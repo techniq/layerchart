@@ -114,7 +114,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls('lc-circle', fill == null && 'fill-surface-content', className),
+            classes: cls('lc-circle', className),
           }
     );
   }
@@ -160,7 +160,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls('lc-circle', fill == null && 'fill-surface-content', className)}
+    class={cls('lc-circle', className)}
     {...restProps}
   />
 {:else if renderCtx === 'html'}
@@ -177,7 +177,32 @@
     style:border-color={stroke}
     style:border-style="solid"
     style:transform="translate(-50%, -50%)"
-    class={cls('lc-circle', fill == null && 'bg-surface-content', className)}
+    class={cls('lc-circle', className)}
     {...restProps}
   ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-circle)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-circle, svg.lc-circle):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-circle, svg.lc-circle):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-circle):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-circle):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

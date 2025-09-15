@@ -422,12 +422,7 @@
     capHeight: '7px',
     lineHeight: '11px',
     ...labelProps,
-    class: cls(
-      'lc-axis-label',
-      'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-      classes.label,
-      labelProps?.class
-    ),
+    class: cls('lc-axis-label', classes.label, labelProps?.class),
   }) satisfies ComponentProps<typeof Text>;
 </script>
 
@@ -437,13 +432,11 @@
   class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
 >
   {#if rule !== false}
-    {@const ruleProps = extractLayerProps(rule, 'lc-axis-rule')}
     <Rule
       x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
       y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
       {motion}
-      {...ruleProps}
-      class={cls('stroke-surface-content/50 bg-surface-content/50', classes.rule, ruleProps?.class)}
+      {...extractLayerProps(rule, 'lc-axis-rule', classes.rule ?? '')}
     />
   {/if}
 
@@ -470,28 +463,21 @@
       capHeight: '7px',
       lineHeight: '11px',
       ...tickLabelProps,
-      class: cls(
-        'lc-axis-tick-label',
-        'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-        classes.tickLabel,
-        tickLabelProps?.class
-      ),
+      class: cls('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
     }}
 
     <Group {transitionIn} {transitionInParams} class="lc-axis-tick-group">
       {#if grid !== false}
-        {@const ruleProps = extractLayerProps(grid, 'lc-axis-grid')}
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
           {motion}
-          {...ruleProps}
-          class={cls('stroke-surface-content/10', classes.rule, ruleProps?.class)}
+          {...extractLayerProps(grid, 'lc-axis-grid', classes.rule ?? '')}
         />
       {/if}
 
       {#if tickMarks}
-        {@const tickClasses = cls('lc-axis-tick', 'stroke-surface-content/50', classes.tick)}
+        {@const tickClasses = cls('lc-axis-tick', classes.tick)}
         {#if orientation === 'horizontal'}
           <Line
             x1={tickCoords.x}
@@ -532,7 +518,36 @@
 </Group>
 
 <style>
-  .lc-axis-tick-label {
-    fill: blue;
+  @layer components {
+    :global(:where(.lc-axis-rule)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-tick)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-grid)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-label, .lc-axis-tick-label)) {
+      font-size: 10px;
+      stroke: var(--color-surface-100, light-dark(white, black));
+      stroke-width: 2px;
+      font-weight: 300;
+    }
   }
 </style>

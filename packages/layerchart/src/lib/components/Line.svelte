@@ -148,7 +148,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, stroke, strokeWidth, opacity },
-            classes: cls('lc-line', stroke === undefined && 'stroke-surface-content', className),
+            classes: cls('lc-line', className),
           }
     );
   }
@@ -195,7 +195,7 @@
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls('lc-line', stroke === undefined && 'stroke-surface-content', className)}
+    class={cls('lc-line', className)}
     {...restProps}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
@@ -206,6 +206,7 @@
     { x: motionX1.current, y: motionY1.current },
     { x: motionX2.current, y: motionY2.current }
   )}
+  <!-- STYLE-TODO: Should html use stroke for fill? -->
   <div
     style:position="absolute"
     style:left="{motionX1.current}px"
@@ -215,7 +216,26 @@
     style:transform="translateY(-50%) rotate({angle}deg)"
     style:transform-origin="0 50%"
     style:opacity
-    style:background-color={fill}
-    class={cls('lc-line', stroke === undefined && 'bg-surface-content', className)}
+    style:background-color={stroke}
+    class={cls('lc-line', className)}
+    style={restProps.style}
   ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-line)) {
+      --stroke-color: var(--color-surface-content, currentColor);
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-line, svg.lc-line):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-line):not([background-color])) {
+      background-color: var(--stroke-color);
+    }
+  }
+</style>

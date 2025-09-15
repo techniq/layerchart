@@ -410,7 +410,7 @@
             paintOrder: 'stroke',
             textAnchor,
           },
-          classes: cls(fill === undefined && 'fill-surface-content', className),
+          classes: cls('lc-text', className),
         };
 
     const computedStyles = getComputedStyles(ctx.canvas, styles);
@@ -495,7 +495,7 @@
         stroke-width={strokeWidth}
         {opacity}
         transform={transformProp}
-        class={cls('lc-text', fill === undefined && 'fill-surface-content', className)}
+        class={cls('lc-text', className)}
       >
         <textPath
           style="text-anchor: {textAnchor};"
@@ -521,7 +521,7 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls('lc-text', fill === undefined && 'text-surface-content fill-current', className)}
+        class={cls('lc-text', className)}
       >
         {#each wordsByLines as line, index}
           <tspan
@@ -553,8 +553,34 @@
         ? 'bottom'
         : 'top'}
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
-    class={cls('lc-text', fill === undefined && 'text-surface-content', className)}
+    class={cls('lc-text', className)}
   >
     {textValue}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-text)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-text, svg.lc-text):not([fill])) {
+      color: var(--fill-color);
+      fill: currentColor;
+    }
+    :global(:where(.lc-layout-svg .lc-text, svg.lc-text):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-text):not([background-color])) {
+      color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-text):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

@@ -22,16 +22,16 @@ function isObjectWithClass(val: any): val is { class?: string } {
 export function extractLayerProps<T>(
   props: T,
   className: string,
-  extraClasses?: string
+  ...extraClasses: string[]
 ): WithClass<ExtractObjectType<T> extends never ? DefaultProps : ExtractObjectType<T>> {
   if (isObjectWithClass(props)) {
     return {
       ...props,
-      class: cls(className, props.class ?? '', extraClasses),
+      class: cls(className, ...extraClasses, props.class),
     } as WithClass<ExtractObjectType<T>>;
   }
 
   return {
-    class: cls(className, extraClasses),
+    class: cls(className, ...extraClasses),
   } as WithClass<ExtractObjectType<T> extends never ? DefaultProps : ExtractObjectType<T>>;
 }

@@ -107,7 +107,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls('lc-rect', fill == null && 'fill-surface-content', className),
+            classes: cls('lc-rect', className),
           }
     );
   }
@@ -155,7 +155,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls('lc-rect', fill == null && 'fill-surface-content', className)}
+    class={cls('lc-rect', className)}
     {...restProps}
     {onclick}
     {ondblclick}
@@ -181,7 +181,7 @@
     style:border-style="solid"
     style:border-color={stroke}
     style:border-radius="{restProps.rx}px"
-    class={cls('lc-rect', fill == null && 'bg-surface-content', className)}
+    class={cls('lc-rect', className)}
     {...restProps as any}
     {onclick}
     {ondblclick}
@@ -192,3 +192,28 @@
     {onpointerout}
   ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-rect)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-rect, svg.lc-rect):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-rect, svg.lc-rect):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-rect):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-rect):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

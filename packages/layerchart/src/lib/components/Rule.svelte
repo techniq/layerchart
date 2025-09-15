@@ -189,7 +189,7 @@
 
 <Group class="lc-rule-g">
   {#each lines as line}
-    {@const stroke = line.stroke}
+    {@const stroke = line.stroke ?? strokeProp}
 
     {#if ctx.radial}
       {#if line.axis === 'x'}
@@ -202,19 +202,10 @@
           {x2}
           {y2}
           {stroke}
-          class={cls('lc-rule-x-radial-line', !stroke && 'stroke-surface-content/10', className)}
+          class={cls('lc-rule-x-radial-line', className)}
         />
       {:else if line.axis === 'y'}
-        <Circle
-          r={line.y1}
-          {stroke}
-          class={cls(
-            'lc-rule-y-radial-circle',
-            !stroke && 'stroke-surface-content/50',
-            'fill-none',
-            className
-          )}
-        />
+        <Circle r={line.y1} {stroke} class={cls('lc-rule-y-radial-circle', className)} />
       {/if}
     {:else}
       <Line
@@ -224,12 +215,38 @@
         x2={line.x2}
         y2={line.y2}
         {stroke}
-        class={cls(
-          line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line',
-          !stroke && 'stroke-surface-content/50',
-          className
-        )}
+        class={cls(line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line', className)}
       />
     {/if}
   {/each}
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-rule-x-line, .lc-rule-y-line)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-rule-x-radial-line)) {
+      /* STYLE-TODO: should this be 10% or 50% like .lc-rule-x-line? */
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-rule-y-radial-circle)) {
+      --fill-color: none;
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+  }
+</style>
