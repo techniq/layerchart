@@ -183,19 +183,29 @@
           {@render childrenProp({ data: point, textProps })}
         {:else}
           <Text
+            data-placement={placement}
             {...textProps}
             {...restProps}
-            class={cls(
-              'text-xs',
-              placement === 'inside'
-                ? 'fill-surface-300 stroke-surface-content'
-                : 'fill-surface-content stroke-surface-100',
-              textProps.class,
-              className
-            )}
+            {...extractLayerProps(getTextProps(point), 'lc-labels-text', className ?? '')}
           />
         {/if}
       {/each}
     {/snippet}
   </Points>
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-labels-text)) {
+      font-size: 12px;
+
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: var(--color-surface-100, light-dark(white, black));
+
+      &[data-placement='inside'] {
+        --fill-color: var(--color-surface-100, light-dark(white, black));
+        --stroke-color: var(--color-surface-content, currentColor);
+      }
+    }
+  }
+</style>

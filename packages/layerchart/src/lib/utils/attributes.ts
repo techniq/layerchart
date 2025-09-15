@@ -1,4 +1,5 @@
 import { cls } from '@layerstack/tailwind';
+import type { ClassValue } from 'svelte/elements';
 
 type ExtractObjectType<T> = T extends object ? (T extends Function ? never : T) : never;
 type WithClass<T> = T & { class?: string };
@@ -22,7 +23,7 @@ function isObjectWithClass(val: any): val is { class?: string } {
 export function extractLayerProps<T>(
   props: T,
   className: string,
-  ...extraClasses: string[]
+  ...extraClasses: ClassValue[]
 ): WithClass<ExtractObjectType<T> extends never ? DefaultProps : ExtractObjectType<T>> {
   if (isObjectWithClass(props)) {
     return {
