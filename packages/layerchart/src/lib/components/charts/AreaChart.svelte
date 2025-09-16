@@ -316,7 +316,7 @@
     if (!context) return {};
     const seriesTooltipData =
       s.data && context.tooltip.data
-        ? findRelatedData(s.data, context.tooltip.data, context.x)
+        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
         : null;
     const highlightPointsProps =
       typeof props.highlight?.points === 'object' ? props.highlight.points : null;

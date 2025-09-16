@@ -48,7 +48,7 @@
           value={sum(seriesState.visibleSeries, (s) => {
             const seriesTooltipData = s.data ? findRelatedData(s.data, data, context.x) : data;
             const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
-            return valueAccessor(seriesTooltipData);
+            return seriesTooltipData ? valueAccessor(seriesTooltipData) : 0;
           })}
           format="integer"
           valueAlign="right"

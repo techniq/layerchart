@@ -236,10 +236,6 @@
     return labelsProps;
   }
 
-  const highlightPointsProps = $derived(
-    typeof props.highlight?.points === 'object' ? props.highlight.points : null
-  );
-
   function getHighlightProps(
     s: SeriesData<TData, typeof Spline>,
     i: number
@@ -247,8 +243,10 @@
     if (!context || !context.tooltip.data) return {};
     const seriesTooltipData =
       s.data && context.tooltip.data
-        ? findRelatedData(s.data, context.tooltip.data, context.x)
+        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
         : null;
+    const highlightPointsProps =
+      typeof props.highlight?.points === 'object' ? props.highlight.points : null;
 
     return {
       data: seriesTooltipData,
