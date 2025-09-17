@@ -51,7 +51,7 @@ export function defaultChartPadding<TData, SeriesComponent extends Component, TS
     return {
       top: axis === true || axis === 'y' ? 4 : 0,
       left: axis === true || axis === 'y' ? 20 : 0,
-      bottom: (axis === true || axis === 'x' ? 20 : 0) + (legend === true ? 32 : 0),
+      bottom: (axis === true || axis === 'x' ? 20 : 0) + (legend ? 32 : 0),
       right: axis === true || axis === 'x' ? 4 : 0,
     };
   }

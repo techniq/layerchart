@@ -406,7 +406,7 @@
           'var(--color-warning)',
           'var(--color-danger)',
         ]}
-  padding={{ bottom: legend === true ? 32 : 0 }}
+  padding={{ bottom: legend ? 32 : 0 }}
   {...restProps}
   tooltip={tooltip === false
     ? false
