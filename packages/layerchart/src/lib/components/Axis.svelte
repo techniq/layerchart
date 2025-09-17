@@ -87,9 +87,6 @@
     tickLabel?: string;
   } = {};
 
-  $: [xRangeMin, xRangeMax] = extent<number>($xRange) as [number, number];
-  $: [yRangeMin, yRangeMax] = extent<number>($yRange) as [number, number];
-
   $: tickVals = Array.isArray(ticks)
     ? ticks
     : typeof ticks === 'function'
@@ -102,7 +99,10 @@
             : _scale.domain()
           : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
 
-  function getCoords(tick: any) {
+  function getCoords(tick: any, xRange: [number, number], yRange: [number, number]) {
+    const [xRangeMin, xRangeMax] = extent(xRange) as [number, number];
+    const [yRangeMin, yRangeMax] = extent(yRange) as [number, number];
+
     switch (placement) {
       case 'top':
         return {
@@ -257,7 +257,7 @@
   {/if}
 
   {#each tickVals as tick, index (tick)}
-    {@const tickCoords = getCoords(tick)}
+    {@const tickCoords = getCoords(tick, $xRange, $yRange)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
       tickCoords.x,
