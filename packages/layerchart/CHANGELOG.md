@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.12
+
+### Patch Changes
+
+- fix(Axis): Fix reactivity issue with xRange/yRange in Svelte 5.34+. Fixes #641 ([#643](https://github.com/techniq/layerchart/pull/643))
+
 ## 1.0.11
 
 ### Patch Changes
