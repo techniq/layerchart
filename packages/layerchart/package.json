@@ -105,7 +105,7 @@
     "d3-tile": "^1.0.0",
     "d3-time": "^3.1.0",
     "date-fns": "^4.1.0",
-    "layercake": "^8.4.4",
+    "layercake": "8.4.3",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
