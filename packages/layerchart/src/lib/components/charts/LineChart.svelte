@@ -102,7 +102,7 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
-  import { isScaleTime } from 'layerchart/utils/scales.svelte.js';
+  import { isScaleTime } from '../../utils/scales.svelte.js';
 
   let {
     data = [],
