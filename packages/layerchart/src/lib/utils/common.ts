@@ -66,3 +66,30 @@ export function findRelatedData(data: any[], original: any, accessor: Function) 
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });
 }
+
+/**
+ * Return the object if the value is an object, otherwise return null.
+ * Functions (including Snippet types) are treated as non-objects and return null.
+ */
+export function getObjectOrNull<T>(
+  value: T
+): T extends object
+  ? T extends Function
+    ? null
+    : T
+  : T extends null
+    ? null
+    : T extends undefined
+      ? undefined
+      : null {
+  if (typeof value === 'object') return value as any;
+  if (value === undefined) return undefined as any;
+  return null as any;
+}
+
+/**
+ * Call with args if function, otherwise return the value.
+ */
+export function resolveMaybeFn<T>(value: T | ((...args: any[]) => T), ...args: any[]) {
+  return typeof value === 'function' ? (value as Function)(...args) : value;
+}
