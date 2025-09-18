@@ -1,9 +1,11 @@
 import type { Component, ComponentProps } from 'svelte';
 import { SelectionState } from '@layerstack/svelte-state';
 import { scaleOrdinal } from 'd3-scale';
+import { cls } from '@layerstack/tailwind';
 
 import type { SeriesData } from './types.js';
 import type Legend from '../Legend.svelte';
+import { resolveMaybeFn } from '../../utils/common.js';
 
 export class HighlightKey<TData, SeriesComponent extends Component> {
   current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
@@ -75,12 +77,14 @@ export function createLegendProps<TData, TComponent extends Component>(
     onpointerleave: () => (opts.seriesState.highlightKey.current = null),
     ...opts.props,
     classes: {
-      item: (item) =>
-        opts.seriesState.visibleSeries.length &&
-        !opts.seriesState.visibleSeries.some((s) => s.key === item.value)
-          ? 'opacity-50'
-          : '',
       ...opts.props?.classes,
+      item: (item) => {
+        const isVisible =
+          opts.seriesState.visibleSeries.length &&
+          !opts.seriesState.visibleSeries.some((s) => s.key === item.value);
+
+        return cls(resolveMaybeFn(opts.props?.classes?.item, item), isVisible && 'opacity-50');
+      },
     },
   };
 }
