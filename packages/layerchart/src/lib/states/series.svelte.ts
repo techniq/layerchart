@@ -1,0 +1,60 @@
+import type { Component } from 'svelte';
+import type { SeriesData } from '../components/charts/types.js';
+
+import { SelectionState } from '@layerstack/svelte-state';
+
+class HighlightKey<TData, SeriesComponent extends Component> {
+  current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
+
+  set = (seriesKey: typeof this.current) => {
+    this.current = seriesKey;
+  };
+}
+
+export class SeriesState<TData, TComponent extends Component> {
+  #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
+  selectedSeries = new SelectionState();
+  selectedKeys = new SelectionState();
+  highlightKey = new HighlightKey<TData, TComponent>();
+
+  constructor(getSeries: () => SeriesData<TData, TComponent>[]) {
+    this.#series = getSeries();
+
+    $effect.pre(() => {
+      // keep series state in sync with the prop
+      this.#series = getSeries();
+    });
+  }
+
+  get series() {
+    return this.#series;
+  }
+
+  get isDefaultSeries() {
+    return this.#series.length === 1 && this.#series[0].key === 'default';
+  }
+
+  get allSeriesData() {
+    return this.#series
+      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+      .filter((d) => d) as Array<TData & { seriesKey: string }>;
+  }
+
+  get visibleSeries() {
+    return this.#series.filter(
+      (s) => this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(s.key)
+    );
+  }
+
+  /**
+   * Check if series is highlighted
+   * Changing default to `true` is useful to determine if series should be faded
+   */
+  isHighlighted(seriesKey: SeriesData<TData, TComponent>['key'], defaultValue = false) {
+    if (this.highlightKey.current === null) {
+      return defaultValue;
+    } else {
+      return this.highlightKey.current === seriesKey;
+    }
+  }
+}

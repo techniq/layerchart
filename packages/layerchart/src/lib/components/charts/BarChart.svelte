@@ -109,7 +109,8 @@
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';

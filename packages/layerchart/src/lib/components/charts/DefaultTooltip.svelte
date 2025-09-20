@@ -4,7 +4,7 @@
   import { getChartContext } from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
   import type { SimplifiedChartPropsObject } from './types.js';
-  import type { SeriesState } from './utils.svelte.js';
+  import type { SeriesState } from '$lib/states/series.svelte.js';
   import { format } from '@layerstack/utils';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
 

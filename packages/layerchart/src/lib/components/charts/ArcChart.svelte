@@ -146,7 +146,8 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
 

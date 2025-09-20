@@ -92,7 +92,8 @@
   import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';

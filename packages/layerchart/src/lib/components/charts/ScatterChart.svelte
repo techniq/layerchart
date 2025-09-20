@@ -61,9 +61,10 @@
   import Rule from '../Rule.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
+  import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
 
   let {
     data = [],
