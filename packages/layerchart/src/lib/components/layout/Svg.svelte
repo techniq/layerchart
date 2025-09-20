@@ -63,7 +63,6 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
@@ -113,12 +112,8 @@
   width={ctx.containerWidth}
   height={ctx.containerHeight}
   style:z-index={zIndex}
-  class={cls(
-    'lc-layout-svg',
-    'absolute top-0 left-0 overflow-visible',
-    pointerEvents === false && 'pointer-events-none',
-    className
-  )}
+  class={['lc-layout-svg', className]}
+  class:disablePointerEvents={pointerEvents === false}
   role="figure"
   {...restProps}
 >
@@ -146,3 +141,17 @@
     {/if}
   </g>
 </svg>
+
+<style>
+  @layer base {
+    :where(.lc-layout-svg) {
+      position: absolute;
+      inset: 0;
+      overflow: visible; /* match html and allow viewing outside of bounds (useful for axis that leak and general debugging)*/
+
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+  }
+</style>

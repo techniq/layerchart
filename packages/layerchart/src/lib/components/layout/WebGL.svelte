@@ -1,5 +1,9 @@
 <script lang="ts" module>
-  export type WebGLProps = {
+  import type { Snippet } from 'svelte';
+  import type { Without } from '$lib/utils/types.js';
+  import type { HTMLCanvasAttributes } from 'svelte/elements';
+
+  export type WebGLPropsWithoutHTML = {
     /**
      * A reference to the  `<canvas>` element.
      *
@@ -44,6 +48,9 @@
     >;
   };
 
+  export type WebGLProps = WebGLPropsWithoutHTML &
+    Without<HTMLCanvasAttributes, WebGLPropsWithoutHTML>;
+
   export type WebGLContextValue = {
     gl: WebGLRenderingContext | null;
   };
@@ -61,10 +68,9 @@
 </script>
 
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { onMount } from 'svelte';
   import { getChartContext } from '../Chart.svelte';
   import { Context } from 'runed';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     context = $bindable(),
@@ -73,6 +79,7 @@
     fallback = '',
     pointerEvents = true,
     zIndex = 0,
+    class: className,
     children,
     ...restProps
   }: WebGLProps = $props();
@@ -116,14 +123,14 @@
 
 <canvas
   bind:this={ref}
+  class={['lc-layout-webgl', className]}
+  class:disablePointerEvents={pointerEvents === false}
   style:z-index={zIndex}
-  style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top={ctx.padding.top + 'px'}
   style:right={ctx.padding.right + 'px'}
   style:bottom={ctx.padding.bottom + 'px'}
   style:left={ctx.padding.left + 'px'}
-  style="width:100%;height:100%;position:absolute;"
-  {...extractLayerProps(restProps, 'lc-layout-webgl')}
+  {...restProps}
 >
   {#if typeof fallback === 'function'}
     {@render fallback()}
@@ -133,3 +140,16 @@
 </canvas>
 
 {@render children?.({ ref, webGLContext: context })}
+
+<style>
+  @layer base {
+    :where(.lc-layout-webgl) {
+      position: absolute;
+      inset: 0;
+
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+  }
+</style>
