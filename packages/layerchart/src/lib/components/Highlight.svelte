@@ -101,6 +101,11 @@
      */
     motion?: MotionProp;
 
+    /**
+     * The opacity of the element. (0 to 1)
+     */
+    opacity?: number;
+
     onAreaClick?: (e: MouseEvent, detail: { data: any }) => void;
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
@@ -135,6 +140,7 @@
     lines: linesProp = false,
     area = false,
     bar = false,
+    opacity,
     motion = 'spring',
     onAreaClick,
     onBarClick,
@@ -448,12 +454,14 @@
         endAngle={_area.x + _area.width}
         innerRadius={_area.y}
         outerRadius={_area.y + _area.height}
+        {opacity}
         class="lc-highlight-area"
         onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
       />
     {:else}
       <Rect
         motion={motion === 'spring' ? 'spring' : undefined}
+        {opacity}
         {..._area}
         {...extractLayerProps(area, 'lc-highlight-area')}
         onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
@@ -468,6 +476,7 @@
       <Bar
         motion={motion === 'spring' ? 'spring' : undefined}
         data={highlightData}
+        {opacity}
         {...extractLayerProps(bar, 'lc-highlight-bar')}
         onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
       />
@@ -485,6 +494,7 @@
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
+          {opacity}
           {...extractLayerProps(linesProp, 'lc-highlight-line')}
         />
       {/each}
@@ -503,6 +513,7 @@
           fill={point.fill}
           r={4}
           strokeWidth={6}
+          {opacity}
           {...extractLayerProps(points, 'lc-highlight-point')}
           onpointerdown={onPointClick &&
             ((e) => {
