@@ -311,17 +311,11 @@
       strokeWidth: 1,
       insets: stackInsets,
       fill: s.color,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       onBarClick: (e, detail) => onBarClick(e, { ...detail, series: s }),
       ...props.bars,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.bars?.class,
-        s.props?.class
-      ),
+      class: cls(props.bars?.class, s.props?.class),
     };
   }
 
@@ -333,16 +327,10 @@
       // TODO: Improve placement when using `seriesLayout="group"`
       // data: s.data,
       // y: s.value ?? (s.data ? undefined : s.key),
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
   }
 

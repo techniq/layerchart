@@ -124,7 +124,6 @@
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { SelectionState } from '@layerstack/svelte-state';
 
   import Arc, { type ArcPropsWithoutHTML } from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -133,7 +132,13 @@
   import Legend from '../Legend.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import {
+    accessor,
+    chartDataArray,
+    getObjectOrNull,
+    resolveMaybeFn,
+    type Accessor,
+  } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import type {
     SeriesData,
@@ -141,7 +146,7 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { HighlightKey } from './utils.svelte.js';
+  import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
 
@@ -223,10 +228,12 @@
     });
   });
 
-  const selectedSeries = new SelectionState();
+  const seriesState = new SeriesState(() => series);
 
   const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
+    series.filter(
+      (s) => seriesState.selectedSeries.isEmpty() || seriesState.selectedSeries.isSelected(s.key)
+    )
   );
 
   const allSeriesData = $derived(
@@ -245,41 +252,43 @@
 
   const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
-  const highlightKey = new HighlightKey<TData, typeof Arc>();
-  const selectedKeys = new SelectionState();
-
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
-      return selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
+      return seriesState.selectedKeys.isEmpty() || seriesState.selectedKeys.isSelected(dataKey);
     })
   );
 
   function getLegendProps(): ComponentProps<typeof Legend> {
-    return {
-      tickFormat: (tick) => {
-        const item = chartData.find((d) => keyAccessor(d) === tick);
-        return item ? (labelAccessor(item) ?? tick) : tick;
+    return createLegendProps({
+      seriesState,
+      props: {
+        tickFormat: (tick) => {
+          // Use data label instead of series label
+          const item = chartData.find((d) => keyAccessor(d) === tick);
+          return item ? (labelAccessor(item) ?? tick) : tick;
+        },
+        onclick: (e, item) => {
+          // Select data keys instead of series value
+          seriesState.selectedKeys.toggle(item.value);
+        },
+        ...props.legend,
+        ...getObjectOrNull(legend),
+        classes: {
+          ...props.legend?.classes,
+          ...getObjectOrNull(legend)?.classes,
+          item: (item) => {
+            const isVisible =
+              visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value);
+            return cls(
+              resolveMaybeFn(props.legend?.classes?.item, item),
+              resolveMaybeFn(getObjectOrNull(legend)?.classes?.item, item),
+              isVisible && 'opacity-50'
+            );
+          },
+        },
       },
-      placement: 'bottom',
-      variant: 'swatches',
-      onclick: (e, item) => {
-        selectedKeys.toggle(item.value);
-        selectedSeries.toggle(item.value);
-      },
-      onpointerenter: (e, item) => (highlightKey.current = item.value),
-      onpointerleave: (e) => (highlightKey.current = null),
-      ...props.legend,
-      ...(typeof legend === 'object' ? legend : null),
-      classes: {
-        item: (item) =>
-          visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
-            ? 'opacity-50'
-            : '',
-        ...props.legend?.classes,
-        ...(typeof legend === 'object' ? legend.classes : null),
-      },
-    };
+    });
   }
 
   function getGroupProps(): ComponentProps<typeof Group> {
@@ -317,6 +326,7 @@
         multiSeries && (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
       fill: s.color ?? context.cScale?.(context.c(d)),
       track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
+      opacity: seriesState.isHighlighted(keyAccessor(d), true) ? 1 : 0.1,
       tooltipContext: context.tooltip,
       data: d,
       onclick: (e) => {
@@ -326,12 +336,7 @@
       },
       ...props.arc,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        highlightKey.current && highlightKey.current !== keyAccessor(d) && 'opacity-50',
-        props.arc?.class,
-        s.props?.class
-      ),
+      class: cls(props.arc?.class, s.props?.class),
     };
   }
 
@@ -397,8 +402,8 @@
       series,
       visibleSeries,
       visibleData,
-      highlightKey: highlightKey.current,
-      setHighlightKey: highlightKey.set,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
       getLegendProps,
       getGroupProps,
       getArcProps,
@@ -452,8 +457,8 @@
                 value={valueAccessor(data)}
                 color={context.cScale?.(context.c(data))}
                 {format}
-                onpointerenter={() => (highlightKey.current = keyAccessor(data))}
-                onpointerleave={() => (highlightKey.current = null)}
+                onpointerenter={() => (seriesState.highlightKey.current = keyAccessor(data))}
+                onpointerleave={() => (seriesState.highlightKey.current = null)}
                 {...props.tooltip?.item}
               />
             </Tooltip.List>

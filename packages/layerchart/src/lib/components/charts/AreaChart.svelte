@@ -220,13 +220,6 @@
       ...(typeof s.props?.line === 'object' ? s.props.line : null),
     };
 
-    const highlightClass =
-      seriesState.visibleSeries.length > 1 &&
-      seriesState.highlightKey.current &&
-      seriesState.highlightKey.current !== s.key
-        ? 'opacity-10'
-        : '';
-
     return {
       data: s.data,
       y0: stackSeries
@@ -241,19 +234,18 @@
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
+      opacity:
+        // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+        seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.area,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        highlightClass,
-        props.area?.class,
-        s.props?.class
-      ),
+      class: cls(props.area?.class, s.props?.class),
       line: {
         stroke: s.color,
+        opacity:
+          // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+          seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
         ...lineProps,
-        class: cls('transition-opacity', highlightClass, lineProps.class),
       },
     };
   }
@@ -270,16 +262,11 @@
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.points?.class,
-        typeof points === 'object' && points.class
-      ),
+      class: cls(props.points?.class, typeof points === 'object' && points.class),
     };
   }
 
@@ -294,16 +281,11 @@
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
   }
 
@@ -331,19 +313,14 @@
       onPointEnter: () => (seriesState.highlightKey.current = s.key),
       onPointLeave: () => (seriesState.highlightKey.current = null),
       ...props.highlight,
+      opacity:
+        seriesState.highlightKey.current && seriesState.highlightKey.current !== s.key ? 0.1 : 1,
       points:
         props.highlight?.points == false
           ? false
           : {
               ...highlightPointsProps,
               fill: s.color,
-              class: cls(
-                'transition-opacity',
-                seriesState.highlightKey.current &&
-                  seriesState.highlightKey.current !== s.key &&
-                  'opacity-10',
-                highlightPointsProps?.class
-              ),
             },
     };
   }

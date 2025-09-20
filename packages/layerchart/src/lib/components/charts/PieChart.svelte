@@ -353,12 +353,7 @@
         // Workaround for `tooltip={{ mode: 'manual' }}
         onTooltipClick(e, { data: arc.data });
       },
-      class: cls(
-        'transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== keyAccessor(arc.data) &&
-          'opacity-50'
-      ),
+      opacity: seriesState.isHighlighted(keyAccessor(arc.data), true) ? 1 : 0.1,
       ...props.arc,
       ...s.props,
       ...arcDataProps,

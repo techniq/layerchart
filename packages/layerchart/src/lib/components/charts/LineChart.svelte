@@ -179,17 +179,10 @@
       stroke: s.color,
       ...props.spline,
       ...s.props,
-      class: cls(
-        'lc-line-chart-line',
-        'transition-opacity',
-        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        seriesState.visibleSeries.length > 1 &&
-          seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.spline?.class,
-        s.props?.class
-      ),
+      opacity:
+        // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+        seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
+      class: cls(props.spline?.class, s.props?.class),
     };
 
     return splineProps;
@@ -201,16 +194,11 @@
       x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       fill: s.color,
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.points?.class,
-        typeof points === 'object' && points.class
-      ),
+      class: cls(props.points?.class, typeof points === 'object' && points.class),
     };
 
     return pointsProps;
@@ -221,16 +209,10 @@
       data: s.data,
       x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
 
     return labelsProps;
@@ -258,6 +240,7 @@
         : undefined,
       onPointEnter: () => (seriesState.highlightKey.current = s.key),
       onPointLeave: () => (seriesState.highlightKey.current = null),
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.highlight,
       points:
         props.highlight?.points == false
@@ -265,13 +248,6 @@
           : {
               ...highlightPointsProps,
               fill: s.color,
-              class: cls(
-                'transition-opacity',
-                seriesState.highlightKey.current &&
-                  seriesState.highlightKey.current !== s.key &&
-                  'opacity-10',
-                highlightPointsProps?.class
-              ),
             },
     };
   }
@@ -280,8 +256,8 @@
     return createLegendProps({
       seriesState,
       props: {
-        ...props.legend,
         ...(typeof legend === 'object' ? legend : null),
+        ...props.legend,
       },
     });
   }
