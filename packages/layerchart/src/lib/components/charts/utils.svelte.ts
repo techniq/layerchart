@@ -49,6 +49,18 @@ export class SeriesState<TData, TComponent extends Component> {
       (s) => this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(s.key)
     );
   }
+
+  /**
+   * Check if series is highlighted
+   * Changing default to `true` is useful to determine if series should be faded
+   */
+  isHighlighted(seriesKey: SeriesData<TData, TComponent>['key'], defaultValue = false) {
+    if (this.highlightKey.current === null) {
+      return defaultValue;
+    } else {
+      return this.highlightKey.current === seriesKey;
+    }
+  }
 }
 
 type CreateLegendPropsOptions<TData, TComponent extends Component> = {
@@ -77,14 +89,13 @@ export function createLegendProps<TData, TComponent extends Component>(
     onpointerleave: () => (opts.seriesState.highlightKey.current = null),
     ...opts.props,
     classes: {
-      ...opts.props?.classes,
       item: (item) => {
         const isVisible =
           opts.seriesState.visibleSeries.length &&
           !opts.seriesState.visibleSeries.some((s) => s.key === item.value);
-
         return cls(resolveMaybeFn(opts.props?.classes?.item, item), isVisible && 'opacity-50');
       },
+      ...opts.props?.classes,
     },
   };
 }
