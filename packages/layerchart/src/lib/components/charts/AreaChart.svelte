@@ -139,7 +139,7 @@
             key: 'default',
             label: typeof y === 'string' ? y : 'value',
             value: y,
-            color: 'var(--color-primary)',
+            color: 'var(--color-primary, currentColor)',
           },
         ]
       : seriesProp

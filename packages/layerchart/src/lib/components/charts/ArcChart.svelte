@@ -349,12 +349,12 @@
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
-          'var(--color-primary)',
-          'var(--color-secondary)',
-          'var(--color-info)',
-          'var(--color-success)',
-          'var(--color-warning)',
-          'var(--color-danger)',
+          'var(--color-primary, currentColor)',
+          'var(--color-secondary, currentColor)',
+          'var(--color-info, currentColor)',
+          'var(--color-success, currentColor)',
+          'var(--color-warning, currentColor)',
+          'var(--color-danger, currentColor)',
         ]}
   padding={{ bottom: legend ? 32 : 0 }}
   {...restProps}

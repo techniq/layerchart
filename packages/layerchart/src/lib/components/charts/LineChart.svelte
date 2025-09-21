@@ -159,7 +159,7 @@
                 ? yProp
                 : 'value',
             value: isVertical ? xProp : yProp,
-            color: 'var(--color-primary)',
+            color: 'var(--color-primary, currentColor)',
           },
         ]
       : seriesProp
