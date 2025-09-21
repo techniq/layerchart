@@ -34,16 +34,15 @@ export class SeriesState<TData, TComponent extends Component> {
     return this.#series.length === 1 && this.#series[0].key === 'default';
   }
 
-  get allSeriesData() {
-    return this.#series
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData & { seriesKey: string }>;
+  get visibleSeries() {
+    return this.#series.filter((s) => this.isVisible(s.key));
   }
 
-  get visibleSeries() {
-    return this.#series.filter(
-      (s) => this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(s.key)
-    );
+  /**
+   * Check if series is visible
+   */
+  isVisible(seriesKey: SeriesData<TData, TComponent>['key']) {
+    return this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(seriesKey);
   }
 
   /**
@@ -56,5 +55,17 @@ export class SeriesState<TData, TComponent extends Component> {
     } else {
       return this.highlightKey.current === seriesKey;
     }
+  }
+
+  get allSeriesData() {
+    return this.#series
+      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+      .filter((d) => d) as Array<TData & { seriesKey: string }>;
+  }
+
+  get allSeriesColors() {
+    return this.#series.map((s) => s.color).filter((c) => c != null) as Array<
+      NonNullable<SeriesData<TData, TComponent>['color']>
+    >;
   }
 }

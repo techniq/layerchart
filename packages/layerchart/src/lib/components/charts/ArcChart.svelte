@@ -231,27 +231,9 @@
 
   const seriesState = new SeriesState(() => series);
 
-  const visibleSeries = $derived(
-    series.filter(
-      (s) => seriesState.selectedSeries.isEmpty() || seriesState.selectedSeries.isSelected(s.key)
-    )
-  );
-
-  const allSeriesData = $derived(
-    visibleSeries
-      .flatMap((s) =>
-        s.data?.map((d) => {
-          return { seriesKey: s.key, ...d };
-        })
-      )
-      .filter((d) => d) as Array<TData & { stackData?: any }>
-  );
-
   const chartData = $derived(
-    allSeriesData.length ? allSeriesData : chartDataArray(data)
+    seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
   ) as Array<TData>;
-
-  const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
   const visibleData = $derived(
     chartData.filter((d) => {
@@ -363,7 +345,7 @@
       return key;
     },
     get visibleSeries() {
-      return visibleSeries;
+      return seriesState.visibleSeries;
     },
   });
 </script>
@@ -375,8 +357,8 @@
   x={value}
   {c}
   cDomain={chartData.map(keyAccessor)}
-  cRange={seriesColors.length
-    ? seriesColors
+  cRange={seriesState.allSeriesColors.length
+    ? seriesState.allSeriesColors
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
@@ -401,7 +383,7 @@
       color: cAccessor,
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       visibleData,
       highlightKey: seriesState.highlightKey.current,
       setHighlightKey: seriesState.highlightKey.set,

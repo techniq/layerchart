@@ -245,31 +245,15 @@
   const valueAccessor = $derived(accessor(value));
   const cAccessor = $derived(accessor(c));
 
-  const allSeriesData = $derived(
-    series
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData>
-  );
-
   const chartData = $derived(
-    allSeriesData.length ? allSeriesData : chartDataArray(data)
+    seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
   ) as Array<TData>;
-
-  const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
       return seriesState.selectedKeys.isEmpty() || seriesState.selectedKeys.isSelected(dataKey);
     })
-  );
-
-  // TODO: note, I added this because it wasn't consistent with all the other charts
-  // unsure if it is correct but will validate with Sean
-  const visibleSeries = $derived(
-    series.filter(
-      (s) => seriesState.selectedSeries.isEmpty() || seriesState.selectedSeries.isSelected(s.key)
-    )
   );
 
   function getLegendProps(): ComponentProps<typeof Legend> {
@@ -342,7 +326,8 @@
     return {
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
-      outerRadius: visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+      outerRadius:
+        seriesState.visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
       innerRadius,
       cornerRadius,
       padAngle,
@@ -354,7 +339,7 @@
         // Workaround for `tooltip={{ mode: 'manual' }}
         onTooltipClick(e, { data: arc.data });
       },
-      opacity: seriesState.isHighlighted(keyAccessor(arc.data), true) ? 1 : 0.1,
+      opacity: seriesState.isHighlighted(keyAccessor(arc.data), true) ? 1 : 0.5,
       ...props.arc,
       ...s.props,
       ...arcDataProps,
@@ -383,7 +368,7 @@
       return key;
     },
     get visibleSeries() {
-      return visibleSeries;
+      return seriesState.visibleSeries;
     },
   });
 </script>
@@ -395,8 +380,8 @@
   x={value}
   c={key}
   cDomain={chartData.map(keyAccessor)}
-  cRange={seriesColors.length
-    ? seriesColors
+  cRange={seriesState.allSeriesColors.length
+    ? seriesState.allSeriesColors
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
@@ -423,7 +408,7 @@
       color: cAccessor,
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       visibleData,
       highlightKey: seriesState.highlightKey.current,
       setHighlightKey: seriesState.highlightKey.set,
@@ -447,7 +432,7 @@
           {@render marks(snippetProps)}
         {:else}
           <Group {...getGroupProps()}>
-            {#each visibleSeries as s, seriesIdx (s.key)}
+            {#each seriesState.visibleSeries as s, seriesIdx (s.key)}
               {#if typeof pie === 'function'}
                 {@render pie({
                   ...snippetProps,

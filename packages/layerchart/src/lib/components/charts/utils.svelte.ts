@@ -34,10 +34,10 @@ export function createLegendProps<TData, TComponent extends Component>(
     ...opts.props,
     classes: {
       item: (item) => {
-        const isVisible =
-          opts.seriesState.visibleSeries.length &&
-          !opts.seriesState.visibleSeries.some((s) => s.key === item.value);
-        return cls(resolveMaybeFn(opts.props?.classes?.item, item), isVisible && 'opacity-50');
+        return cls(
+          resolveMaybeFn(opts.props?.classes?.item, item),
+          !opts.seriesState.isVisible(item.value) && 'opacity-50'
+        );
       },
       ...opts.props?.classes,
     },
