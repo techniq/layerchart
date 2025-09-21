@@ -109,7 +109,7 @@
     <GeoPath
       geojson={polygon}
       {curve}
-      class={cls('lc-hull-path', 'fill-transparent', classes.path)}
+      class={['lc-hull-path', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
@@ -122,10 +122,18 @@
       x={(d) => d[0]}
       y={(d) => d[1]}
       {curve}
-      class={cls('lc-hull-class', 'fill-transparent', classes.path)}
+      class={['lc-hull-class', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
     />
   {/if}
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-hull-path, .lc-hull-geo-path)) {
+      fill: transparent;
+    }
+  }
+</style>

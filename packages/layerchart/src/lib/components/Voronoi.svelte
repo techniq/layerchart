@@ -129,7 +129,7 @@
       >
         <GeoPath
           geojson={feature}
-          class={cls('lc-voronoi-geo-path', 'fill-transparent stroke-transparent', classes.path)}
+          class={['lc-voronoi-geo-path', classes.path]}
           onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
           onpointerenter={(e) =>
             onpointerenter?.(e, { data: feature.properties.site.data, feature })}
@@ -152,7 +152,7 @@
         <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
           <Spline
             {pathData}
-            class={cls('lc-voronoi-path', 'fill-transparent stroke-transparent', classes.path)}
+            class={['lc-voronoi-path', classes.path]}
             onclick={(e) => onclick?.(e, { data: point.data, point })}
             onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
             onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
@@ -168,3 +168,12 @@
     {/each}
   {/if}
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-voronoi-path, .lc-voronoi-geo-path)) {
+      fill: transparent;
+      stroke: transparent;
+    }
+  }
+</style>
