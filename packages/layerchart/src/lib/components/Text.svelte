@@ -472,13 +472,7 @@
 {#if renderCtx === 'svg'}
   <!-- `overflow: visible` allow contents to be shown outside element -->
   <!-- `paint-order: stroke` supports stroke outlining text  -->
-  <svg
-    x={dx}
-    y={dy}
-    {...svgProps}
-    class={cls('lc-text-svg', 'overflow-visible [paint-order:stroke]', svgProps?.class)}
-    bind:this={svgRef}
-  >
+  <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]} bind:this={svgRef}>
     {#if path}
       <defs>
         {#key path}
@@ -495,14 +489,14 @@
         stroke-width={strokeWidth}
         {opacity}
         transform={transformProp}
-        class={cls('lc-text', className)}
+        class={['lc-text', className]}
       >
         <textPath
           style="text-anchor: {textAnchor};"
           dominant-baseline={dominantBaseline}
           href="#{pathId}"
           {startOffset}
-          class={cls('lc-text-path')}
+          class="lc-text-path"
         >
           {wordsByLines.map((line) => line.words.join(' ')).join()}
         </textPath>
@@ -521,7 +515,7 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls('lc-text', className)}
+        class={['lc-text', className]}
       >
         {#each wordsByLines as line, index}
           <tspan
@@ -553,7 +547,7 @@
         ? 'bottom'
         : 'top'}
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
-    class={cls('lc-text', className)}
+    class={['lc-text', className]}
   >
     {textValue}
   </div>
@@ -564,6 +558,11 @@
     :global(:where(.lc-text)) {
       --fill-color: var(--color-surface-content, currentColor);
       --stroke-color: initial;
+    }
+
+    :global(:where(.lc-text-svg)) {
+      overflow: visible;
+      paint-order: stroke;
     }
 
     /* Svg | Canvas layers */
