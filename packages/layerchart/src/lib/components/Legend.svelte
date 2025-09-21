@@ -65,16 +65,17 @@
      */
     orientation?: 'horizontal' | 'vertical';
 
-    onclick?: (e: MouseEvent, detail: LegendItem) => any;
-    onpointerenter?: (e: MouseEvent, detail: LegendItem) => any;
-    onpointerleave?: (e: MouseEvent, detail: LegendItem) => any;
-
     /**
      * Determine display ramp (individual color swatches or continuous ramp)
      *
      * @default 'ramp'
      */
     variant?: 'ramp' | 'swatches';
+
+    /**
+     * An array of selected items. If provided, the legend fades unselected items.
+     */
+    selected?: string[];
 
     /**
      * Classes to apply to the elements.
@@ -90,6 +91,10 @@
       swatch?: string;
       item?: string | ((item: LegendItem) => string);
     };
+
+    onclick?: (e: MouseEvent, detail: LegendItem) => any;
+    onpointerenter?: (e: MouseEvent, detail: LegendItem) => any;
+    onpointerleave?: (e: MouseEvent, detail: LegendItem) => any;
 
     /**
      * A bindable reference to the wrapping `<div>` element.
@@ -135,6 +140,7 @@
     onpointerenter,
     onpointerleave,
     variant = 'ramp',
+    selected = [],
     classes = {},
     ref: refProp = $bindable(),
     class: className,
@@ -361,6 +367,7 @@
         {@const item = { value: tick, color }}
         <button
           class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
+          style:opacity={selected.length === 0 || selected.includes(tick) ? 1 : 0.3}
           onclick={(e) => onclick?.(e, item)}
           onpointerenter={(e) => onpointerenter?.(e, item)}
           onpointerleave={(e) => onpointerleave?.(e, item)}
