@@ -324,7 +324,7 @@
           />
         {:else if scaleConfig.swatches}
           {#each scaleConfig.swatches as swatch, i}
-            <rect {...extractLayerProps(swatch, 'lc-legend-swatch')} />
+            <rect {...extractLayerProps(swatch, 'lc-legend-ramp-swatch')} />
           {/each}
         {/if}
       </g>
