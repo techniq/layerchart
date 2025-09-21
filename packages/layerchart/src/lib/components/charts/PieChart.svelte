@@ -174,9 +174,9 @@
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { format } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
   import type { PieArcDatum } from 'd3-shape';
-  import { getObjectOrNull, resolveMaybeFn } from '../../utils/common.js';
+  import { schemeObservable10 } from 'd3-scale-chromatic';
+  import { getObjectOrNull } from '../../utils/common.js';
 
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -372,12 +372,12 @@
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
-          'var(--color-primary, currentColor)',
-          'var(--color-secondary, currentColor)',
-          'var(--color-info, currentColor)',
-          'var(--color-success, currentColor)',
-          'var(--color-warning, currentColor)',
-          'var(--color-danger, currentColor)',
+          `var(--color-primary, ${schemeObservable10[0]})`,
+          `var(--color-secondary, ${schemeObservable10[1]})`,
+          `var(--color-info, ${schemeObservable10[2]})`,
+          `var(--color-success, ${schemeObservable10[3]})`,
+          `var(--color-warning, ${schemeObservable10[4]})`,
+          `var(--color-danger, ${schemeObservable10[5]})`,
         ]}
   padding={{
     bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
