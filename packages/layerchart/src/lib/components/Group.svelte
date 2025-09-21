@@ -83,8 +83,6 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
-  import { cls } from '@layerstack/tailwind';
-
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
 
@@ -177,7 +175,7 @@
 {:else if renderCtx === 'svg'}
   <g
     style:transform
-    class={cls('lc-group-g', className)}
+    class={['lc-group-g', className]}
     in:transitionIn={transitionInParams}
     {opacity}
     {...restProps}
@@ -193,7 +191,7 @@
     style:opacity
     in:transitionIn={transitionInParams}
     {...restProps}
-    class={cls('lc-group-div', 'absolute', className)}
+    class={['lc-group-div', className]}
     ontouchmove={handleTouchMove}
   >
     {@render children?.()}

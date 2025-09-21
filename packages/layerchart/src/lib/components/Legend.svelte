@@ -117,6 +117,7 @@
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { resolveMaybeFn } from '$lib/utils/common.js';
 
   let {
     scale: scaleProp,
@@ -296,29 +297,9 @@
   bind:this={ref}
   {...restProps}
   data-placement={placement}
-  class={cls(
-    'lc-legend-container',
-    'inline-block',
-    'z-1', // stack above tooltip context layers (band rects, voronoi, ...)
-    placement && [
-      'absolute',
-      {
-        'top-left': 'top-0 left-0',
-        top: 'top-0 left-1/2 -translate-x-1/2',
-        'top-right': 'top-0 right-0',
-        left: 'top-1/2 left-0 -translate-y-1/2',
-        center: 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-        right: 'top-1/2 right-0 -translate-y-1/2',
-        'bottom-left': 'bottom-0 left-0',
-        bottom: 'bottom-0 left-1/2 -translate-x-1/2',
-        'bottom-right': 'bottom-0 right-0',
-      }[placement],
-    ],
-    className,
-    classes.root
-  )}
+  class={cls('lc-legend-container', className, classes.root)}
 >
-  <div class={cls('lc-legend-title', 'text-[10px] font-semibold', classes.title)}>
+  <div class={cls('lc-legend-title', classes.title)}>
     {title}
   </div>
   {#if children}
@@ -331,7 +312,7 @@
       {width}
       height={height + tickLengthProp + tickFontSize}
       viewBox="0 0 {width} {height + tickLengthProp + tickFontSize}"
-      class={cls('lc-legend-ramp-svg', 'overflow-visible')}
+      class={cls('lc-legend-ramp-svg')}
     >
       <g class="lc-legend-ramp-g">
         {#if scaleConfig.interpolator}
@@ -355,7 +336,7 @@
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
             y={height + tickLengthProp + tickFontSize}
             style:font-size={tickFontSize}
-            class={cls('lc-legend-tick-text', 'text-[10px] fill-surface-content', classes.label)}
+            class={cls('lc-legend-tick-text', classes.label)}
           >
             <!-- @ts-expect-error - improve types -->
             {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
@@ -367,46 +348,25 @@
               y1={0}
               x2={scaleConfig.xScale?.(tick)}
               y2={height + tickLengthProp}
-              class={cls('lc-legend-tick-line', 'stroke-surface-content', classes.tick)}
+              class={cls('lc-legend-tick-line', classes.tick)}
             />
           {/if}
         {/each}
       </g>
     </svg>
   {:else if variant === 'swatches'}
-    <div
-      class={cls(
-        'lc-legend-swatch-group',
-        'flex gap-x-4 gap-y-1',
-        orientation === 'vertical' && 'flex-col',
-        classes.items
-      )}
-    >
+    <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
       {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
         {@const color = scale?.(tick) ?? ''}
         {@const item = { value: tick, color }}
         <button
-          class={cls(
-            'lc-legend-swatch-button',
-            'flex items-center gap-1 truncate',
-            !onclick && 'cursor-auto',
-            typeof classes.item === 'function' ? classes.item(item) : classes.item
-          )}
+          class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
           onclick={(e) => onclick?.(e, item)}
           onpointerenter={(e) => onpointerenter?.(e, item)}
           onpointerleave={(e) => onpointerleave?.(e, item)}
         >
-          <div
-            class={cls('lc-legend-swatch', 'h-4 w-4 shrink-0 rounded-full', classes.swatch)}
-            style:background-color={color}
-          ></div>
-          <div
-            class={cls(
-              'lc-legend-swatch-label',
-              'text-xs text-surface-content truncate whitespace-nowrap',
-              classes.label
-            )}
-          >
+          <div class={cls('lc-legend-swatch', classes.swatch)} style:background-color={color}></div>
+          <div class={cls('lc-legend-swatch-label', classes.label)}>
             <!-- @ts-expect-error - improve types -->
             {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
           </div>
@@ -415,3 +375,109 @@
     </div>
   {/if}
 </div>
+
+<style>
+  @layer components {
+    :where(.lc-legend-container) {
+      display: inline-block;
+      z-index: 1; /*stack above tooltip context layers (band rects, voronoi, ...) */
+
+      &[data-placement] {
+        position: absolute;
+      }
+
+      &[data-placement='top-left'] {
+        top: 0;
+        left: 0;
+      }
+      &[data-placement='top'] {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='top-right'] {
+        top: 0;
+        right: 0;
+      }
+      &[data-placement='left'] {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='center'] {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &[data-placement='right'] {
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='bottom-left'] {
+        bottom: 0;
+        left: 0;
+      }
+      &[data-placement='bottom'] {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='bottom-right'] {
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+
+  :where(.lc-legend-title) {
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  :where(.lc-legend-ramp-svg) {
+    overflow: visible;
+  }
+
+  :where(.lc-legend-tick-text) {
+    font-size: 10px;
+    fill: var(--color-surface-content, currentColor);
+  }
+
+  :where(.lc-legend-tick-line) {
+    stroke: var(--color-surface-content, currentColor);
+  }
+
+  :where(.lc-legend-swatch-group) {
+    display: flex;
+    gap: 0.25rem 1rem;
+
+    &[data-orientation='vertical'] {
+      flex-direction: column;
+    }
+  }
+
+  :where(.lc-legend-swatch-button) {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :where(.lc-legend-swatch) {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border-radius: 9999px; /* full */
+  }
+
+  :where(.lc-legend-swatch-label) {
+    font-size: 0.75rem; /* text-xs */
+    color: var(--color-surface-content, currentColor);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
