@@ -271,19 +271,6 @@
         },
         ...props.legend,
         ...getObjectOrNull(legend),
-        classes: {
-          ...props.legend?.classes,
-          ...getObjectOrNull(legend)?.classes,
-          item: (item) => {
-            const isVisible =
-              visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value);
-            return cls(
-              resolveMaybeFn(props.legend?.classes?.item, item),
-              resolveMaybeFn(getObjectOrNull(legend)?.classes?.item, item),
-              isVisible && 'opacity-50'
-            );
-          },
-        },
       },
     });
   }

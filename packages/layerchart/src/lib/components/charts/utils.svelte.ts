@@ -28,16 +28,14 @@ export function createLegendProps<TData, TComponent extends Component>(
     tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
     placement: 'bottom',
     variant: 'swatches',
-    onclick: (_, item) => opts.seriesState.selectedSeries.toggle(item.value),
+    selected: opts.seriesState.selectedKeys.current,
+    onclick: (_, item) => opts.seriesState.selectedKeys.toggle(item.value),
     onpointerenter: (_, item) => (opts.seriesState.highlightKey.current = item.value),
     onpointerleave: () => (opts.seriesState.highlightKey.current = null),
     ...opts.props,
     classes: {
       item: (item) => {
-        return cls(
-          resolveMaybeFn(opts.props?.classes?.item, item),
-          !opts.seriesState.isVisible(item.value) && 'opacity-50'
-        );
+        return cls(resolveMaybeFn(opts.props?.classes?.item, item));
       },
       ...opts.props?.classes,
     },

@@ -14,7 +14,7 @@ class HighlightKey<TData, SeriesComponent extends Component> {
 export class SeriesState<TData, TComponent extends Component> {
   #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
   selectedSeries = new SelectionState();
-  selectedKeys = new SelectionState();
+  selectedKeys = new SelectionState<string>();
   highlightKey = new HighlightKey<TData, TComponent>();
 
   constructor(getSeries: () => SeriesData<TData, TComponent>[]) {
