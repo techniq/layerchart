@@ -152,7 +152,7 @@
     y={(y + ty) * scale}
     width={scale}
     height={scale}
-    class="stroke-danger/50 fill-none"
+    class="lc-tile-image-debug-rect"
   />
   <Text
     x={(x + tx) * scale}
@@ -161,6 +161,21 @@
     dx={2}
     dy={-2}
     value="{x}-{y}-{z}"
-    class="text-[8px] fill-black/50"
+    class="lc-tile-image-debug-text"
   />
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-tile-image-debug-rect)) {
+      fill: none;
+      stroke: var(--color-danger, red);
+    }
+
+    :global(:where(.lc-tile-image-debug-text)) {
+      --fill-color: var(--color-danger, red);
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+</style>
