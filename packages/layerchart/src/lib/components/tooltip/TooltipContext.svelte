@@ -658,7 +658,7 @@
           onclick={(e, { data }) => {
             onclick(e, { data });
           }}
-          classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
+          classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
         />
       </Svg>
     {:else if mode === 'bounds' || mode === 'band'}
@@ -733,7 +733,7 @@
 </div>
 
 <style>
-  @layer base {
+  @layer component {
     :where(.lc-tooltip-context-container) {
       position: absolute;
     }
@@ -745,6 +745,13 @@
       &.debug {
         outline: 1px solid var(--color-danger);
         background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :global(:where(.lc-tooltip-voronoi-path)) {
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
       }
     }
 
