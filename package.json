@@ -23,5 +23,10 @@
     "rimraf": "6.0.1",
     "wrangler": "^4.30.0"
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@9.1.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
