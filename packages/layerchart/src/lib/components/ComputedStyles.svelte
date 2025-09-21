@@ -20,8 +20,16 @@
 </script>
 
 <div
-  class={cls('lc-computed-styles', 'hidden', className)}
+  class={cls('lc-computed-styles', className)}
   use:computedStyles={(_styles) => (styles = _styles)}
 ></div>
 
 {@render children?.({ styles })}
+
+<style>
+  @layer base {
+    :global(:where(.lc-computed-styles)) {
+      display: none;
+    }
+  }
+</style>

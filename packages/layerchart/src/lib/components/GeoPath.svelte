@@ -66,7 +66,6 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
@@ -198,6 +197,23 @@
     onpointerenter={_onPointerEnter}
     onpointermove={_onPointerMove}
     onpointerleave={_onPointerLeave}
-    class={cls('lc-geo-path', fill == null && 'fill-transparent', className)}
+    class={['lc-geo-path', className]}
   />
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-geo-path)) {
+      --fill-color: transparent;
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-geo-path, svg.lc-geo-path):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-geo-path, svg.lc-geo-path):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+  }
+</style>

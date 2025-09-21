@@ -216,7 +216,6 @@
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { cls } from '@layerstack/tailwind';
   import {
     createControlledMotion,
     createMotionTracker,
@@ -518,9 +517,17 @@
   onpointerup={onPointerUp}
   ondblclick={onDoubleClick}
   onclickcapture={onClick}
-  class={cls('lc-transform-context', 'h-full', className)}
+  class={['lc-transform-context', className]}
   bind:this={ref}
   {...restProps}
 >
   {@render children?.({ transformContext: transformContext })}
 </div>
+
+<style>
+  @layer base {
+    :where(.lc-transform-context) {
+      height: 100%;
+    }
+  }
+</style>

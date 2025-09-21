@@ -614,7 +614,8 @@
   style:width="{ctx.width}px"
   style:height="{ctx.height}px"
   style:--touch-action={touchEvents}
-  class={cls('lc-tooltip-context', debug && triggerPointerEvents && 'debug')}
+  class="lc-tooltip-context"
+  class:debug={debug && triggerPointerEvents}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
