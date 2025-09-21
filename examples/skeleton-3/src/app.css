@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/optional/presets';
+@import '@skeletonlabs/skeleton/themes/cerberus';
+
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+/* @source '../node_modules/layerchart/dist'; */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.lc-root-container {
+	--color-primary: var(--color-primary-500);
+
+	--color-surface-100: var(--color-surface-50);
+	--color-surface-200: var(--color-surface-100);
+	--color-surface-300: var(--color-surface-200);
+	--color-surface-content: var(--base-font-color);
+
+	html.dark & {
+		--color-surface-100: var(--color-surface-700);
+		--color-surface-200: var(--color-surface-800);
+		--color-surface-300: var(--color-surface-900);
+		--color-surface-content: var(--base-font-color-dark);
+	}
+}
