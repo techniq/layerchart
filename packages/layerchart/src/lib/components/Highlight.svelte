@@ -544,7 +544,7 @@
 <style>
   @layer components {
     :global(:where(.lc-highlight-area)) {
-      --fill-color: color-mix(in oklch, var(--color-surface-content, currentColor) 5%, transparent);
+      --fill-color: color-mix(in oklab, var(--color-surface-content, currentColor) 5%, transparent);
     }
 
     :global(:where(.lc-highlight-bar)) {
@@ -553,7 +553,7 @@
 
     :global(:where(.lc-highlight-line)) {
       --stroke-color: color-mix(
-        in oklch,
+        in oklab,
         var(--color-surface-content, currentColor) 20%,
         transparent
       );

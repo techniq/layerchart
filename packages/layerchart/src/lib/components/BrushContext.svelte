@@ -590,7 +590,7 @@
       cursor: move;
       user-select: none;
       z-index: 10;
-      background: color-mix(in oklch, var(--color-surface-content, currentColor) 10%, transparent);
+      background: color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent);
     }
 
     :where(.lc-brush-handle) {

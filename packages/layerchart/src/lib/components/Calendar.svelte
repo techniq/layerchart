@@ -155,7 +155,7 @@
   @layer components {
     :global(:where(.lc-calendar-cell)) {
       --stroke-color: color-mix(
-        in oklch,
+        in oklab,
         var(--color-surface-content, currentColor) 5%,
         transparent
       );

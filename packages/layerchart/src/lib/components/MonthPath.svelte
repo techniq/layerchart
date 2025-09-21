@@ -82,7 +82,7 @@
   @layer components {
     :global(:where(.lc-month-path)) {
       --stroke-color: color-mix(
-        in oklch,
+        in oklab,
         var(--color-surface-content, currentColor) 20%,
         transparent
       );
