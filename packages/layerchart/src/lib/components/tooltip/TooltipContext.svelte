@@ -744,14 +744,14 @@
 
       &.debug {
         outline: 1px solid var(--color-danger);
-        background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+        background-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
       }
     }
 
     :global(:where(.lc-tooltip-voronoi-path)) {
       &.debug {
         stroke: var(--color-danger);
-        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
       }
     }
 
@@ -760,7 +760,7 @@
 
       &.debug {
         stroke: var(--color-danger);
-        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
       }
     }
 
@@ -769,7 +769,7 @@
 
       &.debug {
         stroke: var(--color-danger);
-        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
       }
     }
   }

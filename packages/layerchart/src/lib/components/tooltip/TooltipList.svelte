@@ -18,10 +18,17 @@
   });
 </script>
 
-<div
-  bind:this={ref}
-  class={cls('lc-tooltip-list', 'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-start', className)}
-  {...restProps}
->
+<div bind:this={ref} class={cls('lc-tooltip-list', className)} {...restProps}>
   {@render children?.()}
 </div>
+
+<style>
+  @layer component {
+    :where(.lc-tooltip-list) {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 8px;
+      align-items: start;
+    }
+  }
+</style>

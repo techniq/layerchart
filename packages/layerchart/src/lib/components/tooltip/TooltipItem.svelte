@@ -128,31 +128,19 @@
 
 <div
   {...props.root}
-  class={cls('lc-tooltip-item-root', 'contents', classes.root, className, props.root?.class)}
+  class={cls('lc-tooltip-item-root', classes.root, className, props.root?.class)}
   {...restProps}
   bind:this={ref}
 >
   <div
     {...props.label}
-    class={cls(
-      'lc-tooltip-item-label',
-      'label',
-      'flex items-center gap-2 whitespace-nowrap',
-      classes.label,
-      props.label?.class
-    )}
+    class={cls('lc-tooltip-item-label', 'label', classes.label, props.label?.class)}
     bind:this={labelRef}
   >
     {#if color}
       <div
         {...props.color}
-        class={cls(
-          'lc-tooltip-item-color',
-          'color',
-          'inline-block size-2 rounded-full bg-[var(--color)]',
-          classes.color,
-          props.color?.class
-        )}
+        class={cls('lc-tooltip-item-color', 'color', classes.color, props.color?.class)}
         style:--color={color}
         bind:this={colorRef}
       ></div>
@@ -167,17 +155,8 @@
   <div
     bind:this={valueRef}
     {...props.value}
-    class={cls(
-      'lc-tooltip-item-value',
-      'value',
-      'tabular-nums',
-      {
-        'text-right': valueAlign === 'right',
-        'text-center': valueAlign === 'center',
-      },
-      classes.value,
-      props.value?.class
-    )}
+    class={cls('lc-tooltip-item-value', 'value', classes.value, props.value?.class)}
+    data-align={valueAlign}
   >
     {#if children}
       {@render children()}
@@ -187,3 +166,39 @@
     {/if}
   </div>
 </div>
+
+<style>
+  @layer component {
+    :where(.lc-tooltip-item-root) {
+      display: contents;
+    }
+
+    :where(.lc-tooltip-item-color) {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px; /* full */
+      background-color: var(--color);
+    }
+
+    :where(.lc-tooltip-item-label) {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    :where(.lc-tooltip-item-value) {
+      /* tabular-nums */
+      font-variant-numeric: tabular-nums;
+
+      &[data-align='right'] {
+        text-align: right;
+      }
+
+      &[data-align='center'] {
+        text-align: center;
+      }
+    }
+  }
+</style>
