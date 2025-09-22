@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Switch } from '@skeletonlabs/skeleton-svelte';
-	import { ModeWatcher, mode, setMode } from 'mode-watcher';
+	import { settings, ThemeInit, ThemeSwitch } from 'svelte-ux';
 
 	import favicon from '$lib/assets/favicon.svg';
 	import '../app.css';
+
+	settings();
 
 	let { children } = $props();
 </script>
@@ -12,15 +13,11 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<ModeWatcher defaultTheme="cerberus" />
+<ThemeInit />
 
 <main class="p-4">
 	<div class="pb-4 text-right">
-		<Switch
-			name="mode"
-			checked={mode.current === 'dark'}
-			onCheckedChange={(e) => setMode(e.checked ? 'dark' : 'light')}
-		/>
+		<ThemeSwitch />
 	</div>
 
 	{@render children?.()}
