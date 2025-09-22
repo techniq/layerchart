@@ -39,7 +39,7 @@ importers:
         specifier: ^5.1.14
         version: 5.1.14
       layerchart:
-        specifier: workspace:2.0.0-next.38
+        specifier: workspace:*
         version: link:../../packages/layerchart
       mode-watcher:
         specifier: ^1.1.0
