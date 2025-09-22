@@ -129,10 +129,6 @@
 
 <style>
   @layer components {
-    :global(:where(.lc-annotation-point)) {
-      /* --stroke-color: var(--color-surface-content, currentColor); */
-    }
-
     :global(:where(.lc-annotation-point-label)) {
       font-size: 12px;
       pointer-events: none;
