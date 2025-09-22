@@ -1,0 +1,40 @@
+{
+	"name": "shadcn-svelte-1",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check ."
+	},
+	"devDependencies": {
+		"@internationalized/date": "^3.8.1",
+		"@lucide/svelte": "^0.544.0",
+		"@sveltejs/adapter-cloudflare": "^7.0.0",
+		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/vite-plugin-svelte": "^6.0.0",
+		"@tailwindcss/vite": "^4.0.0",
+		"bits-ui": "^2.11.0",
+		"clsx": "^2.1.1",
+		"layerchart": "workspace:*",
+		"mode-watcher": "^1.1.0",
+		"prettier": "^3.4.2",
+		"prettier-plugin-svelte": "^3.3.3",
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.0.0",
+		"tailwind-merge": "^3.3.1",
+		"tailwind-variants": "^3.1.1",
+		"tailwindcss": "^4.0.0",
+		"tw-animate-css": "^1.3.8",
+		"typescript": "^5.0.0",
+		"vite": "^7.0.4",
+		"vite-plugin-devtools-json": "^1.0.0"
+	}
+}
