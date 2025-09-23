@@ -170,9 +170,11 @@
             class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
           />
         {:else}
-          <Rule
-            {x}
-            xOffset={xBandOffset}
+          <Line
+            x1={ctx.xScale(x) + xBandOffset}
+            y1={ctx.yRange[0]}
+            x2={ctx.xScale(x) + xBandOffset}
+            y2={ctx.yRange[1]}
             {motion}
             {...splineProps}
             class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
@@ -182,9 +184,12 @@
 
       <!-- Add extra rule after last band -->
       {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
-        <Rule
-          x={xTickVals[xTickVals.length - 1]}
-          xOffset={ctx.xScale.step() + xBandOffset}
+        {@const x = ctx.xScale(xTickVals[xTickVals.length - 1])! + ctx.xScale.step() + xBandOffset}
+        <Line
+          x1={x}
+          y1={ctx.yRange[0]}
+          x2={x}
+          y2={ctx.yRange[1]}
           {motion}
           {...splineProps}
           class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}
@@ -217,9 +222,11 @@
             />
           {/if}
         {:else}
-          <Rule
-            {y}
-            yOffset={yBandOffset}
+          <Line
+            x1={ctx.xRange[0]}
+            y1={ctx.yScale(y) + yBandOffset}
+            x2={ctx.xRange[1]}
+            y2={ctx.yScale(y) + yBandOffset}
             {motion}
             {...splineProps}
             class={cls('lc-grid-y-rule', classes.line, splineProps?.class)}
@@ -237,9 +244,13 @@
             class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
           />
         {:else}
-          <Rule
-            y={yTickVals[yTickVals.length - 1]}
-            yOffset={ctx.yScale.step() + yBandOffset}
+          {@const y =
+            ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
+          <Line
+            x1={ctx.xRange[0]}
+            y1={y}
+            x2={ctx.xRange[1]}
+            y2={y}
             {motion}
             {...splineProps}
             class={cls('lc-grid-y-end-rule', classes.line, splineProps?.class)}
