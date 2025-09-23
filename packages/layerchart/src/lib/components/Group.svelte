@@ -197,3 +197,11 @@
     {@render children?.()}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :where(.lc-group-div) {
+      position: absolute;
+    }
+  }
+</style>
