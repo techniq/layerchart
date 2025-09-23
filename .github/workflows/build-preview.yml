@@ -24,7 +24,7 @@ jobs:
         run: pnpm install
 
       - name: Build site
-        run: pnpm build --filter layerchart
+        run: pnpm build:package
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
