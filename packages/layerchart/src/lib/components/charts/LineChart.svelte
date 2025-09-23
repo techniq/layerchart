@@ -178,11 +178,11 @@
       x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       stroke: s.color,
-      ...props.spline,
-      ...s.props,
       opacity:
         // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
         seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
+      ...props.spline,
+      ...s.props,
       class: cls(props.spline?.class, s.props?.class),
     };
 
