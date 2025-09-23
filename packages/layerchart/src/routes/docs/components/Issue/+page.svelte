@@ -119,7 +119,8 @@
       x="date"
       series={series.map((s) => {
         if (s.key === 'apples') {
-          return { ...s, value: (d: any) => -d.apples };
+          // @ts-expect-error
+          return { ...s, value: (d) => -d.apples };
         }
         return s;
       })}
