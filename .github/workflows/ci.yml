@@ -35,4 +35,8 @@ jobs:
         env:
           CI: true
 
-      - run: pnpm build
+      - run: pnpm build --filter layerchart
+
+      - run: pnpm package --filter layerchart
+
+      - run: pnpm build --filter examples
