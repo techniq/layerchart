@@ -481,6 +481,7 @@
 
     :where(.lc-legend-swatch-label) {
       font-size: 0.75rem; /* text-xs */
+      line-height: calc(1 / 0.75);
       color: var(--color-surface-content, currentColor);
       overflow: hidden;
       text-overflow: ellipsis;
