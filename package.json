@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "test:unit": "pnpm -r test:unit",
-    "build": "rimraf packages/*/dist && pnpm -r build",
+    "build": "rimraf packages/*/dist && pnpm --filter layerchart package && pnpm -r build",
     "package": "pnpm -r package",
     "check": "pnpm -r check",
     "lint": "pnpm -r lint",
