@@ -119,7 +119,7 @@
       x="date"
       series={series.map((s) => {
         if (s.key === 'apples') {
-          return { ...s, value: (d) => -d.apples };
+          return { ...s, value: (d: any) => -d.apples };
         }
         return s;
       })}
