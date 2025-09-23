@@ -435,56 +435,56 @@
         right: 0;
       }
     }
-  }
 
-  :where(.lc-legend-title) {
-    font-size: 10px;
-    font-weight: 600;
-  }
-
-  :where(.lc-legend-ramp-svg) {
-    overflow: visible;
-  }
-
-  :where(.lc-legend-tick-text) {
-    font-size: 10px;
-    fill: var(--color-surface-content, currentColor);
-  }
-
-  :where(.lc-legend-tick-line) {
-    stroke: var(--color-surface-content, currentColor);
-  }
-
-  :where(.lc-legend-swatch-group) {
-    display: flex;
-    gap: 0.25rem 1rem;
-
-    &[data-orientation='vertical'] {
-      flex-direction: column;
+    :where(.lc-legend-title) {
+      font-size: 10px;
+      font-weight: 600;
     }
-  }
 
-  :where(.lc-legend-swatch-button) {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    :where(.lc-legend-ramp-svg) {
+      overflow: visible;
+    }
 
-  :where(.lc-legend-swatch) {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-    border-radius: 9999px; /* full */
-  }
+    :where(.lc-legend-tick-text) {
+      font-size: 10px;
+      fill: var(--color-surface-content, currentColor);
+    }
 
-  :where(.lc-legend-swatch-label) {
-    font-size: 0.75rem; /* text-xs */
-    color: var(--color-surface-content, currentColor);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    :where(.lc-legend-tick-line) {
+      stroke: var(--color-surface-content, currentColor);
+    }
+
+    :where(.lc-legend-swatch-group) {
+      display: flex;
+      gap: 0.25rem 1rem;
+
+      &[data-orientation='vertical'] {
+        flex-direction: column;
+      }
+    }
+
+    :where(.lc-legend-swatch-button) {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    :where(.lc-legend-swatch) {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      border-radius: 9999px; /* full */
+    }
+
+    :where(.lc-legend-swatch-label) {
+      font-size: 0.75rem; /* text-xs */
+      color: var(--color-surface-content, currentColor);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 </style>
