@@ -4,6 +4,7 @@
   "author": "Sean Lynch <techniq35@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://layerchart.com",
   "scripts": {
     "dev": "pnpm -r dev",
     "test:unit": "pnpm -r test:unit",
