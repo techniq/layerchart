@@ -95,6 +95,7 @@
   import Circle from './Circle.svelte';
   import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
+  import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -169,11 +170,9 @@
             class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
           />
         {:else}
-          <Line
-            x1={ctx.xScale(x) + xBandOffset}
-            y1={ctx.yRange[0]}
-            x2={ctx.xScale(x) + xBandOffset}
-            y2={ctx.yRange[1]}
+          <Rule
+            {x}
+            xOffset={xBandOffset}
             {motion}
             {...splineProps}
             class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
@@ -184,11 +183,9 @@
       <!-- Add extra rule after last band -->
       {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
         {@const x = ctx.xScale(xTickVals[xTickVals.length - 1])! + ctx.xScale.step() + xBandOffset}
-        <Line
-          x1={x}
-          y1={ctx.yRange[0]}
-          x2={x}
-          y2={ctx.yRange[1]}
+        <Rule
+          x={xTickVals[xTickVals.length - 1]}
+          xOffset={ctx.xScale.step() + xBandOffset}
           {motion}
           {...splineProps}
           class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}

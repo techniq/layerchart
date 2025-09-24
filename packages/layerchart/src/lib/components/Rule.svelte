@@ -223,30 +223,25 @@
 
 <style>
   @layer components {
-    :global(:where(.lc-rule-x-line, .lc-rule-y-line)) {
+    /* TODO: better way to handle this without affecting other components? */
+    /* Could add a layer between "components" and "base" but would require more setup (and not alignw with TW layers) */
+    :global(
+      :where(
+        .lc-rule-x-line,
+        .lc-rule-y-line,
+        .lc-rule-x-radial-line,
+        .lc-rule-y-radial-circle
+      ):not([class*='lc-axis'], [class*='lc-grid'])
+    ) {
       --stroke-color: color-mix(
         in oklab,
         var(--color-surface-content, currentColor) 50%,
-        transparent
-      );
-    }
-
-    :global(:where(.lc-rule-x-radial-line)) {
-      /* STYLE-TODO: should this be 10% or 50% like .lc-rule-x-line? */
-      --stroke-color: color-mix(
-        in oklab,
-        var(--color-surface-content, currentColor) 10%,
         transparent
       );
     }
 
     :global(:where(.lc-rule-y-radial-circle)) {
       --fill-color: none;
-      --stroke-color: color-mix(
-        in oklab,
-        var(--color-surface-content, currentColor) 50%,
-        transparent
-      );
     }
   }
 </style>
