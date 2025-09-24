@@ -14,7 +14,7 @@
 
 - feat(LineChart): Support `orientation="vertical"`. Resolves #640 ([#557](https://github.com/techniq/layerchart/pull/557))
 
-- feat: Add Html context support for applicable primitives such as Circle, Line, Rect, Text (and more) as well as transitively such as Axis, Grid, Labels (and more)  ([#557](https://github.com/techniq/layerchart/pull/557))
+- feat: Add Html context support for applicable primitives such as Circle, Line, Rect, Text (and more) as well as transitively such as Axis, Grid, Labels (and more) ([#557](https://github.com/techniq/layerchart/pull/557))
 
 - feat(LinearGradient): Support Html context ([#557](https://github.com/techniq/layerchart/pull/557))
 
