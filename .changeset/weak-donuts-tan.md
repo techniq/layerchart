@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-feat: Simplify Skeleton integration with `@import 'layerchart/skeleton.css'`
+feat: Simplify daisyUI, shadcn-svelte, and Skeleton integrations with single line `@import 'layerchart/{library}.css'` added to `app.css`
