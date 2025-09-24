@@ -112,7 +112,8 @@
     :where(.lc-tooltip-header) {
       font-weight: 600;
       white-space: nowrap;
-      border-bottom-width: 1px;
+      border-bottom: 1px solid
+        color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent);
       margin-bottom: 4px;
       padding-bottom: 4px;
       display: flex;
