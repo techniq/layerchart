@@ -505,16 +505,16 @@
                 // full band width/height regardless of value
                 return {
                   x: x - xOffset,
-                  y: min(ctx.yRange),
+                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
                   width: ctx.xScale.step(),
-                  height: fullHeight,
+                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
               } else if (isScaleBand(ctx.yScale)) {
                 return {
-                  x: min(ctx.xRange),
+                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
                   y: y - yOffset,
-                  width: fullWidth,
+                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
                   height: ctx.yScale.step(),
                   data: d,
                 };
@@ -530,9 +530,9 @@
 
                 return {
                   x: x - xOffset,
-                  y: min(ctx.yRange),
+                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
                   width: (ctx.xScale(nextDataPoint) ?? 0) - (xValue ?? 0),
-                  height: fullHeight,
+                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
               } else if (isScaleTime(ctx.yScale)) {
@@ -546,9 +546,9 @@
                   : ctx.y(ctx.flatData[index + 1]);
 
                 return {
-                  x: min(ctx.xRange),
+                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
                   y: y - yOffset,
-                  width: fullWidth,
+                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
                   height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
                   data: d,
                 };
