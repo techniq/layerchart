@@ -149,7 +149,6 @@
 
 <script lang="ts">
   import { onMount, untrack, type Snippet } from 'svelte';
-  import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
@@ -166,7 +165,6 @@
   } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from '../Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -453,12 +451,8 @@
 <canvas
   bind:this={ref}
   style:z-index={zIndex}
-  class={cls(
-    layerClass('layout-canvas'),
-    'absolute top-0 left-0 w-full h-full',
-    pointerEvents === false && 'pointer-events-none',
-    className
-  )}
+  class={['lc-layout-canvas', className]}
+  class:disablePointerEvents={pointerEvents === false}
   onclick={(e) => {
     const component = getPointerComponent(e);
     component?.events?.click?.(e);
@@ -507,17 +501,32 @@
 </canvas>
 
 <!-- Hit canvas used for hidden context -->
-<canvas
-  bind:this={hitCanvasElement}
-  class={cls(
-    layerClass('hit-canvas'),
-    'layerchart-hitcanvas',
-    'absolute top-0 left-0 w-full h-full',
-    'pointer-events-none', // events all handled by main canvas
-    // '[image-rendering:pixelated]', // https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering
-    'border border-danger',
-    !debug && 'opacity-0'
-  )}
-></canvas>
+<canvas bind:this={hitCanvasElement} class="lc-hit-canvas" class:debug></canvas>
 
 {@render children?.({ ref, canvasContext: context })}
+
+<style>
+  @layer base {
+    :where(.lc-layout-canvas) {
+      position: absolute;
+      inset: 0;
+
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+
+    :where(.lc-hit-canvas) {
+      position: absolute;
+      inset: 0;
+      pointer-events: none; /* events handled by main canvas */
+      image-rendering: pixelated; /* https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering */
+
+      opacity: 0;
+      &.debug {
+        border: 1px solid var(--color-danger, red);
+        opacity: 1;
+      }
+    }
+  }
+</style>

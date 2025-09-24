@@ -128,14 +128,15 @@
       fill={cell.color}
       onpointermove={(e) => tooltip?.show(e, cell.data)}
       onpointerleave={(e) => tooltip?.hide()}
-      {...extractLayerProps(restProps, 'calendar-cell', 'stroke-surface-content/5')}
+      strokeWidth={1}
+      {...extractLayerProps(restProps, 'lc-calendar-cell')}
     />
   {/each}
 {/if}
 
 {#if monthPath}
   {#each yearMonths as date}
-    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'calendar-month-path')} />
+    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'lc-calendar-month-path')} />
   {/each}
 {/if}
 
@@ -143,9 +144,25 @@
   {#each yearMonths as date}
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
-      y={-4}
       value={format(date, 'month', { variant: 'short' })}
-      {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
+      capHeight="7px"
+      {...extractLayerProps(monthLabel, 'lc-calendar-month-label')}
     />
   {/each}
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-calendar-cell)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 5%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-calendar-month-label)) {
+      font-size: 12px;
+    }
+  }
+</style>

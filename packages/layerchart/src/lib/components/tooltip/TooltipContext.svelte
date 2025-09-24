@@ -78,6 +78,14 @@
     locked?: boolean;
 
     /**
+     * Controls the touch event behavior on the tooltip container.
+     * By default uses `pan-y` to allow verticle scrolling but horizontal scrubbing.
+     * Use `none` to disable all touch events (useful for improved transform/geo charts interactions)
+     * @default 'pan-y'
+     */
+    touchEvents?: 'none' | 'pan-x' | 'pan-y' | 'auto';
+
+    /**
      * quadtree search or voronoi clip radius
      * @default Infinity
      */
@@ -144,7 +152,6 @@
     getTooltipPayload,
     type TooltipPayload,
   } from './tooltipMetaContext.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext<any>();
   const geoCtx = getGeoContext();
@@ -155,6 +162,7 @@
     findTooltipData = 'closest',
     hideDelay = 0,
     locked = false,
+    touchEvents = 'pan-y',
     mode = 'manual',
     onclick = () => {},
     radius = Infinity,
@@ -497,16 +505,16 @@
                 // full band width/height regardless of value
                 return {
                   x: x - xOffset,
-                  y: min(ctx.yRange),
+                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
                   width: ctx.xScale.step(),
-                  height: fullHeight,
+                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
               } else if (isScaleBand(ctx.yScale)) {
                 return {
-                  x: min(ctx.xRange),
+                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
                   y: y - yOffset,
-                  width: fullWidth,
+                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
                   height: ctx.yScale.step(),
                   data: d,
                 };
@@ -522,9 +530,9 @@
 
                 return {
                   x: x - xOffset,
-                  y: min(ctx.yRange),
+                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
                   width: (ctx.xScale(nextDataPoint) ?? 0) - (xValue ?? 0),
-                  height: fullHeight,
+                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
               } else if (isScaleTime(ctx.yScale)) {
@@ -538,9 +546,9 @@
                   : ctx.y(ctx.flatData[index + 1]);
 
                 return {
-                  x: min(ctx.xRange),
+                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
                   y: y - yOffset,
-                  width: fullWidth,
+                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
                   height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
                   data: d,
                 };
@@ -605,17 +613,12 @@
   style:left="{ctx.padding.left}px"
   style:width="{ctx.width}px"
   style:height="{ctx.height}px"
-  class={cls(
-    layerClass('tooltip-context'),
-    'absolute',
-    debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
-  )}
-  onmouseenter={onPointerEnter}
-  ontouchstart={onPointerEnter}
-  onmousemove={onPointerMove}
-  ontouchmove={onPointerMove}
-  onmouseleave={onPointerLeave}
-  ontouchend={onPointerLeave}
+  style:--touch-action={touchEvents}
+  class="lc-tooltip-context"
+  class:debug={debug && triggerPointerEvents}
+  onpointerenter={onPointerEnter}
+  onpointermove={onPointerMove}
+  onpointerleave={onPointerLeave}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
     if (triggerPointerEvents && tooltipContext.data != null) {
@@ -627,7 +630,7 @@
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
-    class={cls(layerClass('tooltip-context-container'), 'absolute')}
+    class="lc-tooltip-context-container"
     style:top="-{ctx.padding.top ?? 0}px"
     style:left="-{ctx.padding.left ?? 0}px"
     style:width="{ctx.containerWidth}px"
@@ -656,12 +659,12 @@
           onclick={(e, { data }) => {
             onclick(e, { data });
           }}
-          classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
+          classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
         />
       </Svg>
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg center={ctx.radial}>
-        <g class={layerClass('tooltip-rects-g')}>
+        <g class="lc-tooltip-rects-g">
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             {#if ctx.radial}
@@ -670,10 +673,7 @@
                 outerRadius={rect.y + rect.height}
                 startAngle={rect.x}
                 endAngle={rect.x + rect.width}
-                class={cls(
-                  layerClass('tooltip-rect'),
-                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                )}
+                class={cls('lc-tooltip-rect', debug && 'debug')}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
                 onpointermove={(e) => showTooltip(e, rect?.data)}
                 onpointerleave={() => hideTooltip()}
@@ -693,10 +693,7 @@
                 y={rect?.y}
                 width={rect?.width}
                 height={rect?.height}
-                class={cls(
-                  layerClass('tooltip-rect'),
-                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                )}
+                class={cls('lc-tooltip-rect', debug && 'debug')}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
                 onpointermove={(e) => showTooltip(e, rect?.data)}
                 onpointerleave={() => hideTooltip()}
@@ -717,7 +714,7 @@
     {:else if ['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode) && debug}
       <Svg pointerEvents={false}>
         <ChartClipPath>
-          <g class={layerClass('tooltip-quadtree-g')}>
+          <g class="lc-tooltip-quadtree-g">
             {#if quadtree}
               {#each quadtreeRects(quadtree, false) as rect}
                 <rect
@@ -725,10 +722,7 @@
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
-                  class={cls(
-                    layerClass('tooltip-quadtree-rect'),
-                    debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                  )}
+                  class={cls('lc-tooltip-quadtree-rect', debug && 'debug')}
                 />
               {/each}
             {/if}
@@ -738,3 +732,46 @@
     {/if}
   </div>
 </div>
+
+<style>
+  @layer component {
+    :where(.lc-tooltip-context-container) {
+      position: absolute;
+    }
+
+    :where(.lc-tooltip-context) {
+      position: absolute;
+      touch-action: var(--touch-action);
+
+      &.debug {
+        outline: 1px solid var(--color-danger);
+        background-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :global(:where(.lc-tooltip-voronoi-path)) {
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :where(.lc-tooltip-rect) {
+      fill: transparent;
+
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :where(.lc-tooltip-quadtree-rect) {
+      fill: transparent;
+
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklab, var(--color-danger) 10%, transparent);
+      }
+    }
+  }
+</style>

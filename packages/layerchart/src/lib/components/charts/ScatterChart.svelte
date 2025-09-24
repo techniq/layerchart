@@ -61,9 +61,10 @@
   import Rule from '../Rule.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
+  import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
 
   let {
     data = [],
@@ -117,16 +118,10 @@
     return {
       data: s.data,
       fill: s.color,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.points?.class,
-        s.props?.class
-      ),
+      class: cls(props.points?.class, s.props?.class),
     };
   }
 
@@ -136,16 +131,10 @@
   ): ComponentProps<typeof Labels<TData>> {
     return {
       data: s.data,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
   }
 
@@ -230,7 +219,7 @@
   {yDomain}
   yNice
   c={yProp}
-  cRange={['var(--color-primary)']}
+  cRange={['var(--color-primary, currentColor)']}
   padding={defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false

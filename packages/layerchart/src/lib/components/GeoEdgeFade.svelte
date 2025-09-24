@@ -56,6 +56,6 @@
   const opacity = $derived(opacityProp ?? clamper(fade(distance)));
 </script>
 
-<Group {opacity} bind:ref {...extractLayerProps(restProps, 'geo-edge-fade')}>
+<Group {opacity} bind:ref {...extractLayerProps(restProps, 'lc-geo-edge-fade')}>
   {@render children?.()}
 </Group>

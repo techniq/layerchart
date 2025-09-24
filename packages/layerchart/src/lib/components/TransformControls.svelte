@@ -32,7 +32,6 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
-  import { cls } from '@layerstack/tailwind';
 
   import LucideFocus from '~icons/lucide/focus';
   import LucideChevronDown from '~icons/lucide/chevron-down';
@@ -85,22 +84,9 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-  class={cls(
-    'bg-surface-300/50 border rounded-full m-1 backdrop-blur-sm z-10 flex',
-    orientation === 'vertical' && 'flex-col',
-    {
-      'top-left': 'absolute top-0 left-0',
-      top: 'absolute top-0 left-1/2 -translate-x-1/2',
-      'top-right': 'absolute top-0 right-0',
-      left: 'absolute top-1/2 left-0 -translate-y-1/2',
-      center: 'absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2',
-      right: 'absolute top-1/2 right-0 -translate-y-1/2',
-      'bottom-left': 'absolute bottom-0 left-0',
-      bottom: 'absolute bottom-0 left-1/2 -translate-x-1/2',
-      'bottom-right': 'absolute bottom-0 right-0',
-    }[placement],
-    className
-  )}
+  class={['lc-transform-controls', className]}
+  data-orientation={orientation}
+  data-placement={placement}
   ondblclick={(e) => {
     // Stop from propagating to TransformContext
     e.stopPropagation();
@@ -173,3 +159,72 @@
     </Tooltip>
   {/if}
 </div>
+
+<style>
+  @layer components {
+    :where(.lc-transform-controls) {
+      display: flex;
+      background: color-mix(
+        in oklab,
+        var(--color-surface-300, light-dark(white, black)) 50%,
+        transparent
+      );
+      border: 1px solid
+        color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent);
+      border-radius: 9999px;
+      margin: 4px;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+
+      &[data-orientation='vertical'] {
+        flex-direction: column;
+      }
+
+      &[data-placement] {
+        position: absolute;
+      }
+
+      &[data-placement='top-left'] {
+        top: 0;
+        left: 0;
+      }
+      &[data-placement='top'] {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='top-right'] {
+        top: 0;
+        right: 0;
+      }
+      &[data-placement='left'] {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='center'] {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &[data-placement='right'] {
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='bottom-left'] {
+        bottom: 0;
+        left: 0;
+      }
+      &[data-placement='bottom'] {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='bottom-right'] {
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+</style>

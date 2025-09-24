@@ -56,7 +56,6 @@
 <script lang="ts">
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -89,25 +88,14 @@
 </script>
 
 <div
-  class={cls(
-    layerClass('tooltip-header'),
-    'font-semibold whitespace-nowrap border-b mb-1 pb-1 flex items-center gap-2',
-    classes.root,
-    props.root?.class,
-    className
-  )}
+  class={cls('lc-tooltip-header', classes.root, props.root?.class, className)}
   {...restProps}
   bind:this={ref}
 >
   {#if color}
     <div
       bind:this={colorRef}
-      class={cls(
-        layerClass('tooltip-header-color'),
-        'color',
-        'inline-block size-2 rounded-full bg-[var(--color)]',
-        classes.color
-      )}
+      class={cls('lc-tooltip-header-color', classes.color)}
       style:--color={color}
     ></div>
   {/if}
@@ -118,3 +106,28 @@
     {format ? formatUtil(value, asAny(format)) : value}
   {/if}
 </div>
+
+<style>
+  @layer component {
+    :where(.lc-tooltip-header) {
+      font-weight: 600;
+      white-space: nowrap;
+      border-bottom: 1px solid
+        color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent);
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    :where(.lc-tooltip-header-color) {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px; /* rounded-full */
+      background-color: var(--color);
+      flex-shrink: 0;
+    }
+  }
+</style>

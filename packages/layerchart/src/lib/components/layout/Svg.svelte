@@ -63,11 +63,9 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -114,19 +112,15 @@
   width={ctx.containerWidth}
   height={ctx.containerHeight}
   style:z-index={zIndex}
-  class={cls(
-    layerClass('layout-svg'),
-    'absolute top-0 left-0 overflow-visible',
-    pointerEvents === false && 'pointer-events-none',
-    className
-  )}
+  class={['lc-layout-svg', className]}
+  class:disablePointerEvents={pointerEvents === false}
   role="figure"
   {...restProps}
 >
   {#if typeof title === 'function'}
     {@render title()}
   {:else if title}
-    <title class={layerClass('layout-svg-title')}>{title}</title>
+    <title class="lc-layout-svg-title">{title}</title>
   {/if}
 
   <defs>
@@ -135,11 +129,11 @@
 
   <g
     bind:this={innerRef}
-    class={layerClass('layout-svg-g')}
+    class="lc-layout-svg-g"
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
     {#if transform}
-      <g {transform} class={layerClass('layout-svg-g-transform')}>
+      <g {transform} class="lc-layout-svg-g-transform">
         {@render children?.({ ref })}
       </g>
     {:else}
@@ -147,3 +141,17 @@
     {/if}
   </g>
 </svg>
+
+<style>
+  @layer base {
+    :where(.lc-layout-svg) {
+      position: absolute;
+      inset: 0;
+      overflow: visible; /* match html and allow viewing outside of bounds (useful for axis that leak and general debugging)*/
+
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+  }
+</style>

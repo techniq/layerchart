@@ -132,7 +132,6 @@
   import { getChartContext } from './Chart.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -274,7 +273,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls('lc-spline-path', className),
           }
     );
   }
@@ -362,12 +361,7 @@
     <path
       d={tweenedState.current}
       {...restProps}
-      class={cls(
-        layerClass('spline-path'),
-        !fill && 'fill-none',
-        !stroke && 'stroke-surface-content',
-        className
-      )}
+      class={cls('lc-spline-path', className)}
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
@@ -384,7 +378,7 @@
     <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
     {#if startContent && startPoint}
-      <Group x={startPoint.x} y={startPoint.y} class={layerClass('spline-g-start')}>
+      <Group x={startPoint.x} y={startPoint.y} class="lc-spline-g-start">
         {@render startContent({
           point: startPoint,
           value: {
@@ -396,7 +390,7 @@
     {/if}
 
     {#if endContent && endPoint.current}
-      <Group x={endPoint.current.x} y={endPoint.current.y} class={layerClass('spline-g-end')}>
+      <Group x={endPoint.current.x} y={endPoint.current.y} class="lc-spline-g-end">
         {@render endContent({
           point: endPoint.current,
           value: {
@@ -408,3 +402,28 @@
     {/if}
   {/key}
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-spline-path)) {
+      --fill-color: none;
+      --stroke-color: var(--color-surface-content, currentColor);
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-spline-path, svg.lc-spline-path):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-spline-path, svg.lc-spline-path):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-spline-path):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-spline-path):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

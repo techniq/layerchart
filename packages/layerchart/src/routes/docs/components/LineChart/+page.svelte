@@ -45,6 +45,16 @@
     value: 'integer',
     keys,
   });
+  const multiSeriesDataWithNulls = $derived(
+    multiSeriesData.map((d) => {
+      const newItem = { ...d };
+      keys.forEach((key) => {
+        // @ts-expect-error shh
+        newItem[key] = Math.random() < 0.2 ? null : newItem[key];
+      });
+      return newItem;
+    })
+  );
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
 
@@ -89,6 +99,79 @@
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $derived(shared.debug);
+
+  const monitorSeries = [
+    {
+      key: 'RespondActivityTaskCompleted',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.05875000000000004,
+        },
+        {
+          date: new Date('2025-09-14T00:05:00.000Z'),
+          value: 0.0195,
+        },
+        {
+          date: new Date('2025-09-14T12:00:00.000Z'),
+          value: 0.0195,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.08083333333333337,
+        },
+        {
+          date: new Date('2025-09-15T00:05:00.000Z'),
+          value: 0.04592857142857144,
+        },
+      ],
+      color: 'var(--color-blue-500)',
+    },
+    {
+      key: 'RespondWorkflowTaskCompleted',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.08999999999999998,
+        },
+        {
+          date: new Date('2025-09-14T00:05:00.000Z'),
+          value: 0.03275000000000002,
+        },
+        {
+          date: new Date('2025-09-14T12:00:00.000Z'),
+          value: 0.047,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.08666666666666673,
+        },
+        {
+          date: new Date('2025-09-15T00:05:00.000Z'),
+          value: 0.04625,
+        },
+        {
+          date: new Date('2025-09-15T12:00:00.000Z'),
+          value: 0.0485,
+        },
+      ],
+      color: 'var(--color-purple-500)',
+    },
+    {
+      key: 'StartWorkflowExecution',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.16666666666666669,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.1300000000000001,
+        },
+      ],
+      color: 'var(--color-green-500)',
+    },
+  ];
 </script>
 
 <h1>Examples</h1>
@@ -130,6 +213,21 @@
   </div>
 </Preview>
 
+<h2>Vertical</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      orientation="vertical"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
@@ -145,6 +243,38 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Series (with nulls)</h2>
+
+<Preview data={multiSeriesDataWithNulls}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesDataWithNulls}
+      x="date"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
+      ]}
+      {renderContext}
+      {debug}
+    >
+      {#snippet belowMarks({ visibleSeries, highlightKey })}
+        {#each visibleSeries as s}
+          <Spline
+            data={multiSeriesDataWithNulls.filter((d) => d[s.key] !== null)}
+            y={s.key}
+            stroke={s.color}
+            class={cls(
+              '[stroke-dasharray:3,3] transition-opacity',
+              highlightKey && highlightKey !== s.key && 'opacity-10'
+            )}
+          />
+        {/each}
+      {/snippet}
+    </LineChart>
   </div>
 </Preview>
 
@@ -171,6 +301,68 @@
           data: multiSeriesDataByFruit.get('oranges'),
           color: 'var(--color-warning)',
         },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Series (separate data with different length)</h2>
+
+<Preview data={multiSeriesDataByFruit}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-danger)',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-success)',
+        },
+        {
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-warning)',
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<!-- <h2>Series (separate data (different lengths))</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart x="date" y="value" series={monitorSeries} {renderContext} {debug}>
+      {#snippet tooltip({ context, visibleSeries, highlightKey, setHighlightKey })}
+        {@const data = context.tooltip.data}
+        <Tooltip.Root>TODO</Tooltip.Root>
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview> -->
+
+<h2>Series (vertical)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesData}
+      y="date"
+      orientation="vertical"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}

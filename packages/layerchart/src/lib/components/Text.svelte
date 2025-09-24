@@ -188,7 +188,6 @@
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
 
@@ -411,7 +410,7 @@
             paintOrder: 'stroke',
             textAnchor,
           },
-          classes: cls(fill === undefined && 'fill-surface-content', className),
+          classes: cls('lc-text', className),
         };
 
     const computedStyles = getComputedStyles(ctx.canvas, styles);
@@ -473,13 +472,7 @@
 {#if renderCtx === 'svg'}
   <!-- `overflow: visible` allow contents to be shown outside element -->
   <!-- `paint-order: stroke` supports stroke outlining text  -->
-  <svg
-    x={dx}
-    y={dy}
-    {...svgProps}
-    class={cls(layerClass('text-svg'), 'overflow-visible [paint-order:stroke]', svgProps?.class)}
-    bind:this={svgRef}
-  >
+  <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]} bind:this={svgRef}>
     {#if path}
       <defs>
         {#key path}
@@ -496,14 +489,14 @@
         stroke-width={strokeWidth}
         {opacity}
         transform={transformProp}
-        class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
+        class={['lc-text', className]}
       >
         <textPath
           style="text-anchor: {textAnchor};"
           dominant-baseline={dominantBaseline}
           href="#{pathId}"
           {startOffset}
-          class={cls(layerClass('text-path'))}
+          class="lc-text-path"
         >
           {wordsByLines.map((line) => line.words.join(' ')).join()}
         </textPath>
@@ -522,13 +515,13 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
+        class={['lc-text', className]}
       >
         {#each wordsByLines as line, index}
           <tspan
             x={motionX.current}
             dy={index === 0 ? startDy : getPixelValue(lineHeight)}
-            class={layerClass('text-tspan')}
+            class="lc-text-tspan"
           >
             {line.words.join(' ')}
           </tspan>
@@ -536,4 +529,57 @@
       </text>
     {/if}
   </svg>
+{:else if renderCtx === 'html'}
+  {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
+  {@const translateY =
+    verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
+  <!-- TODO: How best to handle dx/dy when adjusted for svg style issues? -->
+  <!-- style:line-height={lineHeight} -->
+  <!-- TODO: How to handle fill-/stroke- vs bg-/text-/border- colors? -->
+  <div
+    style:position="absolute"
+    style:left="{dx + motionX.current}px"
+    style:top="{dy + motionY.current}px"
+    style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
+    style:transform-origin="{verticalAnchor === 'middle'
+      ? 'center'
+      : verticalAnchor === 'end'
+        ? 'bottom'
+        : 'top'}
+    {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
+    class={['lc-text', className]}
+  >
+    {textValue}
+  </div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-text)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    :global(:where(.lc-text-svg)) {
+      overflow: visible;
+      paint-order: stroke;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-text, svg.lc-text):not([fill])) {
+      color: var(--fill-color);
+      fill: currentColor;
+    }
+    :global(:where(.lc-layout-svg .lc-text, svg.lc-text):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-text):not([background-color])) {
+      color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-text):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

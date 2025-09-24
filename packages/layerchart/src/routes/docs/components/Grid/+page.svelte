@@ -128,7 +128,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" y="value" yDomain={[0, 100]} radial>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.renderContext} center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />
       </Layer>
     </Chart>

@@ -122,6 +122,10 @@
       "types": "./dist/utils/*.d.ts",
       "svelte": "./dist/utils/*.js",
       "default": "./dist/utils/*.js"
+    },
+    "./*.css": {
+      "style": "./dist/styles/*.css",
+      "default": "./dist/styles/*.css"
     }
   },
   "files": [

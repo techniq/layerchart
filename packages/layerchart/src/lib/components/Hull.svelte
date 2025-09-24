@@ -65,7 +65,6 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     data,
@@ -104,13 +103,13 @@
   );
 </script>
 
-<Group {...restProps} class={cls(layerClass('hull-g'), classes.root, className)} bind:ref>
+<Group {...restProps} class={cls('lc-hull-g', classes.root, className)} bind:ref>
   {#if geoCtx.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
       geojson={polygon}
       {curve}
-      class={cls(layerClass('hull-path'), 'fill-transparent', classes.path)}
+      class={['lc-hull-path', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
@@ -123,10 +122,18 @@
       x={(d) => d[0]}
       y={(d) => d[1]}
       {curve}
-      class={cls(layerClass('hull-class'), 'fill-transparent', classes.path)}
+      class={['lc-hull-class', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
     />
   {/if}
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-hull-path, .lc-hull-geo-path)) {
+      fill: transparent;
+    }
+  }
+</style>

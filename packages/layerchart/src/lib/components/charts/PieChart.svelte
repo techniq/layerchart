@@ -172,11 +172,11 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps, type Snippet } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { format } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
-  import { SelectionState } from '@layerstack/svelte-state';
   import type { PieArcDatum } from 'd3-shape';
+  import { schemeObservable10 } from 'd3-scale-chromatic';
+  import { getObjectOrNull } from '../../utils/common.js';
 
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -194,7 +194,8 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { HighlightKey } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
@@ -237,67 +238,37 @@
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
   );
+  const seriesState = new SeriesState(() => series);
 
   const keyAccessor = $derived(accessor(key));
   const labelAccessor = $derived(accessor(label));
   const valueAccessor = $derived(accessor(value));
   const cAccessor = $derived(accessor(c));
 
-  const allSeriesData = $derived(
-    series
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData>
-  );
-
   const chartData = $derived(
-    allSeriesData.length ? allSeriesData : chartDataArray(data)
+    seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
   ) as Array<TData>;
-
-  const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
-
-  const highlightKey = new HighlightKey<TData, typeof Arc>();
-  const selectedKeys = new SelectionState();
-  const selectedSeries = new SelectionState();
 
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
-      return selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
+      return seriesState.selectedKeys.isEmpty() || seriesState.selectedKeys.isSelected(dataKey);
     })
   );
 
-  // TODO: note, I added this because it wasn't consistent with all the other charts
-  // unsure if it is correct but will validate with Sean
-  const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
-  );
-
   function getLegendProps(): ComponentProps<typeof Legend> {
-    return {
-      tickFormat: (tick) => {
-        const item = chartData.find((d) => keyAccessor(d) === tick);
-        return item ? (labelAccessor(item) ?? tick) : tick;
+    return createLegendProps({
+      seriesState,
+      props: {
+        tickFormat: (tick) => {
+          // Use data label instead of series label
+          const item = chartData.find((d) => keyAccessor(d) === tick);
+          return item ? (labelAccessor(item) ?? tick) : tick;
+        },
+        ...props.legend,
+        ...getObjectOrNull(legend),
       },
-      placement: 'bottom',
-      variant: 'swatches',
-      onclick: (e, item) => {
-        selectedKeys.toggle(item.value);
-        // TODO: investigate
-        // selectedSeries.toggle(item.value);
-      },
-      onpointerenter: (e, item) => (highlightKey.current = item.value),
-      onpointerleave: (e) => (highlightKey.current = null),
-      ...props.legend,
-      ...(typeof legend === 'object' ? legend : null),
-      classes: {
-        item: (item) =>
-          visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
-            ? 'opacity-50'
-            : '',
-        ...props.legend?.classes,
-        ...(typeof legend === 'object' ? legend.classes : null),
-      },
-    };
+    });
   }
 
   function getGroupProps(): ComponentProps<typeof Group> {
@@ -338,7 +309,8 @@
     return {
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
-      outerRadius: visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+      outerRadius:
+        seriesState.visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
       innerRadius,
       cornerRadius,
       padAngle,
@@ -350,10 +322,7 @@
         // Workaround for `tooltip={{ mode: 'manual' }}
         onTooltipClick(e, { data: arc.data });
       },
-      class: cls(
-        'transition-opacity',
-        highlightKey.current && highlightKey.current !== keyAccessor(arc.data) && 'opacity-50'
-      ),
+      opacity: seriesState.isHighlighted(keyAccessor(arc.data), true) ? 1 : 0.5,
       ...props.arc,
       ...s.props,
       ...arcDataProps,
@@ -382,7 +351,7 @@
       return key;
     },
     get visibleSeries() {
-      return visibleSeries;
+      return seriesState.visibleSeries;
     },
   });
 </script>
@@ -394,19 +363,21 @@
   x={value}
   c={key}
   cDomain={chartData.map(keyAccessor)}
-  cRange={seriesColors.length
-    ? seriesColors
+  cRange={seriesState.allSeriesColors.length
+    ? seriesState.allSeriesColors
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
-          'var(--color-primary)',
-          'var(--color-secondary)',
-          'var(--color-info)',
-          'var(--color-success)',
-          'var(--color-warning)',
-          'var(--color-danger)',
+          `var(--color-primary, ${schemeObservable10[0]})`,
+          `var(--color-secondary, ${schemeObservable10[1]})`,
+          `var(--color-info, ${schemeObservable10[2]})`,
+          `var(--color-success, ${schemeObservable10[3]})`,
+          `var(--color-warning, ${schemeObservable10[4]})`,
+          `var(--color-danger, ${schemeObservable10[5]})`,
         ]}
-  padding={{ bottom: legend === true ? 32 : 0 }}
+  padding={{
+    bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
+  }}
   {...restProps}
   tooltip={tooltip === false
     ? false
@@ -420,10 +391,10 @@
       color: cAccessor,
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       visibleData,
-      highlightKey: highlightKey.current,
-      setHighlightKey: highlightKey.set,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
       getLegendProps,
       getGroupProps,
     }}
@@ -444,7 +415,8 @@
           {@render marks(snippetProps)}
         {:else}
           <Group {...getGroupProps()}>
-            {#each visibleSeries as s, seriesIdx (s.key)}
+            <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->
+            {#each series as s, seriesIdx (s.key)}
               {#if typeof pie === 'function'}
                 {@render pie({
                   ...snippetProps,
@@ -496,8 +468,8 @@
                 value={valueAccessor(data)}
                 color={context.cScale?.(context.c(data))}
                 {format}
-                onpointerenter={() => (highlightKey.current = keyAccessor(data))}
-                onpointerleave={() => (highlightKey.current = null)}
+                onpointerenter={() => (seriesState.highlightKey.current = keyAccessor(data))}
+                onpointerleave={() => (seriesState.highlightKey.current = null)}
                 {...props.tooltip?.item}
               />
             </Tooltip.List>

@@ -44,12 +44,11 @@
     LineChartExtraSnippetProps<TData>
   > & {
     /**
-     * The event to be dispatched when the point is clicked.
+     * The orientation of the line chart.
+     *
+     * @default 'horizontal'
      */
-    onPointClick?: (
-      e: MouseEvent,
-      details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
-    ) => void;
+    orientation?: 'vertical' | 'horizontal';
 
     props?: LineChartPropsObjProp;
 
@@ -64,6 +63,14 @@
         seriesIndex: number;
       }
     >;
+
+    /**
+     * The event to be dispatched when the point is clicked.
+     */
+    onPointClick?: (
+      e: MouseEvent,
+      details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
+    ) => void;
   };
 </script>
 
@@ -83,12 +90,7 @@
   import Rule from '../Rule.svelte';
   import Spline from '../Spline.svelte';
 
-  import {
-    accessor,
-    chartDataArray,
-    defaultChartPadding,
-    findRelatedData,
-  } from '../../utils/common.js';
+  import { chartDataArray, defaultChartPadding, findRelatedData } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import type {
     SeriesData,
@@ -96,18 +98,22 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import { isScaleTime } from '../../utils/scales.svelte.js';
 
   let {
     data = [],
     x: xProp,
-    y: yProp,
+    xScale,
     xDomain,
+    y: yProp,
+    yScale,
     radial = false,
+    orientation = 'horizontal',
     series: seriesProp,
     seriesLayout = 'overlap',
     axis = true,
@@ -137,14 +143,23 @@
     ...restProps
   }: LineChartProps<TData> = $props();
 
+  const isVertical = $derived(orientation === 'vertical');
+
   const series = $derived(
     seriesProp === undefined
       ? [
           {
             key: 'default',
-            label: typeof yProp === 'string' ? yProp : 'value',
-            value: yProp,
-            color: 'var(--color-primary)',
+
+            label: isVertical
+              ? typeof xProp === 'string'
+                ? xProp
+                : 'value'
+              : typeof yProp === 'string'
+                ? yProp
+                : 'value',
+            value: isVertical ? xProp : yProp,
+            color: 'var(--color-primary, currentColor)',
           },
         ]
       : seriesProp
@@ -160,21 +175,15 @@
   function getSplineProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const splineProps: ComponentProps<typeof Spline> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       stroke: s.color,
+      opacity:
+        // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+        seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.spline,
       ...s.props,
-      class: cls(
-        layerClass('line-chart-line'),
-        'transition-opacity',
-        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        seriesState.visibleSeries.length > 1 &&
-          seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.spline?.class,
-        s.props?.class
-      ),
+      class: cls(props.spline?.class, s.props?.class),
     };
 
     return splineProps;
@@ -183,18 +192,14 @@
   function getPointsProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const pointsProps: ComponentProps<typeof Points> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       fill: s.color,
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.points?.class,
-        typeof points === 'object' && points.class
-      ),
+      class: cls(props.points?.class, typeof points === 'object' && points.class),
     };
 
     return pointsProps;
@@ -203,25 +208,16 @@
   function getLabelsProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
 
     return labelsProps;
   }
-
-  const highlightPointsProps = $derived(
-    typeof props.highlight?.points === 'object' ? props.highlight.points : null
-  );
 
   function getHighlightProps(
     s: SeriesData<TData, typeof Spline>,
@@ -230,18 +226,22 @@
     if (!context || !context.tooltip.data) return {};
     const seriesTooltipData =
       s.data && context.tooltip.data
-        ? findRelatedData(s.data, context.tooltip.data, context.x)
+        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
         : null;
+    const highlightPointsProps =
+      typeof props.highlight?.points === 'object' ? props.highlight.points : null;
 
     return {
       data: seriesTooltipData,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       lines: i === 0,
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
         : undefined,
       onPointEnter: () => (seriesState.highlightKey.current = s.key),
       onPointLeave: () => (seriesState.highlightKey.current = null),
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.highlight,
       points:
         props.highlight?.points == false
@@ -249,13 +249,6 @@
           : {
               ...highlightPointsProps,
               fill: s.color,
-              class: cls(
-                'transition-opacity',
-                seriesState.highlightKey.current &&
-                  seriesState.highlightKey.current !== s.key &&
-                  'opacity-10',
-                highlightPointsProps?.class
-              ),
             },
     };
   }
@@ -264,8 +257,8 @@
     return createLegendProps({
       seriesState,
       props: {
-        ...props.legend,
         ...(typeof legend === 'object' ? legend : null),
+        ...props.legend,
       },
     });
   }
@@ -324,18 +317,20 @@
 <Chart
   bind:context
   data={chartData}
-  x={xProp}
+  x={xProp ?? (isVertical ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
-  y={yProp ?? series.map((s) => s.value ?? s.key)}
-  yBaseline={0}
-  yNice
+  xBaseline={!isVertical || (xScale && isScaleTime(xScale)) ? undefined : 0}
+  xNice={orientation === 'vertical'}
+  y={yProp ?? (isVertical ? undefined : series.map((s) => s.value ?? s.key))}
+  yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
+  yNice={orientation === 'horizontal'}
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'quadtree-x',
+        mode: isVertical ? 'quadtree-y' : 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,

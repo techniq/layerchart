@@ -144,7 +144,6 @@
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { polygon } from '$lib/utils/shape.js';
   import { roundedPolygonPath } from '$lib/utils/path.js';
 
@@ -234,7 +233,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls(layerClass('polygon'), fill == null && 'fill-surface-content', className),
+            classes: cls('lc-polygon', className),
           }
     );
   }
@@ -278,8 +277,33 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('polygon'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-polygon', className)}
     {...restProps}
     bind:this={ref}
   />
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-polygon)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-polygon, svg.lc-polygon):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-polygon, svg.lc-polygon):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-polygon):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-polygon):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

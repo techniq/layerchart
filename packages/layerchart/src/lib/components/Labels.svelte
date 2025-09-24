@@ -74,7 +74,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
   import Group from './Group.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -174,28 +174,38 @@
   }
 </script>
 
-<Group class={layerClass('labels-g')}>
+<Group class="lc-labels-g">
   <Points {data} {x} {y}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
-        {@const textProps = extractLayerProps(getTextProps(point), 'labels-text')}
+        {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
         {#if childrenProp}
           {@render childrenProp({ data: point, textProps })}
         {:else}
           <Text
+            data-placement={placement}
             {...textProps}
             {...restProps}
-            class={cls(
-              'text-xs',
-              placement === 'inside'
-                ? 'fill-surface-300 stroke-surface-content'
-                : 'fill-surface-content stroke-surface-100',
-              textProps.class,
-              className
-            )}
+            {...extractLayerProps(getTextProps(point), 'lc-labels-text', className ?? '')}
           />
         {/if}
       {/each}
     {/snippet}
   </Points>
 </Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-labels-text)) {
+      font-size: 12px;
+
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: var(--color-surface-100, light-dark(white, black));
+
+      &[data-placement='inside'] {
+        --fill-color: var(--color-surface-100, light-dark(white, black));
+        --stroke-color: var(--color-surface-content, currentColor);
+      }
+    }
+  }
+</style>

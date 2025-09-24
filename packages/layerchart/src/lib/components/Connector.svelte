@@ -141,7 +141,7 @@
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  {...extractLayerProps(restProps, 'connector')}
+  {...extractLayerProps(restProps, 'lc-connector')}
   {...restProps}
 />
 <MarkerWrapper id={markerStartId} marker={markerStart} />

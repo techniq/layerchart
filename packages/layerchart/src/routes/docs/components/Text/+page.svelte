@@ -5,6 +5,7 @@
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
   import { shared } from '../../shared.svelte.js';
+  import { toTitleCase } from '@layerstack/utils';
 
   const config = $state({
     x: 0,
@@ -105,44 +106,27 @@
   </div>
 </div>
 
-<div class="grid grid-cols-2">
-  <div>
-    <h2 class="text-center">SVG</h2>
-    <div class="flex items-center justify-center bg-surface-100 p-4">
-      <div
-        class="h-56 border border-surface-content/10"
-        style:width="{config.resizeSvg ? config.width : 300}px"
-      >
-        <Chart>
-          <Layer type="svg">
-            <Text {...config} truncate={truncate ? truncateOptions : false} />
-            {#if config.showAnchor}
-              <Circle cx={config.x} cy={config.y} r={2} fill="red" />
-            {/if}
-          </Layer>
-        </Chart>
+<div class="grid grid-cols-3">
+  {#each ['svg', 'canvas', 'html'] as const as type}
+    <div>
+      <h2 class="text-center">{toTitleCase(type)}</h2>
+      <div class="flex items-center justify-center bg-surface-100 p-4">
+        <div
+          class="h-56 border border-surface-content/10"
+          style:width="{config.resizeSvg ? config.width : 300}px"
+        >
+          <Chart>
+            <Layer {type}>
+              <Text {...config} truncate={truncate ? truncateOptions : false} />
+              {#if config.showAnchor}
+                <Circle cx={config.x} cy={config.y} r={2} fill="red" />
+              {/if}
+            </Layer>
+          </Chart>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div>
-    <h2 class="text-center">Canvas</h2>
-    <div class="flex items-center justify-center bg-surface-100 p-4">
-      <div
-        class="h-56 border border-surface-content/10"
-        style:width="{config.resizeSvg ? config.width : 300}px"
-      >
-        <Chart>
-          <Layer type="canvas">
-            <Text {...config} truncate={truncate ? truncateOptions : false} />
-            {#if config.showAnchor}
-              <Circle cx={config.x} cy={config.y} r={2} fill="red" />
-            {/if}
-          </Layer>
-        </Chart>
-      </div>
-    </div>
-  </div>
+  {/each}
 </div>
 
 <h1>Examples</h1>

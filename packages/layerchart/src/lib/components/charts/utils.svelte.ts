@@ -1,53 +1,11 @@
 import type { Component, ComponentProps } from 'svelte';
-import { SelectionState } from '@layerstack/svelte-state';
+
 import { scaleOrdinal } from 'd3-scale';
+import { cls } from '@layerstack/tailwind';
 
-import type { SeriesData } from './types.js';
 import type Legend from '../Legend.svelte';
-
-export class HighlightKey<TData, SeriesComponent extends Component> {
-  current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
-
-  set = (seriesKey: typeof this.current) => {
-    this.current = seriesKey;
-  };
-}
-
-export class SeriesState<TData, TComponent extends Component> {
-  #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
-  selectedSeries = new SelectionState();
-  selectedKeys = new SelectionState();
-  highlightKey = new HighlightKey<TData, TComponent>();
-
-  constructor(getSeries: () => SeriesData<TData, TComponent>[]) {
-    this.#series = getSeries();
-
-    $effect.pre(() => {
-      // keep series state in sync with the prop
-      this.#series = getSeries();
-    });
-  }
-
-  get series() {
-    return this.#series;
-  }
-
-  get isDefaultSeries() {
-    return this.#series.length === 1 && this.#series[0].key === 'default';
-  }
-
-  get allSeriesData() {
-    return this.#series
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData & { seriesKey: string }>;
-  }
-
-  get visibleSeries() {
-    return this.#series.filter(
-      (s) => this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(s.key)
-    );
-  }
-}
+import { resolveMaybeFn } from '$lib/utils/common.js';
+import type { SeriesState } from '$lib/states/series.svelte.js';
 
 type CreateLegendPropsOptions<TData, TComponent extends Component> = {
   seriesState: SeriesState<TData, TComponent>;
@@ -70,16 +28,15 @@ export function createLegendProps<TData, TComponent extends Component>(
     tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
     placement: 'bottom',
     variant: 'swatches',
-    onclick: (_, item) => opts.seriesState.selectedSeries.toggle(item.value),
+    selected: opts.seriesState.selectedKeys.current,
+    onclick: (_, item) => opts.seriesState.selectedKeys.toggle(item.value),
     onpointerenter: (_, item) => (opts.seriesState.highlightKey.current = item.value),
     onpointerleave: () => (opts.seriesState.highlightKey.current = null),
     ...opts.props,
     classes: {
-      item: (item) =>
-        opts.seriesState.visibleSeries.length &&
-        !opts.seriesState.visibleSeries.some((s) => s.key === item.value)
-          ? 'opacity-50'
-          : '',
+      item: (item) => {
+        return cls(resolveMaybeFn(opts.props?.classes?.item, item));
+      },
       ...opts.props?.classes,
     },
   };

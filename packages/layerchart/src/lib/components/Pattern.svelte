@@ -154,7 +154,7 @@
     const lineDefs = Array.isArray(linesProp) ? linesProp : linesProp === true ? [{}] : [linesProp];
     for (const line of lineDefs) {
       // const spacing = Math.abs(line.spacing);
-      const stroke = line.color ?? 'var(--color-surface-content)';
+      const stroke = line.color ?? 'var(--color-surface-content, currentColor)';
       const strokeWidth = line.width ?? 1;
       const opacity = line.opacity ?? 1;
 
@@ -217,7 +217,7 @@
             cx: size / 4,
             cy: size / 4,
             r: circle.radius ?? 1,
-            fill: circle.color ?? 'var(--color-surface-content)',
+            fill: circle.color ?? 'var(--color-surface-content, currentColor)',
             opacity: circle.opacity ?? 1,
           },
           {
@@ -225,7 +225,7 @@
             cx: (size * 3) / 4,
             cy: (size * 3) / 4,
             r: circle.radius ?? 1,
-            fill: circle.color ?? 'var(--color-surface-content)',
+            fill: circle.color ?? 'var(--color-surface-content, currentColor)',
             opacity: circle.opacity ?? 1,
           }
         );
@@ -235,7 +235,7 @@
           cx: size / 2,
           cy: size / 2,
           r: circle.radius ?? 1,
-          fill: circle.color ?? 'var(--color-surface-content)',
+          fill: circle.color ?? 'var(--color-surface-content, currentColor)',
           opacity: circle.opacity ?? 1,
         });
       }
@@ -265,7 +265,7 @@
       {width}
       {height}
       patternUnits="userSpaceOnUse"
-      {...extractLayerProps(restProps, 'pattern')}
+      {...extractLayerProps(restProps, 'lc-pattern')}
     >
       {#if patternContent}
         {@render patternContent?.()}

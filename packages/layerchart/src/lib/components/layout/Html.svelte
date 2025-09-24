@@ -46,11 +46,9 @@
 </script>
 
 <script lang="ts">
-  import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -90,16 +88,11 @@
 
 <div
   bind:this={ref}
-  class={cls(
-    layerClass('layout-html'),
-    'absolute top-0 left-0',
-    pointerEvents === false && 'pointer-events-none',
-    className
-  )}
+  class={['lc-layout-html', className]}
+  class:disablePointerEvents={pointerEvents === false}
   style:transform
   style:transform-origin="top left"
   style:z-index={zIndex}
-  style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top="{ctx.padding.top}px"
   style:bottom="{ctx.padding.bottom}px"
   style:left="{ctx.padding.left}px"
@@ -112,3 +105,16 @@
 >
   {@render children?.({ ref })}
 </div>
+
+<style>
+  @layer base {
+    :where(.lc-layout-html) {
+      position: absolute;
+      inset: 0;
+
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+  }
+</style>

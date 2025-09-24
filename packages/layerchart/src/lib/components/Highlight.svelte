@@ -101,6 +101,11 @@
      */
     motion?: MotionProp;
 
+    /**
+     * The opacity of the element. (0 to 1)
+     */
+    opacity?: number;
+
     onAreaClick?: (e: MouseEvent, detail: { data: any }) => void;
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
@@ -114,7 +119,6 @@
   import { max, min } from 'd3-array';
   import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
   import { notNull } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
@@ -136,6 +140,7 @@
     lines: linesProp = false,
     area = false,
     bar = false,
+    opacity,
     motion = 'spring',
     onAreaClick,
     onBarClick,
@@ -435,11 +440,6 @@
       return tmpPoints;
     }
   );
-
-  const areaProps = $derived(extractLayerProps(area, 'highlight-area'));
-  const barProps = $derived(extractLayerProps(bar, 'highlight-bar'));
-  const linesProps = $derived(extractLayerProps(linesProp, 'highlight-line'));
-  const pointsProps = $derived(extractLayerProps(points, 'highlight-point'));
 </script>
 
 {#if highlightData}
@@ -454,15 +454,16 @@
         endAngle={_area.x + _area.width}
         innerRadius={_area.y}
         outerRadius={_area.y + _area.height}
-        class={cls(!areaProps.fill && 'fill-surface-content/5', areaProps.class)}
+        {opacity}
+        class="lc-highlight-area"
         onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
       />
     {:else}
       <Rect
         motion={motion === 'spring' ? 'spring' : undefined}
+        {opacity}
         {..._area}
-        {...areaProps}
-        class={cls(!areaProps.fill && 'fill-surface-content/5', areaProps.class)}
+        {...extractLayerProps(area, 'lc-highlight-area')}
         onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
       />
     {/if}
@@ -475,8 +476,8 @@
       <Bar
         motion={motion === 'spring' ? 'spring' : undefined}
         data={highlightData}
-        {...barProps}
-        class={cls(!barProps.fill && 'fill-primary', barProps.class)}
+        {opacity}
+        {...extractLayerProps(bar, 'lc-highlight-bar')}
         onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
       />
     {/if}
@@ -493,11 +494,8 @@
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
-          {...linesProps}
-          class={cls(
-            'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
-            linesProps.class
-          )}
+          {opacity}
+          {...extractLayerProps(linesProp, 'lc-highlight-line')}
         />
       {/each}
     {/if}
@@ -515,12 +513,8 @@
           fill={point.fill}
           r={4}
           strokeWidth={6}
-          {...pointsProps}
-          class={cls(
-            'stroke-white [paint-order:stroke] drop-shadow-sm',
-            !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
-            pointsProps.class
-          )}
+          {opacity}
+          {...extractLayerProps(points, 'lc-highlight-point')}
           onpointerdown={onPointClick &&
             ((e) => {
               // Do not propagate `pointerdown` event to `BrushContext` if `onclick` is provided
@@ -546,3 +540,33 @@
     {/if}
   {/if}
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-highlight-area)) {
+      --fill-color: color-mix(in oklab, var(--color-surface-content, currentColor) 5%, transparent);
+    }
+
+    :global(:where(.lc-highlight-bar)) {
+      --fill-color: var(--color-primary, currentColor);
+    }
+
+    :global(:where(.lc-highlight-line)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+      stroke-width: 2;
+      stroke-dasharray: 2 2;
+      pointer-events: none;
+    }
+
+    :global(:where(.lc-highlight-point)) {
+      --stroke-color: white;
+      --fill-color: var(--color-primary, currentColor);
+      paint-order: stroke;
+      filter: drop-shadow(var(--drop-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15)));
+    }
+  }
+</style>

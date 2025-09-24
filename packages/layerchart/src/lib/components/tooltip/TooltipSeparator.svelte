@@ -1,6 +1,5 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
@@ -18,14 +17,23 @@
   });
 </script>
 
-<div
-  bind:this={ref}
-  class={cls(
-    layerClass('tooltip-separator'),
-    'rounded-sm bg-surface-content/20 my-1 col-span-full h-px',
-    className
-  )}
-  {...restProps}
->
+<div bind:this={ref} class={cls('lc-tooltip-separator', className)} {...restProps}>
   {@render children?.()}
 </div>
+
+<style>
+  @layer component {
+    :where(.lc-tooltip-separator) {
+      height: 1px;
+      border-radius: 4px;
+      background-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+      margin-top: 4px;
+      margin-bottom: 4px;
+      grid-column: 1 / -1; /* col-span-full */
+    }
+  }
+</style>

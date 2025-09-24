@@ -40,6 +40,7 @@
         tooltip: { context: { mode: 'band' } },
       }}
       {renderContext}
+      debug={shared.debug}
     >
       {#snippet highlight()}
         <Highlight area axis="x" />

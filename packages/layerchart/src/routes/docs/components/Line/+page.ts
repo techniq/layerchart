@@ -9,7 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: '`<line>` element with tweened properties using `motionStore`',
-      supportedContexts: ['svg', 'canvas'],
+      supportedContexts: ['svg', 'canvas', 'html'],
       related: ['components/Rule', 'components/Spline'],
     },
   };

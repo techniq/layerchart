@@ -80,6 +80,13 @@
 
 <ClipPath {id} {disabled} {children}>
   {#snippet clip()}
-    <Circle {cx} {cy} {r} {motion} {...extractLayerProps(restProps, 'clip-path-circle')} bind:ref />
+    <Circle
+      {cx}
+      {cy}
+      {r}
+      {motion}
+      {...extractLayerProps(restProps, 'lc-clip-path-circle')}
+      bind:ref
+    />
   {/snippet}
 </ClipPath>

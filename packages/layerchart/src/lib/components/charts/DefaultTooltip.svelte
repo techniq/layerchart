@@ -4,7 +4,7 @@
   import { getChartContext } from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
   import type { SimplifiedChartPropsObject } from './types.js';
-  import type { SeriesState } from './utils.svelte.js';
+  import type { SeriesState } from '$lib/states/series.svelte.js';
   import { format } from '@layerstack/utils';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
 
@@ -48,7 +48,7 @@
           value={sum(seriesState.visibleSeries, (s) => {
             const seriesTooltipData = s.data ? findRelatedData(s.data, data, context.x) : data;
             const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
-            return valueAccessor(seriesTooltipData);
+            return seriesTooltipData ? valueAccessor(seriesTooltipData) : 0;
           })}
           format="integer"
           valueAlign="right"

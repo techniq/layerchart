@@ -1,0 +1,13 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+
+# Ignore shadcn/ui components and utils
+src/lib/components/ui/
+src/lib/utils.ts
