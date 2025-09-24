@@ -251,10 +251,6 @@
           const item = chartData.find((d) => keyAccessor(d) === tick);
           return item ? (labelAccessor(item) ?? tick) : tick;
         },
-        onclick: (e, item) => {
-          // Select data keys instead of series value
-          seriesState.selectedKeys.toggle(item.value);
-        },
         ...props.legend,
         ...getObjectOrNull(legend),
       },

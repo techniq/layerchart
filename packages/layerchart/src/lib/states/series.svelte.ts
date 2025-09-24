@@ -13,7 +13,6 @@ class HighlightKey<TData, SeriesComponent extends Component> {
 
 export class SeriesState<TData, TComponent extends Component> {
   #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
-  selectedSeries = new SelectionState();
   selectedKeys = new SelectionState<string>();
   highlightKey = new HighlightKey<TData, TComponent>();
 
@@ -42,7 +41,7 @@ export class SeriesState<TData, TComponent extends Component> {
    * Check if series is visible
    */
   isVisible(seriesKey: SeriesData<TData, TComponent>['key']) {
-    return this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(seriesKey);
+    return this.selectedKeys.isEmpty() || this.selectedKeys.isSelected(seriesKey);
   }
 
   /**

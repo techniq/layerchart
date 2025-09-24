@@ -265,10 +265,6 @@
           const item = chartData.find((d) => keyAccessor(d) === tick);
           return item ? (labelAccessor(item) ?? tick) : tick;
         },
-        onclick: (e, item) => {
-          // Select data keys instead of series value
-          seriesState.selectedKeys.toggle(item.value);
-        },
         ...props.legend,
         ...getObjectOrNull(legend),
       },
@@ -419,7 +415,8 @@
           {@render marks(snippetProps)}
         {:else}
           <Group {...getGroupProps()}>
-            {#each seriesState.visibleSeries as s, seriesIdx (s.key)}
+            <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->
+            {#each series as s, seriesIdx (s.key)}
               {#if typeof pie === 'function'}
                 {@render pie({
                   ...snippetProps,
