@@ -95,7 +95,6 @@
   import Circle from './Circle.svelte';
   import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
-  import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
