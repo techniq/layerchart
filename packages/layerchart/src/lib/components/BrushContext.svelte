@@ -537,17 +537,11 @@
     {#if brushState.active}
       <div
         {...range}
-        style:left="{_range.x}px"
-        style:top="{_range.y}px"
-        style:width="{_range.width}px"
-        style:height="{_range.height}px"
-        class={cls(
-          'brush-range',
-          'absolute bg-surface-content/10 cursor-move select-none',
-          'z-10',
-          classes.range,
-          range?.class
-        )}
+        style:left="{brushState.range.x}px"
+        style:top="{brushState.range.y}px"
+        style:width="{brushState.range.width}px"
+        style:height="{brushState.range.height}px"
+        class={cls('lc-brush-range', classes.range, range?.class)}
         onpointerdown={adjustRange}
         ondblclick={() => reset()}
       ></div>
