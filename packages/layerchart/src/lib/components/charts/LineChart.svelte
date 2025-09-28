@@ -317,10 +317,12 @@
 <Chart
   bind:context
   data={chartData}
+  {xScale}
   x={xProp ?? (isVertical ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
   xBaseline={!isVertical || (xScale && isScaleTime(xScale)) ? undefined : 0}
   xNice={orientation === 'vertical'}
+  {yScale}
   y={yProp ?? (isVertical ? undefined : series.map((s) => s.value ?? s.key))}
   yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
   yNice={orientation === 'horizontal'}
