@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.40
+
+### Patch Changes
+
+- fix(LineChart): Restore passing xScale / yScale overrides ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.39
 
 ### Minor Changes
