@@ -1,7 +1,9 @@
-import type { HierarchyNode } from 'd3-hierarchy';
-import type { AnyScale } from './scales.svelte.js';
-import type { SankeyGraph } from 'd3-sankey';
+import type { MouseEventHandler, PointerEventHandler } from 'svelte/elements';
 import type { TransitionConfig } from 'svelte/transition';
+import type { HierarchyNode } from 'd3-hierarchy';
+import type { SankeyGraph } from 'd3-sankey';
+
+import type { AnyScale } from './scales.svelte.js';
 
 /**
  * Useful to workaround Svelte 3/4 markup type issues
@@ -106,6 +108,19 @@ export type CommonStyleProps = {
    * The opacity of the element. (0 to 1)
    */
   opacity?: number;
+};
+
+/**
+ * Events for primatives which support `SVGRectElement` and `HTMLDivElement` elements based on render context
+ */
+export type CommonEvents = {
+  onclick?: MouseEventHandler<Element> | null;
+  ondblclick?: MouseEventHandler<Element> | null;
+  onpointerenter?: PointerEventHandler<Element> | null;
+  onpointermove?: PointerEventHandler<Element> | null;
+  onpointerleave?: PointerEventHandler<Element> | null;
+  onpointerover?: PointerEventHandler<Element> | null;
+  onpointerout?: PointerEventHandler<Element> | null;
 };
 
 export type OnlyObjects<T> = T extends object ? T : never;

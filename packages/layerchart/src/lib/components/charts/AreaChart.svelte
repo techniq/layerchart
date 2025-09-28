@@ -67,7 +67,6 @@
 
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
@@ -93,7 +92,8 @@
   import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
@@ -140,7 +140,7 @@
             key: 'default',
             label: typeof y === 'string' ? y : 'value',
             value: y,
-            color: 'var(--color-primary)',
+            color: 'var(--color-primary, currentColor)',
           },
         ]
       : seriesProp
@@ -222,13 +222,6 @@
       ...(typeof s.props?.line === 'object' ? s.props.line : null),
     };
 
-    const highlightClass =
-      seriesState.visibleSeries.length > 1 &&
-      seriesState.highlightKey.current &&
-      seriesState.highlightKey.current !== s.key
-        ? 'opacity-10'
-        : '';
-
     return {
       data: s.data,
       y0: stackSeries
@@ -243,19 +236,18 @@
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
+      opacity:
+        // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+        seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.area,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        highlightClass,
-        props.area?.class,
-        s.props?.class
-      ),
+      class: cls(props.area?.class, s.props?.class),
       line: {
         stroke: s.color,
+        opacity:
+          // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+          seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
         ...lineProps,
-        class: cls('transition-opacity', highlightClass, lineProps.class),
       },
     };
   }
@@ -272,16 +264,11 @@
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.points?.class,
-        typeof points === 'object' && points.class
-      ),
+      class: cls(props.points?.class, typeof points === 'object' && points.class),
     };
   }
 
@@ -296,16 +283,11 @@
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
   }
 
@@ -318,7 +300,7 @@
     if (!context) return {};
     const seriesTooltipData =
       s.data && context.tooltip.data
-        ? findRelatedData(s.data, context.tooltip.data, context.x)
+        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
         : null;
     const highlightPointsProps =
       typeof props.highlight?.points === 'object' ? props.highlight.points : null;
@@ -333,19 +315,14 @@
       onPointEnter: () => (seriesState.highlightKey.current = s.key),
       onPointLeave: () => (seriesState.highlightKey.current = null),
       ...props.highlight,
+      opacity:
+        seriesState.highlightKey.current && seriesState.highlightKey.current !== s.key ? 0.1 : 1,
       points:
         props.highlight?.points == false
           ? false
           : {
               ...highlightPointsProps,
               fill: s.color,
-              class: cls(
-                'transition-opacity',
-                seriesState.highlightKey.current &&
-                  seriesState.highlightKey.current !== s.key &&
-                  'opacity-10',
-                highlightPointsProps?.class
-              ),
             },
     };
   }

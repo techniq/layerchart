@@ -1,7 +1,6 @@
 <script lang="ts" module>
   import { createId } from '$lib/utils/createId.js';
   import type { Without } from '$lib/utils/types.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { getRenderContext } from './Chart.svelte';
@@ -76,7 +75,7 @@
   {#if disabled || renderContext !== 'svg'}
     {@render children({ id, url, useId })}
   {:else}
-    <g style:clip-path={url} class={layerClass('clip-path-g')}>
+    <g style:clip-path={url} class="lc-clip-path-g">
       {@render children({ id, url, useId })}
     </g>
   {/if}

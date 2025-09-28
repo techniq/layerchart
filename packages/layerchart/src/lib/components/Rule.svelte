@@ -61,7 +61,6 @@
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 
   let {
@@ -188,9 +187,9 @@
   // $inspect({ lines });
 </script>
 
-<Group class={layerClass('rule-g')}>
+<Group class="lc-rule-g">
   {#each lines as line}
-    {@const stroke = line.stroke}
+    {@const stroke = line.stroke ?? strokeProp}
 
     {#if ctx.radial}
       {#if line.axis === 'x'}
@@ -203,23 +202,10 @@
           {x2}
           {y2}
           {stroke}
-          class={cls(
-            layerClass('rule-x-radial-line'),
-            !stroke && 'stroke-surface-content/10',
-            className
-          )}
+          class={cls('lc-rule-x-radial-line', className)}
         />
       {:else if line.axis === 'y'}
-        <Circle
-          r={line.y1}
-          {stroke}
-          class={cls(
-            layerClass('rule-y-radial-circle'),
-            !stroke && 'stroke-surface-content/50',
-            'fill-none',
-            className
-          )}
-        />
+        <Circle r={line.y1} {stroke} class={cls('lc-rule-y-radial-circle', className)} />
       {/if}
     {:else}
       <Line
@@ -229,12 +215,33 @@
         x2={line.x2}
         y2={line.y2}
         {stroke}
-        class={cls(
-          layerClass(line.axis === 'x' ? 'rule-x-line' : 'rule-y-line'),
-          !stroke && 'stroke-surface-content/50',
-          className
-        )}
+        class={cls(line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line', className)}
       />
     {/if}
   {/each}
 </Group>
+
+<style>
+  @layer components {
+    /* TODO: better way to handle this without affecting other components? */
+    /* Could add a layer between "components" and "base" but would require more setup (and not alignw with TW layers) */
+    :global(
+      :where(
+        .lc-rule-x-line,
+        .lc-rule-y-line,
+        .lc-rule-x-radial-line,
+        .lc-rule-y-radial-circle
+      ):not([class*='lc-axis'], [class*='lc-grid'])
+    ) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-rule-y-radial-circle)) {
+      --fill-color: none;
+    }
+  }
+</style>

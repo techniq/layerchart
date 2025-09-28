@@ -109,7 +109,8 @@
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import { createLegendProps, SeriesState } from './utils.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
@@ -312,17 +313,11 @@
       strokeWidth: 1,
       insets: stackInsets,
       fill: s.color,
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       onBarClick: (e, detail) => onBarClick(e, { ...detail, series: s }),
       ...props.bars,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.bars?.class,
-        s.props?.class
-      ),
+      class: cls(props.bars?.class, s.props?.class),
     };
   }
 
@@ -334,16 +329,10 @@
       // TODO: Improve placement when using `seriesLayout="group"`
       // data: s.data,
       // y: s.value ?? (s.data ? undefined : s.key),
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        seriesState.highlightKey.current &&
-          seriesState.highlightKey.current !== s.key &&
-          'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
   }
 
@@ -453,7 +442,7 @@
   {y1Range}
   {yInterval}
   c={isVertical ? yProp : xProp}
-  cRange={['var(--color-primary)']}
+  cRange={['var(--color-primary, currentColor)']}
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}

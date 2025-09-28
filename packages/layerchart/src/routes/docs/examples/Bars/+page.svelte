@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleTime } from 'd3-scale';
   import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
   import { timeDay } from 'd3-time';

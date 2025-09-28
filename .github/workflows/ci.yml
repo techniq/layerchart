@@ -27,12 +27,18 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm check
+      - run: pnpm check:packages
 
-      - run: pnpm lint
+      - run: pnpm lint:packages
 
       - run: pnpm test:unit
         env:
           CI: true
 
-      - run: pnpm build
+      - run: pnpm build:packages
+
+      - run: pnpm build:examples
+
+      # Run after building to ensure svelte-package is ran
+      - run: pnpm check:examples
+      - run: pnpm lint:examples

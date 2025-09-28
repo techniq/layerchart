@@ -83,5 +83,5 @@
   preserveAspectRatio="none"
   {height}
   {width}
-  {...extractLayerProps(restProps, 'color-ramp')}
+  {...extractLayerProps(restProps, 'lc-color-ramp')}
 />

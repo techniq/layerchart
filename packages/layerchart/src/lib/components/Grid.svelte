@@ -98,7 +98,7 @@
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { autoTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   const ctx = getChartContext();
@@ -151,11 +151,11 @@
   );
 </script>
 
-<Group bind:ref class={cls(layerClass('grid'), classes.root, className)} {...restProps}>
+<Group bind:ref class={cls('lc-grid', classes.root, className)} {...restProps}>
   {#if x}
-    {@const splineProps = extractLayerProps(x, 'grid-x-line')}
+    {@const splineProps = extractLayerProps(x, 'lc-grid-x-line')}
 
-    <Group {transitionIn} {transitionInParams} class={layerClass('grid-x')}>
+    <Group {transitionIn} {transitionInParams} class="lc-grid-x">
       {#each xTickVals as x (x)}
         {#if ctx.radial}
           {@const [x1, y1] = pointRadial(ctx.xScale(x), ctx.yRange[0])}
@@ -167,12 +167,7 @@
             {y2}
             motion={tweenConfig}
             {...splineProps}
-            class={cls(
-              layerClass('grid-x-radial-line'),
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
           />
         {:else}
           <Rule
@@ -180,37 +175,28 @@
             xOffset={xBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              layerClass('grid-x-rule'),
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
 
       <!-- Add extra rule after last band -->
       {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
+        {@const x = ctx.xScale(xTickVals[xTickVals.length - 1])! + ctx.xScale.step() + xBandOffset}
         <Rule
           x={xTickVals[xTickVals.length - 1]}
           xOffset={ctx.xScale.step() + xBandOffset}
           {motion}
           {...splineProps}
-          class={cls(
-            layerClass('grid-x-end-rule'),
-            'stroke-surface-content/10',
-            classes.line,
-            splineProps?.class
-          )}
+          class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}
         />
       {/if}
     </Group>
   {/if}
 
   {#if y}
-    {@const splineProps = extractLayerProps(y, 'grid-y-line')}
-    <Group {transitionIn} {transitionInParams} class={layerClass('grid-y')}>
+    {@const splineProps = extractLayerProps(y, 'lc-grid-y-line')}
+    <Group {transitionIn} {transitionInParams} class="lc-grid-y">
       {#each yTickVals as y (y)}
         {#if ctx.radial}
           {#if radialY === 'circle'}
@@ -218,12 +204,7 @@
               r={ctx.yScale(y) + yBandOffset}
               {motion}
               {...splineProps}
-              class={cls(
-                layerClass('grid-y-radial-circle'),
-                'fill-none stroke-surface-content/10',
-                classes.line,
-                splineProps?.class
-              )}
+              class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
             />
           {:else}
             <Spline
@@ -233,26 +214,18 @@
               motion={tweenConfig}
               curve={curveLinearClosed}
               {...splineProps}
-              class={cls(
-                layerClass('grid-y-radial-line'),
-                'stroke-surface-content/10',
-                classes.line,
-                splineProps?.class
-              )}
+              class={cls('lc-grid-y-radial-line', classes.line, splineProps?.class)}
             />
           {/if}
         {:else}
-          <Rule
-            {y}
-            yOffset={yBandOffset}
+          <Line
+            x1={ctx.xRange[0]}
+            y1={ctx.yScale(y) + yBandOffset}
+            x2={ctx.xRange[1]}
+            y2={ctx.yScale(y) + yBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              layerClass('grid-y-rule'),
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
@@ -264,28 +237,52 @@
             r={ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              layerClass('grid-y-radial-circle'),
-              'fill-none stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
           />
         {:else}
-          <Rule
-            y={yTickVals[yTickVals.length - 1]}
-            yOffset={ctx.yScale.step() + yBandOffset}
+          {@const y =
+            ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
+          <Line
+            x1={ctx.xRange[0]}
+            y1={y}
+            x2={ctx.xRange[1]}
+            y2={y}
             {motion}
             {...splineProps}
-            class={cls(
-              layerClass('grid-y-end-rule'),
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-end-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/if}
     </Group>
   {/if}
 </Group>
+
+<style>
+  @layer components {
+    :global(
+      :where(
+        .lc-grid-x-rule,
+        .lc-grid-x-end-rule,
+        .lc-grid-x-radial-line,
+        .lc-grid-y-rule,
+        .lc-grid-y-end-rule,
+        .lc-grid-y-radial-line
+      )
+    ) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-grid-y-radial-circle)) {
+      --fill-color: none;
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+  }
+</style>

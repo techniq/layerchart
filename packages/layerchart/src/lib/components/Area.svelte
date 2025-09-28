@@ -239,7 +239,15 @@
 </script>
 
 {#if line}
-  <Spline {data} {x} y={y1} {curve} {defined} {motion} {...extractLayerProps(line, 'area-line')} />
+  <Spline
+    {data}
+    {x}
+    y={y1}
+    {curve}
+    {defined}
+    {motion}
+    {...extractLayerProps(line, 'lc-area-line')}
+  />
 {/if}
 
 {#if renderCtx === 'svg'}
@@ -251,6 +259,6 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    {...extractLayerProps(restProps, 'area-path')}
+    {...extractLayerProps(restProps, 'lc-area-path')}
   />
 {/if}

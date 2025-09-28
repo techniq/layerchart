@@ -187,6 +187,37 @@
   </div>
 </Preview>
 
+<h2>Vertical</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <Chart
+      data={dateSeriesData}
+      x="value"
+      xNice
+      y="date"
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'quadtree-y' }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
+        <Spline class="stroke-2 stroke-primary" />
+        <Highlight points lines />
+      </Layer>
+
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>

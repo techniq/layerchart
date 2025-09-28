@@ -82,7 +82,6 @@
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     cx = 0,
@@ -133,7 +132,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls('lc-ellipse', className),
           }
     );
   }
@@ -181,7 +180,49 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('ellipse'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-ellipse', className)}
     {...restProps}
   />
+{:else if renderCtx === 'html'}
+  <div
+    style:position="absolute"
+    style:left="{motionCx.current}px"
+    style:top="{motionCy.current}px"
+    style:width="{motionRx.current * 2}px"
+    style:height="{motionRy.current * 2}px"
+    style:border-radius="50%"
+    style:background-color={fill}
+    style:opacity
+    style:border-width={strokeWidth}
+    style:border-color={stroke}
+    style:border-style="solid"
+    style:transform="translate(-50%, -50%)"
+    class={cls('lc-ellipse', className)}
+    {...restProps}
+  ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-ellipse)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-ellipse, svg.lc-ellipse):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-ellipse, svg.lc-ellipse):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-ellipse):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-ellipse):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

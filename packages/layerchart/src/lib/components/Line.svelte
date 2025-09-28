@@ -4,6 +4,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import { pointsToAngleAndLength } from '$lib/utils/math.js';
 
   export type LinePropsWithoutHTML = {
     /**
@@ -98,7 +99,6 @@
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -148,7 +148,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls('lc-line', className),
           }
     );
   }
@@ -195,10 +195,47 @@
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls(layerClass('line'), stroke === undefined && 'stroke-surface-content', className)}
+    class={cls('lc-line', className)}
     {...restProps}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
   <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
   <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
+{:else if renderCtx === 'html'}
+  {@const { angle, length } = pointsToAngleAndLength(
+    { x: motionX1.current, y: motionY1.current },
+    { x: motionX2.current, y: motionY2.current }
+  )}
+  <!-- STYLE-TODO: Should html use stroke for fill? -->
+  <div
+    style:position="absolute"
+    style:left="{motionX1.current}px"
+    style:top="{motionY1.current}px"
+    style:width="{length}px"
+    style:height="{strokeWidth ?? 1}px"
+    style:transform="translateY(-50%) rotate({angle}deg)"
+    style:transform-origin="0 50%"
+    style:opacity
+    style:background-color={stroke}
+    class={cls('lc-line', className)}
+    style={restProps.style}
+  ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-line)) {
+      --stroke-color: var(--color-surface-content, currentColor);
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-line, svg.lc-line):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-line):not([background-color])) {
+      background-color: var(--stroke-color);
+    }
+  }
+</style>

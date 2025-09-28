@@ -24,7 +24,6 @@
   import type { Snippet } from 'svelte';
   import { getRenderContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -35,13 +34,13 @@
 
 {#if renderContext === 'svg'}
   <defs>
-    <filter {id} class={layerClass('blur-filter')}>
+    <filter {id} class="lc-blur-filter">
       <feGaussianBlur in="SourceGraphic" {stdDeviation} />
     </filter>
   </defs>
 
   {#if children}
-    <g filter="url(#{id})" class={layerClass('blur-g')}>
+    <g filter="url(#{id})" class="lc-blur-g">
       {@render children()}
     </g>
   {/if}

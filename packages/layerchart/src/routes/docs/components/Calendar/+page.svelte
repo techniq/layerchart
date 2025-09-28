@@ -42,7 +42,7 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ top: 13 }}
+      padding={{ top: 20 }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -91,7 +91,7 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ top: 13 }}
+      padding={{ top: 20 }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -141,7 +141,7 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ left: 20, top: 13 }}
+      padding={{ top: 20, left: 20 }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -200,7 +200,7 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ top: 13 }}
+      padding={{ top: 20 }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -244,7 +244,7 @@
   </div>
 </Preview>
 
-<h2>Html</h2>
+<h2>Html with padding</h2>
 
 <Preview {data}>
   <div class="h-[200px] p-4 border rounded-sm">
@@ -260,7 +260,7 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ top: 13 }}
+      padding={{ top: 20 }}
     >
       {#snippet children({ context })}
         <Layer type="html">

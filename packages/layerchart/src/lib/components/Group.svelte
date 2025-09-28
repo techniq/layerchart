@@ -83,13 +83,10 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
-  import { cls } from '@layerstack/tailwind';
-
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
 
   import { getChartContext } from './Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -178,7 +175,7 @@
 {:else if renderCtx === 'svg'}
   <g
     style:transform
-    class={cls(layerClass('group-g'), className)}
+    class={['lc-group-g', className]}
     in:transitionIn={transitionInParams}
     {opacity}
     {...restProps}
@@ -187,16 +184,24 @@
   >
     {@render children?.()}
   </g>
-{:else}
+{:else if renderCtx === 'html'}
   <div
     bind:this={ref}
     style:transform
     style:opacity
     in:transitionIn={transitionInParams}
     {...restProps}
-    class={cls(layerClass('group-div'), 'absolute', className)}
+    class={['lc-group-div', className]}
     ontouchmove={handleTouchMove}
   >
     {@render children?.()}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :where(.lc-group-div) {
+      position: absolute;
+    }
+  }
+</style>

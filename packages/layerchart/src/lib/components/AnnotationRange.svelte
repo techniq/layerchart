@@ -118,7 +118,12 @@
 </script>
 
 {#if fill || className}
-  <Rect {...rect} {...props?.rect} {fill} class={cls(props?.rect?.class, className)} />
+  <Rect
+    {...rect}
+    {...props?.rect}
+    {fill}
+    class={cls('lc-annotation-range', props?.rect?.class, className)}
+  />
 {/if}
 
 {#if gradient}
@@ -142,6 +147,15 @@
     value={label}
     {...labelProps}
     {...props?.label}
-    class={cls('text-xs pointer-events-none', props?.label?.class)}
+    class={cls('lc-annotation-range-label', props?.label?.class)}
   />
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-annotation-range-label)) {
+      font-size: 12px;
+      pointer-events: none;
+    }
+  }
+</style>

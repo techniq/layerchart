@@ -189,7 +189,7 @@
 
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
   import {
@@ -402,7 +402,7 @@
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
-    {...extractLayerProps(track, 'arc-track')}
+    {...extractLayerProps(track, 'lc-arc-track')}
   />
 {/if}
 
@@ -416,7 +416,7 @@
   stroke-width={strokeWidth}
   {opacity}
   {...restProps}
-  class={cls(layerClass('arc-line'), className)}
+  class={cls('lc-arc-line', className)}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}

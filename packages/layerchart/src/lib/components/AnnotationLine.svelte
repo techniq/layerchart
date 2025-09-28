@@ -130,7 +130,7 @@
   x2={line.x2}
   y2={line.y2}
   {...props?.line}
-  class={cls('stroke-surface-content', props?.line?.class)}
+  class={cls('lc-annotation-line', props?.line?.class)}
 />
 
 {#if label}
@@ -138,6 +138,19 @@
     value={label}
     {...labelProps}
     {...props?.label}
-    class={cls('text-xs pointer-events-none', props?.label?.class)}
+    class={cls('lc-annotation-line-label', props?.label?.class)}
   />
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-annotation-line)) {
+      --stroke-color: var(--color-surface-content, currentColor);
+    }
+
+    :global(:where(.lc-annotation-line-label)) {
+      font-size: 12px;
+      pointer-events: none;
+    }
+  }
+</style>

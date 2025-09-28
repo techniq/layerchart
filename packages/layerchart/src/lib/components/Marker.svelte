@@ -73,7 +73,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -104,39 +103,51 @@
     {refX}
     {refY}
     {viewBox}
+    data-type={type}
     {...restProps}
-    class={cls(
-      layerClass('marker'),
-      'overflow-visible',
-      // stroke
-      restProps.stroke == null &&
-        (['arrow', 'circle-stroke', 'line'].includes(type ?? '')
-          ? 'stroke-[context-stroke]'
-          : type === 'circle'
-            ? 'stroke-surface-100'
-            : 'stroke-none'),
-      // extra stroke attrs
-      '[stroke-linecap:round] [stroke-linejoin:round]',
-      //fill
-      restProps.fill == null &&
-        (['triangle', 'dot', 'circle'].includes(type ?? '')
-          ? 'fill-[context-stroke]'
-          : type === 'circle-stroke'
-            ? 'fill-surface-100'
-            : 'fill-none'),
-      className
-    )}
+    class={cls('lc-marker', className)}
   >
     {#if children}
       {@render children()}
     {:else if type === 'triangle'}
-      <path d="M 0 0 L 10 5 L 0 10 z" class={layerClass('marker-triangle')} />
+      <path d="M 0 0 L 10 5 L 0 10 z" class="lc-marker-triangle" />
     {:else if type === 'arrow'}
-      <polyline points="0 0, 10 5, 0 10" class={layerClass('marker-arrow')} />
+      <polyline points="0 0, 10 5, 0 10" class="lc-marker-arrow" />
     {:else if type === 'circle' || type === 'circle-stroke' || type === 'dot'}
-      <circle cx={5} cy={5} r={5} class={layerClass('marker-circle')} />
+      <circle cx={5} cy={5} r={5} class="lc-marker-circle" />
     {:else if type === 'line'}
-      <polyline points="5 0, 5 10" class={layerClass('marker-line')} />
+      <polyline points="5 0, 5 10" class="lc-marker-line" />
     {/if}
   </marker>
 </defs>
+
+<style>
+  @layer base {
+    :global(:where(.lc-marker)) {
+      overflow: visible;
+
+      &[data-type='arrow'],
+      &[data-type='circle-stroke'],
+      &[data-type='line'] {
+        fill: none;
+        stroke: context-stroke;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      &[data-type='circle'] {
+        stroke: var(--color-surface-100, light-dark(white, black));
+      }
+
+      &[data-type='triangle'],
+      &[data-type='dot'],
+      &[data-type='circle'] {
+        fill: context-stroke;
+      }
+
+      &[data-type='circle-stroke'] {
+        fill: var(--color-surface-100, light-dark(white, black));
+      }
+    }
+  }
+</style>

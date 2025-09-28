@@ -34,7 +34,7 @@
 
   import { getChartContext } from './Chart.svelte';
   import { chartDataArray } from '../utils/common.js';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     fill,
@@ -52,7 +52,7 @@
   const data = $derived(chartDataArray(dataProp ?? ctx.data));
 </script>
 
-<Group class={layerClass('bars')}>
+<Group class="lc-bars">
   {#if children}
     {@render children()}
   {:else}
@@ -64,7 +64,7 @@
         {stroke}
         fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}
-        {...extractLayerProps(restProps, 'bars-bar')}
+        {...extractLayerProps(restProps, 'lc-bars-bar')}
       />
     {/each}
   {/if}

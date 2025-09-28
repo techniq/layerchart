@@ -162,7 +162,6 @@
   import { getTooltipContext } from './TooltipContext.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { untrack, type Snippet } from 'svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     anchor = 'top-left',
@@ -359,8 +358,8 @@
 {#if tooltipCtx.data}
   <div
     {...props.root}
-    class={cls('root', layerClass('tooltip-root'), classes.root, props.root?.class)}
-    class:pointer-events-none={!pointerEvents}
+    class={cls('lc-tooltip-root', classes.root, props.root?.class)}
+    class:disablePointerEvents={pointerEvents === false}
     style:top="{motionY.current}px"
     style:left="{motionX.current}px"
     transition:fade={{ duration: 100 }}
@@ -376,27 +375,11 @@
   >
     <div
       {...props.container}
-      class={cls(
-        layerClass('tooltip-container'),
-        variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
-        {
-          default: [
-            'bg-surface-100/90 dark:bg-surface-300/90 backdrop-filter backdrop-blur-[2px] text-surface-content',
-            '[&_.label]:text-surface-content/75',
-          ],
-          invert: [
-            'bg-surface-content/90 backdrop-filter backdrop-blur-[2px] text-surface-100 border border-surface-content',
-            '[&_.label]:text-surface-100/50',
-          ],
-          none: '',
-        }[variant],
-        classes.container,
-        props.container?.class,
-        className
-      )}
+      class={cls('lc-tooltip-container', classes.container, props.container?.class, className)}
+      data-variant={variant}
     >
       {#if children}
-        <div {...props.content} class={cls(layerClass('tooltip-content'), classes.content)}>
+        <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
           {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
         </div>
       {/if}
@@ -405,13 +388,61 @@
 {/if}
 
 <style>
-  .root {
-    position: absolute;
-    z-index: 50;
-    user-select: none;
-  }
+  @layer component {
+    :where(.lc-tooltip-root) {
+      position: absolute;
+      z-index: 50;
+      user-select: none;
 
-  .pointer-events-none {
-    pointer-events: none;
+      &.disablePointerEvents {
+        pointer-events: none;
+      }
+    }
+
+    :where(.lc-tooltip-container) {
+      &:not([data-variant='none']) {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        padding: 4px 8px;
+        height: 100%;
+        border-radius: 0.25rem; /* rounded-sm */
+        box-shadow: /* elevation-1 */
+          0px 2px 1px -1px hsl(0 0% 0% / 20%),
+          0px 1px 1px 0px hsl(0 0% 0% / 14%),
+          0px 1px 3px 0px hsl(0 0% 0% / 12%);
+        /* STYLE-TODO: vendor prefix (-webkit?) */
+        backdrop-filter: blur(2px);
+      }
+
+      &[data-variant='default'] {
+        color: var(--color-surface-content, currentColor);
+        background-color: color-mix(
+          in oklab,
+          light-dark(var(--color-surface-100, white), var(--color-surface-300, black)) 90%,
+          transparent
+        );
+
+        :global(& .label) {
+          color: color-mix(in oklab, var(--color-surface-content, currentColor) 75%, transparent);
+        }
+      }
+
+      &[data-variant='invert'] {
+        color: var(--color-surface-100, light-dark(white, black));
+        background-color: color-mix(
+          in oklab,
+          var(--color-surface-content, currentColor) 90%,
+          transparent
+        );
+
+        :global(& .label) {
+          color: color-mix(
+            in oklab,
+            var(--color-surface-100, light-dark(white, black)) 50%,
+            transparent
+          );
+        }
+      }
+    }
   }
 </style>

@@ -634,6 +634,9 @@
         xAxis: { format: 'month', tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
+        tooltip: {
+          context: { mode: 'bisect-x' },
+        },
       }}
       series={[
         {

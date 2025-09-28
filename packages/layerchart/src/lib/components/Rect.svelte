@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -39,7 +39,8 @@
   } & CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
-    Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML>;
+    Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML> &
+    CommonEvents;
 </script>
 
 <script lang="ts">
@@ -49,7 +50,6 @@
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     height,
@@ -107,7 +107,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls('lc-rect', className),
           }
     );
   }
@@ -155,7 +155,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-rect', className)}
     {...restProps}
     {onclick}
     {ondblclick}
@@ -166,4 +166,54 @@
     {onpointerout}
     bind:this={ref}
   />
+{:else if renderCtx === 'html'}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div
+    style:position="absolute"
+    style:left="{motionX.current}px"
+    style:top="{motionY.current}px"
+    style:width="{motionWidth.current}px"
+    style:height="{motionHeight.current}px"
+    style:background={fill}
+    style:background-opacity={opacity}
+    style:border-width="{strokeWidth}px"
+    style:border-style="solid"
+    style:border-color={stroke}
+    style:border-radius="{restProps.rx}px"
+    class={cls('lc-rect', className)}
+    {...restProps as any}
+    {onclick}
+    {ondblclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
+    {onpointerover}
+    {onpointerout}
+  ></div>
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-rect)) {
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: initial;
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-rect, svg.lc-rect):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-rect, svg.lc-rect):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-rect):not([background])) {
+      background: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-rect):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

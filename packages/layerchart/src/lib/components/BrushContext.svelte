@@ -171,6 +171,7 @@
 </script>
 
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { extent, min, max } from 'd3-array';
   import { clamp, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -181,7 +182,6 @@
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -513,7 +513,6 @@
 {#if disabled}
   {@render children?.({ brushContext: brushState })}
 {:else}
-  {@const handleClass = layerClass('brush-handle')}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     bind:this={rootEl}
@@ -521,12 +520,12 @@
     style:left="{ctx.padding.left}px"
     style:width="{ctx.width}px"
     style:height="{ctx.height}px"
-    class={cls(layerClass('brush-context'), 'absolute touch-none')}
+    class={cls('lc-brush-context')}
     onpointerdown={createRange}
     ondblclick={() => selectAll()}
   >
     <div
-      class={cls(layerClass('brush-container'), 'absolute')}
+      class={cls('lc-brush-container')}
       style:top="-{ctx.padding.top ?? 0}px"
       style:left="-{ctx.padding.left ?? 0}px"
       style:width="{ctx.containerWidth}px"
@@ -538,12 +537,12 @@
     {#if brushState.active}
       <div
         {...range}
-        style:left="{brushState.range.x}px"
-        style:top="{brushState.range.y}px"
-        style:width="{brushState.range.width}px"
-        style:height="{brushState.range.height}px"
+        style:left="{_range.x}px"
+        style:top="{_range.y}px"
+        style:width="{_range.width}px"
+        style:height="{_range.height}px"
         class={cls(
-          layerClass('brush-range'),
+          'brush-range',
           'absolute bg-surface-content/10 cursor-move select-none',
           'z-10',
           classes.range,
@@ -561,14 +560,7 @@
           style:width="{brushState.range.width}px"
           style:height="{handleSize}px"
           data-position="top"
-          class={cls(
-            handleClass,
-            'cursor-ns-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustTop}
           ondblclick={(e) => {
             e.stopPropagation();
@@ -586,15 +578,7 @@
           style:width="{brushState.range.width}px"
           style:height="{handleSize}px"
           data-position="bottom"
-          class={cls(
-            handleClass,
-            'handle bottom',
-            'cursor-ns-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustBottom}
           ondblclick={(e) => {
             e.stopPropagation();
@@ -614,14 +598,7 @@
           style:width="{handleSize}px"
           style:height="{brushState.range.height}px"
           data-position="left"
-          class={cls(
-            handleClass,
-            'cursor-ew-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustLeft}
           ondblclick={(e) => {
             e.stopPropagation();
@@ -639,14 +616,7 @@
           style:width="{handleSize}px"
           style:height="{brushState.range.height}px"
           data-position="right"
-          class={cls(
-            handleClass,
-            'cursor-ew-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustRight}
           ondblclick={(e) => {
             e.stopPropagation();
@@ -660,3 +630,40 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :where(.lc-brush-context) {
+      position: absolute;
+      touch-action: none;
+    }
+
+    :where(.lc-brush-container) {
+      position: absolute;
+    }
+
+    :where(.lc-brush-range) {
+      position: absolute;
+      cursor: move;
+      user-select: none;
+      z-index: 10;
+      background: color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent);
+    }
+
+    :where(.lc-brush-handle) {
+      position: absolute;
+      user-select: none;
+      z-index: 10;
+
+      &[data-position='top'],
+      &[data-position='bottom'] {
+        cursor: ns-resize;
+      }
+
+      &[data-position='left'],
+      &[data-position='right'] {
+        cursor: ew-resize;
+      }
+    }
+  }
+</style>
