@@ -2,66 +2,11 @@
   import type { Snippet } from 'svelte';
   import { Context } from 'runed';
 
-  // TODO: Should we support the full `DomainType` (`string`, etc)
-  // type BrushDomainType = NonNullable<DomainType>;
-  export type BrushDomainType = Array<number | Date | null>;
-
-  // TODO: move to new file?
-  export class BrushState {
-    x = $state<BrushDomainType>([null, null]);
-    y = $state<BrushDomainType>([null, null]);
-    active = $state<boolean>();
-
-    // TODO: make read only
-    range = $state<BrushRange>({
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-    });
-
-    // TODO: make read only
-    handleSize = $state(0);
-
-    constructor(options?: { x?: BrushDomainType; y?: BrushDomainType; active?: boolean }) {
-      this.x = options?.x ?? [null, null];
-      this.y = options?.y ?? [null, null];
-      // this.active = options?.active ?? (this.x !== null || this.y !== null);
-      this.active = options?.active;
-    }
-  }
+  import { BrushState, type BrushDomainType } from '$lib/states/brush.svelte.js';
 
   const _BrushContext = new Context<BrushState>('BrushContext');
 
-  export type BrushRange = {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-
-  // export type BrushContextValue = {
-  //   xDomain: DomainType;
-  //   yDomain: DomainType;
-  //   isActive: boolean;
-  //   range: BrushRange;
-  //   handleSize: number;
-  // };
-
-  // const defaultContext: BrushContextValue = {
-  //   xDomain: null,
-  //   yDomain: null,
-  //   isActive: false,
-  //   range: {
-  //     x: 0,
-  //     y: 0,
-  //     width: 0,
-  //     height: 0,
-  //   },
-  //   handleSize: 0,
-  // };
-
-  const defaultContext = new BrushState();
+  const defaultContext = new BrushState(null);
 
   export function getBrushContext() {
     const defaults = $state(defaultContext);
@@ -171,7 +116,6 @@
 </script>
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
   import { extent, min, max } from 'd3-array';
   import { clamp, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -210,7 +154,7 @@
 
   let rootEl = $state<HTMLElement>();
 
-  const brushState = new BrushState({ x, y });
+  const brushState = new BrushState(ctx, { x, y, axis });
 
   // if (xDomain === undefined) {
   //   xDomain = ctx.xScale.domain();
@@ -244,56 +188,9 @@
   // const yDomainMax = $derived(yDomainMinMax[1]);
   const [yDomainMin, yDomainMax] = $derived(ctx.yScale.domain());
 
-  const top = $derived(ctx.yScale(brushState.y?.[1]));
-  const bottom = $derived(ctx.yScale(brushState.y?.[0]));
-  const left = $derived(ctx.xScale(brushState.x?.[0]));
-  const right = $derived(ctx.xScale(brushState.x?.[1]));
-
   $effect(() => {
-    brushState.range = {
-      x: axis === 'both' || axis === 'x' ? left : 0,
-      y: axis === 'both' || axis === 'y' ? top : 0,
-      width: axis === 'both' || axis === 'x' ? right - left : ctx.width,
-      height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
-    };
     brushState.handleSize = handleSize;
   });
-
-  // const _range = $derived({
-  //   x: axis === 'both' || axis === 'x' ? left : 0,
-  //   y: axis === 'both' || axis === 'y' ? top : 0,
-  //   width: axis === 'both' || axis === 'x' ? right - left : ctx.width,
-  //   height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
-  // });
-
-  // let isActive = $state(false);
-
-  // const brushContext = {
-  //   get xDomain() {
-  //     return xDomain!;
-  //   },
-  //   set xDomain(v: DomainType) {
-  //     xDomain = v;
-  //   },
-  //   get yDomain() {
-  //     return yDomain!;
-  //   },
-  //   set yDomain(v: DomainType) {
-  //     yDomain = v;
-  //   },
-  //   get isActive() {
-  //     return isActive;
-  //   },
-  //   set isActive(v: boolean) {
-  //     isActive = v;
-  //   },
-  //   get range() {
-  //     return _range;
-  //   },
-  //   get handleSize() {
-  //     return handleSize;
-  //   },
-  // };
 
   // brushContextProp = brushContext;
   brushContextProp = brushState;
@@ -568,7 +465,7 @@
         <div
           {...handle}
           style:left="{brushState.range.x}px"
-          style:top="{bottom - handleSize}px"
+          style:top="{brushState.range.y + brushState.range.height - handleSize}px"
           style:width="{brushState.range.width}px"
           style:height="{handleSize}px"
           data-position="bottom"
@@ -605,7 +502,7 @@
 
         <div
           {...handle}
-          style:left="{right - handleSize + 1}px"
+          style:left="{brushState.range.x + brushState.range.width - handleSize + 1}px"
           style:top="{brushState.range.y}px"
           style:width="{handleSize}px"
           style:height="{brushState.range.height}px"
