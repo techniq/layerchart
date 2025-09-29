@@ -104,7 +104,7 @@
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import { isScaleTime } from '../../utils/scales.svelte.js';
-  import type { BrushDomainType } from '../BrushContext.svelte';
+  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],

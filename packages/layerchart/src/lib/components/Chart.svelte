@@ -40,7 +40,8 @@
   import { unique } from '@layerstack/utils';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
-  import BrushContext, { type BrushState } from './BrushContext.svelte';
+  import BrushContext from './BrushContext.svelte';
+  import { type BrushState } from '$lib/states/brush.svelte.js';
   import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };

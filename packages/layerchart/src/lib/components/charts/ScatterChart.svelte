@@ -64,7 +64,7 @@
   import { asAny } from '../../utils/types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import type { BrushDomainType } from '../BrushContext.svelte';
+  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
