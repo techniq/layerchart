@@ -28,7 +28,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
-  import type { BrushDomainType } from '$lib/components/BrushContext.svelte';
+  import type { BrushDomainType } from '$lib/states/brush.svelte.js';
   import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
