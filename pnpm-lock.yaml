@@ -209,6 +209,9 @@ importers:
       layerchart:
         specifier: workspace:*
         version: link:../../packages/layerchart
+      mode-watcher:
+        specifier: ^1.1.0
+        version: 1.1.0(svelte@5.38.2)
       prettier:
         specifier: ^3.4.2
         version: 3.6.2
