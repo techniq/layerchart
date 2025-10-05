@@ -17,6 +17,9 @@
 		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
+		"@content-collections/core": "^0.11.1",
+		"@content-collections/markdown": "^0.1.4",
+		"@content-collections/vite": "^0.2.7",
 		"@eslint/compat": "^1.4.0",
 		"@eslint/js": "^9.36.0",
 		"@playwright/test": "^1.55.1",
@@ -42,6 +45,7 @@
 		"vite": "^7.1.7",
 		"vite-plugin-devtools-json": "^1.0.0",
 		"vitest": "^3.2.4",
-		"vitest-browser-svelte": "^1.1.0"
+		"vitest-browser-svelte": "^1.1.0",
+		"zod": "^4.1.11"
 	}
 }
