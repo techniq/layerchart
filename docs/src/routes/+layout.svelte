@@ -14,7 +14,6 @@
 	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 	import { env } from '@layerstack/utils';
-	import { MediaQueryPresets } from '@layerstack/svelte-state';
 	import { watch } from 'runed';
 
 	import { dev } from '$app/environment';
@@ -53,8 +52,6 @@
 
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
-
-	const { mdScreen } = new MediaQueryPresets();
 
 	settings({
 		components: {
@@ -144,45 +141,47 @@
 	{/if} -->
 	</Button>
 
-	<span class="text-xl font-bold md:w-60">LayerChart</span>
+	<span class="text-xl font-bold lg:w-60">LayerChart</span>
 
-	<TextField
-		placeholder="Search"
-		bind:value={searchQuery}
-		on:keydown={(e) => {
-			if (e.key === 'Enter') {
-				handleSearch();
-			}
-		}}
-		bind:inputEl={searchInput}
-		classes={{
-			root: 'px-2',
-			container: 'hover:border-surface-content/20'
-		}}
-	>
-		{#snippet prepend()}
-			<LucideSearch class="text-surface-content/50 mr-4" />
-		{/snippet}
-		{#snippet append()}
-			<div class="flex items-center gap-1">
-				<Kbd
-					command={env.isMac()}
-					control={!env.isMac()}
-					class="size-4 items-center justify-center text-xs"
-				/>
-				<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
-			</div>
-		{/snippet}
-	</TextField>
-
-	<div class="grow"></div>
+	<div class="flex grow justify-end sm:justify-center lg:justify-start">
+		<!-- TODO: Add search functionality -->
+		<Button icon={LucideSearch} class="inline-block sm:hidden" />
+		<TextField
+			placeholder="Search"
+			bind:value={searchQuery}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					handleSearch();
+				}
+			}}
+			bind:inputEl={searchInput}
+			classes={{
+				root: 'hidden sm:block px-2',
+				container: 'hover:border-surface-content/20'
+			}}
+		>
+			{#snippet prepend()}
+				<LucideSearch class="text-surface-content/50 mr-4" />
+			{/snippet}
+			{#snippet append()}
+				<div class="flex items-center gap-1">
+					<Kbd
+						command={env.isMac()}
+						control={!env.isMac()}
+						class="size-4 items-center justify-center text-xs"
+					/>
+					<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
+				</div>
+			{/snippet}
+		</TextField>
+	</div>
 
 	<div class="flex items-center gap-2">
 		<div class="flex items-center border-r pr-2">
 			<ThemeSelect keyboardShortcuts />
 		</div>
 
-		{#if mdScreen.current}
+		<div class="hidden md:flex">
 			<Tooltip title="Discord" placement="left" offset={2}>
 				<Button
 					icon={CustomDiscord}
@@ -209,40 +208,40 @@
 					target="_blank"
 				/>
 			</Tooltip>
-		{:else}
-			<MenuButton
-				icon={LucideEllipsisVertical}
-				menuIcon={null}
-				iconOnly={true}
-				options={[
-					{
-						label: 'Svelte UX',
-						value: 'https://svelte-ux.techniq.dev',
-						icon: LucideArrowUpRight
-					},
-					{
-						label: 'Github',
-						value: 'https://github.com/techniq/layerchart',
-						icon: LucideGithub
-					},
-					{
-						label: 'Discord',
-						value: 'https://discord.gg/697JhMPD3t',
-						icon: CustomDiscord
-					},
-					{
-						label: 'Bluesky',
-						value: 'https://bsky.app/profile/techniq.dev',
-						icon: CustomBluesky
-					}
-				]}
-				on:change={(e) => {
-					window.open(e.detail.value, '_blank');
-				}}
-			>
-				<span slot="selection" class="hidden"></span>
-			</MenuButton>
-		{/if}
+		</div>
+		<MenuButton
+			icon={LucideEllipsisVertical}
+			menuIcon={null}
+			iconOnly={true}
+			options={[
+				{
+					label: 'Svelte UX',
+					value: 'https://svelte-ux.techniq.dev',
+					icon: LucideArrowUpRight
+				},
+				{
+					label: 'Github',
+					value: 'https://github.com/techniq/layerchart',
+					icon: LucideGithub
+				},
+				{
+					label: 'Discord',
+					value: 'https://discord.gg/697JhMPD3t',
+					icon: CustomDiscord
+				},
+				{
+					label: 'Bluesky',
+					value: 'https://bsky.app/profile/techniq.dev',
+					icon: CustomBluesky
+				}
+			]}
+			on:change={(e) => {
+				window.open(e.detail.value, '_blank');
+			}}
+			class="inline-block md:hidden"
+		>
+			<span slot="selection" class="hidden"></span>
+		</MenuButton>
 	</div>
 </header>
 
