@@ -2,10 +2,16 @@ import { defineConfig } from 'vitest/config';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import contentCollections from '@content-collections/vite';
+import Icons from 'unplugin-icons/vite';
 // import devtoolsJson from 'vite-plugin-devtools-json';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(), contentCollections() /*, devtoolsJson()*/],
+	plugins: [
+		tailwindcss(),
+		sveltekit(),
+		contentCollections(),
+		Icons({ compiler: 'svelte' }) /*, devtoolsJson()*/
+	],
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
