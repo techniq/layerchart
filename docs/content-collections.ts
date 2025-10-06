@@ -4,14 +4,14 @@ import { z } from 'zod';
 
 const components = defineCollection({
 	name: 'components',
-	directory: 'content/components',
+	directory: 'src/content/components',
 	include: '**/*.md',
 	schema: z.object({
 		description: z.string().optional()
 	}),
 	transform: async (doc, context) => ({
 		...doc,
-		id: doc._meta.path,
+		slug: doc._meta.path,
 		html: await compileMarkdown(context, doc)
 	})
 });

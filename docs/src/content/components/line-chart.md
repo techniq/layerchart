@@ -4,8 +4,16 @@ description: 'Streamlined Chart configuration for Line charts'
 # source,
 # pageSource,
 # description: 'Streamlined Chart configuration for Line charts',
-# supportedContexts: ['svg', 'canvas'],
+# supportedContexts: ['svg', 'canvas']
 # related: ['components/Chart', 'components/Spline', 'examples/Line'],
 ---
 
-This is a LineChart
+# Examples
+
+```svelte
+<script>
+	let foo = $props();
+</script>
+
+This is a test
+```
