@@ -5,15 +5,17 @@
 	import { allComponents } from 'content-collections';
 	import { page } from '$app/state';
 
+	let { onItemClick }: { onItemClick?: () => {} } = $props();
+
 	const componentsBySection = group(allComponents, (d) => d.section);
 </script>
 
 <nav class="flex flex-col gap-6">
 	<section>
-		<h2 class="mb-2 text-base font-semibold capitalize">Components</h2>
+		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
 		{#each componentsBySection as [section, components]}
 			<div class="mb-4">
-				<h3 class="mb-1 text-sm font-medium capitalize">{section}</h3>
+				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
 				{#each components as component}
 					<NavItem
 						text={component.name}
@@ -24,6 +26,7 @@
 							active:
 								'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
 						}}
+						on:click={() => onItemClick?.()}
 					/>
 				{/each}
 			</div>

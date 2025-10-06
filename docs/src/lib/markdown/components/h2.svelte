@@ -6,7 +6,7 @@
 </script>
 
 <h2
-	class={cls('mt-12 scroll-m-20 text-3xl font-semibold tracking-[-0.01em] first:mt-0', className)}
+	class={cls('mt-12 scroll-m-20 text-2xl font-semibold tracking-[-0.01em] first:mt-0', className)}
 	{...restProps}
 >
 	{@render children?.()}

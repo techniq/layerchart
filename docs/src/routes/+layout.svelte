@@ -1,24 +1,46 @@
 <script lang="ts">
-	import { Breadcrumb, Button, Drawer, Kbd, TableOfContents, TextField } from 'svelte-ux';
+	import { onMount } from 'svelte';
+	import {
+		Breadcrumb,
+		Button,
+		Drawer,
+		Kbd,
+		MenuButton,
+		settings,
+		TableOfContents,
+		TextField,
+		ThemeSelect,
+		Tooltip
+	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 	import { env } from '@layerstack/utils';
+	import { MediaQueryPresets } from '@layerstack/svelte-state';
+	import { watch } from 'runed';
 
+	import { dev } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 
-	import IconAlignLeft from '~icons/lucide/align-left';
-	import IconAlignJustify from '~icons/lucide/align-justify';
-	import IconSearch from '~icons/lucide/search';
-	import IconArrowLeft from '~icons/lucide/arrow-left';
-	import IconArrowRight from '~icons/lucide/arrow-right';
-	import IconFilePen from '~icons/lucide/file-pen';
-	import IconChevronRight from '~icons/lucide/chevron-right';
+	import LucideAlignLeft from '~icons/lucide/align-left';
+	import LucideAlignJustify from '~icons/lucide/align-justify';
+	import LucideSearch from '~icons/lucide/search';
+	import LucideArrowLeft from '~icons/lucide/arrow-left';
+	import LucideArrowRight from '~icons/lucide/arrow-right';
+	import LucideFilePen from '~icons/lucide/file-pen';
+	import LucideChevronRight from '~icons/lucide/chevron-right';
+	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
+	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
+	import LucidePanelLeftOpen from '~icons/lucide/panel-left-open';
+
+	import LucideGithub from '~icons/lucide/github';
+	import CustomBluesky from '~icons/custom-brands/bluesky';
+	import CustomDiscord from '~icons/custom-brands/discord';
 
 	import '../app.css';
 
-	let { children } = $props();
+	let { data, children } = $props();
 
 	let searchQuery = $state('');
 
@@ -31,21 +53,82 @@
 
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
+
+	const { mdScreen } = new MediaQueryPresets();
+
+	settings({
+		components: {
+			// NavItem: {
+			//   classes: {
+			//     root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
+			//     active:
+			//       'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow-sm z-10',
+			//   },
+			// },
+		},
+		// @ts-expect-error
+		themes: data.themes
+	});
+
+	let currentPath = '';
+	onMount(() => {
+		// Delay adding `scroll-smooth` to `<html>` as provides better refresh experience
+		// and fixes issue where sometimes doesn't scroll far enough
+		setTimeout(() => {
+			document.documentElement.classList.add('scroll-smooth');
+		}, 0);
+
+		// Posthog analytics
+		if (!dev) {
+			watch(
+				() => page,
+				() => {
+					if (currentPath && currentPath !== page.url.pathname) {
+						// Page navigated away
+						// @ts-expect-error
+						posthog.capture('$pageleave');
+					}
+					// Page entered
+					currentPath = page.url.pathname;
+					// @ts-expect-error
+					posthog.capture('$pageview');
+				}
+			);
+			const handleBeforeUnload = () => {
+				// Hard reloads or browser exit
+				// @ts-expect-error
+				posthog.capture('$pageleave');
+			};
+			window.addEventListener('beforeunload', handleBeforeUnload);
+			return () => {
+				window.removeEventListener('beforeunload', handleBeforeUnload);
+			};
+		}
+	});
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+
+	{#if page.url.origin.includes('https')}
+		<script
+			defer
+			src="https://static.cloudflareinsights.com/beacon.min.js"
+			data-cf-beacon={JSON.stringify({ token: 'aff39463882545fd8cca0adba6afa86e' })}
+		></script>
+
+		<script
+			async
+			defer
+			src="https://us.umami.is/script.js"
+			data-website-id="98141640-7328-4228-ba7b-2287da133ee9"
+		></script>
+	{/if}
 </svelte:head>
 
-<button
-	class={cls(
-		'sticky left-0 top-[62px] flex w-full items-center gap-4 border-b py-2 lg:hidden',
-		'-ml-6 w-[calc(100%+theme(spacing.6))] px-6'
-	)}
-	onclick={() => (showDrawer = true)}
->
-	<IconAlignJustify />
-	<!-- {#if pageContent.breadcrumbs}
+<header class="bg-surface-300 sticky top-0 z-10 flex h-16 items-center border-b px-4 py-2">
+	<Button icon={LucidePanelLeftOpen} onclick={() => (showDrawer = true)} class="mr-2 lg:hidden">
+		<!-- {#if pageContent.breadcrumbs}
 		<Breadcrumb items={pageContent.breadcrumbs}>
 			{#snippet divider()}
 				<IconChevronRight class="text-surface-content/50 text-sm" />
@@ -59,57 +142,129 @@
 			{/snippet}
 		</Breadcrumb>
 	{/if} -->
-</button>
+	</Button>
 
-<div class="flex min-h-[calc(100vh-56px)]">
-	<div
-		class="sticky top-[58px] hidden max-h-[calc(100dvh-58px)] w-[280px] overflow-auto border-r px-3 py-5 lg:block"
+	<span class="text-xl font-bold md:w-60">LayerChart</span>
+
+	<TextField
+		placeholder="Search"
+		bind:value={searchQuery}
+		on:keydown={(e) => {
+			if (e.key === 'Enter') {
+				handleSearch();
+			}
+		}}
+		bind:inputEl={searchInput}
+		classes={{
+			root: 'px-2',
+			container: 'hover:border-surface-content/20'
+		}}
 	>
-		<TextField
-			placeholder="Search"
-			bind:value={searchQuery}
-			on:keydown={(e) => {
-				if (e.key === 'Enter') {
-					handleSearch();
-				}
-			}}
-			bind:inputEl={searchInput}
-			classes={{
-				root: 'mb-6',
-				container: 'hover:border-surface-content/20'
-			}}
-		>
-			{#snippet prepend()}
-				<IconSearch class="text-surface-content/50 mr-4" />
-			{/snippet}
-			{#snippet append()}
-				<div class="flex items-center gap-1">
-					<Kbd
-						command={env.isMac()}
-						control={!env.isMac()}
-						class="size-4 items-center justify-center text-xs"
-					/>
-					<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
-				</div>
-			{/snippet}
-		</TextField>
+		{#snippet prepend()}
+			<LucideSearch class="text-surface-content/50 mr-4" />
+		{/snippet}
+		{#snippet append()}
+			<div class="flex items-center gap-1">
+				<Kbd
+					command={env.isMac()}
+					control={!env.isMac()}
+					class="size-4 items-center justify-center text-xs"
+				/>
+				<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
+			</div>
+		{/snippet}
+	</TextField>
 
+	<div class="grow"></div>
+
+	<div class="flex items-center gap-2">
+		<div class="flex items-center border-r pr-2">
+			<ThemeSelect keyboardShortcuts />
+		</div>
+
+		{#if mdScreen.current}
+			<Tooltip title="Discord" placement="left" offset={2}>
+				<Button
+					icon={CustomDiscord}
+					href="https://discord.gg/697JhMPD3t"
+					class="p-2"
+					target="_blank"
+				/>
+			</Tooltip>
+
+			<Tooltip title="Bluesky" placement="left" offset={2}>
+				<Button
+					icon={CustomBluesky}
+					href="https://bsky.app/profile/techniq.dev"
+					class="p-2"
+					target="_blank"
+				/>
+			</Tooltip>
+
+			<Tooltip title="View repository" placement="left" offset={2}>
+				<Button
+					icon={LucideGithub}
+					href="https://github.com/techniq/layerchart"
+					class="p-2"
+					target="_blank"
+				/>
+			</Tooltip>
+		{:else}
+			<MenuButton
+				icon={LucideEllipsisVertical}
+				menuIcon={null}
+				iconOnly={true}
+				options={[
+					{
+						label: 'Svelte UX',
+						value: 'https://svelte-ux.techniq.dev',
+						icon: LucideArrowUpRight
+					},
+					{
+						label: 'Github',
+						value: 'https://github.com/techniq/layerchart',
+						icon: LucideGithub
+					},
+					{
+						label: 'Discord',
+						value: 'https://discord.gg/697JhMPD3t',
+						icon: CustomDiscord
+					},
+					{
+						label: 'Bluesky',
+						value: 'https://bsky.app/profile/techniq.dev',
+						icon: CustomBluesky
+					}
+				]}
+				on:change={(e) => {
+					window.open(e.detail.value, '_blank');
+				}}
+			>
+				<span slot="selection" class="hidden"></span>
+			</MenuButton>
+		{/if}
+	</div>
+</header>
+
+<div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
+	<div
+		class="bg-surface-300 w-62 sticky top-16 hidden max-h-[calc(100dvh-64px)] overflow-auto border-r px-3 py-5 lg:block"
+	>
 		<DocsMenu />
 	</div>
 
 	<Drawer
 		bind:open={showDrawer}
 		placement="left"
-		class="border-r px-6 py-8"
+		class="bg-surface-200 w-60 border-r px-4 py-8"
 		classes={{
-			backdrop:
-				'bg-surface-100/10 bg-radial from-black/0 from-[1px] to-surface-100 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+			backdrop: 'bg-surface-100/20 backdrop-blur-sm'
 		}}
 	>
 		<DocsMenu onItemClick={() => (showDrawer = false)} />
 	</Drawer>
 
-	<main class="mx-auto max-w-4xl flex-1 overflow-x-auto py-4 lg:px-20 lg:py-8">
+	<main class="mx-auto max-w-4xl flex-1 overflow-x-auto px-6 py-4 lg:px-20 lg:py-8">
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
 				{#snippet divider()}
@@ -129,7 +284,7 @@
 			class="text-surface-content/50 hover:text-surface-content mb-4 mt-16 inline-flex items-center gap-1 text-sm"
 			target="_blank"
 		>
-			<IconFilePen class="inline-block h-4 w-4" />
+			<LucideFilePen class="inline-block h-4 w-4" />
 			Edit this page
 		</a>
 
@@ -167,12 +322,12 @@
 
 	<!-- Table of Contents -->
 	<div
-		class="sticky top-[58px] hidden max-h-[calc(100dvh-58px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
+		class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
 	>
 		<div
-			class="_text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
+			class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
 		>
-			<IconAlignLeft />
+			<LucideAlignLeft />
 			On this page
 		</div>
 		{#key page.url}

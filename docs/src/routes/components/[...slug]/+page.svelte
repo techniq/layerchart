@@ -4,8 +4,8 @@
 	const { Component, metadata } = $derived(data);
 </script>
 
-<h1 class="text-2xl font-semibold">{metadata.name}</h1>
-<div>{metadata.description}</div>
+<h1 class="text-3xl font-bold">{metadata.name}</h1>
+<div class="text-surface-content/70">{metadata.description}</div>
 <div>{metadata.supportedContexts.join(', ')}</div>
 
 <Component />

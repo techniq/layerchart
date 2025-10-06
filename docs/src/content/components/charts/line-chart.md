@@ -7,7 +7,7 @@ related: [components/Chart, components/Spline, examples/Line]
 # pageSource,
 ---
 
-# Examples
+## Examples
 
 ```svelte
 <script>

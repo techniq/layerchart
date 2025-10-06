@@ -7,7 +7,7 @@ related: [components/Chart, components/Area, examples/Area]
 # pageSource,
 ---
 
-# Examples
+## Examples
 
 ```svelte
 <script>

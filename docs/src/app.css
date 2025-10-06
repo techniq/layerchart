@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 @import '@layerstack/tailwind/core.css';
 @import '@layerstack/tailwind/utils.css';
-@import '@layerstack/tailwind/themes/basic.css';
+/* @import '@layerstack/tailwind/themes/basic.css'; */
+@import '@layerstack/tailwind/themes/all.css';
 
 @source '../node_modules/svelte-ux/dist';
 
