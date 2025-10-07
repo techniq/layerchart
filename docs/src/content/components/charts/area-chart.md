@@ -2,9 +2,6 @@
 description: 'Streamlined Chart configuration for Area charts'
 supportedContexts: [svg, canvas]
 related: [components/Chart, components/Area, examples/Area]
-# api,
-# source,
-# pageSource,
 ---
 
 <script lang="ts">
