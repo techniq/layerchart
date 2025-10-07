@@ -8,22 +8,15 @@ related: [components/Chart, components/Area, examples/Area]
 ---
 
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/data.js';
+	import Code from '$lib/components/Code.svelte';
 
-	const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+	import Basic from './examples/basic.svelte';
+	import BasicSource from './examples/basic.svelte?raw';
 </script>
 
 ## Examples
 
 ### Basic
 
-<div class="h-[300px] p-4 border rounded-sm">
-	<AreaChart data={dateSeriesData} x="date" y="value" />
-</div>
-
-```svelte
-<div class="h-[300px] rounded-sm border p-4">
-	<AreaChart data={dateSeriesData} x="date" y="value" />
-</div>
-```
+<Basic />
+<Code source={BasicSource} />
