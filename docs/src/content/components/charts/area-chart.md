@@ -7,12 +7,23 @@ related: [components/Chart, components/Area, examples/Area]
 # pageSource,
 ---
 
-## Examples
+<script lang="ts">
+	import { AreaChart } from 'layerchart';
+	import { createDateSeries } from '$lib/utils/data.js';
 
-```svelte
-<script>
-	let foo = $props();
+	const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 </script>
 
-This is a test
+## Examples
+
+### Basic
+
+<div class="h-[300px] p-4 border rounded-sm">
+	<AreaChart data={dateSeriesData} x="date" y="value" />
+</div>
+
+```svelte
+<div class="h-[300px] rounded-sm border p-4">
+	<AreaChart data={dateSeriesData} x="date" y="value" />
+</div>
 ```
