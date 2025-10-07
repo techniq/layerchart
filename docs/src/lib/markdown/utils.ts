@@ -31,7 +31,7 @@ export async function getComponentDoc(slug: string = 'index') {
 	}
 
 	return {
-		Component: doc.default,
+		PageComponent: doc.default,
 		metadata
 	};
 }
