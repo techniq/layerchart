@@ -32,6 +32,7 @@
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucidePanelLeftOpen from '~icons/lucide/panel-left-open';
+	import LucidePanelLeftClose from '~icons/lucide/panel-left-close';
 
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
@@ -52,6 +53,7 @@
 
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
+	let showSidebar = $state(true);
 
 	settings({
 		components: {
@@ -246,11 +248,30 @@
 </header>
 
 <div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
-	<div
-		class="bg-surface-300 w-62 sticky top-16 hidden max-h-[calc(100dvh-64px)] overflow-auto border-r px-3 py-5 lg:block"
+	<aside
+		class={cls(
+			'bg-surface-300 sticky top-16 hidden max-h-[calc(100dvh-64px)] overflow-auto border-r py-5 lg:block transition-all',
+			showSidebar ? 'w-62 px-3' : 'w-0'
+		)}
 	>
 		<DocsMenu />
-	</div>
+
+		<div class="bg-surface-300 absolute bottom-0 left-0 right-0 h-14 border-t px-3">
+			<!-- Placeholder for toggle button -->
+		</div>
+	</aside>
+
+	<Button
+		onclick={() => (showSidebar = !showSidebar)}
+		iconOnly
+		class={cls('fixed max-lg:hidden transition-all bottom-3', showSidebar ? 'left-50' : 'left-1')}
+	>
+		{#if showSidebar}
+			<LucidePanelLeftClose />
+		{:else}
+			<LucidePanelLeftOpen />
+		{/if}
+	</Button>
 
 	<Drawer
 		bind:open={showDrawer}
