@@ -54,6 +54,7 @@
 		"rehype-slug": "^6.0.0",
 		"remark-gfm": "^4.0.1",
 		"runed": "^0.31.1",
+		"shiki": "^3.9.2",
 		"svelte": "^5.39.5",
 		"svelte-check": "^4.3.2",
 		"svelte-ux": "2.0.0-next.20",

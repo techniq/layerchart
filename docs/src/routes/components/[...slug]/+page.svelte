@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Code from '$lib/components/Code.svelte';
+
 	let { data } = $props();
 
 	const { Component, metadata } = $derived(data);
@@ -14,6 +16,4 @@ Related:
 <div>{metadata.related.join(', ')}</div>
 
 Source:
-<pre class="whitespace-pre">
-{JSON.stringify(metadata.source, null, 2)}
-</pre>
+<Code source={metadata.source} />

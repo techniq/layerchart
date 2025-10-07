@@ -134,6 +134,9 @@ importers:
       runed:
         specifier: ^0.31.1
         version: 0.31.1(svelte@5.39.9)
+      shiki:
+        specifier: ^3.9.2
+        version: 3.9.2
       svelte:
         specifier: ^5.39.5
         version: 5.39.9
