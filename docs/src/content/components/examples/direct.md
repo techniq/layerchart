@@ -1,5 +1,6 @@
 ---
 description: Directly import each component and source
+section: examples
 ---
 
 <script lang="ts">

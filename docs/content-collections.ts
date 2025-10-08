@@ -11,6 +11,7 @@ const components = defineCollection({
 	include: '**/*.md',
 	schema: z.object({
 		description: z.string().optional(),
+		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
 		related: z.array(z.string()).default([])
 	}),
@@ -36,8 +37,7 @@ const components = defineCollection({
 			...doc,
 			name: toPascalCase(fileName.replace('.md', '')),
 			slug: path,
-			source,
-			section: directory
+			source
 			// html: await compileMarkdown(context, doc)
 		};
 	}

@@ -1,5 +1,6 @@
 ---
 description: Use `experimental.async` to load each example and source
+section: examples
 ---
 
 <script lang="ts">

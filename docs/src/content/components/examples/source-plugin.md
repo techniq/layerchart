@@ -1,5 +1,6 @@
 ---
 description: Use rehype plugin and wrapper component to populate source
+section: examples
 ---
 
 <script lang="ts">
