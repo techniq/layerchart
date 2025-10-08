@@ -8,13 +8,12 @@ related: [components/Chart, components/Area, examples/Area]
 <script lang="ts">
 	import Code from '$lib/components/Code.svelte';
 
-	import Basic from '$examples/AreaChart/basic.svelte';
-	import BasicSource from '$examples/AreaChart/basic.svelte?raw';
+	let { examples } = $props();
 </script>
 
 ## Examples
 
 ### Basic
 
-<Basic />
-<Code source={BasicSource} />
+<examples.basic.component />
+<Code source={examples.basic.source} />

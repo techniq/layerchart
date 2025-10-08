@@ -4,7 +4,7 @@
 
 	let { data } = $props();
 
-	const { PageComponent, metadata } = $derived(data);
+	const { PageComponent, metadata, examples } = $derived(data);
 </script>
 
 <H1>{metadata.name}</H1>
@@ -12,7 +12,7 @@
 <div>{metadata.layers.join(', ')}</div>
 
 <svelte:boundary>
-	<PageComponent />
+	<PageComponent {examples} />
 
 	{#snippet pending()}
 		<p>loading...</p>
