@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	export {
+		a,
 		blockquote,
 		code,
 		h1,
