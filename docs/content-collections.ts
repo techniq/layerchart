@@ -15,28 +15,26 @@ const components = defineCollection({
 		related: z.array(z.string()).default([])
 	}),
 	transform: async (doc) => {
-		const { directory, fileName, path } = doc._meta;
+		const { filePath, fileName, directory, path } = doc._meta;
 
 		// Read the source file from the layerchart package
-		const componentName = toPascalCase(fileName.replace('.md', ''));
 		const sourcePath = join(
 			process.cwd(),
-			'../packages/layerchart/src/lib/components/charts',
-			`${componentName}.svelte`
+			`../packages/layerchart/src/lib/components/${path}.svelte`
 		);
 
 		let source = '';
 		try {
 			source = readFileSync(sourcePath, 'utf-8');
 		} catch (error) {
-			console.warn(
-				`Could not read source file for ${componentName}: ${error instanceof Error ? error.message : String(error)}`
-			);
+			// console.warn(
+			// 	`Could not read source file for ${filePath}: ${error instanceof Error ? error.message : String(error)}`
+			// );
 		}
 
 		return {
 			...doc,
-			name: componentName,
+			name: toPascalCase(fileName.replace('.md', '')),
 			slug: path,
 			source,
 			section: directory

@@ -9,10 +9,12 @@ import path, { resolve } from 'node:path';
 import process from 'node:process';
 // import { fileURLToPath } from "node:url";
 // import prettier from "@prettier/sync";
-// import { getHighlighter } from "shiki";
+// import { getHighlighter } from 'shiki';
+// import { createHighlighter } from 'shiki';
 import { u } from 'unist-builder';
 import { visit } from 'unist-util-visit';
 // import { codeBlockPrettierConfig } from "./other/code-block-prettier.js";
+// import { rehypeCustomHighlight } from '@mdsx/rehype-custom-highlighter';
 
 export const mdsxConfig = defineConfig({
 	extensions: ['.md'],
@@ -89,16 +91,21 @@ function getComponentSourceFileContent(component, name) {
 	if (!component || !name) return null;
 
 	const filePath = path.join(process.cwd(), `./src/examples/${component}/${name}.svelte`);
-	const fileContents = readFileSync(filePath, 'utf-8');
+	try {
+		const fileContents = readFileSync(filePath, 'utf-8');
 
-	// return prettier.format(
-	// 	transformComponentSourceContent(fileContents),
-	// 	codeBlockPrettierConfig
-	// );
-	return fileContents;
+		// return prettier.format(
+		// 	transformComponentSourceContent(fileContents),
+		// 	codeBlockPrettierConfig
+		// );
+		return fileContents;
+	} catch (e) {
+		console.error(`Error reading file at ${filePath}:`, e);
+		return null;
+	}
 }
 
-function transformComponentSourceContent(src = '') {
-	// return src.replaceAll(`import { cn } from "$lib/utils/styles.js"`, `import cn from "clsx"`);
-	return src;
-}
+// function transformComponentSourceContent(src = '') {
+// 	// return src.replaceAll(`import { cn } from "$lib/utils/styles.js"`, `import cn from "clsx"`);
+// 	return src;
+// }
