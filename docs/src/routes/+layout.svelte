@@ -251,7 +251,7 @@
 <div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
 	<aside
 		class={cls(
-			'bg-surface-300 sticky top-16 hidden max-h-[calc(100dvh-64px)] overflow-auto border-r py-5 lg:block transition-all',
+			'bg-surface-300 sticky top-16 hidden max-h-[calc(100dvh-64px)] overflow-auto border-r py-5 lg:block transition-[width]',
 			showSidebar ? 'w-62 px-3' : 'w-0'
 		)}
 	>
@@ -265,7 +265,10 @@
 	<Button
 		onclick={() => (showSidebar = !showSidebar)}
 		iconOnly
-		class={cls('fixed max-lg:hidden transition-all bottom-3', showSidebar ? 'left-50' : 'left-1')}
+		class={cls(
+			'fixed max-lg:hidden transition-[left] bottom-3',
+			showSidebar ? 'left-50' : 'left-1'
+		)}
 	>
 		{#if showSidebar}
 			<LucidePanelLeftClose />
