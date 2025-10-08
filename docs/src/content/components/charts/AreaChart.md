@@ -10,9 +10,10 @@ related: [components/Chart, components/Area, examples/Area]
 	import Basic from '$examples/AreaChart/basic.svelte';
 	import BasicSource from '$examples/AreaChart/basic.svelte?raw';
 
-	import AsyncExample from '$lib/components/AsyncExample.svelte';
-	import PromiseExample from '$lib/components/PromiseExample.svelte';
 	import Example from '$lib/components/Example.svelte';
+
+	import PromiseExample from '$lib/components/PromiseExample.svelte';
+	import AsyncExample from '$lib/components/AsyncExample.svelte';
 </script>
 
 ## Examples
@@ -30,10 +31,16 @@ related: [components/Chart, components/Area, examples/Area]
 	<Basic />
 </Example>
 
-### Async import
-
-<AsyncExample component="AreaChart" name="basic" />
-
 ### Promise import
 
+> Issue after build
+
 <PromiseExample component="AreaChart" name="basic" />
+
+### Async import
+
+> Issue with initial page view
+
+> Issue after build
+
+<AsyncExample component="AreaChart" name="basic" />
