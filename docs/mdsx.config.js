@@ -39,8 +39,6 @@ function rehypeComponentExample() {
 				const nameMatch = currNode.value.match(nameRegex);
 				const name = nameMatch ? nameMatch[1] : null;
 
-				console.log({ name });
-
 				if (!name) return null;
 
 				try {

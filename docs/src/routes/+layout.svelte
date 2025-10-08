@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import posthog from 'posthog-js';
 	import {
 		Breadcrumb,
 		Button,
