@@ -19,8 +19,12 @@
 	{/snippet}
 </svelte:boundary>
 
-<H2>Related</H2>
-<div>{metadata.related.join(', ')}</div>
+{#if metadata.related.length}
+	<H2>Related</H2>
+	<div>{metadata.related.join(', ')}</div>
+{/if}
 
-<H2>Component source</H2>
-<Code source={metadata.source} />
+{#if metadata.source}
+	<H2>Component source</H2>
+	<Code source={metadata.source} />
+{/if}
