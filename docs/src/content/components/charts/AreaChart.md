@@ -1,6 +1,6 @@
 ---
-description: 'Streamlined Chart configuration for Area charts'
-supportedContexts: [svg, canvas]
+description: Streamlined Chart configuration for Area charts
+layers: [svg, canvas]
 related: [components/Chart, components/Area, examples/Area]
 ---
 

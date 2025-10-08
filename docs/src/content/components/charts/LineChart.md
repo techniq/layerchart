@@ -1,6 +1,6 @@
 ---
-description: 'Streamlined Chart configuration for Line charts'
-supportedContexts: [svg, canvas]
+description: Streamlined Chart configuration for Line charts
+layers: [svg, canvas]
 related: [components/Chart, components/Spline, examples/Line]
 ---
 

@@ -9,7 +9,7 @@
 
 <H1>{metadata.name}</H1>
 <div class="text-surface-content/70">{metadata.description}</div>
-<div>{metadata.supportedContexts.join(', ')}</div>
+<div>{metadata.layers.join(', ')}</div>
 
 <svelte:boundary>
 	<PageComponent />

@@ -11,7 +11,7 @@ const components = defineCollection({
 	include: '**/*.md',
 	schema: z.object({
 		description: z.string().optional(),
-		supportedContexts: z.array(z.string()).default([]),
+		layers: z.array(z.string()).default([]),
 		related: z.array(z.string()).default([])
 	}),
 	transform: async (doc) => {
