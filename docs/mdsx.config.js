@@ -32,18 +32,27 @@ export const mdsxConfig = defineConfig({
  */
 function rehypeComponentExample() {
 	return async (tree) => {
+		const componentRegex = /component="([^"]+)"/;
 		const nameRegex = /name="([^"]+)"/;
+
 		visit(tree, (node, index, parent) => {
 			if (node?.type === 'raw' && node?.value?.startsWith('<Example')) {
 				const currNode = node;
+
+				const componentMatch = currNode.value.match(componentRegex);
+				const component = componentMatch ? componentMatch[1] : null;
+				if (!component) return null;
+
 				const nameMatch = currNode.value.match(nameRegex);
 				const name = nameMatch ? nameMatch[1] : null;
-
 				if (!name) return null;
 
 				try {
-					const sourceCode = getComponentSourceFileContent(name);
-					if (!sourceCode) throw new Error(`Could not find source code for component: ${name}`);
+					const sourceCode = getComponentSourceFileContent(component, name);
+					if (!sourceCode)
+						throw new Error(
+							`Could not find source code for component: ${component} example: ${name}`
+						);
 
 					const sourceCodeNode = u('element', {
 						tagName: 'pre',
@@ -76,13 +85,10 @@ function rehypeComponentExample() {
 	};
 }
 
-function getComponentSourceFileContent(name = '') {
-	if (!name) return null;
+function getComponentSourceFileContent(component, name) {
+	if (!component || !name) return null;
 
-	const filePath = path.join(
-		process.cwd(),
-		`./src/content/components/charts/examples/${name}.svelte`
-	);
+	const filePath = path.join(process.cwd(), `./src/examples/${component}/${name}.svelte`);
 	const fileContents = readFileSync(filePath, 'utf-8');
 
 	// return prettier.format(

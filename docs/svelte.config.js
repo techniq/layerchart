@@ -10,6 +10,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
+			$examples: './src/examples',
 			'content-collections': './.content-collections/generated'
 		}
 	},
@@ -17,6 +18,11 @@ const config = {
 		inspector: {
 			toggleKeyCombo: 'alt-shift',
 			toggleButtonPos: 'bottom-right'
+		}
+	},
+	compilerOptions: {
+		experimental: {
+			async: true
 		}
 	}
 };

@@ -11,7 +11,13 @@
 <div class="text-surface-content/70">{metadata.description}</div>
 <div>{metadata.supportedContexts.join(', ')}</div>
 
-<PageComponent />
+<svelte:boundary>
+	<PageComponent />
+
+	{#snippet pending()}
+		<p>loading...</p>
+	{/snippet}
+</svelte:boundary>
 
 <H2>Related</H2>
 <div>{metadata.related.join(', ')}</div>
