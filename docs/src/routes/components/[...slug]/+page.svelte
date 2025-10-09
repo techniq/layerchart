@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Code from '$lib/components/Code.svelte';
 	import { h1 as H1, h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
+	import { examples } from '$lib/context.js';
 
 	let { data } = $props();
 
-	const { PageComponent, metadata, examples } = $derived(data);
+	const { PageComponent, metadata } = $derived(data);
+	examples.set(data.examples);
 </script>
 
 <H1>{metadata.name}</H1>

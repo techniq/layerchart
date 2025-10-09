@@ -1,3 +1,4 @@
+import type { Examples } from '$lib/types.js';
 import { getComponentDoc } from '$lib/markdown/utils.js';
 import type { Component } from 'svelte';
 
@@ -13,7 +14,7 @@ export const load = async ({ params }) => {
 		query: '?raw'
 	});
 
-	const examples: Record<string, { component: Component; source: string }> = {};
+	const examples: Examples = {};
 	for (const path in allExamples) {
 		if (path.includes(`/src/examples/${componentName}/`)) {
 			const component = (await allExamples[path]()) as Component;
