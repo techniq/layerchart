@@ -7,6 +7,7 @@ export { default as h3 } from './h3.svelte';
 export { default as img } from './img.svelte';
 export { default as li } from './li.svelte';
 export { default as ol } from './ol.svelte';
+export { default as p } from './p.svelte';
 export { default as pre } from './pre.svelte';
 export { default as table } from './table.svelte';
 export { default as td } from './td.svelte';

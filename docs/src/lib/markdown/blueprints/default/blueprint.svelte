@@ -9,6 +9,7 @@
 		img,
 		li,
 		ol,
+		p,
 		pre,
 		table,
 		tr,
