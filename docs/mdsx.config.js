@@ -16,10 +16,22 @@ import { visit } from 'unist-util-visit';
 // import { codeBlockPrettierConfig } from "./other/code-block-prettier.js";
 // import { rehypeCustomHighlight } from '@mdsx/rehype-custom-highlighter';
 
+/**
+ * @type {import('rehype-pretty-code').Options}
+ */
+const prettyCodeOptions = {
+	theme: 'github-dark'
+	// TODO: Why does this not work?
+	// theme: {
+	// 	light: 'github-light',
+	// 	dark: 'github-dark'
+	// }
+};
+
 export const mdsxConfig = defineConfig({
 	extensions: ['.md'],
 	remarkPlugins: [remarkGfm],
-	rehypePlugins: [rehypeSlug, rehypeComponentExample, rehypePrettyCode],
+	rehypePlugins: [rehypeSlug, rehypeComponentExample, [rehypePrettyCode, prettyCodeOptions]],
 	blueprints: {
 		default: {
 			path: 'src/lib/markdown/blueprints/default/blueprint.svelte'
