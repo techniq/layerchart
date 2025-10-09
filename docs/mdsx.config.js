@@ -38,7 +38,7 @@ function rehypeComponentExample() {
 		const nameRegex = /name="([^"]+)"/;
 
 		visit(tree, (node, index, parent) => {
-			if (node?.type === 'raw' && node?.value?.startsWith('<Example')) {
+			if (node?.type === 'raw' && node?.value?.startsWith('<SourceExample')) {
 				const currNode = node;
 
 				const componentMatch = currNode.value.match(componentRegex);

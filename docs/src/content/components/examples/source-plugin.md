@@ -4,30 +4,30 @@ section: examples
 ---
 
 <script lang="ts">
-	import Example from '$lib/components/Example.svelte';
+	import SourceExample from '$lib/components/SourceExample.svelte';
 
 	import Basic from '$examples/AreaChart/basic.svelte';
 </script>
 
 ```svelte
 <script lang="ts">
-	import Example from '$lib/components/Example.svelte';
+	import SourceExample from '$lib/components/SourceExample.svelte';
 
 	// repeat for each example
 	import Basic from '$examples/AreaChart/basic.svelte';
 </script>
 
 <!-- repeat for each example -->
-<Example component="AreaChart" name="basic">
+<SourceExample component="AreaChart" name="basic">
 	<Basic />
-</Example>
+</SourceExample>
 ```
 
 ## Example
 
-<Example component="AreaChart" name="basic">
+<SourceExample component="AreaChart" name="basic">
 	<Basic />
-</Example>
+</SourceExample>
 
 ## Benefits
 
