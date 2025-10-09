@@ -21,7 +21,7 @@ const components = defineCollection({
 		// Read the source file from the layerchart package
 		const sourcePath = join(
 			process.cwd(),
-			`../packages/layerchart/src/lib/components/${path}.svelte`
+			`../packages/layerchart/src/lib/components/${doc.section === 'charts' ? 'charts/' : ''}${path}.svelte`
 		);
 
 		let source = '';
