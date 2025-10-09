@@ -5,12 +5,12 @@ layers: [svg, canvas]
 related: [components/Chart, components/Spline, examples/Line]
 ---
 
-## Examples
-
-```svelte
-<script>
-	let foo = $props();
+<script lang="ts">
+	import Example from '$lib/components/Example.svelte';
 </script>
 
-This is a test
-```
+## Examples
+
+### Basic
+
+<Example name="basic" />

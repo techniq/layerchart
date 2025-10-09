@@ -12,7 +12,7 @@
 
 	let { name }: { name: string } = $props();
 
-	const example = examples.get()?.[name];
+	const example = examples.get()?.current[name];
 
 	let showCode = $state(false);
 

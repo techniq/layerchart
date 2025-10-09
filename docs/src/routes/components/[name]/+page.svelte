@@ -13,7 +13,14 @@
 	let { data } = $props();
 
 	const { PageComponent, metadata } = $derived(data);
-	examples.set(data.examples);
+
+	const examplesContext = {
+		get current() {
+			return data.examples;
+		}
+	};
+
+	examples.set(examplesContext);
 </script>
 
 <div class="flex items-center gap-4">

@@ -300,14 +300,16 @@
 
 		{@render children()}
 
-		<a
-			href="https://github.com/techniq/layerchart/blob/main/docs{page.url.pathname}.md"
-			class="text-surface-content/50 hover:text-surface-content mb-4 mt-16 inline-flex items-center gap-1 text-sm"
-			target="_blank"
-		>
-			<LucideFilePen class="inline-block h-4 w-4" />
-			Edit this page
-		</a>
+		<div>
+			<a
+				href="https://github.com/techniq/layerchart/blob/main/docs{page.url.pathname}.md"
+				class="text-surface-content/50 hover:text-surface-content mb-4 mt-16 inline-flex items-center gap-1 text-sm"
+				target="_blank"
+			>
+				<LucideFilePen class="inline-block h-4 w-4" />
+				Edit this page
+			</a>
+		</div>
 
 		<div class="flex gap-4">
 			<!-- {#if pageContent.prev}
