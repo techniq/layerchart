@@ -96,5 +96,11 @@
 
 {#if metadata.related.length}
 	<H2>Related</H2>
-	<div>{metadata.related.join(', ')}</div>
+	<div class="flex flex-wrap gap-2 mt-1">
+		{#each metadata.related as related}
+			<Button variant="fill-light" href="/{related}" size="sm">
+				{related}
+			</Button>
+		{/each}
+	</div>
 {/if}

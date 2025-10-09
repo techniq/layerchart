@@ -3,7 +3,8 @@ import { getComponentDoc } from '$lib/markdown/utils.js';
 import type { Component } from 'svelte';
 
 export const load = async ({ params }) => {
-	const [directory, componentName] = params.slug.split('/');
+	// const [directory, componentName] = params.slug.split('/');
+	const componentName = params.slug;
 
 	const allExamples = import.meta.glob('/src/examples/**/*', {
 		import: 'default'
