@@ -27,7 +27,7 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
  */
 export function randomWalk(options?: { count?: number }) {
 	const random = randomNormal();
-	// @ts-expect-error
+	// @ts-expect-error shh
 	return Array.from(cumsum({ length: options?.count ?? 100 }, random));
 }
 

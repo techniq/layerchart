@@ -6,13 +6,12 @@ import { browser, dev } from '$app/environment';
 export const ssr = false;
 
 export const load = async () => {
-  // Setup Posthog
-  if (browser && !dev) {
-    // @ts-expect-error
-    posthog.init('phc_EjObiSURIW3vFLwJYNXQ1DumcnVPI28mO5nbTRVPjs0', {
-      api_host: 'https://app.posthog.com',
-      capture_pageview: false,
-      capture_pageleave: false,
-    });
-  }
+	// Setup Posthog
+	if (browser && !dev) {
+		posthog.init('phc_EjObiSURIW3vFLwJYNXQ1DumcnVPI28mO5nbTRVPjs0', {
+			api_host: 'https://app.posthog.com',
+			capture_pageview: false,
+			capture_pageleave: false
+		});
+	}
 };

@@ -5,7 +5,7 @@
 	import { allComponents } from 'content-collections';
 	import { page } from '$app/state';
 
-	let { onItemClick }: { onItemClick?: () => {} } = $props();
+	let { onItemClick }: { onItemClick?: () => void } = $props();
 
 	const componentsBySection = group(allComponents, (d) => d.section);
 </script>

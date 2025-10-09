@@ -66,7 +66,7 @@
 			//   },
 			// },
 		},
-		// @ts-expect-error
+		// @ts-expect-error - shh
 		themes: data.themes
 	});
 
@@ -85,18 +85,15 @@
 				() => {
 					if (currentPath && currentPath !== page.url.pathname) {
 						// Page navigated away
-						// @ts-expect-error
 						posthog.capture('$pageleave');
 					}
 					// Page entered
 					currentPath = page.url.pathname;
-					// @ts-expect-error
 					posthog.capture('$pageview');
 				}
 			);
 			const handleBeforeUnload = () => {
 				// Hard reloads or browser exit
-				// @ts-expect-error
 				posthog.capture('$pageleave');
 			};
 			window.addEventListener('beforeunload', handleBeforeUnload);
@@ -378,6 +375,7 @@
 								'border-surface-content text-surface-content'
 						)}
 					>
+						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html node.name}
 					</a>
 				{/snippet}
