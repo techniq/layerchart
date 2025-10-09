@@ -8,7 +8,11 @@
 	import Json from './Json.svelte';
 
 	import LucideCode from '~icons/lucide/code';
+	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
+
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
 	let { name }: { name: string } = $props();
 
@@ -65,9 +69,10 @@
 
 		{#if data}
 			<Toggle let:on={open} let:toggle let:toggleOff>
-				<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}
-					>View data</Button
-				>
+				<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}>
+					View data
+				</Button>
+
 				<Dialog
 					{open}
 					on:close={toggleOff}
@@ -94,6 +99,16 @@
 					</div>
 				</Dialog>
 			</Toggle>
+		{/if}
+
+		{#if page.params.example == null}
+			<Button
+				icon={LucideFullscreen}
+				class="text-surface-content/70 py-1"
+				on:click={() => goto(`${page.url.pathname}/${name}`)}
+			>
+				Inspect
+			</Button>
 		{/if}
 	{:else}
 		Example "{name}" not found.
