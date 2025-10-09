@@ -2,12 +2,13 @@
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 
-	import Code from '$lib/components/Code.svelte';
 	import { h1 as H1, h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
+	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
 	import { shared } from '$lib/shared.svelte.js';
 
 	import LucideSettings from '~icons/lucide/settings';
+	import LucideCode from '~icons/lucide/code';
 
 	let { data } = $props();
 
@@ -49,7 +50,41 @@
 	</span>
 </div>
 
-<div class="text-surface-content/70">{metadata.description}</div>
+<div class="text-sm text-surface-content/70">{metadata.description}</div>
+
+<div class="flex gap-2 mt-3">
+	{#if metadata.source}
+		<ViewSourceButton
+			label="Source"
+			source={metadata.source}
+			href={metadata.sourceUrl}
+			icon={LucideCode}
+		/>
+	{/if}
+
+	<!-- <ViewSourceButton
+        label="Page source"
+        source={pageSource}
+        href={pageUrl
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
+          : ''}
+        icon={LucideFilePenLine}
+      /> -->
+
+	<!-- {#if !hideTableOfContents}
+        <Button
+          icon={LucideChevronDown}
+          on:click={() => {
+            showTableOfContents = !showTableOfContents;
+          }}
+          variant="fill-light"
+          color="primary"
+          size="sm"
+        >
+          On this page
+        </Button>
+      {/if} -->
+</div>
 
 <svelte:boundary>
 	<PageComponent {examples} />
@@ -62,9 +97,4 @@
 {#if metadata.related.length}
 	<H2>Related</H2>
 	<div>{metadata.related.join(', ')}</div>
-{/if}
-
-{#if metadata.source}
-	<H2>Component source</H2>
-	<Code source={metadata.source} />
 {/if}

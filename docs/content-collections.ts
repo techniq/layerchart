@@ -25,8 +25,10 @@ const components = defineCollection({
 		);
 
 		let source = '';
+		let sourceUrl = '';
 		try {
 			source = readFileSync(sourcePath, 'utf-8');
+			sourceUrl = `https://github.com/techniq/layerchart/blob/next/packages/layerchart/src/lib/components/${path}.svelte`;
 		} catch (error) {
 			// console.warn(
 			// 	`Could not read source file for ${filePath}: ${error instanceof Error ? error.message : String(error)}`
@@ -37,7 +39,8 @@ const components = defineCollection({
 			...doc,
 			name: toPascalCase(fileName.replace('.md', '')),
 			slug: path,
-			source
+			source,
+			sourceUrl
 			// html: await compileMarkdown(context, doc)
 		};
 	}
