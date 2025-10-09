@@ -43,53 +43,59 @@
 	let data = $derived(ref?.data);
 </script>
 
-{#if example}
-	<example.component bind:this={ref} />
+<div class="example mt-1">
+	{#if example}
+		<example.component bind:this={ref} />
 
-	{#if showCode}
-		<div transition:slide class="border border-t-0">
-			<Code source={example.source} />
-		</div>
-	{/if}
+		{#if showCode}
+			<div transition:slide class="border border-t-0">
+				<Code source={example.source} />
+			</div>
+		{/if}
 
-	{#if example.source}
-		<Button
-			icon={LucideCode}
-			class="text-surface-content/70 py-1"
-			on:click={() => (showCode = !showCode)}
-		>
-			{showCode ? 'Hide' : 'Show'} Code
-		</Button>
-	{/if}
-
-	{#if data}
-		<Toggle let:on={open} let:toggle let:toggleOff>
-			<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}
-				>View data</Button
+		{#if example.source}
+			<Button
+				icon={LucideCode}
+				class="text-surface-content/70 py-1"
+				on:click={() => (showCode = !showCode)}
 			>
-			<Dialog
-				{open}
-				on:close={toggleOff}
-				class="max-h-[98dvh] md:max-h-[90dvh] w-160 max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
-			>
-				<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
-					<div class="overflow-auto">
-						<div class="text-lg font-semibold">Chart data</div>
+				{showCode ? 'Hide' : 'Show'} Code
+			</Button>
+		{/if}
+
+		{#if data}
+			<Toggle let:on={open} let:toggle let:toggleOff>
+				<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}
+					>View data</Button
+				>
+				<Dialog
+					{open}
+					on:close={toggleOff}
+					class="max-h-[98dvh] md:max-h-[90dvh] w-160 max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
+				>
+					<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
+						<div class="overflow-auto">
+							<div class="text-lg font-semibold">Chart data</div>
+						</div>
+
+						<Tooltip title="Copy">
+							<CopyButton
+								value={() => getDataAsString(data)}
+								variant="fill-light"
+								color="primary"
+							/>
+						</Tooltip>
 					</div>
 
-					<Tooltip title="Copy">
-						<CopyButton value={() => getDataAsString(data)} variant="fill-light" color="primary" />
-					</Tooltip>
-				</div>
+					<Json value={data} class="border-t" />
 
-				<Json value={data} class="border-t" />
-
-				<div slot="actions">
-					<Button variant="fill" color="primary">Close</Button>
-				</div>
-			</Dialog>
-		</Toggle>
+					<div slot="actions">
+						<Button variant="fill" color="primary">Close</Button>
+					</div>
+				</Dialog>
+			</Toggle>
+		{/if}
+	{:else}
+		Example "{name}" not found.
 	{/if}
-{:else}
-	Example "{name}" not found.
-{/if}
+</div>
