@@ -27,6 +27,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - run: pnpm exec playwright install chromium
+
       - run: pnpm check:packages
 
       - run: pnpm lint:packages
