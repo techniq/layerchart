@@ -6,9 +6,11 @@
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
 	import { shared } from '$lib/shared.svelte.js';
+	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideCode from '~icons/lucide/code';
+	import LucideChevronRight from '~icons/lucide/chevron-right';
 
 	let { data, children } = $props();
 
@@ -23,8 +25,21 @@
 	examples.set(examplesContext);
 </script>
 
+<div class="flex items-center gap-2 text-xs font-bold">
+	<div class="text-surface-content/50 capitalize">
+		{metadata.section}
+	</div>
+
+	{#if page.params.example}
+		<LucideChevronRight class="text-sm opacity-25" />
+		<a href="/components/{page.params.name}" class="text-primary">{metadata.name}</a>
+	{/if}
+</div>
+
 <div class="flex items-center gap-4">
-	<H1>{metadata.name}</H1>
+	<h1 class="text-3xl font-bold first-letter:capitalize">
+		{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
+	</h1>
 	<span class="flex items-center gap-1">
 		{#if metadata.layers}
 			<ToggleGroup
@@ -57,19 +72,20 @@
 	</span>
 </div>
 
-<div class="text-sm text-surface-content/70">{metadata.description}</div>
+{#if page.params.example == null}
+	<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
-<div class="flex gap-2 mt-3">
-	{#if metadata.source}
-		<ViewSourceButton
-			label="Source"
-			source={metadata.source}
-			href={metadata.sourceUrl}
-			icon={LucideCode}
-		/>
-	{/if}
+	<div class="flex gap-2 mt-3">
+		{#if metadata.source}
+			<ViewSourceButton
+				label="Source"
+				source={metadata.source}
+				href={metadata.sourceUrl}
+				icon={LucideCode}
+			/>
+		{/if}
 
-	<!-- <ViewSourceButton
+		<!-- <ViewSourceButton
         label="Page source"
         source={pageSource}
         href={pageUrl
@@ -78,7 +94,7 @@
         icon={LucideFilePenLine}
       /> -->
 
-	<!-- {#if !hideTableOfContents}
+		<!-- {#if !hideTableOfContents}
         <Button
           icon={LucideChevronDown}
           on:click={() => {
@@ -91,6 +107,7 @@
           On this page
         </Button>
       {/if} -->
-</div>
+	</div>
+{/if}
 
 {@render children()}

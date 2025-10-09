@@ -7,5 +7,4 @@
 	let example = page.params.example!;
 </script>
 
-<H3 class="first-letter:capitalize">{example.replaceAll('-', ' ')}</H3>
 <Example name={example} />
