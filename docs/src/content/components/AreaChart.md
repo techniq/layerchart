@@ -14,3 +14,7 @@ related: [components/Chart, components/Area, examples/Area]
 ### Basic
 
 <Example name="basic" />
+
+### Default series label
+
+<Example name="default-series-label" />
