@@ -192,8 +192,8 @@
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();
 
-  let tooltipWidth = $state(0);
-  let tooltipHeight = $state(0);
+  let tooltipWidth = $state<number | null>(null);
+  let tooltipHeight = $state<number | null>(null);
 
   function alignValue(value: number, align: Align, additionalOffset: number, tooltipSize: number) {
     const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
@@ -201,12 +201,11 @@
   }
 
   const positions = $derived.by(() => {
-    if (!tooltipCtx.data) {
-      // if no data, fallback?
-      const tooltipX = untrack(() => tooltipCtx.x);
-      const tooltipY = untrack(() => tooltipCtx.y);
-      return { x: tooltipX, y: tooltipY };
+    // if no data or tooltip size is not known yet, return null
+    if (!tooltipCtx.data || tooltipWidth === null || tooltipHeight === null) {
+      return { x: null, y: null };
     }
+
     const xBandOffset = isScaleBand(ctx.xScale)
       ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
@@ -345,8 +344,8 @@
     };
   });
 
-  const motionX = createMotion(tooltipCtx.x, () => positions.x, motion);
-  const motionY = createMotion(tooltipCtx.y, () => positions.y, motion);
+  const motionX = createMotion(null, () => positions.x, motion);
+  const motionY = createMotion(null, () => positions.y, motion);
 
   $effect(() => {
     if (!tooltipCtx.data) {
