@@ -457,6 +457,37 @@
   </div>
 </Preview>
 
+<h2>Disable motion</h2>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      data={dateSeries}
+      x="date"
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'quadtree-x' }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Layer>
+      <Tooltip.Root motion="none">
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Anchor location</h2>
 
 <div class="grid grid-cols-3 gap-2 mb-2">
