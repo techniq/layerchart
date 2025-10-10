@@ -380,6 +380,7 @@
           y="data"
           anchor="right"
           contained={false}
+          variant="none"
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
@@ -391,6 +392,7 @@
           x="data"
           y={context.height + context.padding.top + 2}
           anchor="top"
+          variant="none"
           class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
@@ -430,6 +432,7 @@
           yOffset={2}
           anchor="bottom"
           contained={false}
+          variant="none"
           class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
@@ -442,6 +445,7 @@
           y={context.height + context.padding.top + 2}
           anchor="top"
           contained={false}
+          variant="none"
           class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
