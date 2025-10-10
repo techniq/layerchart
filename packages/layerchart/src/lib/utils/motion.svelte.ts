@@ -162,7 +162,7 @@ function setupTracking<T>(
   if (options.controlled) return;
 
   $effect(() => {
-    motion.set(getValue());
+    motion.set(getValue(), { instant: motion.target == null });
   });
 }
 
