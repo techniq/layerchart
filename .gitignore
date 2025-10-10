@@ -9,3 +9,6 @@ coverage/
 .DS_Store
 
 test-*
+
+# Content Collections
+.content-collections
