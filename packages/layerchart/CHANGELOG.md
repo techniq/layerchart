@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.41
+
+### Patch Changes
+
+- fix(Tooltip): Correctly set tooltip position on chart enter and exit ([#655](https://github.com/techniq/layerchart/pull/655))
+
 ## 2.0.0-next.40
 
 ### Patch Changes
