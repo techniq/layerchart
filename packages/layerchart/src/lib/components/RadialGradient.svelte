@@ -87,7 +87,7 @@
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';

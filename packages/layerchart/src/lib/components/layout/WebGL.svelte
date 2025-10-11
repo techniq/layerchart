@@ -69,7 +69,7 @@
 
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { getChartContext } from '../Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { Context } from 'runed';
 
   let {

@@ -136,7 +136,7 @@
   import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import { getChartContext } from '../Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '../GeoContext.svelte';
   import Svg from './../layout/Svg.svelte';
   import Arc from '../Arc.svelte';

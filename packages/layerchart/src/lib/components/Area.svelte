@@ -64,7 +64,7 @@
   import { flattenPathData } from '../utils/path.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
     extractTweenConfig,

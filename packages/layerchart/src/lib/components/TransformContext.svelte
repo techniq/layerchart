@@ -214,7 +214,7 @@
   import { localPoint } from '@layerstack/utils';
   import { Context, watch } from 'runed';
   import type { Without } from '$lib/utils/types.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
   import {
     createControlledMotion,

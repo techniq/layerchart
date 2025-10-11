@@ -188,7 +188,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';

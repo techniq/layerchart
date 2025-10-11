@@ -35,7 +35,7 @@
     type HierarchyNode,
   } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     nodeSize,

@@ -164,7 +164,7 @@
     TouchEventHandler,
   } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { getChartContext } from '../Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     ref: refProp = $bindable(),

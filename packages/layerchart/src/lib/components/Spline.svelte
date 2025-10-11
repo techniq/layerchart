@@ -129,7 +129,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
   import MarkerWrapper from './MarkerWrapper.svelte';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
 

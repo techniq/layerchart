@@ -1,7 +1,7 @@
 <script lang="ts">
   // Shared tooltip logic across simplified chart components
   import { sum } from 'd3-array';
-  import { getChartContext } from '../Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import * as Tooltip from '../tooltip/index.js';
   import type { SimplifiedChartPropsObject } from './types.js';
   import type { SeriesState } from '$lib/states/series.svelte.js';

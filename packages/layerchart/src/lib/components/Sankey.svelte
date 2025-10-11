@@ -89,7 +89,7 @@
     type SankeyGraph,
   } from 'd3-sankey';
 
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     nodes: nodesProp = (d: any) => d.nodes,

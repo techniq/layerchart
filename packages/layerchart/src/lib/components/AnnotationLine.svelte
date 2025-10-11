@@ -35,7 +35,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import Line from './Line.svelte';
   import Text from './Text.svelte';
   import type { Placement } from './types.js';

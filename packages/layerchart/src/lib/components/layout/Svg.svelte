@@ -65,7 +65,8 @@
 <script lang="ts">
   import { getTransformContext } from '../TransformContext.svelte';
 
-  import { getChartContext, setRenderContext } from '../Chart.svelte';
+  import { setRenderContext } from '../Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     ref: refProp = $bindable(),

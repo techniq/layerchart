@@ -120,7 +120,7 @@
   import ColorRamp from './ColorRamp.svelte';
   import { cls } from '@layerstack/tailwind';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { resolveMaybeFn } from '$lib/utils/common.js';
 

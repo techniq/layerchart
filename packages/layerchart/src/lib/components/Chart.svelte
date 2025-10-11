@@ -1,5 +1,13 @@
 <script lang="ts" module>
+  import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import { scaleOrdinal, scaleSqrt } from 'd3-scale';
+  import type { TimeInterval } from 'd3-time';
+  import { extent, max, min } from 'd3-array';
+  import type { HierarchyNode } from 'd3-hierarchy';
+  import type { SankeyGraph } from 'd3-sankey';
+  import { Context, useDebounce } from 'runed';
+  import { unique } from '@layerstack/utils';
+
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filterObject.js';
@@ -13,14 +21,10 @@
     type AnyScale,
     type DomainType,
   } from '$lib/utils/scales.svelte.js';
-  import { Context, useDebounce } from 'runed';
   import type {
-    AxisKey,
     BaseRange,
-    DataType,
     Extents,
     Nice,
-    Padding,
     PaddingArray,
     XRangeWithScale,
     YRangeWithScale,
@@ -31,17 +35,13 @@
     createGetter,
     createChartScale,
   } from '$lib/utils/chart.js';
-  import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
   import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { extent, max, min } from 'd3-array';
-  import type { HierarchyNode } from 'd3-hierarchy';
-  import type { SankeyGraph } from 'd3-sankey';
-  import { unique } from '@layerstack/utils';
+
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
-  import type { TimeInterval } from 'd3-time';
+  import { setChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -81,85 +81,6 @@
     | 'y1Range'
   >;
 
-  export type ChartContextValue<
-    T = any,
-    XScale extends AnyScale = AnyScale,
-    YScale extends AnyScale = AnyScale,
-  > = {
-    activeGetters: Record<AxisKey, (d: T) => any>;
-    width: number;
-    height: number;
-    percentRange: boolean;
-    aspectRatio: number;
-    containerRef: HTMLElement | undefined;
-    containerWidth: number;
-    containerHeight: number;
-    config: PreservedChartConfig<T, XScale, YScale>;
-    x: (d: T) => any;
-    y: (d: T) => any;
-    z: (d: T) => any;
-    r: (d: T) => any;
-    x1: (d: T) => any;
-    y1: (d: T) => any;
-    c: (d: T) => any;
-    data: DataType<T>;
-    xNice: Nice;
-    yNice: Nice;
-    zNice: Nice;
-    rNice: Nice;
-    xDomainSort: boolean;
-    yDomainSort: boolean;
-    zDomainSort: boolean;
-    rDomainSort: boolean;
-    xReverse: boolean;
-    yReverse: boolean;
-    zReverse: boolean;
-    rReverse: boolean;
-    xPadding: PaddingArray;
-    yPadding: PaddingArray;
-    zPadding: PaddingArray;
-    rPadding: PaddingArray;
-    padding: Padding;
-    flatData: T[];
-    extents: Extents;
-    xDomain: number[];
-    yDomain: number[];
-    zDomain: DomainType;
-    rDomain: DomainType;
-    cDomain: DomainType;
-    x1Domain: DomainType;
-    y1Domain: DomainType;
-    xRange: any[];
-    yRange: any[];
-    zRange: any[];
-    rRange: any[];
-    cRange: readonly string[] | string[] | undefined;
-    x1Range: XRangeWithScale<XScale> | undefined;
-    y1Range: YRangeWithScale<YScale> | undefined;
-    meta: Record<string, any>;
-    xScale: AnyScale;
-    yScale: AnyScale;
-    zScale: AnyScale;
-    rScale: AnyScale;
-    cScale: AnyScale | null;
-    x1Scale: AnyScale | null;
-    y1Scale: AnyScale | null;
-    yGet: (d: T) => any;
-    xGet: (d: T) => any;
-    zGet: (d: T) => any;
-    rGet: (d: T) => any;
-    cGet: (d: T) => any;
-    x1Get: (d: T) => any;
-    y1Get: (d: T) => any;
-    xInterval: TimeInterval | null;
-    yInterval: TimeInterval | null;
-    radial: boolean;
-    tooltip: TooltipContextValue<T>;
-    geo: GeoContextValue;
-    brush: BrushContextValue;
-    transform: TransformContextValue;
-  };
-
   export type LayerChartInternalMeta = {
     /**
      * The current chart type.
@@ -174,25 +95,6 @@
       | 'simplified-pie'
       | 'simplified-scatter';
   };
-
-  const _ChartContext = new Context<ChartContextValue<any, AnyScale, AnyScale>>('ChartContext');
-
-  export function getChartContext<
-    T,
-    XScale extends AnyScale = AnyScale,
-    YScale extends AnyScale = AnyScale,
-  >(): ChartContextValue<T, XScale, YScale> {
-    return _ChartContext.getOr({} as ChartContextValue<T, XScale, YScale>);
-  }
-
-  export function setChartContext<
-    T,
-    XScale extends AnyScale = AnyScale,
-    YScale extends AnyScale = AnyScale,
-  >(context: ChartContextValue<T, XScale, YScale>): ChartContextValue<T, XScale, YScale> {
-    // @ts-expect-error - shh
-    return _ChartContext.set(context);
-  }
 
   export type RenderContext = 'svg' | 'canvas' | 'html';
 

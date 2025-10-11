@@ -158,10 +158,10 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
-  import { getChartContext, type ChartContextValue } from '../Chart.svelte';
+  import { getChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
   import { getTooltipContext } from './TooltipContext.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { untrack, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
   let {
     anchor = 'top-left',

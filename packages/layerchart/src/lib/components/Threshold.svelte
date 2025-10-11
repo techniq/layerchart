@@ -44,7 +44,7 @@
 
   import Area from './Area.svelte';
   import ClipPath from './ClipPath.svelte';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();
 

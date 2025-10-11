@@ -47,7 +47,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import LinearGradient from './LinearGradient.svelte';
   import Pattern from './Pattern.svelte';
   import Rect from './Rect.svelte';

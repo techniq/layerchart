@@ -76,7 +76,8 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext, getRenderContext } from './Chart.svelte';
+  import { getRenderContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';

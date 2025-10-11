@@ -86,7 +86,7 @@
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
 
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();
 

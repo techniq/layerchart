@@ -44,7 +44,8 @@
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
-  import { getRenderContext, getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
