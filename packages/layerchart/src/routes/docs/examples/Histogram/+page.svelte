@@ -16,7 +16,6 @@
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -49,8 +48,6 @@
       getRandomDate(timeDay.offset(now, -dateRange), now)
     ) as any[]
   ); // TODO: Make typescript happy
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -71,7 +68,6 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
-      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -110,7 +106,6 @@
         bars: { motion: 'tween' },
       }}
       orientation="horizontal"
-      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -205,7 +200,6 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
-      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -258,7 +252,6 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
-        {layer}
       >
         {#snippet tooltip()}
           <Tooltip.Root>
@@ -329,7 +322,6 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
-        {layer}
       >
         {#snippet tooltip()}
           <Tooltip.Root>

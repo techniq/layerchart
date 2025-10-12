@@ -10,7 +10,6 @@
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
   import { movable } from '$lib/actions/movable.js';
-  import { shared } from '../../shared.svelte.js';
 
   let source = $state({ x: 300, y: 150 });
   let target = $state({ x: 500, y: 300 });
@@ -37,7 +36,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart padding={{ left: 16, bottom: 24 }}>
-      <Layer type={shared.layer}>
+      <Layer>
         <Connector
           {source}
           {target}

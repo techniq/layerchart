@@ -7,7 +7,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
-  import { shared } from '../../shared.svelte.js';
 
   const collisionStrength = 0.01;
 
@@ -117,7 +116,6 @@
         >
           {#snippet children({ nodes, simulation })}
             <Layer
-              type={shared.layer}
               onpointermove={(e) => {
                 simulation.nodes()[0].fx = e.offsetX;
                 simulation.nodes()[0].fy = e.offsetY;

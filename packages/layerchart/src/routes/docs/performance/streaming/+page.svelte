@@ -3,9 +3,7 @@
   import { Button, ButtonGroup, Field, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import { TimerState } from '@layerstack/svelte-state';
-  import { shared } from '../../shared.svelte.js';
 
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -130,7 +128,7 @@
 
   <div class="h-[500px] p-4 border rounded-sm">
     {#if show && chartData.length}
-      <LineChart x="date" y="value" data={chartData} {layer} brush />
+      <LineChart x="date" y="value" data={chartData} brush />
     {/if}
   </div>
 

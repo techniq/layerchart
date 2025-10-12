@@ -21,7 +21,6 @@
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -89,7 +88,7 @@
       {#snippet children({ context })}
         <Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
-        <Layer type={shared.layer}>
+        <Layer>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"

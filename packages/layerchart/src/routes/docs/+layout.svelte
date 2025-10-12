@@ -38,9 +38,12 @@
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
   import { page } from '$app/state';
-  import { shared } from './shared.svelte.js';
+  import { setSettings, getSettings } from '$lib/contexts/settings.js';
 
   const { children } = $props();
+
+  // TODO: `setSettings({...})` or just use default?
+  const settings = getSettings();
 
   const [type, name] = $derived(page.url.pathname.split('/').slice(2) ?? []);
   const title = $derived(page.data.meta?.title ?? name);
@@ -124,7 +127,7 @@
       <span class="flex items-center gap-1">
         {#if supportedContexts}
           <ToggleGroup
-            bind:value={shared.layer}
+            bind:value={settings.layer}
             variant="fill"
             color="primary"
             inset
@@ -144,7 +147,7 @@
               <Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
                 <label class="flex items-center gap-2">
                   <span class="text-sm text-surface-content">Debug</span>
-                  <Switch bind:checked={shared.debug} />
+                  <Switch bind:checked={settings.debug} />
                 </label>
               </Menu>
             </Button>

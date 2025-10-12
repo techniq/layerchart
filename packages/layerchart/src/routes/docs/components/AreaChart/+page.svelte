@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import {
     AreaChart,
     Area,
@@ -18,6 +17,7 @@
     type ChartContextValue,
     defaultChartPadding,
     Layer,
+    getSettings,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
@@ -32,9 +32,10 @@
   import type { DomainType } from '$lib/utils/scales.svelte.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
+
+  const settings = getSettings();
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
   const dateSeriesDataWithNulls = $derived(
@@ -127,9 +128,6 @@
   let lockedTooltip = $state(false);
   let xDomain: DomainType | undefined = $state();
 
-  let layer = $derived(shared.layer as ComponentProps<typeof AreaChart>['layer']);
-  let debug = $derived(shared.debug);
-
   let markerPoints: { date: Date; value: number }[] = $state([]);
   let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
 
@@ -168,7 +166,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" {layer} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" />
   </div>
 </Preview>
 
@@ -176,14 +174,14 @@
 
 <Preview data={dataVisits}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dataVisits} x="date" y="visits" {layer} {debug} />
+    <AreaChart data={dataVisits} x="date" y="visits" />
   </div>
 </Preview>
 
 <h2>Gradient</h2>
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <AreaChart data={dateSeriesData} x="date" y="value">
       {#snippet marks()}
         <LinearGradient class="from-primary/50 to-primary/1" vertical>
           {#snippet children({ gradient })}
@@ -203,7 +201,7 @@
   }}
 
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={negativeDateSeriesData} x="date" y="value" {layer} {debug}>
+    <AreaChart data={negativeDateSeriesData} x="date" y="value">
       {#snippet marks({ context })}
         {@const thresholdValue = 0}
         {@const thresholdOffset =
@@ -259,8 +257,6 @@
       x="date"
       y="value"
       props={{ area: { curve: curveCatmullRom } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -283,8 +279,6 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -313,8 +307,6 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -335,8 +327,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -366,8 +356,6 @@
         },
       ]}
       props={{ tooltip: { context: { mode: 'quadtree' } } }}
-      {layer}
-      {debug}
     >
       {#snippet marks({ series, context })}
         {#each series as s}
@@ -419,8 +407,6 @@
         },
       ]}
       seriesLayout="stack"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -444,8 +430,6 @@
         },
       ]}
       seriesLayout="stackExpand"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -469,8 +453,6 @@
         },
       ]}
       seriesLayout="stackDiverging"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -494,8 +476,6 @@
         },
       ]}
       seriesLayout="stack"
-      {layer}
-      {debug}
     >
       {#snippet marks({ series, getAreaProps })}
         {#each series as s, i (s.key)}
@@ -541,8 +521,6 @@
         },
       ]}
       seriesLayout="stack"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -563,8 +541,6 @@
         highlight: { area: true, lines: false, points: false },
         tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } },
       }}
-      {layer}
-      {debug}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -604,7 +580,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" labels brush {layer} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" labels brush />
   </div>
 </Preview>
 
@@ -612,7 +588,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" points {layer} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" points />
   </div>
 </Preview>
 
@@ -652,8 +628,6 @@
           props: { opacity: 0.2, line: { opacity: 0.2 } },
         },
       ]}
-      {layer}
-      {debug}
     >
       {#snippet belowMarks()}
         <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
@@ -680,8 +654,6 @@
         },
       }}
       tooltip={false}
-      {layer}
-      {debug}
     >
       {#snippet marks({ context })}
         {@const segmentWidth = context.width / (funnelSegments.length - 1)}
@@ -724,7 +696,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points {layer} {debug} />
+    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points />
   </div>
 </Preview>
 
@@ -741,8 +713,6 @@
       axis={false}
       grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -751,7 +721,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" axis="x" {layer} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" axis="x" />
   </div>
 </Preview>
 
@@ -759,7 +729,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" axis="y" {layer} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" axis="y" />
   </div>
 </Preview>
 
@@ -783,8 +753,6 @@
       ]}
       seriesLayout="stack"
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -809,8 +777,6 @@
       ]}
       seriesLayout="stack"
       legend={{ placement: 'top-right' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -837,8 +803,6 @@
       ]}
       seriesLayout="stack"
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -855,8 +819,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -876,8 +838,6 @@
           markerPoints = [...markerPoints, detail.data];
         }
       }}
-      {layer}
-      {debug}
     >
       {#snippet aboveMarks({ context })}
         {#each markerPoints as p}
@@ -924,7 +884,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <AreaChart data={dateSeriesData} x="date" y="value">
       {#snippet tooltip({ context })}
         <Tooltip.Root
           x={context.padding.left}
@@ -972,8 +932,6 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {layer}
-      {debug}
       props={{ tooltip: { context: { locked: lockedTooltip } } }}
     >
       {#snippet tooltip({ context, setHighlightKey, series })}
@@ -1033,8 +991,6 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {layer}
-      {debug}
       props={{ tooltip: { context: { hideDelay: 500 } } }}
     >
       {#snippet tooltip({ context, setHighlightKey, series })}
@@ -1077,15 +1033,7 @@
     {/if}
   </div>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart
-      bind:context
-      data={denseDateSeriesData}
-      x="date"
-      y="value"
-      {xDomain}
-      {layer}
-      {debug}
-    />
+    <AreaChart bind:context data={denseDateSeriesData} x="date" y="value" {xDomain} />
   </div>
 </Preview>
 
@@ -1110,8 +1058,6 @@
           },
         };
       })}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -1160,8 +1106,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1194,8 +1138,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1246,8 +1188,6 @@
         };
       })}
       padding={{ ...defaultChartPadding(), right: 60 }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1274,8 +1214,6 @@
           class: 'cursor-crosshair',
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1295,8 +1233,6 @@
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
         }}
-        {layer}
-        {debug}
       />
     </div>
 
@@ -1311,8 +1247,6 @@
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
         }}
-        {layer}
-        {debug}
       />
     </div>
   </div>
@@ -1327,8 +1261,6 @@
       xScale={scalePoint()}
       x="fruit"
       y="value"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1344,10 +1276,8 @@
       y="value"
       tooltip={{
         mode: 'band',
-        debug,
+        debug: settings.debug,
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1356,9 +1286,9 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <AreaChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer type={settings.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />

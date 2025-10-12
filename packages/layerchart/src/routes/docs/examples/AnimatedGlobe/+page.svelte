@@ -6,7 +6,15 @@
   import LucidePlay from '~icons/lucide/play';
   import LucideSquare from '~icons/lucide/square';
 
-  import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    getSettings,
+    Graticule,
+    Layer,
+    Tooltip,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
@@ -18,7 +26,6 @@
   import TransformDebug from '$lib/docs/TransformDebug.svelte';
 
   import { timings } from './timings.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -93,7 +100,9 @@
     selectedFeature = null;
   }
 
-  let debug = $derived(shared.debug);
+  let settings = getSettings();
+  let layer = $derived(settings.layer);
+  let debug = $derived(settings.debug);
 </script>
 
 <Preview data={countries}>
@@ -156,7 +165,7 @@
           </div>
         {/if}
 
-        <Layer type={shared.layer} {debug}>
+        <Layer {debug}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
@@ -175,7 +184,7 @@
           {/each}
         </Layer>
 
-        {#if shared.layer === 'canvas'}
+        {#if layer === 'canvas'}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
           <Layer type="canvas" pointerEvents={false}>
             {#if context.tooltip.data}

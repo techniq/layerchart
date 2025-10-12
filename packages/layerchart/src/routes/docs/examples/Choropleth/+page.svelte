@@ -5,11 +5,10 @@
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Legend, Layer, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, Legend, Layer, Tooltip, getSettings } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -66,13 +65,13 @@
         initialScrollMode: 'scale',
       }}
       padding={{ top: 60 }}
-      tooltip={{ raiseTarget: shared.layer === 'svg' }}
+      tooltip={{ raiseTarget: getSettings().layer === 'svg' }}
     >
       {#snippet children({ context })}
         {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
-        <Layer type={shared.layer}>
+        <Layer>
           {#each enrichedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
@@ -91,8 +90,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.layer} pointerEvents={false}>
-          {#if context.tooltip.data && shared.layer === 'canvas'}
+        <Layer pointerEvents={false}>
+          {#if context.tooltip.data && getSettings().layer === 'canvas'}
             <GeoPath geojson={context.tooltip.data} class="stroke-white" {strokeWidth} />
           {/if}
         </Layer>

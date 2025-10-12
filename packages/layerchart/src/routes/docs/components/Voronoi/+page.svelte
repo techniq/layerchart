@@ -4,7 +4,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
   import { RangeField } from 'svelte-ux';
-  import { shared } from '../../shared.svelte.js';
 
   const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -27,7 +26,7 @@
   <div class="h-[400px] p-4 border rounded-sm relative" onpointermove={onPointerMove}>
     <Chart {data} x="x" y="y">
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <ChartClipPath>
             <Points r={2} class="fill-primary stroke-primary" />
             <Voronoi

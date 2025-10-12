@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Axis, Highlight, Layer, Points, ScatterChart, Tooltip } from 'layerchart';
+  import { Axis, getSettings, Highlight, Layer, Points, ScatterChart, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
@@ -8,7 +8,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, getSpiral } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -35,9 +34,6 @@
   );
 
   const dateSeriesData = createDateSeries({ count: 30, min: 20, max: 100, value: 'integer' });
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -46,7 +42,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" />
   </div>
 </Preview>
 
@@ -54,15 +50,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      xPadding={[20, 20]}
-      yPadding={[20, 20]}
-      {layer}
-      {debug}
-    />
+    <ScatterChart data={spiralData} x="x" y="y" xPadding={[20, 20]} yPadding={[20, 20]} />
   </div>
 </Preview>
 
@@ -84,8 +72,6 @@
           'fill-opacity': 0.3,
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -94,7 +80,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} {layer} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} />
   </div>
 </Preview>
 
@@ -117,8 +103,6 @@
           },
         };
       })}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -144,8 +128,6 @@
           },
         };
       })}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -154,7 +136,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {layer} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} />
   </div>
 </Preview>
 
@@ -173,8 +155,6 @@
         };
       })}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -195,8 +175,6 @@
         points: { motion: { type: 'tween', duration: 200 } },
       }}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -217,8 +195,6 @@
         };
       })}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -227,7 +203,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" axis="x" {layer} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="x" />
   </div>
 </Preview>
 
@@ -235,7 +211,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" axis="y" {layer} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="y" />
   </div>
 </Preview>
 
@@ -253,8 +229,6 @@
         points: { opacity: 0.3 },
         highlight: { lines: false },
       }}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -280,8 +254,6 @@
       cScale={scaleThreshold()}
       cDomain={[50]}
       cRange={['var(--color-danger)', 'var(--color-success)']}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -298,8 +270,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -308,7 +278,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug}>
+    <ScatterChart data={spiralData} x="x" y="y">
       {#snippet tooltip({ context })}
         <Tooltip.Root
           x={context.padding.left}
@@ -376,8 +346,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -407,8 +375,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -442,8 +408,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -477,8 +441,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -513,8 +475,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -533,8 +493,6 @@
         yAxis: { motion: { type: 'tween', duration: 200 } },
       }}
       brush
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -543,9 +501,9 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug}>
+    <ScatterChart data={spiralData} x="x" y="y">
       {#snippet children({ context })}
-        <Layer type={layer}>
+        <Layer type={getSettings().layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" grid rule />
           <Points class="fill-primary/10 stroke-primary" />

@@ -1,12 +1,9 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
-
   import { AnnotationRange, BarChart, LineChart, type Placement } from 'layerchart';
   import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -32,9 +29,6 @@
   let placement: Placement = $state('center');
   let xOffset = $state(0);
   let yOffset = $state(0);
-
-  let layer = $derived(shared.layer as ComponentProps<typeof LineChart>['layer']);
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -43,7 +37,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[500, null]}
@@ -64,7 +58,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[null, 500]}
@@ -85,7 +79,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[300, 500]}
@@ -106,7 +100,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange y={[0, 400]} class="fill-success/10" />
         <AnnotationRange y={[400, 600]} class="fill-warning/10" />
@@ -120,7 +114,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), null]}
@@ -141,7 +135,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[null, new Date('2010-12-31')]}
@@ -162,7 +156,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), new Date('2010-12-31')]}
@@ -183,7 +177,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2011-01-01'), new Date('2011-06-30')]}
@@ -228,7 +222,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), new Date('2010-12-31')]}
@@ -253,7 +247,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[dateSeriesData[2].date, dateSeriesData[2].date]}
@@ -274,7 +268,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[dateSeriesData[2].date, dateSeriesData[4].date]}
@@ -295,7 +289,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[75, null]}
@@ -316,7 +310,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), null]}

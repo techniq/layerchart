@@ -7,7 +7,6 @@
   import { BarChart, Bars, LinearGradient, LineChart } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope and https://codepen.io/agalliat/pen/PoZLBxP
 
@@ -67,8 +66,6 @@
     };
   });
   const colorScale = scaleSequential([0, 256], interpolateTurbo);
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -86,7 +83,6 @@
       grid={false}
       props={{ spline: { class: 'stroke-surface-content' } }}
       tooltip={{ mode: 'manual' }}
-      {layer}
     />
   </div>
 </Preview>
@@ -108,7 +104,6 @@
       props={{
         yAxis: { format: (d) => decibels(d)?.toFixed(1) },
       }}
-      {layer}
     >
       {#snippet marks()}
         <LinearGradient

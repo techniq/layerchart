@@ -197,6 +197,9 @@
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -219,9 +222,9 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    layer = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -234,6 +237,9 @@
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp

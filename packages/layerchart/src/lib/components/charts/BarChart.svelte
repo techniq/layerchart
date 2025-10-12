@@ -114,6 +114,9 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -134,9 +137,9 @@
     onTooltipClick = () => {},
     onBarClick = () => {},
     props = {},
-    layer = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     xScale: xScaleProp,
     yScale: yScaleProp,
     bandPadding = radial ? 0 : 0.4,
@@ -156,6 +159,9 @@
     context = $bindable(),
     ...restProps
   }: BarChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined

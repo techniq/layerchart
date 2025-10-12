@@ -150,6 +150,9 @@
   import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -172,9 +175,9 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    layer = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -192,6 +195,9 @@
     trackOuterRadius,
     ...restProps
   }: ArcChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const center = $derived(centerProp ?? placement === 'center');
 

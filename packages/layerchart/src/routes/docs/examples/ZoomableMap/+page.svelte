@@ -4,15 +4,16 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Layer, Tooltip, geoFitObjectTransform } from 'layerchart';
+  import { Chart, GeoPath, Layer, Tooltip, geoFitObjectTransform, getSettings } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { GeometryObjectA } from 'topojson-specification';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
+
+  let settings = getSettings();
 
   let projection = $state(geoAlbersUsa);
   const projections = [
@@ -71,7 +72,7 @@
       {#snippet children({ context })}
         <TransformControls />
 
-        <Layer type={shared.layer}>
+        <Layer>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -116,8 +117,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.layer} pointerEvents={false}>
-          {#if context.tooltip.data && shared.layer === 'canvas'}
+        <Layer pointerEvents={false}>
+          {#if context.tooltip.data && settings.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               strokeWidth={1 / context.transform.scale}
@@ -160,7 +161,7 @@
       {#snippet children({ context })}
         <TransformControls />
 
-        <Layer type={shared.layer}>
+        <Layer>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -207,8 +208,8 @@
         </Layer>
 
         <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-        <Layer type={shared.layer} pointerEvents={false}>
-          {#if context.tooltip.data && shared.layer === 'canvas'}
+        <Layer pointerEvents={false}>
+          {#if context.tooltip.data && settings.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               strokeWidth={1 / context.transform.scale}

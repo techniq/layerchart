@@ -28,7 +28,6 @@
 
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Json from '$lib/docs/Json.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let geojsonStr = $state('');
   let geojson = $state<GeoJSON.FeatureCollection>();
@@ -100,7 +99,7 @@
       >
         {#snippet children({ context })}
           {#if projection === geoMercator && serviceUrl}
-            <Layer type={shared.layer}>
+            <Layer>
               <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
               <GeoTile url={serviceUrl} zoomDelta={-100} />
               <GeoTile url={serviceUrl} zoomDelta={-4} />
@@ -111,7 +110,7 @@
 
           <TransformControls />
 
-          <Layer type={shared.layer}>
+          <Layer>
             {#if geojson?.features}
               {#each geojson?.features as feature}
                 <GeoPath

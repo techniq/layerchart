@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import { Spring } from 'svelte/motion';
   import { PieChart, Text } from 'layerchart';
   import { group, sum } from 'd3-array';
@@ -11,7 +10,6 @@
   import { longData } from '$lib/utils/genData.js';
   import { format } from '@layerstack/utils';
   import Arc from '$lib/components/Arc.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -42,9 +40,6 @@
       };
     })
   );
-
-  let layer = $derived(shared.layer as ComponentProps<typeof PieChart>['layer']);
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -53,7 +48,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" />
   </div>
 </Preview>
 
@@ -69,8 +64,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -79,7 +72,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" outerRadius={100} {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" outerRadius={100} />
   </div>
 </Preview>
 
@@ -87,7 +80,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" outerRadius={-20} {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" outerRadius={-20} />
   </div>
 </Preview>
 
@@ -95,16 +88,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      {data}
-      key="fruit"
-      value="value"
-      innerRadius={-20}
-      cornerRadius={5}
-      padAngle={0.02}
-      {layer}
-      {debug}
-    />
+    <PieChart {data} key="fruit" value="value" innerRadius={-20} cornerRadius={5} padAngle={0.02} />
   </div>
 </Preview>
 
@@ -112,16 +96,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      {data}
-      key="fruit"
-      value="value"
-      innerRadius={-20}
-      cornerRadius={5}
-      padAngle={0.02}
-      {layer}
-      {debug}
-    >
+    <PieChart {data} key="fruit" value="value" innerRadius={-20} cornerRadius={5} padAngle={0.02}>
       {#snippet aboveMarks()}
         <Text
           value={format(sum(data, (d) => d.value))}
@@ -156,8 +131,6 @@
       cornerRadius={10}
       padAngle={0.02}
       props={{ group: { y: 90 } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -179,8 +152,6 @@
       cornerRadius={4}
       padAngle={0.02}
       tooltip={false}
-      {layer}
-      {debug}
     >
       {#snippet aboveMarks()}
         <Text
@@ -207,8 +178,6 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -224,8 +193,6 @@
         { key: '2019', data: dataByYear.get(2019), props: { innerRadius: -20 } },
         { key: '2018', data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -246,8 +213,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -256,14 +221,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      {data}
-      key="fruit"
-      value="value"
-      props={{ arc: { class: 'stroke-surface-100' } }}
-      {layer}
-      {debug}
-    />
+    <PieChart {data} key="fruit" value="value" props={{ arc: { class: 'stroke-surface-100' } }} />
   </div>
 </Preview>
 
@@ -271,7 +229,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" legend {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" legend />
   </div>
 </Preview>
 
@@ -284,8 +242,6 @@
       key="fruit"
       value="value"
       legend={{ placement: 'top-left', orientation: 'vertical' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -307,8 +263,6 @@
           item: 'text-xs',
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -334,8 +288,6 @@
       }}
       value="value"
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -354,8 +306,6 @@
         'var(--color-danger)',
         'var(--color-info)',
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -364,7 +314,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} />
   </div>
 </Preview>
 
@@ -372,14 +322,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      {data}
-      key="fruit"
-      value="value"
-      cRange={quantize(interpolateRainbow, 5)}
-      {layer}
-      {debug}
-    />
+    <PieChart {data} key="fruit" value="value" cRange={quantize(interpolateRainbow, 5)} />
   </div>
 </Preview>
 
@@ -387,7 +330,7 @@
 
 <Preview data={dataWithColor}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart data={dataWithColor} key="fruit" value="value" c="color" {layer} {debug} />
+    <PieChart data={dataWithColor} key="fruit" value="value" c="color" />
   </div>
 </Preview>
 
@@ -401,8 +344,6 @@
       value="value"
       padding={{ right: 80 }}
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -417,8 +358,6 @@
       value="value"
       placement="left"
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -433,8 +372,6 @@
       value="value"
       placement="right"
       legend={{ placement: 'left', orientation: 'vertical' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -450,8 +387,6 @@
       center={false}
       props={{ group: { x: 200, center: 'y' } }}
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -460,7 +395,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" {layer} {debug}>
+    <PieChart {data} key="fruit" value="value">
       {#snippet arc({ index, props })}
         <Arc {...props} offset={index === 0 ? 16 : undefined} />
       {/snippet}
@@ -478,14 +413,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       {#if show}
-        <PieChart
-          {data}
-          key="fruit"
-          value="value"
-          props={{ pie: { motion: 'tween' } }}
-          {layer}
-          {debug}
-        />
+        <PieChart {data} key="fruit" value="value" props={{ pie: { motion: 'tween' } }} />
       {/if}
     </div>
   </Preview>
@@ -501,14 +429,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       {#if show}
-        <PieChart
-          {data}
-          key="fruit"
-          value="value"
-          props={{ pie: { motion: 'spring' } }}
-          {layer}
-          {debug}
-        />
+        <PieChart {data} key="fruit" value="value" props={{ pie: { motion: 'spring' } }} />
       {/if}
     </div>
   </Preview>
@@ -518,6 +439,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" keys="centroid" {layer} {debug} />
+    <PieChart {data} key="fruit" value="value" keys="centroid"   />
   </div>
 </Preview> -->

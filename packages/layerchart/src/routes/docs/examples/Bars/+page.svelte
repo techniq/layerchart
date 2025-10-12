@@ -29,7 +29,6 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
   import { unique } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({
     count: 10,
@@ -123,7 +122,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -145,7 +144,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars radius={4} rounded="right" strokeWidth={1} class="fill-primary" />
@@ -168,7 +167,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -200,7 +199,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
@@ -232,7 +231,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
@@ -274,7 +273,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -295,7 +294,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -317,7 +316,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Rule x={0} />
@@ -340,7 +339,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Rule x={0} />
@@ -364,7 +363,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" ticks={4} rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -386,7 +385,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis
           placement="left"
@@ -412,7 +411,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <LinearGradient class="from-green-400 to-blue-500" units="userSpaceOnUse">
@@ -438,7 +437,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars>
@@ -468,7 +467,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -498,7 +497,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -527,7 +526,7 @@
     >
       {#snippet children({ context })}
         {@const avg = mean(data, (d) => d.value)}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <Bars strokeWidth={1} class="fill-primary" />
@@ -563,7 +562,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="bottom" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis placement="left" rule />
@@ -585,7 +584,7 @@
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="bottom" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis placement="left" rule />
@@ -608,7 +607,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars x="baseline" strokeWidth={1} class="fill-surface-content/20" />
@@ -641,7 +640,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" />
         <Bars x="value" rounded-sm="right" strokeWidth={1} class="fill-primary" />
@@ -676,7 +675,7 @@
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -698,7 +697,7 @@
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -720,7 +719,7 @@
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars class="fill-primary" insets={{ y: 2 }} />
@@ -749,7 +748,7 @@
         yScale={scaleBand().padding(0.4)}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           {#if show}
@@ -790,7 +789,7 @@
         yScale={scaleBand().padding(0.4)}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           {#if show}
@@ -834,7 +833,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <Bars strokeWidth={1} />
@@ -889,7 +888,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <Bars strokeWidth={1} />
@@ -944,7 +943,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule format="percentRound" />
           <Axis placement="left" rule />
           <Bars strokeWidth={1} />
@@ -1003,7 +1002,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <Bars strokeWidth={1} />
@@ -1075,7 +1074,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <g>
@@ -1177,7 +1176,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="bottom" grid rule />
           <Axis placement="left" rule />
           <g>
@@ -1259,7 +1258,7 @@
         },
       }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars strokeWidth={1} class="fill-primary" />

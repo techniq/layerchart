@@ -20,7 +20,6 @@
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -113,7 +112,7 @@
       padding={{ left: 10, right: 10 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
           <GeoPath geojson={countriesGeojson} id="clip" />

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Chart, Layer, LinearGradient, Pattern, Rect } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 </script>
 
 <h1>Examples</h1>
@@ -11,7 +10,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <Pattern size={4} lines>
           {#snippet children({ pattern })}
             <Rect
@@ -105,7 +104,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <Pattern size={4} circles>
           {#snippet children({ pattern })}
             <Rect
@@ -199,7 +198,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <Pattern size={4} circles={{ color: 'white', opacity: 0.25 }} background="hsl(20 100% 50%)">
           {#snippet children({ pattern })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
@@ -260,7 +259,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
@@ -348,7 +347,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Pattern size={4} background={gradient}>
@@ -408,7 +407,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <Pattern width={4} height={4}>
           {#snippet patternContent()}
             <line x2="100%" class="stroke-surface-content" />
@@ -528,7 +527,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.layer}>
+      <Layer>
         <Pattern id="circle-pattern-1" width={4} height={4}>
           {#snippet patternContent()}
             <circle cx={2} cy={2} r={1} class="fill-surface-content" />

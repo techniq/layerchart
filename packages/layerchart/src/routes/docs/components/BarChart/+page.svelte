@@ -12,6 +12,7 @@
     Text,
     Tooltip,
     Polygon,
+    getSettings,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
@@ -23,7 +24,6 @@
   import { timeDay, timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -102,9 +102,6 @@
       end: new Date('2021-12-31'),
     },
   ];
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -113,7 +110,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" />
   </div>
 </Preview>
 
@@ -121,14 +118,7 @@
 
 <Preview data={horizontalDateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={horizontalDateSeriesData}
-      x="value"
-      y="date"
-      orientation="horizontal"
-      {layer}
-      {debug}
-    />
+    <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
   </div>
 </Preview>
 
@@ -136,7 +126,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" xInterval={timeDay} {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" xInterval={timeDay} />
   </div>
 </Preview>
 
@@ -150,8 +140,6 @@
       y="date"
       yInterval={timeDay}
       orientation="horizontal"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -166,8 +154,6 @@
       y="value"
       xInterval={timeDay}
       props={{ bars: { insets: { x: 4 } } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -181,8 +167,6 @@
       x="date"
       y="value"
       props={{ bars: { class: 'fill-secondary' } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -191,14 +175,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      cRange={['var(--color-secondary)']}
-      {layer}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" cRange={['var(--color-secondary)']} />
   </div>
 </Preview>
 
@@ -220,8 +197,6 @@
       props={{
         yAxis: { format: 'metric' },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -238,8 +213,6 @@
       cScale={scaleThreshold()}
       cDomain={[0]}
       cRange={['var(--color-danger)', 'var(--color-success)']}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -248,7 +221,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet marks({ series, getBarsProps })}
         {#each series as s, i (s.key)}
           <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
@@ -266,14 +239,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      props={{ bars: { rounded: 'none' } }}
-      {layer}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" props={{ bars: { rounded: 'none' } }} />
   </div>
 </Preview>
 
@@ -306,8 +272,6 @@
           context: { mode: 'bounds' },
         },
       }}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -328,14 +292,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      props={{ highlight: { area: false } }}
-      {layer}
-      {debug}
-    >
+    <BarChart data={dateSeriesData} x="date" y="value" props={{ highlight: { area: false } }}>
       {#snippet belowMarks()}
         <Highlight area={{ class: 'fill-surface-content/10' }} />
       {/snippet}
@@ -358,8 +315,6 @@
           props: { insets: { x: 8 } },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -376,8 +331,6 @@
         { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
         { key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -403,8 +356,6 @@
           props: { insets: { x: 8 } },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -427,8 +378,6 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -458,8 +407,6 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context, series })}
         <Tooltip.Root>
@@ -516,8 +463,6 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ series, context })}
         <Tooltip.Root>
@@ -576,8 +521,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -612,8 +555,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     >
       <!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
       {#snippet aboveMarks({ context, visibleSeries })}
@@ -668,8 +609,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -709,8 +648,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -750,8 +687,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -786,8 +721,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -823,8 +756,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -861,8 +792,6 @@
         },
       }}
       stackPadding={5.0}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -896,8 +825,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -937,8 +864,6 @@
           header: { format: 'none' },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -978,7 +903,7 @@
           header: { format: 'none' },
         },
       }}
-      {layer} {debug}
+       
     />
   </div>
 </Preview> -->
@@ -1014,8 +939,6 @@
         },
       }}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1051,8 +974,6 @@
         },
       }}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1088,8 +1009,6 @@
         },
       }}
       legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1128,8 +1047,6 @@
         },
       }}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1138,7 +1055,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" labels {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" labels />
   </div>
 </Preview>
 
@@ -1146,14 +1063,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      labels={{ placement: 'inside' }}
-      {layer}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" labels={{ placement: 'inside' }} />
   </div>
 </Preview>
 
@@ -1180,8 +1090,6 @@
         },
       }}
       padding={{ left: 0, bottom: 16 }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1190,16 +1098,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[500px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="value"
-      y="date"
-      labels
-      orientation="horizontal"
-      axis={false}
-      {layer}
-      {debug}
-    >
+    <BarChart data={dateSeriesData} x="value" y="date" labels orientation="horizontal" axis={false}>
       {#snippet aboveMarks()}
         <Labels x={(d) => 0} value="date" class="text-sm fill-surface-300 stroke-none" />
       {/snippet}
@@ -1219,8 +1118,6 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1245,8 +1142,6 @@
         xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
         rule: { y: false },
       }}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -1324,8 +1219,6 @@
           context: { mode: 'bounds' },
         },
       }}
-      {layer}
-      {debug}
     >
       {#snippet axis({ context })}
         <Axis placement="bottom" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>
@@ -1364,7 +1257,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="x" />
   </div>
 </Preview>
 
@@ -1372,7 +1265,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="y" />
   </div>
 </Preview>
 
@@ -1385,8 +1278,6 @@
       x="date"
       y="value"
       props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1395,7 +1286,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} />
   </div>
 </Preview>
 
@@ -1403,14 +1294,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      grid={{ x: true, bandAlign: 'between' }}
-      {layer}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true, bandAlign: 'between' }} />
   </div>
 </Preview>
 
@@ -1426,8 +1310,6 @@
       yScale={scaleLog()}
       yDomain={[1, 100]}
       props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1436,15 +1318,7 @@
 
 <Preview data={largeDateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={largeDateSeriesData}
-      x="date"
-      y="value"
-      xInterval={timeDay}
-      brush
-      {layer}
-      {debug}
-    />
+    <BarChart data={largeDateSeriesData} x="date" y="value" xInterval={timeDay} brush />
   </div>
 </Preview>
 
@@ -1457,7 +1331,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" radial {layer} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" radial />
   </div>
 </Preview>
 
@@ -1471,8 +1345,6 @@
       y="value"
       yRange={({ height }) => [height / 5, height / 2]}
       radial
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1488,8 +1360,6 @@
       yRange={({ height }) => [height / 5, height / 2]}
       radial
       props={{ bars: { padAngle: 0.1 } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1505,8 +1375,6 @@
       yRange={({ height }) => [height / 5, height / 2]}
       radial
       orientation="horizontal"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1536,8 +1404,6 @@
       ]}
       radial
       orientation="horizontal"
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1568,8 +1434,6 @@
       radial
       orientation="horizontal"
       grid={{ bandAlign: 'between' }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1606,8 +1470,6 @@
         },
       }}
       padding={{ top: 10, bottom: 10 }}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -1645,8 +1507,6 @@
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         grid: { xTicks: 12 },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1663,8 +1523,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1673,7 +1531,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1710,8 +1568,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1739,8 +1595,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1770,8 +1624,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1801,8 +1653,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1836,8 +1686,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1852,7 +1700,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
-        <Layer type={layer}>
+        <Layer type={getSettings().layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />

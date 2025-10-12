@@ -3,9 +3,8 @@
   import { feature } from 'topojson-client';
   import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  import { Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
+  import { Chart, Circle, GeoPath, GeoPoint, getSettings, Layer, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   import LucideStar from '~icons/lucide/star';
 
@@ -16,7 +15,8 @@
 
   let tooltipMode = $state<'quadtree' | 'voronoi'>('quadtree');
   let tooltipRadius = $state(30);
-  let debug = $derived(shared.debug);
+
+  let settings = getSettings();
 </script>
 
 <h1>Examples</h1>
@@ -42,7 +42,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         {#each states.features as feature}
           <GeoPath
             geojson={feature}
@@ -53,7 +53,7 @@
         <g class="points pointer-events-none">
           {#each data.us.capitals as capital}
             <!-- TODO: Improve GeoPoint to standardize svg/canvas -->
-            {#if shared.layer === 'svg'}
+            {#if settings.layer === 'svg'}
               <GeoPoint lat={capital.latitude} long={capital.longitude}>
                 <Circle r={2} class="fill-white stroke-danger" />
                 <Text
@@ -63,7 +63,7 @@
                   class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                 />
               </GeoPoint>
-            {:else if shared.layer === 'canvas'}
+            {:else if settings.layer === 'canvas'}
               <GeoPoint lat={capital.latitude} long={capital.longitude}>
                 {#snippet children({ x, y })}
                   <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
@@ -96,10 +96,10 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
+      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           {#each countries.features as feature}
             <GeoPath
               geojson={feature}
@@ -119,9 +119,9 @@
 
         <!-- Show tooltip as GeoPoint (Svg/Canvas) instead of Tooltip.Point (Html)) -->
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.layer}>
+        <Layer>
           {#if context.tooltip.data}
-            {#if shared.layer === 'svg'}
+            {#if settings.layer === 'svg'}
               <GeoPoint
                 lat={context.tooltip.data.latitude}
                 long={context.tooltip.data.longitude}
@@ -135,7 +135,7 @@
                   class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                 />
               </GeoPoint>
-            {:else if shared.layer === 'canvas'}
+            {:else if settings.layer === 'canvas'}
               <GeoPoint
                 lat={context.tooltip.data.latitude}
                 long={context.tooltip.data.longitude}
@@ -172,10 +172,10 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
+      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -194,7 +194,7 @@
         </Layer>
 
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.layer}>
+        <Layer>
           {#if context.tooltip.data}
             <GeoPoint
               lat={context.tooltip.data.latitude}
@@ -232,10 +232,10 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
+      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           {#each countries.features as feature}
             <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
           {/each}
@@ -251,7 +251,7 @@
         </Layer>
 
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.layer}>
+        <Layer>
           {#if context.tooltip.data}
             <GeoPoint
               lat={context.tooltip.data.latitude}
@@ -288,7 +288,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}

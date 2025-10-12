@@ -7,7 +7,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(10);
   let showPoints = $state(false);
@@ -58,7 +57,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 20, right: 8, top: 4, bottom: 24 }}>
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {#if show}

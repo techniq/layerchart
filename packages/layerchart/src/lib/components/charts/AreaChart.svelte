@@ -97,6 +97,9 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -119,9 +122,9 @@
     onTooltipClick = () => {},
     onPointClick,
     props = {},
-    layer = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -131,6 +134,9 @@
     context = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined

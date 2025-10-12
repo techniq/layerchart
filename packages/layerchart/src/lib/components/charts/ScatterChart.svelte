@@ -65,6 +65,9 @@
   import { asAny } from '../../utils/types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -85,9 +88,9 @@
     context = $bindable(),
     onTooltipClick = () => {},
     props = {},
-    layer = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -98,6 +101,9 @@
     annotations = [],
     ...restProps
   }: ScatterChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series: SeriesData<TData, typeof Points>[] = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp

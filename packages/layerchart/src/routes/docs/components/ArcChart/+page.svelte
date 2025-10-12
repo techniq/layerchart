@@ -1,12 +1,10 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import { ArcChart, Arc, Group, LinearGradient, Text } from 'layerchart';
   import { group } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
   import { Field, Switch, Toggle } from 'svelte-ux';
-  import { shared } from '../../shared.svelte.js';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -28,9 +26,6 @@
     { key: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
-
-  let layer = $derived(shared.layer as ComponentProps<typeof ArcChart>['layer']);
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -47,8 +42,6 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -57,7 +50,7 @@
 
 <Preview {data}>
   <div class="h-[160px] p-4 border rounded-sm resize overflow-auto">
-    <ArcChart {layer} {debug}>
+    <ArcChart>
       {#snippet marks()}
         <LinearGradient class="from-secondary to-primary">
           {#snippet children({ gradient })}
@@ -106,8 +99,6 @@
       props={{
         group: { y: 45 },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -125,8 +116,6 @@
       trackOuterRadius={-5}
       trackInnerRadius={-10}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -144,8 +133,6 @@
       trackOuterRadius={-5}
       trackInnerRadius={-10}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -163,8 +150,6 @@
       trackOuterRadius={0.95}
       trackInnerRadius={0.9}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -183,8 +168,6 @@
       trackOuterRadius={75}
       trackInnerRadius={65}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -200,8 +183,6 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -219,8 +200,6 @@
       innerRadius={-20}
       cornerRadius={10}
       props={{ group: { y: 70 } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -237,8 +216,6 @@
       innerRadius={-20}
       range={[90, -270]}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -255,8 +232,6 @@
       innerRadius={-20}
       range={[180, -180]}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -277,8 +252,6 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -301,8 +274,6 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -325,8 +296,6 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {layer}
-      {debug}
     >
       {#snippet arc({ props, seriesIndex, visibleSeries })}
         <Arc {...props}>
@@ -369,8 +338,6 @@
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}
-          {layer}
-          {debug}
         />
       {/if}
     </div>
@@ -402,8 +369,6 @@
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}
-          {layer}
-          {debug}
         />
       {/if}
     </div>
@@ -414,6 +379,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <ArcChart {data} key="fruit" value="value" keys="centroid" {layer} {debug} />
+    <ArcChart {data} key="fruit" value="value" keys="centroid"   />
   </div>
 </Preview> -->

@@ -7,7 +7,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
   import { endOfInterval } from '@layerstack/utils';
 
   const now = new Date();
@@ -45,7 +44,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
@@ -94,7 +93,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
@@ -144,7 +143,7 @@
       padding={{ top: 20, left: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
             {@const end = endOfInterval('year', start)}
@@ -203,7 +202,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <Calendar start={firstDayOfYear} end={lastDayOfYear}>
             {#snippet children({ cells, cellSize })}
               {#each cells as cell}

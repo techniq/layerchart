@@ -3,12 +3,11 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
+  import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip, getSettings } from 'layerchart';
   import { RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -26,7 +25,8 @@
 
   let serviceUrl = $state<ComponentProps<typeof GeoTile>['url']>(null!);
   let zoomDelta = $state(0);
-  let debug = $derived(shared.debug);
+
+  let settings = getSettings();
 </script>
 
 <div class="grid grid-cols-[1fr_1fr] gap-2 my-2">
@@ -47,8 +47,8 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
-          <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+        <Layer>
+          <GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
           {#each filteredStates.features as feature}
             <!-- TODO: Renders on canvas if put on separate Layer  -->
             <GeoPath
@@ -88,7 +88,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer}>
+        <Layer>
           <ClipPath useId="clip">
             <GeoTile url={serviceUrl} {zoomDelta} />
           </ClipPath>

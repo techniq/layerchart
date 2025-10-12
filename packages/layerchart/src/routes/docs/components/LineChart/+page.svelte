@@ -2,6 +2,7 @@
   import {
     Axis,
     defaultChartPadding,
+    getSettings,
     Highlight,
     Labels,
     Layer,
@@ -23,7 +24,6 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -96,9 +96,6 @@
   );
 
   let show = $state(true);
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
-  let debug = $derived(shared.debug);
 
   const monitorSeries = [
     {
@@ -180,7 +177,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" />
   </div>
 </Preview>
 
@@ -192,8 +189,6 @@
       data={dateSeriesData}
       x="date"
       series={[{ key: 'value', color: 'var(--color-secondary)' }]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -207,8 +202,6 @@
       x="date"
       y="value"
       props={{ spline: { curve: curveCatmullRom } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -217,7 +210,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[600px] w-[400px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="value" y="date" orientation="vertical" {layer} {debug} />
+    <LineChart data={dateSeriesData} x="value" y="date" orientation="vertical" />
   </div>
 </Preview>
 
@@ -233,8 +226,6 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -251,8 +242,6 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {layer}
-      {debug}
     >
       {#snippet belowMarks({ visibleSeries, highlightKey })}
         {#each visibleSeries as s}
@@ -295,8 +284,6 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -325,8 +312,6 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -335,7 +320,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart x="date" y="value" series={monitorSeries} {layer} {debug}>
+    <LineChart x="date" y="value" series={monitorSeries}>
       {#snippet tooltip({ context, visibleSeries, highlightKey, setHighlightKey })}
         {@const data = context.tooltip.data}
         <Tooltip.Root>TODO</Tooltip.Root>
@@ -357,8 +342,6 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -377,8 +360,6 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ tooltip: { context: { mode: 'quadtree' } } }}
-      {layer}
-      {debug}
       brush
       legend
     >
@@ -436,8 +417,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -455,8 +434,6 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -473,8 +450,6 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {layer}
-      {debug}
     >
       {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
         {#if highlightKey}
@@ -490,7 +465,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} {layer} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} />
   </div>
 </Preview>
 
@@ -498,7 +473,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" points {layer} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" points />
   </div>
 </Preview>
 
@@ -506,15 +481,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      points
-      labels={{ offset: 10 }}
-      {layer}
-      {debug}
-    />
+    <LineChart data={dateSeriesData} x="date" y="value" points labels={{ offset: 10 }} />
   </div>
 </Preview>
 
@@ -533,8 +500,6 @@
           points: false,
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -576,8 +541,6 @@
           },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -617,8 +580,6 @@
           },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -667,8 +628,6 @@
           },
         },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -677,7 +636,7 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {layer} {debug}>
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null}>
       {#snippet marks()}
         <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
           {#snippet children({ gradient })}
@@ -711,7 +670,7 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {layer} {debug}>
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null}>
       {#snippet marks({ context })}
         {@const thresholdOffset = context.yScale(50) / (context.height + context.padding.bottom)}
         <LinearGradient
@@ -786,8 +745,6 @@
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -824,8 +781,6 @@
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -864,8 +819,6 @@
         //   },
         // },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -874,7 +827,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {layer} {debug} />
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points />
   </div>
 </Preview>
 
@@ -882,7 +835,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {layer} {debug}>
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value">
       {#snippet belowMarks({ series })}
         {#each series as s}
           <Spline
@@ -908,8 +861,6 @@
       axis={false}
       grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -918,7 +869,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="x" {layer} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="x" />
   </div>
 </Preview>
 
@@ -926,7 +877,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="y" {layer} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="y" />
   </div>
 </Preview>
 
@@ -938,8 +889,6 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      {layer}
-      {debug}
       props={{
         yAxis: {
           tickLabelProps: {
@@ -971,8 +920,6 @@
         { key: 'oranges', label: 'Oranges', color: 'var(--color-warning)' },
       ]}
       legend
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -989,8 +936,6 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -999,7 +944,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <LineChart data={dateSeriesData} x="date" y="value">
       {#snippet tooltip({ context })}
         <Tooltip.Root
           x={context.padding.left}
@@ -1050,8 +995,6 @@
           },
         };
       })}
-      {layer}
-      {debug}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
@@ -1100,8 +1043,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1135,8 +1076,6 @@
           },
         },
       ]}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1187,8 +1126,6 @@
         };
       })}
       padding={{ ...defaultChartPadding(), right: 60 }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1210,8 +1147,6 @@
         spline: { motion: { type: 'tween', duration: 200 } },
         xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
       }}
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1233,8 +1168,6 @@
         alert(JSON.stringify(detail));
       }}
       brush
-      {layer}
-      {debug}
     />
   </div>
 </Preview>
@@ -1250,14 +1183,7 @@
 <Preview data={dateSeriesData}>
   {#if show}
     <div class="h-[300px] p-4 border rounded-sm" transition:slide>
-      <LineChart
-        data={dateSeriesData}
-        x="date"
-        y="value"
-        props={{ spline: { draw: true } }}
-        {layer}
-        {debug}
-      />
+      <LineChart data={dateSeriesData} x="date" y="value" props={{ spline: { draw: true } }} />
     </div>
   {/if}
 </Preview>
@@ -1266,9 +1192,9 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
+    <LineChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
-        <Layer type={layer}>
+        <Layer type={getSettings().layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Spline class="stroke-2 stroke-primary" />

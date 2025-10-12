@@ -7,7 +7,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { r: number; group: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -53,7 +52,6 @@
         >
           {#snippet children({ nodes, simulation })}
             <Layer
-              type={shared.layer}
               onpointermove={(e) => {
                 simulation.nodes()[0].fx = e.offsetX - context.width / 2;
                 simulation.nodes()[0].fy = e.offsetY - context.height / 2;

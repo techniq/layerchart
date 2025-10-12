@@ -7,9 +7,6 @@
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
-  import { shared } from '../../shared.svelte.js';
-
-  let layer = $derived(shared.layer as 'svg' | 'canvas');
 
   let selectedCurve = $state(curveStepAfter);
 
@@ -40,7 +37,6 @@
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={false}
-      {layer}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -75,7 +71,6 @@
         highlight: { area: true, lines: false, points: false },
         tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } },
       }}
-      {layer}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -122,7 +117,6 @@
       padding={{ left: 16, bottom: 24 }}
       labels
       tooltip={false}
-      {layer}
     >
       {#snippet marks()}
         <Threshold>

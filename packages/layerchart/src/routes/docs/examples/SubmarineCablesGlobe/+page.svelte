@@ -17,7 +17,6 @@
     type ChartContextValue,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -79,7 +78,7 @@
       bind:context
     >
       {#snippet children({ context })}
-        <Layer type={shared.layer} disableHitCanvas={timer.running}>
+        <Layer disableHitCanvas={timer.running}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"

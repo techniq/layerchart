@@ -3,16 +3,25 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, GeoTile, Layer, Tooltip, geoFitObjectTransform } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    GeoTile,
+    Layer,
+    Tooltip,
+    geoFitObjectTransform,
+    getSettings,
+  } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { RangeField } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
+
+  let settings = getSettings();
 
   const states = $derived(feature(data.geojson, data.geojson.objects.states));
 
@@ -26,7 +35,6 @@
 
   let serviceUrl = $state<ComponentProps<typeof GeoTile>['url']>(null!);
   let zoomDelta = $state(0);
-  let debug = $derived(shared.debug);
 </script>
 
 <div class="grid grid-cols-[1fr_1fr] gap-2 my-2">
@@ -52,7 +60,7 @@
         }}
       >
         {#snippet children({ context })}
-          {#if debug}
+          {#if settings.debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
             </div>
@@ -60,8 +68,8 @@
 
           <TransformControls />
 
-          <Layer type={shared.layer}>
-            <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+          <Layer>
+            <GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
 
             {#each filteredStates.features as feature}
               <GeoPath
@@ -119,7 +127,7 @@
         }}
       >
         {#snippet children({ context })}
-          {#if debug}
+          {#if settings.debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
             </div>
@@ -127,8 +135,8 @@
 
           <TransformControls />
 
-          <Layer type={shared.layer}>
-            <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+          <Layer>
+            <GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
 
             {#each filteredStates.features as feature}
               <GeoPath
@@ -183,7 +191,7 @@
         }}
       >
         {#snippet children({ context })}
-          {#if debug}
+          {#if settings.debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
             </div>
@@ -191,12 +199,12 @@
 
           <TransformControls />
 
-          <Layer type={shared.layer}>
+          <Layer>
             <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
             <GeoTile url={serviceUrl} zoomDelta={-100} />
             <GeoTile url={serviceUrl} zoomDelta={-4} />
             <GeoTile url={serviceUrl} zoomDelta={-1} />
-            <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+            <GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
 
             {#each filteredStates.features as feature}
               <GeoPath

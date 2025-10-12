@@ -14,7 +14,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import dots from './dots.json' with { type: 'json' };
   import type { Prettify } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { category: string; value: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -62,7 +61,7 @@
     <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
       {#snippet children({ context })}
         {@const nodeStrokeWidth = 1}
-        <Layer type={shared.layer}>
+        <Layer>
           <ForceSimulation
             forces={{
               x: xForce.x((d) =>

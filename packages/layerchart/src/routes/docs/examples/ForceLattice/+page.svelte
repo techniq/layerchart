@@ -5,7 +5,6 @@
   import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   const n = 20;
   const nodes = Array.from({ length: n * n }, (_, i) => ({ index: i }));
@@ -34,7 +33,7 @@
         }}
       >
         {#snippet children({ nodes, linkPositions })}
-          <Layer type={shared.layer} center>
+          <Layer center>
             {#each links as link, i (i)}
               <Link
                 explicitCoords={linkPositions[i]}

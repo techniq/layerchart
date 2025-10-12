@@ -9,7 +9,6 @@
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(100);
 
@@ -47,7 +46,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -79,7 +78,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -118,7 +117,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.layer}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}

@@ -9,7 +9,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -45,7 +44,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {@const dataByGroup = group(data.groupData, (d) => d.group)}
-      <Layer type={shared.layer}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {#each dataByGroup as [group, data]}
@@ -78,7 +77,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.layer}>
+      <Layer>
         <GeoPath
           geojson={states}
           class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"

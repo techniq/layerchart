@@ -4,13 +4,14 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Layer, spikePath, Spline, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, getSettings, Layer, spikePath, Spline, Tooltip } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
+
+  let settings = getSettings();
 
   const projection = geoIdentity as unknown as () => GeoProjection;
 
@@ -70,7 +71,7 @@
 
         <TransformControls />
 
-        <Layer type={shared.layer}>
+        <Layer>
           <GeoPath
             geojson={states}
             class="fill-surface-content/10 stroke-surface-100"
@@ -103,8 +104,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.layer} pointerEvents={false}>
-          {#if context.tooltip.data && shared.layer === 'canvas'}
+        <Layer pointerEvents={false}>
+          {#if context.tooltip.data && settings.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"

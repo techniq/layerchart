@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ComponentProps } from 'svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
 
   export type CanvasLayerProps = {
     type: 'canvas';
@@ -13,7 +13,17 @@
     type: 'svg';
   } & Omit<ComponentProps<typeof Svg>, 'type' | 'onpointermove'>;
 
-  export type LayerProps = (CanvasLayerProps | HtmlLayerProps | SvgLayerProps) & {
+  export type DefaultLayerProps = {
+    type?: undefined;
+    children: Snippet;
+  };
+
+  export type LayerProps = (
+    | CanvasLayerProps
+    | HtmlLayerProps
+    | SvgLayerProps
+    | DefaultLayerProps
+  ) & {
     onpointermove?: (e: PointerEvent) => void;
   };
 </script>
@@ -22,23 +32,27 @@
   import Canvas from './Canvas.svelte';
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
+  import { getSettings } from '$lib/contexts/settings.js';
 
   let { type, children, ...restProps }: LayerProps = $props();
+
+  let settings = getSettings();
+  let layer = $derived(type ?? settings.layer);
 </script>
 
-{#if type === 'canvas'}
+{#if layer === 'canvas'}
   <Canvas {...restProps as ComponentProps<typeof Canvas>}>
     {#snippet children(props)}
       {@render children?.(props)}
     {/snippet}
   </Canvas>
-{:else if type === 'svg'}
+{:else if layer === 'svg'}
   <Svg {...restProps as ComponentProps<typeof Svg>}>
     {#snippet children(props)}
       {@render children?.(props)}
     {/snippet}
   </Svg>
-{:else if type === 'html'}
+{:else if layer === 'html'}
   <Html {...restProps as ComponentProps<typeof Html>}>
     {#snippet children(props)}
       {@render children?.(props)}
