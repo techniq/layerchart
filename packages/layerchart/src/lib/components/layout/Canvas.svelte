@@ -86,54 +86,6 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  type ComponentRender<T extends Element = Element> = {
-    name: string;
-    render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
-    retainState?: boolean;
-    events?: {
-      click?: MouseEventHandler<T> | null;
-      dblclick?: MouseEventHandler<T> | null;
-      pointerenter?: PointerEventHandler<T> | null;
-      pointerover?: PointerEventHandler<T> | null;
-      pointermove?: PointerEventHandler<T> | null;
-      pointerleave?: PointerEventHandler<T> | null;
-      pointerout?: PointerEventHandler<T> | null;
-      pointerdown?: PointerEventHandler<T> | null;
-      touchmove?: TouchEventHandler<T> | null;
-    };
-    /**
-     * Optional dependencies to track and invalidate the canvas context when they change.
-     */
-    deps?: () => any[];
-  };
-
-  export type CanvasContextValue = {
-    /**
-     * Register component to render.
-     *
-     * Returns method to unregister on component destroy
-     */
-    register<T extends Element>(component: ComponentRender<T>): () => void;
-    invalidate(): void;
-  };
-
-  const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
-
-  const defaultCanvasContext: CanvasContextValue = {
-    register: <T extends Element>(_: ComponentRender<T>) => {
-      return () => {};
-    },
-    invalidate: () => {},
-  };
-
-  export function getCanvasContext() {
-    return CanvasContext.getOr(defaultCanvasContext);
-  }
-
-  function setCanvasContext(context: CanvasContextValue) {
-    return CanvasContext.set(context);
-  }
-
   /**
    * Handles the automatic registration of the component to the canvas context,
    * with dependency tracking and cleanup on destroy.
@@ -154,17 +106,18 @@
 
   import { setLayerContext } from '$lib/contexts/layer.js';
   import { getTransformContext } from '$lib/contexts/transform.js';
-  import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
+  import { getPixelColor, scaleCanvas } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { Context, useMutationObserver, watch } from 'runed';
-  import type {
-    HTMLCanvasAttributes,
-    MouseEventHandler,
-    PointerEventHandler,
-    TouchEventHandler,
-  } from 'svelte/elements';
+  import { useMutationObserver, watch } from 'runed';
+  import type { HTMLCanvasAttributes, PointerEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import {
+    getCanvasContext,
+    setCanvasContext,
+    type CanvasContextValue,
+    type ComponentRender,
+  } from '$lib/contexts/canvas.js';
 
   let {
     ref: refProp = $bindable(),
