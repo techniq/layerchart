@@ -14,7 +14,7 @@ import type {
 import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
 
 import { type GeoContextValue } from '$lib/contexts/geo.js';
-import { type TooltipContextValue } from '../components/tooltip/TooltipContext.svelte';
+import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import { type TransformContextValue } from '../components/TransformContext.svelte';
 import { type BrushContextValue } from '../components/BrushContext.svelte';
 import type { PreservedChartConfig } from '../components/Chart.svelte';

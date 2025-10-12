@@ -159,7 +159,7 @@
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
-  import { getTooltipContext } from './TooltipContext.svelte';
+  import { getTooltipContext } from '$lib/contexts/tooltip.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { type Snippet } from 'svelte';
 

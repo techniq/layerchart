@@ -1,9 +1,6 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import {
     geoPath as d3GeoPath,
     geoTransform as d3geoTransform,
@@ -12,6 +9,10 @@
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
+  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
+
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {

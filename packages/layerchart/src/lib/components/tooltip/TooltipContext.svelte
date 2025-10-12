@@ -1,11 +1,9 @@
 <script lang="ts" module>
-  import { Context } from 'runed';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
+  import { setTooltipContext, type TooltipContextValue } from '$lib/contexts/tooltip.js';
 
-  const _TooltipContext = new Context<TooltipContextValue>('TooltipContext');
-
-  type TooltipMode =
+  export type TooltipMode =
     | 'bisect-x' // requires values to be sorted
     | 'bisect-y' // requires values to be sorted
     | 'band'
@@ -16,40 +14,6 @@
     | 'quadtree-x' // ignores y values (constant 0)
     | 'quadtree-y' // ignores x values (constant 0)
     | 'manual';
-
-  export type TooltipContextValue<T = any> = {
-    x: number;
-    y: number;
-    data: T | null;
-    payload: TooltipPayload[];
-    show(
-      e: PointerEvent | MouseEvent | TouchEvent,
-      tooltipData?: any,
-      payload?: TooltipPayload
-    ): void;
-    hide(e?: PointerEvent): void;
-    mode: TooltipMode;
-    isHoveringTooltipArea: boolean;
-    isHoveringTooltipContent: boolean;
-  };
-
-  //   const defaultContext = {
-  //     x: 0,
-  //     y: 0,
-  //     data: null as any,
-  //     payload: [],
-  //     show: () => {},
-  //     hide: () => {},
-  //     mode: 'manual',
-  //   } as TooltipContextValue;
-
-  export function getTooltipContext<T = any>() {
-    return _TooltipContext.get() as TooltipContextValue<T>;
-  }
-
-  function setTooltipContext<T = any>(tooltip: TooltipContextValue<T>) {
-    return _TooltipContext.set(tooltip) as TooltipContextValue<T>;
-  }
 
   type TooltipContextPropsWithoutHTML<T = any> = {
     /**

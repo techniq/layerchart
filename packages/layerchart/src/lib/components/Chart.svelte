@@ -36,7 +36,8 @@
     createChartScale,
   } from '$lib/utils/chart.js';
   import GeoContext from './GeoContext.svelte';
-  import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import TooltipContext from './tooltip/TooltipContext.svelte';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';

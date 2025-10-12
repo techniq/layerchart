@@ -123,7 +123,7 @@
   import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getTooltipContext } from './tooltip/TooltipContext.svelte';
+  import { getTooltipContext } from '$lib/contexts/tooltip.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import Arc from './Arc.svelte';

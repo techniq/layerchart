@@ -16,7 +16,7 @@ import type {
   Spline,
 } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
-import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
+import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
 import type Svg from '../layout/Svg.svelte';

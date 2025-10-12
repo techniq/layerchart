@@ -60,7 +60,7 @@
   import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';
