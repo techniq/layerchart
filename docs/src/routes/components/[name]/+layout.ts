@@ -19,7 +19,11 @@ export const load = async ({ params }) => {
 			const source = (await allSources[path]()) as string;
 			const name = path.split('/')?.pop()?.replace('.svelte', '') ?? 'unknown';
 
-			examples[name] = { component, source };
+			// Remove `export { data };`
+			// TODO: Also remove blank lines left behind
+			const cleanupSource = source.replace(/^.*export \{ data \};.*$/gm, '');
+
+			examples[name] = { component, source: cleanupSource };
 		}
 	}
 
