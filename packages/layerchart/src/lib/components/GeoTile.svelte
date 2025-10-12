@@ -49,7 +49,7 @@
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {

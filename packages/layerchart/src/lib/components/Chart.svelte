@@ -5,7 +5,7 @@
   import { extent, max, min } from 'd3-array';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
-  import { Context, useDebounce } from 'runed';
+  import { useDebounce } from 'runed';
   import { unique } from '@layerstack/utils';
 
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
@@ -35,13 +35,15 @@
     createGetter,
     createChartScale,
   } from '$lib/utils/chart.js';
-  import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
+  import GeoContext from './GeoContext.svelte';
   import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
+
   import { setChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
+  import { type GeoContextValue } from '$lib/contexts/geo.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 

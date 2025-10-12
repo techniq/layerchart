@@ -137,7 +137,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getGeoContext } from '../GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Svg from './../layout/Svg.svelte';
   import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';

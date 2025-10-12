@@ -51,7 +51,7 @@ export { default as ForceSimulation } from './ForceSimulation.svelte';
 export * from './ForceSimulation.svelte';
 export { default as GeoCircle } from './GeoCircle.svelte';
 export * from './GeoCircle.svelte';
-export { default as GeoContext, getGeoContext } from './GeoContext.svelte';
+export { default as GeoContext } from './GeoContext.svelte';
 export * from './GeoContext.svelte';
 export { default as GeoEdgeFade } from './GeoEdgeFade.svelte';
 export * from './GeoEdgeFade.svelte';

@@ -12,7 +12,7 @@
 
 <script lang="ts">
   import { isVisible } from '$lib/utils/geo.js';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
 
   let { lat, long, children }: GeoVisibleProps = $props();
   const geoCtx = getGeoContext();

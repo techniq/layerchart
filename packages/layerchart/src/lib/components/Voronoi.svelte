@@ -68,7 +68,7 @@
   import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import CircleClipPath from './CircleClipPath.svelte';
 
   let {

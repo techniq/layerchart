@@ -1,26 +1,10 @@
 <script lang="ts" module>
-  import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
-  import { getTransformContext } from './TransformContext.svelte';
-  import { Context } from 'runed';
-  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
+  import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
 
-  export type GeoContextValue = {
-    projection: GeoProjection | undefined;
-  };
-
-  /**
-   * Access or set the current GeoContext.
-   */
-  const _GeoContext = new Context<GeoContextValue>('GeoContext');
-
-  export function getGeoContext() {
-    return _GeoContext.getOr({ projection: undefined } as GeoContextValue);
-  }
-
-  export function setGeoContext(geo: GeoContextValue) {
-    return _GeoContext.set(geo);
-  }
+  import { setGeoContext, type GeoContextValue } from '$lib/contexts/geo.js';
+  import { getTransformContext } from './TransformContext.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   export type GeoContextProps = {
     /**

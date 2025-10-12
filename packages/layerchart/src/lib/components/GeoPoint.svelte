@@ -32,7 +32,7 @@
 <script lang="ts">
   import Group from './Group.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { lat, long, ref: refProp = $bindable(), children, ...restProps }: GeoPointProps = $props();

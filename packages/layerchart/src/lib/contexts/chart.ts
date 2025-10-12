@@ -13,7 +13,7 @@ import type {
 } from '$lib/utils/types.js';
 import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
 
-import { type GeoContextValue } from '../components/GeoContext.svelte';
+import { type GeoContextValue } from '$lib/contexts/geo.js';
 import { type TooltipContextValue } from '../components/tooltip/TooltipContext.svelte';
 import { type TransformContextValue } from '../components/TransformContext.svelte';
 import { type BrushContextValue } from '../components/BrushContext.svelte';
