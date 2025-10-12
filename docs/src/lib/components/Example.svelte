@@ -14,11 +14,9 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
-	let { name }: { name: string } = $props();
+	let { name, showCode = false }: { name: string; showCode?: boolean } = $props();
 
 	const example = examples.get()?.current[name];
-
-	let showCode = $state(false);
 
 	/**
 	 * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`

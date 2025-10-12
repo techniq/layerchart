@@ -5,4 +5,4 @@
 	let example = page.params.example!;
 </script>
 
-<Example name={example} />
+<Example name={example} showCode />
