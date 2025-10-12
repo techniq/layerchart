@@ -153,7 +153,7 @@
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { setLayerContext } from '$lib/contexts/layer.js';
-  import { getTransformContext } from '../TransformContext.svelte';
+  import { getTransformContext } from '$lib/contexts/transform.js';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { Context, useMutationObserver, watch } from 'runed';

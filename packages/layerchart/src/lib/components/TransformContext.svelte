@@ -1,145 +1,12 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-
-  const DEFAULT_TRANSLATE = { x: 0, y: 0 };
-  const DEFAULT_SCALE = 1;
-
-  type TransformMode = 'canvas' | 'manual' | 'none';
-  type TransformScrollMode = 'scale' | 'translate' | 'none';
-
-  export type TransformContextValue = {
-    /**
-     * The current transform mode.
-     *
-     * - `canvas`: The transform is applied to the canvas element.
-     * - `manual`: The transform is applied manually.
-     * - `none`: No transform is applied.
-     */
-    mode: TransformMode;
-
-    /**
-     * The current scale of the transform.
-     */
-    scale: number;
-
-    /**
-     * Set the scale of the transform
-     * @param value - the scale value to set
-     * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
-     */
-    setScale(value: number, options?: MotionProp): void;
-
-    /**
-     * The current translate of the transform.
-     */
-    translate: { x: number; y: number };
-
-    /**
-     * Set the translate of the transform
-     * @param point - the point to translate to
-     * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
-     */
-    setTranslate(point: { x: number; y: number }, options?: MotionProp): void;
-
-    /**
-     * Whether the transform is currently being moved
-     */
-    moving: boolean;
-
-    /**
-     * Whether the transform is currently being dragged
-     */
-    dragging: boolean;
-
-    /**
-     * The scroll mode of the transform.
-     *
-     * - `scale`: Scrolling will zoom in/out the canvas.
-     * - `translate`: Scrolling will pan the canvas.
-     * - `none`: No scroll mode is applied.
-     */
-    scrollMode: TransformScrollMode;
-
-    /**
-     * Set the scroll mode of the transform
-     *
-     * @param mode - the scroll mode to set
-     */
-    setScrollMode(mode: TransformScrollMode): void;
-
-    /**
-     * Reset the transform to its initial state
-     */
-    reset(): void;
-
-    /**
-     * Zoom in the transform
-     */
-    zoomIn(): void;
-
-    /**
-     * Zoom out the transform
-     *
-     */
-    zoomOut(): void;
-
-    /**
-     * Translate the transform to the center of the canvas
-     */
-    translateCenter(): void;
-
-    /**
-     * Zoom to a specific point in the canvas
-     *
-     * @param center - The point (in chart coordinates) that should become the new
-     * center of the view after zooming.
-     *
-     * @param rect - A rectangular region (in chart coordinates) that the view should scale to fit.
-     * If omitted, the scale defaults to 1 (no zoom).
-     */
-    zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }): void;
-  };
-
-  const _TransformContext = new Context<TransformContextValue>('TransformContext');
-
-  function createDefaultTransformContext() {
-    let defaultTranslate = $state(DEFAULT_TRANSLATE);
-    let defaultScale = $state(DEFAULT_SCALE);
-
-    const defaultContext: TransformContextValue = {
-      mode: 'none',
-      get scale() {
-        return defaultScale;
-      },
-      setScale: (value: number) => {
-        defaultScale = value;
-      },
-      get translate() {
-        return defaultTranslate;
-      },
-      setTranslate: (value: { x: 0; y: 0 }) => {
-        defaultTranslate = value;
-      },
-      moving: false,
-      dragging: false,
-      scrollMode: 'none',
-      setScrollMode: () => {},
-      reset: () => {},
-      zoomIn: () => {},
-      zoomOut: () => {},
-      translateCenter: () => {},
-      zoomTo: () => {},
-    };
-    return defaultContext;
-  }
-
-  export function getTransformContext() {
-    return _TransformContext.getOr(createDefaultTransformContext());
-  }
-
-  export function setTransformContext(transform: TransformContextValue) {
-    return _TransformContext.set(transform);
-  }
+  import { setTransformContext, type TransformContextValue } from '$lib/contexts/transform.js';
+  import {
+    DEFAULT_SCALE,
+    DEFAULT_TRANSLATE,
+    type TransformMode,
+    type TransformScrollMode,
+  } from '$lib/states/transform.svelte.js';
 
   type TransformContextPropsWithoutHTML = {
     mode?: TransformMode;
@@ -211,11 +78,11 @@
 </script>
 
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { localPoint } from '@layerstack/utils';
-  import { Context, watch } from 'runed';
+  import { watch } from 'runed';
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import type { Snippet } from 'svelte';
   import {
     createControlledMotion,
     createMotionTracker,

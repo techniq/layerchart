@@ -40,11 +40,12 @@
   import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
-  import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
+  import TransformContext from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
 
   import { setChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
   import { type GeoContextValue } from '$lib/contexts/geo.js';
+  import { type TransformContextValue } from '$lib/contexts/transform.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 

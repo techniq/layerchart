@@ -3,7 +3,7 @@
   import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
 
   import { setGeoContext, type GeoContextValue } from '$lib/contexts/geo.js';
-  import { getTransformContext } from './TransformContext.svelte';
+  import { getTransformContext } from '$lib/contexts/transform.js';
   import { getChartContext } from '$lib/contexts/chart.js';
 
   export type GeoContextProps = {

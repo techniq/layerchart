@@ -63,7 +63,7 @@
 </script>
 
 <script lang="ts">
-  import { getTransformContext } from '../TransformContext.svelte';
+  import { getTransformContext } from '$lib/contexts/transform.js';
 
   import { setLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
