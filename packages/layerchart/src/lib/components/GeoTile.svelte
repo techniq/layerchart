@@ -46,7 +46,7 @@
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { getGeoContext } from '$lib/contexts/geo.js';

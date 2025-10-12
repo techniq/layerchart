@@ -70,7 +70,7 @@
   import { merge } from 'lodash-es';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { createKey } from '$lib/utils/key.svelte.js';

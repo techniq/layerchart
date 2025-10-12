@@ -95,7 +95,7 @@
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Rule from '../Rule.svelte';
 

@@ -84,7 +84,7 @@
 
 <script lang="ts">
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from '$lib/contexts/chart.js';

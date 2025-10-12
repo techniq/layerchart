@@ -19,7 +19,7 @@ import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
-import type Svg from '../layout/Svg.svelte';
+import type Svg from '../layers/Svg.svelte';
 import type Tooltip from '../tooltip/Tooltip.svelte';
 import type TooltipHeader from '../tooltip/TooltipHeader.svelte';
 import type TooltipList from '../tooltip/TooltipList.svelte';
@@ -31,7 +31,7 @@ import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
 import type Arc from '../Arc.svelte';
-import type Canvas from '../layout/Canvas.svelte';
+import type Canvas from '../layers/Canvas.svelte';
 import type { Without } from '$lib/utils/types.js';
 
 export type SeriesData<TData, TComponent extends Component> = {

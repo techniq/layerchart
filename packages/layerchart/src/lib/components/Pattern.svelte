@@ -126,7 +126,7 @@
 
 <script lang="ts">
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { createPattern } from '$lib/utils/canvas.js';
 
   const uid = $props.id();

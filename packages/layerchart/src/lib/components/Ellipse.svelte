@@ -78,7 +78,7 @@
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';

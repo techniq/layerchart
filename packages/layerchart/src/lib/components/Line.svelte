@@ -94,7 +94,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';

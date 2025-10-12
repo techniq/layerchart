@@ -102,7 +102,7 @@
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import Svg from './../layout/Svg.svelte';
+  import Svg from './../layers/Svg.svelte';
   import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';

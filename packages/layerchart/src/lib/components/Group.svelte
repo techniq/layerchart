@@ -84,7 +84,7 @@
   import { cubicIn } from 'svelte/easing';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
 
   import { getChartContext } from '$lib/contexts/chart.js';
 

@@ -125,7 +125,7 @@
   import Group from './Group.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import MarkerWrapper from './MarkerWrapper.svelte';

@@ -141,7 +141,7 @@
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { polygon } from '$lib/utils/shape.js';

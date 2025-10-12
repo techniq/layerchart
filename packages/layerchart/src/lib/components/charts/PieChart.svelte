@@ -181,7 +181,7 @@
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
   import * as Tooltip from '../tooltip/index.js';
