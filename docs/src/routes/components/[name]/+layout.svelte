@@ -1,16 +1,19 @@
 <script lang="ts">
+	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 
 	import { h1 as H1 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
-	import { shared } from '$lib/shared.svelte.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideCode from '~icons/lucide/code';
 	import LucideChevronRight from '~icons/lucide/chevron-right';
+
+	// TODO: `setSettings({...})` or just use default?
+	const settings = getSettings();
 
 	let { data, children } = $props();
 
@@ -43,7 +46,7 @@
 	<span class="flex items-center gap-1">
 		{#if metadata.layers}
 			<ToggleGroup
-				bind:value={shared.layer}
+				bind:value={settings.layer}
 				variant="fill"
 				color="primary"
 				inset
@@ -63,7 +66,7 @@
 					<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
 						<label class="flex items-center gap-2">
 							<span class="text-sm text-surface-content">Debug</span>
-							<Switch bind:checked={shared.debug} />
+							<Switch bind:checked={settings.debug} />
 						</label>
 					</Menu>
 				</Button>
