@@ -2,6 +2,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+	import { cls } from '@layerstack/tailwind';
 
 	import { examples } from '$lib/context';
 	import Code from './Code.svelte';
@@ -47,7 +48,9 @@
 
 <div class="example mt-1">
 	{#if example}
-		<example.component bind:this={ref} />
+		<div class={cls('p-4 border rounded-t-sm', !showCode && 'rounded-b-sm')}>
+			<example.component bind:this={ref} />
+		</div>
 
 		{#if showCode}
 			<div transition:slide class="border border-t-0">

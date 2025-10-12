@@ -6,6 +6,6 @@
 	export { data };
 </script>
 
-<div class="h-[300px] p-4 border rounded-sm">
+<div class="h-[300px]">
 	<LineChart {data} x="date" y="value" />
 </div>
