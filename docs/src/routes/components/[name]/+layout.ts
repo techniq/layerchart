@@ -21,7 +21,7 @@ export const load = async ({ params }) => {
 
 			// Remove `export { data };`
 			// TODO: Also remove blank lines left behind
-			const cleanupSource = source.replace(/^.*export \{ data \};.*$/gm, '');
+			const cleanupSource = source.replace(/^.*export .*;.*$/gm, '');
 
 			examples[name] = { component, source: cleanupSource };
 		}

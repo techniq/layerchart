@@ -18,3 +18,23 @@ related: [components/Chart, components/Area, examples/Area]
 ### Default series label
 
 <Example name="default-series-label" />
+
+### Gradient
+
+<Example name="gradient" />
+
+### Threshold Gradient
+
+<Example name="threshold-gradient" />
+
+### Curve
+
+<Example name="curve" />
+
+### Series
+
+<Example name="series" />
+
+### Series (separate data)
+
+<Example name="series-separate-data" />
