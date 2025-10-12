@@ -28,14 +28,20 @@
 
 {#if type === 'canvas'}
   <Canvas {...restProps as ComponentProps<typeof Canvas>}>
-    {@render children?.()}
+    {#snippet children(props)}
+      {@render children?.(props)}
+    {/snippet}
   </Canvas>
 {:else if type === 'svg'}
   <Svg {...restProps as ComponentProps<typeof Svg>}>
-    {@render children?.()}
+    {#snippet children(props)}
+      {@render children?.(props)}
+    {/snippet}
   </Svg>
 {:else if type === 'html'}
   <Html {...restProps as ComponentProps<typeof Html>}>
-    {@render children?.()}
+    {#snippet children(props)}
+      {@render children?.(props)}
+    {/snippet}
   </Html>
 {/if}
