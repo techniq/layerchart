@@ -6,6 +6,4 @@
 	export { data };
 </script>
 
-<div class="h-[300px]">
-	<AreaChart {data} x="date" y="value" />
-</div>
+<AreaChart {data} x="date" y="value" height={300} />

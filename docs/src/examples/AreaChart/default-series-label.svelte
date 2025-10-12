@@ -11,6 +11,4 @@
 	export { data };
 </script>
 
-<div class="h-[300px]">
-	<AreaChart {data} x="date" y="visits" />
-</div>
+<AreaChart {data} x="date" y="visits" height={300} />
