@@ -593,6 +593,12 @@
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
     onTransform?: ComponentProps<typeof TransformContext>['onTransform'];
+
+    /** Sets width of the chart container.  Uses parent width if not set (bind:clientWidth) */
+    width?: number;
+
+    /** Sets height of the chart container.  Uses parent height if not set (bind:clientHeight) */
+    height?: number;
   };
 </script>
 
@@ -603,6 +609,8 @@
   let {
     ssr = false,
     pointerEvents = true,
+    width: widthProp,
+    height: heightProp,
     position = 'relative',
     percentRange = false,
     ref: refProp = $bindable(),
@@ -684,8 +692,12 @@
 
   const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
 
-  let containerWidth = $state(100);
-  let containerHeight = $state(100);
+  // Measured dimensions of the container
+  let _containerWidth = $state(100);
+  let _containerHeight = $state(100);
+
+  let containerWidth = $derived(widthProp ?? _containerWidth);
+  let containerHeight = $derived(heightProp ?? _containerHeight);
 
   const logDebug = useDebounce(printDebug, 200);
 
@@ -1280,13 +1292,15 @@
   <div
     bind:this={ref}
     style:position
-    style:top={position === 'absolute' ? '0' : null}
-    style:right={position === 'absolute' ? '0' : null}
-    style:bottom={position === 'absolute' ? '0' : null}
-    style:left={position === 'absolute' ? '0' : null}
+    style:top={position === 'absolute' ? 0 : null}
+    style:right={position === 'absolute' ? 0 : null}
+    style:bottom={position === 'absolute' ? 0 : null}
+    style:left={position === 'absolute' ? 0 : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
-    bind:clientWidth={containerWidth}
-    bind:clientHeight={containerHeight}
+    style:width={widthProp ? `${widthProp}px` : '100%'}
+    style:height={heightProp ? `${heightProp}px` : '100%'}
+    bind:clientWidth={_containerWidth}
+    bind:clientHeight={_containerHeight}
     class="lc-root-container"
   >
     {#key isMounted}
@@ -1323,9 +1337,5 @@
   .lc-root-container,
   .lc-root-container :global(*) {
     box-sizing: border-box;
-  }
-  .lc-root-container {
-    width: 100%;
-    height: 100%;
   }
 </style>
