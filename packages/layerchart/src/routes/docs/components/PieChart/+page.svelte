@@ -43,9 +43,7 @@
     })
   );
 
-  let renderContext = $derived(
-    shared.renderContext as ComponentProps<typeof PieChart>['renderContext']
-  );
+  let layer = $derived(shared.layer as ComponentProps<typeof PieChart>['layer']);
   let debug = $derived(shared.debug);
 </script>
 
@@ -55,7 +53,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" {layer} {debug} />
   </div>
 </Preview>
 
@@ -71,7 +69,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -81,7 +79,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" outerRadius={100} {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" outerRadius={100} {layer} {debug} />
   </div>
 </Preview>
 
@@ -89,7 +87,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" outerRadius={-20} {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" outerRadius={-20} {layer} {debug} />
   </div>
 </Preview>
 
@@ -104,7 +102,7 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.02}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -121,7 +119,7 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.02}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet aboveMarks()}
@@ -158,7 +156,7 @@
       cornerRadius={10}
       padAngle={0.02}
       props={{ group: { y: 90 } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -181,7 +179,7 @@
       cornerRadius={4}
       padAngle={0.02}
       tooltip={false}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet aboveMarks()}
@@ -209,7 +207,7 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -226,7 +224,7 @@
         { key: '2019', data: dataByYear.get(2019), props: { innerRadius: -20 } },
         { key: '2018', data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -248,7 +246,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -263,7 +261,7 @@
       key="fruit"
       value="value"
       props={{ arc: { class: 'stroke-surface-100' } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -273,7 +271,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" legend {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" legend {layer} {debug} />
   </div>
 </Preview>
 
@@ -286,7 +284,7 @@
       key="fruit"
       value="value"
       legend={{ placement: 'top-left', orientation: 'vertical' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -309,7 +307,7 @@
           item: 'text-xs',
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -336,7 +334,7 @@
       }}
       value="value"
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -356,7 +354,7 @@
         'var(--color-danger)',
         'var(--color-info)',
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -366,7 +364,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} {layer} {debug} />
   </div>
 </Preview>
 
@@ -379,7 +377,7 @@
       key="fruit"
       value="value"
       cRange={quantize(interpolateRainbow, 5)}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -389,7 +387,7 @@
 
 <Preview data={dataWithColor}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart data={dataWithColor} key="fruit" value="value" c="color" {renderContext} {debug} />
+    <PieChart data={dataWithColor} key="fruit" value="value" c="color" {layer} {debug} />
   </div>
 </Preview>
 
@@ -403,7 +401,7 @@
       value="value"
       padding={{ right: 80 }}
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -419,7 +417,7 @@
       value="value"
       placement="left"
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -435,7 +433,7 @@
       value="value"
       placement="right"
       legend={{ placement: 'left', orientation: 'vertical' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -452,7 +450,7 @@
       center={false}
       props={{ group: { x: 200, center: 'y' } }}
       legend={{ placement: 'right', orientation: 'vertical' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -462,7 +460,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" {renderContext} {debug}>
+    <PieChart {data} key="fruit" value="value" {layer} {debug}>
       {#snippet arc({ index, props })}
         <Arc {...props} offset={index === 0 ? 16 : undefined} />
       {/snippet}
@@ -485,7 +483,7 @@
           key="fruit"
           value="value"
           props={{ pie: { motion: 'tween' } }}
-          {renderContext}
+          {layer}
           {debug}
         />
       {/if}
@@ -508,7 +506,7 @@
           key="fruit"
           value="value"
           props={{ pie: { motion: 'spring' } }}
-          {renderContext}
+          {layer}
           {debug}
         />
       {/if}
@@ -520,6 +518,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {data} key="fruit" value="value" keys="centroid" {renderContext} {debug} />
+    <PieChart {data} key="fruit" value="value" keys="centroid" {layer} {debug} />
   </div>
 </Preview> -->

@@ -43,7 +43,7 @@
 	<span class="flex items-center gap-1">
 		{#if metadata.layers}
 			<ToggleGroup
-				bind:value={shared.renderContext}
+				bind:value={shared.layer}
 				variant="fill"
 				color="primary"
 				inset

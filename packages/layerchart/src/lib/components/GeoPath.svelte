@@ -68,7 +68,7 @@
 <script lang="ts">
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
@@ -111,7 +111,7 @@
     return geoCurvePath(projection, curve);
   });
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -155,7 +155,7 @@
     tooltipContext?.hide();
   };
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'GeoPath',
       render,
@@ -184,7 +184,7 @@
 
 {#if children}
   {@render children({ geoPath })}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <path
     bind:this={ref}
     {...restProps}

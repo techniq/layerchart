@@ -98,7 +98,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         {#key spring}
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
@@ -157,7 +157,7 @@
   {#each labelExamples as example}
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart>
-        <Layer type={shared.renderContext} center>
+        <Layer type={shared.layer} center>
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
               <Arc

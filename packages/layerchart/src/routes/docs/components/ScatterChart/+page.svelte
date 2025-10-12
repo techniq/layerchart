@@ -36,7 +36,7 @@
 
   const dateSeriesData = createDateSeries({ count: 30, min: 20, max: 100, value: 'integer' });
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let debug = $derived(shared.debug);
 </script>
 
@@ -46,7 +46,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug} />
   </div>
 </Preview>
 
@@ -60,7 +60,7 @@
       y="y"
       xPadding={[20, 20]}
       yPadding={[20, 20]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -84,7 +84,7 @@
           'fill-opacity': 0.3,
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -94,15 +94,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      xBaseline={0}
-      yBaseline={0}
-      {renderContext}
-      {debug}
-    />
+    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} {layer} {debug} />
   </div>
 </Preview>
 
@@ -125,7 +117,7 @@
           },
         };
       })}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -152,7 +144,7 @@
           },
         };
       })}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -162,7 +154,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {renderContext} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {layer} {debug} />
   </div>
 </Preview>
 
@@ -181,7 +173,7 @@
         };
       })}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -203,7 +195,7 @@
         points: { motion: { type: 'tween', duration: 200 } },
       }}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -225,7 +217,7 @@
         };
       })}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -235,7 +227,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" axis="x" {renderContext} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="x" {layer} {debug} />
   </div>
 </Preview>
 
@@ -243,7 +235,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" axis="y" {renderContext} {debug} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="y" {layer} {debug} />
   </div>
 </Preview>
 
@@ -261,7 +253,7 @@
         points: { opacity: 0.3 },
         highlight: { lines: false },
       }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context })}
@@ -288,7 +280,7 @@
       cScale={scaleThreshold()}
       cDomain={[50]}
       cRange={['var(--color-danger)', 'var(--color-success)']}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -306,7 +298,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -316,7 +308,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
+    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug}>
       {#snippet tooltip({ context })}
         <Tooltip.Root
           x={context.padding.left}
@@ -384,7 +376,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -415,7 +407,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -450,7 +442,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -485,7 +477,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -521,7 +513,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -541,7 +533,7 @@
         yAxis: { motion: { type: 'tween', duration: 200 } },
       }}
       brush
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -551,9 +543,9 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
+    <ScatterChart data={spiralData} x="x" y="y" {layer} {debug}>
       {#snippet children({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" grid rule />
           <Points class="fill-primary/10 stroke-primary" />

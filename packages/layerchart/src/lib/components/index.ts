@@ -27,7 +27,7 @@ export { default as Calendar } from './Calendar.svelte';
 export * from './Calendar.svelte';
 export { default as Canvas } from './layout/Canvas.svelte';
 export * from './layout/Canvas.svelte';
-export { default as Chart, getRenderContext } from './Chart.svelte';
+export { default as Chart } from './Chart.svelte';
 export * from './Chart.svelte';
 export { default as ChartClipPath } from './ChartClipPath.svelte';
 export * from './ChartClipPath.svelte';

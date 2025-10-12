@@ -16,7 +16,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line
@@ -51,7 +51,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} stroke="var(--color-primary)" />
@@ -80,7 +80,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line

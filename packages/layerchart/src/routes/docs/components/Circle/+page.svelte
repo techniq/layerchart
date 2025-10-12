@@ -15,7 +15,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Circle cx={100} cy={100} r={20} />
@@ -41,7 +41,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Circle cx={100} cy={100} r={20} fill="var(--color-surface-content)" />
@@ -70,7 +70,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Circle cx={100} cy={100} r={20} />

@@ -45,7 +45,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {@const dataByGroup = group(data.groupData, (d) => d.group)}
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {#each dataByGroup as [group, data]}
@@ -78,7 +78,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath
           geojson={states}
           class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"

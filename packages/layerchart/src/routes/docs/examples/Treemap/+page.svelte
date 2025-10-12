@@ -185,7 +185,7 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Bounds
             domain={asAny(selectedNested)}
             motion={{ type: 'tween', duration: 800, easing: cubicOut }}
@@ -349,7 +349,7 @@
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Treemap
           hierarchy={groupedHierarchy}
           {tile}
@@ -484,7 +484,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Bounds
           domain={asAny(selectedZoomable)}
           motion={{ type: 'tween', duration: 800, easing: cubicOut }}

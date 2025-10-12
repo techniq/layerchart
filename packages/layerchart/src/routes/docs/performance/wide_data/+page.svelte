@@ -11,7 +11,7 @@
 
   let example = $state<'single'>('single');
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -59,7 +59,7 @@
                 y={(d) => 100 - d.idl}
                 props={chartProps}
                 brush
-                {renderContext}
+                {layer}
                 profile
               />
             {/if}
@@ -83,7 +83,7 @@
                 ]}
                 props={chartProps}
                 brush
-                {renderContext}
+                {layer}
                 profile
               />
             {/if}

@@ -78,7 +78,7 @@
       ondragstart={timer.stop}
       bind:context
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         <GeoPath geojson={land} {curve} class="stroke-surface-content/50 fill-white" />

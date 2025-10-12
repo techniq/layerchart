@@ -19,7 +19,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Frame class="fill-danger/5" />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
@@ -41,7 +41,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Frame class="fill-danger/5" full />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
@@ -63,7 +63,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Frame class="stroke-surface-content/50 fill-none" />
         <Axis placement="bottom" />
         <Axis placement="left" />
@@ -85,7 +85,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <LinearGradient class="from-primary/10 to-secondary/10" vertical>
           {#snippet children({ gradient })}
             <Frame class="stroke-primary/10" fill={gradient} />

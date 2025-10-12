@@ -3,9 +3,9 @@ import { Layer } from 'layerchart';
 
 // Shared state for the docs layout
 export const shared = $state<{
-  renderContext: ComponentProps<typeof Layer>['type'];
+  layer: ComponentProps<typeof Layer>['type'];
   debug: boolean;
 }>({
-  renderContext: 'svg',
+  layer: 'svg',
   debug: false,
 });

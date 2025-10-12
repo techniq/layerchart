@@ -173,7 +173,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Bounds
             domain={{
               x0: selectedHorizontal?.y0,
@@ -268,7 +268,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Bounds
             domain={{
               x0: selectedVertical?.x0,
@@ -373,7 +373,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Bounds
           domain={{ x0: selectedCarNode?.y0, y0: selectedCarNode?.x0, y1: selectedCarNode?.x1 }}
         >

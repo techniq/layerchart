@@ -31,7 +31,7 @@
     return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
   }
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -48,7 +48,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -96,7 +96,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -147,7 +147,7 @@
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
       props={{ tooltip: { context: { mode: 'bounds' } } }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -182,7 +182,7 @@
       rule={false}
       orientation="horizontal"
       padding={{ bottom: 36 }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -218,7 +218,7 @@
       orientation="horizontal"
       padding={{ bottom: 36 }}
       props={{ tooltip: { context: { mode: 'bounds' } } }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -258,7 +258,7 @@
           points: true,
         },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet marks()}
         <Rule />
@@ -318,7 +318,7 @@
           points: true,
         },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet marks()}
         <Rule />
@@ -381,7 +381,7 @@
           },
         },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -436,7 +436,7 @@
         },
         tooltip: { context: { mode: 'bounds' } },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>

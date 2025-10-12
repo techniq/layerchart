@@ -83,7 +83,7 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
 
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -134,9 +134,9 @@
     }
   });
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Group',
       render: (ctx) => {
@@ -170,9 +170,9 @@
   };
 </script>
 
-{#if renderCtx === 'canvas'}
+{#if layerCtx === 'canvas'}
   {@render children?.()}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <g
     style:transform
     class={['lc-group-g', className]}
@@ -184,7 +184,7 @@
   >
     {@render children?.()}
   </g>
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <div
     bind:this={ref}
     style:transform

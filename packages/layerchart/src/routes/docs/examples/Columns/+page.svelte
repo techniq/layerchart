@@ -123,7 +123,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -145,7 +145,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
@@ -168,7 +168,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -200,7 +200,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
@@ -232,7 +232,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
@@ -274,7 +274,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -295,7 +295,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -318,7 +318,7 @@
       yPadding={[16, 16]}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Rule y={0} />
@@ -342,7 +342,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Rule y={0} />
@@ -366,7 +366,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" ticks={4} rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -388,7 +388,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
@@ -414,7 +414,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
@@ -440,7 +440,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars>
@@ -470,7 +470,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -500,7 +500,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -529,7 +529,7 @@
     >
       {#snippet children({ context })}
         {@const avg = mean(data, (d) => d.value)}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} class="fill-primary" />
@@ -565,7 +565,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis placement="bottom" rule />
@@ -587,7 +587,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis placement="bottom" rule />
@@ -610,7 +610,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars y="baseline" strokeWidth={1} class="fill-surface-content/20" />
@@ -643,7 +643,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
         <Axis placement="bottom" />
         <Bars y="value" rounded-sm="top" strokeWidth={1} class="fill-primary" />
@@ -678,7 +678,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule tickMultiline />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -701,7 +701,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule tickMultiline />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -724,7 +724,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule tickMultiline />
         <Bars class="fill-primary" insets={{ x: 2 }} />
@@ -753,7 +753,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -794,7 +794,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -836,7 +836,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -880,7 +880,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -926,7 +926,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
@@ -980,7 +980,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
@@ -1034,7 +1034,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule format="percentRound" />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
@@ -1092,7 +1092,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
@@ -1162,7 +1162,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <g>
@@ -1263,7 +1263,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <g>
@@ -1344,7 +1344,7 @@
         },
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />

@@ -27,7 +27,7 @@
   <div class="h-[400px] p-4 border rounded-sm relative" onpointermove={onPointerMove}>
     <Chart {data} x="x" y="y">
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <ChartClipPath>
             <Points r={2} class="fill-primary stroke-primary" />
             <Voronoi

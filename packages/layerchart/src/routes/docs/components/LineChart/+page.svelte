@@ -97,7 +97,7 @@
 
   let show = $state(true);
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let debug = $derived(shared.debug);
 
   const monitorSeries = [
@@ -180,7 +180,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug} />
   </div>
 </Preview>
 
@@ -192,7 +192,7 @@
       data={dateSeriesData}
       x="date"
       series={[{ key: 'value', color: 'var(--color-secondary)' }]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -207,7 +207,7 @@
       x="date"
       y="value"
       props={{ spline: { curve: curveCatmullRom } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -217,14 +217,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[600px] w-[400px] p-4 border rounded-sm">
-    <LineChart
-      data={dateSeriesData}
-      x="value"
-      y="date"
-      orientation="vertical"
-      {renderContext}
-      {debug}
-    />
+    <LineChart data={dateSeriesData} x="value" y="date" orientation="vertical" {layer} {debug} />
   </div>
 </Preview>
 
@@ -240,7 +233,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -258,7 +251,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet belowMarks({ visibleSeries, highlightKey })}
@@ -302,7 +295,7 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -332,7 +325,7 @@
           color: 'var(--color-warning)',
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -342,7 +335,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart x="date" y="value" series={monitorSeries} {renderContext} {debug}>
+    <LineChart x="date" y="value" series={monitorSeries} {layer} {debug}>
       {#snippet tooltip({ context, visibleSeries, highlightKey, setHighlightKey })}
         {@const data = context.tooltip.data}
         <Tooltip.Root>TODO</Tooltip.Root>
@@ -364,7 +357,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -384,7 +377,7 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ tooltip: { context: { mode: 'quadtree' } } }}
-      {renderContext}
+      {layer}
       {debug}
       brush
       legend
@@ -443,7 +436,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -462,7 +455,7 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -480,7 +473,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
@@ -497,14 +490,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      labels={{ offset: 10 }}
-      {renderContext}
-      {debug}
-    />
+    <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} {layer} {debug} />
   </div>
 </Preview>
 
@@ -512,7 +498,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" points {layer} {debug} />
   </div>
 </Preview>
 
@@ -526,7 +512,7 @@
       y="value"
       points
       labels={{ offset: 10 }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -547,7 +533,7 @@
           points: false,
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -590,7 +576,7 @@
           },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -631,7 +617,7 @@
           },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -681,7 +667,7 @@
           },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -691,14 +677,7 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.dailyTemperature}
-      x="date"
-      y="value"
-      yDomain={null}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {layer} {debug}>
       {#snippet marks()}
         <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
           {#snippet children({ gradient })}
@@ -732,14 +711,7 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.dailyTemperature}
-      x="date"
-      y="value"
-      yDomain={null}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {layer} {debug}>
       {#snippet marks({ context })}
         {@const thresholdOffset = context.yScale(50) / (context.height + context.padding.bottom)}
         <LinearGradient
@@ -814,7 +786,7 @@
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -852,7 +824,7 @@
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -892,7 +864,7 @@
         //   },
         // },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -902,7 +874,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {layer} {debug} />
   </div>
 </Preview>
 
@@ -910,7 +882,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {layer} {debug}>
       {#snippet belowMarks({ series })}
         {#each series as s}
           <Spline
@@ -936,7 +908,7 @@
       axis={false}
       grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -946,7 +918,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="x" {layer} {debug} />
   </div>
 </Preview>
 
@@ -954,7 +926,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="y" {layer} {debug} />
   </div>
 </Preview>
 
@@ -966,7 +938,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      {renderContext}
+      {layer}
       {debug}
       props={{
         yAxis: {
@@ -999,7 +971,7 @@
         { key: 'oranges', label: 'Oranges', color: 'var(--color-warning)' },
       ]}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1017,7 +989,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1027,7 +999,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet tooltip({ context })}
         <Tooltip.Root
           x={context.padding.left}
@@ -1078,7 +1050,7 @@
           },
         };
       })}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context })}
@@ -1128,7 +1100,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1163,7 +1135,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1215,7 +1187,7 @@
         };
       })}
       padding={{ ...defaultChartPadding(), right: 60 }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1238,7 +1210,7 @@
         spline: { motion: { type: 'tween', duration: 200 } },
         xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1261,7 +1233,7 @@
         alert(JSON.stringify(detail));
       }}
       brush
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1283,7 +1255,7 @@
         x="date"
         y="value"
         props={{ spline: { draw: true } }}
-        {renderContext}
+        {layer}
         {debug}
       />
     </div>
@@ -1294,9 +1266,9 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet children({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Spline class="stroke-2 stroke-primary" />

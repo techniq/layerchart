@@ -65,7 +65,7 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath geojson={selectedStateFeature} class="stroke-surface-content" />
       </Layer>
     </Chart>
@@ -83,7 +83,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each selectedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
@@ -116,7 +116,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <ChartClipPath>
             {#each counties.features as feature}
               <GeoPath

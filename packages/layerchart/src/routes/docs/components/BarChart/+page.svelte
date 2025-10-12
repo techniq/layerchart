@@ -103,7 +103,7 @@
     },
   ];
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let debug = $derived(shared.debug);
 </script>
 
@@ -113,7 +113,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug} />
   </div>
 </Preview>
 
@@ -126,7 +126,7 @@
       x="value"
       y="date"
       orientation="horizontal"
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -136,14 +136,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      xInterval={timeDay}
-      {renderContext}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" xInterval={timeDay} {layer} {debug} />
   </div>
 </Preview>
 
@@ -157,7 +150,7 @@
       y="date"
       yInterval={timeDay}
       orientation="horizontal"
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -173,7 +166,7 @@
       y="value"
       xInterval={timeDay}
       props={{ bars: { insets: { x: 4 } } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -188,7 +181,7 @@
       x="date"
       y="value"
       props={{ bars: { class: 'fill-secondary' } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -203,7 +196,7 @@
       x="date"
       y="value"
       cRange={['var(--color-secondary)']}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -227,7 +220,7 @@
       props={{
         yAxis: { format: 'metric' },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -245,7 +238,7 @@
       cScale={scaleThreshold()}
       cDomain={[0]}
       cRange={['var(--color-danger)', 'var(--color-success)']}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -255,7 +248,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet marks({ series, getBarsProps })}
         {#each series as s, i (s.key)}
           <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
@@ -278,7 +271,7 @@
       x="date"
       y="value"
       props={{ bars: { rounded: 'none' } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -313,7 +306,7 @@
           context: { mode: 'bounds' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context })}
@@ -340,7 +333,7 @@
       x="date"
       y="value"
       props={{ highlight: { area: false } }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet belowMarks()}
@@ -365,7 +358,7 @@
           props: { insets: { x: 8 } },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -383,7 +376,7 @@
         { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
         { key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -410,7 +403,7 @@
           props: { insets: { x: 8 } },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -434,7 +427,7 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -465,7 +458,7 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context, series })}
@@ -523,7 +516,7 @@
           color: 'var(--color-secondary)',
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ series, context })}
@@ -583,7 +576,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -619,7 +612,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     >
       <!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
@@ -675,7 +668,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -716,7 +709,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -757,7 +750,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -793,7 +786,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -830,7 +823,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -868,7 +861,7 @@
         },
       }}
       stackPadding={5.0}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -903,7 +896,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -944,7 +937,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -985,7 +978,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext} {debug}
+      {layer} {debug}
     />
   </div>
 </Preview> -->
@@ -1021,7 +1014,7 @@
         },
       }}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1058,7 +1051,7 @@
         },
       }}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1095,7 +1088,7 @@
         },
       }}
       legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1135,7 +1128,7 @@
         },
       }}
       legend
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1145,7 +1138,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" labels {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" labels {layer} {debug} />
   </div>
 </Preview>
 
@@ -1158,7 +1151,7 @@
       x="date"
       y="value"
       labels={{ placement: 'inside' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1187,7 +1180,7 @@
         },
       }}
       padding={{ left: 0, bottom: 16 }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1204,7 +1197,7 @@
       labels
       orientation="horizontal"
       axis={false}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet aboveMarks()}
@@ -1226,7 +1219,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1252,7 +1245,7 @@
         xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
         rule: { y: false },
       }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context })}
@@ -1331,7 +1324,7 @@
           context: { mode: 'bounds' },
         },
       }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet axis({ context })}
@@ -1371,7 +1364,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {layer} {debug} />
   </div>
 </Preview>
 
@@ -1379,7 +1372,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {layer} {debug} />
   </div>
 </Preview>
 
@@ -1392,7 +1385,7 @@
       x="date"
       y="value"
       props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1402,7 +1395,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {layer} {debug} />
   </div>
 </Preview>
 
@@ -1415,7 +1408,7 @@
       x="date"
       y="value"
       grid={{ x: true, bandAlign: 'between' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1433,7 +1426,7 @@
       yScale={scaleLog()}
       yDomain={[1, 100]}
       props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1449,7 +1442,7 @@
       y="value"
       xInterval={timeDay}
       brush
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1464,7 +1457,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" radial {renderContext} {debug} />
+    <BarChart data={dateSeriesData} x="date" y="value" radial {layer} {debug} />
   </div>
 </Preview>
 
@@ -1478,7 +1471,7 @@
       y="value"
       yRange={({ height }) => [height / 5, height / 2]}
       radial
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1495,7 +1488,7 @@
       yRange={({ height }) => [height / 5, height / 2]}
       radial
       props={{ bars: { padAngle: 0.1 } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1512,7 +1505,7 @@
       yRange={({ height }) => [height / 5, height / 2]}
       radial
       orientation="horizontal"
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1543,7 +1536,7 @@
       ]}
       radial
       orientation="horizontal"
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1575,7 +1568,7 @@
       radial
       orientation="horizontal"
       grid={{ bandAlign: 'between' }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1613,7 +1606,7 @@
         },
       }}
       padding={{ top: 10, bottom: 10 }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet tooltip({ context })}
@@ -1652,7 +1645,7 @@
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         grid: { xTicks: 12 },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1670,7 +1663,7 @@
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1680,7 +1673,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1717,7 +1710,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1746,7 +1739,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1777,7 +1770,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1808,7 +1801,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1843,7 +1836,7 @@
           },
         },
       ]}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -1859,7 +1852,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />

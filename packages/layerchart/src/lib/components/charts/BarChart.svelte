@@ -134,7 +134,7 @@
     onTooltipClick = () => {},
     onBarClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer = 'svg',
     profile = false,
     debug = false,
     xScale: xScaleProp,
@@ -489,8 +489,8 @@
       {@render belowContext?.(snippetProps)}
 
       <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        type={layer}
+        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
         center={radial}
         {debug}
       >

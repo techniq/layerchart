@@ -53,7 +53,7 @@
         >
           {#snippet children({ nodes, simulation })}
             <Layer
-              type={shared.renderContext}
+              type={shared.layer}
               onpointermove={(e) => {
                 simulation.nodes()[0].fx = e.offsetX - context.width / 2;
                 simulation.nodes()[0].fy = e.offsetY - context.height / 2;

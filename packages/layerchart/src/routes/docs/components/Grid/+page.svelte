@@ -24,7 +24,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid x y />
       </Layer>
     </Chart>
@@ -42,7 +42,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid x />
       </Layer>
     </Chart>
@@ -60,7 +60,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y />
       </Layer>
     </Chart>
@@ -78,7 +78,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y={{ style: 'stroke-dasharray: 2' }} />
       </Layer>
     </Chart>
@@ -96,7 +96,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid x />
         <Axis placement="bottom" rule />
       </Layer>
@@ -115,7 +115,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid x bandAlign="between" />
         <Axis placement="bottom" rule />
       </Layer>
@@ -128,7 +128,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" y="value" yDomain={[0, 100]} radial>
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />
       </Layer>
     </Chart>
@@ -140,7 +140,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" y="value" yDomain={[0, 100]} radial>
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY="linear" />
       </Layer>
     </Chart>
@@ -158,7 +158,7 @@
       yDomain={[0, 2]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y yTicks={(scale) => scale.ticks?.().filter(Number.isInteger)} />
         <Axis
           placement="left"
@@ -182,7 +182,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y yTicks={[0, 25, 50, 75, 100]} />
         <Axis placement="left" rule ticks={[0, 50, 100]} />
       </Layer>
@@ -201,7 +201,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
         <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Layer>
@@ -220,7 +220,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y yTicks={20} />
         <Axis placement="left" rule ticks={10} />
       </Layer>
@@ -239,7 +239,7 @@
       yDomain={[0, 100]}
       padding={{ bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid x xTicks={mdScreen.current ? 10 : 5} />
         <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
       </Layer>
@@ -258,7 +258,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Grid y yTicks={null} />
         <Axis placement="left" rule ticks={null} />
       </Layer>

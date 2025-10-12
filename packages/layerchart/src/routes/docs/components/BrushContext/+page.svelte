@@ -77,7 +77,7 @@
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
     <Chart data={data.appleStock} x="date" y="value" brush>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
       </Layer>
     </Chart>
@@ -94,7 +94,7 @@
       y="value"
       brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50' } }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
       </Layer>
     </Chart>
@@ -111,7 +111,7 @@
       y="value"
       brush={{ classes: { range: 'striped-background' } }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
       </Layer>
     </Chart>
@@ -129,7 +129,7 @@
       brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
           {#if context.brush.isActive}
@@ -169,7 +169,7 @@
   <div class="h-[40px]">
     <Chart data={data.appleStock} x="date" y="value" brush>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           {#if context.brush.isActive}
             <Text
@@ -201,7 +201,7 @@
     <div class="h-[40px]">
       <Chart data={data.appleStock} x="date" y="value" padding={{ left: 80, right: 80 }} brush>
         {#snippet children({ context })}
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
             {#if context.brush.isActive}
@@ -249,7 +249,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -287,7 +287,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -330,7 +330,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -361,7 +361,7 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -388,7 +388,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           </Layer>
         </Chart>
@@ -416,7 +416,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           </Layer>
         </Chart>
@@ -430,7 +430,7 @@
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -466,7 +466,7 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule motion={{ type: 'tween', duration: 200 }} />
             <Axis placement="bottom" rule />
             <LinearGradient class="from-primary/50 to-primary/1" vertical>
@@ -498,7 +498,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           </Layer>
         </Chart>
@@ -529,7 +529,7 @@
             yBaseline={0}
             padding={{ left: 16, bottom: 24 }}
           >
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Axis placement="left" grid rule />
               <Axis placement="bottom" />
               <Rule y={0} />
@@ -560,7 +560,7 @@
               onReset: (e) => (xDomain = null),
             }}
           >
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Area
                 line={{ class: 'stroke-2 stroke-(--chart-color)' }}
                 class="fill-(--chart-color) opacity-20"
@@ -597,7 +597,7 @@
           }}
         >
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Axis placement="left" grid rule />
               <Axis placement="bottom" rule />
               <ChartClipPath>
@@ -665,7 +665,7 @@
           },
         }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
@@ -724,7 +724,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
 
@@ -756,7 +756,7 @@
             },
           }}
         >
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Points>
               {#snippet children({ points })}
                 {#each points as point}
@@ -793,7 +793,7 @@
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
     <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Bars strokeWidth={1} class="fill-primary" />
       </Layer>
     </Chart>

@@ -34,7 +34,7 @@
         }}
       >
         {#snippet children({ nodes, linkPositions })}
-          <Layer type={shared.renderContext} center>
+          <Layer type={shared.layer} center>
             {#each links as link, i (i)}
               <Link
                 explicitCoords={linkPositions[i]}

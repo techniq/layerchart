@@ -278,7 +278,7 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <ForceSimulation
             forces={{
               ...(hasLinkForce && { link: linkForce }),

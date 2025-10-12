@@ -156,7 +156,7 @@
           </div>
         {/if}
 
-        <Layer type={shared.renderContext} {debug}>
+        <Layer type={shared.layer} {debug}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
@@ -175,7 +175,7 @@
           {/each}
         </Layer>
 
-        {#if shared.renderContext === 'canvas'}
+        {#if shared.layer === 'canvas'}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
           <Layer type="canvas" pointerEvents={false}>
             {#if context.tooltip.data}

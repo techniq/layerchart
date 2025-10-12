@@ -85,7 +85,7 @@
       ondragstart={timer.stop}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} {debug} disableHitCanvas={timer.running}>
+        <Layer type={shared.layer} {debug} disableHitCanvas={timer.running}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
           <Graticule class="stroke-surface-content/20" />

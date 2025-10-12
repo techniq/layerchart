@@ -57,7 +57,7 @@
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         <ForceSimulation
           forces={{
             link: linkForce,

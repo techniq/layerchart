@@ -47,7 +47,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoTile url={serviceUrl} {zoomDelta} {debug} />
           {#each filteredStates.features as feature}
             <!-- TODO: Renders on canvas if put on separate Layer  -->
@@ -88,7 +88,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <ClipPath useId="clip">
             <GeoTile url={serviceUrl} {zoomDelta} />
           </ClipPath>

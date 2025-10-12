@@ -96,18 +96,6 @@
       | 'simplified-scatter';
   };
 
-  export type RenderContext = 'svg' | 'canvas' | 'html';
-
-  const _RenderContext = new Context<RenderContext>('RenderContext');
-
-  export function getRenderContext(): RenderContext {
-    return _RenderContext.get();
-  }
-
-  export function setRenderContext(context: RenderContext): RenderContext {
-    return _RenderContext.set(context);
-  }
-
   export type ChartPropsWithoutHTML<
     T,
     XScale extends AnyScale = AnyScale,

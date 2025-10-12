@@ -71,7 +71,7 @@
       {#snippet children({ context })}
         <TransformControls />
 
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -116,8 +116,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.renderContext} pointerEvents={false}>
-          {#if context.tooltip.data && shared.renderContext === 'canvas'}
+        <Layer type={shared.layer} pointerEvents={false}>
+          {#if context.tooltip.data && shared.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               strokeWidth={1 / context.transform.scale}
@@ -160,7 +160,7 @@
       {#snippet children({ context })}
         <TransformControls />
 
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -207,8 +207,8 @@
         </Layer>
 
         <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-        <Layer type={shared.renderContext} pointerEvents={false}>
-          {#if context.tooltip.data && shared.renderContext === 'canvas'}
+        <Layer type={shared.layer} pointerEvents={false}>
+          {#if context.tooltip.data && shared.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               strokeWidth={1 / context.transform.scale}

@@ -37,7 +37,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart padding={{ left: 16, bottom: 24 }}>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Connector
           {source}
           {target}

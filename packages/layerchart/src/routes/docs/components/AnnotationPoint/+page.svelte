@@ -57,7 +57,7 @@
   let yOffset = $state(0);
   let radius = $state(4);
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
   let debug = $derived(shared.debug);
 </script>
 
@@ -67,10 +67,10 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
       <!-- Placed above context to fix overlap with Axis (might be refined to allow aboveMarks in future) -->
       {#snippet aboveContext({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           {#each annotations as annotation}
             <AnnotationPoint
               x={annotation.x}
@@ -112,9 +112,9 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
       {#snippet aboveContext({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           {#each annotations as annotation}
             <AnnotationPoint
               x={annotation.x}
@@ -157,9 +157,9 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
       {#snippet aboveContext({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           {#each annotations as annotation}
             <AnnotationLine
               x={annotation.x}
@@ -216,7 +216,7 @@
       x="date"
       y="value"
       padding={{ ...defaultChartPadding(), right: 40 }}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet aboveMarks({ context })}
@@ -269,7 +269,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value" {layer} {debug}>
       {#snippet aboveMarks({ context })}
         {@const maxPoint = data.appleStock[maxIndex(data.appleStock, (d) => d.value)]}
         <AnnotationPoint
@@ -294,9 +294,9 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet aboveContext({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           <AnnotationPoint
             x={dateSeriesData[3].date}
             r={4}
@@ -318,9 +318,9 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value" {layer} {debug}>
       {#snippet aboveContext({ context })}
-        <Layer type={renderContext}>
+        <Layer type={layer}>
           <AnnotationPoint
             x={dateSeriesData[3].date}
             y={dateSeriesData[3].value}

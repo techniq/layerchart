@@ -13,7 +13,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
@@ -41,7 +41,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <RadialGradient id="tw-1" class="from-pink-500 to-yellow-500" />
         <RadialGradient id="tw-2" class="from-green-300 to-purple-600" />
         <RadialGradient id="tw-3" class="from-gray-600 to-black" />
@@ -64,7 +64,7 @@
 <Preview>
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="pad">
           {#snippet children({ gradient })}
             <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
@@ -92,7 +92,7 @@
 <Preview>
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}

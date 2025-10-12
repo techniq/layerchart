@@ -113,7 +113,7 @@
       padding={{ left: 10, right: 10 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
           <GeoPath geojson={countriesGeojson} id="clip" />

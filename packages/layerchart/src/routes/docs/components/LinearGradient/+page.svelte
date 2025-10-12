@@ -11,7 +11,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
@@ -39,7 +39,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <LinearGradient
           stops={[
             ['30%', 'hsl(60 100% 50%)'],
@@ -84,7 +84,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <LinearGradient class="from-pink-500 to-yellow-500" vertical>
           {#snippet children({ gradient })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
@@ -148,7 +148,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}

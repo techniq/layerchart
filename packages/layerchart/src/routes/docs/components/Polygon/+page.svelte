@@ -37,7 +37,7 @@
 <div class="h-[300px] p-4 border rounded-sm">
   <Chart>
     {#snippet children({ context })}
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Polygon
           cx={context.width / 2}
           cy={context.height / 2}
@@ -73,7 +73,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -95,7 +95,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -117,7 +117,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -140,7 +140,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -163,7 +163,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -186,7 +186,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -210,7 +210,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -233,7 +233,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -255,7 +255,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -277,7 +277,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -317,7 +317,7 @@
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             {#snippet children({ context })}
-              <Layer type={shared.renderContext}>
+              <Layer type={shared.layer}>
                 <Polygon
                   cx={context.width / 2}
                   cy={context.height / 2}
@@ -348,7 +348,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Group x={context.width / 2} y={context.height / 2}>
                 {@const size = 60}
                 <Polygon
@@ -378,7 +378,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Group x={context.width / 2} y={context.height / 2}>
                 {@const size = 50}
                 <Polygon

@@ -106,7 +106,7 @@
           fitGeojson: geojson,
         }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoPath {geojson} fill="white" />
         </Layer>
       </Chart>

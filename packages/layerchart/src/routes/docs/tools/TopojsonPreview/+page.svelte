@@ -108,7 +108,7 @@
       >
         {#snippet children({ context })}
           {#if projection === geoMercator && serviceUrl}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
               <GeoTile url={serviceUrl} zoomDelta={-100} />
               <GeoTile url={serviceUrl} zoomDelta={-4} />
@@ -119,7 +119,7 @@
 
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             {#if geojson?.features}
               {#each geojson.features as feature}
                 <GeoPath

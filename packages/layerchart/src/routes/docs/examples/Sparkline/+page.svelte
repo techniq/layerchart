@@ -8,7 +8,7 @@
 
   const data = createDateSeries({ count: 50, min: 50, max: 100, value: 'integer' });
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -17,15 +17,7 @@
 <Preview {data}>
   <div>
     <div class="w-[124px] h-[18px]">
-      <LineChart
-        {data}
-        x="date"
-        y="value"
-        yDomain={null}
-        axis={false}
-        grid={false}
-        {renderContext}
-      />
+      <LineChart {data} x="date" y="value" yDomain={null} axis={false} grid={false} {layer} />
     </div>
   </div>
 </Preview>
@@ -37,15 +29,7 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
       <span class="w-[124px] h-[18px] inline-block">
-        <LineChart
-          {data}
-          x="date"
-          y="value"
-          yDomain={null}
-          axis={false}
-          grid={false}
-          {renderContext}
-        />
+        <LineChart {data} x="date" y="value" yDomain={null} axis={false} grid={false} {layer} />
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
     </p>
@@ -55,7 +39,7 @@
 <h2>Basic zero axis</h2>
 <Preview {data}>
   <div class="w-[124px] h-[20px] inline-block">
-    <LineChart {data} x="date" y="value" axis={false} grid={false} {renderContext} />
+    <LineChart {data} x="date" y="value" axis={false} grid={false} {layer} />
   </div>
 </Preview>
 
@@ -72,7 +56,7 @@
       props={{
         highlight: { points: { r: 3, class: 'stroke-none' } },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root
@@ -114,7 +98,7 @@
           props={{
             highlight: { points: { r: 3, class: 'stroke-none' } },
           }}
-          {renderContext}
+          {layer}
         >
           {#snippet tooltip({ context })}
             <Tooltip.Root

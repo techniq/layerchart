@@ -89,7 +89,7 @@
       {#snippet children({ context })}
         <Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"

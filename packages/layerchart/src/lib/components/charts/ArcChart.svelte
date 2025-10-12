@@ -25,7 +25,7 @@
     | 'marks'
     | 'onTooltipClick'
     | 'profile'
-    | 'renderContext'
+    | 'layer'
     | 'series'
     | 'tooltip'
     | 'cRange'
@@ -172,7 +172,7 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer = 'svg',
     profile = false,
     debug = false,
     tooltip = true,
@@ -380,8 +380,8 @@
       {@render belowContext?.(snippetProps)}
 
       <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        type={layer}
+        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
         {center}
         {debug}
       >

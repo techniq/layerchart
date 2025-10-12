@@ -122,7 +122,7 @@
         >
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Dagre data={selectedGraph} edges={(d) => d.links} {...settings.playground}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -197,7 +197,7 @@
         >
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Dagre data={data.basic} edges={(d) => d.links} {...settings.simple}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -276,7 +276,7 @@
         >
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Dagre data={data.tcpState} edges={(d) => d.links} {...settings.tcpState}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -378,7 +378,7 @@
         >
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Dagre
               data={data.softwareUserFlow}
               edges={(d) => d.links}
@@ -483,7 +483,7 @@
         >
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Dagre
               data={data.cluster}
               edges={(d) => d.links}

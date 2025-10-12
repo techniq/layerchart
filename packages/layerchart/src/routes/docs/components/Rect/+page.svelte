@@ -15,7 +15,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />
@@ -41,7 +41,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />
@@ -69,7 +69,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />

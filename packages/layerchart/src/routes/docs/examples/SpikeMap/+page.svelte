@@ -70,7 +70,7 @@
 
         <TransformControls />
 
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoPath
             geojson={states}
             class="fill-surface-content/10 stroke-surface-100"
@@ -103,8 +103,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.renderContext} pointerEvents={false}>
-          {#if context.tooltip.data && shared.renderContext === 'canvas'}
+        <Layer type={shared.layer} pointerEvents={false}>
+          {#if context.tooltip.data && shared.layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"

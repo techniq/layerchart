@@ -62,7 +62,7 @@
     <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
       {#snippet children({ context })}
         {@const nodeStrokeWidth = 1}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <ForceSimulation
             forces={{
               x: xForce.x((d) =>

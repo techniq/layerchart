@@ -42,7 +42,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         {#each states.features as feature}
           <GeoPath
             geojson={feature}
@@ -53,7 +53,7 @@
         <g class="points pointer-events-none">
           {#each data.us.capitals as capital}
             <!-- TODO: Improve GeoPoint to standardize svg/canvas -->
-            {#if shared.renderContext === 'svg'}
+            {#if shared.layer === 'svg'}
               <GeoPoint lat={capital.latitude} long={capital.longitude}>
                 <Circle r={2} class="fill-white stroke-danger" />
                 <Text
@@ -63,7 +63,7 @@
                   class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                 />
               </GeoPoint>
-            {:else if shared.renderContext === 'canvas'}
+            {:else if shared.layer === 'canvas'}
               <GeoPoint lat={capital.latitude} long={capital.longitude}>
                 {#snippet children({ x, y })}
                   <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
@@ -99,7 +99,7 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each countries.features as feature}
             <GeoPath
               geojson={feature}
@@ -119,9 +119,9 @@
 
         <!-- Show tooltip as GeoPoint (Svg/Canvas) instead of Tooltip.Point (Html)) -->
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#if context.tooltip.data}
-            {#if shared.renderContext === 'svg'}
+            {#if shared.layer === 'svg'}
               <GeoPoint
                 lat={context.tooltip.data.latitude}
                 long={context.tooltip.data.longitude}
@@ -135,7 +135,7 @@
                   class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                 />
               </GeoPoint>
-            {:else if shared.renderContext === 'canvas'}
+            {:else if shared.layer === 'canvas'}
               <GeoPoint
                 lat={context.tooltip.data.latitude}
                 long={context.tooltip.data.longitude}
@@ -175,7 +175,7 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -194,7 +194,7 @@
         </Layer>
 
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#if context.tooltip.data}
             <GeoPoint
               lat={context.tooltip.data.latitude}
@@ -235,7 +235,7 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each countries.features as feature}
             <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
           {/each}
@@ -251,7 +251,7 @@
         </Layer>
 
         <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#if context.tooltip.data}
             <GeoPoint
               lat={context.tooltip.data.latitude}
@@ -288,7 +288,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}

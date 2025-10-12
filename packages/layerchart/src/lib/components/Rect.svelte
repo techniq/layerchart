@@ -47,7 +47,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
 
@@ -89,7 +89,7 @@
   const motionWidth = createMotion(initialWidth, () => width, parseMotionProp(motion, 'width'));
   const motionHeight = createMotion(initialHeight, () => height, parseMotionProp(motion, 'height'));
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -116,7 +116,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Rect',
       render,
@@ -144,7 +144,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <rect
     x={motionX.current}
     y={motionY.current}
@@ -166,7 +166,7 @@
     {onpointerout}
     bind:this={ref}
   />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div

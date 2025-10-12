@@ -50,7 +50,7 @@
     ) as any[]
   ); // TODO: Make typescript happy
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -71,7 +71,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -110,7 +110,7 @@
         bars: { motion: 'tween' },
       }}
       orientation="horizontal"
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -205,7 +205,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -258,7 +258,7 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
-        {renderContext}
+        {layer}
       >
         {#snippet tooltip()}
           <Tooltip.Root>
@@ -329,7 +329,7 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
-        {renderContext}
+        {layer}
       >
         {#snippet tooltip()}
           <Tooltip.Root>

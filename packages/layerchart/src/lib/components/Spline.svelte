@@ -127,7 +127,7 @@
   import { flattenPathData } from '../utils/path.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -260,7 +260,7 @@
 
   let key = $state(Symbol());
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -282,7 +282,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Spline',
       render,
@@ -356,7 +356,7 @@
   });
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   {#key key}
     <path
       d={tweenedState.current}

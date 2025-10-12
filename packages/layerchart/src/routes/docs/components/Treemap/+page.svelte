@@ -145,7 +145,7 @@
   <div class="aspect-[16/9]">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Treemap
             hierarchy={rootPopulation}
             {tile}
@@ -278,7 +278,7 @@
   <div class="h-[800px]">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Treemap
             hierarchy={root.copy()}
             {tile}
@@ -366,7 +366,7 @@
 <Preview data={rootFlat}>
   <div class="h-[400px]">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Treemap hierarchy={rootFlat}>
           {#snippet children({ nodes })}
             {#each nodes.filter((n) => n.depth > 0) as node}

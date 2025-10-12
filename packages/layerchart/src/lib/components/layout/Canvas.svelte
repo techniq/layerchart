@@ -152,7 +152,7 @@
   import { Logger, localPoint } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
-  import { setRenderContext } from '../Chart.svelte';
+  import { setLayerContext } from '$lib/contexts/layer.js';
   import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
@@ -445,7 +445,7 @@
   });
 
   setCanvasContext(canvasContext);
-  setRenderContext('canvas');
+  setLayerContext('canvas');
 </script>
 
 <canvas

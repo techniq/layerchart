@@ -156,7 +156,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -187,7 +187,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -211,7 +211,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -242,7 +242,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -273,7 +273,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -305,7 +305,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -336,7 +336,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -368,7 +368,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -419,7 +419,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -470,7 +470,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -544,7 +544,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -594,7 +594,7 @@
       tooltip={{ mode: 'quadtree-x' }}
       bind:context
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -634,7 +634,7 @@
         debug: charts.area.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -684,7 +684,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
@@ -741,7 +741,7 @@
         debug: charts.dateTime.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Points class="fill-primary" />
@@ -791,7 +791,7 @@
         debug: charts.duration.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Rule />
@@ -850,7 +850,7 @@
         debug: charts.multiDuration.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Rule />
@@ -913,7 +913,7 @@
         debug: charts.bars.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -964,7 +964,7 @@
         debug: charts.multiBars.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/10" />
@@ -1018,7 +1018,7 @@
         debug: charts.scatter.debug,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
         <Points class="fill-primary stroke-primary" />

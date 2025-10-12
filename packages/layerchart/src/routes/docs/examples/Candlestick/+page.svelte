@@ -31,7 +31,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} />
@@ -76,7 +76,7 @@
         padding={{ left: 20, bottom: 32 }}
         tooltip={{ mode: 'quadtree-x' }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule tickSpacing={20} />
           <Axis placement="bottom" rule tickMultiline />
           <Rule y={['high', 'low']} />
@@ -112,7 +112,7 @@
           },
         }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Bars insets={{ x: 0.5 }} />
         </Layer>
       </Chart>
@@ -136,7 +136,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} class="stroke-surface-content" />
@@ -176,7 +176,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Bars y={['high', 'low']} insets={{ x: 1.5 }} class="fill-surface-content" />

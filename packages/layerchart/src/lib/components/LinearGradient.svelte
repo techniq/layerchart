@@ -76,7 +76,7 @@
 </script>
 
 <script lang="ts">
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
@@ -110,7 +110,7 @@
   });
 
   const ctx = getChartContext();
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   let canvasGradient = $state<CanvasGradient>();
 
@@ -174,7 +174,7 @@
     canvasGradient = gradient;
   }
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Gradient',
       render,
@@ -183,13 +183,13 @@
   }
 </script>
 
-{#if renderCtx === 'canvas'}
+{#if layerCtx === 'canvas'}
   <!--
 	TODO: we can probably pass the context to coerce this type so we don't need a bunch
 	of predicates to check if the gradient is a CanvasGradient or not...
 	-->
   {@render children?.({ id, gradient: asAny(canvasGradient) })}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <defs>
     <linearGradient
       bind:this={ref}
@@ -225,6 +225,6 @@
   </defs>
 
   {@render children?.({ id, gradient: `url(#${id})` })}
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   {@render children?.({ id, gradient: createCSSGradient() })}
 {/if}

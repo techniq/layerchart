@@ -24,7 +24,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule format="percentRound" />
         <Axis placement="bottom" rule />
         <Rule />

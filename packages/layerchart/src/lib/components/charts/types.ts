@@ -241,7 +241,7 @@ export type BaseChartProps<
    *
    * @default 'svg'
    */
-  renderContext?: 'svg' | 'canvas';
+  layer?: 'svg' | 'canvas';
 
   /**
    * Whether to log the initial render performance using `console.time`.

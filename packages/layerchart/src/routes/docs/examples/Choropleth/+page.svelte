@@ -66,13 +66,13 @@
         initialScrollMode: 'scale',
       }}
       padding={{ top: 60 }}
-      tooltip={{ raiseTarget: shared.renderContext === 'svg' }}
+      tooltip={{ raiseTarget: shared.layer === 'svg' }}
     >
       {#snippet children({ context })}
         {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each enrichedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
@@ -91,8 +91,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.renderContext} pointerEvents={false}>
-          {#if context.tooltip.data && shared.renderContext === 'canvas'}
+        <Layer type={shared.layer} pointerEvents={false}>
+          {#if context.tooltip.data && shared.layer === 'canvas'}
             <GeoPath geojson={context.tooltip.data} class="stroke-white" {strokeWidth} />
           {/if}
         </Layer>

@@ -36,7 +36,7 @@
     >
       {#snippet children({ context })}
         {@const r = 6}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="bottom" format="none" rule grid />
           <ForceSimulation
             forces={{

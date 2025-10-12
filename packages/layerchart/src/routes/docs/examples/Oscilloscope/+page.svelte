@@ -68,7 +68,7 @@
   });
   const colorScale = scaleSequential([0, 256], interpolateTurbo);
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -86,7 +86,7 @@
       grid={false}
       props={{ spline: { class: 'stroke-surface-content' } }}
       tooltip={{ mode: 'manual' }}
-      {renderContext}
+      {layer}
     />
   </div>
 </Preview>
@@ -108,7 +108,7 @@
       props={{
         yAxis: { format: (d) => decibels(d)?.toFixed(1) },
       }}
-      {renderContext}
+      {layer}
     >
       {#snippet marks()}
         <LinearGradient

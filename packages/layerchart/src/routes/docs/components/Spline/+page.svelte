@@ -63,7 +63,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
 
@@ -105,7 +105,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -132,7 +132,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -159,7 +159,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -191,7 +191,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -225,7 +225,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 48, bottom: 24, right: 48 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -262,7 +262,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -293,7 +293,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, right: 40, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}

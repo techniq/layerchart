@@ -116,7 +116,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}
@@ -205,7 +205,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}

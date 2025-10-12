@@ -10,7 +10,7 @@
 
   const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -24,7 +24,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={{ left: 16, bottom: 24 }}>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
@@ -46,7 +46,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
@@ -70,7 +70,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={{ left: 16, bottom: 24 }}>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
@@ -98,7 +98,7 @@
       cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="stroke-surface-content/50" />

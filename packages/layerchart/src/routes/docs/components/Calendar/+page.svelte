@@ -45,7 +45,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
@@ -94,7 +94,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
@@ -144,7 +144,7 @@
       padding={{ top: 20, left: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
             {@const end = endOfInterval('year', start)}
@@ -203,7 +203,7 @@
       padding={{ top: 20 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Calendar start={firstDayOfYear} end={lastDayOfYear}>
             {#snippet children({ cells, cellSize })}
               {#each cells as cell}

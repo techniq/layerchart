@@ -48,7 +48,7 @@
 <script lang="ts">
   import { getTransformContext } from '../TransformContext.svelte';
 
-  import { setRenderContext } from '../Chart.svelte';
+  import { setLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
@@ -84,7 +84,7 @@
     }
   });
 
-  setRenderContext('html');
+  setLayerContext('html');
 </script>
 
 <div

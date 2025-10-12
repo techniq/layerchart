@@ -57,7 +57,7 @@
       }}
     >
       <TransformControls />
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         {#if showPath}
           <Spline {curve} motion="tween" />
         {/if}

@@ -76,7 +76,7 @@
     >
       {#snippet children({ context })}
         {@const [yaw, pitch, roll] = context.geo.projection?.rotate() ?? [0, 0, 0]}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
           <!-- Back -->

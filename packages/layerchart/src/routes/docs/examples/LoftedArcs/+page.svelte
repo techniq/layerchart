@@ -41,7 +41,7 @@
       }}
       padding={{ top: 16, bottom: 16, left: 16, right: 16 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         {#each countries.features as country}
@@ -73,7 +73,7 @@
       {#if debug}
         <GeoDebug class="absolute top-0 right-0 z-10" />
       {/if}
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20 pointer-events-none" />
         {#each countries.features as country}

@@ -136,7 +136,7 @@
 <Preview>
   <div class="h-[100px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <Text value={'March\n2025'} verticalAnchor="start" />
       </Layer>
     </Chart>

@@ -22,7 +22,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <g class="states">
           {#each states.features as feature}
             <GeoPath

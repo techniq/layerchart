@@ -49,7 +49,7 @@
       padding={{ top: 32, bottom: 8 }}
       radial
     >
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         <Axis
           placement="radius"
           grid={{ class: 'stroke-surface-content/20 fill-surface-200/50' }}
@@ -77,7 +77,7 @@
       radial
       padding={{ top: 12, bottom: 12 }}
     >
-      <Layer type={shared.renderContext} center>
+      <Layer type={shared.layer} center>
         <Spline y={(d) => d.avg} curve={curveCatmullRom} class="stroke-primary" />
         <Area
           y0={(d) => d.min}
@@ -120,7 +120,7 @@
       padding={{ top: 12, bottom: 12 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer type={shared.layer} center>
           {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
             <Spline
               data={yearData}

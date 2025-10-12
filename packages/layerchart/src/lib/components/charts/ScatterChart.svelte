@@ -85,7 +85,7 @@
     context = $bindable(),
     onTooltipClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer = 'svg',
     profile = false,
     debug = false,
     children: childrenProp,
@@ -265,11 +265,7 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-        {debug}
-      >
+      <Layer type={layer} {...asAny(layer === 'canvas' ? props.canvas : props.svg)} {debug}>
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}

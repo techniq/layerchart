@@ -99,7 +99,7 @@
       }}
       padding={{ left: 100, right: 100 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer type={shared.layer}>
         <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
         <Graticule class="stroke-surface-content/20" />
 

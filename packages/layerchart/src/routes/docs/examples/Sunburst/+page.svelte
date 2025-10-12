@@ -85,7 +85,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer type={shared.layer} center>
           <Bounds
             domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
             range={({ height }) => ({

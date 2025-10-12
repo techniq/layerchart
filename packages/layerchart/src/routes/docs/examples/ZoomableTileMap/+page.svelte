@@ -60,7 +60,7 @@
 
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <GeoTile url={serviceUrl} {zoomDelta} {debug} />
 
             {#each filteredStates.features as feature}
@@ -127,7 +127,7 @@
 
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <GeoTile url={serviceUrl} {zoomDelta} {debug} />
 
             {#each filteredStates.features as feature}
@@ -191,7 +191,7 @@
 
           <TransformControls />
 
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
             <GeoTile url={serviceUrl} zoomDelta={-100} />
             <GeoTile url={serviceUrl} zoomDelta={-4} />

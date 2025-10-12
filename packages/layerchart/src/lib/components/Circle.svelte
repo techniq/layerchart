@@ -62,7 +62,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -97,7 +97,7 @@
   const initialCy = initialCyProp ?? cy;
   const initialR = initialRProp ?? r;
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   const motionCx = createMotion(initialCx, () => cx, motion);
   const motionCy = createMotion(initialCy, () => cy, motion);
@@ -123,7 +123,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Circle',
       render,
@@ -149,7 +149,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <circle
     bind:this={ref}
     cx={motionCx.current}
@@ -163,7 +163,7 @@
     class={cls('lc-circle', className)}
     {...restProps}
   />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <div
     style:position="absolute"
     style:left="{motionCx.current}px"

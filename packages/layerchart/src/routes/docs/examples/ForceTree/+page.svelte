@@ -46,7 +46,7 @@
           cloneNodes
         >
           {#snippet children({ nodes, linkPositions })}
-            <Layer type={shared.renderContext} center>
+            <Layer type={shared.layer} center>
               {#each links as link, i}
                 <Link
                   data={link}

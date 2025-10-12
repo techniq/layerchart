@@ -8,11 +8,5 @@
 </script>
 
 <div class="h-[300px] p-4 border rounded-sm">
-	<LineChart
-		{data}
-		x="date"
-		y="value"
-		debug={shared.debug}
-		renderContext={shared.renderContext as any}
-	/>
+	<LineChart {data} x="date" y="value" debug={shared.debug} layer={shared.layer as any} />
 </div>

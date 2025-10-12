@@ -64,7 +64,7 @@
       <div>{marker}</div>
       <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Spline
               {curve}
               class="stroke-primary"
@@ -106,7 +106,7 @@
       <div>{marker}</div>
       <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
-          <Layer type={shared.renderContext}>
+          <Layer type={shared.layer}>
             <Spline
               {curve}
               class="stroke-primary stroke-2"
@@ -140,7 +140,7 @@
       <div class="h-[35px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
           {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
+            <Layer type={shared.layer}>
               <Line
                 x1={0}
                 x2={context.width}
@@ -165,7 +165,7 @@
   <div class="grid gap-2">
     <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
@@ -190,7 +190,7 @@
     <div>default (auto)</div>
     <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
@@ -203,7 +203,7 @@
     <div>0</div>
     <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
@@ -216,7 +216,7 @@
     <div>90</div>
     <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"

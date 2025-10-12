@@ -25,7 +25,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.layer}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -42,8 +42,8 @@
 
         <!-- Draw tooltip path for canvas since hover: not supported -->
         <!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->
-        {#if shared.renderContext === 'canvas'}
-          <Layer type={shared.renderContext} pointerEvents={false}>
+        {#if shared.layer === 'canvas'}
+          <Layer type={shared.layer} pointerEvents={false}>
             {#if context.tooltip.data}
               <GeoPath
                 geojson={context.tooltip.data}

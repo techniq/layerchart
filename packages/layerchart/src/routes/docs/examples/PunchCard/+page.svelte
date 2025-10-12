@@ -13,7 +13,7 @@
 
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let layer = $derived(shared.layer as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -39,7 +39,7 @@
         grid: { x: false, y: true, bandAlign: 'between' },
         tooltip: { context: { mode: 'band' } },
       }}
-      {renderContext}
+      {layer}
       debug={shared.debug}
     >
       {#snippet highlight()}

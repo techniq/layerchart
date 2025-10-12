@@ -29,9 +29,7 @@
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 
-  let renderContext = $derived(
-    shared.renderContext as ComponentProps<typeof ArcChart>['renderContext']
-  );
+  let layer = $derived(shared.layer as ComponentProps<typeof ArcChart>['layer']);
   let debug = $derived(shared.debug);
 </script>
 
@@ -49,7 +47,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -59,7 +57,7 @@
 
 <Preview {data}>
   <div class="h-[160px] p-4 border rounded-sm resize overflow-auto">
-    <ArcChart {renderContext} {debug}>
+    <ArcChart {layer} {debug}>
       {#snippet marks()}
         <LinearGradient class="from-secondary to-primary">
           {#snippet children({ gradient })}
@@ -108,7 +106,7 @@
       props={{
         group: { y: 45 },
       }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -127,7 +125,7 @@
       trackOuterRadius={-5}
       trackInnerRadius={-10}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -146,7 +144,7 @@
       trackOuterRadius={-5}
       trackInnerRadius={-10}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -165,7 +163,7 @@
       trackOuterRadius={0.95}
       trackInnerRadius={0.9}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -185,7 +183,7 @@
       trackOuterRadius={75}
       trackInnerRadius={65}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -202,7 +200,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -221,7 +219,7 @@
       innerRadius={-20}
       cornerRadius={10}
       props={{ group: { y: 70 } }}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -239,7 +237,7 @@
       innerRadius={-20}
       range={[90, -270]}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -257,7 +255,7 @@
       innerRadius={-20}
       range={[180, -180]}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -279,7 +277,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -303,7 +301,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     />
   </div>
@@ -327,7 +325,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      {renderContext}
+      {layer}
       {debug}
     >
       {#snippet arc({ props, seriesIndex, visibleSeries })}
@@ -371,7 +369,7 @@
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}
-          {renderContext}
+          {layer}
           {debug}
         />
       {/if}
@@ -404,7 +402,7 @@
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}
-          {renderContext}
+          {layer}
           {debug}
         />
       {/if}
@@ -416,6 +414,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <ArcChart {data} key="fruit" value="value" keys="centroid" {renderContext} {debug} />
+    <ArcChart {data} key="fruit" value="value" keys="centroid" {layer} {debug} />
   </div>
 </Preview> -->

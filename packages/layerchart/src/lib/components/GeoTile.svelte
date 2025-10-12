@@ -45,7 +45,7 @@
   import { tile as d3Tile } from 'd3-tile';
 
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
@@ -64,7 +64,7 @@
 
   const ctx = getChartContext();
   const geoCtx = getGeoContext();
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
 
@@ -91,7 +91,7 @@
     }
   }
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'GeoTile',
       render,
@@ -100,7 +100,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg' && url}
+{#if layerCtx === 'svg' && url}
   {#if children}
     {@render children({ tiles })}
   {:else}
