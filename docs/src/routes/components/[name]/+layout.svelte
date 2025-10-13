@@ -10,6 +10,7 @@
 
 	import LucideSettings from '~icons/lucide/settings';
 	import LucideCode from '~icons/lucide/code';
+	import LucideChevronLeft from '~icons/lucide/chevron-left';
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 
 	// TODO: `setSettings({...})` or just use default?
@@ -27,6 +28,17 @@
 	};
 	examples.set(examplesContext);
 </script>
+
+{#if page.params.example}
+	<Button
+		size="sm"
+		icon={LucideChevronLeft}
+		href="/components/{page.params.name}"
+		class="mb-4 border"
+	>
+		Back to examples
+	</Button>
+{/if}
 
 <div class="flex items-center gap-2 text-xs font-bold">
 	<div class="text-surface-content/50 capitalize">
