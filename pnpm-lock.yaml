@@ -77,6 +77,9 @@ importers:
       '@types/d3-random':
         specifier: ^3.0.3
         version: 3.0.3
+      '@types/d3-scale':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/d3-shape':
         specifier: ^3.1.7
         version: 3.1.7
@@ -98,6 +101,9 @@ importers:
       d3-random:
         specifier: ^3.0.1
         version: 3.0.1
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
       d3-shape:
         specifier: ^3.2.0
         version: 3.2.0

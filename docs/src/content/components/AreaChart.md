@@ -142,3 +142,35 @@ related: [components/Chart, components/Area, examples/Area]
 ### Point annotations
 
 <Example name="point-annotations" />
+
+### Line annotation
+
+<Example name="line-annotation" />
+
+### Range annotation
+
+<Example name="range-annotation" />
+
+### Series point annotations
+
+<Example name="series-point-annotations" />
+
+### Brushing
+
+<Example name="brush" />
+
+### Brush syncing
+
+<Example name="brush-sync" />
+
+### Point scale
+
+<Example name="point-scale" />
+
+### Band scale
+
+<Example name="band-scale" />
+
+### Custom chart
+
+<Example name="custom-chart" />

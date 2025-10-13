@@ -5,12 +5,34 @@ import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { csvParse, autoType } from 'd3-dsv';
 
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
+import { celsiusToFahrenheit } from 'layerchart';
 
 export const getAppleStock = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
 		parse<AppleStockData>(await r.text())
 	);
+	return data;
+});
+
+export const getDailyTemperatures = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/dailyTemperatures.csv').then(async (r) => {
+		return csvParse<{ dayOfYear: number; year: number; value: number | 'NA' }>(
+			await r.text(),
+			// @ts-expect-error - autoType
+			autoType
+		)
+			.filter((d) => d.value !== 'NA')
+			.map((d) => {
+				const origDate = new Date(d.year, 0, d.dayOfYear);
+				return {
+					...d,
+					date: new Date(Date.UTC(2000, origDate.getUTCMonth(), origDate.getUTCDate())),
+					value: d.value !== 'NA' ? celsiusToFahrenheit(d.value) : 'NA'
+				};
+			});
+	});
 	return data;
 });
 
