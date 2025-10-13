@@ -67,6 +67,18 @@ related: [components/Chart, components/Area, examples/Area]
 
 <Example name="series-stack-separate-data" />
 
+### Legend
+
+<Example name="series-stack-legend" />
+
+### Legend (placement)
+
+<Example name="series-stack-legend-placement" />
+
+### Legend (custom labels)
+
+<Example name="series-stack-legend-labels" />
+
 ### Threshold
 
 <Example name="threshold" />
@@ -78,3 +90,39 @@ related: [components/Chart, components/Area, examples/Area]
 ### Points
 
 <Example name="points" />
+
+### Radial
+
+<Example name="radial" />
+
+### Funnel
+
+<Example name="funnel" />
+
+### Null gaps
+
+<Example name="null-gaps" />
+
+### Sparkline
+
+<Example name="sparkline" />
+
+### Single axis (x)
+
+<Example name="single-axis-x" />
+
+### Single axis (y)
+
+<Example name="single-axis-y" />
+
+### Tooltip click
+
+<Example name="series-tooltip-click" />
+
+### Markers
+
+<Example name="markers" />
+
+### Custom tooltip
+
+<Example name="custom-tooltip" />
