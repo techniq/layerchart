@@ -112,6 +112,8 @@
 			</Button>
 		{/if}
 	{:else}
-		Example "{name}" not found.
+		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
+			Example <span class="font-bold">`{name}`</span> not found.
+		</div>
 	{/if}
 </div>
