@@ -344,46 +344,48 @@
 	</main>
 
 	<!-- Table of Contents -->
-	<div
-		class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
-	>
+	{#if page.data.meta?.tableOfContents}
 		<div
-			class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
+			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
 		>
-			<LucideAlignLeft />
-			On this page
-		</div>
-		{#key page.url}
-			<TableOfContents
-				classes={{
-					li: 'leading-none overflow-x-hidden'
-				}}
+			<div
+				class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
 			>
-				{#snippet children({
-					node,
-					activeHeadingId
-				}: {
-					node: { id: string; name: string; level: number; element: HTMLElement };
-					activeHeadingId: string;
-				})}
-					<a
-						href="#{node.id}"
-						style:padding-left="{node.level * 12}px"
-						class={cls(
-							'hover:text-surface-content block w-full overflow-hidden text-ellipsis whitespace-nowrap border-l py-1 text-sm',
-							node.level <= 2 ? 'text-surface-content/70 font-medium' : 'text-surface-content/50',
-							node.id &&
-								node.id === activeHeadingId &&
-								'border-surface-content text-surface-content'
-						)}
-					>
-						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						{@html node.name}
-					</a>
-				{/snippet}
-			</TableOfContents>
-		{/key}
-	</div>
+				<LucideAlignLeft />
+				On this page
+			</div>
+			{#key page.url}
+				<TableOfContents
+					classes={{
+						li: 'leading-none overflow-x-hidden'
+					}}
+				>
+					{#snippet children({
+						node,
+						activeHeadingId
+					}: {
+						node: { id: string; name: string; level: number; element: HTMLElement };
+						activeHeadingId: string;
+					})}
+						<a
+							href="#{node.id}"
+							style:padding-left="{node.level * 12}px"
+							class={cls(
+								'hover:text-surface-content block w-full overflow-hidden text-ellipsis whitespace-nowrap border-l py-1 text-sm',
+								node.level <= 2 ? 'text-surface-content/70 font-medium' : 'text-surface-content/50',
+								node.id &&
+									node.id === activeHeadingId &&
+									'border-surface-content text-surface-content'
+							)}
+						>
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+							{@html node.name}
+						</a>
+					{/snippet}
+				</TableOfContents>
+			{/key}
+		</div>
+	{/if}
 </div>
 
 <svelte:window

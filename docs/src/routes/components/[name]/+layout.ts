@@ -29,6 +29,9 @@ export const load = async ({ params }) => {
 
 	return {
 		...(await getComponentDoc(params.name)),
-		examples
+		examples,
+		meta: {
+			tableOfContents: true
+		}
 	};
 };
