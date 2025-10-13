@@ -11,6 +11,7 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$examples: './src/examples',
+			'$static/*': 'static/*',
 			'content-collections': './.content-collections/generated'
 		}
 	},

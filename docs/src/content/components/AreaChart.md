@@ -126,3 +126,19 @@ related: [components/Chart, components/Area, examples/Area]
 ### Custom tooltip
 
 <Example name="custom-tooltip" />
+
+### Locking and clickable tooltip
+
+<Example name="tooltip-locking" />
+
+### Fixed tooltip below chart with hide delay
+
+<Example name="tooltip-fixed-with-hide-delay" />
+
+### Externally access tooltip data
+
+<Example name="tooltip-external" />
+
+### Point annotations
+
+<Example name="point-annotations" />
