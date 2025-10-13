@@ -13,17 +13,20 @@ const config = {
 			$examples: './src/examples',
 			'$static/*': 'static/*',
 			'content-collections': './.content-collections/generated'
+		},
+		experimental: {
+			remoteFunctions: true
+		}
+	},
+	compilerOptions: {
+		experimental: {
+			async: true
 		}
 	},
 	vitePlugin: {
 		inspector: {
 			toggleKeyCombo: 'alt-shift',
 			toggleButtonPos: 'bottom-right'
-		}
-	},
-	compilerOptions: {
-		experimental: {
-			async: true
 		}
 	}
 };

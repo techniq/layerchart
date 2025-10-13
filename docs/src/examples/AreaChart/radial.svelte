@@ -1,25 +1,9 @@
 <script lang="ts">
 	import { AreaChart, Spline } from 'layerchart';
 	import { curveCatmullRom } from 'd3-shape';
-	import { ascending, flatGroup, max, mean, min } from 'd3-array';
-	import { csvParse, autoType } from 'd3-dsv';
+	import { getSfoTemperatures } from '$lib/data.remote';
 
-	const data = await fetch('/data/examples/sfoTemperatures.csv').then(async (r) => {
-		return flatGroup(
-			// @ts-expect-error
-			csvParse<{ date: Date; tavg: number; tmax: number; tmin: number }>(await r.text(), autoType),
-			(d) => new Date(Date.UTC(2000, d.date.getUTCMonth(), d.date.getUTCDate())) // group by day of year
-		)
-			.sort(([a], [b]) => ascending(a, b)) // sort chronologically
-			.map(([date, v]) => ({
-				date,
-				avg: mean(v, (d) => d.tavg || NaN),
-				min: mean(v, (d) => d.tmin || NaN),
-				max: mean(v, (d) => d.tmax || NaN),
-				minmin: min(v, (d) => d.tmin || NaN),
-				maxmax: max(v, (d) => d.tmax || NaN)
-			}));
-	});
+	const data = $derived(await getSfoTemperatures());
 	export { data };
 </script>
 

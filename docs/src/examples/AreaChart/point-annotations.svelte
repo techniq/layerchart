@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { AreaChart, Tooltip } from 'layerchart';
-	import { format, parse, sortFunc } from '@layerstack/utils';
-	import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
+	import { format, sortFunc } from '@layerstack/utils';
+	import { getAppleStock } from '$lib/data.remote';
 
-	const data = await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
-		parse<AppleStockData>(await r.text())
-	);
+	const data = $derived(await getAppleStock());
 	export { data };
 
 	// Get a few random points to use for annotations
