@@ -2,7 +2,7 @@
 description: Streamlined Chart configuration for Scatter charts
 section: charts
 layers: [svg, canvas]
-related: [components/Chart]
+related: [components/Chart, components/Points, examples/Scatter]
 ---
 
 <script lang="ts">

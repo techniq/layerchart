@@ -1,8 +1,8 @@
 ---
-description: Streamlined Chart configuration for Bar charts
+description: Streamlined Chart configuration for Pie charts
 section: charts
 layers: [svg, canvas]
-related: [components/Chart]
+related: [components/Chart, components/Pie, examples/Arc]
 ---
 
 <script lang="ts">
