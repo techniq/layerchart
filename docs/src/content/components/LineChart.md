@@ -138,3 +138,33 @@ related: [components/Chart, components/Spline, examples/Line]
 ### Axis labels inside
 
 <Example name="axis-labels-inside" />
+
+### Legend
+
+<Example name="legend" />
+
+### Tooltip click
+
+<Example name="tooltip-click" />
+
+### Custom tooltip
+
+<Example name="custom-tooltip" />
+
+### Point annotations
+
+<Example name="point-annotations" />
+
+> See also: [AnnotationPoint](/components/AnnotationPoint) for more examples
+
+### Line annotation
+
+<Example name="line-annotation" />
+
+> See also: [AnnotationLine](/components/AnnotationLine) for more examples
+
+### Range annotation
+
+<Example name="range-annotation" />
+
+> See also: [AnnotationRange](/components/AnnotationRange) for more examples
