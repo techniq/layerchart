@@ -168,3 +168,23 @@ related: [components/Chart, components/Spline, examples/Line]
 <Example name="range-annotation" />
 
 > See also: [AnnotationRange](/components/AnnotationRange) for more examples
+
+### Series point annotations
+
+<Example name="series-point-annotations" />
+
+### Brushing
+
+<Example name="brush" />
+
+### Brush with series point events
+
+<Example name="series-brush" />
+
+### Draw
+
+<Example name="draw" />
+
+### Custom chart
+
+<Example name="custom-chart" />
