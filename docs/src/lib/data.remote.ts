@@ -1,11 +1,12 @@
-import { prerender, getRequestEvent } from '$app/server';
-
+import { celsiusToFahrenheit } from 'layerchart';
 import { parse } from '@layerstack/utils';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { csvParse, autoType } from 'd3-dsv';
 
+import { prerender, getRequestEvent } from '$app/server';
+
+import type { PenguinsData } from '$static/data/examples/penguins.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
-import { celsiusToFahrenheit } from 'layerchart';
 
 export const getAppleStock = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -62,5 +63,13 @@ export const getSfoTemperatures = prerender(async () => {
 				maxmax: max(v, (d) => d.tmax || NaN)
 			}));
 	});
+	return data;
+});
+
+export const getPenguins = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/penguins.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as PenguinsData;
 	return data;
 });

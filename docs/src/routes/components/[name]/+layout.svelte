@@ -125,4 +125,9 @@
 	</div>
 {/if}
 
-{@render children()}
+<svelte:boundary>
+	{@render children()}
+	{#snippet pending()}
+		loading...
+	{/snippet}
+</svelte:boundary>
