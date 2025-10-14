@@ -82,3 +82,59 @@ related: [components/Chart, components/Spline, examples/Line]
 ### Points within labels
 
 <Example name="labels-within-points" />
+
+### Radar (linear grid)
+
+<Example name="radar" />
+
+### Radar (rounded grid)
+
+<Example name="radar-rounded" />
+
+### Radar with series data
+
+<Example name="radar-series" />
+
+### Gradient encoding
+
+<Example name="gradient-encoding" />
+
+### Gradient threshold
+
+<Example name="gradient-threshold" />
+
+### Large series
+
+<Example name="large-series" />
+
+### Large radial series
+
+<Example name="large-radial-series" />
+
+### Dynamic data (move over chart)
+
+<Example name="dynamic-data" />
+
+### Null gaps
+
+<Example name="null-gaps" />
+
+### Null with dashed lines
+
+<Example name="null-dashed-gaps" />
+
+### Sparkline
+
+<Example name="sparkline" />
+
+### Single axis (x)
+
+<Example name="single-axis-x" />
+
+### Single axis (y)
+
+<Example name="single-axis-y" />
+
+### Axis labels inside
+
+<Example name="axis-labels-inside" />

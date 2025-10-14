@@ -15,6 +15,14 @@ export const getAppleStock = prerender(async () => {
 	return data;
 });
 
+export const getDailyTemperature = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/daily-temperature.json').then(async (r) =>
+		parse<{ date: Date; value: number }[]>(await r.text())
+	);
+	return data;
+});
+
 export const getDailyTemperatures = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/dailyTemperatures.csv').then(async (r) => {
@@ -23,7 +31,7 @@ export const getDailyTemperatures = prerender(async () => {
 			// @ts-expect-error - autoType
 			autoType
 		)
-			.filter((d) => d.value !== 'NA')
+			.filter((d) => d.value !== 'NA' && d.dayOfYear <= 365 /* Ignore 366th day */)
 			.map((d) => {
 				const origDate = new Date(d.year, 0, d.dayOfYear);
 				return {
