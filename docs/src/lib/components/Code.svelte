@@ -29,7 +29,7 @@
 <div
 	class={cls(
 		'Code',
-		'relative bg-surface-200 dark:bg-surface-300 p-4 overflow-auto not-prose',
+		'relative bg-surface-200 dark:bg-surface-300 p-4 overflow-auto not-prose [tab-size:2]',
 		classes.root,
 		className
 	)}
