@@ -1,7 +1,7 @@
 ---
 description: Streamlined Chart configuration for Scatter charts
 section: charts
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [components/Chart, components/Points, examples/Scatter]
 ---
 
@@ -62,3 +62,53 @@ related: [components/Chart, components/Points, examples/Scatter]
 ### Single axis (y)
 
 <Example name="single-axis-y" />
+
+### Single dimension
+
+<Example name="single-dimension" />
+
+### Date series (with color scale)
+
+<Example name="date-series-color-scale" />
+
+### Tooltip click
+
+<Example name="tooltip-click" />
+
+### Point annotations
+
+<Example name="point-annotations" />
+
+> See also: [AnnotationPoint](/components/AnnotationPoint) for more examples
+
+### Line annotation
+
+<Example name="line-annotation" />
+
+> See also: [AnnotationLine](/components/AnnotationLine) for more examples
+
+### Range annotation (vertical)
+
+<Example name="range-annotation-vertical" />
+
+> See also: [AnnotationRange](/components/AnnotationRange) for more examples
+
+### Range annotation (horizontal)
+
+<Example name="range-annotation-horizontal" />
+
+> See also: [AnnotationRange](/components/AnnotationRange) for more examples
+
+### Range annotation (both)
+
+<Example name="range-annotation-both" />
+
+> See also: [AnnotationRange](/components/AnnotationRange) for more examples
+
+### Brush
+
+<Example name="brush" />
+
+### Custom
+
+<Example name="custom" />

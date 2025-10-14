@@ -171,6 +171,6 @@ related: [components/Chart, components/Area, examples/Area]
 
 <Example name="band-scale" />
 
-### Custom chart
+### Custom
 
-<Example name="custom-chart" />
+<Example name="custom" />

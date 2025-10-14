@@ -185,6 +185,6 @@ related: [components/Chart, components/Spline, examples/Line]
 
 <Example name="draw" />
 
-### Custom chart
+### Custom
 
-<Example name="custom-chart" />
+<Example name="custom" />
