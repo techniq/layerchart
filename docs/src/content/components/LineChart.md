@@ -66,3 +66,19 @@ related: [components/Chart, components/Spline, examples/Line]
 ### Series (labels on point hover)
 
 <Example name="series-labels-hover" />
+
+### Labels
+
+<Example name="labels" />
+
+### Points
+
+<Example name="points" />
+
+### Labels with points
+
+<Example name="labels-with-points" />
+
+### Points within labels
+
+<Example name="labels-within-points" />
