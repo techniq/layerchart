@@ -10,7 +10,7 @@
 	let show = $state(true);
 </script>
 
-<Field label="Show" labelPlacement="left" let:id class="inline-flex mb-2">
+<Field label="Show" labelPlacement="left" let:id class="justify-self-end mb-2">
 	<Switch {id} bind:checked={show} />
 </Field>
 

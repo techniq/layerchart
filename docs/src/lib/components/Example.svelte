@@ -46,7 +46,7 @@
 	let data = $derived(ref?.data);
 </script>
 
-<div class="example mt-1">
+<div class="example relative mt-1">
 	{#if example}
 		<div class={cls('border rounded-t-sm', !showCode && 'rounded-b-sm')}>
 			<div class="resize-x overflow-auto max-w-full p-4">
