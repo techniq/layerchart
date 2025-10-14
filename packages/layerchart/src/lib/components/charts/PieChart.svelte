@@ -31,6 +31,8 @@
     | 'cRange'
     | 'padding'
     | 'context'
+    | 'width'
+    | 'height'
   > & {
     /**
      * Key accessor
