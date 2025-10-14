@@ -74,6 +74,9 @@ importers:
       '@types/d3-dsv':
         specifier: ^3.0.7
         version: 3.0.7
+      '@types/d3-interpolate':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/d3-random':
         specifier: ^3.0.3
         version: 3.0.3
@@ -99,6 +102,9 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4
       d3-dsv:
+        specifier: ^3.0.1
+        version: 3.0.1
+      d3-interpolate:
         specifier: ^3.0.1
         version: 3.0.1
       d3-random:

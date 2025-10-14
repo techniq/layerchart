@@ -13,7 +13,7 @@
 </script>
 
 <Field label="Show" labelPlacement="left" let:id class="absolute top-2 right-2 z-1">
-	<Switch {id} bind:checked={show} />
+	<Switch {id} bind:checked={show} size="md" />
 </Field>
 
 <div style:height="180px">

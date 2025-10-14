@@ -77,6 +77,10 @@ related: [components/Chart, components/Pie, examples/Arc]
 
 <Example name="legend-placement" />
 
+### Legend (with padding)
+
+<Example name="legend-with-padding" />
+
 ### Legend (responsive)
 
 <Example name="legend-responsive" />
@@ -84,3 +88,43 @@ related: [components/Chart, components/Pie, examples/Arc]
 ### Legend (custom label)
 
 <Example name="legend-custom-label" />
+
+### Placement (left)
+
+<Example name="placement-left" />
+
+### Placement (right)
+
+<Example name="placement-right" />
+
+### Placement (custom)
+
+<Example name="placement-custom" />
+
+### Colors (CSS variables)
+
+<Example name="colors-variables" />
+
+### Colors (scheme)
+
+<Example name="colors-scheme" />
+
+### Colors (interpolator)
+
+<Example name="colors-interpolator" />
+
+### Colors (data prop)
+
+<Example name="colors-data-prop" />
+
+### Offset slice
+
+<Example name="offset-slice" />
+
+### Motion (tween)
+
+<Example name="motion-tween" />
+
+### Motion (spring)
+
+<Example name="motion-spring" />

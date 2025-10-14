@@ -11,7 +11,7 @@
 </script>
 
 <Field label="Show" labelPlacement="left" let:id class="justify-self-end mb-2">
-	<Switch {id} bind:checked={show} />
+	<Switch {id} bind:checked={show} size="md" />
 </Field>
 
 {#if show}
