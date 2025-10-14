@@ -48,8 +48,10 @@
 
 <div class="example mt-1">
 	{#if example}
-		<div class={cls('p-4 border rounded-t-sm', !showCode && 'rounded-b-sm')}>
-			<example.component bind:this={ref} />
+		<div class={cls('border rounded-t-sm', !showCode && 'rounded-b-sm')}>
+			<div class="resize-x overflow-auto max-w-full p-4">
+				<example.component bind:this={ref} />
+			</div>
 		</div>
 
 		{#if showCode}
