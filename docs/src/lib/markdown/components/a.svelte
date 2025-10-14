@@ -9,6 +9,12 @@
 	const target = $derived(!internal ? '_blank' : undefined);
 </script>
 
-<a {href} {target} {rel} class={cls('link leading-7 text-primary', className)} {...restProps}>
+<a
+	{href}
+	{target}
+	{rel}
+	class={cls('link leading-7 text-primary font-semibold', className)}
+	{...restProps}
+>
 	{@render children?.()}
 </a>
