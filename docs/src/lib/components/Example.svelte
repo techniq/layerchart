@@ -60,59 +60,61 @@
 			</div>
 		{/if}
 
-		{#if example.source}
-			<Button
-				icon={LucideCode}
-				class="text-surface-content/70 py-1"
-				on:click={() => (showCode = !showCode)}
-			>
-				{showCode ? 'Hide' : 'Show'} Code
-			</Button>
-		{/if}
-
-		{#if data}
-			<Toggle let:on={open} let:toggle let:toggleOff>
-				<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}>
-					View data
-				</Button>
-
-				<Dialog
-					{open}
-					on:close={toggleOff}
-					class="max-h-[98dvh] md:max-h-[90dvh] w-160 max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
+		<div class="mt-0.5">
+			{#if example.source}
+				<Button
+					icon={LucideCode}
+					class="text-surface-content/70 py-1"
+					on:click={() => (showCode = !showCode)}
 				>
-					<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
-						<div class="overflow-auto">
-							<div class="text-lg font-semibold">Chart data</div>
+					{showCode ? 'Hide' : 'Show'} Code
+				</Button>
+			{/if}
+
+			{#if data}
+				<Toggle let:on={open} let:toggle let:toggleOff>
+					<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}>
+						View data
+					</Button>
+
+					<Dialog
+						{open}
+						on:close={toggleOff}
+						class="max-h-[98dvh] md:max-h-[90dvh] w-160 max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
+					>
+						<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
+							<div class="overflow-auto">
+								<div class="text-lg font-semibold">Chart data</div>
+							</div>
+
+							<Tooltip title="Copy">
+								<CopyButton
+									value={() => getDataAsString(data)}
+									variant="fill-light"
+									color="primary"
+								/>
+							</Tooltip>
 						</div>
 
-						<Tooltip title="Copy">
-							<CopyButton
-								value={() => getDataAsString(data)}
-								variant="fill-light"
-								color="primary"
-							/>
-						</Tooltip>
-					</div>
+						<Json value={data} class="border-t" />
 
-					<Json value={data} class="border-t" />
+						<div slot="actions">
+							<Button variant="fill" color="primary">Close</Button>
+						</div>
+					</Dialog>
+				</Toggle>
+			{/if}
 
-					<div slot="actions">
-						<Button variant="fill" color="primary">Close</Button>
-					</div>
-				</Dialog>
-			</Toggle>
-		{/if}
-
-		{#if page.params.example == null}
-			<Button
-				icon={LucideFullscreen}
-				class="text-surface-content/70 py-1"
-				on:click={() => goto(`${page.url.pathname}/${name}`)}
-			>
-				Inspect
-			</Button>
-		{/if}
+			{#if page.params.example == null}
+				<Button
+					icon={LucideFullscreen}
+					class="text-surface-content/70 py-1"
+					on:click={() => goto(`${page.url.pathname}/${name}`)}
+				>
+					Inspect
+				</Button>
+			{/if}
+		</div>
 	{:else}
 		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
 			Example <span class="font-bold">`{name}`</span> not found.
