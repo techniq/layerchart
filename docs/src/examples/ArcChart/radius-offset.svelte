@@ -11,6 +11,8 @@
 	value="value"
 	maxValue={100}
 	innerRadius={-20}
+	trackOuterRadius={-5}
+	trackInnerRadius={-10}
 	cornerRadius={10}
 	height={160}
 />

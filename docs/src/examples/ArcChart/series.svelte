@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { longData } from '$lib/utils/data';
 	import { ArcChart } from 'layerchart';
 
-	const data = [{ key: 'Example', value: 70 }];
+	const data = longData.filter((d) => d.year === 2019);
 	export { data };
 </script>
 
 <ArcChart
 	{data}
-	key="key"
+	key="fruit"
 	value="value"
-	maxValue={100}
+	outerRadius={-25}
 	innerRadius={-20}
 	cornerRadius={10}
-	height={160}
+	height={300}
 />

@@ -10,7 +10,10 @@
 	key="key"
 	value="value"
 	maxValue={100}
-	innerRadius={-20}
+	outerRadius={80}
+	innerRadius={60}
+	trackOuterRadius={75}
+	trackInnerRadius={65}
 	cornerRadius={10}
 	height={160}
 />
