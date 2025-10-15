@@ -1,0 +1,32 @@
+---
+description: Rectangle of the Chart bounding box, respects padding or full size
+section: common
+layers: [svg, canvas, html]
+related: [components/Rect]
+---
+
+<script lang="ts">
+	import Example from '$lib/components/Example.svelte';
+</script>
+
+## Examples
+
+### Basic
+
+Inset based (respect padding)
+
+<Example name="basic" />
+
+### Full
+
+Full bounds (ignore padding)
+
+<Example name="full" />
+
+### Border
+
+<Example name="border" />
+
+### Gradient
+
+<Example name="gradient" />
