@@ -129,3 +129,55 @@ related: [components/Grid, components/Rule]
 ### Multiple time axis with same placement (right)
 
 <Example name="multiple-axis-same-placement-right" />
+
+### Radial rule
+
+<Example name="radial-rule" />
+
+### Radial grid
+
+<Example name="radial-grid" />
+
+### Log scale
+
+<Example name="log-scale" />
+
+### Time scale (auto)
+
+<Example name="time-scale-auto" />
+
+### Time scale (auto) with multiline ticks
+
+Provides a compact multiline representation of dates. Also useful to see boundary changes (years, months, etc)
+
+<Example name="time-scale-auto-multiline" />
+
+### Time scale (auto) with format (filtering)
+
+Useful when you want to keep all ticks at the same resolution (ex. day) while still allowing tickSpacing/count to reduce ticks
+
+<Example name="time-scale-auto-format-filtering" />
+
+### Time scale (explicit)
+
+Specify explicit time intervals such as every day, every 6 months, etc.
+
+> Note: `tickSpacing` / `count` have no effect
+
+<Example name="time-scale-explicit" />
+
+### Time scale (explicit) with multiline ticks
+
+Specify explicit time intervals such as every day, every 6 months, etc with compact multiline representtion.
+
+> Note: `tickSpacing` / `count` have no effect
+
+<Example name="time-scale-explicit-multiline" />
+
+### Time scale (brush)
+
+<Example name="time-scale-brush" />
+
+### Time scale (brush) with multiline ticks
+
+<Example name="time-scale-brush-multiline" />
