@@ -107,7 +107,7 @@
     yearDays.map((date) => {
       const cellData = dataByDate.get(date) ?? { date };
       return {
-        x: timeWeek.count(timeYear(date), date) * cellSize[0],
+        x: timeWeek.count(start, date) * cellSize[0],
         y: date.getDay() * cellSize[1],
         color: ctx.config.c ? ctx.cGet(cellData) : 'transparent',
         data: cellData,
@@ -136,14 +136,19 @@
 
 {#if monthPath}
   {#each yearMonths as date}
-    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'lc-calendar-month-path')} />
+    <MonthPath
+      {date}
+      startOfRange={start}
+      {cellSize}
+      {...extractLayerProps(monthPath, 'lc-calendar-month-path')}
+    />
   {/each}
 {/if}
 
 {#if monthLabel}
   {#each yearMonths as date}
     <Text
-      x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
+      x={timeWeek.count(start, timeWeek.ceil(date)) * cellSize[0]}
       value={format(date, 'month', { variant: 'short' })}
       capHeight="7px"
       {...extractLayerProps(monthLabel, 'lc-calendar-month-label')}

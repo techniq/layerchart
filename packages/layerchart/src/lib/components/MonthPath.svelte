@@ -16,6 +16,11 @@
     cellSize: number | [number, number];
 
     /**
+     * The start date of the calendar (used to calculate week offsets).
+     */
+    startOfRange: Date;
+
+    /**
      * A bindable reference to the underlying `<path>` element.
      *
      * @bindable
@@ -38,6 +43,7 @@
   let {
     date,
     cellSize: cellSizeProp,
+    startOfRange,
     pathRef: pathRefProp = $bindable(),
     class: className,
     ...restProps
@@ -54,12 +60,12 @@
 
   // start of month
   const startDayOfWeek = $derived(date.getDay());
-  const startWeek = $derived(timeWeek.count(timeYear(date), date));
+  const startWeek = $derived(timeWeek.count(startOfRange, date));
 
   // end of month
   const monthEnd = $derived(endOfInterval('month', date));
   const endDayOfWeek = $derived(monthEnd.getDay());
-  const endWeek = $derived(timeWeek.count(timeYear(monthEnd), monthEnd));
+  const endWeek = $derived(timeWeek.count(startOfRange, monthEnd));
 
   const pathData = $derived(`
     M${(startWeek + 1) * cellSize[0]},${startDayOfWeek * cellSize[1]}

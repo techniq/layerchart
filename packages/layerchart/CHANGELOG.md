@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.42
+
+### Patch Changes
+
+- fix(Calendar): Respect `start` instead of always start of year ([#657](https://github.com/techniq/layerchart/pull/657))
+
 ## 2.0.0-next.41
 
 ### Patch Changes
