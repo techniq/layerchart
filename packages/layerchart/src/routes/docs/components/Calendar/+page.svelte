@@ -8,11 +8,17 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { shared } from '../../shared.svelte.js';
-  import { endOfInterval } from '@layerstack/utils';
+  import { endOfInterval, intervalOffset, startOfInterval } from '@layerstack/utils';
 
   const now = new Date();
   const firstDayOfYear = timeYear.floor(now);
   const lastDayOfYear = endOfInterval('year', now);
+
+  const previousMonth = intervalOffset('month', now, -1);
+  const firstDayOfPreviousMonth = startOfInterval('month', previousMonth);
+  const lastDayOfPreviousMonth = endOfInterval('month', previousMonth);
+
+  const ninetyDaysAgo = intervalOffset('day', now, -90);
 
   const data = createDateSeries({ count: 365 * 4, min: 10, max: 100, value: 'integer' }).map(
     (d) => {
@@ -284,6 +290,99 @@
               {/each}
             {/snippet}
           </Calendar>
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+
+            {#if data.value != null}
+              <Tooltip.List>
+                <Tooltip.Item
+                  label="value"
+                  value={data.value}
+                  format="integer"
+                  valueAlign="right"
+                />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Last month</h2>
+
+<Preview {data}>
+  <div class="h-[200px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
+      ]}
+      padding={{ top: 20 }}
+    >
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Calendar
+            start={firstDayOfPreviousMonth}
+            end={lastDayOfPreviousMonth}
+            tooltipContext={context.tooltip}
+            monthPath
+          />
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+
+            {#if data.value != null}
+              <Tooltip.List>
+                <Tooltip.Item
+                  label="value"
+                  value={data.value}
+                  format="integer"
+                  valueAlign="right"
+                />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </Chart>
+  </div>
+</Preview>
+
+<h2>90 days</h2>
+
+<Preview {data}>
+  <div class="h-[200px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
+      ]}
+      padding={{ top: 20 }}
+    >
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />
         </Layer>
 
         <Tooltip.Root>
