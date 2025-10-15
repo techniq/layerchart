@@ -32,8 +32,8 @@
   import Canvas from './Canvas.svelte';
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
+  import Frame from '../Frame.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
-  import { Frame } from '../index.js';
 
   let { type, children, ...restProps }: LayerProps = $props();
 
@@ -45,8 +45,8 @@
   <Canvas {...restProps as ComponentProps<typeof Canvas>}>
     {#snippet children(props)}
       {#if settings.debug}
-        <Frame class="fill-danger/5" />
-        <Frame class="fill-danger/5" full />
+        <Frame class="lc-debug-frame" />
+        <Frame class="lc-debug-frame" full />
       {/if}
 
       {@render children?.(props)}
@@ -56,8 +56,8 @@
   <Svg {...restProps as ComponentProps<typeof Svg>}>
     {#snippet children(props)}
       {#if settings.debug}
-        <Frame class="fill-danger/5" />
-        <Frame class="fill-danger/5" full />
+        <Frame class="lc-debug-frame" />
+        <Frame class="lc-debug-frame" full />
       {/if}
 
       {@render children?.(props)}
@@ -67,11 +67,19 @@
   <Html {...restProps as ComponentProps<typeof Html>}>
     {#snippet children(props)}
       {#if settings.debug}
-        <Frame class="fill-danger/5" />
-        <Frame class="fill-danger/5" full />
+        <Frame class="lc-debug-frame" />
+        <Frame class="lc-debug-frame" full />
       {/if}
 
       {@render children?.(props)}
     {/snippet}
   </Html>
 {/if}
+
+<style>
+  @layer component {
+    :global(:where(.lc-debug-frame)) {
+      --fill-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
+    }
+  }
+</style>
