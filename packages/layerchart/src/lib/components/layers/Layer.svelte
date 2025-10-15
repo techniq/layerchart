@@ -33,6 +33,7 @@
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
+  import { Frame } from '../index.js';
 
   let { type, children, ...restProps }: LayerProps = $props();
 
@@ -43,18 +44,33 @@
 {#if layer === 'canvas'}
   <Canvas {...restProps as ComponentProps<typeof Canvas>}>
     {#snippet children(props)}
+      {#if settings.debug}
+        <Frame class="fill-danger/5" />
+        <Frame class="fill-danger/5" full />
+      {/if}
+
       {@render children?.(props)}
     {/snippet}
   </Canvas>
 {:else if layer === 'svg'}
   <Svg {...restProps as ComponentProps<typeof Svg>}>
     {#snippet children(props)}
+      {#if settings.debug}
+        <Frame class="fill-danger/5" />
+        <Frame class="fill-danger/5" full />
+      {/if}
+
       {@render children?.(props)}
     {/snippet}
   </Svg>
 {:else if layer === 'html'}
   <Html {...restProps as ComponentProps<typeof Html>}>
     {#snippet children(props)}
+      {#if settings.debug}
+        <Frame class="fill-danger/5" />
+        <Frame class="fill-danger/5" full />
+      {/if}
+
       {@render children?.(props)}
     {/snippet}
   </Html>
