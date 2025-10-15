@@ -117,3 +117,15 @@ related: [components/Grid, components/Rule]
 ### Axis label placements (left / right)
 
 <Example name="axis-label-placement-left-right" />
+
+### Multiline tick labels with format (`\n`)
+
+<Example name="multiline-tick-labels" />
+
+### Multiple time axis with same placement (bottom)
+
+<Example name="multiple-axis-same-placement-bottom" />
+
+### Multiple time axis with same placement (right)
+
+<Example name="multiple-axis-same-placement-right" />

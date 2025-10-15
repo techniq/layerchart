@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { Axis, Chart, Frame, getSettings, Layer } from 'layerchart';
+	import { Axis, Chart, Layer } from 'layerchart';
 	import { timeDay } from 'd3-time';
 	import { startOfInterval } from '@layerstack/utils';
 
 	const today = startOfInterval('day', new Date());
-	const settings = getSettings();
 </script>
 
 <Chart
@@ -13,11 +12,6 @@
 	height={200}
 >
 	<Layer>
-		{#if settings.debug}
-			<Frame class="fill-danger/5" />
-			<Frame class="fill-danger/5" full />
-		{/if}
-
 		<Axis label="top start" placement="top" labelPlacement="start" rule />
 		<Axis label="top middle" placement="top" labelPlacement="middle" rule />
 		<Axis label="top end" placement="top" labelPlacement="end" rule />
