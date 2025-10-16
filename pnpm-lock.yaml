@@ -110,6 +110,12 @@ importers:
       d3-dsv:
         specifier: ^3.0.1
         version: 3.0.1
+      d3-geo:
+        specifier: ^3.1.1
+        version: 3.1.1
+      d3-hierarchy:
+        specifier: ^3.1.2
+        version: 3.1.2
       d3-interpolate:
         specifier: ^3.0.1
         version: 3.0.1
@@ -188,6 +194,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.14
+      topojson-client:
+        specifier: ^3.1.0
+        version: 3.1.0
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
