@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { NavItem } from 'svelte-ux';
-	import { group } from 'd3-array';
+	import { flatGroup } from 'd3-array';
 
 	import { allComponents } from 'content-collections';
 	import { page } from '$app/state';
 
 	let { onItemClick }: { onItemClick?: () => void } = $props();
 
-	const componentsBySection = group(allComponents, (d) => d.section);
+	const componentsBySection = flatGroup(allComponents, (d) => d.section).filter(
+		([section]) => section !== 'examples'
+	);
 </script>
 
 <nav class="flex flex-col gap-6">
