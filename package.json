@@ -6,7 +6,7 @@
   "type": "module",
   "homepage": "https://layerchart.com",
   "scripts": {
-    "dev": "pnpm --filter './packages/*' dev & pnpm --filter docs dev",
+    "dev": "pnpm package && pnpm --filter docs dev",
     "test:unit": "pnpm -r test:unit",
     "build:packages": "rimraf packages/*/dist && pnpm --filter './packages/*' build",
     "build:examples": "rimraf packages/*/dist && pnpm --filter './packages/*' package &&  pnpm --filter './examples/*' build",
