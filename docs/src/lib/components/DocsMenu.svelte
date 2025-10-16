@@ -4,12 +4,27 @@
 
 	import { allComponents } from 'content-collections';
 	import { page } from '$app/state';
+	import { sortFunc } from '@layerstack/utils';
 
 	let { onItemClick }: { onItemClick?: () => void } = $props();
 
-	const componentsBySection = flatGroup(allComponents, (d) => d.section).filter(
-		([section]) => section !== 'examples'
-	);
+	const sectionsOrder = [
+		'charts',
+		'common',
+		'primitives',
+		'marks',
+		'annotations',
+		'Interactions',
+		'geo',
+		'layout',
+		'fill',
+		'clippig',
+		'other'
+	];
+
+	const componentsBySection = flatGroup(allComponents, (d) => d.section)
+		.filter(([section]) => section !== 'examples')
+		.sort(sortFunc(([section]) => sectionsOrder.indexOf(section)));
 </script>
 
 <nav class="flex flex-col gap-6">
