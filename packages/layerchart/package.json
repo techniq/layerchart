@@ -7,10 +7,12 @@
   "homepage": "https://layerchart.com",
   "version": "2.0.0-next.42",
   "scripts": {
-    "dev": "vite dev --port 3002",
+    "dev": "pnpm package:watch",
+    "dev:svelte": "vite dev --port 3002",
     "build": "vite build",
     "preview": "vite preview",
     "package": "svelte-package",
+    "package:watch": "svelte-package --watch",
     "prepublishOnly": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
