@@ -2,12 +2,9 @@
 	import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
 
 	const radius = 50;
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<Chart height={400}>
+<Chart height={220}>
 	<Layer>
 		<RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
 			{#snippet children({ gradient })}

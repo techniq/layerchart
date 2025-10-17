@@ -2,12 +2,9 @@
 	import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
 
 	const radius = 50;
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<Chart height={400}>
+<Chart height={220}>
 	<Layer>
 		<RadialGradient id="tw-1" class="from-pink-500 to-yellow-500" />
 		<RadialGradient id="tw-2" class="from-green-300 to-purple-600" />
@@ -19,7 +16,12 @@
 		<RadialGradient id="tw-8" class="from-red-500 to-red-800" />
 		<RadialGradient id="tw-9" class="from-blue-400 to-emerald-400" />
 		{#each { length: 9 } as _, i}
-			<Circle cx={radius + i * 120} cy={radius} r={radius} fill="url(#tw-{i + 1})" />
+			<Circle
+				cx={radius + 120 * (i % 5)}
+				cy={radius + 120 * Math.floor(i / 5)}
+				r={radius}
+				fill="url(#tw-{i + 1})"
+			/>
 		{/each}
 	</Layer>
 </Chart>

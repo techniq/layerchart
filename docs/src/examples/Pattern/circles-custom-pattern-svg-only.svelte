@@ -1,12 +1,8 @@
 <script lang="ts">
 	import { Chart, Layer, Pattern } from 'layerchart';
-
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<Chart height={400}>
+<Chart height={300}>
 	<Layer>
 		<Pattern id="circle-pattern-1" width={4} height={4}>
 			{#snippet patternContent()}

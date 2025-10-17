@@ -1,12 +1,8 @@
 <script lang="ts">
 	import { Chart, Layer, LinearGradient, Rect } from 'layerchart';
-
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<Chart height={400}>
+<Chart height={300}>
 	<Layer>
 		<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
 			{#snippet children({ gradient })}
