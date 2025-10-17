@@ -73,3 +73,9 @@ export const getPenguins = prerender(async () => {
 	)) as PenguinsData;
 	return data;
 });
+
+export const getFlare = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json());
+	return data;
+});

@@ -10,6 +10,14 @@ related: [examples/Treemap]
 
 ## Examples
 
+### Playground
+
+<Example name="playground" />
+
+### Complex
+
+<Example name="complex" />
+
 ### Basic
 
 <Example name="basic" />
