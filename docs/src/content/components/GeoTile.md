@@ -1,8 +1,8 @@
 ---
 description: GeoTile
 section: geo
-layers: ["svg", "canvas"]
-related: ["examples/GeoTile", "examples/ZoomableTileMap"]
+layers: ['svg', 'canvas']
+related: ['examples/GeoTile', 'examples/ZoomableTileMap']
 ---
 
 <script lang="ts">

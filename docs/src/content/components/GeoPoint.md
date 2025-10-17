@@ -1,8 +1,8 @@
 ---
-description: GeoPoint 
+description: GeoPoint
 section: geo
-layers: ["svg", "canvas"]
-related: ["examples/GeoPoint"]
+layers: ['svg', 'canvas']
+related: ['examples/GeoPoint']
 ---
 
 <script lang="ts">

@@ -1,8 +1,8 @@
 ---
-description: TileImage 
+description: TileImage
 section: geo
-layers: ["svg", "canvas"]
-related: ["components/GeoTile"]
+layers: ['svg', 'canvas']
+related: ['components/GeoTile']
 ---
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 ---
 description: Blur
 section: other
-layers: ["svg"]
+layers: ['svg']
 related: []
 ---
 

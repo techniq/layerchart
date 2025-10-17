@@ -1,8 +1,8 @@
 ---
 description: Bounds
 section: other
-layers: ["svg", "canvas"]
-related: ["examples/Partition", "examples/Sunburst", "examples/Treemap"]
+layers: ['svg', 'canvas']
+related: ['examples/Partition', 'examples/Sunburst', 'examples/Treemap']
 ---
 
 <script lang="ts">

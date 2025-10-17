@@ -1,8 +1,8 @@
 ---
 description: GeoSpline
 section: geo
-layers: ["svg", "canvas"]
-related: ["examples/LoftedArcs"]
+layers: ['svg', 'canvas']
+related: ['examples/LoftedArcs']
 ---
 
 <script lang="ts">

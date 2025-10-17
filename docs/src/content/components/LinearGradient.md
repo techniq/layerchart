@@ -1,8 +1,8 @@
 ---
 description: Linear Gradient
 section: fill
-layers: ["svg", "canvas", "html"]
-related: ["components/RadialGradient", "components/Pattern"]
+layers: ['svg', 'canvas', 'html']
+related: ['components/RadialGradient', 'components/Pattern']
 ---
 
 <script lang="ts">

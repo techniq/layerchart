@@ -1,8 +1,8 @@
 ---
 description: Pattern
 section: fill
-layers: ["svg", "canvas"]
-related: ["components/LinearGradient", "components/RadialGradient"]
+layers: ['svg', 'canvas']
+related: ['components/LinearGradient', 'components/RadialGradient']
 ---
 
 <script lang="ts">

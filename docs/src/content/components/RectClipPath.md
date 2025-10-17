@@ -1,8 +1,8 @@
 ---
 description: Rectangular Clip Path
 section: clipping
-layers: ["svg"]
-related: ["components/ChartClipPath", "examples/Partition", "examples/Treemap"]
+layers: ['svg']
+related: ['components/ChartClipPath', 'examples/Partition', 'examples/Treemap']
 ---
 
 <script lang="ts">

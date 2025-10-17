@@ -1,7 +1,7 @@
 ---
 description: Ramp in a color space
 section: other
-layers: ["svg"]
+layers: ['svg']
 related: []
 ---
 

@@ -1,7 +1,7 @@
 ---
 description: Circular Clip Path
 section: clipping
-layers: ["svg"]
+layers: ['svg']
 related: []
 ---
 
