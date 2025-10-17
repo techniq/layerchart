@@ -253,26 +253,29 @@
 		)}
 	>
 		<DocsMenu />
-
-		<div class="bg-surface-300 absolute bottom-0 left-0 right-0 h-14 border-t px-3">
-			<!-- Placeholder for toggle button -->
-		</div>
 	</aside>
 
-	<Button
-		onclick={() => (showSidebar = !showSidebar)}
-		iconOnly
+	<div
 		class={cls(
-			'fixed max-lg:hidden transition-[left] bottom-3',
-			showSidebar ? 'left-50' : 'left-1'
+			'fixed bottom-0 left-0 right-0 h-14 px-3 transition-[width]',
+			showSidebar ? 'w-62 bg-surface-300 border-t' : 'w-0'
 		)}
 	>
-		{#if showSidebar}
-			<LucidePanelLeftClose />
-		{:else}
-			<LucidePanelLeftOpen />
-		{/if}
-	</Button>
+		<Button
+			onclick={() => (showSidebar = !showSidebar)}
+			iconOnly
+			class={cls(
+				'fixed max-lg:hidden transition-[left] bottom-3',
+				showSidebar ? 'left-50' : 'left-1'
+			)}
+		>
+			{#if showSidebar}
+				<LucidePanelLeftClose />
+			{:else}
+				<LucidePanelLeftOpen />
+			{/if}
+		</Button>
+	</div>
 
 	<Drawer
 		bind:open={showDrawer}
