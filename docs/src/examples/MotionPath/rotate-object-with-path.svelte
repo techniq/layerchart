@@ -26,39 +26,37 @@
 	);
 
 	export { data };
+
+	let show = $state(true);
 </script>
 
-<Toggle on let:on={show} let:toggle>
-	<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
-		<Field label="Show" let:id>
-			<Switch checked={show} on:change={toggle} {id} size="md" />
-		</Field>
-		<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-		<CurveMenuField bind:value={curve} />
-		<RangeField label="Points" bind:value={pointCount} min={2} />
-	</div>
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4">
+	<Field label="Show" let:id>
+		<Switch bind:checked={show} {id} size="md" />
+	</Field>
+	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+	<CurveMenuField bind:value={curve} />
+	<RangeField label="Points" bind:value={pointCount} min={2} />
+</div>
 
-	<div class="h-[300px] p-4 border rounded-sm">
-		<Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={400}>
-			<Layer>
-				<Axis placement="left" grid rule />
-				<Axis placement="bottom" rule />
-				{#if show}
-					<MotionPath duration="5s" repeatCount="indefinite" rotate="auto">
-						{#snippet children({ pathId, objectId })}
-							<Spline id={pathId} {curve} />
-							<rect
-								id={objectId}
-								x={-10}
-								y={-10}
-								width={20}
-								height={20}
-								class="fill-surface-100 stroke-surface-content"
-							/>
-						{/snippet}
-					</MotionPath>
-				{/if}
-			</Layer>
-		</Chart>
-	</div>
-</Toggle>
+<Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={300}>
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		{#if show}
+			<MotionPath duration="5s" repeatCount="indefinite" rotate="auto">
+				{#snippet children({ pathId, objectId })}
+					<Spline id={pathId} {curve} />
+					<rect
+						id={objectId}
+						x={-10}
+						y={-10}
+						width={20}
+						height={20}
+						class="fill-surface-100 stroke-surface-content"
+					/>
+				{/snippet}
+			</MotionPath>
+		{/if}
+	</Layer>
+</Chart>

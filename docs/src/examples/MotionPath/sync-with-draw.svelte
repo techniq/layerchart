@@ -7,7 +7,6 @@
 
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
-	import Blockquote from '$lib/components/Blockquote.svelte';
 
 	let pointCount = $state(100);
 
@@ -28,39 +27,32 @@
 	);
 
 	export { data };
+
+	let show = $state(true);
 </script>
 
-<Toggle on let:on={show} let:toggle>
-	<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
-		<Field label="Show" let:id>
-			<Switch checked={show} on:change={toggle} {id} size="md" />
-		</Field>
-		<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-		<CurveMenuField bind:value={curve} />
-		<RangeField label="Points" bind:value={pointCount} min={2} />
-	</div>
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
+	<Field label="Show" let:id>
+		<Switch bind:checked={show} {id} size="md" />
+	</Field>
+	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+	<CurveMenuField bind:value={curve} />
+	<RangeField label="Points" bind:value={pointCount} min={2} />
+</div>
 
-	<div class="h-[300px] p-4 border rounded-sm">
-		<Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={400}>
-			<Layer>
-				<Axis placement="left" grid rule />
-				<Axis placement="bottom" rule />
-				{#if show}
-					{#key data}
-						<MotionPath duration="3s">
-							{#snippet children({ pathId, objectId })}
-								<Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-								<Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
-							{/snippet}
-						</MotionPath>
-					{/key}
-				{/if}
-			</Layer>
-		</Chart>
-	</div>
-</Toggle>
-
-<Blockquote>
-	Because the draw transition and `animateMotion` using different timers, there is no guarantee they
-	will start at the same time
-</Blockquote>
+<Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={300}>
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		{#if show}
+			{#key data}
+				<MotionPath duration="3s">
+					{#snippet children({ pathId, objectId })}
+						<Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
+						<Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+					{/snippet}
+				</MotionPath>
+			{/key}
+		{/if}
+	</Layer>
+</Chart>
