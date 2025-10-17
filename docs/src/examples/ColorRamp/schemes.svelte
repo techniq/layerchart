@@ -10,13 +10,9 @@
 	const schemes = Object.entries(d3chromatic).filter(([key, value]) =>
 		key.startsWith('scheme')
 	) as unknown as Array<[name: string, scheme: string[]]>;
-
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<div class="grid gap-4">
+<div class="grid gap-4 h-100">
 	{#each schemes as [name, scheme]}
 		{#if typeof scheme[0] === 'string'}
 			<div>

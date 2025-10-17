@@ -16,18 +16,14 @@
 	interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
 	interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
 	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
-
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<div class="inline-flex gap-3 items-center mb-1 ml-4">
+<div class="inline-flex gap-3 items-center mb-4">
 	<span class="text-sm text-surface-content/50">Steps:</span>
-	<NumberStepper bind:value={steps} />
+	<NumberStepper bind:value={steps} dense />
 </div>
 
-<div class="grid gap-4">
+<div class="grid gap-4 h-100">
 	{#each interpolators as [name, interpolator]}
 		<div>
 			<div class="text-sm">{name}</div>

@@ -14,13 +14,9 @@
 	interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
 	interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
 	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
-
-	const data = $derived([]);
-
-	export { data };
 </script>
 
-<div class="grid gap-4">
+<div class="grid gap-4 h-100">
 	{#each interpolators as [name, interpolator]}
 		<div>
 			<div class="text-sm">{name}</div>
@@ -29,4 +25,5 @@
 			</svg>
 		</div>
 	{/each}
+	<div class="h-1"></div>
 </div>
