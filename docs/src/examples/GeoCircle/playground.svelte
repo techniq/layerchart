@@ -88,7 +88,6 @@
 		projection,
 		fitGeojson: geojson
 	}}
-	padding={{ left: 100, right: 100 }}
 	height={600}
 >
 	<Layer>
