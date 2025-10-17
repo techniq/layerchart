@@ -25,4 +25,4 @@
 	let { metadata, children }: { metadata: any; children: Snippet } = $props();
 </script>
 
-{@render children()}
+{@render children?.()}
