@@ -19,7 +19,7 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 
-import type { GeoContextValue } from '$lib/contexts/geo.js';
+import type { GeoState } from '$lib/contexts/geo.js';
 import type { TransformContextValue } from '$lib/contexts/transform.js';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type { BrushContextValue } from '$lib/components/BrushContext.svelte';
@@ -43,7 +43,7 @@ export class ChartState<
   props = $derived(this._propsGetter());
 
   // Context references
-  geoContext = $state<GeoContextValue>(null!);
+  geoContext = $state<GeoState>(null!);
   transformContext = $state<TransformContextValue>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
   brushContext = $state<BrushContextValue>(null!);
