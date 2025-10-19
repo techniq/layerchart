@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
-
 	import type { HighlightPropsWithoutHTML, TooltipContextProps } from 'layerchart';
+	import { cls } from '@layerstack/tailwind';
 
 	let {
-		settings = $bindable()
+		settings = $bindable(),
+		class: className
 	}: {
 		settings: {
 			mode: TooltipContextProps['mode'];
@@ -14,10 +15,11 @@
 			snapToDataY: boolean;
 			debug: TooltipContextProps['debug'];
 		};
+		class?: string;
 	} = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_120px_120px_64px] gap-2 mb-2">
+<div class={cls('grid grid-cols-[1fr_1fr_120px_120px_64px] gap-2 mb-4', className)}>
 	<MenuField
 		label="Mode"
 		bind:value={settings.mode}

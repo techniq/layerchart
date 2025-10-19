@@ -29,7 +29,7 @@
 	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="grid grid-cols-3 gap-2 mb-4">
 	<Toggle let:on={open} let:toggle>
 		<Field label="Anchor" class="cursor-pointer" on:click={toggle}>
 			<span class="text-sm">

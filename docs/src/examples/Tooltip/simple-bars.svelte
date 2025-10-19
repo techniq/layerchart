@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Bars, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
+	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/genData.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 	import type { ComponentProps } from 'svelte';
@@ -12,22 +12,19 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-
-	let charts = $state({
-		bars: {
-			mode: 'band',
-			highlight: ['area'],
-			axis: undefined,
-			snapToDataX: false,
-			snapToDataY: false,
-			debug: false
-		}
-	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
-
 	export { data };
+
+	let settings = $state({
+		mode: 'band',
+		highlight: ['area'],
+		axis: undefined,
+		snapToDataX: false,
+		snapToDataY: false,
+		debug: false
+	}) as ComponentProps<typeof TooltipControls>['settings'];
 </script>
 
-<TooltipControls bind:settings={charts.bars} />
+<TooltipControls bind:settings />
 <Chart
 	{data}
 	x="date"
@@ -37,8 +34,8 @@
 	yNice
 	padding={{ left: 16, bottom: 24 }}
 	tooltip={{
-		mode: 'band',
-		debug: false
+		mode: settings.mode,
+		debug: settings.debug
 	}}
 	height={300}
 >
@@ -46,9 +43,17 @@
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 		<Bars radius={4} strokeWidth={1} class="fill-primary" />
-		<Highlight points={false} lines={false} area={true} bar={false} axis={undefined} />
+		<Highlight
+			points={settings.highlight.includes('points')}
+			lines={settings.highlight.includes('lines')}
+			area={settings.highlight.includes('area')}
+			axis={settings.axis}
+		/>
 	</Layer>
-	<Tooltip.Root x="pointer" y="pointer">
+	<Tooltip.Root
+		x={settings.snapToDataX ? 'data' : 'pointer'}
+		y={settings.snapToDataY ? 'data' : 'pointer'}
+	>
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />
 			<Tooltip.List>
