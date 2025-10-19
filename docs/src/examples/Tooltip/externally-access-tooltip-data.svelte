@@ -16,7 +16,7 @@
 	export { data };
 </script>
 
-<div class="text-sm">
+<div class="text-sm mb-4">
 	{#if context}
 		{#if context.tooltip.data}
 			date: {format(context.tooltip.data.date, 'day', { variant: 'short' })}
