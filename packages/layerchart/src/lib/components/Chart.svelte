@@ -589,12 +589,10 @@
   let {
     ssr = false,
     pointerEvents = true,
-    width: widthProp,
-    height: heightProp,
+    width,
+    height,
     position = 'relative',
-    yRange: _yRangeProp,
-    children: _children,
-    xRange: _xRangeProp,
+    children,
     geo,
     tooltip,
     transform,
@@ -611,19 +609,15 @@
   }));
 
   let ref = $state<HTMLElement>();
-
   $effect.pre(() => {
     refProp = ref;
     chartState.containerRef = ref;
   });
 
+  // Update bindable
   contextProp = chartState;
 
   setChartContext(chartState);
-
-  $effect(() => {
-    chartState.isMounted = true;
-  });
 
   const initialTransform = $derived(
     geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
@@ -667,8 +661,8 @@
     style:bottom={position === 'absolute' ? 0 : null}
     style:left={position === 'absolute' ? 0 : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
-    style:width={widthProp ? `${widthProp}px` : '100%'}
-    style:height={heightProp ? `${heightProp}px` : '100%'}
+    style:width={width ? `${width}px` : '100%'}
+    style:height={height ? `${height}px` : '100%'}
     bind:clientWidth={chartState._containerWidth}
     bind:clientHeight={chartState._containerHeight}
     class="lc-root-container"
@@ -692,7 +686,7 @@
           <BrushContext {...brushProps} bind:brushContext={chartState.brushContext}>
             <!-- svelte-ignore ownership_invalid_binding -->
             <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
-              {@render _children?.({
+              {@render children?.({
                 context: chartState,
               })}
             </TooltipContext>

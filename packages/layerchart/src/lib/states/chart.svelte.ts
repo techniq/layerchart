@@ -66,6 +66,11 @@ export class ChartState<
 
     const logDebug = useDebounce(printDebug, 200);
 
+    // Set mounted state once component initializes
+    $effect(() => {
+      this.isMounted = true;
+    });
+
     // Call onResize callback when dimensions change
     $effect(() => {
       if (!this.isMounted) return;
