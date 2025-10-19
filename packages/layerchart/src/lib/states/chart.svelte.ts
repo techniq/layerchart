@@ -35,8 +35,11 @@ export class ChartState<
   XScale extends AnyScale = AnyScale,
   YScale extends AnyScale = AnyScale,
 > {
-  // Props - initialized via constructor parameter
-  props!: ChartPropsWithoutHTML<TData, XScale, YScale>;
+  // Props getter function - set in constructor
+  private _propsGetter!: () => ChartPropsWithoutHTML<TData, XScale, YScale>;
+
+  // Props - accessed via getter function for fine-grained reactivity
+  props = $derived(this._propsGetter());
 
   // Context references
   geoContext = $state<GeoContextValue>(null!);
@@ -57,9 +60,10 @@ export class ChartState<
   // Meta data (mutable from context)
   meta = $state<Record<string, any>>({});
 
-  constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
-    this.props = props;
-    this.meta = props.meta ?? {};
+  constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
+    this._propsGetter = propsGetter;
+    const initialProps = propsGetter();
+    this.meta = initialProps.meta ?? {};
   }
 
   // Use $derived fields instead of getters for caching
@@ -442,27 +446,29 @@ export class ChartState<
     return this.transformContext;
   }
 
-  config = $derived({
-    x: this.props.x,
-    y: this.props.y,
-    z: this.props.z,
-    r: this.props.r,
-    c: this.props.c,
-    x1: this.props.x1,
-    y1: this.props.y1,
-    xDomain: this._xDomain,
-    yDomain: this._yDomain,
-    zDomain: this.props.zDomain,
-    rDomain: this.props.rDomain,
-    x1Domain: this.props.x1Domain,
-    y1Domain: this.props.y1Domain,
-    cDomain: this.props.cDomain,
-    xRange: this.props.xRange,
-    yRange: this.props.yRange,
-    zRange: this.props.zRange,
-    rRange: this.props.rRange,
-    cRange: this.props.cRange,
-    x1Range: this.props.x1Range,
-    y1Range: this.props.y1Range,
-  });
+  get config() {
+    return {
+      x: this.props.x,
+      y: this.props.y,
+      z: this.props.z,
+      r: this.props.r,
+      c: this.props.c,
+      x1: this.props.x1,
+      y1: this.props.y1,
+      xDomain: this._xDomain,
+      yDomain: this._yDomain,
+      zDomain: this.props.zDomain,
+      rDomain: this.props.rDomain,
+      x1Domain: this.props.x1Domain,
+      y1Domain: this.props.y1Domain,
+      cDomain: this.props.cDomain,
+      xRange: this.props.xRange,
+      yRange: this.props.yRange,
+      zRange: this.props.zRange,
+      rRange: this.props.rRange,
+      cRange: this.props.cRange,
+      x1Range: this.props.x1Range,
+      y1Range: this.props.y1Range,
+    };
+  }
 }

@@ -636,11 +636,11 @@
     brush,
   } = $derived(props);
 
-  const chartState = new ChartState<TData, XScale, YScale>({
+  const chartState = new ChartState<TData, XScale, YScale>(() => ({
     ref: refProp,
     context: contextProp,
     ...props,
-  });
+  }));
 
   let ref = $state<HTMLElement>();
 
