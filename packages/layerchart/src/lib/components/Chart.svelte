@@ -1,53 +1,29 @@
 <script lang="ts" module>
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
-  import { scaleOrdinal, scaleSqrt } from 'd3-scale';
   import type { TimeInterval } from 'd3-time';
-  import { extent, max, min } from 'd3-array';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
   import { useDebounce } from 'runed';
-  import { unique } from '@layerstack/utils';
 
-  import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
+  import { type Accessor } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
-  import { filterObject } from '$lib/utils/filterObject.js';
-  import {
-    autoScale,
-    createScale,
-    getRange,
-    isScaleBand,
-    isScaleTime,
-    makeAccessor,
-    type AnyScale,
-    type DomainType,
-  } from '$lib/utils/scales.svelte.js';
+  import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
-    Extents,
     Nice,
     PaddingArray,
     XRangeWithScale,
     YRangeWithScale,
   } from '$lib/utils/types.js';
-  import {
-    calcDomain,
-    calcScaleExtents,
-    createGetter,
-    createChartScale,
-  } from '$lib/utils/chart.js';
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './tooltip/TooltipContext.svelte';
-  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
-  import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
+  import BrushContext from './BrushContext.svelte';
 
   import { setChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
-  import { type GeoContextValue } from '$lib/contexts/geo.js';
-  import { type TransformContextValue } from '$lib/contexts/transform.js';
-
-  const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
+  import { ChartState } from 'layerchart/states/chart.svelte.js';
 
   export type ChartResizeDetail = {
     width: number;
@@ -607,23 +583,23 @@
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
   let {
+    ref: refProp = $bindable(),
+    context: contextProp = $bindable(),
+    ...props
+  }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
+
+  let {
     ssr = false,
     pointerEvents = true,
     width: widthProp,
     height: heightProp,
     position = 'relative',
     percentRange = false,
-    ref: refProp = $bindable(),
     x: xProp,
     y: yProp,
     z: zProp,
     r: rProp,
     data = [],
-    flatData: flatDataProp,
-    xDomain: xDomainProp,
-    yDomain: yDomainProp,
-    zDomain: zDomainProp,
-    rDomain: rDomainProp,
     xNice = false,
     yNice = false,
     zNice = false,
@@ -632,17 +608,7 @@
     yPadding,
     zPadding,
     rPadding,
-    // @ts-expect-error shh
-    xScale: xScaleProp = autoScale(xDomainProp, flatDataProp ?? data, xProp),
-    // @ts-expect-error shh
-    yScale: yScaleProp = autoScale(yDomainProp, flatDataProp ?? data, yProp),
-    // @ts-expect-error shh
-    zScale: zScaleProp = autoScale(zDomainProp, flatDataProp ?? data, zProp),
-    rScale: rScaleProp = scaleSqrt(),
-    padding: paddingProp = {},
-    verbose = true,
     debug = false,
-    extents: extentsProp = {},
     xDomainSort = false,
     yDomainSort = false,
     zDomainSort = false,
@@ -651,38 +617,30 @@
     zReverse = false,
     rReverse = false,
     yRange: _yRangeProp,
-    zRange: zRangeProp,
-    rRange: rRangeProp,
-    xBaseline = null,
-    yBaseline = null,
     xInterval = null,
     yInterval = null,
     meta = {},
     children: _children,
     radial = false,
     xRange: _xRangeProp,
-    x1: x1Prop,
-    x1Domain: x1DomainProp,
     x1Range: x1RangeProp,
-    x1Scale: x1ScaleProp,
-    y1: y1Prop,
-    y1Domain: y1DomainProp,
     y1Range: y1RangeProp,
-    y1Scale: y1ScaleProp,
-    c: cProp,
-    cScale: cScaleProp,
-    cDomain: cDomainProp,
     cRange: cRangeProp,
     onResize,
     geo,
-    context: contextProp = $bindable(),
     tooltip,
     transform,
     onTransform,
     ondragend,
     ondragstart,
     brush,
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
+  } = $derived(props);
+
+  const chartState = new ChartState<TData, XScale, YScale>({
+    ref: refProp,
+    context: contextProp,
+    ...props,
+  });
 
   let ref = $state<HTMLElement>();
 
@@ -690,361 +648,53 @@
     refProp = ref;
   });
 
-  const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
-
-  // Measured dimensions of the container
-  let _containerWidth = $state(100);
-  let _containerHeight = $state(100);
-
-  let containerWidth = $derived(widthProp ?? _containerWidth);
-  let containerHeight = $derived(heightProp ?? _containerHeight);
-
   const logDebug = useDebounce(printDebug, 200);
-
-  const _xDomain: DomainType | undefined = $derived.by(() => {
-    if (xDomainProp !== undefined) return xDomainProp;
-
-    if (xInterval != null && Array.isArray(data) && data.length > 0) {
-      const lastXValue = accessor(xProp)(data[data.length - 1]);
-      return [null, xInterval.offset(lastXValue)];
-    }
-
-    if (xBaseline != null && Array.isArray(data)) {
-      const xValues = data.flatMap(accessor(xProp));
-      return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
-    }
-  });
-
-  const _yDomain: DomainType | undefined = $derived.by(() => {
-    if (yDomainProp !== undefined) return yDomainProp;
-
-    if (yInterval != null && Array.isArray(data) && data.length > 0) {
-      const lastYValue = accessor(yProp)(data[data.length - 1]);
-      return [null, yInterval.offset(lastYValue)];
-    }
-
-    if (yBaseline != null && Array.isArray(data)) {
-      const yValues = data.flatMap(accessor(yProp));
-      return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
-    }
-  });
-
-  const yRangeProp = $derived(
-    _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
-  );
-
-  const yReverse = $derived(
-    yScaleProp ? !isScaleBand(yScaleProp) && !isScaleTime(yScaleProp) : true
-  );
-
-  const x = $derived(makeAccessor(xProp));
-  const y = $derived(makeAccessor(yProp));
-  const z = $derived(makeAccessor(zProp));
-  const r = $derived(makeAccessor(rProp));
-  const c = $derived(accessor(cProp));
-  const x1 = $derived(accessor(x1Prop));
-  const y1 = $derived(accessor(y1Prop));
-
-  const flatData = $derived(flatDataProp ?? data) as TData[];
-
-  const filteredExtents = $derived(filterObject($state.snapshot(extentsProp)));
-
-  const activeGetters = $derived({
-    x,
-    y,
-    z,
-    r,
-  });
-
-  const padding = $derived.by(() => {
-    if (typeof paddingProp === 'number') {
-      return {
-        ...defaultPadding,
-        top: paddingProp,
-        right: paddingProp,
-        bottom: paddingProp,
-        left: paddingProp,
-      };
-    }
-    return { ...defaultPadding, ...paddingProp };
-  });
-
-  let isMounted = $state(false);
-
-  const box = $derived.by(() => {
-    const top = padding.top;
-    const right = containerWidth - padding.right;
-    const bottom = containerHeight - padding.bottom;
-    const left = padding.left;
-    const width = right - left;
-    const height = bottom - top;
-    if (verbose === true) {
-      if (width <= 0 && isMounted === true) {
-        console.warn(
-          `[LayerChart] Target div has zero or negative width (${width}). Did you forget to set an explicit width in CSS on the container?`
-        );
-      }
-      if (height <= 0 && isMounted === true) {
-        console.warn(
-          `[LayerChart] Target div has zero or negative height (${height}). Did you forget to set an explicit height in CSS on the container?`
-        );
-      }
-    }
-
-    return {
-      top,
-      left,
-      bottom,
-      right,
-      width,
-      height,
-    };
-  });
-
-  const width = $derived(box.width);
-  const height = $derived(box.height);
-
-  interface ScaleEntry {
-    scale: AnyScale;
-    sort?: boolean;
-  }
-
-  /* --------------------------------------------
-   * Calculate extents by taking the extent of the data
-   * and filling that in with anything set by the user
-   * Note that this is different from an "extent" passed
-   * in as a domain, which can be a partial domain
-   */
-  const extents: Extents = $derived.by(() => {
-    const scaleLookup: Record<string, ScaleEntry> = {
-      x: { scale: xScaleProp, sort: xDomainSort },
-      y: { scale: yScaleProp, sort: yDomainSort },
-      z: { scale: zScaleProp, sort: zDomainSort },
-      r: { scale: rScaleProp, sort: rDomainSort },
-    };
-
-    const getters = filterObject(activeGetters, filteredExtents);
-    const activeScales: Record<string, ScaleEntry> = Object.fromEntries(
-      Object.keys(getters).map((k) => [k, scaleLookup[k]])
-    );
-
-    if (Object.keys(getters).length > 0) {
-      const calculatedExtents = calcScaleExtents(flatData, getters, activeScales);
-      return { ...calculatedExtents, ...filteredExtents };
-    } else {
-      return {};
-    }
-  });
-
-  const xDomain = $derived(calcDomain('x', extents, _xDomain));
-  const yDomain = $derived(calcDomain('y', extents, _yDomain));
-  const zDomain = $derived(calcDomain('z', extents, zDomainProp));
-  const rDomain = $derived(calcDomain('r', extents, rDomainProp));
-
-  const x1Domain = $derived(x1DomainProp ?? extent(chartDataArray(data), x1));
-  const y1Domain = $derived(y1DomainProp ?? extent(chartDataArray(data), y1));
-  const cDomain = $derived(cDomainProp ?? unique(chartDataArray(data).map(c)));
-
-  const snappedPadding = $derived($state.snapshot(xPadding));
-  const snappedExtents = $derived($state.snapshot(extents));
-
-  const xScale = $derived(
-    createChartScale('x', {
-      scale: xScaleProp,
-      domain: xDomain,
-      padding: snappedPadding,
-      nice: xNice,
-      reverse: xReverse,
-      percentRange,
-      range: xRangeProp,
-      height,
-      width,
-      extents: snappedExtents,
-    })
-  );
-
-  const xGet = $derived(createGetter(x, xScale));
-
-  const yScale = $derived(
-    createChartScale('y', {
-      scale: yScaleProp,
-      domain: yDomain,
-      padding: yPadding,
-      nice: yNice,
-      reverse: yReverse,
-      percentRange,
-      range: yRangeProp,
-      height,
-      width,
-      extents: filteredExtents,
-    })
-  );
-
-  const yGet = $derived(createGetter(y, yScale));
-
-  const zScale = $derived(
-    createChartScale('z', {
-      scale: zScaleProp,
-      domain: zDomain,
-      padding: zPadding,
-      nice: zNice,
-      reverse: zReverse,
-      percentRange,
-      range: zRangeProp,
-      height,
-      width,
-      extents: filteredExtents,
-    })
-  );
-  const zGet = $derived(createGetter(z, zScale));
-
-  const rScale = $derived(
-    createChartScale('r', {
-      scale: rScaleProp,
-      domain: rDomain,
-      padding: rPadding,
-      nice: rNice,
-      reverse: rReverse,
-      percentRange,
-      range: rRangeProp,
-      height,
-      width,
-      extents: filteredExtents,
-    })
-  );
-
-  const rGet = $derived(createGetter(r, rScale));
-
-  const x1Scale = $derived(
-    x1RangeProp
-      ? createScale(
-          // @ts-expect-error shh
-          x1ScaleProp ?? autoScale(x1DomainProp, flatDataProp ?? data, x1Prop),
-          x1Domain,
-          x1RangeProp,
-          {
-            xScale,
-            width,
-            height,
-          }
-        )
-      : null
-  );
-
-  const x1Get = $derived(createGetter(x1, x1Scale));
-
-  const y1Scale = $derived(
-    y1RangeProp
-      ? createScale(
-          // @ts-expect-error shh
-          y1ScaleProp ?? autoScale(y1DomainProp, flatDataProp ?? data, y1Prop),
-          y1Domain,
-          y1RangeProp,
-          {
-            yScale,
-            width,
-            height,
-          }
-        )
-      : null
-  );
-
-  const y1Get = $derived(createGetter(y1, y1Scale));
-
-  const cScale = $derived(
-    cRangeProp
-      ? createScale(cScaleProp ?? scaleOrdinal(), cDomain, cRangeProp, { width, height })
-      : null
-  );
-
-  const cGet = $derived((d: any) => cScale?.(c(d)));
-
-  const xDomainPossiblyNice = $derived(xScale.domain());
-  const yDomainPossiblyNice = $derived(yScale.domain());
-  const zDomainPossiblyNice = $derived(zScale.domain());
-  const rDomainPossiblyNice = $derived(rScale.domain());
-
-  const xRange = $derived(getRange(xScale));
-  const yRange = $derived(getRange(yScale));
-  const zRange = $derived(getRange(zScale));
-  const rRange = $derived(getRange(rScale));
-
-  const aspectRatio = $derived(width / height);
-
-  const config: PreservedChartConfig<TData, XScale, YScale> = $derived({
-    x: xProp,
-    y: yProp,
-    z: zProp,
-    r: rProp,
-    c: cProp,
-    x1: x1Prop,
-    y1: y1Prop,
-    xDomain: _xDomain,
-    yDomain: _yDomain,
-    zDomain: zDomainProp,
-    rDomain: rDomainProp,
-    x1Domain: x1DomainProp,
-    y1Domain: y1DomainProp,
-    cDomain: cDomainProp,
-    xRange: _xRangeProp,
-    yRange: _yRangeProp,
-    zRange: zRangeProp,
-    rRange: rRangeProp,
-    cRange: cRangeProp,
-    x1Range: x1RangeProp,
-    y1Range: y1RangeProp,
-  });
-
-  let geoContext = $state<GeoContextValue>(null!);
-  let transformContext = $state<TransformContextValue>(null!);
-  let tooltipContext = $state<TooltipContextValue>(null!);
-  let brushContext = $state<BrushContextValue>(null!);
 
   const context: ChartContextValue<TData, XScale, YScale> = {
     get activeGetters() {
-      return activeGetters;
+      return chartState.activeGetters;
     },
     get config() {
-      return config;
+      return chartState.config;
     },
     get width() {
-      return width;
+      return chartState.width;
     },
     get height() {
-      return height;
+      return chartState.height;
     },
     get percentRange() {
       return percentRange;
     },
     get aspectRatio() {
-      return aspectRatio;
+      return chartState.aspectRatio;
     },
     get containerWidth() {
-      return containerWidth;
+      return chartState.containerWidth;
     },
     get containerHeight() {
-      return containerHeight;
+      return chartState.containerHeight;
     },
     get x() {
-      return x;
+      return chartState.x;
     },
     get y() {
-      return y;
+      return chartState.y;
     },
     get z() {
-      return z;
+      return chartState.z;
     },
     get r() {
-      return r;
+      return chartState.r;
     },
     get c() {
-      return c;
+      return chartState.c;
     },
     get x1() {
-      return x1;
+      return chartState.x1;
     },
     get y1() {
-      return y1;
+      return chartState.y1;
     },
     get data() {
       return data;
@@ -1077,7 +727,7 @@
       return xReverse;
     },
     get yReverse() {
-      return yReverse;
+      return chartState.yReverse;
     },
     get zReverse() {
       return zReverse;
@@ -1098,46 +748,46 @@
       return rPadding;
     },
     get padding() {
-      return padding;
+      return chartState.padding;
     },
     get flatData() {
-      return flatData;
+      return chartState.flatData;
     },
     get extents() {
-      return extents;
+      return chartState.extents;
     },
     get xDomain() {
-      return xDomainPossiblyNice;
+      return chartState.xDomainPossiblyNice;
     },
     get yDomain() {
-      return yDomainPossiblyNice;
+      return chartState.yDomainPossiblyNice;
     },
     get zDomain() {
-      return zDomainPossiblyNice;
+      return chartState.zDomainPossiblyNice;
     },
     get rDomain() {
-      return rDomainPossiblyNice;
+      return chartState.rDomainPossiblyNice;
     },
     get cDomain() {
-      return cDomain;
+      return chartState.cDomain;
     },
     get x1Domain() {
-      return x1Domain;
+      return chartState.x1Domain;
     },
     get y1Domain() {
-      return y1Domain;
+      return chartState.y1Domain;
     },
     get xRange() {
-      return xRange;
+      return chartState.xRange;
     },
     get yRange() {
-      return yRange;
+      return chartState.yRange;
     },
     get zRange() {
-      return zRange;
+      return chartState.zRange;
     },
     get rRange() {
-      return rRange;
+      return chartState.rRange;
     },
     get cRange() {
       return cRangeProp;
@@ -1155,46 +805,46 @@
       meta = v;
     },
     get xScale() {
-      return xScale;
+      return chartState.xScale;
     },
     get yScale() {
-      return yScale;
+      return chartState.yScale;
     },
     get zScale() {
-      return zScale;
+      return chartState.zScale;
     },
     get rScale() {
-      return rScale;
+      return chartState.rScale;
     },
     get yGet() {
-      return yGet;
+      return chartState.yGet;
     },
     get xGet() {
-      return xGet;
+      return chartState.xGet;
     },
     get zGet() {
-      return zGet;
+      return chartState.zGet;
     },
     get rGet() {
-      return rGet;
+      return chartState.rGet;
     },
     get cGet() {
-      return cGet;
+      return chartState.cGet;
     },
     get x1Get() {
-      return x1Get;
+      return chartState.x1Get;
     },
     get y1Get() {
-      return y1Get;
+      return chartState.y1Get;
     },
     get cScale() {
-      return cScale;
+      return chartState.cScale;
     },
     get x1Scale() {
-      return x1Scale;
+      return chartState.x1Scale;
     },
     get y1Scale() {
-      return y1Scale;
+      return chartState.y1Scale;
     },
     get xInterval() {
       return xInterval;
@@ -1209,16 +859,16 @@
       return ref;
     },
     get geo() {
-      return geoContext;
+      return chartState.geoContext;
     },
     get transform() {
-      return transformContext;
+      return chartState.transformContext;
     },
     get tooltip() {
-      return tooltipContext;
+      return chartState.tooltipContext;
     },
     get brush() {
-      return brushContext;
+      return chartState.brushContext;
     },
   };
 
@@ -1227,51 +877,55 @@
   setChartContext(context);
 
   $effect(() => {
-    isMounted = true;
+    chartState.isMounted = true;
   });
 
   onMount(() => {
-    if (box && debug === true && (ssr === true || typeof window !== 'undefined')) {
+    if (chartState.box && debug === true && (ssr === true || typeof window !== 'undefined')) {
       logDebug({
         data,
-        flatData: typeof flatData !== 'undefined' ? flatData : null,
-        boundingBox: box,
-        activeGetters,
+        flatData: typeof chartState.flatData !== 'undefined' ? chartState.flatData : null,
+        boundingBox: chartState.box,
+        activeGetters: chartState.activeGetters,
         x: xProp,
         y: yProp,
         z: zProp,
         r: rProp,
-        xScale,
-        yScale,
-        zScale,
-        rScale,
+        xScale: chartState.xScale,
+        yScale: chartState.yScale,
+        zScale: chartState.zScale,
+        rScale: chartState.rScale,
       });
     }
   });
 
   $effect(() => {
-    if (!isMounted) return;
+    if (!chartState.isMounted) return;
     onResize?.({
-      width: context.width,
-      height: context.height,
-      containerWidth: context.containerWidth,
-      containerHeight: context.containerHeight,
+      width: chartState.width,
+      height: chartState.height,
+      containerWidth: chartState.containerWidth,
+      containerHeight: chartState.containerHeight,
     });
   });
 
   const initialTransform = $derived(
     geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
-      ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
+      ? geoFitObjectTransform(
+          geo.projection(),
+          [chartState.width, chartState.height],
+          geo.fitGeojson
+        )
       : undefined
   );
 
   const processTranslate = $derived.by(() => {
     if (!geo) return undefined;
     return (x: number, y: number, deltaX: number, deltaY: number) => {
-      if (geo.applyTransform?.includes('rotate') && geoContext?.projection) {
+      if (geo.applyTransform?.includes('rotate') && chartState.geoContext?.projection) {
         // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
         // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-        const projectionScale = geoContext.projection.scale() ?? 0;
+        const projectionScale = chartState.geoContext.projection.scale() ?? 0;
         const sensitivity = 75;
         return {
           x: x + deltaX * (sensitivity / projectionScale),
@@ -1299,14 +953,14 @@
     style:pointer-events={pointerEvents === false ? 'none' : null}
     style:width={widthProp ? `${widthProp}px` : '100%'}
     style:height={heightProp ? `${heightProp}px` : '100%'}
-    bind:clientWidth={_containerWidth}
-    bind:clientHeight={_containerHeight}
+    bind:clientWidth={chartState._containerWidth}
+    bind:clientHeight={chartState._containerHeight}
     class="lc-root-container"
   >
-    {#key isMounted}
+    {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
       <TransformContext
-        bind:transformContext
+        bind:transformContext={chartState.transformContext}
         mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}
@@ -1317,11 +971,11 @@
         {ondragend}
       >
         <!-- svelte-ignore ownership_invalid_binding -->
-        <GeoContext {...geo} bind:geoContext>
+        <GeoContext {...geo} bind:geoContext={chartState.geoContext}>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <BrushContext {...brushProps} bind:brushContext>
+          <BrushContext {...brushProps} bind:brushContext={chartState.brushContext}>
             <!-- svelte-ignore ownership_invalid_binding -->
-            <TooltipContext {...tooltipProps} bind:tooltipContext>
+            <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
               {@render _children?.({
                 context,
               })}
