@@ -13,7 +13,7 @@
     Graticule,
     Layer,
     Tooltip,
-    type ChartContextValue,
+    type ChartState,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -24,7 +24,7 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let context = $state<ChartContextValue<(typeof data.earthquakes)[number]>>();
+  let context = $state<ChartState<(typeof data.earthquakes)[number]>>();
 
   let velocity = $state(3);
 

@@ -51,8 +51,15 @@ export class ChartState<
   // Mount state
   isMounted = $state(false);
 
+  // Container ref (set from Chart.svelte)
+  containerRef = $state<HTMLElement | undefined>();
+
+  // Meta data (mutable from context)
+  meta = $state<Record<string, any>>({});
+
   constructor(props: ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this.props = props;
+    this.meta = props.meta ?? {};
   }
 
   // Use $derived fields instead of getters for caching
@@ -354,6 +361,86 @@ export class ChartState<
   rRange = $derived(getRange(this.rScale));
 
   aspectRatio = $derived(this.width / this.height);
+
+  // Properties that come directly from props (not derived)
+  get percentRange() {
+    return this.props.percentRange ?? false;
+  }
+  get xNice() {
+    return this.props.xNice ?? false;
+  }
+  get yNice() {
+    return this.props.yNice ?? false;
+  }
+  get zNice() {
+    return this.props.zNice ?? false;
+  }
+  get rNice() {
+    return this.props.rNice ?? false;
+  }
+  get xDomainSort() {
+    return this.props.xDomainSort ?? false;
+  }
+  get yDomainSort() {
+    return this.props.yDomainSort ?? false;
+  }
+  get zDomainSort() {
+    return this.props.zDomainSort ?? false;
+  }
+  get rDomainSort() {
+    return this.props.rDomainSort ?? false;
+  }
+  get xReverse() {
+    return this.props.xReverse ?? false;
+  }
+  get zReverse() {
+    return this.props.zReverse ?? false;
+  }
+  get rReverse() {
+    return this.props.rReverse ?? false;
+  }
+  get xPadding() {
+    return this.props.xPadding;
+  }
+  get yPadding() {
+    return this.props.yPadding;
+  }
+  get zPadding() {
+    return this.props.zPadding;
+  }
+  get rPadding() {
+    return this.props.rPadding;
+  }
+  get cRange() {
+    return this.props.cRange;
+  }
+  get x1Range() {
+    return this.props.x1Range;
+  }
+  get y1Range() {
+    return this.props.y1Range;
+  }
+  get xInterval() {
+    return this.props.xInterval ?? null;
+  }
+  get yInterval() {
+    return this.props.yInterval ?? null;
+  }
+  get radial() {
+    return this.props.radial ?? false;
+  }
+  get tooltip() {
+    return this.tooltipContext;
+  }
+  get geo() {
+    return this.geoContext;
+  }
+  get brush() {
+    return this.brushContext;
+  }
+  get transform() {
+    return this.transformContext;
+  }
 
   config = $derived({
     x: this.props.x,

@@ -26,7 +26,7 @@ import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
 import type { ChartPropsWithoutHTML } from '../Chart.svelte';
-import type { ChartContextValue } from '$lib/contexts/chart.js';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
@@ -51,7 +51,7 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
   /**
    * The chart context
    */
-  context: ChartContextValue<TData>;
+  context: ChartState<TData>;
 
   /**
    * The series of data for the chart.
@@ -261,7 +261,7 @@ export type BaseChartProps<
   /**
    * A bindable reference to the chart context.
    */
-  context?: ChartContextValue<TData>;
+  context?: ChartState<TData>;
 
   children?: ChartSnippet;
   aboveContext?: ChartSnippet;

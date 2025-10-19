@@ -165,7 +165,6 @@
 
   const activeSeries = $derived.by(() => {
     if (!context?.tooltip?.data) return null;
-    // @ts-expect-error - shh
     return series.find((s) => s.key === context?.tooltip.data?.seriesKey) ?? series[0];
   });
 

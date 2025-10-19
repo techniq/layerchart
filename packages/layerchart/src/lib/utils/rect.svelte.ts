@@ -1,5 +1,5 @@
 import { max, min } from 'd3-array';
-import type { ChartContextValue } from '$lib/contexts/chart.js';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 import { accessor, type Accessor } from './common.js';
 import { isScaleBand } from './scales.svelte.js';
 
@@ -58,7 +58,7 @@ function resolveInsets(insets?: Insets): ResolvedInsets {
 }
 
 export function createDimensionGetter<TData>(
-  ctx: ChartContextValue<TData>,
+  ctx: ChartState<TData>,
   getOptions?: () => DimensionGetterOptions
 ) {
   const options = $derived(getOptions?.());

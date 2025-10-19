@@ -14,7 +14,7 @@
     Threshold,
     pivotLonger,
     accessor,
-    type ChartContextValue,
+    type ChartState,
     defaultChartPadding,
     Layer,
     getSettings,
@@ -129,7 +129,7 @@
   let xDomain: DomainType | undefined = $state();
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
-  let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
+  let context = $state<ChartState<(typeof denseDateSeriesData)[number]>>(null!);
 
   let selectedCurve = $state(curveStepAfter);
 

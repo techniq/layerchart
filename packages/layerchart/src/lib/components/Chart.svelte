@@ -22,7 +22,7 @@
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
 
-  import { setChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
+  import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from 'layerchart/states/chart.svelte.js';
 
   export type ChartResizeDetail = {
@@ -535,12 +535,12 @@
      */
     radial?: boolean;
 
-    children?: Snippet<[{ context: ChartContextValue<T, XScale, YScale> }]>;
+    children?: Snippet<[{ context: ChartState<T, XScale, YScale> }]>;
 
     /**
      * A bindable reference to the chart context.
      */
-    context?: ChartContextValue<T, XScale, YScale>;
+    context?: ChartState<T, XScale, YScale>;
 
     /**
      * Props passed to GeoContext
@@ -646,235 +646,19 @@
 
   $effect.pre(() => {
     refProp = ref;
+    chartState.containerRef = ref;
   });
 
   const logDebug = useDebounce(printDebug, 200);
 
-  const context: ChartContextValue<TData, XScale, YScale> = {
-    get activeGetters() {
-      return chartState.activeGetters;
-    },
-    get config() {
-      return chartState.config;
-    },
-    get width() {
-      return chartState.width;
-    },
-    get height() {
-      return chartState.height;
-    },
-    get percentRange() {
-      return percentRange;
-    },
-    get aspectRatio() {
-      return chartState.aspectRatio;
-    },
-    get containerWidth() {
-      return chartState.containerWidth;
-    },
-    get containerHeight() {
-      return chartState.containerHeight;
-    },
-    get x() {
-      return chartState.x;
-    },
-    get y() {
-      return chartState.y;
-    },
-    get z() {
-      return chartState.z;
-    },
-    get r() {
-      return chartState.r;
-    },
-    get c() {
-      return chartState.c;
-    },
-    get x1() {
-      return chartState.x1;
-    },
-    get y1() {
-      return chartState.y1;
-    },
-    get data() {
-      return data;
-    },
-    get xNice() {
-      return xNice;
-    },
-    get yNice() {
-      return yNice;
-    },
-    get zNice() {
-      return zNice;
-    },
-    get rNice() {
-      return rNice;
-    },
-    get xDomainSort() {
-      return xDomainSort;
-    },
-    get yDomainSort() {
-      return yDomainSort;
-    },
-    get zDomainSort() {
-      return zDomainSort;
-    },
-    get rDomainSort() {
-      return rDomainSort;
-    },
-    get xReverse() {
-      return xReverse;
-    },
-    get yReverse() {
-      return chartState.yReverse;
-    },
-    get zReverse() {
-      return zReverse;
-    },
-    get rReverse() {
-      return rReverse;
-    },
-    get xPadding() {
-      return xPadding;
-    },
-    get yPadding() {
-      return yPadding;
-    },
-    get zPadding() {
-      return zPadding;
-    },
-    get rPadding() {
-      return rPadding;
-    },
-    get padding() {
-      return chartState.padding;
-    },
-    get flatData() {
-      return chartState.flatData;
-    },
-    get extents() {
-      return chartState.extents;
-    },
-    get xDomain() {
-      return chartState.xDomainPossiblyNice;
-    },
-    get yDomain() {
-      return chartState.yDomainPossiblyNice;
-    },
-    get zDomain() {
-      return chartState.zDomainPossiblyNice;
-    },
-    get rDomain() {
-      return chartState.rDomainPossiblyNice;
-    },
-    get cDomain() {
-      return chartState.cDomain;
-    },
-    get x1Domain() {
-      return chartState.x1Domain;
-    },
-    get y1Domain() {
-      return chartState.y1Domain;
-    },
-    get xRange() {
-      return chartState.xRange;
-    },
-    get yRange() {
-      return chartState.yRange;
-    },
-    get zRange() {
-      return chartState.zRange;
-    },
-    get rRange() {
-      return chartState.rRange;
-    },
-    get cRange() {
-      return cRangeProp;
-    },
-    get x1Range() {
-      return x1RangeProp;
-    },
-    get y1Range() {
-      return y1RangeProp;
-    },
-    get meta() {
-      return meta;
-    },
-    set meta(v: Record<string, any>) {
-      meta = v;
-    },
-    get xScale() {
-      return chartState.xScale;
-    },
-    get yScale() {
-      return chartState.yScale;
-    },
-    get zScale() {
-      return chartState.zScale;
-    },
-    get rScale() {
-      return chartState.rScale;
-    },
-    get yGet() {
-      return chartState.yGet;
-    },
-    get xGet() {
-      return chartState.xGet;
-    },
-    get zGet() {
-      return chartState.zGet;
-    },
-    get rGet() {
-      return chartState.rGet;
-    },
-    get cGet() {
-      return chartState.cGet;
-    },
-    get x1Get() {
-      return chartState.x1Get;
-    },
-    get y1Get() {
-      return chartState.y1Get;
-    },
-    get cScale() {
-      return chartState.cScale;
-    },
-    get x1Scale() {
-      return chartState.x1Scale;
-    },
-    get y1Scale() {
-      return chartState.y1Scale;
-    },
-    get xInterval() {
-      return xInterval;
-    },
-    get yInterval() {
-      return yInterval;
-    },
-    get radial() {
-      return radial;
-    },
-    get containerRef() {
-      return ref;
-    },
-    get geo() {
-      return chartState.geoContext;
-    },
-    get transform() {
-      return chartState.transformContext;
-    },
-    get tooltip() {
-      return chartState.tooltipContext;
-    },
-    get brush() {
-      return chartState.brushContext;
-    },
-  };
+  // Update meta when props.meta changes
+  $effect(() => {
+    chartState.meta = meta;
+  });
 
-  contextProp = context;
+  contextProp = chartState;
 
-  setChartContext(context);
+  setChartContext(chartState);
 
   $effect(() => {
     chartState.isMounted = true;
@@ -977,7 +761,7 @@
             <!-- svelte-ignore ownership_invalid_binding -->
             <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
               {@render _children?.({
-                context,
+                context: chartState,
               })}
             </TooltipContext>
           </BrushContext>
