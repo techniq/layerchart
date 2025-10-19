@@ -1,12 +1,7 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
 	import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
 
-	import type TooltipContext from '$lib/components/tooltip/TooltipContext.svelte';
-	import type Highlight from '$lib/components/Highlight.svelte';
-
-	type TooltipContextProps = ComponentProps<typeof TooltipContext>;
-	type HighlightProps = ComponentProps<typeof Highlight>;
+	import type { HighlightPropsWithoutHTML, TooltipContextProps } from 'layerchart';
 
 	let {
 		settings = $bindable()
@@ -14,7 +9,7 @@
 		settings: {
 			mode: TooltipContextProps['mode'];
 			highlight: Array<'none' | 'points' | 'lines' | 'area' | 'bar'>;
-			axis: HighlightProps['axis'];
+			axis: HighlightPropsWithoutHTML['axis'];
 			snapToDataX: boolean;
 			snapToDataY: boolean;
 			debug: TooltipContextProps['debug'];
