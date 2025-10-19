@@ -15,7 +15,7 @@
 		'primitives',
 		'marks',
 		'annotations',
-		'Interactions',
+		'interactions',
 		'geo',
 		'layout',
 		'fill',
