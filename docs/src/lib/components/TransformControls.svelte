@@ -43,7 +43,7 @@
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 
-	import { getTransformContext } from '$lib/contexts/transform.js';
+	import { getChartContext } from 'layerchart';
 	import type { Without } from '$lib/utils/types.js';
 
 	let {
@@ -79,7 +79,7 @@
 		}
 	} as const);
 
-	const transform = getTransformContext();
+	const chart = getChartContext();
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -96,7 +96,7 @@
 		<Tooltip title="Zoom in">
 			<Button
 				icon={LucideZoomIn}
-				on:click={() => transform.zoomIn()}
+				on:click={() => chart.transform.zoomIn()}
 				{size}
 				class="text-surface-content p-2"
 			/>
@@ -107,7 +107,7 @@
 		<Tooltip title="Zoom out">
 			<Button
 				icon={LucideZoomOut}
-				on:click={() => transform.zoomOut()}
+				on:click={() => chart.transform.zoomOut()}
 				{size}
 				class="text-surface-content p-2"
 			/>
@@ -118,7 +118,7 @@
 		<Tooltip title="Center">
 			<Button
 				icon={LucideFocus}
-				on:click={() => transform.translateCenter()}
+				on:click={() => chart.transform.translateCenter()}
 				{size}
 				class="text-surface-content p-2"
 			/>
@@ -129,7 +129,7 @@
 		<Tooltip title="Reset">
 			<Button
 				icon={LucideUndo2}
-				on:click={() => transform.reset()}
+				on:click={() => chart.transform.reset()}
 				{size}
 				class="text-surface-content p-2"
 			/>
@@ -148,8 +148,8 @@
 				menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
 				menuIcon={null}
 				{size}
-				value={transform.scrollMode}
-				on:change={(e) => transform.setScrollMode(e.detail.value)}
+				value={chart.transform.scrollMode}
+				on:change={(e) => chart.transform.setScrollMode(e.detail.value)}
 				class="text-surface-content"
 			>
 				<svelte:fragment slot="selection" let:value>
