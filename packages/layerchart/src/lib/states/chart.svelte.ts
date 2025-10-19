@@ -1,7 +1,7 @@
 import { scaleOrdinal, scaleSqrt } from 'd3-scale';
-import type { TimeInterval } from 'd3-time';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
+import { useDebounce } from 'runed';
 
 import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
 import {
@@ -12,11 +12,12 @@ import {
   isScaleTime,
   makeAccessor,
 } from '$lib/utils/scales.svelte.js';
-import type { ChartPropsWithoutHTML, PreservedChartConfig } from '$lib/components/Chart.svelte';
+import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
-import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
+import { accessor, chartDataArray } from '$lib/utils/common.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
+import { printDebug } from '$lib/utils/debug.js';
 
 import type { GeoContextValue } from '$lib/contexts/geo.js';
 import type { TransformContextValue } from '$lib/contexts/transform.js';
@@ -57,13 +58,52 @@ export class ChartState<
   // Container ref (set from Chart.svelte)
   containerRef = $state<HTMLElement | undefined>();
 
-  // Meta data (mutable from context)
-  meta = $state<Record<string, any>>({});
+  // Meta data - reactive to props.meta changes
+  meta = $derived(this.props.meta ?? {});
 
   constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this._propsGetter = propsGetter;
-    const initialProps = propsGetter();
-    this.meta = initialProps.meta ?? {};
+
+    const logDebug = useDebounce(printDebug, 200);
+
+    // Call onResize callback when dimensions change
+    $effect(() => {
+      if (!this.isMounted) return;
+      this.props.onResize?.({
+        width: this.width,
+        height: this.height,
+        containerWidth: this.containerWidth,
+        containerHeight: this.containerHeight,
+      });
+    });
+
+    // Debug logging when mounted
+    $effect(() => {
+      if (
+        !this.isMounted ||
+        !this.props.debug ||
+        (!this.props.ssr && typeof window === 'undefined')
+      ) {
+        return;
+      }
+
+      if (this.box) {
+        logDebug({
+          data: this.data,
+          flatData: this.flatData,
+          boundingBox: this.box,
+          activeGetters: this.activeGetters,
+          x: this.props.x,
+          y: this.props.y,
+          z: this.props.z,
+          r: this.props.r,
+          xScale: this.xScale,
+          yScale: this.yScale,
+          zScale: this.zScale,
+          rScale: this.rScale,
+        });
+      }
+    });
   }
 
   // Use $derived fields instead of getters for caching

@@ -1,12 +1,10 @@
 <script lang="ts" module>
-  import { onMount, type ComponentProps, type Snippet } from 'svelte';
+  import { type ComponentProps, type Snippet } from 'svelte';
   import type { TimeInterval } from 'd3-time';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
-  import { useDebounce } from 'runed';
 
   import { type Accessor } from '$lib/utils/common.js';
-  import { printDebug } from '$lib/utils/debug.js';
   import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
@@ -594,39 +592,9 @@
     width: widthProp,
     height: heightProp,
     position = 'relative',
-    percentRange = false,
-    x: xProp,
-    y: yProp,
-    z: zProp,
-    r: rProp,
-    data = [],
-    xNice = false,
-    yNice = false,
-    zNice = false,
-    rNice = false,
-    xPadding,
-    yPadding,
-    zPadding,
-    rPadding,
-    debug = false,
-    xDomainSort = false,
-    yDomainSort = false,
-    zDomainSort = false,
-    rDomainSort = false,
-    xReverse = false,
-    zReverse = false,
-    rReverse = false,
     yRange: _yRangeProp,
-    xInterval = null,
-    yInterval = null,
-    meta = {},
     children: _children,
-    radial = false,
     xRange: _xRangeProp,
-    x1Range: x1RangeProp,
-    y1Range: y1RangeProp,
-    cRange: cRangeProp,
-    onResize,
     geo,
     tooltip,
     transform,
@@ -649,48 +617,12 @@
     chartState.containerRef = ref;
   });
 
-  const logDebug = useDebounce(printDebug, 200);
-
-  // Update meta when props.meta changes
-  $effect(() => {
-    chartState.meta = meta;
-  });
-
   contextProp = chartState;
 
   setChartContext(chartState);
 
   $effect(() => {
     chartState.isMounted = true;
-  });
-
-  onMount(() => {
-    if (chartState.box && debug === true && (ssr === true || typeof window !== 'undefined')) {
-      logDebug({
-        data,
-        flatData: typeof chartState.flatData !== 'undefined' ? chartState.flatData : null,
-        boundingBox: chartState.box,
-        activeGetters: chartState.activeGetters,
-        x: xProp,
-        y: yProp,
-        z: zProp,
-        r: rProp,
-        xScale: chartState.xScale,
-        yScale: chartState.yScale,
-        zScale: chartState.zScale,
-        rScale: chartState.rScale,
-      });
-    }
-  });
-
-  $effect(() => {
-    if (!chartState.isMounted) return;
-    onResize?.({
-      width: chartState.width,
-      height: chartState.height,
-      containerWidth: chartState.containerWidth,
-      containerHeight: chartState.containerHeight,
-    });
   });
 
   const initialTransform = $derived(
