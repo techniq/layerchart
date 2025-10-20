@@ -21,7 +21,7 @@
   import BrushContext from './BrushContext.svelte';
 
   import { setChartContext } from '$lib/contexts/chart.js';
-  import { ChartState } from 'layerchart/states/chart.svelte.js';
+  import { ChartState } from '$lib/states/chart.svelte.js';
 
   export type ChartResizeDetail = {
     width: number;
