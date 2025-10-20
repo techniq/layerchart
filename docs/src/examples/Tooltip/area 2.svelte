@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import type { ComponentProps } from 'svelte';
+	import { Area, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
+	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
 	const data = createDateSeries({
 		count: 30,
@@ -10,9 +12,21 @@
 		keys: ['value', 'baseline']
 	});
 
+	let charts = $state({
+		area: {
+			mode: 'quadtree-x',
+			highlight: ['points', 'lines'],
+			axis: undefined,
+			snapToDataX: false,
+			snapToDataY: false,
+			debug: false
+		}
+	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
+
 	export { data };
 </script>
 
+<TooltipControls bind:settings={charts.area} />
 <Chart
 	{data}
 	x="date"
@@ -20,16 +34,19 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltip={{
+		mode: 'quadtree-x',
+		debug: false
+	}}
 	height={300}
 >
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 		<Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
-		<Highlight points lines />
+		<Highlight points={true} lines={true} area={false} axis={undefined} />
 	</Layer>
-	<Tooltip.Root>
+	<Tooltip.Root x="pointer" y="pointer">
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />
 			<Tooltip.List>

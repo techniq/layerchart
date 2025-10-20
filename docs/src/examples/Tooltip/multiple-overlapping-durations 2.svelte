@@ -1,38 +1,47 @@
 <script lang="ts">
-	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
 	import type { ComponentProps } from 'svelte';
-	import { Rule } from 'layerchart';
-	import { createTimeSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import {
+		Axis,
+		Chart,
+		Layer,
+		Highlight,
+		Points,
+		Rule,
+		Tooltip,
+		type ChartContextValue
+	} from 'layerchart';
 	import { Duration } from 'svelte-ux';
+	import { createTimeSeries, createDateSeries } from '$lib/utils/data.js';
+	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
-	const data = createTimeSeries({
-		min: 20,
-		max: 100,
-		value: 'integer',
-		keys: ['value', 'baseline']
-	});
+	const data = [
+		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] }),
+		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] })
+	];
+
+	let charts = $state({
+		multiDuration: {
+			mode: 'bounds',
+			highlight: ['area'],
+			axis: 'both',
+			snapToDataX: false,
+			snapToDataY: false,
+			debug: false
+		}
+	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
+
 	export { data };
-
-	let settings = $state({
-		mode: 'band',
-		highlight: ['area'],
-		axis: undefined,
-		snapToDataX: false,
-		snapToDataY: false,
-		debug: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
 </script>
 
-<TooltipControls bind:settings />
+<TooltipControls bind:settings={charts.multiDuration} />
 <Chart
 	{data}
 	x={['startDate', 'endDate']}
 	y="name"
 	padding={{ left: 36, bottom: 36 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: 'bounds',
+		debug: false
 	}}
 	height={300}
 >
@@ -41,17 +50,9 @@
 		<Axis placement="bottom" />
 		<Rule />
 		<Points class="fill-primary" />
-		<Highlight
-			points={settings.highlight.includes('points')}
-			lines={settings.highlight.includes('lines')}
-			area={settings.highlight.includes('area')}
-			axis={settings.axis}
-		/>
+		<Highlight points={false} lines={false} area={true} axis="both" />
 	</Layer>
-	<Tooltip.Root
-		x={settings.snapToDataX ? 'data' : 'pointer'}
-		y={settings.snapToDataY ? 'data' : 'pointer'}
-	>
+	<Tooltip.Root x="pointer" y="pointer">
 		{#snippet children({ data })}
 			<Tooltip.Header>{data.name}</Tooltip.Header>
 			<Tooltip.List>

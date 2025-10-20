@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import { Area, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
-	import { Button, Field, Menu, MenuField, Toggle } from 'svelte-ux';
+	import { Button, Duration, Field, Menu, MenuField, Toggle } from 'svelte-ux';
 	import type { ComponentProps } from 'svelte';
 
 	const data = createDateSeries({
@@ -11,7 +11,6 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-	export { data };
 
 	const anchorOptions = [
 		'top-left',
@@ -27,9 +26,21 @@
 	let anchor: ComponentProps<typeof Tooltip.Root>['anchor'] = $state('top-left');
 	let snap: 'pointer' | 'data' = $state('pointer');
 	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
+
+	const dateSeries = createDateSeries({
+		count: 30,
+		min: 20,
+		max: 100,
+		value: 'integer',
+		keys: ['value', 'baseline']
+	});
+
+	let context: ChartContextValue<(typeof dateSeries)[number]> | undefined = $state();
+
+	export { data };
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-4">
+<div class="grid grid-cols-3 gap-2 mb-2">
 	<Toggle let:on={open} let:toggle>
 		<Field label="Anchor" class="cursor-pointer" on:click={toggle}>
 			<span class="text-sm">
@@ -88,12 +99,12 @@
 		<Highlight points lines />
 	</Layer>
 	<Tooltip.Root
-		{anchor}
-		x={snap}
-		xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
-		y={snap}
-		yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
-		{contained}
+		anchor="top-left"
+		x="pointer"
+		xOffset={10}
+		y="pointer"
+		yOffset={10}
+		contained={false}
 	>
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />

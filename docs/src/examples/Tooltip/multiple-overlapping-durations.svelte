@@ -2,7 +2,7 @@
 	import type { ComponentProps } from 'svelte';
 	import { Axis, Chart, Layer, Highlight, Points, Rule, Tooltip } from 'layerchart';
 	import { Duration } from 'svelte-ux';
-	import { createTimeSeries } from '$lib/utils/genData.js';
+	import { createTimeSeries } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
 	const data = [

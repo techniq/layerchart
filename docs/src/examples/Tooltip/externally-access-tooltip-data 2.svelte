@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import { Area, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
+	import { format } from '@layerstack/utils';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -10,8 +11,21 @@
 		keys: ['value', 'baseline']
 	});
 
+	let context: ChartContextValue<(typeof data)[number]> | undefined = $state();
+
 	export { data };
 </script>
+
+<div class="text-sm">
+	{#if context}
+		{#if context.tooltip.data}
+			date: {format(context.tooltip.data.date, 'day', { variant: 'short' })}
+			value: {context.tooltip.data.value}
+		{:else}
+			[hover chart]
+		{/if}
+	{/if}
+</div>
 
 <Chart
 	{data}
@@ -21,6 +35,7 @@
 	yNice
 	padding={{ left: 16, bottom: 24 }}
 	tooltip={{ mode: 'quadtree-x' }}
+	bind:context
 	height={300}
 >
 	<Layer>

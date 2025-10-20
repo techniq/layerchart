@@ -2,10 +2,9 @@
   import { scaleUtc } from 'd3-scale';
   import { utcDay } from 'd3-time';
 
-  import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip } from 'layerchart';
+  import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip, type DomainType } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import type { DomainType } from '$lib/utils/scales.svelte.js';
 
   let { data } = $props();
 

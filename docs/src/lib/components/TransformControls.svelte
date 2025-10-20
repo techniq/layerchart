@@ -43,8 +43,7 @@
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
 
-	import { getChartContext } from 'layerchart';
-	import type { Without } from '$lib/utils/types.js';
+	import { getChartContext, type Without } from 'layerchart';
 
 	let {
 		placement = 'top-right',

@@ -5,27 +5,29 @@
 	import type { ComponentProps } from 'svelte';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
-	export { data };
+	let charts = $state({
+		scatter: {
+			mode: 'quadtree',
+			highlight: ['points', 'lines'],
+			axis: 'both',
+			snapToDataX: true,
+			snapToDataY: true,
+			debug: false
+		}
+	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
 
-	let settings = $state({
-		mode: 'quadtree',
-		highlight: ['points', 'lines'],
-		axis: 'both',
-		snapToDataX: true,
-		snapToDataY: true,
-		debug: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipControls bind:settings={charts.scatter} />
 <Chart
 	{data}
 	x="x"
 	y="y"
 	padding={{ left: 30, bottom: 30 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: 'quadtree',
+		debug: false
 	}}
 	height={300}
 >
@@ -33,17 +35,9 @@
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" grid rule />
 		<Points class="fill-primary stroke-primary" />
-		<Highlight
-			points={settings.highlight.includes('points')}
-			lines={settings.highlight.includes('lines')}
-			area={settings.highlight.includes('area')}
-			axis={settings.axis}
-		/>
+		<Highlight points={true} lines={true} area={false} axis="both" />
 	</Layer>
-	<Tooltip.Root
-		x={settings.snapToDataX ? 'data' : 'pointer'}
-		y={settings.snapToDataY ? 'data' : 'pointer'}
-	>
+	<Tooltip.Root x="data" y="data">
 		{#snippet children({ data })}
 			<Tooltip.List>
 				<Tooltip.Item label="x" value={data.x} format="decimal" />

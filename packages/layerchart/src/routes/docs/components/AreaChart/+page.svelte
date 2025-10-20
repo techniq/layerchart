@@ -18,6 +18,7 @@
     defaultChartPadding,
     Layer,
     getSettings,
+    type DomainType,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
@@ -29,7 +30,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData, randomWalk } from '$lib/utils/genData.js';
-  import type { DomainType } from '$lib/utils/scales.svelte.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 

@@ -15,19 +15,22 @@
 		keys
 	});
 	const data = stack().keys(keys)(stackDateSeries) as any[];
-	export { data };
 
-	let settings = $state({
-		mode: 'quadtree-x',
-		highlight: ['points', 'lines'],
-		axis: undefined,
-		snapToDataX: false,
-		snapToDataY: false,
-		debug: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	let charts = $state({
+		areaStack: {
+			mode: 'quadtree-x',
+			highlight: ['points', 'lines'],
+			axis: undefined,
+			snapToDataX: false,
+			snapToDataY: false,
+			debug: false
+		}
+	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
+
+	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipControls bind:settings={charts.areaStack} />
 <Chart
 	{data}
 	flatData={flatten(data)}
@@ -39,8 +42,8 @@
 	cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
 	padding={{ left: 16, bottom: 24 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: 'quadtree',
+		debug: false
 	}}
 	height={300}
 >
@@ -59,17 +62,9 @@
 				/>
 			{/each}
 
-			<Highlight
-				points={settings.highlight.includes('points')}
-				lines={settings.highlight.includes('lines')}
-				area={settings.highlight.includes('area')}
-				axis={settings.axis}
-			/>
+			<Highlight points={true} lines={true} area={false} axis={undefined} />
 		</Layer>
-		<Tooltip.Root
-			x={settings.snapToDataX ? 'data' : 'pointer'}
-			y={settings.snapToDataY ? 'data' : 'pointer'}
-		>
+		<Tooltip.Root x="pointer" y="pointer">
 			{#snippet children({ data })}
 				<Tooltip.Header value={data.data.date} format="day" />
 				<Tooltip.List>
