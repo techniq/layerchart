@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
-	import type { DomainType } from 'layerchart/utils/scales.svelte';
+	import { AreaChart, type DomainType } from 'layerchart';
 	import { randomWalk } from '$lib/utils/data.js';
 	import { timeDay } from 'd3-time';
 

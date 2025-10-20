@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
 		count: 30,

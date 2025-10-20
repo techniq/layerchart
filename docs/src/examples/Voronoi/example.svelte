@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, ChartClipPath, Circle, Layer, Points, Voronoi } from 'layerchart';
-	import { getSpiral } from '$lib/utils/genData.js';
+	import { getSpiral } from '$lib/utils/data.js';
 	import { RangeField } from 'svelte-ux';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });

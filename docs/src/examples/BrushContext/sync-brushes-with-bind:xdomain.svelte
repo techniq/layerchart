@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { scaleOrdinal } from 'd3-scale';
 	import { timeDay } from 'd3-time';
-	import { Area, Axis, Chart, ChartClipPath, Layer, LinearGradient, Rule } from 'layerchart';
-	import { randomWalk } from '$lib/utils/genData.js';
-	import type { DomainType } from '$lib/utils/scales.svelte.js';
+	import {
+		Area,
+		Axis,
+		Chart,
+		ChartClipPath,
+		Layer,
+		LinearGradient,
+		Rule,
+		type DomainType
+	} from 'layerchart';
+	import { randomWalk } from '$lib/utils/data.js';
 
 	let { data } = $props();
 

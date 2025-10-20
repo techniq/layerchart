@@ -11,7 +11,7 @@
 		type ChartContextValue
 	} from 'layerchart';
 	import { Duration } from 'svelte-ux';
-	import { createTimeSeries, createDateSeries } from '$lib/utils/genData.js';
+	import { createTimeSeries, createDateSeries } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
 	const data = [

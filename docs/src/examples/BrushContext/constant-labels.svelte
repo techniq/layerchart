@@ -2,7 +2,6 @@
 	import { Area, Chart, Layer, Text } from 'layerchart';
 	import { State } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
-	import { asAny } from '$lib/utils/types.js';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = $derived(await getAppleStock());
@@ -20,7 +19,7 @@
 					<Text
 						x={-4}
 						y={context.height / 2}
-						value={format(asAny(context.brush.xDomain?.[0]))}
+						value={format(context.brush.xDomain?.[0] as any)}
 						textAnchor="end"
 						verticalAnchor="middle"
 						class="text-xs"
@@ -28,7 +27,7 @@
 					<Text
 						x={context.width + 4}
 						y={context.height / 2}
-						value={format(asAny(context.brush.xDomain?.[1]))}
+						value={format(context.brush.xDomain?.[1] as any)}
 						verticalAnchor="middle"
 						class="text-xs"
 					/>

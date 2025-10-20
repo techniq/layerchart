@@ -3,7 +3,7 @@
 	import { stack } from 'd3-shape';
 	import { Area, asAny, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { flatten } from '@layerstack/utils';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
 	const keys = ['apples', 'bananas', 'oranges'];

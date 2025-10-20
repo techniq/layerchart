@@ -20,6 +20,7 @@
     Rule,
     Text,
     Tooltip,
+    type DomainType,
   } from 'layerchart';
 
   import LucideChevronLeft from '~icons/lucide/chevron-left.svelte';
@@ -28,7 +29,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
-  import type { DomainType } from '$lib/utils/scales.svelte.js';
 
   let { data } = $props();
 
