@@ -50,7 +50,7 @@
 		<div
 			class={cls('border rounded-t-sm bg-surface-300 overflow-hidden', !showCode && 'rounded-b-sm')}
 		>
-			<div class="resize-x overflow-auto max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
+			<div class="resize-x overflow-hidden max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
 				<example.component bind:this={ref} />
 			</div>
 		</div>

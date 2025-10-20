@@ -22,7 +22,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24, top: 16 }}
+	padding={{ left: 16, bottom: 24, top: 16, right: 16 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >
