@@ -13,7 +13,6 @@
 	import LucideTable from '~icons/lucide/table';
 
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 
 	let { name, showCode = false }: { name: string; showCode?: boolean } = $props();
 
@@ -109,9 +108,9 @@
 
 			{#if page.params.example == null}
 				<Button
+					href="{page.url.pathname}/{name}"
 					icon={LucideFullscreen}
 					class="text-surface-content/70 py-1"
-					on:click={() => goto(`${page.url.pathname}/${name}`)}
 				>
 					Inspect
 				</Button>
