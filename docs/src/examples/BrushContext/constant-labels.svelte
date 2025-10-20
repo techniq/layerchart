@@ -1,0 +1,39 @@
+<script lang="ts">
+	import { Area, Chart, Layer, Text } from 'layerchart';
+	import { State } from 'svelte-ux';
+	import { format } from '@layerstack/utils';
+	import { asAny } from '$lib/utils/types.js';
+	import { getAppleStock } from '$lib/data.remote';
+
+	const data = $derived(await getAppleStock());
+
+	export { data };
+</script>
+
+<State initial={[null, null]} let:value={xDomain} let:set>
+	<Chart {data} x="date" y="value" padding={{ left: 80, right: 80 }} brush height={40}>
+		{#snippet children({ context })}
+			<Layer>
+				<Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+
+				{#if context.brush.isActive}
+					<Text
+						x={-4}
+						y={context.height / 2}
+						value={format(asAny(context.brush.xDomain?.[0]))}
+						textAnchor="end"
+						verticalAnchor="middle"
+						class="text-xs"
+					/>
+					<Text
+						x={context.width + 4}
+						y={context.height / 2}
+						value={format(asAny(context.brush.xDomain?.[1]))}
+						verticalAnchor="middle"
+						class="text-xs"
+					/>
+				{/if}
+			</Layer>
+		{/snippet}
+	</Chart>
+</State>
