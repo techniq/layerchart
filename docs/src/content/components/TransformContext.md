@@ -2,7 +2,15 @@
 description: TransformContext
 section: interactions
 layers: ['svg', 'canvas', 'html']
-related: ['components/Chart', 'examples/Pack', 'examples/Tree', 'examples/ZoomableMap', 'examples/ZoomableTileMap', 'examples/LoftedArcsGlobe']
+related:
+  [
+    'components/Chart',
+    'examples/Pack',
+    'examples/Tree',
+    'examples/ZoomableMap',
+    'examples/ZoomableTileMap',
+    'examples/LoftedArcsGlobe'
+  ]
 ---
 
 <script lang="ts">
@@ -10,6 +18,10 @@ related: ['components/Chart', 'examples/Pack', 'examples/Tree', 'examples/Zoomab
 </script>
 
 ## Examples
+
+### Playground
+
+<Example name="playground" />
 
 ### Pan/Zoom SVG image
 

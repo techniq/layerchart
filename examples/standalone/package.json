@@ -15,16 +15,16 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
-		"@sveltejs/kit": "^2.47.1",
+		"@sveltejs/kit": "^2.47.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"layerchart": "workspace:*",
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "^5.40.2",
+		"svelte": "^5.41.1",
 		"svelte-check": "^4.3.3",
 		"typescript": "^5.9.3",
-		"vite": "^7.1.10",
+		"vite": "^7.1.11",
 		"vite-plugin-devtools-json": "^1.0.0"
 	}
 }
