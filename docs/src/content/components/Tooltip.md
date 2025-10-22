@@ -31,7 +31,9 @@ related: ['components/TooltipContext', 'components/Highlight']
 
 <Example name="invert-variant" />
 
-### Position Default (mouse position with offset)
+## Position
+
+### Default (mouse position with offset)
 
 <Example name="default-mouse-position-with-offset" />
 

@@ -30,6 +30,8 @@
       };
     })
   );
+
+  export { data };
 </script>
 
 <h1>Playground</h1>
