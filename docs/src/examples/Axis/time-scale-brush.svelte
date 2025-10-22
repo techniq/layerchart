@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { Axis, Chart, Layer } from 'layerchart';
+	import { Axis, Chart, Layer, type DomainType } from 'layerchart';
 	import { timeYear } from 'd3-time';
 	import { startOfInterval } from '@layerstack/utils';
 	import { RangeField } from 'svelte-ux';
-	import type { DomainType } from 'layerchart/utils/scales.svelte';
 
 	const today = startOfInterval('day', new Date());
 

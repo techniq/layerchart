@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 	import { Button, Field, Menu, MenuField, Toggle } from 'svelte-ux';
 	import type { ComponentProps } from 'svelte';
 

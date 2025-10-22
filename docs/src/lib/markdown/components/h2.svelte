@@ -1,13 +1,8 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { cls } from '@layerstack/tailwind';
+	import HBase from './h-base.svelte';
 
-	let { class: className, children, ...restProps }: HTMLAttributes<HTMLHeadingElement> = $props();
+	let props: HTMLAttributes<HTMLHeadingElement> = $props();
 </script>
 
-<h2
-	class={cls('mt-12 scroll-m-20 text-2xl font-semibold tracking-[-0.01em] first:mt-0', className)}
-	{...restProps}
->
-	{@render children?.()}
-</h2>
+<HBase tag="h2" class="text-2xl font-semibold tracking-[-0.01em] mt-12 first:mt-0" {...props} />

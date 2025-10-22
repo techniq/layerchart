@@ -9,7 +9,7 @@
 		type ChartContextValue
 	} from 'layerchart';
 	import type { ComponentProps } from 'svelte';
-	import { createDateSeries, createTimeSeries } from '$lib/utils/genData.js';
+	import { createDateSeries, createTimeSeries } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 
 	const data = createTimeSeries({

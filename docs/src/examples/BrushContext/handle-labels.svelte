@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Area, Chart, Layer, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { asAny } from '$lib/utils/types.js';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = $derived(await getAppleStock());
@@ -17,7 +16,7 @@
 				<Text
 					x={context.brush.range.x - 4}
 					y={context.brush.range.height / 2}
-					value={format(asAny(context.brush.xDomain?.[0]))}
+					value={format(context.brush.xDomain?.[0] as any)}
 					textAnchor="end"
 					verticalAnchor="middle"
 					class="text-xs"
@@ -25,7 +24,7 @@
 				<Text
 					x={context.brush.range.x + context.brush.range.width + 4}
 					y={context.brush.range.height / 2}
-					value={format(asAny(context.brush.xDomain?.[1]))}
+					value={format(context.brush.xDomain?.[1] as any)}
 					verticalAnchor="middle"
 					class="text-xs"
 				/>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { Bars, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 	import type { ComponentProps } from 'svelte';
 

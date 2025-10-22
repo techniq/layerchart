@@ -13,7 +13,6 @@
 	import LucideTable from '~icons/lucide/table';
 
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 
 	let { name, showCode = false }: { name: string; showCode?: boolean } = $props();
 
@@ -51,7 +50,7 @@
 		<div
 			class={cls('border rounded-t-sm bg-surface-300 overflow-hidden', !showCode && 'rounded-b-sm')}
 		>
-			<div class="resize-x overflow-auto max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
+			<div class="resize-x overflow-hidden max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
 				<example.component bind:this={ref} />
 			</div>
 		</div>
@@ -109,9 +108,9 @@
 
 			{#if page.params.example == null}
 				<Button
+					href="{page.url.pathname}/{name}"
 					icon={LucideFullscreen}
 					class="text-surface-content/70 py-1"
-					on:click={() => goto(`${page.url.pathname}/${name}`)}
 				>
 					Inspect
 				</Button>

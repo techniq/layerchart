@@ -2,7 +2,7 @@
 	import { scaleBand } from 'd3-scale';
 	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
 		count: 30,
@@ -22,7 +22,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24, top: 16 }}
+	padding={{ left: 16, bottom: 24, top: 16, right: 16 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >

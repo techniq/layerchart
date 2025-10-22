@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
-	import { getSpiral } from '$lib/utils/genData.js';
+	import { getSpiral } from '$lib/utils/data.js';
 	import TooltipControls from '$lib/components/TooltipControls.svelte';
 	import type { ComponentProps } from 'svelte';
 

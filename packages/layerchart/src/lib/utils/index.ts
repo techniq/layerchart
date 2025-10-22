@@ -6,6 +6,7 @@ export * from './hierarchy.js';
 export * from './math.js';
 export * from './path.js';
 export * from './pivot.js';
+export * from './scales.svelte.js';
 export * from './stack.js';
 export * from './ticks.js';
 export * from './threshold.js';

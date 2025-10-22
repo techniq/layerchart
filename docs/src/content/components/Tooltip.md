@@ -19,15 +19,15 @@ related: ['components/TooltipContext', 'components/Highlight']
 
 <Example name="custom-content" />
 
-### color swatch
+### Color swatch
 
 <Example name="color-swatch" />
 
-### color swatch using theme
+### Color swatch using theme
 
 <Example name="color-swatch-using-theme" />
 
-### invert variant
+### Invert variant
 
 <Example name="invert-variant" />
 
@@ -95,7 +95,7 @@ related: ['components/TooltipContext', 'components/Highlight']
 
 - x: scaleTime (multi), y: scaleBand
 - bounds recommended. voronoi and quadtree partially supported (using first point)
-  
+
 <Example name="multiple-overlapping-durations" />
 
 ### Simple Bars
