@@ -2,11 +2,40 @@ import { celsiusToFahrenheit } from 'layerchart';
 import { parse } from '@layerstack/utils';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { csvParse, autoType } from 'd3-dsv';
+import type { GeometryCollection, Topology } from 'topojson-specification';
+import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 
 import { prerender, getRequestEvent } from '$app/server';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
+
+export const getGroupData = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/group-data.json').then((r) => r.json())) as {
+		x: number;
+		y: number;
+		group: string;
+	}[];
+	return data;
+});
+
+export const getUsData = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = {
+		us: {
+			geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
+				r.json()
+			)) as Topology<{
+				states: GeometryCollection<{ name: string }>;
+			}>,
+			stateCaptitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+				csvParse(await r.text(), autoType)
+			)) as USStateCapitalsData
+		}
+	};
+	return data;
+});
 
 export const getAppleStock = prerender(async () => {
 	const { fetch } = getRequestEvent();
