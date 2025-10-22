@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AnnotationRange, BarChart } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	let { data } = $props();
 

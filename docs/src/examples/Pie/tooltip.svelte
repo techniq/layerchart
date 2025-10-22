@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { sum } from 'd3-array';
 	import { Chart, Layer, Pie, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 	const dataSum = $derived(sum(data, (d) => d.value));

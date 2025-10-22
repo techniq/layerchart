@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { AnnotationLine, BarChart } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
-	const dateSeriesData = createDateSeries({
+	const data = createDateSeries({
 		count: 10,
 		min: 20,
 		max: 100,
@@ -10,10 +10,10 @@
 		keys: ['value', 'baseline']
 	});
 
-	export { dateSeriesData as data };
+	export { data };
 </script>
 
-<BarChart data={dateSeriesData} x="date" y="value" height={300}>
+<BarChart {data} x="date" y="value" height={300}>
 	{#snippet aboveMarks({ context })}
 		<AnnotationLine
 			y={50}

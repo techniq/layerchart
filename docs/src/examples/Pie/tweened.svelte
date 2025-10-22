@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, Layer, Pie } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 	import { Field, Switch, Toggle } from 'svelte-ux';
 
 	let show = $state(true);
