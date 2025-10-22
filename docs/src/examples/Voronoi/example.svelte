@@ -4,6 +4,7 @@
 	import { RangeField } from 'svelte-ux';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
+	export { data };
 
 	let point = $state({ x: 0, y: 0 });
 	function onPointerMove(e: PointerEvent) {
@@ -12,17 +13,14 @@
 			y: e.offsetY
 		};
 	}
-
 	let radius = $state(0);
-
-	export { data };
 </script>
 
 <RangeField label="Radius" bind:value={radius} max={100} />
 
 <Chart {data} x="x" y="y" height={400}>
 	{#snippet children({ context })}
-		<Layer>
+		<Layer onpointermove={onPointerMove}>
 			<ChartClipPath>
 				<Points r={2} class="fill-primary stroke-primary" />
 				<Voronoi

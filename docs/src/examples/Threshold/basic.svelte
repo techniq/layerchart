@@ -13,11 +13,10 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-
 	export { data };
 </script>
 
-<CurveMenuField bind:value={selectedCurve} />
+<CurveMenuField bind:value={selectedCurve} class="mb-6" />
 
 <AreaChart
 	{data}

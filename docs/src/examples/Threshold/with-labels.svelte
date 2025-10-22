@@ -9,7 +9,6 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-
 	export { data };
 </script>
 
