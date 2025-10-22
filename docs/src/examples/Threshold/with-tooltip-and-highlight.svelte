@@ -2,7 +2,7 @@
 	import { curveStepAfter } from 'd3-shape';
 	import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	let selectedCurve = $state(curveStepAfter);
 

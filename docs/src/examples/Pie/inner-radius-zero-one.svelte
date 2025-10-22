@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { Chart, Layer, Pie } from 'layerchart';
-  import { createDateSeries } from '$lib/utils/genData.js';
+	import { Chart, Layer, Pie } from 'layerchart';
+	import { createDateSeries } from '$lib/utils/data.js';
 
-  const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
+	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 
-  const keyColors = [
-    'var(--color-info)',
-    'var(--color-success)',
-    'var(--color-warning)',
-    'var(--color-danger)',
-  ];
+	const keyColors = [
+		'var(--color-info)',
+		'var(--color-success)',
+		'var(--color-warning)',
+		'var(--color-danger)'
+	];
 
-  export { data };
+	export { data };
 </script>
 
 <Chart {data} x="value" c="date" cRange={keyColors} height={300}>
-  <Layer center>
-    <Pie innerRadius={100} />
-  </Layer>
+	<Layer center>
+		<Pie innerRadius={100} />
+	</Layer>
 </Chart>

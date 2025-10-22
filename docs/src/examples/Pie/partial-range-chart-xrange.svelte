@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, Layer, Pie } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 

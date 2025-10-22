@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AreaChart, Area, Spline, Threshold } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
 		count: 30,

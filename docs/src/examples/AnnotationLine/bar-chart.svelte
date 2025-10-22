@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AnnotationLine, BarChart } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/genData.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const dateSeriesData = createDateSeries({
 		count: 10,
