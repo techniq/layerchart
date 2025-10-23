@@ -15,43 +15,43 @@ related: []
 
 <Example name="playground" />
 
-#### Triangle
+### Triangle
 
 <Example name="triangle" />
 
-#### Square
+### Square
 
 <Example name="square" />
 
-#### Rectangle
+### Rectangle
 
 <Example name="rectangle" />
 
-#### Diamond
+### Diamond
 
 <Example name="diamond" />
 
-#### Rhombus
+### Rhombus
 
 <Example name="rhombus" />
 
-#### Parallelogram
+### Parallelogram
 
 <Example name="parallelogram" />
 
-#### Trapezoid
+### Trapezoid
 
 <Example name="trapezoid" />
 
-#### Pentagon
+### Pentagon
 
 <Example name="pentagon" />
 
-#### Hexagon
+### Hexagon
 
 <Example name="hexagon" />
 
-#### Octagon
+### Octagon
 
 <Example name="octagon" />
 

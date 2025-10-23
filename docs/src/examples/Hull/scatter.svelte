@@ -18,7 +18,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-4">
 	<CurveMenuField bind:value={curve} showOpenClosed />
 </div>
 

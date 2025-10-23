@@ -14,7 +14,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-2">
 	<CurveMenuField bind:value={curve} showOpenClosed />
 </div>
 
@@ -28,10 +28,7 @@
 	height={600}
 >
 	<Layer>
-		<GeoPath
-			geojson={states}
-			class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-		/>
+		<GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
 		<g class="points pointer-events-none">
 			<Hull
 				data={data.us.stateCaptitals.filter((d: any) => {

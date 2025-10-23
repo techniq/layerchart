@@ -28,9 +28,9 @@
 			};
 		})
 	);
+	export { data };
 
 	const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line'] as const;
-	export { data };
 </script>
 
 <div class="grid grid-cols-[auto_auto_auto_auto_1fr_1fr_1fr] gap-2 mb-2">
@@ -43,7 +43,7 @@
 	<Field label="End" let:id>
 		<Switch bind:checked={markerEnd} {id} size="md" />
 	</Field>
-	<Field label="Tweeened" let:id>
+	<Field label="Tweened" let:id>
 		<Switch bind:checked={tweened} {id} size="md" />
 	</Field>
 	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
