@@ -59,11 +59,10 @@
 		{#if metadata.layers}
 			<ToggleGroup
 				bind:value={settings.layer}
-				variant="fill"
+				variant="outline"
 				color="primary"
 				inset
-				gap="px"
-				size="sm"
+				rounded="full"
 			>
 				{#each metadata.layers as layer}
 					<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>

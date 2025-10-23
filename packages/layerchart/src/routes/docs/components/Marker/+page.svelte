@@ -49,7 +49,7 @@
   <Field label="End" let:id>
     <Switch bind:checked={markerEnd} {id} size="md" />
   </Field>
-  <Field label="Tweeened" let:id>
+  <Field label="Tweened" let:id>
     <Switch bind:checked={tweened} {id} size="md" />
   </Field>
   <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
@@ -91,7 +91,7 @@
   <Field label="End" let:id>
     <Switch bind:checked={markerEnd} {id} size="md" />
   </Field>
-  <Field label="Tweeened" let:id>
+  <Field label="Tweened" let:id>
     <Switch bind:checked={tweened} {id} size="md" />
   </Field>
   <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />

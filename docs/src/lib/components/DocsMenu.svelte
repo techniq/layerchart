@@ -29,6 +29,18 @@
 </script>
 
 <nav class={cls('grid gap-6', className)}>
+	<NavItem
+		text="Home"
+		currentUrl={page.url}
+		path="/"
+		classes={{
+			root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
+			active:
+				'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
+		}}
+		on:click={() => onItemClick?.()}
+	/>
+
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
 		{#each componentsBySection as [section, components]}
@@ -38,7 +50,7 @@
 					<NavItem
 						text={component.name}
 						currentUrl={page.url}
-						path={`/components/${component.slug}`}
+						path="/components/{component.slug}"
 						classes={{
 							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 							active:

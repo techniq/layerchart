@@ -31,7 +31,7 @@
 	let show = $state(true);
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4">
 	<Field label="Show" let:id>
 		<Switch bind:checked={show} {id} size="md" />
 	</Field>
