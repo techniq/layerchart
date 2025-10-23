@@ -2,7 +2,16 @@
 description: <rect> element with tweened properties using motionStore
 section: primitives
 layers: ['svg', 'canvas', 'html']
-related: ['components/Bars', 'components/Highlight', 'components/RectClipPath', 'examples/Partition', 'examples/Sankey', 'examples/Tree', 'examples/Treemap']
+related:
+  [
+    'components/Bars',
+    'components/Highlight',
+    'components/RectClipPath',
+    'examples/Partition',
+    'examples/Sankey',
+    'examples/Tree',
+    'examples/Treemap'
+  ]
 ---
 
 <script lang="ts">

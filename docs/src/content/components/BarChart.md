@@ -1,8 +1,15 @@
 ---
 description: Streamlined Chart configuration for Bar charts
 section: charts
-layers: ["svg", "canvas"]
-related: ["components/Chart", "components/Bars", "examples/Bars", "examples/Histogram", "examples/Sparkbar"]
+layers: ['svg', 'canvas']
+related:
+  [
+    'components/Chart',
+    'components/Bars',
+    'examples/Bars',
+    'examples/Histogram',
+    'examples/Sparkbar'
+  ]
 ---
 
 <script lang="ts">

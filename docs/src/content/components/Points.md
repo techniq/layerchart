@@ -2,7 +2,16 @@
 description: Points
 section: marks
 layers: ['svg', 'canvas']
-related: ['components/Area', 'components/Spline', 'components/Tooltip', 'components/Zoom', 'examples/DotPlot', 'examples/PunchCard', 'examples/Scatter']
+related:
+  [
+    'components/Area',
+    'components/Spline',
+    'components/Tooltip',
+    'components/Zoom',
+    'examples/DotPlot',
+    'examples/PunchCard',
+    'examples/Scatter'
+  ]
 ---
 
 <script lang="ts">

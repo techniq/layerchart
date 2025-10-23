@@ -42,7 +42,7 @@ related: ['components/Arc', 'examples/Arc']
 <Example name="inner-radius-positive" />
 
 #### If value >= 0 and less than 1, value will be treated as a percentage of outerRadius
- 
+
 <Example name="inner-radius-zero-one" />
 
 #### If value less than 0, value will be treated as a offset of outerRadius
