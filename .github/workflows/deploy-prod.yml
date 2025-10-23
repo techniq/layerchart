@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm package
+
       - name: Build site
         run: pnpm --filter docs build
 
