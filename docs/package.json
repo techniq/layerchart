@@ -51,6 +51,7 @@
 		"@types/topojson-specification": "^1.0.5",
 		"@vitest/browser": "^3.2.4",
 		"d3-array": "^3.2.4",
+		"d3-color": "^3.1.0",
 		"d3-dsv": "^3.0.1",
 		"d3-geo": "^3.1.1",
 		"d3-hierarchy": "^3.1.2",
