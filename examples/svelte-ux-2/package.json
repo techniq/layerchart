@@ -18,17 +18,17 @@
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
 		"@sveltejs/kit": "^2.47.3",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
-		"@tailwindcss/vite": "^4.1.15",
+		"@tailwindcss/vite": "^4.1.16",
 		"layerchart": "workspace:*",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.7.1",
-		"svelte": "^5.41.2",
+		"svelte": "^5.41.3",
 		"svelte-check": "^4.3.3",
 		"svelte-ux": "2.0.0-next.19",
-		"tailwindcss": "^4.1.15",
+		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3",
-		"vite": "^7.1.11",
+		"vite": "^7.1.12",
 		"vite-plugin-devtools-json": "^1.0.0"
 	}
 }
