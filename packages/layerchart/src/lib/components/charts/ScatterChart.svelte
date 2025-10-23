@@ -38,8 +38,8 @@
     'radial'
   > & {
     props?: ScatterChartPropsObjProp;
-    yDomain?: ComponentProps<typeof BrushContext>['yDomain'];
-    yScale?: AnyScale;
+    // yDomain?: ComponentProps<typeof BrushContext>['yDomain'];
+    // yScale?: AnyScale;
   };
 </script>
 
@@ -48,7 +48,6 @@
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
-  import BrushContext from '../BrushContext.svelte';
   import Chart from '../Chart.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
@@ -65,6 +64,7 @@
   import { asAny } from '../../utils/types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
+  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
@@ -235,12 +235,12 @@
     ? {
         axis: 'both',
         resetOnEnd: true,
-        xDomain,
-        yDomain,
+        x: xDomain as BrushDomainType,
+        y: yDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.xDomain;
-          yDomain = e.yDomain;
+          xDomain = e.brush.x;
+          yDomain = e.brush.y;
           brushProps.onBrushEnd?.(e);
         },
       }

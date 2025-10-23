@@ -40,7 +40,8 @@
   import { unique } from '@layerstack/utils';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
-  import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
+  import BrushContext from './BrushContext.svelte';
+  import { type BrushState } from '$lib/states/brush.svelte.js';
   import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -156,7 +157,7 @@
     radial: boolean;
     tooltip: TooltipContextValue<T>;
     geo: GeoContextValue;
-    brush: BrushContextValue;
+    brush: BrushState;
     transform: TransformContextValue;
   };
 
@@ -1092,7 +1093,7 @@
   let geoContext = $state<GeoContextValue>(null!);
   let transformContext = $state<TransformContextValue>(null!);
   let tooltipContext = $state<TooltipContextValue>(null!);
-  let brushContext = $state<BrushContextValue>(null!);
+  let brushContext = $state<BrushState>(null!);
 
   const context: ChartContextValue<TData, XScale, YScale> = {
     get activeGetters() {
