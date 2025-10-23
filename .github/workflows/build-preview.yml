@@ -23,12 +23,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm package
+
       - name: Build site
-        run: pnpm build:packages
+        run: pnpm --filter docs build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: preview-build
-          path: packages/layerchart/.svelte-kit
+          path: docs/.svelte-kit
           include-hidden-files: true
