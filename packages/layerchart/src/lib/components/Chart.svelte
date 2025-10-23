@@ -19,6 +19,7 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
+  import { type BrushState } from '$lib/states/brush.svelte.js';
 
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';

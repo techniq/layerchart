@@ -22,7 +22,7 @@ import { printDebug } from '$lib/utils/debug.js';
 import type { GeoState } from '$lib/contexts/geo.js';
 import type { TransformContextValue } from '$lib/contexts/transform.js';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
-import type { BrushContextValue } from '$lib/components/BrushContext.svelte';
+import type { BrushState } from './brush.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -46,7 +46,7 @@ export class ChartState<
   geoContext = $state<GeoState>(null!);
   transformContext = $state<TransformContextValue>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
-  brushContext = $state<BrushContextValue>(null!);
+  brushContext = $state<BrushState>(null!);
 
   // Container dimensions
   _containerWidth = $state(100);

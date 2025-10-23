@@ -1228,7 +1228,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.brush.x) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
@@ -1241,8 +1241,7 @@
         data={denseDateSeriesData2}
         x="date"
         y="value"
-        {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.brush.x) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
