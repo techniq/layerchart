@@ -13,11 +13,11 @@
 	}: { tag: string } & HTMLAttributes<HTMLHeadingElement> = $props();
 </script>
 
-<svelte:element this={tag} {id} class={cls('group relative scroll-m-20', className)} {...restProps}>
-	<LucideLink
-		class="absolute left-0 top-0.5 pr-2 opacity-0 group-hover:opacity-100 translate-x-0 group-hover:-translate-x-full transition-all text-surface-content/50"
-	/>
-	<a href="#{id}">
+<svelte:element this={tag} {id} class={cls('scroll-m-20', className)} {...restProps}>
+	<a href="#{id}" class="group relative">
 		{@render children?.()}
+		<LucideLink
+			class="inline text-surface-content/50 opacity-0 group-hover:opacity-100 -translate-x-full group-hover:translate-x-0 transition-all scale-70"
+		/>
 	</a>
 </svelte:element>
