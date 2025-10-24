@@ -4,8 +4,7 @@
 	import { BarChart, Bars, Tooltip } from 'layerchart';
 	import { getCivilizationEvents } from '$lib/data.remote.js';
 
-	const data = getCivilizationEvents();
-
+	const data = $derived(await getCivilizationEvents());
 	export { data };
 </script>
 
