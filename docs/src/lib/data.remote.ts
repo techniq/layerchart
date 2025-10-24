@@ -9,6 +9,7 @@ import { prerender, getRequestEvent } from '$app/server';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
+import type { USSenatorsData } from '$static/data/examples/us-senators';
 
 export const getGroupData = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -118,5 +119,13 @@ export const getUsCapitals = prerender(async () => {
 	const data = (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
 	)) as USStateCapitalsData;
+	return data;
+});
+
+export const getUsSenators = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as USSenatorsData;
 	return data;
 });
