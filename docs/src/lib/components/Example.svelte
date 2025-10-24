@@ -14,9 +14,13 @@
 
 	import { page } from '$app/state';
 
-	let { name, showCode = false }: { name: string; showCode?: boolean } = $props();
+	let {
+		component = page.params.name!,
+		name,
+		showCode = false
+	}: { component: string; name: string; showCode?: boolean } = $props();
 
-	const example = examples.get()?.current[name];
+	const example = examples.get()?.current[component]?.[name];
 
 	/**
 	 * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
@@ -118,7 +122,8 @@
 		</div>
 	{:else}
 		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
-			Example <span class="font-bold">`{name}`</span> not found.
+			Example <span class="font-bold">`{name}`</span> for
+			<span class="font-bold">`{component}`</span> not found.
 		</div>
 	{/if}
 </div>

@@ -12,23 +12,44 @@ export const load = async ({ params }) => {
 		query: '?raw'
 	});
 
+	const { PageComponent, metadata } = await getMarkdownComponent(
+		params.type as 'components' | 'examples',
+		params.name
+	);
+
+	// Extract all <Example component="..." name="..."> from markdown page
+	const regex = /<Example\s+(?:component="([^"]*?)"\s+)?name="([^"]*?)"\s*\/>/g;
+	const pageExamples = [...metadata.content.matchAll(regex)].map((match) => ({
+		component: match[1] || params.name, // use page component name if not explicit (ex. <Example name="basic" />)
+		name: match[2]
+	}));
+
 	const examples: Examples = {};
 	for (const path in allExamples) {
-		if (path.includes(`/src/examples/${params.name}/`)) {
+		if (
+			pageExamples.some(
+				(example) => path === `/src/examples/${example.component}/${example.name}.svelte`
+			)
+		) {
 			const component = (await allExamples[path]()) as Component;
 			const source = (await allSources[path]()) as string;
-			const name = path.split('/')?.pop()?.replace('.svelte', '') ?? 'unknown';
+			const [_, __, ___, componentName, filename] = path.split('/');
+			const name = filename.replace('.svelte', '');
 
 			// Remove `export { data };`
 			// TODO: Also remove blank lines left behind
 			const cleanupSource = source.replace(/^.*export .*;.*$/gm, '');
 
-			examples[name] = { component, source: cleanupSource };
+			if (!examples[componentName]) {
+				examples[componentName] = {};
+			}
+			examples[componentName][name] = { component, source: cleanupSource };
 		}
 	}
 
 	return {
-		...(await getMarkdownComponent(params.type as 'components' | 'examples', params.name)),
+		PageComponent,
+		metadata,
 		examples,
 		meta: {
 			tableOfContents: true
