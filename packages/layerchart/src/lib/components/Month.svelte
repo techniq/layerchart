@@ -112,7 +112,6 @@
   const ctx = getChartContext();
 
   const rangeDays = $derived(timeDays(start, end));
-  const rangeMonths = $derived(timeMonths(start, end));
 
   // Space needed for month labels at the top
   const monthLabelHeight = $derived(cellSize);
@@ -170,14 +169,22 @@
       });
     });
 
-    return cells;
+    return { cells, monthIndexMap };
   });
 
-  // Generate month labels
+  // Generate month labels based on the actual months encountered in the cells
   const monthLabels = $derived.by(() => {
     const labels: Array<{ x: number; y: number; text: string }> = [];
+    const monthIndexMap = allCells.monthIndexMap;
 
-    rangeMonths.forEach((firstDayOfMonth, index) => {
+    // Convert the map to an array of [monthKey, index] pairs and sort by index
+    const monthEntries = Array.from(monthIndexMap.entries()).sort((a, b) => a[1] - b[1]);
+
+    monthEntries.forEach(([monthKey, index]) => {
+      // Parse the monthKey to get the year and month
+      const [year, month] = monthKey.split('-').map(Number);
+      const firstDayOfMonth = new Date(year, month, 1);
+
       const monthCol = index % monthsPerRow;
       const monthRow = Math.floor(index / monthsPerRow);
 
@@ -197,9 +204,9 @@
 <Group>
   <!-- Cells -->
   {#if children}
-    {@render children({ cells: allCells, cellSize })}
+    {@render children({ cells: allCells.cells, cellSize })}
   {:else}
-    {#each allCells as cell}
+    {#each allCells.cells as cell}
       <Rect
         x={cell.x}
         y={cell.y}
