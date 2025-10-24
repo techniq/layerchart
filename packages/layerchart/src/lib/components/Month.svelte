@@ -1,0 +1,321 @@
+<script lang="ts" module>
+  export type MonthCell = {
+    x: number;
+    y: number;
+    color: any;
+    data: any;
+    date: Date;
+  };
+
+  export type MonthPropsWithoutHTML = {
+    /**
+     * The start year to display.
+     *
+     * @default current year
+     */
+    startYear?: number;
+
+    /**
+     * The end year to display (inclusive).
+     *
+     * @default current year
+     */
+    endYear?: number;
+
+    /**
+     * Size of the cell in the calendar.
+     *
+     * @default 25
+     */
+    cellSize?: number;
+
+    /**
+     * Number of months to display per row. If undefined, automatically calculated based on available width.
+     */
+    monthsPerRow?: number;
+
+    /**
+     * Padding multiplier between months (relative to cellSize).
+     *
+     * @default 1.2
+     */
+    monthPadding?: number;
+
+    /**
+     * Vertical spacing multiplier between month rows (in number of cell heights).
+     *
+     * @default 8
+     */
+    rowSpacing?: number;
+
+    /**
+     * Whether to show the day number in each cell.
+     *
+     * @default true
+     */
+    showDayNumber?: boolean;
+
+    /**
+     * Whether to show month labels.
+     *
+     * @default true
+     */
+    showMonthLabel?: boolean;
+
+    /**
+     * Whether to show year labels.
+     *
+     * @default true
+     */
+    showYearLabel?: boolean;
+
+    /**
+     * Props to pass to the `<text>` element for month labels.
+     */
+    monthLabelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * Props to pass to the `<text>` element for year labels.
+     */
+    yearLabelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * Props to pass to the `<text>` element for day numbers.
+     */
+    dayNumberProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * Tooltip context to setup mouse events to show tooltip for related data
+     */
+    tooltipContext?: TooltipContextValue;
+
+    children?: Snippet<[{ cells: MonthCell[]; cellSize: number }]>;
+  } & Omit<
+    RectPropsWithoutHTML,
+    'children' | 'x' | 'y' | 'width' | 'height' | 'fill' | 'onpointermove' | 'onpointerleave'
+  >;
+
+  export type MonthProps = MonthPropsWithoutHTML &
+    Without<SVGAttributes<SVGRectElement>, MonthPropsWithoutHTML>;
+</script>
+
+<script lang="ts">
+  import { type ComponentProps, type Snippet } from 'svelte';
+  import { timeDays, timeMonths, timeWeek } from 'd3-time';
+  import { index } from 'd3-array';
+  import { format } from '@layerstack/utils';
+
+  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import Group from './Group.svelte';
+  import Text from './Text.svelte';
+  import { chartDataArray } from '../utils/common.js';
+  import { getChartContext } from './Chart.svelte';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { Without } from '$lib/utils/types.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
+  const DAYS_PER_WEEK = 7;
+
+  let {
+    startYear = new Date().getFullYear(),
+    endYear = new Date().getFullYear(),
+    cellSize = 25,
+    monthPadding = 1.2,
+    rowSpacing = 8,
+    showDayNumber = true,
+    showMonthLabel = true,
+    showYearLabel = true,
+    monthLabelProps = {},
+    yearLabelProps = {},
+    dayNumberProps = {},
+    tooltipContext: tooltip,
+    children,
+    ...restProps
+  }: MonthPropsWithoutHTML = $props();
+
+  const ctx = getChartContext();
+
+  // Calculate monthsPerRow based on the actual space taken by each month
+  // Each month (except the last in a row) takes: (monthPadding * cellSize * DAYS_PER_WEEK)
+  // The calculation accounts for n-1 padded months plus one unpadded month
+  // Formula: (n-1) * monthPadding * width + width = totalWidth
+  // Solving for n: n = (totalWidth + (monthPadding - 1) * width) / (monthPadding * width)
+  const monthsPerRow = $derived(
+    Math.floor(
+      (ctx.width + (monthPadding - 1) * cellSize * DAYS_PER_WEEK) /
+        (monthPadding * cellSize * DAYS_PER_WEEK)
+    )
+  );
+
+  // Generate data indexed by date (using date object as key)
+  const dataByDate = $derived(
+    ctx.data && ctx.config.x ? index(chartDataArray(ctx.data), (d) => ctx.x(d)) : new Map()
+  );
+
+  // Generate cells for all years
+  const allCells = $derived.by(() => {
+    const cells: MonthCell[] = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      const firstDayOfYear = new Date(year, 0, 1);
+      const lastDayOfYear = new Date(year + 1, 0, 1);
+      const yearDays = timeDays(firstDayOfYear, lastDayOfYear);
+
+      yearDays.forEach((day) => {
+        const firstDayOfMonth = new Date(day.getFullYear(), day.getMonth(), 1);
+        const cellData = dataByDate.get(day) ?? { date: day };
+
+        const monthIndex = day.getMonth();
+        const monthCol = monthIndex % monthsPerRow;
+        const monthRow = Math.floor(monthIndex / monthsPerRow);
+
+        const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
+        const weekDiff = timeWeek.count(firstDayOfMonth, day);
+        const rowLevel = monthRow + 1;
+
+        cells.push({
+          x: day.getDay() * cellSize + monthPaddingOffset,
+          y: weekDiff * cellSize + rowLevel * cellSize * rowSpacing - cellSize / 2,
+          color: ctx.config.c ? ctx.cGet(cellData) : 'transparent',
+          data: cellData,
+          date: day,
+        });
+      });
+    }
+
+    return cells;
+  });
+
+  // Generate month labels
+  const monthLabels = $derived.by(() => {
+    const labels: Array<{ x: number; y: number; text: string; year: number }> = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      const firstDayOfYear = new Date(year, 0, 1);
+      const lastDayOfYear = new Date(year + 1, 0, 1);
+      const yearMonths = timeMonths(firstDayOfYear, lastDayOfYear);
+
+      yearMonths.forEach((firstDayOfMonth) => {
+        const monthIndex = firstDayOfMonth.getMonth();
+        const monthCol = monthIndex % monthsPerRow;
+        const monthRow = Math.floor(monthIndex / monthsPerRow);
+
+        const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
+        const rowLevel = monthRow + 1;
+
+        labels.push({
+          x: monthPaddingOffset,
+          y: rowLevel * cellSize * rowSpacing - cellSize,
+          text: format(firstDayOfMonth, 'month'),
+          year,
+        });
+      });
+    }
+
+    return labels;
+  });
+
+  // Calculate year label positions
+  const yearLabels = $derived.by(() => {
+    const labels: Array<{ x: number; y: number; text: string }> = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      labels.push({
+        x: ctx.width / 2,
+        y: cellSize * 5.5,
+        text: String(year),
+      });
+    }
+
+    return labels;
+  });
+</script>
+
+<Group y={-cellSize * 4}>
+  <!-- Cells -->
+  {#if children}
+    {@render children({ cells: allCells, cellSize })}
+  {:else}
+    {#each allCells as cell}
+      <Rect
+        x={cell.x}
+        y={cell.y}
+        width={cellSize}
+        height={cellSize}
+        fill={cell.color}
+        onpointermove={(e) => tooltip?.show(e, cell.data)}
+        onpointerleave={(e) => tooltip?.hide()}
+        {...extractLayerProps(restProps, 'lc-month-cell')}
+      />
+
+      {#if showDayNumber}
+        <Text
+          x={cell.x + cellSize / 2}
+          y={cell.y + cellSize / 2}
+          lineHeight="0.8em"
+          value={cell.date.getDate()}
+          textAnchor="middle"
+          verticalAnchor="middle"
+          class="lc-month-day-number"
+          {...dayNumberProps}
+        />
+      {/if}
+    {/each}
+  {/if}
+
+  <!-- Month labels -->
+  {#if showMonthLabel}
+    {#each monthLabels as label}
+      <Text
+        x={label.x}
+        y={label.y}
+        value={label.text}
+        class="lc-month-month-label"
+        {...monthLabelProps}
+      />
+    {/each}
+  {/if}
+
+  <!-- Year labels -->
+  {#if showYearLabel}
+    {#each yearLabels as label}
+      <Text
+        x={label.x}
+        y={label.y}
+        value={label.text}
+        class="lc-month-year-label"
+        {...yearLabelProps}
+      />
+    {/each}
+  {/if}
+</Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-month-cell)) {
+      stroke-width: 1;
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-month-day-number)) {
+      font-size: 10px;
+      pointer-events: none;
+      stroke: var(--color-surface-100, light-dark(white, black));
+      stroke-width: 1px;
+      font-weight: 600;
+    }
+
+    :global(:where(.lc-month-month-label)) {
+      font-size: 1.1em;
+    }
+
+    :global(:where(.lc-month-year-label)) {
+      font-size: 1.5em;
+    }
+  }
+</style>

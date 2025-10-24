@@ -93,6 +93,8 @@ export { default as Link } from './Link.svelte';
 export * from './Link.svelte';
 export { default as MotionPath } from './MotionPath.svelte';
 export * from './MotionPath.svelte';
+export { default as Month } from './Month.svelte';
+export * from './Month.svelte';
 export { default as Pack } from './Pack.svelte';
 export * from './Pack.svelte';
 export { default as Partition } from './Partition.svelte';
