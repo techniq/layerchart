@@ -9,18 +9,14 @@
 
   export type MonthPropsWithoutHTML = {
     /**
-     * The start year to display.
-     *
-     * @default current year
+     * The start date of the calendar.
      */
-    startYear?: number;
+    start: Date;
 
     /**
-     * The end year to display (inclusive).
-     *
-     * @default current year
+     * The end date of the calendar.
      */
-    endYear?: number;
+    end: Date;
 
     /**
      * Size of the cell in the calendar.
@@ -56,28 +52,9 @@
     showDayNumber?: boolean;
 
     /**
-     * Whether to show month labels.
-     *
-     * @default true
-     */
-    showMonthLabel?: boolean;
-
-    /**
-     * Whether to show year labels.
-     *
-     * @default true
-     */
-    showYearLabel?: boolean;
-
-    /**
      * Props to pass to the `<text>` element for month labels.
      */
-    monthLabelProps?: Partial<ComponentProps<typeof Text>>;
-
-    /**
-     * Props to pass to the `<text>` element for year labels.
-     */
-    yearLabelProps?: Partial<ComponentProps<typeof Text>>;
+    monthLabel?: boolean | Partial<ComponentProps<typeof Text>>;
 
     /**
      * Props to pass to the `<text>` element for day numbers.
@@ -118,16 +95,14 @@
   const DAYS_PER_WEEK = 7;
 
   let {
-    startYear = new Date().getFullYear(),
-    endYear = new Date().getFullYear(),
+    start,
+    end,
     cellSize = 25,
+    monthsPerRow: monthsPerRowProp,
     monthPadding = 1.2,
     rowSpacing = 8,
     showDayNumber = true,
-    showMonthLabel = true,
-    showYearLabel = true,
-    monthLabelProps = {},
-    yearLabelProps = {},
+    monthLabel = true,
     dayNumberProps = {},
     tooltipContext: tooltip,
     children,
@@ -136,16 +111,23 @@
 
   const ctx = getChartContext();
 
+  const rangeDays = $derived(timeDays(start, end));
+  const rangeMonths = $derived(timeMonths(start, end));
+
+  // Space needed for month labels at the top
+  const monthLabelHeight = $derived(cellSize);
+
   // Calculate monthsPerRow based on the actual space taken by each month
   // Each month (except the last in a row) takes: (monthPadding * cellSize * DAYS_PER_WEEK)
   // The calculation accounts for n-1 padded months plus one unpadded month
   // Formula: (n-1) * monthPadding * width + width = totalWidth
   // Solving for n: n = (totalWidth + (monthPadding - 1) * width) / (monthPadding * width)
   const monthsPerRow = $derived(
-    Math.floor(
-      (ctx.width + (monthPadding - 1) * cellSize * DAYS_PER_WEEK) /
-        (monthPadding * cellSize * DAYS_PER_WEEK)
-    )
+    monthsPerRowProp ??
+      Math.floor(
+        (ctx.width + (monthPadding - 1) * cellSize * DAYS_PER_WEEK) /
+          (monthPadding * cellSize * DAYS_PER_WEEK)
+      )
   );
 
   // Generate data indexed by date (using date object as key)
@@ -153,86 +135,66 @@
     ctx.data && ctx.config.x ? index(chartDataArray(ctx.data), (d) => ctx.x(d)) : new Map()
   );
 
-  // Generate cells for all years
+  // Generate cells for the date range
   const allCells = $derived.by(() => {
     const cells: MonthCell[] = [];
+    // Create a map of month index to track which months we've seen
+    const monthIndexMap = new Map<string, number>();
+    let currentMonthIndex = 0;
 
-    for (let year = startYear; year <= endYear; year++) {
-      const firstDayOfYear = new Date(year, 0, 1);
-      const lastDayOfYear = new Date(year + 1, 0, 1);
-      const yearDays = timeDays(firstDayOfYear, lastDayOfYear);
+    rangeDays.forEach((day) => {
+      const firstDayOfMonth = new Date(day.getFullYear(), day.getMonth(), 1);
+      const monthKey = `${day.getFullYear()}-${day.getMonth()}`;
 
-      yearDays.forEach((day) => {
-        const firstDayOfMonth = new Date(day.getFullYear(), day.getMonth(), 1);
-        const cellData = dataByDate.get(day) ?? { date: day };
+      // Assign a sequential index to each unique month in the range
+      if (!monthIndexMap.has(monthKey)) {
+        monthIndexMap.set(monthKey, currentMonthIndex);
+        currentMonthIndex++;
+      }
 
-        const monthIndex = day.getMonth();
-        const monthCol = monthIndex % monthsPerRow;
-        const monthRow = Math.floor(monthIndex / monthsPerRow);
+      const monthIndex = monthIndexMap.get(monthKey)!;
+      const cellData = dataByDate.get(day) ?? { date: day };
 
-        const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
-        const weekDiff = timeWeek.count(firstDayOfMonth, day);
-        const rowLevel = monthRow + 1;
+      const monthCol = monthIndex % monthsPerRow;
+      const monthRow = Math.floor(monthIndex / monthsPerRow);
 
-        cells.push({
-          x: day.getDay() * cellSize + monthPaddingOffset,
-          y: weekDiff * cellSize + rowLevel * cellSize * rowSpacing - cellSize / 2,
-          color: ctx.config.c ? ctx.cGet(cellData) : 'transparent',
-          data: cellData,
-          date: day,
-        });
+      const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
+      const weekDiff = timeWeek.count(firstDayOfMonth, day);
+
+      cells.push({
+        x: day.getDay() * cellSize + monthPaddingOffset,
+        y: weekDiff * cellSize + monthRow * cellSize * rowSpacing + monthLabelHeight,
+        color: ctx.config.c ? ctx.cGet(cellData) : 'transparent',
+        data: cellData,
+        date: day,
       });
-    }
+    });
 
     return cells;
   });
 
   // Generate month labels
   const monthLabels = $derived.by(() => {
-    const labels: Array<{ x: number; y: number; text: string; year: number }> = [];
-
-    for (let year = startYear; year <= endYear; year++) {
-      const firstDayOfYear = new Date(year, 0, 1);
-      const lastDayOfYear = new Date(year + 1, 0, 1);
-      const yearMonths = timeMonths(firstDayOfYear, lastDayOfYear);
-
-      yearMonths.forEach((firstDayOfMonth) => {
-        const monthIndex = firstDayOfMonth.getMonth();
-        const monthCol = monthIndex % monthsPerRow;
-        const monthRow = Math.floor(monthIndex / monthsPerRow);
-
-        const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
-        const rowLevel = monthRow + 1;
-
-        labels.push({
-          x: monthPaddingOffset,
-          y: rowLevel * cellSize * rowSpacing - cellSize,
-          text: format(firstDayOfMonth, 'month'),
-          year,
-        });
-      });
-    }
-
-    return labels;
-  });
-
-  // Calculate year label positions
-  const yearLabels = $derived.by(() => {
     const labels: Array<{ x: number; y: number; text: string }> = [];
 
-    for (let year = startYear; year <= endYear; year++) {
+    rangeMonths.forEach((firstDayOfMonth, index) => {
+      const monthCol = index % monthsPerRow;
+      const monthRow = Math.floor(index / monthsPerRow);
+
+      const monthPaddingOffset = monthPadding * cellSize * DAYS_PER_WEEK * monthCol;
+
       labels.push({
-        x: ctx.width / 2,
-        y: cellSize * 5.5,
-        text: String(year),
+        x: monthPaddingOffset,
+        y: monthRow * cellSize * rowSpacing,
+        text: format(firstDayOfMonth, 'month'),
       });
-    }
+    });
 
     return labels;
   });
 </script>
 
-<Group y={-cellSize * 4}>
+<Group>
   <!-- Cells -->
   {#if children}
     {@render children({ cells: allCells, cellSize })}
@@ -265,27 +227,15 @@
   {/if}
 
   <!-- Month labels -->
-  {#if showMonthLabel}
+  {#if monthLabel}
     {#each monthLabels as label}
       <Text
         x={label.x}
         y={label.y}
         value={label.text}
+        verticalAnchor="start"
         class="lc-month-month-label"
-        {...monthLabelProps}
-      />
-    {/each}
-  {/if}
-
-  <!-- Year labels -->
-  {#if showYearLabel}
-    {#each yearLabels as label}
-      <Text
-        x={label.x}
-        y={label.y}
-        value={label.text}
-        class="lc-month-year-label"
-        {...yearLabelProps}
+        {...extractLayerProps(monthLabel, 'lc-month-month-label')}
       />
     {/each}
   {/if}
@@ -311,11 +261,7 @@
     }
 
     :global(:where(.lc-month-month-label)) {
-      font-size: 1.1em;
-    }
-
-    :global(:where(.lc-month-year-label)) {
-      font-size: 1.5em;
+      font-size: 16px;
     }
   }
 </style>
