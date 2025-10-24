@@ -4,7 +4,7 @@
 	import { Duration } from 'svelte-ux';
 	import { BarChart, Tooltip } from 'layerchart';
 	import { getRandomInteger } from '$lib/utils/data.js';
-	import { applyLanes } from 'layerchart/utils/array.js';
+	import { applyLanes } from 'layerchart';
 
 	const count = 10;
 	const now = timeDay.floor(new Date());

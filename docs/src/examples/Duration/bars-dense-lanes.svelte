@@ -3,7 +3,7 @@
 	import { Duration } from 'svelte-ux';
 	import { BarChart, Tooltip } from 'layerchart';
 	import { getUsEvents } from '$lib/data.remote';
-	import { applyLanes } from 'layerchart/utils/array.js';
+	import { applyLanes } from 'layerchart';
 
 	const usEvents = await getUsEvents();
 	const data = applyLanes(usEvents, { start: 'startDate', end: 'endDate' });
