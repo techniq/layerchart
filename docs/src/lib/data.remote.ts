@@ -129,3 +129,11 @@ export const getUsSenators = prerender(async () => {
 	)) as USSenatorsData;
 	return data;
 });
+
+export const getAlphabet = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/alphabet.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { letter: string; frequency: number }[];
+	return data;
+});
