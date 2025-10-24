@@ -33,7 +33,7 @@
 	<Button
 		size="sm"
 		icon={LucideChevronLeft}
-		href="/components/{page.params.name}"
+		href="/{page.params.type}/{page.params.name}"
 		class="mb-4 border"
 	>
 		Back to examples
@@ -47,7 +47,7 @@
 
 	{#if page.params.example}
 		<LucideChevronRight class="text-sm opacity-25" />
-		<a href="/components/{page.params.name}" class="text-primary">{metadata.name}</a>
+		<a href="/{page.params.type}/{page.params.name}" class="text-primary">{metadata.name}</a>
 	{/if}
 </div>
 

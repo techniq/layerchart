@@ -1,6 +1,6 @@
 import type { Component } from 'svelte';
 import type { Examples } from '$lib/types.js';
-import { getComponentDoc } from '$lib/markdown/utils.js';
+import { getMarkdownComponent } from '$lib/markdown/utils.js';
 
 export const load = async ({ params }) => {
 	const allExamples = import.meta.glob('/src/examples/**/*', {
@@ -28,7 +28,7 @@ export const load = async ({ params }) => {
 	}
 
 	return {
-		...(await getComponentDoc(params.name)),
+		...(await getMarkdownComponent(params.type as 'components' | 'examples', params.name)),
 		examples,
 		meta: {
 			tableOfContents: true
