@@ -4,9 +4,9 @@
 	import { feature } from 'topojson-client';
 	import { Chart, Circle, GeoPath, GeoPoint, Hull, Layer, Text } from 'layerchart';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import { getUsCountiesTopology, getUsCapitals } from '$lib/data.remote';
+	import { getUsStatesTopology, getUsCapitals } from '$lib/data.remote';
 
-	let topology = $state(await getUsCountiesTopology());
+	let topology = $state(await getUsStatesTopology());
 	const states = feature(topology, topology.objects.states);
 
 	let capitals = $state(await getUsCapitals());
