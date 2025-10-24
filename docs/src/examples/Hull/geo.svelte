@@ -4,14 +4,16 @@
 	import { feature } from 'topojson-client';
 	import { Chart, Circle, GeoPath, GeoPoint, Hull, Layer, Text } from 'layerchart';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import { getUsData } from '$lib/data.remote';
+	import { getUsCountiesTopology, getUsCapitals } from '$lib/data.remote';
 
-	let data = $state(await getUsData());
+	let topology = $state(await getUsCountiesTopology());
+	const states = feature(topology, topology.objects.states);
+
+	let capitals = $state(await getUsCapitals());
+
+	export { capitals as data };
+
 	let curve = $state(curveLinearClosed);
-
-	const states = feature(data.us.geojson, data.us.geojson.objects.states);
-
-	export { data };
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-2">
@@ -31,7 +33,7 @@
 		<GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
 		<g class="points pointer-events-none">
 			<Hull
-				data={data.us.stateCaptitals.filter((d: any) => {
+				data={capitals.filter((d: any) => {
 					return !['Alaska', 'Hawaii'].includes(d.name);
 				})}
 				{curve}
@@ -40,12 +42,11 @@
 				}}
 			/>
 
-			{#each data.us.stateCaptitals as capital}
+			{#each capitals as capital}
 				<!-- TODO: Fix GeoPoint to work with Canvas -->
 				<GeoPoint lat={capital.latitude} long={capital.longitude}>
 					<Circle r={2} class="fill-white stroke-danger" />
 					<Text
-						y="-6"
 						value={capital.description}
 						textAnchor="middle"
 						class="text-[8px] stroke-surface-100 [stroke-width:2px]"

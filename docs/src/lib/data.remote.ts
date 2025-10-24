@@ -20,23 +20,6 @@ export const getGroupData = prerender(async () => {
 	return data;
 });
 
-export const getUsData = prerender(async () => {
-	const { fetch } = getRequestEvent();
-	const data = {
-		us: {
-			geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
-				r.json()
-			)) as Topology<{
-				states: GeometryCollection<{ name: string }>;
-			}>,
-			stateCaptitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
-				csvParse(await r.text(), autoType)
-			)) as USStateCapitalsData
-		}
-	};
-	return data;
-});
-
 export const getAppleStock = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
@@ -106,5 +89,34 @@ export const getPenguins = prerender(async () => {
 export const getFlare = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json());
+	return data;
+});
+
+export const getUsStatesTopology = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
+		r.json()
+	)) as Topology<{
+		states: GeometryCollection<{ name: string }>;
+	}>;
+	return data;
+});
+
+export const getUsCountiesTopology = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json').then((r) =>
+		r.json()
+	)) as Topology<{
+		states: GeometryCollection<{ name: string }>;
+		counties: GeometryCollection<{ name: string }>;
+	}>;
+	return data;
+});
+
+export const getUsCapitals = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as USStateCapitalsData;
 	return data;
 });
