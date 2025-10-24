@@ -169,3 +169,27 @@ export const getCivilizationEvents = prerender(async () => {
 	});
 	return data;
 });
+
+export const getAppleTicker = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/apple-ticker.json').then(async (r) =>
+		parse(await r.text())
+	);
+	return data;
+});
+
+export const getNewPassengerCars = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/new-passenger-cars.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	);
+	return data;
+});
+
+export const getHydro = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/hydro.json').then(async (r) =>
+		parse(await r.text())
+	);
+	return data;
+});
