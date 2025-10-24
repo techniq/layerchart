@@ -125,15 +125,7 @@
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
-  import {
-    timeDay,
-    timeHour,
-    timeMillisecond,
-    timeMinute,
-    timeMonth,
-    timeSecond,
-    timeYear,
-  } from 'd3-time';
+  import { timeDay, timeHour, timeMillisecond, timeMinute, timeSecond, timeYear } from 'd3-time';
 
   import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';

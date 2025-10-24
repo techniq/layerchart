@@ -1,4 +1,4 @@
-import { timeYear, timeMonth, timeDay, type TimeInterval, timeTicks } from 'd3-time';
+import { timeYear, timeDay, type TimeInterval, timeTicks } from 'd3-time';
 
 import {
   format,
