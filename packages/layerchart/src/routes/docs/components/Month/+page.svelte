@@ -205,7 +205,7 @@
         <Layer type={shared.renderContext}>
           <Month
             start={firstDayOfYear}
-            end={lastDayOfYear}
+            end={now}
             showDayNumber={false}
             tooltipContext={context.tooltip}
           />
@@ -248,7 +248,7 @@
         <Layer type={shared.renderContext}>
           <Month
             start={firstDayOfYear}
-            end={lastDayOfYear}
+            end={now}
             showDayNumber={false}
             monthLabel={false}
             tooltipContext={context.tooltip}
