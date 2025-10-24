@@ -113,8 +113,8 @@
 
   const rangeDays = $derived(timeDays(start, end));
 
-  // Space needed for month labels at the top
-  const monthLabelHeight = $derived(cellSize);
+  // Space needed for month labels at the top (only if labels are shown)
+  const monthLabelHeight = $derived(monthLabel ? cellSize : 0);
 
   // Calculate monthsPerRow based on the actual space taken by each month
   // Each month (except the last in a row) takes: (monthPadding * cellSize * DAYS_PER_WEEK)
