@@ -147,3 +147,25 @@ export const getOlympians = prerender(async () => {
 	}[];
 	return data;
 });
+
+export const getUsEvents = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/us-events.csv').then(async (r) => {
+		return csvParse(await r.text(), autoType).map((d: any) => {
+			return {
+				startDate: new Date(d.startYear, 0, 1),
+				endDate: new Date(d.endYear, 11, 31),
+				event: d.event
+			};
+		});
+	});
+	return data;
+});
+
+export const getCivilizationEvents = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/civilization-timeline.csv').then(async (r) => {
+		return csvParse(await r.text(), autoType);
+	});
+	return data;
+});
