@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 
 	let example = page.params.example!;
+	let component = page.url.searchParams.get('component') ?? page.params.name!;
 </script>
 
-<Example name={example} showCode />
+<Example name={example} {component} showCode />
