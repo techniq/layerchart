@@ -251,7 +251,7 @@
   const ctx = getChartContext();
 
   const endAngle = $derived(
-    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
+    endAngleProp ?? degreesToRadians(ctx.xRange ? max(ctx.xRange) : max(range))
   );
 
   const motionEndAngle = createMotion(initialValue, () => value, motion);

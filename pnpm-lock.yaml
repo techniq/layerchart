@@ -300,8 +300,8 @@ importers:
         specifier: 2.0.0-next.17
         version: 2.0.0-next.17
       '@layerstack/utils':
-        specifier: 2.0.0-next.14
-        version: 2.0.0-next.14
+        specifier: 2.0.0-next.15
+        version: 2.0.0-next.15
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -4208,7 +4208,7 @@ snapshots:
 
   '@layerstack/tailwind@2.0.0-next.17':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/utils': 2.0.0-next.15
       clsx: 2.1.1
       d3-array: 3.2.4
       lodash-es: 4.17.21
