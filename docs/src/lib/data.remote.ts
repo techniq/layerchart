@@ -137,3 +137,13 @@ export const getAlphabet = prerender(async () => {
 	)) as { letter: string; frequency: number }[];
 	return data;
 });
+
+export const getOlympians = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/olympians.json').then((r) => r.json())) as {
+		name: string;
+		weight: number;
+		height: number;
+	}[];
+	return data;
+});
