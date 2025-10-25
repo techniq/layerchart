@@ -8,8 +8,9 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
+  import { getUsStatesTopology } from '$lib/data.remote';
 
-  let { data } = $props();
+  const data = $derived(await getUsStatesTopology());
 
   const states = feature(data.geojson, data.geojson.objects.states);
 
