@@ -156,6 +156,15 @@ export const getUsSenators = prerender(async () => {
 	return data;
 });
 
+export const getMiserables = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/graph/miserables.json').then((r) => r.json())) as {
+		nodes: { id: string; group: number }[];
+		links: { source: string; target: string; value: number }[];
+	};
+	return data;
+});
+
 export const getAlphabet = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/alphabet.csv').then(async (r) =>
