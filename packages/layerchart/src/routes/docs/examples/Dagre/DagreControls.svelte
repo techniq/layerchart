@@ -4,8 +4,8 @@
   import { curveLinear } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import type Dagre from '$lib/components/Dagre.svelte';
-  import type Spline from '$lib/components/Spline.svelte';
+  import type Dagre from 'layerchart';
+  import type Spline from 'layerchart';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   type DagreProps = ComponentProps<typeof Dagre>;
