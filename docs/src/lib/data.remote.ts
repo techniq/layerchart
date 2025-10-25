@@ -124,6 +124,30 @@ export const getUsCapitals = prerender(async () => {
 	return data;
 });
 
+export const getUsAirports = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { name: string; latitude: number; longitude: number }[];
+	return data;
+});
+
+export const getWorldCapitals = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
+		r.json()
+	)) as { label: string; latitude: number; longitude: number }[];
+	return data;
+});
+
+export const getWorldAirports = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { name: string; latitude: number; longitude: number }[];
+	return data;
+});
+
 export const getUsSenators = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
