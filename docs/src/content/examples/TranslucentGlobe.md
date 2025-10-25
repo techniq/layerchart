@@ -1,6 +1,6 @@
 ---
-description: Beeswarm
-section: Force
+description: TranslucentGlobe
+section: Geo
 layers: ['svg', 'canvas']
 related: []
 ---
@@ -13,4 +13,4 @@ related: []
 
 ### Basic
 
-<Example component="ForceSimulation" name="beeswarm" />
+<Example name="basic" />
