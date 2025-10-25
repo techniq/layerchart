@@ -199,3 +199,20 @@ export const getHydro = prerender(async () => {
 	);
 	return data;
 });
+
+export const getWorldLinks = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/geo/world-links.json').then((r) => r.json());
+	return data;
+});
+
+export const getWorldGeojson = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
+		(r) => r.json()
+	)) as Topology<{
+		countries: GeometryCollection<{ name: string }>;
+		land: GeometryCollection;
+	}>;
+	return data;
+});
