@@ -56,7 +56,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2 items-end mb-2">
+<div class="flex gap-2 items-end mb-4">
 	<div class="mb-2 flex gap-6">
 		<Field label="Spin:" dense labelPlacement="left" let:id>
 			<ButtonGroup size="sm" variant="fill-light">
@@ -76,45 +76,43 @@
 	</div>
 </div>
 
-<div class="h-[600px]">
-	<Chart
-		geo={{
-			projection: geoOrthographic,
-			fitGeojson: countries,
-			applyTransform: ['rotate']
-		}}
-		ondragstart={timer.stop}
-		bind:context
-		padding={{ top: 60 }}
-		height={600}
-	>
-		{#snippet children({ context })}
-			<Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
+<Chart
+	geo={{
+		projection: geoOrthographic,
+		fitGeojson: countries,
+		applyTransform: ['rotate']
+	}}
+	ondragstart={timer.stop}
+	bind:context
+	padding={{ top: 60 }}
+	height={600}
+>
+	{#snippet children({ context })}
+		<Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
-			<Layer>
-				<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
-				<Graticule class="stroke-surface-content/20" />
-				<GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
+		<Layer>
+			<GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
+			<Graticule class="stroke-surface-content/20" />
+			<GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
 
-				{#each eclipses.features as feature}
-					{@const hasColor =
-						context.tooltip.data == null || context.tooltip.data.ID === feature.properties.ID}
+			{#each eclipses.features as feature}
+				{@const hasColor =
+					context.tooltip.data == null || context.tooltip.data.ID === feature.properties.ID}
 
-					<GeoPath
-						geojson={feature}
-						fill={hasColor ? colorScale(feature.properties.Date) : undefined}
-						class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-						onpointermove={(e) => context.tooltip.show(e, feature.properties)}
-						onpointerleave={(e) => context.tooltip.hide()}
-					/>
-				{/each}
-			</Layer>
+				<GeoPath
+					geojson={feature}
+					fill={hasColor ? colorScale(feature.properties.Date) : undefined}
+					class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
+					onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+					onpointerleave={(e) => context.tooltip.hide()}
+				/>
+			{/each}
+		</Layer>
 
-			<Tooltip.Root>
-				{#snippet children({ data })}
-					{format(data.Date, 'day', { variant: 'long' })}
-				{/snippet}
-			</Tooltip.Root>
-		{/snippet}
-	</Chart>
-</div>
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				{format(data.Date, 'day', { variant: 'long' })}
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</Chart>
