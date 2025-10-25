@@ -219,10 +219,24 @@ export const getWorldGeojson = prerender(async () => {
 
 export const getEclipses = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
+	const data = (await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
 		parse(await r.text())
-	) as Topology<{
+	)) as Topology<{
 		eclipses: GeometryCollection<{ ID: string; Date: Date }>;
 	}>;
+	return data;
+});
+
+export const getSubmarineCables = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/geo/submarine-cables.json').then((r) => r.json());
+	return data;
+});
+
+export const getSubmarineCablesLandingPoints = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/geo/submarine-cables-landing-points.json').then((r) =>
+		r.json()
+	);
 	return data;
 });
