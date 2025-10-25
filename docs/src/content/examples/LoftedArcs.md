@@ -2,14 +2,12 @@
 description: LoftedArcs
 section: Geo
 layers: ['svg', 'canvas']
-related: []
+related: ['https://observablehq.com/@armollica/globe-with-lofted-arcs']
 ---
 
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
-
-> See also: [Globe with Lofted Arcs](https://observablehq.com/@armollica/globe-with-lofted-arcs)
 
 ## Examples
 

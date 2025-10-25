@@ -9,9 +9,6 @@ related: ['https://d3js.org/d3-force/link', 'https://observablehq.com/@d3/force-
   import Example from '$lib/components/Example.svelte';
 </script>
 
-> [D3 Force Link Documentation](https://d3js.org/d3-force/link)
-> [Force-Directed Lattice Example](https://observablehq.com/@d3/force-directed-lattice)
-
 ## Examples
 
 ### Basic

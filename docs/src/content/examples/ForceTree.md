@@ -9,8 +9,6 @@ related: ['https://observablehq.com/@d3/force-directed-tree']
   import Example from '$lib/components/Example.svelte';
 </script>
 
-> [Related example](https://observablehq.com/@d3/force-directed-tree)
-
 ## Examples
 
 ### Basic

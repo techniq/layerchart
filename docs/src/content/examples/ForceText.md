@@ -9,8 +9,6 @@ related: ['https://d3og.com/armollica/06a202c9f7df191ace8a1f97e33ffb97/']
   import Example from '$lib/components/Example.svelte';
 </script>
 
-> [Related example](https://d3og.com/armollica/06a202c9f7df191ace8a1f97e33ffb97/)
-
 ## Examples
 
 ### Basic
