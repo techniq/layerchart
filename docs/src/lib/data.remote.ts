@@ -165,6 +165,15 @@ export const getMiserables = prerender(async () => {
 	return data;
 });
 
+export const getDisjointGraph = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/graph/disjoint-graph.json').then((r) => r.json())) as {
+		nodes: { id: string; group: number }[];
+		links: { source: string; target: string; value: number }[];
+	};
+	return data;
+});
+
 export const getAlphabet = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/alphabet.csv').then(async (r) =>
