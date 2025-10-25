@@ -13,5 +13,4 @@ related: []
 
 ### Basic
 
-BROKEN - missed dependency '@layerstack/svelte-actions';
-<!-- <Example name="basic" /> -->
+<Example name="basic" />

@@ -269,3 +269,29 @@ export const getEarthquakes = prerender(async () => {
 		);
 	return data;
 });
+
+export const getTimezones = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/timezones.json').then((r) =>
+		r.json()
+	)) as Topology<{
+		timezones: GeometryCollection<{
+			objectid: number;
+			scalerank: number;
+			featurecla: string;
+			name: string;
+			map_color6: number;
+			map_color8: number;
+			note: any;
+			zone: number;
+			utc_format: string;
+			time_zone: string;
+			iso_8601: string;
+			places: string;
+			dst_places: any;
+			tz_name1st: any;
+			tz_namesum: number;
+		}>;
+	}>;
+	return data;
+});
