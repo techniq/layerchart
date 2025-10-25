@@ -1,15 +1,16 @@
 import { celsiusToFahrenheit } from 'layerchart';
-import { parse } from '@layerstack/utils';
+import { parse, sortFunc } from '@layerstack/utils';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { csvParse, autoType } from 'd3-dsv';
 import type { GeometryCollection, Topology } from 'topojson-specification';
-import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 
 import { prerender, getRequestEvent } from '$app/server';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 import type { USSenatorsData } from '$static/data/examples/us-senators';
+import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
+import type { CivilizationTimeline } from '$static/data/examples/date/civilization-timeline.js';
 
 export const getGroupData = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -165,8 +166,13 @@ export const getUsEvents = prerender(async () => {
 export const getCivilizationEvents = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/civilization-timeline.csv').then(async (r) => {
-		return csvParse(await r.text(), autoType);
+		return csvParse<CivilizationTimeline>(
+			await r.text(),
+			// @ts-expect-error - shh
+			autoType
+		).sort(sortFunc('start'));
 	});
+
 	return data;
 });
 

@@ -1,53 +1,53 @@
 <script lang="ts">
-	import { scaleTime } from 'd3-scale';
-	import { Duration } from 'svelte-ux';
-	import { BarChart, Bars, Tooltip } from 'layerchart';
+	import { BarChart, Tooltip } from 'layerchart';
 	import { getCivilizationEvents } from '$lib/data.remote.js';
 
 	const data = $derived(await getCivilizationEvents());
 	export { data };
+
+	function formatYear(number: number): string {
+		return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
+	}
 </script>
 
 <BarChart
 	{data}
 	x={['start', 'end']}
-	xScale={scaleTime()}
-	y="name"
-	grid={{ x: false, y: true, bandAlign: 'between' }}
+	y="civilization"
+	c="region"
+	cRange={[
+		'var(--color-danger)',
+		'var(--color-warning)',
+		'var(--color-success)',
+		'var(--color-info)'
+	]}
+	rule={false}
 	orientation="horizontal"
-	padding={{ left: 120, bottom: 36 }}
+	padding={{ left: 200, bottom: 36, right: 36 }}
 	props={{
-		highlight: {
-			axis: 'x',
-			area: true,
-			bars: true
+		xAxis: {
+			format: formatYear
+		},
+		yAxis: {
+			tickLabelProps: {
+				width: 300,
+				truncate: { position: 'middle' }
+			}
 		}
 	}}
-	height={300}
+	height={700}
 >
-	{#snippet marks()}
-		<Bars />
-	{/snippet}
-
 	{#snippet tooltip({ context })}
 		<Tooltip.Root {context}>
 			{#snippet children({ data })}
-				<Tooltip.Header>{data.name}</Tooltip.Header>
+				<Tooltip.Header>{data.civilization}</Tooltip.Header>
 				<Tooltip.List>
-					<Tooltip.Item
-						label="start"
-						value={data.start}
-						format={{ type: 'time', options: { variant: 'medium' } }}
-					/>
-					<Tooltip.Item
-						label="end"
-						value={data.end}
-						format={{ type: 'time', options: { variant: 'medium' } }}
-					/>
-					<Tooltip.Separator />
-					<Tooltip.Item label="duration" valueAlign="right">
-						<Duration start={data.start} end={data.end} totalUnits={2} />
-					</Tooltip.Item>
+					<Tooltip.Item label="region" value={data.region} />
+					<Tooltip.Item label="timeline" value={data.timeline} />
+					<!-- <Tooltip.Item label="start label" value={data.startLabel} />
+              <Tooltip.Item label="end label" value={data.endLabel} /> -->
+					<Tooltip.Item label="start" value={data.start} format={formatYear} />
+					<Tooltip.Item label="end" value={data.end} format={formatYear} />
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>
