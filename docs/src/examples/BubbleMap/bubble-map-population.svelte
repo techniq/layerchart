@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { index, max, descending } from 'd3-array';
+	import { index, max } from 'd3-array';
 	import { geoIdentity, type GeoProjection } from 'd3-geo';
-	import { scaleLinear } from 'd3-scale';
+	import { scaleSqrt, scaleThreshold } from 'd3-scale';
+	import { interpolateViridis } from 'd3-scale-chromatic';
+	import { quantize } from 'd3-interpolate';
 	import { feature } from 'topojson-client';
+	import { sortFunc } from '@layerstack/utils';
 
-	import { Chart, GeoPath, getSettings, Layer, spikePath, Spline, Tooltip } from 'layerchart';
+	import { Chart, GeoPath, Legend, Layer, Tooltip, Circle, getSettings } from 'layerchart';
 	import TransformControls from '$lib/components/TransformControls.svelte';
 
 	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/data.remote.js';
@@ -12,12 +15,10 @@
 	const geojson = await getUsCountiesAlbersTopology();
 	const populationData = await getUsCountyPopulation();
 
-	let settings = getSettings();
-
-	const projection = geoIdentity as unknown as () => GeoProjection;
-
 	const states = feature(geojson, geojson.objects.states);
 	const counties = feature(geojson, geojson.objects.counties);
+
+	const projection = geoIdentity as unknown as () => GeoProjection;
 
 	const statesById = index(states.features, (d) => d.id);
 
@@ -32,23 +33,36 @@
 	});
 	const populationByFips = index(population, (d) => d.fips);
 
-	const width = 7;
-	const maxHeight = 200;
-	const heightScale = scaleLinear()
-		.domain([0, max(population, (d) => d.population) ?? 0])
-		.range([0, maxHeight]);
+	const maxRadius = 40;
+	const rScale = $derived(
+		scaleSqrt()
+			.domain([0, max(population, (d) => d.population) ?? 0])
+			.range([0, maxRadius])
+	);
 
-	const enrichedCountiesFeatures = counties.features
-		.map((feature) => {
-			return {
-				...feature,
-				properties: {
-					...feature.properties,
-					data: populationByFips.get(feature.id as string)
-				}
-			};
-		})
-		.sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
+	const colors = $derived(quantize(interpolateViridis, 5));
+	// $: colorScale = scaleQuantize()
+	// 	.domain([0, max(population, d => d.percentUnder18)])
+	// 	.range(colors)
+	const colorScale = $derived(
+		scaleThreshold<number, string>()
+			.domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18) ?? 0)])
+			.range(colors)
+	);
+
+	const enrichedCountiesFeatures = $derived(
+		counties.features
+			.map((feature) => {
+				return {
+					...feature,
+					properties: {
+						...feature.properties,
+						data: populationByFips.get(String(feature.id))
+					}
+				};
+			})
+			.sort(sortFunc('properties.data.population', 'desc'))
+	);
 
 	const data = { geojson, populationData, states, counties, population, enrichedCountiesFeatures };
 
@@ -64,11 +78,11 @@
 		mode: 'canvas',
 		initialScrollMode: 'scale'
 	}}
+	padding={{ top: 60 }}
 	height={600}
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
-
 		<TransformControls />
 
 		<Layer>
@@ -77,13 +91,17 @@
 			{#each enrichedCountiesFeatures as feature}
 				<GeoPath geojson={feature} {strokeWidth}>
 					{#snippet children({ geoPath })}
-						{@const [x, y] = geoPath?.centroid(feature) ?? [0, 0]}
+						{@const [cx, cy] = geoPath?.centroid(feature) ?? []}
 						{@const d = feature.properties.data}
-						{@const height = heightScale(d?.population ?? 0)}
-						<Spline
-							pathData={spikePath({ x, y, width, height })}
-							class="stroke-danger fill-danger/25"
-							{strokeWidth}
+						<Circle
+							{cx}
+							{cy}
+							r={rScale(d?.population ?? 0)}
+							fill={colorScale(d?.percentUnder18 ?? 0)}
+							fillOpacity={0.5}
+							stroke={colorScale(d?.percentUnder18 ?? 0)}
+							strokeWidth={strokeWidth / 2}
+							class="pointer-events-none"
 						/>
 					{/snippet}
 				</GeoPath>
@@ -101,7 +119,7 @@
 
 		<!-- Add extra path to mimic hover stroke on canvas -->
 		<Layer pointerEvents={false}>
-			{#if context.tooltip.data && settings.layer === 'canvas'}
+			{#if context.tooltip.data && getSettings().layer === 'canvas'}
 				<GeoPath
 					geojson={context.tooltip.data}
 					class="stroke-none fill-surface-content/10"
@@ -110,11 +128,19 @@
 			{/if}
 		</Layer>
 
+		<Legend
+			scale={colorScale}
+			title="Est. Percent under 18"
+			placement="top-left"
+			class="bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
+		/>
+
 		<Tooltip.Root>
 			{#snippet children({ data })}
 				{@const d = data.properties.data}
-				<Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header
-				>
+				<Tooltip.Header>
+					{data.properties.name + ' - ' + data.properties.data?.state}
+				</Tooltip.Header>
 				<Tooltip.List>
 					<Tooltip.Item
 						label="Total Population"
