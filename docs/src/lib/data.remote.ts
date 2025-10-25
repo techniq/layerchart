@@ -295,3 +295,28 @@ export const getTimezones = prerender(async () => {
 	}>;
 	return data;
 });
+
+export const getUsCountiesAlbersTopology = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch(
+		'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-albers-10m.json'
+	).then((r) => r.json())) as Topology<{
+		states: GeometryCollection<{ name: string }>;
+		counties: GeometryCollection<{ name: string }>;
+	}>;
+	return data;
+});
+
+export const getUsCountyPopulation = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
+		r.json()
+	)) as Array<{
+		state: string;
+		county: string;
+		DP05_0001E: string;
+		DP05_0019E: string;
+		DP05_0019PE: string;
+	}>;
+	return data;
+});
