@@ -216,3 +216,13 @@ export const getWorldGeojson = prerender(async () => {
 	}>;
 	return data;
 });
+
+export const getEclipses = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
+		parse(await r.text())
+	) as Topology<{
+		eclipses: GeometryCollection<{ ID: string; Date: Date }>;
+	}>;
+	return data;
+});
