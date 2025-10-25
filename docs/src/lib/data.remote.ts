@@ -361,3 +361,14 @@ export const getUsCountyPopulation = prerender(async () => {
 	}>;
 	return data;
 });
+
+export const getForceGroupDots = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('docs/static/data/examples/force-group-dots.json').then((r) =>
+		r.json()
+	)) as {
+		category: string;
+		value: number;
+	}[];
+	return data;
+});
