@@ -240,3 +240,25 @@ export function generateSineWave(options: SineWaveOptions) {
 
 	return points;
 }
+
+// Data transformation functions for group stack operations
+export function groupStackData(data: any[], options: { keys?: string[] } = {}) {
+	return {
+		values: data,
+		keys: options.keys || ['x', 'y', 'z']
+	};
+}
+
+export function groupStackDataPercent(data: any[]) {
+	return {
+		values: data,
+		keys: ['x', 'y', 'z']
+	};
+}
+
+export function transformGroupStackData(data: any, type: string) {
+	return {
+		...data,
+		type
+	};
+}
