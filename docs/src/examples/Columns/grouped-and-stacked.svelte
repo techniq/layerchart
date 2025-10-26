@@ -1,67 +1,75 @@
 <script lang="ts">
+	import { longData } from '$lib/utils/data';
+	import { sum } from 'd3-array';
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
-	import { groupStackData } from '$lib/utils/data.js';
+	import { Axis, Bars, Chart, groupStackData, Highlight, Layer, Tooltip } from 'layerchart';
 
-	const keyColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)'];
-
-	// Create grouped and stacked data structure
-	const rawData = [
-		// Group 1
-		{ category: 'Q1', value: 25, group: 'x', series: 'A' },
-		{ category: 'Q1', value: 18, group: 'y', series: 'A' },
-		{ category: 'Q1', value: 20, group: 'x', series: 'B' },
-		{ category: 'Q1', value: 15, group: 'y', series: 'B' },
-
-		// Group 2
-		{ category: 'Q2', value: 30, group: 'x', series: 'A' },
-		{ category: 'Q2', value: 22, group: 'y', series: 'A' },
-		{ category: 'Q2', value: 18, group: 'x', series: 'B' },
-		{ category: 'Q2', value: 25, group: 'y', series: 'B' },
-
-		// Group 3
-		{ category: 'Q3', value: 28, group: 'x', series: 'A' },
-		{ category: 'Q3', value: 20, group: 'y', series: 'A' },
-		{ category: 'Q3', value: 22, group: 'x', series: 'B' },
-		{ category: 'Q3', value: 19, group: 'y', series: 'B' }
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
+	const keyColors = [
+		'var(--color-info)',
+		'var(--color-success)',
+		'var(--color-warning)',
+		'var(--color-danger)'
 	];
 
-	const data = groupStackData(rawData, { groupBy: 'series', stackBy: 'group' });
+	const data = groupStackData(longData, {
+		xKey: 'year',
+		groupBy: 'basket',
+		stackBy: 'fruit'
+	});
 
 	export { data };
 </script>
 
 <Chart
 	{data}
-	x="category"
-	xScale={scaleBand().padding(0.4)}
-	y={['start', 'end']}
+	x="year"
+	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
+	y="values"
 	yNice
+	c="fruit"
+	cDomain={colorKeys}
+	cRange={keyColors}
+	x1="basket"
+	x1Scale={scaleBand().padding(0.1)}
+	x1Domain={[1, 2]}
+	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'bisect-x' }}
+	tooltip={{ mode: 'band' }}
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	{#each data.keys as key, keyIndex}
-		<Bars
-			y={(d) => d.values[key]}
-			fill={keyColors[keyIndex]}
-			rounded="top"
-			strokeWidth={1}
-			data={{ group: key }}
-		/>
-	{/each}
-	<Highlight area />
-	<Tooltip.Root>
-		{#snippet children({ data: tooltipData })}
-			<Tooltip.Header value={tooltipData.category} />
-			<Tooltip.List>
-				{#each data.keys as key}
-					<Tooltip.Item label={key} value={tooltipData.values[key]} />
-				{/each}
-			</Tooltip.List>
-		{/snippet}
-	</Tooltip.Root>
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+			<Bars strokeWidth={1} />
+			<Highlight area />
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.year}</Tooltip.Header>
+				<Tooltip.List>
+					{#each data.data as d}
+						<Tooltip.Item
+							label={d.fruit}
+							value={d.value}
+							color={context.cScale?.(d.fruit)}
+							format="integer"
+							valueAlign="right"
+						/>
+					{/each}
+
+					<Tooltip.Separator />
+
+					<Tooltip.Item
+						label="total"
+						value={sum([...data.data], (d) => d.value)}
+						format="integer"
+						valueAlign="right"
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
 </Chart>

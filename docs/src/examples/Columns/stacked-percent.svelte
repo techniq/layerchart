@@ -1,59 +1,66 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip, groupStackData } from 'layerchart';
-	import { groupStackDataPercent } from '$lib/utils/data.js';
+	import { Axis, Bars, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { sum } from 'd3-array';
+	import { longData } from '$lib/utils/data';
+	import { stackOffsetExpand } from 'd3-shape';
 
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
 	const keyColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)'];
 
-	const data = groupStackDataPercent([
-		{ category: 'A', value: 25, group: 'x' },
-		{ category: 'A', value: 18, group: 'y' },
-		{ category: 'A', value: 12, group: 'z' },
-		{ category: 'B', value: 12, group: 'x' },
-		{ category: 'B', value: 29, group: 'y' },
-		{ category: 'B', value: 15, group: 'z' },
-		{ category: 'C', value: 8, group: 'x' },
-		{ category: 'C', value: 30, group: 'y' },
-		{ category: 'C', value: 18, group: 'z' },
-		{ category: 'D', value: 15, group: 'x' },
-		{ category: 'D', value: 20, group: 'y' },
-		{ category: 'D', value: 22, group: 'z' }
-	]);
+	const stackedPercentData = groupStackData(longData, {
+		xKey: 'year',
+		stackBy: 'fruit',
+		offset: stackOffsetExpand
+	});
 
 	export { data };
 </script>
 
 <Chart
-	{data}
-	x="category"
-	xScale={scaleBand().padding(0.4)}
-	y={['start', 'end']}
-	yDomain={[0, 100]}
+	data={stackedPercentData}
+	x="year"
+	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
+	y="values"
+	yNice
+	c="fruit"
+	cDomain={colorKeys}
+	cRange={keyColors}
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'bisect-x' }}
-	height={300}
+	tooltip={{ mode: 'band' }}
 >
-	<Axis placement="left" grid rule format={(d) => `${d}%`} />
-	<Axis placement="bottom" />
-	{#each data.keys as key, keyIndex}
-		<Bars
-			y={(d) => d.values[key]}
-			fill={keyColors[keyIndex]}
-			rounded="top"
-			strokeWidth={1}
-			data={{ group: key }}
-		/>
-	{/each}
-	<Highlight area />
-	<Tooltip.Root>
-		{#snippet children({ data: tooltipData })}
-			<Tooltip.Header value={tooltipData.category} />
-			<Tooltip.List>
-				{#each data.keys as key}
-					<Tooltip.Item label={key} value={tooltipData.values[key]} format={(d) => `${d}%`} />
-				{/each}
-			</Tooltip.List>
-		{/snippet}
-	</Tooltip.Root>
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule format="percentRound" />
+			<Axis placement="bottom" rule />
+			<Bars strokeWidth={1} />
+			<Highlight area />
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.year}</Tooltip.Header>
+				<Tooltip.List>
+					{#each data.data as d}
+						<Tooltip.Item
+							label={d.fruit}
+							value={d.value}
+							color={context.cScale?.(d.fruit)}
+							format="integer"
+							valueAlign="right"
+						/>
+					{/each}
+
+					<Tooltip.Separator />
+
+					<Tooltip.Item
+						label="total"
+						value={sum([...data.data], (d) => d.value)}
+						format="integer"
+						valueAlign="right"
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
 </Chart>

@@ -1,100 +1,153 @@
 <script lang="ts">
+	import { longData } from '$lib/utils/data';
+	import { unique } from '@layerstack/utils';
+	import { sum } from 'd3-array';
 	import { scaleBand } from 'd3-scale';
-	import { cubicOut } from 'svelte/easing';
-	import { tweened } from 'svelte/motion';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
-	import { groupStackData, transformGroupStackData } from '$lib/utils/data.js';
-	import { Button } from 'svelte-ux';
+	import { Axis, Bar, Chart, groupStackData, Highlight, Layer, Tooltip } from 'layerchart';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { cubicInOut } from 'svelte/easing';
 
-	const keyColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)'];
-
-	let mode = $state('grouped'); // 'grouped', 'stacked', or 'both'
-
-	const rawData = [
-		{ category: 'A', value: 25, group: 'x' },
-		{ category: 'A', value: 18, group: 'y' },
-		{ category: 'A', value: 12, group: 'z' },
-		{ category: 'B', value: 12, group: 'x' },
-		{ category: 'B', value: 29, group: 'y' },
-		{ category: 'B', value: 15, group: 'z' },
-		{ category: 'C', value: 8, group: 'x' },
-		{ category: 'C', value: 30, group: 'y' },
-		{ category: 'C', value: 18, group: 'z' },
-		{ category: 'D', value: 15, group: 'x' },
-		{ category: 'D', value: 20, group: 'y' },
-		{ category: 'D', value: 22, group: 'z' }
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
+	const keyColors = [
+		'var(--color-info)',
+		'var(--color-success)',
+		'var(--color-warning)',
+		'var(--color-danger)'
 	];
 
-	const groupedData = transformGroupStackData(groupStackData(rawData), 'grouped');
-	const stackedData = groupStackData(rawData);
-	const bothData = transformGroupStackData(stackedData, 'both');
+	let transitionChartMode = $state('group');
+	const transitionChart = $derived(
+		transitionChartMode === 'group'
+			? ({
+					groupBy: 'fruit',
+					stackBy: undefined
+				} as const)
+			: transitionChartMode === 'stack'
+				? ({
+						groupBy: undefined,
+						stackBy: 'fruit'
+					} as const)
+				: transitionChartMode === 'groupStack'
+					? ({
+							groupBy: 'basket',
+							stackBy: 'fruit'
+						} as const)
+					: ({
+							groupBy: undefined,
+							stackBy: undefined
+						} as const)
+	);
+	const transitionData = $derived(
+		groupStackData(longData, {
+			xKey: 'year',
+			groupBy: transitionChart.groupBy,
+			stackBy: transitionChart.stackBy
+		}) as {
+			year: string;
+			fruit: string;
+			basket: number;
+			keys: string[];
+			value: number;
+			values: number[];
+		}[]
+	);
 
-	let data = tweened(groupedData, { duration: 1000, easing: cubicOut });
-
-	$effect(() => {
-		if (mode === 'grouped') {
-			data.set(groupedData);
-		} else if (mode === 'stacked') {
-			data.set(stackedData);
-		} else {
-			data.set(bothData);
-		}
-	});
-
-	export { $data };
+	export { data };
 </script>
 
-<div class="flex items-center gap-2 mb-4">
-	<Button
-		on:click={() => (mode = 'grouped')}
-		variant={mode === 'grouped' ? 'fill' : 'outline'}
-		size="sm"
-	>
-		Grouped
-	</Button>
-	<Button
-		on:click={() => (mode = 'stacked')}
-		variant={mode === 'stacked' ? 'fill' : 'outline'}
-		size="sm"
-	>
-		Stacked
-	</Button>
-	<Button on:click={() => (mode = 'both')} variant={mode === 'both' ? 'fill' : 'outline'} size="sm">
-		Both
-	</Button>
+<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
+	<Field label="Mode">
+		<ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
+			<ToggleOption value="group">Grouped</ToggleOption>
+			<ToggleOption value="stack">Stacked</ToggleOption>
+			<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
+		</ToggleGroup>
+	</Field>
 </div>
 
 <Chart
-	data={$data}
-	x="category"
-	xScale={scaleBand().padding(0.4)}
-	y={mode === 'grouped' ? 'value' : ['start', 'end']}
+	data={transitionData}
+	x="year"
+	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
+	y="values"
 	yNice
+	c="fruit"
+	cDomain={colorKeys}
+	cRange={keyColors}
+	x1={transitionChart.groupBy}
+	x1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
+	x1Domain={transitionChart.groupBy
+		? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+		: undefined}
+	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'bisect-x' }}
+	tooltip={{ mode: 'band' }}
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	{#each $data.keys as key, keyIndex}
-		<Bars
-			y={mode === 'grouped' ? (d) => d.values[key] : (d) => d.values[key]}
-			fill={keyColors[keyIndex]}
-			rounded="top"
-			strokeWidth={1}
-			data={{ group: key }}
-		/>
-	{/each}
-	<Highlight area />
-	<Tooltip.Root>
-		{#snippet children({ data: tooltipData })}
-			<Tooltip.Header value={tooltipData.category} />
-			<Tooltip.List>
-				{#each $data.keys as key}
-					<Tooltip.Item label={key} value={tooltipData.values[key]} />
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+			<g>
+				<!-- TODO: 'data' can be used once type issue is resolved -->
+				{#each transitionData as d (d.year + '-' + d.fruit)}
+					<Bar
+						data={d}
+						fill={context.cScale?.(d.fruit)}
+						strokeWidth={1}
+						motion={{
+							x: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							y: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							},
+							width: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							height: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							}
+						}}
+					/>
 				{/each}
-			</Tooltip.List>
-		{/snippet}
-	</Tooltip.Root>
+			</g>
+			<Highlight area />
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.year}</Tooltip.Header>
+				<Tooltip.List>
+					{#each data.data as d}
+						<Tooltip.Item
+							label={d.fruit}
+							value={d.value}
+							color={context.cScale?.(d.fruit)}
+							format="integer"
+							valueAlign="right"
+						/>
+					{/each}
+
+					<Tooltip.Separator />
+
+					<!-- TODO: Remove [...] type hack to make svelte-check happy -->
+					<Tooltip.Item
+						label="total"
+						value={sum([...data.data], (d) => d.value)}
+						format="integer"
+						valueAlign="right"
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
 </Chart>

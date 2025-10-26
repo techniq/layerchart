@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Bar, Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { Bar, Axis, Chart, Layer, Tooltip, groupStackData } from 'layerchart';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { longData } from '$lib/utils/data.js';
 	import { unique } from '@layerstack/utils';
+	import { cubicInOut } from 'svelte/easing';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
 	const keyColors = [
@@ -28,7 +29,14 @@
 			xKey: 'year',
 			groupBy: transitionChart.groupBy,
 			stackBy: transitionChart.stackBy
-		})
+		}) as {
+			year: string;
+			fruit: string;
+			basket: number;
+			keys: string[];
+			value: number;
+			values: number[];
+		}[]
 	);
 
 	export { data };
@@ -44,6 +52,7 @@
 	</Field>
 </div>
 
+<!-- Always use stackedData for extents for consistent scale -->
 <Chart
 	{data}
 	x="values"
@@ -70,11 +79,36 @@
 				{#each data as d (d.year + '-' + d.fruit)}
 					<Bar
 						data={d}
+						fill={context.cScale?.(d.fruit)}
 						strokeWidth={1}
+						motion={{
+							x: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							y: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							},
+							width: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							height: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							}
+						}}
+						class="cursor-pointer"
 						onclick={(e) => {
-							alert('Clicked: ' + d.fruit + ' in ' + d.year);
+							alert('You clicked on:\n' + JSON.stringify(d, null, 2));
 						}}
 						onpointerenter={(e) => context.tooltip.show(e, d)}
+						onpointermove={(e) => context.tooltip.show(e, d)}
 						onpointerleave={(e) => context.tooltip.hide()}
 					/>
 				{/each}

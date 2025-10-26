@@ -1,22 +1,15 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart } from 'layerchart';
+	import { Axis, Bar, Bars, Chart, Layer } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
-		count: 12,
+		count: 30,
 		min: 20,
 		max: 100,
 		value: 'integer',
-		keys: ['value']
+		keys: ['value', 'baseline']
 	});
-
-	const getBarColor = (d, index) => {
-		if (d.value > 80) return 'hsl(var(--color-danger))';
-		if (d.value > 60) return 'hsl(var(--color-warning))';
-		return 'hsl(var(--color-success))';
-	};
 
 	export { data };
 </script>
@@ -26,11 +19,21 @@
 	x="date"
 	xScale={scaleBand().padding(0.4)}
 	y="value"
+	yDomain={[0, null]}
 	yNice
 	padding={{ left: 16, bottom: 24 }}
-	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" format="day" />
-	<Bars rounded="top" strokeWidth={1} fill={getBarColor} />
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Bars>
+			{#each data as d, i}
+				<Bar
+					data={d}
+					strokeWidth={1}
+					class={i === data.length - 4 ? 'fill-primary' : 'fill-surface-content'}
+				/>
+			{/each}
+		</Bars>
+	</Layer>
 </Chart>
