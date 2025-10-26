@@ -31,11 +31,7 @@ export async function getMarkdownComponent(
 		}
 	}
 
-	// get full metadata (authored frontmatter + content-collection transformed)
-	const metadata =
-		type === 'components'
-			? allComponents.find((c) => c.slug === slug)
-			: allExamples.find((e) => e.slug === slug);
+	const metadata = getMetadata(type, slug);
 
 	if (!doc || !metadata) {
 		error(404, 'Could not find the document.');
@@ -45,4 +41,18 @@ export async function getMarkdownComponent(
 		PageComponent: doc.default,
 		metadata
 	};
+}
+
+/**
+ * Get full metadata (authored frontmatter + content-collection transformed)
+ */
+function getMetadata<T extends 'components' | 'examples'>(
+	type: T,
+	slug: string
+): T extends 'components' ? ComponentMetadata : ExampleMetadata {
+	return (
+		type === 'components'
+			? allComponents.find((c) => c.slug === slug)
+			: allExamples.find((e) => e.slug === slug)
+	) as any;
 }

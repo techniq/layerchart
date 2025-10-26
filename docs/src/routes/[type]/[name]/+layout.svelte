@@ -89,7 +89,7 @@
 	<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
 	<div class="flex gap-2 mt-3">
-		{#if metadata.source}
+		{#if 'source' in metadata}
 			<ViewSourceButton
 				label="Source"
 				source={metadata.source}
