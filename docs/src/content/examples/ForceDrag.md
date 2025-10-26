@@ -2,11 +2,7 @@
 description: ForceDrag examples demonstrating draggable nodes in force simulation with sticky behavior
 section: force
 layers: ['svg', 'canvas']
-related:
-  [
-    'https://observablehq.com/@d3/sticky-force-layout',
-    'https://observablehq.com/@d3/sticky-force-layout'
-  ]
+related: ['https://observablehq.com/@d3/sticky-force-layout']
 ---
 
 <script lang="ts">

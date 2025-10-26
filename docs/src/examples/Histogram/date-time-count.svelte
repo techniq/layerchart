@@ -4,26 +4,42 @@
 	import { timeDay } from 'd3-time';
 	import { BarChart, Tooltip, thresholdTime } from 'layerchart';
 	import { format } from '@layerstack/utils';
+	import { NumberStepper } from 'svelte-ux';
 
-	const random = randomNormal();
-	const now = new Date();
-	const dateRange = 10;
+	let randomCount = $state(1000);
+	let random = $state(randomNormal());
 
 	function getRandomDate(from: Date, to: Date) {
 		const fromTime = from.getTime();
 		const toTime = to.getTime();
-		return new Date(fromTime + Math.random() * (toTime - fromTime));
+		return new Date(fromTime + random() * (toTime - fromTime));
 	}
 
-	const randomDateData = Array.from({ length: 1000 }, () =>
-		getRandomDate(timeDay.offset(now, -dateRange), now)
-	);
+	const now = new Date();
+	let dateRange = $state(10);
+	const randomData = $derived(
+		Array.from({ length: randomCount }, () =>
+			getRandomDate(timeDay.offset(now, -dateRange), now)
+		) as any[]
+	); // TODO: Make typescript happy
 
-	const binByTime = bin().thresholds(thresholdTime(10));
-	const data = binByTime(randomDateData);
+	let thresholds = $state(10);
+
+	let binByTime = $derived(bin().thresholds(thresholdTime(thresholds ?? 0)));
+	let data = $derived(binByTime(randomData));
 
 	export { data };
 </script>
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+	<NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
+	<NumberStepper
+		label="Thresholds"
+		value={thresholds}
+		on:change={(e) => (thresholds = e.detail.value)}
+		class="w-full"
+	/>
+</div>
 
 <BarChart
 	{data}

@@ -2,15 +2,22 @@
 	import { bin } from 'd3-array';
 	import { BarChart, Tooltip } from 'layerchart';
 	import { getOlympians } from '$lib/data.remote';
+	import { RangeField } from 'svelte-ux';
 
 	const olympians = await getOlympians();
-	const binByWeight = bin()
-		.value((d) => d.weight)
-		.thresholds(10);
-	const data = binByWeight(olympians);
+	let thresholds = $state(10);
 
+	const binByWeight = $derived(
+		bin<(typeof olympians)[0], number>()
+			.value((d) => d.weight)
+			.thresholds(thresholds)
+	);
+
+	const data = $derived(binByWeight(olympians));
 	export { data };
 </script>
+
+<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} />
 
 <BarChart
 	{data}

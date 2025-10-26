@@ -1,75 +1,133 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
-	import { groupStackData } from '$lib/utils/data.js';
+	import { Axis, Bar, Chart, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { longData } from '$lib/utils/data.js';
+	import { cubicInOut } from 'svelte/easing';
+	import { unique } from '@layerstack/utils';
 
-	const keyColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)'];
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
+	const keyColors = [
+		'var(--color-info)',
+		'var(--color-success)',
+		'var(--color-warning)',
+		'var(--color-danger)'
+	];
 
-	let clickedData = $state(null);
+	let transitionChartMode = $state('group');
+	const transitionChart = $derived(
+		transitionChartMode === 'group'
+			? ({
+					groupBy: 'fruit',
+					stackBy: undefined
+				} as const)
+			: transitionChartMode === 'stack'
+				? ({
+						groupBy: undefined,
+						stackBy: 'fruit'
+					} as const)
+				: transitionChartMode === 'groupStack'
+					? ({
+							groupBy: 'basket',
+							stackBy: 'fruit'
+						} as const)
+					: ({
+							groupBy: undefined,
+							stackBy: undefined
+						} as const)
+	);
 
-	const data = groupStackData([
-		{ category: 'A', value: 25, group: 'x' },
-		{ category: 'A', value: 18, group: 'y' },
-		{ category: 'A', value: 12, group: 'z' },
-		{ category: 'B', value: 12, group: 'x' },
-		{ category: 'B', value: 29, group: 'y' },
-		{ category: 'B', value: 15, group: 'z' },
-		{ category: 'C', value: 8, group: 'x' },
-		{ category: 'C', value: 30, group: 'y' },
-		{ category: 'C', value: 18, group: 'z' },
-		{ category: 'D', value: 15, group: 'x' },
-		{ category: 'D', value: 20, group: 'y' },
-		{ category: 'D', value: 22, group: 'z' }
-	]);
-
-	function handleBarClick(event) {
-		const { data: barData, group } = event.detail;
-		clickedData = { ...barData, group };
-		console.log('Clicked bar:', barData, 'Group:', group);
-	}
+	const transitionData = $derived(
+		groupStackData(longData, {
+			xKey: 'year',
+			groupBy: transitionChart.groupBy,
+			stackBy: transitionChart.stackBy
+		}) as {
+			year: string;
+			fruit: string;
+			basket: number;
+			keys: string[];
+			value: number;
+			values: number[];
+		}[]
+	);
 
 	export { data };
 </script>
 
-{#if clickedData}
-	<div class="mb-4 p-2 bg-surface-100 rounded text-sm">
-		Clicked: {clickedData.category} - {clickedData.group} ({clickedData.values[clickedData.group]})
-	</div>
-{/if}
-
 <Chart
-	{data}
-	x="category"
-	xScale={scaleBand().padding(0.4)}
-	y={['start', 'end']}
+	data={transitionData}
+	x="year"
+	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
+	y="values"
 	yNice
+	c="fruit"
+	cDomain={colorKeys}
+	cRange={keyColors}
+	x1={transitionChart.groupBy}
+	x1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
+	x1Domain={transitionChart.groupBy
+		? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+		: undefined}
+	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'bisect-x' }}
-	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	{#each data.keys as key, keyIndex}
-		<Bars
-			y={(d) => d.values[key]}
-			fill={keyColors[keyIndex]}
-			rounded="top"
-			strokeWidth={1}
-			data={{ group: key }}
-			on:click={handleBarClick}
-			class="cursor-pointer hover:opacity-80"
-		/>
-	{/each}
-	<Highlight area />
-	<Tooltip.Root>
-		{#snippet children({ data: tooltipData })}
-			<Tooltip.Header value={tooltipData.category} />
-			<Tooltip.List>
-				{#each data.keys as key}
-					<Tooltip.Item label={key} value={tooltipData.values[key]} />
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+			<g>
+				{#each transitionData as d (d.year + '-' + d.fruit)}
+					<Bar
+						data={d}
+						fill={context.cScale?.(d.fruit)}
+						strokeWidth={1}
+						motion={{
+							x: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							y: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							},
+							width: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 0 : 300
+							},
+							height: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: transitionChart.groupBy ? 300 : 0
+							}
+						}}
+						class="cursor-pointer"
+						onclick={(e) => {
+							alert('You clicked on: ' + JSON.stringify(d, null, 2));
+						}}
+						onpointerenter={(e) => context.tooltip.show(e, d)}
+						onpointermove={(e) => context.tooltip.show(e, d)}
+						onpointerleave={(e) => context.tooltip.hide()}
+					/>
 				{/each}
-			</Tooltip.List>
-		{/snippet}
-	</Tooltip.Root>
+			</g>
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.year}</Tooltip.Header>
+				<Tooltip.List>
+					<Tooltip.Item
+						label={data.fruit}
+						value={data.value}
+						color={context.cScale?.(data.fruit)}
+						format="integer"
+						valueAlign="right"
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
 </Chart>
