@@ -1,6 +1,6 @@
 ---
 description: Force simulation with disconnected graph components, showcasing separate network clusters
-section: Force
+section: force
 layers: ['ForceSimulation', 'Svg', 'Circle', 'Line']
 related: ['ForceGraph', 'ForceGroup', 'ForceLattice']
 ---

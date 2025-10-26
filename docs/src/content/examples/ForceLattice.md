@@ -1,6 +1,6 @@
 ---
 description: ForceLattice examples demonstrating grid-based force simulation layouts
-section: Force
+section: force
 layers: ['svg', 'canvas']
 related: ['https://d3js.org/d3-force/link', 'https://observablehq.com/@d3/force-directed-lattice']
 ---

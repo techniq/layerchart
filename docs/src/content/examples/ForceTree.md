@@ -1,6 +1,6 @@
 ---
 description: ForceTree examples demonstrating hierarchical data visualization with force simulation
-section: Force
+section: force
 layers: ['svg', 'canvas']
 related: ['https://observablehq.com/@d3/force-directed-tree']
 ---

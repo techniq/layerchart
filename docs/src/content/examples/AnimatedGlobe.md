@@ -1,6 +1,6 @@
 ---
 description: Animated Globe
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: []
 ---

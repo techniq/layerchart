@@ -1,8 +1,15 @@
 ---
 description: Sparkbar
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
-related: ['components/BarChart', 'components/Bars', 'examples/Columns', 'examples/Histogram', 'examples/Sparkline']
+related:
+  [
+    'components/BarChart',
+    'components/Bars',
+    'examples/Columns',
+    'examples/Histogram',
+    'examples/Sparkline'
+  ]
 ---
 
 <script lang="ts">

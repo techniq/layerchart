@@ -1,6 +1,6 @@
 ---
 description: GeoPoint examples demonstrating geographic point placement with various datasets
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: []
 ---

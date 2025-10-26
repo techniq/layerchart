@@ -13,7 +13,7 @@
 		.filter(([section]) => section !== 'examples')
 		.sort(
 			sortFunc(([section]) =>
-				['cartesian_polar', 'hierarchy', 'graph', 'force', 'geo'].indexOf(section)
+				['cartesian & polar', 'hierarchy', 'graph', 'force', 'geo'].indexOf(section)
 			)
 		);
 

@@ -1,8 +1,15 @@
 ---
 description: Timezones
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
-related: ['components/Blur', 'components/GeoCircle', 'components/GeoPath', 'components/ClipPath', 'components/Graticule']
+related:
+  [
+    'components/Blur',
+    'components/GeoCircle',
+    'components/GeoPath',
+    'components/ClipPath',
+    'components/Graticule'
+  ]
 ---
 
 <script lang="ts">

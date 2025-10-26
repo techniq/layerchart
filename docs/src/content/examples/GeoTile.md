@@ -1,6 +1,6 @@
 ---
 description: GeoTile examples demonstrating tile-based mapping with interactive controls
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: ['examples/ZoomableTileMap']
 ---

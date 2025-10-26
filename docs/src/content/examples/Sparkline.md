@@ -1,8 +1,15 @@
 ---
 description: Sparkline
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
-related: ['components/LineChart', 'components/Spline', 'components/Tooltip', 'components/Highlight', 'examples/Sparkbar']
+related:
+  [
+    'components/LineChart',
+    'components/Spline',
+    'components/Tooltip',
+    'components/Highlight',
+    'examples/Sparkbar'
+  ]
 ---
 
 <script lang="ts">

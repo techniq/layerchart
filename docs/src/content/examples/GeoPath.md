@@ -1,6 +1,6 @@
 ---
 description: GeoPath
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: []
 ---

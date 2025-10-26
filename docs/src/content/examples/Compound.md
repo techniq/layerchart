@@ -1,8 +1,15 @@
 ---
 description: Compound
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
-related: ['components/Bars', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar', 'examples/DualAxis']
+related:
+  [
+    'components/Bars',
+    'examples/Bars',
+    'examples/Histogram',
+    'examples/Sparkbar',
+    'examples/DualAxis'
+  ]
 ---
 
 <script lang="ts">

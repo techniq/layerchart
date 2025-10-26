@@ -1,8 +1,12 @@
 ---
 description: ForceGraph examples demonstrating network graph visualization with interactive force controls
-section: Force
+section: force
 layers: ['svg', 'canvas']
-related: ['https://observablehq.com/@d3/force-directed-graph', 'https://observablehq.com/@d3/force-directed-graph']
+related:
+  [
+    'https://observablehq.com/@d3/force-directed-graph',
+    'https://observablehq.com/@d3/force-directed-graph'
+  ]
 ---
 
 <script lang="ts">

@@ -1,6 +1,6 @@
 ---
 description: Duration
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/BarChart', 'components/Points']
 ---

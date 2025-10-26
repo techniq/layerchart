@@ -1,8 +1,8 @@
 ---
 description: Arc
-section: Cartesian & Polar
-layers: ["svg", "canvas"]
-related: ["components/Arc", "components/Pie"]
+section: cartesian & polar
+layers: ['svg', 'canvas']
+related: ['components/Arc', 'components/Pie']
 ---
 
 <script lang="ts">

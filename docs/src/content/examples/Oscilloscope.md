@@ -1,8 +1,15 @@
 ---
 description: Oscilloscope
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
-related: ['components/Bars', 'components/Spline', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar']
+related:
+  [
+    'components/Bars',
+    'components/Spline',
+    'examples/Bars',
+    'examples/Histogram',
+    'examples/Sparkbar'
+  ]
 ---
 
 <script lang="ts">

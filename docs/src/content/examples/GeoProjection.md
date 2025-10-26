@@ -1,6 +1,6 @@
 ---
 description: Geographic projection examples demonstrating various map projections with interactive controls
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: ['components/GeoPath', 'components/Chart', 'components/Graticule', 'components/Layer']
 ---

@@ -1,6 +1,6 @@
 ---
 description: Choropleth
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: []
 ---

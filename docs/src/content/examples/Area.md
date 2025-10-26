@@ -1,6 +1,6 @@
 ---
 description: Area
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
 related: []
 ---

@@ -1,6 +1,6 @@
 ---
 description: Bar Chart (Horizontal)
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Bars', 'examples/Columns', 'examples/Histogram', 'charts/BarChart']
 ---

@@ -1,6 +1,6 @@
 ---
 description: Beeswarm
-section: Force
+section: force
 layers: ['svg', 'canvas']
 related: []
 ---

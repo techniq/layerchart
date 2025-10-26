@@ -1,6 +1,6 @@
 ---
 description: ForceGroup examples demonstrating grouped force simulation layouts
-section: Force
+section: force
 layers: ['svg', 'canvas']
 related: []
 ---

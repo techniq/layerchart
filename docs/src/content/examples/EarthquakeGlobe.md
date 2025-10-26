@@ -1,8 +1,12 @@
 ---
 description: EarthquakeGlobe
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
-related: ['https://observablehq.com/@tansi/earthquake', 'https://observablehq.com/@observablehq/plot-earthquake-globe']
+related:
+  [
+    'https://observablehq.com/@tansi/earthquake',
+    'https://observablehq.com/@observablehq/plot-earthquake-globe'
+  ]
 ---
 
 <script lang="ts">

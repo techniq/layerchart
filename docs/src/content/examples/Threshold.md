@@ -1,8 +1,8 @@
 ---
 description: Threshold
-section: Cartesian & Polar
-layers: ["svg"]
-related: ["components/Threshold", "components/AreaChart"]
+section: cartesian & polar
+layers: ['svg']
+related: ['components/Threshold', 'components/AreaChart']
 ---
 
 <script lang="ts">

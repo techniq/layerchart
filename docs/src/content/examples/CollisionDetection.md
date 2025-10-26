@@ -1,6 +1,6 @@
 ---
 description: CollisionDetection
-section: Force
+section: force
 layers: ['svg', 'canvas']
 related: ['https://d3js.org/d3-force/collide', 'https://observablehq.com/@d3/collision-detection']
 ---

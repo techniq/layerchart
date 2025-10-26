@@ -1,6 +1,6 @@
 ---
 description: CountryMap
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: []
 ---
@@ -14,4 +14,5 @@ related: []
 ### Basic
 
 BROKEN - Console accumulating errors and locks
+
 <!-- <Example name="country-map" /> -->

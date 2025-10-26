@@ -1,6 +1,6 @@
 ---
 description: SubmarineCablesGlobe
-section: Geo
+section: geo
 layers: ['svg', 'canvas']
 related: ['https://vizhub.com/curran/submarine-cables-globe']
 ---

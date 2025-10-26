@@ -1,6 +1,6 @@
 ---
 description: Histogram
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Bars', 'examples/Bars', 'examples/Columns']
 ---
