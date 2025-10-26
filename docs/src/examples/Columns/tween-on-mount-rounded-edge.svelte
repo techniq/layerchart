@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { Axis, Bars, Chart, Layer } from 'layerchart';
 	import { scaleBand } from 'd3-scale';
-	import { onMount } from 'svelte';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
+	import { cubicInOut } from 'svelte/easing';
+	import { Field, Switch } from 'svelte-ux';
 
 	const data = createDateSeries({
 		count: 30,
@@ -12,43 +12,40 @@
 		value: 'integer',
 		keys: ['value']
 	});
-
-	let mounted = $state(false);
-
-	onMount(() => {
-		setTimeout(() => {
-			mounted = true;
-		}, 100);
-	});
-
 	export { data };
+
+	let show = $state(false);
 </script>
+
+<Field label="Show bars" let:id>
+	<Switch bind:checked={show} {id} size="md" />
+</Field>
 
 <Chart
 	{data}
 	x="date"
 	xScale={scaleBand().padding(0.4)}
 	y="value"
+	yDomain={[0, null]}
 	yNice
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'bisect-x' }}
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	<Bars
-		rounded={{ top: 6 }}
-		strokeWidth={1}
-		class="fill-primary"
-		springValues={{ from: { height: 0 }, to: { height: mounted ? undefined : 0 } }}
-	/>
-	<Highlight area />
-	<Tooltip.Root>
-		{#snippet children({ data })}
-			<Tooltip.Header value={data.date} format="day" />
-			<Tooltip.List>
-				<Tooltip.Item label="value" value={data.value} />
-			</Tooltip.List>
-		{/snippet}
-	</Tooltip.Root>
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		{#if show}
+			<Bars
+				motion={{
+					type: 'tween',
+					duration: 500,
+					easing: cubicInOut
+				}}
+				radius={4}
+				rounded="edge"
+				strokeWidth={1}
+				class="fill-primary"
+			/>
+		{/if}
+	</Layer>
 </Chart>

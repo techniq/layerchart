@@ -28,11 +28,12 @@
 	<Layer>
 		<Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
 		<Axis placement="bottom" />
-		<Bars y="value" rounded={{ top: 2 }} strokeWidth={1} class="fill-primary" />
-		<Bars y={(d) => -d.baseline} rounded={{ bottom: 2 }} strokeWidth={1} class="fill-secondary" />
+		<Bars y="value" rounded-sm="top" strokeWidth={1} class="fill-primary" />
+		<Bars y={(d) => -d.baseline} rounded="bottom" strokeWidth={1} class="fill-secondary" />
 		<Rule y={0} />
 		<Highlight area />
 	</Layer>
+
 	<Tooltip.Root>
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />

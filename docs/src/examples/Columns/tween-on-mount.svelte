@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bar, Bars, Chart, Highlight, Layer, Tooltip } from 'layerchart';
-	import { Toggle, Field, Switch } from 'svelte-ux';
+	import { Axis, Bar, Chart, Layer } from 'layerchart';
+	import { Field, Switch } from 'svelte-ux';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -12,17 +12,14 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
+	export { data };
 
 	let show = $state(true);
-
-	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
-	<Field label="Show bars" let:id>
-		<Switch bind:checked={show} {id} size="md" />
-	</Field>
-</div>
+<Field label="Show bars" let:id>
+	<Switch bind:checked={show} {id} size="md" />
+</Field>
 
 <Chart
 	{data}
@@ -38,16 +35,29 @@
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 		{#if show}
-			<Bars
-				initialY={300 - 16 * 2 - 2 - 24}
-				initialHeight={0}
-				motion={{
-					y: { type: 'tween', duration: 500, easing: cubicInOut },
-					height: { type: 'tween', duration: 500, easing: cubicInOut }
-				}}
-				strokeWidth={1}
-				class="fill-primary"
-			/>
+			{#each data as d, i}
+				<Bar
+					data={d}
+					initialY={300 - 16 * 2 - 2 - 24}
+					initialHeight={0}
+					motion={{
+						y: {
+							type: 'tween',
+							duration: 500,
+							easing: cubicInOut,
+							delay: i * 30
+						},
+						height: {
+							type: 'tween',
+							duration: 500,
+							easing: cubicInOut,
+							delay: i * 30
+						}
+					}}
+					strokeWidth={1}
+					class="fill-primary"
+				/>
+			{/each}
 		{/if}
 	</Layer>
 </Chart>

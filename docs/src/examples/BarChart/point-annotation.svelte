@@ -13,19 +13,25 @@
 	export { data };
 </script>
 
-<BarChart
-	{data}
-	x="date"
-	y="value"
-	annotations={[
-		{
-			type: 'point',
-			data: { date: data[5]?.date, value: data[5]?.value },
-			props: {
-				class: 'fill-danger stroke-danger-content',
-				r: 4
+<div class="h-[300px] p-4 border rounded-sm">
+	<BarChart
+		{data}
+		x="date"
+		y="value"
+		annotations={[
+			{
+				type: 'point',
+				x: data[data.length - 1].date,
+				r: 4,
+				label: 'Today',
+				labelPlacement: 'bottom',
+				labelYOffset: 16,
+				props: {
+					circle: { class: 'fill-secondary' },
+					label: { class: 'text-xs fill-secondary font-bold' }
+				}
 			}
-		}
-	]}
-	height={300}
-/>
+		]}
+		height={300}
+	/>
+</div>

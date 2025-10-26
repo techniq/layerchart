@@ -12,6 +12,10 @@ import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 import type { USSenatorsData } from '$static/data/examples/us-senators';
 import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 import type { CivilizationTimeline } from '$static/data/examples/date/civilization-timeline.js';
+import type { WorldLinksData } from '$static/data/examples/geo/world-links.js';
+import type { HydroData } from '$static/data/examples/date/hydro.js';
+import type { AppleTickerData } from '$static/data/examples/date/apple-ticker.js';
+import type { NewPassengerCars } from '$static/data/examples/new-passenger-cars.js';
 
 export const getGroupData = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -222,7 +226,7 @@ export const getCivilizationEvents = prerender(async () => {
 export const getAppleTicker = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/apple-ticker.json').then(async (r) =>
-		parse(await r.text())
+		parse<AppleTickerData>(await r.text())
 	);
 	return data;
 });
@@ -230,22 +234,25 @@ export const getAppleTicker = prerender(async () => {
 export const getNewPassengerCars = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/new-passenger-cars.csv').then(async (r) =>
-		csvParse(await r.text(), autoType)
+		// @ts-expect-error - shh
+		csvParse<NewPassengerCars>(await r.text(), autoType)
 	);
 	return data;
 });
 
 export const getHydro = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = await fetch('/data/examples/date/hydro.json').then(async (r) =>
+	const data = (await fetch('/data/examples/date/hydro.json').then(async (r) =>
 		parse(await r.text())
-	);
+	)) as HydroData;
 	return data;
 });
 
 export const getWorldLinks = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = await fetch('/data/examples/geo/world-links.json').then((r) => r.json());
+	const data = (await fetch('/data/examples/geo/world-links.json').then((r) =>
+		r.json()
+	)) as WorldLinksData;
 	return data;
 });
 

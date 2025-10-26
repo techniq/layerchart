@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { sum } from 'd3-array';
-	import { Bar, Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
@@ -54,7 +54,7 @@
 						<Tooltip.Item
 							label="{d.fruit} (basket {d.basket})"
 							value={d.value}
-							color={context.cScale(d.fruit)}
+							color={context.cScale?.(d.fruit)}
 							format="integer"
 							valueAlign="right"
 						/>

@@ -3,7 +3,6 @@
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 
-	import { h1 as H1 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
 	import { page } from '$app/state';

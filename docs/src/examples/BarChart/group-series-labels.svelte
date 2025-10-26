@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, Labels } from 'layerchart';
+	import { accessor, BarChart, Text } from 'layerchart';
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
@@ -8,7 +8,7 @@
 </script>
 
 <BarChart
-	{data}
+	data={wideData}
 	x="year"
 	series={[
 		{ key: 'apples', color: 'var(--color-danger)' },
@@ -35,19 +35,22 @@
 	}}
 	height={300}
 >
+	<!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
 	{#snippet aboveMarks({ context, visibleSeries })}
 		{#each visibleSeries as s}
-			<Labels
-				data={context.data.filter(
-					(d) => context.yScale(d[s.key] || 0) > context.yScale.range()[0] - 16
-				)}
-				x={context.xScale}
-				y={(d) => context.yScale(d[s.key] || 0)}
-				value={(d) => d[s.key]}
-				verticalAnchor="end"
-				class="text-xs fill-surface-content/75 pointer-events-none"
-				format="metric"
-			/>
+			{#each wideData as d}
+				{@const valueAccessor = accessor(s.key)}
+				{@const value = valueAccessor(d)}
+				<Text
+					x={context.xScale(d.year) +
+						(context.x1Scale?.(s.key) ?? 0) +
+						(context.x1Scale?.bandwidth?.() ?? 0) / 2}
+					y={context.yScale(value)}
+					{value}
+					textAnchor="middle"
+					class="text-xs"
+				/>
+			{/each}
 		{/each}
 	{/snippet}
 </BarChart>

@@ -23,11 +23,13 @@
 	rule={false}
 	props={{
 		yAxis: {
-			tickSize: 0,
-			class: 'text-xs fill-surface-content',
-			dx: 8
-		},
-		bars: { class: 'fill-primary' }
+			tickLabelProps: {
+				textAnchor: 'start',
+				dx: 6,
+				class: 'fill-surface-300 stroke-none'
+			},
+			tickLength: 0
+		}
 	}}
 	padding={{ left: 0, bottom: 16 }}
 	height={500}

@@ -88,7 +88,7 @@
 					<Tooltip.Item
 						label={data.fruit}
 						value={data.value}
-						color={context.cScale(data.fruit)}
+						color={context.cScale?.(data.fruit)}
 						format="integer"
 						valueAlign="right"
 					/>

@@ -22,7 +22,7 @@
 		edgeLabelOffset: 10,
 		curve: curveLinear,
 		arrow: 'triangle'
-	}) satisfies ComponentProps<typeof DagreControls>['settings'];
+	}) as ComponentProps<typeof DagreControls>['settings'];
 
 	export { data };
 </script>

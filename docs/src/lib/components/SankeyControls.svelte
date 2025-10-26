@@ -1,9 +1,6 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
 	import { RangeField, MenuField } from 'svelte-ux';
-	import type Sankey from 'layerchart/Sankey.svelte';
-
-	type SankeyProps = ComponentProps<typeof Sankey>;
+	import type { SankeyProps } from 'layerchart';
 
 	let {
 		nodeAlign = $bindable(),

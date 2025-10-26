@@ -28,7 +28,6 @@
 	);
 
 	let zoomDelta = $state(0);
-	let settings = getSettings();
 
 	export { data };
 </script>

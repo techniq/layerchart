@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
+	import { BarChart, Spline, Tooltip } from 'layerchart';
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = $derived(await getAppleTicker());
@@ -10,7 +10,7 @@
 <div class="grid grid-stack p-4 border rounded-sm">
 	<!-- First chart (bar), with different domain scale for volume -->
 	<BarChart
-		data={data.appleTicker}
+		{data}
 		x="date"
 		y="volume"
 		yNice
@@ -25,7 +25,7 @@
 
 	<!-- Second chart (line), responsible for tooltip -->
 	<BarChart
-		data={data.appleTicker}
+		{data}
 		x="date"
 		y={['open', 'close']}
 		yNice

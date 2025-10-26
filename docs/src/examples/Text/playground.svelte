@@ -20,9 +20,9 @@
 
 	let truncate = $state(false);
 
-	const truncateOptions = $state<ComponentProps<typeof Text>['truncate']>({
+	type TruncateOptions = Exclude<ComponentProps<typeof Text>['truncate'], undefined | boolean>;
+	const truncateOptions = $state<TruncateOptions>({
 		maxChars: 22,
-		minChars: 0,
 		ellipsis: '…',
 		position: 'end'
 	});
