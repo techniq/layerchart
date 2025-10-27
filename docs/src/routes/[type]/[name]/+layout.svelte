@@ -62,6 +62,7 @@
 				color="primary"
 				inset
 				rounded="full"
+				size="sm"
 			>
 				{#each metadata.layers as layer}
 					<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
