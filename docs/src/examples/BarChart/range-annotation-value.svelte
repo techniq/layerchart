@@ -20,12 +20,21 @@
 	annotations={[
 		{
 			type: 'range',
-			data: {
-				x: [data[0]?.date, data[9]?.date],
-				y: [40, 60]
-			},
+			y: [75, null],
+			pattern: {
+				size: 8,
+				lines: {
+					rotate: -45,
+					opacity: 0.2
+				}
+			}
+		},
+		{
+			type: 'line',
+			label: 'Max',
+			y: 75,
 			props: {
-				class: 'fill-info/30 stroke-info stroke-2'
+				line: { class: '[stroke-dasharray:2,2] _stroke-danger' }
 			}
 		}
 	]}

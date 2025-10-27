@@ -35,7 +35,7 @@
 </script>
 
 <script lang="ts">
-  import { timeWeek, timeYear } from 'd3-time';
+  import { timeWeek } from 'd3-time';
   import { cls } from '@layerstack/tailwind';
   import { endOfInterval } from '@layerstack/utils';
   import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';

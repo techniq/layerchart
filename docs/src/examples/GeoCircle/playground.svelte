@@ -11,7 +11,7 @@
 	} from 'd3-geo';
 	import { range } from 'd3-array';
 	import { feature } from 'topojson-client';
-	import { getCountries } from '$lib/geo.remote';
+	import { getCountries } from '$lib/data.remote';
 
 	import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 

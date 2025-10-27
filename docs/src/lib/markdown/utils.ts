@@ -1,31 +1,38 @@
 import type { Component } from 'svelte';
 import { error } from '@sveltejs/kit';
 
-import { allComponents, type Component as ComponentMetadata } from 'content-collections';
+import {
+	allComponents,
+	type Component as ComponentMetadata,
+	allExamples,
+	type Example as ExampleMetadata
+} from 'content-collections';
 
-export function getComponentMetadata(slug: string) {
-	return allComponents.find((c) => c.slug === slug);
-}
+/**
+ * Get markdown document component and metadata (frontmatter)
+ * @param type
+ * @param slug
+ * @returns
+ */
+export async function getMarkdownComponent(
+	type: 'components' | 'examples',
+	slug: string = 'index'
+) {
+	const modules = import.meta.glob<{
+		default: Component;
+		metadata: ComponentMetadata | ExampleMetadata;
+	}>('/src/content/**/*.md');
 
-function slugFromPath(path: string) {
-	return path.replace('/src/content/components/', '').replace('.md', '');
-}
-
-export type DocResolver = () => Promise<{ default: Component; metadata: ComponentMetadata }>;
-
-export async function getComponentDoc(slug: string = 'index') {
-	const modules = import.meta.glob('/src/content/**/*.md');
-
-	let match: { path?: string; resolver?: DocResolver } = {};
-
+	let doc: Awaited<ReturnType<(typeof modules)[string]>> | null = null;
 	for (const [path, resolver] of Object.entries(modules)) {
-		if (slugFromPath(path) === slug) {
-			match = { path, resolver: resolver as unknown as DocResolver };
+		if (path === `/src/content/${type}/${slug}.md`) {
+			doc = await resolver();
 			break;
 		}
 	}
-	const doc = await match?.resolver?.();
-	const metadata = getComponentMetadata(slug);
+
+	const metadata = getMetadata(type, slug);
+
 	if (!doc || !metadata) {
 		error(404, 'Could not find the document.');
 	}
@@ -34,4 +41,18 @@ export async function getComponentDoc(slug: string = 'index') {
 		PageComponent: doc.default,
 		metadata
 	};
+}
+
+/**
+ * Get full metadata (authored frontmatter + content-collection transformed)
+ */
+function getMetadata<T extends 'components' | 'examples'>(
+	type: T,
+	slug: string
+): T extends 'components' ? ComponentMetadata : ExampleMetadata {
+	return (
+		type === 'components'
+			? allComponents.find((c) => c.slug === slug)
+			: allExamples.find((e) => e.slug === slug)
+	) as any;
 }

@@ -21,7 +21,7 @@
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "^5.41.3",
+		"svelte": "^5.42.1",
 		"svelte-check": "^4.3.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12",

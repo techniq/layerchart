@@ -31,21 +31,21 @@ related: ['components/TooltipContext', 'components/Highlight']
 
 <Example name="invert-variant" />
 
-## Position
+### Position
 
-### Default (mouse position with offset)
+#### Default (mouse position with offset)
 
 <Example name="default-mouse-position-with-offset" />
 
-### Data Snapping
+#### Data Snapping
 
 <Example name="data-snapping" />
 
-### Multiple Tooltips with Fixed Single Axis
+#### Multiple Tooltips with Fixed Single Axis
 
 <Example name="multiple-tooltips-with-fixed-single-axis" />
 
-### Multiple Tooltips with Fixed Single Axis (scaleBand)
+#### Multiple Tooltips with Fixed Single Axis (scaleBand)
 
 <Example name="multiple-tooltips-with-fixed-single-axis-scaleband" />
 

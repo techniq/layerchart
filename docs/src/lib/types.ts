@@ -1,3 +1,4 @@
 import type { Component } from 'svelte';
 
-export type Examples = Record<string, { component: Component; source: string }>;
+// Examples by component name and example name
+export type Examples = Record<string, Record<string, { component: Component; source: string }>>;

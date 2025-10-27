@@ -20,12 +20,13 @@
 	annotations={[
 		{
 			type: 'range',
-			data: {
-				x: [data[2]?.date, data[5]?.date],
-				y: [0, 100]
-			},
-			props: {
-				class: 'fill-warning/20 stroke-warning'
+			x: [data[2].date, data[2].date],
+			pattern: {
+				size: 8,
+				lines: {
+					rotate: -45,
+					opacity: 0.2
+				}
 			}
 		}
 	]}

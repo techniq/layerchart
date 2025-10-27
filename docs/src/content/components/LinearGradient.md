@@ -23,6 +23,6 @@ related: ['components/RadialGradient', 'components/Pattern']
 
 <Example name="tailwind-colors" />
 
-### units
+### Units
 
 <Example name="units" />

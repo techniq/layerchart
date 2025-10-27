@@ -1,0 +1,58 @@
+import type { Component } from 'svelte';
+import type { Examples } from '$lib/types.js';
+import { getMarkdownComponent } from '$lib/markdown/utils.js';
+
+export const load = async ({ params }) => {
+	const allExamples = import.meta.glob('/src/examples/**/*', {
+		import: 'default'
+	});
+
+	const allSources = import.meta.glob('/src/examples/**/*', {
+		import: 'default',
+		query: '?raw'
+	});
+
+	const { PageComponent, metadata } = await getMarkdownComponent(
+		params.type as 'components' | 'examples',
+		params.name
+	);
+
+	// Extract all <Example component="..." name="..."> from markdown page
+	const regex = /<Example\s+(?:component="([^"]*?)"\s+)?name="([^"]*?)"\s*\/>/g;
+	const pageExamples = [...metadata.content.matchAll(regex)].map((match) => ({
+		component: match[1] || params.name, // use page component name if not explicit (ex. <Example name="basic" />)
+		name: match[2]
+	}));
+
+	const examples: Examples = {};
+	for (const path in allExamples) {
+		if (
+			pageExamples.some(
+				(example) => path === `/src/examples/${example.component}/${example.name}.svelte`
+			)
+		) {
+			const component = (await allExamples[path]()) as Component;
+			const source = (await allSources[path]()) as string;
+			const [_, __, ___, componentName, filename] = path.split('/');
+			const name = filename.replace('.svelte', '');
+
+			// Remove `export { data };`
+			// TODO: Also remove blank lines left behind
+			const cleanupSource = source.replace(/^.*export .*;.*$/gm, '');
+
+			if (!examples[componentName]) {
+				examples[componentName] = {};
+			}
+			examples[componentName][name] = { component, source: cleanupSource };
+		}
+	}
+
+	return {
+		PageComponent,
+		metadata,
+		examples,
+		meta: {
+			tableOfContents: true
+		}
+	};
+};

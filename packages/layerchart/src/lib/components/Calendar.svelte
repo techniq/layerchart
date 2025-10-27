@@ -55,7 +55,7 @@
 
 <script lang="ts">
   import { type ComponentProps, type Snippet } from 'svelte';
-  import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
+  import { timeDays, timeMonths, timeWeek } from 'd3-time';
   import { index } from 'd3-array';
   import { format } from '@layerstack/utils';
 
