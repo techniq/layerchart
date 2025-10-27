@@ -4,11 +4,9 @@
   import { curveLinear } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import type Dagre from 'layerchart';
-  import type Spline from 'layerchart';
+  import type { DagreProps } from 'layerchart';
+  import type { SplineProps } from 'layerchart';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
-
-  type DagreProps = ComponentProps<typeof Dagre>;
 
   let {
     settings = $bindable({
@@ -35,7 +33,7 @@
       edgeLabelPosition: DagreProps['edgeLabelPosition'];
       edgeLabelOffset: DagreProps['edgeLabelOffset'];
       curve: ComponentProps<typeof CurveMenuField>['value'];
-      arrow: ComponentProps<typeof Spline>['marker'];
+      arrow: SplineProps['marker'];
     };
     class?: string;
   } = $props();
