@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
 	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
