@@ -4,7 +4,7 @@
 	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
 	import { getHydro } from '$lib/data.remote.js';
 
-	const data = $derived(await getHydro());
+	const data = await getHydro();
 
 	export { data };
 </script>

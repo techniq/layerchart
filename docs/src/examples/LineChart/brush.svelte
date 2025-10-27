@@ -2,7 +2,7 @@
 	import { getAppleStock } from '$lib/data.remote';
 	import { LineChart } from 'layerchart';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 	export { data };
 </script>
 

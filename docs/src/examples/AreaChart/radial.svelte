@@ -3,7 +3,7 @@
 	import { curveCatmullRom } from 'd3-shape';
 	import { getSfoTemperatures } from '$lib/data.remote';
 
-	const data = $derived(await getSfoTemperatures());
+	const data = await getSfoTemperatures();
 	export { data };
 </script>
 

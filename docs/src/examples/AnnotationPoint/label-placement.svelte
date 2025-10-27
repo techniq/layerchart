@@ -4,7 +4,7 @@
 	import { maxIndex } from 'd3-array';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	const placementOptions = [
 		'top-left',

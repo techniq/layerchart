@@ -3,7 +3,7 @@
 	import { flatGroup } from 'd3-array';
 	import { getDailyTemperatures } from '$lib/data.remote';
 
-	const data = $derived(await getDailyTemperatures());
+	const data = await getDailyTemperatures();
 	export { data };
 </script>
 

@@ -13,7 +13,7 @@
 	import { format } from '@layerstack/utils';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 	export { data };
 
 	let xDomain = $state<DomainType>([null, null]);

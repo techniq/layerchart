@@ -2,7 +2,7 @@
 	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
-	const data = $derived(await getNewPassengerCars());
+	const data = await getNewPassengerCars();
 
 	export { data };
 </script>

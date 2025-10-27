@@ -17,7 +17,7 @@
 	type NodeDatum = { category: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
-	const data: MySimulationNodeDatum[] = $derived(await getForceGroupDots());
+	const data: MySimulationNodeDatum[] = await getForceGroupDots();
 	const nodes: MySimulationNodeDatum[] = data;
 
 	const categoryColor = scaleOrdinal([

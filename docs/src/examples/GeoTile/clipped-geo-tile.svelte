@@ -8,7 +8,7 @@
 	import TilesetField from '$lib/components/TilesetField.svelte';
 	import { getUsStatesTopology } from '$lib/data.remote';
 
-	const data = $derived(await getUsStatesTopology());
+	const data = await getUsStatesTopology();
 
 	const states = feature(data, data.objects.states);
 

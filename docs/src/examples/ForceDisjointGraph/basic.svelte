@@ -32,7 +32,7 @@
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
 
-	const data = $derived(await getDisjointGraph());
+	const data = await getDisjointGraph();
 	const nodes: MySimulationNodeDatum[] = $derived(data.nodes);
 	const links: MySimulationLinkDatum[] = $derived(data.links);
 

@@ -32,7 +32,7 @@
 		{ label: 'Orthographic', value: geoOrthographic }
 	];
 
-	const topojson = $derived(await getCountries());
+	const topojson = await getCountries();
 	const geojson = $derived(feature(topojson, topojson.objects.countries));
 	const features = $derived(
 		projection === geoAlbersUsa

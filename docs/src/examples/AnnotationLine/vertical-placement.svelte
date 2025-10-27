@@ -3,7 +3,7 @@
 	import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	const placementOptions = [
 		'top-left',

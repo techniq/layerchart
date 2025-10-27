@@ -2,7 +2,7 @@
 	import { AnnotationPoint, defaultChartPadding, LineChart } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	export { data };
 </script>
