@@ -3,6 +3,14 @@ import type { SeriesData } from '../components/charts/types.js';
 
 import { SelectionState } from '@layerstack/svelte-state';
 
+class HighlightKey<TData, SeriesComponent extends Component> {
+  current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
+
+  set = (seriesKey: typeof this.current) => {
+    this.current = seriesKey;
+  };
+}
+
 export class SeriesState<TData, TComponent extends Component> {
   #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
   selectedKeys = new SelectionState<string>();
@@ -59,12 +67,4 @@ export class SeriesState<TData, TComponent extends Component> {
       NonNullable<SeriesData<TData, TComponent>['color']>
     >;
   }
-}
-
-class HighlightKey<TData, SeriesComponent extends Component> {
-  current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
-
-  set = (seriesKey: typeof this.current) => {
-    this.current = seriesKey;
-  };
 }

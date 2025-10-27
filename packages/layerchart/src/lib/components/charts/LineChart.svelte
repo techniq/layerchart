@@ -104,7 +104,6 @@
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import { isScaleTime } from '../../utils/scales.svelte.js';
-  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
@@ -343,10 +342,10 @@
     ? {
         axis: 'x',
         resetOnEnd: true,
-        x: xDomain as BrushDomainType,
+        xDomain,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.brush.x;
+          xDomain = e.xDomain;
           brushProps.onBrushEnd?.(e);
         },
       }

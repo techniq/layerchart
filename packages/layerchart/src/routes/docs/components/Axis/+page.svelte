@@ -848,7 +848,7 @@
         brush={{
           resetOnEnd: true,
           onBrushEnd: (e) => {
-            xDomain = asAny(e.brush.x);
+            xDomain = asAny(e.xDomain);
           },
         }}
       >
@@ -865,9 +865,9 @@
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
           mode: 'separated',
-          x: xDomain,
+          xDomain,
           onChange: (e) => {
-            xDomain = asAny(e.brush.x);
+            xDomain = asAny(e.xDomain);
           },
         }}
       >
@@ -901,7 +901,7 @@
         brush={{
           resetOnEnd: true,
           onBrushEnd: (e) => {
-            xDomain = asAny(e.brush.x);
+            xDomain = asAny(e.xDomain);
           },
         }}
       >
@@ -918,9 +918,9 @@
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
           mode: 'separated',
-          x: xDomain,
+          xDomain,
           onChange: (e) => {
-            xDomain = asAny(e.brush.x);
+            xDomain = asAny(e.xDomain);
           },
         }}
       >

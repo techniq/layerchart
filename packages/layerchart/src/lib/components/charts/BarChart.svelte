@@ -114,7 +114,6 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
-  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
@@ -459,18 +458,11 @@
     ? {
         axis: 'x',
         resetOnEnd: true,
-        x: xDomain as BrushDomainType,
+        xDomain,
         ...brushProps,
         onBrushEnd: (e) => {
           // TOOD: This should set xRange instead of xDomain, and/or xDomain should be all values, not just bounds of brush range
-          // const values = context?.xScale.domain() ?? [];
-          // console.log('domain', values, e.xDomain);
-          // const i0 = values?.indexOf(e.xDomain[0]);
-          // const i1 = values?.indexOf(e.xDomain[1]);
-          // xDomain = values.slice(i0, i1);
-
-          xDomain = e.brush.x;
-
+          xDomain = e.xDomain;
           brushProps.onBrushEnd?.(e);
         },
       }

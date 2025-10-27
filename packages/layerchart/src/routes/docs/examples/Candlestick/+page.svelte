@@ -108,7 +108,7 @@
         yNice
         brush={{
           onChange: (e) => {
-            xDomain = e.brush.x;
+            xDomain = e.xDomain;
           },
         }}
       >
