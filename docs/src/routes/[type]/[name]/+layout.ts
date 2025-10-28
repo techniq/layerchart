@@ -18,11 +18,17 @@ export const load = async ({ params }) => {
 	);
 
 	// Extract all <Example component="..." name="..."> from markdown page
-	const regex = /<Example\s+(?:component="([^"]*?)"\s+)?name="([^"]*?)"\s*\/>/g;
-	const pageExamples = [...metadata.content.matchAll(regex)].map((match) => ({
-		component: match[1] || params.name, // use page component name if not explicit (ex. <Example name="basic" />)
-		name: match[2]
-	}));
+	const regex = /<Example\s+([^>]*?)\/>/g;
+	const matches = [...metadata.content.matchAll(regex)];
+
+	const pageExamples = matches.map((match) => {
+		const attrs = match[1];
+		const component = attrs.match(/component="([^"]*?)"/)?.[1] || params.name; // use page component name if not explicit (ex. <Example name="basic" />);
+		const name = attrs.match(/name="([^"]*?)"/)?.[1] || null;
+		return { component, name };
+	});
+
+	console.log({ pageExamples });
 
 	const examples: Examples = {};
 	for (const path in allExamples) {
