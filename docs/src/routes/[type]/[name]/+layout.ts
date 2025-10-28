@@ -28,8 +28,6 @@ export const load = async ({ params }) => {
 		return { component, name };
 	});
 
-	console.log({ pageExamples });
-
 	const examples: Examples = {};
 	for (const path in allExamples) {
 		if (
