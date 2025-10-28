@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
   import { scaleOrdinal, scaleSqrt } from 'd3-scale';
   import type { TimeInterval } from 'd3-time';
   import { extent, max, min } from 'd3-array';
@@ -682,7 +683,8 @@
     ondragend,
     ondragstart,
     brush,
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
+    class: className,
+  }: ChartPropsWithoutHTML<TData, XScale, YScale> & HTMLAttributes<HTMLDivElement> = $props();
 
   let ref = $state<HTMLElement>();
 
@@ -1301,7 +1303,7 @@
     style:height={heightProp ? `${heightProp}px` : '100%'}
     bind:clientWidth={_containerWidth}
     bind:clientHeight={_containerHeight}
-    class="lc-root-container"
+    class={['lc-root-container', className]}
   >
     {#key isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
