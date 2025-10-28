@@ -21,6 +21,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ left: 16, bottom: 24 }}
+	class="group"
 	tooltip={{ mode: 'band' }}
 >
 	<Layer>

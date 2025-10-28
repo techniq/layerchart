@@ -23,6 +23,7 @@
 	yScale={scaleBand().padding(0.4)}
 	padding={{ left: 16, bottom: 24 }}
 	tooltip={{ mode: 'band' }}
+	class="group"
 	height={300}
 >
 	<Layer>
