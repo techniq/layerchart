@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
+	import { Axis, Bars, Chart, Highlight, Layer, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
-		count: 30,
+		count: 20,
 		min: 20,
-		max: 100,
-		value: 'integer',
-		keys: ['value', 'baseline']
+		max: 100
 	});
-
 	export { data };
 </script>
 
@@ -19,15 +16,19 @@
 	x="date"
 	xScale={scaleBand().padding(0.4)}
 	y="value"
+	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
+	class="group"
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	<Bars rounded="top" strokeWidth={1} class="fill-primary" />
-	<Highlight bar />
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		<Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
+		<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />
+	</Layer>
 	<Tooltip.Root>
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />

@@ -1,51 +1,63 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { onMount } from 'svelte';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
+	import { Axis, Bar, Chart, Layer } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
+	import { cubicInOut } from 'svelte/easing';
+	import { Field, Switch } from 'svelte-ux';
 
 	const data = createDateSeries({
-		count: 12,
+		count: 20,
 		min: 20,
-		max: 100,
-		value: 'integer',
-		keys: ['value']
+		max: 100
 	});
-
-	let mounted = $state(false);
-
-	onMount(() => {
-		setTimeout(() => {
-			mounted = true;
-		}, 200);
-	});
-
 	export { data };
+
+	let show = $state(true);
 </script>
+
+<div class="absolute p-1 top-1 right-1 rounded z-1 backdrop-blur-sm bg-surface-100/50">
+	<Field label="Show" labelPlacement="left" let:id>
+		<Switch bind:checked={show} {id} size="md" />
+	</Field>
+</div>
 
 <Chart
 	{data}
 	x="date"
 	xScale={scaleBand().padding(0.4)}
 	y="value"
+	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" format="day" />
-	{#each data as d, i}
-		<Bars
-			data={[d]}
-			rounded="top"
-			strokeWidth={1}
-			class="fill-primary"
-			springValues={{
-				from: { height: 0 },
-				to: { height: mounted ? undefined : 0 },
-				delay: i * 50
-			}}
-		/>
-	{/each}
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" rule />
+		{#if show}
+			{#each data as d, i}
+				<Bar
+					data={d}
+					initialY={300 - 24}
+					initialHeight={0}
+					motion={{
+						y: {
+							type: 'tween',
+							duration: 500,
+							easing: cubicInOut,
+							delay: i * 30
+						},
+						height: {
+							type: 'tween',
+							duration: 500,
+							easing: cubicInOut,
+							delay: i * 30
+						}
+					}}
+					strokeWidth={1}
+					class="fill-primary"
+				/>
+			{/each}
+		{/if}
+	</Layer>
 </Chart>

@@ -6,19 +6,23 @@
 	import { stackOffsetExpand } from 'd3-shape';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
-	const keyColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-accent)'];
+	const keyColors = [
+		'var(--color-info)',
+		'var(--color-success)',
+		'var(--color-warning)',
+		'var(--color-danger)'
+	];
 
-	const stackedPercentData = groupStackData(longData, {
+	const data = groupStackData(longData, {
 		xKey: 'year',
 		stackBy: 'fruit',
 		offset: stackOffsetExpand
 	});
-
 	export { data };
 </script>
 
 <Chart
-	data={stackedPercentData}
+	{data}
 	x="year"
 	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
 	y="values"
@@ -26,8 +30,9 @@
 	c="fruit"
 	cDomain={colorKeys}
 	cRange={keyColors}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
+	height={300}
 >
 	{#snippet children({ context })}
 		<Layer>

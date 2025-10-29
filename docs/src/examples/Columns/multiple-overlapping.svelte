@@ -1,43 +1,43 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Highlight, Tooltip } from 'layerchart';
+	import { Axis, Bars, Chart, Highlight, Layer, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
-	const data1 = createDateSeries({
-		count: 30,
+	const data = createDateSeries({
+		count: 20,
 		min: 20,
 		max: 80,
-		value: 'integer',
-		keys: ['value']
+		keys: ['value', 'baseline']
 	});
-
-	const data2 = createDateSeries({
-		count: 30,
-		min: 40,
-		max: 100,
-		value: 'integer',
-		keys: ['value']
-	});
-
-	export { data1, data2 };
+	export { data };
 </script>
 
 <div class="h-[300px] p-4 border rounded-sm">
 	<Chart
-		data={data1}
+		{data}
 		x="date"
 		xScale={scaleBand().padding(0.4)}
-		y="value"
+		y={['value', 'baseline']}
+		yDomain={[0, null]}
 		yNice
-		padding={{ left: 16, bottom: 24 }}
+		padding={{ left: 24, bottom: 20, top: 8 }}
 		tooltip={{ mode: 'bisect-x' }}
-		height={300}
 	>
-		<Axis placement="left" grid rule format="integer" />
-		<Axis placement="bottom" />
-		<Bars data={data1} rounded="top" strokeWidth={1} class="fill-primary" opacity={0.7} />
-		<Bars data={data2} rounded="top" strokeWidth={1} class="fill-secondary" opacity={0.7} />
-		<Highlight area />
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+			<Bars y="baseline" strokeWidth={1} class="fill-surface-content/20" />
+			<Bars y="value" strokeWidth={1} insets={{ x: 4 }} class="fill-primary" />
+			<Highlight area />
+		</Layer>
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header value={data.date} format="day" />
+				<Tooltip.List>
+					<Tooltip.Item label="value" value={data.value} />
+					<Tooltip.Item label="baseline" value={data.baseline} />
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
 	</Chart>
 </div>

@@ -4,7 +4,7 @@
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
-		count: 30,
+		count: 20,
 		min: 20,
 		max: 100,
 		value: 'integer',
@@ -20,9 +20,10 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
-	class="group"
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
+	class="group"
+	height={300}
 >
 	<Layer>
 		<Axis placement="left" grid rule />

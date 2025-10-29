@@ -6,20 +6,20 @@
 	import { Field, Switch } from 'svelte-ux';
 
 	const data = createDateSeries({
-		count: 30,
+		count: 20,
 		min: 20,
-		max: 100,
-		value: 'integer',
-		keys: ['value']
+		max: 100
 	});
 	export { data };
 
-	let show = $state(false);
+	let show = $state(true);
 </script>
 
-<Field label="Show bars" let:id>
-	<Switch bind:checked={show} {id} size="md" />
-</Field>
+<div class="absolute p-1 top-1 right-1 rounded z-1 backdrop-blur-sm bg-surface-100/50">
+	<Field label="Show" labelPlacement="left" let:id>
+		<Switch bind:checked={show} {id} size="md" />
+	</Field>
+</div>
 
 <Chart
 	{data}
@@ -28,7 +28,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	height={300}
 >
 	<Layer>

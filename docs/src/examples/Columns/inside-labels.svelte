@@ -3,8 +3,7 @@
 	import { Axis, Bars, Chart, Labels, Layer, Rule } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
-	const data = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
-
+	const data = createDateSeries({ count: 20, min: -20, max: 50 });
 	export { data };
 </script>
 
@@ -15,7 +14,8 @@
 	y="value"
 	yBaseline={0}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 24, bottom: 20, top: 8 }}
+	height={300}
 >
 	<Layer>
 		<Axis placement="left" grid rule />

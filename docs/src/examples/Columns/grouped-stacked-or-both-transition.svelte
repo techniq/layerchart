@@ -15,33 +15,20 @@
 		'var(--color-danger)'
 	];
 
-	let transitionChartMode = $state('group');
-	const transitionChart = $derived(
-		transitionChartMode === 'group'
-			? ({
-					groupBy: 'fruit',
-					stackBy: undefined
-				} as const)
-			: transitionChartMode === 'stack'
-				? ({
-						groupBy: undefined,
-						stackBy: 'fruit'
-					} as const)
-				: transitionChartMode === 'groupStack'
-					? ({
-							groupBy: 'basket',
-							stackBy: 'fruit'
-						} as const)
-					: ({
-							groupBy: undefined,
-							stackBy: undefined
-						} as const)
+	let chartMode = $state('group');
+
+	const groupBy = $derived(
+		chartMode === 'group' || chartMode === 'groupStack' ? 'fruit' : undefined
 	);
-	const transitionData = $derived(
+	const stackBy = $derived(
+		chartMode === 'stack' || chartMode === 'groupStack' ? 'fruit' : undefined
+	);
+
+	const data = $derived(
 		groupStackData(longData, {
 			xKey: 'year',
-			groupBy: transitionChart.groupBy,
-			stackBy: transitionChart.stackBy
+			groupBy: groupBy,
+			stackBy: stackBy
 		}) as {
 			year: string;
 			fruit: string;
@@ -51,22 +38,19 @@
 			values: number[];
 		}[]
 	);
-
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
-			<ToggleOption value="group">Grouped</ToggleOption>
-			<ToggleOption value="stack">Stacked</ToggleOption>
-			<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-		</ToggleGroup>
-	</Field>
-</div>
+<Field label="Mode" class="mb-4">
+	<ToggleGroup bind:value={chartMode} variant="outline" size="sm" inset class="w-full">
+		<ToggleOption value="group">Grouped</ToggleOption>
+		<ToggleOption value="stack">Stacked</ToggleOption>
+		<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
+	</ToggleGroup>
+</Field>
 
 <Chart
-	data={transitionData}
+	{data}
 	x="year"
 	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
 	y="values"
@@ -74,13 +58,11 @@
 	c="fruit"
 	cDomain={colorKeys}
 	cRange={keyColors}
-	x1={transitionChart.groupBy}
-	x1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
-	x1Domain={transitionChart.groupBy
-		? unique(transitionData.map((d) => d[transitionChart.groupBy]))
-		: undefined}
+	x1={groupBy}
+	x1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
+	x1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >
@@ -89,8 +71,7 @@
 			<Axis placement="left" grid rule />
 			<Axis placement="bottom" rule />
 			<g>
-				<!-- TODO: 'data' can be used once type issue is resolved -->
-				{#each transitionData as d (d.year + '-' + d.fruit)}
+				{#each data as d (d.year + '-' + d.fruit)}
 					<Bar
 						data={d}
 						fill={context.cScale?.(d.fruit)}
@@ -99,22 +80,22 @@
 							x: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 0 : 300
+								delay: groupBy ? 0 : 300
 							},
 							y: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 300 : 0
+								delay: groupBy ? 300 : 0
 							},
 							width: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 0 : 300
+								delay: groupBy ? 0 : 300
 							},
 							height: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 300 : 0
+								delay: groupBy ? 300 : 0
 							}
 						}}
 					/>

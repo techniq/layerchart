@@ -1,17 +1,13 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { format } from '@layerstack/utils';
-	import { Axis, Bars, Chart, Rule } from 'layerchart';
+	import { Axis, Bars, Chart, Layer, Rule } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
-		count: 30,
-		min: -50,
-		max: -10,
-		value: 'integer',
-		keys: ['value']
+		count: 20,
+		min: -100,
+		max: -50
 	});
-
 	export { data };
 </script>
 
@@ -20,12 +16,13 @@
 	x="date"
 	xScale={scaleBand().padding(0.4)}
 	y="value"
-	yDomain={[null, 0]}
-	padding={{ left: 16, bottom: 24 }}
+	yNice
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	height={300}
 >
-	<Axis placement="left" grid rule format="integer" />
-	<Axis placement="bottom" />
-	<Bars rounded="bottom" strokeWidth={1} class="fill-primary" />
-	<Rule y={0} />
+	<Layer>
+		<Axis placement="left" grid rule />
+		<Axis placement="bottom" />
+		<Bars strokeWidth={1} class="fill-primary" />
+	</Layer>
 </Chart>

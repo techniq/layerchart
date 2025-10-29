@@ -38,7 +38,6 @@
 			values: number[];
 		}[]
 	);
-
 	export { data };
 </script>
 
