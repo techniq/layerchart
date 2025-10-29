@@ -14,21 +14,20 @@
 		'var(--color-danger)'
 	];
 
-	let transitionChartMode = $state('group');
+	let chartMode = $state('group');
 
-	const transitionChart = $derived(
-		transitionChartMode === 'group'
-			? ({ groupBy: 'fruit', stackBy: undefined } as const)
-			: transitionChartMode === 'stack'
-				? ({ groupBy: undefined, stackBy: 'fruit' } as const)
-				: ({ groupBy: 'basket', stackBy: 'fruit' } as const)
+	const groupBy = $derived(
+		chartMode === 'group' || chartMode === 'groupStack' ? 'fruit' : undefined
+	);
+	const stackBy = $derived(
+		chartMode === 'stack' || chartMode === 'groupStack' ? 'fruit' : undefined
 	);
 
 	const data = $derived(
 		groupStackData(longData, {
 			xKey: 'year',
-			groupBy: transitionChart.groupBy,
-			stackBy: transitionChart.stackBy
+			groupBy: groupBy,
+			stackBy: stackBy
 		}) as {
 			year: string;
 			fruit: string;
@@ -42,15 +41,13 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
-			<ToggleOption value="group">Grouped</ToggleOption>
-			<ToggleOption value="stack">Stacked</ToggleOption>
-			<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-		</ToggleGroup>
-	</Field>
-</div>
+<Field label="Mode" class="mb-4">
+	<ToggleGroup bind:value={chartMode} variant="outline" size="sm" inset class="w-full">
+		<ToggleOption value="group">Grouped</ToggleOption>
+		<ToggleOption value="stack">Stacked</ToggleOption>
+		<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
+	</ToggleGroup>
+</Field>
 
 <!-- Always use stackedData for extents for consistent scale -->
 <Chart
@@ -62,13 +59,11 @@
 	c="fruit"
 	cDomain={colorKeys}
 	cRange={keyColors}
-	y1={transitionChart.groupBy}
-	y1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
-	y1Domain={transitionChart.groupBy
-		? unique(data.map((d) => d[transitionChart.groupBy]))
-		: undefined}
+	y1={groupBy}
+	y1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
+	y1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	y1Range={({ yScale }) => [0, yScale.bandwidth()]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	height={400}
 >
 	{#snippet children({ context })}
@@ -85,22 +80,22 @@
 							x: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 0 : 300
+								delay: groupBy ? 0 : 300
 							},
 							y: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 300 : 0
+								delay: groupBy ? 300 : 0
 							},
 							width: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 0 : 300
+								delay: groupBy ? 0 : 300
 							},
 							height: {
 								type: 'tween',
 								easing: cubicInOut,
-								delay: transitionChart.groupBy ? 300 : 0
+								delay: groupBy ? 300 : 0
 							}
 						}}
 						class="cursor-pointer"

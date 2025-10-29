@@ -26,7 +26,7 @@
 	c="fruit"
 	cDomain={colorKeys}
 	cRange={keyColors}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >

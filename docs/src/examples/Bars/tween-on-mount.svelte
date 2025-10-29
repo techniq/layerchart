@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand } from 'd3-scale';
-	import { Bar, Bars, Axis, Chart, Highlight, Layer, Tooltip } from 'layerchart';
-	import { Toggle, Field, Switch } from 'svelte-ux';
+	import { Bars, Axis, Chart, Layer } from 'layerchart';
+	import { Field, Switch } from 'svelte-ux';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -18,8 +18,8 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
-	<Field label="Show bars" let:id>
+<div class="absolute p-1 top-1 right-1 rounded z-1 backdrop-blur-sm bg-surface-100/50">
+	<Field label="Show" labelPlacement="left" let:id>
 		<Switch bind:checked={show} {id} size="md" />
 	</Field>
 </div>
@@ -31,7 +31,7 @@
 	xNice
 	y="date"
 	yScale={scaleBand().padding(0.4)}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	height={300}
 >
 	<Layer>

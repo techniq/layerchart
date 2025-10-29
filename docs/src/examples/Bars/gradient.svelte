@@ -14,25 +14,23 @@
 	export { data };
 </script>
 
-<div class="h-[300px] p-4 border rounded-sm">
-	<Chart
-		{data}
-		x="value"
-		xDomain={[0, null]}
-		xNice
-		y="date"
-		yScale={scaleBand().padding(0.4)}
-		padding={{ left: 16, bottom: 24 }}
-		height={300}
-	>
-		<Layer>
-			<Axis placement="bottom" grid rule />
-			<Axis placement="left" rule />
-			<LinearGradient class="from-green-400 to-blue-500" units="userSpaceOnUse">
-				{#snippet children({ gradient })}
-					<Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
-				{/snippet}
-			</LinearGradient>
-		</Layer>
-	</Chart>
-</div>
+<Chart
+	{data}
+	x="value"
+	xDomain={[0, null]}
+	xNice
+	y="date"
+	yScale={scaleBand().padding(0.4)}
+	padding={{ left: 32, bottom: 20, right: 8 }}
+	height={300}
+>
+	<Layer>
+		<Axis placement="bottom" grid rule />
+		<Axis placement="left" rule />
+		<LinearGradient class="from-green-400 to-blue-500" units="userSpaceOnUse">
+			{#snippet children({ gradient })}
+				<Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
+			{/snippet}
+		</LinearGradient>
+	</Layer>
+</Chart>

@@ -15,7 +15,7 @@
 	xPadding={[20, 20]}
 	y="date"
 	yScale={scaleBand().padding(0.4)}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	height={300}
 >
 	<Layer>

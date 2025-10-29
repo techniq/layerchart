@@ -29,7 +29,7 @@
 	y1="fruit"
 	y1Domain={colorKeys}
 	y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	tooltip={{ mode: 'band' }}
 	height={400}
 >

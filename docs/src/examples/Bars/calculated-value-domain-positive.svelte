@@ -14,7 +14,7 @@
 	xNice
 	y="date"
 	yScale={scaleBand().padding(0.4)}
-	padding={{ left: 20, bottom: 20 }}
+	padding={{ left: 32, bottom: 20, right: 8 }}
 	height={300}
 >
 	<Layer>
