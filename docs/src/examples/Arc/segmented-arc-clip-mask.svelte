@@ -9,7 +9,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-flow-col gap-3 mb-2">
+<div class="grid grid-flow-col gap-3 mb-4">
 	<RangeField label="Value" bind:value />
 	<RangeField label="Segments" bind:value={segments} min={2} />
 </div>

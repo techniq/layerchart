@@ -5,9 +5,9 @@
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
-	let xDomain = $state<DomainType>([null, null]);
-
 	export { data };
+
+	let xDomain = $state<DomainType>([null, null]);
 </script>
 
 <Chart

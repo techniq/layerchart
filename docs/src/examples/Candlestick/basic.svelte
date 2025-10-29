@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { scaleUtc } from 'd3-scale';
-	import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip, type DomainType } from 'layerchart';
+	import { Axis, Chart, Highlight, Layer, Rule, Tooltip } from 'layerchart';
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
-
 	export { data };
 </script>
 

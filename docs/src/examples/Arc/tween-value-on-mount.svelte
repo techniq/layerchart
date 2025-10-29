@@ -15,11 +15,9 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
-	<Field label="Show" let:id>
-		<Switch checked={show} on:change={() => (show = !show)} {id} size="md" />
-	</Field>
-</div>
+<Field label="Show" labelPlacement="left" let:id class="absolute top-2 right-2 z-1">
+	<Switch {id} bind:checked={show} size="md" />
+</Field>
 
 <Chart height={200}>
 	<Layer center>
