@@ -55,11 +55,11 @@
 			class={cls('border rounded-t-sm bg-surface-300 overflow-hidden', !showCode && 'rounded-b-sm')}
 		>
 			<div class="resize-x overflow-hidden max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
-				{#if page.params.example}
-					<example.component bind:this={ref} />
-				{:else}
+				<!-- {#if page.params.example} -->
+				<example.component bind:this={ref} />
+				<!-- {:else}
 					Inspect to view
-				{/if}
+				{/if} -->
 			</div>
 		</div>
 
