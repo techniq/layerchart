@@ -62,7 +62,7 @@
 	x1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
 	x1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
-	padding={{ left: 24, bottom: 20, top: 8 }}
+	padding={{ left: 32, bottom: 20, top: 8 }}
 	height={300}
 >
 	{#snippet children({ context })}

@@ -3,14 +3,7 @@
 	import { Axis, Bars, Chart, Highlight, Layer } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
-	const data = createDateSeries({
-		count: 30,
-		min: 20,
-		max: 100,
-		value: 'integer',
-		keys: ['value', 'baseline']
-	});
-
+	const data = createDateSeries({ count: 20, min: 20, max: 100 });
 	export { data };
 </script>
 
@@ -21,7 +14,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 24, bottom: 20, top: 8 }}
 	height={300}
 >
 	<Layer>

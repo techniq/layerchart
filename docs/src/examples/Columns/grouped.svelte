@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { sum } from 'd3-array';
-	import { Axis, Bar, Bars, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { Axis, Bars, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
@@ -29,7 +29,7 @@
 	x1="fruit"
 	x1Domain={colorKeys}
 	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >

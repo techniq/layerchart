@@ -34,7 +34,7 @@
 	x1Scale={scaleBand().padding(0.1)}
 	x1Domain={[1, 2]}
 	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ left: 32, bottom: 20, top: 8 }}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >
