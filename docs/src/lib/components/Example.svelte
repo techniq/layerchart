@@ -47,14 +47,25 @@
 
 	let ref = $state<SvelteComponent | null>(null);
 	let data = $derived(ref?.data);
+
+	let canResize = $derived(page.data.metadata.resize);
 </script>
 
 <div class="example relative mt-1">
 	{#if example}
 		<div
-			class={cls('border rounded-t-sm bg-surface-300 overflow-hidden', !showCode && 'rounded-b-sm')}
+			class={cls(
+				'border rounded-t-sm bg-surface-300',
+				canResize && 'overflow-hidden',
+				!showCode && 'rounded-b-sm'
+			)}
 		>
-			<div class="resize-x overflow-hidden max-w-full p-4 outline rounded bg-surface-200 shadow-lg">
+			<div
+				class={cls(
+					'p-4 outline rounded bg-surface-200 shadow-lg',
+					canResize && 'resize-x overflow-hidden max-w-full'
+				)}
+			>
 				<!-- {#if page.params.example} -->
 				<example.component bind:this={ref} />
 				<!-- {:else}

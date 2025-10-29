@@ -10,6 +10,7 @@ related:
     'examples/Histogram',
     'examples/Sparkline'
   ]
+resize: false
 ---
 
 <script lang="ts">

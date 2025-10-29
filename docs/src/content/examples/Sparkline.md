@@ -10,6 +10,7 @@ related:
     'components/Highlight',
     'examples/Sparkbar'
   ]
+resize: false
 ---
 
 <script lang="ts">
