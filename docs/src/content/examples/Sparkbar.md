@@ -22,10 +22,6 @@ related:
 
 <Example name="basic" />
 
-### Basic within a paragraph
-
-<Example name="basic-within-a-paragraph" />
-
 ### Basic negative data
 
 <Example name="basic-negative-data" />
@@ -33,6 +29,10 @@ related:
 ### Fixed position tooltip
 
 <Example name="fixed-position-tooltip" />
+
+### Basic within a paragraph
+
+<Example name="basic-within-a-paragraph" />
 
 ### Basic within a paragraph with Tooltip and Highlight
 

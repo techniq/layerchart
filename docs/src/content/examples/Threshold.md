@@ -15,12 +15,12 @@ related: ['components/Threshold', 'components/AreaChart']
 
 ### Basic
 
-<Example component="AreaChart" name="basic-threshold" />
+<Example name="basic-threshold" />
 
 ### With Tooltip and Highlight
 
-<Example component="AreaChart" name="with-tooltip-and-highlight" />
+<Example name="with-tooltip-and-highlight" />
 
 ### With Labels
 
-<Example component="AreaChart" name="with-labels" />
+<Example name="with-labels" />

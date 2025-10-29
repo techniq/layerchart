@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { scaleTime } from 'd3-scale';
 	import { extent } from 'd3-array';
-	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
+	import { Axis, BarChart, Tooltip } from 'layerchart';
 	import { getHydro } from '$lib/data.remote.js';
 
 	const data = await getHydro();
-
 	export { data };
 </script>
 

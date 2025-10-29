@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { curveLinearClosed } from 'd3-shape';
+	import { curveCatmullRomClosed, curveLinearClosed } from 'd3-shape';
 	import { Axis, Chart, Layer, Points, Spline } from 'layerchart';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	const data = [
 		{ name: 'fastball', value: 10 },
@@ -9,9 +10,17 @@
 		{ name: 'cutter', value: 8 },
 		{ name: 'curve', value: 5 }
 	];
-
 	export { data };
+
+	let curve = $state(curveLinearClosed);
 </script>
+
+<Field label="curve: " labelPlacement="left" dense class="absolute top-2 right-2 z-1">
+	<ToggleGroup bind:value={curve} size="sm">
+		<ToggleOption value={curveLinearClosed}>Linear</ToggleOption>
+		<ToggleOption value={curveCatmullRomClosed}>CatmullRom</ToggleOption>
+	</ToggleGroup>
+</Field>
 
 <Chart
 	{data}
@@ -30,7 +39,7 @@
 			format={(d) => ''}
 		/>
 		<Axis placement="angle" grid={{ class: 'stroke-surface-content/20' }} />
-		<Spline curve={curveLinearClosed} class="stroke-primary fill-primary/20" />
+		<Spline {curve} class="stroke-primary fill-primary/20" />
 		<Points class="fill-primary stroke-surface-200" />
 	</Layer>
 </Chart>

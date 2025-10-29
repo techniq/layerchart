@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
+	import { Axis, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
 	const data = await getNewPassengerCars();
-
 	export { data };
 </script>
 
@@ -16,6 +15,7 @@
 		yDomain={[0, null]}
 		yNice
 		padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
+		height={300}
 	>
 		<Layer>
 			<Axis

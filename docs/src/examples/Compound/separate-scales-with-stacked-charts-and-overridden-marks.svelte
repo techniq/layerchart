@@ -3,7 +3,6 @@
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
-
 	export { data };
 </script>
 

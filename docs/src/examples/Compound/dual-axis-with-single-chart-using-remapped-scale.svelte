@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
-	import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
+	import { Axis, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
 	const data = await getNewPassengerCars();
-
 	export { data };
 </script>
 

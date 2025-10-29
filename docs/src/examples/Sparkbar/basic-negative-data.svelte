@@ -2,8 +2,7 @@
 	import { BarChart } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
-	const data = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
-
+	const data = createDateSeries({ count: 30, min: -20, max: 50 });
 	export { data };
 </script>
 
