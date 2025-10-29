@@ -684,7 +684,8 @@
     ondragstart,
     brush,
     class: className,
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> & HTMLAttributes<HTMLDivElement> = $props();
+  }: ChartPropsWithoutHTML<TData, XScale, YScale> &
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
 
   let ref = $state<HTMLElement>();
 
