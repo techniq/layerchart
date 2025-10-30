@@ -21,11 +21,11 @@
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getWorldGeojson } from '$lib/data.remote.js';
+	import { getCountriesTopology } from '$lib/geo.remote.js';
 	import { timings } from './timings.js';
 
-	const geojson = await getWorldGeojson();
-	const countries = feature(geojson, geojson.objects.countries);
+	const topology = await getCountriesTopology();
+	const countries = feature(topology, topology.objects.countries);
 
 	let context = $state<ChartContextValue>(null!);
 
@@ -100,7 +100,7 @@
 	let layer = $derived(settings.layer);
 	let debug = $derived(settings.debug);
 
-	const data = { geojson, countries, timings };
+	const data = { topology, countries, timings };
 
 	export { data };
 </script>

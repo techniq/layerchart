@@ -9,7 +9,7 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const examplesBySection = flatGroup(allExamples, (d) => d.section.toLowerCase())
+	const examplesBySection = flatGroup(allExamples, (d) => d.section?.toLowerCase())
 		.filter(([section]) => section !== 'examples')
 		.sort(
 			sortFunc(([section]) =>
@@ -17,7 +17,7 @@
 			)
 		);
 
-	const componentsBySection = flatGroup(allComponents, (d) => d.section.toLowerCase())
+	const componentsBySection = flatGroup(allComponents, (d) => d.section?.toLowerCase())
 		.filter(([section]) => section !== 'examples')
 		.sort(
 			sortFunc(([section]) =>

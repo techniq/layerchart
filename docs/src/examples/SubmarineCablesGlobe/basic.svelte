@@ -18,16 +18,16 @@
 	} from 'layerchart';
 
 	import {
-		getWorldGeojson,
+		getCountriesTopology,
 		getSubmarineCables,
 		getSubmarineCablesLandingPoints
-	} from '$lib/data.remote.js';
+	} from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
+	const topology = await getCountriesTopology();
 	const cables = await getSubmarineCables();
 	const landingPoints = await getSubmarineCablesLandingPoints();
 
-	const countries = feature(geojson, geojson.objects.countries);
+	const countries = feature(topology, topology.objects.countries);
 
 	let context = $state<ChartContextValue>();
 

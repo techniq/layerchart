@@ -13,12 +13,12 @@
 		Layer
 	} from 'layerchart';
 
-	import { getWorldLinks, getWorldGeojson } from '$lib/data.remote.js';
+	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
+	const topology = await getCountriesTopology();
 	const worldLinks = await getWorldLinks();
 
-	const countries = feature(geojson, geojson.objects.countries);
+	const countries = feature(topology, topology.objects.countries);
 
 	let settings = getSettings();
 

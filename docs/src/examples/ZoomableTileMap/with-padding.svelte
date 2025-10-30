@@ -16,7 +16,7 @@
 	import { RangeField } from 'svelte-ux';
 
 	import TilesetField from '$lib/components/TilesetField.svelte';
-	import { getUsCountiesTopology } from '$lib/data.remote.js';
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesTopology();
 	let settings = getSettings();

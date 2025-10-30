@@ -14,10 +14,10 @@
 	import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getWorldGeojson } from '$lib/data.remote.js';
+	import { getCountriesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
-	const countries = feature(geojson, geojson.objects.countries);
+	const topology = await getCountriesTopology();
+	const countries = feature(topology, topology.objects.countries);
 
 	let context = $state<ChartContextValue>();
 
@@ -36,7 +36,7 @@
 		disabled: true
 	});
 
-	const data = { geojson, countries };
+	const data = { topology, countries };
 
 	export { data };
 </script>

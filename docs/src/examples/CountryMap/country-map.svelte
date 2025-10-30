@@ -3,7 +3,7 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Layer, Text } from 'layerchart';
-	import { getUsStatesTopology } from '$lib/data.remote.js';
+	import { getUsStatesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsStatesTopology();
 	const states = feature(geojson, geojson.objects.states);

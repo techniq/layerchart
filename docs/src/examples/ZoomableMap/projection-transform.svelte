@@ -9,7 +9,7 @@
 	import { SelectField } from 'svelte-ux';
 
 	import type { GeometryObjectA } from 'topojson-specification';
-	import { getUsCountiesTopology } from '$lib/data.remote.js';
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesTopology();
 	let settings = getSettings();

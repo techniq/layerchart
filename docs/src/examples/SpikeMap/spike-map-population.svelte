@@ -7,17 +7,17 @@
 	import { Chart, GeoPath, getSettings, Layer, spikePath, Spline, Tooltip } from 'layerchart';
 	import TransformControls from '$lib/components/TransformControls.svelte';
 
-	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/data.remote.js';
+	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
 
-	const geojson = await getUsCountiesAlbersTopology();
+	const topology = await getUsCountiesAlbersTopology();
 	const populationData = await getUsCountyPopulation();
 
 	let settings = getSettings();
 
 	const projection = geoIdentity as unknown as () => GeoProjection;
 
-	const states = feature(geojson, geojson.objects.states);
-	const counties = feature(geojson, geojson.objects.counties);
+	const states = feature(topology, topology.objects.states);
+	const counties = feature(topology, topology.objects.counties);
 
 	const statesById = index(states.features, (d) => d.id);
 
@@ -50,7 +50,7 @@
 		})
 		.sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
 
-	const data = { geojson, populationData, states, counties, population, enrichedCountiesFeatures };
+	const data = { topology, populationData, states, counties, population, enrichedCountiesFeatures };
 
 	export { data };
 </script>

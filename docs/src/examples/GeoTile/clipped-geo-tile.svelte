@@ -4,13 +4,12 @@
 	import { feature } from 'topojson-client';
 
 	import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
-	import { RangeField, SelectField } from 'svelte-ux';
+	import { RangeField } from 'svelte-ux';
 	import TilesetField from '$lib/components/TilesetField.svelte';
-	import { getUsStatesTopology } from '$lib/data.remote';
+	import { getUsStatesTopology } from '$lib/geo.remote';
 
-	const data = await getUsStatesTopology();
-
-	const states = feature(data, data.objects.states);
+	const topology = await getUsStatesTopology();
+	const states = feature(topology, topology.objects.states);
 
 	const filteredStates = {
 		...states,
@@ -28,8 +27,6 @@
 	);
 
 	let zoomDelta = $state(0);
-
-	export { data };
 </script>
 
 <div class="grid grid-cols-[1fr_1fr] gap-2 my-2">

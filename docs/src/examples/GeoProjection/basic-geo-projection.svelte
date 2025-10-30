@@ -14,9 +14,7 @@
 
 	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
 	import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
-	import { getWorldProjectionData } from '$lib/data.remote';
-
-	const data = await getWorldProjectionData();
+	import { getCountriesTopology, getCountriesDetailTopology } from '$lib/geo.remote';
 
 	let config = $state({
 		projection: geoOrthographic,
@@ -41,9 +39,10 @@
 		{ label: 'Gnomonic', value: geoGnomonic }
 	];
 
-	const dataGeoJson = $derived(config.detailed ? data.geojsonDetail : data.geojson);
-
-	const geojson = $derived(feature(dataGeoJson, dataGeoJson.objects.countries));
+	const topology = $derived(
+		await (config.detailed ? getCountriesDetailTopology() : getCountriesTopology())
+	);
+	const geojson = $derived(feature(topology, topology.objects.countries));
 	const features = $derived(
 		config.projection === geoAlbersUsa
 			? geojson.features.filter((f) => f.properties.name === 'United States of America')

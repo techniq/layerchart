@@ -13,7 +13,7 @@
 
 	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import { Checkbox, Field, ProgressCircle, RangeField } from 'svelte-ux';
-	import { getMiserables } from '$lib/data.remote';
+	import { getMiserablesGraph } from '$lib/graph.remote';
 
 	import type { Prettify } from '@layerstack/utils';
 
@@ -33,7 +33,7 @@
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
 
-	const data = await getMiserables();
+	const data = await getMiserablesGraph();
 
 	const nodes: MySimulationNodeDatum[] = data.nodes;
 	const links: MySimulationLinkDatum[] = data.links;

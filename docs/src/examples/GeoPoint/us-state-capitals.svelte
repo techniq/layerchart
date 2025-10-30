@@ -3,12 +3,12 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, Circle, GeoPath, GeoPoint, getSettings, Layer, Text } from 'layerchart';
-	import { getUsStatesTopology, getUsCapitals } from '$lib/data.remote';
+	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 
 	const [usData, capitalsData] = await Promise.all([getUsStatesTopology(), getUsCapitals()]);
-	const data = $state({ us: { geojson: usData, capitals: capitalsData } });
+	const data = $state({ us: { topology: usData, capitals: capitalsData } });
 
-	const states = feature(data.us.geojson, data.us.geojson.objects.states);
+	const states = feature(data.us.topology, data.us.topology.objects.states);
 
 	let settings = getSettings();
 

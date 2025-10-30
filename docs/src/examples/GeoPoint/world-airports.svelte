@@ -4,14 +4,14 @@
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import { Chart, GeoPath, GeoPoint, getSettings, Layer, Tooltip } from 'layerchart';
-	import { getWorldGeojson, getWorldAirports } from '$lib/data.remote';
+	import { getCountriesTopology, getWorldAirports } from '$lib/geo.remote';
 
 	const [worldData, airportsData] = $derived(
-		await Promise.all([getWorldGeojson(), getWorldAirports()])
+		await Promise.all([getCountriesTopology(), getWorldAirports()])
 	);
-	const data = $state({ world: { geojson: worldData, airports: airportsData } });
+	const data = $state({ world: { topology: worldData, airports: airportsData } });
 
-	const countries = feature(data.world.geojson, data.world.geojson.objects.countries);
+	const countries = feature(data.world.topology, data.world.topology.objects.countries);
 
 	let tooltipMode = $state<'quadtree' | 'voronoi'>('quadtree');
 	let tooltipRadius = $state(30);

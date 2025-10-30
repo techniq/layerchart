@@ -4,7 +4,7 @@
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import { Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
-	import { getUsStatesTopology, getUsCapitals } from '$lib/data.remote';
+	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 
 	import LucideStar from '~icons/lucide/star';
 

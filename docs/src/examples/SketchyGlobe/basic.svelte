@@ -9,15 +9,15 @@
 	import { TimerState } from '@layerstack/svelte-state';
 
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import { getWorldGeojson } from '$lib/data.remote.js';
+	import { getCountriesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
+	const topology = await getCountriesTopology();
 
 	let curve = $state(curveCatmullRomClosed);
 	let minArea = $state(2);
 
-	const simplifiedGeojson = $derived(simplify(presimplify(geojson), Math.pow(10, 2 - minArea)));
-	const land = $derived(feature(simplifiedGeojson, geojson.objects.land));
+	const simplifiedGeojson = $derived(simplify(presimplify(topology), Math.pow(10, 2 - minArea)));
+	const land = $derived(feature(simplifiedGeojson, topology.objects.land));
 
 	let context = $state<ChartContextValue>(null!);
 
@@ -36,8 +36,7 @@
 		disabled: true
 	});
 
-	const data = { geojson, land };
-
+	const data = { topology, land };
 	export { data };
 </script>
 

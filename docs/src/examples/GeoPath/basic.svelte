@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { geoAlbersUsa } from 'd3-geo';
 	import { Chart, GeoPath, getSettings, Layer, Tooltip } from 'layerchart';
-	import { getUsCountiesTopology } from '$lib/data.remote';
+	import { getUsCountiesTopology } from '$lib/geo.remote';
 	import { feature } from 'topojson-client';
 
 	const settings = getSettings();

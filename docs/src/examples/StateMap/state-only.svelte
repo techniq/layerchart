@@ -6,10 +6,10 @@
 	import { SelectField } from 'svelte-ux';
 	import { sort } from '@layerstack/utils';
 
-	import { getUsCountiesTopology } from '$lib/data.remote.js';
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getUsCountiesTopology();
-	const states = feature(geojson, geojson.objects.states);
+	const topology = await getUsCountiesTopology();
+	const states = feature(topology, topology.objects.states);
 
 	const stateOptions = sort(
 		states.features
@@ -27,7 +27,7 @@
 		{ label: 'Mercator', value: geoMercator }
 	];
 
-	const data = { geojson, states, selectedStateFeature };
+	const data = { topology, states, selectedStateFeature };
 
 	export { data };
 </script>

@@ -16,13 +16,13 @@
 		type ChartContextValue
 	} from 'layerchart';
 
-	import { getWorldGeojson, getTectonicPlates, getEarthquakes } from '$lib/data.remote.js';
+	import { getTectonicPlates, getEarthquakes, getCountriesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
+	const topology = await getCountriesTopology();
 	const tectonicPlates = await getTectonicPlates();
 	const earthquakes = await getEarthquakes();
 
-	const countries = feature(geojson, geojson.objects.countries);
+	const countries = feature(topology, topology.objects.countries);
 
 	let context = $state<ChartContextValue<(typeof earthquakes)[number]>>();
 

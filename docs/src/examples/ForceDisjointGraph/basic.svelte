@@ -12,7 +12,7 @@
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
 	import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
-	import { getDisjointGraph } from '$lib/data.remote.js';
+	import { getDisjointGraph } from '$lib/graph.remote.js';
 
 	import type { Prettify } from '@layerstack/utils';
 

@@ -20,12 +20,12 @@
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getWorldGeojson, getEclipses } from '$lib/data.remote.js';
+	import { getCountriesTopology, getEclipses } from '$lib/geo.remote.js';
 
-	const geojson = await getWorldGeojson();
+	const topology = await getCountriesTopology();
 	const eclipsesData = await getEclipses();
 
-	const countries = feature(geojson, geojson.objects.countries);
+	const countries = feature(topology, topology.objects.countries);
 	const eclipses = feature(eclipsesData, eclipsesData.objects.eclipses);
 
 	let context = $state<ChartContextValue>(null!);

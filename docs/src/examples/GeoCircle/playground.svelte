@@ -11,7 +11,7 @@
 	} from 'd3-geo';
 	import { range } from 'd3-array';
 	import { feature } from 'topojson-client';
-	import { getCountries } from '$lib/data.remote';
+	import { getCountriesTopology } from '$lib/geo.remote';
 
 	import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
@@ -32,8 +32,8 @@
 		{ label: 'Orthographic', value: geoOrthographic }
 	];
 
-	const topojson = await getCountries();
-	const geojson = $derived(feature(topojson, topojson.objects.countries));
+	const topology = await getCountriesTopology();
+	const geojson = $derived(feature(topology, topology.objects.countries));
 	const features = $derived(
 		projection === geoAlbersUsa
 			? geojson.features.filter((f) => f.properties.name === 'United States of America')

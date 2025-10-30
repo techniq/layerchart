@@ -10,7 +10,7 @@
 	import { Chart, GeoPath, Legend, Layer, Tooltip, Circle, getSettings } from 'layerchart';
 	import TransformControls from '$lib/components/TransformControls.svelte';
 
-	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/data.remote.js';
+	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesAlbersTopology();
 	const populationData = await getUsCountyPopulation();

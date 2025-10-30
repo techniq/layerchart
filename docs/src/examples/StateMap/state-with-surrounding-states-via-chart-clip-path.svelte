@@ -6,7 +6,7 @@
 	import { SelectField } from 'svelte-ux';
 	import { sort } from '@layerstack/utils';
 
-	import { getUsCountiesTopology } from '$lib/data.remote.js';
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesTopology();
 	const counties = feature(geojson, geojson.objects.counties);
