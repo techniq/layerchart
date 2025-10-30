@@ -27,6 +27,7 @@
     Extents,
     Nice,
     PaddingArray,
+    Without,
     XRangeWithScale,
     YRangeWithScale,
   } from '$lib/utils/types.js';
@@ -601,6 +602,13 @@
     /** Sets height of the chart container.  Uses parent height if not set (bind:clientHeight) */
     height?: number;
   };
+
+  export type ChartProps<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  > = ChartPropsWithoutHTML<T, XScale, YScale> &
+    Without<HTMLAttributes<HTMLDivElement>, ChartPropsWithoutHTML<T, XScale, YScale>>;
 </script>
 
 <script

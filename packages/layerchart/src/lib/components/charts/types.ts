@@ -25,7 +25,7 @@ import type TooltipHeader from '../tooltip/TooltipHeader.svelte';
 import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
-import type { ChartPropsWithoutHTML } from '../Chart.svelte';
+import type { ChartProps } from '../Chart.svelte';
 import type { ChartContextValue } from '$lib/contexts/chart.js';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
@@ -277,10 +277,7 @@ export type SimplifiedChartProps<
   TSnippetProps = {},
   ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
 > = BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet> &
-  Without<
-    ChartPropsWithoutHTML<TData>,
-    BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>
-  >;
+  Without<ChartProps<TData>, BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>>;
 
 export type ChartAnnotations = Array<
   | ({
