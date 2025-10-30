@@ -17,12 +17,12 @@ related: ['components/Dagre', 'components/Link']
 
 ### Basic
 
-<!-- <Example name="basic-dagre" /> -->
+<Example name="basic" />
 
 ### TCP State Diagram
 
-<!-- <Example name="tcp-state-diagram" /> -->
+<Example name="tcp-state-diagram" />
 
 ### Software user flow
 
-<!-- <Example name="software-user-flow" /> -->
+<Example name="software-user-flow" />

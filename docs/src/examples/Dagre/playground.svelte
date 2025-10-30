@@ -12,7 +12,7 @@
 	import { getGraph } from '$lib/graph.remote';
 
 	let selectedGraphValue = $state('simple');
-	let data = $derived(await getGraph(selectedGraphValue));
+	let data = $derived<any>(await getGraph(selectedGraphValue));
 
 	let settings = $state({
 		ranker: 'network-simplex',
@@ -30,7 +30,7 @@
 	let showSettings = $state(false);
 </script>
 
-<div class="flex justify-end gap-2 items-end mb-4">
+<div class="flex justify-end gap-2 items-end mb-2">
 	<MenuField
 		label="Graph"
 		options={[
@@ -49,16 +49,18 @@
 	/>
 
 	<Field label="Settings" labelPlacement="inset" let:id dense>
-		<!-- TODO: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'f') -->
-		<!-- <Switch bind:checked={showSettings} {id} size="md" /> -->
-		<input type="checkbox" bind:checked={showSettings} {id} class="w-5 h-5" />
+		<Switch
+			checked={showSettings}
+			on:change={() => (showSettings = !showSettings)}
+			{id}
+			size="md"
+		/>
 	</Field>
 </div>
 
 <div class="flex gap-2">
 	<div class="flex-1 p-4 border rounded-sm overflow-hidden">
 		<Chart
-			data={[]}
 			transform={{
 				mode: 'canvas',
 				initialScrollMode: 'scale',
@@ -69,7 +71,7 @@
 			<TransformControls />
 
 			<Layer>
-				<Dagre data={data as any} edges={(d) => d.links} {...settings}>
+				<Dagre {data} edges={(d) => d.links} {...settings}>
 					{#snippet children({ nodes, edges })}
 						<g class="edges">
 							{#each edges as edge, i (edge.v + '-' + edge.w)}
