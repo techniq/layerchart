@@ -9,7 +9,7 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const examplesBySection = flatGroup(allExamples, (d) => d.section)
+	const examplesBySection = flatGroup(allExamples, (d) => d.section.toLowerCase())
 		.filter(([section]) => section !== 'examples')
 		.sort(
 			sortFunc(([section]) =>
@@ -17,7 +17,7 @@
 			)
 		);
 
-	const componentsBySection = flatGroup(allComponents, (d) => d.section)
+	const componentsBySection = flatGroup(allComponents, (d) => d.section.toLowerCase())
 		.filter(([section]) => section !== 'examples')
 		.sort(
 			sortFunc(([section]) =>
@@ -56,7 +56,7 @@
 		{#each examplesBySection as [section, examples]}
 			<div class="mb-6">
 				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
-				{#each examples as example}
+				{#each examples.sort(sortFunc('name')) as example}
 					<NavItem
 						text={example.name}
 						currentUrl={page.url}
@@ -78,7 +78,7 @@
 		{#each componentsBySection as [section, components]}
 			<div class="mb-6">
 				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
-				{#each components as component}
+				{#each components.sort(sortFunc('name')) as component}
 					<NavItem
 						text={component.name}
 						currentUrl={page.url}

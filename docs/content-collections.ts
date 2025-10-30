@@ -10,6 +10,7 @@ const components = defineCollection({
 	directory: 'src/content/components',
 	include: '**/*.md',
 	schema: z.object({
+		name: z.string().optional(),
 		description: z.string().optional(),
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
@@ -38,7 +39,7 @@ const components = defineCollection({
 
 		return {
 			...doc,
-			name: toPascalCase(fileName.replace('.md', '')),
+			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
 			slug: path,
 			source,
 			sourceUrl
@@ -52,6 +53,7 @@ const examples = defineCollection({
 	directory: 'src/content/examples',
 	include: '**/*.md',
 	schema: z.object({
+		name: z.string().optional(),
 		description: z.string().optional(),
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
@@ -80,7 +82,7 @@ const examples = defineCollection({
 
 		return {
 			...doc,
-			name: toPascalCase(fileName.replace('.md', '')),
+			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
 			slug: path
 			// source,
 			// sourceUrl

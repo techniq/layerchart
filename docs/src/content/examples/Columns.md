@@ -1,6 +1,7 @@
 ---
+name: Bar Chart (Vertical)
 description: Bar Chart (Vertical)
-section: Cartesian & Polar
+section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Bars', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar']
 ---

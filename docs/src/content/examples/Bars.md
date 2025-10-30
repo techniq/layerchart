@@ -1,4 +1,5 @@
 ---
+name: Bar Chart (Horizontal)
 description: Bar Chart (Horizontal)
 section: cartesian & polar
 layers: ['svg', 'canvas']
