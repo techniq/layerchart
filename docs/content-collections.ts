@@ -15,7 +15,8 @@ const components = defineCollection({
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
 		related: z.array(z.string()).default([]),
-		resize: z.boolean().default(true)
+		resize: z.boolean().default(true),
+		tableOfContents: z.boolean().default(true)
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -58,7 +59,8 @@ const examples = defineCollection({
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
 		related: z.array(z.string()).default([]),
-		resize: z.boolean().default(true)
+		resize: z.boolean().default(true),
+		tableOfContents: z.boolean().default(true)
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;

@@ -3,6 +3,7 @@ description: LoftedArcs
 section: geo
 layers: ['svg', 'canvas']
 related: ['https://observablehq.com/@armollica/globe-with-lofted-arcs']
+tableOfContents: false
 ---
 
 <script lang="ts">

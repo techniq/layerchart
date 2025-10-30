@@ -9,14 +9,11 @@ related:
     'https://stanke.co/creating-orthographic-maps-in-tableau/',
     'https://www.washingtonpost.com/graphics/national/eclipse/'
   ]
+tableOfContents: false
 ---
 
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
-
-## Examples
-
-### Basic
 
 <Example name="basic" />

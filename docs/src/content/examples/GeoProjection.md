@@ -3,6 +3,7 @@ description: Geographic projection examples demonstrating various map projection
 section: geo
 layers: ['svg', 'canvas']
 related: ['components/GeoPath', 'components/Chart', 'components/Graticule', 'components/Layer']
+tableOfContents: false
 ---
 
 <script lang="ts">

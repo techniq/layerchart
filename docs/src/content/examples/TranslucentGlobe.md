@@ -3,6 +3,7 @@ description: TranslucentGlobe
 section: geo
 layers: ['svg', 'canvas']
 related: []
+tableOfContents: false
 ---
 
 <script lang="ts">

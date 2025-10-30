@@ -2,16 +2,7 @@
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoEdgeFade,
-		GeoPath,
-		GeoPoint,
-		GeoSpline,
-		getSettings,
-		Graticule,
-		Layer
-	} from 'layerchart';
+	import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
 
 	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
 
@@ -19,11 +10,7 @@
 	const worldLinks = await getWorldLinks();
 
 	const countries = feature(topology, topology.objects.countries);
-
-	let settings = getSettings();
-
 	const data = { countries, worldLinks };
-
 	export { data };
 </script>
 
@@ -34,7 +21,7 @@
 		applyTransform: ['rotate']
 	}}
 	padding={{ top: 80, bottom: 80 }}
-	height={600}
+	height={800}
 >
 	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
