@@ -13,7 +13,7 @@ related: ['components/Dagre', 'components/Link']
 
 ### Playground
 
-<!-- <Example name="playground-dagre" /> -->
+<Example name="playground" />
 
 ### Basic
 
