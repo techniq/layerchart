@@ -21,17 +21,18 @@
 	import PackControls from '$lib/components/PackControls.svelte';
 	import { getFlare } from '$lib/data.remote';
 
-	let data = $state(await getFlare());
-
-	const complexHierarchy = hierarchy(data.flare)
-		.sum((d) => d.value)
-		.sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
-
 	let colorBy: 'depth' | 'parent' | 'children' = $state('parent');
 	let padding = $state(3);
 	let nodes = $state.raw<HierarchyCircularNode<any>[]>([]);
 	let selected = $state.raw<HierarchyCircularNode<any>>();
 	let context = $state<ChartContextValue>(null!);
+
+	// Move until https://github.com/sveltejs/svelte/issues/17090 is resolved
+	let data = await getFlare();
+
+	const complexHierarchy = hierarchy(data)
+		.sum((d) => d.value)
+		.sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
 	$effect(() => {
 		if (context?.transform && selected) {
@@ -82,6 +83,7 @@
 
 <Breadcrumb
 	items={selected ? selected?.ancestors().reverse() : (nodes[0]?.ancestors().reverse() ?? [])}
+	class="mb-2"
 >
 	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
@@ -99,6 +101,7 @@
 	}}
 	bind:context
 	height={600}
+	class="overflow-hidden"
 >
 	<Layer onclick={() => (selected = complexHierarchy)}>
 		<Pack {padding} hierarchy={complexHierarchy} bind:nodes>

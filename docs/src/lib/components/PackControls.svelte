@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	// <PackControls bind:padding bind:colorBy />
-
 	interface Props {
 		padding?: number;
 		colorBy?: 'parent' | 'depth' | 'children';
