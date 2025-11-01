@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { untrack, type ComponentProps } from 'svelte';
+	import { type ComponentProps } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
-	import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
+	import { hierarchy as d3Hierarchy, type HierarchyNode } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array';
 	import { getFlare } from '$lib/data.remote';
 	import TreemapControls from '$lib/components/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
@@ -27,83 +26,10 @@
 		findAncestor
 	} from 'layerchart';
 
-	/* For data.remote.ts (current getFlare is incomplete).
-  
-  export const getFlare = prerender(async () => {
-	const { fetch } = getRequestEvent();
-	const flare = await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json());
-	const cars = await fetch('/data/examples/cars.csv').then(async (r) =>
-		// @ts-expect-error
-		csvParse<CarData>(await r.text(), autoType)
-	);
-	return { flare, cars };
-});
-
-Also
-
-copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treemap.ts
-
-	export function isNodeVisible(
-	node: HierarchyRectangularNode<any>,
-	xScale: ScaleContinuousNumeric<number, number>,
-	yScale: ScaleContinuousNumeric<number, number>,
-	minSize = 4
-	) {
-	const width = xScale(node.x1) - xScale(node.x0);
-	const height = yScale(node.y1) - yScale(node.y0);
-	return width >= minSize && height >= minSize;
-	}
-
-*/
-
-	let data = $state(await getFlare());
-
-	const complexDataHierarchy = hierarchy(data.flare)
-		.sum((d) => d.value)
-		.sort(sortFunc('value', 'desc'));
-
-	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
-
-	let isFiltered = $state(false);
-	const groupedCars = $derived(
-		rollup(
-			data.cars
-				// Limit dataset
-				.filter((d) =>
-					['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
-				)
-				// Hide some models in each group to show transitions
-				.filter((d) => (isFiltered ? d.year > 2010 : true))
-				// Apply `make` selection
-				.filter((d) => {
-					if (selectedCarNode?.depth === 1) {
-						return d.make === selectedCarNode.data[0];
-					} else {
-						return true;
-					}
-				}),
-			(items) => items[0], //.slice(0, 3),
-			(d) => d.make,
-			(d) => d.model
-			// d => d.year,
-		)
-	);
-	let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
-	$effect.pre(() => {
-		untrack(() => {
-			selectedCarNode = groupedHierarchy;
-		});
-	});
-
-	$effect.pre(() => {
-		groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
-	});
-
 	let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
 	let maintainAspectRatio = $state(false);
-	let colorBy = $state('children');
+	let colorBy = $state<'children' | 'depth' | 'parent'>('children');
 
-	let selectedNested: HierarchyNode<any> = $state(complexDataHierarchy.copy());
 	let paddingOuter = $state(4);
 	let paddingInner = $state(4);
 	let paddingTop = $state(20);
@@ -111,11 +37,17 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 	let paddingLeft = $state(0);
 	let paddingRight = $state(0);
 
+	let data = await getFlare();
+	const hierarchy = d3Hierarchy(data)
+		.sum((d) => d.value)
+		.sort(sortFunc('value', 'desc'));
+	let selected: HierarchyNode<any> = $state(hierarchy.copy());
+
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
 	const ordinalColor = scaleOrdinal(
-		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90) // filter out hard to see yellow and green
+		// filter out hard to see yellow and green
+		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
 	);
-	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
 	function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
 		switch (colorBy) {
@@ -148,14 +80,8 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 	bind:paddingLeft
 	bind:paddingRight
 />
-<Breadcrumb items={selectedNested?.ancestors().reverse() ?? []}>
-	<Button
-		slot="item"
-		let:item
-		on:click={() => (selectedNested = item)}
-		base
-		class="px-2 py-1 rounded-sm"
-	>
+<Breadcrumb items={selected?.ancestors().reverse() ?? []} class="my-2">
+	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
 			<div class="text-sm">{item.data.name}</div>
 			<div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
@@ -166,14 +92,11 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 <Chart height={800}>
 	{#snippet children({ context })}
 		<Layer>
-			<Bounds
-				domain={asAny(selectedNested)}
-				motion={{ type: 'tween', duration: 800, easing: cubicOut }}
-			>
+			<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>
 				{#snippet children({ xScale, yScale })}
 					<ChartClipPath>
 						<Treemap
-							hierarchy={complexDataHierarchy}
+							{hierarchy}
 							{tile}
 							{maintainAspectRatio}
 							{paddingOuter}
@@ -188,7 +111,7 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 									<Group
 										x={xScale(node.x0)}
 										y={yScale(node.y0)}
-										onclick={() => (node.children ? (selectedNested = node) : null)}
+										onclick={() => (node.children ? (selected = node) : null)}
 										onpointermove={(e) => context.tooltip.show(e, node)}
 										onpointerleave={context.tooltip.hide}
 									>

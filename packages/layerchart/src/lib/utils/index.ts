@@ -9,6 +9,7 @@ export * from './pivot.js';
 export * from './scales.svelte.js';
 export * from './stack.js';
 export * from './ticks.js';
+export * from './treemap.js';
 export * from './threshold.js';
 export * from './types.js';
 

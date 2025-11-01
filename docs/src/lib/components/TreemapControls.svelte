@@ -1,33 +1,33 @@
 <script lang="ts">
-  import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import type { TreemapLayoutOptions, TreemapTileMethod, TreemapColorBy } from 'layerchart';
+	import type { TreemapProps } from 'layerchart';
+	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  // <TreemapControls bind:tile bind:maintainAspectRatio bind:colorBy bind:paddingOuter bind:paddingInner bind:paddingTop bind:paddingBottom bind:paddingLeft bind:paddingRight />
+	type TreemapTileMethod = TreemapProps<any>['tile'];
+	type TreemapColorBy = 'children' | 'depth' | 'parent';
 
-  interface Props {
-    tile?: TreemapTileMethod;
-    maintainAspectRatio?: boolean;
-    colorBy?: TreemapColorBy;
-    paddingOuter?: number;
-    paddingInner?: number;
-    paddingTop?: number;
-    paddingBottom?: number;
-    paddingLeft?: number;
-    paddingRight?: number;
-  }
+	interface Props {
+		tile?: TreemapTileMethod;
+		maintainAspectRatio?: boolean;
+		colorBy?: TreemapColorBy;
+		paddingOuter?: number;
+		paddingInner?: number;
+		paddingTop?: number;
+		paddingBottom?: number;
+		paddingLeft?: number;
+		paddingRight?: number;
+	}
 
-  let {
-    tile = $bindable<TreemapTileMethod>('squarify'),
-    maintainAspectRatio = $bindable<boolean>(true),
-    colorBy = $bindable<TreemapColorBy>('children'),
-    paddingOuter = $bindable<number>(0),
-    paddingInner = $bindable<number>(1),
-    paddingTop = $bindable<number>(0),
-    paddingBottom = $bindable<number>(0),
-    paddingLeft = $bindable<number>(0),
-    paddingRight = $bindable<number>(0)
-  }: Props = $props();
-
+	let {
+		tile = $bindable<TreemapTileMethod>('squarify'),
+		maintainAspectRatio = $bindable<boolean>(true),
+		colorBy = $bindable<TreemapColorBy>('children'),
+		paddingOuter = $bindable<number>(0),
+		paddingInner = $bindable<number>(1),
+		paddingTop = $bindable<number>(0),
+		paddingBottom = $bindable<number>(0),
+		paddingLeft = $bindable<number>(0),
+		paddingRight = $bindable<number>(0)
+	}: Props = $props();
 </script>
 
 <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">

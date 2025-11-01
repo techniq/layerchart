@@ -6,54 +6,31 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
-	import { getFlare } from '$lib/data.remote';
+	import { getCars } from '$lib/data.remote';
 	import TreemapControls from '$lib/components/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
-	import { format, sortFunc } from '@layerstack/utils';
+	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import { Chart, Group, Rect, RectClipPath, Layer, Treemap, findAncestor } from 'layerchart';
 
-	/* For data.remote.ts (current getFlare is incomplete).
-  
-  export const getFlare = prerender(async () => {
-	const { fetch } = getRequestEvent();
-	const flare = await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json());
-	const cars = await fetch('/data/examples/cars.csv').then(async (r) =>
-		// @ts-expect-error
-		csvParse<CarData>(await r.text(), autoType)
-	);
-	return { flare, cars };
-});
+	let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
+	let maintainAspectRatio = $state(false);
+	let colorBy = $state<'children' | 'depth' | 'parent'>('children');
+	let paddingOuter = $state(4);
+	let paddingInner = $state(4);
+	let paddingTop = $state(20);
+	let paddingBottom = $state(0);
+	let paddingLeft = $state(0);
+	let paddingRight = $state(0);
 
-Also
-
-copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treemap.ts
-
-	export function isNodeVisible(
-	node: HierarchyRectangularNode<any>,
-	xScale: ScaleContinuousNumeric<number, number>,
-	yScale: ScaleContinuousNumeric<number, number>,
-	minSize = 4
-	) {
-	const width = xScale(node.x1) - xScale(node.x0);
-	const height = yScale(node.y1) - yScale(node.y0);
-	return width >= minSize && height >= minSize;
-	}
-
-*/
-
-	let data = $state(await getFlare());
-
-	const complexDataHierarchy = hierarchy(data.flare)
-		.sum((d) => d.value)
-		.sort(sortFunc('value', 'desc'));
+	let data = await getCars();
 
 	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
 
 	let isFiltered = $state(false);
 	const groupedCars = $derived(
 		rollup(
-			data.cars
+			data
 				// Limit dataset
 				.filter((d) =>
 					['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
@@ -85,15 +62,6 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 		groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
 	});
 
-	let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
-	let maintainAspectRatio = $state(false);
-	let colorBy = $state('children');
-	let paddingOuter = $state(4);
-	let paddingInner = $state(4);
-	let paddingTop = $state(20);
-	let paddingBottom = $state(0);
-	let paddingLeft = $state(0);
-	let paddingRight = $state(0);
 	const node = $state(selectedCarNode ?? groupedHierarchy ?? null);
 	const items = $state(node ? node.ancestors().reverse() : []);
 
@@ -135,7 +103,7 @@ copy packages/layerchart/src/lib/utils/treemap.ts into docs/src/lib/utils/treema
 	bind:paddingRight
 />
 
-<Breadcrumb {items}>
+<Breadcrumb {items} class="my-2">
 	<Button
 		slot="item"
 		let:item
