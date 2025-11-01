@@ -5,7 +5,7 @@
 	import LucideCirclePlay from '~icons/lucide/circle-play';
 	import LucideCircleStop from '~icons/lucide/circle-stop';
 
-	const FFT_SIZE = 2048;
+	const FFT_SIZE = 1024;
 
 	// Generate mock time domain data for demonstration
 	const mockData = Array.from({ length: 512 }, (_, i) => ({
@@ -13,7 +13,7 @@
 		value: 128 + 256 * Math.sin((i / 512) * Math.PI * 8) + 128 * Math.sin((i / 512) * Math.PI * 16)
 	}));
 
-	let timeData: { key: number; value: number }[] = $state([]);
+	let data: { key: number; value: number }[] = $state([]);
 	let audioContext: AudioContext | null = $state(null);
 	let analyser: AnalyserNode | null = $state(null);
 	let dataArray: Uint8Array<ArrayBuffer> | null = $state(null);
@@ -23,7 +23,7 @@
 
 	$effect(() => {
 		if (!isListening) {
-			timeData = mockData;
+			data = mockData;
 		}
 	});
 
@@ -64,7 +64,7 @@
 		analyser = null;
 		dataArray = null;
 		isListening = false;
-		timeData = [];
+		data = [];
 	}
 
 	function updateTimeData() {
@@ -72,10 +72,10 @@
 
 		analyser.getByteTimeDomainData(dataArray);
 
-		const amplification = 3;
+		const amplification = 8;
 		const centerValue = 128;
 
-		timeData = Array.from(dataArray, (value, i) => ({
+		data = Array.from(dataArray, (value, i) => ({
 			key: i,
 			value: centerValue + (value - centerValue) * amplification
 		}));
@@ -89,7 +89,6 @@
 		};
 	});
 
-	const data = $derived(timeData);
 	export { data };
 </script>
 
@@ -121,7 +120,7 @@
 </div>
 
 <LineChart
-	data={timeData}
+	{data}
 	x="key"
 	y="value"
 	yDomain={[-256, 512]}

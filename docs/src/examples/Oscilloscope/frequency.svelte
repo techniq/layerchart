@@ -16,7 +16,7 @@
 		value: Math.max(0, 160 - i * 2 + 40 * Math.random())
 	}));
 
-	let frequencyData: { key: number; value: number }[] = $state([]);
+	let data: { key: number; value: number }[] = $state([]);
 	let audioContext: AudioContext | null = $state(null);
 	let analyser: AnalyserNode | null = $state(null);
 	let dataArray: Uint8Array<ArrayBuffer> | null = $state(null);
@@ -26,7 +26,7 @@
 
 	$effect(() => {
 		if (!isListening) {
-			frequencyData = mockData;
+			data = mockData;
 		}
 	});
 
@@ -70,7 +70,7 @@
 		analyser = null;
 		dataArray = null;
 		isListening = false;
-		frequencyData = [];
+		data = [];
 	}
 
 	function updateFrequencyData() {
@@ -78,7 +78,7 @@
 
 		analyser.getByteFrequencyData(dataArray);
 
-		frequencyData = Array.from(dataArray, (value, i) => ({
+		data = Array.from(dataArray, (value, i) => ({
 			key: i,
 			value
 		}));
@@ -92,7 +92,6 @@
 		};
 	});
 
-	const data = $derived(frequencyData);
 	export { data };
 </script>
 
@@ -124,7 +123,7 @@
 </div>
 
 <BarChart
-	data={frequencyData}
+	{data}
 	x="key"
 	xDomain={range(0, FFT_SIZE / 2)}
 	y="value"
