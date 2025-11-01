@@ -6,19 +6,18 @@
 	import { hsl } from 'd3-color';
 	import { getFlare } from '$lib/data.remote';
 	import { Arc, Bounds, Chart, Layer, Partition, Tooltip, findAncestor } from 'layerchart';
-	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 	import SunburstControls from '$lib/components/SunburstControls.svelte';
 
-	let data = $state(await getFlare());
+	let colorBy = $state<'parent' | 'depth'>('parent');
 
-	const complexHierarchy = hierarchy(data.flare)
+	let data = await getFlare();
+	const complexHierarchy = hierarchy(data)
 		.sum((d) => d.value)
 		.sort(
 			compoundSortFunc(sortFunc('height', 'desc'), sortFunc('value', 'desc'))
 		) as HierarchyRectangularNode<any>;
-
-	let colorBy = $state('parent');
 
 	let selected: HierarchyRectangularNode<any> = $state(
 		complexHierarchy
@@ -51,7 +50,7 @@
 
 <SunburstControls bind:colorBy />
 
-<Breadcrumb items={selected?.ancestors().reverse() ?? []}>
+<Breadcrumb items={selected?.ancestors().reverse() ?? []} class="my-2">
 	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
 			<div class="text-sm">{item.data.name}</div>
@@ -59,6 +58,7 @@
 		</div>
 	</Button>
 </Breadcrumb>
+
 <Chart height={600}>
 	{#snippet children({ context })}
 		<Layer center>

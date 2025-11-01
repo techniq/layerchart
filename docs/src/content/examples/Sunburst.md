@@ -13,5 +13,4 @@ related: []
 
 ### Basic
 
-<Example name="basic-sunburst" />
-
+<Example name="basic" />
