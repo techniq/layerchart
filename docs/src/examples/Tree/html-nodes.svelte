@@ -1,32 +1,32 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
-	import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
+	import { hierarchy as d3Hierarchy, type HierarchyNode } from 'd3-hierarchy';
 	import { curveBumpX } from 'd3-shape';
+
 	import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
 	import TransformControls from '$lib/components/TransformControls.svelte';
+	import { getFlare } from '$lib/data.remote';
 	import { cls } from '@layerstack/tailwind';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 	import TreeControls from '$lib/components/TreeControls.svelte';
-	import { getFlare } from '$lib/data.remote';
-
-	let data = $state(await getFlare());
-
-	let expandedNodeNames = $state(['flare']);
-
-	const complexDataHierarchy = $derived(
-		hierarchy(data.flare, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
-	);
-	// .sum((d) => d.value)
-	// .sort(sortFunc('value', 'desc'));
 
 	let orientation: ComponentProps<typeof Tree>['orientation'] = $state('horizontal');
 	let curve = $state(curveBumpX);
 	let layout: 'chart' | 'node' = $state('chart');
-	let selected = $state();
 	let sweep: ConnectorSweep = $state('none'); // Sweep direction
 	let type: ConnectorType = $state('d3'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
 	let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
+
+	let data = await getFlare();
+
+	let expandedNodeNames = $state(['flare']);
+	const hierarchy = $derived(
+		d3Hierarchy(data, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
+	);
+	// .sum((d) => d.value)
+	// .sort(sortFunc('value', 'desc'));
+	let selected = $state();
 
 	function getNodeKey(node: HierarchyNode<{ name: string }>) {
 		return node.data.name + node.depth;
@@ -58,11 +58,7 @@
 	{#snippet children()}
 		<TransformControls orientation="horizontal" class="-m-2" />
 
-		<Tree
-			hierarchy={complexDataHierarchy}
-			{orientation}
-			nodeSize={layout === 'node' ? nodeSize : undefined}
-		>
+		<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
 			{#snippet children({ nodes, links })}
 				<Layer>
 					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}

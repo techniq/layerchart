@@ -13,7 +13,7 @@ related: []
 
 ### Basic
 
-<Example name="basic-tree" />
+<Example name="basic" />
 
 ### HTML nodes
 
