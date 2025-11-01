@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
+	import {
+		hierarchy as d3Hierarchy,
+		type HierarchyNode,
+		type HierarchyRectangularNode
+	} from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
@@ -20,28 +24,22 @@
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import PartitionControls from '$lib/components/PartitionControls.svelte';
-	import { getFlare } from '$lib/data.remote';
+	import { getCars } from '$lib/data.remote';
 
-	let data = $state(await getFlare());
-	let isFiltered = $state(false);
-	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
 	let colorBy = $state<'children' | 'parent' | 'depth'>('children');
 	let padding = $state(0);
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
-	let carNodes = $state<HierarchyRectangularNode<any>[]>([]);
-	let groupedHierarchy = $derived(hierarchy(getGrouped()).count());
 
-	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
-	// filter out hard to see yellow and green
-	const ordinalColor = scaleOrdinal(
-		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
-	);
-	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
+	let data = await getCars();
+	let hierarchy = $derived(d3Hierarchy(getGrouped()).count());
+	let nodes = $state<HierarchyRectangularNode<any>[]>([]);
+	let selected = $state<HierarchyRectangularNode<any>>();
+	let isFiltered = $state(false);
 
 	function getGrouped(selected?: HierarchyRectangularNode<any>) {
 		return rollup(
-			data.cars
+			data
 				// Limit dataset
 				.filter((d) =>
 					['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
@@ -63,6 +61,12 @@
 		);
 	}
 
+	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
+	const ordinalColor = scaleOrdinal(
+		// filter out hard to see yellow and green
+		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+	);
+
 	function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
 		switch (colorBy) {
 			case 'children':
@@ -80,10 +84,8 @@
 		return '';
 	}
 
-	const carNodeBreadcrumbItems = $derived(
-		selectedCarNode
-			? selectedCarNode?.ancestors().reverse()
-			: (carNodes[0]?.ancestors().reverse() ?? [])
+	const breadcrumbItems = $derived(
+		selected ? selected?.ancestors().reverse() : (nodes[0]?.ancestors().reverse() ?? [])
 	);
 
 	export { data };
@@ -98,14 +100,8 @@
 	filterable={true}
 />
 
-<Breadcrumb items={carNodeBreadcrumbItems}>
-	<Button
-		slot="item"
-		let:item
-		on:click={() => (selectedCarNode = item)}
-		base
-		class="px-2 py-1 rounded-sm"
-	>
+<Breadcrumb items={breadcrumbItems}>
+	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
 			<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
 			<div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
@@ -115,10 +111,10 @@
 
 <Chart height={800}>
 	<Layer>
-		<Bounds domain={{ x0: selectedCarNode?.y0, y0: selectedCarNode?.x0, y1: selectedCarNode?.x1 }}>
+		<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>
 			{#snippet children({ xScale, yScale })}
 				<ChartClipPath>
-					<Partition bind:nodes={carNodes} hierarchy={groupedHierarchy} {padding} {round}>
+					<Partition bind:nodes {hierarchy} {padding} {round}>
 						{#snippet children({ nodes })}
 							{#each nodes as node (node
 								.ancestors()
@@ -128,7 +124,7 @@
 									<Group
 										x={xScale(node.y0)}
 										y={yScale(node.x0)}
-										onclick={() => (selectedCarNode = node)}
+										onclick={() => (selected = node)}
 										motion={{ type: 'tween', delay: 600 }}
 									>
 										{@const nodeWidth = xScale(node.y1) - xScale(node.y0)}

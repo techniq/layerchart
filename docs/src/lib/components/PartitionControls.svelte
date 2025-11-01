@@ -1,16 +1,16 @@
-<script lang="ts">
-	import { Field, RangeField, ToggleGroup, ToggleOption, Switch } from 'svelte-ux';
-
-	// <PartitionControls bind:padding bind:fullSizeLeafNodes bind:round bind:colorBy bind:isFiltered filterable />
-
-	interface Props {
+<script lang="ts" module>
+	export type PartitionControlsProps = {
 		padding?: number;
 		fullSizeLeafNodes?: boolean;
 		round?: boolean;
 		colorBy?: 'children' | 'depth' | 'parent';
 		isFiltered?: boolean;
 		filterable?: boolean;
-	}
+	};
+</script>
+
+<script lang="ts">
+	import { Field, RangeField, ToggleGroup, ToggleOption, Switch } from 'svelte-ux';
 
 	let {
 		padding = $bindable(0),
@@ -19,7 +19,7 @@
 		colorBy = $bindable('children'),
 		isFiltered = $bindable(false),
 		filterable = false
-	}: Props = $props();
+	}: PartitionControlsProps = $props();
 </script>
 
 <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-2">

@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
-	import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
+	import {
+		hierarchy as d3Hierarchy,
+		type HierarchyNode,
+		type HierarchyRectangularNode
+	} from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array';
 	import { getFlare } from '$lib/data.remote';
 	import {
 		Bounds,
@@ -16,68 +19,34 @@
 		Rect,
 		RectClipPath,
 		Layer,
-		Text,
 		findAncestor
 	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
-	import PartitionControls from '$lib/components/PartitionControls.svelte';
+	import PartitionControls, {
+		type PartitionControlsProps
+	} from '$lib/components/PartitionControls.svelte';
 
-	let data = $state(await getFlare());
-
-	const complexHierarchy = hierarchy(data.flare)
-		.sum((d) => d.value)
-		.sort(sortFunc('value', 'desc')) as HierarchyRectangularNode<any>;
-
-	const horizontalHierarchy = complexHierarchy.copy();
-	let isFiltered = $state(false);
-	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
-
-	function getGrouped(selected?: HierarchyRectangularNode<any>) {
-		return rollup(
-			data.cars
-				// Limit dataset
-				.filter((d) =>
-					['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
-				)
-				// Hide some models in each group to show transitions
-				.filter((d) => (isFiltered ? d.year > 2010 : true))
-				// Apply `make` selection
-				.filter((d) => {
-					if (selected && selected?.depth === 1) {
-						return d.make === selected.data[0];
-					} else {
-						return true;
-					}
-				}),
-			(items) => items[0], //.slice(0, 3),
-			(d) => d.make,
-			(d) => d.model
-			// d => d.year,
-		);
-	}
-
-	let colorBy = $state('children');
-	let horizontalNodes = $state<HierarchyRectangularNode<any>[]>([]);
-	let verticalNodes = $state<HierarchyRectangularNode<any>[]>([]);
-	let carNodes = $state<HierarchyRectangularNode<any>[]>([]);
-	let groupedHierarchy = $derived(hierarchy(getGrouped()).count());
-
+	let colorBy = $state<PartitionControlsProps['colorBy']>('children');
 	let padding = $state(0);
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
-	let selectedHorizontal = $state<HierarchyRectangularNode<any>>(); // select root initially
-	let selectedVertical = $state<HierarchyRectangularNode<any>>(); // select root initially
+
+	let data = await getFlare();
+	const hierarchy = d3Hierarchy(data)
+		.sum((d) => d.value)
+		.sort(sortFunc('value', 'desc')) as HierarchyRectangularNode<any>;
+	let nodes = $state<HierarchyRectangularNode<any>[]>([]);
+	let selected = $state<HierarchyRectangularNode<any>>(); // select root initially
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
-	// filter out hard to see yellow and green
 	const ordinalColor = scaleOrdinal(
+		// filter out hard to see yellow and green
 		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
 	);
-	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
-	function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
+	function getNodeColor(node: HierarchyNode<any>, colorBy: PartitionControlsProps['colorBy']) {
 		switch (colorBy) {
 			case 'children':
 				return node.children ? 'var(--color-primary)' : 'var(--color-primary-600)';
@@ -94,21 +63,8 @@
 		return '';
 	}
 
-	const horizontalBreadcrumbItems = $derived(
-		selectedHorizontal
-			? selectedHorizontal?.ancestors().reverse()
-			: (horizontalNodes[0]?.ancestors().reverse() ?? [])
-	);
-	const verticalBreadcrumbItems = $derived(
-		selectedVertical
-			? selectedVertical?.ancestors().reverse()
-			: (verticalNodes[0]?.ancestors().reverse() ?? [])
-	);
-
-	const carNodeBreadcrumbItems = $derived(
-		selectedCarNode
-			? selectedCarNode?.ancestors().reverse()
-			: (carNodes[0]?.ancestors().reverse() ?? [])
+	const breadcrumbItems = $derived(
+		selected ? selected?.ancestors().reverse() : (nodes[0]?.ancestors().reverse() ?? [])
 	);
 
 	export { data };
@@ -116,14 +72,8 @@
 
 <PartitionControls bind:padding bind:fullSizeLeafNodes bind:round bind:colorBy />
 
-<Breadcrumb items={horizontalBreadcrumbItems}>
-	<Button
-		slot="item"
-		let:item
-		on:click={() => (selectedHorizontal = item)}
-		base
-		class="px-2 py-1 rounded-sm"
-	>
+<Breadcrumb items={breadcrumbItems} class="mb-2">
+	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
 			<div class="text-sm">{item.data.name}</div>
 			<div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
@@ -136,20 +86,15 @@
 		<Layer>
 			<Bounds
 				domain={{
-					x0: selectedHorizontal?.y0,
-					y0: selectedHorizontal?.x0,
-					y1: selectedHorizontal?.x1
+					x0: selected?.y0,
+					y0: selected?.x0,
+					y1: selected?.x1
 				}}
 				motion={{ type: 'tween', duration: 800, easing: cubicOut }}
 			>
 				{#snippet children({ xScale, yScale })}
 					<ChartClipPath>
-						<Partition
-							{padding}
-							{round}
-							hierarchy={horizontalHierarchy}
-							bind:nodes={horizontalNodes}
-						>
+						<Partition {padding} {round} {hierarchy} bind:nodes>
 							{#snippet children({ nodes })}
 								{#each nodes as node}
 									{@const nodeWidth =
@@ -157,11 +102,7 @@
 											? xScale(node.y1) - xScale(node.y0)
 											: context.width - xScale(node.y0)}
 									{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
-									<Group
-										x={xScale(node.y0)}
-										y={yScale(node.x0)}
-										onclick={() => (selectedHorizontal = node)}
-									>
+									<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>
 										<RectClipPath width={nodeWidth} height={nodeHeight}>
 											{@const nodeColor = getNodeColor(node, colorBy)}
 											<g transition:fade={{ duration: 600 }}>

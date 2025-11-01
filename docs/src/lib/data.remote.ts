@@ -156,6 +156,15 @@ export const getAppleTicker = prerender(async () => {
 	return data;
 });
 
+export const getCars = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/cars.csv').then(async (r) =>
+		// @ts-expect-error - shh
+		csvParse<CarData>(await r.text(), autoType)
+	);
+	return data;
+});
+
 export const getNewPassengerCars = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/new-passenger-cars.csv').then(async (r) =>

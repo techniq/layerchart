@@ -13,12 +13,12 @@ related: []
 
 ### Horizontal
 
-<Example name="horizontal-partition" />
+<Example name="horizontal" />
 
 ### Vertical
 
-<Example name="vertical-partition" />
+<Example name="vertical" />
 
 ### Filterable
 
-<Example name="filterable-partition" />
+<Example name="filterable" />
