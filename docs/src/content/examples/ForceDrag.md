@@ -13,4 +13,4 @@ related: ['https://observablehq.com/@d3/sticky-force-layout']
 
 ### Basic
 
-<Example name="basic-force-drag" />
+<Example component="ForceSimulation"  name="graph-drag" />

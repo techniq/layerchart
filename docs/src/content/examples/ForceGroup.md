@@ -13,4 +13,4 @@ related: []
 
 ### Circle pack
 
-<Example name="circle-pack" />
+<Example component="ForceSimulation"  name="group" />

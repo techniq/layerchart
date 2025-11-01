@@ -13,4 +13,4 @@ related: ['https://d3js.org/d3-force/link', 'https://observablehq.com/@d3/force-
 
 ### Basic
 
-<Example name="basic-force-lattice" />
+<Example component="ForceSimulation"  name="lattice" />

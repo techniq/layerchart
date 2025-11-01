@@ -13,4 +13,4 @@ related: ['https://observablehq.com/@d3/force-directed-tree']
 
 ### Basic
 
-<Example name="basic-force-tree" />
+<Example component="ForceSimulation"  name="tree" />

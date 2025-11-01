@@ -17,4 +17,4 @@ related:
 
 ### Basic - Miserables
 
-<Example name="basic-force-graph" />
+<Example component="ForceSimulation"  name="graph-playground" />

@@ -13,4 +13,4 @@ related: ['https://d3js.org/d3-force/collide', 'https://observablehq.com/@d3/col
 
 ### Basic
 
-<Example name="collision-detection" />
+<Example component="ForceSimulation" name="collision-detection" />

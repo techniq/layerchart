@@ -50,7 +50,7 @@
 	}
 </script>
 
-<Chart>
+<Chart height={680}>
 	<Layer center>
 		<ForceSimulation
 			forces={{

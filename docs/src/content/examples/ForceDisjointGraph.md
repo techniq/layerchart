@@ -1,7 +1,7 @@
 ---
 description: Force simulation with disconnected graph components, showcasing separate network clusters
 section: force
-layers: ['ForceSimulation', 'Svg', 'Circle', 'Line']
+layers: ['Svg', 'Circle', 'Line']
 related: ['ForceGraph', 'ForceGroup', 'ForceLattice']
 ---
 
@@ -13,4 +13,4 @@ related: ['ForceGraph', 'ForceGroup', 'ForceLattice']
 
 ### Basic
 
-<Example name='basic' />
+<Example component="ForceSimulation" name="disjoint-graph" />

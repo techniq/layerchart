@@ -13,4 +13,4 @@ related: ['https://d3og.com/armollica/06a202c9f7df191ace8a1f97e33ffb97/']
 
 ### Basic
 
-<Example name="basic-force-text" />
+<Example component="ForceSimulation"  name="text" />
