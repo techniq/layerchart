@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { getSimpleGraph } from '$lib/graph.remote';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text } from 'layerchart';
+
+	const data = await getSimpleGraph();
 </script>
 
-<Chart data={[]} height={400}>
+<Chart {data} flatData={[]} height={400}>
 	<Layer>
 		<Sankey nodeId={(d) => d.id}>
 			{#snippet children({ links, nodes })}

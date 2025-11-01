@@ -13,20 +13,20 @@ related: ['components/Sankey', 'components/Link']
 
 ### Simple
 
-<!-- <Example name="simple" /> -->
+<Example name="simple" />
 
 ### Tooltip
 
-<!-- <Example name="tooltip" /> -->
+<Example name="tooltip" />
 
 ### Node select
 
-<!-- <Example name="node-select" /> -->
+<Example name="node-select" />
 
 ### Complex
 
-<!-- <Example name="complex" /> -->
+<Example name="complex" />
 
 ### Hierarchy
 
-<!-- <Example name="hierarchy" /> -->
+<Example name="hierarchy" />

@@ -2,13 +2,13 @@
 	import { Icon } from 'svelte-ux';
 	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
+	import { getGreenhouseGraph } from '$lib/graph.remote';
 
-	let { data } = $props();
-
+	const data = await getGreenhouseGraph();
 	export { data };
 </script>
 
-<Chart {data} flatData={[]} height={800}>
+<Chart {data} flatData={[]} height={600}>
 	{#snippet children({ context })}
 		<Layer>
 			<Sankey nodeId={(d) => d.name} nodeWidth={8}>

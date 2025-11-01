@@ -187,3 +187,12 @@ export const getComplexGeneratedGraph = prerender(async () => {
 	};
 	return data;
 });
+
+export const getGreenhouseGraph = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/graph/greenhouse.json').then((r) => r.json())) as {
+		nodes: { id: string }[];
+		links: { source: string; target: string }[];
+	};
+	return data;
+});
