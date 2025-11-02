@@ -1,5 +1,5 @@
 ---
-description: Text
+description: Primitive component which adds custom text for labeling, annotation, or commentary.
 section: primitives
 layers: ['svg', 'canvas', 'html']
 related: []

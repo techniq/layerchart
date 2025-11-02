@@ -1,5 +1,5 @@
 ---
-description: Streamlined Chart configuration for Line charts
+description: Streamlined visualization of data points connected by lines to visualize trends or changes over time.
 section: charts
 layers: [svg, canvas]
 related: [components/Chart, components/Spline, examples/Line]

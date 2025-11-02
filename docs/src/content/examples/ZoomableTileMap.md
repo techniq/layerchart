@@ -1,5 +1,5 @@
 ---
-description: ZoomableTileMap
+description: Visualization of an interactive geographic map with tiles which can be interactively zoomed and panned for detailed spatial exploration.
 section: geo
 layers: ['svg', 'canvas']
 related: []

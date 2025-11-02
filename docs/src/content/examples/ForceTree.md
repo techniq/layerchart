@@ -1,5 +1,5 @@
 ---
-description: ForceTree examples demonstrating hierarchical data visualization with force simulation
+description: Visualization showing hierarchical data structures using a force-directed layout to illustrate parent-child relationships dynamically.
 section: force
 layers: ['svg', 'canvas']
 related: ['https://observablehq.com/@d3/force-directed-tree']

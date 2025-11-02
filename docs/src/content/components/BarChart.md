@@ -1,5 +1,5 @@
 ---
-description: Streamlined Chart configuration for Bar charts
+description: Streamlined visualization displaying categorical data using rectangular bars whose lengths represent the values of each category.
 section: charts
 layers: ['svg', 'canvas']
 related:

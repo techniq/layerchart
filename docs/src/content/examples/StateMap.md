@@ -1,5 +1,5 @@
 ---
-description: StateMap
+description: Visualization of a geographical map using state or regional boundaries to represent values or magnitudes at specific locations.
 section: geo
 layers: ['svg', 'canvas']
 related: []

@@ -1,5 +1,5 @@
 ---
-description: Arc
+description: Visualization of data using curved segments to represent proportions or relationships within a circular layout.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Arc', 'components/Pie']

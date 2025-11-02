@@ -1,5 +1,5 @@
 ---
-description: Streamlined Chart configuration for Area charts
+description: Streamlined visualization of quantitative data over a continuous interval, with filled areas beneath a line to emphasize magnitude or cumulative values.
 section: charts
 layers: [svg, canvas]
 related: [components/Chart, components/Area, examples/Area]

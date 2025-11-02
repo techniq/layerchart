@@ -1,5 +1,5 @@
 ---
-description: CollisionDetection
+description: Visualization manages overlapping elements by adjusting their positions to ensure clarity and readability.
 section: force
 layers: ['svg', 'canvas']
 related: ['https://d3js.org/d3-force/collide', 'https://observablehq.com/@d3/collision-detection']

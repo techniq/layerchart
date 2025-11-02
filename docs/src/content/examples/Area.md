@@ -1,5 +1,5 @@
 ---
-description: Area
+description: Visualization where shaded region under a line chart is used to emphasize magnitude and trend of data over a range.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: []

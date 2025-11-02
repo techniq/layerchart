@@ -1,5 +1,5 @@
 ---
-description: Force simulation with disconnected graph components, showcasing separate network clusters
+description: Visualization of nodes positioned using a force-directed layout while preventing overlap by applying disjoint or collision forces between nodes.
 section: force
 layers: ['Svg', 'Circle', 'Line']
 related: ['ForceGraph', 'ForceGroup', 'ForceLattice']

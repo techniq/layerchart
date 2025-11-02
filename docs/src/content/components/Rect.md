@@ -1,5 +1,5 @@
 ---
-description: <rect> element with tweened properties using motionStore
+description: Primitive component which draws a rectangle to highlight areas, ranges, or specific regions of interest.
 section: primitives
 layers: ['svg', 'canvas', 'html']
 related:

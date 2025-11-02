@@ -1,5 +1,5 @@
 ---
-description: GeoTile examples demonstrating tile-based mapping with interactive controls
+description: Visualization rendering map tiles to display geographical data efficiently, allowing for zooming and panning across different regions.
 section: geo
 layers: ['svg', 'canvas']
 related: ['examples/ZoomableTileMap']

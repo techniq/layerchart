@@ -1,5 +1,5 @@
 ---
-description: ForceDrag examples demonstrating draggable nodes in force simulation with sticky behavior
+description: Visualization of force-directed layout that allows users to interactively drag and reposition nodes while maintaining dynamic force-based relationships with or without sticky behavior.
 section: force
 layers: ['svg', 'canvas']
 related: ['https://observablehq.com/@d3/sticky-force-layout']

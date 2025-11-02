@@ -1,5 +1,5 @@
 ---
-description: Draw x and/or y axis lines respecting scales
+description: Commonly used component which draws horizontal and vertical lines respecting scales across a chart to enhance readability and help align data points with axis values.
 section: common
 layers: [svg, canvas, html]
 related: [components/Axis, components/Rule]

@@ -1,5 +1,5 @@
 ---
-description: Beeswarm
+description: Visualization of individual data points along a single axis while avoiding overlap, revealing distribution and clustering patterns.
 section: force
 layers: ['svg', 'canvas']
 related: []

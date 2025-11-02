@@ -1,5 +1,5 @@
 ---
-description: Rectangle of the Chart bounding box, respects padding or full size
+description: Commonly used component representing a rectangular Chart bounding box and respecting padding or full size.
 section: common
 layers: [svg, canvas, html]
 related: [components/Rect]

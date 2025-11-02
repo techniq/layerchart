@@ -1,5 +1,5 @@
 ---
-description: AnnotationRange
+description: Annotation component highlighting a continuous span or interval on a chart to emphasize specific data ranges or thresholds.
 section: annotations
 layers: ['svg', 'canvas', 'html']
 related: ['components/AnnotationLine', 'components/AnnotationPoint']

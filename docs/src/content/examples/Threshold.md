@@ -1,5 +1,5 @@
 ---
-description: Threshold
+description: Visualization of data relative to predefined limits, highlighting values that exceed or fall below set thresholds.
 section: cartesian & polar
 layers: ['svg']
 related: ['components/Threshold', 'components/AreaChart']

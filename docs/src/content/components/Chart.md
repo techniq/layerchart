@@ -1,5 +1,5 @@
 ---
-description: Sets up the chart context, defining dimension scales and supporting contexts like TooltipContext, GeoContext, and TransformContext. For simpler configuration, see prebuilt charts such as AreaChart and BarChart.
+description: Base Layerchart component providing chart dimensions and contexts such as TooltipContext, GeoContext, and TransformContext. See also simplified charts such as AreaChart and BarChart for streamlined implementations.
 section: charts
 layers: []
 related:
