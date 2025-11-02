@@ -1,5 +1,6 @@
 ---
-section: Geographic component which displays circular areas on a map to represent a specific geographic region or radius around a point.
+description: Geographic component which displays circular areas on a map to represent a specific geographic region or radius around a point.
+section: geo
 layers: [svg, canvas]
 related: [examples/Timezones]
 ---

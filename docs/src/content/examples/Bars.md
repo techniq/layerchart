@@ -1,6 +1,6 @@
 ---
-name: Visuaiization where horizontal bars to represent and compare discrete data values visually.
-description: Bar Chart (Horizontal)
+name: Bar Chart (Horizontal)
+description: Visualization where horizontal bars to represent and compare discrete data values visually.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Bars', 'examples/Columns', 'examples/Histogram', 'charts/BarChart']

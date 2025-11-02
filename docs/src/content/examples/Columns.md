@@ -1,6 +1,6 @@
 ---
-name: Visualization creating vertical bars to represent and compare discrete data values visually.
-description: Bar Chart (Vertical)
+name: Bar Chart (Vertical)
+description: Visualization creating vertical bars to represent and compare discrete data values visually.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Bars', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar']
