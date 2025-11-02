@@ -5,11 +5,10 @@
 	import { Chart, GeoPath, Layer, Text } from 'layerchart';
 	import { getUsStatesTopology } from '$lib/geo.remote.js';
 
-	const geojson = await getUsStatesTopology();
-	const states = feature(geojson, geojson.objects.states);
+	const topology = await getUsStatesTopology();
+	const states = feature(topology, topology.objects.states);
 
-	const data = { geojson, states };
-
+	const data = { topology, states };
 	export { data };
 </script>
 
@@ -34,14 +33,16 @@
 				<GeoPath geojson={feature}>
 					{#snippet children({ geoPath })}
 						{@const [x, y] = geoPath?.centroid(feature) ?? []}
-						<Text
+
+						<!-- TODO: Why is this locking up the browser? -->
+						<!-- <Text
 							{x}
 							{y}
 							value={feature.properties.name}
 							textAnchor="middle"
 							verticalAnchor="middle"
 							class="text-[8px] stroke-surface-100 stroke-[2px]"
-						/>
+						/> -->
 					{/snippet}
 				</GeoPath>
 			{/each}

@@ -10,6 +10,4 @@ tableOfContents: false
   import Example from '$lib/components/Example.svelte';
 </script>
 
-BROKEN - Console accumulating errors and locks
-
-<!-- <Example name="country-map" /> -->
+<Example name="country-map" />

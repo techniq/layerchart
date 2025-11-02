@@ -109,7 +109,7 @@
 	</Button>
 </Breadcrumb>
 
-<Chart height={800}>
+<Chart height={600}>
 	<Layer>
 		<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>
 			{#snippet children({ xScale, yScale })}
