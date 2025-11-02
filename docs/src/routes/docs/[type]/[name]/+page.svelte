@@ -66,7 +66,7 @@
 				<div slot="toggle" class="mt-2">
 					<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 						{#each uniqueUsage as usage}
-							<ExampleLink component={usage.component} example={usage.example} />
+							<ExampleLink component={usage.component} example={usage.example} showComponent />
 						{/each}
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 			<!-- No direct examples, show immediately -->
 			<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 				{#each uniqueUsage as usage}
-					<ExampleLink component={usage.component} example={usage.example} />
+					<ExampleLink component={usage.component} example={usage.example} showComponent />
 				{/each}
 			</div>
 		{/if}

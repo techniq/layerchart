@@ -36,7 +36,7 @@
 		href="/docs/{page.params.type}/{page.params.name}"
 		class="mb-4 border"
 	>
-		Back to examples
+		Back to {page.params.name}
 	</Button>
 {/if}
 
@@ -47,7 +47,7 @@
 
 	{#if page.params.example}
 		<LucideChevronRight class="text-sm opacity-25" />
-		<a href="/{page.params.type}/{page.params.name}" class="text-primary">{metadata.name}</a>
+		<a href="/docs/{page.params.type}/{page.params.name}" class="text-primary">{metadata.name}</a>
 	{/if}
 </div>
 

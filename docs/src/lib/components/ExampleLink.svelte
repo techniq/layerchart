@@ -1,5 +1,11 @@
 <script lang="ts">
-	let { component, example }: { component: string; example: string } = $props();
+	import LucideChevronRight from '~icons/lucide/chevron-right';
+
+	let {
+		component,
+		example,
+		showComponent
+	}: { component: string; example: string; showComponent?: boolean } = $props();
 </script>
 
 <a
@@ -27,8 +33,13 @@
 		</div>
 	{/if} -->
 	<div class="p-3 border-t">
-		<p class="text-sm font-medium group-hover:text-primary transition-colors capitalize">
-			{example.replaceAll('-', ' ')}
+		<p
+			class="flex items-center truncate gap-1 text-sm font-medium group-hover:text-primary transition-colors capitalize"
+		>
+			{#if showComponent}
+				<span>{component}</span> <LucideChevronRight class="text-surface-content/50" />
+			{/if}
+			<span class="truncate">{example.replaceAll('-', ' ')}</span>
 		</p>
 	</div>
 </a>
