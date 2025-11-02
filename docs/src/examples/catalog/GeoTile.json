@@ -68,5 +68,5 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "generatedAt": "2025-11-02T23:06:33.674Z"
+  "updatedAt": "2025-11-02T23:12:27.946Z"
 }

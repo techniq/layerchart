@@ -41,6 +41,6 @@ export interface ComponentCatalog {
 	examples: ExampleInfo[];
 	/** All places where this component is used across all examples */
 	usage: UsageInfo[];
-	/** ISO timestamp when the catalog was generated */
-	generatedAt: string;
+	/** ISO timestamp when the catalog was last updated */
+	updatedAt: string;
 }

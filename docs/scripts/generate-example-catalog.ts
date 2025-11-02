@@ -142,17 +142,38 @@ function ensureDir(dirPath: string): void {
 /**
  * Generate catalog for a single component
  */
-function generateComponentCatalog(componentName: string): ComponentCatalog {
+function generateComponentCatalog(componentName: string, catalogPath: string): ComponentCatalog {
 	console.log(`Processing ${componentName}...`);
 
 	const examples = getComponentExamples(componentName);
 	const usage = findComponentUsage(componentName);
 
+	// Check if catalog file exists and read it
+	let existingUpdatedAt: string | undefined;
+	if (fs.existsSync(catalogPath)) {
+		try {
+			const existingContent = fs.readFileSync(catalogPath, 'utf-8');
+			const existingCatalog: ComponentCatalog = JSON.parse(existingContent);
+
+			// Check if content has changed (excluding updatedAt field)
+			const contentUnchanged =
+				existingCatalog.component === componentName &&
+				JSON.stringify(existingCatalog.examples) === JSON.stringify(examples) &&
+				JSON.stringify(existingCatalog.usage) === JSON.stringify(usage);
+
+			if (contentUnchanged) {
+				existingUpdatedAt = existingCatalog.updatedAt;
+			}
+		} catch (error) {
+			// If we can't read or parse, treat as new file
+		}
+	}
+
 	return {
 		component: componentName,
 		examples,
 		usage,
-		generatedAt: new Date().toISOString()
+		updatedAt: existingUpdatedAt ?? new Date().toISOString()
 	};
 }
 
@@ -176,10 +197,10 @@ async function main() {
 
 	// Process each component
 	for (const componentName of components) {
-		const catalog = generateComponentCatalog(componentName);
-
 		// Write catalog file
 		const catalogPath = path.join(CATALOG_DIR, `${componentName}.json`);
+		const catalog = generateComponentCatalog(componentName, catalogPath);
+
 		fs.writeFileSync(catalogPath, JSON.stringify(catalog, null, 2));
 
 		console.log(`  ✓ Examples: ${catalog.examples.length}`);
