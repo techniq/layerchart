@@ -1,4 +1,5 @@
 ---
+name: Force Tree
 description: Visualization showing hierarchical data structures using a force-directed layout to illustrate parent-child relationships dynamically.
 section: force
 layers: ['svg', 'canvas']

@@ -1,4 +1,5 @@
 ---
+name: Force Text
 description: Visualization positioning text elements within a force-directed layout to demonstrating relationships and connections dynamically.
 section: force
 layers: ['svg', 'canvas']

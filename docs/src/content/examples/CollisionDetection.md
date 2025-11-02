@@ -1,4 +1,5 @@
 ---
+name: Collision Detection
 description: Visualization manages overlapping elements by adjusting their positions to ensure clarity and readability.
 section: force
 layers: ['svg', 'canvas']

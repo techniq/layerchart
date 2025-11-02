@@ -1,4 +1,5 @@
 ---
+name: Submarine Cables Globe
 description: Visualization of submarine communication cables on a 3D globe to represent global connectivity and data flow.
 section: geo
 layers: ['svg', 'canvas']

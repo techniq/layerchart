@@ -1,4 +1,5 @@
 ---
+name: Force Drag
 description: Visualization of force-directed layout that allows users to interactively drag and reposition nodes while maintaining dynamic force-based relationships with or without sticky behavior.
 section: force
 layers: ['svg', 'canvas']

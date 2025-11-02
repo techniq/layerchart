@@ -1,4 +1,5 @@
 ---
+name: Zoomable Map
 description: Visualization of interactive geographic map that allows users to zoom in and out to explore data at different scales.
 section: geo
 layers: ['svg', 'canvas']

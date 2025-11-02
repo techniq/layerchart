@@ -1,4 +1,5 @@
 ---
+name: Lofted Arcs
 description: Visualization drawing elevated arcs on a globe or map to represent connections or flows between geographical locations.
 section: geo
 layers: ['svg', 'canvas']

@@ -1,4 +1,5 @@
 ---
+name: Sketchy Globe
 description: Visualization of a hand-drawn, sketch-like representation of a 3D globe to visualize geographical data.
 section: geo
 layers: ['svg', 'canvas']

@@ -1,4 +1,5 @@
 ---
+name: Country Map
 description: Visualization of data points on a geographical map using country boundaries to represent values or magnitudes at specific locations.
 section: geo
 layers: ['svg', 'canvas']

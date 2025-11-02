@@ -1,4 +1,5 @@
 ---
+name: Eclipses Globe
 description: Visualization of solar and lunar eclipses on a 3D globe, showing their paths and visibility across the Earth.
 section: geo
 layers: ['svg', 'canvas']
