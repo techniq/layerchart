@@ -1,0 +1,27 @@
+{
+  "component": "Marker",
+  "examples": [
+    {
+      "name": "line",
+      "path": "/example/Marker/line"
+    },
+    {
+      "name": "orientation",
+      "path": "/example/Marker/orientation"
+    },
+    {
+      "name": "spline",
+      "path": "/example/Marker/spline"
+    },
+    {
+      "name": "spline-w-thicker-stroke",
+      "path": "/example/Marker/spline-w-thicker-stroke"
+    },
+    {
+      "name": "styling",
+      "path": "/example/Marker/styling"
+    }
+  ],
+  "usage": [],
+  "generatedAt": "2025-11-02T16:10:38.718Z"
+}

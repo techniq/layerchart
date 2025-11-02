@@ -1,0 +1,52 @@
+{
+  "component": "Frame",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Frame/basic"
+    },
+    {
+      "name": "border",
+      "path": "/example/Frame/border"
+    },
+    {
+      "name": "full",
+      "path": "/example/Frame/full"
+    },
+    {
+      "name": "gradient",
+      "path": "/example/Frame/gradient"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Frame",
+      "path": "/example/Frame/basic",
+      "lineNumber": 12,
+      "line": "<Frame class=\"fill-danger/5\" />"
+    },
+    {
+      "example": "border",
+      "component": "Frame",
+      "path": "/example/Frame/border",
+      "lineNumber": 12,
+      "line": "<Frame class=\"stroke-surface-content/50 fill-none\" />"
+    },
+    {
+      "example": "full",
+      "component": "Frame",
+      "path": "/example/Frame/full",
+      "lineNumber": 12,
+      "line": "<Frame class=\"fill-danger/5\" full />"
+    },
+    {
+      "example": "gradient",
+      "component": "Frame",
+      "path": "/example/Frame/gradient",
+      "lineNumber": 14,
+      "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.262Z"
+}

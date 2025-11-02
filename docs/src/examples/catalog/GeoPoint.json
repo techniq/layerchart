@@ -1,0 +1,140 @@
+{
+  "component": "GeoPoint",
+  "examples": [
+    {
+      "name": "icons",
+      "path": "/example/GeoPoint/icons"
+    },
+    {
+      "name": "us-airports",
+      "path": "/example/GeoPoint/us-airports"
+    },
+    {
+      "name": "us-state-capitals",
+      "path": "/example/GeoPoint/us-state-capitals"
+    },
+    {
+      "name": "world-airports",
+      "path": "/example/GeoPoint/world-airports"
+    },
+    {
+      "name": "world-capitals",
+      "path": "/example/GeoPoint/world-capitals"
+    }
+  ],
+  "usage": [
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/icons",
+      "lineNumber": 52,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-airports",
+      "lineNumber": 56,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-airports",
+      "lineNumber": 68,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 37,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 47,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-airports",
+      "lineNumber": 53,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-airports",
+      "lineNumber": 65,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 56,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 70,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 84,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 47,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 34,
+      "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 35,
+      "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/world-map",
+      "lineNumber": 46,
+      "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/world-map",
+      "lineNumber": 47,
+      "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SubmarineCablesGlobe",
+      "path": "/example/SubmarineCablesGlobe/basic",
+      "lineNumber": 108,
+      "line": "<GeoPoint"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.392Z"
+}

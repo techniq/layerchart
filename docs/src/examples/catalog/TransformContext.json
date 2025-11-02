@@ -1,0 +1,19 @@
+{
+  "component": "TransformContext",
+  "examples": [
+    {
+      "name": "pan-zoom-html-image",
+      "path": "/example/TransformContext/pan-zoom-html-image"
+    },
+    {
+      "name": "pan-zoom-svg-image",
+      "path": "/example/TransformContext/pan-zoom-svg-image"
+    },
+    {
+      "name": "playground",
+      "path": "/example/TransformContext/playground"
+    }
+  ],
+  "usage": [],
+  "generatedAt": "2025-11-02T16:10:39.205Z"
+}

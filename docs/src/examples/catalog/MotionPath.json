@@ -1,0 +1,41 @@
+{
+  "component": "MotionPath",
+  "examples": [
+    {
+      "name": "repeat-indefinitely",
+      "path": "/example/MotionPath/repeat-indefinitely"
+    },
+    {
+      "name": "rotate-object-with-path",
+      "path": "/example/MotionPath/rotate-object-with-path"
+    },
+    {
+      "name": "sync-with-draw",
+      "path": "/example/MotionPath/sync-with-draw"
+    }
+  ],
+  "usage": [
+    {
+      "example": "repeat-indefinitely",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/repeat-indefinitely",
+      "lineNumber": 43,
+      "line": "<MotionPath duration=\"5s\" repeatCount=\"indefinite\">"
+    },
+    {
+      "example": "rotate-object-with-path",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/rotate-object-with-path",
+      "lineNumber": 43,
+      "line": "<MotionPath duration=\"5s\" repeatCount=\"indefinite\" rotate=\"auto\">"
+    },
+    {
+      "example": "sync-with-draw",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/sync-with-draw",
+      "lineNumber": 44,
+      "line": "<MotionPath duration=\"3s\">"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.877Z"
+}

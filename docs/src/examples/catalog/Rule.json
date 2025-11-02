@@ -1,0 +1,328 @@
+{
+  "component": "Rule",
+  "examples": [
+    {
+      "name": "annotation-x",
+      "path": "/example/Rule/annotation-x"
+    },
+    {
+      "name": "annotation-y",
+      "path": "/example/Rule/annotation-y"
+    },
+    {
+      "name": "baseline-top-right",
+      "path": "/example/Rule/baseline-top-right"
+    },
+    {
+      "name": "baseline-x-negative",
+      "path": "/example/Rule/baseline-x-negative"
+    },
+    {
+      "name": "baseline-x-y",
+      "path": "/example/Rule/baseline-x-y"
+    },
+    {
+      "name": "baseline-y-negative",
+      "path": "/example/Rule/baseline-y-negative"
+    },
+    {
+      "name": "data-x-band",
+      "path": "/example/Rule/data-x-band"
+    },
+    {
+      "name": "data-x-date",
+      "path": "/example/Rule/data-x-date"
+    },
+    {
+      "name": "data-x-range",
+      "path": "/example/Rule/data-x-range"
+    },
+    {
+      "name": "data-y-range",
+      "path": "/example/Rule/data-y-range"
+    }
+  ],
+  "usage": [
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 32,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 29,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "threshold-with-lineargradient",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient",
+      "lineNumber": 32,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "threshold-with-lineargradient-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient-over-under",
+      "lineNumber": 32,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "threshold-with-rectclippath",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "lineNumber": 29,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "threshold-with-rectclippath-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "lineNumber": 29,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "multiple-axis-grid-and-rules",
+      "component": "Axis",
+      "path": "/example/Axis/multiple-axis-grid-and-rules",
+      "lineNumber": 19,
+      "line": "<Rule x=\"$left\" />"
+    },
+    {
+      "example": "average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/average-annotation-rule",
+      "lineNumber": 34,
+      "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/inside-labels",
+      "lineNumber": 23,
+      "line": "<Rule x={0} />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/multiple-diverging",
+      "lineNumber": 32,
+      "line": "<Rule x={0} />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/outside-labels-default",
+      "lineNumber": 24,
+      "line": "<Rule x={0} />"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 67,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "basic",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/basic",
+      "lineNumber": 26,
+      "line": "<Rule y={['high', 'low']} />"
+    },
+    {
+      "example": "basic",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/basic",
+      "lineNumber": 27,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
+      "example": "open-close-line-color",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/open-close-line-color",
+      "lineNumber": 26,
+      "line": "<Rule y={['high', 'low']} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "open-close-line-color",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/open-close-line-color",
+      "lineNumber": 27,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
+      "example": "with-brushing",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/with-brushing",
+      "lineNumber": 34,
+      "line": "<Rule y={['high', 'low']} />"
+    },
+    {
+      "example": "with-brushing",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/with-brushing",
+      "lineNumber": 35,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
+      "example": "average-annotation-rule",
+      "component": "Columns",
+      "path": "/example/Columns/average-annotation-rule",
+      "lineNumber": 32,
+      "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Columns",
+      "path": "/example/Columns/inside-labels",
+      "lineNumber": 23,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging",
+      "lineNumber": 31,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "multiple-diverging-rounded-specific",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "lineNumber": 33,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Columns",
+      "path": "/example/Columns/outside-labels-default",
+      "lineNumber": 24,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "points",
+      "component": "Duration",
+      "path": "/example/Duration/points",
+      "lineNumber": 44,
+      "line": "<Rule />"
+    },
+    {
+      "example": "points-color",
+      "component": "Duration",
+      "path": "/example/Duration/points-color",
+      "lineNumber": 51,
+      "line": "<Rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Lollipop",
+      "path": "/example/Lollipop/basic",
+      "lineNumber": 24,
+      "line": "<Rule />"
+    },
+    {
+      "example": "annotation-x",
+      "component": "Rule",
+      "path": "/example/Rule/annotation-x",
+      "lineNumber": 14,
+      "line": "<Rule x={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+    },
+    {
+      "example": "annotation-y",
+      "component": "Rule",
+      "path": "/example/Rule/annotation-y",
+      "lineNumber": 14,
+      "line": "<Rule y={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+    },
+    {
+      "example": "baseline-top-right",
+      "component": "Rule",
+      "path": "/example/Rule/baseline-top-right",
+      "lineNumber": 14,
+      "line": "<Rule x=\"$right\" y=\"$top\" />"
+    },
+    {
+      "example": "baseline-x-negative",
+      "component": "Rule",
+      "path": "/example/Rule/baseline-x-negative",
+      "lineNumber": 14,
+      "line": "<Rule x={0} />"
+    },
+    {
+      "example": "baseline-x-y",
+      "component": "Rule",
+      "path": "/example/Rule/baseline-x-y",
+      "lineNumber": 14,
+      "line": "<Rule x y />"
+    },
+    {
+      "example": "baseline-y-negative",
+      "component": "Rule",
+      "path": "/example/Rule/baseline-y-negative",
+      "lineNumber": 14,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "data-x-band",
+      "component": "Rule",
+      "path": "/example/Rule/data-x-band",
+      "lineNumber": 50,
+      "line": "<Rule class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "data-x-date",
+      "component": "Rule",
+      "path": "/example/Rule/data-x-date",
+      "lineNumber": 20,
+      "line": "<Rule class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "data-x-range",
+      "component": "Rule",
+      "path": "/example/Rule/data-x-range",
+      "lineNumber": 19,
+      "line": "<Rule class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "data-y-range",
+      "component": "Rule",
+      "path": "/example/Rule/data-y-range",
+      "lineNumber": 20,
+      "line": "<Rule class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 42,
+      "line": "<Rule />"
+    },
+    {
+      "example": "duration 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration 2",
+      "lineNumber": 45,
+      "line": "<Rule />"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 39,
+      "line": "<Rule />"
+    },
+    {
+      "example": "multiple-overlapping-durations 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations 2",
+      "lineNumber": 51,
+      "line": "<Rule />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:39.079Z"
+}

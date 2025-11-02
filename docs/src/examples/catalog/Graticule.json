@@ -1,0 +1,84 @@
+{
+  "component": "Graticule",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "AnimatedGlobe",
+      "path": "/example/AnimatedGlobe/basic",
+      "lineNumber": 170,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EarthquakeGlobe",
+      "path": "/example/EarthquakeGlobe/basic",
+      "lineNumber": 89,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EclipsesGlobe",
+      "path": "/example/EclipsesGlobe/basic",
+      "lineNumber": 95,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "playground",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/playground",
+      "lineNumber": 95,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic-geo-projection",
+      "component": "GeoProjection",
+      "path": "/example/GeoProjection/basic-geo-projection",
+      "lineNumber": 89,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+    },
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 28,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/world-map",
+      "lineNumber": 39,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SketchyGlobe",
+      "path": "/example/SketchyGlobe/basic",
+      "lineNumber": 79,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SubmarineCablesGlobe",
+      "path": "/example/SubmarineCablesGlobe/basic",
+      "lineNumber": 87,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 86,
+      "line": "<Graticule class=\"stroke-surface-content/5\" />"
+    },
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 93,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.499Z"
+}

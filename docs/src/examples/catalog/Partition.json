@@ -1,0 +1,48 @@
+{
+  "component": "Partition",
+  "examples": [
+    {
+      "name": "filterable",
+      "path": "/example/Partition/filterable"
+    },
+    {
+      "name": "horizontal",
+      "path": "/example/Partition/horizontal"
+    },
+    {
+      "name": "vertical",
+      "path": "/example/Partition/vertical"
+    }
+  ],
+  "usage": [
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/example/Partition/filterable",
+      "lineNumber": 117,
+      "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/example/Partition/horizontal",
+      "lineNumber": 97,
+      "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 98,
+      "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
+    },
+    {
+      "example": "basic",
+      "component": "Sunburst",
+      "path": "/example/Sunburst/basic",
+      "lineNumber": 76,
+      "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.926Z"
+}

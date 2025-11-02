@@ -1,0 +1,472 @@
+{
+  "component": "LinearGradient",
+  "examples": [
+    {
+      "name": "direction-with-custom-colors",
+      "path": "/example/LinearGradient/direction-with-custom-colors"
+    },
+    {
+      "name": "explicit-offsets",
+      "path": "/example/LinearGradient/explicit-offsets"
+    },
+    {
+      "name": "tailwind-colors",
+      "path": "/example/LinearGradient/tailwind-colors"
+    },
+    {
+      "name": "units",
+      "path": "/example/LinearGradient/units"
+    }
+  ],
+  "usage": [
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 56,
+      "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
+    },
+    {
+      "example": "partial-arc",
+      "component": "Arc",
+      "path": "/example/Arc/partial-arc",
+      "lineNumber": 17,
+      "line": "<LinearGradient class=\"from-secondary to-primary\">"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 60,
+      "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 7,
+      "line": "<LinearGradient class=\"from-secondary to-primary\">"
+    },
+    {
+      "example": "clipped-area-on-tooltip",
+      "component": "Area",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "lineNumber": 32,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "gradient",
+      "component": "Area",
+      "path": "/example/Area/gradient",
+      "lineNumber": 23,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "gradient-separate-stroke",
+      "component": "Area",
+      "path": "/example/Area/gradient-separate-stroke",
+      "lineNumber": 23,
+      "line": "<LinearGradient class=\"from-secondary/1 to-secondary\">"
+    },
+    {
+      "example": "gradient-separate-stroke",
+      "component": "Area",
+      "path": "/example/Area/gradient-separate-stroke",
+      "lineNumber": 25,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "stack-with-gradient",
+      "component": "Area",
+      "path": "/example/Area/stack-with-gradient",
+      "lineNumber": 53,
+      "line": "<LinearGradient stops={[primaryColor, secondaryColor]} vertical>"
+    },
+    {
+      "example": "threshold-with-lineargradient",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient",
+      "lineNumber": 33,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "threshold-with-lineargradient-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient-over-under",
+      "lineNumber": 33,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "funnel",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/funnel",
+      "lineNumber": 68,
+      "line": "<LinearGradient class=\"from-primary/50 to-secondary/10\">"
+    },
+    {
+      "example": "gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/gradient",
+      "lineNumber": 11,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "series-stack-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-gradient",
+      "lineNumber": 35,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "threshold-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold-gradient",
+      "lineNumber": 20,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "funnel",
+      "component": "AreaChartSimple",
+      "path": "/example/AreaChartSimple/funnel",
+      "lineNumber": 68,
+      "line": "<LinearGradient class=\"from-primary/50 to-secondary/10\">"
+    },
+    {
+      "example": "gradient",
+      "component": "AreaChartSimple",
+      "path": "/example/AreaChartSimple/gradient",
+      "lineNumber": 11,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "series-stack-gradient",
+      "component": "AreaChartSimple",
+      "path": "/example/AreaChartSimple/series-stack-gradient",
+      "lineNumber": 35,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "threshold-gradient",
+      "component": "AreaChartSimple",
+      "path": "/example/AreaChartSimple/threshold-gradient",
+      "lineNumber": 20,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "gradient",
+      "component": "BarChart",
+      "path": "/example/BarChart/gradient",
+      "lineNumber": 19,
+      "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
+    },
+    {
+      "example": "gradient",
+      "component": "Bars",
+      "path": "/example/Bars/gradient",
+      "lineNumber": 30,
+      "line": "<LinearGradient class=\"from-green-400 to-blue-500\" units=\"userSpaceOnUse\">"
+    },
+    {
+      "example": "integrated-brush-(both-axis-area)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
+      "lineNumber": 41,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "integrated-brush-(x-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(x-axis)",
+      "lineNumber": 38,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "integrated-brush-(y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(y-axis)",
+      "lineNumber": 39,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 45,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 32,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "separate-chart-(filter-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(filter-data)",
+      "lineNumber": 26,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 69,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "tooltip-interop",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/tooltip-interop",
+      "lineNumber": 43,
+      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "gradient",
+      "component": "Columns",
+      "path": "/example/Columns/gradient",
+      "lineNumber": 23,
+      "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
+    },
+    {
+      "example": "gradient",
+      "component": "Frame",
+      "path": "/example/Frame/gradient",
+      "lineNumber": 12,
+      "line": "<LinearGradient class=\"from-primary/10 to-secondary/10\" vertical>"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "Line",
+      "path": "/example/Line/gradient-encoding",
+      "lineNumber": 21,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Line",
+      "path": "/example/Line/gradient-threshold",
+      "lineNumber": 17,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "direction-with-custom-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "lineNumber": 7,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "direction-with-custom-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "lineNumber": 13,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>"
+    },
+    {
+      "example": "direction-with-custom-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "lineNumber": 19,
+      "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
+    },
+    {
+      "example": "explicit-offsets",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/explicit-offsets",
+      "lineNumber": 7,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "explicit-offsets",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/explicit-offsets",
+      "lineNumber": 18,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "explicit-offsets",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/explicit-offsets",
+      "lineNumber": 30,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 7,
+      "line": "<LinearGradient class=\"from-pink-500 to-yellow-500\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 13,
+      "line": "<LinearGradient class=\"from-green-300 to-purple-600\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 19,
+      "line": "<LinearGradient class=\"from-gray-600 to-black\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 25,
+      "line": "<LinearGradient class=\"from-pink-300 to-indigo-400\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 31,
+      "line": "<LinearGradient class=\"from-yellow-100 to-yellow-500\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 37,
+      "line": "<LinearGradient class=\"from-blue-700 to-gray-900\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 43,
+      "line": "<LinearGradient class=\"from-sky-300 to-blue-500\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 49,
+      "line": "<LinearGradient class=\"from-red-500 to-red-800\" vertical>"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/tailwind-colors",
+      "lineNumber": 55,
+      "line": "<LinearGradient class=\"from-blue-400 to-emerald-400\" vertical>"
+    },
+    {
+      "example": "units",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/units",
+      "lineNumber": 7,
+      "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
+    },
+    {
+      "example": "units",
+      "component": "LinearGradient",
+      "path": "/example/LinearGradient/units",
+      "lineNumber": 15,
+      "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "LineChart",
+      "path": "/example/LineChart/gradient-encoding",
+      "lineNumber": 19,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "LineChart",
+      "path": "/example/LineChart/gradient-threshold",
+      "lineNumber": 14,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "frequency",
+      "component": "Oscilloscope",
+      "path": "/example/Oscilloscope/frequency",
+      "lineNumber": 142,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 7,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 17,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 27,
+      "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 37,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 47,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 7,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 19,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 31,
+      "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 43,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 55,
+      "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 67,
+      "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.676Z"
+}

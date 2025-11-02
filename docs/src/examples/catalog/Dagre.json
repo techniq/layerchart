@@ -1,0 +1,52 @@
+{
+  "component": "Dagre",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Dagre/basic"
+    },
+    {
+      "name": "playground",
+      "path": "/example/Dagre/playground"
+    },
+    {
+      "name": "software-user-flow",
+      "path": "/example/Dagre/software-user-flow"
+    },
+    {
+      "name": "tcp-state-diagram",
+      "path": "/example/Dagre/tcp-state-diagram"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Dagre",
+      "path": "/example/Dagre/basic",
+      "lineNumber": 56,
+      "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
+    },
+    {
+      "example": "playground",
+      "component": "Dagre",
+      "path": "/example/Dagre/playground",
+      "lineNumber": 74,
+      "line": "<Dagre {data} edges={(d) => d.links} {...settings}>"
+    },
+    {
+      "example": "software-user-flow",
+      "component": "Dagre",
+      "path": "/example/Dagre/software-user-flow",
+      "lineNumber": 58,
+      "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Dagre",
+      "path": "/example/Dagre/tcp-state-diagram",
+      "lineNumber": 57,
+      "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.186Z"
+}

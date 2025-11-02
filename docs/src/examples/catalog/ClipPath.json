@@ -1,0 +1,35 @@
+{
+  "component": "ClipPath",
+  "examples": [],
+  "usage": [
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 19,
+      "line": "<ClipPath>"
+    },
+    {
+      "example": "clipped-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/clipped-geo-tile",
+      "lineNumber": 47,
+      "line": "<ClipPath useId=\"clip\">"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 124,
+      "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 147,
+      "line": "<ClipPath useId=\"globe\">"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.090Z"
+}

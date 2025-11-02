@@ -1,0 +1,172 @@
+{
+  "component": "AnnotationRange",
+  "examples": [
+    {
+      "name": "bar-chart-(multiple)",
+      "path": "/example/AnnotationRange/bar-chart-(multiple)"
+    },
+    {
+      "name": "bar-chart-(single)",
+      "path": "/example/AnnotationRange/bar-chart-(single)"
+    },
+    {
+      "name": "bar-chart-(value)",
+      "path": "/example/AnnotationRange/bar-chart-(value)"
+    },
+    {
+      "name": "hide-tooltip",
+      "path": "/example/AnnotationRange/hide-tooltip"
+    },
+    {
+      "name": "horizontal-with-fill-multiple",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple"
+    },
+    {
+      "name": "horizontal-with-pattern-lower-bound",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound"
+    },
+    {
+      "name": "horizontal-with-pattern-range",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-range"
+    },
+    {
+      "name": "horizontal-with-pattern-upper-bound",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound"
+    },
+    {
+      "name": "label-placement",
+      "path": "/example/AnnotationRange/label-placement"
+    },
+    {
+      "name": "vertical-with-gradient-range",
+      "path": "/example/AnnotationRange/vertical-with-gradient-range"
+    },
+    {
+      "name": "vertical-with-pattern-lower-bound",
+      "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound"
+    },
+    {
+      "name": "vertical-with-pattern-range",
+      "path": "/example/AnnotationRange/vertical-with-pattern-range"
+    },
+    {
+      "name": "vertical-with-pattern-upper-bound",
+      "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound"
+    }
+  ],
+  "usage": [
+    {
+      "example": "horizontal-with-range",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-with-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(multiple)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(multiple)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(single)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(single)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(value)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(value)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "hide-tooltip",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/hide-tooltip",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 12,
+      "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 13,
+      "line": "<AnnotationRange y={[400, 600]} class=\"fill-warning/10\" />"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 14,
+      "line": "<AnnotationRange y={[600, null]} class=\"fill-danger/10\" />"
+    },
+    {
+      "example": "horizontal-with-pattern-lower-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-pattern-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-pattern-upper-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "label-placement",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/label-placement",
+      "lineNumber": 55,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-gradient-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-gradient-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-lower-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-upper-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:37.571Z"
+}

@@ -1,0 +1,19 @@
+{
+  "component": "Pack",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Pack/basic"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/example/Pack/basic",
+      "lineNumber": 107,
+      "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.900Z"
+}

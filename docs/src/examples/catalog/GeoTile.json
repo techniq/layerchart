@@ -1,0 +1,72 @@
+{
+  "component": "GeoTile",
+  "examples": [
+    {
+      "name": "basic-geo-tile",
+      "path": "/example/GeoTile/basic-geo-tile"
+    },
+    {
+      "name": "clipped-geo-tile",
+      "path": "/example/GeoTile/clipped-geo-tile"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/basic-geo-tile",
+      "lineNumber": 48,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "clipped-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/clipped-geo-tile",
+      "lineNumber": 48,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "basic",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/basic",
+      "lineNumber": 70,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "seamless-multiple-zoom-layers",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "lineNumber": 71,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "seamless-multiple-zoom-layers",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "lineNumber": 72,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "seamless-multiple-zoom-layers",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "lineNumber": 73,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "seamless-multiple-zoom-layers",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "lineNumber": 74,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "with-padding",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/with-padding",
+      "lineNumber": 76,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.434Z"
+}

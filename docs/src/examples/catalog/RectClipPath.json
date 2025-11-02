@@ -1,0 +1,140 @@
+{
+  "component": "RectClipPath",
+  "examples": [],
+  "usage": [
+    {
+      "example": "clipped-area-on-tooltip",
+      "component": "Area",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "lineNumber": 35,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 33,
+      "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 36,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 30,
+      "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 33,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "threshold-with-rectclippath",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "lineNumber": 30,
+      "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+    },
+    {
+      "example": "threshold-with-rectclippath",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "lineNumber": 33,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "threshold-with-rectclippath-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "lineNumber": 30,
+      "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+    },
+    {
+      "example": "threshold-with-rectclippath-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "lineNumber": 33,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "lineNumber": 35,
+      "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "lineNumber": 34,
+      "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
+    },
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/example/Partition/filterable",
+      "lineNumber": 144,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/example/Partition/horizontal",
+      "lineNumber": 106,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 107,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    },
+    {
+      "example": "complex",
+      "component": "Treemap",
+      "path": "/example/Treemap/complex",
+      "lineNumber": 145,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    },
+    {
+      "example": "nested-filter",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-filter",
+      "lineNumber": 163,
+      "line": "<RectClipPath"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 133,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 194,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 107,
+      "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:39.064Z"
+}

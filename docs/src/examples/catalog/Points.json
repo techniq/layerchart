@@ -1,0 +1,189 @@
+{
+  "component": "Points",
+  "examples": [],
+  "usage": [
+    {
+      "example": "playground",
+      "component": "Area",
+      "path": "/example/Area/playground",
+      "lineNumber": 67,
+      "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 39,
+      "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 62,
+      "line": "<Points>"
+    },
+    {
+      "example": "selection",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/selection",
+      "lineNumber": 35,
+      "line": "<Points>"
+    },
+    {
+      "example": "points",
+      "component": "Duration",
+      "path": "/example/Duration/points",
+      "lineNumber": 45,
+      "line": "<Points />"
+    },
+    {
+      "example": "points-color",
+      "component": "Duration",
+      "path": "/example/Duration/points-color",
+      "lineNumber": 52,
+      "line": "<Points />"
+    },
+    {
+      "example": "text",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/text",
+      "lineNumber": 120,
+      "line": "<Points data={nodes.slice(1)} r={radius} class=\"fill-primary\" />"
+    },
+    {
+      "example": "scatter",
+      "component": "Hull",
+      "path": "/example/Hull/scatter",
+      "lineNumber": 42,
+      "line": "<Points r={3} {data} fill={color} />"
+    },
+    {
+      "example": "basic",
+      "component": "Lollipop",
+      "path": "/example/Lollipop/basic",
+      "lineNumber": 25,
+      "line": "<Points />"
+    },
+    {
+      "example": "radar",
+      "component": "RadialLine",
+      "path": "/example/RadialLine/radar",
+      "lineNumber": 43,
+      "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Scatter",
+      "path": "/example/Scatter/basic",
+      "lineNumber": 22,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "color-via-scale",
+      "component": "Scatter",
+      "path": "/example/Scatter/color-via-scale",
+      "lineNumber": 27,
+      "line": "<Points class=\"stroke-surface-content/50\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Scatter",
+      "path": "/example/Scatter/with-labels",
+      "lineNumber": 22,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Scatter",
+      "path": "/example/Scatter/with-tooltip-and-highlight",
+      "lineNumber": 23,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "custom",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/custom",
+      "lineNumber": 15,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Spline",
+      "path": "/example/Spline/playground",
+      "lineNumber": 60,
+      "line": "<Points"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 43,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "duration 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration 2",
+      "lineNumber": 46,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 40,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-overlapping-durations 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations 2",
+      "lineNumber": 52,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "scatter-plot",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/scatter-plot",
+      "lineNumber": 35,
+      "line": "<Points class=\"fill-primary stroke-primary\" />"
+    },
+    {
+      "example": "scatter-plot 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/scatter-plot 2",
+      "lineNumber": 37,
+      "line": "<Points class=\"fill-primary stroke-primary\" />"
+    },
+    {
+      "example": "single-date-time",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time",
+      "lineNumber": 40,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "single-date-time 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time 2",
+      "lineNumber": 52,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "TransformContext",
+      "path": "/example/TransformContext/playground",
+      "lineNumber": 62,
+      "line": "<Points>"
+    },
+    {
+      "example": "example",
+      "component": "Voronoi",
+      "path": "/example/Voronoi/example",
+      "lineNumber": 25,
+      "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:39.002Z"
+}

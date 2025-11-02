@@ -1,0 +1,92 @@
+{
+  "component": "AnnotationPoint",
+  "examples": [
+    {
+      "name": "band-scale-on-axis",
+      "path": "/example/AnnotationPoint/band-scale-on-axis"
+    },
+    {
+      "name": "band-scale-on-value",
+      "path": "/example/AnnotationPoint/band-scale-on-value"
+    },
+    {
+      "name": "label-placement",
+      "path": "/example/AnnotationPoint/label-placement"
+    },
+    {
+      "name": "on-axis-with-tooltip",
+      "path": "/example/AnnotationPoint/on-axis-with-tooltip"
+    },
+    {
+      "name": "on-series-with-line-and-tooltip",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip"
+    },
+    {
+      "name": "on-series-with-tooltip",
+      "path": "/example/AnnotationPoint/on-series-with-tooltip"
+    },
+    {
+      "name": "series-annotation",
+      "path": "/example/AnnotationPoint/series-annotation"
+    }
+  ],
+  "usage": [
+    {
+      "example": "vertical-to-point",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-to-point",
+      "lineNumber": 34,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "band-scale-on-axis",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "band-scale-on-value",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "label-placement",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/label-placement",
+      "lineNumber": 59,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-axis-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+      "lineNumber": 30,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 38,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-tooltip",
+      "lineNumber": 29,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "series-annotation",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/series-annotation",
+      "lineNumber": 13,
+      "line": "<AnnotationPoint"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:37.551Z"
+}

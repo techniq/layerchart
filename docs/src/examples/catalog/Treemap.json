@@ -1,0 +1,74 @@
+{
+  "component": "Treemap",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Treemap/basic"
+    },
+    {
+      "name": "complex",
+      "path": "/example/Treemap/complex"
+    },
+    {
+      "name": "nested-filter",
+      "path": "/example/Treemap/nested-filter"
+    },
+    {
+      "name": "nested-zoom",
+      "path": "/example/Treemap/nested-zoom"
+    },
+    {
+      "name": "playground",
+      "path": "/example/Treemap/playground"
+    },
+    {
+      "name": "stacked-zoom",
+      "path": "/example/Treemap/stacked-zoom"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Treemap",
+      "path": "/example/Treemap/basic",
+      "lineNumber": 36,
+      "line": "<Treemap hierarchy={data}>"
+    },
+    {
+      "example": "complex",
+      "component": "Treemap",
+      "path": "/example/Treemap/complex",
+      "lineNumber": 112,
+      "line": "<Treemap"
+    },
+    {
+      "example": "nested-filter",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-filter",
+      "lineNumber": 122,
+      "line": "<Treemap"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 98,
+      "line": "<Treemap"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 161,
+      "line": "<Treemap"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 97,
+      "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:39.276Z"
+}

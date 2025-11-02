@@ -1,0 +1,378 @@
+{
+  "component": "Legend",
+  "examples": [
+    {
+      "name": "chart-integration",
+      "path": "/example/Legend/chart-integration"
+    },
+    {
+      "name": "chart-placement",
+      "path": "/example/Legend/chart-placement"
+    },
+    {
+      "name": "children-override",
+      "path": "/example/Legend/children-override"
+    },
+    {
+      "name": "click-handler",
+      "path": "/example/Legend/click-handler"
+    },
+    {
+      "name": "diverging",
+      "path": "/example/Legend/diverging"
+    },
+    {
+      "name": "diverging-sqrt",
+      "path": "/example/Legend/diverging-sqrt"
+    },
+    {
+      "name": "ordinal",
+      "path": "/example/Legend/ordinal"
+    },
+    {
+      "name": "quantile",
+      "path": "/example/Legend/quantile"
+    },
+    {
+      "name": "quantize",
+      "path": "/example/Legend/quantize"
+    },
+    {
+      "name": "responsive-swatches",
+      "path": "/example/Legend/responsive-swatches"
+    },
+    {
+      "name": "sequential",
+      "path": "/example/Legend/sequential"
+    },
+    {
+      "name": "sequential-log",
+      "path": "/example/Legend/sequential-log"
+    },
+    {
+      "name": "sequential-quantile",
+      "path": "/example/Legend/sequential-quantile"
+    },
+    {
+      "name": "sequential-sqrt",
+      "path": "/example/Legend/sequential-sqrt"
+    },
+    {
+      "name": "sqrt",
+      "path": "/example/Legend/sqrt"
+    },
+    {
+      "name": "square-swatch",
+      "path": "/example/Legend/square-swatch"
+    },
+    {
+      "name": "styling",
+      "path": "/example/Legend/styling"
+    },
+    {
+      "name": "threshold",
+      "path": "/example/Legend/threshold"
+    },
+    {
+      "name": "vertical-orientation",
+      "path": "/example/Legend/vertical-orientation"
+    }
+  ],
+  "usage": [
+    {
+      "example": "bubble-map-population",
+      "component": "BubbleMap",
+      "path": "/example/BubbleMap/bubble-map-population",
+      "lineNumber": 131,
+      "line": "<Legend"
+    },
+    {
+      "example": "basic",
+      "component": "Choropleth",
+      "path": "/example/Choropleth/basic",
+      "lineNumber": 100,
+      "line": "<Legend"
+    },
+    {
+      "example": "basic",
+      "component": "EclipsesGlobe",
+      "path": "/example/EclipsesGlobe/basic",
+      "lineNumber": 91,
+      "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
+    },
+    {
+      "example": "chart-integration",
+      "component": "Legend",
+      "path": "/example/Legend/chart-integration",
+      "lineNumber": 13,
+      "line": "<Legend title=\"I am Legend\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 13,
+      "line": "<Legend title=\"top-left\" placement=\"top-left\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 14,
+      "line": "<Legend title=\"top\" placement=\"top\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 15,
+      "line": "<Legend title=\"top-right\" placement=\"top-right\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 16,
+      "line": "<Legend title=\"left\" placement=\"left\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 17,
+      "line": "<Legend title=\"center\" placement=\"center\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 18,
+      "line": "<Legend title=\"right\" placement=\"right\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 19,
+      "line": "<Legend title=\"bottom-left\" placement=\"bottom-left\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 20,
+      "line": "<Legend title=\"bottom\" placement=\"bottom\" variant=\"swatches\" />"
+    },
+    {
+      "example": "chart-placement",
+      "component": "Legend",
+      "path": "/example/Legend/chart-placement",
+      "lineNumber": 21,
+      "line": "<Legend title=\"bottom-right\" placement=\"bottom-right\" variant=\"swatches\" />"
+    },
+    {
+      "example": "children-override",
+      "component": "Legend",
+      "path": "/example/Legend/children-override",
+      "lineNumber": 7,
+      "line": "<Legend"
+    },
+    {
+      "example": "click-handler",
+      "component": "Legend",
+      "path": "/example/Legend/click-handler",
+      "lineNumber": 7,
+      "line": "<Legend"
+    },
+    {
+      "example": "diverging",
+      "component": "Legend",
+      "path": "/example/Legend/diverging",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "diverging",
+      "component": "Legend",
+      "path": "/example/Legend/diverging",
+      "lineNumber": 13,
+      "line": "<Legend"
+    },
+    {
+      "example": "diverging-sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/diverging-sqrt",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "diverging-sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/diverging-sqrt",
+      "lineNumber": 13,
+      "line": "<Legend"
+    },
+    {
+      "example": "ordinal",
+      "component": "Legend",
+      "path": "/example/Legend/ordinal",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "ordinal",
+      "component": "Legend",
+      "path": "/example/Legend/ordinal",
+      "lineNumber": 16,
+      "line": "<Legend"
+    },
+    {
+      "example": "quantile",
+      "component": "Legend",
+      "path": "/example/Legend/quantile",
+      "lineNumber": 12,
+      "line": "<Legend"
+    },
+    {
+      "example": "quantile",
+      "component": "Legend",
+      "path": "/example/Legend/quantile",
+      "lineNumber": 18,
+      "line": "<!-- <Legend"
+    },
+    {
+      "example": "quantize",
+      "component": "Legend",
+      "path": "/example/Legend/quantize",
+      "lineNumber": 8,
+      "line": "<Legend scale={scaleQuantize([1, 10], schemePurples[9])} title=\"Unemployment rate (%)\" />"
+    },
+    {
+      "example": "quantize",
+      "component": "Legend",
+      "path": "/example/Legend/quantize",
+      "lineNumber": 10,
+      "line": "<!-- <Legend"
+    },
+    {
+      "example": "responsive-swatches",
+      "component": "Legend",
+      "path": "/example/Legend/responsive-swatches",
+      "lineNumber": 7,
+      "line": "<Legend"
+    },
+    {
+      "example": "sequential",
+      "component": "Legend",
+      "path": "/example/Legend/sequential",
+      "lineNumber": 8,
+      "line": "<Legend scale={scaleSequential([0, 100], interpolateViridis)} title=\"Temperature (°F)\" />"
+    },
+    {
+      "example": "sequential",
+      "component": "Legend",
+      "path": "/example/Legend/sequential",
+      "lineNumber": 10,
+      "line": "<Legend"
+    },
+    {
+      "example": "sequential-log",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-log",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "sequential-log",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-log",
+      "lineNumber": 14,
+      "line": "<!-- <Legend"
+    },
+    {
+      "example": "sequential-quantile",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-quantile",
+      "lineNumber": 11,
+      "line": "<Legend"
+    },
+    {
+      "example": "sequential-quantile",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-quantile",
+      "lineNumber": 16,
+      "line": "<Legend"
+    },
+    {
+      "example": "sequential-sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-sqrt",
+      "lineNumber": 8,
+      "line": "<Legend scale={scaleSequentialSqrt([0, 1], interpolateTurbo)} title=\"Speed (kts)\" />"
+    },
+    {
+      "example": "sequential-sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/sequential-sqrt",
+      "lineNumber": 9,
+      "line": "<Legend"
+    },
+    {
+      "example": "sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/sqrt",
+      "lineNumber": 7,
+      "line": "<Legend scale={scaleSqrt([-100, 0, 100], ['blue', 'white', 'red'])} title=\"Temperature (°C)\" />"
+    },
+    {
+      "example": "sqrt",
+      "component": "Legend",
+      "path": "/example/Legend/sqrt",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "square-swatch",
+      "component": "Legend",
+      "path": "/example/Legend/square-swatch",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "styling",
+      "component": "Legend",
+      "path": "/example/Legend/styling",
+      "lineNumber": 7,
+      "line": "<Legend"
+    },
+    {
+      "example": "threshold",
+      "component": "Legend",
+      "path": "/example/Legend/threshold",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "threshold",
+      "component": "Legend",
+      "path": "/example/Legend/threshold",
+      "lineNumber": 14,
+      "line": "<!-- <Legend"
+    },
+    {
+      "example": "vertical-orientation",
+      "component": "Legend",
+      "path": "/example/Legend/vertical-orientation",
+      "lineNumber": 8,
+      "line": "<Legend"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "Line",
+      "path": "/example/Line/gradient-encoding",
+      "lineNumber": 27,
+      "line": "<Legend"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:38.627Z"
+}

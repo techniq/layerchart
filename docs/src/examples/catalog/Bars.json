@@ -1,0 +1,703 @@
+{
+  "component": "Bars",
+  "examples": [
+    {
+      "name": "average-annotation-rule",
+      "path": "/example/Bars/average-annotation-rule"
+    },
+    {
+      "name": "basic",
+      "path": "/example/Bars/basic"
+    },
+    {
+      "name": "calculated-value-domain-negative",
+      "path": "/example/Bars/calculated-value-domain-negative"
+    },
+    {
+      "name": "calculated-value-domain-positive",
+      "path": "/example/Bars/calculated-value-domain-positive"
+    },
+    {
+      "name": "click-handler",
+      "path": "/example/Bars/click-handler"
+    },
+    {
+      "name": "customize-individual-styles",
+      "path": "/example/Bars/customize-individual-styles"
+    },
+    {
+      "name": "gradient",
+      "path": "/example/Bars/gradient"
+    },
+    {
+      "name": "grouped",
+      "path": "/example/Bars/grouped"
+    },
+    {
+      "name": "grouped-and-stacked",
+      "path": "/example/Bars/grouped-and-stacked"
+    },
+    {
+      "name": "grouped-stacked-or-both-transition",
+      "path": "/example/Bars/grouped-stacked-or-both-transition"
+    },
+    {
+      "name": "highlight-individual-bar",
+      "path": "/example/Bars/highlight-individual-bar"
+    },
+    {
+      "name": "highlight-individual-bar-line",
+      "path": "/example/Bars/highlight-individual-bar-line"
+    },
+    {
+      "name": "inside-labels",
+      "path": "/example/Bars/inside-labels"
+    },
+    {
+      "name": "limit-ticks-count",
+      "path": "/example/Bars/limit-ticks-count"
+    },
+    {
+      "name": "limit-ticks-second-scale",
+      "path": "/example/Bars/limit-ticks-second-scale"
+    },
+    {
+      "name": "multiple-diverging",
+      "path": "/example/Bars/multiple-diverging"
+    },
+    {
+      "name": "multiple-overlapping",
+      "path": "/example/Bars/multiple-overlapping"
+    },
+    {
+      "name": "outside-labels-default",
+      "path": "/example/Bars/outside-labels-default"
+    },
+    {
+      "name": "rounded-right-only",
+      "path": "/example/Bars/rounded-right-only"
+    },
+    {
+      "name": "stacked",
+      "path": "/example/Bars/stacked"
+    },
+    {
+      "name": "stacked-percent",
+      "path": "/example/Bars/stacked-percent"
+    },
+    {
+      "name": "stagger-tween-on-mount",
+      "path": "/example/Bars/stagger-tween-on-mount"
+    },
+    {
+      "name": "time-scale-with-inset",
+      "path": "/example/Bars/time-scale-with-inset"
+    },
+    {
+      "name": "time-scale-with-interval",
+      "path": "/example/Bars/time-scale-with-interval"
+    },
+    {
+      "name": "time-scale-with-missing-data",
+      "path": "/example/Bars/time-scale-with-missing-data"
+    },
+    {
+      "name": "tooltip-and-bar-highlight",
+      "path": "/example/Bars/tooltip-and-bar-highlight"
+    },
+    {
+      "name": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+    },
+    {
+      "name": "tooltip-and-clipped-highlight",
+      "path": "/example/Bars/tooltip-and-clipped-highlight"
+    },
+    {
+      "name": "tooltip-and-highlight",
+      "path": "/example/Bars/tooltip-and-highlight"
+    },
+    {
+      "name": "tween-on-mount",
+      "path": "/example/Bars/tween-on-mount"
+    },
+    {
+      "name": "with-grid-on-top",
+      "path": "/example/Bars/with-grid-on-top"
+    },
+    {
+      "name": "with-grid-on-top-mix-blend",
+      "path": "/example/Bars/with-grid-on-top-mix-blend"
+    }
+  ],
+  "usage": [
+    {
+      "example": "gradient",
+      "component": "BarChart",
+      "path": "/example/BarChart/gradient",
+      "lineNumber": 21,
+      "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
+    },
+    {
+      "example": "average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/average-annotation-rule",
+      "lineNumber": 33,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Bars",
+      "path": "/example/Bars/basic",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "calculated-value-domain-negative",
+      "component": "Bars",
+      "path": "/example/Bars/calculated-value-domain-negative",
+      "lineNumber": 23,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "calculated-value-domain-positive",
+      "component": "Bars",
+      "path": "/example/Bars/calculated-value-domain-positive",
+      "lineNumber": 23,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "click-handler",
+      "component": "Bars",
+      "path": "/example/Bars/click-handler",
+      "lineNumber": 36,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/customize-individual-styles",
+      "lineNumber": 30,
+      "line": "<Bars>"
+    },
+    {
+      "example": "gradient",
+      "component": "Bars",
+      "path": "/example/Bars/gradient",
+      "lineNumber": 32,
+      "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
+    },
+    {
+      "example": "grouped",
+      "component": "Bars",
+      "path": "/example/Bars/grouped",
+      "lineNumber": 40,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "grouped-and-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/grouped-and-stacked",
+      "lineNumber": 45,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/highlight-individual-bar",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "highlight-individual-bar-line",
+      "component": "Bars",
+      "path": "/example/Bars/highlight-individual-bar-line",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/inside-labels",
+      "lineNumber": 24,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "limit-ticks-count",
+      "component": "Bars",
+      "path": "/example/Bars/limit-ticks-count",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "limit-ticks-second-scale",
+      "component": "Bars",
+      "path": "/example/Bars/limit-ticks-second-scale",
+      "lineNumber": 34,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/multiple-diverging",
+      "lineNumber": 30,
+      "line": "<Bars x=\"value\" rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/multiple-diverging",
+      "lineNumber": 31,
+      "line": "<Bars x={(d) => -d.baseline} rounded=\"left\" strokeWidth={1} class=\"fill-secondary\" />"
+    },
+    {
+      "example": "multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/multiple-overlapping",
+      "lineNumber": 31,
+      "line": "<Bars x=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
+    },
+    {
+      "example": "multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/multiple-overlapping",
+      "lineNumber": 32,
+      "line": "<Bars x=\"value\" strokeWidth={1} insets={{ y: 8 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/outside-labels-default",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "rounded-right-only",
+      "component": "Bars",
+      "path": "/example/Bars/rounded-right-only",
+      "lineNumber": 30,
+      "line": "<Bars radius={4} rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "stacked",
+      "component": "Bars",
+      "path": "/example/Bars/stacked",
+      "lineNumber": 37,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "stacked-percent",
+      "component": "Bars",
+      "path": "/example/Bars/stacked-percent",
+      "lineNumber": 42,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "time-scale-with-inset",
+      "component": "Bars",
+      "path": "/example/Bars/time-scale-with-inset",
+      "lineNumber": 30,
+      "line": "<Bars class=\"fill-primary\" insets={{ y: 2 }} />"
+    },
+    {
+      "example": "time-scale-with-interval",
+      "component": "Bars",
+      "path": "/example/Bars/time-scale-with-interval",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "time-scale-with-missing-data",
+      "component": "Bars",
+      "path": "/example/Bars/time-scale-with-missing-data",
+      "lineNumber": 30,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tooltip-and-bar-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-bar-highlight",
+      "lineNumber": 32,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "lineNumber": 32,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "lineNumber": 36,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tooltip-and-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-highlight",
+      "lineNumber": 31,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/tween-on-mount",
+      "lineNumber": 41,
+      "line": "<Bars"
+    },
+    {
+      "example": "with-grid-on-top",
+      "component": "Bars",
+      "path": "/example/Bars/with-grid-on-top",
+      "lineNumber": 28,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "with-grid-on-top-mix-blend",
+      "component": "Bars",
+      "path": "/example/Bars/with-grid-on-top-mix-blend",
+      "lineNumber": 28,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "bars",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/bars",
+      "lineNumber": 28,
+      "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "bars",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/bars",
+      "lineNumber": 29,
+      "line": "<Bars y={['open', 'close']} insets={{ x: 0.5 }} />"
+    },
+    {
+      "example": "with-brushing",
+      "component": "Candlestick",
+      "path": "/example/Candlestick/with-brushing",
+      "lineNumber": 67,
+      "line": "<Bars insets={{ x: 0.5 }} />"
+    },
+    {
+      "example": "average-annotation-rule",
+      "component": "Columns",
+      "path": "/example/Columns/average-annotation-rule",
+      "lineNumber": 31,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Columns",
+      "path": "/example/Columns/basic",
+      "lineNumber": 27,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "calculated-value-domain-negative",
+      "component": "Columns",
+      "path": "/example/Columns/calculated-value-domain-negative",
+      "lineNumber": 26,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "calculated-value-domain-positive",
+      "component": "Columns",
+      "path": "/example/Columns/calculated-value-domain-positive",
+      "lineNumber": 26,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "click-handler",
+      "component": "Columns",
+      "path": "/example/Columns/click-handler",
+      "lineNumber": 33,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "customize-individual-styles",
+      "component": "Columns",
+      "path": "/example/Columns/customize-individual-styles",
+      "lineNumber": 27,
+      "line": "<Bars>"
+    },
+    {
+      "example": "gradient",
+      "component": "Columns",
+      "path": "/example/Columns/gradient",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
+    },
+    {
+      "example": "grouped",
+      "component": "Columns",
+      "path": "/example/Columns/grouped",
+      "lineNumber": 40,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "grouped-and-stacked",
+      "component": "Columns",
+      "path": "/example/Columns/grouped-and-stacked",
+      "lineNumber": 45,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "highlight-individual-bar",
+      "component": "Columns",
+      "path": "/example/Columns/highlight-individual-bar",
+      "lineNumber": 27,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "highlight-individual-bar-line",
+      "component": "Columns",
+      "path": "/example/Columns/highlight-individual-bar-line",
+      "lineNumber": 23,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Columns",
+      "path": "/example/Columns/inside-labels",
+      "lineNumber": 24,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "limit-ticks-count",
+      "component": "Columns",
+      "path": "/example/Columns/limit-ticks-count",
+      "lineNumber": 27,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "limit-ticks-second-scale",
+      "component": "Columns",
+      "path": "/example/Columns/limit-ticks-second-scale",
+      "lineNumber": 31,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging",
+      "lineNumber": 29,
+      "line": "<Bars y=\"value\" rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-diverging",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging",
+      "lineNumber": 30,
+      "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
+    },
+    {
+      "example": "multiple-diverging-rounded-specific",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "lineNumber": 31,
+      "line": "<Bars y=\"value\" rounded-sm=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-diverging-rounded-specific",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "lineNumber": 32,
+      "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
+    },
+    {
+      "example": "multiple-overlapping",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-overlapping",
+      "lineNumber": 29,
+      "line": "<Bars y=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
+    },
+    {
+      "example": "multiple-overlapping",
+      "component": "Columns",
+      "path": "/example/Columns/multiple-overlapping",
+      "lineNumber": 30,
+      "line": "<Bars y=\"value\" strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Columns",
+      "path": "/example/Columns/outside-labels-default",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "rounded-top-only",
+      "component": "Columns",
+      "path": "/example/Columns/rounded-top-only",
+      "lineNumber": 28,
+      "line": "<Bars radius={4} rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "stacked",
+      "component": "Columns",
+      "path": "/example/Columns/stacked",
+      "lineNumber": 37,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "stacked-percent",
+      "component": "Columns",
+      "path": "/example/Columns/stacked-percent",
+      "lineNumber": 41,
+      "line": "<Bars strokeWidth={1} />"
+    },
+    {
+      "example": "time-scale-with-inset",
+      "component": "Columns",
+      "path": "/example/Columns/time-scale-with-inset",
+      "lineNumber": 25,
+      "line": "<Bars class=\"fill-primary\" insets={{ x: 2 }} />"
+    },
+    {
+      "example": "time-scale-with-interval",
+      "component": "Columns",
+      "path": "/example/Columns/time-scale-with-interval",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "time-scale-with-interval-months",
+      "component": "Columns",
+      "path": "/example/Columns/time-scale-with-interval-months",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "time-scale-with-missing-data",
+      "component": "Columns",
+      "path": "/example/Columns/time-scale-with-missing-data",
+      "lineNumber": 25,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tooltip-and-bar-highlight",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-bar-highlight",
+      "lineNumber": 29,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "lineNumber": 31,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+    },
+    {
+      "example": "tooltip-and-clipped-highlight",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "lineNumber": 35,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tooltip-and-highlight",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-highlight",
+      "lineNumber": 29,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Columns",
+      "path": "/example/Columns/tween-on-mount",
+      "lineNumber": 38,
+      "line": "<Bars"
+    },
+    {
+      "example": "tween-on-mount-rounded-edge",
+      "component": "Columns",
+      "path": "/example/Columns/tween-on-mount-rounded-edge",
+      "lineNumber": 38,
+      "line": "<Bars"
+    },
+    {
+      "example": "with-grid-on-top",
+      "component": "Columns",
+      "path": "/example/Columns/with-grid-on-top",
+      "lineNumber": 24,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "with-grid-on-top-mix-blend",
+      "component": "Columns",
+      "path": "/example/Columns/with-grid-on-top-mix-blend",
+      "lineNumber": 24,
+      "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "frequency",
+      "component": "Oscilloscope",
+      "path": "/example/Oscilloscope/frequency",
+      "lineNumber": 148,
+      "line": "<Bars radius={1} fill={gradient} />"
+    },
+    {
+      "example": "multiple-overlapping-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "lineNumber": 47,
+      "line": "<Bars y=\"baseline\" radius={4} strokeWidth={1} class=\"fill-surface-content/10\" />"
+    },
+    {
+      "example": "multiple-overlapping-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "lineNumber": 48,
+      "line": "<Bars y=\"value\" radius={4} strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-overlapping-bars 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars 2",
+      "lineNumber": 47,
+      "line": "<Bars y=\"baseline\" radius={4} strokeWidth={1} class=\"fill-surface-content/10\" />"
+    },
+    {
+      "example": "multiple-overlapping-bars 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars 2",
+      "lineNumber": 48,
+      "line": "<Bars y=\"value\" radius={4} strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-tooltips-with-fixed-single-axis-scaleband",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
+      "lineNumber": 33,
+      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-tooltips-with-fixed-single-axis-scaleband 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband 2",
+      "lineNumber": 33,
+      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "simple-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/simple-bars",
+      "lineNumber": 45,
+      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "simple-bars 2",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/simple-bars 2",
+      "lineNumber": 48,
+      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
+    }
+  ],
+  "generatedAt": "2025-11-02T16:10:37.717Z"
+}
