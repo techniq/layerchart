@@ -43,7 +43,7 @@
 	<Button
 		size="sm"
 		icon={LucideChevronLeft}
-		href="/{page.params.type}/{page.params.name}"
+		href="/docs/{page.params.type}/{page.params.name}"
 		class="mb-4 border"
 	>
 		Back to examples

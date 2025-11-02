@@ -1,0 +1,3457 @@
+{
+  "generatedAt": "2025-11-02T06:51:36.099Z",
+  "totalComponents": 82,
+  "totalExamples": 760,
+  "components": [
+    {
+      "component": "AnimatedGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/AnimatedGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "AnnotationLine",
+      "examples": [
+        {
+          "name": "bar-chart",
+          "path": "/example/AnnotationLine/bar-chart"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/AnnotationLine/horizontal"
+        },
+        {
+          "name": "horizontal-placement",
+          "path": "/example/AnnotationLine/horizontal-placement"
+        },
+        {
+          "name": "horizontal-with-range",
+          "path": "/example/AnnotationLine/horizontal-with-range"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/AnnotationLine/vertical"
+        },
+        {
+          "name": "vertical-placement",
+          "path": "/example/AnnotationLine/vertical-placement"
+        },
+        {
+          "name": "vertical-to-point",
+          "path": "/example/AnnotationLine/vertical-to-point"
+        },
+        {
+          "name": "vertical-with-rotation",
+          "path": "/example/AnnotationLine/vertical-with-rotation"
+        }
+      ]
+    },
+    {
+      "component": "AnnotationPoint",
+      "examples": [
+        {
+          "name": "band-scale-on-axis",
+          "path": "/example/AnnotationPoint/band-scale-on-axis"
+        },
+        {
+          "name": "band-scale-on-value",
+          "path": "/example/AnnotationPoint/band-scale-on-value"
+        },
+        {
+          "name": "label-placement",
+          "path": "/example/AnnotationPoint/label-placement"
+        },
+        {
+          "name": "on-axis-with-tooltip",
+          "path": "/example/AnnotationPoint/on-axis-with-tooltip"
+        },
+        {
+          "name": "on-series-with-line-and-tooltip",
+          "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip"
+        },
+        {
+          "name": "on-series-with-tooltip",
+          "path": "/example/AnnotationPoint/on-series-with-tooltip"
+        },
+        {
+          "name": "series-annotation",
+          "path": "/example/AnnotationPoint/series-annotation"
+        }
+      ]
+    },
+    {
+      "component": "AnnotationRange",
+      "examples": [
+        {
+          "name": "bar-chart-(multiple)",
+          "path": "/example/AnnotationRange/bar-chart-(multiple)"
+        },
+        {
+          "name": "bar-chart-(single)",
+          "path": "/example/AnnotationRange/bar-chart-(single)"
+        },
+        {
+          "name": "bar-chart-(value)",
+          "path": "/example/AnnotationRange/bar-chart-(value)"
+        },
+        {
+          "name": "hide-tooltip",
+          "path": "/example/AnnotationRange/hide-tooltip"
+        },
+        {
+          "name": "horizontal-with-fill-multiple",
+          "path": "/example/AnnotationRange/horizontal-with-fill-multiple"
+        },
+        {
+          "name": "horizontal-with-pattern-lower-bound",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound"
+        },
+        {
+          "name": "horizontal-with-pattern-range",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-range"
+        },
+        {
+          "name": "horizontal-with-pattern-upper-bound",
+          "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound"
+        },
+        {
+          "name": "label-placement",
+          "path": "/example/AnnotationRange/label-placement"
+        },
+        {
+          "name": "vertical-with-gradient-range",
+          "path": "/example/AnnotationRange/vertical-with-gradient-range"
+        },
+        {
+          "name": "vertical-with-pattern-lower-bound",
+          "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound"
+        },
+        {
+          "name": "vertical-with-pattern-range",
+          "path": "/example/AnnotationRange/vertical-with-pattern-range"
+        },
+        {
+          "name": "vertical-with-pattern-upper-bound",
+          "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound"
+        }
+      ]
+    },
+    {
+      "component": "Arc",
+      "examples": [
+        {
+          "name": "color-wheel",
+          "path": "/example/Arc/color-wheel"
+        },
+        {
+          "name": "concentric",
+          "path": "/example/Arc/concentric"
+        },
+        {
+          "name": "draggable-arc",
+          "path": "/example/Arc/draggable-arc"
+        },
+        {
+          "name": "label-direction",
+          "path": "/example/Arc/label-direction"
+        },
+        {
+          "name": "partial-arc",
+          "path": "/example/Arc/partial-arc"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Arc/playground"
+        },
+        {
+          "name": "segmented-arc",
+          "path": "/example/Arc/segmented-arc"
+        },
+        {
+          "name": "segmented-arc-clip-mask",
+          "path": "/example/Arc/segmented-arc-clip-mask"
+        },
+        {
+          "name": "tween-value-on-mount",
+          "path": "/example/Arc/tween-value-on-mount"
+        }
+      ]
+    },
+    {
+      "component": "ArcChart",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ArcChart/basic"
+        },
+        {
+          "name": "color",
+          "path": "/example/ArcChart/color"
+        },
+        {
+          "name": "gradient-with-text",
+          "path": "/example/ArcChart/gradient-with-text"
+        },
+        {
+          "name": "radius-fixed",
+          "path": "/example/ArcChart/radius-fixed"
+        },
+        {
+          "name": "radius-offset",
+          "path": "/example/ArcChart/radius-offset"
+        },
+        {
+          "name": "radius-percent",
+          "path": "/example/ArcChart/radius-percent"
+        },
+        {
+          "name": "series",
+          "path": "/example/ArcChart/series"
+        },
+        {
+          "name": "series-arc",
+          "path": "/example/ArcChart/series-arc"
+        },
+        {
+          "name": "series-individual",
+          "path": "/example/ArcChart/series-individual"
+        },
+        {
+          "name": "series-labels",
+          "path": "/example/ArcChart/series-labels"
+        },
+        {
+          "name": "series-motion-spring",
+          "path": "/example/ArcChart/series-motion-spring"
+        },
+        {
+          "name": "series-motion-tween",
+          "path": "/example/ArcChart/series-motion-tween"
+        },
+        {
+          "name": "series-start-180",
+          "path": "/example/ArcChart/series-start-180"
+        },
+        {
+          "name": "series-start-90",
+          "path": "/example/ArcChart/series-start-90"
+        },
+        {
+          "name": "series-track-color",
+          "path": "/example/ArcChart/series-track-color"
+        },
+        {
+          "name": "track-size",
+          "path": "/example/ArcChart/track-size"
+        }
+      ]
+    },
+    {
+      "component": "Area",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Area/basic"
+        },
+        {
+          "name": "clip-tween-on-mount",
+          "path": "/example/Area/clip-tween-on-mount"
+        },
+        {
+          "name": "clipped-area-on-tooltip",
+          "path": "/example/Area/clipped-area-on-tooltip"
+        },
+        {
+          "name": "explicit-axis-ticks-min-max",
+          "path": "/example/Area/explicit-axis-ticks-min-max"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Area/gradient"
+        },
+        {
+          "name": "gradient-separate-stroke",
+          "path": "/example/Area/gradient-separate-stroke"
+        },
+        {
+          "name": "highlight-color-based-on-value-using-color-scale",
+          "path": "/example/Area/highlight-color-based-on-value-using-color-scale"
+        },
+        {
+          "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
+          "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop"
+        },
+        {
+          "name": "multiple-series",
+          "path": "/example/Area/multiple-series"
+        },
+        {
+          "name": "multiple-series-highlight-on-hover",
+          "path": "/example/Area/multiple-series-highlight-on-hover"
+        },
+        {
+          "name": "multiple-series-using-overrides",
+          "path": "/example/Area/multiple-series-using-overrides"
+        },
+        {
+          "name": "multiple-series-with-labels",
+          "path": "/example/Area/multiple-series-with-labels"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Area/playground"
+        },
+        {
+          "name": "stack",
+          "path": "/example/Area/stack"
+        },
+        {
+          "name": "stack-with-gradient",
+          "path": "/example/Area/stack-with-gradient"
+        },
+        {
+          "name": "threshold-with-lineargradient",
+          "path": "/example/Area/threshold-with-lineargradient"
+        },
+        {
+          "name": "threshold-with-lineargradient-over-under",
+          "path": "/example/Area/threshold-with-lineargradient-over-under"
+        },
+        {
+          "name": "threshold-with-rectclippath",
+          "path": "/example/Area/threshold-with-rectclippath"
+        },
+        {
+          "name": "threshold-with-rectclippath-over-under",
+          "path": "/example/Area/threshold-with-rectclippath-over-under"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Area/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Area/with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
+      "component": "AreaChart",
+      "examples": [
+        {
+          "name": "band-scale",
+          "path": "/example/AreaChart/band-scale"
+        },
+        {
+          "name": "basic",
+          "path": "/example/AreaChart/basic"
+        },
+        {
+          "name": "brush",
+          "path": "/example/AreaChart/brush"
+        },
+        {
+          "name": "brush-sync",
+          "path": "/example/AreaChart/brush-sync"
+        },
+        {
+          "name": "curve",
+          "path": "/example/AreaChart/curve"
+        },
+        {
+          "name": "custom",
+          "path": "/example/AreaChart/custom"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/AreaChart/custom-tooltip"
+        },
+        {
+          "name": "default-series-label",
+          "path": "/example/AreaChart/default-series-label"
+        },
+        {
+          "name": "funnel",
+          "path": "/example/AreaChart/funnel"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/AreaChart/gradient"
+        },
+        {
+          "name": "labels",
+          "path": "/example/AreaChart/labels"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/AreaChart/line-annotation"
+        },
+        {
+          "name": "markers",
+          "path": "/example/AreaChart/markers"
+        },
+        {
+          "name": "null-gaps",
+          "path": "/example/AreaChart/null-gaps"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/AreaChart/point-annotations"
+        },
+        {
+          "name": "point-scale",
+          "path": "/example/AreaChart/point-scale"
+        },
+        {
+          "name": "points",
+          "path": "/example/AreaChart/points"
+        },
+        {
+          "name": "radial",
+          "path": "/example/AreaChart/radial"
+        },
+        {
+          "name": "range-annotation",
+          "path": "/example/AreaChart/range-annotation"
+        },
+        {
+          "name": "series",
+          "path": "/example/AreaChart/series"
+        },
+        {
+          "name": "series-individual-tooltip",
+          "path": "/example/AreaChart/series-individual-tooltip"
+        },
+        {
+          "name": "series-point-annotations",
+          "path": "/example/AreaChart/series-point-annotations"
+        },
+        {
+          "name": "series-point-click",
+          "path": "/example/AreaChart/series-point-click"
+        },
+        {
+          "name": "series-separate-data",
+          "path": "/example/AreaChart/series-separate-data"
+        },
+        {
+          "name": "series-stack",
+          "path": "/example/AreaChart/series-stack"
+        },
+        {
+          "name": "series-stack-diverging",
+          "path": "/example/AreaChart/series-stack-diverging"
+        },
+        {
+          "name": "series-stack-expand",
+          "path": "/example/AreaChart/series-stack-expand"
+        },
+        {
+          "name": "series-stack-gradient",
+          "path": "/example/AreaChart/series-stack-gradient"
+        },
+        {
+          "name": "series-stack-legend",
+          "path": "/example/AreaChart/series-stack-legend"
+        },
+        {
+          "name": "series-stack-legend-labels",
+          "path": "/example/AreaChart/series-stack-legend-labels"
+        },
+        {
+          "name": "series-stack-legend-placement",
+          "path": "/example/AreaChart/series-stack-legend-placement"
+        },
+        {
+          "name": "series-stack-separate-data",
+          "path": "/example/AreaChart/series-stack-separate-data"
+        },
+        {
+          "name": "series-tooltip-click",
+          "path": "/example/AreaChart/series-tooltip-click"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/AreaChart/single-axis-x"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/AreaChart/single-axis-y"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/AreaChart/sparkline"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/AreaChart/threshold"
+        },
+        {
+          "name": "threshold-gradient",
+          "path": "/example/AreaChart/threshold-gradient"
+        },
+        {
+          "name": "tooltip-external",
+          "path": "/example/AreaChart/tooltip-external"
+        },
+        {
+          "name": "tooltip-fixed-with-hide-delay",
+          "path": "/example/AreaChart/tooltip-fixed-with-hide-delay"
+        },
+        {
+          "name": "tooltip-locking",
+          "path": "/example/AreaChart/tooltip-locking"
+        }
+      ]
+    },
+    {
+      "component": "AreaChartSimple",
+      "examples": [
+        {
+          "name": "band-scale",
+          "path": "/example/AreaChartSimple/band-scale"
+        },
+        {
+          "name": "basic",
+          "path": "/example/AreaChartSimple/basic"
+        },
+        {
+          "name": "brush",
+          "path": "/example/AreaChartSimple/brush"
+        },
+        {
+          "name": "brush-sync",
+          "path": "/example/AreaChartSimple/brush-sync"
+        },
+        {
+          "name": "curve",
+          "path": "/example/AreaChartSimple/curve"
+        },
+        {
+          "name": "custom",
+          "path": "/example/AreaChartSimple/custom"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/AreaChartSimple/custom-tooltip"
+        },
+        {
+          "name": "default-series-label",
+          "path": "/example/AreaChartSimple/default-series-label"
+        },
+        {
+          "name": "funnel",
+          "path": "/example/AreaChartSimple/funnel"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/AreaChartSimple/gradient"
+        },
+        {
+          "name": "labels",
+          "path": "/example/AreaChartSimple/labels"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/AreaChartSimple/line-annotation"
+        },
+        {
+          "name": "markers",
+          "path": "/example/AreaChartSimple/markers"
+        },
+        {
+          "name": "null-gaps",
+          "path": "/example/AreaChartSimple/null-gaps"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/AreaChartSimple/point-annotations"
+        },
+        {
+          "name": "point-scale",
+          "path": "/example/AreaChartSimple/point-scale"
+        },
+        {
+          "name": "points",
+          "path": "/example/AreaChartSimple/points"
+        },
+        {
+          "name": "radial",
+          "path": "/example/AreaChartSimple/radial"
+        },
+        {
+          "name": "range-annotation",
+          "path": "/example/AreaChartSimple/range-annotation"
+        },
+        {
+          "name": "series",
+          "path": "/example/AreaChartSimple/series"
+        },
+        {
+          "name": "series-individual-tooltip",
+          "path": "/example/AreaChartSimple/series-individual-tooltip"
+        },
+        {
+          "name": "series-point-annotations",
+          "path": "/example/AreaChartSimple/series-point-annotations"
+        },
+        {
+          "name": "series-point-click",
+          "path": "/example/AreaChartSimple/series-point-click"
+        },
+        {
+          "name": "series-separate-data",
+          "path": "/example/AreaChartSimple/series-separate-data"
+        },
+        {
+          "name": "series-stack",
+          "path": "/example/AreaChartSimple/series-stack"
+        },
+        {
+          "name": "series-stack-diverging",
+          "path": "/example/AreaChartSimple/series-stack-diverging"
+        },
+        {
+          "name": "series-stack-expand",
+          "path": "/example/AreaChartSimple/series-stack-expand"
+        },
+        {
+          "name": "series-stack-gradient",
+          "path": "/example/AreaChartSimple/series-stack-gradient"
+        },
+        {
+          "name": "series-stack-legend",
+          "path": "/example/AreaChartSimple/series-stack-legend"
+        },
+        {
+          "name": "series-stack-legend-labels",
+          "path": "/example/AreaChartSimple/series-stack-legend-labels"
+        },
+        {
+          "name": "series-stack-legend-placement",
+          "path": "/example/AreaChartSimple/series-stack-legend-placement"
+        },
+        {
+          "name": "series-stack-separate-data",
+          "path": "/example/AreaChartSimple/series-stack-separate-data"
+        },
+        {
+          "name": "series-tooltip-click",
+          "path": "/example/AreaChartSimple/series-tooltip-click"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/AreaChartSimple/single-axis-x"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/AreaChartSimple/single-axis-y"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/AreaChartSimple/sparkline"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/AreaChartSimple/threshold"
+        },
+        {
+          "name": "threshold-gradient",
+          "path": "/example/AreaChartSimple/threshold-gradient"
+        },
+        {
+          "name": "tooltip-external",
+          "path": "/example/AreaChartSimple/tooltip-external"
+        },
+        {
+          "name": "tooltip-fixed-with-hide-delay",
+          "path": "/example/AreaChartSimple/tooltip-fixed-with-hide-delay"
+        },
+        {
+          "name": "tooltip-locking",
+          "path": "/example/AreaChartSimple/tooltip-locking"
+        }
+      ]
+    },
+    {
+      "component": "Axis",
+      "examples": [
+        {
+          "name": "arrow-markers",
+          "path": "/example/Axis/arrow-markers"
+        },
+        {
+          "name": "axis-label-placement-left-right",
+          "path": "/example/Axis/axis-label-placement-left-right"
+        },
+        {
+          "name": "axis-label-placement-top-bottom",
+          "path": "/example/Axis/axis-label-placement-top-bottom"
+        },
+        {
+          "name": "explicit-ticks",
+          "path": "/example/Axis/explicit-ticks"
+        },
+        {
+          "name": "extent-ticks-only",
+          "path": "/example/Axis/extent-ticks-only"
+        },
+        {
+          "name": "grid",
+          "path": "/example/Axis/grid"
+        },
+        {
+          "name": "grid-dashed",
+          "path": "/example/Axis/grid-dashed"
+        },
+        {
+          "name": "hide-zero-filter",
+          "path": "/example/Axis/hide-zero-filter"
+        },
+        {
+          "name": "hide-zero-format",
+          "path": "/example/Axis/hide-zero-format"
+        },
+        {
+          "name": "inject-ticks",
+          "path": "/example/Axis/inject-ticks"
+        },
+        {
+          "name": "integer-only-filter",
+          "path": "/example/Axis/integer-only-filter"
+        },
+        {
+          "name": "integer-only-format",
+          "path": "/example/Axis/integer-only-format"
+        },
+        {
+          "name": "labels-next-hash",
+          "path": "/example/Axis/labels-next-hash"
+        },
+        {
+          "name": "log-scale",
+          "path": "/example/Axis/log-scale"
+        },
+        {
+          "name": "multiline-tick-labels",
+          "path": "/example/Axis/multiline-tick-labels"
+        },
+        {
+          "name": "multiple-axis-grid-and-rules",
+          "path": "/example/Axis/multiple-axis-grid-and-rules"
+        },
+        {
+          "name": "multiple-axis-grid-and-rules-separate-grid",
+          "path": "/example/Axis/multiple-axis-grid-and-rules-separate-grid"
+        },
+        {
+          "name": "multiple-axis-grid-with-single-rule",
+          "path": "/example/Axis/multiple-axis-grid-with-single-rule"
+        },
+        {
+          "name": "multiple-axis-same-placement-bottom",
+          "path": "/example/Axis/multiple-axis-same-placement-bottom"
+        },
+        {
+          "name": "multiple-axis-same-placement-right",
+          "path": "/example/Axis/multiple-axis-same-placement-right"
+        },
+        {
+          "name": "override-axis-ticks-scale",
+          "path": "/example/Axis/override-axis-ticks-scale"
+        },
+        {
+          "name": "placement-bottom-left",
+          "path": "/example/Axis/placement-bottom-left"
+        },
+        {
+          "name": "placement-bottom-left-rule",
+          "path": "/example/Axis/placement-bottom-left-rule"
+        },
+        {
+          "name": "placement-top-right",
+          "path": "/example/Axis/placement-top-right"
+        },
+        {
+          "name": "placement-top-right-rule",
+          "path": "/example/Axis/placement-top-right-rule"
+        },
+        {
+          "name": "radial-grid",
+          "path": "/example/Axis/radial-grid"
+        },
+        {
+          "name": "radial-rule",
+          "path": "/example/Axis/radial-rule"
+        },
+        {
+          "name": "remove-tick-marks",
+          "path": "/example/Axis/remove-tick-marks"
+        },
+        {
+          "name": "rotate-labels",
+          "path": "/example/Axis/rotate-labels"
+        },
+        {
+          "name": "tick-count",
+          "path": "/example/Axis/tick-count"
+        },
+        {
+          "name": "tick-label-styling",
+          "path": "/example/Axis/tick-label-styling"
+        },
+        {
+          "name": "tick-spacing",
+          "path": "/example/Axis/tick-spacing"
+        },
+        {
+          "name": "time-scale-auto",
+          "path": "/example/Axis/time-scale-auto"
+        },
+        {
+          "name": "time-scale-auto-format-filtering",
+          "path": "/example/Axis/time-scale-auto-format-filtering"
+        },
+        {
+          "name": "time-scale-auto-multiline",
+          "path": "/example/Axis/time-scale-auto-multiline"
+        },
+        {
+          "name": "time-scale-brush",
+          "path": "/example/Axis/time-scale-brush"
+        },
+        {
+          "name": "time-scale-brush-multiline",
+          "path": "/example/Axis/time-scale-brush-multiline"
+        },
+        {
+          "name": "time-scale-explicit",
+          "path": "/example/Axis/time-scale-explicit"
+        },
+        {
+          "name": "time-scale-explicit-multiline",
+          "path": "/example/Axis/time-scale-explicit-multiline"
+        }
+      ]
+    },
+    {
+      "component": "BarChart",
+      "examples": [
+        {
+          "name": "axis-labels-inside-bars",
+          "path": "/example/BarChart/axis-labels-inside-bars"
+        },
+        {
+          "name": "axis-labels-inside-bars-using-labels",
+          "path": "/example/BarChart/axis-labels-inside-bars-using-labels"
+        },
+        {
+          "name": "both-axis-grid",
+          "path": "/example/BarChart/both-axis-grid"
+        },
+        {
+          "name": "both-axis-grid-align-between",
+          "path": "/example/BarChart/both-axis-grid-align-between"
+        },
+        {
+          "name": "brushing",
+          "path": "/example/BarChart/brushing"
+        },
+        {
+          "name": "color-bars-class",
+          "path": "/example/BarChart/color-bars-class"
+        },
+        {
+          "name": "color-per-value",
+          "path": "/example/BarChart/color-per-value"
+        },
+        {
+          "name": "color-threshold",
+          "path": "/example/BarChart/color-threshold"
+        },
+        {
+          "name": "color-using-scale",
+          "path": "/example/BarChart/color-using-scale"
+        },
+        {
+          "name": "custom-chart",
+          "path": "/example/BarChart/custom-chart"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/BarChart/custom-tooltip"
+        },
+        {
+          "name": "duration",
+          "path": "/example/BarChart/duration"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/BarChart/gradient"
+        },
+        {
+          "name": "group-series",
+          "path": "/example/BarChart/group-series"
+        },
+        {
+          "name": "group-series-bar-click",
+          "path": "/example/BarChart/group-series-bar-click"
+        },
+        {
+          "name": "group-series-horizontal",
+          "path": "/example/BarChart/group-series-horizontal"
+        },
+        {
+          "name": "group-series-labels",
+          "path": "/example/BarChart/group-series-labels"
+        },
+        {
+          "name": "group-series-series-long-data",
+          "path": "/example/BarChart/group-series-series-long-data"
+        },
+        {
+          "name": "highlight-below-marks",
+          "path": "/example/BarChart/highlight-below-marks"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/BarChart/horizontal"
+        },
+        {
+          "name": "labels",
+          "path": "/example/BarChart/labels"
+        },
+        {
+          "name": "labels-inside-placement",
+          "path": "/example/BarChart/labels-inside-placement"
+        },
+        {
+          "name": "legend-custom-labels",
+          "path": "/example/BarChart/legend-custom-labels"
+        },
+        {
+          "name": "legend-group-series",
+          "path": "/example/BarChart/legend-group-series"
+        },
+        {
+          "name": "legend-placement",
+          "path": "/example/BarChart/legend-placement"
+        },
+        {
+          "name": "legend-stack-series",
+          "path": "/example/BarChart/legend-stack-series"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/BarChart/line-annotation"
+        },
+        {
+          "name": "override-axis-ticks-with-custom-scale",
+          "path": "/example/BarChart/override-axis-ticks-with-custom-scale"
+        },
+        {
+          "name": "point-annotation",
+          "path": "/example/BarChart/point-annotation"
+        },
+        {
+          "name": "radial-horizontal",
+          "path": "/example/BarChart/radial-horizontal"
+        },
+        {
+          "name": "radial-horizontal-color-per-value",
+          "path": "/example/BarChart/radial-horizontal-color-per-value"
+        },
+        {
+          "name": "radial-horizontal-duration",
+          "path": "/example/BarChart/radial-horizontal-duration"
+        },
+        {
+          "name": "radial-horizontal-grid-between",
+          "path": "/example/BarChart/radial-horizontal-grid-between"
+        },
+        {
+          "name": "radial-vertical",
+          "path": "/example/BarChart/radial-vertical"
+        },
+        {
+          "name": "radial-vertical-arcpadding",
+          "path": "/example/BarChart/radial-vertical-arcpadding"
+        },
+        {
+          "name": "radial-vertical-yrange",
+          "path": "/example/BarChart/radial-vertical-yrange"
+        },
+        {
+          "name": "radial-weather",
+          "path": "/example/BarChart/radial-weather"
+        },
+        {
+          "name": "range-annotation-multiple",
+          "path": "/example/BarChart/range-annotation-multiple"
+        },
+        {
+          "name": "range-annotation-single",
+          "path": "/example/BarChart/range-annotation-single"
+        },
+        {
+          "name": "range-annotation-value",
+          "path": "/example/BarChart/range-annotation-value"
+        },
+        {
+          "name": "remove-rounding",
+          "path": "/example/BarChart/remove-rounding"
+        },
+        {
+          "name": "scale-override",
+          "path": "/example/BarChart/scale-override"
+        },
+        {
+          "name": "series",
+          "path": "/example/BarChart/series"
+        },
+        {
+          "name": "series-data",
+          "path": "/example/BarChart/series-data"
+        },
+        {
+          "name": "series-diverging",
+          "path": "/example/BarChart/series-diverging"
+        },
+        {
+          "name": "series-horizontal",
+          "path": "/example/BarChart/series-horizontal"
+        },
+        {
+          "name": "series-horizontal-diverging",
+          "path": "/example/BarChart/series-horizontal-diverging"
+        },
+        {
+          "name": "series-horizontal-diverging-as-percent",
+          "path": "/example/BarChart/series-horizontal-diverging-as-percent"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/BarChart/single-axis-x"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/BarChart/single-axis-y"
+        },
+        {
+          "name": "single-dimension",
+          "path": "/example/BarChart/single-dimension"
+        },
+        {
+          "name": "single-stack-with-indicator",
+          "path": "/example/BarChart/single-stack-with-indicator"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/BarChart/sparkline"
+        },
+        {
+          "name": "stack-series",
+          "path": "/example/BarChart/stack-series"
+        },
+        {
+          "name": "stack-series-diverging",
+          "path": "/example/BarChart/stack-series-diverging"
+        },
+        {
+          "name": "stack-series-expand",
+          "path": "/example/BarChart/stack-series-expand"
+        },
+        {
+          "name": "stack-series-horizontal",
+          "path": "/example/BarChart/stack-series-horizontal"
+        },
+        {
+          "name": "stack-series-padded",
+          "path": "/example/BarChart/stack-series-padded"
+        },
+        {
+          "name": "time-scale-interval",
+          "path": "/example/BarChart/time-scale-interval"
+        },
+        {
+          "name": "time-scale-interval-horizontal",
+          "path": "/example/BarChart/time-scale-interval-horizontal"
+        },
+        {
+          "name": "time-scale-interval-with-inset",
+          "path": "/example/BarChart/time-scale-interval-with-inset"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/BarChart/tooltip-click"
+        },
+        {
+          "name": "vertical-default",
+          "path": "/example/BarChart/vertical-default"
+        }
+      ]
+    },
+    {
+      "component": "Bars",
+      "examples": [
+        {
+          "name": "average-annotation-rule",
+          "path": "/example/Bars/average-annotation-rule"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Bars/basic"
+        },
+        {
+          "name": "calculated-value-domain-negative",
+          "path": "/example/Bars/calculated-value-domain-negative"
+        },
+        {
+          "name": "calculated-value-domain-positive",
+          "path": "/example/Bars/calculated-value-domain-positive"
+        },
+        {
+          "name": "click-handler",
+          "path": "/example/Bars/click-handler"
+        },
+        {
+          "name": "customize-individual-styles",
+          "path": "/example/Bars/customize-individual-styles"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Bars/gradient"
+        },
+        {
+          "name": "grouped",
+          "path": "/example/Bars/grouped"
+        },
+        {
+          "name": "grouped-and-stacked",
+          "path": "/example/Bars/grouped-and-stacked"
+        },
+        {
+          "name": "grouped-stacked-or-both-transition",
+          "path": "/example/Bars/grouped-stacked-or-both-transition"
+        },
+        {
+          "name": "highlight-individual-bar",
+          "path": "/example/Bars/highlight-individual-bar"
+        },
+        {
+          "name": "highlight-individual-bar-line",
+          "path": "/example/Bars/highlight-individual-bar-line"
+        },
+        {
+          "name": "inside-labels",
+          "path": "/example/Bars/inside-labels"
+        },
+        {
+          "name": "limit-ticks-count",
+          "path": "/example/Bars/limit-ticks-count"
+        },
+        {
+          "name": "limit-ticks-second-scale",
+          "path": "/example/Bars/limit-ticks-second-scale"
+        },
+        {
+          "name": "multiple-diverging",
+          "path": "/example/Bars/multiple-diverging"
+        },
+        {
+          "name": "multiple-overlapping",
+          "path": "/example/Bars/multiple-overlapping"
+        },
+        {
+          "name": "outside-labels-default",
+          "path": "/example/Bars/outside-labels-default"
+        },
+        {
+          "name": "rounded-right-only",
+          "path": "/example/Bars/rounded-right-only"
+        },
+        {
+          "name": "stacked",
+          "path": "/example/Bars/stacked"
+        },
+        {
+          "name": "stacked-percent",
+          "path": "/example/Bars/stacked-percent"
+        },
+        {
+          "name": "stagger-tween-on-mount",
+          "path": "/example/Bars/stagger-tween-on-mount"
+        },
+        {
+          "name": "time-scale-with-inset",
+          "path": "/example/Bars/time-scale-with-inset"
+        },
+        {
+          "name": "time-scale-with-interval",
+          "path": "/example/Bars/time-scale-with-interval"
+        },
+        {
+          "name": "time-scale-with-missing-data",
+          "path": "/example/Bars/time-scale-with-missing-data"
+        },
+        {
+          "name": "tooltip-and-bar-highlight",
+          "path": "/example/Bars/tooltip-and-bar-highlight"
+        },
+        {
+          "name": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+        },
+        {
+          "name": "tooltip-and-clipped-highlight",
+          "path": "/example/Bars/tooltip-and-clipped-highlight"
+        },
+        {
+          "name": "tooltip-and-highlight",
+          "path": "/example/Bars/tooltip-and-highlight"
+        },
+        {
+          "name": "tween-on-mount",
+          "path": "/example/Bars/tween-on-mount"
+        },
+        {
+          "name": "with-grid-on-top",
+          "path": "/example/Bars/with-grid-on-top"
+        },
+        {
+          "name": "with-grid-on-top-mix-blend",
+          "path": "/example/Bars/with-grid-on-top-mix-blend"
+        }
+      ]
+    },
+    {
+      "component": "BrushContext",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/BrushContext/basic"
+        },
+        {
+          "name": "constant-labels",
+          "path": "/example/BrushContext/constant-labels"
+        },
+        {
+          "name": "handle-arrows",
+          "path": "/example/BrushContext/handle-arrows"
+        },
+        {
+          "name": "handle-labels",
+          "path": "/example/BrushContext/handle-labels"
+        },
+        {
+          "name": "integrated-brush-(both-axis-area)",
+          "path": "/example/BrushContext/integrated-brush-(both-axis-area)"
+        },
+        {
+          "name": "integrated-brush-(x-axis)",
+          "path": "/example/BrushContext/integrated-brush-(x-axis)"
+        },
+        {
+          "name": "integrated-brush-(y-axis)",
+          "path": "/example/BrushContext/integrated-brush-(y-axis)"
+        },
+        {
+          "name": "minimap",
+          "path": "/example/BrushContext/minimap"
+        },
+        {
+          "name": "selection",
+          "path": "/example/BrushContext/selection"
+        },
+        {
+          "name": "separate-chart-(clip-data:-y-axis)",
+          "path": "/example/BrushContext/separate-chart-(clip-data:-y-axis)"
+        },
+        {
+          "name": "separate-chart-(clip-data)",
+          "path": "/example/BrushContext/separate-chart-(clip-data)"
+        },
+        {
+          "name": "separate-chart-(filter-data)",
+          "path": "/example/BrushContext/separate-chart-(filter-data)"
+        },
+        {
+          "name": "simple-styling",
+          "path": "/example/BrushContext/simple-styling"
+        },
+        {
+          "name": "striped-background",
+          "path": "/example/BrushContext/striped-background"
+        },
+        {
+          "name": "sync-brushes-with-bind:xdomain",
+          "path": "/example/BrushContext/sync-brushes-with-bind:xdomain"
+        },
+        {
+          "name": "tooltip-interop",
+          "path": "/example/BrushContext/tooltip-interop"
+        }
+      ]
+    },
+    {
+      "component": "BubbleMap",
+      "examples": [
+        {
+          "name": "bubble-map-population",
+          "path": "/example/BubbleMap/bubble-map-population"
+        }
+      ]
+    },
+    {
+      "component": "Calendar",
+      "examples": [
+        {
+          "name": "90-days",
+          "path": "/example/Calendar/90-days"
+        },
+        {
+          "name": "fixed-cell-size",
+          "path": "/example/Calendar/fixed-cell-size"
+        },
+        {
+          "name": "html-with-padding",
+          "path": "/example/Calendar/html-with-padding"
+        },
+        {
+          "name": "last-month",
+          "path": "/example/Calendar/last-month"
+        },
+        {
+          "name": "multiple-years",
+          "path": "/example/Calendar/multiple-years"
+        },
+        {
+          "name": "responsive-cell-size-default",
+          "path": "/example/Calendar/responsive-cell-size-default"
+        },
+        {
+          "name": "rounded-cells",
+          "path": "/example/Calendar/rounded-cells"
+        }
+      ]
+    },
+    {
+      "component": "Candlestick",
+      "examples": [
+        {
+          "name": "bars",
+          "path": "/example/Candlestick/bars"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Candlestick/basic"
+        },
+        {
+          "name": "open-close-line-color",
+          "path": "/example/Candlestick/open-close-line-color"
+        },
+        {
+          "name": "with-brushing",
+          "path": "/example/Candlestick/with-brushing"
+        }
+      ]
+    },
+    {
+      "component": "Choropleth",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Choropleth/basic"
+        }
+      ]
+    },
+    {
+      "component": "Circle",
+      "examples": [
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Circle/styling-using-attributes"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Circle/styling-using-classes"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Circle/styling-using-css-variables"
+        }
+      ]
+    },
+    {
+      "component": "ColorRamp",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ColorRamp/basic"
+        },
+        {
+          "name": "pixelated",
+          "path": "/example/ColorRamp/pixelated"
+        },
+        {
+          "name": "schemes",
+          "path": "/example/ColorRamp/schemes"
+        }
+      ]
+    },
+    {
+      "component": "Columns",
+      "examples": [
+        {
+          "name": "average-annotation-rule",
+          "path": "/example/Columns/average-annotation-rule"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Columns/basic"
+        },
+        {
+          "name": "calculated-value-domain-negative",
+          "path": "/example/Columns/calculated-value-domain-negative"
+        },
+        {
+          "name": "calculated-value-domain-positive",
+          "path": "/example/Columns/calculated-value-domain-positive"
+        },
+        {
+          "name": "click-handler",
+          "path": "/example/Columns/click-handler"
+        },
+        {
+          "name": "customize-individual-styles",
+          "path": "/example/Columns/customize-individual-styles"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Columns/gradient"
+        },
+        {
+          "name": "grouped",
+          "path": "/example/Columns/grouped"
+        },
+        {
+          "name": "grouped-and-stacked",
+          "path": "/example/Columns/grouped-and-stacked"
+        },
+        {
+          "name": "grouped-stacked-or-both-transition",
+          "path": "/example/Columns/grouped-stacked-or-both-transition"
+        },
+        {
+          "name": "highlight-individual-bar",
+          "path": "/example/Columns/highlight-individual-bar"
+        },
+        {
+          "name": "highlight-individual-bar-line",
+          "path": "/example/Columns/highlight-individual-bar-line"
+        },
+        {
+          "name": "inside-labels",
+          "path": "/example/Columns/inside-labels"
+        },
+        {
+          "name": "limit-ticks-count",
+          "path": "/example/Columns/limit-ticks-count"
+        },
+        {
+          "name": "limit-ticks-second-scale",
+          "path": "/example/Columns/limit-ticks-second-scale"
+        },
+        {
+          "name": "multiple-diverging",
+          "path": "/example/Columns/multiple-diverging"
+        },
+        {
+          "name": "multiple-diverging-rounded-specific",
+          "path": "/example/Columns/multiple-diverging-rounded-specific"
+        },
+        {
+          "name": "multiple-overlapping",
+          "path": "/example/Columns/multiple-overlapping"
+        },
+        {
+          "name": "outside-labels-default",
+          "path": "/example/Columns/outside-labels-default"
+        },
+        {
+          "name": "rounded-top-only",
+          "path": "/example/Columns/rounded-top-only"
+        },
+        {
+          "name": "stacked",
+          "path": "/example/Columns/stacked"
+        },
+        {
+          "name": "stacked-percent",
+          "path": "/example/Columns/stacked-percent"
+        },
+        {
+          "name": "stagger-tween-on-mount",
+          "path": "/example/Columns/stagger-tween-on-mount"
+        },
+        {
+          "name": "stagger-tween-on-mount-rounded-edge",
+          "path": "/example/Columns/stagger-tween-on-mount-rounded-edge"
+        },
+        {
+          "name": "time-scale-with-inset",
+          "path": "/example/Columns/time-scale-with-inset"
+        },
+        {
+          "name": "time-scale-with-interval",
+          "path": "/example/Columns/time-scale-with-interval"
+        },
+        {
+          "name": "time-scale-with-interval-months",
+          "path": "/example/Columns/time-scale-with-interval-months"
+        },
+        {
+          "name": "time-scale-with-missing-data",
+          "path": "/example/Columns/time-scale-with-missing-data"
+        },
+        {
+          "name": "tooltip-and-bar-highlight",
+          "path": "/example/Columns/tooltip-and-bar-highlight"
+        },
+        {
+          "name": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+        },
+        {
+          "name": "tooltip-and-clipped-highlight",
+          "path": "/example/Columns/tooltip-and-clipped-highlight"
+        },
+        {
+          "name": "tooltip-and-highlight",
+          "path": "/example/Columns/tooltip-and-highlight"
+        },
+        {
+          "name": "tween-on-mount",
+          "path": "/example/Columns/tween-on-mount"
+        },
+        {
+          "name": "tween-on-mount-rounded-edge",
+          "path": "/example/Columns/tween-on-mount-rounded-edge"
+        },
+        {
+          "name": "with-grid-on-top",
+          "path": "/example/Columns/with-grid-on-top"
+        },
+        {
+          "name": "with-grid-on-top-mix-blend",
+          "path": "/example/Columns/with-grid-on-top-mix-blend"
+        }
+      ]
+    },
+    {
+      "component": "Compound",
+      "examples": [
+        {
+          "name": "common-scale-with-extra-marks",
+          "path": "/example/Compound/common-scale-with-extra-marks"
+        },
+        {
+          "name": "dual-axis-with-single-chart-using-remapped-scale",
+          "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale"
+        },
+        {
+          "name": "dual-axis-with-stacked-charts",
+          "path": "/example/Compound/dual-axis-with-stacked-charts"
+        },
+        {
+          "name": "separate-scales-with-stacked-charts-and-overridden-marks",
+          "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks"
+        },
+        {
+          "name": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
+          "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down"
+        }
+      ]
+    },
+    {
+      "component": "Connector",
+      "examples": [
+        {
+          "name": "playground",
+          "path": "/example/Connector/playground"
+        }
+      ]
+    },
+    {
+      "component": "CountryMap",
+      "examples": [
+        {
+          "name": "country-map",
+          "path": "/example/CountryMap/country-map"
+        }
+      ]
+    },
+    {
+      "component": "Dagre",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Dagre/basic"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Dagre/playground"
+        },
+        {
+          "name": "software-user-flow",
+          "path": "/example/Dagre/software-user-flow"
+        },
+        {
+          "name": "tcp-state-diagram",
+          "path": "/example/Dagre/tcp-state-diagram"
+        }
+      ]
+    },
+    {
+      "component": "Duration",
+      "examples": [
+        {
+          "name": "bars",
+          "path": "/example/Duration/bars"
+        },
+        {
+          "name": "bars-color",
+          "path": "/example/Duration/bars-color"
+        },
+        {
+          "name": "bars-dense",
+          "path": "/example/Duration/bars-dense"
+        },
+        {
+          "name": "bars-dense-lanes",
+          "path": "/example/Duration/bars-dense-lanes"
+        },
+        {
+          "name": "bars-lanes",
+          "path": "/example/Duration/bars-lanes"
+        },
+        {
+          "name": "civilization-timeline",
+          "path": "/example/Duration/civilization-timeline"
+        },
+        {
+          "name": "civilization-timeline-dense",
+          "path": "/example/Duration/civilization-timeline-dense"
+        },
+        {
+          "name": "points",
+          "path": "/example/Duration/points"
+        },
+        {
+          "name": "points-color",
+          "path": "/example/Duration/points-color"
+        }
+      ]
+    },
+    {
+      "component": "EarthquakeGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/EarthquakeGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "EclipsesGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/EclipsesGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "Ellipse",
+      "examples": [
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Ellipse/styling-using-attributes"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Ellipse/styling-using-classes"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Ellipse/styling-using-css-variables"
+        }
+      ]
+    },
+    {
+      "component": "ForceSimulation",
+      "examples": [
+        {
+          "name": "beeswarm",
+          "path": "/example/ForceSimulation/beeswarm"
+        },
+        {
+          "name": "collision-detection",
+          "path": "/example/ForceSimulation/collision-detection"
+        },
+        {
+          "name": "disjoint-graph",
+          "path": "/example/ForceSimulation/disjoint-graph"
+        },
+        {
+          "name": "graph-drag",
+          "path": "/example/ForceSimulation/graph-drag"
+        },
+        {
+          "name": "graph-playground",
+          "path": "/example/ForceSimulation/graph-playground"
+        },
+        {
+          "name": "group",
+          "path": "/example/ForceSimulation/group"
+        },
+        {
+          "name": "lattice",
+          "path": "/example/ForceSimulation/lattice"
+        },
+        {
+          "name": "text",
+          "path": "/example/ForceSimulation/text"
+        },
+        {
+          "name": "tree",
+          "path": "/example/ForceSimulation/tree"
+        }
+      ]
+    },
+    {
+      "component": "Frame",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Frame/basic"
+        },
+        {
+          "name": "border",
+          "path": "/example/Frame/border"
+        },
+        {
+          "name": "full",
+          "path": "/example/Frame/full"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Frame/gradient"
+        }
+      ]
+    },
+    {
+      "component": "GeoCircle",
+      "examples": [
+        {
+          "name": "playground",
+          "path": "/example/GeoCircle/playground"
+        }
+      ]
+    },
+    {
+      "component": "GeoPath",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/GeoPath/basic"
+        }
+      ]
+    },
+    {
+      "component": "GeoPoint",
+      "examples": [
+        {
+          "name": "icons",
+          "path": "/example/GeoPoint/icons"
+        },
+        {
+          "name": "us-airports",
+          "path": "/example/GeoPoint/us-airports"
+        },
+        {
+          "name": "us-state-capitals",
+          "path": "/example/GeoPoint/us-state-capitals"
+        },
+        {
+          "name": "world-airports",
+          "path": "/example/GeoPoint/world-airports"
+        },
+        {
+          "name": "world-capitals",
+          "path": "/example/GeoPoint/world-capitals"
+        }
+      ]
+    },
+    {
+      "component": "GeoProjection",
+      "examples": [
+        {
+          "name": "basic-geo-projection",
+          "path": "/example/GeoProjection/basic-geo-projection"
+        }
+      ]
+    },
+    {
+      "component": "GeoTile",
+      "examples": [
+        {
+          "name": "basic-geo-tile",
+          "path": "/example/GeoTile/basic-geo-tile"
+        },
+        {
+          "name": "clipped-geo-tile",
+          "path": "/example/GeoTile/clipped-geo-tile"
+        }
+      ]
+    },
+    {
+      "component": "Grid",
+      "examples": [
+        {
+          "name": "band-scale-between",
+          "path": "/example/Grid/band-scale-between"
+        },
+        {
+          "name": "band-scale-default",
+          "path": "/example/Grid/band-scale-default"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Grid/basic"
+        },
+        {
+          "name": "dashed-lines",
+          "path": "/example/Grid/dashed-lines"
+        },
+        {
+          "name": "explicit-ticks",
+          "path": "/example/Grid/explicit-ticks"
+        },
+        {
+          "name": "inject-tick-value",
+          "path": "/example/Grid/inject-tick-value"
+        },
+        {
+          "name": "integer-only",
+          "path": "/example/Grid/integer-only"
+        },
+        {
+          "name": "padding",
+          "path": "/example/Grid/padding"
+        },
+        {
+          "name": "radial",
+          "path": "/example/Grid/radial"
+        },
+        {
+          "name": "radial-linear",
+          "path": "/example/Grid/radial-linear"
+        },
+        {
+          "name": "tick-count",
+          "path": "/example/Grid/tick-count"
+        },
+        {
+          "name": "tick-count-null",
+          "path": "/example/Grid/tick-count-null"
+        },
+        {
+          "name": "tick-count-responsive",
+          "path": "/example/Grid/tick-count-responsive"
+        },
+        {
+          "name": "x-only",
+          "path": "/example/Grid/x-only"
+        },
+        {
+          "name": "y-only",
+          "path": "/example/Grid/y-only"
+        }
+      ]
+    },
+    {
+      "component": "Group",
+      "examples": [
+        {
+          "name": "basic-usage",
+          "path": "/example/Group/basic-usage"
+        }
+      ]
+    },
+    {
+      "component": "Histogram",
+      "examples": [
+        {
+          "name": "date-time-count",
+          "path": "/example/Histogram/date-time-count"
+        },
+        {
+          "name": "date-time-interval",
+          "path": "/example/Histogram/date-time-interval"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Histogram/horizontal"
+        },
+        {
+          "name": "random-distribution",
+          "path": "/example/Histogram/random-distribution"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Histogram/vertical"
+        }
+      ]
+    },
+    {
+      "component": "Hull",
+      "examples": [
+        {
+          "name": "geo",
+          "path": "/example/Hull/geo"
+        },
+        {
+          "name": "scatter",
+          "path": "/example/Hull/scatter"
+        }
+      ]
+    },
+    {
+      "component": "Legend",
+      "examples": [
+        {
+          "name": "chart-integration",
+          "path": "/example/Legend/chart-integration"
+        },
+        {
+          "name": "chart-placement",
+          "path": "/example/Legend/chart-placement"
+        },
+        {
+          "name": "children-override",
+          "path": "/example/Legend/children-override"
+        },
+        {
+          "name": "click-handler",
+          "path": "/example/Legend/click-handler"
+        },
+        {
+          "name": "diverging",
+          "path": "/example/Legend/diverging"
+        },
+        {
+          "name": "diverging-sqrt",
+          "path": "/example/Legend/diverging-sqrt"
+        },
+        {
+          "name": "ordinal",
+          "path": "/example/Legend/ordinal"
+        },
+        {
+          "name": "quantile",
+          "path": "/example/Legend/quantile"
+        },
+        {
+          "name": "quantize",
+          "path": "/example/Legend/quantize"
+        },
+        {
+          "name": "responsive-swatches",
+          "path": "/example/Legend/responsive-swatches"
+        },
+        {
+          "name": "sequential",
+          "path": "/example/Legend/sequential"
+        },
+        {
+          "name": "sequential-log",
+          "path": "/example/Legend/sequential-log"
+        },
+        {
+          "name": "sequential-quantile",
+          "path": "/example/Legend/sequential-quantile"
+        },
+        {
+          "name": "sequential-sqrt",
+          "path": "/example/Legend/sequential-sqrt"
+        },
+        {
+          "name": "sqrt",
+          "path": "/example/Legend/sqrt"
+        },
+        {
+          "name": "square-swatch",
+          "path": "/example/Legend/square-swatch"
+        },
+        {
+          "name": "styling",
+          "path": "/example/Legend/styling"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/Legend/threshold"
+        },
+        {
+          "name": "vertical-orientation",
+          "path": "/example/Legend/vertical-orientation"
+        }
+      ]
+    },
+    {
+      "component": "Line",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Line/basic"
+        },
+        {
+          "name": "gradient-encoding",
+          "path": "/example/Line/gradient-encoding"
+        },
+        {
+          "name": "gradient-threshold",
+          "path": "/example/Line/gradient-threshold"
+        },
+        {
+          "name": "multiple-series",
+          "path": "/example/Line/multiple-series"
+        },
+        {
+          "name": "multiple-series-highlight-on-hover",
+          "path": "/example/Line/multiple-series-highlight-on-hover"
+        },
+        {
+          "name": "multiple-series-using-overrides",
+          "path": "/example/Line/multiple-series-using-overrides"
+        },
+        {
+          "name": "multiple-series-with-labels",
+          "path": "/example/Line/multiple-series-with-labels"
+        },
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Line/styling-using-attributes"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Line/styling-using-classes"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Line/styling-using-css-variables"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Line/vertical"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Line/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Line/with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
+      "component": "LinearGradient",
+      "examples": [
+        {
+          "name": "direction-with-custom-colors",
+          "path": "/example/LinearGradient/direction-with-custom-colors"
+        },
+        {
+          "name": "explicit-offsets",
+          "path": "/example/LinearGradient/explicit-offsets"
+        },
+        {
+          "name": "tailwind-colors",
+          "path": "/example/LinearGradient/tailwind-colors"
+        },
+        {
+          "name": "units",
+          "path": "/example/LinearGradient/units"
+        }
+      ]
+    },
+    {
+      "component": "LineChart",
+      "examples": [
+        {
+          "name": "axis-labels-inside",
+          "path": "/example/LineChart/axis-labels-inside"
+        },
+        {
+          "name": "basic",
+          "path": "/example/LineChart/basic"
+        },
+        {
+          "name": "brush",
+          "path": "/example/LineChart/brush"
+        },
+        {
+          "name": "curve",
+          "path": "/example/LineChart/curve"
+        },
+        {
+          "name": "custom",
+          "path": "/example/LineChart/custom"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/LineChart/custom-tooltip"
+        },
+        {
+          "name": "default-series-label",
+          "path": "/example/LineChart/default-series-label"
+        },
+        {
+          "name": "draw",
+          "path": "/example/LineChart/draw"
+        },
+        {
+          "name": "dynamic-data",
+          "path": "/example/LineChart/dynamic-data"
+        },
+        {
+          "name": "gradient-encoding",
+          "path": "/example/LineChart/gradient-encoding"
+        },
+        {
+          "name": "gradient-threshold",
+          "path": "/example/LineChart/gradient-threshold"
+        },
+        {
+          "name": "labels",
+          "path": "/example/LineChart/labels"
+        },
+        {
+          "name": "labels-with-points",
+          "path": "/example/LineChart/labels-with-points"
+        },
+        {
+          "name": "labels-within-points",
+          "path": "/example/LineChart/labels-within-points"
+        },
+        {
+          "name": "large-radial-series",
+          "path": "/example/LineChart/large-radial-series"
+        },
+        {
+          "name": "large-series",
+          "path": "/example/LineChart/large-series"
+        },
+        {
+          "name": "legend",
+          "path": "/example/LineChart/legend"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/LineChart/line-annotation"
+        },
+        {
+          "name": "null-dashed-gaps",
+          "path": "/example/LineChart/null-dashed-gaps"
+        },
+        {
+          "name": "null-gaps",
+          "path": "/example/LineChart/null-gaps"
+        },
+        {
+          "name": "override-color",
+          "path": "/example/LineChart/override-color"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/LineChart/point-annotations"
+        },
+        {
+          "name": "points",
+          "path": "/example/LineChart/points"
+        },
+        {
+          "name": "radar",
+          "path": "/example/LineChart/radar"
+        },
+        {
+          "name": "radar-rounded",
+          "path": "/example/LineChart/radar-rounded"
+        },
+        {
+          "name": "radar-series",
+          "path": "/example/LineChart/radar-series"
+        },
+        {
+          "name": "range-annotation",
+          "path": "/example/LineChart/range-annotation"
+        },
+        {
+          "name": "series",
+          "path": "/example/LineChart/series"
+        },
+        {
+          "name": "series-brush",
+          "path": "/example/LineChart/series-brush"
+        },
+        {
+          "name": "series-custom-highlight-point",
+          "path": "/example/LineChart/series-custom-highlight-point"
+        },
+        {
+          "name": "series-individual-tooltip",
+          "path": "/example/LineChart/series-individual-tooltip"
+        },
+        {
+          "name": "series-labels-hover",
+          "path": "/example/LineChart/series-labels-hover"
+        },
+        {
+          "name": "series-point-annotations",
+          "path": "/example/LineChart/series-point-annotations"
+        },
+        {
+          "name": "series-point-click",
+          "path": "/example/LineChart/series-point-click"
+        },
+        {
+          "name": "series-separate-data",
+          "path": "/example/LineChart/series-separate-data"
+        },
+        {
+          "name": "series-separate-data-diff-length",
+          "path": "/example/LineChart/series-separate-data-diff-length"
+        },
+        {
+          "name": "series-vertical",
+          "path": "/example/LineChart/series-vertical"
+        },
+        {
+          "name": "series-with-nulls",
+          "path": "/example/LineChart/series-with-nulls"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/LineChart/single-axis-x"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/LineChart/single-axis-y"
+        },
+        {
+          "name": "sparkline",
+          "path": "/example/LineChart/sparkline"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/LineChart/tooltip-click"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/LineChart/vertical"
+        }
+      ]
+    },
+    {
+      "component": "LoftedArcs",
+      "examples": [
+        {
+          "name": "draggable-globe-with-edgefade",
+          "path": "/example/LoftedArcs/draggable-globe-with-edgefade"
+        },
+        {
+          "name": "world-map",
+          "path": "/example/LoftedArcs/world-map"
+        }
+      ]
+    },
+    {
+      "component": "Lollipop",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Lollipop/basic"
+        }
+      ]
+    },
+    {
+      "component": "Marker",
+      "examples": [
+        {
+          "name": "line",
+          "path": "/example/Marker/line"
+        },
+        {
+          "name": "orientation",
+          "path": "/example/Marker/orientation"
+        },
+        {
+          "name": "spline",
+          "path": "/example/Marker/spline"
+        },
+        {
+          "name": "spline-w-thicker-stroke",
+          "path": "/example/Marker/spline-w-thicker-stroke"
+        },
+        {
+          "name": "styling",
+          "path": "/example/Marker/styling"
+        }
+      ]
+    },
+    {
+      "component": "MotionPath",
+      "examples": [
+        {
+          "name": "repeat-indefinitely",
+          "path": "/example/MotionPath/repeat-indefinitely"
+        },
+        {
+          "name": "rotate-object-with-path",
+          "path": "/example/MotionPath/rotate-object-with-path"
+        },
+        {
+          "name": "sync-with-draw",
+          "path": "/example/MotionPath/sync-with-draw"
+        }
+      ]
+    },
+    {
+      "component": "Oscilloscope",
+      "examples": [
+        {
+          "name": "frequency",
+          "path": "/example/Oscilloscope/frequency"
+        },
+        {
+          "name": "time",
+          "path": "/example/Oscilloscope/time"
+        }
+      ]
+    },
+    {
+      "component": "Pack",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Pack/basic"
+        }
+      ]
+    },
+    {
+      "component": "Partition",
+      "examples": [
+        {
+          "name": "filterable",
+          "path": "/example/Partition/filterable"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Partition/horizontal"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Partition/vertical"
+        }
+      ]
+    },
+    {
+      "component": "Pattern",
+      "examples": [
+        {
+          "name": "circles",
+          "path": "/example/Pattern/circles"
+        },
+        {
+          "name": "circles-custom-pattern-svg-only",
+          "path": "/example/Pattern/circles-custom-pattern-svg-only"
+        },
+        {
+          "name": "lineargradient-as-pattern",
+          "path": "/example/Pattern/lineargradient-as-pattern"
+        },
+        {
+          "name": "lines",
+          "path": "/example/Pattern/lines"
+        },
+        {
+          "name": "lines-custom-pattern-svg-only",
+          "path": "/example/Pattern/lines-custom-pattern-svg-only"
+        },
+        {
+          "name": "with-fill-color",
+          "path": "/example/Pattern/with-fill-color"
+        },
+        {
+          "name": "with-lineargradient",
+          "path": "/example/Pattern/with-lineargradient"
+        }
+      ]
+    },
+    {
+      "component": "Pie",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Pie/basic"
+        },
+        {
+          "name": "default-slot-render-each-arc",
+          "path": "/example/Pie/default-slot-render-each-arc"
+        },
+        {
+          "name": "disable-sorting",
+          "path": "/example/Pie/disable-sorting"
+        },
+        {
+          "name": "inner-radius-negative",
+          "path": "/example/Pie/inner-radius-negative"
+        },
+        {
+          "name": "inner-radius-positive",
+          "path": "/example/Pie/inner-radius-positive"
+        },
+        {
+          "name": "inner-radius-zero-one",
+          "path": "/example/Pie/inner-radius-zero-one"
+        },
+        {
+          "name": "labels",
+          "path": "/example/Pie/labels"
+        },
+        {
+          "name": "labels-centroid",
+          "path": "/example/Pie/labels-centroid"
+        },
+        {
+          "name": "labels-centroid-multiple",
+          "path": "/example/Pie/labels-centroid-multiple"
+        },
+        {
+          "name": "labels-outer",
+          "path": "/example/Pie/labels-outer"
+        },
+        {
+          "name": "labels-outer-radial",
+          "path": "/example/Pie/labels-outer-radial"
+        },
+        {
+          "name": "labels-outer-with-padding",
+          "path": "/example/Pie/labels-outer-with-padding"
+        },
+        {
+          "name": "multiple-data-prop",
+          "path": "/example/Pie/multiple-data-prop"
+        },
+        {
+          "name": "offset",
+          "path": "/example/Pie/offset"
+        },
+        {
+          "name": "outer-radius",
+          "path": "/example/Pie/outer-radius"
+        },
+        {
+          "name": "pad-angle",
+          "path": "/example/Pie/pad-angle"
+        },
+        {
+          "name": "pad-angle-with-inner-radius",
+          "path": "/example/Pie/pad-angle-with-inner-radius"
+        },
+        {
+          "name": "partial-range-chart-xrange",
+          "path": "/example/Pie/partial-range-chart-xrange"
+        },
+        {
+          "name": "partial-range-range-prop",
+          "path": "/example/Pie/partial-range-range-prop"
+        },
+        {
+          "name": "placement",
+          "path": "/example/Pie/placement"
+        },
+        {
+          "name": "placement-center",
+          "path": "/example/Pie/placement-center"
+        },
+        {
+          "name": "placement-left",
+          "path": "/example/Pie/placement-left"
+        },
+        {
+          "name": "placement-right",
+          "path": "/example/Pie/placement-right"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/Pie/tooltip"
+        },
+        {
+          "name": "tooltip-with-arcs-slot",
+          "path": "/example/Pie/tooltip-with-arcs-slot"
+        },
+        {
+          "name": "tweened",
+          "path": "/example/Pie/tweened"
+        }
+      ]
+    },
+    {
+      "component": "PieChart",
+      "examples": [
+        {
+          "name": "arc",
+          "path": "/example/PieChart/arc"
+        },
+        {
+          "name": "arc-props",
+          "path": "/example/PieChart/arc-props"
+        },
+        {
+          "name": "basic",
+          "path": "/example/PieChart/basic"
+        },
+        {
+          "name": "colors-data-prop",
+          "path": "/example/PieChart/colors-data-prop"
+        },
+        {
+          "name": "colors-interpolator",
+          "path": "/example/PieChart/colors-interpolator"
+        },
+        {
+          "name": "colors-scheme",
+          "path": "/example/PieChart/colors-scheme"
+        },
+        {
+          "name": "colors-variables",
+          "path": "/example/PieChart/colors-variables"
+        },
+        {
+          "name": "donut",
+          "path": "/example/PieChart/donut"
+        },
+        {
+          "name": "donut-with-text",
+          "path": "/example/PieChart/donut-with-text"
+        },
+        {
+          "name": "legend",
+          "path": "/example/PieChart/legend"
+        },
+        {
+          "name": "legend-custom-label",
+          "path": "/example/PieChart/legend-custom-label"
+        },
+        {
+          "name": "legend-placement",
+          "path": "/example/PieChart/legend-placement"
+        },
+        {
+          "name": "legend-responsive",
+          "path": "/example/PieChart/legend-responsive"
+        },
+        {
+          "name": "legend-with-padding",
+          "path": "/example/PieChart/legend-with-padding"
+        },
+        {
+          "name": "motion-spring",
+          "path": "/example/PieChart/motion-spring"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/PieChart/motion-tween"
+        },
+        {
+          "name": "offset-slice",
+          "path": "/example/PieChart/offset-slice"
+        },
+        {
+          "name": "placement-custom",
+          "path": "/example/PieChart/placement-custom"
+        },
+        {
+          "name": "placement-left",
+          "path": "/example/PieChart/placement-left"
+        },
+        {
+          "name": "placement-right",
+          "path": "/example/PieChart/placement-right"
+        },
+        {
+          "name": "radius-fixed",
+          "path": "/example/PieChart/radius-fixed"
+        },
+        {
+          "name": "radius-offset",
+          "path": "/example/PieChart/radius-offset"
+        },
+        {
+          "name": "radius-percent",
+          "path": "/example/PieChart/radius-percent"
+        },
+        {
+          "name": "segments",
+          "path": "/example/PieChart/segments"
+        },
+        {
+          "name": "series",
+          "path": "/example/PieChart/series"
+        },
+        {
+          "name": "series-click",
+          "path": "/example/PieChart/series-click"
+        },
+        {
+          "name": "series-props",
+          "path": "/example/PieChart/series-props"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/PieChart/tooltip-click"
+        }
+      ]
+    },
+    {
+      "component": "Point",
+      "examples": [
+        {
+          "name": "basic-usage",
+          "path": "/example/Point/basic-usage"
+        }
+      ]
+    },
+    {
+      "component": "Polygon",
+      "examples": [
+        {
+          "name": "10-point-star",
+          "path": "/example/Polygon/10-point-star"
+        },
+        {
+          "name": "12-point-star",
+          "path": "/example/Polygon/12-point-star"
+        },
+        {
+          "name": "14-point-star",
+          "path": "/example/Polygon/14-point-star"
+        },
+        {
+          "name": "16-point-star",
+          "path": "/example/Polygon/16-point-star"
+        },
+        {
+          "name": "18-point-star",
+          "path": "/example/Polygon/18-point-star"
+        },
+        {
+          "name": "20-point-star",
+          "path": "/example/Polygon/20-point-star"
+        },
+        {
+          "name": "6-point-star",
+          "path": "/example/Polygon/6-point-star"
+        },
+        {
+          "name": "8-point-star",
+          "path": "/example/Polygon/8-point-star"
+        },
+        {
+          "name": "arrow",
+          "path": "/example/Polygon/arrow"
+        },
+        {
+          "name": "cross",
+          "path": "/example/Polygon/cross"
+        },
+        {
+          "name": "custom-points",
+          "path": "/example/Polygon/custom-points"
+        },
+        {
+          "name": "diamond",
+          "path": "/example/Polygon/diamond"
+        },
+        {
+          "name": "hexagon",
+          "path": "/example/Polygon/hexagon"
+        },
+        {
+          "name": "octagon",
+          "path": "/example/Polygon/octagon"
+        },
+        {
+          "name": "parallelogram",
+          "path": "/example/Polygon/parallelogram"
+        },
+        {
+          "name": "pentagon",
+          "path": "/example/Polygon/pentagon"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Polygon/playground"
+        },
+        {
+          "name": "rectangle",
+          "path": "/example/Polygon/rectangle"
+        },
+        {
+          "name": "rhombus",
+          "path": "/example/Polygon/rhombus"
+        },
+        {
+          "name": "simple",
+          "path": "/example/Polygon/simple"
+        },
+        {
+          "name": "square",
+          "path": "/example/Polygon/square"
+        },
+        {
+          "name": "stars",
+          "path": "/example/Polygon/stars"
+        },
+        {
+          "name": "trapezoid",
+          "path": "/example/Polygon/trapezoid"
+        },
+        {
+          "name": "triangle",
+          "path": "/example/Polygon/triangle"
+        }
+      ]
+    },
+    {
+      "component": "PunchCard",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/PunchCard/basic"
+        }
+      ]
+    },
+    {
+      "component": "RadialGradient",
+      "examples": [
+        {
+          "name": "focal-location-and-radius-with-custom-colors",
+          "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors"
+        },
+        {
+          "name": "spreadmethod",
+          "path": "/example/RadialGradient/spreadmethod"
+        },
+        {
+          "name": "tailwind-colors",
+          "path": "/example/RadialGradient/tailwind-colors"
+        },
+        {
+          "name": "units",
+          "path": "/example/RadialGradient/units"
+        }
+      ]
+    },
+    {
+      "component": "RadialLine",
+      "examples": [
+        {
+          "name": "line-with-areas",
+          "path": "/example/RadialLine/line-with-areas"
+        },
+        {
+          "name": "multi-year-lines",
+          "path": "/example/RadialLine/multi-year-lines"
+        },
+        {
+          "name": "radar",
+          "path": "/example/RadialLine/radar"
+        }
+      ]
+    },
+    {
+      "component": "Rect",
+      "examples": [
+        {
+          "name": "styling-using-attributes",
+          "path": "/example/Rect/styling-using-attributes"
+        },
+        {
+          "name": "styling-using-classes",
+          "path": "/example/Rect/styling-using-classes"
+        },
+        {
+          "name": "styling-using-css-variables",
+          "path": "/example/Rect/styling-using-css-variables"
+        }
+      ]
+    },
+    {
+      "component": "Rule",
+      "examples": [
+        {
+          "name": "annotation-x",
+          "path": "/example/Rule/annotation-x"
+        },
+        {
+          "name": "annotation-y",
+          "path": "/example/Rule/annotation-y"
+        },
+        {
+          "name": "baseline-top-right",
+          "path": "/example/Rule/baseline-top-right"
+        },
+        {
+          "name": "baseline-x-negative",
+          "path": "/example/Rule/baseline-x-negative"
+        },
+        {
+          "name": "baseline-x-y",
+          "path": "/example/Rule/baseline-x-y"
+        },
+        {
+          "name": "baseline-y-negative",
+          "path": "/example/Rule/baseline-y-negative"
+        },
+        {
+          "name": "data-x-band",
+          "path": "/example/Rule/data-x-band"
+        },
+        {
+          "name": "data-x-date",
+          "path": "/example/Rule/data-x-date"
+        },
+        {
+          "name": "data-x-range",
+          "path": "/example/Rule/data-x-range"
+        },
+        {
+          "name": "data-y-range",
+          "path": "/example/Rule/data-y-range"
+        }
+      ]
+    },
+    {
+      "component": "Sankey",
+      "examples": [
+        {
+          "name": "complex",
+          "path": "/example/Sankey/complex"
+        },
+        {
+          "name": "hierarchy",
+          "path": "/example/Sankey/hierarchy"
+        },
+        {
+          "name": "node-select",
+          "path": "/example/Sankey/node-select"
+        },
+        {
+          "name": "simple",
+          "path": "/example/Sankey/simple"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/Sankey/tooltip"
+        }
+      ]
+    },
+    {
+      "component": "Scatter",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Scatter/basic"
+        },
+        {
+          "name": "color-via-scale",
+          "path": "/example/Scatter/color-via-scale"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Scatter/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Scatter/with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
+      "component": "ScatterChart",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ScatterChart/basic"
+        },
+        {
+          "name": "brush",
+          "path": "/example/ScatterChart/brush"
+        },
+        {
+          "name": "custom",
+          "path": "/example/ScatterChart/custom"
+        },
+        {
+          "name": "custom-tooltip",
+          "path": "/example/ScatterChart/custom-tooltip"
+        },
+        {
+          "name": "date-series-color-scale",
+          "path": "/example/ScatterChart/date-series-color-scale"
+        },
+        {
+          "name": "domain-baseline",
+          "path": "/example/ScatterChart/domain-baseline"
+        },
+        {
+          "name": "domain-nice",
+          "path": "/example/ScatterChart/domain-nice"
+        },
+        {
+          "name": "domain-padding",
+          "path": "/example/ScatterChart/domain-padding"
+        },
+        {
+          "name": "labels",
+          "path": "/example/ScatterChart/labels"
+        },
+        {
+          "name": "line-annotation",
+          "path": "/example/ScatterChart/line-annotation"
+        },
+        {
+          "name": "point-annotations",
+          "path": "/example/ScatterChart/point-annotations"
+        },
+        {
+          "name": "radius-scale",
+          "path": "/example/ScatterChart/radius-scale"
+        },
+        {
+          "name": "range-annotation-both",
+          "path": "/example/ScatterChart/range-annotation-both"
+        },
+        {
+          "name": "range-annotation-horizontal",
+          "path": "/example/ScatterChart/range-annotation-horizontal"
+        },
+        {
+          "name": "range-annotation-vertical",
+          "path": "/example/ScatterChart/range-annotation-vertical"
+        },
+        {
+          "name": "series",
+          "path": "/example/ScatterChart/series"
+        },
+        {
+          "name": "series-custom-labels",
+          "path": "/example/ScatterChart/series-custom-labels"
+        },
+        {
+          "name": "series-legend",
+          "path": "/example/ScatterChart/series-legend"
+        },
+        {
+          "name": "series-tween",
+          "path": "/example/ScatterChart/series-tween"
+        },
+        {
+          "name": "series-with-radius",
+          "path": "/example/ScatterChart/series-with-radius"
+        },
+        {
+          "name": "single-axis-x",
+          "path": "/example/ScatterChart/single-axis-x"
+        },
+        {
+          "name": "single-axis-y",
+          "path": "/example/ScatterChart/single-axis-y"
+        },
+        {
+          "name": "single-dimension",
+          "path": "/example/ScatterChart/single-dimension"
+        },
+        {
+          "name": "tooltip-click",
+          "path": "/example/ScatterChart/tooltip-click"
+        }
+      ]
+    },
+    {
+      "component": "SketchyGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/SketchyGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "Sparkbar",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Sparkbar/basic"
+        },
+        {
+          "name": "basic-negative-data",
+          "path": "/example/Sparkbar/basic-negative-data"
+        },
+        {
+          "name": "basic-within-a-paragraph",
+          "path": "/example/Sparkbar/basic-within-a-paragraph"
+        },
+        {
+          "name": "basic-within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight"
+        },
+        {
+          "name": "fixed-position-tooltip",
+          "path": "/example/Sparkbar/fixed-position-tooltip"
+        }
+      ]
+    },
+    {
+      "component": "Sparkline",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Sparkline/basic"
+        },
+        {
+          "name": "basic-within-a-paragraph",
+          "path": "/example/Sparkline/basic-within-a-paragraph"
+        },
+        {
+          "name": "basic-zero-axis",
+          "path": "/example/Sparkline/basic-zero-axis"
+        },
+        {
+          "name": "fixed-position-tooltip",
+          "path": "/example/Sparkline/fixed-position-tooltip"
+        },
+        {
+          "name": "within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/Sparkline/within-a-paragraph-with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
+      "component": "SpikeMap",
+      "examples": [
+        {
+          "name": "spike-map-population",
+          "path": "/example/SpikeMap/spike-map-population"
+        }
+      ]
+    },
+    {
+      "component": "Spline",
+      "examples": [
+        {
+          "name": "basic-start-and-end-snippets",
+          "path": "/example/Spline/basic-start-and-end-snippets"
+        },
+        {
+          "name": "draw",
+          "path": "/example/Spline/draw"
+        },
+        {
+          "name": "end-slot-with-draw-with-value",
+          "path": "/example/Spline/end-slot-with-draw-with-value"
+        },
+        {
+          "name": "end-snippet-with-draw",
+          "path": "/example/Spline/end-snippet-with-draw"
+        },
+        {
+          "name": "label-using-start-end-snippets",
+          "path": "/example/Spline/label-using-start-end-snippets"
+        },
+        {
+          "name": "markers-arrows",
+          "path": "/example/Spline/markers-arrows"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Spline/playground"
+        },
+        {
+          "name": "tweened",
+          "path": "/example/Spline/tweened"
+        }
+      ]
+    },
+    {
+      "component": "StateMap",
+      "examples": [
+        {
+          "name": "state-only",
+          "path": "/example/StateMap/state-only"
+        },
+        {
+          "name": "state-with-counties",
+          "path": "/example/StateMap/state-with-counties"
+        },
+        {
+          "name": "state-with-surrounding-states-via-chart-clip-path",
+          "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path"
+        }
+      ]
+    },
+    {
+      "component": "SubmarineCablesGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/SubmarineCablesGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "Sunburst",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Sunburst/basic"
+        }
+      ]
+    },
+    {
+      "component": "Text",
+      "examples": [
+        {
+          "name": "playground",
+          "path": "/example/Text/playground"
+        },
+        {
+          "name": "word-wrap-with-explicit-n",
+          "path": "/example/Text/word-wrap-with-explicit-n"
+        }
+      ]
+    },
+    {
+      "component": "Threshold",
+      "examples": [
+        {
+          "name": "basic-threshold",
+          "path": "/example/Threshold/basic-threshold"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Threshold/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Threshold/with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
+      "component": "Timezones",
+      "examples": [
+        {
+          "name": "basic-timezones",
+          "path": "/example/Timezones/basic-timezones"
+        }
+      ]
+    },
+    {
+      "component": "Tooltip",
+      "examples": [
+        {
+          "name": "anchor-location",
+          "path": "/example/Tooltip/anchor-location"
+        },
+        {
+          "name": "anchor-location 2",
+          "path": "/example/Tooltip/anchor-location 2"
+        },
+        {
+          "name": "area",
+          "path": "/example/Tooltip/area"
+        },
+        {
+          "name": "area 2",
+          "path": "/example/Tooltip/area 2"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Tooltip/basic"
+        },
+        {
+          "name": "basic 2",
+          "path": "/example/Tooltip/basic 2"
+        },
+        {
+          "name": "color-swatch",
+          "path": "/example/Tooltip/color-swatch"
+        },
+        {
+          "name": "color-swatch 2",
+          "path": "/example/Tooltip/color-swatch 2"
+        },
+        {
+          "name": "color-swatch-using-theme",
+          "path": "/example/Tooltip/color-swatch-using-theme"
+        },
+        {
+          "name": "color-swatch-using-theme 2",
+          "path": "/example/Tooltip/color-swatch-using-theme 2"
+        },
+        {
+          "name": "custom-content",
+          "path": "/example/Tooltip/custom-content"
+        },
+        {
+          "name": "custom-content 2",
+          "path": "/example/Tooltip/custom-content 2"
+        },
+        {
+          "name": "data-snapping",
+          "path": "/example/Tooltip/data-snapping"
+        },
+        {
+          "name": "data-snapping 2",
+          "path": "/example/Tooltip/data-snapping 2"
+        },
+        {
+          "name": "default-mouse-position-with-offset",
+          "path": "/example/Tooltip/default-mouse-position-with-offset"
+        },
+        {
+          "name": "default-mouse-position-with-offset 2",
+          "path": "/example/Tooltip/default-mouse-position-with-offset 2"
+        },
+        {
+          "name": "disable-motion",
+          "path": "/example/Tooltip/disable-motion"
+        },
+        {
+          "name": "disable-motion 2",
+          "path": "/example/Tooltip/disable-motion 2"
+        },
+        {
+          "name": "duration",
+          "path": "/example/Tooltip/duration"
+        },
+        {
+          "name": "duration 2",
+          "path": "/example/Tooltip/duration 2"
+        },
+        {
+          "name": "externally-access-tooltip-data",
+          "path": "/example/Tooltip/externally-access-tooltip-data"
+        },
+        {
+          "name": "externally-access-tooltip-data 2",
+          "path": "/example/Tooltip/externally-access-tooltip-data 2"
+        },
+        {
+          "name": "invert-variant",
+          "path": "/example/Tooltip/invert-variant"
+        },
+        {
+          "name": "invert-variant 2",
+          "path": "/example/Tooltip/invert-variant 2"
+        },
+        {
+          "name": "multiple-overlapping-bars",
+          "path": "/example/Tooltip/multiple-overlapping-bars"
+        },
+        {
+          "name": "multiple-overlapping-bars 2",
+          "path": "/example/Tooltip/multiple-overlapping-bars 2"
+        },
+        {
+          "name": "multiple-overlapping-durations",
+          "path": "/example/Tooltip/multiple-overlapping-durations"
+        },
+        {
+          "name": "multiple-overlapping-durations 2",
+          "path": "/example/Tooltip/multiple-overlapping-durations 2"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis 2",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis 2"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis-scaleband",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband"
+        },
+        {
+          "name": "multiple-tooltips-with-fixed-single-axis-scaleband 2",
+          "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband 2"
+        },
+        {
+          "name": "position",
+          "path": "/example/Tooltip/position"
+        },
+        {
+          "name": "position 2",
+          "path": "/example/Tooltip/position 2"
+        },
+        {
+          "name": "scatter-plot",
+          "path": "/example/Tooltip/scatter-plot"
+        },
+        {
+          "name": "scatter-plot 2",
+          "path": "/example/Tooltip/scatter-plot 2"
+        },
+        {
+          "name": "simple-bars",
+          "path": "/example/Tooltip/simple-bars"
+        },
+        {
+          "name": "simple-bars 2",
+          "path": "/example/Tooltip/simple-bars 2"
+        },
+        {
+          "name": "single-date-time",
+          "path": "/example/Tooltip/single-date-time"
+        },
+        {
+          "name": "single-date-time 2",
+          "path": "/example/Tooltip/single-date-time 2"
+        },
+        {
+          "name": "stacked-area",
+          "path": "/example/Tooltip/stacked-area"
+        },
+        {
+          "name": "stacked-area 2",
+          "path": "/example/Tooltip/stacked-area 2"
+        }
+      ]
+    },
+    {
+      "component": "TransformContext",
+      "examples": [
+        {
+          "name": "pan-zoom-html-image",
+          "path": "/example/TransformContext/pan-zoom-html-image"
+        },
+        {
+          "name": "pan-zoom-svg-image",
+          "path": "/example/TransformContext/pan-zoom-svg-image"
+        },
+        {
+          "name": "playground",
+          "path": "/example/TransformContext/playground"
+        }
+      ]
+    },
+    {
+      "component": "TranslucentGlobe",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/TranslucentGlobe/basic"
+        }
+      ]
+    },
+    {
+      "component": "Tree",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Tree/basic"
+        },
+        {
+          "name": "html-nodes",
+          "path": "/example/Tree/html-nodes"
+        }
+      ]
+    },
+    {
+      "component": "Treemap",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Treemap/basic"
+        },
+        {
+          "name": "complex",
+          "path": "/example/Treemap/complex"
+        },
+        {
+          "name": "nested-filter",
+          "path": "/example/Treemap/nested-filter"
+        },
+        {
+          "name": "nested-zoom",
+          "path": "/example/Treemap/nested-zoom"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Treemap/playground"
+        },
+        {
+          "name": "stacked-zoom",
+          "path": "/example/Treemap/stacked-zoom"
+        }
+      ]
+    },
+    {
+      "component": "Voronoi",
+      "examples": [
+        {
+          "name": "example",
+          "path": "/example/Voronoi/example"
+        }
+      ]
+    },
+    {
+      "component": "ZoomableMap",
+      "examples": [
+        {
+          "name": "canvas-transform",
+          "path": "/example/ZoomableMap/canvas-transform"
+        },
+        {
+          "name": "projection-transform",
+          "path": "/example/ZoomableMap/projection-transform"
+        }
+      ]
+    },
+    {
+      "component": "ZoomableTileMap",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ZoomableTileMap/basic"
+        },
+        {
+          "name": "seamless-multiple-zoom-layers",
+          "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers"
+        },
+        {
+          "name": "with-padding",
+          "path": "/example/ZoomableTileMap/with-padding"
+        }
+      ]
+    }
+  ]
+}

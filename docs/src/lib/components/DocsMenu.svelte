@@ -39,17 +39,31 @@
 </script>
 
 <nav class={cls('grid gap-6', className)}>
-	<NavItem
-		text="Introduction"
-		currentUrl={page.url}
-		path="/docs/introduction"
-		classes={{
-			root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-			active:
-				'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-		}}
-		on:click={() => onItemClick?.()}
-	/>
+	<section>
+		<NavItem
+			text="Introduction"
+			currentUrl={page.url}
+			path="/docs/introduction"
+			classes={{
+				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
+				active:
+					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
+			}}
+			on:click={() => onItemClick?.()}
+		/>
+
+		<NavItem
+			text="Examples"
+			currentUrl={page.url}
+			path="/docs/examples"
+			classes={{
+				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
+				active:
+					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
+			}}
+			on:click={() => onItemClick?.()}
+		/>
+	</section>
 
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Examples</h2>

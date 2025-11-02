@@ -57,7 +57,7 @@
 	let canResize = $derived(page.data.metadata?.resize);
 </script>
 
-<div class="example relative mt-1">
+<div class="example relative">
 	{#if example}
 		<div
 			class={cls(

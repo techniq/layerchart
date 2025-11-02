@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev --port 3002",
 		"build": "vite build",
-		"prebuild": "pnpm extract:api",
+		"prebuild": "pnpm generate:api",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -16,7 +16,8 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"extract:api": "tsx scripts/extract-component-api.ts"
+		"generate:api": "tsx scripts/generate-component-api.ts",
+		"generate:screenshots": "tsx scripts/generate-screenshots.ts"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.11.1",

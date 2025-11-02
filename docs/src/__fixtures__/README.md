@@ -127,10 +127,10 @@ These fixtures enable testing of:
 
 ## 🚀 Usage
 
-The fixtures are used directly by the main extraction script in `../../scripts/extract-component-api.ts`:
+The fixtures are used directly by the main extraction script in `../../scripts/generate-component-api.ts`:
 
 ```typescript
-import { extractAPIs } from '../scripts/extract-component-api.js';
+import { extractAPIs } from '../scripts/generate-component-api.js';
 
 // Extract all APIs from the fixtures directory
 const apis = extractAPIs(fixturesDir);

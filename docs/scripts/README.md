@@ -4,7 +4,7 @@ This directory contains a script to automatically extract TypeScript type defini
 
 ## Overview
 
-The `extract-component-api.ts` script scans all Svelte components in `packages/layerchart/src/lib/components` and extracts their prop types (specifically `*PropsWithoutHTML` types) along with JSDoc documentation.
+The `generate-component-api.ts` script scans all Svelte components in `packages/layerchart/src/lib/components` and extracts their prop types (specifically `*PropsWithoutHTML` types) along with JSDoc documentation.
 
 ## Usage
 
@@ -145,7 +145,7 @@ Run the tests:
 
 ```bash
 cd docs
-pnpm test:unit src/extract-component-api.test.ts --run
+pnpm test:unit src/generate-component-api.test.ts --run
 ```
 
 Test coverage includes:
