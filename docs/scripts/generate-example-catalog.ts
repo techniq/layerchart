@@ -23,6 +23,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import type {
+	ComponentCatalog,
+	ExampleInfo,
+	UsageInfo
+} from '../src/examples/catalog/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,26 +35,6 @@ const __dirname = path.dirname(__filename);
 const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
 const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples');
 const CATALOG_DIR = path.resolve(__dirname, '../src/examples/catalog');
-
-interface ExampleInfo {
-	name: string;
-	path: string;
-}
-
-interface UsageInfo {
-	example: string;
-	component: string;
-	path: string;
-	lineNumber: number;
-	line: string;
-}
-
-interface ComponentCatalog {
-	component: string;
-	examples: ExampleInfo[];
-	usage: UsageInfo[];
-	generatedAt: string;
-}
 
 /**
  * Get all component files from the components directory
