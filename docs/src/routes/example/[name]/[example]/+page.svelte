@@ -6,4 +6,4 @@
 	let component = page.url.searchParams.get('component') ?? page.params.name!;
 </script>
 
-<Example name={example} {component} />
+<Example name={example} {component} variant="basic" />

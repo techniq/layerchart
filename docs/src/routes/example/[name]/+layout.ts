@@ -3,13 +3,13 @@ import type { Examples } from '$lib/types.js';
 
 export const load = async ({ params }) => {
 	const allExamples = import.meta.glob('/src/examples/**/*', {
-import: 'default'
-});
+		import: 'default'
+	});
 
 	const allSources = import.meta.glob('/src/examples/**/*', {
-import: 'default',
-query: '?raw'
-});
+		import: 'default',
+		query: '?raw'
+	});
 
 	// Load all examples for the given component
 	const examples: Examples = {};
