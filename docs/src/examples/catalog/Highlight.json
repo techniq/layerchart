@@ -108,32 +108,18 @@
       "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
     },
     {
-      "example": "custom",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/custom",
-      "lineNumber": 16,
-      "line": "<Highlight points lines />"
-    },
-    {
-      "example": "series-individual-tooltip",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/series-individual-tooltip",
-      "lineNumber": 58,
-      "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
-    },
-    {
-      "example": "threshold-gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold-gradient",
-      "lineNumber": 41,
-      "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
-    },
-    {
       "example": "highlight-below-marks",
       "component": "BarChart",
       "path": "/example/BarChart/highlight-below-marks",
       "lineNumber": 18,
       "line": "<Highlight area={{ class: 'fill-surface-content/10' }} />"
+    },
+    {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 30,
+      "line": "<Highlight area />"
     },
     {
       "example": "click-handler",
@@ -232,34 +218,6 @@
       "path": "/example/BrushContext/tooltip-interop",
       "lineNumber": 49,
       "line": "<Highlight points lines />"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 30,
-      "line": "<Highlight area />"
-    },
-    {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 28,
-      "line": "<Highlight lines />"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 28,
-      "line": "<Highlight lines />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 36,
-      "line": "<Highlight lines />"
     },
     {
       "example": "click-handler",
@@ -473,13 +431,6 @@
     },
     {
       "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 26,
-      "line": "<Highlight area />"
-    },
-    {
-      "example": "basic",
       "component": "PunchCard",
       "path": "/example/PunchCard/basic",
       "lineNumber": 34,
@@ -491,6 +442,34 @@
       "path": "/example/PunchCard/basic",
       "lineNumber": 35,
       "line": "<Highlight area axis=\"y\" />"
+    },
+    {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 28,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 28,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 36,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 26,
+      "line": "<Highlight area />"
     },
     {
       "example": "with-tooltip-and-highlight",
@@ -815,5 +794,5 @@
       "line": "<Highlight points={true} lines={true} area={false} axis={undefined} />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:28.531Z"
+  "generatedAt": "2025-11-02T23:06:33.787Z"
 }

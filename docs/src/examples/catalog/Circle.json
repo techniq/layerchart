@@ -37,13 +37,6 @@
       "line": "<Circle"
     },
     {
-      "example": "markers",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/markers",
-      "lineNumber": 35,
-      "line": "<Circle"
-    },
-    {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
@@ -541,5 +534,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:27.867Z"
+  "generatedAt": "2025-11-02T23:06:33.365Z"
 }

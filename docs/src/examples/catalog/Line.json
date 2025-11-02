@@ -63,13 +63,6 @@
       "line": "<Line"
     },
     {
-      "example": "markers",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/markers",
-      "lineNumber": 28,
-      "line": "<Line"
-    },
-    {
       "example": "highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/highlight-individual-bar",
@@ -210,5 +203,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:28.687Z"
+  "generatedAt": "2025-11-02T23:06:33.855Z"
 }

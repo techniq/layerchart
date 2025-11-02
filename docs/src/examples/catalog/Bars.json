@@ -18,6 +18,10 @@
       "path": "/example/Bars/calculated-value-domain-positive"
     },
     {
+      "name": "candlestick-bars",
+      "path": "/example/Bars/candlestick-bars"
+    },
+    {
       "name": "click-handler",
       "path": "/example/Bars/click-handler"
     },
@@ -165,6 +169,20 @@
       "path": "/example/Bars/calculated-value-domain-positive",
       "lineNumber": 23,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 28,
+      "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 29,
+      "line": "<Bars y={['open', 'close']} insets={{ x: 0.5 }} />"
     },
     {
       "example": "click-handler",
@@ -361,27 +379,6 @@
       "path": "/example/Bars/with-grid-on-top-mix-blend",
       "lineNumber": 28,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 28,
-      "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 29,
-      "line": "<Bars y={['open', 'close']} insets={{ x: 0.5 }} />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 67,
-      "line": "<Bars insets={{ x: 0.5 }} />"
     },
     {
       "example": "average-annotation-rule",
@@ -643,6 +640,13 @@
       "line": "<Bars radius={1} fill={gradient} />"
     },
     {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 67,
+      "line": "<Bars insets={{ x: 0.5 }} />"
+    },
+    {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
@@ -699,5 +703,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:27.745Z"
+  "generatedAt": "2025-11-02T23:06:33.034Z"
 }

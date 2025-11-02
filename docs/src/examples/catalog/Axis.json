@@ -461,20 +461,6 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "custom",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/custom",
-      "lineNumber": 13,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "custom",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/custom",
-      "lineNumber": 14,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
       "example": "arrow-markers",
       "component": "Axis",
       "path": "/example/Axis/arrow-markers",
@@ -1021,6 +1007,20 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+    },
+    {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
+    },
+    {
       "example": "click-handler",
       "component": "Bars",
       "path": "/example/Bars/click-handler",
@@ -1551,62 +1551,6 @@
       "path": "/example/BrushContext/tooltip-interop",
       "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 26,
-      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 27,
-      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
-    },
-    {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 24,
-      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
-    },
-    {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 25,
-      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 24,
-      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 25,
-      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 32,
-      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 33,
-      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
       "example": "styling-using-attributes",
@@ -2596,20 +2540,6 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 22,
-      "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
-    },
-    {
-      "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 23,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
@@ -2834,6 +2764,48 @@
       "line": "<Axis placement=\"left\" />"
     },
     {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+    },
+    {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 32,
+      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 33,
+      "line": "<Axis placement=\"bottom\" rule tickMultiline />"
+    },
+    {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
@@ -2888,6 +2860,20 @@
       "path": "/example/Rule/data-y-range",
       "lineNumber": 19,
       "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "basic",
@@ -3660,5 +3646,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:27.703Z"
+  "generatedAt": "2025-11-02T23:06:32.996Z"
 }

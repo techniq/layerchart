@@ -23,13 +23,6 @@
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
-      "example": "threshold",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold",
-      "lineNumber": 34,
-      "line": "<Threshold curve={selectedCurve}>"
-    },
-    {
       "example": "basic-threshold",
       "component": "Threshold",
       "path": "/example/Threshold/basic-threshold",
@@ -51,5 +44,5 @@
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:29.151Z"
+  "generatedAt": "2025-11-02T23:06:34.341Z"
 }

@@ -340,62 +340,6 @@
       "line": "<Area"
     },
     {
-      "example": "custom",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/custom",
-      "lineNumber": 15,
-      "line": "<Area line={{ class: 'stroke-primary' }} class=\"fill-primary/30\" />"
-    },
-    {
-      "example": "funnel",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/funnel",
-      "lineNumber": 71,
-      "line": "<Area"
-    },
-    {
-      "example": "gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/gradient",
-      "lineNumber": 13,
-      "line": "<Area line={{ class: 'stroke-primary' }} fill={gradient} />"
-    },
-    {
-      "example": "series-individual-tooltip",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/series-individual-tooltip",
-      "lineNumber": 51,
-      "line": "<Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />"
-    },
-    {
-      "example": "series-stack-gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/series-stack-gradient",
-      "lineNumber": 42,
-      "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
-    },
-    {
-      "example": "threshold",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold",
-      "lineNumber": 36,
-      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
-    },
-    {
-      "example": "threshold",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold",
-      "lineNumber": 40,
-      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
-    },
-    {
-      "example": "threshold-gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold-gradient",
-      "lineNumber": 29,
-      "line": "<Area"
-    },
-    {
       "example": "basic",
       "component": "BrushContext",
       "path": "/example/BrushContext/basic",
@@ -781,5 +725,5 @@
       "line": "<Area"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:27.686Z"
+  "generatedAt": "2025-11-02T23:06:32.980Z"
 }

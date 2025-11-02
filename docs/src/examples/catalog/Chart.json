@@ -535,6 +535,13 @@
       "line": "<Chart"
     },
     {
+      "example": "candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/candlestick-bars",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
       "example": "click-handler",
       "component": "Bars",
       "path": "/example/Bars/click-handler",
@@ -931,41 +938,6 @@
       "component": "Calendar",
       "path": "/example/Calendar/rounded-cells",
       "lineNumber": 24,
-      "line": "<Chart"
-    },
-    {
-      "example": "bars",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/bars",
-      "lineNumber": 11,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 13,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 52,
       "line": "<Chart"
     },
     {
@@ -1781,13 +1753,6 @@
       "line": "<Chart"
     },
     {
-      "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 12,
-      "line": "<Chart"
-    },
-    {
       "example": "line",
       "component": "Marker",
       "path": "/example/Marker/line",
@@ -2481,6 +2446,34 @@
       "line": "<Chart"
     },
     {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 13,
+      "line": "<Chart"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 52,
+      "line": "<Chart"
+    },
+    {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
@@ -2506,6 +2499,13 @@
       "component": "Rule",
       "path": "/example/Rule/data-y-range",
       "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 12,
       "line": "<Chart"
     },
     {
@@ -3111,5 +3111,5 @@
       "line": "<Chart"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:27.833Z"
+  "generatedAt": "2025-11-02T23:06:33.170Z"
 }

@@ -59,18 +59,18 @@
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
-      "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 25,
-      "line": "<Points />"
-    },
-    {
       "example": "radar",
       "component": "RadialLine",
       "path": "/example/RadialLine/radar",
       "lineNumber": 43,
       "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 25,
+      "line": "<Points />"
     },
     {
       "example": "basic",
@@ -185,5 +185,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:28.984Z"
+  "generatedAt": "2025-11-02T23:06:34.116Z"
 }

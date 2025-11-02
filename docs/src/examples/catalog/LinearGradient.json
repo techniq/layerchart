@@ -125,34 +125,6 @@
       "line": "<LinearGradient"
     },
     {
-      "example": "funnel",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/funnel",
-      "lineNumber": 68,
-      "line": "<LinearGradient class=\"from-primary/50 to-secondary/10\">"
-    },
-    {
-      "example": "gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/gradient",
-      "lineNumber": 11,
-      "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
-    },
-    {
-      "example": "series-stack-gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/series-stack-gradient",
-      "lineNumber": 35,
-      "line": "<LinearGradient"
-    },
-    {
-      "example": "threshold-gradient",
-      "component": "AreaChartSimple",
-      "path": "/example/AreaChartSimple/threshold-gradient",
-      "lineNumber": 20,
-      "line": "<LinearGradient"
-    },
-    {
       "example": "gradient",
       "component": "BarChart",
       "path": "/example/BarChart/gradient",
@@ -468,5 +440,5 @@
       "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:28.707Z"
+  "generatedAt": "2025-11-02T23:06:33.877Z"
 }

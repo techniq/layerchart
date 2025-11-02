@@ -26,6 +26,18 @@
       "path": "/example/Rule/baseline-y-negative"
     },
     {
+      "name": "candlestick",
+      "path": "/example/Rule/candlestick"
+    },
+    {
+      "name": "candlestick-open-close-line-color",
+      "path": "/example/Rule/candlestick-open-close-line-color"
+    },
+    {
+      "name": "candlestick-with-brushing",
+      "path": "/example/Rule/candlestick-with-brushing"
+    },
+    {
       "name": "data-x-band",
       "path": "/example/Rule/data-x-band"
     },
@@ -40,6 +52,10 @@
     {
       "name": "data-y-range",
       "path": "/example/Rule/data-y-range"
+    },
+    {
+      "name": "lollipop",
+      "path": "/example/Rule/lollipop"
     }
   ],
   "usage": [
@@ -128,48 +144,6 @@
       "line": "<Rule y={0} />"
     },
     {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 26,
-      "line": "<Rule y={['high', 'low']} />"
-    },
-    {
-      "example": "basic",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/basic",
-      "lineNumber": 27,
-      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 26,
-      "line": "<Rule y={['high', 'low']} class=\"stroke-surface-content\" />"
-    },
-    {
-      "example": "open-close-line-color",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/open-close-line-color",
-      "lineNumber": 27,
-      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 34,
-      "line": "<Rule y={['high', 'low']} />"
-    },
-    {
-      "example": "with-brushing",
-      "component": "Candlestick",
-      "path": "/example/Candlestick/with-brushing",
-      "lineNumber": 35,
-      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
-    },
-    {
       "example": "average-annotation-rule",
       "component": "Columns",
       "path": "/example/Columns/average-annotation-rule",
@@ -219,13 +193,6 @@
       "line": "<Rule />"
     },
     {
-      "example": "basic",
-      "component": "Lollipop",
-      "path": "/example/Lollipop/basic",
-      "lineNumber": 24,
-      "line": "<Rule />"
-    },
-    {
       "example": "annotation-x",
       "component": "Rule",
       "path": "/example/Rule/annotation-x",
@@ -268,6 +235,48 @@
       "line": "<Rule y={0} />"
     },
     {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 26,
+      "line": "<Rule y={['high', 'low']} />"
+    },
+    {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 27,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 26,
+      "line": "<Rule y={['high', 'low']} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 27,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 34,
+      "line": "<Rule y={['high', 'low']} />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 35,
+      "line": "<Rule y={['open', 'close']} strokeWidth={3} />"
+    },
+    {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
@@ -294,6 +303,13 @@
       "path": "/example/Rule/data-y-range",
       "lineNumber": 20,
       "line": "<Rule class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 24,
+      "line": "<Rule />"
     },
     {
       "example": "duration",
@@ -324,5 +340,5 @@
       "line": "<Rule />"
     }
   ],
-  "generatedAt": "2025-11-02T22:11:29.088Z"
+  "generatedAt": "2025-11-02T23:06:34.258Z"
 }
