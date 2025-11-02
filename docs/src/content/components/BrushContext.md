@@ -61,7 +61,7 @@ related: []
 
 ### Sync brushes with `bind:xDomain`
 
-<Example name="sync-brushes-with-bind:xdomain" />
+<Example name="sync-brushes-with-bind-xdomain" />
 
 ### Tooltip interop
 

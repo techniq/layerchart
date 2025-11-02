@@ -1,62 +1,63 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 interface ExampleInfo {
 	component: string;
 	examples: Array<{
 		name: string;
 		path: string;
+		hasLightScreenshot: boolean;
+		hasDarkScreenshot: boolean;
 	}>;
 }
 
 export async function load() {
-	const examplesDir = path.resolve(__dirname, '../../../examples');
-	const screenshotsDir = path.resolve(__dirname, '../../../../static/screenshots');
+	// Import all example files using Vite's import.meta.glob
+	const exampleModules = import.meta.glob('/src/examples/**/*.svelte');
+	const screenshotModules = import.meta.glob('/static/screenshots/**/*.png', {
+		query: '?url',
+		import: 'default'
+	});
 
-	// Read all component directories
-	const components: ExampleInfo[] = [];
-	const entries = fs.readdirSync(examplesDir, { withFileTypes: true });
+	// Group examples by component
+	const componentMap = new Map<
+		string,
+		Array<{
+			name: string;
+			path: string;
+			hasLightScreenshot: boolean;
+			hasDarkScreenshot: boolean;
+		}>
+	>();
 
-	for (const entry of entries) {
-		if (entry.isDirectory()) {
-			const componentName = entry.name;
-			const componentDir = path.join(examplesDir, componentName);
+	for (const filePath of Object.keys(exampleModules)) {
+		// Parse path: /src/examples/ComponentName/example-name.svelte
+		const match = filePath.match(/\/examples\/([^/]+)\/(.+)\.svelte$/);
+		if (!match) continue;
 
-			// Get all .svelte files in this component directory
-			const exampleFiles = fs.readdirSync(componentDir, { withFileTypes: true });
-			const examples = exampleFiles
-				.filter((file) => file.isFile() && file.name.endsWith('.svelte'))
-				.map((file) => {
-					const exampleName = file.name.replace('.svelte', '');
-					return {
-						name: exampleName,
-						path: `/example/${componentName}/${exampleName}`,
-						// Check if screenshots exist
-						hasLightScreenshot: fs.existsSync(
-							path.join(screenshotsDir, componentName, `${exampleName}-light.png`)
-						),
-						hasDarkScreenshot: fs.existsSync(
-							path.join(screenshotsDir, componentName, `${exampleName}-dark.png`)
-						)
-					};
-				})
-				.sort((a, b) => a.name.localeCompare(b.name));
+		const [, componentName, exampleName] = match;
 
-			if (examples.length > 0) {
-				components.push({
-					component: componentName,
-					examples
-				});
-			}
+		if (!componentMap.has(componentName)) {
+			componentMap.set(componentName, []);
 		}
+
+		const hasLightScreenshot =
+			`/static/screenshots/${componentName}/${exampleName}-light.png` in screenshotModules;
+		const hasDarkScreenshot =
+			`/static/screenshots/${componentName}/${exampleName}-dark.png` in screenshotModules;
+
+		componentMap.get(componentName)!.push({
+			name: exampleName,
+			path: `/example/${componentName}/${exampleName}`,
+			hasLightScreenshot,
+			hasDarkScreenshot
+		});
 	}
 
-	// Sort components alphabetically
-	components.sort((a, b) => a.component.localeCompare(b.component));
+	// Convert to sorted array
+	const components: ExampleInfo[] = Array.from(componentMap.entries())
+		.map(([component, examples]) => ({
+			component,
+			examples: examples.sort((a, b) => a.name.localeCompare(b.name))
+		}))
+		.sort((a, b) => a.component.localeCompare(b.component));
 
 	return {
 		components,

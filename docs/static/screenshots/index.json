@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-02T13:29:30.858Z",
+  "generatedAt": "2025-11-02T14:56:02.527Z",
   "totalComponents": 82,
   "totalExamples": 760,
   "components": [
@@ -1287,8 +1287,8 @@
           "path": "/example/BrushContext/striped-background"
         },
         {
-          "name": "sync-brushes-with-bind:xdomain",
-          "path": "/example/BrushContext/sync-brushes-with-bind:xdomain"
+          "name": "sync-brushes-with-bind-xdomain",
+          "path": "/example/BrushContext/sync-brushes-with-bind-xdomain"
         },
         {
           "name": "tooltip-interop",
