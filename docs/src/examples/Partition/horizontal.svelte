@@ -81,7 +81,7 @@
 	</Button>
 </Breadcrumb>
 
-<Chart height={800}>
+<Chart height={600}>
 	{#snippet children({ context })}
 		<Layer>
 			<Bounds

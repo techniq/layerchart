@@ -39,17 +39,31 @@
 </script>
 
 <nav class={cls('grid gap-6', className)}>
-	<NavItem
-		text="Home"
-		currentUrl={page.url}
-		path="/"
-		classes={{
-			root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-			active:
-				'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-		}}
-		on:click={() => onItemClick?.()}
-	/>
+	<section>
+		<NavItem
+			text="Introduction"
+			currentUrl={page.url}
+			path="/docs/introduction"
+			classes={{
+				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
+				active:
+					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
+			}}
+			on:click={() => onItemClick?.()}
+		/>
+
+		<NavItem
+			text="Examples"
+			currentUrl={page.url}
+			path="/docs/examples"
+			classes={{
+				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
+				active:
+					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
+			}}
+			on:click={() => onItemClick?.()}
+		/>
+	</section>
 
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Examples</h2>
@@ -60,7 +74,7 @@
 					<NavItem
 						text={example.name}
 						currentUrl={page.url}
-						path="/examples/{example.slug}"
+						path="/docs/examples/{example.slug}"
 						classes={{
 							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 							active:
@@ -82,7 +96,7 @@
 					<NavItem
 						text={component.name}
 						currentUrl={page.url}
-						path="/components/{component.slug}"
+						path="/docs/components/{component.slug}"
 						classes={{
 							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 							active:

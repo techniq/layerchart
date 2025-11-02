@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "vite dev --port 3002",
 		"build": "vite build",
+		"prebuild": "pnpm generate:api",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -14,7 +15,9 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"generate:api": "tsx scripts/generate-component-api.ts",
+		"generate:screenshots": "tsx scripts/generate-screenshots.ts"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.11.1",
@@ -25,6 +28,7 @@
 		"@iconify-json/lucide": "^1.2.71",
 		"@layerstack/svelte-actions": "1.0.1-next.14",
 		"@layerstack/svelte-state": "0.1.0-next.19",
+		"@layerstack/svelte-table": "1.0.1-next.16",
 		"@layerstack/tailwind": "2.0.0-next.19",
 		"@layerstack/utils": "2.0.0-next.16",
 		"@playwright/test": "^1.56.1",
@@ -82,12 +86,13 @@
 		"runed": "^0.35.1",
 		"shiki": "^3.14.0",
 		"solar-calculator": "^0.3.0",
-		"svelte": "^5.43.2",
+		"svelte": "5.39.13",
 		"svelte-check": "^4.3.3",
 		"svelte-ux": "2.0.0-next.20",
 		"tailwindcss": "^4.1.16",
 		"topojson-client": "^3.1.0",
 		"topojson-simplify": "^3.0.3",
+		"tsx": "^4.19.2",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.2",
 		"unist-builder": "^4.0.0",

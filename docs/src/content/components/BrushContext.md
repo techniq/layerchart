@@ -53,7 +53,7 @@ related: []
 
 ### Separate chart (clip data: y-axis)
 
-<Example name="separate-chart-(clip-data:-y-axis)" />
+<Example name="separate-chart-(clip-data-y-axis)" />
 
 ### Separate chart (filter data)
 
