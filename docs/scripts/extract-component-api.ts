@@ -13,7 +13,7 @@
  * - Additional JSDoc tags (@bindable, etc.)
  *
  * @output
- * Generates api.json containing structured API documentation for all components
+ * Generates individual JSON files in generated/api/ for each component, plus an index.json file
  *
  * @usage
  * pnpm extract:api
@@ -51,7 +51,6 @@ const __dirname = path.dirname(__filename);
 
 const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
 const OUTPUT_DIR = path.resolve(__dirname, '../src/generated/api');
-const OUTPUT_FILE = path.resolve(__dirname, '../src/generated/api.json');
 
 /**
  * Get all .svelte files in a directory
@@ -373,17 +372,8 @@ function main() {
 	};
 	fs.writeFileSync(indexFile, JSON.stringify(indexOutput, null, 2));
 
-	// Write combined output file
-	const output = {
-		generatedAt: new Date().toISOString(),
-		components: apis
-	};
-
-	fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
-
 	console.log(`\n✅ Generated ${apis.length} component API files in ${OUTPUT_DIR}`);
 	console.log(`✅ Generated index file: ${indexFile}`);
-	console.log(`✅ Generated combined file: ${OUTPUT_FILE}`);
 	console.log(`   Extracted ${apis.length} component APIs`);
 }
 
