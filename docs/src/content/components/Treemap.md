@@ -1,6 +1,6 @@
 ---
 description: Layout component which visualizes hierarchical data as nested rectangles, where each rectangle’s size represents a quantitative value and nesting reflects the hierarchy.
-section: hierarchy
+section: layout
 layers: [svg, canvas]
 related: [examples/Treemap]
 ---

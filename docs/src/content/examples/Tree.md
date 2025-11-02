@@ -1,6 +1,6 @@
 ---
 description: Visual representation that organizes items or entities in a branching structure, showing parent-child relationships where each node connects to one or more subordinate nodes, effectively illustrating levels of hierarchy from top (root) to bottom (leaves).
-section: Hierarchy
+section: hierarchy
 layers: ['svg']
 related: []
 ---
