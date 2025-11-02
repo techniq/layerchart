@@ -25,3 +25,8 @@ vite.config.ts.timestamp-*
 
 # Content Collections
 .content-collections
+
+# Generated API documentation
+src/generated/api.json
+src/generated/api/*.json
+!src/generated/api/README.md

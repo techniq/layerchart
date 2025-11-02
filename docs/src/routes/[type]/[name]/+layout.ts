@@ -1,5 +1,6 @@
 import type { Component } from 'svelte';
 import type { Examples } from '$lib/types.js';
+import type { ComponentAPI } from '$lib/api-types.js';
 import { getMarkdownComponent } from '$lib/markdown/utils.js';
 
 export const load = async ({ params }) => {
@@ -10,6 +11,10 @@ export const load = async ({ params }) => {
 	const allSources = import.meta.glob('/src/examples/**/*', {
 		import: 'default',
 		query: '?raw'
+	});
+
+	const allAPIs = import.meta.glob('/src/generated/api/*.json', {
+		import: 'default'
 	});
 
 	const { PageComponent, metadata } = await getMarkdownComponent(
@@ -51,10 +56,26 @@ export const load = async ({ params }) => {
 		}
 	}
 
+	// Load component API if this is a component page
+	let api: ComponentAPI | null = null;
+	if (params.type === 'components') {
+		const apiPath = `/src/generated/api/${params.name}.json`;
+		if (allAPIs[apiPath]) {
+			try {
+				api = (await allAPIs[apiPath]()) as ComponentAPI;
+			} catch (error) {
+				console.warn(`Failed to load API file for component: ${params.name}`, error);
+			}
+		} else {
+			console.warn(`No API file found for component: ${params.name}`);
+		}
+	}
+
 	return {
 		PageComponent,
 		metadata,
 		examples,
+		api,
 		meta: {
 			tableOfContents: true
 		}
