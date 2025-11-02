@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-02T06:51:36.099Z",
+  "generatedAt": "2025-11-02T13:29:30.858Z",
   "totalComponents": 82,
   "totalExamples": 760,
   "components": [
@@ -1267,8 +1267,8 @@
           "path": "/example/BrushContext/selection"
         },
         {
-          "name": "separate-chart-(clip-data:-y-axis)",
-          "path": "/example/BrushContext/separate-chart-(clip-data:-y-axis)"
+          "name": "separate-chart-(clip-data-y-axis)",
+          "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)"
         },
         {
           "name": "separate-chart-(clip-data)",
