@@ -20,7 +20,7 @@
 							strokeWidth={link.width}
 							class="stroke-surface-content/10"
 							onpointermove={(e) => context.tooltip.show(e, { link })}
-							onpointerleave={context.tooltip.hide}
+							onpointerleave={() => context.tooltip.hide()}
 						/>
 					{/each}
 
@@ -33,7 +33,7 @@
 								height={nodeHeight}
 								class="fill-primary"
 								onpointermove={(e) => context.tooltip.show(e, { node })}
-								onpointerleave={context.tooltip.hide}
+								onpointerleave={() => context.tooltip.hide()}
 							/>
 							<Text
 								value={node.name}
