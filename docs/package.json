@@ -14,11 +14,12 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run && npm run test:e2e",
+		"test": "pnpm test:unit -- --run && pnpm test:e2e",
 		"test:e2e": "playwright test",
 		"generate:api": "tsx scripts/generate-component-api.ts",
 		"generate:screenshots": "tsx scripts/generate-screenshots.ts",
-		"generate:catalog": "tsx scripts/generate-example-catalog.ts"
+		"generate:catalog": "tsx scripts/generate-example-catalog.ts",
+		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.11.1",
