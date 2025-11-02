@@ -150,7 +150,8 @@ async function captureScreenshot(
 
 		// Take screenshot of the element
 		await element.screenshot({
-			path: screenshotPath
+			path: screenshotPath,
+			omitBackground: true
 		});
 
 		console.log(`  ✓ ${mode}: ${screenshotPath}`);
