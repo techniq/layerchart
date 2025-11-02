@@ -60,7 +60,7 @@
 					<NavItem
 						text={example.name}
 						currentUrl={page.url}
-						path="/examples/{example.slug}"
+						path="/docs/examples/{example.slug}"
 						classes={{
 							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 							active:
@@ -82,7 +82,7 @@
 					<NavItem
 						text={component.name}
 						currentUrl={page.url}
-						path="/components/{component.slug}"
+						path="/docs/components/{component.slug}"
 						classes={{
 							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 							active:
