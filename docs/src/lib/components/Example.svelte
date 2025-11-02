@@ -48,7 +48,7 @@
 	let ref = $state<SvelteComponent | null>(null);
 	let data = $derived(ref?.data);
 
-	let canResize = $derived(page.data.metadata.resize);
+	let canResize = $derived(page.data.metadata?.resize);
 </script>
 
 <div class="example relative mt-1">

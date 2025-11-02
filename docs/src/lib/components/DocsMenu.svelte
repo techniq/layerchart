@@ -40,9 +40,9 @@
 
 <nav class={cls('grid gap-6', className)}>
 	<NavItem
-		text="Home"
+		text="Introduction"
 		currentUrl={page.url}
-		path="/"
+		path="/docs/introduction"
 		classes={{
 			root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
 			active:
