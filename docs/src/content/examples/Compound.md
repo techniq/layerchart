@@ -1,5 +1,5 @@
 ---
-description: Compound
+description: Visualization combineing multiple chart types or multiple of same chart types to provide a more comprehensive view of the related data.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related:

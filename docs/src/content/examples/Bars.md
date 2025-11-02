@@ -1,5 +1,5 @@
 ---
-name: Bar Chart (Horizontal)
+name: Visuaiization where horizontal bars to represent and compare discrete data values visually.
 description: Bar Chart (Horizontal)
 section: cartesian & polar
 layers: ['svg', 'canvas']

@@ -1,5 +1,5 @@
 ---
-description: Sparkline
+description: Visualization of very small, simple line used to show a trend in data over time within a compact space.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related:

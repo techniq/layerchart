@@ -1,5 +1,5 @@
 ---
-description: BrushContext
+description: Interaction component providing an interactive brush context allowing selection, adjustment, and resetting of x/y domains with draggable handles and event callbacks.
 section: interactions
 layers: ['svg', 'canvas']
 related: []

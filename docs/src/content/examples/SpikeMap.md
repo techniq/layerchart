@@ -1,5 +1,5 @@
 ---
-description: SpikeMap
+description: Visualization of geographical map using spikes to represent values or magnitudes at specific locations.
 section: geo
 layers: ['svg', 'canvas']
 related: []

@@ -1,5 +1,5 @@
 ---
-description: Setup geo context, particularly the projection used by other geo components.  Typically used indirectly via the `geo` prop on Chart
+description: Geographic component which provides geographic projection and scaling context to children for accurate rendering of geographic data.
 section: geo
 layers: ['svg', 'canvas']
 related: ['components/Chart']

@@ -1,5 +1,5 @@
 ---
-description: ForceText examples demonstrating text rasterization with force simulation
+description: Visualization positioning text elements within a force-directed layout to demonstrating relationships and connections dynamically.
 section: force
 layers: ['svg', 'canvas']
 related: ['https://d3og.com/armollica/06a202c9f7df191ace8a1f97e33ffb97/']

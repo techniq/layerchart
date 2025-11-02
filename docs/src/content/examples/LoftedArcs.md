@@ -1,5 +1,5 @@
 ---
-description: LoftedArcs
+description: Visualization drawing elevated arcs on a globe or map to represent connections or flows between geographical locations.
 section: geo
 layers: ['svg', 'canvas']
 related: ['https://observablehq.com/@armollica/globe-with-lofted-arcs']

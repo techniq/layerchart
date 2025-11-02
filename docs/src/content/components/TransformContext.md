@@ -1,5 +1,5 @@
 ---
-description: TransformContext
+description: Interaction component which provides context to support panning, zooming, and dragging interactions for chart elements.
 section: interactions
 layers: ['svg', 'canvas', 'html']
 related:

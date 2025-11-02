@@ -1,5 +1,5 @@
 ---
-description: Lollipop
+description: Visualization combining lines and markers to represent data points, highlighting individual values along a vertical or horizontal axis.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Rule']

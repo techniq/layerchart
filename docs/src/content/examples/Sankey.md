@@ -1,5 +1,5 @@
 ---
-description: Sankey
+description: Visualization of flow and distribution of resources or data between different stages or categories using proportional arrows.
 section: graph
 layers: ['svg']
 related: ['components/Sankey', 'components/Link']

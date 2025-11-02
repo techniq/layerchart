@@ -1,5 +1,5 @@
 ---
-description: Scatter
+description: Visualization plotting individual data points on a graph to show distribution, relationships, or clusters without connecting lines.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: []

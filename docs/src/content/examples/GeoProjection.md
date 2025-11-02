@@ -1,5 +1,5 @@
 ---
-description: Geographic projection examples demonstrating various map projections with interactive controls
+description: Visualization transforming geographical coordinates into a flat map representation using various projection techniques.
 section: geo
 layers: ['svg', 'canvas']
 related: ['components/GeoPath', 'components/Chart', 'components/Graticule', 'components/Layer']

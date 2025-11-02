@@ -1,5 +1,5 @@
 ---
-description: Dagre
+description: Visualization of directed graphs using a layered approach to represent relationships between nodes.
 section: graph
 layers: ['svg']
 related: ['components/Dagre', 'components/Link']

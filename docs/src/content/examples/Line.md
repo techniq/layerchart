@@ -1,5 +1,5 @@
 ---
-description: Line
+description: Visualization connectings data points with straight lines to show trends, patterns, or relationships over a continuous range.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: []

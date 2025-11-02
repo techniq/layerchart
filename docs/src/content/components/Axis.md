@@ -1,5 +1,5 @@
 ---
-section: common
+section: Commonly used component displays the scale and reference lines on a chart, providing context for interpreting data values.
 layers: [svg, canvas, html]
 related: [components/Grid, components/Rule]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Bar Chart (Vertical)
+name: Visualization creating vertical bars to represent and compare discrete data values visually.
 description: Bar Chart (Vertical)
 section: cartesian & polar
 layers: ['svg', 'canvas']

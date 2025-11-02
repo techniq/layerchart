@@ -1,5 +1,5 @@
 ---
-description: Duration
+description: Visualization of time intervals/durations on a chart to represent events, activities, or processes over a specified period.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/BarChart', 'components/Points']

@@ -1,5 +1,5 @@
 ---
-description: Ramp in a color space
+description: Component generates a color ramp (gradient) based on specified colors and stops, useful for mapping data values to colors in visualizations.
 section: other
 layers: ['svg']
 related: []

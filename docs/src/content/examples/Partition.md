@@ -1,5 +1,5 @@
 ---
-description: Space-filling visualization that represents hierarchical data as nested rectangles, where each rectangle’s size reflects a quantitative value and deeper levels of the hierarchy are shown as subdivisions within parent rectangles
+description: Space-filling visualization that represents hierarchical data as nested rectangles, where each rectangle’s size reflects a quantitative value and deeper levels of the hierarchy are shown as subdivisions within parent rectangles.
 section: Hierarchy
 layers: ['svg']
 related: []

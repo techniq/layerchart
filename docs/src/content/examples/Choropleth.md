@@ -1,5 +1,5 @@
 ---
-description: Choropleth
+description: Visualization of data by shading geographical regions on a map according to specific values or categories.
 section: geo
 layers: ['svg', 'canvas']
 related: []

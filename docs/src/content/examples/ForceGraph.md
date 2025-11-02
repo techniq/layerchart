@@ -1,5 +1,5 @@
 ---
-description: ForceGraph examples demonstrating network graph visualization with interactive force controls
+description: Visualization displaying interconnected nodes and links using a physics-based simulation that positions elements according to attractive and repulsive forces.
 section: force
 layers: ['svg', 'canvas']
 related:

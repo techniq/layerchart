@@ -1,5 +1,5 @@
 ---
-description: <g> element with convenient x/y and center placement along with tweened properties using motionStore
+description: Primitive component which clusters multiple chart elements together, allowing them to be managed, styled, or transformed as a single unit.
 section: primitives
 layers: ['svg', 'html']
 related:

@@ -1,5 +1,5 @@
 ---
-description: Candlestick
+description: Visualization of price movements over time using candles that show opening, closing, high, and low values for each period.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related: ['components/Rule', 'components/Bars']

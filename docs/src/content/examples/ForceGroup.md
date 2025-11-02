@@ -1,5 +1,5 @@
 ---
-description: ForceGroup examples demonstrating grouped force simulation layouts
+description: Visualization showing a lattice structure using force-directed layout to visualize relationships in a grid-like pattern.
 section: force
 layers: ['svg', 'canvas']
 related: []

@@ -1,5 +1,5 @@
 ---
-description: Sparkbar
+description: Visualization of very small, simple bar chart used to show data over time within a compact space.
 section: cartesian & polar
 layers: ['svg', 'canvas']
 related:

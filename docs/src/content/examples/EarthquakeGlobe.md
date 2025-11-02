@@ -1,5 +1,5 @@
 ---
-description: EarthquakeGlobe
+description: Visualization of an interactive 3D globe visualization to represent earthquake data dynamically.
 section: geo
 layers: ['svg', 'canvas']
 related:

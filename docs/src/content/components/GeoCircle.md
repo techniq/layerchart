@@ -1,5 +1,5 @@
 ---
-section: geo
+section: Geographic component which displays circular areas on a map to represent a specific geographic region or radius around a point.
 layers: [svg, canvas]
 related: [examples/Timezones]
 ---
