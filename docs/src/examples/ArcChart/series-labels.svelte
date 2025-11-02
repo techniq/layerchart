@@ -10,7 +10,7 @@
 </script>
 
 <ArcChart
-	key="fruit"
+	key="key"
 	value="value"
 	series={data.map((d) => {
 		return {
@@ -31,7 +31,7 @@
 				<Text
 					{...getArcTextProps('middle')}
 					value={visibleSeries[seriesIndex].key}
-					class="fill-black"
+					class="fill-black pointer-events-none"
 					font-size="12px"
 				/>
 			{/snippet}

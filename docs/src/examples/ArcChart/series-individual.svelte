@@ -10,7 +10,7 @@
 </script>
 
 <ArcChart
-	key="fruit"
+	key="key"
 	value="value"
 	series={data.map((d) => {
 		return {
