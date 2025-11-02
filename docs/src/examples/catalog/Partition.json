@@ -10,6 +10,10 @@
       "path": "/example/Partition/horizontal"
     },
     {
+      "name": "sunburst",
+      "path": "/example/Partition/sunburst"
+    },
+    {
       "name": "vertical",
       "path": "/example/Partition/vertical"
     }
@@ -30,19 +34,19 @@
       "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
     },
     {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 76,
+      "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
+    },
+    {
       "example": "vertical",
       "component": "Partition",
       "path": "/example/Partition/vertical",
       "lineNumber": 98,
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
-    },
-    {
-      "example": "basic",
-      "component": "Sunburst",
-      "path": "/example/Sunburst/basic",
-      "lineNumber": 76,
-      "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
     }
   ],
-  "generatedAt": "2025-11-02T16:10:38.926Z"
+  "generatedAt": "2025-11-02T22:11:28.856Z"
 }

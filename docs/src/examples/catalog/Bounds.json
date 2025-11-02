@@ -17,17 +17,17 @@
       "line": "<Bounds"
     },
     {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 65,
+      "line": "<Bounds"
+    },
+    {
       "example": "vertical",
       "component": "Partition",
       "path": "/example/Partition/vertical",
       "lineNumber": 88,
-      "line": "<Bounds"
-    },
-    {
-      "example": "basic",
-      "component": "Sunburst",
-      "path": "/example/Sunburst/basic",
-      "lineNumber": 65,
       "line": "<Bounds"
     },
     {
@@ -45,5 +45,5 @@
       "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
     }
   ],
-  "generatedAt": "2025-11-02T16:10:37.849Z"
+  "generatedAt": "2025-11-02T22:11:27.778Z"
 }

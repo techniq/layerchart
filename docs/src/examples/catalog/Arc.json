@@ -152,6 +152,13 @@
       "line": "<Arc {...props}>"
     },
     {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 80,
+      "line": "<Arc"
+    },
+    {
       "example": "default-slot-render-each-arc",
       "component": "Pie",
       "path": "/example/Pie/default-slot-render-each-arc",
@@ -213,14 +220,7 @@
       "path": "/example/PieChart/offset-slice",
       "lineNumber": 11,
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
-    },
-    {
-      "example": "basic",
-      "component": "Sunburst",
-      "path": "/example/Sunburst/basic",
-      "lineNumber": 80,
-      "line": "<Arc"
     }
   ],
-  "generatedAt": "2025-11-02T16:10:37.593Z"
+  "generatedAt": "2025-11-02T22:11:27.663Z"
 }

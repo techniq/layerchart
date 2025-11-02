@@ -1879,6 +1879,13 @@
       "line": "<Chart height={600}>"
     },
     {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 62,
+      "line": "<Chart height={600}>"
+    },
+    {
       "example": "vertical",
       "component": "Partition",
       "path": "/example/Partition/vertical",
@@ -2663,13 +2670,6 @@
       "line": "<Chart"
     },
     {
-      "example": "basic",
-      "component": "Sunburst",
-      "path": "/example/Sunburst/basic",
-      "lineNumber": 62,
-      "line": "<Chart height={600}>"
-    },
-    {
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
@@ -3111,5 +3111,5 @@
       "line": "<Chart"
     }
   ],
-  "generatedAt": "2025-11-02T16:10:37.965Z"
+  "generatedAt": "2025-11-02T22:11:27.833Z"
 }

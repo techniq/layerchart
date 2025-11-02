@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-02T14:56:02.527Z",
-  "totalComponents": 82,
+  "generatedAt": "2025-11-02T22:11:48.190Z",
+  "totalComponents": 81,
   "totalExamples": 760,
   "components": [
     {
@@ -2364,6 +2364,10 @@
           "path": "/example/Partition/horizontal"
         },
         {
+          "name": "sunburst",
+          "path": "/example/Partition/sunburst"
+        },
+        {
           "name": "vertical",
           "path": "/example/Partition/vertical"
         }
@@ -3122,15 +3126,6 @@
         {
           "name": "basic",
           "path": "/example/SubmarineCablesGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "Sunburst",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Sunburst/basic"
         }
       ]
     },
