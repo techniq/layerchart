@@ -38,9 +38,6 @@ const VIEWPORT = {
 	height: 1000
 };
 
-// Wait time for charts to render (ms)
-const RENDER_WAIT = 1000;
-
 // Limit for testing (set to undefined to process all)
 const TEST_LIMIT: number | undefined = undefined;
 
@@ -134,9 +131,6 @@ async function captureScreenshot(
 		// Navigate to the example
 		await page.goto(url, { waitUntil: 'networkidle' });
 
-		// Wait for the page to render
-		await page.waitForTimeout(RENDER_WAIT);
-
 		// Try to find .lc-root-container first, fall back to .example
 		let element = page.locator('.lc-root-container').first();
 
@@ -186,6 +180,9 @@ async function main() {
 		viewport: VIEWPORT
 	});
 	const page = await context.newPage();
+
+	// Set default timeout to avoid long waits
+	page.setDefaultTimeout(5000);
 
 	let processedCount = 0;
 	let skippedCount = 0;
