@@ -82,6 +82,10 @@
       "path": "/example/LineChart/null-gaps"
     },
     {
+      "name": "oscilloscope-time",
+      "path": "/example/LineChart/oscilloscope-time"
+    },
+    {
       "name": "override-color",
       "path": "/example/LineChart/override-color"
     },
@@ -486,6 +490,13 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" points height={300} />"
     },
     {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 122,
+      "line": "<LineChart"
+    },
+    {
       "example": "override-color",
       "component": "LineChart",
       "path": "/example/LineChart/override-color",
@@ -673,14 +684,7 @@
       "path": "/example/LineChart/vertical",
       "lineNumber": 9,
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
-    },
-    {
-      "example": "time",
-      "component": "Oscilloscope",
-      "path": "/example/Oscilloscope/time",
-      "lineNumber": 122,
-      "line": "<LineChart"
     }
   ],
-  "updatedAt": "2025-11-03T13:50:24.977Z"
+  "updatedAt": "2025-11-03T17:18:47.494Z"
 }

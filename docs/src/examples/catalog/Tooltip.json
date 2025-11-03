@@ -2300,6 +2300,216 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 29,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 31,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 32,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 33,
+      "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} color=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 34,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} color=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 49,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 51,
+      "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 52,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 53,
+      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 54,
+      "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 56,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 58,
+      "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 59,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 60,
+      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 61,
+      "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 45,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 47,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"open\" value={data.open} format=\"currency\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 50,
+      "line": "<Tooltip.Item label=\"close\" value={data.close} format=\"currency\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 51,
+      "line": "<Tooltip.Item label=\"high\" value={data.high} format=\"currency\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 52,
+      "line": "<Tooltip.Item label=\"low\" value={data.low} format=\"currency\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 53,
+      "line": "<Tooltip.Item label=\"volume\" value={data.volume} format=\"integer\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 80,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 82,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 83,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 84,
+      "line": "<Tooltip.Item label=\"rain\" color=\"hsl(200 100% 50%)\" value={data.rain} />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 85,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 90,
+      "line": "<Tooltip.Item label=\"dirtyh2o\" color=\"hsl(0, 84%, 60%)\" value={data.dirtyh2o} />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 91,
+      "line": "<Tooltip.Item"
+    },
+    {
       "example": "vertical-grouped",
       "component": "Columns",
       "path": "/example/Columns/vertical-grouped",
@@ -2725,216 +2935,6 @@
       "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 36,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
-    },
-    {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
-      "lineNumber": 29,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
-      "lineNumber": 31,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
-    },
-    {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
-      "lineNumber": 32,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
-      "lineNumber": 33,
-      "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} color=\"var(--color-primary)\" />"
-    },
-    {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
-      "lineNumber": 34,
-      "line": "<Tooltip.Item label=\"value\" value={data.value} color=\"var(--color-secondary)\" />"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 49,
-      "line": "<Tooltip.Root {context}>"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 51,
-      "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 52,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 53,
-      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 54,
-      "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 56,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 58,
-      "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 59,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 60,
-      "line": "<Tooltip.Item label=\"sales\" value={data.sales} format=\"currencyRound\" />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 61,
-      "line": "<Tooltip.Item label=\"efficiency\" value={data.efficiency} />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 45,
-      "line": "<Tooltip.Root {context}>"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 47,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 48,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 49,
-      "line": "<Tooltip.Item label=\"open\" value={data.open} format=\"currency\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 50,
-      "line": "<Tooltip.Item label=\"close\" value={data.close} format=\"currency\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 51,
-      "line": "<Tooltip.Item label=\"high\" value={data.high} format=\"currency\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 52,
-      "line": "<Tooltip.Item label=\"low\" value={data.low} format=\"currency\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 53,
-      "line": "<Tooltip.Item label=\"volume\" value={data.volume} format=\"integer\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 80,
-      "line": "<Tooltip.Root {context}>"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 82,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 83,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 84,
-      "line": "<Tooltip.Item label=\"rain\" color=\"hsl(200 100% 50%)\" value={data.rain} />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 85,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 90,
-      "line": "<Tooltip.Item label=\"dirtyh2o\" color=\"hsl(0, 84%, 60%)\" value={data.dirtyh2o} />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 91,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "beeswarm",
@@ -5800,5 +5800,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:06:48.523Z"
+  "updatedAt": "2025-11-03T17:50:38.938Z"
 }

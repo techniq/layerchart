@@ -976,6 +976,27 @@
       "line": "<Layer>"
     },
     {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/example/Circle/styling-using-attributes",
@@ -1246,27 +1267,6 @@
       "component": "Columns",
       "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 23,
-      "line": "<Layer>"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 20,
-      "line": "<Layer>"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 43,
       "line": "<Layer>"
     },
     {
@@ -3237,5 +3237,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:55.900Z"
+  "updatedAt": "2025-11-03T17:50:38.337Z"
 }

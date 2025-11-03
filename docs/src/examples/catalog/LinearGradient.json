@@ -132,6 +132,13 @@
       "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
     },
     {
+      "example": "oscilloscope-frequency",
+      "component": "BarChart",
+      "path": "/example/BarChart/oscilloscope-frequency",
+      "lineNumber": 142,
+      "line": "<LinearGradient"
+    },
+    {
       "example": "horizontal-gradient",
       "component": "Bars",
       "path": "/example/Bars/horizontal-gradient",
@@ -342,13 +349,6 @@
       "line": "<LinearGradient"
     },
     {
-      "example": "frequency",
-      "component": "Oscilloscope",
-      "path": "/example/Oscilloscope/frequency",
-      "lineNumber": 142,
-      "line": "<LinearGradient"
-    },
-    {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
       "path": "/example/Pattern/lineargradient-as-pattern",
@@ -440,5 +440,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:55.983Z"
+  "updatedAt": "2025-11-03T17:18:47.519Z"
 }

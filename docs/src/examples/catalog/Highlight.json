@@ -220,6 +220,34 @@
       "line": "<Highlight points lines />"
     },
     {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 45,
+      "line": "<Highlight lines points />"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 46,
+      "line": "<Highlight points={{ class: 'fill-secondary' }} y={(d) => context.y1Scale?.(d.efficiency)} />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 31,
+      "line": "<Highlight lines points />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 53,
+      "line": "<Highlight lines />"
+    },
+    {
       "example": "vertical-click-handler",
       "component": "Columns",
       "path": "/example/Columns/vertical-click-handler",
@@ -316,34 +344,6 @@
       "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 30,
       "line": "<Highlight area />"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 45,
-      "line": "<Highlight lines points />"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 46,
-      "line": "<Highlight points={{ class: 'fill-secondary' }} y={(d) => context.y1Scale?.(d.efficiency)} />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 31,
-      "line": "<Highlight lines points />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 53,
-      "line": "<Highlight lines />"
     },
     {
       "example": "custom",
@@ -794,5 +794,5 @@
       "line": "<Highlight points={true} lines={true} area={false} axis={undefined} />"
     }
   ],
-  "updatedAt": "2025-11-03T17:06:47.386Z"
+  "updatedAt": "2025-11-03T17:50:38.263Z"
 }

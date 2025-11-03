@@ -466,9 +466,9 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
       "lineNumber": 25,
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
@@ -725,5 +725,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-03T16:41:08.484Z"
+  "updatedAt": "2025-11-03T17:50:37.034Z"
 }

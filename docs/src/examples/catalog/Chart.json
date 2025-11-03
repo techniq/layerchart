@@ -1,6 +1,27 @@
 {
   "component": "Chart",
-  "examples": [],
+  "examples": [
+    {
+      "name": "compound-common-scale-with-extra-marks",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks"
+    },
+    {
+      "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale"
+    },
+    {
+      "name": "compound-dual-axis-with-stacked-charts",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts"
+    },
+    {
+      "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks"
+    },
+    {
+      "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down"
+    }
+  ],
   "usage": [
     {
       "example": "color-wheel",
@@ -927,6 +948,27 @@
       "line": "<Chart"
     },
     {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/example/Circle/styling-using-attributes",
@@ -1197,27 +1239,6 @@
       "component": "Columns",
       "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 14,
-      "line": "<Chart"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 11,
-      "line": "<Chart"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 11,
-      "line": "<Chart"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 36,
       "line": "<Chart"
     },
     {
@@ -3111,5 +3132,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:55.156Z"
+  "updatedAt": "2025-11-03T17:50:37.502Z"
 }

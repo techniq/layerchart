@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-03T17:06:45.276Z",
-  "totalComponents": 58,
+  "generatedAt": "2025-11-03T17:50:36.234Z",
+  "totalComponents": 57,
   "totalExamples": 717,
   "components": [
     {
@@ -827,6 +827,10 @@
           "path": "/example/BarChart/line-annotation"
         },
         {
+          "name": "oscilloscope-frequency",
+          "path": "/example/BarChart/oscilloscope-frequency"
+        },
+        {
           "name": "override-axis-ticks-with-custom-scale",
           "path": "/example/BarChart/override-axis-ticks-with-custom-scale"
         },
@@ -1228,6 +1232,31 @@
       ]
     },
     {
+      "component": "Chart",
+      "examples": [
+        {
+          "name": "compound-common-scale-with-extra-marks",
+          "path": "/example/Chart/compound-common-scale-with-extra-marks"
+        },
+        {
+          "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
+          "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale"
+        },
+        {
+          "name": "compound-dual-axis-with-stacked-charts",
+          "path": "/example/Chart/compound-dual-axis-with-stacked-charts"
+        },
+        {
+          "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+          "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks"
+        },
+        {
+          "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+          "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down"
+        }
+      ]
+    },
+    {
       "component": "Circle",
       "examples": [
         {
@@ -1407,31 +1436,6 @@
         {
           "name": "vertical-with-grid-on-top-mix-blend",
           "path": "/example/Columns/vertical-with-grid-on-top-mix-blend"
-        }
-      ]
-    },
-    {
-      "component": "Compound",
-      "examples": [
-        {
-          "name": "common-scale-with-extra-marks",
-          "path": "/example/Compound/common-scale-with-extra-marks"
-        },
-        {
-          "name": "dual-axis-with-single-chart-using-remapped-scale",
-          "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale"
-        },
-        {
-          "name": "dual-axis-with-stacked-charts",
-          "path": "/example/Compound/dual-axis-with-stacked-charts"
-        },
-        {
-          "name": "separate-scales-with-stacked-charts-and-overridden-marks",
-          "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks"
-        },
-        {
-          "name": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-          "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down"
         }
       ]
     },
@@ -1988,6 +1992,10 @@
           "path": "/example/LineChart/null-gaps"
         },
         {
+          "name": "oscilloscope-time",
+          "path": "/example/LineChart/oscilloscope-time"
+        },
+        {
           "name": "override-color",
           "path": "/example/LineChart/override-color"
         },
@@ -2136,19 +2144,6 @@
         {
           "name": "sync-with-draw",
           "path": "/example/MotionPath/sync-with-draw"
-        }
-      ]
-    },
-    {
-      "component": "Oscilloscope",
-      "examples": [
-        {
-          "name": "frequency",
-          "path": "/example/Oscilloscope/frequency"
-        },
-        {
-          "name": "time",
-          "path": "/example/Oscilloscope/time"
         }
       ]
     },

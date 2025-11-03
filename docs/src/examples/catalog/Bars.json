@@ -143,6 +143,13 @@
       "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
     },
     {
+      "example": "oscilloscope-frequency",
+      "component": "BarChart",
+      "path": "/example/BarChart/oscilloscope-frequency",
+      "lineNumber": 148,
+      "line": "<Bars radius={1} fill={gradient} />"
+    },
+    {
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
       "path": "/example/Bars/horizontal-average-annotation-rule",
@@ -633,13 +640,6 @@
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
-      "example": "frequency",
-      "component": "Oscilloscope",
-      "path": "/example/Oscilloscope/frequency",
-      "lineNumber": 148,
-      "line": "<Bars radius={1} fill={gradient} />"
-    },
-    {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
@@ -703,5 +703,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:54.975Z"
+  "updatedAt": "2025-11-03T17:18:46.166Z"
 }

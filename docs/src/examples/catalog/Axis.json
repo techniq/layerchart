@@ -1553,6 +1553,62 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 25,
+      "line": "<Axis"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 33,
+      "line": "<Axis"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" format=\"none\" rule />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 21,
+      "line": "<Axis"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" format=\"none\" rule />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 44,
+      "line": "<Axis"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 65,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 67,
+      "line": "<Axis"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/example/Circle/styling-using-attributes",
@@ -2097,62 +2153,6 @@
       "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 25,
-      "line": "<Axis"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 33,
-      "line": "<Axis"
-    },
-    {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 42,
-      "line": "<Axis placement=\"bottom\" format=\"none\" rule />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 21,
-      "line": "<Axis"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 29,
-      "line": "<Axis placement=\"bottom\" format=\"none\" rule />"
-    },
-    {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
-      "lineNumber": 44,
-      "line": "<Axis"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 65,
-      "line": "<Axis placement=\"left\" />"
-    },
-    {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 67,
-      "line": "<Axis"
     },
     {
       "example": "styling-using-attributes",
@@ -3646,5 +3646,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:54.895Z"
+  "updatedAt": "2025-11-03T17:50:37.272Z"
 }

@@ -109,44 +109,44 @@
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
       "lineNumber": 43,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
-      "example": "dual-axis-with-single-chart-using-remapped-scale",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-single-chart-using-remapped-scale",
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
       "lineNumber": 44,
       "line": "<Spline y={(d) => context.y1Scale?.(d.efficiency)} class=\"stroke-2 stroke-secondary\" />"
     },
     {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 30,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
-      "example": "dual-axis-with-stacked-charts",
-      "component": "Compound",
-      "path": "/example/Compound/dual-axis-with-stacked-charts",
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 51,
       "line": "<Spline class=\"stroke-2 stroke-secondary\" />"
     },
     {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 40,
       "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
     },
     {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 41,
       "line": "<Spline y=\"close\" class=\"stroke-secondary\" />"
     },
@@ -494,5 +494,5 @@
       "line": "<Spline {curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-03T16:41:09.983Z"
+  "updatedAt": "2025-11-03T17:50:38.823Z"
 }

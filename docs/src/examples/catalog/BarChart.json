@@ -166,6 +166,10 @@
       "path": "/example/BarChart/line-annotation"
     },
     {
+      "name": "oscilloscope-frequency",
+      "path": "/example/BarChart/oscilloscope-frequency"
+    },
+    {
       "name": "override-axis-ticks-with-custom-scale",
       "path": "/example/BarChart/override-axis-ticks-with-custom-scale"
     },
@@ -657,6 +661,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "oscilloscope-frequency",
+      "component": "BarChart",
+      "path": "/example/BarChart/oscilloscope-frequency",
+      "lineNumber": 125,
+      "line": "<BarChart"
+    },
+    {
       "example": "override-axis-ticks-with-custom-scale",
       "component": "BarChart",
       "path": "/example/BarChart/override-axis-ticks-with-custom-scale",
@@ -937,47 +948,40 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} />"
     },
     {
-      "example": "common-scale-with-extra-marks",
-      "component": "Compound",
-      "path": "/example/Compound/common-scale-with-extra-marks",
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
       "lineNumber": 15,
       "line": "<BarChart"
     },
     {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 11,
       "line": "<BarChart"
     },
     {
-      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 26,
       "line": "<BarChart"
     },
     {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "lineNumber": 13,
       "line": "<BarChart"
     },
     {
-      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Compound",
-      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "lineNumber": 30,
-      "line": "<BarChart"
-    },
-    {
-      "example": "frequency",
-      "component": "Oscilloscope",
-      "path": "/example/Oscilloscope/frequency",
-      "lineNumber": 125,
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-03T16:52:48.547Z"
+  "updatedAt": "2025-11-03T17:50:37.326Z"
 }
