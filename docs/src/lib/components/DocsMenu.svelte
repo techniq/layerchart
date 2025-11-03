@@ -40,29 +40,8 @@
 
 <nav class={cls('grid gap-6', className)}>
 	<section>
-		<NavItem
-			text="Introduction"
-			currentUrl={page.url}
-			path="/docs/introduction"
-			classes={{
-				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-				active:
-					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-			}}
-			on:click={() => onItemClick?.()}
-		/>
-
-		<NavItem
-			text="Examples"
-			currentUrl={page.url}
-			path="/docs/examples"
-			classes={{
-				root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-				active:
-					'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-			}}
-			on:click={() => onItemClick?.()}
-		/>
+		{@render navItem({ label: 'Introduction', path: '/docs/introduction' })}
+		{@render navItem({ label: 'Examples', path: '/docs/examples' })}
 	</section>
 
 	<!-- <section>
@@ -71,17 +50,7 @@
 			<div class="mb-6">
 				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
 				{#each examples.sort(sortFunc('name')) as example}
-					<NavItem
-						text={example.name}
-						currentUrl={page.url}
-						path="/docs/examples/{example.slug}"
-						classes={{
-							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-							active:
-								'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-						}}
-						on:click={() => onItemClick?.()}
-					/>
+					{@render navItem({ label: example.name, path: `/docs/components/${example.slug}` })}
 				{/each}
 			</div>
 		{/each}
@@ -91,21 +60,25 @@
 		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
 		{#each componentsBySection as [section, components]}
 			<div class="mb-6">
-				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
+				<h3 class="text-surface-content/70 mb-3 text-sm font-medium capitalize">{section}</h3>
 				{#each components.sort(sortFunc('name')) as component}
-					<NavItem
-						text={component.name}
-						currentUrl={page.url}
-						path="/docs/components/{component.slug}"
-						classes={{
-							root: 'text-sm text-surface-content/70 pl-6 py-2 rounded-r border-l hover:border-surface-content/20 hover:bg-surface-content/5',
-							active:
-								'text-surface-content! border-surface-content! hover:bg-surface-content/5! font-medium'
-						}}
-						on:click={() => onItemClick?.()}
-					/>
+					{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 				{/each}
 			</div>
 		{/each}
 	</section>
 </nav>
+
+{#snippet navItem({ label, path }: { label: string; path: string })}
+	<NavItem
+		text={label}
+		currentUrl={page.url}
+		{path}
+		classes={{
+			root: 'text-sm text-surface-content/50 pl-6 py-1.5 rounded hover:border-surface-content/20 hover:bg-surface-content/5',
+			active:
+				'text-surface-content! border-surface-content! hover:bg-surface-content/10! font-medium bg-surface-content/10'
+		}}
+		on:click={() => onItemClick?.()}
+	/>
+{/snippet}
