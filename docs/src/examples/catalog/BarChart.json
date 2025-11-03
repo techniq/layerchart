@@ -210,6 +210,26 @@
       "path": "/example/BarChart/single-stack-with-indicator"
     },
     {
+      "name": "sparkbar",
+      "path": "/example/BarChart/sparkbar"
+    },
+    {
+      "name": "sparkbar-fixed-position-tooltip",
+      "path": "/example/BarChart/sparkbar-fixed-position-tooltip"
+    },
+    {
+      "name": "sparkbar-negative-data",
+      "path": "/example/BarChart/sparkbar-negative-data"
+    },
+    {
+      "name": "sparkbar-within-a-paragraph",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph"
+    },
+    {
+      "name": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight"
+    },
+    {
       "name": "sparkline",
       "path": "/example/BarChart/sparkline"
     },
@@ -662,6 +682,41 @@
       "line": "<BarChart"
     },
     {
+      "example": "sparkbar",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
+      "example": "sparkbar-fixed-position-tooltip",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-fixed-position-tooltip",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "sparkbar-negative-data",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-negative-data",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
       "example": "sparkline",
       "component": "BarChart",
       "path": "/example/BarChart/sparkline",
@@ -877,42 +932,7 @@
       "path": "/example/Oscilloscope/frequency",
       "lineNumber": 125,
       "line": "<BarChart"
-    },
-    {
-      "example": "basic",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic",
-      "lineNumber": 9,
-      "line": "<BarChart"
-    },
-    {
-      "example": "basic-negative-data",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-negative-data",
-      "lineNumber": 9,
-      "line": "<BarChart"
-    },
-    {
-      "example": "basic-within-a-paragraph",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph",
-      "lineNumber": 12,
-      "line": "<BarChart"
-    },
-    {
-      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 12,
-      "line": "<BarChart"
-    },
-    {
-      "example": "fixed-position-tooltip",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/fixed-position-tooltip",
-      "lineNumber": 10,
-      "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:26.700Z"
+  "updatedAt": "2025-11-03T12:58:15.291Z"
 }

@@ -166,9 +166,9 @@ related:
 
 <Example name="axis-labels-inside-bars-using-labels" />
 
-### Sparkline
+### Sparkbar
 
-<Example name="sparkline" />
+<Example name="sparkbar" />
 
 ### Single dimension
 

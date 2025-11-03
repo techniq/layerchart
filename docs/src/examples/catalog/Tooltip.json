@@ -942,6 +942,41 @@
       "line": "<Tooltip.Item label=\"Range:\" value=\"{data.start} - {data.end}\" />"
     },
     {
+      "example": "sparkbar-fixed-position-tooltip",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-fixed-position-tooltip",
+      "lineNumber": 22,
+      "line": "<Tooltip.Root"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 25,
+      "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 27,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 28,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 29,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} />"
+    },
+    {
       "example": "candlestick-bars",
       "component": "Bars",
       "path": "/example/Bars/candlestick-bars",
@@ -4155,41 +4190,6 @@
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
     },
     {
-      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 25,
-      "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
-    },
-    {
-      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 27,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
-    },
-    {
-      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 28,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 29,
-      "line": "<Tooltip.Item label=\"value\" value={data.value} />"
-    },
-    {
-      "example": "fixed-position-tooltip",
-      "component": "Sparkbar",
-      "path": "/example/Sparkbar/fixed-position-tooltip",
-      "lineNumber": 22,
-      "line": "<Tooltip.Root"
-    },
-    {
       "example": "fixed-position-tooltip",
       "component": "Sparkline",
       "path": "/example/Sparkline/fixed-position-tooltip",
@@ -5800,5 +5800,5 @@
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:28.232Z"
+  "updatedAt": "2025-11-03T12:58:16.755Z"
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-02T23:16:19.353Z",
-  "totalComponents": 78,
+  "generatedAt": "2025-11-03T12:58:14.602Z",
+  "totalComponents": 77,
   "totalExamples": 719,
   "components": [
     {
@@ -878,6 +878,26 @@
         {
           "name": "single-stack-with-indicator",
           "path": "/example/BarChart/single-stack-with-indicator"
+        },
+        {
+          "name": "sparkbar",
+          "path": "/example/BarChart/sparkbar"
+        },
+        {
+          "name": "sparkbar-fixed-position-tooltip",
+          "path": "/example/BarChart/sparkbar-fixed-position-tooltip"
+        },
+        {
+          "name": "sparkbar-negative-data",
+          "path": "/example/BarChart/sparkbar-negative-data"
+        },
+        {
+          "name": "sparkbar-within-a-paragraph",
+          "path": "/example/BarChart/sparkbar-within-a-paragraph"
+        },
+        {
+          "name": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight"
         },
         {
           "name": "sparkline",
@@ -2825,31 +2845,6 @@
         {
           "name": "basic",
           "path": "/example/SketchyGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "Sparkbar",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Sparkbar/basic"
-        },
-        {
-          "name": "basic-negative-data",
-          "path": "/example/Sparkbar/basic-negative-data"
-        },
-        {
-          "name": "basic-within-a-paragraph",
-          "path": "/example/Sparkbar/basic-within-a-paragraph"
-        },
-        {
-          "name": "basic-within-a-paragraph-with-tooltip-and-highlight",
-          "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight"
-        },
-        {
-          "name": "fixed-position-tooltip",
-          "path": "/example/Sparkbar/fixed-position-tooltip"
         }
       ]
     },
