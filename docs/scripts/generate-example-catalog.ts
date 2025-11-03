@@ -37,17 +37,22 @@ const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples');
 const CATALOG_DIR = path.resolve(__dirname, '../src/examples/catalog');
 
 /**
- * Get all component files from the components directory
+ * Get all component files from the components directory (recursively)
  */
 function getComponents(dir: string): string[] {
 	const components: string[] = [];
 	const entries = fs.readdirSync(dir, { withFileTypes: true });
 
 	for (const entry of entries) {
+		const fullPath = path.join(dir, entry.name);
+
 		if (entry.isFile() && entry.name.endsWith('.svelte')) {
 			// Remove .svelte extension to get component name
 			const componentName = entry.name.replace('.svelte', '');
 			components.push(componentName);
+		} else if (entry.isDirectory()) {
+			// Recursively scan subdirectories
+			components.push(...getComponents(fullPath));
 		}
 	}
 

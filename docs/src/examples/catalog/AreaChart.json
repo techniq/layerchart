@@ -1,0 +1,487 @@
+{
+  "component": "AreaChart",
+  "examples": [
+    {
+      "name": "band-scale",
+      "path": "/example/AreaChart/band-scale"
+    },
+    {
+      "name": "basic",
+      "path": "/example/AreaChart/basic"
+    },
+    {
+      "name": "brush",
+      "path": "/example/AreaChart/brush"
+    },
+    {
+      "name": "brush-sync",
+      "path": "/example/AreaChart/brush-sync"
+    },
+    {
+      "name": "curve",
+      "path": "/example/AreaChart/curve"
+    },
+    {
+      "name": "custom",
+      "path": "/example/AreaChart/custom"
+    },
+    {
+      "name": "custom-tooltip",
+      "path": "/example/AreaChart/custom-tooltip"
+    },
+    {
+      "name": "default-series-label",
+      "path": "/example/AreaChart/default-series-label"
+    },
+    {
+      "name": "funnel",
+      "path": "/example/AreaChart/funnel"
+    },
+    {
+      "name": "gradient",
+      "path": "/example/AreaChart/gradient"
+    },
+    {
+      "name": "labels",
+      "path": "/example/AreaChart/labels"
+    },
+    {
+      "name": "line-annotation",
+      "path": "/example/AreaChart/line-annotation"
+    },
+    {
+      "name": "markers",
+      "path": "/example/AreaChart/markers"
+    },
+    {
+      "name": "null-gaps",
+      "path": "/example/AreaChart/null-gaps"
+    },
+    {
+      "name": "point-annotations",
+      "path": "/example/AreaChart/point-annotations"
+    },
+    {
+      "name": "point-scale",
+      "path": "/example/AreaChart/point-scale"
+    },
+    {
+      "name": "points",
+      "path": "/example/AreaChart/points"
+    },
+    {
+      "name": "radial",
+      "path": "/example/AreaChart/radial"
+    },
+    {
+      "name": "range-annotation",
+      "path": "/example/AreaChart/range-annotation"
+    },
+    {
+      "name": "series",
+      "path": "/example/AreaChart/series"
+    },
+    {
+      "name": "series-individual-tooltip",
+      "path": "/example/AreaChart/series-individual-tooltip"
+    },
+    {
+      "name": "series-point-annotations",
+      "path": "/example/AreaChart/series-point-annotations"
+    },
+    {
+      "name": "series-point-click",
+      "path": "/example/AreaChart/series-point-click"
+    },
+    {
+      "name": "series-separate-data",
+      "path": "/example/AreaChart/series-separate-data"
+    },
+    {
+      "name": "series-stack",
+      "path": "/example/AreaChart/series-stack"
+    },
+    {
+      "name": "series-stack-diverging",
+      "path": "/example/AreaChart/series-stack-diverging"
+    },
+    {
+      "name": "series-stack-expand",
+      "path": "/example/AreaChart/series-stack-expand"
+    },
+    {
+      "name": "series-stack-gradient",
+      "path": "/example/AreaChart/series-stack-gradient"
+    },
+    {
+      "name": "series-stack-legend",
+      "path": "/example/AreaChart/series-stack-legend"
+    },
+    {
+      "name": "series-stack-legend-labels",
+      "path": "/example/AreaChart/series-stack-legend-labels"
+    },
+    {
+      "name": "series-stack-legend-placement",
+      "path": "/example/AreaChart/series-stack-legend-placement"
+    },
+    {
+      "name": "series-stack-separate-data",
+      "path": "/example/AreaChart/series-stack-separate-data"
+    },
+    {
+      "name": "series-tooltip-click",
+      "path": "/example/AreaChart/series-tooltip-click"
+    },
+    {
+      "name": "single-axis-x",
+      "path": "/example/AreaChart/single-axis-x"
+    },
+    {
+      "name": "single-axis-y",
+      "path": "/example/AreaChart/single-axis-y"
+    },
+    {
+      "name": "sparkline",
+      "path": "/example/AreaChart/sparkline"
+    },
+    {
+      "name": "threshold",
+      "path": "/example/AreaChart/threshold"
+    },
+    {
+      "name": "threshold-gradient",
+      "path": "/example/AreaChart/threshold-gradient"
+    },
+    {
+      "name": "tooltip-external",
+      "path": "/example/AreaChart/tooltip-external"
+    },
+    {
+      "name": "tooltip-fixed-with-hide-delay",
+      "path": "/example/AreaChart/tooltip-fixed-with-hide-delay"
+    },
+    {
+      "name": "tooltip-locking",
+      "path": "/example/AreaChart/tooltip-locking"
+    }
+  ],
+  "usage": [
+    {
+      "example": "band-scale",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/band-scale",
+      "lineNumber": 10,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "basic",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/basic",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
+    },
+    {
+      "example": "brush",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/brush",
+      "lineNumber": 9,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "brush-sync",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/brush-sync",
+      "lineNumber": 23,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "brush-sync",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/brush-sync",
+      "lineNumber": 41,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "curve",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/curve",
+      "lineNumber": 10,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} props={{ area: { curve: curveCatmullRom } }} />"
+    },
+    {
+      "example": "custom",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/custom",
+      "lineNumber": 10,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "custom-tooltip",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/custom-tooltip",
+      "lineNumber": 10,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "default-series-label",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/default-series-label",
+      "lineNumber": 14,
+      "line": "<AreaChart {data} x=\"date\" y=\"visits\" height={300} />"
+    },
+    {
+      "example": "funnel",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/funnel",
+      "lineNumber": 44,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/gradient",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "labels",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/labels",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" labels brush height={300} />"
+    },
+    {
+      "example": "line-annotation",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/line-annotation",
+      "lineNumber": 9,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "markers",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/markers",
+      "lineNumber": 13,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "null-gaps",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/null-gaps",
+      "lineNumber": 14,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+    },
+    {
+      "example": "point-annotations",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/point-annotations",
+      "lineNumber": 23,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "point-scale",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/point-scale",
+      "lineNumber": 10,
+      "line": "<AreaChart {data} xScale={scalePoint()} x=\"fruit\" y=\"value\" height={300} />"
+    },
+    {
+      "example": "points",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/points",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+    },
+    {
+      "example": "radial",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/radial",
+      "lineNumber": 10,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "range-annotation",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/range-annotation",
+      "lineNumber": 9,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-individual-tooltip",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-individual-tooltip",
+      "lineNumber": 22,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-point-annotations",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-point-annotations",
+      "lineNumber": 38,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-point-click",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-point-click",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-separate-data",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-separate-data",
+      "lineNumber": 20,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-diverging",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-diverging",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-expand",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-expand",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-gradient",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-legend",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-legend",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-legend-labels",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-legend-labels",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-legend-placement",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-legend-placement",
+      "lineNumber": 15,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-stack-separate-data",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-separate-data",
+      "lineNumber": 20,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "series-tooltip-click",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-tooltip-click",
+      "lineNumber": 9,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "single-axis-x",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/single-axis-x",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"x\" height={300} />"
+    },
+    {
+      "example": "single-axis-y",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/single-axis-y",
+      "lineNumber": 9,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"y\" height={300} />"
+    },
+    {
+      "example": "sparkline",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/sparkline",
+      "lineNumber": 9,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "threshold",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold",
+      "lineNumber": 22,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "threshold-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold-gradient",
+      "lineNumber": 15,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "tooltip-external",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/tooltip-external",
+      "lineNumber": 27,
+      "line": "<AreaChart bind:context {data} x=\"date\" y=\"value\" height={300} />"
+    },
+    {
+      "example": "tooltip-fixed-with-hide-delay",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
+      "lineNumber": 16,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "tooltip-locking",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/tooltip-locking",
+      "lineNumber": 19,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "basic-threshold",
+      "component": "Threshold",
+      "path": "/example/Threshold/basic-threshold",
+      "lineNumber": 21,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "with-labels",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-labels",
+      "lineNumber": 21,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 21,
+      "line": "<AreaChart"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:26.648Z"
+}

@@ -1,0 +1,316 @@
+{
+  "component": "PieChart",
+  "examples": [
+    {
+      "name": "arc",
+      "path": "/example/PieChart/arc"
+    },
+    {
+      "name": "arc-props",
+      "path": "/example/PieChart/arc-props"
+    },
+    {
+      "name": "basic",
+      "path": "/example/PieChart/basic"
+    },
+    {
+      "name": "colors-data-prop",
+      "path": "/example/PieChart/colors-data-prop"
+    },
+    {
+      "name": "colors-interpolator",
+      "path": "/example/PieChart/colors-interpolator"
+    },
+    {
+      "name": "colors-scheme",
+      "path": "/example/PieChart/colors-scheme"
+    },
+    {
+      "name": "colors-variables",
+      "path": "/example/PieChart/colors-variables"
+    },
+    {
+      "name": "donut",
+      "path": "/example/PieChart/donut"
+    },
+    {
+      "name": "donut-with-text",
+      "path": "/example/PieChart/donut-with-text"
+    },
+    {
+      "name": "legend",
+      "path": "/example/PieChart/legend"
+    },
+    {
+      "name": "legend-custom-label",
+      "path": "/example/PieChart/legend-custom-label"
+    },
+    {
+      "name": "legend-placement",
+      "path": "/example/PieChart/legend-placement"
+    },
+    {
+      "name": "legend-responsive",
+      "path": "/example/PieChart/legend-responsive"
+    },
+    {
+      "name": "legend-with-padding",
+      "path": "/example/PieChart/legend-with-padding"
+    },
+    {
+      "name": "motion-spring",
+      "path": "/example/PieChart/motion-spring"
+    },
+    {
+      "name": "motion-tween",
+      "path": "/example/PieChart/motion-tween"
+    },
+    {
+      "name": "offset-slice",
+      "path": "/example/PieChart/offset-slice"
+    },
+    {
+      "name": "placement-custom",
+      "path": "/example/PieChart/placement-custom"
+    },
+    {
+      "name": "placement-left",
+      "path": "/example/PieChart/placement-left"
+    },
+    {
+      "name": "placement-right",
+      "path": "/example/PieChart/placement-right"
+    },
+    {
+      "name": "radius-fixed",
+      "path": "/example/PieChart/radius-fixed"
+    },
+    {
+      "name": "radius-offset",
+      "path": "/example/PieChart/radius-offset"
+    },
+    {
+      "name": "radius-percent",
+      "path": "/example/PieChart/radius-percent"
+    },
+    {
+      "name": "segments",
+      "path": "/example/PieChart/segments"
+    },
+    {
+      "name": "series",
+      "path": "/example/PieChart/series"
+    },
+    {
+      "name": "series-click",
+      "path": "/example/PieChart/series-click"
+    },
+    {
+      "name": "series-props",
+      "path": "/example/PieChart/series-props"
+    },
+    {
+      "name": "tooltip-click",
+      "path": "/example/PieChart/tooltip-click"
+    }
+  ],
+  "usage": [
+    {
+      "example": "arc",
+      "component": "PieChart",
+      "path": "/example/PieChart/arc",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "arc-props",
+      "component": "PieChart",
+      "path": "/example/PieChart/arc-props",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "basic",
+      "component": "PieChart",
+      "path": "/example/PieChart/basic",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} />"
+    },
+    {
+      "example": "colors-data-prop",
+      "component": "PieChart",
+      "path": "/example/PieChart/colors-data-prop",
+      "lineNumber": 21,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" c=\"color\" height={300} />"
+    },
+    {
+      "example": "colors-interpolator",
+      "component": "PieChart",
+      "path": "/example/PieChart/colors-interpolator",
+      "lineNumber": 11,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={quantize(interpolateRainbow, 5)} />"
+    },
+    {
+      "example": "colors-scheme",
+      "component": "PieChart",
+      "path": "/example/PieChart/colors-scheme",
+      "lineNumber": 10,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={schemeTableau10} />"
+    },
+    {
+      "example": "colors-variables",
+      "component": "PieChart",
+      "path": "/example/PieChart/colors-variables",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "donut",
+      "component": "PieChart",
+      "path": "/example/PieChart/donut",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "donut-with-text",
+      "component": "PieChart",
+      "path": "/example/PieChart/donut-with-text",
+      "lineNumber": 11,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend",
+      "component": "PieChart",
+      "path": "/example/PieChart/legend",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} legend />"
+    },
+    {
+      "example": "legend-custom-label",
+      "component": "PieChart",
+      "path": "/example/PieChart/legend-custom-label",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend-placement",
+      "component": "PieChart",
+      "path": "/example/PieChart/legend-placement",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} legend />"
+    },
+    {
+      "example": "legend-responsive",
+      "component": "PieChart",
+      "path": "/example/PieChart/legend-responsive",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "legend-with-padding",
+      "component": "PieChart",
+      "path": "/example/PieChart/legend-with-padding",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "motion-spring",
+      "component": "PieChart",
+      "path": "/example/PieChart/motion-spring",
+      "lineNumber": 18,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'spring' } }} />"
+    },
+    {
+      "example": "motion-tween",
+      "component": "PieChart",
+      "path": "/example/PieChart/motion-tween",
+      "lineNumber": 18,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'tween' } }} />"
+    },
+    {
+      "example": "offset-slice",
+      "component": "PieChart",
+      "path": "/example/PieChart/offset-slice",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300}>"
+    },
+    {
+      "example": "placement-custom",
+      "component": "PieChart",
+      "path": "/example/PieChart/placement-custom",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "placement-left",
+      "component": "PieChart",
+      "path": "/example/PieChart/placement-left",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "placement-right",
+      "component": "PieChart",
+      "path": "/example/PieChart/placement-right",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    },
+    {
+      "example": "radius-fixed",
+      "component": "PieChart",
+      "path": "/example/PieChart/radius-fixed",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={100} />"
+    },
+    {
+      "example": "radius-offset",
+      "component": "PieChart",
+      "path": "/example/PieChart/radius-offset",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={-20} />"
+    },
+    {
+      "example": "radius-percent",
+      "component": "PieChart",
+      "path": "/example/PieChart/radius-percent",
+      "lineNumber": 9,
+      "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={0.8} />"
+    },
+    {
+      "example": "segments",
+      "component": "PieChart",
+      "path": "/example/PieChart/segments",
+      "lineNumber": 23,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series",
+      "component": "PieChart",
+      "path": "/example/PieChart/series",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series-click",
+      "component": "PieChart",
+      "path": "/example/PieChart/series-click",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "series-props",
+      "component": "PieChart",
+      "path": "/example/PieChart/series-props",
+      "lineNumber": 10,
+      "line": "<PieChart"
+    },
+    {
+      "example": "tooltip-click",
+      "component": "PieChart",
+      "path": "/example/PieChart/tooltip-click",
+      "lineNumber": 9,
+      "line": "<PieChart"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:27.956Z"
+}

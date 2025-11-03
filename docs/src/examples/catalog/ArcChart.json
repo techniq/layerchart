@@ -1,0 +1,184 @@
+{
+  "component": "ArcChart",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/ArcChart/basic"
+    },
+    {
+      "name": "color",
+      "path": "/example/ArcChart/color"
+    },
+    {
+      "name": "gradient-with-text",
+      "path": "/example/ArcChart/gradient-with-text"
+    },
+    {
+      "name": "radius-fixed",
+      "path": "/example/ArcChart/radius-fixed"
+    },
+    {
+      "name": "radius-offset",
+      "path": "/example/ArcChart/radius-offset"
+    },
+    {
+      "name": "radius-percent",
+      "path": "/example/ArcChart/radius-percent"
+    },
+    {
+      "name": "series",
+      "path": "/example/ArcChart/series"
+    },
+    {
+      "name": "series-arc",
+      "path": "/example/ArcChart/series-arc"
+    },
+    {
+      "name": "series-individual",
+      "path": "/example/ArcChart/series-individual"
+    },
+    {
+      "name": "series-labels",
+      "path": "/example/ArcChart/series-labels"
+    },
+    {
+      "name": "series-motion-spring",
+      "path": "/example/ArcChart/series-motion-spring"
+    },
+    {
+      "name": "series-motion-tween",
+      "path": "/example/ArcChart/series-motion-tween"
+    },
+    {
+      "name": "series-start-180",
+      "path": "/example/ArcChart/series-start-180"
+    },
+    {
+      "name": "series-start-90",
+      "path": "/example/ArcChart/series-start-90"
+    },
+    {
+      "name": "series-track-color",
+      "path": "/example/ArcChart/series-track-color"
+    },
+    {
+      "name": "track-size",
+      "path": "/example/ArcChart/track-size"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/basic",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "color",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/color",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 5,
+      "line": "<ArcChart height={140}>"
+    },
+    {
+      "example": "radius-fixed",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/radius-fixed",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "radius-offset",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/radius-offset",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "radius-percent",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/radius-percent",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series",
+      "lineNumber": 9,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-arc",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-arc",
+      "lineNumber": 9,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-individual",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-individual",
+      "lineNumber": 12,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-labels",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-labels",
+      "lineNumber": 12,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-motion-spring",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-motion-spring",
+      "lineNumber": 21,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-motion-tween",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-motion-tween",
+      "lineNumber": 21,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-start-180",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-start-180",
+      "lineNumber": 9,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-start-90",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-start-90",
+      "lineNumber": 9,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "series-track-color",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-track-color",
+      "lineNumber": 9,
+      "line": "<ArcChart"
+    },
+    {
+      "example": "track-size",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/track-size",
+      "lineNumber": 8,
+      "line": "<ArcChart"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:26.616Z"
+}

@@ -1,0 +1,28 @@
+{
+  "component": "Canvas",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "AnimatedGlobe",
+      "path": "/example/AnimatedGlobe/basic",
+      "lineNumber": 188,
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
+    },
+    {
+      "example": "basic",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/basic",
+      "lineNumber": 35,
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->"
+    },
+    {
+      "example": "canvas-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/canvas-transform",
+      "lineNumber": 120,
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:26.805Z"
+}

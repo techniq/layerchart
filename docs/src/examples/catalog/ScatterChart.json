@@ -1,0 +1,279 @@
+{
+  "component": "ScatterChart",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/ScatterChart/basic"
+    },
+    {
+      "name": "brush",
+      "path": "/example/ScatterChart/brush"
+    },
+    {
+      "name": "custom",
+      "path": "/example/ScatterChart/custom"
+    },
+    {
+      "name": "custom-tooltip",
+      "path": "/example/ScatterChart/custom-tooltip"
+    },
+    {
+      "name": "date-series-color-scale",
+      "path": "/example/ScatterChart/date-series-color-scale"
+    },
+    {
+      "name": "domain-baseline",
+      "path": "/example/ScatterChart/domain-baseline"
+    },
+    {
+      "name": "domain-nice",
+      "path": "/example/ScatterChart/domain-nice"
+    },
+    {
+      "name": "domain-padding",
+      "path": "/example/ScatterChart/domain-padding"
+    },
+    {
+      "name": "labels",
+      "path": "/example/ScatterChart/labels"
+    },
+    {
+      "name": "line-annotation",
+      "path": "/example/ScatterChart/line-annotation"
+    },
+    {
+      "name": "point-annotations",
+      "path": "/example/ScatterChart/point-annotations"
+    },
+    {
+      "name": "radius-scale",
+      "path": "/example/ScatterChart/radius-scale"
+    },
+    {
+      "name": "range-annotation-both",
+      "path": "/example/ScatterChart/range-annotation-both"
+    },
+    {
+      "name": "range-annotation-horizontal",
+      "path": "/example/ScatterChart/range-annotation-horizontal"
+    },
+    {
+      "name": "range-annotation-vertical",
+      "path": "/example/ScatterChart/range-annotation-vertical"
+    },
+    {
+      "name": "series",
+      "path": "/example/ScatterChart/series"
+    },
+    {
+      "name": "series-custom-labels",
+      "path": "/example/ScatterChart/series-custom-labels"
+    },
+    {
+      "name": "series-legend",
+      "path": "/example/ScatterChart/series-legend"
+    },
+    {
+      "name": "series-tween",
+      "path": "/example/ScatterChart/series-tween"
+    },
+    {
+      "name": "series-with-radius",
+      "path": "/example/ScatterChart/series-with-radius"
+    },
+    {
+      "name": "single-axis-x",
+      "path": "/example/ScatterChart/single-axis-x"
+    },
+    {
+      "name": "single-axis-y",
+      "path": "/example/ScatterChart/single-axis-y"
+    },
+    {
+      "name": "single-dimension",
+      "path": "/example/ScatterChart/single-dimension"
+    },
+    {
+      "name": "tooltip-click",
+      "path": "/example/ScatterChart/tooltip-click"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "PunchCard",
+      "path": "/example/PunchCard/basic",
+      "lineNumber": 14,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "basic",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/basic",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} />"
+    },
+    {
+      "example": "brush",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/brush",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "custom",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/custom",
+      "lineNumber": 10,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400}>"
+    },
+    {
+      "example": "custom-tooltip",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/custom-tooltip",
+      "lineNumber": 10,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400}>"
+    },
+    {
+      "example": "date-series-color-scale",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/date-series-color-scale",
+      "lineNumber": 10,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "domain-baseline",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/domain-baseline",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xBaseline={0} yBaseline={0} height={400} />"
+    },
+    {
+      "example": "domain-nice",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/domain-nice",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice height={400} />"
+    },
+    {
+      "example": "domain-padding",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/domain-padding",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} xPadding={[50, 50]} yPadding={[50, 50]} />"
+    },
+    {
+      "example": "labels",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/labels",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" labels height={400} />"
+    },
+    {
+      "example": "line-annotation",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/line-annotation",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "point-annotations",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/point-annotations",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "radius-scale",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/radius-scale",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "range-annotation-both",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/range-annotation-both",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "range-annotation-horizontal",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/range-annotation-horizontal",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "range-annotation-vertical",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/range-annotation-vertical",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "series",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/series",
+      "lineNumber": 17,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "series-custom-labels",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/series-custom-labels",
+      "lineNumber": 17,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "series-legend",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/series-legend",
+      "lineNumber": 17,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "series-tween",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/series-tween",
+      "lineNumber": 17,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "series-with-radius",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/series-with-radius",
+      "lineNumber": 17,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "single-axis-x",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/single-axis-x",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} axis=\"x\" />"
+    },
+    {
+      "example": "single-axis-y",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/single-axis-y",
+      "lineNumber": 9,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} axis=\"y\" />"
+    },
+    {
+      "example": "single-dimension",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/single-dimension",
+      "lineNumber": 11,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "tooltip-click",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/tooltip-click",
+      "lineNumber": 9,
+      "line": "<ScatterChart"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:28.141Z"
+}

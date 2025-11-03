@@ -1,0 +1,918 @@
+{
+  "component": "BarChart",
+  "examples": [
+    {
+      "name": "axis-labels-inside-bars",
+      "path": "/example/BarChart/axis-labels-inside-bars"
+    },
+    {
+      "name": "axis-labels-inside-bars-using-labels",
+      "path": "/example/BarChart/axis-labels-inside-bars-using-labels"
+    },
+    {
+      "name": "both-axis-grid",
+      "path": "/example/BarChart/both-axis-grid"
+    },
+    {
+      "name": "both-axis-grid-align-between",
+      "path": "/example/BarChart/both-axis-grid-align-between"
+    },
+    {
+      "name": "brushing",
+      "path": "/example/BarChart/brushing"
+    },
+    {
+      "name": "color-bars-class",
+      "path": "/example/BarChart/color-bars-class"
+    },
+    {
+      "name": "color-per-value",
+      "path": "/example/BarChart/color-per-value"
+    },
+    {
+      "name": "color-threshold",
+      "path": "/example/BarChart/color-threshold"
+    },
+    {
+      "name": "color-using-scale",
+      "path": "/example/BarChart/color-using-scale"
+    },
+    {
+      "name": "custom-chart",
+      "path": "/example/BarChart/custom-chart"
+    },
+    {
+      "name": "custom-tooltip",
+      "path": "/example/BarChart/custom-tooltip"
+    },
+    {
+      "name": "duration",
+      "path": "/example/BarChart/duration"
+    },
+    {
+      "name": "gradient",
+      "path": "/example/BarChart/gradient"
+    },
+    {
+      "name": "group-series",
+      "path": "/example/BarChart/group-series"
+    },
+    {
+      "name": "group-series-bar-click",
+      "path": "/example/BarChart/group-series-bar-click"
+    },
+    {
+      "name": "group-series-horizontal",
+      "path": "/example/BarChart/group-series-horizontal"
+    },
+    {
+      "name": "group-series-labels",
+      "path": "/example/BarChart/group-series-labels"
+    },
+    {
+      "name": "group-series-series-long-data",
+      "path": "/example/BarChart/group-series-series-long-data"
+    },
+    {
+      "name": "highlight-below-marks",
+      "path": "/example/BarChart/highlight-below-marks"
+    },
+    {
+      "name": "horizontal",
+      "path": "/example/BarChart/horizontal"
+    },
+    {
+      "name": "labels",
+      "path": "/example/BarChart/labels"
+    },
+    {
+      "name": "labels-inside-placement",
+      "path": "/example/BarChart/labels-inside-placement"
+    },
+    {
+      "name": "legend-custom-labels",
+      "path": "/example/BarChart/legend-custom-labels"
+    },
+    {
+      "name": "legend-group-series",
+      "path": "/example/BarChart/legend-group-series"
+    },
+    {
+      "name": "legend-placement",
+      "path": "/example/BarChart/legend-placement"
+    },
+    {
+      "name": "legend-stack-series",
+      "path": "/example/BarChart/legend-stack-series"
+    },
+    {
+      "name": "line-annotation",
+      "path": "/example/BarChart/line-annotation"
+    },
+    {
+      "name": "override-axis-ticks-with-custom-scale",
+      "path": "/example/BarChart/override-axis-ticks-with-custom-scale"
+    },
+    {
+      "name": "point-annotation",
+      "path": "/example/BarChart/point-annotation"
+    },
+    {
+      "name": "radial-horizontal",
+      "path": "/example/BarChart/radial-horizontal"
+    },
+    {
+      "name": "radial-horizontal-color-per-value",
+      "path": "/example/BarChart/radial-horizontal-color-per-value"
+    },
+    {
+      "name": "radial-horizontal-duration",
+      "path": "/example/BarChart/radial-horizontal-duration"
+    },
+    {
+      "name": "radial-horizontal-grid-between",
+      "path": "/example/BarChart/radial-horizontal-grid-between"
+    },
+    {
+      "name": "radial-vertical",
+      "path": "/example/BarChart/radial-vertical"
+    },
+    {
+      "name": "radial-vertical-arcpadding",
+      "path": "/example/BarChart/radial-vertical-arcpadding"
+    },
+    {
+      "name": "radial-vertical-yrange",
+      "path": "/example/BarChart/radial-vertical-yrange"
+    },
+    {
+      "name": "radial-weather",
+      "path": "/example/BarChart/radial-weather"
+    },
+    {
+      "name": "range-annotation-multiple",
+      "path": "/example/BarChart/range-annotation-multiple"
+    },
+    {
+      "name": "range-annotation-single",
+      "path": "/example/BarChart/range-annotation-single"
+    },
+    {
+      "name": "range-annotation-value",
+      "path": "/example/BarChart/range-annotation-value"
+    },
+    {
+      "name": "remove-rounding",
+      "path": "/example/BarChart/remove-rounding"
+    },
+    {
+      "name": "scale-override",
+      "path": "/example/BarChart/scale-override"
+    },
+    {
+      "name": "series",
+      "path": "/example/BarChart/series"
+    },
+    {
+      "name": "series-data",
+      "path": "/example/BarChart/series-data"
+    },
+    {
+      "name": "series-diverging",
+      "path": "/example/BarChart/series-diverging"
+    },
+    {
+      "name": "series-horizontal",
+      "path": "/example/BarChart/series-horizontal"
+    },
+    {
+      "name": "series-horizontal-diverging",
+      "path": "/example/BarChart/series-horizontal-diverging"
+    },
+    {
+      "name": "series-horizontal-diverging-as-percent",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent"
+    },
+    {
+      "name": "single-axis-x",
+      "path": "/example/BarChart/single-axis-x"
+    },
+    {
+      "name": "single-axis-y",
+      "path": "/example/BarChart/single-axis-y"
+    },
+    {
+      "name": "single-dimension",
+      "path": "/example/BarChart/single-dimension"
+    },
+    {
+      "name": "single-stack-with-indicator",
+      "path": "/example/BarChart/single-stack-with-indicator"
+    },
+    {
+      "name": "sparkline",
+      "path": "/example/BarChart/sparkline"
+    },
+    {
+      "name": "stack-series",
+      "path": "/example/BarChart/stack-series"
+    },
+    {
+      "name": "stack-series-diverging",
+      "path": "/example/BarChart/stack-series-diverging"
+    },
+    {
+      "name": "stack-series-expand",
+      "path": "/example/BarChart/stack-series-expand"
+    },
+    {
+      "name": "stack-series-horizontal",
+      "path": "/example/BarChart/stack-series-horizontal"
+    },
+    {
+      "name": "stack-series-padded",
+      "path": "/example/BarChart/stack-series-padded"
+    },
+    {
+      "name": "time-scale-interval",
+      "path": "/example/BarChart/time-scale-interval"
+    },
+    {
+      "name": "time-scale-interval-horizontal",
+      "path": "/example/BarChart/time-scale-interval-horizontal"
+    },
+    {
+      "name": "time-scale-interval-with-inset",
+      "path": "/example/BarChart/time-scale-interval-with-inset"
+    },
+    {
+      "name": "tooltip-click",
+      "path": "/example/BarChart/tooltip-click"
+    },
+    {
+      "name": "vertical-default",
+      "path": "/example/BarChart/vertical-default"
+    }
+  ],
+  "usage": [
+    {
+      "example": "bar-chart",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/bar-chart",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "band-scale-on-axis",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "band-scale-on-value",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "bar-chart-(multiple)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(multiple)",
+      "lineNumber": 18,
+      "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "bar-chart-(single)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(single)",
+      "lineNumber": 18,
+      "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "bar-chart-(value)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(value)",
+      "lineNumber": 18,
+      "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "axis-labels-inside-bars",
+      "component": "BarChart",
+      "path": "/example/BarChart/axis-labels-inside-bars",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "axis-labels-inside-bars-using-labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"value\" y=\"date\" labels orientation=\"horizontal\" axis={false} height={500}>"
+    },
+    {
+      "example": "both-axis-grid",
+      "component": "BarChart",
+      "path": "/example/BarChart/both-axis-grid",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" grid={{ x: true }} height={300} />"
+    },
+    {
+      "example": "both-axis-grid-align-between",
+      "component": "BarChart",
+      "path": "/example/BarChart/both-axis-grid-align-between",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" grid={{ x: true, bandAlign: 'between' }} height={300} />"
+    },
+    {
+      "example": "brushing",
+      "component": "BarChart",
+      "path": "/example/BarChart/brushing",
+      "lineNumber": 17,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} brush height={300} />"
+    },
+    {
+      "example": "color-bars-class",
+      "component": "BarChart",
+      "path": "/example/BarChart/color-bars-class",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" props={{ bars: { class: 'fill-secondary' } }} height={300} />"
+    },
+    {
+      "example": "color-per-value",
+      "component": "BarChart",
+      "path": "/example/BarChart/color-per-value",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "color-threshold",
+      "component": "BarChart",
+      "path": "/example/BarChart/color-threshold",
+      "lineNumber": 11,
+      "line": "<BarChart"
+    },
+    {
+      "example": "color-using-scale",
+      "component": "BarChart",
+      "path": "/example/BarChart/color-using-scale",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" cRange={['var(--color-secondary)']} height={300} />"
+    },
+    {
+      "example": "custom-chart",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-chart",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "custom-tooltip",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-tooltip",
+      "lineNumber": 17,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "duration",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration",
+      "lineNumber": 57,
+      "line": "<BarChart"
+    },
+    {
+      "example": "gradient",
+      "component": "BarChart",
+      "path": "/example/BarChart/gradient",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "group-series",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-series-bar-click",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series-bar-click",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-series-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series-horizontal",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-series-labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series-labels",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "group-series-series-long-data",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series-series-long-data",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "highlight-below-marks",
+      "component": "BarChart",
+      "path": "/example/BarChart/highlight-below-marks",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" props={{ highlight: { area: false } }} height={300}>"
+    },
+    {
+      "example": "horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/horizontal",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"value\" y=\"date\" orientation=\"horizontal\" height={300} />"
+    },
+    {
+      "example": "labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/labels",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" labels height={300} />"
+    },
+    {
+      "example": "labels-inside-placement",
+      "component": "BarChart",
+      "path": "/example/BarChart/labels-inside-placement",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" labels={{ placement: 'inside' }} height={300} />"
+    },
+    {
+      "example": "legend-custom-labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/legend-custom-labels",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "legend-group-series",
+      "component": "BarChart",
+      "path": "/example/BarChart/legend-group-series",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "legend-placement",
+      "component": "BarChart",
+      "path": "/example/BarChart/legend-placement",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "legend-stack-series",
+      "component": "BarChart",
+      "path": "/example/BarChart/legend-stack-series",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "line-annotation",
+      "component": "BarChart",
+      "path": "/example/BarChart/line-annotation",
+      "lineNumber": 18,
+      "line": "<BarChart"
+    },
+    {
+      "example": "override-axis-ticks-with-custom-scale",
+      "component": "BarChart",
+      "path": "/example/BarChart/override-axis-ticks-with-custom-scale",
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "point-annotation",
+      "component": "BarChart",
+      "path": "/example/BarChart/point-annotation",
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-horizontal",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-horizontal-color-per-value",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-horizontal-color-per-value",
+      "lineNumber": 15,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-horizontal-duration",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-horizontal-duration",
+      "lineNumber": 58,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-horizontal-grid-between",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-horizontal-grid-between",
+      "lineNumber": 15,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-vertical",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-vertical",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" radial height={400} />"
+    },
+    {
+      "example": "radial-vertical-arcpadding",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-vertical-arcpadding",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-vertical-yrange",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-vertical-yrange",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "radial-weather",
+      "component": "BarChart",
+      "path": "/example/BarChart/radial-weather",
+      "lineNumber": 27,
+      "line": "<BarChart"
+    },
+    {
+      "example": "range-annotation-multiple",
+      "component": "BarChart",
+      "path": "/example/BarChart/range-annotation-multiple",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "range-annotation-single",
+      "component": "BarChart",
+      "path": "/example/BarChart/range-annotation-single",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "range-annotation-value",
+      "component": "BarChart",
+      "path": "/example/BarChart/range-annotation-value",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "remove-rounding",
+      "component": "BarChart",
+      "path": "/example/BarChart/remove-rounding",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" props={{ bars: { rounded: 'none' } }} height={300} />"
+    },
+    {
+      "example": "scale-override",
+      "component": "BarChart",
+      "path": "/example/BarChart/scale-override",
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series",
+      "component": "BarChart",
+      "path": "/example/BarChart/series",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series-data",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-data",
+      "lineNumber": 19,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series-diverging",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-diverging",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series-horizontal-diverging",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging",
+      "lineNumber": 33,
+      "line": "<BarChart"
+    },
+    {
+      "example": "series-horizontal-diverging-as-percent",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
+      "lineNumber": 33,
+      "line": "<BarChart"
+    },
+    {
+      "example": "single-axis-x",
+      "component": "BarChart",
+      "path": "/example/BarChart/single-axis-x",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" axis=\"x\" height={300} />"
+    },
+    {
+      "example": "single-axis-y",
+      "component": "BarChart",
+      "path": "/example/BarChart/single-axis-y",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" axis=\"y\" height={300} />"
+    },
+    {
+      "example": "single-dimension",
+      "component": "BarChart",
+      "path": "/example/BarChart/single-dimension",
+      "lineNumber": 18,
+      "line": "<BarChart"
+    },
+    {
+      "example": "single-stack-with-indicator",
+      "component": "BarChart",
+      "path": "/example/BarChart/single-stack-with-indicator",
+      "lineNumber": 40,
+      "line": "<BarChart"
+    },
+    {
+      "example": "sparkline",
+      "component": "BarChart",
+      "path": "/example/BarChart/sparkline",
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "stack-series",
+      "component": "BarChart",
+      "path": "/example/BarChart/stack-series",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "stack-series-diverging",
+      "component": "BarChart",
+      "path": "/example/BarChart/stack-series-diverging",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "stack-series-expand",
+      "component": "BarChart",
+      "path": "/example/BarChart/stack-series-expand",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "stack-series-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/stack-series-horizontal",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "stack-series-padded",
+      "component": "BarChart",
+      "path": "/example/BarChart/stack-series-padded",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    },
+    {
+      "example": "time-scale-interval",
+      "component": "BarChart",
+      "path": "/example/BarChart/time-scale-interval",
+      "lineNumber": 17,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} height={300} />"
+    },
+    {
+      "example": "time-scale-interval-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/time-scale-interval-horizontal",
+      "lineNumber": 17,
+      "line": "<BarChart {data} x=\"value\" y=\"date\" yInterval={timeDay} orientation=\"horizontal\" height={300} />"
+    },
+    {
+      "example": "time-scale-interval-with-inset",
+      "component": "BarChart",
+      "path": "/example/BarChart/time-scale-interval-with-inset",
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "tooltip-click",
+      "component": "BarChart",
+      "path": "/example/BarChart/tooltip-click",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "vertical-default",
+      "component": "BarChart",
+      "path": "/example/BarChart/vertical-default",
+      "lineNumber": 16,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} />"
+    },
+    {
+      "example": "common-scale-with-extra-marks",
+      "component": "Compound",
+      "path": "/example/Compound/common-scale-with-extra-marks",
+      "lineNumber": 15,
+      "line": "<BarChart"
+    },
+    {
+      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Compound",
+      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 11,
+      "line": "<BarChart"
+    },
+    {
+      "example": "separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Compound",
+      "path": "/example/Compound/separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Compound",
+      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
+      "example": "separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Compound",
+      "path": "/example/Compound/separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 30,
+      "line": "<BarChart"
+    },
+    {
+      "example": "bars",
+      "component": "Duration",
+      "path": "/example/Duration/bars",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "bars-color",
+      "component": "Duration",
+      "path": "/example/Duration/bars-color",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "bars-dense",
+      "component": "Duration",
+      "path": "/example/Duration/bars-dense",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "bars-dense-lanes",
+      "component": "Duration",
+      "path": "/example/Duration/bars-dense-lanes",
+      "lineNumber": 14,
+      "line": "<BarChart"
+    },
+    {
+      "example": "bars-lanes",
+      "component": "Duration",
+      "path": "/example/Duration/bars-lanes",
+      "lineNumber": 29,
+      "line": "<BarChart"
+    },
+    {
+      "example": "civilization-timeline",
+      "component": "Duration",
+      "path": "/example/Duration/civilization-timeline",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
+      "example": "civilization-timeline-dense",
+      "component": "Duration",
+      "path": "/example/Duration/civilization-timeline-dense",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
+      "example": "points",
+      "component": "Duration",
+      "path": "/example/Duration/points",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "points-color",
+      "component": "Duration",
+      "path": "/example/Duration/points-color",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "date-time-count",
+      "component": "Histogram",
+      "path": "/example/Histogram/date-time-count",
+      "lineNumber": 44,
+      "line": "<BarChart"
+    },
+    {
+      "example": "date-time-interval",
+      "component": "Histogram",
+      "path": "/example/Histogram/date-time-interval",
+      "lineNumber": 59,
+      "line": "<BarChart"
+    },
+    {
+      "example": "horizontal",
+      "component": "Histogram",
+      "path": "/example/Histogram/horizontal",
+      "lineNumber": 22,
+      "line": "<BarChart"
+    },
+    {
+      "example": "random-distribution",
+      "component": "Histogram",
+      "path": "/example/Histogram/random-distribution",
+      "lineNumber": 14,
+      "line": "<BarChart"
+    },
+    {
+      "example": "vertical",
+      "component": "Histogram",
+      "path": "/example/Histogram/vertical",
+      "lineNumber": 22,
+      "line": "<BarChart"
+    },
+    {
+      "example": "frequency",
+      "component": "Oscilloscope",
+      "path": "/example/Oscilloscope/frequency",
+      "lineNumber": 125,
+      "line": "<BarChart"
+    },
+    {
+      "example": "basic",
+      "component": "Sparkbar",
+      "path": "/example/Sparkbar/basic",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
+      "example": "basic-negative-data",
+      "component": "Sparkbar",
+      "path": "/example/Sparkbar/basic-negative-data",
+      "lineNumber": 9,
+      "line": "<BarChart"
+    },
+    {
+      "example": "basic-within-a-paragraph",
+      "component": "Sparkbar",
+      "path": "/example/Sparkbar/basic-within-a-paragraph",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "basic-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "Sparkbar",
+      "path": "/example/Sparkbar/basic-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "fixed-position-tooltip",
+      "component": "Sparkbar",
+      "path": "/example/Sparkbar/fixed-position-tooltip",
+      "lineNumber": 10,
+      "line": "<BarChart"
+    }
+  ],
+  "updatedAt": "2025-11-03T12:48:26.700Z"
+}
