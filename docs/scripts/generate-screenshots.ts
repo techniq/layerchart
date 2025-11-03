@@ -6,6 +6,7 @@
  *
  * @description
  * Scans all .svelte files in docs/src/examples and generates screenshots by:
+ * - Cleaning up orphaned screenshots from renamed/moved/deleted examples
  * - Navigating to /example/[componentName]/[exampleName]
  * - Capturing screenshots in both light and dark mode
  * - Saving to docs/static/screenshots/[componentName]/[exampleName]-{light|dark}.png
@@ -155,6 +156,85 @@ async function captureScreenshot(
 }
 
 /**
+ * Clean up orphaned screenshots (files/folders for examples that no longer exist)
+ */
+function cleanupOrphanedScreenshots(validExamples: ExampleInfo[]): void {
+	console.log('Checking for orphaned screenshots...\n');
+
+	// Create a set of valid example paths for quick lookup
+	const validPaths = new Set(
+		validExamples.flatMap((ex) => [
+			`${ex.component}/${ex.example}-light.png`,
+			`${ex.component}/${ex.example}-dark.png`
+		])
+	);
+
+	// Create a set of valid component names
+	const validComponents = new Set(validExamples.map((ex) => ex.component));
+
+	let removedFiles = 0;
+	let removedDirs = 0;
+
+	// Check if screenshots directory exists
+	if (!fs.existsSync(SCREENSHOTS_DIR)) {
+		console.log('No screenshots directory found, skipping cleanup.\n');
+		return;
+	}
+
+	// Read all component directories in screenshots
+	const screenshotEntries = fs.readdirSync(SCREENSHOTS_DIR, { withFileTypes: true });
+
+	for (const entry of screenshotEntries) {
+		// Skip non-directories and special files
+		if (!entry.isDirectory() || entry.name.startsWith('.')) {
+			continue;
+		}
+
+		const componentName = entry.name;
+		const componentDir = path.join(SCREENSHOTS_DIR, componentName);
+
+		// Check if this component still exists
+		if (!validComponents.has(componentName)) {
+			console.log(`  ✗ Removing orphaned component directory: ${componentName}/`);
+			fs.rmSync(componentDir, { recursive: true, force: true });
+			removedDirs++;
+			continue;
+		}
+
+		// Check files within the component directory
+		const files = fs.readdirSync(componentDir);
+		for (const file of files) {
+			// Skip non-PNG files and hidden files
+			if (!file.endsWith('.png') || file.startsWith('.')) {
+				continue;
+			}
+
+			const relativePath = `${componentName}/${file}`;
+			if (!validPaths.has(relativePath)) {
+				const filePath = path.join(componentDir, file);
+				console.log(`  ✗ Removing orphaned screenshot: ${relativePath}`);
+				fs.unlinkSync(filePath);
+				removedFiles++;
+			}
+		}
+
+		// Remove component directory if it's now empty
+		const remainingFiles = fs.readdirSync(componentDir);
+		if (remainingFiles.length === 0) {
+			console.log(`  ✗ Removing empty directory: ${componentName}/`);
+			fs.rmdirSync(componentDir);
+			removedDirs++;
+		}
+	}
+
+	if (removedFiles === 0 && removedDirs === 0) {
+		console.log('  ✓ No orphaned screenshots found\n');
+	} else {
+		console.log(`\n  Removed ${removedFiles} orphaned files and ${removedDirs} directories\n`);
+	}
+}
+
+/**
  * Main function
  */
 async function main() {
@@ -164,6 +244,9 @@ async function main() {
 	// Get all examples
 	let examples = getExampleFiles(EXAMPLES_DIR);
 	console.log(`Found ${examples.length} examples`);
+
+	// Clean up orphaned screenshots before processing
+	cleanupOrphanedScreenshots(examples);
 
 	// Limit for testing
 	if (TEST_LIMIT !== undefined) {
