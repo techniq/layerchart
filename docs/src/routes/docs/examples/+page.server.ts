@@ -1,5 +1,8 @@
+import { allComponents } from 'content-collections';
+
 interface ExampleInfo {
 	component: string;
+	section?: string;
 	examples: Array<{
 		name: string;
 		path: string;
@@ -15,6 +18,14 @@ export async function load() {
 		query: '?url',
 		import: 'default'
 	});
+
+	// Create a map of component names to their sections
+	const componentSectionMap = new Map<string, string>();
+	for (const component of allComponents) {
+		if (component.section) {
+			componentSectionMap.set(component.name, component.section);
+		}
+	}
 
 	// Group examples by component
 	const componentMap = new Map<
@@ -51,16 +62,16 @@ export async function load() {
 		});
 	}
 
-	// Convert to sorted array
+	// Convert to sorted array with section information
 	const components: ExampleInfo[] = Array.from(componentMap.entries())
 		.map(([component, examples]) => ({
 			component,
+			section: componentSectionMap.get(component),
 			examples: examples.sort((a, b) => a.name.localeCompare(b.name))
 		}))
 		.sort((a, b) => a.component.localeCompare(b.component));
 
 	return {
-		components,
-		totalExamples: components.reduce((sum, c) => sum + c.examples.length, 0)
+		components
 	};
 }
