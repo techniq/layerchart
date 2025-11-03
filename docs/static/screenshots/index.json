@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-11-03T12:58:14.602Z",
-  "totalComponents": 77,
-  "totalExamples": 719,
+  "generatedAt": "2025-11-03T13:50:22.571Z",
+  "totalComponents": 76,
+  "totalExamples": 717,
   "components": [
     {
       "component": "AnimatedGlobe",
@@ -898,10 +898,6 @@
         {
           "name": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
           "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight"
-        },
-        {
-          "name": "sparkline",
-          "path": "/example/BarChart/sparkline"
         },
         {
           "name": "stack-series",
@@ -2091,6 +2087,22 @@
           "path": "/example/LineChart/sparkline"
         },
         {
+          "name": "sparkline-fixed-position-tooltip",
+          "path": "/example/LineChart/sparkline-fixed-position-tooltip"
+        },
+        {
+          "name": "sparkline-within-a-paragraph",
+          "path": "/example/LineChart/sparkline-within-a-paragraph"
+        },
+        {
+          "name": "sparkline-within-a-paragraph-with-tooltip-and-highlight",
+          "path": "/example/LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight"
+        },
+        {
+          "name": "sparkline-zero-axis",
+          "path": "/example/LineChart/sparkline-zero-axis"
+        },
+        {
           "name": "tooltip-click",
           "path": "/example/LineChart/tooltip-click"
         },
@@ -2845,31 +2857,6 @@
         {
           "name": "basic",
           "path": "/example/SketchyGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "Sparkline",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Sparkline/basic"
-        },
-        {
-          "name": "basic-within-a-paragraph",
-          "path": "/example/Sparkline/basic-within-a-paragraph"
-        },
-        {
-          "name": "basic-zero-axis",
-          "path": "/example/Sparkline/basic-zero-axis"
-        },
-        {
-          "name": "fixed-position-tooltip",
-          "path": "/example/Sparkline/fixed-position-tooltip"
-        },
-        {
-          "name": "within-a-paragraph-with-tooltip-and-highlight",
-          "path": "/example/Sparkline/within-a-paragraph-with-tooltip-and-highlight"
         }
       ]
     },

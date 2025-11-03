@@ -3686,6 +3686,20 @@
       "line": "<Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />"
     },
     {
+      "example": "sparkline-fixed-position-tooltip",
+      "component": "LineChart",
+      "path": "/example/LineChart/sparkline-fixed-position-tooltip",
+      "lineNumber": 24,
+      "line": "<Tooltip.Root"
+    },
+    {
+      "example": "sparkline-within-a-paragraph-with-tooltip-and-highlight",
+      "component": "LineChart",
+      "path": "/example/LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight",
+      "lineNumber": 29,
+      "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
+    },
+    {
       "example": "sunburst",
       "component": "Partition",
       "path": "/example/Partition/sunburst",
@@ -4188,20 +4202,6 @@
       "path": "/example/ScatterChart/single-dimension",
       "lineNumber": 24,
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
-    },
-    {
-      "example": "fixed-position-tooltip",
-      "component": "Sparkline",
-      "path": "/example/Sparkline/fixed-position-tooltip",
-      "lineNumber": 24,
-      "line": "<Tooltip.Root"
-    },
-    {
-      "example": "within-a-paragraph-with-tooltip-and-highlight",
-      "component": "Sparkline",
-      "path": "/example/Sparkline/within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 29,
-      "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
     },
     {
       "example": "spike-map-population",
@@ -5800,5 +5800,5 @@
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2025-11-03T12:58:16.755Z"
+  "updatedAt": "2025-11-03T13:50:25.790Z"
 }

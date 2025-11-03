@@ -10,9 +10,11 @@
 	{data}
 	x="date"
 	y="value"
-	yDomain={null}
 	axis={false}
 	grid={false}
+	props={{
+		highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } }
+	}}
 	width={124}
-	height={18}
+	height={20}
 />

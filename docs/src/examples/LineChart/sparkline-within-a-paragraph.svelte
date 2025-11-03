@@ -16,6 +16,9 @@
 		yDomain={null}
 		axis={false}
 		grid={false}
+		props={{
+			highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } }
+		}}
 		height={18}
 		width={124}
 		class="inline-block"

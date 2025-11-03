@@ -230,10 +230,6 @@
       "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight"
     },
     {
-      "name": "sparkline",
-      "path": "/example/BarChart/sparkline"
-    },
-    {
       "name": "stack-series",
       "path": "/example/BarChart/stack-series"
     },
@@ -717,13 +713,6 @@
       "line": "<BarChart"
     },
     {
-      "example": "sparkline",
-      "component": "BarChart",
-      "path": "/example/BarChart/sparkline",
-      "lineNumber": 17,
-      "line": "<BarChart"
-    },
-    {
       "example": "stack-series",
       "component": "BarChart",
       "path": "/example/BarChart/stack-series",
@@ -934,5 +923,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-03T12:58:15.291Z"
+  "updatedAt": "2025-11-03T13:50:23.586Z"
 }
