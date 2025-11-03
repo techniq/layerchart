@@ -1,0 +1,107 @@
+{
+  "component": "ForceSimulation",
+  "examples": [
+    {
+      "name": "beeswarm",
+      "path": "/example/ForceSimulation/beeswarm"
+    },
+    {
+      "name": "collision-detection",
+      "path": "/example/ForceSimulation/collision-detection"
+    },
+    {
+      "name": "disjoint-graph",
+      "path": "/example/ForceSimulation/disjoint-graph"
+    },
+    {
+      "name": "graph-drag",
+      "path": "/example/ForceSimulation/graph-drag"
+    },
+    {
+      "name": "graph-playground",
+      "path": "/example/ForceSimulation/graph-playground"
+    },
+    {
+      "name": "group",
+      "path": "/example/ForceSimulation/group"
+    },
+    {
+      "name": "lattice",
+      "path": "/example/ForceSimulation/lattice"
+    },
+    {
+      "name": "text",
+      "path": "/example/ForceSimulation/text"
+    },
+    {
+      "name": "tree",
+      "path": "/example/ForceSimulation/tree"
+    }
+  ],
+  "usage": [
+    {
+      "example": "beeswarm",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/beeswarm",
+      "lineNumber": 33,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "collision-detection",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/collision-detection",
+      "lineNumber": 38,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "disjoint-graph",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/disjoint-graph",
+      "lineNumber": 55,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "graph-drag",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-drag",
+      "lineNumber": 76,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "graph-playground",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-playground",
+      "lineNumber": 280,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "group",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/group",
+      "lineNumber": 62,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "lattice",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/lattice",
+      "lineNumber": 27,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "text",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/text",
+      "lineNumber": 98,
+      "line": "<ForceSimulation"
+    },
+    {
+      "example": "tree",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/tree",
+      "lineNumber": 34,
+      "line": "<ForceSimulation"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.777Z"
+}

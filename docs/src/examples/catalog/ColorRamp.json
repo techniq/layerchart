@@ -1,0 +1,48 @@
+{
+  "component": "ColorRamp",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/ColorRamp/basic"
+    },
+    {
+      "name": "pixelated",
+      "path": "/example/ColorRamp/pixelated"
+    },
+    {
+      "name": "schemes",
+      "path": "/example/ColorRamp/schemes"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/basic",
+      "lineNumber": 24,
+      "line": "<ColorRamp {interpolator} {width} {height} />"
+    },
+    {
+      "example": "pixelated",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/pixelated",
+      "lineNumber": 31,
+      "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 21,
+      "line": "<ColorRamp"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 35,
+      "line": "<ColorRamp"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.634Z"
+}

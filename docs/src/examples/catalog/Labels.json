@@ -1,0 +1,84 @@
+{
+  "component": "Labels",
+  "examples": [],
+  "usage": [
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-with-labels",
+      "lineNumber": 49,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Area",
+      "path": "/example/Area/with-labels",
+      "lineNumber": 24,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "axis-labels-inside-bars-using-labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
+      "lineNumber": 18,
+      "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/inside-labels",
+      "lineNumber": 25,
+      "line": "<Labels placement=\"inside\" format=\"integer\" />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/outside-labels-default",
+      "lineNumber": 26,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "inside-labels",
+      "component": "Columns",
+      "path": "/example/Columns/inside-labels",
+      "lineNumber": 25,
+      "line": "<Labels placement=\"inside\" format=\"integer\" />"
+    },
+    {
+      "example": "outside-labels-default",
+      "component": "Columns",
+      "path": "/example/Columns/outside-labels-default",
+      "lineNumber": 26,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Line",
+      "path": "/example/Line/multiple-series-with-labels",
+      "lineNumber": 47,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Line",
+      "path": "/example/Line/with-labels",
+      "lineNumber": 23,
+      "line": "<Labels format=\"integer\" />"
+    },
+    {
+      "example": "series-labels-hover",
+      "component": "LineChart",
+      "path": "/example/LineChart/series-labels-hover",
+      "lineNumber": 34,
+      "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Scatter",
+      "path": "/example/Scatter/with-labels",
+      "lineNumber": 23,
+      "line": "<Labels format=\"integer\" offset={10} />"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.133Z"
+}

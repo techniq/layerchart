@@ -1,0 +1,70 @@
+{
+  "component": "Bar",
+  "examples": [],
+  "usage": [
+    {
+      "example": "customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/customize-individual-styles",
+      "lineNumber": 32,
+      "line": "<Bar"
+    },
+    {
+      "example": "grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/grouped-stacked-or-both-transition",
+      "lineNumber": 77,
+      "line": "<Bar"
+    },
+    {
+      "example": "stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/stagger-tween-on-mount",
+      "lineNumber": 42,
+      "line": "<Bar"
+    },
+    {
+      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 75,
+      "line": "<Bar"
+    },
+    {
+      "example": "customize-individual-styles",
+      "component": "Columns",
+      "path": "/example/Columns/customize-individual-styles",
+      "lineNumber": 29,
+      "line": "<Bar"
+    },
+    {
+      "example": "grouped-stacked-or-both-transition",
+      "component": "Columns",
+      "path": "/example/Columns/grouped-stacked-or-both-transition",
+      "lineNumber": 75,
+      "line": "<Bar"
+    },
+    {
+      "example": "stagger-tween-on-mount",
+      "component": "Columns",
+      "path": "/example/Columns/stagger-tween-on-mount",
+      "lineNumber": 39,
+      "line": "<Bar"
+    },
+    {
+      "example": "stagger-tween-on-mount-rounded-edge",
+      "component": "Columns",
+      "path": "/example/Columns/stagger-tween-on-mount-rounded-edge",
+      "lineNumber": 39,
+      "line": "<Bar"
+    },
+    {
+      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Columns",
+      "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 74,
+      "line": "<Bar"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.118Z"
+}

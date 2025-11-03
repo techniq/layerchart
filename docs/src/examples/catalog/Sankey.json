@@ -1,0 +1,63 @@
+{
+  "component": "Sankey",
+  "examples": [
+    {
+      "name": "complex",
+      "path": "/example/Sankey/complex"
+    },
+    {
+      "name": "hierarchy",
+      "path": "/example/Sankey/hierarchy"
+    },
+    {
+      "name": "node-select",
+      "path": "/example/Sankey/node-select"
+    },
+    {
+      "name": "simple",
+      "path": "/example/Sankey/simple"
+    },
+    {
+      "name": "tooltip",
+      "path": "/example/Sankey/tooltip"
+    }
+  ],
+  "usage": [
+    {
+      "example": "complex",
+      "component": "Sankey",
+      "path": "/example/Sankey/complex",
+      "lineNumber": 45,
+      "line": "<Sankey"
+    },
+    {
+      "example": "hierarchy",
+      "component": "Sankey",
+      "path": "/example/Sankey/hierarchy",
+      "lineNumber": 60,
+      "line": "<Sankey"
+    },
+    {
+      "example": "node-select",
+      "component": "Sankey",
+      "path": "/example/Sankey/node-select",
+      "lineNumber": 14,
+      "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
+    },
+    {
+      "example": "simple",
+      "component": "Sankey",
+      "path": "/example/Sankey/simple",
+      "lineNumber": 10,
+      "line": "<Sankey nodeId={(d) => d.id}>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Sankey",
+      "path": "/example/Sankey/tooltip",
+      "lineNumber": 14,
+      "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.552Z"
+}

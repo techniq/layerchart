@@ -1,0 +1,337 @@
+{
+  "component": "Pattern",
+  "examples": [
+    {
+      "name": "circles",
+      "path": "/example/Pattern/circles"
+    },
+    {
+      "name": "circles-custom-pattern-svg-only",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only"
+    },
+    {
+      "name": "lineargradient-as-pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern"
+    },
+    {
+      "name": "lines",
+      "path": "/example/Pattern/lines"
+    },
+    {
+      "name": "lines-custom-pattern-svg-only",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only"
+    },
+    {
+      "name": "with-fill-color",
+      "path": "/example/Pattern/with-fill-color"
+    },
+    {
+      "name": "with-lineargradient",
+      "path": "/example/Pattern/with-lineargradient"
+    }
+  ],
+  "usage": [
+    {
+      "example": "highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/highlight-individual-bar",
+      "lineNumber": 31,
+      "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+    },
+    {
+      "example": "highlight-individual-bar",
+      "component": "Columns",
+      "path": "/example/Columns/highlight-individual-bar",
+      "lineNumber": 28,
+      "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 7,
+      "line": "<Pattern size={4} circles>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 21,
+      "line": "<Pattern size={8} circles>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 35,
+      "line": "<Pattern size={8} circles={{ stagger: true }}>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 49,
+      "line": "<Pattern size={8} circles={{ radius: 2 }}>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 63,
+      "line": "<Pattern size={8} circles={{ radius: 2, stagger: true }}>"
+    },
+    {
+      "example": "circles",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles",
+      "lineNumber": 77,
+      "line": "<Pattern size={8} circles={{ radius: 2, opacity: 0.3 }}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 7,
+      "line": "<Pattern id=\"circle-pattern-1\" width={4} height={4}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 13,
+      "line": "<Pattern id=\"circle-pattern-2\" width={8} height={8}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 19,
+      "line": "<Pattern id=\"circle-pattern-3\" width={8} height={8}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 25,
+      "line": "<Pattern id=\"circle-pattern-4\" width={8} height={8}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 35,
+      "line": "<Pattern id=\"circle-pattern-5\" width={8} height={8}>"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 45,
+      "line": "<Pattern id=\"circle-pattern-6\" width={8} height={8}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 9,
+      "line": "<Pattern size={4} background={gradient}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 19,
+      "line": "<Pattern size={4} background={gradient}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 29,
+      "line": "<Pattern size={4} background={gradient}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 39,
+      "line": "<Pattern size={8} background={gradient}>"
+    },
+    {
+      "example": "lineargradient-as-pattern",
+      "component": "Pattern",
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "lineNumber": 49,
+      "line": "<Pattern size={8} background={gradient}>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 7,
+      "line": "<Pattern size={4} lines>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 21,
+      "line": "<Pattern size={4} lines={{ rotate: 90 }}>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 35,
+      "line": "<Pattern size={5} lines={[{ rotate: 0 }, { rotate: 90 }]}>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 49,
+      "line": "<Pattern size={5} lines={{ rotate: -45 }}>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 63,
+      "line": "<Pattern size={5} lines={{ rotate: 45 }}>"
+    },
+    {
+      "example": "lines",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines",
+      "lineNumber": 77,
+      "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 7,
+      "line": "<Pattern width={4} height={4}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 25,
+      "line": "<Pattern width={4} height={4}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 43,
+      "line": "<Pattern width={4} height={4}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 62,
+      "line": "<Pattern width={8} height={8}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 80,
+      "line": "<Pattern width={8} height={8}>"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 98,
+      "line": "<Pattern width={8} height={8}>"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 7,
+      "line": "<Pattern size={4} circles={{ color: 'white', opacity: 0.25 }} background=\"hsl(20 100% 50%)\">"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 13,
+      "line": "<Pattern size={8} circles={{ color: 'white', opacity: 0.6 }} background=\"hsl(150 100% 45%)\">"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 19,
+      "line": "<Pattern"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 29,
+      "line": "<Pattern"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 39,
+      "line": "<Pattern size={4} lines={{ color: 'white', opacity: 0.5 }} background=\"hsl(40 100% 50%)\">"
+    },
+    {
+      "example": "with-fill-color",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-fill-color",
+      "lineNumber": 45,
+      "line": "<Pattern"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 11,
+      "line": "<Pattern size={4} circles={{ color: 'white', opacity: 0.5 }}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 23,
+      "line": "<Pattern size={8} circles={{ color: 'white', opacity: 0.5 }}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 35,
+      "line": "<Pattern size={8} circles={{ color: 'white', opacity: 0.5, stagger: true }}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 47,
+      "line": "<Pattern size={8} circles={{ color: 'white', opacity: 0.5, stagger: true, radius: 2 }}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 59,
+      "line": "<Pattern size={4} lines={{ color: 'white', opacity: 0.5 }}>"
+    },
+    {
+      "example": "with-lineargradient",
+      "component": "Pattern",
+      "path": "/example/Pattern/with-lineargradient",
+      "lineNumber": 71,
+      "line": "<Pattern"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.356Z"
+}

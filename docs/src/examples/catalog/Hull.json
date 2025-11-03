@@ -1,0 +1,30 @@
+{
+  "component": "Hull",
+  "examples": [
+    {
+      "name": "geo",
+      "path": "/example/Hull/geo"
+    },
+    {
+      "name": "scatter",
+      "path": "/example/Hull/scatter"
+    }
+  ],
+  "usage": [
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 35,
+      "line": "<Hull"
+    },
+    {
+      "example": "scatter",
+      "component": "Hull",
+      "path": "/example/Hull/scatter",
+      "lineNumber": 44,
+      "line": "<Hull"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.116Z"
+}

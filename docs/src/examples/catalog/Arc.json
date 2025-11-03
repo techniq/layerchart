@@ -1,0 +1,226 @@
+{
+  "component": "Arc",
+  "examples": [
+    {
+      "name": "color-wheel",
+      "path": "/example/Arc/color-wheel"
+    },
+    {
+      "name": "concentric",
+      "path": "/example/Arc/concentric"
+    },
+    {
+      "name": "draggable-arc",
+      "path": "/example/Arc/draggable-arc"
+    },
+    {
+      "name": "label-direction",
+      "path": "/example/Arc/label-direction"
+    },
+    {
+      "name": "partial-arc",
+      "path": "/example/Arc/partial-arc"
+    },
+    {
+      "name": "playground",
+      "path": "/example/Arc/playground"
+    },
+    {
+      "name": "segmented-arc",
+      "path": "/example/Arc/segmented-arc"
+    },
+    {
+      "name": "segmented-arc-clip-mask",
+      "path": "/example/Arc/segmented-arc-clip-mask"
+    },
+    {
+      "name": "tween-value-on-mount",
+      "path": "/example/Arc/tween-value-on-mount"
+    }
+  ],
+  "usage": [
+    {
+      "example": "color-wheel",
+      "component": "Arc",
+      "path": "/example/Arc/color-wheel",
+      "lineNumber": 40,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 17,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 25,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 34,
+      "line": "<Arc"
+    },
+    {
+      "example": "draggable-arc",
+      "component": "Arc",
+      "path": "/example/Arc/draggable-arc",
+      "lineNumber": 18,
+      "line": "<Arc"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 58,
+      "line": "<Arc"
+    },
+    {
+      "example": "partial-arc",
+      "component": "Arc",
+      "path": "/example/Arc/partial-arc",
+      "lineNumber": 19,
+      "line": "<Arc"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 62,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc",
+      "lineNumber": 22,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 23,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 32,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 25,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 34,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 44,
+      "line": "<Arc"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 10,
+      "line": "<Arc"
+    },
+    {
+      "example": "series-labels",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-labels",
+      "lineNumber": 29,
+      "line": "<Arc {...props}>"
+    },
+    {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 80,
+      "line": "<Arc"
+    },
+    {
+      "example": "default-slot-render-each-arc",
+      "component": "Pie",
+      "path": "/example/Pie/default-slot-render-each-arc",
+      "lineNumber": 22,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels",
+      "component": "Pie",
+      "path": "/example/Pie/labels",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-centroid",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-centroid-multiple",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "lineNumber": 27,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer-radial",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-radial",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer-with-padding",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-with-padding",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "tooltip-with-arcs-slot",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "lineNumber": 48,
+      "line": "<Arc"
+    },
+    {
+      "example": "offset-slice",
+      "component": "PieChart",
+      "path": "/example/PieChart/offset-slice",
+      "lineNumber": 11,
+      "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.039Z"
+}

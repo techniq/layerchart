@@ -1,0 +1,71 @@
+{
+  "component": "BrushContext",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/BrushContext/basic"
+    },
+    {
+      "name": "constant-labels",
+      "path": "/example/BrushContext/constant-labels"
+    },
+    {
+      "name": "handle-arrows",
+      "path": "/example/BrushContext/handle-arrows"
+    },
+    {
+      "name": "handle-labels",
+      "path": "/example/BrushContext/handle-labels"
+    },
+    {
+      "name": "integrated-brush-(both-axis-area)",
+      "path": "/example/BrushContext/integrated-brush-(both-axis-area)"
+    },
+    {
+      "name": "integrated-brush-(x-axis)",
+      "path": "/example/BrushContext/integrated-brush-(x-axis)"
+    },
+    {
+      "name": "integrated-brush-(y-axis)",
+      "path": "/example/BrushContext/integrated-brush-(y-axis)"
+    },
+    {
+      "name": "minimap",
+      "path": "/example/BrushContext/minimap"
+    },
+    {
+      "name": "selection",
+      "path": "/example/BrushContext/selection"
+    },
+    {
+      "name": "separate-chart-(clip-data-y-axis)",
+      "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)"
+    },
+    {
+      "name": "separate-chart-(clip-data)",
+      "path": "/example/BrushContext/separate-chart-(clip-data)"
+    },
+    {
+      "name": "separate-chart-(filter-data)",
+      "path": "/example/BrushContext/separate-chart-(filter-data)"
+    },
+    {
+      "name": "simple-styling",
+      "path": "/example/BrushContext/simple-styling"
+    },
+    {
+      "name": "striped-background",
+      "path": "/example/BrushContext/striped-background"
+    },
+    {
+      "name": "sync-brushes-with-bind-xdomain",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain"
+    },
+    {
+      "name": "tooltip-interop",
+      "path": "/example/BrushContext/tooltip-interop"
+    }
+  ],
+  "usage": [],
+  "updatedAt": "2025-11-02T23:12:27.284Z"
+}

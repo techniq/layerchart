@@ -1,0 +1,110 @@
+{
+  "component": "AnnotationLine",
+  "examples": [
+    {
+      "name": "bar-chart",
+      "path": "/example/AnnotationLine/bar-chart"
+    },
+    {
+      "name": "horizontal",
+      "path": "/example/AnnotationLine/horizontal"
+    },
+    {
+      "name": "horizontal-placement",
+      "path": "/example/AnnotationLine/horizontal-placement"
+    },
+    {
+      "name": "horizontal-with-range",
+      "path": "/example/AnnotationLine/horizontal-with-range"
+    },
+    {
+      "name": "vertical",
+      "path": "/example/AnnotationLine/vertical"
+    },
+    {
+      "name": "vertical-placement",
+      "path": "/example/AnnotationLine/vertical-placement"
+    },
+    {
+      "name": "vertical-to-point",
+      "path": "/example/AnnotationLine/vertical-to-point"
+    },
+    {
+      "name": "vertical-with-rotation",
+      "path": "/example/AnnotationLine/vertical-with-rotation"
+    }
+  ],
+  "usage": [
+    {
+      "example": "bar-chart",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/bar-chart",
+      "lineNumber": 18,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-placement",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-placement",
+      "lineNumber": 55,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-with-range",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-with-range",
+      "lineNumber": 23,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-placement",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-placement",
+      "lineNumber": 55,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-to-point",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-to-point",
+      "lineNumber": 28,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 29,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 29,
+      "line": "<AnnotationLine"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:26.975Z"
+}

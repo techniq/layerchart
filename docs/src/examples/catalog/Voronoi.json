@@ -1,0 +1,19 @@
+{
+  "component": "Voronoi",
+  "examples": [
+    {
+      "name": "example",
+      "path": "/example/Voronoi/example"
+    }
+  ],
+  "usage": [
+    {
+      "example": "example",
+      "component": "Voronoi",
+      "path": "/example/Voronoi/example",
+      "lineNumber": 26,
+      "line": "<Voronoi"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.771Z"
+}

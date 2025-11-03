@@ -1,0 +1,14 @@
+{
+  "component": "GeoEdgeFade",
+  "examples": [],
+  "usage": [
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 33,
+      "line": "<GeoEdgeFade {link}>"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.863Z"
+}

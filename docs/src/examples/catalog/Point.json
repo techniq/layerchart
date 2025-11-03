@@ -1,0 +1,40 @@
+{
+  "component": "Point",
+  "examples": [
+    {
+      "name": "basic-usage",
+      "path": "/example/Point/basic-usage"
+    }
+  ],
+  "usage": [
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 59,
+      "line": "<Point d={data[data.length - 1]}>"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 62,
+      "line": "<Point d={data[data.length - 1]}>"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Point",
+      "path": "/example/Point/basic-usage",
+      "lineNumber": 21,
+      "line": "<Point d={{ x: 50, y: 50 }}>"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Point",
+      "path": "/example/Point/basic-usage",
+      "lineNumber": 27,
+      "line": "<Point d={{ x: 20, y: 20 }}>"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.415Z"
+}

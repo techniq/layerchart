@@ -1,0 +1,14 @@
+{
+  "component": "GeoContext",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 80,
+      "line": "<GeoContext"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.847Z"
+}

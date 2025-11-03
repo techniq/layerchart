@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-11-02T14:56:02.527Z",
-  "totalComponents": 82,
-  "totalExamples": 760,
+  "generatedAt": "2025-11-02T23:16:19.353Z",
+  "totalComponents": 78,
+  "totalExamples": 719,
   "components": [
     {
       "component": "AnimatedGlobe",
@@ -508,175 +508,6 @@
       ]
     },
     {
-      "component": "AreaChartSimple",
-      "examples": [
-        {
-          "name": "band-scale",
-          "path": "/example/AreaChartSimple/band-scale"
-        },
-        {
-          "name": "basic",
-          "path": "/example/AreaChartSimple/basic"
-        },
-        {
-          "name": "brush",
-          "path": "/example/AreaChartSimple/brush"
-        },
-        {
-          "name": "brush-sync",
-          "path": "/example/AreaChartSimple/brush-sync"
-        },
-        {
-          "name": "curve",
-          "path": "/example/AreaChartSimple/curve"
-        },
-        {
-          "name": "custom",
-          "path": "/example/AreaChartSimple/custom"
-        },
-        {
-          "name": "custom-tooltip",
-          "path": "/example/AreaChartSimple/custom-tooltip"
-        },
-        {
-          "name": "default-series-label",
-          "path": "/example/AreaChartSimple/default-series-label"
-        },
-        {
-          "name": "funnel",
-          "path": "/example/AreaChartSimple/funnel"
-        },
-        {
-          "name": "gradient",
-          "path": "/example/AreaChartSimple/gradient"
-        },
-        {
-          "name": "labels",
-          "path": "/example/AreaChartSimple/labels"
-        },
-        {
-          "name": "line-annotation",
-          "path": "/example/AreaChartSimple/line-annotation"
-        },
-        {
-          "name": "markers",
-          "path": "/example/AreaChartSimple/markers"
-        },
-        {
-          "name": "null-gaps",
-          "path": "/example/AreaChartSimple/null-gaps"
-        },
-        {
-          "name": "point-annotations",
-          "path": "/example/AreaChartSimple/point-annotations"
-        },
-        {
-          "name": "point-scale",
-          "path": "/example/AreaChartSimple/point-scale"
-        },
-        {
-          "name": "points",
-          "path": "/example/AreaChartSimple/points"
-        },
-        {
-          "name": "radial",
-          "path": "/example/AreaChartSimple/radial"
-        },
-        {
-          "name": "range-annotation",
-          "path": "/example/AreaChartSimple/range-annotation"
-        },
-        {
-          "name": "series",
-          "path": "/example/AreaChartSimple/series"
-        },
-        {
-          "name": "series-individual-tooltip",
-          "path": "/example/AreaChartSimple/series-individual-tooltip"
-        },
-        {
-          "name": "series-point-annotations",
-          "path": "/example/AreaChartSimple/series-point-annotations"
-        },
-        {
-          "name": "series-point-click",
-          "path": "/example/AreaChartSimple/series-point-click"
-        },
-        {
-          "name": "series-separate-data",
-          "path": "/example/AreaChartSimple/series-separate-data"
-        },
-        {
-          "name": "series-stack",
-          "path": "/example/AreaChartSimple/series-stack"
-        },
-        {
-          "name": "series-stack-diverging",
-          "path": "/example/AreaChartSimple/series-stack-diverging"
-        },
-        {
-          "name": "series-stack-expand",
-          "path": "/example/AreaChartSimple/series-stack-expand"
-        },
-        {
-          "name": "series-stack-gradient",
-          "path": "/example/AreaChartSimple/series-stack-gradient"
-        },
-        {
-          "name": "series-stack-legend",
-          "path": "/example/AreaChartSimple/series-stack-legend"
-        },
-        {
-          "name": "series-stack-legend-labels",
-          "path": "/example/AreaChartSimple/series-stack-legend-labels"
-        },
-        {
-          "name": "series-stack-legend-placement",
-          "path": "/example/AreaChartSimple/series-stack-legend-placement"
-        },
-        {
-          "name": "series-stack-separate-data",
-          "path": "/example/AreaChartSimple/series-stack-separate-data"
-        },
-        {
-          "name": "series-tooltip-click",
-          "path": "/example/AreaChartSimple/series-tooltip-click"
-        },
-        {
-          "name": "single-axis-x",
-          "path": "/example/AreaChartSimple/single-axis-x"
-        },
-        {
-          "name": "single-axis-y",
-          "path": "/example/AreaChartSimple/single-axis-y"
-        },
-        {
-          "name": "sparkline",
-          "path": "/example/AreaChartSimple/sparkline"
-        },
-        {
-          "name": "threshold",
-          "path": "/example/AreaChartSimple/threshold"
-        },
-        {
-          "name": "threshold-gradient",
-          "path": "/example/AreaChartSimple/threshold-gradient"
-        },
-        {
-          "name": "tooltip-external",
-          "path": "/example/AreaChartSimple/tooltip-external"
-        },
-        {
-          "name": "tooltip-fixed-with-hide-delay",
-          "path": "/example/AreaChartSimple/tooltip-fixed-with-hide-delay"
-        },
-        {
-          "name": "tooltip-locking",
-          "path": "/example/AreaChartSimple/tooltip-locking"
-        }
-      ]
-    },
-    {
       "component": "Axis",
       "examples": [
         {
@@ -1114,6 +945,10 @@
           "path": "/example/Bars/calculated-value-domain-positive"
         },
         {
+          "name": "candlestick-bars",
+          "path": "/example/Bars/candlestick-bars"
+        },
+        {
           "name": "click-handler",
           "path": "/example/Bars/click-handler"
         },
@@ -1335,27 +1170,6 @@
         {
           "name": "rounded-cells",
           "path": "/example/Calendar/rounded-cells"
-        }
-      ]
-    },
-    {
-      "component": "Candlestick",
-      "examples": [
-        {
-          "name": "bars",
-          "path": "/example/Candlestick/bars"
-        },
-        {
-          "name": "basic",
-          "path": "/example/Candlestick/basic"
-        },
-        {
-          "name": "open-close-line-color",
-          "path": "/example/Candlestick/open-close-line-color"
-        },
-        {
-          "name": "with-brushing",
-          "path": "/example/Candlestick/with-brushing"
         }
       ]
     },
@@ -2280,15 +2094,6 @@
       ]
     },
     {
-      "component": "Lollipop",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Lollipop/basic"
-        }
-      ]
-    },
-    {
       "component": "Marker",
       "examples": [
         {
@@ -2362,6 +2167,10 @@
         {
           "name": "horizontal",
           "path": "/example/Partition/horizontal"
+        },
+        {
+          "name": "sunburst",
+          "path": "/example/Partition/sunburst"
         },
         {
           "name": "vertical",
@@ -2830,6 +2639,18 @@
           "path": "/example/Rule/baseline-y-negative"
         },
         {
+          "name": "candlestick",
+          "path": "/example/Rule/candlestick"
+        },
+        {
+          "name": "candlestick-open-close-line-color",
+          "path": "/example/Rule/candlestick-open-close-line-color"
+        },
+        {
+          "name": "candlestick-with-brushing",
+          "path": "/example/Rule/candlestick-with-brushing"
+        },
+        {
           "name": "data-x-band",
           "path": "/example/Rule/data-x-band"
         },
@@ -2844,6 +2665,10 @@
         {
           "name": "data-y-range",
           "path": "/example/Rule/data-y-range"
+        },
+        {
+          "name": "lollipop",
+          "path": "/example/Rule/lollipop"
         }
       ]
     },
@@ -3122,15 +2947,6 @@
         {
           "name": "basic",
           "path": "/example/SubmarineCablesGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "Sunburst",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Sunburst/basic"
         }
       ]
     },

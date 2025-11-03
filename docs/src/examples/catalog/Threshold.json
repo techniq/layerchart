@@ -1,0 +1,48 @@
+{
+  "component": "Threshold",
+  "examples": [
+    {
+      "name": "basic-threshold",
+      "path": "/example/Threshold/basic-threshold"
+    },
+    {
+      "name": "with-labels",
+      "path": "/example/Threshold/with-labels"
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "path": "/example/Threshold/with-tooltip-and-highlight"
+    }
+  ],
+  "usage": [
+    {
+      "example": "threshold",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold",
+      "lineNumber": 34,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "basic-threshold",
+      "component": "Threshold",
+      "path": "/example/Threshold/basic-threshold",
+      "lineNumber": 30,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
+      "example": "with-labels",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-labels",
+      "lineNumber": 31,
+      "line": "<Threshold>"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 33,
+      "line": "<Threshold curve={selectedCurve}>"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.613Z"
+}

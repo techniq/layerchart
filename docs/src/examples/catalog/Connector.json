@@ -1,0 +1,19 @@
+{
+  "component": "Connector",
+  "examples": [
+    {
+      "name": "playground",
+      "path": "/example/Connector/playground"
+    }
+  ],
+  "usage": [
+    {
+      "example": "playground",
+      "component": "Connector",
+      "path": "/example/Connector/playground",
+      "lineNumber": 36,
+      "line": "<Connector {source} {target} {sweep} {type} {radius} {curve} class=\"stroke-primary stroke-4\" />"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.672Z"
+}

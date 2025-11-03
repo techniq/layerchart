@@ -1,0 +1,30 @@
+{
+  "component": "Tree",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Tree/basic"
+    },
+    {
+      "name": "html-nodes",
+      "path": "/example/Tree/html-nodes"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/example/Tree/basic",
+      "lineNumber": 61,
+      "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+    },
+    {
+      "example": "html-nodes",
+      "component": "Tree",
+      "path": "/example/Tree/html-nodes",
+      "lineNumber": 61,
+      "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:28.693Z"
+}

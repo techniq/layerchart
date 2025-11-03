@@ -1,0 +1,502 @@
+{
+  "component": "GeoPath",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/GeoPath/basic"
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "AnimatedGlobe",
+      "path": "/example/AnimatedGlobe/basic",
+      "lineNumber": 169,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+    },
+    {
+      "example": "basic",
+      "component": "AnimatedGlobe",
+      "path": "/example/AnimatedGlobe/basic",
+      "lineNumber": 173,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "AnimatedGlobe",
+      "path": "/example/AnimatedGlobe/basic",
+      "lineNumber": 191,
+      "line": "<GeoPath geojson={context.tooltip.data} class=\"fill-surface-content/20\" />"
+    },
+    {
+      "example": "bubble-map-population",
+      "component": "BubbleMap",
+      "path": "/example/BubbleMap/bubble-map-population",
+      "lineNumber": 89,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
+    },
+    {
+      "example": "bubble-map-population",
+      "component": "BubbleMap",
+      "path": "/example/BubbleMap/bubble-map-population",
+      "lineNumber": 92,
+      "line": "<GeoPath geojson={feature} {strokeWidth}>"
+    },
+    {
+      "example": "bubble-map-population",
+      "component": "BubbleMap",
+      "path": "/example/BubbleMap/bubble-map-population",
+      "lineNumber": 111,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "bubble-map-population",
+      "component": "BubbleMap",
+      "path": "/example/BubbleMap/bubble-map-population",
+      "lineNumber": 123,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "Choropleth",
+      "path": "/example/Choropleth/basic",
+      "lineNumber": 77,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "Choropleth",
+      "path": "/example/Choropleth/basic",
+      "lineNumber": 86,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "Choropleth",
+      "path": "/example/Choropleth/basic",
+      "lineNumber": 96,
+      "line": "<GeoPath geojson={context.tooltip.data} class=\"stroke-white\" {strokeWidth} />"
+    },
+    {
+      "example": "country-map",
+      "component": "CountryMap",
+      "path": "/example/CountryMap/country-map",
+      "lineNumber": 25,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "country-map",
+      "component": "CountryMap",
+      "path": "/example/CountryMap/country-map",
+      "lineNumber": 33,
+      "line": "<GeoPath geojson={feature}>"
+    },
+    {
+      "example": "basic",
+      "component": "EarthquakeGlobe",
+      "path": "/example/EarthquakeGlobe/basic",
+      "lineNumber": 87,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EarthquakeGlobe",
+      "path": "/example/EarthquakeGlobe/basic",
+      "lineNumber": 91,
+      "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EarthquakeGlobe",
+      "path": "/example/EarthquakeGlobe/basic",
+      "lineNumber": 92,
+      "line": "<GeoPath geojson={tectonicPlates} class=\"stroke-danger-100/30\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EclipsesGlobe",
+      "path": "/example/EclipsesGlobe/basic",
+      "lineNumber": 94,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EclipsesGlobe",
+      "path": "/example/EclipsesGlobe/basic",
+      "lineNumber": 96,
+      "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "EclipsesGlobe",
+      "path": "/example/EclipsesGlobe/basic",
+      "lineNumber": 102,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "playground",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/playground",
+      "lineNumber": 94,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
+    },
+    {
+      "example": "playground",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/playground",
+      "lineNumber": 98,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/basic",
+      "lineNumber": 24,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/basic",
+      "lineNumber": 31,
+      "line": "<GeoPath geojson={counties} class=\"fill-none stroke-surface-content/10 pointer-events-none\" />"
+    },
+    {
+      "example": "basic",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/basic",
+      "lineNumber": 39,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/icons",
+      "lineNumber": 45,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-airports",
+      "lineNumber": 49,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 27,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-airports",
+      "lineNumber": 49,
+      "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 49,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic-geo-projection",
+      "component": "GeoProjection",
+      "path": "/example/GeoProjection/basic-geo-projection",
+      "lineNumber": 88,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
+    },
+    {
+      "example": "basic-geo-projection",
+      "component": "GeoProjection",
+      "path": "/example/GeoProjection/basic-geo-projection",
+      "lineNumber": 91,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/basic-geo-tile",
+      "lineNumber": 51,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "clipped-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/clipped-geo-tile",
+      "lineNumber": 50,
+      "line": "<GeoPath geojson={selectedFeature} id=\"clip\" class=\"stroke-none\" />"
+    },
+    {
+      "example": "clipped-geo-tile",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/clipped-geo-tile",
+      "lineNumber": 52,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 33,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 27,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+    },
+    {
+      "example": "draggable-globe-with-edgefade",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "lineNumber": 30,
+      "line": "<GeoPath geojson={country} class=\"stroke-surface-content/50 fill-white pointer-events-none\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/world-map",
+      "lineNumber": 38,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "LoftedArcs",
+      "path": "/example/LoftedArcs/world-map",
+      "lineNumber": 41,
+      "line": "<GeoPath geojson={country} class=\"stroke-surface-content/50 fill-white\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SketchyGlobe",
+      "path": "/example/SketchyGlobe/basic",
+      "lineNumber": 78,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SketchyGlobe",
+      "path": "/example/SketchyGlobe/basic",
+      "lineNumber": 80,
+      "line": "<GeoPath geojson={land} {curve} class=\"stroke-surface-content/50 fill-white\" />"
+    },
+    {
+      "example": "spike-map-population",
+      "component": "SpikeMap",
+      "path": "/example/SpikeMap/spike-map-population",
+      "lineNumber": 75,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
+    },
+    {
+      "example": "spike-map-population",
+      "component": "SpikeMap",
+      "path": "/example/SpikeMap/spike-map-population",
+      "lineNumber": 78,
+      "line": "<GeoPath geojson={feature} {strokeWidth}>"
+    },
+    {
+      "example": "spike-map-population",
+      "component": "SpikeMap",
+      "path": "/example/SpikeMap/spike-map-population",
+      "lineNumber": 93,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "spike-map-population",
+      "component": "SpikeMap",
+      "path": "/example/SpikeMap/spike-map-population",
+      "lineNumber": 105,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "state-only",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-only",
+      "lineNumber": 62,
+      "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "state-with-counties",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-with-counties",
+      "lineNumber": 68,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "state-with-counties",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-with-counties",
+      "lineNumber": 74,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "state-with-surrounding-states-via-chart-clip-path",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
+      "lineNumber": 66,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "state-with-surrounding-states-via-chart-clip-path",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
+      "lineNumber": 73,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "state-with-surrounding-states-via-chart-clip-path",
+      "component": "StateMap",
+      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
+      "lineNumber": 78,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "SubmarineCablesGlobe",
+      "path": "/example/SubmarineCablesGlobe/basic",
+      "lineNumber": 86,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SubmarineCablesGlobe",
+      "path": "/example/SubmarineCablesGlobe/basic",
+      "lineNumber": 88,
+      "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "SubmarineCablesGlobe",
+      "path": "/example/SubmarineCablesGlobe/basic",
+      "lineNumber": 93,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 121,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 123,
+      "line": "<GeoPath geojson={countriesGeojson} id=\"clip\" />"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 126,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 136,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic-timezones",
+      "component": "Timezones",
+      "path": "/example/Timezones/basic-timezones",
+      "lineNumber": 143,
+      "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
+    },
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 77,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 88,
+      "line": "<GeoPath geojson={country} class=\"stroke-surface-content/5 fill-surface-content/10\" />"
+    },
+    {
+      "example": "basic",
+      "component": "TranslucentGlobe",
+      "path": "/example/TranslucentGlobe/basic",
+      "lineNumber": 95,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "canvas-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/canvas-transform",
+      "lineNumber": 76,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "canvas-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/canvas-transform",
+      "lineNumber": 106,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "canvas-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/canvas-transform",
+      "lineNumber": 123,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projection-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/projection-transform",
+      "lineNumber": 76,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projection-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/projection-transform",
+      "lineNumber": 104,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projection-transform",
+      "component": "ZoomableMap",
+      "path": "/example/ZoomableMap/projection-transform",
+      "lineNumber": 121,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/basic",
+      "lineNumber": 73,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "seamless-multiple-zoom-layers",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "lineNumber": 77,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "with-padding",
+      "component": "ZoomableTileMap",
+      "path": "/example/ZoomableTileMap/with-padding",
+      "lineNumber": 79,
+      "line": "<GeoPath"
+    }
+  ],
+  "updatedAt": "2025-11-02T23:12:27.885Z"
+}
