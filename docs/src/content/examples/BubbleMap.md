@@ -1,4 +1,5 @@
 ---
+name: Bubble Map
 description: Visualization which displays data points on a geographical map using bubbles to represent values or magnitudes at specific locations.
 section: geo
 layers: ['svg', 'canvas']

@@ -1,4 +1,5 @@
 ---
+name: Radial Line
 description: Visualization plotting data points in a circular layout, connecting them with lines to reveal patterns or trends radiating from a central point.
 section: cartesian & polar
 layers: ['svg', 'canvas']

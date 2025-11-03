@@ -1,4 +1,5 @@
 ---
+name: Punch Card
 description: Visualization displaying data in a grid format where the size or color of each cell represents the magnitude of values, often used to show patterns over time.
 section: cartesian & polar
 layers: ['svg', 'canvas']

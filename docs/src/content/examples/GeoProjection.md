@@ -1,4 +1,5 @@
 ---
+name: Geo Projection
 description: Visualization transforming geographical coordinates into a flat map representation using various projection techniques.
 section: geo
 layers: ['svg', 'canvas']

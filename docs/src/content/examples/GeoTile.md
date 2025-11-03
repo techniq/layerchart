@@ -1,4 +1,5 @@
 ---
+name: Geo Title
 description: Visualization rendering map tiles to display geographical data efficiently, allowing for zooming and panning across different regions.
 section: geo
 layers: ['svg', 'canvas']

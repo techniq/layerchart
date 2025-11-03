@@ -1,4 +1,5 @@
 ---
+name: Translucent Globe
 description: Visualization of a semi-transparent 3D globe visualization to represent geographical data with a focus on underlying structures.
 section: geo
 layers: ['svg', 'canvas']
