@@ -2,71 +2,83 @@
   "component": "GeoTile",
   "examples": [
     {
-      "name": "basic-geo-tile",
-      "path": "/example/GeoTile/basic-geo-tile"
+      "name": "basic",
+      "path": "/example/GeoTile/basic"
     },
     {
-      "name": "clipped-geo-tile",
-      "path": "/example/GeoTile/clipped-geo-tile"
+      "name": "clipped",
+      "path": "/example/GeoTile/clipped"
+    },
+    {
+      "name": "zoomable",
+      "path": "/example/GeoTile/zoomable"
+    },
+    {
+      "name": "zoomable-seamless-layers",
+      "path": "/example/GeoTile/zoomable-seamless-layers"
+    },
+    {
+      "name": "zoomable-with-padding",
+      "path": "/example/GeoTile/zoomable-with-padding"
     }
   ],
   "usage": [
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 48,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 48,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
     },
     {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
       "lineNumber": 70,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
       "lineNumber": 71,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
     },
     {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
       "lineNumber": 72,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
     },
     {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
       "lineNumber": 73,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
     },
     {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
       "lineNumber": 74,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
       "lineNumber": 76,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.946Z"
+  "updatedAt": "2025-11-03T14:25:00.343Z"
 }

@@ -45,6 +45,27 @@
       "line": "<TransformControls />"
     },
     {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 67,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 67,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 73,
+      "line": "<TransformControls />"
+    },
+    {
       "example": "spike-map-population",
       "component": "SpikeMap",
       "path": "/example/SpikeMap/spike-map-population",
@@ -99,28 +120,7 @@
       "path": "/example/ZoomableMap/projection-transform",
       "lineNumber": 72,
       "line": "<TransformControls />"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 67,
-      "line": "<TransformControls />"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 67,
-      "line": "<TransformControls />"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 73,
-      "line": "<TransformControls />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.673Z"
+  "updatedAt": "2025-11-03T14:25:01.475Z"
 }

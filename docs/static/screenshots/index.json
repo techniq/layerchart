@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-03T13:50:22.571Z",
-  "totalComponents": 76,
+  "generatedAt": "2025-11-03T14:24:58.821Z",
+  "totalComponents": 75,
   "totalExamples": 717,
   "components": [
     {
@@ -1639,12 +1639,24 @@
       "component": "GeoTile",
       "examples": [
         {
-          "name": "basic-geo-tile",
-          "path": "/example/GeoTile/basic-geo-tile"
+          "name": "basic",
+          "path": "/example/GeoTile/basic"
         },
         {
-          "name": "clipped-geo-tile",
-          "path": "/example/GeoTile/clipped-geo-tile"
+          "name": "clipped",
+          "path": "/example/GeoTile/clipped"
+        },
+        {
+          "name": "zoomable",
+          "path": "/example/GeoTile/zoomable"
+        },
+        {
+          "name": "zoomable-seamless-layers",
+          "path": "/example/GeoTile/zoomable-seamless-layers"
+        },
+        {
+          "name": "zoomable-with-padding",
+          "path": "/example/GeoTile/zoomable-with-padding"
         }
       ]
     },
@@ -3231,23 +3243,6 @@
         {
           "name": "projection-transform",
           "path": "/example/ZoomableMap/projection-transform"
-        }
-      ]
-    },
-    {
-      "component": "ZoomableTileMap",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/ZoomableTileMap/basic"
-        },
-        {
-          "name": "seamless-multiple-zoom-layers",
-          "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers"
-        },
-        {
-          "name": "with-padding",
-          "path": "/example/ZoomableTileMap/with-padding"
         }
       ]
     }

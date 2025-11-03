@@ -3084,73 +3084,178 @@
       "line": "<Tooltip.Root>"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 61,
       "line": "<Tooltip.Root>"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 65,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 66,
       "line": "<Tooltip.List>"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 67,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 68,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 62,
       "line": "<Tooltip.Root>"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 66,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 67,
       "line": "<Tooltip.List>"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 68,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 69,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 91,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 95,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 96,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 97,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 98,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 95,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 99,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 100,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 101,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 102,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 97,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 104,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 105,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 106,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 107,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
@@ -5693,112 +5798,7 @@
       "path": "/example/ZoomableMap/projection-transform",
       "lineNumber": 136,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 91,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 95,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 96,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 97,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 98,
-      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 95,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 99,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 100,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 101,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 102,
-      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 97,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 104,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 105,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 106,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 107,
-      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2025-11-03T13:50:25.790Z"
+  "updatedAt": "2025-11-03T14:25:01.283Z"
 }

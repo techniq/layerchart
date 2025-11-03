@@ -14,7 +14,7 @@
       "component": "GeoPath",
       "path": "/example/GeoPath/basic",
       "lineNumber": 35,
-      "line": "<!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->"
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> layer -->"
     },
     {
       "example": "canvas-transform",
@@ -24,5 +24,5 @@
       "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:26.805Z"
+  "updatedAt": "2025-11-03T14:17:43.243Z"
 }

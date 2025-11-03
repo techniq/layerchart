@@ -32,7 +32,7 @@
 		</Layer>
 
 		<!-- Draw tooltip path for canvas since hover: not supported -->
-		<!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->
+		<!-- Provides better performance by rendering tooltip path on separate <Canvas> layer -->
 		{#if settings.layer === 'canvas'}
 			<Layer pointerEvents={false}>
 				{#if context.tooltip.data}

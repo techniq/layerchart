@@ -218,24 +218,45 @@
       "line": "<GeoPath"
     },
     {
-      "example": "basic-geo-tile",
+      "example": "basic",
       "component": "GeoTile",
-      "path": "/example/GeoTile/basic-geo-tile",
+      "path": "/example/GeoTile/basic",
       "lineNumber": 51,
       "line": "<GeoPath"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 50,
       "line": "<GeoPath geojson={selectedFeature} id=\"clip\" class=\"stroke-none\" />"
     },
     {
-      "example": "clipped-geo-tile",
+      "example": "clipped",
       "component": "GeoTile",
-      "path": "/example/GeoTile/clipped-geo-tile",
+      "path": "/example/GeoTile/clipped",
       "lineNumber": 52,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 73,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 77,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 79,
       "line": "<GeoPath"
     },
     {
@@ -475,28 +496,7 @@
       "path": "/example/ZoomableMap/projection-transform",
       "lineNumber": 121,
       "line": "<GeoPath"
-    },
-    {
-      "example": "basic",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/basic",
-      "lineNumber": 73,
-      "line": "<GeoPath"
-    },
-    {
-      "example": "seamless-multiple-zoom-layers",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/seamless-multiple-zoom-layers",
-      "lineNumber": 77,
-      "line": "<GeoPath"
-    },
-    {
-      "example": "with-padding",
-      "component": "ZoomableTileMap",
-      "path": "/example/ZoomableTileMap/with-padding",
-      "lineNumber": 79,
-      "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.885Z"
+  "updatedAt": "2025-11-03T14:25:00.270Z"
 }
