@@ -9,6 +9,8 @@ related: ['components/Arc', 'examples/Arc']
   import Example from '$lib/components/Example.svelte';
 </script>
 
+> See also: [PieChart](/docs/components/PieChart) for simplified examples
+
 ## Examples
 
 ### Basic

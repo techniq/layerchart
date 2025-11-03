@@ -8,3 +8,5 @@ related: ['components/Bar', 'examples/Bars', 'examples/Columns', 'examples/Histo
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
+
+> See also: [BarChart](/docs/components/BarChart) for simplified examples

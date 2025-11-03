@@ -132,9 +132,9 @@
       "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
     },
     {
-      "example": "gradient",
+      "example": "horizontal-gradient",
       "component": "Bars",
-      "path": "/example/Bars/gradient",
+      "path": "/example/Bars/horizontal-gradient",
       "lineNumber": 30,
       "line": "<LinearGradient class=\"from-green-400 to-blue-500\" units=\"userSpaceOnUse\">"
     },
@@ -195,9 +195,9 @@
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
-      "example": "gradient",
+      "example": "vertical-gradient",
       "component": "Columns",
-      "path": "/example/Columns/gradient",
+      "path": "/example/Columns/vertical-gradient",
       "lineNumber": 23,
       "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
     },
@@ -207,20 +207,6 @@
       "path": "/example/Frame/gradient",
       "lineNumber": 12,
       "line": "<LinearGradient class=\"from-primary/10 to-secondary/10\" vertical>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
-      "lineNumber": 21,
-      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
-    },
-    {
-      "example": "gradient-threshold",
-      "component": "Line",
-      "path": "/example/Line/gradient-threshold",
-      "lineNumber": 17,
-      "line": "<LinearGradient"
     },
     {
       "example": "direction-with-custom-colors",
@@ -438,7 +424,21 @@
       "path": "/example/Pattern/with-lineargradient",
       "lineNumber": 67,
       "line": "<LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
+      "lineNumber": 21,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-threshold",
+      "lineNumber": 17,
+      "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.191Z"
+  "updatedAt": "2025-11-03T17:05:55.983Z"
 }

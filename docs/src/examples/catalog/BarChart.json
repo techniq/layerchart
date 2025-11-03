@@ -50,6 +50,42 @@
       "path": "/example/BarChart/duration"
     },
     {
+      "name": "duration-bars",
+      "path": "/example/BarChart/duration-bars"
+    },
+    {
+      "name": "duration-bars-color",
+      "path": "/example/BarChart/duration-bars-color"
+    },
+    {
+      "name": "duration-bars-dense",
+      "path": "/example/BarChart/duration-bars-dense"
+    },
+    {
+      "name": "duration-bars-dense-lanes",
+      "path": "/example/BarChart/duration-bars-dense-lanes"
+    },
+    {
+      "name": "duration-bars-lanes",
+      "path": "/example/BarChart/duration-bars-lanes"
+    },
+    {
+      "name": "duration-civilization-timeline",
+      "path": "/example/BarChart/duration-civilization-timeline"
+    },
+    {
+      "name": "duration-civilization-timeline-dense",
+      "path": "/example/BarChart/duration-civilization-timeline-dense"
+    },
+    {
+      "name": "duration-points",
+      "path": "/example/BarChart/duration-points"
+    },
+    {
+      "name": "duration-points-color",
+      "path": "/example/BarChart/duration-points-color"
+    },
+    {
       "name": "gradient",
       "path": "/example/BarChart/gradient"
     },
@@ -76,6 +112,26 @@
     {
       "name": "highlight-below-marks",
       "path": "/example/BarChart/highlight-below-marks"
+    },
+    {
+      "name": "histogram-date-time-count",
+      "path": "/example/BarChart/histogram-date-time-count"
+    },
+    {
+      "name": "histogram-date-time-interval",
+      "path": "/example/BarChart/histogram-date-time-interval"
+    },
+    {
+      "name": "histogram-horizontal",
+      "path": "/example/BarChart/histogram-horizontal"
+    },
+    {
+      "name": "histogram-random-distribution",
+      "path": "/example/BarChart/histogram-random-distribution"
+    },
+    {
+      "name": "histogram-vertical",
+      "path": "/example/BarChart/histogram-vertical"
     },
     {
       "name": "horizontal",
@@ -398,6 +454,69 @@
       "line": "<BarChart"
     },
     {
+      "example": "duration-bars",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-bars-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-color",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-bars-dense",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-dense",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-bars-dense-lanes",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-dense-lanes",
+      "lineNumber": 14,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-bars-lanes",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-lanes",
+      "lineNumber": 29,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-civilization-timeline",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-civilization-timeline",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-civilization-timeline-dense",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-civilization-timeline-dense",
+      "lineNumber": 13,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
+      "example": "duration-points-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points-color",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
       "example": "gradient",
       "component": "BarChart",
       "path": "/example/BarChart/gradient",
@@ -445,6 +564,41 @@
       "path": "/example/BarChart/highlight-below-marks",
       "lineNumber": 16,
       "line": "<BarChart {data} x=\"date\" y=\"value\" props={{ highlight: { area: false } }} height={300}>"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-date-time-count",
+      "lineNumber": 44,
+      "line": "<BarChart"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-date-time-interval",
+      "lineNumber": 59,
+      "line": "<BarChart"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-horizontal",
+      "lineNumber": 22,
+      "line": "<BarChart"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-random-distribution",
+      "lineNumber": 14,
+      "line": "<BarChart"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-vertical",
+      "lineNumber": 22,
+      "line": "<BarChart"
     },
     {
       "example": "horizontal",
@@ -818,104 +972,6 @@
       "line": "<BarChart"
     },
     {
-      "example": "bars",
-      "component": "Duration",
-      "path": "/example/Duration/bars",
-      "lineNumber": 26,
-      "line": "<BarChart"
-    },
-    {
-      "example": "bars-color",
-      "component": "Duration",
-      "path": "/example/Duration/bars-color",
-      "lineNumber": 26,
-      "line": "<BarChart"
-    },
-    {
-      "example": "bars-dense",
-      "component": "Duration",
-      "path": "/example/Duration/bars-dense",
-      "lineNumber": 12,
-      "line": "<BarChart"
-    },
-    {
-      "example": "bars-dense-lanes",
-      "component": "Duration",
-      "path": "/example/Duration/bars-dense-lanes",
-      "lineNumber": 14,
-      "line": "<BarChart"
-    },
-    {
-      "example": "bars-lanes",
-      "component": "Duration",
-      "path": "/example/Duration/bars-lanes",
-      "lineNumber": 29,
-      "line": "<BarChart"
-    },
-    {
-      "example": "civilization-timeline",
-      "component": "Duration",
-      "path": "/example/Duration/civilization-timeline",
-      "lineNumber": 13,
-      "line": "<BarChart"
-    },
-    {
-      "example": "civilization-timeline-dense",
-      "component": "Duration",
-      "path": "/example/Duration/civilization-timeline-dense",
-      "lineNumber": 13,
-      "line": "<BarChart"
-    },
-    {
-      "example": "points",
-      "component": "Duration",
-      "path": "/example/Duration/points",
-      "lineNumber": 26,
-      "line": "<BarChart"
-    },
-    {
-      "example": "points-color",
-      "component": "Duration",
-      "path": "/example/Duration/points-color",
-      "lineNumber": 26,
-      "line": "<BarChart"
-    },
-    {
-      "example": "date-time-count",
-      "component": "Histogram",
-      "path": "/example/Histogram/date-time-count",
-      "lineNumber": 44,
-      "line": "<BarChart"
-    },
-    {
-      "example": "date-time-interval",
-      "component": "Histogram",
-      "path": "/example/Histogram/date-time-interval",
-      "lineNumber": 59,
-      "line": "<BarChart"
-    },
-    {
-      "example": "horizontal",
-      "component": "Histogram",
-      "path": "/example/Histogram/horizontal",
-      "lineNumber": 22,
-      "line": "<BarChart"
-    },
-    {
-      "example": "random-distribution",
-      "component": "Histogram",
-      "path": "/example/Histogram/random-distribution",
-      "lineNumber": 14,
-      "line": "<BarChart"
-    },
-    {
-      "example": "vertical",
-      "component": "Histogram",
-      "path": "/example/Histogram/vertical",
-      "lineNumber": 22,
-      "line": "<BarChart"
-    },
-    {
       "example": "frequency",
       "component": "Oscilloscope",
       "path": "/example/Oscilloscope/frequency",
@@ -923,5 +979,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-03T13:50:23.586Z"
+  "updatedAt": "2025-11-03T16:52:48.547Z"
 }

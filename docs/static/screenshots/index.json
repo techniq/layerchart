@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-03T15:45:45.084Z",
-  "totalComponents": 62,
+  "generatedAt": "2025-11-03T17:06:45.276Z",
+  "totalComponents": 58,
   "totalExamples": 717,
   "components": [
     {
@@ -711,6 +711,42 @@
           "path": "/example/BarChart/duration"
         },
         {
+          "name": "duration-bars",
+          "path": "/example/BarChart/duration-bars"
+        },
+        {
+          "name": "duration-bars-color",
+          "path": "/example/BarChart/duration-bars-color"
+        },
+        {
+          "name": "duration-bars-dense",
+          "path": "/example/BarChart/duration-bars-dense"
+        },
+        {
+          "name": "duration-bars-dense-lanes",
+          "path": "/example/BarChart/duration-bars-dense-lanes"
+        },
+        {
+          "name": "duration-bars-lanes",
+          "path": "/example/BarChart/duration-bars-lanes"
+        },
+        {
+          "name": "duration-civilization-timeline",
+          "path": "/example/BarChart/duration-civilization-timeline"
+        },
+        {
+          "name": "duration-civilization-timeline-dense",
+          "path": "/example/BarChart/duration-civilization-timeline-dense"
+        },
+        {
+          "name": "duration-points",
+          "path": "/example/BarChart/duration-points"
+        },
+        {
+          "name": "duration-points-color",
+          "path": "/example/BarChart/duration-points-color"
+        },
+        {
           "name": "gradient",
           "path": "/example/BarChart/gradient"
         },
@@ -737,6 +773,26 @@
         {
           "name": "highlight-below-marks",
           "path": "/example/BarChart/highlight-below-marks"
+        },
+        {
+          "name": "histogram-date-time-count",
+          "path": "/example/BarChart/histogram-date-time-count"
+        },
+        {
+          "name": "histogram-date-time-interval",
+          "path": "/example/BarChart/histogram-date-time-interval"
+        },
+        {
+          "name": "histogram-horizontal",
+          "path": "/example/BarChart/histogram-horizontal"
+        },
+        {
+          "name": "histogram-random-distribution",
+          "path": "/example/BarChart/histogram-random-distribution"
+        },
+        {
+          "name": "histogram-vertical",
+          "path": "/example/BarChart/histogram-vertical"
         },
         {
           "name": "horizontal",
@@ -936,136 +992,136 @@
       "component": "Bars",
       "examples": [
         {
-          "name": "average-annotation-rule",
-          "path": "/example/Bars/average-annotation-rule"
+          "name": "horizontal-average-annotation-rule",
+          "path": "/example/Bars/horizontal-average-annotation-rule"
         },
         {
-          "name": "basic",
-          "path": "/example/Bars/basic"
+          "name": "horizontal-basic",
+          "path": "/example/Bars/horizontal-basic"
         },
         {
-          "name": "calculated-value-domain-negative",
-          "path": "/example/Bars/calculated-value-domain-negative"
+          "name": "horizontal-calculated-value-domain-negative",
+          "path": "/example/Bars/horizontal-calculated-value-domain-negative"
         },
         {
-          "name": "calculated-value-domain-positive",
-          "path": "/example/Bars/calculated-value-domain-positive"
+          "name": "horizontal-calculated-value-domain-positive",
+          "path": "/example/Bars/horizontal-calculated-value-domain-positive"
         },
         {
-          "name": "candlestick-bars",
-          "path": "/example/Bars/candlestick-bars"
+          "name": "horizontal-candlestick-bars",
+          "path": "/example/Bars/horizontal-candlestick-bars"
         },
         {
-          "name": "click-handler",
-          "path": "/example/Bars/click-handler"
+          "name": "horizontal-click-handler",
+          "path": "/example/Bars/horizontal-click-handler"
         },
         {
-          "name": "customize-individual-styles",
-          "path": "/example/Bars/customize-individual-styles"
+          "name": "horizontal-customize-individual-styles",
+          "path": "/example/Bars/horizontal-customize-individual-styles"
         },
         {
-          "name": "gradient",
-          "path": "/example/Bars/gradient"
+          "name": "horizontal-gradient",
+          "path": "/example/Bars/horizontal-gradient"
         },
         {
-          "name": "grouped",
-          "path": "/example/Bars/grouped"
+          "name": "horizontal-grouped",
+          "path": "/example/Bars/horizontal-grouped"
         },
         {
-          "name": "grouped-and-stacked",
-          "path": "/example/Bars/grouped-and-stacked"
+          "name": "horizontal-grouped-and-stacked",
+          "path": "/example/Bars/horizontal-grouped-and-stacked"
         },
         {
-          "name": "grouped-stacked-or-both-transition",
-          "path": "/example/Bars/grouped-stacked-or-both-transition"
+          "name": "horizontal-grouped-stacked-or-both-transition",
+          "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition"
         },
         {
-          "name": "highlight-individual-bar",
-          "path": "/example/Bars/highlight-individual-bar"
+          "name": "horizontal-highlight-individual-bar",
+          "path": "/example/Bars/horizontal-highlight-individual-bar"
         },
         {
-          "name": "highlight-individual-bar-line",
-          "path": "/example/Bars/highlight-individual-bar-line"
+          "name": "horizontal-highlight-individual-bar-line",
+          "path": "/example/Bars/horizontal-highlight-individual-bar-line"
         },
         {
-          "name": "inside-labels",
-          "path": "/example/Bars/inside-labels"
+          "name": "horizontal-inside-labels",
+          "path": "/example/Bars/horizontal-inside-labels"
         },
         {
-          "name": "limit-ticks-count",
-          "path": "/example/Bars/limit-ticks-count"
+          "name": "horizontal-limit-ticks-count",
+          "path": "/example/Bars/horizontal-limit-ticks-count"
         },
         {
-          "name": "limit-ticks-second-scale",
-          "path": "/example/Bars/limit-ticks-second-scale"
+          "name": "horizontal-limit-ticks-second-scale",
+          "path": "/example/Bars/horizontal-limit-ticks-second-scale"
         },
         {
-          "name": "multiple-diverging",
-          "path": "/example/Bars/multiple-diverging"
+          "name": "horizontal-multiple-diverging",
+          "path": "/example/Bars/horizontal-multiple-diverging"
         },
         {
-          "name": "multiple-overlapping",
-          "path": "/example/Bars/multiple-overlapping"
+          "name": "horizontal-multiple-overlapping",
+          "path": "/example/Bars/horizontal-multiple-overlapping"
         },
         {
-          "name": "outside-labels-default",
-          "path": "/example/Bars/outside-labels-default"
+          "name": "horizontal-outside-labels-default",
+          "path": "/example/Bars/horizontal-outside-labels-default"
         },
         {
-          "name": "rounded-right-only",
-          "path": "/example/Bars/rounded-right-only"
+          "name": "horizontal-rounded-right-only",
+          "path": "/example/Bars/horizontal-rounded-right-only"
         },
         {
-          "name": "stacked",
-          "path": "/example/Bars/stacked"
+          "name": "horizontal-stacked",
+          "path": "/example/Bars/horizontal-stacked"
         },
         {
-          "name": "stacked-percent",
-          "path": "/example/Bars/stacked-percent"
+          "name": "horizontal-stacked-percent",
+          "path": "/example/Bars/horizontal-stacked-percent"
         },
         {
-          "name": "stagger-tween-on-mount",
-          "path": "/example/Bars/stagger-tween-on-mount"
+          "name": "horizontal-stagger-tween-on-mount",
+          "path": "/example/Bars/horizontal-stagger-tween-on-mount"
         },
         {
-          "name": "time-scale-with-inset",
-          "path": "/example/Bars/time-scale-with-inset"
+          "name": "horizontal-time-scale-with-inset",
+          "path": "/example/Bars/horizontal-time-scale-with-inset"
         },
         {
-          "name": "time-scale-with-interval",
-          "path": "/example/Bars/time-scale-with-interval"
+          "name": "horizontal-time-scale-with-interval",
+          "path": "/example/Bars/horizontal-time-scale-with-interval"
         },
         {
-          "name": "time-scale-with-missing-data",
-          "path": "/example/Bars/time-scale-with-missing-data"
+          "name": "horizontal-time-scale-with-missing-data",
+          "path": "/example/Bars/horizontal-time-scale-with-missing-data"
         },
         {
-          "name": "tooltip-and-bar-highlight",
-          "path": "/example/Bars/tooltip-and-bar-highlight"
+          "name": "horizontal-tooltip-and-bar-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-bar-highlight"
         },
         {
-          "name": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-          "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+          "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar"
         },
         {
-          "name": "tooltip-and-clipped-highlight",
-          "path": "/example/Bars/tooltip-and-clipped-highlight"
+          "name": "horizontal-tooltip-and-clipped-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight"
         },
         {
-          "name": "tooltip-and-highlight",
-          "path": "/example/Bars/tooltip-and-highlight"
+          "name": "horizontal-tooltip-and-highlight",
+          "path": "/example/Bars/horizontal-tooltip-and-highlight"
         },
         {
-          "name": "tween-on-mount",
-          "path": "/example/Bars/tween-on-mount"
+          "name": "horizontal-tween-on-mount",
+          "path": "/example/Bars/horizontal-tween-on-mount"
         },
         {
-          "name": "with-grid-on-top",
-          "path": "/example/Bars/with-grid-on-top"
+          "name": "horizontal-with-grid-on-top",
+          "path": "/example/Bars/horizontal-with-grid-on-top"
         },
         {
-          "name": "with-grid-on-top-mix-blend",
-          "path": "/example/Bars/with-grid-on-top-mix-blend"
+          "name": "horizontal-with-grid-on-top-mix-blend",
+          "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend"
         }
       ]
     },
@@ -1209,148 +1265,148 @@
       "component": "Columns",
       "examples": [
         {
-          "name": "average-annotation-rule",
-          "path": "/example/Columns/average-annotation-rule"
+          "name": "vertical-average-annotation-rule",
+          "path": "/example/Columns/vertical-average-annotation-rule"
         },
         {
-          "name": "basic",
-          "path": "/example/Columns/basic"
+          "name": "vertical-basic",
+          "path": "/example/Columns/vertical-basic"
         },
         {
-          "name": "calculated-value-domain-negative",
-          "path": "/example/Columns/calculated-value-domain-negative"
+          "name": "vertical-calculated-value-domain-negative",
+          "path": "/example/Columns/vertical-calculated-value-domain-negative"
         },
         {
-          "name": "calculated-value-domain-positive",
-          "path": "/example/Columns/calculated-value-domain-positive"
+          "name": "vertical-calculated-value-domain-positive",
+          "path": "/example/Columns/vertical-calculated-value-domain-positive"
         },
         {
-          "name": "click-handler",
-          "path": "/example/Columns/click-handler"
+          "name": "vertical-click-handler",
+          "path": "/example/Columns/vertical-click-handler"
         },
         {
-          "name": "customize-individual-styles",
-          "path": "/example/Columns/customize-individual-styles"
+          "name": "vertical-customize-individual-styles",
+          "path": "/example/Columns/vertical-customize-individual-styles"
         },
         {
-          "name": "gradient",
-          "path": "/example/Columns/gradient"
+          "name": "vertical-gradient",
+          "path": "/example/Columns/vertical-gradient"
         },
         {
-          "name": "grouped",
-          "path": "/example/Columns/grouped"
+          "name": "vertical-grouped",
+          "path": "/example/Columns/vertical-grouped"
         },
         {
-          "name": "grouped-and-stacked",
-          "path": "/example/Columns/grouped-and-stacked"
+          "name": "vertical-grouped-and-stacked",
+          "path": "/example/Columns/vertical-grouped-and-stacked"
         },
         {
-          "name": "grouped-stacked-or-both-transition",
-          "path": "/example/Columns/grouped-stacked-or-both-transition"
+          "name": "vertical-grouped-stacked-or-both-transition",
+          "path": "/example/Columns/vertical-grouped-stacked-or-both-transition"
         },
         {
-          "name": "highlight-individual-bar",
-          "path": "/example/Columns/highlight-individual-bar"
+          "name": "vertical-highlight-individual-bar",
+          "path": "/example/Columns/vertical-highlight-individual-bar"
         },
         {
-          "name": "highlight-individual-bar-line",
-          "path": "/example/Columns/highlight-individual-bar-line"
+          "name": "vertical-highlight-individual-bar-line",
+          "path": "/example/Columns/vertical-highlight-individual-bar-line"
         },
         {
-          "name": "inside-labels",
-          "path": "/example/Columns/inside-labels"
+          "name": "vertical-inside-labels",
+          "path": "/example/Columns/vertical-inside-labels"
         },
         {
-          "name": "limit-ticks-count",
-          "path": "/example/Columns/limit-ticks-count"
+          "name": "vertical-limit-ticks-count",
+          "path": "/example/Columns/vertical-limit-ticks-count"
         },
         {
-          "name": "limit-ticks-second-scale",
-          "path": "/example/Columns/limit-ticks-second-scale"
+          "name": "vertical-limit-ticks-second-scale",
+          "path": "/example/Columns/vertical-limit-ticks-second-scale"
         },
         {
-          "name": "multiple-diverging",
-          "path": "/example/Columns/multiple-diverging"
+          "name": "vertical-multiple-diverging",
+          "path": "/example/Columns/vertical-multiple-diverging"
         },
         {
-          "name": "multiple-diverging-rounded-specific",
-          "path": "/example/Columns/multiple-diverging-rounded-specific"
+          "name": "vertical-multiple-diverging-rounded-specific",
+          "path": "/example/Columns/vertical-multiple-diverging-rounded-specific"
         },
         {
-          "name": "multiple-overlapping",
-          "path": "/example/Columns/multiple-overlapping"
+          "name": "vertical-multiple-overlapping",
+          "path": "/example/Columns/vertical-multiple-overlapping"
         },
         {
-          "name": "outside-labels-default",
-          "path": "/example/Columns/outside-labels-default"
+          "name": "vertical-outside-labels-default",
+          "path": "/example/Columns/vertical-outside-labels-default"
         },
         {
-          "name": "rounded-top-only",
-          "path": "/example/Columns/rounded-top-only"
+          "name": "vertical-rounded-top-only",
+          "path": "/example/Columns/vertical-rounded-top-only"
         },
         {
-          "name": "stacked",
-          "path": "/example/Columns/stacked"
+          "name": "vertical-stacked",
+          "path": "/example/Columns/vertical-stacked"
         },
         {
-          "name": "stacked-percent",
-          "path": "/example/Columns/stacked-percent"
+          "name": "vertical-stacked-percent",
+          "path": "/example/Columns/vertical-stacked-percent"
         },
         {
-          "name": "stagger-tween-on-mount",
-          "path": "/example/Columns/stagger-tween-on-mount"
+          "name": "vertical-stagger-tween-on-mount",
+          "path": "/example/Columns/vertical-stagger-tween-on-mount"
         },
         {
-          "name": "stagger-tween-on-mount-rounded-edge",
-          "path": "/example/Columns/stagger-tween-on-mount-rounded-edge"
+          "name": "vertical-stagger-tween-on-mount-rounded-edge",
+          "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge"
         },
         {
-          "name": "time-scale-with-inset",
-          "path": "/example/Columns/time-scale-with-inset"
+          "name": "vertical-time-scale-with-inset",
+          "path": "/example/Columns/vertical-time-scale-with-inset"
         },
         {
-          "name": "time-scale-with-interval",
-          "path": "/example/Columns/time-scale-with-interval"
+          "name": "vertical-time-scale-with-interval",
+          "path": "/example/Columns/vertical-time-scale-with-interval"
         },
         {
-          "name": "time-scale-with-interval-months",
-          "path": "/example/Columns/time-scale-with-interval-months"
+          "name": "vertical-time-scale-with-interval-months",
+          "path": "/example/Columns/vertical-time-scale-with-interval-months"
         },
         {
-          "name": "time-scale-with-missing-data",
-          "path": "/example/Columns/time-scale-with-missing-data"
+          "name": "vertical-time-scale-with-missing-data",
+          "path": "/example/Columns/vertical-time-scale-with-missing-data"
         },
         {
-          "name": "tooltip-and-bar-highlight",
-          "path": "/example/Columns/tooltip-and-bar-highlight"
+          "name": "vertical-tooltip-and-bar-highlight",
+          "path": "/example/Columns/vertical-tooltip-and-bar-highlight"
         },
         {
-          "name": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-          "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+          "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar"
         },
         {
-          "name": "tooltip-and-clipped-highlight",
-          "path": "/example/Columns/tooltip-and-clipped-highlight"
+          "name": "vertical-tooltip-and-clipped-highlight",
+          "path": "/example/Columns/vertical-tooltip-and-clipped-highlight"
         },
         {
-          "name": "tooltip-and-highlight",
-          "path": "/example/Columns/tooltip-and-highlight"
+          "name": "vertical-tooltip-and-highlight",
+          "path": "/example/Columns/vertical-tooltip-and-highlight"
         },
         {
-          "name": "tween-on-mount",
-          "path": "/example/Columns/tween-on-mount"
+          "name": "vertical-tween-on-mount",
+          "path": "/example/Columns/vertical-tween-on-mount"
         },
         {
-          "name": "tween-on-mount-rounded-edge",
-          "path": "/example/Columns/tween-on-mount-rounded-edge"
+          "name": "vertical-tween-on-mount-rounded-edge",
+          "path": "/example/Columns/vertical-tween-on-mount-rounded-edge"
         },
         {
-          "name": "with-grid-on-top",
-          "path": "/example/Columns/with-grid-on-top"
+          "name": "vertical-with-grid-on-top",
+          "path": "/example/Columns/vertical-with-grid-on-top"
         },
         {
-          "name": "with-grid-on-top-mix-blend",
-          "path": "/example/Columns/with-grid-on-top-mix-blend"
+          "name": "vertical-with-grid-on-top-mix-blend",
+          "path": "/example/Columns/vertical-with-grid-on-top-mix-blend"
         }
       ]
     },
@@ -1406,47 +1462,6 @@
         {
           "name": "tcp-state-diagram",
           "path": "/example/Dagre/tcp-state-diagram"
-        }
-      ]
-    },
-    {
-      "component": "Duration",
-      "examples": [
-        {
-          "name": "bars",
-          "path": "/example/Duration/bars"
-        },
-        {
-          "name": "bars-color",
-          "path": "/example/Duration/bars-color"
-        },
-        {
-          "name": "bars-dense",
-          "path": "/example/Duration/bars-dense"
-        },
-        {
-          "name": "bars-dense-lanes",
-          "path": "/example/Duration/bars-dense-lanes"
-        },
-        {
-          "name": "bars-lanes",
-          "path": "/example/Duration/bars-lanes"
-        },
-        {
-          "name": "civilization-timeline",
-          "path": "/example/Duration/civilization-timeline"
-        },
-        {
-          "name": "civilization-timeline-dense",
-          "path": "/example/Duration/civilization-timeline-dense"
-        },
-        {
-          "name": "points",
-          "path": "/example/Duration/points"
-        },
-        {
-          "name": "points-color",
-          "path": "/example/Duration/points-color"
         }
       ]
     },
@@ -1758,31 +1773,6 @@
       ]
     },
     {
-      "component": "Histogram",
-      "examples": [
-        {
-          "name": "date-time-count",
-          "path": "/example/Histogram/date-time-count"
-        },
-        {
-          "name": "date-time-interval",
-          "path": "/example/Histogram/date-time-interval"
-        },
-        {
-          "name": "horizontal",
-          "path": "/example/Histogram/horizontal"
-        },
-        {
-          "name": "random-distribution",
-          "path": "/example/Histogram/random-distribution"
-        },
-        {
-          "name": "vertical",
-          "path": "/example/Histogram/vertical"
-        }
-      ]
-    },
-    {
       "component": "Hull",
       "examples": [
         {
@@ -1880,34 +1870,6 @@
       "component": "Line",
       "examples": [
         {
-          "name": "basic",
-          "path": "/example/Line/basic"
-        },
-        {
-          "name": "gradient-encoding",
-          "path": "/example/Line/gradient-encoding"
-        },
-        {
-          "name": "gradient-threshold",
-          "path": "/example/Line/gradient-threshold"
-        },
-        {
-          "name": "multiple-series",
-          "path": "/example/Line/multiple-series"
-        },
-        {
-          "name": "multiple-series-highlight-on-hover",
-          "path": "/example/Line/multiple-series-highlight-on-hover"
-        },
-        {
-          "name": "multiple-series-using-overrides",
-          "path": "/example/Line/multiple-series-using-overrides"
-        },
-        {
-          "name": "multiple-series-with-labels",
-          "path": "/example/Line/multiple-series-with-labels"
-        },
-        {
           "name": "styling-using-attributes",
           "path": "/example/Line/styling-using-attributes"
         },
@@ -1918,18 +1880,6 @@
         {
           "name": "styling-using-css-variables",
           "path": "/example/Line/styling-using-css-variables"
-        },
-        {
-          "name": "vertical",
-          "path": "/example/Line/vertical"
-        },
-        {
-          "name": "with-labels",
-          "path": "/example/Line/with-labels"
-        },
-        {
-          "name": "with-tooltip-and-highlight",
-          "path": "/example/Line/with-tooltip-and-highlight"
         }
       ]
     },
@@ -2501,6 +2451,27 @@
       ]
     },
     {
+      "component": "Points",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Points/basic"
+        },
+        {
+          "name": "color-via-scale",
+          "path": "/example/Points/color-via-scale"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Points/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Points/with-tooltip-and-highlight"
+        }
+      ]
+    },
+    {
       "component": "Polygon",
       "examples": [
         {
@@ -2602,15 +2573,6 @@
       ]
     },
     {
-      "component": "PunchCard",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/PunchCard/basic"
-        }
-      ]
-    },
-    {
       "component": "RadialGradient",
       "examples": [
         {
@@ -2628,23 +2590,6 @@
         {
           "name": "units",
           "path": "/example/RadialGradient/units"
-        }
-      ]
-    },
-    {
-      "component": "RadialLine",
-      "examples": [
-        {
-          "name": "line-with-areas",
-          "path": "/example/RadialLine/line-with-areas"
-        },
-        {
-          "name": "multi-year-lines",
-          "path": "/example/RadialLine/multi-year-lines"
-        },
-        {
-          "name": "radar",
-          "path": "/example/RadialLine/radar"
         }
       ]
     },
@@ -2752,27 +2697,6 @@
       ]
     },
     {
-      "component": "Scatter",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Scatter/basic"
-        },
-        {
-          "name": "color-via-scale",
-          "path": "/example/Scatter/color-via-scale"
-        },
-        {
-          "name": "with-labels",
-          "path": "/example/Scatter/with-labels"
-        },
-        {
-          "name": "with-tooltip-and-highlight",
-          "path": "/example/Scatter/with-tooltip-and-highlight"
-        }
-      ]
-    },
-    {
       "component": "ScatterChart",
       "examples": [
         {
@@ -2818,6 +2742,10 @@
         {
           "name": "point-annotations",
           "path": "/example/ScatterChart/point-annotations"
+        },
+        {
+          "name": "punchcard",
+          "path": "/example/ScatterChart/punchcard"
         },
         {
           "name": "radius-scale",
@@ -2877,6 +2805,10 @@
       "component": "Spline",
       "examples": [
         {
+          "name": "basic",
+          "path": "/example/Spline/basic"
+        },
+        {
           "name": "basic-start-and-end-snippets",
           "path": "/example/Spline/basic-start-and-end-snippets"
         },
@@ -2893,6 +2825,14 @@
           "path": "/example/Spline/end-snippet-with-draw"
         },
         {
+          "name": "gradient-encoding",
+          "path": "/example/Spline/gradient-encoding"
+        },
+        {
+          "name": "gradient-threshold",
+          "path": "/example/Spline/gradient-threshold"
+        },
+        {
           "name": "label-using-start-end-snippets",
           "path": "/example/Spline/label-using-start-end-snippets"
         },
@@ -2901,12 +2841,52 @@
           "path": "/example/Spline/markers-arrows"
         },
         {
+          "name": "multiple-series",
+          "path": "/example/Spline/multiple-series"
+        },
+        {
+          "name": "multiple-series-highlight-on-hover",
+          "path": "/example/Spline/multiple-series-highlight-on-hover"
+        },
+        {
+          "name": "multiple-series-using-overrides",
+          "path": "/example/Spline/multiple-series-using-overrides"
+        },
+        {
+          "name": "multiple-series-with-labels",
+          "path": "/example/Spline/multiple-series-with-labels"
+        },
+        {
           "name": "playground",
           "path": "/example/Spline/playground"
         },
         {
+          "name": "radial-line-with-areas",
+          "path": "/example/Spline/radial-line-with-areas"
+        },
+        {
+          "name": "radial-multi-year-lines",
+          "path": "/example/Spline/radial-multi-year-lines"
+        },
+        {
+          "name": "radial-radar",
+          "path": "/example/Spline/radial-radar"
+        },
+        {
           "name": "tweened",
           "path": "/example/Spline/tweened"
+        },
+        {
+          "name": "vertical",
+          "path": "/example/Spline/vertical"
+        },
+        {
+          "name": "with-labels",
+          "path": "/example/Spline/with-labels"
+        },
+        {
+          "name": "with-tooltip-and-highlight",
+          "path": "/example/Spline/with-tooltip-and-highlight"
         }
       ]
     },

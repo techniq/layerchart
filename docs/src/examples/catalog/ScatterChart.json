@@ -46,6 +46,10 @@
       "path": "/example/ScatterChart/point-annotations"
     },
     {
+      "name": "punchcard",
+      "path": "/example/ScatterChart/punchcard"
+    },
+    {
       "name": "radius-scale",
       "path": "/example/ScatterChart/radius-scale"
     },
@@ -99,13 +103,6 @@
     }
   ],
   "usage": [
-    {
-      "example": "basic",
-      "component": "PunchCard",
-      "path": "/example/PunchCard/basic",
-      "lineNumber": 14,
-      "line": "<ScatterChart"
-    },
     {
       "example": "basic",
       "component": "ScatterChart",
@@ -181,6 +178,13 @@
       "component": "ScatterChart",
       "path": "/example/ScatterChart/point-annotations",
       "lineNumber": 9,
+      "line": "<ScatterChart"
+    },
+    {
+      "example": "punchcard",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/punchcard",
+      "lineNumber": 14,
       "line": "<ScatterChart"
     },
     {
@@ -275,5 +279,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:28.141Z"
+  "updatedAt": "2025-11-03T17:06:48.346Z"
 }

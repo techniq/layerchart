@@ -109,30 +109,44 @@
       "line": "<Rule x=\"$left\" />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 44,
+      "line": "<Rule />"
+    },
+    {
+      "example": "duration-points-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points-color",
+      "lineNumber": 51,
+      "line": "<Rule />"
+    },
+    {
+      "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/average-annotation-rule",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
       "lineNumber": 34,
       "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
     },
     {
-      "example": "inside-labels",
+      "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/inside-labels",
+      "path": "/example/Bars/horizontal-inside-labels",
       "lineNumber": 23,
       "line": "<Rule x={0} />"
     },
     {
-      "example": "multiple-diverging",
+      "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/multiple-diverging",
+      "path": "/example/Bars/horizontal-multiple-diverging",
       "lineNumber": 32,
       "line": "<Rule x={0} />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/outside-labels-default",
+      "path": "/example/Bars/horizontal-outside-labels-default",
       "lineNumber": 24,
       "line": "<Rule x={0} />"
     },
@@ -144,53 +158,39 @@
       "line": "<Rule y={0} />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "vertical-average-annotation-rule",
       "component": "Columns",
-      "path": "/example/Columns/average-annotation-rule",
+      "path": "/example/Columns/vertical-average-annotation-rule",
       "lineNumber": 32,
       "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
     },
     {
-      "example": "inside-labels",
+      "example": "vertical-inside-labels",
       "component": "Columns",
-      "path": "/example/Columns/inside-labels",
+      "path": "/example/Columns/vertical-inside-labels",
       "lineNumber": 23,
       "line": "<Rule y={0} />"
     },
     {
-      "example": "multiple-diverging",
+      "example": "vertical-multiple-diverging",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging",
+      "path": "/example/Columns/vertical-multiple-diverging",
       "lineNumber": 31,
       "line": "<Rule y={0} />"
     },
     {
-      "example": "multiple-diverging-rounded-specific",
+      "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 33,
       "line": "<Rule y={0} />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "vertical-outside-labels-default",
       "component": "Columns",
-      "path": "/example/Columns/outside-labels-default",
+      "path": "/example/Columns/vertical-outside-labels-default",
       "lineNumber": 24,
       "line": "<Rule y={0} />"
-    },
-    {
-      "example": "points",
-      "component": "Duration",
-      "path": "/example/Duration/points",
-      "lineNumber": 44,
-      "line": "<Rule />"
-    },
-    {
-      "example": "points-color",
-      "component": "Duration",
-      "path": "/example/Duration/points-color",
-      "lineNumber": 51,
-      "line": "<Rule />"
     },
     {
       "example": "annotation-x",
@@ -340,5 +340,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.531Z"
+  "updatedAt": "2025-11-03T17:05:56.413Z"
 }

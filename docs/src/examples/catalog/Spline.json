@@ -2,6 +2,10 @@
   "component": "Spline",
   "examples": [
     {
+      "name": "basic",
+      "path": "/example/Spline/basic"
+    },
+    {
       "name": "basic-start-and-end-snippets",
       "path": "/example/Spline/basic-start-and-end-snippets"
     },
@@ -18,6 +22,14 @@
       "path": "/example/Spline/end-snippet-with-draw"
     },
     {
+      "name": "gradient-encoding",
+      "path": "/example/Spline/gradient-encoding"
+    },
+    {
+      "name": "gradient-threshold",
+      "path": "/example/Spline/gradient-threshold"
+    },
+    {
       "name": "label-using-start-end-snippets",
       "path": "/example/Spline/label-using-start-end-snippets"
     },
@@ -26,12 +38,52 @@
       "path": "/example/Spline/markers-arrows"
     },
     {
+      "name": "multiple-series",
+      "path": "/example/Spline/multiple-series"
+    },
+    {
+      "name": "multiple-series-highlight-on-hover",
+      "path": "/example/Spline/multiple-series-highlight-on-hover"
+    },
+    {
+      "name": "multiple-series-using-overrides",
+      "path": "/example/Spline/multiple-series-using-overrides"
+    },
+    {
+      "name": "multiple-series-with-labels",
+      "path": "/example/Spline/multiple-series-with-labels"
+    },
+    {
       "name": "playground",
       "path": "/example/Spline/playground"
     },
     {
+      "name": "radial-line-with-areas",
+      "path": "/example/Spline/radial-line-with-areas"
+    },
+    {
+      "name": "radial-multi-year-lines",
+      "path": "/example/Spline/radial-multi-year-lines"
+    },
+    {
+      "name": "radial-radar",
+      "path": "/example/Spline/radial-radar"
+    },
+    {
       "name": "tweened",
       "path": "/example/Spline/tweened"
+    },
+    {
+      "name": "vertical",
+      "path": "/example/Spline/vertical"
+    },
+    {
+      "name": "with-labels",
+      "path": "/example/Spline/with-labels"
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "path": "/example/Spline/with-tooltip-and-highlight"
     }
   ],
   "usage": [
@@ -132,83 +184,6 @@
       "path": "/example/GeoPath/spike-map",
       "lineNumber": 83,
       "line": "<Spline"
-    },
-    {
-      "example": "basic",
-      "component": "Line",
-      "path": "/example/Line/basic",
-      "lineNumber": 22,
-      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
-      "lineNumber": 23,
-      "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
-    },
-    {
-      "example": "gradient-threshold",
-      "component": "Line",
-      "path": "/example/Line/gradient-threshold",
-      "lineNumber": 26,
-      "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
-    },
-    {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 55,
-      "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 58,
-      "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 31,
-      "line": "<Spline y={(d) => d.y} class=\"stroke-2\" stroke={fruitColors.bananas} />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 32,
-      "line": "<Spline y={(d) => d.y1} class=\"stroke-2\" stroke={fruitColors.oranges} />"
-    },
-    {
-      "example": "multiple-series-with-labels",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-with-labels",
-      "lineNumber": 45,
-      "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
-    },
-    {
-      "example": "vertical",
-      "component": "Line",
-      "path": "/example/Line/vertical",
-      "lineNumber": 23,
-      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Line",
-      "path": "/example/Line/with-labels",
-      "lineNumber": 22,
-      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Line",
-      "path": "/example/Line/with-tooltip-and-highlight",
-      "lineNumber": 23,
-      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "custom",
@@ -316,25 +291,11 @@
       "line": "<Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
-      "lineNumber": 23,
-      "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
-    },
-    {
-      "example": "multi-year-lines",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/multi-year-lines",
-      "lineNumber": 30,
-      "line": "<Spline"
-    },
-    {
-      "example": "radar",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/radar",
-      "lineNumber": 42,
-      "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
+      "example": "basic",
+      "component": "Spline",
+      "path": "/example/Spline/basic",
+      "lineNumber": 22,
+      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "basic-start-and-end-snippets",
@@ -365,6 +326,20 @@
       "line": "<Spline {curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
+      "example": "gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
+      "lineNumber": 23,
+      "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-threshold",
+      "lineNumber": 26,
+      "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
+    },
+    {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
@@ -379,6 +354,41 @@
       "line": "<Spline"
     },
     {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 55,
+      "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 58,
+      "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 31,
+      "line": "<Spline y={(d) => d.y} class=\"stroke-2\" stroke={fruitColors.bananas} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 32,
+      "line": "<Spline y={(d) => d.y1} class=\"stroke-2\" stroke={fruitColors.oranges} />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 45,
+      "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
@@ -386,11 +396,53 @@
       "line": "<Spline"
     },
     {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 23,
+      "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
+    },
+    {
+      "example": "radial-multi-year-lines",
+      "component": "Spline",
+      "path": "/example/Spline/radial-multi-year-lines",
+      "lineNumber": 30,
+      "line": "<Spline"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 42,
+      "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
       "lineNumber": 41,
       "line": "<Spline {curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 23,
+      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/with-labels",
+      "lineNumber": 22,
+      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 23,
+      "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "basic-threshold",
@@ -442,5 +494,5 @@
       "line": "<Spline {curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-03T14:46:59.626Z"
+  "updatedAt": "2025-11-03T16:41:09.983Z"
 }

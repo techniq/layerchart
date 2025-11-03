@@ -473,16 +473,16 @@
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
       "lineNumber": 24,
       "line": "<Area"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
       "lineNumber": 30,
       "line": "<Area"
     },
@@ -725,5 +725,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.067Z"
+  "updatedAt": "2025-11-03T16:41:08.484Z"
 }

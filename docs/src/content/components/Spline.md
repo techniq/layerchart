@@ -9,6 +9,8 @@ related: ['components/MotionPath', 'examples/Sparkline']
   import Example from '$lib/components/Example.svelte';
 </script>
 
+> See also: [LineChart](/docs/components/LineChart) for simplified examples
+
 ## Playground
 
 <Example name="playground" />

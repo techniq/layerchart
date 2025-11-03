@@ -1,6 +1,23 @@
 {
   "component": "Points",
-  "examples": [],
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Points/basic"
+    },
+    {
+      "name": "color-via-scale",
+      "path": "/example/Points/color-via-scale"
+    },
+    {
+      "name": "with-labels",
+      "path": "/example/Points/with-labels"
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "path": "/example/Points/with-tooltip-and-highlight"
+    }
+  ],
   "usage": [
     {
       "example": "playground",
@@ -8,6 +25,20 @@
       "path": "/example/Area/playground",
       "lineNumber": 67,
       "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
+    },
+    {
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 45,
+      "line": "<Points />"
+    },
+    {
+      "example": "duration-points-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points-color",
+      "lineNumber": 52,
+      "line": "<Points />"
     },
     {
       "example": "minimap",
@@ -31,20 +62,6 @@
       "line": "<Points>"
     },
     {
-      "example": "points",
-      "component": "Duration",
-      "path": "/example/Duration/points",
-      "lineNumber": 45,
-      "line": "<Points />"
-    },
-    {
-      "example": "points-color",
-      "component": "Duration",
-      "path": "/example/Duration/points-color",
-      "lineNumber": 52,
-      "line": "<Points />"
-    },
-    {
       "example": "text",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/text",
@@ -59,11 +76,32 @@
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
-      "example": "radar",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/radar",
-      "lineNumber": 43,
-      "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+      "example": "basic",
+      "component": "Points",
+      "path": "/example/Points/basic",
+      "lineNumber": 22,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "color-via-scale",
+      "component": "Points",
+      "path": "/example/Points/color-via-scale",
+      "lineNumber": 27,
+      "line": "<Points class=\"stroke-surface-content/50\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Points",
+      "path": "/example/Points/with-labels",
+      "lineNumber": 22,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 23,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
     },
     {
       "example": "lollipop",
@@ -71,34 +109,6 @@
       "path": "/example/Rule/lollipop",
       "lineNumber": 25,
       "line": "<Points />"
-    },
-    {
-      "example": "basic",
-      "component": "Scatter",
-      "path": "/example/Scatter/basic",
-      "lineNumber": 22,
-      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
-    },
-    {
-      "example": "color-via-scale",
-      "component": "Scatter",
-      "path": "/example/Scatter/color-via-scale",
-      "lineNumber": 27,
-      "line": "<Points class=\"stroke-surface-content/50\" />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-labels",
-      "lineNumber": 22,
-      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-tooltip-and-highlight",
-      "lineNumber": 23,
-      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
     },
     {
       "example": "custom",
@@ -113,6 +123,13 @@
       "path": "/example/Spline/playground",
       "lineNumber": 60,
       "line": "<Points"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 43,
+      "line": "<Points class=\"fill-primary stroke-surface-200\" />"
     },
     {
       "example": "duration",
@@ -185,5 +202,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.433Z"
+  "updatedAt": "2025-11-03T16:48:39.071Z"
 }

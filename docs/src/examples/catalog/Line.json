@@ -2,34 +2,6 @@
   "component": "Line",
   "examples": [
     {
-      "name": "basic",
-      "path": "/example/Line/basic"
-    },
-    {
-      "name": "gradient-encoding",
-      "path": "/example/Line/gradient-encoding"
-    },
-    {
-      "name": "gradient-threshold",
-      "path": "/example/Line/gradient-threshold"
-    },
-    {
-      "name": "multiple-series",
-      "path": "/example/Line/multiple-series"
-    },
-    {
-      "name": "multiple-series-highlight-on-hover",
-      "path": "/example/Line/multiple-series-highlight-on-hover"
-    },
-    {
-      "name": "multiple-series-using-overrides",
-      "path": "/example/Line/multiple-series-using-overrides"
-    },
-    {
-      "name": "multiple-series-with-labels",
-      "path": "/example/Line/multiple-series-with-labels"
-    },
-    {
       "name": "styling-using-attributes",
       "path": "/example/Line/styling-using-attributes"
     },
@@ -40,18 +12,6 @@
     {
       "name": "styling-using-css-variables",
       "path": "/example/Line/styling-using-css-variables"
-    },
-    {
-      "name": "vertical",
-      "path": "/example/Line/vertical"
-    },
-    {
-      "name": "with-labels",
-      "path": "/example/Line/with-labels"
-    },
-    {
-      "name": "with-tooltip-and-highlight",
-      "path": "/example/Line/with-tooltip-and-highlight"
     }
   ],
   "usage": [
@@ -63,16 +23,16 @@
       "line": "<Line"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 33,
       "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 30,
       "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
     },
@@ -203,5 +163,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.172Z"
+  "updatedAt": "2025-11-03T17:05:55.940Z"
 }

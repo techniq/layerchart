@@ -173,9 +173,9 @@
       "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/average-annotation-rule",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
       "lineNumber": 35,
       "line": "<Text"
     },
@@ -215,9 +215,9 @@
       "line": "<Text"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "vertical-average-annotation-rule",
       "component": "Columns",
-      "path": "/example/Columns/average-annotation-rule",
+      "path": "/example/Columns/vertical-average-annotation-rule",
       "lineNumber": 33,
       "line": "<Text"
     },
@@ -317,20 +317,6 @@
       "component": "Hull",
       "path": "/example/Hull/geo",
       "lineNumber": 49,
-      "line": "<Text"
-    },
-    {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 58,
-      "line": "<Text"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 61,
       "line": "<Text"
     },
     {
@@ -502,6 +488,20 @@
       "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
     },
     {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 58,
+      "line": "<Text"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 61,
+      "line": "<Text"
+    },
+    {
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
@@ -600,5 +600,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-03T14:33:37.567Z"
+  "updatedAt": "2025-11-03T17:05:56.516Z"
 }

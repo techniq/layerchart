@@ -368,11 +368,11 @@
     },
     {
       "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
       "lineNumber": 27,
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2025-11-03T15:07:10.799Z"
+  "updatedAt": "2025-11-03T16:36:15.027Z"
 }

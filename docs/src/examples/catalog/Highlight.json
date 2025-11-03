@@ -115,100 +115,100 @@
       "line": "<Highlight area={{ class: 'fill-surface-content/10' }} />"
     },
     {
-      "example": "candlestick-bars",
+      "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/candlestick-bars",
+      "path": "/example/Bars/horizontal-candlestick-bars",
       "lineNumber": 30,
       "line": "<Highlight area />"
     },
     {
-      "example": "click-handler",
+      "example": "horizontal-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/click-handler",
+      "path": "/example/Bars/horizontal-click-handler",
       "lineNumber": 37,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped",
+      "example": "horizontal-grouped",
       "component": "Bars",
-      "path": "/example/Bars/grouped",
+      "path": "/example/Bars/horizontal-grouped",
       "lineNumber": 41,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/grouped-and-stacked",
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
       "lineNumber": 46,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
-      "path": "/example/Bars/grouped-stacked-or-both-transition",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
       "lineNumber": 106,
       "line": "<Highlight area />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 35,
       "line": "<Highlight"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "horizontal-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar-line",
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
       "lineNumber": 31,
       "line": "<Highlight"
     },
     {
-      "example": "multiple-diverging",
+      "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/multiple-diverging",
+      "path": "/example/Bars/horizontal-multiple-diverging",
       "lineNumber": 34,
       "line": "<Highlight area />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/multiple-overlapping",
+      "path": "/example/Bars/horizontal-multiple-overlapping",
       "lineNumber": 33,
       "line": "<Highlight area />"
     },
     {
-      "example": "stacked",
+      "example": "horizontal-stacked",
       "component": "Bars",
-      "path": "/example/Bars/stacked",
+      "path": "/example/Bars/horizontal-stacked",
       "lineNumber": 38,
       "line": "<Highlight area />"
     },
     {
-      "example": "stacked-percent",
+      "example": "horizontal-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/stacked-percent",
+      "path": "/example/Bars/horizontal-stacked-percent",
       "lineNumber": 43,
       "line": "<Highlight area />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "horizontal-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-bar-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
       "lineNumber": 33,
       "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 33,
       "line": "<Highlight>"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "horizontal-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
       "lineNumber": 32,
       "line": "<Highlight area />"
     },
@@ -220,100 +220,100 @@
       "line": "<Highlight points lines />"
     },
     {
-      "example": "click-handler",
+      "example": "vertical-click-handler",
       "component": "Columns",
-      "path": "/example/Columns/click-handler",
+      "path": "/example/Columns/vertical-click-handler",
       "lineNumber": 34,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped",
+      "example": "vertical-grouped",
       "component": "Columns",
-      "path": "/example/Columns/grouped",
+      "path": "/example/Columns/vertical-grouped",
       "lineNumber": 41,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "vertical-grouped-and-stacked",
       "component": "Columns",
-      "path": "/example/Columns/grouped-and-stacked",
+      "path": "/example/Columns/vertical-grouped-and-stacked",
       "lineNumber": 46,
       "line": "<Highlight area />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Columns",
-      "path": "/example/Columns/grouped-stacked-or-both-transition",
+      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
       "lineNumber": 104,
       "line": "<Highlight area />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 32,
       "line": "<Highlight"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "vertical-highlight-individual-bar-line",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar-line",
+      "path": "/example/Columns/vertical-highlight-individual-bar-line",
       "lineNumber": 24,
       "line": "<Highlight"
     },
     {
-      "example": "multiple-diverging",
+      "example": "vertical-multiple-diverging",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging",
+      "path": "/example/Columns/vertical-multiple-diverging",
       "lineNumber": 32,
       "line": "<Highlight area />"
     },
     {
-      "example": "multiple-diverging-rounded-specific",
+      "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 34,
       "line": "<Highlight area />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "vertical-multiple-overlapping",
       "component": "Columns",
-      "path": "/example/Columns/multiple-overlapping",
+      "path": "/example/Columns/vertical-multiple-overlapping",
       "lineNumber": 31,
       "line": "<Highlight area />"
     },
     {
-      "example": "stacked",
+      "example": "vertical-stacked",
       "component": "Columns",
-      "path": "/example/Columns/stacked",
+      "path": "/example/Columns/vertical-stacked",
       "lineNumber": 38,
       "line": "<Highlight area />"
     },
     {
-      "example": "stacked-percent",
+      "example": "vertical-stacked-percent",
       "component": "Columns",
-      "path": "/example/Columns/stacked-percent",
+      "path": "/example/Columns/vertical-stacked-percent",
       "lineNumber": 42,
       "line": "<Highlight area />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "vertical-tooltip-and-bar-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-bar-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
       "lineNumber": 30,
       "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 32,
       "line": "<Highlight>"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "vertical-tooltip-and-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 30,
       "line": "<Highlight area />"
     },
@@ -346,62 +346,6 @@
       "line": "<Highlight lines />"
     },
     {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 69,
-      "line": "<Highlight points lines />"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 73,
-      "line": "<Highlight points lines />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 33,
-      "line": "<Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 34,
-      "line": "<Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 35,
-      "line": "<Highlight lines />"
-    },
-    {
-      "example": "multiple-series-with-labels",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-with-labels",
-      "lineNumber": 48,
-      "line": "<Highlight points lines />"
-    },
-    {
-      "example": "vertical",
-      "component": "Line",
-      "path": "/example/Line/vertical",
-      "lineNumber": 24,
-      "line": "<Highlight points lines />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Line",
-      "path": "/example/Line/with-tooltip-and-highlight",
-      "lineNumber": 24,
-      "line": "<Highlight points lines />"
-    },
-    {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
@@ -430,18 +374,11 @@
       "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
     },
     {
-      "example": "basic",
-      "component": "PunchCard",
-      "path": "/example/PunchCard/basic",
-      "lineNumber": 34,
-      "line": "<Highlight area axis=\"x\" />"
-    },
-    {
-      "example": "basic",
-      "component": "PunchCard",
-      "path": "/example/PunchCard/basic",
-      "lineNumber": 35,
-      "line": "<Highlight area axis=\"y\" />"
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 24,
+      "line": "<Highlight points lines />"
     },
     {
       "example": "candlestick",
@@ -472,18 +409,81 @@
       "line": "<Highlight area />"
     },
     {
-      "example": "with-tooltip-and-highlight",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-tooltip-and-highlight",
-      "lineNumber": 24,
-      "line": "<Highlight points lines />"
-    },
-    {
       "example": "custom",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/custom",
       "lineNumber": 16,
       "line": "<Highlight points lines axis=\"both\" />"
+    },
+    {
+      "example": "punchcard",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/punchcard",
+      "lineNumber": 34,
+      "line": "<Highlight area axis=\"x\" />"
+    },
+    {
+      "example": "punchcard",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/punchcard",
+      "lineNumber": 35,
+      "line": "<Highlight area axis=\"y\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 69,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 73,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 33,
+      "line": "<Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 34,
+      "line": "<Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 35,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 48,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 24,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 24,
+      "line": "<Highlight points lines />"
     },
     {
       "example": "anchor-location",
@@ -794,5 +794,5 @@
       "line": "<Highlight points={true} lines={true} area={false} axis={undefined} />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.093Z"
+  "updatedAt": "2025-11-03T17:06:47.386Z"
 }

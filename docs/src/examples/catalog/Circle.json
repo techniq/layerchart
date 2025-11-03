@@ -268,20 +268,6 @@
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
     },
     {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 57,
-      "line": "<Circle r={4} fill={color} />"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 60,
-      "line": "<Circle r={4} fill={color} />"
-    },
-    {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
@@ -513,6 +499,20 @@
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 57,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 60,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
@@ -534,5 +534,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-03T14:46:58.481Z"
+  "updatedAt": "2025-11-03T16:36:14.433Z"
 }

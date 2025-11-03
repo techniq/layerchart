@@ -16,9 +16,9 @@
   ],
   "usage": [
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 32,
       "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
     },
@@ -44,9 +44,9 @@
       "line": "<Rect"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 29,
       "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
     },
@@ -660,5 +660,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.494Z"
+  "updatedAt": "2025-11-03T17:05:56.367Z"
 }

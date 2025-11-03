@@ -66,16 +66,16 @@
       "line": "<RectClipPath"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 35,
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 34,
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.516Z"
+  "updatedAt": "2025-11-03T17:05:56.388Z"
 }

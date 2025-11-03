@@ -500,233 +500,233 @@
       "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/average-annotation-rule",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
       "lineNumber": 18,
       "line": "<Chart"
     },
     {
-      "example": "basic",
+      "example": "horizontal-basic",
       "component": "Bars",
-      "path": "/example/Bars/basic",
+      "path": "/example/Bars/horizontal-basic",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "horizontal-calculated-value-domain-negative",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-negative",
+      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "horizontal-calculated-value-domain-positive",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-positive",
+      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "candlestick-bars",
+      "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/candlestick-bars",
+      "path": "/example/Bars/horizontal-candlestick-bars",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "click-handler",
+      "example": "horizontal-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/click-handler",
+      "path": "/example/Bars/horizontal-click-handler",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "horizontal-customize-individual-styles",
       "component": "Bars",
-      "path": "/example/Bars/customize-individual-styles",
+      "path": "/example/Bars/horizontal-customize-individual-styles",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "gradient",
+      "example": "horizontal-gradient",
       "component": "Bars",
-      "path": "/example/Bars/gradient",
+      "path": "/example/Bars/horizontal-gradient",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "grouped",
+      "example": "horizontal-grouped",
       "component": "Bars",
-      "path": "/example/Bars/grouped",
+      "path": "/example/Bars/horizontal-grouped",
       "lineNumber": 20,
       "line": "<Chart"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/grouped-and-stacked",
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
-      "path": "/example/Bars/grouped-stacked-or-both-transition",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
       "lineNumber": 53,
       "line": "<Chart"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "horizontal-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar-line",
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "inside-labels",
+      "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/inside-labels",
+      "path": "/example/Bars/horizontal-inside-labels",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "horizontal-limit-ticks-count",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-count",
+      "path": "/example/Bars/horizontal-limit-ticks-count",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "horizontal-limit-ticks-second-scale",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-second-scale",
+      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "multiple-diverging",
+      "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/multiple-diverging",
+      "path": "/example/Bars/horizontal-multiple-diverging",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/multiple-overlapping",
+      "path": "/example/Bars/horizontal-multiple-overlapping",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "outside-labels-default",
+      "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/outside-labels-default",
+      "path": "/example/Bars/horizontal-outside-labels-default",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "rounded-right-only",
+      "example": "horizontal-rounded-right-only",
       "component": "Bars",
-      "path": "/example/Bars/rounded-right-only",
+      "path": "/example/Bars/horizontal-rounded-right-only",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "stacked",
+      "example": "horizontal-stacked",
       "component": "Bars",
-      "path": "/example/Bars/stacked",
+      "path": "/example/Bars/horizontal-stacked",
       "lineNumber": 20,
       "line": "<Chart"
     },
     {
-      "example": "stacked-percent",
+      "example": "horizontal-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/stacked-percent",
+      "path": "/example/Bars/horizontal-stacked-percent",
       "lineNumber": 25,
       "line": "<Chart"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/stagger-tween-on-mount",
+      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
       "lineNumber": 27,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "horizontal-time-scale-with-inset",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-inset",
+      "path": "/example/Bars/horizontal-time-scale-with-inset",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "horizontal-time-scale-with-interval",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-interval",
+      "path": "/example/Bars/horizontal-time-scale-with-interval",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "horizontal-time-scale-with-missing-data",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-missing-data",
+      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "horizontal-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-bar-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 53,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "horizontal-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "tween-on-mount",
+      "example": "horizontal-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/tween-on-mount",
+      "path": "/example/Bars/horizontal-tween-on-mount",
       "lineNumber": 27,
       "line": "<Chart"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "horizontal-with-grid-on-top",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top",
+      "path": "/example/Bars/horizontal-with-grid-on-top",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "horizontal-with-grid-on-top-mix-blend",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top-mix-blend",
+      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
       "lineNumber": 17,
       "line": "<Chart"
     },
@@ -948,254 +948,254 @@
       "line": "<Chart"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "vertical-average-annotation-rule",
       "component": "Columns",
-      "path": "/example/Columns/average-annotation-rule",
+      "path": "/example/Columns/vertical-average-annotation-rule",
       "lineNumber": 17,
       "line": "<Chart"
     },
     {
-      "example": "basic",
+      "example": "vertical-basic",
       "component": "Columns",
-      "path": "/example/Columns/basic",
+      "path": "/example/Columns/vertical-basic",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "vertical-calculated-value-domain-negative",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-negative",
+      "path": "/example/Columns/vertical-calculated-value-domain-negative",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "vertical-calculated-value-domain-positive",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-positive",
+      "path": "/example/Columns/vertical-calculated-value-domain-positive",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "click-handler",
+      "example": "vertical-click-handler",
       "component": "Columns",
-      "path": "/example/Columns/click-handler",
+      "path": "/example/Columns/vertical-click-handler",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "vertical-customize-individual-styles",
       "component": "Columns",
-      "path": "/example/Columns/customize-individual-styles",
+      "path": "/example/Columns/vertical-customize-individual-styles",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "gradient",
+      "example": "vertical-gradient",
       "component": "Columns",
-      "path": "/example/Columns/gradient",
+      "path": "/example/Columns/vertical-gradient",
       "lineNumber": 10,
       "line": "<Chart"
     },
     {
-      "example": "grouped",
+      "example": "vertical-grouped",
       "component": "Columns",
-      "path": "/example/Columns/grouped",
+      "path": "/example/Columns/vertical-grouped",
       "lineNumber": 20,
       "line": "<Chart"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "vertical-grouped-and-stacked",
       "component": "Columns",
-      "path": "/example/Columns/grouped-and-stacked",
+      "path": "/example/Columns/vertical-grouped-and-stacked",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Columns",
-      "path": "/example/Columns/grouped-stacked-or-both-transition",
+      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
       "lineNumber": 52,
       "line": "<Chart"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "vertical-highlight-individual-bar-line",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar-line",
+      "path": "/example/Columns/vertical-highlight-individual-bar-line",
       "lineNumber": 10,
       "line": "<Chart"
     },
     {
-      "example": "inside-labels",
+      "example": "vertical-inside-labels",
       "component": "Columns",
-      "path": "/example/Columns/inside-labels",
+      "path": "/example/Columns/vertical-inside-labels",
       "lineNumber": 10,
       "line": "<Chart"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "vertical-limit-ticks-count",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-count",
+      "path": "/example/Columns/vertical-limit-ticks-count",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "vertical-limit-ticks-second-scale",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-second-scale",
+      "path": "/example/Columns/vertical-limit-ticks-second-scale",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "multiple-diverging",
+      "example": "vertical-multiple-diverging",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging",
+      "path": "/example/Columns/vertical-multiple-diverging",
       "lineNumber": 16,
       "line": "<Chart"
     },
     {
-      "example": "multiple-diverging-rounded-specific",
+      "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 18,
       "line": "<Chart"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "vertical-multiple-overlapping",
       "component": "Columns",
-      "path": "/example/Columns/multiple-overlapping",
+      "path": "/example/Columns/vertical-multiple-overlapping",
       "lineNumber": 16,
       "line": "<Chart"
     },
     {
-      "example": "outside-labels-default",
+      "example": "vertical-outside-labels-default",
       "component": "Columns",
-      "path": "/example/Columns/outside-labels-default",
+      "path": "/example/Columns/vertical-outside-labels-default",
       "lineNumber": 10,
       "line": "<Chart"
     },
     {
-      "example": "rounded-top-only",
+      "example": "vertical-rounded-top-only",
       "component": "Columns",
-      "path": "/example/Columns/rounded-top-only",
+      "path": "/example/Columns/vertical-rounded-top-only",
       "lineNumber": 15,
       "line": "<Chart"
     },
     {
-      "example": "stacked",
+      "example": "vertical-stacked",
       "component": "Columns",
-      "path": "/example/Columns/stacked",
+      "path": "/example/Columns/vertical-stacked",
       "lineNumber": 20,
       "line": "<Chart"
     },
     {
-      "example": "stacked-percent",
+      "example": "vertical-stacked-percent",
       "component": "Columns",
-      "path": "/example/Columns/stacked-percent",
+      "path": "/example/Columns/vertical-stacked-percent",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "vertical-stagger-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "stagger-tween-on-mount-rounded-edge",
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "vertical-time-scale-with-inset",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-inset",
+      "path": "/example/Columns/vertical-time-scale-with-inset",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "vertical-time-scale-with-interval",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval",
+      "path": "/example/Columns/vertical-time-scale-with-interval",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-interval-months",
+      "example": "vertical-time-scale-with-interval-months",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval-months",
+      "path": "/example/Columns/vertical-time-scale-with-interval-months",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "vertical-time-scale-with-missing-data",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-missing-data",
+      "path": "/example/Columns/vertical-time-scale-with-missing-data",
       "lineNumber": 11,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "vertical-tooltip-and-bar-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-bar-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 52,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 16,
       "line": "<Chart"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "vertical-tooltip-and-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 15,
       "line": "<Chart"
     },
     {
-      "example": "tween-on-mount",
+      "example": "vertical-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount",
+      "path": "/example/Columns/vertical-tween-on-mount",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "tween-on-mount-rounded-edge",
+      "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
       "lineNumber": 24,
       "line": "<Chart"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "vertical-with-grid-on-top",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top",
+      "path": "/example/Columns/vertical-with-grid-on-top",
       "lineNumber": 14,
       "line": "<Chart"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "vertical-with-grid-on-top-mix-blend",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top-mix-blend",
+      "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 14,
       "line": "<Chart"
     },
@@ -1725,55 +1725,6 @@
       "line": "<Chart"
     },
     {
-      "example": "basic",
-      "component": "Line",
-      "path": "/example/Line/basic",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
-      "lineNumber": 17,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
-    },
-    {
-      "example": "gradient-threshold",
-      "component": "Line",
-      "path": "/example/Line/gradient-threshold",
-      "lineNumber": 10,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
-    },
-    {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 36,
-      "line": "<Chart"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 37,
-      "line": "<Chart"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 18,
-      "line": "<Chart"
-    },
-    {
-      "example": "multiple-series-with-labels",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-with-labels",
-      "lineNumber": 26,
-      "line": "<Chart"
-    },
-    {
       "example": "styling-using-attributes",
       "component": "Line",
       "path": "/example/Line/styling-using-attributes",
@@ -1792,27 +1743,6 @@
       "component": "Line",
       "path": "/example/Line/styling-using-css-variables",
       "lineNumber": 5,
-      "line": "<Chart"
-    },
-    {
-      "example": "vertical",
-      "component": "Line",
-      "path": "/example/Line/vertical",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-labels",
-      "component": "Line",
-      "path": "/example/Line/with-labels",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Line",
-      "path": "/example/Line/with-tooltip-and-highlight",
-      "lineNumber": 10,
       "line": "<Chart"
     },
     {
@@ -2187,6 +2117,34 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Points",
+      "path": "/example/Points/basic",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-scale",
+      "component": "Points",
+      "path": "/example/Points/color-via-scale",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-labels",
+      "component": "Points",
+      "path": "/example/Points/with-labels",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
@@ -2453,27 +2411,6 @@
       "line": "<Chart height={220}>"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
-      "lineNumber": 12,
-      "line": "<Chart"
-    },
-    {
-      "example": "multi-year-lines",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/multi-year-lines",
-      "lineNumber": 14,
-      "line": "<Chart"
-    },
-    {
-      "example": "radar",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/radar",
-      "lineNumber": 25,
-      "line": "<Chart"
-    },
-    {
       "example": "styling-using-attributes",
       "component": "Rect",
       "path": "/example/Rect/styling-using-attributes",
@@ -2636,29 +2573,8 @@
     },
     {
       "example": "basic",
-      "component": "Scatter",
-      "path": "/example/Scatter/basic",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "color-via-scale",
-      "component": "Scatter",
-      "path": "/example/Scatter/color-via-scale",
-      "lineNumber": 11,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-labels",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-labels",
-      "lineNumber": 10,
-      "line": "<Chart"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/basic",
       "lineNumber": 10,
       "line": "<Chart"
     },
@@ -2691,6 +2607,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 36, bottom: 24 }} height={300}>"
     },
     {
+      "example": "gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
+      "lineNumber": 17,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-threshold",
+      "lineNumber": 10,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
+    },
+    {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
@@ -2705,6 +2635,34 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 36, bottom: 24 }} height={300}>"
     },
     {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 37,
+      "line": "<Chart"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
@@ -2712,11 +2670,53 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
     },
     {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "radial-multi-year-lines",
+      "component": "Spline",
+      "path": "/example/Spline/radial-multi-year-lines",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 25,
+      "line": "<Chart"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
       "lineNumber": 36,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 36, bottom: 24 }} height={300}>"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/with-labels",
+      "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 10,
+      "line": "<Chart"
     },
     {
       "example": "playground",
@@ -3111,5 +3111,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-03T15:45:46.355Z"
+  "updatedAt": "2025-11-03T17:05:55.156Z"
 }

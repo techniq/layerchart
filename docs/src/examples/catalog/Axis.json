@@ -951,464 +951,464 @@
       "line": "<Axis placement=\"bottom\" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/average-annotation-rule",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
       "lineNumber": 31,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/average-annotation-rule",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
       "lineNumber": 32,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "basic",
+      "example": "horizontal-basic",
       "component": "Bars",
-      "path": "/example/Bars/basic",
+      "path": "/example/Bars/horizontal-basic",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "basic",
+      "example": "horizontal-basic",
       "component": "Bars",
-      "path": "/example/Bars/basic",
+      "path": "/example/Bars/horizontal-basic",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "horizontal-calculated-value-domain-negative",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-negative",
+      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
       "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "horizontal-calculated-value-domain-negative",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-negative",
+      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
       "lineNumber": 22,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "horizontal-calculated-value-domain-positive",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-positive",
+      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
       "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "horizontal-calculated-value-domain-positive",
       "component": "Bars",
-      "path": "/example/Bars/calculated-value-domain-positive",
+      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
       "lineNumber": 22,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "candlestick-bars",
+      "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/candlestick-bars",
+      "path": "/example/Bars/horizontal-candlestick-bars",
       "lineNumber": 26,
       "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
     },
     {
-      "example": "candlestick-bars",
+      "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/candlestick-bars",
+      "path": "/example/Bars/horizontal-candlestick-bars",
       "lineNumber": 27,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
-      "example": "click-handler",
+      "example": "horizontal-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/click-handler",
+      "path": "/example/Bars/horizontal-click-handler",
       "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "click-handler",
+      "example": "horizontal-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/click-handler",
+      "path": "/example/Bars/horizontal-click-handler",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "horizontal-customize-individual-styles",
       "component": "Bars",
-      "path": "/example/Bars/customize-individual-styles",
+      "path": "/example/Bars/horizontal-customize-individual-styles",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "horizontal-customize-individual-styles",
       "component": "Bars",
-      "path": "/example/Bars/customize-individual-styles",
+      "path": "/example/Bars/horizontal-customize-individual-styles",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "gradient",
+      "example": "horizontal-gradient",
       "component": "Bars",
-      "path": "/example/Bars/gradient",
+      "path": "/example/Bars/horizontal-gradient",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "gradient",
+      "example": "horizontal-gradient",
       "component": "Bars",
-      "path": "/example/Bars/gradient",
+      "path": "/example/Bars/horizontal-gradient",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "grouped",
+      "example": "horizontal-grouped",
       "component": "Bars",
-      "path": "/example/Bars/grouped",
+      "path": "/example/Bars/horizontal-grouped",
       "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "grouped",
+      "example": "horizontal-grouped",
       "component": "Bars",
-      "path": "/example/Bars/grouped",
+      "path": "/example/Bars/horizontal-grouped",
       "lineNumber": 39,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/grouped-and-stacked",
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
       "lineNumber": 43,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/grouped-and-stacked",
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
       "lineNumber": 44,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
-      "path": "/example/Bars/grouped-stacked-or-both-transition",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
       "lineNumber": 72,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
-      "path": "/example/Bars/grouped-stacked-or-both-transition",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
       "lineNumber": 73,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "horizontal-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar-line",
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "horizontal-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/highlight-individual-bar-line",
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "inside-labels",
+      "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/inside-labels",
+      "path": "/example/Bars/horizontal-inside-labels",
       "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "inside-labels",
+      "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/inside-labels",
+      "path": "/example/Bars/horizontal-inside-labels",
       "lineNumber": 22,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "horizontal-limit-ticks-count",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-count",
+      "path": "/example/Bars/horizontal-limit-ticks-count",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "horizontal-limit-ticks-count",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-count",
+      "path": "/example/Bars/horizontal-limit-ticks-count",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" ticks={4} rule />"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "horizontal-limit-ticks-second-scale",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-second-scale",
+      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "horizontal-limit-ticks-second-scale",
       "component": "Bars",
-      "path": "/example/Bars/limit-ticks-second-scale",
+      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
       "lineNumber": 29,
       "line": "<Axis"
     },
     {
-      "example": "multiple-diverging",
+      "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/multiple-diverging",
+      "path": "/example/Bars/horizontal-multiple-diverging",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "multiple-diverging",
+      "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/multiple-diverging",
+      "path": "/example/Bars/horizontal-multiple-diverging",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/multiple-overlapping",
+      "path": "/example/Bars/horizontal-multiple-overlapping",
       "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/multiple-overlapping",
+      "path": "/example/Bars/horizontal-multiple-overlapping",
       "lineNumber": 30,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/outside-labels-default",
+      "path": "/example/Bars/horizontal-outside-labels-default",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/outside-labels-default",
+      "path": "/example/Bars/horizontal-outside-labels-default",
       "lineNumber": 23,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "rounded-right-only",
+      "example": "horizontal-rounded-right-only",
       "component": "Bars",
-      "path": "/example/Bars/rounded-right-only",
+      "path": "/example/Bars/horizontal-rounded-right-only",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "rounded-right-only",
+      "example": "horizontal-rounded-right-only",
       "component": "Bars",
-      "path": "/example/Bars/rounded-right-only",
+      "path": "/example/Bars/horizontal-rounded-right-only",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "stacked",
+      "example": "horizontal-stacked",
       "component": "Bars",
-      "path": "/example/Bars/stacked",
+      "path": "/example/Bars/horizontal-stacked",
       "lineNumber": 35,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "stacked",
+      "example": "horizontal-stacked",
       "component": "Bars",
-      "path": "/example/Bars/stacked",
+      "path": "/example/Bars/horizontal-stacked",
       "lineNumber": 36,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "stacked-percent",
+      "example": "horizontal-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/stacked-percent",
+      "path": "/example/Bars/horizontal-stacked-percent",
       "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" grid rule format=\"percentRound\" />"
     },
     {
-      "example": "stacked-percent",
+      "example": "horizontal-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/stacked-percent",
+      "path": "/example/Bars/horizontal-stacked-percent",
       "lineNumber": 41,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/stagger-tween-on-mount",
+      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
       "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/stagger-tween-on-mount",
+      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
       "lineNumber": 39,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "horizontal-time-scale-with-inset",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-inset",
+      "path": "/example/Bars/horizontal-time-scale-with-inset",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "horizontal-time-scale-with-inset",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-inset",
+      "path": "/example/Bars/horizontal-time-scale-with-inset",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "horizontal-time-scale-with-interval",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-interval",
+      "path": "/example/Bars/horizontal-time-scale-with-interval",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "horizontal-time-scale-with-interval",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-interval",
+      "path": "/example/Bars/horizontal-time-scale-with-interval",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "horizontal-time-scale-with-missing-data",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-missing-data",
+      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "horizontal-time-scale-with-missing-data",
       "component": "Bars",
-      "path": "/example/Bars/time-scale-with-missing-data",
+      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "horizontal-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-bar-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
       "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "horizontal-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-bar-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
       "lineNumber": 31,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 71,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 72,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-clipped-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 31,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "horizontal-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
       "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "horizontal-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/tooltip-and-highlight",
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
       "lineNumber": 30,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "tween-on-mount",
+      "example": "horizontal-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/tween-on-mount",
+      "path": "/example/Bars/horizontal-tween-on-mount",
       "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
-      "example": "tween-on-mount",
+      "example": "horizontal-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/tween-on-mount",
+      "path": "/example/Bars/horizontal-tween-on-mount",
       "lineNumber": 39,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "horizontal-with-grid-on-top",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top",
+      "path": "/example/Bars/horizontal-with-grid-on-top",
       "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" grid={{ class: 'stroke-surface-100' }} rule />"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "horizontal-with-grid-on-top",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top",
+      "path": "/example/Bars/horizontal-with-grid-on-top",
       "lineNumber": 30,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "horizontal-with-grid-on-top-mix-blend",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top-mix-blend",
+      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
       "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" grid={{ class: 'mix-blend-multiply' }} rule />"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "horizontal-with-grid-on-top-mix-blend",
       "component": "Bars",
-      "path": "/example/Bars/with-grid-on-top-mix-blend",
+      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
       "lineNumber": 30,
       "line": "<Axis placement=\"left\" rule />"
     },
@@ -1595,506 +1595,506 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "vertical-average-annotation-rule",
       "component": "Columns",
-      "path": "/example/Columns/average-annotation-rule",
+      "path": "/example/Columns/vertical-average-annotation-rule",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "average-annotation-rule",
+      "example": "vertical-average-annotation-rule",
       "component": "Columns",
-      "path": "/example/Columns/average-annotation-rule",
+      "path": "/example/Columns/vertical-average-annotation-rule",
       "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic",
+      "example": "vertical-basic",
       "component": "Columns",
-      "path": "/example/Columns/basic",
+      "path": "/example/Columns/vertical-basic",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "basic",
+      "example": "vertical-basic",
       "component": "Columns",
-      "path": "/example/Columns/basic",
+      "path": "/example/Columns/vertical-basic",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "vertical-calculated-value-domain-negative",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-negative",
+      "path": "/example/Columns/vertical-calculated-value-domain-negative",
       "lineNumber": 24,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "calculated-value-domain-negative",
+      "example": "vertical-calculated-value-domain-negative",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-negative",
+      "path": "/example/Columns/vertical-calculated-value-domain-negative",
       "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "vertical-calculated-value-domain-positive",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-positive",
+      "path": "/example/Columns/vertical-calculated-value-domain-positive",
       "lineNumber": 24,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "calculated-value-domain-positive",
+      "example": "vertical-calculated-value-domain-positive",
       "component": "Columns",
-      "path": "/example/Columns/calculated-value-domain-positive",
+      "path": "/example/Columns/vertical-calculated-value-domain-positive",
       "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
-      "example": "click-handler",
+      "example": "vertical-click-handler",
       "component": "Columns",
-      "path": "/example/Columns/click-handler",
+      "path": "/example/Columns/vertical-click-handler",
       "lineNumber": 31,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "click-handler",
+      "example": "vertical-click-handler",
       "component": "Columns",
-      "path": "/example/Columns/click-handler",
+      "path": "/example/Columns/vertical-click-handler",
       "lineNumber": 32,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "vertical-customize-individual-styles",
       "component": "Columns",
-      "path": "/example/Columns/customize-individual-styles",
+      "path": "/example/Columns/vertical-customize-individual-styles",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "customize-individual-styles",
+      "example": "vertical-customize-individual-styles",
       "component": "Columns",
-      "path": "/example/Columns/customize-individual-styles",
+      "path": "/example/Columns/vertical-customize-individual-styles",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "gradient",
+      "example": "vertical-gradient",
       "component": "Columns",
-      "path": "/example/Columns/gradient",
+      "path": "/example/Columns/vertical-gradient",
       "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "gradient",
+      "example": "vertical-gradient",
       "component": "Columns",
-      "path": "/example/Columns/gradient",
+      "path": "/example/Columns/vertical-gradient",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "grouped",
+      "example": "vertical-grouped",
       "component": "Columns",
-      "path": "/example/Columns/grouped",
+      "path": "/example/Columns/vertical-grouped",
       "lineNumber": 38,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "grouped",
+      "example": "vertical-grouped",
       "component": "Columns",
-      "path": "/example/Columns/grouped",
+      "path": "/example/Columns/vertical-grouped",
       "lineNumber": 39,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "vertical-grouped-and-stacked",
       "component": "Columns",
-      "path": "/example/Columns/grouped-and-stacked",
+      "path": "/example/Columns/vertical-grouped-and-stacked",
       "lineNumber": 43,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "grouped-and-stacked",
+      "example": "vertical-grouped-and-stacked",
       "component": "Columns",
-      "path": "/example/Columns/grouped-and-stacked",
+      "path": "/example/Columns/vertical-grouped-and-stacked",
       "lineNumber": 44,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Columns",
-      "path": "/example/Columns/grouped-stacked-or-both-transition",
+      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
       "lineNumber": 71,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "grouped-stacked-or-both-transition",
+      "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Columns",
-      "path": "/example/Columns/grouped-stacked-or-both-transition",
+      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
       "lineNumber": 72,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "highlight-individual-bar",
+      "example": "vertical-highlight-individual-bar",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar",
+      "path": "/example/Columns/vertical-highlight-individual-bar",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "vertical-highlight-individual-bar-line",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar-line",
+      "path": "/example/Columns/vertical-highlight-individual-bar-line",
       "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "highlight-individual-bar-line",
+      "example": "vertical-highlight-individual-bar-line",
       "component": "Columns",
-      "path": "/example/Columns/highlight-individual-bar-line",
+      "path": "/example/Columns/vertical-highlight-individual-bar-line",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "inside-labels",
+      "example": "vertical-inside-labels",
       "component": "Columns",
-      "path": "/example/Columns/inside-labels",
+      "path": "/example/Columns/vertical-inside-labels",
       "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "inside-labels",
+      "example": "vertical-inside-labels",
       "component": "Columns",
-      "path": "/example/Columns/inside-labels",
+      "path": "/example/Columns/vertical-inside-labels",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "vertical-limit-ticks-count",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-count",
+      "path": "/example/Columns/vertical-limit-ticks-count",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "limit-ticks-count",
+      "example": "vertical-limit-ticks-count",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-count",
+      "path": "/example/Columns/vertical-limit-ticks-count",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" ticks={4} rule />"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "vertical-limit-ticks-second-scale",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-second-scale",
+      "path": "/example/Columns/vertical-limit-ticks-second-scale",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "limit-ticks-second-scale",
+      "example": "vertical-limit-ticks-second-scale",
       "component": "Columns",
-      "path": "/example/Columns/limit-ticks-second-scale",
+      "path": "/example/Columns/vertical-limit-ticks-second-scale",
       "lineNumber": 26,
       "line": "<Axis"
     },
     {
-      "example": "multiple-diverging",
+      "example": "vertical-multiple-diverging",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging",
+      "path": "/example/Columns/vertical-multiple-diverging",
       "lineNumber": 27,
       "line": "<Axis placement=\"left\" grid rule format={(d) => format(Math.abs(d), 'integer')} />"
     },
     {
-      "example": "multiple-diverging",
+      "example": "vertical-multiple-diverging",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging",
+      "path": "/example/Columns/vertical-multiple-diverging",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
-      "example": "multiple-diverging-rounded-specific",
+      "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" grid rule format={(d) => format(Math.abs(d), 'integer')} />"
     },
     {
-      "example": "multiple-diverging-rounded-specific",
+      "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Columns",
-      "path": "/example/Columns/multiple-diverging-rounded-specific",
+      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "vertical-multiple-overlapping",
       "component": "Columns",
-      "path": "/example/Columns/multiple-overlapping",
+      "path": "/example/Columns/vertical-multiple-overlapping",
       "lineNumber": 27,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "multiple-overlapping",
+      "example": "vertical-multiple-overlapping",
       "component": "Columns",
-      "path": "/example/Columns/multiple-overlapping",
+      "path": "/example/Columns/vertical-multiple-overlapping",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "vertical-outside-labels-default",
       "component": "Columns",
-      "path": "/example/Columns/outside-labels-default",
+      "path": "/example/Columns/vertical-outside-labels-default",
       "lineNumber": 22,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "outside-labels-default",
+      "example": "vertical-outside-labels-default",
       "component": "Columns",
-      "path": "/example/Columns/outside-labels-default",
+      "path": "/example/Columns/vertical-outside-labels-default",
       "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "rounded-top-only",
+      "example": "vertical-rounded-top-only",
       "component": "Columns",
-      "path": "/example/Columns/rounded-top-only",
+      "path": "/example/Columns/vertical-rounded-top-only",
       "lineNumber": 26,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "rounded-top-only",
+      "example": "vertical-rounded-top-only",
       "component": "Columns",
-      "path": "/example/Columns/rounded-top-only",
+      "path": "/example/Columns/vertical-rounded-top-only",
       "lineNumber": 27,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "stacked",
+      "example": "vertical-stacked",
       "component": "Columns",
-      "path": "/example/Columns/stacked",
+      "path": "/example/Columns/vertical-stacked",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "stacked",
+      "example": "vertical-stacked",
       "component": "Columns",
-      "path": "/example/Columns/stacked",
+      "path": "/example/Columns/vertical-stacked",
       "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "stacked-percent",
+      "example": "vertical-stacked-percent",
       "component": "Columns",
-      "path": "/example/Columns/stacked-percent",
+      "path": "/example/Columns/vertical-stacked-percent",
       "lineNumber": 39,
       "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
     },
     {
-      "example": "stacked-percent",
+      "example": "vertical-stacked-percent",
       "component": "Columns",
-      "path": "/example/Columns/stacked-percent",
+      "path": "/example/Columns/vertical-stacked-percent",
       "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "vertical-stagger-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "stagger-tween-on-mount",
+      "example": "vertical-stagger-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount",
       "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "stagger-tween-on-mount-rounded-edge",
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "stagger-tween-on-mount-rounded-edge",
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/stagger-tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
       "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "vertical-time-scale-with-inset",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-inset",
+      "path": "/example/Columns/vertical-time-scale-with-inset",
       "lineNumber": 23,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "time-scale-with-inset",
+      "example": "vertical-time-scale-with-inset",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-inset",
+      "path": "/example/Columns/vertical-time-scale-with-inset",
       "lineNumber": 24,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "vertical-time-scale-with-interval",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval",
+      "path": "/example/Columns/vertical-time-scale-with-interval",
       "lineNumber": 23,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "time-scale-with-interval",
+      "example": "vertical-time-scale-with-interval",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval",
+      "path": "/example/Columns/vertical-time-scale-with-interval",
       "lineNumber": 24,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
-      "example": "time-scale-with-interval-months",
+      "example": "vertical-time-scale-with-interval-months",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval-months",
+      "path": "/example/Columns/vertical-time-scale-with-interval-months",
       "lineNumber": 23,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "time-scale-with-interval-months",
+      "example": "vertical-time-scale-with-interval-months",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-interval-months",
+      "path": "/example/Columns/vertical-time-scale-with-interval-months",
       "lineNumber": 24,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "vertical-time-scale-with-missing-data",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-missing-data",
+      "path": "/example/Columns/vertical-time-scale-with-missing-data",
       "lineNumber": 23,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "time-scale-with-missing-data",
+      "example": "vertical-time-scale-with-missing-data",
       "component": "Columns",
-      "path": "/example/Columns/time-scale-with-missing-data",
+      "path": "/example/Columns/vertical-time-scale-with-missing-data",
       "lineNumber": 24,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "vertical-tooltip-and-bar-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-bar-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
       "lineNumber": 27,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tooltip-and-bar-highlight",
+      "example": "vertical-tooltip-and-bar-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-bar-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 70,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 71,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 29,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tooltip-and-clipped-highlight",
+      "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-clipped-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "vertical-tooltip-and-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 27,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tooltip-and-highlight",
+      "example": "vertical-tooltip-and-highlight",
       "component": "Columns",
-      "path": "/example/Columns/tooltip-and-highlight",
+      "path": "/example/Columns/vertical-tooltip-and-highlight",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "tween-on-mount",
+      "example": "vertical-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount",
+      "path": "/example/Columns/vertical-tween-on-mount",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tween-on-mount",
+      "example": "vertical-tween-on-mount",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount",
+      "path": "/example/Columns/vertical-tween-on-mount",
       "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "tween-on-mount-rounded-edge",
+      "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
       "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "tween-on-mount-rounded-edge",
+      "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Columns",
-      "path": "/example/Columns/tween-on-mount-rounded-edge",
+      "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
       "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "vertical-with-grid-on-top",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top",
+      "path": "/example/Columns/vertical-with-grid-on-top",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid={{ class: 'stroke-surface-100' }} rule />"
     },
     {
-      "example": "with-grid-on-top",
+      "example": "vertical-with-grid-on-top",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top",
+      "path": "/example/Columns/vertical-with-grid-on-top",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "vertical-with-grid-on-top-mix-blend",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top-mix-blend",
+      "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 25,
       "line": "<Axis placement=\"left\" grid={{ class: 'mix-blend-multiply' }} rule />"
     },
     {
-      "example": "with-grid-on-top-mix-blend",
+      "example": "vertical-with-grid-on-top-mix-blend",
       "component": "Columns",
-      "path": "/example/Columns/with-grid-on-top-mix-blend",
+      "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
@@ -2344,104 +2344,6 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic",
-      "component": "Line",
-      "path": "/example/Line/basic",
-      "lineNumber": 20,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "basic",
-      "component": "Line",
-      "path": "/example/Line/basic",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
-      "lineNumber": 19,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "Line",
-      "path": "/example/Line/gradient-encoding",
-      "lineNumber": 20,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "gradient-threshold",
-      "component": "Line",
-      "path": "/example/Line/gradient-threshold",
-      "lineNumber": 15,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "gradient-threshold",
-      "component": "Line",
-      "path": "/example/Line/gradient-threshold",
-      "lineNumber": 16,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 51,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "multiple-series",
-      "component": "Line",
-      "path": "/example/Line/multiple-series",
-      "lineNumber": 52,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 52,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "multiple-series-highlight-on-hover",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-highlight-on-hover",
-      "lineNumber": 53,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 29,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "multiple-series-using-overrides",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-using-overrides",
-      "lineNumber": 30,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "multiple-series-with-labels",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-with-labels",
-      "lineNumber": 41,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "multiple-series-with-labels",
-      "component": "Line",
-      "path": "/example/Line/multiple-series-with-labels",
-      "lineNumber": 42,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
       "example": "styling-using-attributes",
       "component": "Line",
       "path": "/example/Line/styling-using-attributes",
@@ -2482,48 +2384,6 @@
       "path": "/example/Line/styling-using-css-variables",
       "lineNumber": 13,
       "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "vertical",
-      "component": "Line",
-      "path": "/example/Line/vertical",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "vertical",
-      "component": "Line",
-      "path": "/example/Line/vertical",
-      "lineNumber": 22,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Line",
-      "path": "/example/Line/with-labels",
-      "lineNumber": 20,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Line",
-      "path": "/example/Line/with-labels",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Line",
-      "path": "/example/Line/with-tooltip-and-highlight",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Line",
-      "path": "/example/Line/with-tooltip-and-highlight",
-      "lineNumber": 22,
-      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "custom",
@@ -2596,46 +2456,60 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
-      "lineNumber": 36,
-      "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
+      "example": "basic",
+      "component": "Points",
+      "path": "/example/Points/basic",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "line-with-areas",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/line-with-areas",
-      "lineNumber": 37,
-      "line": "<Axis"
+      "example": "basic",
+      "component": "Points",
+      "path": "/example/Points/basic",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "multi-year-lines",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/multi-year-lines",
-      "lineNumber": 43,
-      "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
+      "example": "color-via-scale",
+      "component": "Points",
+      "path": "/example/Points/color-via-scale",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "multi-year-lines",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/multi-year-lines",
-      "lineNumber": 44,
-      "line": "<Axis"
+      "example": "color-via-scale",
+      "component": "Points",
+      "path": "/example/Points/color-via-scale",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "radar",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/radar",
-      "lineNumber": 35,
-      "line": "<Axis"
+      "example": "with-labels",
+      "component": "Points",
+      "path": "/example/Points/with-labels",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "radar",
-      "component": "RadialLine",
-      "path": "/example/RadialLine/radar",
-      "lineNumber": 41,
-      "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
+      "example": "with-labels",
+      "component": "Points",
+      "path": "/example/Points/with-labels",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "styling-using-attributes",
@@ -2876,62 +2750,6 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic",
-      "component": "Scatter",
-      "path": "/example/Scatter/basic",
-      "lineNumber": 20,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "basic",
-      "component": "Scatter",
-      "path": "/example/Scatter/basic",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "color-via-scale",
-      "component": "Scatter",
-      "path": "/example/Scatter/color-via-scale",
-      "lineNumber": 25,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "color-via-scale",
-      "component": "Scatter",
-      "path": "/example/Scatter/color-via-scale",
-      "lineNumber": 26,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-labels",
-      "lineNumber": 20,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-labels",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-tooltip-and-highlight",
-      "lineNumber": 21,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "with-tooltip-and-highlight",
-      "component": "Scatter",
-      "path": "/example/Scatter/with-tooltip-and-highlight",
-      "lineNumber": 22,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
       "example": "custom",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/custom",
@@ -2944,6 +2762,20 @@
       "path": "/example/ScatterChart/custom",
       "lineNumber": 14,
       "line": "<Axis placement=\"bottom\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Spline",
+      "path": "/example/Spline/basic",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Spline",
+      "path": "/example/Spline/basic",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "basic-start-and-end-snippets",
@@ -3002,6 +2834,34 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-encoding",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-threshold",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "Spline",
+      "path": "/example/Spline/gradient-threshold",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
@@ -3027,6 +2887,62 @@
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
       "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 51,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 52,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 52,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 53,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3044,6 +2960,48 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
+    },
+    {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 37,
+      "line": "<Axis"
+    },
+    {
+      "example": "radial-multi-year-lines",
+      "component": "Spline",
+      "path": "/example/Spline/radial-multi-year-lines",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
+    },
+    {
+      "example": "radial-multi-year-lines",
+      "component": "Spline",
+      "path": "/example/Spline/radial-multi-year-lines",
+      "lineNumber": 44,
+      "line": "<Axis"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 35,
+      "line": "<Axis"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
@@ -3055,6 +3013,48 @@
       "component": "Spline",
       "path": "/example/Spline/tweened",
       "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/with-labels",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/with-labels",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3646,5 +3646,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.091Z"
+  "updatedAt": "2025-11-03T17:05:54.895Z"
 }

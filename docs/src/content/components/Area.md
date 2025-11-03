@@ -9,6 +9,8 @@ related: ['examples/Area']
   import Example from '$lib/components/Example.svelte';
 </script>
 
+> See also: [AreaChart](/docs/components/AreaChart) for simplified examples
+
 ## Playground
 
 <Example name="playground" />
