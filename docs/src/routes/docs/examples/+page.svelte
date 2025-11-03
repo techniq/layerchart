@@ -7,6 +7,7 @@
 	import H2 from '$lib/markdown/components/h2.svelte';
 
 	import LucideSearch from '~icons/lucide/search';
+	import { sortFunc } from '@layerstack/utils';
 
 	let { data } = $props();
 
@@ -66,28 +67,23 @@
 				sections.add(section);
 			}
 		});
-		return Array.from(sections).sort((a, b) => {
-			// Sort sections in the same order as DocsMenu.svelte
-			const sectionOrder = [
-				'charts',
-				'common',
-				'primitives',
-				'marks',
-				'annotations',
-				'interactions',
-				'geo',
-				'layout',
-				'fill',
-				'clipping',
-				'other'
-			];
-			const indexA = sectionOrder.indexOf(a.toLowerCase());
-			const indexB = sectionOrder.indexOf(b.toLowerCase());
-			if (indexA === -1 && indexB === -1) return a.localeCompare(b);
-			if (indexA === -1) return 1;
-			if (indexB === -1) return -1;
-			return indexA - indexB;
-		});
+		return Array.from(sections).sort(
+			sortFunc((section) =>
+				[
+					'charts',
+					'common',
+					'primitives',
+					'marks',
+					'annotations',
+					'interactions',
+					'geo',
+					'layout',
+					'fill',
+					'clipping',
+					'other'
+				].indexOf(section)
+			)
+		);
 	});
 
 	let sectionOptions = $derived.by(() => [
