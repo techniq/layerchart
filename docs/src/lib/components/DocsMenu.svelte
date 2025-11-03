@@ -65,7 +65,7 @@
 		/>
 	</section>
 
-	<section>
+	<!-- <section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Examples</h2>
 		{#each examplesBySection as [section, examples]}
 			<div class="mb-6">
@@ -85,7 +85,7 @@
 				{/each}
 			</div>
 		{/each}
-	</section>
+	</section> -->
 
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
