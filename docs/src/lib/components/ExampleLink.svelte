@@ -17,13 +17,13 @@
 		<img
 			src="/screenshots/{component}/{example}-light.png"
 			alt="{component} - {example}"
-			class="w-full h-full object-contain object-center dark:hidden bg-surface-100"
+			class="w-full h-full object-scale-down object-center dark:hidden bg-surface-100"
 			loading="lazy"
 		/>
 		<img
 			src="/screenshots/{component}/{example}-dark.png"
 			alt="{component} - {example}"
-			class="w-full h-full object-contain object-center hidden dark:block bg-surface-200"
+			class="w-full h-full object-scale-down object-center hidden dark:block bg-surface-200"
 			loading="lazy"
 		/>
 	</div>
