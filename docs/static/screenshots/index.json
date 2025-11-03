@@ -1,17 +1,8 @@
 {
-  "generatedAt": "2025-11-03T14:24:58.821Z",
-  "totalComponents": 75,
+  "generatedAt": "2025-11-03T15:45:45.084Z",
+  "totalComponents": 62,
   "totalExamples": 717,
   "components": [
-    {
-      "component": "AnimatedGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/AnimatedGlobe/basic"
-        }
-      ]
-    },
     {
       "component": "AnnotationLine",
       "examples": [
@@ -1148,15 +1139,6 @@
       ]
     },
     {
-      "component": "BubbleMap",
-      "examples": [
-        {
-          "name": "bubble-map-population",
-          "path": "/example/BubbleMap/bubble-map-population"
-        }
-      ]
-    },
-    {
       "component": "Calendar",
       "examples": [
         {
@@ -1186,15 +1168,6 @@
         {
           "name": "rounded-cells",
           "path": "/example/Calendar/rounded-cells"
-        }
-      ]
-    },
-    {
-      "component": "Choropleth",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/Choropleth/basic"
         }
       ]
     },
@@ -1416,15 +1389,6 @@
       ]
     },
     {
-      "component": "CountryMap",
-      "examples": [
-        {
-          "name": "country-map",
-          "path": "/example/CountryMap/country-map"
-        }
-      ]
-    },
-    {
       "component": "Dagre",
       "examples": [
         {
@@ -1483,24 +1447,6 @@
         {
           "name": "points-color",
           "path": "/example/Duration/points-color"
-        }
-      ]
-    },
-    {
-      "component": "EarthquakeGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/EarthquakeGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "EclipsesGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/EclipsesGlobe/basic"
         }
       ]
     },
@@ -1587,8 +1533,21 @@
       "component": "GeoCircle",
       "examples": [
         {
+          "name": "earthquake-globe",
+          "path": "/example/GeoCircle/earthquake-globe"
+        },
+        {
           "name": "playground",
           "path": "/example/GeoCircle/playground"
+        }
+      ]
+    },
+    {
+      "component": "GeoContext",
+      "examples": [
+        {
+          "name": "projection-playground",
+          "path": "/example/GeoContext/projection-playground"
         }
       ]
     },
@@ -1596,8 +1555,68 @@
       "component": "GeoPath",
       "examples": [
         {
-          "name": "basic",
-          "path": "/example/GeoPath/basic"
+          "name": "animated-globe",
+          "path": "/example/GeoPath/animated-globe"
+        },
+        {
+          "name": "bubble-map",
+          "path": "/example/GeoPath/bubble-map"
+        },
+        {
+          "name": "choropleth",
+          "path": "/example/GeoPath/choropleth"
+        },
+        {
+          "name": "eclipses-globe",
+          "path": "/example/GeoPath/eclipses-globe"
+        },
+        {
+          "name": "sketchy-globe",
+          "path": "/example/GeoPath/sketchy-globe"
+        },
+        {
+          "name": "spike-map",
+          "path": "/example/GeoPath/spike-map"
+        },
+        {
+          "name": "submarine-cables-globe",
+          "path": "/example/GeoPath/submarine-cables-globe"
+        },
+        {
+          "name": "timezones",
+          "path": "/example/GeoPath/timezones"
+        },
+        {
+          "name": "tooltip",
+          "path": "/example/GeoPath/tooltip"
+        },
+        {
+          "name": "transform-canvas",
+          "path": "/example/GeoPath/transform-canvas"
+        },
+        {
+          "name": "transform-projection",
+          "path": "/example/GeoPath/transform-projection"
+        },
+        {
+          "name": "translucent-globe",
+          "path": "/example/GeoPath/translucent-globe"
+        },
+        {
+          "name": "us-country-map",
+          "path": "/example/GeoPath/us-country-map"
+        },
+        {
+          "name": "us-state",
+          "path": "/example/GeoPath/us-state"
+        },
+        {
+          "name": "us-state-with-counties",
+          "path": "/example/GeoPath/us-state-with-counties"
+        },
+        {
+          "name": "us-state-with-surrounding-states",
+          "path": "/example/GeoPath/us-state-with-surrounding-states"
         }
       ]
     },
@@ -1627,11 +1646,15 @@
       ]
     },
     {
-      "component": "GeoProjection",
+      "component": "GeoSpline",
       "examples": [
         {
-          "name": "basic-geo-projection",
-          "path": "/example/GeoProjection/basic-geo-projection"
+          "name": "draggable-globe",
+          "path": "/example/GeoSpline/draggable-globe"
+        },
+        {
+          "name": "world-map",
+          "path": "/example/GeoSpline/world-map"
         }
       ]
     },
@@ -2121,19 +2144,6 @@
         {
           "name": "vertical",
           "path": "/example/LineChart/vertical"
-        }
-      ]
-    },
-    {
-      "component": "LoftedArcs",
-      "examples": [
-        {
-          "name": "draggable-globe-with-edgefade",
-          "path": "/example/LoftedArcs/draggable-globe-with-edgefade"
-        },
-        {
-          "name": "world-map",
-          "path": "/example/LoftedArcs/world-map"
         }
       ]
     },
@@ -2864,24 +2874,6 @@
       ]
     },
     {
-      "component": "SketchyGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/SketchyGlobe/basic"
-        }
-      ]
-    },
-    {
-      "component": "SpikeMap",
-      "examples": [
-        {
-          "name": "spike-map-population",
-          "path": "/example/SpikeMap/spike-map-population"
-        }
-      ]
-    },
-    {
       "component": "Spline",
       "examples": [
         {
@@ -2919,32 +2911,6 @@
       ]
     },
     {
-      "component": "StateMap",
-      "examples": [
-        {
-          "name": "state-only",
-          "path": "/example/StateMap/state-only"
-        },
-        {
-          "name": "state-with-counties",
-          "path": "/example/StateMap/state-with-counties"
-        },
-        {
-          "name": "state-with-surrounding-states-via-chart-clip-path",
-          "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path"
-        }
-      ]
-    },
-    {
-      "component": "SubmarineCablesGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/SubmarineCablesGlobe/basic"
-        }
-      ]
-    },
-    {
       "component": "Text",
       "examples": [
         {
@@ -2971,15 +2937,6 @@
         {
           "name": "with-tooltip-and-highlight",
           "path": "/example/Threshold/with-tooltip-and-highlight"
-        }
-      ]
-    },
-    {
-      "component": "Timezones",
-      "examples": [
-        {
-          "name": "basic-timezones",
-          "path": "/example/Timezones/basic-timezones"
         }
       ]
     },
@@ -3174,15 +3131,6 @@
       ]
     },
     {
-      "component": "TranslucentGlobe",
-      "examples": [
-        {
-          "name": "basic",
-          "path": "/example/TranslucentGlobe/basic"
-        }
-      ]
-    },
-    {
       "component": "Tree",
       "examples": [
         {
@@ -3230,19 +3178,6 @@
         {
           "name": "example",
           "path": "/example/Voronoi/example"
-        }
-      ]
-    },
-    {
-      "component": "ZoomableMap",
-      "examples": [
-        {
-          "name": "canvas-transform",
-          "path": "/example/ZoomableMap/canvas-transform"
-        },
-        {
-          "name": "projection-transform",
-          "path": "/example/ZoomableMap/projection-transform"
         }
       ]
     }

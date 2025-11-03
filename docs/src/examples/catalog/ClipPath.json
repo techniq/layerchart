@@ -10,26 +10,26 @@
       "line": "<ClipPath>"
     },
     {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 124,
+      "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 147,
+      "line": "<ClipPath useId=\"globe\">"
+    },
+    {
       "example": "clipped",
       "component": "GeoTile",
       "path": "/example/GeoTile/clipped",
       "lineNumber": 47,
       "line": "<ClipPath useId=\"clip\">"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 124,
-      "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 147,
-      "line": "<ClipPath useId=\"globe\">"
     }
   ],
-  "updatedAt": "2025-11-03T14:17:43.377Z"
+  "updatedAt": "2025-11-03T14:52:10.906Z"
 }

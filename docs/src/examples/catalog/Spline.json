@@ -127,6 +127,13 @@
       "line": "<Spline"
     },
     {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 83,
+      "line": "<Spline"
+    },
+    {
       "example": "basic",
       "component": "Line",
       "path": "/example/Line/basic",
@@ -330,13 +337,6 @@
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 83,
-      "line": "<Spline"
-    },
-    {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
@@ -442,5 +442,5 @@
       "line": "<Spline {curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.573Z"
+  "updatedAt": "2025-11-03T14:46:59.626Z"
 }

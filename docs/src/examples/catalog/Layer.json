@@ -3,20 +3,6 @@
   "examples": [],
   "usage": [
     {
-      "example": "basic",
-      "component": "AnimatedGlobe",
-      "path": "/example/AnimatedGlobe/basic",
-      "lineNumber": 168,
-      "line": "<Layer {debug}>"
-    },
-    {
-      "example": "basic",
-      "component": "AnimatedGlobe",
-      "path": "/example/AnimatedGlobe/basic",
-      "lineNumber": 189,
-      "line": "<Layer type=\"canvas\" pointerEvents={false}>"
-    },
-    {
       "example": "band-scale-on-axis",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/band-scale-on-axis",
@@ -941,20 +927,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 88,
-      "line": "<Layer>"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 121,
-      "line": "<Layer pointerEvents={false}>"
-    },
-    {
       "example": "90-days",
       "component": "Calendar",
       "path": "/example/Calendar/90-days",
@@ -1002,20 +974,6 @@
       "path": "/example/Calendar/rounded-cells",
       "lineNumber": 40,
       "line": "<Layer>"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 75,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 94,
-      "line": "<Layer pointerEvents={false}>"
     },
     {
       "example": "styling-using-attributes",
@@ -1319,13 +1277,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "country-map",
-      "component": "CountryMap",
-      "path": "/example/CountryMap/country-map",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
@@ -1351,20 +1302,6 @@
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
       "lineNumber": 56,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 86,
-      "line": "<Layer disableHitCanvas={timer.running}>"
-    },
-    {
-      "example": "basic",
-      "component": "EclipsesGlobe",
-      "path": "/example/EclipsesGlobe/basic",
-      "lineNumber": 93,
       "line": "<Layer>"
     },
     {
@@ -1480,6 +1417,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 86,
+      "line": "<Layer disableHitCanvas={timer.running}>"
+    },
+    {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
@@ -1487,18 +1431,172 @@
       "line": "<Layer>"
     },
     {
-      "example": "basic",
+      "example": "projection-playground",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/projection-playground",
+      "lineNumber": 87,
+      "line": "<Layer>"
+    },
+    {
+      "example": "animated-globe",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/animated-globe",
+      "lineNumber": 168,
+      "line": "<Layer {debug}>"
+    },
+    {
+      "example": "animated-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/animated-globe",
+      "lineNumber": 189,
+      "line": "<Layer type=\"canvas\" pointerEvents={false}>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 88,
+      "line": "<Layer>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 121,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 75,
+      "line": "<Layer>"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 94,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "eclipses-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/eclipses-globe",
+      "lineNumber": 98,
+      "line": "<Layer>"
+    },
+    {
+      "example": "sketchy-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/sketchy-globe",
+      "lineNumber": 77,
+      "line": "<Layer>"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 74,
+      "line": "<Layer>"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 103,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/submarine-cables-globe",
+      "lineNumber": 85,
+      "line": "<Layer disableHitCanvas={timer.running}>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 120,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tooltip",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 22,
       "line": "<Layer>"
     },
     {
-      "example": "basic",
+      "example": "tooltip",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 37,
       "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 74,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 122,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 74,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 119,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
+      "lineNumber": 76,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-country-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-country-map",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-state",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state",
+      "lineNumber": 61,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-state-with-counties",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-counties",
+      "lineNumber": 66,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 63,
+      "line": "<Layer>"
     },
     {
       "example": "icons",
@@ -1557,10 +1655,17 @@
       "line": "<Layer>"
     },
     {
-      "example": "basic-geo-projection",
-      "component": "GeoProjection",
-      "path": "/example/GeoProjection/basic-geo-projection",
-      "lineNumber": 87,
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/draggable-globe",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-map",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/world-map",
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -1848,20 +1953,6 @@
       "component": "LineChart",
       "path": "/example/LineChart/custom",
       "lineNumber": 12,
-      "line": "<Layer>"
-    },
-    {
-      "example": "draggable-globe-with-edgefade",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "world-map",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/world-map",
-      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -2691,27 +2782,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "basic",
-      "component": "SketchyGlobe",
-      "path": "/example/SketchyGlobe/basic",
-      "lineNumber": 77,
-      "line": "<Layer>"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 74,
-      "line": "<Layer>"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 103,
-      "line": "<Layer pointerEvents={false}>"
-    },
-    {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
@@ -2768,34 +2838,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "state-only",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-only",
-      "lineNumber": 61,
-      "line": "<Layer>"
-    },
-    {
-      "example": "state-with-counties",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-counties",
-      "lineNumber": 66,
-      "line": "<Layer>"
-    },
-    {
-      "example": "state-with-surrounding-states-via-chart-clip-path",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
-      "lineNumber": 63,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic",
-      "component": "SubmarineCablesGlobe",
-      "path": "/example/SubmarineCablesGlobe/basic",
-      "lineNumber": 85,
-      "line": "<Layer disableHitCanvas={timer.running}>"
-    },
-    {
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
@@ -2807,13 +2849,6 @@
       "component": "Text",
       "path": "/example/Text/word-wrap-with-explicit-n",
       "lineNumber": 9,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 120,
       "line": "<Layer>"
     },
     {
@@ -3133,13 +3168,6 @@
     },
     {
       "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
-      "lineNumber": 76,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
       "lineNumber": 63,
@@ -3207,35 +3235,7 @@
       "path": "/example/Voronoi/example",
       "lineNumber": 23,
       "line": "<Layer onpointermove={onPointerMove}>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 74,
-      "line": "<Layer>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 121,
-      "line": "<Layer pointerEvents={false}>"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 74,
-      "line": "<Layer>"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 119,
-      "line": "<Layer pointerEvents={false}>"
     }
   ],
-  "updatedAt": "2025-11-03T14:25:00.554Z"
+  "updatedAt": "2025-11-03T15:45:47.134Z"
 }

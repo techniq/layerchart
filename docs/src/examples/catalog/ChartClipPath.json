@@ -66,6 +66,13 @@
       "line": "<ChartClipPath>"
     },
     {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 64,
+      "line": "<ChartClipPath>"
+    },
+    {
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
@@ -84,13 +91,6 @@
       "component": "Partition",
       "path": "/example/Partition/vertical",
       "lineNumber": 97,
-      "line": "<ChartClipPath>"
-    },
-    {
-      "example": "state-with-surrounding-states-via-chart-clip-path",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
-      "lineNumber": 64,
       "line": "<ChartClipPath>"
     },
     {
@@ -115,5 +115,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.560Z"
+  "updatedAt": "2025-11-03T14:39:02.558Z"
 }

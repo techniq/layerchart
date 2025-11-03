@@ -1,14 +1,19 @@
 {
   "component": "GeoContext",
-  "examples": [],
+  "examples": [
+    {
+      "name": "projection-playground",
+      "path": "/example/GeoContext/projection-playground"
+    }
+  ],
   "usage": [
     {
-      "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
       "lineNumber": 80,
       "line": "<GeoContext"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.847Z"
+  "updatedAt": "2025-11-03T15:45:46.737Z"
 }

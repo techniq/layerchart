@@ -80,24 +80,24 @@
   ],
   "usage": [
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
       "lineNumber": 131,
       "line": "<Legend"
     },
     {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
       "lineNumber": 100,
       "line": "<Legend"
     },
     {
-      "example": "basic",
-      "component": "EclipsesGlobe",
-      "path": "/example/EclipsesGlobe/basic",
-      "lineNumber": 91,
+      "example": "eclipses-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/eclipses-globe",
+      "lineNumber": 96,
       "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
     },
     {
@@ -374,5 +374,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.157Z"
+  "updatedAt": "2025-11-03T15:07:10.799Z"
 }

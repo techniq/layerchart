@@ -25,4 +25,4 @@ related:
   import Example from '$lib/components/Example.svelte';
 </script>
 
-<Example name="basic" />
+<Example name="tooltip" />

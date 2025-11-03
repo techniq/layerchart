@@ -3,20 +3,6 @@
   "examples": [],
   "usage": [
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 86,
-      "line": "<TransformControls />"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 73,
-      "line": "<TransformControls />"
-    },
-    {
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
@@ -45,6 +31,41 @@
       "line": "<TransformControls />"
     },
     {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 86,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 73,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 72,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 72,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 72,
+      "line": "<TransformControls />"
+    },
+    {
       "example": "zoomable",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable",
@@ -63,13 +84,6 @@
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-with-padding",
       "lineNumber": 73,
-      "line": "<TransformControls />"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 72,
       "line": "<TransformControls />"
     },
     {
@@ -106,21 +120,7 @@
       "path": "/example/Tree/html-nodes",
       "lineNumber": 59,
       "line": "<TransformControls orientation=\"horizontal\" class=\"-m-2\" />"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 72,
-      "line": "<TransformControls />"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 72,
-      "line": "<TransformControls />"
     }
   ],
-  "updatedAt": "2025-11-03T14:25:01.475Z"
+  "updatedAt": "2025-11-03T15:20:55.604Z"
 }

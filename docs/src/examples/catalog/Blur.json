@@ -3,12 +3,12 @@
   "examples": [],
   "usage": [
     {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
       "lineNumber": 148,
       "line": "<Blur>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.176Z"
+  "updatedAt": "2025-11-03T14:52:10.705Z"
 }

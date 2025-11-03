@@ -172,13 +172,6 @@
   ],
   "usage": [
     {
-      "example": "basic",
-      "component": "AnimatedGlobe",
-      "path": "/example/AnimatedGlobe/basic",
-      "lineNumber": 196,
-      "line": "<Tooltip.Root>"
-    },
-    {
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/on-axis-with-tooltip",
@@ -1432,48 +1425,6 @@
       "line": "<Tooltip.Root"
     },
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 138,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 141,
-      "line": "<Tooltip.Header>"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 144,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 145,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 151,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 157,
-      "line": "<Tooltip.Item"
-    },
-    {
       "example": "90-days",
       "component": "Calendar",
       "path": "/example/Calendar/90-days",
@@ -1668,48 +1619,6 @@
       "path": "/example/Calendar/rounded-cells",
       "lineNumber": 66,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 106,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 109,
-      "line": "<Tooltip.Header>"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 112,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 113,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 119,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 125,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "grouped",
@@ -2818,55 +2727,6 @@
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 105,
-      "line": "<Tooltip.Root {context}>"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 107,
-      "line": "<Tooltip.Header>{data.place}</Tooltip.Header>"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 108,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 109,
-      "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 110,
-      "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 111,
-      "line": "<Tooltip.Item label=\"Magnitude\" value={data.magnitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic",
-      "component": "EclipsesGlobe",
-      "path": "/example/EclipsesGlobe/basic",
-      "lineNumber": 112,
-      "line": "<Tooltip.Root>"
-    },
-    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/beeswarm",
@@ -2965,39 +2825,368 @@
       "line": "<Tooltip.Item label=\"value\" value={data.data.value} format=\"integer\" />"
     },
     {
-      "example": "basic",
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 105,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 107,
+      "line": "<Tooltip.Header>{data.place}</Tooltip.Header>"
+    },
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 108,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 109,
+      "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 110,
+      "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 111,
+      "line": "<Tooltip.Item label=\"Magnitude\" value={data.magnitude} format=\"decimal\" />"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/projection-playground",
+      "lineNumber": 99,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "animated-globe",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/animated-globe",
+      "lineNumber": 196,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 138,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 141,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 144,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 145,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 151,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 157,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 106,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 109,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 112,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 113,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 119,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 125,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "eclipses-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/eclipses-globe",
+      "lineNumber": 117,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 113,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 116,
+      "line": "<Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 118,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 119,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 125,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 131,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/submarine-cables-globe",
+      "lineNumber": 120,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 158,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 161,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 162,
+      "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 163,
+      "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 164,
+      "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 165,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "tooltip",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 47,
       "line": "<Tooltip.Root>"
     },
     {
-      "example": "basic",
+      "example": "tooltip",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 51,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
-      "example": "basic",
+      "example": "tooltip",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 52,
       "line": "<Tooltip.List>"
     },
     {
-      "example": "basic",
+      "example": "tooltip",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 53,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
-      "example": "basic",
+      "example": "tooltip",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 54,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 132,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 137,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 138,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 139,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 140,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 129,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 133,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 134,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 135,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 136,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
+      "lineNumber": 103,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "us-state-with-counties",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-counties",
+      "lineNumber": 80,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 85,
+      "line": "<Tooltip.Root>"
     },
     {
       "example": "icons",
@@ -3075,13 +3264,6 @@
       "path": "/example/GeoPoint/world-airports",
       "lineNumber": 80,
       "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "basic-geo-projection",
-      "component": "GeoProjection",
-      "path": "/example/GeoProjection/basic-geo-projection",
-      "lineNumber": 99,
-      "line": "<Tooltip.Root>"
     },
     {
       "example": "basic",
@@ -4309,69 +4491,6 @@
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
     },
     {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 113,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 116,
-      "line": "<Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 118,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 119,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 125,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 131,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "state-with-counties",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-counties",
-      "lineNumber": 80,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "state-with-surrounding-states-via-chart-clip-path",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
-      "lineNumber": 85,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "basic",
-      "component": "SubmarineCablesGlobe",
-      "path": "/example/SubmarineCablesGlobe/basic",
-      "lineNumber": 120,
-      "line": "<Tooltip.Root>"
-    },
-    {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
       "path": "/example/Threshold/with-tooltip-and-highlight",
@@ -4419,48 +4538,6 @@
       "path": "/example/Threshold/with-tooltip-and-highlight",
       "lineNumber": 57,
       "line": "<Tooltip.Item label=\"variance\" value={data.value - data.baseline} />"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 158,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 161,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 162,
-      "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 163,
-      "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 164,
-      "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 165,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "anchor-location",
@@ -5639,13 +5716,6 @@
       "line": "<Tooltip.Item label={key} value={data.data[key]} />"
     },
     {
-      "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
-      "lineNumber": 103,
-      "line": "<Tooltip.Root>"
-    },
-    {
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
@@ -5728,77 +5798,7 @@
       "path": "/example/Treemap/playground",
       "lineNumber": 234,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 131,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 136,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 137,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 138,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 139,
-      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 129,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 133,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 134,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 135,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 136,
-      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2025-11-03T14:25:01.283Z"
+  "updatedAt": "2025-11-03T15:45:47.811Z"
 }

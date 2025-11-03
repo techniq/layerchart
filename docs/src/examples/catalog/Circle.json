@@ -51,13 +51,6 @@
       "line": "<Circle"
     },
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 96,
-      "line": "<Circle"
-    },
-    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/example/Circle/styling-using-attributes",
@@ -209,6 +202,13 @@
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/tree",
       "lineNumber": 51,
+      "line": "<Circle"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 96,
       "line": "<Circle"
     },
     {
@@ -534,5 +534,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.578Z"
+  "updatedAt": "2025-11-03T14:46:58.481Z"
 }

@@ -222,13 +222,6 @@
       "line": "<Text"
     },
     {
-      "example": "country-map",
-      "component": "CountryMap",
-      "path": "/example/CountryMap/country-map",
-      "lineNumber": 38,
-      "line": "<!-- <Text"
-    },
-    {
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
@@ -269,6 +262,13 @@
       "path": "/example/Dagre/tcp-state-diagram",
       "lineNumber": 97,
       "line": "<Text"
+    },
+    {
+      "example": "us-country-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-country-map",
+      "lineNumber": 38,
+      "line": "<!-- <Text"
     },
     {
       "example": "icons",
@@ -600,5 +600,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.592Z"
+  "updatedAt": "2025-11-03T14:33:37.567Z"
 }

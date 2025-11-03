@@ -3,24 +3,10 @@
   "examples": [],
   "usage": [
     {
-      "example": "basic",
-      "component": "AnimatedGlobe",
-      "path": "/example/AnimatedGlobe/basic",
-      "lineNumber": 170,
-      "line": "<Graticule class=\"stroke-surface-content/20\" />"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
       "lineNumber": 89,
-      "line": "<Graticule class=\"stroke-surface-content/20\" />"
-    },
-    {
-      "example": "basic",
-      "component": "EclipsesGlobe",
-      "path": "/example/EclipsesGlobe/basic",
-      "lineNumber": 95,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -31,54 +17,68 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
-      "example": "basic-geo-projection",
-      "component": "GeoProjection",
-      "path": "/example/GeoProjection/basic-geo-projection",
+      "example": "projection-playground",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/projection-playground",
       "lineNumber": 89,
       "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
-      "example": "draggable-globe-with-edgefade",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
+      "example": "animated-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/animated-globe",
+      "lineNumber": 170,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "eclipses-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/eclipses-globe",
+      "lineNumber": 100,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "sketchy-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/sketchy-globe",
+      "lineNumber": 79,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/submarine-cables-globe",
+      "lineNumber": 87,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
+      "lineNumber": 86,
+      "line": "<Graticule class=\"stroke-surface-content/5\" />"
+    },
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
+      "lineNumber": 93,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/draggable-globe",
       "lineNumber": 28,
       "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
       "example": "world-map",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/world-map",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/world-map",
       "lineNumber": 39,
-      "line": "<Graticule class=\"stroke-surface-content/20\" />"
-    },
-    {
-      "example": "basic",
-      "component": "SketchyGlobe",
-      "path": "/example/SketchyGlobe/basic",
-      "lineNumber": 79,
-      "line": "<Graticule class=\"stroke-surface-content/20\" />"
-    },
-    {
-      "example": "basic",
-      "component": "SubmarineCablesGlobe",
-      "path": "/example/SubmarineCablesGlobe/basic",
-      "lineNumber": 87,
-      "line": "<Graticule class=\"stroke-surface-content/20\" />"
-    },
-    {
-      "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
-      "lineNumber": 86,
-      "line": "<Graticule class=\"stroke-surface-content/5\" />"
-    },
-    {
-      "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
-      "lineNumber": 93,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.026Z"
+  "updatedAt": "2025-11-03T15:45:46.891Z"
 }

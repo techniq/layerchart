@@ -3,13 +3,6 @@
   "examples": [],
   "usage": [
     {
-      "example": "basic",
-      "component": "AnimatedGlobe",
-      "path": "/example/AnimatedGlobe/basic",
-      "lineNumber": 148,
-      "line": "<Chart"
-    },
-    {
       "example": "color-wheel",
       "component": "Arc",
       "path": "/example/Arc/color-wheel",
@@ -885,13 +878,6 @@
       "line": "<Chart"
     },
     {
-      "example": "bubble-map-population",
-      "component": "BubbleMap",
-      "path": "/example/BubbleMap/bubble-map-population",
-      "lineNumber": 72,
-      "line": "<Chart"
-    },
-    {
       "example": "90-days",
       "component": "Calendar",
       "path": "/example/Calendar/90-days",
@@ -938,13 +924,6 @@
       "component": "Calendar",
       "path": "/example/Calendar/rounded-cells",
       "lineNumber": 24,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
-      "component": "Choropleth",
-      "path": "/example/Choropleth/basic",
-      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -1249,13 +1228,6 @@
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
-      "example": "country-map",
-      "component": "CountryMap",
-      "path": "/example/CountryMap/country-map",
-      "lineNumber": 15,
-      "line": "<Chart"
-    },
-    {
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
@@ -1281,20 +1253,6 @@
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
       "lineNumber": 45,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
-      "lineNumber": 68,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
-      "component": "EclipsesGlobe",
-      "path": "/example/EclipsesGlobe/basic",
-      "lineNumber": 79,
       "line": "<Chart"
     },
     {
@@ -1410,6 +1368,13 @@
       "line": "<Chart"
     },
     {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 68,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
@@ -1417,10 +1382,122 @@
       "line": "<Chart"
     },
     {
-      "example": "basic",
+      "example": "projection-playground",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/projection-playground",
+      "lineNumber": 75,
+      "line": "<Chart"
+    },
+    {
+      "example": "animated-globe",
       "component": "GeoPath",
-      "path": "/example/GeoPath/basic",
+      "path": "/example/GeoPath/animated-globe",
+      "lineNumber": 148,
+      "line": "<Chart"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 72,
+      "line": "<Chart"
+    },
+    {
+      "example": "choropleth",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/choropleth",
+      "lineNumber": 58,
+      "line": "<Chart"
+    },
+    {
+      "example": "eclipses-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/eclipses-globe",
+      "lineNumber": 84,
+      "line": "<Chart"
+    },
+    {
+      "example": "sketchy-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/sketchy-globe",
+      "lineNumber": 67,
+      "line": "<Chart"
+    },
+    {
+      "example": "spike-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/spike-map",
+      "lineNumber": 58,
+      "line": "<Chart"
+    },
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/submarine-cables-globe",
+      "lineNumber": 74,
+      "line": "<Chart"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 111,
+      "line": "<Chart"
+    },
+    {
+      "example": "tooltip",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/tooltip",
       "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-canvas",
+      "lineNumber": 59,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/transform-projection",
+      "lineNumber": 59,
+      "line": "<Chart"
+    },
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/translucent-globe",
+      "lineNumber": 64,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-country-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-country-map",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-state",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state",
+      "lineNumber": 54,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-state-with-counties",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-counties",
+      "lineNumber": 58,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 55,
       "line": "<Chart"
     },
     {
@@ -1459,10 +1536,17 @@
       "line": "<Chart"
     },
     {
-      "example": "basic-geo-projection",
-      "component": "GeoProjection",
-      "path": "/example/GeoProjection/basic-geo-projection",
-      "lineNumber": 75,
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/draggable-globe",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "world-map",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/world-map",
+      "lineNumber": 29,
       "line": "<Chart"
     },
     {
@@ -1758,20 +1842,6 @@
       "path": "/example/LinearGradient/units",
       "lineNumber": 5,
       "line": "<Chart height={300}>"
-    },
-    {
-      "example": "draggable-globe-with-edgefade",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/draggable-globe-with-edgefade",
-      "lineNumber": 17,
-      "line": "<Chart"
-    },
-    {
-      "example": "world-map",
-      "component": "LoftedArcs",
-      "path": "/example/LoftedArcs/world-map",
-      "lineNumber": 29,
-      "line": "<Chart"
     },
     {
       "example": "line",
@@ -2593,20 +2663,6 @@
       "line": "<Chart"
     },
     {
-      "example": "basic",
-      "component": "SketchyGlobe",
-      "path": "/example/SketchyGlobe/basic",
-      "lineNumber": 67,
-      "line": "<Chart"
-    },
-    {
-      "example": "spike-map-population",
-      "component": "SpikeMap",
-      "path": "/example/SpikeMap/spike-map-population",
-      "lineNumber": 58,
-      "line": "<Chart"
-    },
-    {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
@@ -2663,34 +2719,6 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 36, bottom: 24 }} height={300}>"
     },
     {
-      "example": "state-only",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-only",
-      "lineNumber": 54,
-      "line": "<Chart"
-    },
-    {
-      "example": "state-with-counties",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-counties",
-      "lineNumber": 58,
-      "line": "<Chart"
-    },
-    {
-      "example": "state-with-surrounding-states-via-chart-clip-path",
-      "component": "StateMap",
-      "path": "/example/StateMap/state-with-surrounding-states-via-chart-clip-path",
-      "lineNumber": 55,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
-      "component": "SubmarineCablesGlobe",
-      "path": "/example/SubmarineCablesGlobe/basic",
-      "lineNumber": 74,
-      "line": "<Chart"
-    },
-    {
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
@@ -2703,13 +2731,6 @@
       "path": "/example/Text/word-wrap-with-explicit-n",
       "lineNumber": 8,
       "line": "<Chart height={100}>"
-    },
-    {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
-      "lineNumber": 111,
-      "line": "<Chart"
     },
     {
       "example": "anchor-location",
@@ -3028,13 +3049,6 @@
     },
     {
       "example": "basic",
-      "component": "TranslucentGlobe",
-      "path": "/example/TranslucentGlobe/basic",
-      "lineNumber": 64,
-      "line": "<Chart"
-    },
-    {
-      "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
       "lineNumber": 50,
@@ -3095,21 +3109,7 @@
       "path": "/example/Voronoi/example",
       "lineNumber": 21,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
-    },
-    {
-      "example": "canvas-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/canvas-transform",
-      "lineNumber": 59,
-      "line": "<Chart"
-    },
-    {
-      "example": "projection-transform",
-      "component": "ZoomableMap",
-      "path": "/example/ZoomableMap/projection-transform",
-      "lineNumber": 59,
-      "line": "<Chart"
     }
   ],
-  "updatedAt": "2025-11-03T14:24:59.813Z"
+  "updatedAt": "2025-11-03T15:45:46.355Z"
 }

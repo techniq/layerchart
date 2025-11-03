@@ -2,15 +2,19 @@
   "component": "GeoCircle",
   "examples": [
     {
+      "name": "earthquake-globe",
+      "path": "/example/GeoCircle/earthquake-globe"
+    },
+    {
       "name": "playground",
       "path": "/example/GeoCircle/playground"
     }
   ],
   "usage": [
     {
-      "example": "basic",
-      "component": "EarthquakeGlobe",
-      "path": "/example/EarthquakeGlobe/basic",
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
       "lineNumber": 95,
       "line": "<GeoCircle"
     },
@@ -29,12 +33,12 @@
       "line": "<GeoCircle"
     },
     {
-      "example": "basic-timezones",
-      "component": "Timezones",
-      "path": "/example/Timezones/basic-timezones",
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
       "lineNumber": 149,
       "line": "<GeoCircle"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.829Z"
+  "updatedAt": "2025-11-03T14:56:29.117Z"
 }
