@@ -6,11 +6,12 @@
  *
  * @description
  * Scans all .svelte files in packages/layerchart/src/lib/components and extracts:
- * - Component prop types (*PropsWithoutHTML pattern)
+ * - Component prop types (*PropsWithoutHTML or *Props patterns, exported or not)
  * - JSDoc descriptions for each property
  * - Default values from @default tags
  * - Optional/required status
  * - Additional JSDoc tags (@bindable, etc.)
+ * - Nested object properties
  *
  * @output
  * Generates individual JSON files in generated/api/ for each component, plus an index.json file
@@ -44,7 +45,7 @@ import fs from 'fs';
 import path from 'path';
 import ts from 'typescript';
 import { fileURLToPath } from 'url';
-import type { PropertyInfo, ComponentAPI } from '../src/lib/api-types.js';
+import type { PropertyInfo, ComponentAPI, ExtendedType } from '../src/lib/api-types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -209,6 +210,123 @@ function extractPropertiesFromType(
 }
 
 /**
+ * Extract element type from generic types like SVGAttributes<SVGRectElement>
+ */
+function extractElementType(typeString: string): string | undefined {
+	const match = typeString.match(/(?:SVG|HTML)Attributes<(\w+)>/);
+	return match?.[1];
+}
+
+/**
+ * Parse extended types from an intersection type
+ */
+function parseExtendedTypes(
+	typeNode: ts.TypeNode,
+	sourceFile: ts.SourceFile
+): ExtendedType[] {
+	const extendedTypes: ExtendedType[] = [];
+
+	if (!ts.isIntersectionTypeNode(typeNode)) {
+		return extendedTypes;
+	}
+
+	for (const type of typeNode.types) {
+		const typeText = type.getText(sourceFile);
+
+		// Skip the base PropsWithoutHTML type (but not Without<> that contains PropsWithoutHTML)
+		if (!typeText.startsWith('Without<') && typeText.includes('PropsWithoutHTML')) {
+			continue;
+		}
+
+		// Check if this is a Without<> wrapper (used to exclude props)
+		// Extract the element type from inside Without<SVGAttributes<Element>, ...>
+		const elementTypeFromWithout = extractElementType(typeText);
+
+		if (typeText.startsWith('Without<') && elementTypeFromWithout) {
+			extendedTypes.push({
+				name: elementTypeFromWithout.replace(/Element$/, 'Attributes'),
+				fullType: typeText,
+				elementType: elementTypeFromWithout,
+				isLibraryType: true,
+			});
+			continue;
+		}
+
+		// Check if this is an SVG/HTML Attributes type
+		const elementType = extractElementType(typeText);
+		if (elementType) {
+			extendedTypes.push({
+				name: elementType.replace(/Element$/, 'Attributes'),
+				fullType: typeText,
+				elementType,
+				isLibraryType: true,
+			});
+			continue;
+		}
+
+		// Check if this is a reference to another type (like CommonEvents)
+		if (ts.isTypeReferenceNode(type)) {
+			const typeName = type.typeName.getText(sourceFile);
+			extendedTypes.push({
+				name: typeName,
+				fullType: typeText,
+				isLibraryType: false, // We should extract these types
+			});
+		}
+	}
+
+	return extendedTypes;
+}
+
+/**
+ * Find the main Props type for a component
+ * Looks for patterns like: ComponentPropsWithoutHTML, ComponentProps
+ */
+function findPropsTypeName(componentName: string, moduleScript: string): string | null {
+	// Try different patterns in order of preference
+	const patterns = [
+		// First try exported types with exact component name match
+		{ pattern: `${componentName}PropsWithoutHTML`, requireExport: true },
+		{ pattern: `${componentName}Props`, requireExport: true },
+		// Then try non-exported types with exact component name match
+		{ pattern: `${componentName}PropsWithoutHTML`, requireExport: false },
+		{ pattern: `${componentName}Props`, requireExport: false },
+		// Finally, try any exported Props type
+		{ regex: new RegExp(`export type (\\w*PropsWithoutHTML)`, 'g') },
+		{ regex: new RegExp(`export type (\\w*Props)(?!WithoutHTML)`, 'g') },
+		// Last resort: any Props type (exported or not)
+		{ regex: new RegExp(`type (\\w*PropsWithoutHTML)`, 'g') },
+		{ regex: new RegExp(`type (\\w*Props)(?!WithoutHTML)`, 'g') },
+	];
+
+	for (const config of patterns) {
+		if ('regex' in config && config.regex) {
+			// For regex patterns, find all matches
+			const matches = [...moduleScript.matchAll(config.regex)];
+			if (matches.length > 0) {
+				// Prefer types ending with "WithoutHTML"
+				const withoutHTMLMatch = matches.find((m) => m[1].endsWith('WithoutHTML'));
+				if (withoutHTMLMatch) {
+					return withoutHTMLMatch[1];
+				}
+				// Otherwise return the first match
+				return matches[0][1];
+			}
+		} else if ('pattern' in config && config.pattern) {
+			// String pattern
+			const searchStr = config.requireExport
+				? `export type ${config.pattern}`
+				: `type ${config.pattern}`;
+			if (moduleScript.includes(searchStr)) {
+				return config.pattern;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
  * Extract component API from a Svelte file
  */
 export function extractComponentAPI(filePath: string): ComponentAPI | null {
@@ -224,12 +342,11 @@ export function extractComponentAPI(filePath: string): ComponentAPI | null {
 
 	const moduleScript = moduleScriptMatch[1];
 
-	// Look for the main Props type (e.g., RectPropsWithoutHTML, CirclePropsWithoutHTML)
+	// Look for the main Props type
 	const componentName = path.basename(filePath, '.svelte');
-	const propsTypeName = `${componentName}PropsWithoutHTML`;
+	const propsTypeName = findPropsTypeName(componentName, moduleScript);
 
-	// Check if this type exists in the file
-	if (!moduleScript.includes(`export type ${propsTypeName}`)) {
+	if (!propsTypeName) {
 		return null;
 	}
 
@@ -240,19 +357,42 @@ export function extractComponentAPI(filePath: string): ComponentAPI | null {
 	// Write the module script to a temp file with necessary imports resolved
 	// We keep the original imports but add stub types for common ones that might not resolve
 	const tempContent = `
-import type { SVGAttributes } from 'svelte/elements';
+import type { SVGAttributes, HTMLAttributes, MouseEventHandler, PointerEventHandler } from 'svelte/elements';
 import type { Snippet, Component } from 'svelte';
 
 // Stub types that might not resolve (only if not already defined)
 type CommonStyleProps = {
+  /** Fill color */
   fill?: string;
+  /** Fill opacity (0-1) */
   fillOpacity?: number;
+  /** Stroke color */
   stroke?: string;
+  /** Stroke width in pixels */
   strokeWidth?: number;
+  /** Stroke opacity (0-1) */
   strokeOpacity?: number;
+  /** Overall opacity (0-1) */
   opacity?: number;
 };
-type CommonEvents = Record<string, any>;
+
+type CommonEvents = {
+  /** Click event handler */
+  onclick?: MouseEventHandler<Element> | null;
+  /** Double click event handler */
+  ondblclick?: MouseEventHandler<Element> | null;
+  /** Pointer enter event handler */
+  onpointerenter?: PointerEventHandler<Element> | null;
+  /** Pointer move event handler */
+  onpointermove?: PointerEventHandler<Element> | null;
+  /** Pointer leave event handler */
+  onpointerleave?: PointerEventHandler<Element> | null;
+  /** Pointer over event handler */
+  onpointerover?: PointerEventHandler<Element> | null;
+  /** Pointer out event handler */
+  onpointerout?: PointerEventHandler<Element> | null;
+};
+
 type Without<T, U> = Omit<T, keyof U>;
 type MotionProp<T = any> = any;
 type SingleDomainType = any;
@@ -277,24 +417,72 @@ ${moduleScript}
 
 		const checker = program.getTypeChecker();
 		let properties: PropertyInfo[] = [];
+		const extendedTypes: ExtendedType[] = [];
 
-		// Find the PropsWithoutHTML type
+		// Find the PropsWithoutHTML type for properties
 		ts.forEachChild(sourceFile, (node) => {
 			if (ts.isTypeAliasDeclaration(node) && node.name.text === propsTypeName) {
 				properties = extractPropertiesFromType(node.type, checker, sourceFile);
 			}
 		});
 
+		// Also look for the full Props type to extract extended types
+		// Try both removing "WithoutHTML" and looking for types that end with "Props"
+		const possibleFullPropsNames = [
+			propsTypeName.replace('WithoutHTML', ''),
+			`${componentName}Props`,
+		];
+
+		for (const fullPropsTypeName of possibleFullPropsNames) {
+			ts.forEachChild(sourceFile, (node) => {
+				if (ts.isTypeAliasDeclaration(node) && node.name.text === fullPropsTypeName) {
+					const newExtendedTypes = parseExtendedTypes(node.type, sourceFile);
+
+					// Merge with existing, avoiding duplicates
+					for (const extType of newExtendedTypes) {
+						if (!extendedTypes.some(et => et.name === extType.name)) {
+							extendedTypes.push(extType);
+						}
+					}
+
+					// Extract properties from non-library extended types (like CommonEvents)
+					for (const extType of extendedTypes) {
+						if (!extType.isLibraryType) {
+							// Find this type definition and extract its properties
+							ts.forEachChild(sourceFile, (typeNode) => {
+								if (ts.isTypeAliasDeclaration(typeNode) && typeNode.name.text === extType.name) {
+									const extProperties = extractPropertiesFromType(typeNode.type, checker, sourceFile);
+									// Add these properties to the main list, avoiding duplicates
+									for (const prop of extProperties) {
+										if (!properties.some(p => p.name === prop.name)) {
+											properties.push(prop);
+										}
+									}
+								}
+							});
+						}
+					}
+				}
+			});
+		}
+
 		if (properties.length === 0) {
 			return null;
 		}
 
-		return {
+		const result: ComponentAPI = {
 			generatedAt: new Date().toISOString(),
 			component: componentName,
 			propsType: propsTypeName,
 			properties
 		};
+
+		// Only add extends if there are extended types
+		if (extendedTypes.length > 0) {
+			result.extends = extendedTypes;
+		}
+
+		return result;
 	} finally {
 		// Clean up temp file
 		if (fs.existsSync(tempPath)) {
@@ -340,7 +528,7 @@ function main() {
 			apis.push(api);
 			console.log(`  ✓ Extracted ${api.properties.length} properties`);
 		} else {
-			console.log(`  ⚠ No PropsWithoutHTML type found`);
+			console.log(`  ⚠ No Props type found`);
 		}
 	}
 
