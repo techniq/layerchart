@@ -128,7 +128,7 @@
 <div class="grid gap-10">
 	{#each visibleExamples as { component, examples } (component)}
 		<div>
-			<H2 id={component}>{component}</H2>
+			<H2 id={component} class="sticky top-16 bg-surface-200 -mx-4 px-4 py-2">{component}</H2>
 			<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 				{#each examples as example (example.name)}
 					<ExampleLink {component} example={example.name} />
