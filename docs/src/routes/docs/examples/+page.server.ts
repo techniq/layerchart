@@ -6,18 +6,11 @@ interface ExampleInfo {
 	examples: Array<{
 		name: string;
 		path: string;
-		hasLightScreenshot: boolean;
-		hasDarkScreenshot: boolean;
 	}>;
 }
 
 export async function load() {
-	// Import all example files using Vite's import.meta.glob
 	const exampleModules = import.meta.glob('/src/examples/**/*.svelte');
-	const screenshotModules = import.meta.glob('/static/screenshots/**/*.png', {
-		query: '?url',
-		import: 'default'
-	});
 
 	// Create a map of component names to their sections
 	const componentSectionMap = new Map<string, string>();
@@ -33,8 +26,6 @@ export async function load() {
 		Array<{
 			name: string;
 			path: string;
-			hasLightScreenshot: boolean;
-			hasDarkScreenshot: boolean;
 		}>
 	>();
 
@@ -49,16 +40,9 @@ export async function load() {
 			componentMap.set(componentName, []);
 		}
 
-		const hasLightScreenshot =
-			`/static/screenshots/${componentName}/${exampleName}-light.png` in screenshotModules;
-		const hasDarkScreenshot =
-			`/static/screenshots/${componentName}/${exampleName}-dark.png` in screenshotModules;
-
 		componentMap.get(componentName)!.push({
 			name: exampleName,
-			path: `/example/${componentName}/${exampleName}`,
-			hasLightScreenshot,
-			hasDarkScreenshot
+			path: `/example/${componentName}/${exampleName}`
 		});
 	}
 
