@@ -107,6 +107,20 @@
       "line": "<Polygon"
     },
     {
+      "example": "repeat-indefinitely",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/repeat-indefinitely",
+      "lineNumber": 46,
+      "line": "<Polygon"
+    },
+    {
+      "example": "rotate-object-with-path",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/rotate-object-with-path",
+      "lineNumber": 46,
+      "line": "<Polygon"
+    },
+    {
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
@@ -345,5 +359,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.453Z"
+  "updatedAt": "2025-11-04T22:00:27.791Z"
 }
