@@ -7,30 +7,35 @@
  * @description
  * Scans all .svelte files in docs/src/examples and generates screenshots by:
  * - Cleaning up orphaned screenshots from renamed/moved/deleted examples
+ * - Using MD5 checksums to detect file changes and regenerate screenshots when needed
  * - Navigating to /example/[componentName]/[exampleName]
  * - Capturing screenshots in both light and dark mode
  * - Saving to docs/static/screenshots/[componentName]/[exampleName]-{light|dark}.png
- * - Skipping screenshots that already exist
+ * - Skipping screenshots that already exist and haven't changed
+ * - Storing checksums inline with each example in index.json for change detection
  *
  * @usage
  * pnpm extract:screenshots
  *
  * @example
- * // Generates screenshots like:
+ * // Generates screenshots and index like:
  * // docs/static/screenshots/Area/basic-light.png
  * // docs/static/screenshots/Area/basic-dark.png
+ * // docs/static/screenshots/index.json (with inline checksums per example)
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { chromium } from 'playwright';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples');
 const SCREENSHOTS_DIR = path.resolve(__dirname, '../static/screenshots');
+const INDEX_FILE = path.resolve(__dirname, '../static/screenshots/index.json');
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3002';
 
 // Viewport size for screenshots
@@ -46,6 +51,65 @@ interface ExampleInfo {
 	component: string;
 	example: string;
 	filePath: string;
+}
+
+interface ChecksumMap {
+	[key: string]: string; // key: "component/example", value: checksum
+}
+
+/**
+ * Calculate MD5 checksum of a file
+ */
+function calculateChecksum(filePath: string): string {
+	const content = fs.readFileSync(filePath, 'utf-8');
+	return crypto.createHash('md5').update(content).digest('hex');
+}
+
+/**
+ * Load checksums from index.json file (inline in examples)
+ */
+function loadChecksums(): ChecksumMap {
+	if (fs.existsSync(INDEX_FILE)) {
+		try {
+			const content = fs.readFileSync(INDEX_FILE, 'utf-8');
+			const indexData = JSON.parse(content);
+			const checksums: ChecksumMap = {};
+
+			// Extract checksums from inline example entries
+			if (indexData.components) {
+				for (const componentGroup of indexData.components) {
+					for (const example of componentGroup.examples || []) {
+						if (example.checksum) {
+							const key = `${componentGroup.component}/${example.name}`;
+							checksums[key] = example.checksum;
+						}
+					}
+				}
+			}
+
+			return checksums;
+		} catch (error) {
+			console.warn('Failed to load checksums from index.json, starting fresh');
+			return {};
+		}
+	}
+	return {};
+}
+
+/**
+ * Check if example file has changed since last screenshot
+ */
+function hasExampleChanged(
+	component: string,
+	example: string,
+	filePath: string,
+	checksums: ChecksumMap
+): boolean {
+	const key = `${component}/${example}`;
+	const currentChecksum = calculateChecksum(filePath);
+	const previousChecksum = checksums[key];
+
+	return !previousChecksum || previousChecksum !== currentChecksum;
 }
 
 /**
@@ -248,6 +312,10 @@ async function main() {
 	// Clean up orphaned screenshots before processing
 	cleanupOrphanedScreenshots(examples);
 
+	// Load existing checksums
+	const checksums = loadChecksums();
+	const updatedChecksums: ChecksumMap = {};
+
 	// Limit for testing
 	if (TEST_LIMIT !== undefined) {
 		examples = examples.slice(0, TEST_LIMIT);
@@ -273,22 +341,33 @@ async function main() {
 
 	// Process each example
 	for (const example of examples) {
-		const { component, example: exampleName } = example;
+		const { component, example: exampleName, filePath } = example;
 		console.log(`\n${component}/${exampleName}`);
+
+		// Check if example file has changed
+		const fileChanged = hasExampleChanged(component, exampleName, filePath, checksums);
 
 		// Check if screenshots already exist
 		const lightExists = screenshotExists(component, exampleName, 'light');
 		const darkExists = screenshotExists(component, exampleName, 'dark');
 
-		if (lightExists && darkExists) {
-			console.log('  ⊘ Skipped (already exists)');
+		// Skip if both screenshots exist and file hasn't changed
+		if (lightExists && darkExists && !fileChanged) {
+			console.log('  ⊘ Skipped (unchanged)');
 			skippedCount += 2;
+			// Keep existing checksum
+			updatedChecksums[`${component}/${exampleName}`] = checksums[`${component}/${exampleName}`];
 			continue;
 		}
 
+		// Show reason for regeneration
+		if (fileChanged && (lightExists || darkExists)) {
+			console.log('  ↻ File changed, regenerating...');
+		}
+
 		try {
-			// Capture light mode if it doesn't exist
-			if (!lightExists) {
+			// Capture light mode if it doesn't exist or file changed
+			if (!lightExists || fileChanged) {
 				await captureScreenshot(page, component, exampleName, 'light');
 				processedCount++;
 			} else {
@@ -296,17 +375,24 @@ async function main() {
 				skippedCount++;
 			}
 
-			// Capture dark mode if it doesn't exist
-			if (!darkExists) {
+			// Capture dark mode if it doesn't exist or file changed
+			if (!darkExists || fileChanged) {
 				await captureScreenshot(page, component, exampleName, 'dark');
 				processedCount++;
 			} else {
 				console.log('  ⊘ dark: already exists');
 				skippedCount++;
 			}
+
+			// Update checksum after successful capture
+			updatedChecksums[`${component}/${exampleName}`] = calculateChecksum(filePath);
 		} catch (error) {
 			console.error(`  ✗ Error:`, error instanceof Error ? error.message : error);
 			errorCount++;
+			// Keep old checksum on error to retry next time
+			if (checksums[`${component}/${exampleName}`]) {
+				updatedChecksums[`${component}/${exampleName}`] = checksums[`${component}/${exampleName}`];
+			}
 		}
 	}
 
@@ -315,15 +401,20 @@ async function main() {
 
 	// Generate index.json with all examples grouped by component
 	console.log('\nGenerating index.json...');
-	const examplesByComponent = new Map<string, Array<{ name: string; path: string }>>();
+	const examplesByComponent = new Map<
+		string,
+		Array<{ name: string; path: string; checksum: string }>
+	>();
 
 	for (const example of examples) {
 		if (!examplesByComponent.has(example.component)) {
 			examplesByComponent.set(example.component, []);
 		}
+		const checksumKey = `${example.component}/${example.example}`;
 		examplesByComponent.get(example.component)!.push({
 			name: example.example,
-			path: `/example/${example.component}/${example.example}`
+			path: `/example/${example.component}/${example.example}`,
+			checksum: updatedChecksums[checksumKey] || ''
 		});
 	}
 
@@ -344,7 +435,7 @@ async function main() {
 
 	const indexPath = path.join(SCREENSHOTS_DIR, 'index.json');
 	fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
-	console.log(`✅ Generated ${indexPath}`);
+	console.log(`✅ Generated ${indexPath} with inline checksums`);
 
 	// Print summary
 	console.log('\n================================');
