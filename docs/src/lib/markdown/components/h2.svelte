@@ -8,6 +8,6 @@
 
 <HBase
 	tag="h2"
-	class={cls('text-2xl font-semibold tracking-[-0.01em] mt-12 first:mt-0', className)}
+	class={cls('text-2xl font-semibold tracking-[-0.01em] mt-12 mb-1 first:mt-0', className)}
 	{...restProps}
 />

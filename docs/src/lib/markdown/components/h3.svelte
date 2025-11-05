@@ -8,6 +8,6 @@
 
 <HBase
 	tag="h3"
-	class={cls('text-xl font-medium tracking-[-0.01em] mt-8', className)}
+	class={cls('text-xl font-medium tracking-[-0.01em] mt-8 mb-1', className)}
 	{...restProps}
 />

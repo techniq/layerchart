@@ -6,4 +6,4 @@
 	let { class: className, ...restProps }: HTMLAttributes<HTMLHeadingElement> = $props();
 </script>
 
-<HBase tag="h1" class={cls('text-3xl font-semibold mt-2', className)} {...restProps} />
+<HBase tag="h1" class={cls('text-3xl font-semibold mt-2 mb-1', className)} {...restProps} />

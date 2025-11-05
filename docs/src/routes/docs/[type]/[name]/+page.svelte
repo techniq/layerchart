@@ -1,20 +1,35 @@
 <script lang="ts">
-	import { Button, Table, ToggleButton } from 'svelte-ux';
+	import { Table, TextField, ToggleButton } from 'svelte-ux';
 
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 	import { slide } from 'svelte/transition';
 
+	import LucideSearch from '~icons/lucide/search';
+
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
 
-	const examples = $derived(catalog?.examples ?? []);
+	let filterQuery = $state<string | null>(null);
+
+	const examples = $derived.by(() => {
+		const exampleList = catalog?.examples ?? [];
+
+		if (!filterQuery) {
+			return exampleList;
+		}
+
+		const query = filterQuery.toLowerCase().trim();
+		return exampleList.filter((example) => example.name.toLowerCase().includes(query));
+	});
 
 	const uniqueUsage = $derived.by(() => {
 		if (!catalog) return [];
 
 		const seen = new Set();
+		const query = filterQuery?.toLowerCase().trim();
+
 		// Filter out if additional usage in same example or already shown in examples
 		return catalog.usage.filter((item) => {
 			const key = `${item.component}::${item.example}`;
@@ -30,11 +45,17 @@
 			if (seen.has(key)) return false;
 			seen.add(key);
 
+			// Filter by query if provided
+			if (query) {
+				return (
+					item.example.toLowerCase().includes(query) ||
+					item.component.toLowerCase().includes(query)
+				);
+			}
+
 			return true;
 		});
 	});
-
-	$inspect({ data });
 </script>
 
 <!-- Markdown page -->
@@ -52,7 +73,16 @@
 {/if} -->
 
 {#if catalog && (examples.length || uniqueUsage.length)}
-	<H2>Examples</H2>
+	<div class="grid grid-cols-[1fr_auto] items-center gap-2 mt-12">
+		<H2>Examples</H2>
+		<div>
+			<TextField placeholder="Filter" bind:value={filterQuery} dense class="mb-2">
+				{#snippet prepend()}
+					<LucideSearch class="text-surface-content/50 mr-4" />
+				{/snippet}
+			</TextField>
+		</div>
+	</div>
 	<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 		{#each examples as example}
 			<ExampleLink component={catalog.component} example={example.name} />
