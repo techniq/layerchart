@@ -1,7 +1,7 @@
 ---
 description: Fill component providing a linear gradient fill pattern for chart elements.
 section: fill
-layers: ['svg', 'canvas', 'html']
+layers: [svg, canvas, html]
 related: ['components/RadialGradient', 'components/Pattern']
 ---
 

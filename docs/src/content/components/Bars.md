@@ -1,8 +1,8 @@
 ---
 description: Marking component which applies horizontal bars to represent and visually compare discrete data values.
 section: marks
-layers: ['svg', 'canvas']
-related: ['components/Bar']
+layers: [svg, canvas]
+related: [components/Bar, examples/BarChart]
 ---
 
 <script lang="ts">

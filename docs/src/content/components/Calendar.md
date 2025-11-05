@@ -1,7 +1,7 @@
 ---
 description: Marking component which highlights specific dates or time periods on a chart to emphasize events, milestones, or temporal patterns.
 section: marks
-layers: ['svg', 'canvas', 'html']
+layers: [svg, canvas, html]
 related: []
 ---
 

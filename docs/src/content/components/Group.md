@@ -1,7 +1,7 @@
 ---
 description: Primitive component which clusters multiple chart elements together, allowing them to be managed, styled, or transformed as a single unit.
 section: primitives
-layers: ['svg', 'html']
+layers: [svg, html]
 related:
   [
     'examples/Pack',

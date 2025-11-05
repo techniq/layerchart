@@ -1,7 +1,7 @@
 ---
 description: Primitive component which renders a multi-sided shape on a chart to represent complex areas, boundaries, or regions of interest.
 section: primitives
-layers: ['svg', 'canvas']
+layers: [svg, canvas]
 related: []
 ---
 

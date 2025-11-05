@@ -1,7 +1,7 @@
 ---
 description: Clipping component which defines a clipping region to constrain the rendering of chart elements within a specified shape or boundary.
 section: clipping
-layers: ['svg']
+layers: [svg]
 related:
   [
     'components/ChartClipPath',
