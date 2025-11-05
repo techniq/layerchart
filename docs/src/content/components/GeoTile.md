@@ -2,7 +2,7 @@
 description: Geographic component which renders map tiles in a grid supporting efficient zooming and panning for larger scale maps.
 section: geo
 layers: ['svg', 'canvas']
-related: ['examples/GeoTile', 'examples/ZoomableTileMap']
+related: []
 ---
 
 <script lang="ts">

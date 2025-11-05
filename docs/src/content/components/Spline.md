@@ -2,7 +2,7 @@
 description: Marking component which applies data points connected by smooth, curved lines to show trends or patterns over a continuous range.
 section: marks
 layers: ['svg', 'canvas']
-related: ['components/MotionPath', 'examples/Sparkline']
+related: ['components/MotionPath']
 ---
 
 <script lang="ts">

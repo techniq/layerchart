@@ -2,7 +2,7 @@
 description: Streamlined visualization of data as proportional slices of a circle to represent parts of a whole.
 section: charts
 layers: [svg, canvas]
-related: [components/Chart, components/Pie, examples/Arc]
+related: [components/Chart, components/Pie]
 ---
 
 <script lang="ts">

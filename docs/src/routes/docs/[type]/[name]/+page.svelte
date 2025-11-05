@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Table, TextField, ToggleButton } from 'svelte-ux';
+	import { Button, Table, TextField, ToggleButton } from 'svelte-ux';
 
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
@@ -48,8 +48,7 @@
 			// Filter by query if provided
 			if (query) {
 				return (
-					item.example.toLowerCase().includes(query) ||
-					item.component.toLowerCase().includes(query)
+					item.example.toLowerCase().includes(query) || item.component.toLowerCase().includes(query)
 				);
 			}
 
@@ -60,17 +59,6 @@
 
 <!-- Markdown page -->
 <PageComponent />
-
-<!-- {#if metadata.related.length}
-	<H2>Related</H2>
-	<div class="flex flex-wrap gap-2 mt-1">
-		{#each metadata.related as related}
-			<Button variant="fill-light" href="/{related}" size="sm">
-				{related}
-			</Button>
-		{/each}
-	</div>
-{/if} -->
 
 {#if catalog && (examples.length || uniqueUsage.length)}
 	<div class="grid grid-cols-[1fr_auto] items-center gap-2 mt-12">
@@ -169,8 +157,6 @@
 		</tbody>
 	</Table>
 
-	{console.log(api.extends)}
-
 	{#if api.extends?.length}
 		<div class="mt-4">
 			also availalble:
@@ -181,6 +167,17 @@
 					>
 				{/each}
 			</div>
+		</div>
+	{/if}
+
+	{#if metadata.related.length}
+		<H2>Related</H2>
+		<div class="flex flex-wrap gap-2 mt-1">
+			{#each metadata.related as related}
+				<Button variant="fill-light" href="/{related}" size="sm">
+					{related}
+				</Button>
+			{/each}
 		</div>
 	{/if}
 {/if}

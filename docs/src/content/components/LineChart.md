@@ -2,7 +2,7 @@
 description: Streamlined visualization of data points connected by lines to visualize trends or changes over time.
 section: charts
 layers: [svg, canvas]
-related: [components/Chart, components/Spline, examples/Line]
+related: [components/Chart, components/Spline]
 ---
 
 <script lang="ts">
