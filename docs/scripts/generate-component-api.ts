@@ -54,7 +54,7 @@ const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/li
 const OUTPUT_DIR = path.resolve(__dirname, '../src/generated/api');
 
 /**
- * Get all .svelte files in a directory
+ * Get all .svelte files in a directory (recursively)
  */
 export function getSvelteFiles(dir: string): string[] {
 	const files: string[] = [];
@@ -63,8 +63,8 @@ export function getSvelteFiles(dir: string): string[] {
 	for (const entry of entries) {
 		const fullPath = path.join(dir, entry.name);
 		if (entry.isDirectory()) {
-			// Skip subdirectories for now (charts, layers, tooltip)
-			continue;
+			// Recursively scan subdirectories (charts, layers, tooltip)
+			files.push(...getSvelteFiles(fullPath));
 		} else if (entry.isFile() && entry.name.endsWith('.svelte')) {
 			files.push(fullPath);
 		}
