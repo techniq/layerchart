@@ -1,9 +1,10 @@
 <script lang="ts">
+	import type { HTMLAttributes } from 'svelte/elements';
 	import { cls } from '@layerstack/tailwind';
 
 	import LucideInfo from '~icons/lucide/info';
 
-	const { children, class: className, ...restProps } = $props();
+	const { children, class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
 </script>
 
 <div
@@ -15,5 +16,5 @@
 	{...restProps}
 >
 	<LucideInfo class="text-primary" />
-	{@render children()}
+	{@render children?.()}
 </div>
