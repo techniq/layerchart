@@ -4,12 +4,10 @@ section: clipping
 layers: [svg]
 related:
   [
-    'components/ChartClipPath',
-    'components/CircleClipPath',
-    'components/RectClipPath',
-    'components/Threshold',
-    'examples/GeoTile',
-    'examples/Timezones'
+    components/ChartClipPath,
+    components/CircleClipPath,
+    components/RectClipPath,
+    components/Threshold
   ]
 ---
 

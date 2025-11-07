@@ -2,7 +2,7 @@
 description: Marking component which applies horizontal bars to represent and visually compare discrete data values.
 section: marks
 layers: [svg, canvas]
-related: [components/Bar, examples/BarChart]
+related: [components/Bar]
 ---
 
 <script lang="ts">

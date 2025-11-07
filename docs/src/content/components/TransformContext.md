@@ -4,12 +4,12 @@ section: interactions
 layers: [svg, canvas, html]
 related:
   [
-    'components/Chart',
-    'examples/Pack',
-    'examples/Tree',
-    'examples/ZoomableMap',
-    'examples/ZoomableTileMap',
-    'examples/LoftedArcsGlobe'
+    components/Chart,
+    examples/Pack,
+    examples/Tree,
+    examples/ZoomableMap,
+    examples/ZoomableTileMap,
+    examples/LoftedArcsGlobe
   ]
 ---
 
