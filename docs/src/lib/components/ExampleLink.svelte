@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { cls } from '@layerstack/tailwind';
+
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import LucideFileCode from '~icons/lucide/file-code';
@@ -6,15 +8,21 @@
 	let {
 		component,
 		example,
-		showComponent
-	}: { component: string; example: string; showComponent?: boolean } = $props();
+		showComponent,
+		aspect = false
+	}: { component: string; example: string; showComponent?: boolean; aspect?: boolean } = $props();
 </script>
 
 <a
 	href="/docs/components/{component}/{example}"
-	class="group block border border-surface-content/10 bg-surface-100 rounded-xl overflow-hidden hover:border-primary transition-colors elevation-1 hover:bg-primary"
+	class="grid grid-rows-[1fr_auto] group border border-surface-content/10 bg-surface-100 rounded-xl overflow-hidden hover:border-primary transition-colors elevation-1 hover:bg-primary"
 >
-	<div class="aspect-3/2 overflow-hidden rounded-lg outline outline-surface-content/10">
+	<div
+		class={cls(
+			'overflow-hidden rounded-lg outline outline-surface-content/10',
+			aspect && 'aspect-3/2'
+		)}
+	>
 		<img
 			src="/screenshots/{component}/{example}-light.png"
 			alt="{component} - {example}"
