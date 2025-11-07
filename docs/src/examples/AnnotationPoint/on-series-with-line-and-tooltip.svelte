@@ -22,7 +22,7 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300}>
+<LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 15 }}>
 	{#snippet aboveContext({ context })}
 		<Layer>
 			{#each annotations as annotation}

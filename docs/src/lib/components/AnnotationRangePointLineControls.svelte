@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Placement } from 'layerchart';
 	import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
+	import { cls } from '@layerstack/tailwind';
 
 	// <AnnotationRangePointLineControls bind:placement bind:xOffset bind:yOffset bind:radius includeRadius/>
 
@@ -33,7 +34,13 @@
 	] as const;
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
+<div
+	class={cls(
+		'grid gap-2 mb-4',
+		'lc-example-controls',
+		includeRadius ? 'grid-cols-4' : 'grid-cols-3'
+	)}
+>
 	<Toggle let:on={open} let:toggle>
 		<Field label="Placement" class="cursor-pointer" on:click={toggle}>
 			<span class="text-sm">
