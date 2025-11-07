@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	import { Button, Table, TextField, ToggleButton } from 'svelte-ux';
 
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
-	import { slide } from 'svelte/transition';
+	import { page } from '$app/state';
 
 	import LucideSearch from '~icons/lucide/search';
 
@@ -60,42 +61,55 @@
 <!-- Markdown page -->
 <PageComponent />
 
-{#if catalog && (examples.length || uniqueUsage.length)}
+{#if catalog && (catalog.examples?.length || catalog.usage?.length)}
 	<div class="grid grid-cols-[1fr_auto] items-center gap-2 mt-12">
 		<H2>Examples</H2>
-		<div>
-			<TextField placeholder="Filter" bind:value={filterQuery} dense class="mb-2">
+		<div class="flex items-center gap-2 mb-2">
+			{#if catalog.examples?.length}
+				<Button href="/docs/{page.params.type}/{page.params.name}/examples">View all</Button>
+			{/if}
+
+			<TextField placeholder="Filter" bind:value={filterQuery} dense>
 				{#snippet prepend()}
 					<LucideSearch class="text-surface-content/50 mr-4" />
 				{/snippet}
 			</TextField>
 		</div>
 	</div>
-	<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-		{#each examples as example}
-			<ExampleLink component={catalog.component} example={example.name} />
-		{/each}
-	</div>
+
+	{#if examples.length}
+		<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+			{#each examples as example}
+				<ExampleLink component={catalog.component} example={example.name} />
+			{/each}
+		</div>
+	{:else if catalog.examples?.length}
+		<p class="text-surface-content/50 text-sm">No examples match your filter.</p>
+	{/if}
 
 	{#if uniqueUsage.length}
 		{#if examples.length}
 			<ToggleButton transition={slide} let:on={showDetails} class="mt-4" buttonPlacement="after">
 				{showDetails ? 'show less' : 'show more'}...
 				<div slot="toggle" class="mt-2">
-					<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+					<div class="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t pt-4 mt-4">
 						{#each uniqueUsage as usage}
 							<ExampleLink component={usage.component} example={usage.example} showComponent />
 						{/each}
 					</div>
 				</div>
 			</ToggleButton>
-		{:else}
+		{:else if catalog.examples?.length === 0}
 			<!-- No direct examples, show immediately -->
 			<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 				{#each uniqueUsage as usage}
 					<ExampleLink component={usage.component} example={usage.example} showComponent />
 				{/each}
 			</div>
+		{:else if catalog.usage?.length}
+			<p class="text-surface-content/50 text-sm mt-2">
+				No additional usage examples match your filter.
+			</p>
 		{/if}
 	{/if}
 {/if}

@@ -11,7 +11,6 @@
 	import LucideCode from '~icons/lucide/code';
 	import LucideChevronLeft from '~icons/lucide/chevron-left';
 	import LucideChevronRight from '~icons/lucide/chevron-right';
-	import H2 from '$lib/markdown/components/h2.svelte';
 
 	// TODO: `setSettings({...})` or just use default?
 	const settings = getSettings();
@@ -30,7 +29,8 @@
 </script>
 
 <div class="mb-4">
-	{#if page.params.example}
+	<!-- Show back if viewing individual example or all component examples -->
+	{#if page.params.example || page.route.id == '/docs/[type]/[name]/examples'}
 		<Button
 			size="sm"
 			icon={LucideChevronLeft}
