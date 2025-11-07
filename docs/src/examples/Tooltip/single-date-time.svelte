@@ -17,9 +17,10 @@
 		highlight: ['points', 'lines'],
 		axis: 'x',
 		snapToDataX: false,
-		snapToDataY: false,
-		debug: false
+		snapToDataY: false
 	}) as ComponentProps<typeof TooltipControls>['settings'];
+
+	export { data };
 </script>
 
 <TooltipControls bind:settings />
@@ -29,8 +30,7 @@
 	y="name"
 	padding={{ left: 36, bottom: 36 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: settings.mode
 	}}
 	height={300}
 >

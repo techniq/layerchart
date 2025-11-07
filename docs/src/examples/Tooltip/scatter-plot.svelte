@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
-	import { getSpiral } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
 	import type { ComponentProps } from 'svelte';
+
+	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
+	import TooltipControls from '$lib/components/TooltipControls.svelte';
+
+	import { getSpiral } from '$lib/utils/data.js';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 	export { data };
@@ -12,9 +14,10 @@
 		highlight: ['points', 'lines'],
 		axis: 'both',
 		snapToDataX: true,
-		snapToDataY: true,
-		debug: false
+		snapToDataY: true
 	}) as ComponentProps<typeof TooltipControls>['settings'];
+
+	export { data };
 </script>
 
 <TooltipControls bind:settings />
@@ -24,8 +27,7 @@
 	y="y"
 	padding={{ left: 30, bottom: 30 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: settings.mode
 	}}
 	height={300}
 >
