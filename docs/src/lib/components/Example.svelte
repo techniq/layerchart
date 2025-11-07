@@ -134,9 +134,7 @@
 
 				{#if page.params.example == null}
 					<Button
-						href="{page.url.pathname}/{name}{component !== page.params.name
-							? `?component=${component}`
-							: ''}"
+						href="/docs/components/{component}/{name}"
 						icon={LucideFullscreen}
 						class="text-surface-content/70 py-1"
 					>
