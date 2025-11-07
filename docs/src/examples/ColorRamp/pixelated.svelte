@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { interpolateRgb, interpolateLab, interpolateHclLong } from 'd3-interpolate';
 	import * as d3chromatic from 'd3-scale-chromatic';
+	import StepsControl from '$lib/components/ColorRampControl.svelte';
 
 	import { ColorRamp } from 'layerchart';
 	import { NumberStepper } from 'svelte-ux';
@@ -18,11 +19,7 @@
 	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
 </script>
 
-<div class="inline-flex gap-3 items-center mb-4">
-	<span class="text-sm text-surface-content/50">Steps:</span>
-	<NumberStepper bind:value={steps} dense />
-</div>
-
+<StepsControl bind:steps />
 <div class="grid gap-4 h-100">
 	{#each interpolators as [name, interpolator]}
 		<div>
