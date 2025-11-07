@@ -36,7 +36,7 @@
 {/snippet}
 
 {#if includeShow}
-	<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-6">
+	<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-6 lc-example-controls">
 		<Field label="Show" let:id>
 			<Switch checked={show} on:change={() => (show = !show)} {id} size="md" />
 		</Field>

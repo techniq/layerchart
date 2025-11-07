@@ -23,7 +23,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="grid grid-cols-3 gap-2 mb-2 lc-example-controls">
 	<ConnectorTypeMenuField bind:value={type} />
 	{#if type === 'd3'}
 		<CurveMenuField bind:value={curve} />

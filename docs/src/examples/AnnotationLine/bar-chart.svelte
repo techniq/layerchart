@@ -13,7 +13,7 @@
 	export { data };
 </script>
 
-<BarChart {data} x="date" y="value" height={300}>
+<BarChart {data} x="date" y="value" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>
 	{#snippet aboveMarks({ context })}
 		<AnnotationLine
 			y={50}

@@ -30,7 +30,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-2 gap-2 my-2">
+<div class="grid grid-cols-2 gap-2 my-2 lc-example-controls">
 	<Field label="Example">
 		<ToggleGroup bind:value={config.example} variant="outline" inset class="w-full" size="sm">
 			<ToggleOption value="single">Single</ToggleOption>

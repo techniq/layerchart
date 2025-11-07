@@ -5,6 +5,8 @@
 	type TreemapTileMethod = TreemapProps<any>['tile'];
 	type TreemapColorBy = 'children' | 'depth' | 'parent';
 
+	// <TreemapControls bind:config />
+
 	interface TreemapConfig {
 		tile: TreemapTileMethod;
 		colorBy: TreemapColorBy;
@@ -36,7 +38,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
+<div class="grid grid-cols-[6fr_1fr_3fr] gap-1 lc-example-controls">
 	<Field label="Tile">
 		<ToggleGroup bind:value={config.tile} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="squarify">Squarify</ToggleOption>
@@ -48,7 +50,13 @@
 		</ToggleGroup>
 	</Field>
 	<Field label="Maintain Aspect Ratio">
-		<ToggleGroup bind:value={config.maintainAspectRatio} variant="outline" size="sm" inset class="w-full">
+		<ToggleGroup
+			bind:value={config.maintainAspectRatio}
+			variant="outline"
+			size="sm"
+			inset
+			class="w-full"
+		>
 			<ToggleOption value={false}>No</ToggleOption>
 			<ToggleOption value={true}>Yes</ToggleOption>
 		</ToggleGroup>

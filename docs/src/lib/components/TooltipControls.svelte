@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
+	import { MenuField, MultiSelectField } from 'svelte-ux';
 	import type { HighlightPropsWithoutHTML, TooltipContextProps } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
+
+	// <TooltipControls bind:settings />
 
 	let {
 		settings = $bindable(),
@@ -18,7 +20,7 @@
 	} = $props();
 </script>
 
-<div class={cls('grid grid-cols-[1fr_1fr_120px_120px] gap-2 mb-4', className)}>
+<div class={cls('grid grid-cols-[1fr_1fr_120px_120px] gap-2 mb-4 lc-example-controls', className)}>
 	<MenuField
 		label="Mode"
 		bind:value={settings.mode}

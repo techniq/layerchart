@@ -7,6 +7,8 @@
 	import type { DagreProps, SplineProps } from 'layerchart';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 
+	// <DagreControls bind:settings />
+
 	let {
 		settings = $bindable({
 			ranker: 'network-simplex',
@@ -38,7 +40,7 @@
 	} = $props();
 </script>
 
-<div class={cls('grid gap-2', className)}>
+<div class={cls('grid gap-2 lc-example-controls', className)}>
 	<MenuField
 		label="Ranker"
 		options={[

@@ -18,7 +18,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-4">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-4 lc-example-controls">
 	<SelectField
 		label="State"
 		options={stateOptions}

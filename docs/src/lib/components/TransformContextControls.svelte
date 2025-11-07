@@ -30,7 +30,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_auto] gap-2 mb-2 lc-example-controls">
 	<RangeField label="Angle" bind:value={config.angle} min={1} max={360} />
 	<Field label="Tweened" let:id>
 		<Switch bind:checked={config.tweened} {id} size="md" />

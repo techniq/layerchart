@@ -2,6 +2,8 @@
 	import { MenuField } from 'svelte-ux';
 	import type { ConnectorSweep } from '$lib/utils/connectorUtils.js';
 
+	// <ConnectorSweepMenuField bind:value />
+
 	let {
 		value = $bindable('horizontal-vertical')
 	}: {
@@ -14,4 +16,12 @@
 	}));
 </script>
 
-<MenuField label="Connector Sweep" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
+<div class="lc-example-controls">
+	<MenuField
+		label="Connector Sweep"
+		{options}
+		bind:value
+		stepper
+		classes={{ menuIcon: 'hidden' }}
+	/>
+</div>

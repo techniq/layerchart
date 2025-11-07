@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Field, Switch, type LabelPlacement } from 'svelte-ux';
 
+	// <ShowControl bind:show label="Show" labelPlacement="left" class="absolute top-2 right-2 z-1" />
+
 	let {
 		show = $bindable(true),
 		label = 'Show',
@@ -9,7 +11,7 @@
 	} = $props();
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-3">
+<div class="grid grid-cols-[auto_1fr] gap-2 mb-3 lc-example-controls">
 	<Field {label} {labelPlacement} let:id class={className}>
 		<Switch bind:checked={show} size="md" />
 	</Field>

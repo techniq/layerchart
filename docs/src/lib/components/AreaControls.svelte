@@ -27,7 +27,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid gap-2 mb-4">
+<div class="grid gap-2 mb-4 lc-example-controls">
 	<div class="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-2">
 		<PathDataMenuField bind:value={pathGenerator} />
 		<CurveMenuField bind:value={curve} />
