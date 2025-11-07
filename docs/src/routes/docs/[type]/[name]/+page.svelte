@@ -8,10 +8,13 @@
 	import { page } from '$app/state';
 
 	import LucideSearch from '~icons/lucide/search';
+	import LucideZoomIn from '~icons/lucide/zoom-in';
+	import LucideZoomOut from '~icons/lucide/zoom-out';
 
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
 
+	let columnCount = $state(3);
 	let filterQuery = $state<string | null>(null);
 
 	const examples = $derived.by(() => {
@@ -74,11 +77,22 @@
 					<LucideSearch class="text-surface-content/50 mr-4" />
 				{/snippet}
 			</TextField>
+
+			<div>
+				<Button
+					icon={LucideZoomOut}
+					on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+				/>
+				<Button icon={LucideZoomIn} on:click={() => (columnCount = Math.max(1, columnCount - 1))} />
+			</div>
 		</div>
 	</div>
 
 	{#if examples.length}
-		<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+		<div
+			style:--column-count="repeat({columnCount}, 1fr)"
+			class="grid grid-cols-(--column-count) gap-4"
+		>
 			{#each examples as example}
 				<ExampleLink component={catalog.component} example={example.name} />
 			{/each}

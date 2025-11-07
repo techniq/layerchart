@@ -1,16 +1,19 @@
 <script lang="ts">
-	import { MenuField, ScrollingValue, TextField } from 'svelte-ux';
+	import { Button, MenuField, ScrollingValue, TextField } from 'svelte-ux';
 	import { sum } from 'd3-array';
+	import { sortFunc } from '@layerstack/utils';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 	import H1 from '$lib/markdown/components/h1.svelte';
 	import H2 from '$lib/markdown/components/h2.svelte';
 
 	import LucideSearch from '~icons/lucide/search';
-	import { sortFunc } from '@layerstack/utils';
+	import LucideZoomIn from '~icons/lucide/zoom-in';
+	import LucideZoomOut from '~icons/lucide/zoom-out';
 
 	let { data } = $props();
 
+	let columnCount = $state(3);
 	let filterQuery = $state<string | null>(null);
 	let selectedSection = $state<string | null>(null);
 
@@ -113,7 +116,9 @@
 	)} components
 </p>
 
-<div class="sticky top-16 grid grid-cols-[1fr_200px] gap-3 py-2 bg-surface-200 z-1">
+<div
+	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200 z-1"
+>
 	<TextField placeholder="Filter" bind:value={filterQuery} clearable>
 		{#snippet prepend()}
 			<LucideSearch class="text-surface-content/50 mr-4" />
@@ -123,13 +128,21 @@
 	<div>
 		<MenuField options={sectionOptions} bind:value={selectedSection} />
 	</div>
+
+	<div>
+		<Button icon={LucideZoomOut} on:click={() => (columnCount = Math.min(5, columnCount + 1))} />
+		<Button icon={LucideZoomIn} on:click={() => (columnCount = Math.max(1, columnCount - 1))} />
+	</div>
 </div>
 
 <div class="grid gap-10">
 	{#each visibleExamples as { component, examples } (component)}
 		<div>
 			<H2 id={component} class="sticky top-29 bg-surface-200 -mx-4 px-4 pt-2">{component}</H2>
-			<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+			<div
+				style:--column-count="repeat({columnCount}, 1fr)"
+				class="grid grid-cols-(--column-count) gap-4"
+			>
 				{#each examples as example (example.name)}
 					<ExampleLink {component} example={example.name} />
 				{/each}
