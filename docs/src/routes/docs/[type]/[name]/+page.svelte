@@ -106,7 +106,10 @@
 			<ToggleButton transition={slide} let:on={showDetails} class="mt-4" buttonPlacement="after">
 				{showDetails ? 'show less' : 'show more'}...
 				<div slot="toggle" class="mt-2">
-					<div class="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t pt-4 mt-4">
+					<div
+						style:--column-count="repeat({columnCount}, 1fr)"
+						class="grid grid-cols-(--column-count) gap-4 border-t pt-4 mt-4"
+					>
 						{#each uniqueUsage as usage}
 							<ExampleLink component={usage.component} example={usage.example} showComponent />
 						{/each}
@@ -115,7 +118,10 @@
 			</ToggleButton>
 		{:else if catalog.examples?.length === 0}
 			<!-- No direct examples, show immediately -->
-			<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+			<div
+				style:--column-count="repeat({columnCount}, 1fr)"
+				class="grid grid-cols-(--column-count) gap-4"
+			>
 				{#each uniqueUsage as usage}
 					<ExampleLink component={usage.component} example={usage.example} showComponent />
 				{/each}
