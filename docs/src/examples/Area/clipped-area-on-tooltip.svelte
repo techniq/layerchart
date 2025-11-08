@@ -23,7 +23,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ top: 48, bottom: 24 }}
+	padding={{ top: 20, bottom: 20 }}
 	tooltip={{ mode: 'quadtree-x' }}
 	height={300}
 >

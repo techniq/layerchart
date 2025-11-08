@@ -1,25 +1,26 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { Field, RangeField, Switch } from 'svelte-ux';
 	import { Area, Axis, Chart, Points, Layer } from 'layerchart';
-	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
+	import AreaPlaygroundControls from '$lib/components/AreaPlaygroundControls.svelte';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 
-	let pointCount = $state(10);
-	let showPoints = $state(false);
-	let showLine = $state(true);
-	let show = $state(true);
-	let tweened = $state(true);
-	const motion = $derived(tweened ? 'tween' : 'none');
+	let config = $state({
+		pathGenerator: (x: number) => x,
+		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
+		pointCount: 10,
+		showPoints: false,
+		showLine: true,
+		show: true,
+		tweened: true
+	});
 
-	let pathGenerator = $state((x: number) => x);
-	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
+	const motion = $derived(config.tweened ? 'tween' : 'none');
 
 	const data = $derived(
-		Array.from({ length: pointCount }).map((_, i) => {
+		Array.from({ length: config.pointCount }).map((_, i) => {
 			return {
 				x: i + 1,
-				y: pathGenerator?.(i / pointCount) ?? i
+				y: config.pathGenerator?.(i / config.pointCount) ?? i
 			};
 		})
 	);
@@ -27,43 +28,20 @@
 	export { data };
 </script>
 
-<div class="grid gap-2 mb-4">
-	<div class="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-2">
-		<PathDataMenuField bind:value={pathGenerator} />
-		<CurveMenuField bind:value={curve} />
-		<RangeField label="Points" bind:value={pointCount} min={2} />
-		<Field label="Show points" let:id>
-			<Switch bind:checked={showPoints} {id} size="md" />
-		</Field>
-		<Field label="Show Line" let:id>
-			<Switch bind:checked={showLine} {id} size="md" />
-		</Field>
-	</div>
-
-	<div class="grid grid-cols-[100px_auto_1fr] gap-2">
-		<Field label="Show" let:id>
-			<Switch bind:checked={show} {id} size="md" />
-		</Field>
-
-		<Field label="Tweened" let:id>
-			<Switch bind:checked={tweened} {id} size="md" />
-		</Field>
-	</div>
-</div>
-
-<Chart {data} x="x" y="y" yNice padding={{ left: 20, right: 8, top: 4, bottom: 24 }} height={300}>
+<AreaPlaygroundControls bind:config />
+<Chart {data} x="x" y="y" yNice padding={20} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		{#if show}
+		{#if config.show}
 			<Area
-				{curve}
-				line={showLine && { class: 'stroke-primary stroke-2' }}
+				curve={config.curve}
+				line={config.showLine && { class: 'stroke-primary stroke-2' }}
 				{motion}
 				class="fill-primary/10"
 			/>
 
-			{#if showPoints}
+			{#if config.showPoints}
 				<Points {motion} r={3} class="fill-surface-100 stroke-primary" />
 			{/if}
 		{/if}

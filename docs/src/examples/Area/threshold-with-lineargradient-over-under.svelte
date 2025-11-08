@@ -13,15 +13,7 @@
 	export { data };
 </script>
 
-<Chart
-	{data}
-	x="date"
-	y="value"
-	yNice
-	padding={{ left: 16, bottom: 24 }}
-	tooltip={{ mode: 'quadtree-x' }}
-	height={300}
->
+<Chart {data} x="date" y="value" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>
 	{#snippet children({ context })}
 		{@const thresholdValue = 0}
 		{@const thresholdOffset =

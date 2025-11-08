@@ -33,7 +33,7 @@
 	x={(d) => asAny(d).data.date}
 	y={[0, 1]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={20}
 	height={300}
 >
 	<Layer>
