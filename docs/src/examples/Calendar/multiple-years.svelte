@@ -30,11 +30,11 @@
 		'var(--color-primary-700)'
 	]}
 	padding={{ top: 20, left: 20 }}
-	height={716}
+	height={450}
 >
 	{#snippet children({ context })}
 		<Layer>
-			{#each range(2019, 2024) as year, i}
+			{#each range(2021, 2024) as year, i}
 				{@const start = new Date(year, 0, 1)}
 				{@const end = endOfInterval('year', start)}
 				<Group y={140 * i}>
