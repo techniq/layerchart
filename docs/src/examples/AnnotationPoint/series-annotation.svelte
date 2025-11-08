@@ -7,7 +7,13 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" padding={{ ...defaultChartPadding(), right: 40 }} height={300}>
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	padding={{ ...defaultChartPadding(), right: 40, bottom: 15, left: 25 }}
+	height={300}
+>
 	{#snippet aboveMarks({ context })}
 		{@const lastPoint = data[data.length - 1]}
 		<AnnotationPoint

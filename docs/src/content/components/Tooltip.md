@@ -65,56 +65,64 @@ related: ['components/TooltipContext', 'components/Highlight']
 
 ### Area
 
-- x: scaleTime, y: scaleLinear
-- quadtree-x recommended. bisect-x, voronoi, and quadtree supported. bounds and band to be improved
+> x: scaleTime, y: scaleLinear
+
+> quadtree-x recommended. bisect-x, voronoi, and quadtree supported. bounds and band to be improved
 
 <Example name="area" />
 
 ### Stacked Area
 
-- x: scaleTime, y: scaleLinear (multi/stack)
-- voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
+> x: scaleTime, y: scaleLinear (multi/stack)
+
+> voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
 
 <Example name="stacked-area" />
 
 ### Single Date / Time
 
-- x: scaleTime, y: scaleBand
-- bisect-x recommended. band, voronoi, and quadtree supported
+> x: scaleTime, y: scaleBand
+
+> bisect-x recommended. band, voronoi, and quadtree supported
 
 <Example name="single-date-time" />
 
 ### Duration
 
-- x: scaleTime (multi), y: scaleBand
-- bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
+> x: scaleTime (multi), y: scaleBand
+
+> bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 
 <Example name="duration" />
 
 ### Multiple (overlapping) Durations
 
-- x: scaleTime (multi), y: scaleBand
-- bounds recommended. voronoi and quadtree partially supported (using first point)
+> x: scaleTime (multi), y: scaleBand
+
+> bounds recommended. voronoi and quadtree partially supported (using first point)
 
 <Example name="multiple-overlapping-durations" />
 
 ### Simple Bars
 
-- x: scaleBand, y: scaleLinear
-- band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
+> x: scaleTime, y: scaleLinear
+
+> band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
 <Example name="simple-bars" />
 
 ### Multiple (overlapping) Bars
 
-- x: scaleBand, y: scaleLinear
-- band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
+> x: scaleTime, y: scaleLinear
+
+> band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
 <Example name="multiple-overlapping-bars" />
 
 ### Scatter Plot
 
-- x: scaleLinear, y: scaleLinear
-- voronoi or quadtree recommended
+> x: scaleLinear, y: scaleLinear
+
+> voronoi or quadtree recommended
 
 <Example name="scatter-plot" />

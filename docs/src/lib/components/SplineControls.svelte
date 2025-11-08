@@ -1,49 +1,66 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { Field, RangeField, Switch } from 'svelte-ux';
+	import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
 
-	// <SplineControls bind:show bind:pathGenerator bind:amplitude bind:frequency bind:phase bind:curve bind:pointCount includeShow={true} />
+	// <SplineControls bind:config includeShowpointsMotion={true} />
+
+	interface SplinePlaygroundConfig {
+		show: boolean;
+		pathGenerator: (x: number) => number;
+		amplitude: number;
+		frequency: number;
+		phase: number;
+		curve?: ComponentProps<typeof CurveMenuField>['value'];
+		pointCount: number;
+		showPoints?: boolean;
+		motion?: 'draw' | 'tween' | 'none';
+	}
 
 	interface Props {
-		show?: boolean;
-		pathGenerator?: (x: number) => number;
-		amplitude?: number;
-		frequency?: number;
-		phase?: number;
-		curve?: ComponentProps<typeof CurveMenuField>['value'];
-		pointCount?: number;
-		includeShow?: boolean;
+		config?: SplinePlaygroundConfig;
+		includeShowpointsMotion?: boolean;
 	}
 
 	let {
-		show = $bindable(true),
-		pathGenerator = $bindable((x: number) => x),
-		amplitude = $bindable(1),
-		frequency = $bindable(10),
-		phase = $bindable(0),
-		curve = $bindable(undefined),
-		pointCount = $bindable(100),
-		includeShow = false
+		config = $bindable({
+			show: true,
+			pathGenerator: (x: number) => x,
+			amplitude: 1,
+			frequency: 10,
+			phase: 0,
+			curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
+			pointCount: 100,
+			showPoints: false,
+			motion: 'tween' as 'draw' | 'tween' | 'none'
+		}),
+		includeShowpointsMotion = false
 	}: Props = $props();
 </script>
 
-{#snippet Controls()}
-	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-	<CurveMenuField bind:value={curve} />
-	<RangeField label="Points" bind:value={pointCount} min={2} />
-{/snippet}
-
-{#if includeShow}
-	<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-6">
-		<Field label="Show" let:id>
-			<Switch checked={show} on:change={() => (show = !show)} {id} size="md" />
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 lc-example-controls">
+	<Field label="Show" let:id>
+		<Switch checked={config.show} on:change={() => (config.show = !config.show)} {id} size="md" />
+	</Field>
+	<PathDataMenuField
+		bind:value={config.pathGenerator}
+		amplitude={config.amplitude}
+		frequency={config.frequency}
+		phase={config.phase}
+	/>
+	<CurveMenuField bind:value={config.curve} />
+	<RangeField label="Points" bind:value={config.pointCount} min={2} />
+	{#if includeShowpointsMotion}
+		<Field label="Show points" let:id>
+			<Switch bind:checked={config.showPoints} {id} size="md" />
 		</Field>
-		{@render Controls()}
-	</div>
-{:else}
-	<div class="grid grid-cols-[auto_1fr_1fr] gap-2 mb-6">
-		{@render Controls()}
-	</div>
-{/if}
+		<Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
+			<ToggleGroup bind:value={config.motion} variant="outline" size="sm">
+				<ToggleOption value="tween">tween</ToggleOption>
+				<ToggleOption value="draw">draw</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
+			</ToggleGroup>
+		</Field>
+	{/if}
+</div>

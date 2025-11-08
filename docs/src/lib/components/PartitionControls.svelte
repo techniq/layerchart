@@ -12,6 +12,8 @@
 <script lang="ts">
 	import { Field, RangeField, ToggleGroup, ToggleOption, Switch } from 'svelte-ux';
 
+	// <PartitionControls bind:padding bind:fullSizeLeafNodes bind:round bind:colorBy bind:isFiltered bind:filterable />
+
 	let {
 		padding = $bindable(0),
 		fullSizeLeafNodes = $bindable(false),
@@ -22,7 +24,7 @@
 	}: PartitionControlsProps = $props();
 </script>
 
-<div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-2">
+<div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-2 lc-example-controls">
 	<RangeField label="Padding" bind:value={padding} max={20} />
 	<Field label="Full-size Leaf Nodes">
 		<ToggleGroup bind:value={fullSizeLeafNodes} variant="outline" size="sm" inset class="w-full">

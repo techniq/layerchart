@@ -30,7 +30,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-xs gap-2 mb-2">
+<div class="grid grid-cols-xs gap-2 mb-2 lc-example-controls">
 	<RangeField label="points" bind:value={points} min={3} max={20} />
 	<RangeField label="inset" bind:value={inset} min={-1} max={1} step={0.1} format="decimal" />
 	<RangeField label="rotate" bind:value={rotate} max={360} />

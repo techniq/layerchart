@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { format } from '@layerstack/utils';
+
+	import { timeDay } from 'd3-time';
+	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -18,7 +19,7 @@
 <Chart
 	{data}
 	x="date"
-	xScale={scaleBand().padding(0.4)}
+	xInterval={timeDay}
 	y="value"
 	yDomain={[0, null]}
 	yNice

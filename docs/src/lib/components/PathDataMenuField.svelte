@@ -3,6 +3,8 @@
 	import * as easings from 'svelte/easing';
 	import { MenuField } from 'svelte-ux';
 
+	// <PathDataMenuField bind:value bind:amplitude bind:frequency bind:phase />
+
 	let {
 		value = $bindable(),
 		amplitude = 1,
@@ -75,4 +77,6 @@
 	});
 </script>
 
-<MenuField label="Path data" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
+<div class="lc-example-controls">
+	<MenuField label="Path data" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
+</div>

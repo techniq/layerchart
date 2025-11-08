@@ -1,8 +1,25 @@
 <script lang="ts">
 	import { Chart, Layer, Pie } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/data.js';
 
-	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
+	// fixed data (same as basic example to call attention to what sorting does)
+	const data = [
+		{
+			date: '2025-11-04T05:00:00.000Z',
+			value: 99
+		},
+		{
+			date: '2025-11-06T05:00:00.000Z',
+			value: 30
+		},
+		{
+			date: '2025-11-05T05:00:00.000Z',
+			value: 14
+		},
+		{
+			date: '2025-11-07T05:00:00.000Z',
+			value: 67
+		}
+	];
 
 	const keyColors = [
 		'var(--color-info)',

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Chart, ChartClipPath, Circle, Layer, Points, Voronoi } from 'layerchart';
 	import { getSpiral } from '$lib/utils/data.js';
-	import { RangeField } from 'svelte-ux';
+
+	import VoronoiControls from '$lib/components/VoronoiControls.svelte';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 	export { data };
@@ -14,10 +15,11 @@
 		};
 	}
 	let radius = $state(0);
+
+	export { data };
 </script>
 
-<RangeField label="Radius" bind:value={radius} max={100} />
-
+<VoronoiControls bind:radius />
 <Chart {data} x="x" y="y" height={400}>
 	{#snippet children({ context })}
 		<Layer onpointermove={onPointerMove}>

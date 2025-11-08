@@ -13,11 +13,11 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
+
 	export { data };
 </script>
 
-<CurveMenuField bind:value={selectedCurve} class="mb-6" />
-
+<CurveMenuField bind:value={selectedCurve} class="mb-8" />
 <AreaChart
 	{data}
 	x="date"
@@ -28,7 +28,7 @@
 	height={300}
 >
 	{#snippet marks()}
-		<Threshold>
+		<Threshold curve={selectedCurve}>
 			{#snippet above({ curve })}
 				<Area y0="value" y1="baseline" {curve} class="fill-success/30" />
 			{/snippet}

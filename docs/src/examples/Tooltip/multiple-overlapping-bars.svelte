@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
-	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
 	import type { ComponentProps } from 'svelte';
+
+	import { timeDay } from 'd3-time';
+	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import TooltipControls from '$lib/components/TooltipControls.svelte';
+
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
 		count: 30,
@@ -12,14 +14,14 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
+
 	let charts = $state({
 		multiBars: {
 			mode: 'band',
 			highlight: ['area'],
 			axis: undefined,
 			snapToDataX: false,
-			snapToDataY: false,
-			debug: false
+			snapToDataY: false
 		}
 	}) as Record<string, ComponentProps<typeof TooltipControls>['settings']>;
 
@@ -30,11 +32,11 @@
 <Chart
 	{data}
 	x="date"
-	xScale={scaleBand().padding(0.4)}
+	xInterval={timeDay}
 	y={(d) => Math.max(d.value, d.baseline)}
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ top: 5, left: 28, bottom: 24 }}
 	tooltip={{
 		mode: 'band',
 		debug: false

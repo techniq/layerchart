@@ -18,7 +18,7 @@
 	}: Props = $props();
 </script>
 
-<div class="flex gap-2 mb-2">
+<div class="flex gap-2 mb-2 lc-example-controls">
 	{#if includeInset}
 		<RangeField
 			label="inset"

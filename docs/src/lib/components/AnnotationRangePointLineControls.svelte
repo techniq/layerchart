@@ -1,19 +1,24 @@
 <script lang="ts">
 	import type { Placement } from 'layerchart';
 	import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
+	import { cls } from '@layerstack/tailwind';
 
-	// <AnnotationRangeControls bind:placement bind:xOffset bind:yOffset />
+	// <AnnotationRangePointLineControls bind:placement bind:xOffset bind:yOffset bind:radius includeRadius/>
 
 	interface Props {
 		placement?: Placement;
 		xOffset?: number;
 		yOffset?: number;
+		radius?: number;
+		includeRadius?: boolean;
 	}
 
 	let {
 		placement = $bindable('center'),
 		xOffset = $bindable(0),
-		yOffset = $bindable(0)
+		yOffset = $bindable(0),
+		radius = $bindable(4),
+		includeRadius = $bindable(false)
 	}: Props = $props();
 
 	const placementOptions = [
@@ -29,7 +34,13 @@
 	] as const;
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
+<div
+	class={cls(
+		'grid gap-2 mb-4',
+		'lc-example-controls',
+		includeRadius ? 'grid-cols-4' : 'grid-cols-3'
+	)}
+>
 	<Toggle let:on={open} let:toggle>
 		<Field label="Placement" class="cursor-pointer" on:click={toggle}>
 			<span class="text-sm">
@@ -51,7 +62,9 @@
 			</div>
 		</Menu>
 	</Toggle>
-
 	<RangeField label="X offset" bind:value={xOffset} max={10} />
 	<RangeField label="Y offset" bind:value={yOffset} max={10} />
+	{#if includeRadius}
+		<RangeField label="Radius" bind:value={radius} max={10} />
+	{/if}
 </div>

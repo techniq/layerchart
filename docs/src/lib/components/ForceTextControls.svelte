@@ -22,7 +22,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-flow-col gap-2 mb-1">
+<div class="grid grid-flow-col gap-2 mb-1 lc-example-controls">
 	<TextField label="Text" bind:value={text} />
 	<RangeField label="Font size (px)" bind:value={fontSize} max={600} />
 	<RangeField label="Spacing" bind:value={spacing} />

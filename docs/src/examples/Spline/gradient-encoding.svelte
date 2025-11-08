@@ -6,6 +6,7 @@
 	import { getDailyTemperature } from '$lib/data.remote';
 
 	const data = await getDailyTemperature();
+
 	const temperatureColor = scaleSequential(
 		extent(data, (d) => d.value) as [number, number],
 		interpolateTurbo
@@ -14,7 +15,7 @@
 	export { data };
 </script>
 
-<Chart {data} x="date" y="value" yNice padding={{ left: 16, bottom: 24 }} height={300}>
+<Chart {data} x="date" y="value" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />

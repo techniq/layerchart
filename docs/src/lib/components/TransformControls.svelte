@@ -45,6 +45,8 @@
 
 	import { getChartContext, type Without } from 'layerchart';
 
+	// <TransformControls placement="top-right" orientation="vertical" size="md" show={['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode']} />
+
 	let {
 		placement = 'top-right',
 		orientation = 'vertical',

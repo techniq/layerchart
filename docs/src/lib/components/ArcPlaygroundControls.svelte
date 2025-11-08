@@ -34,7 +34,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2 lc-example-controls">
 	<RangeField label="Value" bind:value min={domain[0]} max={domain[1]} class="col-span-3" />
 	<Field label="Use spring" let:id>
 		<Switch bind:checked={spring} {id} />

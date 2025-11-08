@@ -10,7 +10,7 @@
 	let { colorBy = $bindable('parent') }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2">
+<div class="grid grid-cols-[1fr_1fr] gap-2 lc-example-controls">
 	<Field label="Color By">
 		<ToggleGroup bind:value={colorBy} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="parent">Parent</ToggleOption>

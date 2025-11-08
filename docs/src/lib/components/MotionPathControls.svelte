@@ -4,34 +4,52 @@
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
 
-	// <MotionPathControls bind:show bind:pathGenerator bind:amplitude bind:frequency bind:phase bind:curve bind:pointCount />
+	// <MotionPathControls bind:config />
+
+	interface MotionPathConfig {
+		pointCount: number;
+		pathGenerator: (x: number) => number;
+		curve?: ComponentProps<typeof CurveMenuField>['value'];
+		amplitude: number;
+		frequency: number;
+		phase: number;
+		show: boolean;
+		duration: string;
+		repeatCount?: number | 'indefinite';
+		start?: string;
+		rotate?: number | 'auto' | 'auto-reverse';
+	}
 
 	interface Props {
-		show?: boolean;
-		pathGenerator?: (x: number) => number;
-		amplitude?: number;
-		frequency?: number;
-		phase?: number;
-		curve?: ComponentProps<typeof CurveMenuField>['value'];
-		pointCount?: number;
+		config?: MotionPathConfig;
 	}
 
 	let {
-		show = $bindable(true),
-		pathGenerator = $bindable((x: number) => x),
-		amplitude = $bindable(1),
-		frequency = $bindable(10),
-		phase = $bindable(0),
-		curve = $bindable(undefined),
-		pointCount = $bindable(100)
+		config = $bindable({
+			pointCount: 100,
+			pathGenerator: (x: number) => x,
+			curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
+			amplitude: 1,
+			frequency: 10,
+			phase: 0,
+			show: true,
+			duration: '5s',
+			repeatCount: 'indefinite' as number | 'indefinite',
+			start: undefined as string | undefined
+		})
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4 lc-example-controls">
 	<Field label="Show" let:id>
-		<Switch bind:checked={show} {id} size="md" />
+		<Switch bind:checked={config.show} {id} size="md" />
 	</Field>
-	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-	<CurveMenuField bind:value={curve} />
-	<RangeField label="Points" bind:value={pointCount} min={2} />
+	<PathDataMenuField
+		bind:value={config.pathGenerator}
+		amplitude={config.amplitude}
+		frequency={config.frequency}
+		phase={config.phase}
+	/>
+	<CurveMenuField bind:value={config.curve} />
+	<RangeField label="Points" bind:value={config.pointCount} min={2} />
 </div>

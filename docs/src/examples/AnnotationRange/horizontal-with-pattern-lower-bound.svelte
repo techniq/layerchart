@@ -7,7 +7,7 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300}>
+<LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 5 }}>
 	{#snippet belowMarks({ context })}
 		<AnnotationRange
 			y={[500, null]}
