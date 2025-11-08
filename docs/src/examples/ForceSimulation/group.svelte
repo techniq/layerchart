@@ -9,11 +9,10 @@
 	} from 'd3-force';
 
 	import { asAny, Chart, Circle, ForceSimulation, Layer } from 'layerchart';
-	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import GroupControl from '$lib/components/GroupControl.svelte';
 	import { getForceGroupDots } from '$lib/data.remote';
 
 	import type { Prettify } from '@layerstack/utils';
-
 	type NodeDatum = { category: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
@@ -46,15 +45,7 @@
 	export { data };
 </script>
 
-<div class="flex justify-end gap-2 items-end mb-2">
-	<Field labelPlacement="left" class="mb-1" dense>
-		<ToggleGroup bind:value={groupBy} size="sm">
-			<ToggleOption value={true}>Group</ToggleOption>
-			<ToggleOption value={false}>Clump</ToggleOption>
-		</ToggleGroup>
-	</Field>
-</div>
-
+<GroupControl bind:groupBy />
 <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]} height={300}>
 	{#snippet children({ context })}
 		{@const nodeStrokeWidth = 1}

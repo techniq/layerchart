@@ -8,7 +8,7 @@
 	} from 'd3-force';
 	import { curveLinear } from 'd3-shape';
 
-	import { Field, Switch } from 'svelte-ux';
+	import StickyControl from '$lib/components/StickyControl.svelte';
 	import { Chart, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
 	import { clamp, type Prettify } from '@layerstack/utils';
@@ -63,13 +63,7 @@
 	export { data };
 </script>
 
-<Field dense class="inline-block mb-2" let:id>
-	<label class="flex gap-2 items-center text-sm" for={id}>
-		Sticky
-		<Switch bind:checked={sticky} {id} />
-	</label>
-</Field>
-
+<StickyControl bind:sticky />
 <Chart height={600}>
 	{#snippet children({ context })}
 		<Layer>

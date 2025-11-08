@@ -5,8 +5,8 @@
 	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
 	import { getFlare } from '$lib/data.remote';
-	import type { Prettify } from '@layerstack/utils';
 
+	import type { Prettify } from '@layerstack/utils';
 	type NodeDatum = { name: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 

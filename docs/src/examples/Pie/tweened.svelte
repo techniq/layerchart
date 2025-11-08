@@ -18,12 +18,10 @@
 </script>
 
 <ShowControls bind:show label="Show Pie" />
-<div style:height="300px">
-	<Chart {data} x="value" c="date" cRange={keyColors}>
-		<Layer center>
-			{#if show}
-				<Pie motion="tween" />
-			{/if}
-		</Layer>
-	</Chart>
-</div>
+<Chart {data} x="value" c="date" cRange={keyColors} height={300}>
+	<Layer center>
+		{#if show}
+			<Pie motion="tween" />
+		{/if}
+	</Layer>
+</Chart>
