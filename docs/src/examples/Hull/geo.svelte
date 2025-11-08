@@ -16,9 +16,7 @@
 	let curve = $state(curveLinearClosed);
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-2">
-	<CurveMenuField bind:value={curve} showOpenClosed />
-</div>
+<CurveMenuField bind:value={curve} showOpenClosed />
 
 <Chart
 	x="longitude"
@@ -27,6 +25,7 @@
 		projection: geoAlbersUsa,
 		fitGeojson: states
 	}}
+	padding={20}
 	height={600}
 >
 	<Layer>

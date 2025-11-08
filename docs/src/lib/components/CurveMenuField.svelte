@@ -36,7 +36,7 @@
 		});
 </script>
 
-<div class="lc-example-controls">
+<div class="grid grid-cols-[1fr_1fr_1fr] lc-example-controls">
 	<MenuField
 		label="Curve"
 		{options}
