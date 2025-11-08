@@ -8,13 +8,15 @@
 		rotate?: number;
 		cornerRadius?: number;
 		includeInset?: boolean;
+		includeRotate?: boolean;
 	}
 
 	let {
 		starInset = $bindable(0.7),
 		rotate = $bindable(0),
 		cornerRadius = $bindable(0),
-		includeInset = false
+		includeInset = false,
+		includeRotate = true
 	}: Props = $props();
 </script>
 
@@ -30,6 +32,8 @@
 			format="decimal"
 		/>
 	{/if}
-	<RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
+	{#if includeRotate}
+		<RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
+	{/if}
 	<RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
 </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, Group, Layer, Polygon } from 'layerchart';
-	import { RangeField } from 'svelte-ux';
+	import PolygonControls from '$lib/components/PolygonControls.svelte';
 
 	let cornerRadius = $state(0);
 
@@ -8,10 +8,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2 mb-2">
-	<RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
-</div>
-
+<PolygonControls bind:cornerRadius includeRotate={false} />
 <Chart height={150}>
 	{#snippet children({ context })}
 		<Layer>
