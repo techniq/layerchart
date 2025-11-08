@@ -7,7 +7,7 @@
 	export { data };
 </script>
 
-<Chart {data} x="date" y="value" yNice padding={{ left: 16, bottom: 24 }} height={300}>
+<Chart {data} x="date" y="value" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>
 	{#snippet children({ context })}
 		{@const thresholdOffset =
 			(context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { curveCatmullRomClosed, curveLinearClosed } from 'd3-shape';
+	import { curveLinearClosed } from 'd3-shape';
 	import { Axis, Chart, Layer, Points, Spline } from 'layerchart';
-	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import RadialControl from '$lib/components/RadialControl.svelte';
 
 	const data = [
 		{ name: 'fastball', value: 10 },
@@ -10,18 +10,13 @@
 		{ name: 'cutter', value: 8 },
 		{ name: 'curve', value: 5 }
 	];
-	export { data };
 
 	let curve = $state(curveLinearClosed);
+
+	export { data };
 </script>
 
-<Field label="curve: " labelPlacement="left" dense class="absolute top-2 right-2 z-1">
-	<ToggleGroup bind:value={curve} size="sm">
-		<ToggleOption value={curveLinearClosed}>Linear</ToggleOption>
-		<ToggleOption value={curveCatmullRomClosed}>CatmullRom</ToggleOption>
-	</ToggleGroup>
-</Field>
-
+<RadialControl bind:curve />
 <Chart
 	{data}
 	x="name"
