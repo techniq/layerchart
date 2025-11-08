@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { RangeField } from 'svelte-ux';
 	import { Connector, Chart, Layer } from 'layerchart';
+	import ConnectorPlaygroundControls from '$lib/components/ConnectorPlaygroundControls.svelte';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
-	import ConnectorTypeMenuField from '$lib/components/ConnectorTypeMenuField.svelte';
-	import ConnectorSweepMenuField from '$lib/components/ConnectorSweepMenuField.svelte';
+
 	import { movable } from '$lib/actions/movable.js';
 
 	let source = $state({ x: 300, y: 150 });
@@ -15,22 +14,9 @@
 	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 	let sweep: ConnectorSweep = $state('horizontal-vertical');
 	let radius = $state(60);
-
-	const data = undefined;
-	export { data };
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
-	<ConnectorTypeMenuField bind:value={type} />
-	{#if type === 'd3'}
-		<CurveMenuField bind:value={curve} />
-	{/if}
-	<ConnectorSweepMenuField bind:value={sweep} />
-	{#if type === 'beveled' || type === 'rounded'}
-		<RangeField label="Radius" bind:value={radius} min={0} />
-	{/if}
-</div>
-
+<ConnectorPlaygroundControls bind:type bind:curve bind:sweep bind:radius />
 <Chart padding={{ left: 16, bottom: 24 }} height={400}>
 	<Layer>
 		<Connector {source} {target} {sweep} {type} {radius} {curve} class="stroke-primary stroke-4" />
