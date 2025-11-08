@@ -2,7 +2,7 @@
 	import { scaleBand } from 'd3-scale';
 	import { stackOffsetExpand } from 'd3-shape';
 	import { sum } from 'd3-array';
-	import { Bar, Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import { Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];

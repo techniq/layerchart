@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { timeDay } from 'd3-time';
-	import { Bar, Bars, Axis, Chart, Highlight, Layer, Tooltip } from 'layerchart';
+	import { Bars, Axis, Chart, Layer } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { Bar, Axis, Chart, Layer, Tooltip, groupStackData } from 'layerchart';
-	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import GroupedStackedComboControls from '$lib/components/GroupedStackedCombo.svelte';
 	import { longData } from '$lib/utils/data.js';
 	import { unique } from '@layerstack/utils';
 	import { cubicInOut } from 'svelte/easing';
@@ -14,7 +14,7 @@
 		'var(--color-danger)'
 	];
 
-	let chartMode = $state('group');
+	let chartMode = $state<'group' | 'stack' | 'groupStack'>('group');
 
 	const groupBy = $derived(
 		chartMode === 'group' || chartMode === 'groupStack' ? 'fruit' : undefined
@@ -41,14 +41,7 @@
 	export { data };
 </script>
 
-<Field label="Mode" class="mb-4">
-	<ToggleGroup bind:value={chartMode} variant="outline" size="sm" inset class="w-full">
-		<ToggleOption value="group">Grouped</ToggleOption>
-		<ToggleOption value="stack">Stacked</ToggleOption>
-		<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-	</ToggleGroup>
-</Field>
-
+<GroupedStackedComboControls bind:chartMode />
 <!-- Always use stackedData for extents for consistent scale -->
 <Chart
 	{data}
