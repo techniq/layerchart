@@ -18,7 +18,7 @@
 	cScale={scaleThreshold()}
 	cDomain={[50, 90]}
 	cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
-	padding={{ left: 16, bottom: 24 }}
+	padding={20}
 	height={300}
 >
 	<Layer>
