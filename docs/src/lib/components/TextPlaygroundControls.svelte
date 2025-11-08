@@ -3,7 +3,7 @@
 	import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { Text } from 'layerchart';
 
-	// <TextControls bind:config bind:truncate bind:truncateOptions />
+	// <TextPlaygroundControls bind:config bind:truncate bind:truncateOptions />
 
 	interface Props {
 		config?: {
