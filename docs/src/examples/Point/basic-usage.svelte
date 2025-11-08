@@ -2,6 +2,7 @@
 	import { Axis, Chart, Circle, Point, Layer } from 'layerchart';
 
 	let data: Array<{ x: number; y: number }> = [];
+
 	export { data };
 </script>
 
