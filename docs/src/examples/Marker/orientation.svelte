@@ -26,7 +26,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2 lc-example-controls">
 	<Field label="Tweened" let:id>
 		<Switch bind:checked={tweened} {id} size="md" />
 	</Field>

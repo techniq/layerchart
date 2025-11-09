@@ -112,7 +112,7 @@
 	min={10}
 	max={300}
 	step={10}
-	class="justify-self-end mb-2"
+	class="justify-self-end mb-2 lc-example-controls"
 />
 
 <div class="grid gap-3">

@@ -8,7 +8,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2 mb-2">
+<div class="flex gap-2 mb-2 lc-example-controls">
 	<RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
 </div>
 

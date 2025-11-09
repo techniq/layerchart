@@ -31,7 +31,7 @@
 	export { data };
 </script>
 
-<div class="grid gap-2 mb-2">
+<div class="grid gap-2 mb-2 lc-example-controls">
 	<TextField label="value" bind:value={config.value} />
 	<div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
 		<RangeField label="x" bind:value={config.x} min={-300} max={300} />

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-08T22:29:13.542Z",
+  "generatedAt": "2025-11-09T01:59:42.466Z",
   "totalComponents": 57,
   "totalExamples": 695,
   "components": [
@@ -779,27 +779,27 @@
         {
           "name": "time-scale-auto",
           "path": "/example/Axis/time-scale-auto",
-          "checksum": "e4c25dd71db6fab943b915435969ad63"
+          "checksum": "1d406e5bbd61469b66b83473d1dcdbf7"
         },
         {
           "name": "time-scale-auto-format-filtering",
           "path": "/example/Axis/time-scale-auto-format-filtering",
-          "checksum": "58901f84bdc487c70d8d89dccf09e780"
+          "checksum": "7a842796553f494e0142195be3b3847d"
         },
         {
           "name": "time-scale-auto-multiline",
           "path": "/example/Axis/time-scale-auto-multiline",
-          "checksum": "217c59bf9db71aa0df8f83d777a3330d"
+          "checksum": "1344828b5547f5c64fc3ebfc4cdc881e"
         },
         {
           "name": "time-scale-brush",
           "path": "/example/Axis/time-scale-brush",
-          "checksum": "0df5021a711027945c01b5ff7ad4dda7"
+          "checksum": "dbe01b89f776096561d3e74a943371f6"
         },
         {
           "name": "time-scale-brush-multiline",
           "path": "/example/Axis/time-scale-brush-multiline",
-          "checksum": "e6c51382139ac7e3cd3cbc13970db751"
+          "checksum": "aecd992738d5a927e7f587d19df32030"
         },
         {
           "name": "time-scale-explicit",
@@ -2594,22 +2594,22 @@
         {
           "name": "line",
           "path": "/example/Marker/line",
-          "checksum": "ef49778cbfffa99d30fd4baea5c4b604"
+          "checksum": "ff9f2b21cbf46a0150a80c6181dbd2ea"
         },
         {
           "name": "orientation",
           "path": "/example/Marker/orientation",
-          "checksum": "26ebe0a71533dec8a2dc1abf0d94ea0c"
+          "checksum": "13a4416779f8f67ff7b5a5ccbc26b63f"
         },
         {
           "name": "spline",
           "path": "/example/Marker/spline",
-          "checksum": "e0d69956e302a42df144f721d7e1d14d"
+          "checksum": "d9b2bf14e9f38d34557c66faf872e206"
         },
         {
           "name": "spline-w-thicker-stroke",
           "path": "/example/Marker/spline-w-thicker-stroke",
-          "checksum": "1f94acc62a38e39ae3197a926c709565"
+          "checksum": "d0c7f8b4cd4bbdd8833ccc99c533ef31"
         },
         {
           "name": "styling",
@@ -3084,7 +3084,7 @@
         {
           "name": "custom-points",
           "path": "/example/Polygon/custom-points",
-          "checksum": "8f44f00d93101238ff71238aa7dcf050"
+          "checksum": "7de82813c1e819d3796893d4b9a5ed6b"
         },
         {
           "name": "diamond",
@@ -3129,7 +3129,7 @@
         {
           "name": "simple",
           "path": "/example/Polygon/simple",
-          "checksum": "d00e7907d6a075680cb0029cb28046d5"
+          "checksum": "4822cae04552252e161ad404e851fe3f"
         },
         {
           "name": "square",
@@ -3549,7 +3549,7 @@
         {
           "name": "playground",
           "path": "/example/Text/playground",
-          "checksum": "494e45e544598b915cf1dbf592956a07"
+          "checksum": "0608a9d2bbd4be30aee4c8d5267f32cd"
         },
         {
           "name": "word-wrap-with-explicit-n",

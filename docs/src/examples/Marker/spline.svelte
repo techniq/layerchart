@@ -33,7 +33,7 @@
 	const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line'] as const;
 </script>
 
-<div class="grid grid-cols-[auto_auto_auto_auto_1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-[auto_auto_auto_auto_1fr_1fr_1fr] gap-2 mb-2 lc-example-controls">
 	<Field label="Start" let:id>
 		<Switch bind:checked={markerStart} {id} size="md" />
 	</Field>
