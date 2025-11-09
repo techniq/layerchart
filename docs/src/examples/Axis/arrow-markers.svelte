@@ -10,11 +10,19 @@
 	xDomain={[timeDay.offset(today, -10), today]}
 	yDomain={[0, 100]}
 	yNice
-	padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+	padding={20}
 	height={300}
 >
 	<Layer>
-		<Axis placement="left" grid rule={{ markerEnd: 'arrow' }} />
-		<Axis placement="bottom" grid rule={{ markerEnd: 'arrow' }} />
+		<Axis
+			placement="left"
+			grid
+			rule={{ markerEnd: { type: 'arrow', class: 'stroke-secondary' } }}
+		/>
+		<Axis
+			placement="bottom"
+			grid
+			rule={{ markerEnd: { type: 'arrow', class: 'stroke-secondary' } }}
+		/>
 	</Layer>
 </Chart>

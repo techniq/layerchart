@@ -7,7 +7,7 @@
 	const data = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 </script>
 
-<Chart {data} x="date" xScale={scaleBand()} y="value" padding={{ bottom: 24 }} height={48}>
+<Chart {data} x="date" xScale={scaleBand()} y="value" padding={24} height={48}>
 	<Layer>
 		<Axis
 			placement="bottom"

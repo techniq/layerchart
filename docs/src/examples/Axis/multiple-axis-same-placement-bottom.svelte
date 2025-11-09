@@ -6,7 +6,7 @@
 	const today = startOfInterval('day', new Date());
 </script>
 
-<Chart xDomain={[timeYear.offset(today, -2), today]} padding={{ bottom: 32 }} height={48}>
+<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>
 	<Layer>
 		<Axis
 			placement="bottom"
