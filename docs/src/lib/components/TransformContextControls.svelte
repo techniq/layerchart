@@ -37,7 +37,7 @@
 	</Field>
 </div>
 
-<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-6">
+<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-6 lc-example-controls">
 	<RangeField label="Points" bind:value={config.pointCount} min={1} max={2000} />
 	<CurveMenuField bind:value={config.curve} showOpenClosed />
 	<Field label="Show points" let:id>

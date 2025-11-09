@@ -42,16 +42,18 @@
 		]}
 	/>
 
-	<MenuField
-		label="Link color"
-		bind:value={linkColorBy}
-		options={[
-			{ label: 'static', value: 'static' },
-			{ label: 'source', value: 'source' },
-			{ label: 'target', value: 'target' }
-		]}
-	/>
+	<div class="lc-example-controls">
+		<MenuField
+			label="Link color"
+			bind:value={linkColorBy}
+			options={[
+				{ label: 'static', value: 'static' },
+				{ label: 'source', value: 'source' },
+				{ label: 'target', value: 'target' }
+			]}
+		/>
 
-	<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
-	<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
+		<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
+		<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
+	</div>
 </div>

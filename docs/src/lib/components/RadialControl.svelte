@@ -11,9 +11,11 @@
 	let { curve = $bindable(curveLinearClosed) }: Props = $props();
 </script>
 
-<Field label="curve: " labelPlacement="left" dense class="absolute top-2 right-2 z-1">
-	<ToggleGroup bind:value={curve} size="sm">
-		<ToggleOption value={curveLinearClosed}>Linear</ToggleOption>
-		<ToggleOption value={curveCatmullRomClosed}>CatmullRom</ToggleOption>
-	</ToggleGroup>
-</Field>
+<div class="lc-example-controls">
+	<Field label="curve: " labelPlacement="left" dense class="absolute top-2 right-2 z-1">
+		<ToggleGroup bind:value={curve} size="sm">
+			<ToggleOption value={curveLinearClosed}>Linear</ToggleOption>
+			<ToggleOption value={curveCatmullRomClosed}>CatmullRom</ToggleOption>
+		</ToggleGroup>
+	</Field>
+</div>

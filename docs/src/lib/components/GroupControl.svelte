@@ -10,7 +10,7 @@
 	let { groupBy = $bindable(true) }: Props = $props();
 </script>
 
-<div class="flex justify-end gap-2 items-end mb-2">
+<div class="flex justify-end gap-2 items-end mb-2 lc-example-controls">
 	<Field labelPlacement="left" class="mb-1" dense>
 		<ToggleGroup bind:value={groupBy} size="sm">
 			<ToggleOption value={true}>Group</ToggleOption>
