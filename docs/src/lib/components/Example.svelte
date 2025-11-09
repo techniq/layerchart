@@ -135,6 +135,7 @@
 				{/if}
 
 				{#if page.params.example == null}
+					<!-- Only show Inspect if not already viewing specific example -->
 					<Button
 						href="/docs/components/{component}/{name}"
 						icon={LucideFullscreen}
@@ -142,15 +143,15 @@
 					>
 						Inspect
 					</Button>
-
-					<Button
-						icon={LucideFilePen}
-						class="text-surface-content/70 py-1"
-						on:click={() => openInStackBlitz(component, name)}
-					>
-						Edit in StackBlitz
-					</Button>
 				{/if}
+
+				<Button
+					icon={LucideFilePen}
+					class="text-surface-content/70 py-1"
+					on:click={() => openInStackBlitz(component, name)}
+				>
+					Edit in StackBlitz
+				</Button>
 			</div>
 		{/if}
 	{:else}
