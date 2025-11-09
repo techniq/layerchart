@@ -21,8 +21,8 @@
 	<Layer>
 		<Axis placement="left" grid rule format="percentRound" />
 		<Axis placement="bottom" rule />
-		<Rule />
-		<Points />
+		<Rule class="stroke-4 stroke-primary" />
+		<Points class="fill-secondary" />
 		<Highlight area />
 	</Layer>
 

@@ -5,9 +5,10 @@
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
-	export { data };
 
 	let xDomain = $state<DomainType>([null, null]);
+
+	export { data };
 </script>
 
 <Chart
@@ -24,7 +25,7 @@
 	c={(d) => (d.close < d.open ? 'desc' : 'asc')}
 	cDomain={['desc', 'asc']}
 	cRange={['var(--color-danger)', 'var(--color-success)']}
-	padding={{ left: 20, bottom: 32 }}
+	padding={{ left: 20, bottom: 32, top: 20 }}
 	tooltip={{ mode: 'quadtree-x' }}
 	height={300}
 >
