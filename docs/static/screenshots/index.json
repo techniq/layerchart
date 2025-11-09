@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-11-09T01:59:42.466Z",
-  "totalComponents": 57,
+  "generatedAt": "2025-11-09T02:02:52.886Z",
+  "totalComponents": 56,
   "totalExamples": 695,
   "components": [
     {
@@ -1395,6 +1395,186 @@
           "name": "horizontal-with-grid-on-top-mix-blend",
           "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
           "checksum": "91f4d5c50c32715a615a1a8f6205084b"
+        },
+        {
+          "name": "vertical-average-annotation-rule",
+          "path": "/example/Bars/vertical-average-annotation-rule",
+          "checksum": "eca4d87b30380c11df5b367730168c2a"
+        },
+        {
+          "name": "vertical-basic",
+          "path": "/example/Bars/vertical-basic",
+          "checksum": "6ad93e62f8632b5e2fe7979294bc7381"
+        },
+        {
+          "name": "vertical-calculated-value-domain-negative",
+          "path": "/example/Bars/vertical-calculated-value-domain-negative",
+          "checksum": "11b4797f3a4193432105572e20f57a46"
+        },
+        {
+          "name": "vertical-calculated-value-domain-positive",
+          "path": "/example/Bars/vertical-calculated-value-domain-positive",
+          "checksum": "31b48a92646f34eb4e7d08b0c4f9123f"
+        },
+        {
+          "name": "vertical-click-handler",
+          "path": "/example/Bars/vertical-click-handler",
+          "checksum": "17bc7dc64ab420312cca422f0627de1c"
+        },
+        {
+          "name": "vertical-customize-individual-styles",
+          "path": "/example/Bars/vertical-customize-individual-styles",
+          "checksum": "9e2139bc1821ee3f05d047a4f8cb3181"
+        },
+        {
+          "name": "vertical-gradient",
+          "path": "/example/Bars/vertical-gradient",
+          "checksum": "d967b6d4bd6123641dd02612b773e02a"
+        },
+        {
+          "name": "vertical-grouped",
+          "path": "/example/Bars/vertical-grouped",
+          "checksum": "e26e9319ff40a746ee06c834c9613ec0"
+        },
+        {
+          "name": "vertical-grouped-and-stacked",
+          "path": "/example/Bars/vertical-grouped-and-stacked",
+          "checksum": "964a09ba7f47fc507c2458394f7d8350"
+        },
+        {
+          "name": "vertical-grouped-stacked-or-both-transition",
+          "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+          "checksum": "d428783fa74f965b4b52a6320982f731"
+        },
+        {
+          "name": "vertical-highlight-individual-bar",
+          "path": "/example/Bars/vertical-highlight-individual-bar",
+          "checksum": "0bdd444f3bd088540148c5c98ef09650"
+        },
+        {
+          "name": "vertical-highlight-individual-bar-line",
+          "path": "/example/Bars/vertical-highlight-individual-bar-line",
+          "checksum": "26181652b983b027269640fddb9f874e"
+        },
+        {
+          "name": "vertical-inside-labels",
+          "path": "/example/Bars/vertical-inside-labels",
+          "checksum": "1f1ea57d292ad40bd8e1e43f17a958c6"
+        },
+        {
+          "name": "vertical-limit-ticks-count",
+          "path": "/example/Bars/vertical-limit-ticks-count",
+          "checksum": "d56363fe45ff5ffd7fb84016a5ddc2fb"
+        },
+        {
+          "name": "vertical-limit-ticks-second-scale",
+          "path": "/example/Bars/vertical-limit-ticks-second-scale",
+          "checksum": "e37d4770553941de7dc68d811ebe2faf"
+        },
+        {
+          "name": "vertical-multiple-diverging",
+          "path": "/example/Bars/vertical-multiple-diverging",
+          "checksum": "f10fcaf47c64b7287d97ba8c0c37b90b"
+        },
+        {
+          "name": "vertical-multiple-diverging-rounded-specific",
+          "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+          "checksum": "6afeead44b9f4e13e78c4944c58166b1"
+        },
+        {
+          "name": "vertical-multiple-overlapping",
+          "path": "/example/Bars/vertical-multiple-overlapping",
+          "checksum": "368d051e4d290297361cab921d7a2898"
+        },
+        {
+          "name": "vertical-outside-labels-default",
+          "path": "/example/Bars/vertical-outside-labels-default",
+          "checksum": "ecc155fbd5a400ee0c293cb81bc4e5ec"
+        },
+        {
+          "name": "vertical-rounded-top-only",
+          "path": "/example/Bars/vertical-rounded-top-only",
+          "checksum": "701c6f4534c52f24f67e32c7ad552990"
+        },
+        {
+          "name": "vertical-stacked",
+          "path": "/example/Bars/vertical-stacked",
+          "checksum": "e90482ba7b47e1c4b87c0d0c72e45480"
+        },
+        {
+          "name": "vertical-stacked-percent",
+          "path": "/example/Bars/vertical-stacked-percent",
+          "checksum": "d6894e322b10146cd88d404339496eec"
+        },
+        {
+          "name": "vertical-stagger-tween-on-mount",
+          "path": "/example/Bars/vertical-stagger-tween-on-mount",
+          "checksum": "bc82a5bb4e885265dbbdd33a3e73fe3d"
+        },
+        {
+          "name": "vertical-stagger-tween-on-mount-rounded-edge",
+          "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+          "checksum": "6ef9d46b6bda864d8578bfa0384cb659"
+        },
+        {
+          "name": "vertical-time-scale-with-inset",
+          "path": "/example/Bars/vertical-time-scale-with-inset",
+          "checksum": "3c5284e31d5529c630e24fcfd3edb2a8"
+        },
+        {
+          "name": "vertical-time-scale-with-interval",
+          "path": "/example/Bars/vertical-time-scale-with-interval",
+          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
+        },
+        {
+          "name": "vertical-time-scale-with-interval-months",
+          "path": "/example/Bars/vertical-time-scale-with-interval-months",
+          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
+        },
+        {
+          "name": "vertical-time-scale-with-missing-data",
+          "path": "/example/Bars/vertical-time-scale-with-missing-data",
+          "checksum": "8dae0033882038f1d1cf65c5ecfaee59"
+        },
+        {
+          "name": "vertical-tooltip-and-bar-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+          "checksum": "f909b1bd172ff370f2a6768a433ea64c"
+        },
+        {
+          "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+          "checksum": "bc01de985e12b65c748acfdf8668e8a8"
+        },
+        {
+          "name": "vertical-tooltip-and-clipped-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+          "checksum": "f0b0d8b9aa95b13025e2c58f038a6ab4"
+        },
+        {
+          "name": "vertical-tooltip-and-highlight",
+          "path": "/example/Bars/vertical-tooltip-and-highlight",
+          "checksum": "ae414302d346548179b761e04b9fbfb8"
+        },
+        {
+          "name": "vertical-tween-on-mount",
+          "path": "/example/Bars/vertical-tween-on-mount",
+          "checksum": "2a9eb326d02854fe28345b8055367c85"
+        },
+        {
+          "name": "vertical-tween-on-mount-rounded-edge",
+          "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+          "checksum": "20240537c50f4156e69efe3f5bb917ec"
+        },
+        {
+          "name": "vertical-with-grid-on-top",
+          "path": "/example/Bars/vertical-with-grid-on-top",
+          "checksum": "e08f00bd7fb10b1b65e004dc50838251"
+        },
+        {
+          "name": "vertical-with-grid-on-top-mix-blend",
+          "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+          "checksum": "70fc6c3f192a3346c22a9885b7980d7d"
         }
       ]
     },
@@ -1590,191 +1770,6 @@
           "name": "schemes",
           "path": "/example/ColorRamp/schemes",
           "checksum": "02913bd3d1165478071b72fc179906a8"
-        }
-      ]
-    },
-    {
-      "component": "Columns",
-      "examples": [
-        {
-          "name": "vertical-average-annotation-rule",
-          "path": "/example/Columns/vertical-average-annotation-rule",
-          "checksum": "eca4d87b30380c11df5b367730168c2a"
-        },
-        {
-          "name": "vertical-basic",
-          "path": "/example/Columns/vertical-basic",
-          "checksum": "6ad93e62f8632b5e2fe7979294bc7381"
-        },
-        {
-          "name": "vertical-calculated-value-domain-negative",
-          "path": "/example/Columns/vertical-calculated-value-domain-negative",
-          "checksum": "11b4797f3a4193432105572e20f57a46"
-        },
-        {
-          "name": "vertical-calculated-value-domain-positive",
-          "path": "/example/Columns/vertical-calculated-value-domain-positive",
-          "checksum": "31b48a92646f34eb4e7d08b0c4f9123f"
-        },
-        {
-          "name": "vertical-click-handler",
-          "path": "/example/Columns/vertical-click-handler",
-          "checksum": "17bc7dc64ab420312cca422f0627de1c"
-        },
-        {
-          "name": "vertical-customize-individual-styles",
-          "path": "/example/Columns/vertical-customize-individual-styles",
-          "checksum": "9e2139bc1821ee3f05d047a4f8cb3181"
-        },
-        {
-          "name": "vertical-gradient",
-          "path": "/example/Columns/vertical-gradient",
-          "checksum": "d967b6d4bd6123641dd02612b773e02a"
-        },
-        {
-          "name": "vertical-grouped",
-          "path": "/example/Columns/vertical-grouped",
-          "checksum": "e26e9319ff40a746ee06c834c9613ec0"
-        },
-        {
-          "name": "vertical-grouped-and-stacked",
-          "path": "/example/Columns/vertical-grouped-and-stacked",
-          "checksum": "964a09ba7f47fc507c2458394f7d8350"
-        },
-        {
-          "name": "vertical-grouped-stacked-or-both-transition",
-          "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
-          "checksum": "d428783fa74f965b4b52a6320982f731"
-        },
-        {
-          "name": "vertical-highlight-individual-bar",
-          "path": "/example/Columns/vertical-highlight-individual-bar",
-          "checksum": "0bdd444f3bd088540148c5c98ef09650"
-        },
-        {
-          "name": "vertical-highlight-individual-bar-line",
-          "path": "/example/Columns/vertical-highlight-individual-bar-line",
-          "checksum": "26181652b983b027269640fddb9f874e"
-        },
-        {
-          "name": "vertical-inside-labels",
-          "path": "/example/Columns/vertical-inside-labels",
-          "checksum": "1f1ea57d292ad40bd8e1e43f17a958c6"
-        },
-        {
-          "name": "vertical-limit-ticks-count",
-          "path": "/example/Columns/vertical-limit-ticks-count",
-          "checksum": "d56363fe45ff5ffd7fb84016a5ddc2fb"
-        },
-        {
-          "name": "vertical-limit-ticks-second-scale",
-          "path": "/example/Columns/vertical-limit-ticks-second-scale",
-          "checksum": "e37d4770553941de7dc68d811ebe2faf"
-        },
-        {
-          "name": "vertical-multiple-diverging",
-          "path": "/example/Columns/vertical-multiple-diverging",
-          "checksum": "f10fcaf47c64b7287d97ba8c0c37b90b"
-        },
-        {
-          "name": "vertical-multiple-diverging-rounded-specific",
-          "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
-          "checksum": "6afeead44b9f4e13e78c4944c58166b1"
-        },
-        {
-          "name": "vertical-multiple-overlapping",
-          "path": "/example/Columns/vertical-multiple-overlapping",
-          "checksum": "368d051e4d290297361cab921d7a2898"
-        },
-        {
-          "name": "vertical-outside-labels-default",
-          "path": "/example/Columns/vertical-outside-labels-default",
-          "checksum": "ecc155fbd5a400ee0c293cb81bc4e5ec"
-        },
-        {
-          "name": "vertical-rounded-top-only",
-          "path": "/example/Columns/vertical-rounded-top-only",
-          "checksum": "701c6f4534c52f24f67e32c7ad552990"
-        },
-        {
-          "name": "vertical-stacked",
-          "path": "/example/Columns/vertical-stacked",
-          "checksum": "e90482ba7b47e1c4b87c0d0c72e45480"
-        },
-        {
-          "name": "vertical-stacked-percent",
-          "path": "/example/Columns/vertical-stacked-percent",
-          "checksum": "d6894e322b10146cd88d404339496eec"
-        },
-        {
-          "name": "vertical-stagger-tween-on-mount",
-          "path": "/example/Columns/vertical-stagger-tween-on-mount",
-          "checksum": "bc82a5bb4e885265dbbdd33a3e73fe3d"
-        },
-        {
-          "name": "vertical-stagger-tween-on-mount-rounded-edge",
-          "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
-          "checksum": "6ef9d46b6bda864d8578bfa0384cb659"
-        },
-        {
-          "name": "vertical-time-scale-with-inset",
-          "path": "/example/Columns/vertical-time-scale-with-inset",
-          "checksum": "3c5284e31d5529c630e24fcfd3edb2a8"
-        },
-        {
-          "name": "vertical-time-scale-with-interval",
-          "path": "/example/Columns/vertical-time-scale-with-interval",
-          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
-        },
-        {
-          "name": "vertical-time-scale-with-interval-months",
-          "path": "/example/Columns/vertical-time-scale-with-interval-months",
-          "checksum": "1045b66e86b7d7460192a9ba20ea7b77"
-        },
-        {
-          "name": "vertical-time-scale-with-missing-data",
-          "path": "/example/Columns/vertical-time-scale-with-missing-data",
-          "checksum": "8dae0033882038f1d1cf65c5ecfaee59"
-        },
-        {
-          "name": "vertical-tooltip-and-bar-highlight",
-          "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
-          "checksum": "f909b1bd172ff370f2a6768a433ea64c"
-        },
-        {
-          "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-          "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-          "checksum": "bc01de985e12b65c748acfdf8668e8a8"
-        },
-        {
-          "name": "vertical-tooltip-and-clipped-highlight",
-          "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
-          "checksum": "f0b0d8b9aa95b13025e2c58f038a6ab4"
-        },
-        {
-          "name": "vertical-tooltip-and-highlight",
-          "path": "/example/Columns/vertical-tooltip-and-highlight",
-          "checksum": "ae414302d346548179b761e04b9fbfb8"
-        },
-        {
-          "name": "vertical-tween-on-mount",
-          "path": "/example/Columns/vertical-tween-on-mount",
-          "checksum": "2a9eb326d02854fe28345b8055367c85"
-        },
-        {
-          "name": "vertical-tween-on-mount-rounded-edge",
-          "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
-          "checksum": "20240537c50f4156e69efe3f5bb917ec"
-        },
-        {
-          "name": "vertical-with-grid-on-top",
-          "path": "/example/Columns/vertical-with-grid-on-top",
-          "checksum": "e08f00bd7fb10b1b65e004dc50838251"
-        },
-        {
-          "name": "vertical-with-grid-on-top-mix-blend",
-          "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
-          "checksum": "70fc6c3f192a3346c22a9885b7980d7d"
         }
       ]
     },
