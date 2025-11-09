@@ -10,9 +10,10 @@
 	{data}
 	x="x"
 	y="y"
-	height={400}
 	onTooltipClick={(e, detail) => {
 		console.log(e, detail);
 		alert(JSON.stringify(detail));
 	}}
+	padding={24}
+	height={400}
 />

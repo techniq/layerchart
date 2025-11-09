@@ -20,8 +20,6 @@
 	yDomain={range(7)}
 	r="value"
 	rRange={[0, 16]}
-	padding={{ left: 32, bottom: 16 }}
-	height={300}
 	props={{
 		xAxis: { format: (d) => 'Week ' + d },
 		yAxis: { format: (d) => daysOfWeek[d] },
@@ -29,6 +27,8 @@
 		grid: { x: false, y: true, bandAlign: 'between' },
 		tooltip: { context: { mode: 'band' } }
 	}}
+	padding={{ left: 32, bottom: 16 }}
+	height={300}
 >
 	{#snippet highlight()}
 		<Highlight area axis="x" />

@@ -22,10 +22,11 @@
 				size: 8,
 				lines: {
 					rotate: -45,
-					opacity: 0.2
+					opacity: 0.3
 				}
 			}
 		}
 	]}
+	padding={24}
 	height={400}
 />

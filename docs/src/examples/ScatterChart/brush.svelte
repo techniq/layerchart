@@ -16,5 +16,6 @@
 		yAxis: { motion: { type: 'tween', duration: 200 } }
 	}}
 	brush
+	padding={24}
 	height={400}
 />

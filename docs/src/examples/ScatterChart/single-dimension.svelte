@@ -18,6 +18,7 @@
 		points: { opacity: 0.3 },
 		highlight: { lines: false }
 	}}
+	padding={24}
 	height={48}
 >
 	{#snippet tooltip({ context })}

@@ -20,5 +20,6 @@
 			fillOpacity: 0.3
 		}
 	}}
+	padding={24}
 	height={400}
 />

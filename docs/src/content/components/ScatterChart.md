@@ -17,6 +17,10 @@ related: [components/Chart, components/Points]
 
 ### Domain nice
 
+> Nice (xNice or yNice) is a feature that makes the numeric range of the axis align with round,
+human-friendly values instead of tight, exact min/max data values. (see padding as compared to
+[basic](#basic) example)
+
 <Example name="domain-nice" />
 
 ### Domain padding

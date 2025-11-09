@@ -6,4 +6,4 @@
 	export { data };
 </script>
 
-<ScatterChart {data} x="x" y="y" height={400} axis="x" />
+<ScatterChart {data} x="x" y="y" axis="x" padding={24} height={400} />

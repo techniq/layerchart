@@ -12,16 +12,21 @@
 	y="y"
 	annotations={[
 		{
-			type: 'line',
-			label: 'Max',
-			labelXOffset: 4,
-			labelYOffset: 2,
-			y: 320,
-			props: {
-				label: { class: 'fill-danger' },
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' }
+			type: 'range',
+			layer: 'below',
+			x: [230, 270],
+			label: 'Range',
+			labelPlacement: 'bottom',
+			labelYOffset: 4,
+			pattern: {
+				size: 8,
+				lines: {
+					rotate: -45,
+					opacity: 0.3
+				}
 			}
 		}
 	]}
+	padding={24}
 	height={400}
 />

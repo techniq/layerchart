@@ -11,10 +11,11 @@
 	{data}
 	x="date"
 	y="value"
-	height={400}
 	yBaseline={0}
 	c="value"
 	cScale={scaleThreshold()}
 	cDomain={[50]}
 	cRange={['var(--color-danger)', 'var(--color-success)']}
+	padding={24}
+	height={400}
 />
