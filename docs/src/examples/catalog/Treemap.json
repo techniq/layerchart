@@ -59,7 +59,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 161,
+      "lineNumber": 119,
       "line": "<Treemap"
     },
     {
@@ -70,5 +70,5 @@
       "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.718Z"
+  "updatedAt": "2025-11-09T02:04:07.981Z"
 }

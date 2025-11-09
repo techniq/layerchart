@@ -53,7 +53,7 @@
       "example": "horizontal-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal-placement",
-      "lineNumber": 55,
+      "lineNumber": 18,
       "line": "<AnnotationLine"
     },
     {
@@ -74,7 +74,7 @@
       "example": "vertical-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-placement",
-      "lineNumber": 55,
+      "lineNumber": 18,
       "line": "<AnnotationLine"
     },
     {
@@ -106,5 +106,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:26.975Z"
+  "updatedAt": "2025-11-09T02:04:06.079Z"
 }

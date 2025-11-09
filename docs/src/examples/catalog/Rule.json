@@ -151,45 +151,45 @@
       "line": "<Rule x={0} />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
-      "component": "BrushContext",
-      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
-      "lineNumber": 67,
-      "line": "<Rule y={0} />"
-    },
-    {
       "example": "vertical-average-annotation-rule",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-average-annotation-rule",
       "lineNumber": 32,
       "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
     },
     {
       "example": "vertical-inside-labels",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-inside-labels",
       "lineNumber": 23,
       "line": "<Rule y={0} />"
     },
     {
       "example": "vertical-multiple-diverging",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging",
       "lineNumber": 31,
       "line": "<Rule y={0} />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 33,
       "line": "<Rule y={0} />"
     },
     {
       "example": "vertical-outside-labels-default",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-outside-labels-default",
       "lineNumber": 24,
+      "line": "<Rule y={0} />"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 67,
       "line": "<Rule y={0} />"
     },
     {
@@ -315,30 +315,16 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 42,
-      "line": "<Rule />"
-    },
-    {
-      "example": "duration 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/duration 2",
-      "lineNumber": 45,
+      "lineNumber": 43,
       "line": "<Rule />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 39,
-      "line": "<Rule />"
-    },
-    {
-      "example": "multiple-overlapping-durations 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-durations 2",
-      "lineNumber": 51,
+      "lineNumber": 42,
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:56.413Z"
+  "updatedAt": "2025-11-09T02:04:07.556Z"
 }

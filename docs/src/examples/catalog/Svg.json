@@ -13,7 +13,7 @@
       "example": "pixelated",
       "component": "ColorRamp",
       "path": "/example/ColorRamp/pixelated",
-      "lineNumber": 30,
+      "lineNumber": 27,
       "line": "<svg {width} {height}>"
     },
     {
@@ -31,5 +31,5 @@
       "line": "<svg {width} {height}>"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:28.170Z"
+  "updatedAt": "2025-11-09T02:04:07.640Z"
 }

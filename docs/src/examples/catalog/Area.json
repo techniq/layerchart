@@ -532,41 +532,20 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 87,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "anchor-location 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/anchor-location 2",
-      "lineNumber": 98,
+      "lineNumber": 38,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 43,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "area 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/area 2",
-      "lineNumber": 46,
+      "lineNumber": 41,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
       "example": "basic",
       "component": "Tooltip",
       "path": "/example/Tooltip/basic",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "basic 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/basic 2",
       "lineNumber": 29,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
@@ -578,23 +557,9 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
-      "example": "color-swatch 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/color-swatch 2",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
       "example": "color-swatch-using-theme",
       "component": "Tooltip",
       "path": "/example/Tooltip/color-swatch-using-theme",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "color-swatch-using-theme 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/color-swatch-using-theme 2",
       "lineNumber": 29,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
@@ -606,23 +571,9 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
-      "example": "custom-content 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/custom-content 2",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
       "example": "data-snapping",
       "component": "Tooltip",
       "path": "/example/Tooltip/data-snapping",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "data-snapping 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/data-snapping 2",
       "lineNumber": 29,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
@@ -634,23 +585,9 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
-      "example": "default-mouse-position-with-offset 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/default-mouse-position-with-offset 2",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
       "example": "disable-motion",
       "component": "Tooltip",
       "path": "/example/Tooltip/disable-motion",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "disable-motion 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/disable-motion 2",
       "lineNumber": 29,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
@@ -662,23 +599,9 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
-      "example": "externally-access-tooltip-data 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/externally-access-tooltip-data 2",
-      "lineNumber": 44,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
       "example": "invert-variant",
       "component": "Tooltip",
       "path": "/example/Tooltip/invert-variant",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "invert-variant 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/invert-variant 2",
       "lineNumber": 29,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
@@ -690,40 +613,12 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
-      "example": "multiple-tooltips-with-fixed-single-axis 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis 2",
-      "lineNumber": 31,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "position",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/position",
-      "lineNumber": 28,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
-      "example": "position 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/position 2",
-      "lineNumber": 29,
-      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
-    },
-    {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
       "lineNumber": 54,
       "line": "<Area"
-    },
-    {
-      "example": "stacked-area 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/stacked-area 2",
-      "lineNumber": 57,
-      "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-03T17:50:37.034Z"
+  "updatedAt": "2025-11-09T02:04:06.241Z"
 }

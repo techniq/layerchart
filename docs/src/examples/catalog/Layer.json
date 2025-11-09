@@ -780,6 +780,258 @@
       "line": "<Layer>"
     },
     {
+      "example": "vertical-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-average-annotation-rule",
+      "lineNumber": 28,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-basic",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-basic",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-calculated-value-domain-negative",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-calculated-value-domain-negative",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-calculated-value-domain-positive",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-calculated-value-domain-positive",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-click-handler",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-click-handler",
+      "lineNumber": 30,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-customize-individual-styles",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-gradient",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-gradient",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-grouped",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-grouped-and-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-and-stacked",
+      "lineNumber": 42,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+      "lineNumber": 70,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-highlight-individual-bar-line",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar-line",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-inside-labels",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-limit-ticks-count",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-limit-ticks-count",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-limit-ticks-second-scale",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-limit-ticks-second-scale",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-multiple-diverging-rounded-specific",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "lineNumber": 28,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-overlapping",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-outside-labels-default",
+      "lineNumber": 21,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-rounded-top-only",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-rounded-top-only",
+      "lineNumber": 25,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-stacked-percent",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked-percent",
+      "lineNumber": 38,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-time-scale-with-inset",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-inset",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-time-scale-with-interval",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-interval",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-time-scale-with-interval-months",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-interval-months",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-time-scale-with-missing-data",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-missing-data",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tooltip-and-bar-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 69,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "lineNumber": 28,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tooltip-and-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-highlight",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tween-on-mount",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-with-grid-on-top",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-with-grid-on-top",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
+      "example": "vertical-with-grid-on-top-mix-blend",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
       "example": "basic",
       "component": "BrushContext",
       "path": "/example/BrushContext/basic",
@@ -1018,258 +1270,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "vertical-average-annotation-rule",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-average-annotation-rule",
-      "lineNumber": 28,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-basic",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-basic",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-calculated-value-domain-negative",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-calculated-value-domain-negative",
-      "lineNumber": 23,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-calculated-value-domain-positive",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-calculated-value-domain-positive",
-      "lineNumber": 23,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-click-handler",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-click-handler",
-      "lineNumber": 30,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-customize-individual-styles",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-customize-individual-styles",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-gradient",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-gradient",
-      "lineNumber": 20,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-grouped",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped",
-      "lineNumber": 37,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-grouped-and-stacked",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped-and-stacked",
-      "lineNumber": 42,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-grouped-stacked-or-both-transition",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
-      "lineNumber": 70,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-highlight-individual-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-highlight-individual-bar-line",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar-line",
-      "lineNumber": 20,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-inside-labels",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-inside-labels",
-      "lineNumber": 20,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-limit-ticks-count",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-limit-ticks-count",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-limit-ticks-second-scale",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-limit-ticks-second-scale",
-      "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-multiple-diverging",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-multiple-diverging-rounded-specific",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 28,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-multiple-overlapping",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-overlapping",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-outside-labels-default",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-outside-labels-default",
-      "lineNumber": 21,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-rounded-top-only",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-rounded-top-only",
-      "lineNumber": 25,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-stacked",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stacked",
-      "lineNumber": 34,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-stacked-percent",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stacked-percent",
-      "lineNumber": 38,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-stagger-tween-on-mount",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stagger-tween-on-mount",
-      "lineNumber": 34,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-stagger-tween-on-mount-rounded-edge",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
-      "lineNumber": 34,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-time-scale-with-inset",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-inset",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-time-scale-with-interval",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-interval",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-time-scale-with-interval-months",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-interval-months",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-time-scale-with-missing-data",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-missing-data",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tooltip-and-bar-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 69,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tooltip-and-clipped-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
-      "lineNumber": 28,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tooltip-and-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-highlight",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tween-on-mount",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tween-on-mount",
-      "lineNumber": 34,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-tween-on-mount-rounded-edge",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
-      "lineNumber": 34,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-with-grid-on-top",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-with-grid-on-top",
-      "lineNumber": 23,
-      "line": "<Layer>"
-    },
-    {
-      "example": "vertical-with-grid-on-top-mix-blend",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
-      "lineNumber": 23,
-      "line": "<Layer>"
-    },
-    {
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
@@ -1427,7 +1427,7 @@
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 93,
+      "lineNumber": 61,
       "line": "<Layer>"
     },
     {
@@ -1938,21 +1938,21 @@
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 39,
+      "lineNumber": 36,
       "line": "<Layer>"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 39,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 39,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -2043,21 +2043,21 @@
       "example": "basic",
       "component": "Pie",
       "path": "/example/Pie/basic",
-      "lineNumber": 18,
+      "lineNumber": 35,
       "line": "<Layer center>"
     },
     {
       "example": "default-slot-render-each-arc",
       "component": "Pie",
       "path": "/example/Pie/default-slot-render-each-arc",
-      "lineNumber": 18,
+      "lineNumber": 36,
       "line": "<Layer center>"
     },
     {
       "example": "disable-sorting",
       "component": "Pie",
       "path": "/example/Pie/disable-sorting",
-      "lineNumber": 18,
+      "lineNumber": 35,
       "line": "<Layer center>"
     },
     {
@@ -2218,7 +2218,7 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 26,
+      "lineNumber": 23,
       "line": "<Layer center>"
     },
     {
@@ -2232,7 +2232,7 @@
       "example": "basic",
       "component": "Points",
       "path": "/example/Points/basic",
-      "lineNumber": 19,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
@@ -2246,7 +2246,7 @@
       "example": "with-labels",
       "component": "Points",
       "path": "/example/Points/with-labels",
-      "lineNumber": 19,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
@@ -2694,42 +2694,42 @@
       "example": "basic",
       "component": "Spline",
       "path": "/example/Spline/basic",
-      "lineNumber": 19,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 37,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 37,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 38,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 37,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/example/Spline/gradient-encoding",
-      "lineNumber": 18,
+      "lineNumber": 19,
       "line": "<Layer>"
     },
     {
@@ -2743,14 +2743,14 @@
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
-      "lineNumber": 37,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 37,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
@@ -2785,7 +2785,7 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 48,
+      "lineNumber": 33,
       "line": "<Layer>"
     },
     {
@@ -2806,28 +2806,28 @@
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 34,
+      "lineNumber": 29,
       "line": "<Layer center>"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 37,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "vertical",
       "component": "Spline",
       "path": "/example/Spline/vertical",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Layer>"
     },
     {
       "example": "with-labels",
       "component": "Spline",
       "path": "/example/Spline/with-labels",
-      "lineNumber": 19,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
@@ -2855,41 +2855,20 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 84,
-      "line": "<Layer>"
-    },
-    {
-      "example": "anchor-location 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/anchor-location 2",
-      "lineNumber": 95,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 40,
-      "line": "<Layer>"
-    },
-    {
-      "example": "area 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/area 2",
-      "lineNumber": 43,
+      "lineNumber": 38,
       "line": "<Layer>"
     },
     {
       "example": "basic",
       "component": "Tooltip",
       "path": "/example/Tooltip/basic",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "basic 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/basic 2",
       "lineNumber": 26,
       "line": "<Layer>"
     },
@@ -2901,23 +2880,9 @@
       "line": "<Layer>"
     },
     {
-      "example": "color-swatch 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/color-swatch 2",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
       "example": "color-swatch-using-theme",
       "component": "Tooltip",
       "path": "/example/Tooltip/color-swatch-using-theme",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "color-swatch-using-theme 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/color-swatch-using-theme 2",
       "lineNumber": 26,
       "line": "<Layer>"
     },
@@ -2929,23 +2894,9 @@
       "line": "<Layer>"
     },
     {
-      "example": "custom-content 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/custom-content 2",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
       "example": "data-snapping",
       "component": "Tooltip",
       "path": "/example/Tooltip/data-snapping",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
-      "example": "data-snapping 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/data-snapping 2",
       "lineNumber": 26,
       "line": "<Layer>"
     },
@@ -2957,13 +2908,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "default-mouse-position-with-offset 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/default-mouse-position-with-offset 2",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
       "example": "disable-motion",
       "component": "Tooltip",
       "path": "/example/Tooltip/disable-motion",
@@ -2971,37 +2915,16 @@
       "line": "<Layer>"
     },
     {
-      "example": "disable-motion 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/disable-motion 2",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 39,
-      "line": "<Layer>"
-    },
-    {
-      "example": "duration 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/duration 2",
-      "lineNumber": 42,
+      "lineNumber": 40,
       "line": "<Layer>"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 41,
-      "line": "<Layer>"
-    },
-    {
-      "example": "externally-access-tooltip-data 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/externally-access-tooltip-data 2",
       "lineNumber": 41,
       "line": "<Layer>"
     },
@@ -3013,38 +2936,17 @@
       "line": "<Layer>"
     },
     {
-      "example": "invert-variant 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/invert-variant 2",
-      "lineNumber": 26,
-      "line": "<Layer>"
-    },
-    {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 44,
-      "line": "<Layer>"
-    },
-    {
-      "example": "multiple-overlapping-bars 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars 2",
-      "lineNumber": 44,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 36,
-      "line": "<Layer>"
-    },
-    {
-      "example": "multiple-overlapping-durations 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-durations 2",
-      "lineNumber": 48,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -3055,51 +2957,16 @@
       "line": "<Layer>"
     },
     {
-      "example": "multiple-tooltips-with-fixed-single-axis 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis 2",
-      "lineNumber": 28,
-      "line": "<Layer>"
-    },
-    {
       "example": "multiple-tooltips-with-fixed-single-axis-scaleband",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
-      "lineNumber": 30,
-      "line": "<Layer>"
-    },
-    {
-      "example": "multiple-tooltips-with-fixed-single-axis-scaleband 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband 2",
-      "lineNumber": 30,
-      "line": "<Layer>"
-    },
-    {
-      "example": "position",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/position",
-      "lineNumber": 25,
-      "line": "<Layer>"
-    },
-    {
-      "example": "position 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/position 2",
-      "lineNumber": 26,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 32,
-      "line": "<Layer>"
-    },
-    {
-      "example": "scatter-plot 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/scatter-plot 2",
       "lineNumber": 34,
       "line": "<Layer>"
     },
@@ -3107,14 +2974,7 @@
       "example": "simple-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/simple-bars",
-      "lineNumber": 42,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple-bars 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/simple-bars 2",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Layer>"
     },
     {
@@ -3125,24 +2985,10 @@
       "line": "<Layer>"
     },
     {
-      "example": "single-date-time 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/single-date-time 2",
-      "lineNumber": 49,
-      "line": "<Layer>"
-    },
-    {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
       "lineNumber": 48,
-      "line": "<Layer>"
-    },
-    {
-      "example": "stacked-area 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/stacked-area 2",
-      "lineNumber": 51,
       "line": "<Layer>"
     },
     {
@@ -3163,8 +3009,8 @@
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 57,
-      "line": "<Layer class=\"border rounded overflow-hidden\">"
+      "lineNumber": 47,
+      "line": "<Layer class=\"overflow-hidden\">"
     },
     {
       "example": "basic",
@@ -3219,7 +3065,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 160,
+      "lineNumber": 118,
       "line": "<Layer>"
     },
     {
@@ -3233,9 +3079,9 @@
       "example": "example",
       "component": "Voronoi",
       "path": "/example/Voronoi/example",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-03T17:50:38.337Z"
+  "updatedAt": "2025-11-09T02:04:07.153Z"
 }

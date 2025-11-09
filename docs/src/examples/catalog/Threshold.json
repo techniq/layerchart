@@ -34,7 +34,7 @@
       "component": "Threshold",
       "path": "/example/Threshold/with-labels",
       "lineNumber": 31,
-      "line": "<Threshold>"
+      "line": "<Threshold curve={selectedCurve}>"
     },
     {
       "example": "with-tooltip-and-highlight",
@@ -44,5 +44,5 @@
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.613Z"
+  "updatedAt": "2025-11-09T02:04:07.698Z"
 }

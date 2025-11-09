@@ -273,63 +273,63 @@
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 45,
-      "line": "<Spline id={pathId} {curve} />"
+      "lineNumber": 46,
+      "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 45,
-      "line": "<Spline id={pathId} {curve} />"
+      "lineNumber": 48,
+      "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 46,
-      "line": "<Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />"
+      "lineNumber": 49,
+      "line": "<Spline id={pathId} curve={config.curve} draw={{ duration: 3000, easing: linear }} />"
     },
     {
       "example": "basic",
       "component": "Spline",
       "path": "/example/Spline/basic",
-      "lineNumber": 22,
+      "lineNumber": 14,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 41,
-      "line": "<Spline {curve} class=\"stroke-primary stroke-2\">"
+      "lineNumber": 35,
+      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 41,
-      "line": "<Spline {curve} draw class=\"stroke-primary stroke-2\" />"
+      "lineNumber": 35,
+      "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 42,
-      "line": "<Spline {curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+      "lineNumber": 36,
+      "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 41,
-      "line": "<Spline {curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+      "lineNumber": 35,
+      "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/example/Spline/gradient-encoding",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
@@ -343,14 +343,14 @@
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
-      "lineNumber": 41,
-      "line": "<Spline {curve} class=\"stroke-primary stroke-2\">"
+      "lineNumber": 36,
+      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 41,
+      "lineNumber": 35,
       "line": "<Spline"
     },
     {
@@ -392,7 +392,7 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 52,
+      "lineNumber": 37,
       "line": "<Spline"
     },
     {
@@ -413,28 +413,28 @@
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 42,
+      "lineNumber": 37,
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 41,
-      "line": "<Spline {curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
+      "lineNumber": 35,
+      "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
     },
     {
       "example": "vertical",
       "component": "Spline",
       "path": "/example/Spline/vertical",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "with-labels",
       "component": "Spline",
       "path": "/example/Spline/with-labels",
-      "lineNumber": 22,
+      "lineNumber": 14,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
@@ -490,9 +490,9 @@
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 59,
-      "line": "<Spline {curve} motion=\"tween\" />"
+      "lineNumber": 49,
+      "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:50:38.823Z"
+  "updatedAt": "2025-11-09T02:04:07.625Z"
 }

@@ -200,154 +200,154 @@
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "horizontal-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal-placement",
-      "lineNumber": 53,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 16,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "horizontal-with-range",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal-with-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-placement",
-      "lineNumber": 53,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 16,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical-to-point",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-to-point",
       "lineNumber": 25,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-with-rotation",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "label-placement",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/label-placement",
-      "lineNumber": 56,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 30,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/on-axis-with-tooltip",
       "lineNumber": 25,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
       "lineNumber": 25,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "on-series-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/on-series-with-tooltip",
       "lineNumber": 25,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/series-annotation",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 40 }} height={300}>"
+      "line": "<LineChart"
     },
     {
       "example": "hide-tooltip",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/hide-tooltip",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "horizontal-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "horizontal-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "horizontal-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
-      "lineNumber": 53,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 28,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "vertical-with-gradient-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-gradient-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "vertical-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "vertical-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "vertical-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
       "example": "axis-labels-inside",
@@ -686,5 +686,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-11-03T17:18:47.494Z"
+  "updatedAt": "2025-11-09T02:04:07.213Z"
 }

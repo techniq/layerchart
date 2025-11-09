@@ -39,15 +39,15 @@
     },
     {
       "example": "vertical-inside-labels",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-inside-labels",
       "lineNumber": 25,
       "line": "<Labels placement=\"inside\" format=\"integer\" />"
     },
     {
       "example": "vertical-outside-labels-default",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-outside-labels-default",
       "lineNumber": 26,
       "line": "<Labels format=\"integer\" />"
     },
@@ -62,7 +62,7 @@
       "example": "with-labels",
       "component": "Points",
       "path": "/example/Points/with-labels",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<Labels format=\"integer\" offset={10} />"
     },
     {
@@ -76,9 +76,9 @@
       "example": "with-labels",
       "component": "Spline",
       "path": "/example/Spline/with-labels",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:55.873Z"
+  "updatedAt": "2025-11-09T02:04:07.134Z"
 }

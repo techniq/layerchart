@@ -146,6 +146,13 @@
       "line": "<LinearGradient class=\"from-green-400 to-blue-500\" units=\"userSpaceOnUse\">"
     },
     {
+      "example": "vertical-gradient",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-gradient",
+      "lineNumber": 23,
+      "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
+    },
+    {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
@@ -200,13 +207,6 @@
       "path": "/example/BrushContext/tooltip-interop",
       "lineNumber": 43,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
-    },
-    {
-      "example": "vertical-gradient",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-gradient",
-      "lineNumber": 23,
-      "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
     },
     {
       "example": "gradient",
@@ -429,7 +429,7 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/example/Spline/gradient-encoding",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
     },
     {
@@ -440,5 +440,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-03T17:18:47.519Z"
+  "updatedAt": "2025-11-09T02:04:07.236Z"
 }

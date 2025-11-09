@@ -56,7 +56,7 @@
       "example": "label-placement",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/label-placement",
-      "lineNumber": 59,
+      "lineNumber": 33,
       "line": "<AnnotationPoint"
     },
     {
@@ -84,9 +84,9 @@
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/series-annotation",
-      "lineNumber": 13,
+      "lineNumber": 19,
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:26.997Z"
+  "updatedAt": "2025-11-09T02:04:06.101Z"
 }

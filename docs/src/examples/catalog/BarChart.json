@@ -336,14 +336,14 @@
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/bar-chart",
       "lineNumber": 16,
-      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "band-scale-on-axis",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/band-scale-on-axis",
       "lineNumber": 16,
-      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 5, left: 25, bottom: 35 }}>"
     },
     {
       "example": "band-scale-on-value",
@@ -983,5 +983,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-03T17:50:37.326Z"
+  "updatedAt": "2025-11-09T02:04:06.345Z"
 }
