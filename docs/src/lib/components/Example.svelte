@@ -7,10 +7,12 @@
 	import { examples } from '$lib/context';
 	import Code from './Code.svelte';
 	import Json from './Json.svelte';
+	import { openInStackBlitz } from '$lib/utils/open-in-stackblitz.js';
 
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
+	import LucideFilePen from '~icons/lucide/file-pen';
 
 	import { page } from '$app/state';
 
@@ -139,6 +141,14 @@
 						class="text-surface-content/70 py-1"
 					>
 						Inspect
+					</Button>
+
+					<Button
+						icon={LucideFilePen}
+						class="text-surface-content/70 py-1"
+						on:click={() => openInStackBlitz(component, name)}
+					>
+						Edit in StackBlitz
 					</Button>
 				{/if}
 			</div>
