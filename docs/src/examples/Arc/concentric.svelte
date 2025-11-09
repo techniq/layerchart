@@ -12,7 +12,7 @@
 	export { data };
 </script>
 
-<Chart height={200}>
+<Chart height={200} padding={20}>
 	<Layer center>
 		<Arc
 			value={400}

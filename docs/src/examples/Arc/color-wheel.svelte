@@ -27,7 +27,7 @@
 	export { data };
 </script>
 
-<Chart height={300}>
+<Chart height={300} padding={20}>
 	{#snippet children({ context })}
 		<Layer center>
 			{#each { length: layerCount } as _, layerIndex}

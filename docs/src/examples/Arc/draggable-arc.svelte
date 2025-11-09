@@ -9,7 +9,7 @@
 	export { data };
 </script>
 
-<Chart height={200}>
+<Chart height={200} padding={20}>
 	{#snippet children({ context })}
 		<Layer center>
 			{@const arcWidth = 20}

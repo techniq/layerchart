@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { Arc, Chart, Group, Layer, LinearGradient, Text } from 'layerchart';
-	import { RangeField } from 'svelte-ux';
+	import ArcControls from '$lib/components/ArcControls.svelte';
 
 	let value = $state(75);
-	const data = { value };
 
-	export { data };
+	export { value as data };
 </script>
 
-<div class="mb-2">
-	<RangeField label="Value" bind:value />
-</div>
-<Chart height={120}>
+<ArcControls bind:value includeSegments={false} />
+<Chart height={120} padding={20}>
 	<Layer center>
 		<Group y={16}>
 			<LinearGradient class="from-secondary to-primary">

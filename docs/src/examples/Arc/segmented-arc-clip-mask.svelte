@@ -1,19 +1,16 @@
 <script lang="ts">
 	import { Arc, Chart, ClipPath, Layer, Text } from 'layerchart';
-	import { RangeField, SpringValue } from 'svelte-ux';
+	import { SpringValue } from 'svelte-ux';
+	import ArcControls from '$lib/components/ArcControls.svelte';
 
 	let value = $state(75);
 	let segments = $state(60);
-	const data = { value, segments };
 
-	export { data };
+	export const data = { value, segments };
 </script>
 
-<div class="grid grid-flow-col gap-3 mb-4">
-	<RangeField label="Value" bind:value />
-	<RangeField label="Segments" bind:value={segments} min={2} />
-</div>
-<Chart height={240}>
+<ArcControls bind:value bind:segments />
+<Chart height={240} padding={20}>
 	<Layer center>
 		<SpringValue {value} let:value>
 			<ClipPath>
