@@ -1,5 +1,5 @@
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { query } from '$app/server';
+import { z } from 'zod';
 import stackblitzFiles from '$static/stackblitz-files.json';
 
 // Import all example files at build time using Vite's import.meta.glob
@@ -10,15 +10,12 @@ const exampleModules = import.meta.glob('/src/examples/**/*.svelte', {
 	eager: true
 });
 
-export const GET: RequestHandler = async ({ url }) => {
-	const component = url.searchParams.get('component');
-	const name = url.searchParams.get('name');
-
-	if (!component || !name) {
-		return json({ error: 'Missing component or name parameter' }, { status: 400 });
-	}
-
-	try {
+export const getExample = query(
+	z.object({
+		component: z.string(),
+		name: z.string()
+	}),
+	({ component, name }) => {
 		// Construct the path to match import.meta.glob pattern
 		const examplePath = `/src/examples/${component}/${name}.svelte`;
 
@@ -26,18 +23,15 @@ export const GET: RequestHandler = async ({ url }) => {
 		const code = exampleModules[examplePath] as string | undefined;
 
 		if (!code) {
-			return json({ error: 'Example not found' }, { status: 404 });
+			throw new Error('Example not found');
 		}
 
 		// Remove `export { data };` from the code
 		const cleanCode = code.replace(/^.*export .*;.*$/gm, '');
 
-		return json({
+		return {
 			code: cleanCode,
-			files: stackblitzFiles
-		});
-	} catch (error) {
-		console.error('Error loading example:', error);
-		return json({ error: 'Failed to load example' }, { status: 500 });
+			files: stackblitzFiles as Record<string, string>
+		};
 	}
-};
+);

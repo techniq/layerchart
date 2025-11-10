@@ -1,17 +1,9 @@
 import sdk from '@stackblitz/sdk';
+import { getExample } from '$lib/stackblitz.remote';
 
 export async function openInStackBlitz(component: string, name: string) {
 	try {
-		const res = await fetch(`/api/example.json?component=${component}&name=${name}`);
-		if (!res.ok) {
-			console.error('Failed to fetch example code from server.');
-			return;
-		}
-
-		const { code: exampleCode, files } = (await res.json()) as {
-			code: string;
-			files: Record<string, string>;
-		};
+		const { code: exampleCode, files } = await getExample({ component, name });
 
 		sdk.openProject(
 			{

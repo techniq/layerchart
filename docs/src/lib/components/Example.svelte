@@ -7,7 +7,6 @@
 	import { examples } from '$lib/context';
 	import Code from './Code.svelte';
 	import Json from './Json.svelte';
-	import { openInStackBlitz } from '$lib/utils/open-in-stackblitz.js';
 
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
@@ -15,6 +14,7 @@
 	import LucideFilePen from '~icons/lucide/file-pen';
 
 	import { page } from '$app/state';
+	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 
 	let {
 		component = page.params.name!,
