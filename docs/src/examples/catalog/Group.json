@@ -235,7 +235,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 174,
+      "lineNumber": 132,
       "line": "<Group"
     },
     {
@@ -246,5 +246,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.076Z"
+  "updatedAt": "2025-11-09T02:04:07.028Z"
 }

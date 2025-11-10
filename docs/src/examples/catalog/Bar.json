@@ -32,39 +32,39 @@
     },
     {
       "example": "vertical-customize-individual-styles",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-customize-individual-styles",
       "lineNumber": 29,
       "line": "<Bar"
     },
     {
       "example": "vertical-grouped-stacked-or-both-transition",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
       "lineNumber": 75,
       "line": "<Bar"
     },
     {
       "example": "vertical-stagger-tween-on-mount",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount",
       "lineNumber": 39,
       "line": "<Bar"
     },
     {
       "example": "vertical-stagger-tween-on-mount-rounded-edge",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stagger-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
       "lineNumber": 39,
       "line": "<Bar"
     },
     {
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "lineNumber": 74,
       "line": "<Bar"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:54.913Z"
+  "updatedAt": "2025-11-09T02:04:06.325Z"
 }

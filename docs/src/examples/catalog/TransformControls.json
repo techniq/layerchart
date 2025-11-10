@@ -104,7 +104,7 @@
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 56,
+      "lineNumber": 46,
       "line": "<TransformControls />"
     },
     {
@@ -122,5 +122,5 @@
       "line": "<TransformControls orientation=\"horizontal\" class=\"-m-2\" />"
     }
   ],
-  "updatedAt": "2025-11-03T15:20:55.604Z"
+  "updatedAt": "2025-11-09T02:04:07.937Z"
 }

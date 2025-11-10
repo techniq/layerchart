@@ -25,6 +25,10 @@ importers:
         version: 4.45.3(@cloudflare/workers-types@4.20251011.0)
 
   docs:
+    dependencies:
+      '@stackblitz/sdk':
+        specifier: ^1.11.0
+        version: 1.11.0
     devDependencies:
       '@content-collections/core':
         specifier: ^0.11.1
@@ -1929,6 +1933,9 @@ packages:
 
   '@speed-highlight/core@1.2.8':
     resolution: {integrity: sha512-IGytNtnUnPIobIbOq5Y6LIlqiHNX+vnToQIS7lj6L5819C+rA8TXRDkkG8vePsiBOGcoW9R6i+dp2YBUKdB09Q==}
+
+  '@stackblitz/sdk@1.11.0':
+    resolution: {integrity: sha512-DFQGANNkEZRzFk1/rDP6TcFdM82ycHE+zfl9C/M/jXlH68jiqHWHFMQURLELoD8koxvu/eW5uhg94NSAZlYrUQ==}
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -5849,6 +5856,8 @@ snapshots:
       tailwindcss: 4.1.16
 
   '@speed-highlight/core@1.2.8': {}
+
+  '@stackblitz/sdk@1.11.0': {}
 
   '@standard-schema/spec@1.0.0': {}
 

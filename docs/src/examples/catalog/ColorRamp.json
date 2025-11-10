@@ -26,7 +26,7 @@
       "example": "pixelated",
       "component": "ColorRamp",
       "path": "/example/ColorRamp/pixelated",
-      "lineNumber": 31,
+      "lineNumber": 28,
       "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
     },
     {
@@ -44,5 +44,5 @@
       "line": "<ColorRamp"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.634Z"
+  "updatedAt": "2025-11-09T02:04:06.663Z"
 }

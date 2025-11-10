@@ -31,8 +31,8 @@
     },
     {
       "example": "vertical-highlight-individual-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
       "lineNumber": 30,
       "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
     },
@@ -163,5 +163,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:55.940Z"
+  "updatedAt": "2025-11-09T02:04:07.192Z"
 }

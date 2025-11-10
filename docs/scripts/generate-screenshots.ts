@@ -174,48 +174,67 @@ function screenshotExists(
 }
 
 /**
- * Generate screenshot for an example
+ * Generate screenshots for an example in both light and dark modes
  */
-async function captureScreenshot(
+async function captureScreenshots(
 	page: any,
 	componentName: string,
 	exampleName: string,
-	mode: 'light' | 'dark'
+	modes: ('light' | 'dark')[]
 ): Promise<void> {
 	const url = `${BASE_URL}/example/${componentName}/${exampleName}`;
 	const screenshotDir = path.join(SCREENSHOTS_DIR, componentName);
-	const screenshotPath = path.join(screenshotDir, `${exampleName}-${mode}.png`);
 
 	// Ensure directory exists
 	ensureDir(screenshotDir);
 
 	try {
-		// Set color scheme preference
-		await page.emulateMedia({ colorScheme: mode });
-
 		// Navigate to the example
 		await page.goto(url, { waitUntil: 'networkidle' });
 
-		// Try to find .lc-root-container first, fall back to .example
-		let element = page.locator('.lc-root-container').first();
+		// Hide example controls before taking screenshots
+		await page.evaluate(() => {
+			const controls = document.querySelectorAll('.lc-example-controls');
+			controls.forEach((control) => {
+				(control as HTMLElement).style.display = 'none';
+			});
+		});
 
-		if (!(await element.isVisible())) {
+		// Count .lc-root-container elements
+		const rootContainers = page.locator('.lc-root-container');
+		const count = await rootContainers.count();
+
+		let element;
+		if (count === 1) {
+			// Use the single Chart (.lc-root-container)
+			element = rootContainers.first();
+		} else {
+			// Use full Example (.example) if there are 0 (ex. Legend) or multiple Chart (.lc-root-container) elements
 			element = page.locator('.example').first();
 
 			if (!(await element.isVisible())) {
-				throw new Error('Neither .lc-root-container nor .example found or visible');
+				throw new Error('.example not found or visible');
 			}
 		}
 
-		// Take screenshot of the element
-		await element.screenshot({
-			path: screenshotPath,
-			omitBackground: true
-		});
+		// Capture screenshots for each mode
+		for (const mode of modes) {
+			const screenshotPath = path.join(screenshotDir, `${exampleName}-${mode}.png`);
 
-		console.log(`  ✓ ${mode}: ${screenshotPath}`);
+			// Set color scheme preference
+			await page.emulateMedia({ colorScheme: mode });
+
+			// Take screenshot of the element
+			await element.screenshot({
+				path: screenshotPath,
+				omitBackground: true
+			});
+
+			console.log(`  ✓ ${mode}: ${screenshotPath}`);
+		}
 	} catch (error) {
-		console.error(`  ✗ ${mode} failed:`, error instanceof Error ? error.message : error);
+		console.error(`  ✗ failed:`, error instanceof Error ? error.message : error);
+		throw error;
 	}
 }
 
@@ -366,22 +385,27 @@ async function main() {
 		}
 
 		try {
-			// Capture light mode if it doesn't exist or file changed
+			// Determine which modes need to be captured
+			const modesToCapture: ('light' | 'dark')[] = [];
+
 			if (!lightExists || fileChanged) {
-				await captureScreenshot(page, component, exampleName, 'light');
-				processedCount++;
+				modesToCapture.push('light');
 			} else {
 				console.log('  ⊘ light: already exists');
 				skippedCount++;
 			}
 
-			// Capture dark mode if it doesn't exist or file changed
 			if (!darkExists || fileChanged) {
-				await captureScreenshot(page, component, exampleName, 'dark');
-				processedCount++;
+				modesToCapture.push('dark');
 			} else {
 				console.log('  ⊘ dark: already exists');
 				skippedCount++;
+			}
+
+			// Capture screenshots if any modes need to be processed
+			if (modesToCapture.length > 0) {
+				await captureScreenshots(page, component, exampleName, modesToCapture);
+				processedCount += modesToCapture.length;
 			}
 
 			// Update checksum after successful capture

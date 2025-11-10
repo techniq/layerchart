@@ -162,7 +162,7 @@
       "example": "default-slot-render-each-arc",
       "component": "Pie",
       "path": "/example/Pie/default-slot-render-each-arc",
-      "lineNumber": 22,
+      "lineNumber": 40,
       "line": "<Arc"
     },
     {
@@ -222,5 +222,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.039Z"
+  "updatedAt": "2025-11-09T02:04:06.172Z"
 }

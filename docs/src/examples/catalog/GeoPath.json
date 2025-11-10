@@ -92,14 +92,14 @@
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 94,
+      "lineNumber": 62,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 98,
+      "lineNumber": 66,
       "line": "<GeoPath"
     },
     {
@@ -558,5 +558,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2025-11-03T15:45:46.783Z"
+  "updatedAt": "2025-11-09T02:04:06.882Z"
 }

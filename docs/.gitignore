@@ -30,3 +30,6 @@ vite.config.ts.timestamp-*
 src/generated/api.json
 src/generated/api/*.json
 !src/generated/api/README.md
+
+# Generated StackBlitz files
+static/stackblitz-files.json

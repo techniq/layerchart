@@ -180,6 +180,13 @@
       "line": "<Text"
     },
     {
+      "example": "vertical-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-average-annotation-rule",
+      "lineNumber": 33,
+      "line": "<Text"
+    },
+    {
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/example/BrushContext/constant-labels",
@@ -212,13 +219,6 @@
       "component": "Calendar",
       "path": "/example/Calendar/multiple-years",
       "lineNumber": 41,
-      "line": "<Text"
-    },
-    {
-      "example": "vertical-average-annotation-rule",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-average-annotation-rule",
-      "lineNumber": 33,
       "line": "<Text"
     },
     {
@@ -470,21 +470,21 @@
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 45,
+      "lineNumber": 39,
       "line": "<Text"
     },
     {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
-      "lineNumber": 44,
-      "line": "<Text value=\"start\" textAnchor=\"end\" verticalAnchor=\"middle\" dx={-8} />"
+      "lineNumber": 39,
+      "line": "<Text value=\"start\" textAnchor=\"start\" verticalAnchor=\"middle\" dx={8} />"
     },
     {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/label-using-start-end-snippets",
-      "lineNumber": 49,
+      "lineNumber": 44,
       "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
     },
     {
@@ -575,14 +575,14 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 195,
+      "lineNumber": 153,
       "line": "<text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 212,
+      "lineNumber": 170,
       "line": "<Text"
     },
     {
@@ -600,5 +600,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:56.516Z"
+  "updatedAt": "2025-11-09T02:04:07.668Z"
 }

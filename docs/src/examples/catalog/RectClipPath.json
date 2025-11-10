@@ -74,8 +74,8 @@
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 34,
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
@@ -125,7 +125,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 194,
+      "lineNumber": 152,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:56.388Z"
+  "updatedAt": "2025-11-09T02:04:07.539Z"
 }

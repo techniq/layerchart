@@ -110,14 +110,14 @@
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Polygon"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 46,
+      "lineNumber": 49,
       "line": "<Polygon"
     },
     {
@@ -359,5 +359,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2025-11-04T22:00:27.791Z"
+  "updatedAt": "2025-11-09T02:04:07.480Z"
 }

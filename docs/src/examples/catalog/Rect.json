@@ -23,6 +23,13 @@
       "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
     },
     {
+      "example": "vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "lineNumber": 29,
+      "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
+    },
+    {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/example/BrushContext/handle-arrows",
@@ -42,13 +49,6 @@
       "path": "/example/Calendar/rounded-cells",
       "lineNumber": 45,
       "line": "<Rect"
-    },
-    {
-      "example": "vertical-highlight-individual-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar",
-      "lineNumber": 29,
-      "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
     },
     {
       "example": "basic",
@@ -649,7 +649,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 183,
+      "lineNumber": 141,
       "line": "<Rect"
     },
     {
@@ -660,5 +660,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:56.367Z"
+  "updatedAt": "2025-11-09T02:04:07.521Z"
 }

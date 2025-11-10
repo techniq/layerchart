@@ -28,6 +28,7 @@
 </script>
 
 <MarkerControls2 bind:config />
+
 <div class="grid gap-2">
 	<div>default (auto)</div>
 	<Chart {data} x="x" y="y" height={200}>

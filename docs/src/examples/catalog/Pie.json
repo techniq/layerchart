@@ -111,21 +111,21 @@
       "example": "basic",
       "component": "Pie",
       "path": "/example/Pie/basic",
-      "lineNumber": 19,
+      "lineNumber": 36,
       "line": "<Pie />"
     },
     {
       "example": "default-slot-render-each-arc",
       "component": "Pie",
       "path": "/example/Pie/default-slot-render-each-arc",
-      "lineNumber": 19,
+      "lineNumber": 37,
       "line": "<Pie>"
     },
     {
       "example": "disable-sorting",
       "component": "Pie",
       "path": "/example/Pie/disable-sorting",
-      "lineNumber": 19,
+      "lineNumber": 36,
       "line": "<Pie sort={null} />"
     },
     {
@@ -293,9 +293,9 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 28,
+      "lineNumber": 25,
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.385Z"
+  "updatedAt": "2025-11-09T02:04:07.415Z"
 }

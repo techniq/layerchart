@@ -40,8 +40,8 @@
     },
     {
       "example": "vertical-highlight-individual-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
       "lineNumber": 28,
       "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
     },
@@ -333,5 +333,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2025-11-03T17:05:56.204Z"
+  "updatedAt": "2025-11-09T02:04:07.393Z"
 }

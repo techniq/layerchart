@@ -132,6 +132,150 @@
     {
       "name": "horizontal-with-grid-on-top-mix-blend",
       "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend"
+    },
+    {
+      "name": "vertical-average-annotation-rule",
+      "path": "/example/Bars/vertical-average-annotation-rule"
+    },
+    {
+      "name": "vertical-basic",
+      "path": "/example/Bars/vertical-basic"
+    },
+    {
+      "name": "vertical-calculated-value-domain-negative",
+      "path": "/example/Bars/vertical-calculated-value-domain-negative"
+    },
+    {
+      "name": "vertical-calculated-value-domain-positive",
+      "path": "/example/Bars/vertical-calculated-value-domain-positive"
+    },
+    {
+      "name": "vertical-click-handler",
+      "path": "/example/Bars/vertical-click-handler"
+    },
+    {
+      "name": "vertical-customize-individual-styles",
+      "path": "/example/Bars/vertical-customize-individual-styles"
+    },
+    {
+      "name": "vertical-gradient",
+      "path": "/example/Bars/vertical-gradient"
+    },
+    {
+      "name": "vertical-grouped",
+      "path": "/example/Bars/vertical-grouped"
+    },
+    {
+      "name": "vertical-grouped-and-stacked",
+      "path": "/example/Bars/vertical-grouped-and-stacked"
+    },
+    {
+      "name": "vertical-grouped-stacked-or-both-transition",
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition"
+    },
+    {
+      "name": "vertical-highlight-individual-bar",
+      "path": "/example/Bars/vertical-highlight-individual-bar"
+    },
+    {
+      "name": "vertical-highlight-individual-bar-line",
+      "path": "/example/Bars/vertical-highlight-individual-bar-line"
+    },
+    {
+      "name": "vertical-inside-labels",
+      "path": "/example/Bars/vertical-inside-labels"
+    },
+    {
+      "name": "vertical-limit-ticks-count",
+      "path": "/example/Bars/vertical-limit-ticks-count"
+    },
+    {
+      "name": "vertical-limit-ticks-second-scale",
+      "path": "/example/Bars/vertical-limit-ticks-second-scale"
+    },
+    {
+      "name": "vertical-multiple-diverging",
+      "path": "/example/Bars/vertical-multiple-diverging"
+    },
+    {
+      "name": "vertical-multiple-diverging-rounded-specific",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific"
+    },
+    {
+      "name": "vertical-multiple-overlapping",
+      "path": "/example/Bars/vertical-multiple-overlapping"
+    },
+    {
+      "name": "vertical-outside-labels-default",
+      "path": "/example/Bars/vertical-outside-labels-default"
+    },
+    {
+      "name": "vertical-rounded-top-only",
+      "path": "/example/Bars/vertical-rounded-top-only"
+    },
+    {
+      "name": "vertical-stacked",
+      "path": "/example/Bars/vertical-stacked"
+    },
+    {
+      "name": "vertical-stacked-percent",
+      "path": "/example/Bars/vertical-stacked-percent"
+    },
+    {
+      "name": "vertical-stagger-tween-on-mount",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount"
+    },
+    {
+      "name": "vertical-stagger-tween-on-mount-rounded-edge",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge"
+    },
+    {
+      "name": "vertical-time-scale-with-inset",
+      "path": "/example/Bars/vertical-time-scale-with-inset"
+    },
+    {
+      "name": "vertical-time-scale-with-interval",
+      "path": "/example/Bars/vertical-time-scale-with-interval"
+    },
+    {
+      "name": "vertical-time-scale-with-interval-months",
+      "path": "/example/Bars/vertical-time-scale-with-interval-months"
+    },
+    {
+      "name": "vertical-time-scale-with-missing-data",
+      "path": "/example/Bars/vertical-time-scale-with-missing-data"
+    },
+    {
+      "name": "vertical-tooltip-and-bar-highlight",
+      "path": "/example/Bars/vertical-tooltip-and-bar-highlight"
+    },
+    {
+      "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+    },
+    {
+      "name": "vertical-tooltip-and-clipped-highlight",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight"
+    },
+    {
+      "name": "vertical-tooltip-and-highlight",
+      "path": "/example/Bars/vertical-tooltip-and-highlight"
+    },
+    {
+      "name": "vertical-tween-on-mount",
+      "path": "/example/Bars/vertical-tween-on-mount"
+    },
+    {
+      "name": "vertical-tween-on-mount-rounded-edge",
+      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge"
+    },
+    {
+      "name": "vertical-with-grid-on-top",
+      "path": "/example/Bars/vertical-with-grid-on-top"
+    },
+    {
+      "name": "vertical-with-grid-on-top-mix-blend",
+      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend"
     }
   ],
   "usage": [
@@ -389,253 +533,253 @@
     },
     {
       "example": "vertical-average-annotation-rule",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-average-annotation-rule",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-basic",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-basic",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-basic",
       "lineNumber": 27,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-calculated-value-domain-negative",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-calculated-value-domain-negative",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-calculated-value-domain-negative",
       "lineNumber": 26,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-calculated-value-domain-positive",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-calculated-value-domain-positive",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-calculated-value-domain-positive",
       "lineNumber": 26,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-click-handler",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-click-handler",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-click-handler",
       "lineNumber": 33,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-customize-individual-styles",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-customize-individual-styles",
       "lineNumber": 27,
       "line": "<Bars>"
     },
     {
       "example": "vertical-gradient",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-gradient",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-gradient",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
     },
     {
       "example": "vertical-grouped",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped",
       "lineNumber": 40,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-grouped-and-stacked",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-grouped-and-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-and-stacked",
       "lineNumber": 45,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-highlight-individual-bar",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
       "lineNumber": 27,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-highlight-individual-bar-line",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-highlight-individual-bar-line",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar-line",
       "lineNumber": 23,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-inside-labels",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-inside-labels",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-inside-labels",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-limit-ticks-count",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-limit-ticks-count",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-limit-ticks-count",
       "lineNumber": 27,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-limit-ticks-second-scale",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-limit-ticks-second-scale",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-limit-ticks-second-scale",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging",
       "lineNumber": 29,
       "line": "<Bars y=\"value\" rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging",
       "lineNumber": 30,
       "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 31,
       "line": "<Bars y=\"value\" rounded-sm=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-diverging-rounded-specific",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 32,
       "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
     },
     {
       "example": "vertical-multiple-overlapping",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-overlapping",
       "lineNumber": 29,
       "line": "<Bars y=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
     },
     {
       "example": "vertical-multiple-overlapping",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-overlapping",
       "lineNumber": 30,
       "line": "<Bars y=\"value\" strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-outside-labels-default",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-outside-labels-default",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-outside-labels-default",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-rounded-top-only",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-rounded-top-only",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-rounded-top-only",
       "lineNumber": 28,
       "line": "<Bars radius={4} rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-stacked",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked",
       "lineNumber": 37,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-stacked-percent",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-stacked-percent",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked-percent",
       "lineNumber": 41,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-time-scale-with-inset",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-inset",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-inset",
       "lineNumber": 25,
       "line": "<Bars class=\"fill-primary\" insets={{ x: 2 }} />"
     },
     {
       "example": "vertical-time-scale-with-interval",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-interval",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-interval",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-time-scale-with-interval-months",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-interval-months",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-interval-months",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-time-scale-with-missing-data",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-time-scale-with-missing-data",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-time-scale-with-missing-data",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tooltip-and-bar-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-bar-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
       "lineNumber": 29,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 35,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tooltip-and-highlight",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tooltip-and-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-highlight",
       "lineNumber": 29,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tween-on-mount",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tween-on-mount",
       "lineNumber": 38,
       "line": "<Bars"
     },
     {
       "example": "vertical-tween-on-mount-rounded-edge",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
       "lineNumber": 38,
       "line": "<Bars"
     },
     {
       "example": "vertical-with-grid-on-top",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-with-grid-on-top",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-with-grid-on-top",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-with-grid-on-top-mix-blend",
-      "component": "Columns",
-      "path": "/example/Columns/vertical-with-grid-on-top-mix-blend",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
@@ -650,58 +794,30 @@
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 47,
+      "lineNumber": 49,
       "line": "<Bars y=\"baseline\" radius={4} strokeWidth={1} class=\"fill-surface-content/10\" />"
     },
     {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 48,
-      "line": "<Bars y=\"value\" radius={4} strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
-    },
-    {
-      "example": "multiple-overlapping-bars 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars 2",
-      "lineNumber": 47,
-      "line": "<Bars y=\"baseline\" radius={4} strokeWidth={1} class=\"fill-surface-content/10\" />"
-    },
-    {
-      "example": "multiple-overlapping-bars 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars 2",
-      "lineNumber": 48,
+      "lineNumber": 50,
       "line": "<Bars y=\"value\" radius={4} strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
     },
     {
       "example": "multiple-tooltips-with-fixed-single-axis-scaleband",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
-      "lineNumber": 33,
-      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
-    },
-    {
-      "example": "multiple-tooltips-with-fixed-single-axis-scaleband 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband 2",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "simple-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/simple-bars",
-      "lineNumber": 45,
-      "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
-    },
-    {
-      "example": "simple-bars 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/simple-bars 2",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-03T17:18:46.166Z"
+  "updatedAt": "2025-11-09T02:04:06.361Z"
 }

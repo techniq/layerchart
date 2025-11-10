@@ -19,23 +19,23 @@
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 43,
-      "line": "<MotionPath duration=\"5s\" repeatCount=\"indefinite\">"
+      "lineNumber": 40,
+      "line": "<MotionPath"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 43,
-      "line": "<MotionPath duration=\"5s\" repeatCount=\"indefinite\" rotate=\"auto\">"
+      "lineNumber": 41,
+      "line": "<MotionPath"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 44,
-      "line": "<MotionPath duration=\"3s\">"
+      "lineNumber": 42,
+      "line": "<MotionPath"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.292Z"
+  "updatedAt": "2025-11-09T02:04:07.332Z"
 }

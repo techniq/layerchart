@@ -106,6 +106,7 @@
 </script>
 
 <AxisControl bind:value={tickSpacing} />
+
 <div class="grid gap-3">
 	{#each examples as example}
 		<div>

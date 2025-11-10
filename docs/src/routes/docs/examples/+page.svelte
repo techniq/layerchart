@@ -129,16 +129,28 @@
 		<MenuField options={sectionOptions} bind:value={selectedSection} />
 	</div>
 
-	<div>
-		<Button icon={LucideZoomOut} on:click={() => (columnCount = Math.min(5, columnCount + 1))} />
-		<Button icon={LucideZoomIn} on:click={() => (columnCount = Math.max(1, columnCount - 1))} />
+	<div class="flex gap-2">
+		<Button
+			icon={LucideZoomOut}
+			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+			variant="fill-outline"
+			class="size-9 border-surface-content/30 pt-1"
+			disabled={columnCount >= 5}
+		/>
+		<Button
+			icon={LucideZoomIn}
+			on:click={() => (columnCount = Math.max(1, columnCount - 1))}
+			variant="fill-outline"
+			class="size-9 border-surface-content/30 pt-1"
+			disabled={columnCount <= 1}
+		/>
 	</div>
 </div>
 
 <div class="grid gap-10">
 	{#each visibleExamples as { component, examples } (component)}
 		<div>
-			<H2 id={component} class="sticky top-29 bg-surface-200 -mx-4 px-4 pt-2">{component}</H2>
+			<H2 id={component} class="sticky top-29 bg-surface-200 pt-2 pb-1">{component}</H2>
 			<div
 				style:--column-count="repeat({columnCount}, 1fr)"
 				class="grid grid-cols-(--column-count) gap-4"

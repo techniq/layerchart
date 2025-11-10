@@ -13,6 +13,7 @@
 </script>
 
 <AxisControl bind:value={tickSpacing} />
+
 <Chart
 	{xDomain}
 	yDomain={[0, 100]}

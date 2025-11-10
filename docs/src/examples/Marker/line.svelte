@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
 	import { Chart, Line, Layer } from 'layerchart';
 	import StartEndControls from '$lib/components/StartEndControls.svelte';
 
@@ -23,6 +22,7 @@
 </script>
 
 <StartEndControls bind:markerStart bind:markerEnd />
+
 <div class="grid gap-2">
 	{#each markerTypes as marker}
 		<div>{marker}</div>

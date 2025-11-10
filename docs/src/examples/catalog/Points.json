@@ -79,7 +79,7 @@
       "example": "basic",
       "component": "Points",
       "path": "/example/Points/basic",
-      "lineNumber": 22,
+      "lineNumber": 14,
       "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
     },
     {
@@ -93,7 +93,7 @@
       "example": "with-labels",
       "component": "Points",
       "path": "/example/Points/with-labels",
-      "lineNumber": 22,
+      "lineNumber": 14,
       "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
     },
     {
@@ -121,55 +121,34 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 60,
+      "lineNumber": 45,
       "line": "<Points"
     },
     {
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 43,
+      "lineNumber": 38,
       "line": "<Points class=\"fill-primary stroke-surface-200\" />"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 43,
-      "line": "<Points class=\"fill-primary\" />"
-    },
-    {
-      "example": "duration 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/duration 2",
-      "lineNumber": 46,
+      "lineNumber": 44,
       "line": "<Points class=\"fill-primary\" />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 40,
-      "line": "<Points class=\"fill-primary\" />"
-    },
-    {
-      "example": "multiple-overlapping-durations 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-durations 2",
-      "lineNumber": 52,
+      "lineNumber": 43,
       "line": "<Points class=\"fill-primary\" />"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 35,
-      "line": "<Points class=\"fill-primary stroke-primary\" />"
-    },
-    {
-      "example": "scatter-plot 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/scatter-plot 2",
       "lineNumber": 37,
       "line": "<Points class=\"fill-primary stroke-primary\" />"
     },
@@ -181,26 +160,19 @@
       "line": "<Points class=\"fill-primary\" />"
     },
     {
-      "example": "single-date-time 2",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/single-date-time 2",
-      "lineNumber": 52,
-      "line": "<Points class=\"fill-primary\" />"
-    },
-    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 62,
+      "lineNumber": 52,
       "line": "<Points>"
     },
     {
       "example": "example",
       "component": "Voronoi",
       "path": "/example/Voronoi/example",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-03T16:48:39.071Z"
+  "updatedAt": "2025-11-09T02:04:07.460Z"
 }

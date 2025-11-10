@@ -136,7 +136,7 @@
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
-      "lineNumber": 55,
+      "lineNumber": 30,
       "line": "<AnnotationRange"
     },
     {
@@ -168,5 +168,5 @@
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.017Z"
+  "updatedAt": "2025-11-09T02:04:06.138Z"
 }

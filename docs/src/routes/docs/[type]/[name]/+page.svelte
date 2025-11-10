@@ -82,8 +82,17 @@
 				<Button
 					icon={LucideZoomOut}
 					on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+					variant="fill-outline"
+					class="size-8 border-surface-content/30 pt-1"
+					disabled={columnCount >= 5}
 				/>
-				<Button icon={LucideZoomIn} on:click={() => (columnCount = Math.max(1, columnCount - 1))} />
+				<Button
+					icon={LucideZoomIn}
+					on:click={() => (columnCount = Math.max(1, columnCount - 1))}
+					variant="fill-outline"
+					class="size-8 border-surface-content/30 pt-1"
+					disabled={columnCount <= 1}
+				/>
 			</div>
 		</div>
 	</div>

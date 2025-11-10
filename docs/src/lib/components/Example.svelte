@@ -11,8 +11,10 @@
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
+	import LucideFilePen from '~icons/lucide/file-pen';
 
 	import { page } from '$app/state';
+	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 
 	let {
 		component = page.params.name!,
@@ -133,6 +135,7 @@
 				{/if}
 
 				{#if page.params.example == null}
+					<!-- Only show Inspect if not already viewing specific example -->
 					<Button
 						href="/docs/components/{component}/{name}"
 						icon={LucideFullscreen}
@@ -141,6 +144,14 @@
 						Inspect
 					</Button>
 				{/if}
+
+				<Button
+					icon={LucideFilePen}
+					class="text-surface-content/70 py-1"
+					on:click={() => openInStackBlitz(component, name)}
+				>
+					Edit in StackBlitz
+				</Button>
 			</div>
 		{/if}
 	{:else}
