@@ -5,7 +5,7 @@
  * any LayerChart example in an isolated environment.
  *
  * @description
- * Reads template files from scripts/stackblitz-templates/ and generates:
+ * Reads template files from scripts/stackblitz-template/ and generates:
  * - package.json with LayerChart and dependencies
  * - SvelteKit configuration files
  * - Basic layout and app.html
@@ -22,15 +22,46 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const TEMPLATES_DIR = path.resolve(__dirname, 'stackblitz-templates');
+const TEMPLATES_DIR = path.resolve(__dirname, 'stackblitz-template');
+const SOURCE_DIR = path.resolve(__dirname, '../src');
 const OUTPUT_FILE = path.resolve(__dirname, '../static/stackblitz-files.json');
 
 /**
- * Read a template file from the templates directory
+ * Read a source file from the docs/src directory
  */
-function readTemplate(filename: string): string {
-	const filePath = path.join(TEMPLATES_DIR, filename);
+function readSource(sourcePath: string): string {
+	const filePath = path.join(SOURCE_DIR, sourcePath);
 	return fs.readFileSync(filePath, 'utf-8');
+}
+
+/**
+ * Recursively read all files from a directory and return them as a flat object
+ * with relative paths as keys and file contents as values
+ */
+function readAllFilesFromDirectory(dir: string, baseDir: string = dir): Record<string, string> {
+	const files: Record<string, string> = {};
+
+	const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+	for (const entry of entries) {
+		const fullPath = path.join(dir, entry.name);
+
+		if (entry.isDirectory()) {
+			// Recursively read subdirectories
+			Object.assign(files, readAllFilesFromDirectory(fullPath, baseDir));
+		} else if (entry.isFile()) {
+			// Skip README.md as it's documentation for the templates directory
+			if (entry.name === 'README.md') {
+				continue;
+			}
+
+			// Get relative path from base directory
+			const relativePath = path.relative(baseDir, fullPath);
+			files[relativePath] = fs.readFileSync(fullPath, 'utf-8');
+		}
+	}
+
+	return files;
 }
 
 /**
@@ -38,13 +69,10 @@ function readTemplate(filename: string): string {
  */
 function generateStackBlitzFiles() {
 	return {
-		'package.json': readTemplate('package.json'),
-		'svelte.config.js': readTemplate('svelte.config.js'),
-		'vite.config.js': readTemplate('vite.config.js'),
-		'src/app.html': readTemplate('app.html'),
-		'src/app.css': readTemplate('app.css'),
-		'src/routes/+layout.svelte': readTemplate('+layout.svelte'),
-		'.gitignore': readTemplate('.gitignore')
+		// Read all template files from stackblitz-template directory
+		...readAllFilesFromDirectory(TEMPLATES_DIR),
+		// Add source files from docs/src
+		'src/lib/utils/data.ts': readSource('lib/utils/data.ts')
 	};
 }
 
