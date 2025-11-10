@@ -209,7 +209,13 @@ export const getExample = query(
 				}
 
 				// Fetch all referenced data files from the running docs instance
+				// Skip external URLs (https/http) as they can be fetched directly in StackBlitz
 				for (const fetchUrl of dataFilesNeeded) {
+					// Skip external URLs
+					if (fetchUrl.startsWith('http://') || fetchUrl.startsWith('https://')) {
+						continue;
+					}
+
 					try {
 						const content = await requestFetch(fetchUrl).then((r) => r.text());
 						// Store with path relative to project root: static/data/examples/...
