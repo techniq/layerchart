@@ -19,7 +19,7 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 32,
+      "lineNumber": 35,
       "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
     },
     {
@@ -660,5 +660,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.521Z"
+  "updatedAt": "2025-11-10T21:19:04.100Z"
 }

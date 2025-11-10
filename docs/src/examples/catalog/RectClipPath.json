@@ -27,42 +27,42 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 30,
+      "lineNumber": 22,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 33,
+      "lineNumber": 25,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 30,
+      "lineNumber": 22,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 33,
+      "lineNumber": 25,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 30,
+      "lineNumber": 22,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 33,
+      "lineNumber": 25,
       "line": "<RectClipPath"
     },
     {
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.539Z"
+  "updatedAt": "2025-11-10T21:19:04.119Z"
 }

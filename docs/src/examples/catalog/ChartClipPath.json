@@ -6,7 +6,7 @@
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 32,
+      "lineNumber": 20,
       "line": "<ChartClipPath"
     },
     {
@@ -115,5 +115,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.525Z"
+  "updatedAt": "2025-11-10T21:19:03.070Z"
 }

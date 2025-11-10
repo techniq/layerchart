@@ -78,63 +78,63 @@
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 58,
+      "lineNumber": 57,
       "line": "<Arc"
     },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 19,
+      "lineNumber": 16,
       "line": "<Arc"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 62,
+      "lineNumber": 29,
       "line": "<Arc"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
+      "lineNumber": 19,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 20,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 29,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
       "lineNumber": 22,
       "line": "<Arc"
     },
     {
-      "example": "segmented-arc-clip-mask",
+      "example": "tween-value-on-mount",
       "component": "Arc",
-      "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 23,
-      "line": "<Arc"
-    },
-    {
-      "example": "segmented-arc-clip-mask",
-      "component": "Arc",
-      "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 32,
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 31,
       "line": "<Arc"
     },
     {
       "example": "tween-value-on-mount",
       "component": "Arc",
       "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 25,
-      "line": "<Arc"
-    },
-    {
-      "example": "tween-value-on-mount",
-      "component": "Arc",
-      "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 34,
-      "line": "<Arc"
-    },
-    {
-      "example": "tween-value-on-mount",
-      "component": "Arc",
-      "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 44,
+      "lineNumber": 41,
       "line": "<Arc"
     },
     {
@@ -222,5 +222,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.172Z"
+  "updatedAt": "2025-11-10T21:19:02.662Z"
 }

@@ -26,7 +26,7 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 33,
+      "lineNumber": 36,
       "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
     },
     {
@@ -103,7 +103,7 @@
       "example": "line",
       "component": "Marker",
       "path": "/example/Marker/line",
-      "lineNumber": 43,
+      "lineNumber": 32,
       "line": "<Line"
     },
     {
@@ -163,5 +163,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.192Z"
+  "updatedAt": "2025-11-10T21:19:03.739Z"
 }

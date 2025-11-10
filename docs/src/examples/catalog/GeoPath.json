@@ -554,9 +554,9 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.882Z"
+  "updatedAt": "2025-11-10T21:19:03.426Z"
 }

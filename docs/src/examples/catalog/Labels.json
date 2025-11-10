@@ -13,7 +13,7 @@
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 24,
+      "lineNumber": 16,
       "line": "<Labels format=\"integer\" />"
     },
     {
@@ -55,7 +55,7 @@
       "example": "series-labels-hover",
       "component": "LineChart",
       "path": "/example/LineChart/series-labels-hover",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
     },
     {
@@ -80,5 +80,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.134Z"
+  "updatedAt": "2025-11-10T21:19:03.671Z"
 }

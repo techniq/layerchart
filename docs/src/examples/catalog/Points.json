@@ -23,7 +23,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 67,
+      "lineNumber": 45,
       "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
     },
     {
@@ -65,14 +65,14 @@
       "example": "text",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/text",
-      "lineNumber": 120,
-      "line": "<Points data={nodes.slice(1)} r={radius} class=\"fill-primary\" />"
+      "lineNumber": 102,
+      "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
     },
     {
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 42,
+      "lineNumber": 39,
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
@@ -108,7 +108,7 @@
       "component": "Rule",
       "path": "/example/Rule/lollipop",
       "lineNumber": 25,
-      "line": "<Points />"
+      "line": "<Points class=\"fill-secondary\" />"
     },
     {
       "example": "custom",
@@ -174,5 +174,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.460Z"
+  "updatedAt": "2025-11-10T21:19:04.047Z"
 }

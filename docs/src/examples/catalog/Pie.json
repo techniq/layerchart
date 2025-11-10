@@ -293,9 +293,9 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.415Z"
+  "updatedAt": "2025-11-10T21:19:03.985Z"
 }

@@ -42,10 +42,6 @@
       "path": "/example/Polygon/cross"
     },
     {
-      "name": "custom-points",
-      "path": "/example/Polygon/custom-points"
-    },
-    {
       "name": "diamond",
       "path": "/example/Polygon/diamond"
     },
@@ -78,16 +74,8 @@
       "path": "/example/Polygon/rhombus"
     },
     {
-      "name": "simple",
-      "path": "/example/Polygon/simple"
-    },
-    {
       "name": "square",
       "path": "/example/Polygon/square"
-    },
-    {
-      "name": "stars",
-      "path": "/example/Polygon/stars"
     },
     {
       "name": "trapezoid",
@@ -124,240 +112,149 @@
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "12-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/12-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "14-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/14-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "16-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/16-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "18-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/18-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "20-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/20-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "6-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/6-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "8-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/8-point-star",
-      "lineNumber": 30,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 20,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 20,
-      "line": "<Polygon"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 23,
-      "line": "<Polygon"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 49,
+      "lineNumber": 17,
       "line": "<Polygon"
     },
     {
       "example": "diamond",
       "component": "Polygon",
       "path": "/example/Polygon/diamond",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "hexagon",
       "component": "Polygon",
       "path": "/example/Polygon/hexagon",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "octagon",
       "component": "Polygon",
       "path": "/example/Polygon/octagon",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "parallelogram",
       "component": "Polygon",
       "path": "/example/Polygon/parallelogram",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "pentagon",
       "component": "Polygon",
       "path": "/example/Polygon/pentagon",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "playground",
       "component": "Polygon",
       "path": "/example/Polygon/playground",
-      "lineNumber": 36,
-      "line": "<Polygon"
+      "lineNumber": 23,
+      "line": "<Polygon cx={context.width / 2} cy={context.height / 2} r={100} {...config} />"
     },
     {
       "example": "rectangle",
       "component": "Polygon",
       "path": "/example/Polygon/rectangle",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "rhombus",
       "component": "Polygon",
       "path": "/example/Polygon/rhombus",
-      "lineNumber": 16,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 23,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 41,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 59,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 78,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 97,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 116,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 136,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 155,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 173,
-      "line": "<Polygon"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 191,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "square",
       "component": "Polygon",
       "path": "/example/Polygon/square",
-      "lineNumber": 16,
-      "line": "<Polygon"
-    },
-    {
-      "example": "stars",
-      "component": "Polygon",
-      "path": "/example/Polygon/stars",
-      "lineNumber": 31,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "trapezoid",
       "component": "Polygon",
       "path": "/example/Polygon/trapezoid",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     },
     {
       "example": "triangle",
       "component": "Polygon",
       "path": "/example/Polygon/triangle",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.480Z"
+  "updatedAt": "2025-11-10T21:19:04.064Z"
 }

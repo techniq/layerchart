@@ -62,56 +62,56 @@
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 55,
+      "lineNumber": 54,
       "line": "<Layer center>"
     },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer center>"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 58,
+      "lineNumber": 24,
       "line": "<Layer center>"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
-      "lineNumber": 18,
+      "lineNumber": 15,
       "line": "<Layer center>"
     },
     {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 17,
+      "lineNumber": 14,
       "line": "<Layer center>"
     },
     {
       "example": "tween-value-on-mount",
       "component": "Arc",
       "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 23,
+      "lineNumber": 20,
       "line": "<Layer center>"
     },
     {
       "example": "basic",
       "component": "Area",
       "path": "/example/Area/basic",
-      "lineNumber": 20,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 28,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
@@ -125,21 +125,21 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 20,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 20,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 20,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
@@ -153,7 +153,7 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 26,
+      "lineNumber": 18,
       "line": "<Layer>"
     },
     {
@@ -188,7 +188,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 55,
+      "lineNumber": 33,
       "line": "<Layer>"
     },
     {
@@ -209,35 +209,35 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 29,
+      "lineNumber": 21,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 29,
+      "lineNumber": 21,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 26,
+      "lineNumber": 18,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 26,
+      "lineNumber": 18,
       "line": "<Layer>"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 20,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
@@ -440,14 +440,14 @@
       "example": "radial-grid",
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
-      "lineNumber": 10,
+      "lineNumber": 16,
       "line": "<Layer center>"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
-      "lineNumber": 10,
+      "lineNumber": 16,
       "line": "<Layer center>"
     },
     {
@@ -489,49 +489,49 @@
       "example": "time-scale-auto",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto",
-      "lineNumber": 124,
+      "lineNumber": 116,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-auto-format-filtering",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-format-filtering",
-      "lineNumber": 124,
+      "lineNumber": 116,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-auto-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
-      "lineNumber": 124,
+      "lineNumber": 116,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush",
-      "lineNumber": 37,
+      "lineNumber": 29,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush",
-      "lineNumber": 55,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush-multiline",
-      "lineNumber": 37,
+      "lineNumber": 29,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush-multiline",
-      "lineNumber": 55,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
@@ -622,7 +622,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 71,
+      "lineNumber": 64,
       "line": "<Layer>"
     },
     {
@@ -706,7 +706,7 @@
       "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-      "lineNumber": 37,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
@@ -741,7 +741,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 70,
+      "lineNumber": 63,
       "line": "<Layer>"
     },
     {
@@ -762,7 +762,7 @@
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 37,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
@@ -1273,7 +1273,7 @@
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 35,
+      "lineNumber": 21,
       "line": "<Layer>"
     },
     {
@@ -1350,21 +1350,21 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 75,
+      "lineNumber": 69,
       "line": "<Layer>"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-playground",
-      "lineNumber": 279,
+      "lineNumber": 147,
       "line": "<Layer>"
     },
     {
       "example": "group",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/group",
-      "lineNumber": 61,
+      "lineNumber": 52,
       "line": "<Layer>"
     },
     {
@@ -1378,7 +1378,7 @@
       "example": "text",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/text",
-      "lineNumber": 114,
+      "lineNumber": 96,
       "line": "<Layer"
     },
     {
@@ -1819,14 +1819,14 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 37,
+      "lineNumber": 34,
       "line": "<Layer>"
     },
     {
@@ -1889,49 +1889,49 @@
       "example": "line",
       "component": "Marker",
       "path": "/example/Marker/line",
-      "lineNumber": 42,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 41,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 53,
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 65,
+      "lineNumber": 63,
       "line": "<Layer>"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 58,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
       "example": "spline-w-thicker-stroke",
       "component": "Marker",
       "path": "/example/Marker/spline-w-thicker-stroke",
-      "lineNumber": 58,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 39,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
@@ -2218,14 +2218,14 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Layer center>"
     },
     {
       "example": "basic-usage",
       "component": "Point",
       "path": "/example/Point/basic-usage",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<Layer>"
     },
     {
@@ -2260,238 +2260,147 @@
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "12-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/12-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "14-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/14-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "16-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/16-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "18-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/18-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "20-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/20-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "6-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/6-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "8-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/8-point-star",
-      "lineNumber": 29,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 17,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 17,
-      "line": "<Layer>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 20,
-      "line": "<Layer>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 46,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
       "example": "diamond",
       "component": "Polygon",
       "path": "/example/Polygon/diamond",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "hexagon",
       "component": "Polygon",
       "path": "/example/Polygon/hexagon",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "octagon",
       "component": "Polygon",
       "path": "/example/Polygon/octagon",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "parallelogram",
       "component": "Polygon",
       "path": "/example/Polygon/parallelogram",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "pentagon",
       "component": "Polygon",
       "path": "/example/Polygon/pentagon",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "playground",
       "component": "Polygon",
       "path": "/example/Polygon/playground",
-      "lineNumber": 35,
+      "lineNumber": 22,
       "line": "<Layer>"
     },
     {
       "example": "rectangle",
       "component": "Polygon",
       "path": "/example/Polygon/rectangle",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "rhombus",
       "component": "Polygon",
       "path": "/example/Polygon/rhombus",
-      "lineNumber": 15,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 40,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 58,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 77,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 96,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 115,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 135,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 154,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 172,
-      "line": "<Layer>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 190,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "square",
       "component": "Polygon",
       "path": "/example/Polygon/square",
-      "lineNumber": 15,
-      "line": "<Layer>"
-    },
-    {
-      "example": "stars",
-      "component": "Polygon",
-      "path": "/example/Polygon/stars",
-      "lineNumber": 30,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "trapezoid",
       "component": "Polygon",
       "path": "/example/Polygon/trapezoid",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
       "example": "triangle",
       "component": "Polygon",
       "path": "/example/Polygon/triangle",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
@@ -2547,98 +2456,98 @@
       "example": "annotation-x",
       "component": "Rule",
       "path": "/example/Rule/annotation-x",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "annotation-y",
       "component": "Rule",
       "path": "/example/Rule/annotation-y",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "baseline-top-right",
       "component": "Rule",
       "path": "/example/Rule/baseline-top-right",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "baseline-x-negative",
       "component": "Rule",
       "path": "/example/Rule/baseline-x-negative",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "baseline-x-y",
       "component": "Rule",
       "path": "/example/Rule/baseline-x-y",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "baseline-y-negative",
       "component": "Rule",
       "path": "/example/Rule/baseline-y-negative",
-      "lineNumber": 11,
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<Layer>"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<Layer>"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<Layer>"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 66,
+      "lineNumber": 67,
       "line": "<Layer>"
     },
     {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<Layer>"
     },
     {
       "example": "data-x-date",
       "component": "Rule",
       "path": "/example/Rule/data-x-date",
-      "lineNumber": 17,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "data-x-range",
       "component": "Rule",
       "path": "/example/Rule/data-x-range",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<Layer>"
     },
     {
       "example": "data-y-range",
       "component": "Rule",
       "path": "/example/Rule/data-y-range",
-      "lineNumber": 17,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
@@ -2841,7 +2750,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 117,
+      "lineNumber": 45,
       "line": "<Layer {type}>"
     },
     {
@@ -3083,5 +2992,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.153Z"
+  "updatedAt": "2025-11-10T21:19:03.693Z"
 }

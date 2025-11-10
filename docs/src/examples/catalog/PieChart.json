@@ -217,14 +217,14 @@
       "example": "motion-spring",
       "component": "PieChart",
       "path": "/example/PieChart/motion-spring",
-      "lineNumber": 18,
+      "lineNumber": 15,
       "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'spring' } }} />"
     },
     {
       "example": "motion-tween",
       "component": "PieChart",
       "path": "/example/PieChart/motion-tween",
-      "lineNumber": 18,
+      "lineNumber": 15,
       "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'tween' } }} />"
     },
     {
@@ -280,7 +280,7 @@
       "example": "segments",
       "component": "PieChart",
       "path": "/example/PieChart/segments",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<PieChart"
     },
     {
@@ -312,5 +312,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2025-11-03T12:48:27.956Z"
+  "updatedAt": "2025-11-10T21:19:04.005Z"
 }

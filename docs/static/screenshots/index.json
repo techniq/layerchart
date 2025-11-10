@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-11-09T02:04:05.551Z",
+  "generatedAt": "2025-11-10T21:20:03.036Z",
   "totalComponents": 56,
-  "totalExamples": 695,
+  "totalExamples": 692,
   "components": [
     {
       "component": "AnnotationLine",
@@ -164,47 +164,47 @@
         {
           "name": "color-wheel",
           "path": "/example/Arc/color-wheel",
-          "checksum": "c40d6b97dd403ad5c2df3d21cb43bf30"
+          "checksum": "edaae71497469e043baf500b71c547d4"
         },
         {
           "name": "concentric",
           "path": "/example/Arc/concentric",
-          "checksum": "d490a00844f07509e65c3cdaaca621cd"
+          "checksum": "23d1db6344877a328a72020cff4426f9"
         },
         {
           "name": "draggable-arc",
           "path": "/example/Arc/draggable-arc",
-          "checksum": "56d7c3d9ead88f4de5501ec9ceee02fa"
+          "checksum": "5344a0bbb361a96b333a8e46ce094e33"
         },
         {
           "name": "label-direction",
           "path": "/example/Arc/label-direction",
-          "checksum": "963171eb4d6b6422cf94ff230c270f62"
+          "checksum": "7b9f857fa1abbf88b621488899336fac"
         },
         {
           "name": "partial-arc",
           "path": "/example/Arc/partial-arc",
-          "checksum": "3dadc9db3f62bbb7f75e7caa68a02c39"
+          "checksum": "3984f9d4a6a8e0f2afec05da93914727"
         },
         {
           "name": "playground",
           "path": "/example/Arc/playground",
-          "checksum": "272b10258475254348a7684d127f555f"
+          "checksum": "5ebc61571b41019cb0baba075c0d1c0f"
         },
         {
           "name": "segmented-arc",
           "path": "/example/Arc/segmented-arc",
-          "checksum": "ba222f630523cf73e7f19a7a72ac2b75"
+          "checksum": "92986b580e1de0378811a1f8f781307b"
         },
         {
           "name": "segmented-arc-clip-mask",
           "path": "/example/Arc/segmented-arc-clip-mask",
-          "checksum": "6ec37f12c6667dac01540f5e01ef90e5"
+          "checksum": "16ebc4fe37dcdd17bc4c05e5e3d8518b"
         },
         {
           "name": "tween-value-on-mount",
           "path": "/example/Arc/tween-value-on-mount",
-          "checksum": "dcbff1f2730cf7c6ac44fbf24d7ca95f"
+          "checksum": "6d3dcec59bb6866be58cd3cd363ba821"
         }
       ]
     },
@@ -299,107 +299,107 @@
         {
           "name": "basic",
           "path": "/example/Area/basic",
-          "checksum": "244bf43564f0b07b527821a742598f88"
+          "checksum": "bb83009a2fd19cef7826a43e1331d944"
         },
         {
           "name": "clip-tween-on-mount",
           "path": "/example/Area/clip-tween-on-mount",
-          "checksum": "8e8a7dbfb4bc90d9992c0e34d3376135"
+          "checksum": "7240c28c5777992cdb7e17730f8ae5d4"
         },
         {
           "name": "clipped-area-on-tooltip",
           "path": "/example/Area/clipped-area-on-tooltip",
-          "checksum": "a123b230b518949953b80176229ce192"
+          "checksum": "9de6af2e8f05bdd28dd03d14141629a2"
         },
         {
           "name": "explicit-axis-ticks-min-max",
           "path": "/example/Area/explicit-axis-ticks-min-max",
-          "checksum": "9c251136690f87ced0bd84e6893cc65b"
+          "checksum": "1d8251e2dba7a577af4f9fc8ceedd2d7"
         },
         {
           "name": "gradient",
           "path": "/example/Area/gradient",
-          "checksum": "191d03cb8767a546efeb0fb340421398"
+          "checksum": "6ed73b256d000f1cbd471505a54a15b6"
         },
         {
           "name": "gradient-separate-stroke",
           "path": "/example/Area/gradient-separate-stroke",
-          "checksum": "46b7dc74c21c8884d14f8609d4f3a33f"
+          "checksum": "93c90f32a5dc770a6542b1ca95c1d5ae"
         },
         {
           "name": "highlight-color-based-on-value-using-color-scale",
           "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-          "checksum": "31511d02c0fcf5c92b64ae1872d2473f"
+          "checksum": "3386cb5876c361d67194b9247a07a89b"
         },
         {
           "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
           "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-          "checksum": "03e691e373195ffd9f7c648bd6e405a4"
+          "checksum": "52919c75c38dafee956ea89e16992f36"
         },
         {
           "name": "multiple-series",
           "path": "/example/Area/multiple-series",
-          "checksum": "c4047ec4de12b897b623c4beeb7b22cc"
+          "checksum": "bc3b5b97fe250203407c2bcb3dbffd21"
         },
         {
           "name": "multiple-series-highlight-on-hover",
           "path": "/example/Area/multiple-series-highlight-on-hover",
-          "checksum": "08c8a8f6a6e86109dd72fb5458a9124b"
+          "checksum": "eab7cab1d81d93b3b7535e079ad406b5"
         },
         {
           "name": "multiple-series-using-overrides",
           "path": "/example/Area/multiple-series-using-overrides",
-          "checksum": "25903c9abfae5f2916c68c77251c79c5"
+          "checksum": "971a7e63d3758106dd3b7a0c545ca633"
         },
         {
           "name": "multiple-series-with-labels",
           "path": "/example/Area/multiple-series-with-labels",
-          "checksum": "a133bd8aaeaf08bf18cd3c98c00e9328"
+          "checksum": "0291b11b5a003ee7e91427a925934388"
         },
         {
           "name": "playground",
           "path": "/example/Area/playground",
-          "checksum": "959aa85ae86cdde663b945d7c52c9104"
+          "checksum": "fb1d33511c5ec3709ed4cfacb970a364"
         },
         {
           "name": "stack",
           "path": "/example/Area/stack",
-          "checksum": "75ef0183a0cd5efe225c0a3fc1e051fc"
+          "checksum": "2395472c3d8e353c1368d011eb124172"
         },
         {
           "name": "stack-with-gradient",
           "path": "/example/Area/stack-with-gradient",
-          "checksum": "f33d3c40b321e5f09b8d03e355444f91"
+          "checksum": "3f725f08302ca920d7b22c77c424baac"
         },
         {
           "name": "threshold-with-lineargradient",
           "path": "/example/Area/threshold-with-lineargradient",
-          "checksum": "239003e6a108c4084548eb1997fd2387"
+          "checksum": "c500850a80a7b962e92d567e1e43f6f2"
         },
         {
           "name": "threshold-with-lineargradient-over-under",
           "path": "/example/Area/threshold-with-lineargradient-over-under",
-          "checksum": "665856f22ba25e474357c776b5c5d1aa"
+          "checksum": "ef559921223609a56e2a5738fc29a107"
         },
         {
           "name": "threshold-with-rectclippath",
           "path": "/example/Area/threshold-with-rectclippath",
-          "checksum": "e275a881dce5b7234c714c3ee0a713a5"
+          "checksum": "172d66544de028f0d8f14959cbcc3654"
         },
         {
           "name": "threshold-with-rectclippath-over-under",
           "path": "/example/Area/threshold-with-rectclippath-over-under",
-          "checksum": "58bdbd561b634defb058e8d17455adc9"
+          "checksum": "8f67834899cfc9abf685b3ca5c4b8b96"
         },
         {
           "name": "with-labels",
           "path": "/example/Area/with-labels",
-          "checksum": "13164a9f2b17baa51f3a38ab2bf3b7e4"
+          "checksum": "fd41b0837ec24a87017a92e27c9cb5ed"
         },
         {
           "name": "with-tooltip-and-highlight",
           "path": "/example/Area/with-tooltip-and-highlight",
-          "checksum": "44184065d86456992f5fd1f813226245"
+          "checksum": "6482b2f80af01443688cc7f2c8f7b688"
         }
       ]
     },
@@ -619,7 +619,7 @@
         {
           "name": "arrow-markers",
           "path": "/example/Axis/arrow-markers",
-          "checksum": "3e1a1c23583bdb23cfd349c5a7f3cfc5"
+          "checksum": "e258ae296638c26c2808ded46bd9af53"
         },
         {
           "name": "axis-label-placement-left-right",
@@ -629,12 +629,12 @@
         {
           "name": "axis-label-placement-top-bottom",
           "path": "/example/Axis/axis-label-placement-top-bottom",
-          "checksum": "01cb18e04074614e38d6b0cad4fcd01a"
+          "checksum": "21ab207c64e335d90f31ff9939bc12b2"
         },
         {
           "name": "explicit-ticks",
           "path": "/example/Axis/explicit-ticks",
-          "checksum": "b538c9dcf5b3e867f1e8909459bd1388"
+          "checksum": "4d6ffd57366c086f5051d307166cad41"
         },
         {
           "name": "extent-ticks-only",
@@ -649,47 +649,47 @@
         {
           "name": "grid-dashed",
           "path": "/example/Axis/grid-dashed",
-          "checksum": "3e8aea2bc4f5a2efcbcf202014a0fc74"
+          "checksum": "9feda1ba05b91487fede2634a94e8121"
         },
         {
           "name": "hide-zero-filter",
           "path": "/example/Axis/hide-zero-filter",
-          "checksum": "cc5c035b1499eb972eb33774b52cc310"
+          "checksum": "514405af420664df69c26a146ab169c6"
         },
         {
           "name": "hide-zero-format",
           "path": "/example/Axis/hide-zero-format",
-          "checksum": "63301ab771f3aff1e5d4db3f2e89cb94"
+          "checksum": "a2ab185afaf6cd216c7665dbfbebe9d2"
         },
         {
           "name": "inject-ticks",
           "path": "/example/Axis/inject-ticks",
-          "checksum": "415c3840ed46d51a05d0b3e81bd4d13f"
+          "checksum": "cd1817137228e96c7d7de6cb4f4eba89"
         },
         {
           "name": "integer-only-filter",
           "path": "/example/Axis/integer-only-filter",
-          "checksum": "1c0e37e6c7001cb843606edb77f4a696"
+          "checksum": "badf9533b776fe4e9f9d623911189e04"
         },
         {
           "name": "integer-only-format",
           "path": "/example/Axis/integer-only-format",
-          "checksum": "ea453768030cf2707103cf94c473e314"
+          "checksum": "a28d1eb7454e4a4c7f6ccf6622ededb8"
         },
         {
           "name": "labels-next-hash",
           "path": "/example/Axis/labels-next-hash",
-          "checksum": "ff06efac7b58e14cfd42e95830ef2fb5"
+          "checksum": "8954583323c7bb23eddee95da407aecb"
         },
         {
           "name": "log-scale",
           "path": "/example/Axis/log-scale",
-          "checksum": "71984d5dce84b8a8dd81142d578e5f1a"
+          "checksum": "0f06cec11ca7cb26676856fb6ebc67a7"
         },
         {
           "name": "multiline-tick-labels",
           "path": "/example/Axis/multiline-tick-labels",
-          "checksum": "5e7080e32be45366e902fdd3d3379c5b"
+          "checksum": "bec845bd6ea016b45af22c1ff71765a8"
         },
         {
           "name": "multiple-axis-grid-and-rules",
@@ -709,7 +709,7 @@
         {
           "name": "multiple-axis-same-placement-bottom",
           "path": "/example/Axis/multiple-axis-same-placement-bottom",
-          "checksum": "7e987e64be8f256e2415c3cc1331e37c"
+          "checksum": "a452d2c80f72ecd59cf2137453aaf2d4"
         },
         {
           "name": "multiple-axis-same-placement-right",
@@ -719,7 +719,7 @@
         {
           "name": "override-axis-ticks-scale",
           "path": "/example/Axis/override-axis-ticks-scale",
-          "checksum": "ae37951dda772af305feb8b0e14537b3"
+          "checksum": "c3d2ec1f9be3bcc09362af96feddccab"
         },
         {
           "name": "placement-bottom-left",
@@ -734,72 +734,72 @@
         {
           "name": "placement-top-right",
           "path": "/example/Axis/placement-top-right",
-          "checksum": "d3aef4def2cefab4b83294dd9e4d0780"
+          "checksum": "9df4fed9a24749bae430f1b93b0f066a"
         },
         {
           "name": "placement-top-right-rule",
           "path": "/example/Axis/placement-top-right-rule",
-          "checksum": "c2cc9cde9d2c5477410ad9b1f69840d1"
+          "checksum": "2322c52549c110b20fb5fb48e6e9c9b7"
         },
         {
           "name": "radial-grid",
           "path": "/example/Axis/radial-grid",
-          "checksum": "9b3eae52d929a145c10477b658383e12"
+          "checksum": "c8e3482e82df2fdcbb589050f2444eda"
         },
         {
           "name": "radial-rule",
           "path": "/example/Axis/radial-rule",
-          "checksum": "fef551a7fa6095ef022ed8463cafe8d3"
+          "checksum": "9349f73053b992e8a6bd6028e1a097f0"
         },
         {
           "name": "remove-tick-marks",
           "path": "/example/Axis/remove-tick-marks",
-          "checksum": "73dd153028e65e0a08128bf6ceae6671"
+          "checksum": "f470dbdc8f694cf1118b8812bebbfb2b"
         },
         {
           "name": "rotate-labels",
           "path": "/example/Axis/rotate-labels",
-          "checksum": "3b1aea37e4a5e95805042762eb184b5b"
+          "checksum": "830db5bb925d25b67af1320c786bf8ef"
         },
         {
           "name": "tick-count",
           "path": "/example/Axis/tick-count",
-          "checksum": "948df56297c42fa84402fc962b19eb67"
+          "checksum": "6a805d4f69fa4b9f3c6bf5ee4472c6c5"
         },
         {
           "name": "tick-label-styling",
           "path": "/example/Axis/tick-label-styling",
-          "checksum": "f5d436b21627e13706c6872137df2185"
+          "checksum": "0792f03cca1d6671235eab0da9770be5"
         },
         {
           "name": "tick-spacing",
           "path": "/example/Axis/tick-spacing",
-          "checksum": "a6acc61b5c4d59c49777b95b45666d45"
+          "checksum": "23bc6b0fa9bbe971e7ac2471a7f8906c"
         },
         {
           "name": "time-scale-auto",
           "path": "/example/Axis/time-scale-auto",
-          "checksum": "1d406e5bbd61469b66b83473d1dcdbf7"
+          "checksum": "157b939edf850575d267a772eeff486f"
         },
         {
           "name": "time-scale-auto-format-filtering",
           "path": "/example/Axis/time-scale-auto-format-filtering",
-          "checksum": "7a842796553f494e0142195be3b3847d"
+          "checksum": "0d48b603dffa1a43ebd92801126116f7"
         },
         {
           "name": "time-scale-auto-multiline",
           "path": "/example/Axis/time-scale-auto-multiline",
-          "checksum": "1344828b5547f5c64fc3ebfc4cdc881e"
+          "checksum": "87d1bdb3db3d751d9ccdb17d7df345df"
         },
         {
           "name": "time-scale-brush",
           "path": "/example/Axis/time-scale-brush",
-          "checksum": "dbe01b89f776096561d3e74a943371f6"
+          "checksum": "1fb8f5e787fc0853235bc8a0dbbc02bd"
         },
         {
           "name": "time-scale-brush-multiline",
           "path": "/example/Axis/time-scale-brush-multiline",
-          "checksum": "aecd992738d5a927e7f587d19df32030"
+          "checksum": "181c4d0507b7a1487318219ac6a10295"
         },
         {
           "name": "time-scale-explicit",
@@ -1234,47 +1234,47 @@
         {
           "name": "horizontal-average-annotation-rule",
           "path": "/example/Bars/horizontal-average-annotation-rule",
-          "checksum": "c4eaf6804d1c08fdab63cf86a3e87687"
+          "checksum": "5007c406609b54fec47a1ed074ee95fd"
         },
         {
           "name": "horizontal-basic",
           "path": "/example/Bars/horizontal-basic",
-          "checksum": "1098e53a7654dda1fbab5c34bd1289a6"
+          "checksum": "a37797c22b1ee2496086b54a76caa15a"
         },
         {
           "name": "horizontal-calculated-value-domain-negative",
           "path": "/example/Bars/horizontal-calculated-value-domain-negative",
-          "checksum": "ccfa2c48c06fad991c5f1119c0978154"
+          "checksum": "846a90c324e8a6296fce7fc2f8433d74"
         },
         {
           "name": "horizontal-calculated-value-domain-positive",
           "path": "/example/Bars/horizontal-calculated-value-domain-positive",
-          "checksum": "7f23096cd9e65acdb6d8bb7f89d2ffee"
+          "checksum": "818a135bb9867f1eeb82e400b0650538"
         },
         {
           "name": "horizontal-candlestick-bars",
           "path": "/example/Bars/horizontal-candlestick-bars",
-          "checksum": "25b09c9cd5430425b91268598974ea42"
+          "checksum": "77ca4f052b2b1208da571326e3e3f157"
         },
         {
           "name": "horizontal-click-handler",
           "path": "/example/Bars/horizontal-click-handler",
-          "checksum": "13a47723f4af762091cc38a5df1b3b36"
+          "checksum": "5eea5d603846d57f5811aab902154127"
         },
         {
           "name": "horizontal-customize-individual-styles",
           "path": "/example/Bars/horizontal-customize-individual-styles",
-          "checksum": "2d8dd4a15b4ec9c974b9c813799a13af"
+          "checksum": "5afedfeadeb1a428b498696412dc5255"
         },
         {
           "name": "horizontal-gradient",
           "path": "/example/Bars/horizontal-gradient",
-          "checksum": "6f90cbb72bd39ee7165822ef9e30f5f6"
+          "checksum": "b2702b71d7965beb26677b394e54ca7b"
         },
         {
           "name": "horizontal-grouped",
           "path": "/example/Bars/horizontal-grouped",
-          "checksum": "4e15dd6b2b48b428b7081b597b943b5e"
+          "checksum": "297343ad5592301b94564d8071ddc402"
         },
         {
           "name": "horizontal-grouped-and-stacked",
@@ -1284,117 +1284,117 @@
         {
           "name": "horizontal-grouped-stacked-or-both-transition",
           "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-          "checksum": "0ffcd51189bb42b182897820e2464601"
+          "checksum": "ea8070600351a92b4b816e1d5a7d2824"
         },
         {
           "name": "horizontal-highlight-individual-bar",
           "path": "/example/Bars/horizontal-highlight-individual-bar",
-          "checksum": "0b2583e75a7fd763130d3e805be8d7c8"
+          "checksum": "9db7adbf87172ff2ef6e4141a846acd7"
         },
         {
           "name": "horizontal-highlight-individual-bar-line",
           "path": "/example/Bars/horizontal-highlight-individual-bar-line",
-          "checksum": "faee62b5e949c35009601c49fdd4b476"
+          "checksum": "2ea91e599ec51ccfc4b1be7f1c905d2e"
         },
         {
           "name": "horizontal-inside-labels",
           "path": "/example/Bars/horizontal-inside-labels",
-          "checksum": "910960cf4fd1b6557738b254f4325cc3"
+          "checksum": "660dbf1a590b29d6f411869592dd439e"
         },
         {
           "name": "horizontal-limit-ticks-count",
           "path": "/example/Bars/horizontal-limit-ticks-count",
-          "checksum": "32ca2417a6fe4c81b320305c3b6a5dd7"
+          "checksum": "7582ff87454dbce38174f35050a5c319"
         },
         {
           "name": "horizontal-limit-ticks-second-scale",
           "path": "/example/Bars/horizontal-limit-ticks-second-scale",
-          "checksum": "732c8ecc3688b81121e9c4c40c05db48"
+          "checksum": "6f3f56ac1125a098b460c8443153b827"
         },
         {
           "name": "horizontal-multiple-diverging",
           "path": "/example/Bars/horizontal-multiple-diverging",
-          "checksum": "1ab8a9449896ef5f6f4622dcd27c917e"
+          "checksum": "c3ad2b59272c99aa40a8eaccacb72e05"
         },
         {
           "name": "horizontal-multiple-overlapping",
           "path": "/example/Bars/horizontal-multiple-overlapping",
-          "checksum": "ee5ccaba3feb6cdbce6c948c3a89c642"
+          "checksum": "ef0f6c1290b5fae6e10bf3f460e1aafc"
         },
         {
           "name": "horizontal-outside-labels-default",
           "path": "/example/Bars/horizontal-outside-labels-default",
-          "checksum": "6d5964b2815ede5538285d50ab94d512"
+          "checksum": "65f6dd8281327c40bd47eb15a0630e4c"
         },
         {
           "name": "horizontal-rounded-right-only",
           "path": "/example/Bars/horizontal-rounded-right-only",
-          "checksum": "ec61b7f8479114310e92fc3cb4f376f1"
+          "checksum": "48bb22034438eec58605e84d576d1e92"
         },
         {
           "name": "horizontal-stacked",
           "path": "/example/Bars/horizontal-stacked",
-          "checksum": "929ba1281a6f7f9487a25615d915cadf"
+          "checksum": "dc747014a7f09644b2e975bc9cf8b8af"
         },
         {
           "name": "horizontal-stacked-percent",
           "path": "/example/Bars/horizontal-stacked-percent",
-          "checksum": "996f9a04979db08bc95ac88e97997307"
+          "checksum": "9ee92eed81ad3f81bd0fbcea83975ba8"
         },
         {
           "name": "horizontal-stagger-tween-on-mount",
           "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-          "checksum": "6b344595dcc445990037a6fe3ab84646"
+          "checksum": "479113570b46f2b8b30e3b153c66cb10"
         },
         {
           "name": "horizontal-time-scale-with-inset",
           "path": "/example/Bars/horizontal-time-scale-with-inset",
-          "checksum": "c5fae2b0bdfa3562424af69d866f8876"
+          "checksum": "014946708fa7f5501326be7021a4a0cc"
         },
         {
           "name": "horizontal-time-scale-with-interval",
           "path": "/example/Bars/horizontal-time-scale-with-interval",
-          "checksum": "5318638471e1e19b001d03e3629eb059"
+          "checksum": "364d452641c8b5961dcd3465f696033d"
         },
         {
           "name": "horizontal-time-scale-with-missing-data",
           "path": "/example/Bars/horizontal-time-scale-with-missing-data",
-          "checksum": "885698e35873100dc77dad0441ea17cc"
+          "checksum": "d87cfbef7b3de94d090f7b193d07bcce"
         },
         {
           "name": "horizontal-tooltip-and-bar-highlight",
           "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
-          "checksum": "eb635de7173dbfa588b6698dcf4267f1"
+          "checksum": "a6f715d98b725fed8c493faa95be9dc4"
         },
         {
           "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
           "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-          "checksum": "8b6881236e80283a47fcd39e220c12c2"
+          "checksum": "490c7f61ec8440a4df998a1a5bd22313"
         },
         {
           "name": "horizontal-tooltip-and-clipped-highlight",
           "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
-          "checksum": "c6ca4cc79e45d873c12c6f5062a338b3"
+          "checksum": "9c6427ba8a1a1159768a2d67e0b2ff72"
         },
         {
           "name": "horizontal-tooltip-and-highlight",
           "path": "/example/Bars/horizontal-tooltip-and-highlight",
-          "checksum": "fc6726b8870f5d4ed134aaca61bdad6e"
+          "checksum": "514b6afd3a901e2f58101594af6d075b"
         },
         {
           "name": "horizontal-tween-on-mount",
           "path": "/example/Bars/horizontal-tween-on-mount",
-          "checksum": "9e5e555642eb4c115fe02d03fd44337b"
+          "checksum": "27a7ed07d28bba2176e7ee4bc315aa80"
         },
         {
           "name": "horizontal-with-grid-on-top",
           "path": "/example/Bars/horizontal-with-grid-on-top",
-          "checksum": "ab263418ccfe85b18b071b7a42f49f48"
+          "checksum": "c526aa173e96c4dd8b966ac718b66747"
         },
         {
           "name": "horizontal-with-grid-on-top-mix-blend",
           "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
-          "checksum": "91f4d5c50c32715a615a1a8f6205084b"
+          "checksum": "6dc9dba74d6c208c01d3cf4d8ef44152"
         },
         {
           "name": "vertical-average-annotation-rule",
@@ -1669,37 +1669,37 @@
         {
           "name": "90-days",
           "path": "/example/Calendar/90-days",
-          "checksum": "c5d396d296a9fd94e25ba0921ca29756"
+          "checksum": "9f31891353c3cc4a3bd561de54242650"
         },
         {
           "name": "fixed-cell-size",
           "path": "/example/Calendar/fixed-cell-size",
-          "checksum": "09649808641458dc2079c09018bda31d"
+          "checksum": "7bda4d776cab0b794a21c943fad73a2f"
         },
         {
           "name": "html-with-padding",
           "path": "/example/Calendar/html-with-padding",
-          "checksum": "69e866428499564f6a605ee170f8c9dd"
+          "checksum": "7ed4ee8a533a7e9d11aa87370a1ff544"
         },
         {
           "name": "last-month",
           "path": "/example/Calendar/last-month",
-          "checksum": "c95c37f7ef0873ffa28649a5b9f3c64a"
+          "checksum": "c4bf2fae7fa54fd141f16377f3077a4a"
         },
         {
           "name": "multiple-years",
           "path": "/example/Calendar/multiple-years",
-          "checksum": "95a707c578888ac3ff1da0839ac98ec3"
+          "checksum": "91026d84f5381817e269487ffbfc7294"
         },
         {
           "name": "responsive-cell-size-default",
           "path": "/example/Calendar/responsive-cell-size-default",
-          "checksum": "cd526371911f1d9741a76234de8cc9b8"
+          "checksum": "bd85f680bbd4500ab8aeb02879aade67"
         },
         {
           "name": "rounded-cells",
           "path": "/example/Calendar/rounded-cells",
-          "checksum": "b4edf6694b042d34a2310857650b5a33"
+          "checksum": "935d7bfc61eddd8214b49e118ccffded"
         }
       ]
     },
@@ -1779,7 +1779,7 @@
         {
           "name": "playground",
           "path": "/example/Connector/playground",
-          "checksum": "2be986b575c0ba759ed4ad10a7ec6429"
+          "checksum": "2dd47c346f2a272afaab8eeaa6b4b0cf"
         }
       ]
     },
@@ -1849,17 +1849,17 @@
         {
           "name": "graph-drag",
           "path": "/example/ForceSimulation/graph-drag",
-          "checksum": "eb4facd4cead779514f0158533b89b9e"
+          "checksum": "176f4291891552d64a25b1b652f53531"
         },
         {
           "name": "graph-playground",
           "path": "/example/ForceSimulation/graph-playground",
-          "checksum": "6f8a82b2497f32d805c1a44b91473ac6"
+          "checksum": "dee49fd9011adca7472aeb671c49e435"
         },
         {
           "name": "group",
           "path": "/example/ForceSimulation/group",
-          "checksum": "22e63d5f69e78d42045454157405936b"
+          "checksum": "beb3c8576a63c26fed1d14604a281b9d"
         },
         {
           "name": "lattice",
@@ -1869,12 +1869,12 @@
         {
           "name": "text",
           "path": "/example/ForceSimulation/text",
-          "checksum": "888921a65d6baa913213036d139ab5ad"
+          "checksum": "e617a65cbf17d00b3434fc11a9c4874c"
         },
         {
           "name": "tree",
           "path": "/example/ForceSimulation/tree",
-          "checksum": "dd2003be38088dfef5966be9ca365ddd"
+          "checksum": "00b1e34cdd50bb7eae58b767752c5d4d"
         }
       ]
     },
@@ -2109,7 +2109,7 @@
         {
           "name": "dashed-lines",
           "path": "/example/Grid/dashed-lines",
-          "checksum": "e7a4550cb27576c8ad114ffeee45d944"
+          "checksum": "187096a909816082d85d29f35e24f50e"
         },
         {
           "name": "explicit-ticks",
@@ -2184,12 +2184,12 @@
         {
           "name": "geo",
           "path": "/example/Hull/geo",
-          "checksum": "13753ed47a8b276d56a7c05432924ffd"
+          "checksum": "30f71bad9640cb6d884c1eb34b062e94"
         },
         {
           "name": "scatter",
           "path": "/example/Hull/scatter",
-          "checksum": "aec987d6cb10a3d3f9b599b7816fac16"
+          "checksum": "54f783de7766a044edc544dfb4b2cad7"
         }
       ]
     },
@@ -2204,7 +2204,7 @@
         {
           "name": "chart-placement",
           "path": "/example/Legend/chart-placement",
-          "checksum": "da0d0198900bf5f91cd3f949de4b440e"
+          "checksum": "a87b917c56a8b41244d029434930d092"
         },
         {
           "name": "children-override",
@@ -2219,12 +2219,12 @@
         {
           "name": "diverging",
           "path": "/example/Legend/diverging",
-          "checksum": "4142bbdd2a87857b294264b7826a330d"
+          "checksum": "9ce92834f96a9ec8e70ca9d4b7b87496"
         },
         {
           "name": "diverging-sqrt",
           "path": "/example/Legend/diverging-sqrt",
-          "checksum": "13dd0a93a12c18ad8a3e7048748eef36"
+          "checksum": "24dd75fbc5f0e3adabc3885a90b0f97e"
         },
         {
           "name": "ordinal",
@@ -2279,7 +2279,7 @@
         {
           "name": "styling",
           "path": "/example/Legend/styling",
-          "checksum": "891d51363e0c2297dcccf25d27a4d94c"
+          "checksum": "0c04324e8eff35bd92a1ac171985ee8d"
         },
         {
           "name": "threshold",
@@ -2504,7 +2504,7 @@
         {
           "name": "series-labels-hover",
           "path": "/example/LineChart/series-labels-hover",
-          "checksum": "7e82ac414e476c6716e24e8846407cb2"
+          "checksum": "f84c699259ccaa6d21d38608ee91fa83"
         },
         {
           "name": "series-point-annotations",
@@ -2589,27 +2589,27 @@
         {
           "name": "line",
           "path": "/example/Marker/line",
-          "checksum": "ff9f2b21cbf46a0150a80c6181dbd2ea"
+          "checksum": "48b21abc8bb7a7662609fe7654cc13fe"
         },
         {
           "name": "orientation",
           "path": "/example/Marker/orientation",
-          "checksum": "13a4416779f8f67ff7b5a5ccbc26b63f"
+          "checksum": "60511001a0142f985d1709f3d36c32a7"
         },
         {
           "name": "spline",
           "path": "/example/Marker/spline",
-          "checksum": "d9b2bf14e9f38d34557c66faf872e206"
+          "checksum": "71f0ffbb601f0c9694e27e5f70960214"
         },
         {
           "name": "spline-w-thicker-stroke",
           "path": "/example/Marker/spline-w-thicker-stroke",
-          "checksum": "d0c7f8b4cd4bbdd8833ccc99c533ef31"
+          "checksum": "63a715e255c40fb57d83462fc2f5e0ea"
         },
         {
           "name": "styling",
           "path": "/example/Marker/styling",
-          "checksum": "40935bf2caa0cdd3bca90e7b4befb347"
+          "checksum": "74f2139893760384cd1647385fa25d43"
         }
       ]
     },
@@ -2839,7 +2839,7 @@
         {
           "name": "tweened",
           "path": "/example/Pie/tweened",
-          "checksum": "f5f96587333e3f71c730fac8be5b50b0"
+          "checksum": "5bad02803b0ffdc726cbaae740d17c63"
         }
       ]
     },
@@ -2919,12 +2919,12 @@
         {
           "name": "motion-spring",
           "path": "/example/PieChart/motion-spring",
-          "checksum": "612835548e2d70f54a97803abb9a370d"
+          "checksum": "b37035b52004c779e29062e35c514ec6"
         },
         {
           "name": "motion-tween",
           "path": "/example/PieChart/motion-tween",
-          "checksum": "feb58b83fd68fd0eb56c291c3b840d0c"
+          "checksum": "c9a8ef0e53ea9e1d16fb9c216e93bc59"
         },
         {
           "name": "offset-slice",
@@ -2964,7 +2964,7 @@
         {
           "name": "segments",
           "path": "/example/PieChart/segments",
-          "checksum": "69f67ae25edfece8a4ecd0b0983dd0db"
+          "checksum": "2717e0015ae3b27a0f7e05919c30743c"
         },
         {
           "name": "series",
@@ -2994,7 +2994,7 @@
         {
           "name": "basic-usage",
           "path": "/example/Point/basic-usage",
-          "checksum": "2ecaf77364d1410e280749dbbd184195"
+          "checksum": "276e1c125fcc90b3b02f7344379cb214"
         }
       ]
     },
@@ -3029,122 +3029,107 @@
         {
           "name": "10-point-star",
           "path": "/example/Polygon/10-point-star",
-          "checksum": "f9bf613fc25bfeff5072e66ef14877e5"
+          "checksum": "90d384275314fdef48dc45a67ea37207"
         },
         {
           "name": "12-point-star",
           "path": "/example/Polygon/12-point-star",
-          "checksum": "c9551c069413f77ff4637ca9df3e2d6d"
+          "checksum": "3c8636fa0d9500c83b1fbf175bb61a2e"
         },
         {
           "name": "14-point-star",
           "path": "/example/Polygon/14-point-star",
-          "checksum": "64f2ad5d41daf3239ffc8f2a04c7c0f7"
+          "checksum": "8b4d17b630d7ac5e0e3c25af897c3845"
         },
         {
           "name": "16-point-star",
           "path": "/example/Polygon/16-point-star",
-          "checksum": "25cc9864b7a4a25bc62384cf5c39f782"
+          "checksum": "4aa6da47b3de2983e81894d99baee321"
         },
         {
           "name": "18-point-star",
           "path": "/example/Polygon/18-point-star",
-          "checksum": "c380ff8bf3bd7fa38906830c84b48df2"
+          "checksum": "0ad89f9b67c40d4d695f15450f2df218"
         },
         {
           "name": "20-point-star",
           "path": "/example/Polygon/20-point-star",
-          "checksum": "2987654a92214f54d569b15de72fab90"
+          "checksum": "bf23ede5e023d91ab5c6505366cec0e0"
         },
         {
           "name": "6-point-star",
           "path": "/example/Polygon/6-point-star",
-          "checksum": "d5e4d1e9b9a28e2bee73aacd5b272957"
+          "checksum": "171f640cb51069a55cd5d10282fd3a16"
         },
         {
           "name": "8-point-star",
           "path": "/example/Polygon/8-point-star",
-          "checksum": "74462a42856d0291f58eeadb627fc90c"
+          "checksum": "c201e9e01b9a3165869d1e65b8ff1f08"
         },
         {
           "name": "arrow",
           "path": "/example/Polygon/arrow",
-          "checksum": "b6a59cd370ebde527a35c6ed8b05d826"
+          "checksum": "dbb66aaff02cd75d2a1cb0cda1a10108"
         },
         {
           "name": "cross",
           "path": "/example/Polygon/cross",
-          "checksum": "24c8e7bd1a56bc6b400479c2d1db64ae"
-        },
-        {
-          "name": "custom-points",
-          "path": "/example/Polygon/custom-points",
-          "checksum": "7de82813c1e819d3796893d4b9a5ed6b"
+          "checksum": "9f4a95d10e3b562c45adc553a6a07abf"
         },
         {
           "name": "diamond",
           "path": "/example/Polygon/diamond",
-          "checksum": "f12e42493c3674b9650d09efd94d9936"
+          "checksum": "8e5739d2276fc44d6fe07049a3e969ad"
         },
         {
           "name": "hexagon",
           "path": "/example/Polygon/hexagon",
-          "checksum": "43460ff4a9840cb94f23eb961bdd1bce"
+          "checksum": "6ed8d20370bf0641d3a83d6a116c0393"
         },
         {
           "name": "octagon",
           "path": "/example/Polygon/octagon",
-          "checksum": "e7f2c83e0d5782f225732f6dca007437"
+          "checksum": "8409b5ab5b70567f567900e9bf98811d"
         },
         {
           "name": "parallelogram",
           "path": "/example/Polygon/parallelogram",
-          "checksum": "dd1fb4ca8f7be627dc27a0fa78a2cbad"
+          "checksum": "60dc62c658293000633301f5a00fa8a7"
         },
         {
           "name": "pentagon",
           "path": "/example/Polygon/pentagon",
-          "checksum": "ca5e283ee307e485cd72a69d0a805685"
+          "checksum": "6ddc00a9f4a9e28e288340c527d6d759"
         },
         {
           "name": "playground",
           "path": "/example/Polygon/playground",
-          "checksum": "857abb48cfe2bf3cd9b38bd97f491ef4"
+          "checksum": "e7589f968f42002a655254e6adbd9e2d"
         },
         {
           "name": "rectangle",
           "path": "/example/Polygon/rectangle",
-          "checksum": "68366319866751f06368ef6aa7e3cca4"
+          "checksum": "d5c77d1f4be235fa314140fa369f3ed6"
         },
         {
           "name": "rhombus",
           "path": "/example/Polygon/rhombus",
-          "checksum": "6207875678f649133c01d094d398e518"
-        },
-        {
-          "name": "simple",
-          "path": "/example/Polygon/simple",
-          "checksum": "4822cae04552252e161ad404e851fe3f"
+          "checksum": "94393fbc4e417eefeeb20beb74a5b79d"
         },
         {
           "name": "square",
           "path": "/example/Polygon/square",
-          "checksum": "125cf338cf30b4441b73057a8b9dc082"
-        },
-        {
-          "name": "stars",
-          "path": "/example/Polygon/stars",
-          "checksum": "4d4a7975a010d289551cb5ae6f3ef89f"
+          "checksum": "ceaf505e64ee5abbc41f766677513208"
         },
         {
           "name": "trapezoid",
           "path": "/example/Polygon/trapezoid",
-          "checksum": "b82e08326e547fc7cc404717960b520a"
+          "checksum": "758f73d323fe6492e440ecaf1c5478c1"
         },
         {
           "name": "triangle",
           "path": "/example/Polygon/triangle",
-          "checksum": "a11b1d5a8f1e3787777e74d27e6f1417"
+          "checksum": "6bd770b295ed58d53589bd51698e55fc"
         }
       ]
     },
@@ -3199,72 +3184,72 @@
         {
           "name": "annotation-x",
           "path": "/example/Rule/annotation-x",
-          "checksum": "f20eb337b2deda4965f8cb91157bde24"
+          "checksum": "187f96f6d9af7b3710f327c8867a12fe"
         },
         {
           "name": "annotation-y",
           "path": "/example/Rule/annotation-y",
-          "checksum": "359f46e98b699d544679fc7c9ca57a72"
+          "checksum": "b174438a96ea307890022abecae5e7d2"
         },
         {
           "name": "baseline-top-right",
           "path": "/example/Rule/baseline-top-right",
-          "checksum": "69196157281256bbb83074a0f737d0f9"
+          "checksum": "bc59c7bfaf697b6273b76f341b9a2791"
         },
         {
           "name": "baseline-x-negative",
           "path": "/example/Rule/baseline-x-negative",
-          "checksum": "6d3e5c92c7478bda695ebf565034d15f"
+          "checksum": "12e05027540a037fc57196b095a8b666"
         },
         {
           "name": "baseline-x-y",
           "path": "/example/Rule/baseline-x-y",
-          "checksum": "8979ec065e9d0a09f73889bb768738be"
+          "checksum": "f10cbafb6058a3c7e3782ee900c06d7f"
         },
         {
           "name": "baseline-y-negative",
           "path": "/example/Rule/baseline-y-negative",
-          "checksum": "72b8c9da0823df78471648565e3b228f"
+          "checksum": "7f9c87e4d74bfe1958d02115f92782ad"
         },
         {
           "name": "candlestick",
           "path": "/example/Rule/candlestick",
-          "checksum": "3624caed29f7c77fe6eb3d140743e6f2"
+          "checksum": "7f712d27d78ab86f75cab25f302b761d"
         },
         {
           "name": "candlestick-open-close-line-color",
           "path": "/example/Rule/candlestick-open-close-line-color",
-          "checksum": "aa982f5bbb051ceecd89cb5ddf174fc0"
+          "checksum": "53fa007ae88e4315bdcb1689679dc319"
         },
         {
           "name": "candlestick-with-brushing",
           "path": "/example/Rule/candlestick-with-brushing",
-          "checksum": "2fb7f2856c306d6e62cb713637bb5040"
+          "checksum": "97b83cacf2b221a01570238e8625afdc"
         },
         {
           "name": "data-x-band",
           "path": "/example/Rule/data-x-band",
-          "checksum": "f44dfe19f1935ed9b8b83642f981bd25"
+          "checksum": "c887ce336ef14e80458c2d94da7a0bcc"
         },
         {
           "name": "data-x-date",
           "path": "/example/Rule/data-x-date",
-          "checksum": "a646b2dca13dec038e8e25fb23a11664"
+          "checksum": "70dd877121ab46fefedd4f8ad1f819ea"
         },
         {
           "name": "data-x-range",
           "path": "/example/Rule/data-x-range",
-          "checksum": "568fc91f3a08648e5038aeccf0ff8b19"
+          "checksum": "b19ac505d7e6b6c9291e4d3793405319"
         },
         {
           "name": "data-y-range",
           "path": "/example/Rule/data-y-range",
-          "checksum": "133b324a5a0244ede9cec36f1c2df8dc"
+          "checksum": "8ab2cabaa993c57d5648c4ac583c998a"
         },
         {
           "name": "lollipop",
           "path": "/example/Rule/lollipop",
-          "checksum": "90e970feb93792099c73d9bd12d6fd7f"
+          "checksum": "667c3c912338bbe5622f8c5318af4bbe"
         }
       ]
     },
@@ -3304,127 +3289,127 @@
         {
           "name": "basic",
           "path": "/example/ScatterChart/basic",
-          "checksum": "4efd7cf88d4fd2abb63b9ad22076afe9"
+          "checksum": "09f9e720b246ccd1273102f5e8f0f4e4"
         },
         {
           "name": "brush",
           "path": "/example/ScatterChart/brush",
-          "checksum": "84e9a4025f1cd90c20175a55be9287d7"
+          "checksum": "c9216b0872136dd7c17d4b3bb5701e57"
         },
         {
           "name": "custom",
           "path": "/example/ScatterChart/custom",
-          "checksum": "24bf40269ee73a5401cf4b79017234b0"
+          "checksum": "e0fe59178462eda6eb17f86d84c1ec93"
         },
         {
           "name": "custom-tooltip",
           "path": "/example/ScatterChart/custom-tooltip",
-          "checksum": "3949e6a4dc81165173301dd86e18071d"
+          "checksum": "464804ee2120c66d2d198712099e864a"
         },
         {
           "name": "date-series-color-scale",
           "path": "/example/ScatterChart/date-series-color-scale",
-          "checksum": "8f9974f5bd745b89533ca0920091e4a0"
+          "checksum": "920010c167558d4c06b8480f98abef38"
         },
         {
           "name": "domain-baseline",
           "path": "/example/ScatterChart/domain-baseline",
-          "checksum": "1cb4719abb8a827a061770592ce60bc7"
+          "checksum": "73a1737d791be77121ed24fd2e9b510d"
         },
         {
           "name": "domain-nice",
           "path": "/example/ScatterChart/domain-nice",
-          "checksum": "01da2f67eb2957bcc4c300e676f96857"
+          "checksum": "1e776e1b858bbf6b0cc6d38bf8ff0919"
         },
         {
           "name": "domain-padding",
           "path": "/example/ScatterChart/domain-padding",
-          "checksum": "0ab0a08f3f7d0a7294d46ce905ce9f4b"
+          "checksum": "9aaef160c92770859224bb0ecfa19c7e"
         },
         {
           "name": "labels",
           "path": "/example/ScatterChart/labels",
-          "checksum": "bc3c4aaa97028f54109f797e90e5079f"
+          "checksum": "2ce356c0201cfb7d997d047935b0ec30"
         },
         {
           "name": "line-annotation",
           "path": "/example/ScatterChart/line-annotation",
-          "checksum": "ba245688cf9c2b4e81eec07242a176f8"
+          "checksum": "da35259a077a37827edf5aacb4b1e3f1"
         },
         {
           "name": "point-annotations",
           "path": "/example/ScatterChart/point-annotations",
-          "checksum": "a7b940eb6fce2c5a5d826dd8e02dbb76"
+          "checksum": "5e82442a2f56e2572bbbc4b8ea48b0d7"
         },
         {
           "name": "punchcard",
           "path": "/example/ScatterChart/punchcard",
-          "checksum": "92a83ab6c53341eb7544727869c1c78e"
+          "checksum": "46b7d7aa8b4e400ee5546ebe0542d97f"
         },
         {
           "name": "radius-scale",
           "path": "/example/ScatterChart/radius-scale",
-          "checksum": "ba7a153bca39d5f90fd048aba770cf69"
+          "checksum": "c7f7f1088f68d5636f0c413807c9b492"
         },
         {
           "name": "range-annotation-both",
           "path": "/example/ScatterChart/range-annotation-both",
-          "checksum": "63e8c17017aea05e09945a5ad2cad62f"
+          "checksum": "f62bce4ec0c4a5ffc4c0a161189b03ad"
         },
         {
           "name": "range-annotation-horizontal",
           "path": "/example/ScatterChart/range-annotation-horizontal",
-          "checksum": "f5d24ed13b937be09ad22d723bfaa4c8"
+          "checksum": "0baff04f1e389c3e2eae613d108844f6"
         },
         {
           "name": "range-annotation-vertical",
           "path": "/example/ScatterChart/range-annotation-vertical",
-          "checksum": "ba245688cf9c2b4e81eec07242a176f8"
+          "checksum": "1bdeac21a6b1899849f1b542ba11a56e"
         },
         {
           "name": "series",
           "path": "/example/ScatterChart/series",
-          "checksum": "240f99640f8c63d5c29e7b3a8662f1e1"
+          "checksum": "ab38e89833a36df01fefa211bd875764"
         },
         {
           "name": "series-custom-labels",
           "path": "/example/ScatterChart/series-custom-labels",
-          "checksum": "0e0c2fd9c993a51991f9c9ca4b1b78a4"
+          "checksum": "00d122422258b871fbb9897ecab6919a"
         },
         {
           "name": "series-legend",
           "path": "/example/ScatterChart/series-legend",
-          "checksum": "16322a771e7094d89e665be0b227b590"
+          "checksum": "395c2150fa14e4a754bfc0f06abaa760"
         },
         {
           "name": "series-tween",
           "path": "/example/ScatterChart/series-tween",
-          "checksum": "6294acdff996096ad16ac02128c47a50"
+          "checksum": "c9050fcaf14886ea957dc39cc31e13e3"
         },
         {
           "name": "series-with-radius",
           "path": "/example/ScatterChart/series-with-radius",
-          "checksum": "a4f00ff2e3bf6faf498a5bf89aa226c6"
+          "checksum": "0766b0124ba0a75ad3637561c7a75c82"
         },
         {
           "name": "single-axis-x",
           "path": "/example/ScatterChart/single-axis-x",
-          "checksum": "aa1ad32524e2576c480cdc92dee10734"
+          "checksum": "4b44094891514ec5f45996f633d2eab0"
         },
         {
           "name": "single-axis-y",
           "path": "/example/ScatterChart/single-axis-y",
-          "checksum": "7a97c84eae5e06097ff9fdc1818f60ec"
+          "checksum": "884977049dbde8ee0dc9610a47a8fc0b"
         },
         {
           "name": "single-dimension",
           "path": "/example/ScatterChart/single-dimension",
-          "checksum": "9b347a04b14eb27cf7fdea9b885666cd"
+          "checksum": "e4ea656b363776435b5052ee70304635"
         },
         {
           "name": "tooltip-click",
           "path": "/example/ScatterChart/tooltip-click",
-          "checksum": "e83d7ab26449df7fe085e54447261c8a"
+          "checksum": "8e7cb72156f4928c277cb2179aa7092b"
         }
       ]
     },
@@ -3544,7 +3529,7 @@
         {
           "name": "playground",
           "path": "/example/Text/playground",
-          "checksum": "0608a9d2bbd4be30aee4c8d5267f32cd"
+          "checksum": "dd85e3d1798edc95cfd15b2386143563"
         },
         {
           "name": "word-wrap-with-explicit-n",

@@ -91,14 +91,14 @@
       "example": "basic",
       "component": "Area",
       "path": "/example/Area/basic",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 36,
+      "lineNumber": 24,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
@@ -119,21 +119,21 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 27,
+      "lineNumber": 19,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 25,
+      "lineNumber": 17,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 27,
+      "lineNumber": 19,
       "line": "<Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />"
     },
     {
@@ -154,14 +154,14 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 31,
+      "lineNumber": 23,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 39,
+      "lineNumber": 31,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
@@ -210,7 +210,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 59,
+      "lineNumber": 37,
       "line": "<Area"
     },
     {
@@ -231,49 +231,49 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 42,
+      "lineNumber": 34,
       "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 42,
+      "lineNumber": 34,
       "line": "<Area"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 31,
+      "lineNumber": 23,
       "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 39,
+      "lineNumber": 31,
       "line": "<Area line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 31,
+      "lineNumber": 23,
       "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 39,
+      "lineNumber": 31,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
@@ -620,5 +620,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.241Z"
+  "updatedAt": "2025-11-10T21:19:02.704Z"
 }

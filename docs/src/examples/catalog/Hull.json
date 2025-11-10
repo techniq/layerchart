@@ -15,16 +15,16 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 35,
+      "lineNumber": 34,
       "line": "<Hull"
     },
     {
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 44,
+      "lineNumber": 41,
       "line": "<Hull"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.116Z"
+  "updatedAt": "2025-11-10T21:19:03.652Z"
 }

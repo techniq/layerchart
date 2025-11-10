@@ -20,7 +20,7 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 41,
+      "lineNumber": 33,
       "line": "<Highlight"
     },
     {
@@ -146,14 +146,14 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 106,
+      "lineNumber": 99,
       "line": "<Highlight area />"
     },
     {
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 35,
+      "lineNumber": 30,
       "line": "<Highlight"
     },
     {
@@ -384,21 +384,21 @@
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Highlight lines />"
     },
     {
@@ -633,5 +633,5 @@
       "line": "<Highlight"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.045Z"
+  "updatedAt": "2025-11-10T21:19:03.603Z"
 }

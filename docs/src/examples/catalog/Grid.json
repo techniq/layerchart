@@ -96,7 +96,7 @@
       "component": "Grid",
       "path": "/example/Grid/dashed-lines",
       "lineNumber": 7,
-      "line": "<Grid y={{ style: 'stroke-dasharray: 2' }} />"
+      "line": "<Grid y={{ style: 'stroke-dasharray: 6 4' }} />"
     },
     {
       "example": "explicit-ticks",
@@ -176,5 +176,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.055Z"
+  "updatedAt": "2025-11-10T21:19:03.541Z"
 }

@@ -28,77 +28,77 @@
       "component": "Arc",
       "path": "/example/Arc/color-wheel",
       "lineNumber": 30,
-      "line": "<Chart height={300}>"
+      "line": "<Chart height={300} padding={20}>"
     },
     {
       "example": "concentric",
       "component": "Arc",
       "path": "/example/Arc/concentric",
       "lineNumber": 15,
-      "line": "<Chart height={200}>"
+      "line": "<Chart height={200} padding={20}>"
     },
     {
       "example": "draggable-arc",
       "component": "Arc",
       "path": "/example/Arc/draggable-arc",
       "lineNumber": 12,
-      "line": "<Chart height={200}>"
+      "line": "<Chart height={200} padding={20}>"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Chart height={300}>"
     },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 14,
-      "line": "<Chart height={120}>"
+      "lineNumber": 11,
+      "line": "<Chart height={120} padding={20}>"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 57,
-      "line": "<Chart height={400}>"
+      "lineNumber": 23,
+      "line": "<Chart height={350}>"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
-      "lineNumber": 17,
-      "line": "<Chart height={240}>"
+      "lineNumber": 14,
+      "line": "<Chart height={240} padding={20}>"
     },
     {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 16,
-      "line": "<Chart height={240}>"
+      "lineNumber": 13,
+      "line": "<Chart height={240} padding={20}>"
     },
     {
       "example": "tween-value-on-mount",
       "component": "Arc",
       "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 22,
-      "line": "<Chart height={200}>"
+      "lineNumber": 19,
+      "line": "<Chart height={200} padding={20}>"
     },
     {
       "example": "basic",
       "component": "Area",
       "path": "/example/Area/basic",
       "lineNumber": 11,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 19,
-      "line": "<Chart"
+      "lineNumber": 15,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "clipped-area-on-tooltip",
@@ -112,21 +112,21 @@
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
       "lineNumber": 11,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
       "lineNumber": 11,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
       "lineNumber": 11,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
@@ -140,7 +140,7 @@
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "lineNumber": 16,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "multiple-series",
@@ -174,8 +174,8 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 54,
-      "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 20, right: 8, top: 4, bottom: 24 }} height={300}>"
+      "lineNumber": 32,
+      "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
     },
     {
       "example": "stack",
@@ -196,35 +196,35 @@
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
       "lineNumber": 16,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
       "lineNumber": 16,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
       "lineNumber": 16,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 16,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
       "lineNumber": 11,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "with-tooltip-and-highlight",
@@ -259,7 +259,7 @@
       "component": "Axis",
       "path": "/example/Axis/explicit-ticks",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 100]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 100]} padding={24} height={48}>"
     },
     {
       "example": "extent-ticks-only",
@@ -287,56 +287,56 @@
       "component": "Axis",
       "path": "/example/Axis/hide-zero-filter",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "hide-zero-format",
       "component": "Axis",
       "path": "/example/Axis/hide-zero-format",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "inject-ticks",
       "component": "Axis",
       "path": "/example/Axis/inject-ticks",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 100]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 100]} padding={24} height={48}>"
     },
     {
       "example": "integer-only-filter",
       "component": "Axis",
       "path": "/example/Axis/integer-only-filter",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "integer-only-format",
       "component": "Axis",
       "path": "/example/Axis/integer-only-format",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "labels-next-hash",
       "component": "Axis",
       "path": "/example/Axis/labels-next-hash",
       "lineNumber": 10,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
     },
     {
       "example": "log-scale",
       "component": "Axis",
       "path": "/example/Axis/log-scale",
       "lineNumber": 6,
-      "line": "<Chart xScale={scaleLog()} xDomain={[1, 100]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xScale={scaleLog()} xDomain={[1, 100]} padding={24} height={48}>"
     },
     {
       "example": "multiline-tick-labels",
       "component": "Axis",
       "path": "/example/Axis/multiline-tick-labels",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={{ bottom: 32 }} height={48}>"
+      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
     },
     {
       "example": "multiple-axis-grid-and-rules",
@@ -364,7 +364,7 @@
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-bottom",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={{ bottom: 32 }} height={48}>"
+      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
     },
     {
       "example": "multiple-axis-same-placement-right",
@@ -378,7 +378,7 @@
       "component": "Axis",
       "path": "/example/Axis/override-axis-ticks-scale",
       "lineNumber": 10,
-      "line": "<Chart {data} x=\"date\" xScale={scaleBand()} y=\"value\" padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart {data} x=\"date\" xScale={scaleBand()} y=\"value\" padding={24} height={48}>"
     },
     {
       "example": "placement-bottom-left",
@@ -413,97 +413,97 @@
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} yDomain={[0, 100]} radial height={300}>"
+      "line": "<Chart"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} yDomain={[0, 100]} radial height={300}>"
+      "line": "<Chart"
     },
     {
       "example": "remove-tick-marks",
       "component": "Axis",
       "path": "/example/Axis/remove-tick-marks",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
     },
     {
       "example": "rotate-labels",
       "component": "Axis",
       "path": "/example/Axis/rotate-labels",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
     },
     {
       "example": "tick-count",
       "component": "Axis",
       "path": "/example/Axis/tick-count",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "tick-label-styling",
       "component": "Axis",
       "path": "/example/Axis/tick-label-styling",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
     },
     {
       "example": "tick-spacing",
       "component": "Axis",
       "path": "/example/Axis/tick-spacing",
       "lineNumber": 5,
-      "line": "<Chart xDomain={[0, 2]} padding={{ bottom: 24 }} height={48}>"
+      "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
     },
     {
       "example": "time-scale-auto",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto",
-      "lineNumber": 123,
+      "lineNumber": 115,
       "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
     },
     {
       "example": "time-scale-auto-format-filtering",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-format-filtering",
-      "lineNumber": 123,
+      "lineNumber": 115,
       "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
     },
     {
       "example": "time-scale-auto-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
-      "lineNumber": 123,
+      "lineNumber": 115,
       "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
     },
     {
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush",
-      "lineNumber": 25,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush",
-      "lineNumber": 43,
+      "lineNumber": 35,
       "line": "<Chart"
     },
     {
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush-multiline",
-      "lineNumber": 25,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-brush-multiline",
-      "lineNumber": 43,
+      "lineNumber": 35,
       "line": "<Chart"
     },
     {
@@ -594,7 +594,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 53,
+      "lineNumber": 46,
       "line": "<Chart"
     },
     {
@@ -678,7 +678,7 @@
       "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-      "lineNumber": 27,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -713,7 +713,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 53,
+      "lineNumber": 46,
       "line": "<Chart"
     },
     {
@@ -734,7 +734,7 @@
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 27,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -1245,7 +1245,7 @@
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 34,
+      "lineNumber": 20,
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
@@ -1322,21 +1322,21 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 73,
+      "lineNumber": 67,
       "line": "<Chart height={600}>"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-playground",
-      "lineNumber": 277,
+      "lineNumber": 145,
       "line": "<Chart height={600}>"
     },
     {
       "example": "group",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/group",
-      "lineNumber": 58,
+      "lineNumber": 49,
       "line": "<Chart data={nodes} x=\"category\" xScale={scaleBand()} r=\"value\" rRange={[3, 12]} height={300}>"
     },
     {
@@ -1350,7 +1350,7 @@
       "example": "text",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/text",
-      "lineNumber": 86,
+      "lineNumber": 68,
       "line": "<Chart"
     },
     {
@@ -1721,14 +1721,14 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 23,
+      "lineNumber": 21,
       "line": "<Chart"
     },
     {
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 25,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -1798,49 +1798,49 @@
       "example": "line",
       "component": "Marker",
       "path": "/example/Marker/line",
-      "lineNumber": 40,
+      "lineNumber": 29,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={35}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 40,
+      "lineNumber": 34,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 52,
+      "lineNumber": 48,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 64,
+      "lineNumber": 62,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 57,
+      "lineNumber": 40,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
     },
     {
       "example": "spline-w-thicker-stroke",
       "component": "Marker",
       "path": "/example/Marker/spline-w-thicker-stroke",
-      "lineNumber": 57,
+      "lineNumber": 40,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
     },
     {
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 38,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
@@ -2127,14 +2127,14 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 22,
-      "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors}>"
+      "lineNumber": 21,
+      "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
     },
     {
       "example": "basic-usage",
       "component": "Point",
       "path": "/example/Point/basic-usage",
-      "lineNumber": 8,
+      "lineNumber": 9,
       "line": "<Chart"
     },
     {
@@ -2169,238 +2169,147 @@
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "12-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/12-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "14-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/14-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "16-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/16-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "18-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/18-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "20-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/20-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "6-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/6-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "8-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/8-point-star",
-      "lineNumber": 27,
+      "lineNumber": 14,
       "line": "<Chart height={150}>"
     },
     {
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Chart height={150}>"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 15,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 18,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 44,
+      "lineNumber": 12,
       "line": "<Chart height={150}>"
     },
     {
       "example": "diamond",
       "component": "Polygon",
       "path": "/example/Polygon/diamond",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "hexagon",
       "component": "Polygon",
       "path": "/example/Polygon/hexagon",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "octagon",
       "component": "Polygon",
       "path": "/example/Polygon/octagon",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "parallelogram",
       "component": "Polygon",
       "path": "/example/Polygon/parallelogram",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "pentagon",
       "component": "Polygon",
       "path": "/example/Polygon/pentagon",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "playground",
       "component": "Polygon",
       "path": "/example/Polygon/playground",
-      "lineNumber": 33,
+      "lineNumber": 20,
       "line": "<Chart height={300}>"
     },
     {
       "example": "rectangle",
       "component": "Polygon",
       "path": "/example/Polygon/rectangle",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "rhombus",
       "component": "Polygon",
       "path": "/example/Polygon/rhombus",
-      "lineNumber": 13,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 20,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 38,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 56,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 75,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 94,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 113,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 133,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 152,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 170,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "simple",
-      "component": "Polygon",
-      "path": "/example/Polygon/simple",
-      "lineNumber": 188,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "square",
       "component": "Polygon",
       "path": "/example/Polygon/square",
-      "lineNumber": 13,
-      "line": "<Chart height={150}>"
-    },
-    {
-      "example": "stars",
-      "component": "Polygon",
-      "path": "/example/Polygon/stars",
-      "lineNumber": 28,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "trapezoid",
       "component": "Polygon",
       "path": "/example/Polygon/trapezoid",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
       "example": "triangle",
       "component": "Polygon",
       "path": "/example/Polygon/triangle",
-      "lineNumber": 13,
+      "lineNumber": 10,
       "line": "<Chart height={150}>"
     },
     {
@@ -2457,98 +2366,98 @@
       "component": "Rule",
       "path": "/example/Rule/annotation-x",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
     },
     {
       "example": "annotation-y",
       "component": "Rule",
       "path": "/example/Rule/annotation-y",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
     },
     {
       "example": "baseline-top-right",
       "component": "Rule",
       "path": "/example/Rule/baseline-top-right",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
     },
     {
       "example": "baseline-x-negative",
       "component": "Rule",
       "path": "/example/Rule/baseline-x-negative",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[-20, 100]} yDomain={[0, 100]} padding={20} height={300}>"
     },
     {
       "example": "baseline-x-y",
       "component": "Rule",
       "path": "/example/Rule/baseline-x-y",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
     },
     {
       "example": "baseline-y-negative",
       "component": "Rule",
       "path": "/example/Rule/baseline-y-negative",
       "lineNumber": 5,
-      "line": "<Chart"
+      "line": "<Chart xDomain={[0, 100]} yDomain={[-20, 100]} padding={20} height={300}>"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 13,
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 52,
+      "lineNumber": 53,
       "line": "<Chart"
     },
     {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Chart"
     },
     {
       "example": "data-x-date",
       "component": "Rule",
       "path": "/example/Rule/data-x-date",
-      "lineNumber": 9,
-      "line": "<Chart"
+      "lineNumber": 10,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} height={300}>"
     },
     {
       "example": "data-x-range",
       "component": "Rule",
       "path": "/example/Rule/data-x-range",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<Chart"
     },
     {
       "example": "data-y-range",
       "component": "Rule",
       "path": "/example/Rule/data-y-range",
-      "lineNumber": 9,
-      "line": "<Chart"
+      "lineNumber": 10,
+      "line": "<Chart {data} x=\"date\" y={['low', 'high']} yNice padding={20} height={300}>"
     },
     {
       "example": "lollipop",
@@ -2743,7 +2652,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 116,
+      "lineNumber": 44,
       "line": "<Chart height={224}>"
     },
     {
@@ -2978,5 +2887,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.485Z"
+  "updatedAt": "2025-11-10T21:19:03.031Z"
 }

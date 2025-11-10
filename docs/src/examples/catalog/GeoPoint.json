@@ -132,9 +132,9 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
     }
   ],
-  "updatedAt": "2025-11-03T15:13:16.565Z"
+  "updatedAt": "2025-11-10T21:19:03.446Z"
 }

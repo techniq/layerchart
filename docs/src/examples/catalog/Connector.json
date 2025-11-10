@@ -11,9 +11,9 @@
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 36,
+      "lineNumber": 22,
       "line": "<Connector {source} {target} {sweep} {type} {radius} {curve} class=\"stroke-primary stroke-4\" />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.672Z"
+  "updatedAt": "2025-11-10T21:19:03.224Z"
 }

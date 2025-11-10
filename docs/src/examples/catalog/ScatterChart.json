@@ -108,7 +108,7 @@
       "component": "ScatterChart",
       "path": "/example/ScatterChart/basic",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} />"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400} />"
     },
     {
       "example": "brush",
@@ -122,14 +122,14 @@
       "component": "ScatterChart",
       "path": "/example/ScatterChart/custom",
       "lineNumber": 10,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400}>"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400}>"
     },
     {
       "example": "custom-tooltip",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/custom-tooltip",
       "lineNumber": 10,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400}>"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400}>"
     },
     {
       "example": "date-series-color-scale",
@@ -143,28 +143,28 @@
       "component": "ScatterChart",
       "path": "/example/ScatterChart/domain-baseline",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xBaseline={0} yBaseline={0} height={400} />"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xBaseline={0} yBaseline={0} padding={24} height={400} />"
     },
     {
       "example": "domain-nice",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/domain-nice",
-      "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice height={400} />"
+      "lineNumber": 10,
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice padding={24} height={400} />"
     },
     {
       "example": "domain-padding",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/domain-padding",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} xPadding={[50, 50]} yPadding={[50, 50]} />"
+      "line": "<ScatterChart"
     },
     {
       "example": "labels",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/labels",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" labels height={400} />"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" labels padding={24} height={400} />"
     },
     {
       "example": "line-annotation",
@@ -255,14 +255,14 @@
       "component": "ScatterChart",
       "path": "/example/ScatterChart/single-axis-x",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} axis=\"x\" />"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" axis=\"x\" padding={24} height={400} />"
     },
     {
       "example": "single-axis-y",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/single-axis-y",
       "lineNumber": 9,
-      "line": "<ScatterChart {data} x=\"x\" y=\"y\" height={400} axis=\"y\" />"
+      "line": "<ScatterChart {data} x=\"x\" y=\"y\" axis=\"y\" padding={24} height={400} />"
     },
     {
       "example": "single-dimension",
@@ -279,5 +279,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2025-11-03T17:06:48.346Z"
+  "updatedAt": "2025-11-10T21:19:04.181Z"
 }

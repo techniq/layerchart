@@ -6,7 +6,7 @@
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 19,
+      "lineNumber": 16,
       "line": "<ClipPath>"
     },
     {
@@ -31,5 +31,5 @@
       "line": "<ClipPath useId=\"clip\">"
     }
   ],
-  "updatedAt": "2025-11-03T14:52:10.906Z"
+  "updatedAt": "2025-11-10T21:19:03.134Z"
 }

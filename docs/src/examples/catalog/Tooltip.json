@@ -227,28 +227,28 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 59,
+      "lineNumber": 51,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 61,
+      "lineNumber": 53,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 62,
+      "lineNumber": 54,
       "line": "<Tooltip.List>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 63,
+      "lineNumber": 55,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
@@ -1697,42 +1697,42 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 109,
+      "lineNumber": 102,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 111,
+      "lineNumber": 104,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 112,
+      "lineNumber": 105,
       "line": "<Tooltip.List>"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 114,
+      "lineNumber": 107,
       "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 123,
+      "lineNumber": 116,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 126,
+      "lineNumber": 119,
       "line": "<Tooltip.Item"
     },
     {
@@ -1921,28 +1921,28 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 113,
+      "lineNumber": 106,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 115,
+      "lineNumber": 108,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 116,
+      "lineNumber": 109,
       "line": "<Tooltip.List>"
     },
     {
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 117,
+      "lineNumber": 110,
       "line": "<Tooltip.Item"
     },
     {
@@ -2901,14 +2901,14 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 145,
+      "lineNumber": 139,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-playground",
-      "lineNumber": 326,
+      "lineNumber": 194,
       "line": "<Tooltip.Root>"
     },
     {
@@ -3860,147 +3860,147 @@
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Tooltip.List>"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Tooltip.Item label=\"Open\" value={data.open} format=\"decimal\" />"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Tooltip.Item label=\"Close\" value={data.close} format=\"decimal\" />"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Tooltip.Item label=\"High\" value={data.high} format=\"decimal\" />"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/example/Rule/candlestick",
-      "lineNumber": 38,
-      "line": "<Tooltip.Item label=\"Low\" value={data.low} format=\"decimal\" />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 31,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 33,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 34,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 35,
-      "line": "<Tooltip.Item label=\"Open\" value={data.open} format=\"decimal\" />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 36,
-      "line": "<Tooltip.Item label=\"Close\" value={data.close} format=\"decimal\" />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 37,
-      "line": "<Tooltip.Item label=\"High\" value={data.high} format=\"decimal\" />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-open-close-line-color",
-      "lineNumber": 38,
-      "line": "<Tooltip.Item label=\"Low\" value={data.low} format=\"decimal\" />"
-    },
-    {
-      "example": "candlestick-with-brushing",
-      "component": "Rule",
-      "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 39,
+      "line": "<Tooltip.Item label=\"Low\" value={data.low} format=\"decimal\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 32,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 34,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 35,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 36,
+      "line": "<Tooltip.Item label=\"Open\" value={data.open} format=\"decimal\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 37,
+      "line": "<Tooltip.Item label=\"Close\" value={data.close} format=\"decimal\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 38,
+      "line": "<Tooltip.Item label=\"High\" value={data.high} format=\"decimal\" />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 39,
+      "line": "<Tooltip.Item label=\"Low\" value={data.low} format=\"decimal\" />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 41,
-      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+      "lineNumber": 40,
+      "line": "<Tooltip.Root>"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 42,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 43,
-      "line": "<Tooltip.Item label=\"Open\" value={data.open} format=\"decimal\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 44,
-      "line": "<Tooltip.Item label=\"Close\" value={data.close} format=\"decimal\" />"
+      "line": "<Tooltip.Item label=\"Open\" value={data.open} format=\"decimal\" />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 45,
-      "line": "<Tooltip.Item label=\"High\" value={data.high} format=\"decimal\" />"
+      "line": "<Tooltip.Item label=\"Close\" value={data.close} format=\"decimal\" />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
       "lineNumber": 46,
+      "line": "<Tooltip.Item label=\"High\" value={data.high} format=\"decimal\" />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 47,
       "line": "<Tooltip.Item label=\"Low\" value={data.low} format=\"decimal\" />"
     },
     {
@@ -4231,7 +4231,7 @@
       "example": "single-dimension",
       "component": "ScatterChart",
       "path": "/example/ScatterChart/single-dimension",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
     },
     {
@@ -5096,5 +5096,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.750Z"
+  "updatedAt": "2025-11-10T21:19:04.296Z"
 }

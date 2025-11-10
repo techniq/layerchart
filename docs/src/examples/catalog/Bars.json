@@ -374,7 +374,7 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 30,
+      "lineNumber": 38,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
@@ -514,7 +514,7 @@
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 41,
+      "lineNumber": 36,
       "line": "<Bars"
     },
     {
@@ -787,7 +787,7 @@
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/example/Rule/candlestick-with-brushing",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Bars insets={{ x: 0.5 }} />"
     },
     {
@@ -819,5 +819,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:06.361Z"
+  "updatedAt": "2025-11-10T21:19:02.879Z"
 }

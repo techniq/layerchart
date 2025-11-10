@@ -23,21 +23,21 @@
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
     },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 17,
+      "lineNumber": 14,
       "line": "<LinearGradient class=\"from-secondary to-primary\">"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 60,
+      "lineNumber": 27,
       "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
     },
     {
@@ -58,21 +58,21 @@
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 23,
+      "lineNumber": 15,
       "line": "<LinearGradient class=\"from-secondary/1 to-secondary\">"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 25,
+      "lineNumber": 17,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -86,14 +86,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 33,
+      "lineNumber": 25,
       "line": "<LinearGradient"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 33,
+      "lineNumber": 25,
       "line": "<LinearGradient"
     },
     {
@@ -440,5 +440,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.236Z"
+  "updatedAt": "2025-11-10T21:19:03.780Z"
 }

@@ -35,7 +35,7 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 31,
+      "lineNumber": 34,
       "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
     },
     {
@@ -333,5 +333,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.393Z"
+  "updatedAt": "2025-11-10T21:19:03.958Z"
 }

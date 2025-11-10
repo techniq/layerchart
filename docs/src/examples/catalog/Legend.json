@@ -112,63 +112,63 @@
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 13,
-      "line": "<Legend title=\"top-left\" placement=\"top-left\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Top-Left\" placement=\"top-left\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 14,
-      "line": "<Legend title=\"top\" placement=\"top\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Top\" placement=\"top\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 15,
-      "line": "<Legend title=\"top-right\" placement=\"top-right\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Top-Right\" placement=\"top-right\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 16,
-      "line": "<Legend title=\"left\" placement=\"left\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Left\" placement=\"left\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 17,
-      "line": "<Legend title=\"center\" placement=\"center\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Center\" placement=\"center\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 18,
-      "line": "<Legend title=\"right\" placement=\"right\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Right\" placement=\"right\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 19,
-      "line": "<Legend title=\"bottom-left\" placement=\"bottom-left\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Bottom-Left\" placement=\"bottom-left\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 20,
-      "line": "<Legend title=\"bottom\" placement=\"bottom\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Bottom\" placement=\"bottom\" variant=\"swatches\" />"
     },
     {
       "example": "chart-placement",
       "component": "Legend",
       "path": "/example/Legend/chart-placement",
       "lineNumber": 21,
-      "line": "<Legend title=\"bottom-right\" placement=\"bottom-right\" variant=\"swatches\" />"
+      "line": "<Legend title=\"Bottom-Right\" placement=\"bottom-right\" variant=\"swatches\" />"
     },
     {
       "example": "children-override",
@@ -374,5 +374,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.170Z"
+  "updatedAt": "2025-11-10T21:19:03.713Z"
 }

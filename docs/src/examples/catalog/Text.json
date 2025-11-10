@@ -22,84 +22,84 @@
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 68,
+      "lineNumber": 67,
       "line": "<Text"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 75,
+      "lineNumber": 74,
       "line": "<Text"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 84,
+      "lineNumber": 83,
       "line": "<Text {...getArcTextProps('inner')} value={innerText} font-size=\"12px\" truncate />"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 85,
+      "lineNumber": 84,
       "line": "<Text {...getArcTextProps('outer')} value={outerText} font-size=\"12px\" truncate />"
     },
     {
       "example": "label-direction",
       "component": "Arc",
       "path": "/example/Arc/label-direction",
-      "lineNumber": 86,
+      "lineNumber": 85,
       "line": "<Text"
     },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 30,
+      "lineNumber": 27,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 75,
+      "lineNumber": 42,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 83,
+      "lineNumber": 50,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 89,
+      "lineNumber": 56,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 95,
+      "lineNumber": 62,
       "line": "<Text"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
-      "lineNumber": 36,
+      "lineNumber": 33,
       "line": "<Text"
     },
     {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 41,
+      "lineNumber": 38,
       "line": "<Text"
     },
     {
@@ -120,7 +120,7 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 24,
+      "lineNumber": 16,
       "line": "<Text {...props} textAnchor={index ? 'end' : 'start'} />"
     },
     {
@@ -316,7 +316,7 @@
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Text"
     },
     {
@@ -428,7 +428,7 @@
       "example": "segments",
       "component": "PieChart",
       "path": "/example/PieChart/segments",
-      "lineNumber": 35,
+      "lineNumber": 37,
       "line": "<Text"
     },
     {
@@ -505,7 +505,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 118,
+      "lineNumber": 46,
       "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
     },
     {
@@ -600,5 +600,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.668Z"
+  "updatedAt": "2025-11-10T21:19:04.236Z"
 }

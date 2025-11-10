@@ -11,7 +11,7 @@
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Group y={16}>"
     },
     {
@@ -130,28 +130,14 @@
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 18,
+      "lineNumber": 15,
       "line": "<Group x={context.width / 2} y={context.height / 2}>"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 18,
-      "line": "<Group x={context.width / 2} y={context.height / 2}>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 21,
-      "line": "<Group x={context.width / 2} y={context.height / 2}>"
-    },
-    {
-      "example": "custom-points",
-      "component": "Polygon",
-      "path": "/example/Polygon/custom-points",
-      "lineNumber": 47,
+      "lineNumber": 15,
       "line": "<Group x={context.width / 2} y={context.height / 2}>"
     },
     {
@@ -246,5 +232,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.028Z"
+  "updatedAt": "2025-11-10T21:19:03.556Z"
 }
