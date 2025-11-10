@@ -11,6 +11,13 @@ const exampleModules = import.meta.glob('/src/examples/**/*.svelte', {
 	eager: true
 });
 
+// Import all component files from $lib/components at build time
+const componentModules = import.meta.glob('/src/lib/components/**/*.svelte', {
+	query: '?raw',
+	import: 'default',
+	eager: true
+});
+
 // Import *.remote.ts source files from generated JSON
 // This avoids the default export issue with ?raw imports in remote modules
 const dataRemoteSource = remoteSources['data.remote.ts'];
@@ -70,6 +77,21 @@ function parseRegularImports(source: string) {
 	}
 
 	return imports;
+}
+
+// Parse $lib/components imports from example code
+function parseComponentImports(source: string): string[] {
+	// Match pattern: import Something from '$lib/components/path/to/Component.svelte';
+	const componentImportPattern = /import\s+(?:\{[^}]+\}|\w+)\s+from\s+['"]\$lib\/components\/([^'"]+)['"]/g;
+	const componentPaths: string[] = [];
+
+	let match;
+	while ((match = componentImportPattern.exec(source)) !== null) {
+		const componentPath = match[1];
+		componentPaths.push(componentPath);
+	}
+
+	return componentPaths;
 }
 
 // Create maps for each remote file
@@ -163,11 +185,25 @@ export const getExample = query(
 		// Get request fetch once
 		const { fetch: requestFetch } = getRequestEvent();
 
+		// Process $lib/components imports
+		const componentPaths = parseComponentImports(code);
+		for (const componentPath of componentPaths) {
+			// Construct the full path to the component
+			const fullComponentPath = `/src/lib/components/${componentPath}`;
+			const componentCode = componentModules[fullComponentPath] as string | undefined;
+
+			if (componentCode) {
+				// Add the component file to additionalFiles
+				additionalFiles[`src/lib/components/${componentPath}`] = componentCode;
+			}
+		}
+
 		// Process each remote module type (data, geo, graph)
 		for (const [moduleName, moduleData] of Object.entries(remoteModules)) {
 			// Check if the example imports from this remote module
+			// Match with or without .js/.ts extension
 			const remoteImportPattern = new RegExp(
-				`import\\s+\\{([^}]+)\\}\\s+from\\s+['"]\\$lib\\/${moduleName}\\.remote['"]`
+				`import\\s+\\{([^}]+)\\}\\s+from\\s+['"]\\$lib\\/${moduleName}\\.remote(?:\\.(?:js|ts))?['"]`
 			);
 			const remoteImports = code.match(remoteImportPattern);
 
