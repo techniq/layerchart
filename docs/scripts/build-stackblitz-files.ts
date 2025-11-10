@@ -25,6 +25,7 @@ const __dirname = path.dirname(__filename);
 const TEMPLATES_DIR = path.resolve(__dirname, 'stackblitz-template');
 const SOURCE_DIR = path.resolve(__dirname, '../src');
 const OUTPUT_FILE = path.resolve(__dirname, '../static/stackblitz-files.json');
+const REMOTE_SOURCES_FILE = path.resolve(__dirname, '../static/remote-sources.json');
 
 /**
  * Read a source file from the docs/src directory
@@ -77,6 +78,18 @@ function generateStackBlitzFiles() {
 }
 
 /**
+ * Generate a JSON file containing the source code of remote modules
+ * This is used by stackblitz.server.ts to parse function definitions
+ */
+function generateRemoteSourceFiles() {
+	return {
+		'data.remote.ts': readSource('lib/data.remote.ts'),
+		'geo.remote.ts': readSource('lib/geo.remote.ts'),
+		'graph.remote.ts': readSource('lib/graph.remote.ts')
+	};
+}
+
+/**
  * Main function
  */
 async function main() {
@@ -84,6 +97,7 @@ async function main() {
 	console.log('=====================================\n');
 
 	const files = generateStackBlitzFiles();
+	const remoteSources = generateRemoteSourceFiles();
 
 	// Ensure output directory exists
 	const outputDir = path.dirname(OUTPUT_FILE);
@@ -93,9 +107,12 @@ async function main() {
 
 	// Write the files
 	fs.writeFileSync(OUTPUT_FILE, JSON.stringify(files, null, 2));
+	fs.writeFileSync(REMOTE_SOURCES_FILE, JSON.stringify(remoteSources, null, 2));
 
 	console.log(`✅ StackBlitz files saved to ${OUTPUT_FILE}`);
 	console.log(`   Total files: ${Object.keys(files).length}`);
+	console.log(`\n✅ Remote source files saved to ${REMOTE_SOURCES_FILE}`);
+	console.log(`   Total remote files: ${Object.keys(remoteSources).length}`);
 	console.log(`\nTemplate files read from: ${TEMPLATES_DIR}`);
 }
 

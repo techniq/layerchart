@@ -1,6 +1,7 @@
 import { query, getRequestEvent } from '$app/server';
 import { z } from 'zod';
 import stackblitzFiles from '$static/stackblitz-files.json';
+import remoteSources from '$static/remote-sources.json';
 
 // Import all example files at build time using Vite's import.meta.glob
 // This works on Cloudflare Workers since files are bundled at build time
@@ -10,10 +11,11 @@ const exampleModules = import.meta.glob('/src/examples/**/*.svelte', {
 	eager: true
 });
 
-// Import all *.remote.ts source files to parse function definitions
-const dataRemoteSource = (await import('/src/lib/data.remote.ts?raw')).default as string;
-const geoRemoteSource = (await import('/src/lib/geo.remote.ts?raw')).default as string;
-const graphRemoteSource = (await import('/src/lib/graph.remote.ts?raw')).default as string;
+// Import *.remote.ts source files from generated JSON
+// This avoids the default export issue with ?raw imports in remote modules
+const dataRemoteSource = remoteSources['data.remote.ts'];
+const geoRemoteSource = remoteSources['geo.remote.ts'];
+const graphRemoteSource = remoteSources['graph.remote.ts'];
 
 // Parse remote.ts files to extract function names, their fetch URLs, and function bodies
 function parseRemoteFunctions(source: string) {
