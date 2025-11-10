@@ -12,7 +12,7 @@
 	let { value = $bindable(75), segments = $bindable(60), includeSegments = true }: Props = $props();
 </script>
 
-<div class="grid grid-flow-col gap-3 mb-2 lc-example-controls">
+<div class="grid grid-flow-col gap-3 mb-2 screenshot-hidden">
 	<RangeField label="Value" bind:value />
 	{#if includeSegments}
 		<RangeField label="Segments" bind:value={segments} min={2} />

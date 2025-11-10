@@ -10,6 +10,6 @@
 	let { value = $bindable(75) }: Props = $props();
 </script>
 
-<div class="mb-2 lc-example-controls">
+<div class="mb-2 screenshot-hidden">
 	<RangeField label="Value" bind:value />
 </div>

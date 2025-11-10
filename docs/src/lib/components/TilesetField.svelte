@@ -123,7 +123,7 @@
 	});
 </script>
 
-<div class="lc-example-controls">
+<div class="screenshot-hidden">
 	<SelectField
 		label="Tileset"
 		options={serviceOptions}

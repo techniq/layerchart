@@ -38,7 +38,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[6fr_1fr_3fr] gap-1 lc-example-controls">
+<div class="grid grid-cols-[6fr_1fr_3fr] gap-1 screenshot-hidden">
 	<Field label="Tile">
 		<ToggleGroup bind:value={config.tile} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="squarify">Squarify</ToggleOption>

@@ -40,7 +40,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4 lc-example-controls">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4 screenshot-hidden">
 	<Field label="Show" let:id>
 		<Switch bind:checked={config.show} {id} size="md" />
 	</Field>

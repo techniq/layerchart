@@ -42,7 +42,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2 lc-example-controls">
+<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2 screenshot-hidden">
 	<RangeField
 		label="Value"
 		bind:value={config.value}

@@ -35,11 +35,7 @@
 </script>
 
 <div
-	class={cls(
-		'grid gap-2 mb-4',
-		'lc-example-controls',
-		includeRadius ? 'grid-cols-4' : 'grid-cols-3'
-	)}
+	class={cls('grid gap-2 mb-4', 'screenshot-hidden', includeRadius ? 'grid-cols-4' : 'grid-cols-3')}
 >
 	<Toggle let:on={open} let:toggle>
 		<Field label="Placement" class="cursor-pointer" on:click={toggle}>

@@ -9,7 +9,7 @@
 	let { padding = $bindable(0), colorBy = $bindable('parent') }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[2fr_1fr] gap-2 lc-example-controls">
+<div class="grid grid-cols-[2fr_1fr] gap-2 screenshot-hidden">
 	<RangeField label="Padding" bind:value={padding} max={50} />
 	<Field label="Color By">
 		<ToggleGroup bind:value={colorBy} variant="outline" size="sm" inset class="w-full">

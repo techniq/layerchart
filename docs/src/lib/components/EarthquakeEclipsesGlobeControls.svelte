@@ -12,7 +12,7 @@
 	let { timer, velocity = $bindable(3) }: Props = $props();
 </script>
 
-<div class="flex gap-2 items-end mb-4 lc-example-controls">
+<div class="flex gap-2 items-end mb-4 screenshot-hidden">
 	<div class="mb-2 flex gap-6">
 		<Field label="Spin:" dense labelPlacement="left" let:id>
 			<ButtonGroup size="sm" variant="fill-light">

@@ -10,7 +10,7 @@
 	let { chartMode = $bindable('group') }: Props = $props();
 </script>
 
-<div class="lc-example-controls">
+<div class="screenshot-hidden">
 	<Field label="Mode" class="mb-4">
 		<ToggleGroup bind:chartMode variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="group">Grouped</ToggleOption>

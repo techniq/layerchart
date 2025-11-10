@@ -194,7 +194,7 @@ async function captureScreenshots(
 
 		// Hide example controls before taking screenshots
 		await page.evaluate(() => {
-			const controls = document.querySelectorAll('.lc-example-controls');
+			const controls = document.querySelectorAll('.screenshot-hidden');
 			controls.forEach((control) => {
 				(control as HTMLElement).style.display = 'none';
 			});

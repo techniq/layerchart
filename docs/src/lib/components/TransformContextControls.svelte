@@ -30,14 +30,14 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 mb-2 lc-example-controls">
+<div class="grid grid-cols-[1fr_auto] gap-2 mb-2 screenshot-hidden">
 	<RangeField label="Angle" bind:value={config.angle} min={1} max={360} />
 	<Field label="Tweened" let:id>
 		<Switch bind:checked={config.tweened} {id} size="md" />
 	</Field>
 </div>
 
-<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-6 lc-example-controls">
+<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-6 screenshot-hidden">
 	<RangeField label="Points" bind:value={config.pointCount} min={1} max={2000} />
 	<CurveMenuField bind:value={config.curve} showOpenClosed />
 	<Field label="Show points" let:id>

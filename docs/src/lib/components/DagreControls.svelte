@@ -40,7 +40,7 @@
 	} = $props();
 </script>
 
-<div class={cls('grid gap-2 lc-example-controls', className)}>
+<div class={cls('grid gap-2 screenshot-hidden', className)}>
 	<MenuField
 		label="Ranker"
 		options={[

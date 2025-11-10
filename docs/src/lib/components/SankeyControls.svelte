@@ -19,7 +19,7 @@
 	} = $props();
 </script>
 
-<div class="grid grid-flow-col gap-1 mb-4 lc-example-controls">
+<div class="grid grid-flow-col gap-1 mb-4 screenshot-hidden">
 	<MenuField
 		label="Align"
 		bind:value={nodeAlign}
@@ -42,7 +42,7 @@
 		]}
 	/>
 
-	<div class="lc-example-controls">
+	<div class="screenshot-hidden">
 		<MenuField
 			label="Link color"
 			bind:value={linkColorBy}

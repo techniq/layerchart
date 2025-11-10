@@ -77,6 +77,6 @@
 	});
 </script>
 
-<div class="lc-example-controls">
+<div class="screenshot-hidden">
 	<MenuField label="Path data" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
 </div>

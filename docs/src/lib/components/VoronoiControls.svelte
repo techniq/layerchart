@@ -10,6 +10,6 @@
 	let { radius = $bindable(0) }: Props = $props();
 </script>
 
-<div class="mb-4 lc-example-controls">
+<div class="mb-4 screenshot-hidden">
 	<RangeField label="Radius" bind:value={radius} max={100} />
 </div>

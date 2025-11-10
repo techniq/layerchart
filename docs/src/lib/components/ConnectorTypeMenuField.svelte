@@ -16,6 +16,6 @@
 	}));
 </script>
 
-<div class="lc-example-controls">
+<div class="screenshot-hidden">
 	<MenuField label="Connector Type" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
 </div>

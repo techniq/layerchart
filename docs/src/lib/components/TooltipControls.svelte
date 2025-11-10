@@ -20,7 +20,7 @@
 	} = $props();
 </script>
 
-<div class={cls('grid grid-cols-[1fr_1fr_120px_120px] gap-2 mb-4 lc-example-controls', className)}>
+<div class={cls('grid grid-cols-[1fr_1fr_120px_120px] gap-2 mb-4 screenshot-hidden', className)}>
 	<MenuField
 		label="Mode"
 		bind:value={settings.mode}

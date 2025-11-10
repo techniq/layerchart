@@ -14,7 +14,7 @@
 	let { serviceUrl = $bindable(null!), zoomDelta = $bindable(0) }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 my-2 lc-example-controls">
+<div class="grid grid-cols-[1fr_1fr] gap-2 my-2 screenshot-hidden">
 	<TilesetField bind:serviceUrl />
 	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
 </div>

@@ -56,7 +56,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid gap-1 mb-4 lc-example-controls">
+<div class="grid gap-1 mb-4 screenshot-hidden">
 	<div class="grid grid-cols-7 gap-2">
 		<Field label="Type" class="col-span-1">
 			<Checkbox size="xs" bind:checked={config.isStatic}>Static</Checkbox>

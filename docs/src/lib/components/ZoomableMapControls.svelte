@@ -11,7 +11,7 @@
 	let { projections, projection = $bindable() }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_2fr] gap-2 my-2 lc-example-controls">
+<div class="grid grid-cols-[1fr_2fr] gap-2 my-2 screenshot-hidden">
 	<SelectField
 		label="Projections"
 		options={projections}

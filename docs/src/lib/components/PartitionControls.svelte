@@ -24,7 +24,7 @@
 	}: PartitionControlsProps = $props();
 </script>
 
-<div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-2 lc-example-controls">
+<div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-2 screenshot-hidden">
 	<RangeField label="Padding" bind:value={padding} max={20} />
 	<Field label="Full-size Leaf Nodes">
 		<ToggleGroup bind:value={fullSizeLeafNodes} variant="outline" size="sm" inset class="w-full">

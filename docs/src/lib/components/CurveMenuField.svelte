@@ -36,7 +36,7 @@
 		});
 </script>
 
-<div class="lc-example-controls">
+<div class="screenshot-hidden">
 	<MenuField
 		label="Curve"
 		{options}

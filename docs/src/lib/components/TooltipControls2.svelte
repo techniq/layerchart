@@ -30,7 +30,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-4 lc-example-controls">
+<div class="grid grid-cols-3 gap-2 mb-4 screenshot-hidden">
 	<Toggle let:on={open} let:toggle>
 		<Field label="Anchor" class="cursor-pointer" on:click={toggle}>
 			<span class="text-sm">

@@ -28,7 +28,7 @@
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-2 gap-1 lc-example-controls">
+<div class="grid grid-cols-2 gap-1 screenshot-hidden">
 	<Field label="Orientation">
 		<ToggleGroup bind:value={orientation} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="horizontal">Horizontal</ToggleOption>

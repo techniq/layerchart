@@ -9,7 +9,7 @@
 	let { markerStart = $bindable(true), markerEnd = $bindable(true) }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[60px_60px] gap-2 mb-2 lc-example-controls">
+<div class="grid grid-cols-[60px_60px] gap-2 mb-2 screenshot-hidden">
 	<Field label="Start" let:id>
 		<Switch bind:checked={markerStart} {id} size="md" />
 	</Field>
