@@ -47,7 +47,7 @@
 	export const data = { value, labelExamples };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-4 gap-2 mb-2">
 	{#each labelExamples as example}
 		<div class="px-4 py-1 border rounded-sm">
 			<Chart height={300}>
