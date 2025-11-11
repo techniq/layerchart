@@ -77,10 +77,10 @@
 					'common',
 					'primitives',
 					'marks',
-					'annotations',
-					'interactions',
 					'geo',
 					'layout',
+					'annotations',
+					'interactions',
 					'fill',
 					'clipping',
 					'other'

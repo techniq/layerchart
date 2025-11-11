@@ -26,10 +26,10 @@
 					'common',
 					'primitives',
 					'marks',
-					'annotations',
-					'interactions',
 					'geo',
 					'layout',
+					'interactions',
+					'annotations',
 					'fill',
 					'clipping',
 					'other'
