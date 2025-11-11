@@ -10,6 +10,7 @@
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
+	import Code from '$lib/components/Code.svelte';
 
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
@@ -60,6 +61,14 @@
 		});
 	});
 </script>
+
+<H2>Usage</H2>
+
+<Code
+	source={`import { ${page.params.name} } from 'layerchart';`}
+	language="javascript"
+	class="bg-surface-100 border rounded"
+/>
 
 <!-- Markdown page -->
 <PageComponent />
