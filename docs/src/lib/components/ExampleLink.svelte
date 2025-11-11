@@ -20,7 +20,7 @@
 	<div
 		class={cls(
 			'overflow-hidden rounded-lg outline outline-surface-content/10',
-			aspect && 'aspect-3/2'
+			aspect && 'aspect-8/3'
 		)}
 	>
 		<img
