@@ -60,10 +60,12 @@
 		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
 		{#each componentsBySection as [section, components]}
 			<div class="mb-6">
-				<h3 class="text-surface-content/70 mb-3 text-sm font-medium capitalize">{section}</h3>
-				{#each components.sort(sortFunc('name')) as component}
-					{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
-				{/each}
+				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{section}</h3>
+				<div class="border-l border-surface-content/10 px-1">
+					{#each components.sort(sortFunc('name')) as component}
+						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
+					{/each}
+				</div>
 			</div>
 		{/each}
 	</section>
@@ -75,9 +77,11 @@
 		currentUrl={page.url}
 		{path}
 		classes={{
-			root: 'text-sm text-surface-content/50 pl-6 py-1.5 rounded hover:border-surface-content/20 hover:bg-surface-content/5',
-			active:
-				'text-surface-content! border-surface-content! hover:bg-surface-content/10! font-medium bg-surface-content/10'
+			root: 'relative text-sm text-surface-content/50 pl-6 py-1 my-px rounded hover:border-surface-content/20 hover:bg-surface-content/5',
+			active: cls(
+				'text-surface-content! border-surface-content! hover:bg-surface-content/10! font-medium bg-surface-content/10',
+				'after:absolute after:bg-surface-content after:w-px after:top-0 after:bottom-0 after:left-[-5px] after:rounded-full'
+			)
 		}}
 		on:click={() => onItemClick?.()}
 	/>
