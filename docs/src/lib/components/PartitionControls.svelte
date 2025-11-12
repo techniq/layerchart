@@ -46,6 +46,7 @@
 		</ToggleGroup>
 	</Field>
 </div>
+
 {#if filterable}
 	<div class="grid grid-cols-4 gap-2 mt-2">
 		<Field label="Apply Partial Filter" let:id>

@@ -13,21 +13,23 @@
 	import { cls } from '@layerstack/tailwind';
 	import { Chart, Group, Rect, RectClipPath, Layer, Treemap, findAncestor } from 'layerchart';
 
-	let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
-	let maintainAspectRatio = $state(false);
-	let colorBy = $state<'children' | 'depth' | 'parent'>('children');
-	let paddingOuter = $state(4);
-	let paddingInner = $state(4);
-	let paddingTop = $state(20);
-	let paddingBottom = $state(0);
-	let paddingLeft = $state(0);
-	let paddingRight = $state(0);
+	let config = $state({
+		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],
+		colorBy: 'children' as 'children' | 'depth' | 'parent',
+		maintainAspectRatio: false,
+		paddingOuter: 4,
+		paddingInner: 4,
+		paddingTop: 20,
+		paddingBottom: 0,
+		paddingLeft: 0,
+		paddingRight: 0,
+		isFiltered: false
+	});
 
 	let data = await getCars();
 
 	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
 
-	let isFiltered = $state(false);
 	const groupedCars = $derived(
 		rollup(
 			data
@@ -36,7 +38,7 @@
 					['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
 				)
 				// Hide some models in each group to show transitions
-				.filter((d) => (isFiltered ? d.year > 2010 : true))
+				.filter((d) => (config.isFiltered ? d.year > 2010 : true))
 				// Apply `make` selection
 				.filter((d) => {
 					if (selectedCarNode?.depth === 1) {
@@ -91,17 +93,7 @@
 	export { data };
 </script>
 
-<TreemapControls
-	bind:tile
-	bind:maintainAspectRatio
-	bind:colorBy
-	bind:paddingOuter
-	bind:paddingInner
-	bind:paddingTop
-	bind:paddingBottom
-	bind:paddingLeft
-	bind:paddingRight
-/>
+<TreemapControls bind:config filterable />
 
 <Breadcrumb {items} class="my-2">
 	<Button
@@ -121,14 +113,14 @@
 	<Layer>
 		<Treemap
 			hierarchy={groupedHierarchy}
-			{tile}
-			{maintainAspectRatio}
-			{paddingOuter}
-			{paddingInner}
-			{paddingTop}
-			{paddingBottom}
-			{paddingLeft}
-			{paddingRight}
+			tile={config.tile}
+			paddingOuter={config.paddingOuter}
+			paddingInner={config.paddingInner}
+			paddingTop={config.paddingTop}
+			paddingBottom={config.paddingBottom}
+			paddingLeft={config.paddingLeft}
+			paddingRight={config.paddingRight}
+			maintainAspectRatio={config.maintainAspectRatio}
 		>
 			{#snippet children({ nodes })}
 				{#each nodes as node (node
@@ -147,14 +139,14 @@
 						>
 							{@const nodeWidth = node.x1 - node.x0}
 							{@const nodeHeight = node.y1 - node.y0}
-							{@const nodeColor = getNodeColor(node, colorBy)}
+							{@const nodeColor = getNodeColor(node, config.colorBy)}
 							<Rect
 								width={nodeWidth}
 								height={nodeHeight}
-								stroke={colorBy === 'children'
+								stroke={config.colorBy === 'children'
 									? 'var(--color-primary-content)'
 									: hsl(nodeColor).darker(1).toString()}
-								stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+								stroke-opacity={config.colorBy === 'children' ? 0.2 : 1}
 								fill={nodeColor}
 								fillOpacity={node.children ? 0.5 : 1}
 								rx={5}
@@ -170,7 +162,7 @@
 									y={16 * 0.6 + 4}
 									class={cls(
 										'text-[10px] font-medium',
-										colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+										config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 									)}
 								>
 									<tspan>{node.data[0] ?? 'Overall'}</tspan>

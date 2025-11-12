@@ -112,7 +112,8 @@
 </script>
 
 <TreemapControls bind:config />
-<div class="aspect-[16/9]">
+
+<div class="aspect-video">
 	<Chart>
 		{#snippet children({ context })}
 			<Layer>

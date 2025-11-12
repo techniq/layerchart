@@ -40,7 +40,7 @@
 		{ label: 'Gnomonic', value: geoGnomonic }
 	];
 
-	const topology = $derived(await getCountriesTopology());
+	const topology = await getCountriesTopology();
 	const geojson = $derived(feature(topology, topology.objects.countries));
 
 	export { data };

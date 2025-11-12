@@ -26,16 +26,17 @@
 		findAncestor
 	} from 'layerchart';
 
-	let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
-	let maintainAspectRatio = $state(false);
-	let colorBy = $state<'children' | 'depth' | 'parent'>('children');
-
-	let paddingOuter = $state(4);
-	let paddingInner = $state(4);
-	let paddingTop = $state(20);
-	let paddingBottom = $state(0);
-	let paddingLeft = $state(0);
-	let paddingRight = $state(0);
+	let config = $state({
+		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],
+		colorBy: 'children' as 'children' | 'depth' | 'parent',
+		maintainAspectRatio: false,
+		paddingOuter: 4,
+		paddingInner: 4,
+		paddingTop: 20,
+		paddingBottom: 0,
+		paddingLeft: 0,
+		paddingRight: 0
+	});
 
 	let data = await getFlare();
 	const hierarchy = d3Hierarchy(data)
@@ -69,17 +70,8 @@
 	export { data };
 </script>
 
-<TreemapControls
-	bind:tile
-	bind:maintainAspectRatio
-	bind:colorBy
-	bind:paddingOuter
-	bind:paddingInner
-	bind:paddingTop
-	bind:paddingBottom
-	bind:paddingLeft
-	bind:paddingRight
-/>
+<TreemapControls bind:config />
+
 <Breadcrumb items={selected?.ancestors().reverse() ?? []} class="my-2">
 	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
 		<div class="text-left">
@@ -97,14 +89,14 @@
 					<ChartClipPath>
 						<Treemap
 							{hierarchy}
-							{tile}
-							{maintainAspectRatio}
-							{paddingOuter}
-							{paddingInner}
-							{paddingTop}
-							{paddingBottom}
-							{paddingLeft}
-							{paddingRight}
+							tile={config.tile}
+							paddingOuter={config.paddingOuter}
+							paddingInner={config.paddingInner}
+							paddingTop={config.paddingTop}
+							paddingBottom={config.paddingBottom}
+							paddingLeft={config.paddingLeft}
+							paddingRight={config.paddingRight}
+							maintainAspectRatio={config.maintainAspectRatio}
 						>
 							{#snippet children({ nodes })}
 								{#each nodes as node}
@@ -117,15 +109,15 @@
 									>
 										{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
 										{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-										{@const nodeColor = getNodeColor(node, colorBy)}
+										{@const nodeColor = getNodeColor(node, config.colorBy)}
 										<g transition:fade={{ duration: 600 }}>
 											<Rect
 												width={nodeWidth}
 												height={nodeHeight}
-												stroke={colorBy === 'children'
+												stroke={config.colorBy === 'children'
 													? 'var(--color-primary-content)'
 													: hsl(nodeColor).darker(1).toString()}
-												stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+												stroke-opacity={config.colorBy === 'children' ? 0.2 : 1}
 												fill={nodeColor}
 												fillOpacity={node.children ? 0.5 : 1}
 												rx={5}
@@ -136,7 +128,7 @@
 													y={16 * 0.6 + 4}
 													class={cls(
 														'text-[10px] font-medium',
-														colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+														config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 													)}
 												>
 													<tspan>{node.data.name}</tspan>
@@ -151,7 +143,7 @@
 														value={format(node.value ?? 0, 'integer')}
 														class={cls(
 															'text-[8px] font-extralight',
-															colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+															config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 														)}
 														verticalAnchor="start"
 														x={4}
