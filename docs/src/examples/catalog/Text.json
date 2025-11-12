@@ -586,58 +586,58 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 168,
+      "lineNumber": 160,
       "line": "<text"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 184,
+      "lineNumber": 176,
       "line": "<!-- <Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 134,
+      "lineNumber": 126,
       "line": "<text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 150,
+      "lineNumber": 142,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 153,
+      "lineNumber": 154,
       "line": "<text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 170,
+      "lineNumber": 171,
       "line": "<Text"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 121,
+      "lineNumber": 112,
       "line": "<Text"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 131,
+      "lineNumber": 122,
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.917Z"
+  "updatedAt": "2025-11-12T18:44:22.850Z"
 }

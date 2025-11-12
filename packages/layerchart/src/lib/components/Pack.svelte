@@ -3,6 +3,9 @@
   import type { Snippet } from 'svelte';
 
   export type PackProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The size of the pack layout.
      */
@@ -14,11 +17,6 @@
      * @see https://github.com/d3/d3-hierarchy#pack_padding
      */
     padding?: number;
-
-    /**
-     * The hierarchy data to be packed.
-     */
-    hierarchy: HierarchyNode<T>;
 
     /**
      * A bindable reference to the computed packed nodes.

@@ -1,5 +1,8 @@
 <script lang="ts" module>
   export type TreemapProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The tile function to use for the treemap layout.
      *
@@ -65,8 +68,6 @@
      * @default false
      */
     maintainAspectRatio?: boolean;
-
-    hierarchy?: HierarchyNode<T>;
 
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };

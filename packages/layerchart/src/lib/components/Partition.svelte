@@ -7,6 +7,9 @@
   import type { Snippet } from 'svelte';
 
   export type PartitionProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The orientation of the partition layout.
      *
@@ -30,8 +33,6 @@
      * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
      */
     round?: boolean;
-
-    hierarchy: HierarchyNode<T>;
 
     /**
      * A bindable reference to the descendants of the partition layout.

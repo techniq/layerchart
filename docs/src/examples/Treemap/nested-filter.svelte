@@ -28,7 +28,7 @@
 
 	let data = await getCars();
 
-	let selectedCarNode = $state<HierarchyRectangularNode<any>>();
+	let selectedCarNode = $state<HierarchyNode<any>>();
 
 	const groupedCars = $derived(
 		rollup(
@@ -53,7 +53,7 @@
 			// d => d.year,
 		)
 	);
-	let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+	let groupedHierarchy = $state<HierarchyNode<any>>();
 	$effect.pre(() => {
 		untrack(() => {
 			selectedCarNode = groupedHierarchy;
@@ -61,7 +61,7 @@
 	});
 
 	$effect.pre(() => {
-		groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
+		groupedHierarchy = hierarchy(groupedCars).count() as HierarchyNode<any>;
 	});
 
 	const node = $state(selectedCarNode ?? groupedHierarchy ?? null);
@@ -112,7 +112,7 @@
 <Chart height={800}>
 	<Layer>
 		<Treemap
-			hierarchy={groupedHierarchy}
+			hierarchy={groupedHierarchy!}
 			tile={config.tile}
 			paddingOuter={config.paddingOuter}
 			paddingInner={config.paddingInner}

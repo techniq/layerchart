@@ -2977,28 +2977,28 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 120,
+      "lineNumber": 112,
       "line": "<Chart height={800}>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 92,
+      "lineNumber": 84,
       "line": "<Chart height={800}>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 116,
+      "lineNumber": 117,
       "line": "<Chart>"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 92,
+      "lineNumber": 83,
       "line": "<Chart height={600}>"
     },
     {
@@ -3009,5 +3009,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-12T18:01:03.481Z"
+  "updatedAt": "2025-11-12T18:44:21.593Z"
 }

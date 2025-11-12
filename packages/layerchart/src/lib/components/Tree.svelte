@@ -1,5 +1,8 @@
 <script lang="ts" module>
   export type TreeProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.
      * If unset, layout size is used instead.  When a node size is specified, the root node is always
@@ -13,8 +16,6 @@
      * see: https://github.com/d3/d3-hierarchy#tree_separation
      */
     separation?: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number;
-
-    hierarchy?: HierarchyNode<T>;
 
     /**
      * Orientation of the tree layout.

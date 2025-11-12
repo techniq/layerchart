@@ -89,37 +89,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 120,
+          "lineNumber": 112,
           "line": "<Chart height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 121,
+          "lineNumber": 113,
           "line": "<Layer>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 122,
+          "lineNumber": 114,
           "line": "<Treemap"
         },
         {
           "component": "Group",
-          "lineNumber": 139,
+          "lineNumber": 131,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 151,
+          "lineNumber": 143,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 163,
+          "lineNumber": 155,
           "line": "<RectClipPath"
         },
         {
           "component": "Text",
-          "lineNumber": 168,
+          "lineNumber": 160,
           "line": "<text"
         }
       ]
@@ -130,52 +130,52 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 92,
+          "lineNumber": 84,
           "line": "<Chart height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 94,
+          "lineNumber": 86,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 95,
+          "lineNumber": 87,
           "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 97,
+          "lineNumber": 89,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 98,
+          "lineNumber": 90,
           "line": "<Treemap"
         },
         {
           "component": "Group",
-          "lineNumber": 111,
+          "lineNumber": 103,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 122,
+          "lineNumber": 114,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 133,
+          "lineNumber": 125,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Text",
-          "lineNumber": 134,
+          "lineNumber": 126,
           "line": "<text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 172,
+          "lineNumber": 164,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -186,42 +186,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 116,
+          "lineNumber": 117,
           "line": "<Chart>"
         },
         {
           "component": "Layer",
-          "lineNumber": 118,
+          "lineNumber": 119,
           "line": "<Layer>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 119,
+          "lineNumber": 120,
           "line": "<Treemap"
         },
         {
           "component": "Group",
-          "lineNumber": 132,
+          "lineNumber": 133,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 141,
+          "lineNumber": 142,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 152,
+          "lineNumber": 153,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Text",
-          "lineNumber": 153,
+          "lineNumber": 154,
           "line": "<text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 188,
+          "lineNumber": 189,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -232,47 +232,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 92,
+          "lineNumber": 83,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 93,
+          "lineNumber": 84,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 94,
+          "lineNumber": 85,
           "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 96,
+          "lineNumber": 87,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 97,
-          "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
+          "lineNumber": 88,
+          "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
         },
         {
           "component": "Group",
-          "lineNumber": 100,
+          "lineNumber": 91,
           "line": "<Group"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 107,
+          "lineNumber": 98,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 111,
+          "lineNumber": 102,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 121,
+          "lineNumber": 112,
           "line": "<Text"
         }
       ]
@@ -297,30 +297,30 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 122,
+      "lineNumber": 114,
       "line": "<Treemap"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 98,
+      "lineNumber": 90,
       "line": "<Treemap"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 119,
+      "lineNumber": 120,
       "line": "<Treemap"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 97,
-      "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
+      "lineNumber": 88,
+      "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:11.172Z"
+  "updatedAt": "2025-11-12T18:44:23.113Z"
 }

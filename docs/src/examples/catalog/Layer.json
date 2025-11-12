@@ -2967,28 +2967,28 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 121,
+      "lineNumber": 113,
       "line": "<Layer>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 94,
+      "lineNumber": 86,
       "line": "<Layer>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 118,
+      "lineNumber": 119,
       "line": "<Layer>"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 93,
+      "lineNumber": 84,
       "line": "<Layer>"
     },
     {
@@ -2999,5 +2999,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-12T18:01:04.471Z"
+  "updatedAt": "2025-11-12T18:44:22.223Z"
 }

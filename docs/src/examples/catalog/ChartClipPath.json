@@ -97,14 +97,14 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 97,
+      "lineNumber": 89,
       "line": "<ChartClipPath>"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 96,
+      "lineNumber": 87,
       "line": "<ChartClipPath>"
     },
     {
@@ -115,5 +115,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-12T17:29:17.392Z"
+  "updatedAt": "2025-11-12T18:44:21.627Z"
 }

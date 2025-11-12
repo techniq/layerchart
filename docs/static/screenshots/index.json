@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-12T18:01:02.391Z",
+  "generatedAt": "2025-11-12T18:44:20.667Z",
   "totalComponents": 57,
   "totalExamples": 693,
   "components": [
@@ -2094,7 +2094,7 @@
         {
           "name": "basic",
           "path": "/example/Graticule/basic",
-          "checksum": "fc8f1594dc2620fb4dfb75934a06acfd"
+          "checksum": "f0f8bf9199ac7a01056fead1dabd9eff"
         }
       ]
     },
@@ -3724,22 +3724,22 @@
         {
           "name": "nested-filter",
           "path": "/example/Treemap/nested-filter",
-          "checksum": "9b5a0a9cbcdd90306acc4e6775bef759"
+          "checksum": "2c5a06f7809ac4433389386185f08e4a"
         },
         {
           "name": "nested-zoom",
           "path": "/example/Treemap/nested-zoom",
-          "checksum": "46fee51f078994ef15c52f63e1496f2d"
+          "checksum": "6e03e7b4062c1b313de331395fc03305"
         },
         {
           "name": "playground",
           "path": "/example/Treemap/playground",
-          "checksum": "4e197a6d5c575e3600dbed582ec216ce"
+          "checksum": "cdb06410dbaafd88f0e0d02c51ea4ee6"
         },
         {
           "name": "stacked-zoom",
           "path": "/example/Treemap/stacked-zoom",
-          "checksum": "c959acfac72a4379800d65343f04d2ae"
+          "checksum": "f173ee9a5ec23d8dc819e26ef897a06b"
         }
       ]
     },

@@ -5700,58 +5700,58 @@
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 172,
+      "lineNumber": 164,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 174,
+      "lineNumber": 166,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 175,
+      "lineNumber": 167,
       "line": "<Tooltip.List>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 176,
+      "lineNumber": 168,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 188,
+      "lineNumber": 189,
       "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "playground",
-      "component": "Treemap",
-      "path": "/example/Treemap/playground",
-      "lineNumber": 190,
-      "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
       "lineNumber": 191,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
       "lineNumber": 192,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 193,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-12T18:01:05.478Z"
+  "updatedAt": "2025-11-12T18:44:22.930Z"
 }

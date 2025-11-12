@@ -701,30 +701,30 @@
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/example/Treemap/nested-filter",
-      "lineNumber": 151,
+      "lineNumber": 143,
       "line": "<Rect"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/nested-zoom",
-      "lineNumber": 122,
+      "lineNumber": 114,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/example/Treemap/playground",
-      "lineNumber": 141,
+      "lineNumber": 142,
       "line": "<Rect"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/example/Treemap/stacked-zoom",
-      "lineNumber": 111,
+      "lineNumber": 102,
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.768Z"
+  "updatedAt": "2025-11-12T18:44:22.677Z"
 }
