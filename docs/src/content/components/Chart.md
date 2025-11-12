@@ -1,14 +1,9 @@
 ---
-description: Base Layerchart component providing chart dimensions and contexts such as TooltipContext, GeoContext, and TransformContext. See also simplified charts such as AreaChart and BarChart for streamlined implementations.
+description: Base component providing chart dimensions and contexts such as TooltipContext, GeoContext, and TransformContext. See also simplified charts such as AreaChart and BarChart for streamlined implementations.
 section: charts
 layers: []
 related:
-  [
-    'components/AreaChart',
-    'components/BarChart',
-    'components/TooltipContext',
-    'components/GeoContext',
-  ]
+  [ArcChart, AreaChart, BarChart, LineChart, PieChart, ScatterChart, TooltipContext, GeoContext]
 ---
 
 <script lang="ts">
