@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-10T21:25:57.524Z",
+  "generatedAt": "2025-11-12T17:29:16.336Z",
   "totalComponents": 56,
   "totalExamples": 692,
   "components": [
@@ -3737,8 +3737,8 @@
       "component": "Voronoi",
       "examples": [
         {
-          "name": "example",
-          "path": "/example/Voronoi/example",
+          "name": "radius",
+          "path": "/example/Voronoi/radius",
           "checksum": "0d7254d1a4029ed1095478b4e44b2d44"
         }
       ]

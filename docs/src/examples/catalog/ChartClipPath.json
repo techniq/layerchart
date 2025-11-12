@@ -108,12 +108,12 @@
       "line": "<ChartClipPath>"
     },
     {
-      "example": "example",
+      "example": "radius",
       "component": "Voronoi",
-      "path": "/example/Voronoi/example",
+      "path": "/example/Voronoi/radius",
       "lineNumber": 26,
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.070Z"
+  "updatedAt": "2025-11-12T17:29:17.392Z"
 }

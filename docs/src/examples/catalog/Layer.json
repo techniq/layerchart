@@ -2985,12 +2985,12 @@
       "line": "<Layer>"
     },
     {
-      "example": "example",
+      "example": "radius",
       "component": "Voronoi",
-      "path": "/example/Voronoi/example",
+      "path": "/example/Voronoi/radius",
       "lineNumber": 25,
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.693Z"
+  "updatedAt": "2025-11-12T17:29:18.076Z"
 }

@@ -270,12 +270,12 @@
       "line": "<Points>"
     },
     {
-      "example": "example",
+      "example": "radius",
       "component": "Voronoi",
-      "path": "/example/Voronoi/example",
+      "path": "/example/Voronoi/radius",
       "lineNumber": 27,
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.707Z"
+  "updatedAt": "2025-11-12T17:29:18.510Z"
 }
