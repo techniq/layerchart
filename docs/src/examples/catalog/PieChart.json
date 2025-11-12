@@ -3,115 +3,326 @@
   "examples": [
     {
       "name": "arc",
-      "path": "/example/PieChart/arc"
+      "path": "/example/PieChart/arc",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "arc-props",
-      "path": "/example/PieChart/arc-props"
+      "path": "/example/PieChart/arc-props",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "basic",
-      "path": "/example/PieChart/basic"
+      "path": "/example/PieChart/basic",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} />"
+        }
+      ]
     },
     {
       "name": "colors-data-prop",
-      "path": "/example/PieChart/colors-data-prop"
+      "path": "/example/PieChart/colors-data-prop",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 21,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" c=\"color\" height={300} />"
+        }
+      ]
     },
     {
       "name": "colors-interpolator",
-      "path": "/example/PieChart/colors-interpolator"
+      "path": "/example/PieChart/colors-interpolator",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={quantize(interpolateRainbow, 5)} />"
+        }
+      ]
     },
     {
       "name": "colors-scheme",
-      "path": "/example/PieChart/colors-scheme"
+      "path": "/example/PieChart/colors-scheme",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} cRange={schemeTableau10} />"
+        }
+      ]
     },
     {
       "name": "colors-variables",
-      "path": "/example/PieChart/colors-variables"
+      "path": "/example/PieChart/colors-variables",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "donut",
-      "path": "/example/PieChart/donut"
+      "path": "/example/PieChart/donut",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "donut-with-text",
-      "path": "/example/PieChart/donut-with-text"
+      "path": "/example/PieChart/donut-with-text",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 11,
+          "line": "<PieChart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 21,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "legend",
-      "path": "/example/PieChart/legend"
+      "path": "/example/PieChart/legend",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} legend />"
+        }
+      ]
     },
     {
       "name": "legend-custom-label",
-      "path": "/example/PieChart/legend-custom-label"
+      "path": "/example/PieChart/legend-custom-label",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "legend-placement",
-      "path": "/example/PieChart/legend-placement"
+      "path": "/example/PieChart/legend-placement",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} legend />"
+        }
+      ]
     },
     {
       "name": "legend-responsive",
-      "path": "/example/PieChart/legend-responsive"
+      "path": "/example/PieChart/legend-responsive",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "legend-with-padding",
-      "path": "/example/PieChart/legend-with-padding"
+      "path": "/example/PieChart/legend-with-padding",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "motion-spring",
-      "path": "/example/PieChart/motion-spring"
+      "path": "/example/PieChart/motion-spring",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 15,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'spring' } }} />"
+        }
+      ]
     },
     {
       "name": "motion-tween",
-      "path": "/example/PieChart/motion-tween"
+      "path": "/example/PieChart/motion-tween",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 15,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" props={{ pie: { motion: 'tween' } }} />"
+        }
+      ]
     },
     {
       "name": "offset-slice",
-      "path": "/example/PieChart/offset-slice"
+      "path": "/example/PieChart/offset-slice",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 11,
+          "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
+        }
+      ]
     },
     {
       "name": "placement-custom",
-      "path": "/example/PieChart/placement-custom"
+      "path": "/example/PieChart/placement-custom",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "placement-left",
-      "path": "/example/PieChart/placement-left"
+      "path": "/example/PieChart/placement-left",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "placement-right",
-      "path": "/example/PieChart/placement-right"
+      "path": "/example/PieChart/placement-right",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "radius-fixed",
-      "path": "/example/PieChart/radius-fixed"
+      "path": "/example/PieChart/radius-fixed",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={100} />"
+        }
+      ]
     },
     {
       "name": "radius-offset",
-      "path": "/example/PieChart/radius-offset"
+      "path": "/example/PieChart/radius-offset",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={-20} />"
+        }
+      ]
     },
     {
       "name": "radius-percent",
-      "path": "/example/PieChart/radius-percent"
+      "path": "/example/PieChart/radius-percent",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart {data} key=\"fruit\" value=\"value\" height={300} outerRadius={0.8} />"
+        }
+      ]
     },
     {
       "name": "segments",
-      "path": "/example/PieChart/segments"
+      "path": "/example/PieChart/segments",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 25,
+          "line": "<PieChart"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 37,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "series",
-      "path": "/example/PieChart/series"
+      "path": "/example/PieChart/series",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "series-click",
-      "path": "/example/PieChart/series-click"
+      "path": "/example/PieChart/series-click",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "series-props",
-      "path": "/example/PieChart/series-props"
+      "path": "/example/PieChart/series-props",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 10,
+          "line": "<PieChart"
+        }
+      ]
     },
     {
       "name": "tooltip-click",
-      "path": "/example/PieChart/tooltip-click"
+      "path": "/example/PieChart/tooltip-click",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 9,
+          "line": "<PieChart"
+        }
+      ]
     }
   ],
   "usage": [
@@ -312,5 +523,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.005Z"
+  "updatedAt": "2025-11-12T16:58:10.660Z"
 }

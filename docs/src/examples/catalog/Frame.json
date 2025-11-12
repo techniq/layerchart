@@ -3,19 +3,112 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Frame/basic"
+      "path": "/example/Frame/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 12,
+          "line": "<Frame class=\"fill-danger/5\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
     },
     {
       "name": "border",
-      "path": "/example/Frame/border"
+      "path": "/example/Frame/border",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 12,
+          "line": "<Frame class=\"stroke-surface-content/50 fill-none\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
     },
     {
       "name": "full",
-      "path": "/example/Frame/full"
+      "path": "/example/Frame/full",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 12,
+          "line": "<Frame class=\"fill-danger/5\" full />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
     },
     {
       "name": "gradient",
-      "path": "/example/Frame/gradient"
+      "path": "/example/Frame/gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 12,
+          "line": "<LinearGradient class=\"from-primary/10 to-secondary/10\" vertical>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 14,
+          "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -48,5 +141,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.804Z"
+  "updatedAt": "2025-11-12T16:58:09.826Z"
 }

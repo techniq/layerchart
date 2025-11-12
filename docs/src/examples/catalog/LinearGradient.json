@@ -3,19 +3,107 @@
   "examples": [
     {
       "name": "direction-with-custom-colors",
-      "path": "/example/LinearGradient/direction-with-custom-colors"
+      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
+        }
+      ]
     },
     {
       "name": "explicit-offsets",
-      "path": "/example/LinearGradient/explicit-offsets"
+      "path": "/example/LinearGradient/explicit-offsets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 14,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
+        }
+      ]
     },
     {
       "name": "tailwind-colors",
-      "path": "/example/LinearGradient/tailwind-colors"
+      "path": "/example/LinearGradient/tailwind-colors",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient class=\"from-pink-500 to-yellow-500\" vertical>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
+        }
+      ]
     },
     {
       "name": "units",
-      "path": "/example/LinearGradient/units"
+      "path": "/example/LinearGradient/units",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 10,
+          "line": "<Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -440,5 +528,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.780Z"
+  "updatedAt": "2025-11-12T16:58:10.404Z"
 }

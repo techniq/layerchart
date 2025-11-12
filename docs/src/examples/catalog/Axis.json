@@ -3,159 +3,837 @@
   "examples": [
     {
       "name": "arrow-markers",
-      "path": "/example/Axis/arrow-markers"
+      "path": "/example/Axis/arrow-markers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "axis-label-placement-left-right",
-      "path": "/example/Axis/axis-label-placement-left-right"
+      "path": "/example/Axis/axis-label-placement-left-right",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart yDomain={[0, 100]} padding={{ top: 24, bottom: 24, left: 40, right: 40 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis label=\"left start\" placement=\"left\" labelPlacement=\"start\" rule />"
+        }
+      ]
     },
     {
       "name": "axis-label-placement-top-bottom",
-      "path": "/example/Axis/axis-label-placement-top-bottom"
+      "path": "/example/Axis/axis-label-placement-top-bottom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis label=\"top start\" placement=\"top\" labelPlacement=\"start\" rule />"
+        }
+      ]
     },
     {
       "name": "explicit-ticks",
-      "path": "/example/Axis/explicit-ticks"
+      "path": "/example/Axis/explicit-ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule ticks={[0, 50, 100]} />"
+        }
+      ]
     },
     {
       "name": "extent-ticks-only",
-      "path": "/example/Axis/extent-ticks-only"
+      "path": "/example/Axis/extent-ticks-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 16,
+          "line": "<Axis"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 23,
+          "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
+        }
+      ]
     },
     {
       "name": "grid",
-      "path": "/example/Axis/grid"
+      "path": "/example/Axis/grid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" grid />"
+        }
+      ]
     },
     {
       "name": "grid-dashed",
-      "path": "/example/Axis/grid-dashed"
+      "path": "/example/Axis/grid-dashed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" />"
+        }
+      ]
     },
     {
       "name": "hide-zero-filter",
-      "path": "/example/Axis/hide-zero-filter"
+      "path": "/example/Axis/hide-zero-filter",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />"
+        }
+      ]
     },
     {
       "name": "hide-zero-format",
-      "path": "/example/Axis/hide-zero-format"
+      "path": "/example/Axis/hide-zero-format",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule format={(v) => v || ''} />"
+        }
+      ]
     },
     {
       "name": "inject-ticks",
-      "path": "/example/Axis/inject-ticks"
+      "path": "/example/Axis/inject-ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
+        }
+      ]
     },
     {
       "name": "integer-only-filter",
-      "path": "/example/Axis/integer-only-filter"
+      "path": "/example/Axis/integer-only-filter",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule ticks={(scale) => scale.ticks?.().filter(Number.isInteger)} />"
+        }
+      ]
     },
     {
       "name": "integer-only-format",
-      "path": "/example/Axis/integer-only-format"
+      "path": "/example/Axis/integer-only-format",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "labels-next-hash",
-      "path": "/example/Axis/labels-next-hash"
+      "path": "/example/Axis/labels-next-hash",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "log-scale",
-      "path": "/example/Axis/log-scale"
+      "path": "/example/Axis/log-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 6,
+          "line": "<Chart xScale={scaleLog()} xDomain={[1, 100]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 7,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 8,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
     },
     {
       "name": "multiline-tick-labels",
-      "path": "/example/Axis/multiline-tick-labels"
+      "path": "/example/Axis/multiline-tick-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 11,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "multiple-axis-grid-and-rules",
-      "path": "/example/Axis/multiple-axis-grid-and-rules"
+      "path": "/example/Axis/multiple-axis-grid-and-rules",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"left\" grid />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 19,
+          "line": "<Rule x=\"$left\" />"
+        }
+      ]
     },
     {
       "name": "multiple-axis-grid-and-rules-separate-grid",
-      "path": "/example/Axis/multiple-axis-grid-and-rules-separate-grid"
+      "path": "/example/Axis/multiple-axis-grid-and-rules-separate-grid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 17,
+          "line": "<Grid x y />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 18,
+          "line": "<Axis placement=\"left\" rule />"
+        }
+      ]
     },
     {
       "name": "multiple-axis-grid-with-single-rule",
-      "path": "/example/Axis/multiple-axis-grid-with-single-rule"
+      "path": "/example/Axis/multiple-axis-grid-with-single-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"left\" grid />"
+        }
+      ]
     },
     {
       "name": "multiple-axis-same-placement-bottom",
-      "path": "/example/Axis/multiple-axis-same-placement-bottom"
+      "path": "/example/Axis/multiple-axis-same-placement-bottom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 11,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "multiple-axis-same-placement-right",
-      "path": "/example/Axis/multiple-axis-same-placement-right"
+      "path": "/example/Axis/multiple-axis-same-placement-right",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart yDomain={[0, 100]} padding={{ top: 8, bottom: 8, right: 90 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 9,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 10,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "override-axis-ticks-scale",
-      "path": "/example/Axis/override-axis-ticks-scale"
+      "path": "/example/Axis/override-axis-ticks-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" xScale={scaleBand()} y=\"value\" padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "placement-bottom-left",
-      "path": "/example/Axis/placement-bottom-left"
+      "path": "/example/Axis/placement-bottom-left",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" />"
+        }
+      ]
     },
     {
       "name": "placement-bottom-left-rule",
-      "path": "/example/Axis/placement-bottom-left-rule"
+      "path": "/example/Axis/placement-bottom-left-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
     },
     {
       "name": "placement-top-right",
-      "path": "/example/Axis/placement-top-right"
+      "path": "/example/Axis/placement-top-right",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"top\" />"
+        }
+      ]
     },
     {
       "name": "placement-top-right-rule",
-      "path": "/example/Axis/placement-top-right-rule"
+      "path": "/example/Axis/placement-top-right-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"top\" rule />"
+        }
+      ]
     },
     {
       "name": "radial-grid",
-      "path": "/example/Axis/radial-grid"
+      "path": "/example/Axis/radial-grid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"radius\" grid />"
+        }
+      ]
     },
     {
       "name": "radial-rule",
-      "path": "/example/Axis/radial-rule"
+      "path": "/example/Axis/radial-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"radius\" rule />"
+        }
+      ]
     },
     {
       "name": "remove-tick-marks",
-      "path": "/example/Axis/remove-tick-marks"
+      "path": "/example/Axis/remove-tick-marks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 11,
+          "line": "<Axis placement=\"bottom\" rule tickMarks={false} />"
+        }
+      ]
     },
     {
       "name": "rotate-labels",
-      "path": "/example/Axis/rotate-labels"
+      "path": "/example/Axis/rotate-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 11,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "tick-count",
-      "path": "/example/Axis/tick-count"
+      "path": "/example/Axis/tick-count",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule ticks={20} />"
+        }
+      ]
     },
     {
       "name": "tick-label-styling",
-      "path": "/example/Axis/tick-label-styling"
+      "path": "/example/Axis/tick-label-styling",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 10,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 11,
+          "line": "<Axis"
+        }
+      ]
     },
     {
       "name": "tick-spacing",
-      "path": "/example/Axis/tick-spacing"
+      "path": "/example/Axis/tick-spacing",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 2]} padding={24} height={48}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule tickSpacing={200} />"
+        }
+      ]
     },
     {
       "name": "time-scale-auto",
-      "path": "/example/Axis/time-scale-auto"
+      "path": "/example/Axis/time-scale-auto",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 115,
+          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 116,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 117,
+          "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} />"
+        }
+      ]
     },
     {
       "name": "time-scale-auto-format-filtering",
-      "path": "/example/Axis/time-scale-auto-format-filtering"
+      "path": "/example/Axis/time-scale-auto-format-filtering",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 115,
+          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 116,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 117,
+          "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} format={example.format} />"
+        }
+      ]
     },
     {
       "name": "time-scale-auto-multiline",
-      "path": "/example/Axis/time-scale-auto-multiline"
+      "path": "/example/Axis/time-scale-auto-multiline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 115,
+          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 116,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 117,
+          "line": "<Axis placement=\"top\" rule grid tickMultiline {tickSpacing} />"
+        }
+      ]
     },
     {
       "name": "time-scale-brush",
-      "path": "/example/Axis/time-scale-brush"
+      "path": "/example/Axis/time-scale-brush",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} />"
+        }
+      ]
     },
     {
       "name": "time-scale-brush-multiline",
-      "path": "/example/Axis/time-scale-brush-multiline"
+      "path": "/example/Axis/time-scale-brush-multiline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} tickMultiline />"
+        }
+      ]
     },
     {
       "name": "time-scale-explicit",
-      "path": "/example/Axis/time-scale-explicit"
+      "path": "/example/Axis/time-scale-explicit",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 110,
+          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 111,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 112,
+          "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: example.interval }} />"
+        }
+      ]
     },
     {
       "name": "time-scale-explicit-multiline",
-      "path": "/example/Axis/time-scale-explicit-multiline"
+      "path": "/example/Axis/time-scale-explicit-multiline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 110,
+          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 111,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 112,
+          "line": "<Axis"
+        }
+      ]
     }
   ],
   "usage": [
@@ -3338,5 +4016,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:02.802Z"
+  "updatedAt": "2025-11-12T16:58:09.138Z"
 }

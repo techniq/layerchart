@@ -3,19 +3,122 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Points/basic"
+      "path": "/example/Points/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 14,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        }
+      ]
     },
     {
       "name": "color-via-scale",
-      "path": "/example/Points/color-via-scale"
+      "path": "/example/Points/color-via-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 27,
+          "line": "<Points class=\"stroke-surface-content/50\" />"
+        }
+      ]
     },
     {
       "name": "with-labels",
-      "path": "/example/Points/with-labels"
+      "path": "/example/Points/with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 14,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 15,
+          "line": "<Labels format=\"integer\" offset={10} />"
+        }
+      ]
     },
     {
       "name": "with-tooltip-and-highlight",
-      "path": "/example/Points/with-tooltip-and-highlight"
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 23,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 24,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 27,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -174,5 +277,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.047Z"
+  "updatedAt": "2025-11-12T16:58:10.707Z"
 }

@@ -3,11 +3,50 @@
   "examples": [
     {
       "name": "playground",
-      "path": "/example/Text/playground"
+      "path": "/example/Text/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart height={224}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer {type}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 46,
+          "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 48,
+          "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
+        }
+      ]
     },
     {
       "name": "word-wrap-with-explicit-n",
-      "path": "/example/Text/word-wrap-with-explicit-n"
+      "path": "/example/Text/word-wrap-with-explicit-n",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 8,
+          "line": "<Chart height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 9,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 10,
+          "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -600,5 +639,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.236Z"
+  "updatedAt": "2025-11-12T16:58:10.917Z"
 }

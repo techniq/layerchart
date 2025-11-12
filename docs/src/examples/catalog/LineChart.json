@@ -3,195 +3,646 @@
   "examples": [
     {
       "name": "axis-labels-inside",
-      "path": "/example/LineChart/axis-labels-inside"
+      "path": "/example/LineChart/axis-labels-inside",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "basic",
-      "path": "/example/LineChart/basic"
+      "path": "/example/LineChart/basic",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} />"
+        }
+      ]
     },
     {
       "name": "brush",
-      "path": "/example/LineChart/brush"
+      "path": "/example/LineChart/brush",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "curve",
-      "path": "/example/LineChart/curve"
+      "path": "/example/LineChart/curve",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} props={{ spline: { curve: curveCatmullRom } }} />"
+        }
+      ]
     },
     {
       "name": "custom",
-      "path": "/example/LineChart/custom"
+      "path": "/example/LineChart/custom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 15,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 16,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 19,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "custom-tooltip",
-      "path": "/example/LineChart/custom-tooltip"
+      "path": "/example/LineChart/custom-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 12,
+          "line": "<Tooltip.Root"
+        }
+      ]
     },
     {
       "name": "default-series-label",
-      "path": "/example/LineChart/default-series-label"
+      "path": "/example/LineChart/default-series-label",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart {data} x=\"date\" y=\"visits\" height={300} />"
+        }
+      ]
     },
     {
       "name": "draw",
-      "path": "/example/LineChart/draw"
+      "path": "/example/LineChart/draw",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 19,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" props={{ spline: { draw: true } }} height={300} />"
+        }
+      ]
     },
     {
       "name": "dynamic-data",
-      "path": "/example/LineChart/dynamic-data"
+      "path": "/example/LineChart/dynamic-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 17,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "gradient-encoding",
-      "path": "/example/LineChart/gradient-encoding"
+      "path": "/example/LineChart/gradient-encoding",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 17,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 19,
+          "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 21,
+          "line": "<Spline stroke={gradient} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 28,
+          "line": "<Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 33,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "gradient-threshold",
-      "path": "/example/LineChart/gradient-threshold"
+      "path": "/example/LineChart/gradient-threshold",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 14,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 23,
+          "line": "<Spline stroke={gradient} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 30,
+          "line": "<Highlight"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 40,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "labels",
-      "path": "/example/LineChart/labels"
+      "path": "/example/LineChart/labels",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} labels={{ offset: 10 }} />"
+        }
+      ]
     },
     {
       "name": "labels-with-points",
-      "path": "/example/LineChart/labels-with-points"
+      "path": "/example/LineChart/labels-with-points",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} points labels={{ offset: 10 }} />"
+        }
+      ]
     },
     {
       "name": "labels-within-points",
-      "path": "/example/LineChart/labels-within-points"
+      "path": "/example/LineChart/labels-within-points",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "large-radial-series",
-      "path": "/example/LineChart/large-radial-series"
+      "path": "/example/LineChart/large-radial-series",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "large-series",
-      "path": "/example/LineChart/large-series"
+      "path": "/example/LineChart/large-series",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "legend",
-      "path": "/example/LineChart/legend"
+      "path": "/example/LineChart/legend",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "line-annotation",
-      "path": "/example/LineChart/line-annotation"
+      "path": "/example/LineChart/line-annotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "null-dashed-gaps",
-      "path": "/example/LineChart/null-dashed-gaps"
+      "path": "/example/LineChart/null-dashed-gaps",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 17,
+          "line": "<Spline"
+        }
+      ]
     },
     {
       "name": "null-gaps",
-      "path": "/example/LineChart/null-gaps"
+      "path": "/example/LineChart/null-gaps",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" points height={300} />"
+        }
+      ]
     },
     {
       "name": "oscilloscope-time",
-      "path": "/example/LineChart/oscilloscope-time"
+      "path": "/example/LineChart/oscilloscope-time",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 122,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "override-color",
-      "path": "/example/LineChart/override-color"
+      "path": "/example/LineChart/override-color",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "point-annotations",
-      "path": "/example/LineChart/point-annotations"
+      "path": "/example/LineChart/point-annotations",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 23,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 43,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "points",
-      "path": "/example/LineChart/points"
+      "path": "/example/LineChart/points",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} points />"
+        }
+      ]
     },
     {
       "name": "radar",
-      "path": "/example/LineChart/radar"
+      "path": "/example/LineChart/radar",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "radar-rounded",
-      "path": "/example/LineChart/radar-rounded"
+      "path": "/example/LineChart/radar-rounded",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "radar-series",
-      "path": "/example/LineChart/radar-series"
+      "path": "/example/LineChart/radar-series",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 40,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "range-annotation",
-      "path": "/example/LineChart/range-annotation"
+      "path": "/example/LineChart/range-annotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series",
-      "path": "/example/LineChart/series"
+      "path": "/example/LineChart/series",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-brush",
-      "path": "/example/LineChart/series-brush"
+      "path": "/example/LineChart/series-brush",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-custom-highlight-point",
-      "path": "/example/LineChart/series-custom-highlight-point"
+      "path": "/example/LineChart/series-custom-highlight-point",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-individual-tooltip",
-      "path": "/example/LineChart/series-individual-tooltip"
+      "path": "/example/LineChart/series-individual-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 22,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 41,
+          "line": "<Spline {data} y={s.key} stroke={s.color} class={cls(!active && 'opacity-20 saturate-0')} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 47,
+          "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 52,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "series-labels-hover",
-      "path": "/example/LineChart/series-labels-hover"
+      "path": "/example/LineChart/series-labels-hover",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 35,
+          "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
+        }
+      ]
     },
     {
       "name": "series-point-annotations",
-      "path": "/example/LineChart/series-point-annotations"
+      "path": "/example/LineChart/series-point-annotations",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 38,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-point-click",
-      "path": "/example/LineChart/series-point-click"
+      "path": "/example/LineChart/series-point-click",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-separate-data",
-      "path": "/example/LineChart/series-separate-data"
+      "path": "/example/LineChart/series-separate-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 20,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-separate-data-diff-length",
-      "path": "/example/LineChart/series-separate-data-diff-length"
+      "path": "/example/LineChart/series-separate-data-diff-length",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 20,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-vertical",
-      "path": "/example/LineChart/series-vertical"
+      "path": "/example/LineChart/series-vertical",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "series-with-nulls",
-      "path": "/example/LineChart/series-with-nulls"
+      "path": "/example/LineChart/series-with-nulls",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 24,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 36,
+          "line": "<Spline"
+        }
+      ]
     },
     {
       "name": "single-axis-x",
-      "path": "/example/LineChart/single-axis-x"
+      "path": "/example/LineChart/single-axis-x",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" axis=\"x\" height={300} />"
+        }
+      ]
     },
     {
       "name": "single-axis-y",
-      "path": "/example/LineChart/single-axis-y"
+      "path": "/example/LineChart/single-axis-y",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" axis=\"y\" height={300} />"
+        }
+      ]
     },
     {
       "name": "sparkline",
-      "path": "/example/LineChart/sparkline"
+      "path": "/example/LineChart/sparkline",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "sparkline-fixed-position-tooltip",
-      "path": "/example/LineChart/sparkline-fixed-position-tooltip"
+      "path": "/example/LineChart/sparkline-fixed-position-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 24,
+          "line": "<Tooltip.Root"
+        }
+      ]
     },
     {
       "name": "sparkline-within-a-paragraph",
-      "path": "/example/LineChart/sparkline-within-a-paragraph"
+      "path": "/example/LineChart/sparkline-within-a-paragraph",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 12,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "sparkline-within-a-paragraph-with-tooltip-and-highlight",
-      "path": "/example/LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight"
+      "path": "/example/LineChart/sparkline-within-a-paragraph-with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 29,
+          "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
+        }
+      ]
     },
     {
       "name": "sparkline-zero-axis",
-      "path": "/example/LineChart/sparkline-zero-axis"
+      "path": "/example/LineChart/sparkline-zero-axis",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "tooltip-click",
-      "path": "/example/LineChart/tooltip-click"
+      "path": "/example/LineChart/tooltip-click",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
     },
     {
       "name": "vertical",
-      "path": "/example/LineChart/vertical"
+      "path": "/example/LineChart/vertical",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -686,5 +1137,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.213Z"
+  "updatedAt": "2025-11-12T16:58:10.388Z"
 }

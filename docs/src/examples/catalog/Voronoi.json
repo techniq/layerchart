@@ -3,7 +3,39 @@
   "examples": [
     {
       "name": "example",
-      "path": "/example/Voronoi/example"
+      "path": "/example/Voronoi/example",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer onpointermove={onPointerMove}>"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 26,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 27,
+          "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
+        },
+        {
+          "component": "Voronoi",
+          "lineNumber": 28,
+          "line": "<Voronoi"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 38,
+          "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -15,5 +47,5 @@
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:08.002Z"
+  "updatedAt": "2025-11-12T16:58:11.192Z"
 }

@@ -3,279 +3,2192 @@
   "examples": [
     {
       "name": "horizontal-average-annotation-rule",
-      "path": "/example/Bars/horizontal-average-annotation-rule"
+      "path": "/example/Bars/horizontal-average-annotation-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 30,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 33,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 34,
+          "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 35,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "horizontal-basic",
-      "path": "/example/Bars/horizontal-basic"
+      "path": "/example/Bars/horizontal-basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-calculated-value-domain-negative",
-      "path": "/example/Bars/horizontal-calculated-value-domain-negative"
+      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 23,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-calculated-value-domain-positive",
-      "path": "/example/Bars/horizontal-calculated-value-domain-positive"
+      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 23,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-candlestick-bars",
-      "path": "/example/Bars/horizontal-candlestick-bars"
+      "path": "/example/Bars/horizontal-candlestick-bars",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 28,
+          "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 30,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 33,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-click-handler",
-      "path": "/example/Bars/horizontal-click-handler"
+      "path": "/example/Bars/horizontal-click-handler",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 34,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 36,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 37,
+          "line": "<Highlight area />"
+        }
+      ]
     },
     {
       "name": "horizontal-customize-individual-styles",
-      "path": "/example/Bars/horizontal-customize-individual-styles"
+      "path": "/example/Bars/horizontal-customize-individual-styles",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars>"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 32,
+          "line": "<Bar"
+        }
+      ]
     },
     {
       "name": "horizontal-gradient",
-      "path": "/example/Bars/horizontal-gradient"
+      "path": "/example/Bars/horizontal-gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 30,
+          "line": "<LinearGradient class=\"from-green-400 to-blue-500\" units=\"userSpaceOnUse\">"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 32,
+          "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-grouped",
-      "path": "/example/Bars/horizontal-grouped"
+      "path": "/example/Bars/horizontal-grouped",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 40,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 41,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 44,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-grouped-and-stacked",
-      "path": "/example/Bars/horizontal-grouped-and-stacked"
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 42,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 45,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 46,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 49,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-grouped-stacked-or-both-transition",
-      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition"
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 46,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 64,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 65,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 70,
+          "line": "<Bar"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 99,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 102,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-highlight-individual-bar",
-      "path": "/example/Bars/horizontal-highlight-individual-bar"
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 30,
+          "line": "<Highlight"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 34,
+          "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 35,
+          "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 36,
+          "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 38,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-highlight-individual-bar-line",
-      "path": "/example/Bars/horizontal-highlight-individual-bar-line"
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 31,
+          "line": "<Highlight"
+        }
+      ]
     },
     {
       "name": "horizontal-inside-labels",
-      "path": "/example/Bars/horizontal-inside-labels"
+      "path": "/example/Bars/horizontal-inside-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 23,
+          "line": "<Rule x={0} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 24,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 25,
+          "line": "<Labels placement=\"inside\" format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-limit-ticks-count",
-      "path": "/example/Bars/horizontal-limit-ticks-count"
+      "path": "/example/Bars/horizontal-limit-ticks-count",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-limit-ticks-second-scale",
-      "path": "/example/Bars/horizontal-limit-ticks-second-scale"
+      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 34,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-multiple-diverging",
-      "path": "/example/Bars/horizontal-multiple-diverging"
+      "path": "/example/Bars/horizontal-multiple-diverging",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars x=\"value\" rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 32,
+          "line": "<Rule x={0} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 34,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 36,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-multiple-overlapping",
-      "path": "/example/Bars/horizontal-multiple-overlapping"
+      "path": "/example/Bars/horizontal-multiple-overlapping",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars x=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 33,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 35,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-outside-labels-default",
-      "path": "/example/Bars/horizontal-outside-labels-default"
+      "path": "/example/Bars/horizontal-outside-labels-default",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 24,
+          "line": "<Rule x={0} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 26,
+          "line": "<Labels format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-rounded-right-only",
-      "path": "/example/Bars/horizontal-rounded-right-only"
+      "path": "/example/Bars/horizontal-rounded-right-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars radius={4} rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-stacked",
-      "path": "/example/Bars/horizontal-stacked"
+      "path": "/example/Bars/horizontal-stacked",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 37,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 38,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-stacked-percent",
-      "path": "/example/Bars/horizontal-stacked-percent"
+      "path": "/example/Bars/horizontal-stacked-percent",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 25,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"bottom\" grid rule format=\"percentRound\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 42,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 43,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 46,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-stagger-tween-on-mount",
-      "path": "/example/Bars/horizontal-stagger-tween-on-mount"
+      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 37,
+          "line": "<Bar"
+        }
+      ]
     },
     {
       "name": "horizontal-time-scale-with-inset",
-      "path": "/example/Bars/horizontal-time-scale-with-inset"
+      "path": "/example/Bars/horizontal-time-scale-with-inset",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars class=\"fill-primary\" insets={{ y: 2 }} />"
+        }
+      ]
     },
     {
       "name": "horizontal-time-scale-with-interval",
-      "path": "/example/Bars/horizontal-time-scale-with-interval"
+      "path": "/example/Bars/horizontal-time-scale-with-interval",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-time-scale-with-missing-data",
-      "path": "/example/Bars/horizontal-time-scale-with-missing-data"
+      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 30,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "horizontal-tooltip-and-bar-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight"
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 32,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 33,
+          "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 35,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 46,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 63,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 64,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 68,
+          "line": "<Bar"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 106,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-tooltip-and-clipped-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight"
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 32,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 33,
+          "line": "<Highlight>"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 35,
+          "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-tooltip-and-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-highlight"
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 32,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 34,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "horizontal-tween-on-mount",
-      "path": "/example/Bars/horizontal-tween-on-mount"
+      "path": "/example/Bars/horizontal-tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"bottom\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 36,
+          "line": "<Bars"
+        }
+      ]
     },
     {
       "name": "horizontal-with-grid-on-top",
-      "path": "/example/Bars/horizontal-with-grid-on-top"
+      "path": "/example/Bars/horizontal-with-grid-on-top",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 28,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"bottom\" grid={{ class: 'stroke-surface-100' }} rule />"
+        }
+      ]
     },
     {
       "name": "horizontal-with-grid-on-top-mix-blend",
-      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend"
+      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 28,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"bottom\" grid={{ class: 'mix-blend-multiply' }} rule />"
+        }
+      ]
     },
     {
       "name": "vertical-average-annotation-rule",
-      "path": "/example/Bars/vertical-average-annotation-rule"
+      "path": "/example/Bars/vertical-average-annotation-rule",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 32,
+          "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 33,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "vertical-basic",
-      "path": "/example/Bars/vertical-basic"
+      "path": "/example/Bars/vertical-basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 27,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-calculated-value-domain-negative",
-      "path": "/example/Bars/vertical-calculated-value-domain-negative"
+      "path": "/example/Bars/vertical-calculated-value-domain-negative",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 24,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 26,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-calculated-value-domain-positive",
-      "path": "/example/Bars/vertical-calculated-value-domain-positive"
+      "path": "/example/Bars/vertical-calculated-value-domain-positive",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 24,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 26,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-click-handler",
-      "path": "/example/Bars/vertical-click-handler"
+      "path": "/example/Bars/vertical-click-handler",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 30,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 31,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 33,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 34,
+          "line": "<Highlight area />"
+        }
+      ]
     },
     {
       "name": "vertical-customize-individual-styles",
-      "path": "/example/Bars/vertical-customize-individual-styles"
+      "path": "/example/Bars/vertical-customize-individual-styles",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 27,
+          "line": "<Bars>"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 29,
+          "line": "<Bar"
+        }
+      ]
     },
     {
       "name": "vertical-gradient",
-      "path": "/example/Bars/vertical-gradient"
+      "path": "/example/Bars/vertical-gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 23,
+          "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
+        }
+      ]
     },
     {
       "name": "vertical-grouped",
-      "path": "/example/Bars/vertical-grouped"
+      "path": "/example/Bars/vertical-grouped",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 40,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 41,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 44,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-grouped-and-stacked",
-      "path": "/example/Bars/vertical-grouped-and-stacked"
+      "path": "/example/Bars/vertical-grouped-and-stacked",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 42,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 45,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 46,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 49,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-grouped-stacked-or-both-transition",
-      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition"
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 70,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 71,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 75,
+          "line": "<Bar"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 104,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 107,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-highlight-individual-bar",
-      "path": "/example/Bars/vertical-highlight-individual-bar"
+      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 27,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 28,
+          "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 29,
+          "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 30,
+          "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 32,
+          "line": "<Highlight"
+        }
+      ]
     },
     {
       "name": "vertical-highlight-individual-bar-line",
-      "path": "/example/Bars/vertical-highlight-individual-bar-line"
+      "path": "/example/Bars/vertical-highlight-individual-bar-line",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 23,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 24,
+          "line": "<Highlight"
+        }
+      ]
     },
     {
       "name": "vertical-inside-labels",
-      "path": "/example/Bars/vertical-inside-labels"
+      "path": "/example/Bars/vertical-inside-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 23,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 24,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 25,
+          "line": "<Labels placement=\"inside\" format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "vertical-limit-ticks-count",
-      "path": "/example/Bars/vertical-limit-ticks-count"
+      "path": "/example/Bars/vertical-limit-ticks-count",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 27,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-limit-ticks-second-scale",
-      "path": "/example/Bars/vertical-limit-ticks-second-scale"
+      "path": "/example/Bars/vertical-limit-ticks-second-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-multiple-diverging",
-      "path": "/example/Bars/vertical-multiple-diverging"
+      "path": "/example/Bars/vertical-multiple-diverging",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" grid rule format={(d) => format(Math.abs(d), 'integer')} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 29,
+          "line": "<Bars y=\"value\" rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 31,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 32,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 34,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-multiple-diverging-rounded-specific",
-      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific"
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" grid rule format={(d) => format(Math.abs(d), 'integer')} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars y=\"value\" rounded-sm=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 33,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 34,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 37,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-multiple-overlapping",
-      "path": "/example/Bars/vertical-multiple-overlapping"
+      "path": "/example/Bars/vertical-multiple-overlapping",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 29,
+          "line": "<Bars y=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 31,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 33,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-outside-labels-default",
-      "path": "/example/Bars/vertical-outside-labels-default"
+      "path": "/example/Bars/vertical-outside-labels-default",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 24,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 26,
+          "line": "<Labels format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "vertical-rounded-top-only",
-      "path": "/example/Bars/vertical-rounded-top-only"
+      "path": "/example/Bars/vertical-rounded-top-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 28,
+          "line": "<Bars radius={4} rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-stacked",
-      "path": "/example/Bars/vertical-stacked"
+      "path": "/example/Bars/vertical-stacked",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 37,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 38,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-stacked-percent",
-      "path": "/example/Bars/vertical-stacked-percent"
+      "path": "/example/Bars/vertical-stacked-percent",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 39,
+          "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 41,
+          "line": "<Bars strokeWidth={1} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 42,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-stagger-tween-on-mount",
-      "path": "/example/Bars/vertical-stagger-tween-on-mount"
+      "path": "/example/Bars/vertical-stagger-tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 39,
+          "line": "<Bar"
+        }
+      ]
     },
     {
       "name": "vertical-stagger-tween-on-mount-rounded-edge",
-      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge"
+      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 39,
+          "line": "<Bar"
+        }
+      ]
     },
     {
       "name": "vertical-time-scale-with-inset",
-      "path": "/example/Bars/vertical-time-scale-with-inset"
+      "path": "/example/Bars/vertical-time-scale-with-inset",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars class=\"fill-primary\" insets={{ x: 2 }} />"
+        }
+      ]
     },
     {
       "name": "vertical-time-scale-with-interval",
-      "path": "/example/Bars/vertical-time-scale-with-interval"
+      "path": "/example/Bars/vertical-time-scale-with-interval",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-time-scale-with-interval-months",
-      "path": "/example/Bars/vertical-time-scale-with-interval-months"
+      "path": "/example/Bars/vertical-time-scale-with-interval-months",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-time-scale-with-missing-data",
-      "path": "/example/Bars/vertical-time-scale-with-missing-data"
+      "path": "/example/Bars/vertical-time-scale-with-missing-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 25,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "vertical-tooltip-and-bar-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-bar-highlight"
+      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 29,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 30,
+          "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 32,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar"
+      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 69,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 70,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bar",
+          "lineNumber": 74,
+          "line": "<Bar"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 112,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-tooltip-and-clipped-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight"
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 31,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 32,
+          "line": "<Highlight>"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 34,
+          "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 40,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-tooltip-and-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-highlight"
+      "path": "/example/Bars/vertical-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 29,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 30,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 32,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "vertical-tween-on-mount",
-      "path": "/example/Bars/vertical-tween-on-mount"
+      "path": "/example/Bars/vertical-tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 38,
+          "line": "<Bars"
+        }
+      ]
     },
     {
       "name": "vertical-tween-on-mount-rounded-edge",
-      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge"
+      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 38,
+          "line": "<Bars"
+        }
+      ]
     },
     {
       "name": "vertical-with-grid-on-top",
-      "path": "/example/Bars/vertical-with-grid-on-top"
+      "path": "/example/Bars/vertical-with-grid-on-top",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 24,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid={{ class: 'stroke-surface-100' }} rule />"
+        }
+      ]
     },
     {
       "name": "vertical-with-grid-on-top-mix-blend",
-      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend"
+      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 24,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid={{ class: 'mix-blend-multiply' }} rule />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -819,5 +2732,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:02.879Z"
+  "updatedAt": "2025-11-12T16:58:09.210Z"
 }

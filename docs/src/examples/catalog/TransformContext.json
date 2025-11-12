@@ -3,17 +3,83 @@
   "examples": [
     {
       "name": "pan-zoom-html-image",
-      "path": "/example/TransformContext/pan-zoom-html-image"
+      "path": "/example/TransformContext/pan-zoom-html-image",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 18,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer type=\"html\">"
+        }
+      ]
     },
     {
       "name": "pan-zoom-svg-image",
-      "path": "/example/TransformContext/pan-zoom-svg-image"
+      "path": "/example/TransformContext/pan-zoom-svg-image",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 18,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer type=\"svg\">"
+        }
+      ]
     },
     {
       "name": "playground",
-      "path": "/example/TransformContext/playground"
+      "path": "/example/TransformContext/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 33,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 46,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer class=\"overflow-hidden\">"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 49,
+          "line": "<Spline curve={config.curve} motion=\"tween\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 52,
+          "line": "<Points>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 55,
+          "line": "<Circle"
+        }
+      ]
     }
   ],
   "usage": [],
-  "updatedAt": "2025-11-02T23:12:28.649Z"
+  "updatedAt": "2025-11-12T16:58:11.116Z"
 }

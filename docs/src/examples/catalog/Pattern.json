@@ -3,31 +3,205 @@
   "examples": [
     {
       "name": "circles",
-      "path": "/example/Pattern/circles"
+      "path": "/example/Pattern/circles",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern size={4} circles>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect"
+        }
+      ]
     },
     {
       "name": "circles-custom-pattern-svg-only",
-      "path": "/example/Pattern/circles-custom-pattern-svg-only"
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern id=\"circle-pattern-1\" width={4} height={4}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 9,
+          "line": "<circle cx={2} cy={2} r={1} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 52,
+          "line": "<rect"
+        }
+      ]
     },
     {
       "name": "lineargradient-as-pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern"
+      "path": "/example/Pattern/lineargradient-as-pattern",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 9,
+          "line": "<Pattern size={4} background={gradient}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 11,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
+        }
+      ]
     },
     {
       "name": "lines",
-      "path": "/example/Pattern/lines"
+      "path": "/example/Pattern/lines",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern size={4} lines>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect"
+        }
+      ]
     },
     {
       "name": "lines-custom-pattern-svg-only",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only"
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern width={4} height={4}>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 9,
+          "line": "<line x2=\"100%\" class=\"stroke-surface-content\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 13,
+          "line": "<rect"
+        }
+      ]
     },
     {
       "name": "with-fill-color",
-      "path": "/example/Pattern/with-fill-color"
+      "path": "/example/Pattern/with-fill-color",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern size={4} circles={{ color: 'white', opacity: 0.25 }} background=\"hsl(20 100% 50%)\">"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
+        }
+      ]
     },
     {
       "name": "with-lineargradient",
-      "path": "/example/Pattern/with-lineargradient"
+      "path": "/example/Pattern/with-lineargradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 7,
+          "line": "<LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 9,
+          "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 11,
+          "line": "<Pattern size={4} circles={{ color: 'white', opacity: 0.5 }}>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -333,5 +507,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.958Z"
+  "updatedAt": "2025-11-12T16:58:10.579Z"
 }

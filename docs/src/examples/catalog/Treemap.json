@@ -3,27 +3,279 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Treemap/basic"
+      "path": "/example/Treemap/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 36,
+          "line": "<Treemap hierarchy={data}>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 39,
+          "line": "<Group x={node.x0} y={node.y0}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 42,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 48,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "complex",
-      "path": "/example/Treemap/complex"
+      "path": "/example/Treemap/complex",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 109,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 111,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 112,
+          "line": "<Treemap"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 125,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 134,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 145,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 146,
+          "line": "<text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 181,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "nested-filter",
-      "path": "/example/Treemap/nested-filter"
+      "path": "/example/Treemap/nested-filter",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 120,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 121,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 122,
+          "line": "<Treemap"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 139,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 151,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 163,
+          "line": "<RectClipPath"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 168,
+          "line": "<text"
+        }
+      ]
     },
     {
       "name": "nested-zoom",
-      "path": "/example/Treemap/nested-zoom"
+      "path": "/example/Treemap/nested-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 92,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 94,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 95,
+          "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 97,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 98,
+          "line": "<Treemap"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 111,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 122,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 133,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 134,
+          "line": "<text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 172,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "playground",
-      "path": "/example/Treemap/playground"
+      "path": "/example/Treemap/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 116,
+          "line": "<Chart>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 118,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 119,
+          "line": "<Treemap"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 132,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 141,
+          "line": "<Rect"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 152,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 153,
+          "line": "<text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 188,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "stacked-zoom",
-      "path": "/example/Treemap/stacked-zoom"
+      "path": "/example/Treemap/stacked-zoom",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 92,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 93,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Bounds",
+          "lineNumber": 94,
+          "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 96,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Treemap",
+          "lineNumber": 97,
+          "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 100,
+          "line": "<Group"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 107,
+          "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 111,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 121,
+          "line": "<Text"
+        }
+      ]
     }
   ],
   "usage": [
@@ -70,5 +322,5 @@
       "line": "<Treemap {hierarchy} {tile} {maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.981Z"
+  "updatedAt": "2025-11-12T16:58:11.172Z"
 }

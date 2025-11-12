@@ -3,23 +3,138 @@
   "examples": [
     {
       "name": "compound-common-scale-with-extra-marks",
-      "path": "/example/Chart/compound-common-scale-with-extra-marks"
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 15,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 25,
+          "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 29,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
-      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale"
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 43,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 45,
+          "line": "<Highlight lines points />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 49,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
     },
     {
       "name": "compound-dual-axis-with-stacked-charts",
-      "path": "/example/Chart/compound-dual-axis-with-stacked-charts"
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 30,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 31,
+          "line": "<Highlight lines points />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 56,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks"
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 11,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 40,
+          "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down"
+      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 13,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 65,
+          "line": "<Axis placement=\"left\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 80,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -2887,5 +3002,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.031Z"
+  "updatedAt": "2025-11-12T16:58:09.367Z"
 }

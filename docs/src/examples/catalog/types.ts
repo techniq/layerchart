@@ -6,6 +6,18 @@
  */
 
 /**
+ * Information about a component usage within an example
+ */
+export interface ComponentUsageInExample {
+	/** The component name */
+	component: string;
+	/** The line number where the component is used */
+	lineNumber: number;
+	/** The trimmed line of code containing the component usage */
+	line: string;
+}
+
+/**
  * Information about a specific example for a component
  */
 export interface ExampleInfo {
@@ -13,6 +25,8 @@ export interface ExampleInfo {
 	name: string;
 	/** The URL path to view the example */
 	path: string;
+	/** All components used in this example */
+	components: ComponentUsageInExample[];
 }
 
 /**

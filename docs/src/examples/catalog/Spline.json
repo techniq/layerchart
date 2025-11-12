@@ -3,87 +3,699 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Spline/basic"
+      "path": "/example/Spline/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 14,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        }
+      ]
     },
     {
       "name": "basic-start-and-end-snippets",
-      "path": "/example/Spline/basic-start-and-end-snippets"
+      "path": "/example/Spline/basic-start-and-end-snippets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle r={5} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "draw",
-      "path": "/example/Spline/draw"
+      "path": "/example/Spline/draw",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
+        }
+      ]
     },
     {
       "name": "end-slot-with-draw-with-value",
-      "path": "/example/Spline/end-slot-with-draw-with-value"
+      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ top: 25, left: 25, bottom: 25, right: 35 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 36,
+          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 38,
+          "line": "<Circle r={5} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 39,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "end-snippet-with-draw",
-      "path": "/example/Spline/end-snippet-with-draw"
+      "path": "/example/Spline/end-snippet-with-draw",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle r={5} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "gradient-encoding",
-      "path": "/example/Spline/gradient-encoding"
+      "path": "/example/Spline/gradient-encoding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 20,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 22,
+          "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 24,
+          "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
+        },
+        {
+          "component": "Legend",
+          "lineNumber": 28,
+          "line": "<Legend"
+        }
+      ]
     },
     {
       "name": "gradient-threshold",
-      "path": "/example/Spline/gradient-threshold"
+      "path": "/example/Spline/gradient-threshold",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 17,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 26,
+          "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
+        }
+      ]
     },
     {
       "name": "label-using-start-end-snippets",
-      "path": "/example/Spline/label-using-start-end-snippets"
+      "path": "/example/Spline/label-using-start-end-snippets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 36,
+          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 38,
+          "line": "<Circle r={5} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 39,
+          "line": "<Text value=\"start\" textAnchor=\"start\" verticalAnchor=\"middle\" dx={8} />"
+        }
+      ]
     },
     {
       "name": "markers-arrows",
-      "path": "/example/Spline/markers-arrows"
+      "path": "/example/Spline/markers-arrows",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline"
+        }
+      ]
     },
     {
       "name": "multiple-series",
-      "path": "/example/Spline/multiple-series"
+      "path": "/example/Spline/multiple-series",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 50,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 51,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 55,
+          "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 57,
+          "line": "<Circle r={4} fill={color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 58,
+          "line": "<Text"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 69,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 72,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "multiple-series-highlight-on-hover",
-      "path": "/example/Spline/multiple-series-highlight-on-hover"
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 37,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 51,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 52,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 58,
+          "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 60,
+          "line": "<Circle r={4} fill={color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 61,
+          "line": "<Text"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 73,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 75,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "multiple-series-using-overrides",
-      "path": "/example/Spline/multiple-series-using-overrides"
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 29,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 31,
+          "line": "<Spline y={(d) => d.y} class=\"stroke-2\" stroke={fruitColors.bananas} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 33,
+          "line": "<Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 38,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "multiple-series-with-labels",
-      "path": "/example/Spline/multiple-series-with-labels"
+      "path": "/example/Spline/multiple-series-with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 41,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 45,
+          "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 47,
+          "line": "<Labels format=\"integer\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 48,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 50,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "playground",
-      "path": "/example/Spline/playground"
+      "path": "/example/Spline/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 34,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 37,
+          "line": "<Spline"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 45,
+          "line": "<Points"
+        }
+      ]
     },
     {
       "name": "radial-line-with-areas",
-      "path": "/example/Spline/radial-line-with-areas"
+      "path": "/example/Spline/radial-line-with-areas",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 23,
+          "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 24,
+          "line": "<Area"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
+        }
+      ]
     },
     {
       "name": "radial-multi-year-lines",
-      "path": "/example/Spline/radial-multi-year-lines"
+      "path": "/example/Spline/radial-multi-year-lines",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 30,
+          "line": "<Spline"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
+        }
+      ]
     },
     {
       "name": "radial-radar",
-      "path": "/example/Spline/radial-radar"
+      "path": "/example/Spline/radial-radar",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 37,
+          "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 38,
+          "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+        }
+      ]
     },
     {
       "name": "tweened",
-      "path": "/example/Spline/tweened"
+      "path": "/example/Spline/tweened",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 35,
+          "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
+        }
+      ]
     },
     {
       "name": "vertical",
-      "path": "/example/Spline/vertical"
+      "path": "/example/Spline/vertical",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 24,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 25,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 28,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "with-labels",
-      "path": "/example/Spline/with-labels"
+      "path": "/example/Spline/with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 14,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 15,
+          "line": "<Labels format=\"integer\" />"
+        }
+      ]
     },
     {
       "name": "with-tooltip-and-highlight",
-      "path": "/example/Spline/with-tooltip-and-highlight"
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 23,
+          "line": "<Spline class=\"stroke-2 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 24,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 27,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -494,5 +1106,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.196Z"
+  "updatedAt": "2025-11-12T16:58:10.884Z"
 }

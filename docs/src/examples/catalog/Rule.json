@@ -3,59 +3,417 @@
   "examples": [
     {
       "name": "annotation-x",
-      "path": "/example/Rule/annotation-x"
+      "path": "/example/Rule/annotation-x",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule x={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+        }
+      ]
     },
     {
       "name": "annotation-y",
-      "path": "/example/Rule/annotation-y"
+      "path": "/example/Rule/annotation-y",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule y={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+        }
+      ]
     },
     {
       "name": "baseline-top-right",
-      "path": "/example/Rule/baseline-top-right"
+      "path": "/example/Rule/baseline-top-right",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"top\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule x=\"$right\" y=\"$top\" />"
+        }
+      ]
     },
     {
       "name": "baseline-x-negative",
-      "path": "/example/Rule/baseline-x-negative"
+      "path": "/example/Rule/baseline-x-negative",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[-20, 100]} yDomain={[0, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule x={0} />"
+        }
+      ]
     },
     {
       "name": "baseline-x-y",
-      "path": "/example/Rule/baseline-x-y"
+      "path": "/example/Rule/baseline-x-y",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule x y />"
+        }
+      ]
     },
     {
       "name": "baseline-y-negative",
-      "path": "/example/Rule/baseline-y-negative"
+      "path": "/example/Rule/baseline-y-negative",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[-20, 100]} padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 9,
+          "line": "<Rule y={0} />"
+        }
+      ]
     },
     {
       "name": "candlestick",
-      "path": "/example/Rule/candlestick"
+      "path": "/example/Rule/candlestick",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 27,
+          "line": "<Rule y={['high', 'low']} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 29,
+          "line": "<Highlight lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 32,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "candlestick-open-close-line-color",
-      "path": "/example/Rule/candlestick-open-close-line-color"
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 27,
+          "line": "<Rule y={['high', 'low']} class=\"stroke-surface-content\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 29,
+          "line": "<Highlight lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 32,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "candlestick-with-brushing",
-      "path": "/example/Rule/candlestick-with-brushing"
+      "path": "/example/Rule/candlestick-with-brushing",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 33,
+          "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 35,
+          "line": "<Rule y={['high', 'low']} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 37,
+          "line": "<Highlight lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 40,
+          "line": "<Tooltip.Root>"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 68,
+          "line": "<Bars insets={{ x: 0.5 }} />"
+        }
+      ]
     },
     {
       "name": "data-x-band",
-      "path": "/example/Rule/data-x-band"
+      "path": "/example/Rule/data-x-band",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 48,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 49,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 51,
+          "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
+        }
+      ]
     },
     {
       "name": "data-x-date",
-      "path": "/example/Rule/data-x-date"
+      "path": "/example/Rule/data-x-date",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 14,
+          "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+        }
+      ]
     },
     {
       "name": "data-x-range",
-      "path": "/example/Rule/data-x-range"
+      "path": "/example/Rule/data-x-range",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 18,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 20,
+          "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+        }
+      ]
     },
     {
       "name": "data-y-range",
-      "path": "/example/Rule/data-y-range"
+      "path": "/example/Rule/data-y-range",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y={['low', 'high']} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 14,
+          "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+        }
+      ]
     },
     {
       "name": "lollipop",
-      "path": "/example/Rule/lollipop"
+      "path": "/example/Rule/lollipop",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule format=\"percentRound\" />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 24,
+          "line": "<Rule class=\"stroke-4 stroke-primary\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 25,
+          "line": "<Points class=\"fill-secondary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 26,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 29,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -326,5 +684,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.141Z"
+  "updatedAt": "2025-11-12T16:58:10.809Z"
 }

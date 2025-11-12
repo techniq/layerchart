@@ -3,23 +3,218 @@
   "examples": [
     {
       "name": "complex",
-      "path": "/example/Sankey/complex"
+      "path": "/example/Sankey/complex",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 42,
+          "line": "<Chart {data} padding={{ right: 164 }} flatData={[]} height={800}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 44,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Sankey",
+          "lineNumber": 45,
+          "line": "<Sankey"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 60,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 88,
+          "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 89,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 107,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 121,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "hierarchy",
-      "path": "/example/Sankey/hierarchy"
+      "path": "/example/Sankey/hierarchy",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 58,
+          "line": "<Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 59,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Sankey",
+          "lineNumber": 60,
+          "line": "<Sankey"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 75,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 99,
+          "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 100,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 114,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "node-select",
-      "path": "/example/Sankey/node-select"
+      "path": "/example/Sankey/node-select",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart data={selectedNode ? sankeyGraphFromNode(selectedNode) : data} flatData={[]} height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Sankey",
+          "lineNumber": 14,
+          "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 17,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 30,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 43,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 49,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "simple",
-      "path": "/example/Sankey/simple"
+      "path": "/example/Sankey/simple",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 8,
+          "line": "<Chart {data} flatData={[]} height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 9,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Sankey",
+          "lineNumber": 10,
+          "line": "<Sankey nodeId={(d) => d.id}>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 13,
+          "line": "<Link sankey data={link} strokeWidth={link.width} class=\"stroke-surface-content/10\" />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 18,
+          "line": "<Group x={node.x0} y={node.y0}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 19,
+          "line": "<Rect width={nodeWidth} height={nodeHeight} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 20,
+          "line": "<Text"
+        }
+      ]
     },
     {
       "name": "tooltip",
-      "path": "/example/Sankey/tooltip"
+      "path": "/example/Sankey/tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} flatData={[]} height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Sankey",
+          "lineNumber": 14,
+          "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 17,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 30,
+          "line": "<Group x={node.x0} y={node.y0}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 31,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 38,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 52,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -59,5 +254,5 @@
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:28.552Z"
+  "updatedAt": "2025-11-12T16:58:10.827Z"
 }

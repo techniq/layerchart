@@ -3,103 +3,323 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/ScatterChart/basic"
+      "path": "/example/ScatterChart/basic",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "brush",
-      "path": "/example/ScatterChart/brush"
+      "path": "/example/ScatterChart/brush",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "custom",
-      "path": "/example/ScatterChart/custom"
+      "path": "/example/ScatterChart/custom",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 10,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 15,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 16,
+          "line": "<Highlight points lines axis=\"both\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 19,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "custom-tooltip",
-      "path": "/example/ScatterChart/custom-tooltip"
+      "path": "/example/ScatterChart/custom-tooltip",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 10,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" padding={24} height={400}>"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 12,
+          "line": "<Tooltip.Root"
+        }
+      ]
     },
     {
       "name": "date-series-color-scale",
-      "path": "/example/ScatterChart/date-series-color-scale"
+      "path": "/example/ScatterChart/date-series-color-scale",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 10,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "domain-baseline",
-      "path": "/example/ScatterChart/domain-baseline"
+      "path": "/example/ScatterChart/domain-baseline",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xBaseline={0} yBaseline={0} padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "domain-nice",
-      "path": "/example/ScatterChart/domain-nice"
+      "path": "/example/ScatterChart/domain-nice",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 10,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" xNice yNice padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "domain-padding",
-      "path": "/example/ScatterChart/domain-padding"
+      "path": "/example/ScatterChart/domain-padding",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "labels",
-      "path": "/example/ScatterChart/labels"
+      "path": "/example/ScatterChart/labels",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" labels padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "line-annotation",
-      "path": "/example/ScatterChart/line-annotation"
+      "path": "/example/ScatterChart/line-annotation",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "point-annotations",
-      "path": "/example/ScatterChart/point-annotations"
+      "path": "/example/ScatterChart/point-annotations",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "punchcard",
-      "path": "/example/ScatterChart/punchcard"
+      "path": "/example/ScatterChart/punchcard",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 14,
+          "line": "<ScatterChart"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 34,
+          "line": "<Highlight area axis=\"x\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 39,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "radius-scale",
-      "path": "/example/ScatterChart/radius-scale"
+      "path": "/example/ScatterChart/radius-scale",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "range-annotation-both",
-      "path": "/example/ScatterChart/range-annotation-both"
+      "path": "/example/ScatterChart/range-annotation-both",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "range-annotation-horizontal",
-      "path": "/example/ScatterChart/range-annotation-horizontal"
+      "path": "/example/ScatterChart/range-annotation-horizontal",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "range-annotation-vertical",
-      "path": "/example/ScatterChart/range-annotation-vertical"
+      "path": "/example/ScatterChart/range-annotation-vertical",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "series",
-      "path": "/example/ScatterChart/series"
+      "path": "/example/ScatterChart/series",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 17,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "series-custom-labels",
-      "path": "/example/ScatterChart/series-custom-labels"
+      "path": "/example/ScatterChart/series-custom-labels",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 17,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "series-legend",
-      "path": "/example/ScatterChart/series-legend"
+      "path": "/example/ScatterChart/series-legend",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 17,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "series-tween",
-      "path": "/example/ScatterChart/series-tween"
+      "path": "/example/ScatterChart/series-tween",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 17,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "series-with-radius",
-      "path": "/example/ScatterChart/series-with-radius"
+      "path": "/example/ScatterChart/series-with-radius",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 17,
+          "line": "<ScatterChart"
+        }
+      ]
     },
     {
       "name": "single-axis-x",
-      "path": "/example/ScatterChart/single-axis-x"
+      "path": "/example/ScatterChart/single-axis-x",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" axis=\"x\" padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "single-axis-y",
-      "path": "/example/ScatterChart/single-axis-y"
+      "path": "/example/ScatterChart/single-axis-y",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart {data} x=\"x\" y=\"y\" axis=\"y\" padding={24} height={400} />"
+        }
+      ]
     },
     {
       "name": "single-dimension",
-      "path": "/example/ScatterChart/single-dimension"
+      "path": "/example/ScatterChart/single-dimension",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 11,
+          "line": "<ScatterChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 25,
+          "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
+        }
+      ]
     },
     {
       "name": "tooltip-click",
-      "path": "/example/ScatterChart/tooltip-click"
+      "path": "/example/ScatterChart/tooltip-click",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 9,
+          "line": "<ScatterChart"
+        }
+      ]
     }
   ],
   "usage": [
@@ -279,5 +499,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:04.181Z"
+  "updatedAt": "2025-11-12T16:58:10.861Z"
 }

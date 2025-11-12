@@ -3,15 +3,81 @@
   "examples": [
     {
       "name": "styling-using-attributes",
-      "path": "/example/Ellipse/styling-using-attributes"
+      "path": "/example/Ellipse/styling-using-attributes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 14,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} fill=\"var(--color-surface-content)\" />"
+        }
+      ]
     },
     {
       "name": "styling-using-classes",
-      "path": "/example/Ellipse/styling-using-classes"
+      "path": "/example/Ellipse/styling-using-classes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 8,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 17,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+        }
+      ]
     },
     {
       "name": "styling-using-css-variables",
-      "path": "/example/Ellipse/styling-using-css-variables"
+      "path": "/example/Ellipse/styling-using-css-variables",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Ellipse",
+          "lineNumber": 14,
+          "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -100,5 +166,5 @@
       "line": "<Ellipse"
     }
   ],
-  "updatedAt": "2025-11-02T23:12:27.753Z"
+  "updatedAt": "2025-11-12T16:58:09.774Z"
 }

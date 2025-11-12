@@ -3,7 +3,39 @@
   "examples": [
     {
       "name": "basic-usage",
-      "path": "/example/Group/basic-usage"
+      "path": "/example/Group/basic-usage",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 9,
+          "line": "<Group center>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 10,
+          "line": "<Circle r={20} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 14,
+          "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -232,5 +264,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.556Z"
+  "updatedAt": "2025-11-12T16:58:10.176Z"
 }

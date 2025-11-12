@@ -25,6 +25,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import type {
 	ComponentCatalog,
+	ComponentUsageInExample,
 	ExampleInfo,
 	UsageInfo
 } from '../src/examples/catalog/types.js';
@@ -60,9 +61,45 @@ function getComponents(dir: string): string[] {
 }
 
 /**
+ * Extract all component usages from an example file
+ */
+function extractComponentsFromExample(
+	filePath: string,
+	allComponents: string[]
+): ComponentUsageInExample[] {
+	const components: ComponentUsageInExample[] = [];
+	const content = fs.readFileSync(filePath, 'utf-8');
+	const lines = content.split('\n');
+
+	// Track which components we've found to avoid duplicates
+	const foundComponents = new Set<string>();
+
+	// Search for each known component in the file
+	for (const componentName of allComponents) {
+		// Use word boundary to avoid matching components with similar prefixes
+		// Match if followed by: whitespace, >, /, ., :, or end-of-line
+		const searchPattern = new RegExp(`<${componentName}(?:\\s|>|/|\\.|:|$)`, 'i');
+
+		lines.forEach((line, index) => {
+			if (searchPattern.test(line) && !foundComponents.has(componentName)) {
+				foundComponents.add(componentName);
+				components.push({
+					component: componentName,
+					lineNumber: index + 1,
+					line: line.trim()
+				});
+			}
+		});
+	}
+
+	// Sort by line number
+	return components.sort((a, b) => a.lineNumber - b.lineNumber);
+}
+
+/**
  * Get all examples for a specific component
  */
-function getComponentExamples(componentName: string): ExampleInfo[] {
+function getComponentExamples(componentName: string, allComponents: string[]): ExampleInfo[] {
 	const componentExamplesDir = path.join(EXAMPLES_DIR, componentName);
 	const examples: ExampleInfo[] = [];
 
@@ -77,9 +114,15 @@ function getComponentExamples(componentName: string): ExampleInfo[] {
 		if (entry.isFile() && entry.name.endsWith('.svelte')) {
 			// Remove .svelte extension
 			const exampleName = entry.name.replace('.svelte', '');
+			const filePath = path.join(componentExamplesDir, entry.name);
+
+			// Extract all components used in this example
+			const componentsInExample = extractComponentsFromExample(filePath, allComponents);
+
 			examples.push({
 				name: exampleName,
-				path: `/example/${componentName}/${exampleName}`
+				path: `/example/${componentName}/${exampleName}`,
+				components: componentsInExample
 			});
 		}
 	}
@@ -147,10 +190,14 @@ function ensureDir(dirPath: string): void {
 /**
  * Generate catalog for a single component
  */
-function generateComponentCatalog(componentName: string, catalogPath: string): ComponentCatalog {
+function generateComponentCatalog(
+	componentName: string,
+	catalogPath: string,
+	allComponents: string[]
+): ComponentCatalog {
 	console.log(`Processing ${componentName}...`);
 
-	const examples = getComponentExamples(componentName);
+	const examples = getComponentExamples(componentName, allComponents);
 	const usage = findComponentUsage(componentName);
 
 	// Check if catalog file exists and read it
@@ -204,7 +251,7 @@ async function main() {
 	for (const componentName of components) {
 		// Write catalog file
 		const catalogPath = path.join(CATALOG_DIR, `${componentName}.json`);
-		const catalog = generateComponentCatalog(componentName, catalogPath);
+		const catalog = generateComponentCatalog(componentName, catalogPath, components);
 
 		fs.writeFileSync(catalogPath, JSON.stringify(catalog, null, 2));
 

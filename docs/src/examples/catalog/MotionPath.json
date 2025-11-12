@@ -3,15 +3,111 @@
   "examples": [
     {
       "name": "repeat-indefinitely",
-      "path": "/example/MotionPath/repeat-indefinitely"
+      "path": "/example/MotionPath/repeat-indefinitely",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 37,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "MotionPath",
+          "lineNumber": 40,
+          "line": "<MotionPath"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 46,
+          "line": "<Spline id={pathId} curve={config.curve} />"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 47,
+          "line": "<Polygon"
+        }
+      ]
     },
     {
       "name": "rotate-object-with-path",
-      "path": "/example/MotionPath/rotate-object-with-path"
+      "path": "/example/MotionPath/rotate-object-with-path",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "MotionPath",
+          "lineNumber": 41,
+          "line": "<MotionPath"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 48,
+          "line": "<Spline id={pathId} curve={config.curve} />"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 49,
+          "line": "<Polygon"
+        }
+      ]
     },
     {
       "name": "sync-with-draw",
-      "path": "/example/MotionPath/sync-with-draw"
+      "path": "/example/MotionPath/sync-with-draw",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "MotionPath",
+          "lineNumber": 42,
+          "line": "<MotionPath"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 49,
+          "line": "<Spline id={pathId} curve={config.curve} draw={{ duration: 3000, easing: linear }} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 50,
+          "line": "<Circle id={objectId} r={5} class=\"fill-surface-100 stroke-surface-content\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -37,5 +133,5 @@
       "line": "<MotionPath"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.332Z"
+  "updatedAt": "2025-11-12T16:58:10.508Z"
 }

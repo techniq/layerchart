@@ -3,39 +3,292 @@
   "examples": [
     {
       "name": "beeswarm",
-      "path": "/example/ForceSimulation/beeswarm"
+      "path": "/example/ForceSimulation/beeswarm",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 32,
+          "line": "<Axis placement=\"bottom\" format=\"none\" rule grid />"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 33,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 44,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 58,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
     },
     {
       "name": "collision-detection",
-      "path": "/example/ForceSimulation/collision-detection"
+      "path": "/example/ForceSimulation/collision-detection",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 38,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 50,
+          "line": "<Layer"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 56,
+          "line": "<Group center>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 59,
+          "line": "<Circle"
+        }
+      ]
     },
     {
       "name": "disjoint-graph",
-      "path": "/example/ForceSimulation/disjoint-graph"
+      "path": "/example/ForceSimulation/disjoint-graph",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 53,
+          "line": "<Chart height={680}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 55,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 66,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 75,
+          "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
+        }
+      ]
     },
     {
       "name": "graph-drag",
-      "path": "/example/ForceSimulation/graph-drag"
+      "path": "/example/ForceSimulation/graph-drag",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 67,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 69,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 70,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 80,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 91,
+          "line": "<circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 139,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "graph-playground",
-      "path": "/example/ForceSimulation/graph-playground"
+      "path": "/example/ForceSimulation/graph-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 145,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 147,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 148,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 168,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 179,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 194,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     },
     {
       "name": "group",
-      "path": "/example/ForceSimulation/group"
+      "path": "/example/ForceSimulation/group",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 49,
+          "line": "<Chart data={nodes} x=\"category\" xScale={scaleBand()} r=\"value\" rRange={[3, 12]} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 52,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 53,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 71,
+          "line": "<Circle"
+        }
+      ]
     },
     {
       "name": "lattice",
-      "path": "/example/ForceSimulation/lattice"
+      "path": "/example/ForceSimulation/lattice",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart height={800}>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 27,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 37,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 46,
+          "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
+        }
+      ]
     },
     {
       "name": "text",
-      "path": "/example/ForceSimulation/text"
+      "path": "/example/ForceSimulation/text",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 68,
+          "line": "<Chart"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 80,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 96,
+          "line": "<Layer"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 102,
+          "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
+        }
+      ]
     },
     {
       "name": "tree",
-      "path": "/example/ForceSimulation/tree"
+      "path": "/example/ForceSimulation/tree",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart height={600}>"
+        },
+        {
+          "component": "ForceSimulation",
+          "lineNumber": 34,
+          "line": "<ForceSimulation"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 47,
+          "line": "<Link data={link} explicitCoords={linkPositions[i]} class=\"stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 51,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 66,
+          "line": "<Tooltip.Root>"
+        }
+      ]
     }
   ],
   "usage": [
@@ -103,5 +356,5 @@
       "line": "<ForceSimulation"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.311Z"
+  "updatedAt": "2025-11-12T16:58:09.803Z"
 }
