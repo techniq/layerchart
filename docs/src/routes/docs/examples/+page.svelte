@@ -110,11 +110,16 @@
 
 <H1>Examples</H1>
 <p class="text-sm text-surface-content/50 mb-10">
-	<!-- Browse {totalVisibleExamples} examples across {visibleExamples.length} components -->
 	Browse {@render scrollingValue(totalVisibleExamples)} examples across {@render scrollingValue(
 		visibleExamples.length
 	)} components
 </p>
+
+<div class="sticky top-29 h-0">
+	<div
+		class="relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline"
+	></div>
+</div>
 
 <div
 	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200 z-1"
@@ -150,7 +155,7 @@
 <div class="grid gap-10">
 	{#each visibleExamples as { component, examples } (component)}
 		<div>
-			<H2 id={component} class="sticky top-29 bg-surface-200 pt-2 pb-1">{component}</H2>
+			<H2 id={component} class="sticky top-29 pt-2 pb-1">{component}</H2>
 			<div
 				style:--column-count="repeat({columnCount}, 1fr)"
 				class="grid grid-cols-(--column-count) gap-4"
