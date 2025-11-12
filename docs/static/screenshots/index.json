@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-11-12T17:29:16.336Z",
-  "totalComponents": 56,
-  "totalExamples": 692,
+  "generatedAt": "2025-11-12T18:01:02.391Z",
+  "totalComponents": 57,
+  "totalExamples": 693,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2085,6 +2085,16 @@
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
           "checksum": "40218b7291ac594cfd447ac6d4873144"
+        }
+      ]
+    },
+    {
+      "component": "Graticule",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Graticule/basic",
+          "checksum": "fc8f1594dc2620fb4dfb75934a06acfd"
         }
       ]
     },

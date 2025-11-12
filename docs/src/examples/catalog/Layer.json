@@ -1704,6 +1704,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "Graticule",
+      "path": "/example/Graticule/basic",
+      "lineNumber": 79,
+      "line": "<Layer>"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/example/Grid/band-scale-between",
@@ -2992,5 +2999,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-12T17:29:18.076Z"
+  "updatedAt": "2025-11-12T18:01:04.471Z"
 }

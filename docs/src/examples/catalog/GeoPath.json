@@ -1013,6 +1013,13 @@
       "line": "<GeoPath"
     },
     {
+      "example": "basic",
+      "component": "Graticule",
+      "path": "/example/Graticule/basic",
+      "lineNumber": 80,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content\" />"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/example/Hull/geo",
@@ -1020,5 +1027,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.943Z"
+  "updatedAt": "2025-11-12T18:01:04.064Z"
 }

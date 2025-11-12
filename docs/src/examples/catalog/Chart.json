@@ -1721,6 +1721,13 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Graticule",
+      "path": "/example/Graticule/basic",
+      "lineNumber": 69,
+      "line": "<Chart"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/example/Grid/band-scale-between",
@@ -3002,5 +3009,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-12T17:29:17.347Z"
+  "updatedAt": "2025-11-12T18:01:03.481Z"
 }

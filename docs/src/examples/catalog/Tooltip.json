@@ -4213,6 +4213,13 @@
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
+      "example": "basic",
+      "component": "Graticule",
+      "path": "/example/Graticule/basic",
+      "lineNumber": 88,
+      "line": "<Tooltip.Root>"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
@@ -5746,5 +5753,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.980Z"
+  "updatedAt": "2025-11-12T18:01:05.478Z"
 }
