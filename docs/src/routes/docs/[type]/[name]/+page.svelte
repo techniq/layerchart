@@ -223,7 +223,7 @@
 
 	{#if api.extends?.length}
 		<div class="mt-4">
-			also availalble:
+			also available:
 			<div class="inline-flex gap-2">
 				{#each api.extends as extended}
 					<span class="text-sm bg-surface-content/10 px-1 py-0.5 rounded border"
