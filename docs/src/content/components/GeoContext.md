@@ -2,7 +2,7 @@
 description: Geographic component which provides geographic projection and scaling context to children for accurate rendering of geographic data.
 section: geo
 layers: [svg, canvas]
-related: ['components/Chart']
+related: [Chart]
 ---
 
 <script lang="ts">

@@ -2,7 +2,7 @@
 description: Commonly used component acting as a visual guideline on a chart that helps align and measure data values along an axis.
 section: common
 layers: [svg, canvas, html]
-related: [components/Axis, components/Line, components/AnnotationLine]
+related: [Axis, Line, AnnotationLine]
 ---
 
 <script lang="ts">

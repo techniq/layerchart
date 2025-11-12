@@ -2,7 +2,7 @@
 description: Annotation component drawing a straight marker across the chart to indicate a specific value, trend, or threshold.
 section: annotations
 layers: [svg, canvas, html]
-related: ['components/AnnotationPoint', 'components/AnnotationRange']
+related: [AnnotationPoint, AnnotationRange]
 ---
 
 <script lang="ts">

@@ -2,7 +2,7 @@
 description: Marking component which highlights or connects specific data points on a chart to emphasize relationships or sequences.
 section: marks
 layers: [svg, canvas]
-related: ['components/Connector', 'components/Points']
+related: [Connector, Points]
 ---
 
 <script lang="ts">

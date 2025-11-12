@@ -10,6 +10,7 @@
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
+	import LucideLink from '~icons/lucide/link';
 	import Code from '$lib/components/Code.svelte';
 
 	let { data } = $props();
@@ -152,6 +153,17 @@
 	{/if}
 {/if}
 
+{#if metadata.related.length}
+	<H2>Related</H2>
+	<div class="flex flex-wrap gap-2 mt-1">
+		{#each metadata.related as related}
+			<Button icon={LucideLink} variant="fill-light" href="/docs/components/{related}" size="sm">
+				{related}
+			</Button>
+		{/each}
+	</div>
+{/if}
+
 {#if api?.properties.length}
 	<H2>API Reference</H2>
 
@@ -219,17 +231,6 @@
 					>
 				{/each}
 			</div>
-		</div>
-	{/if}
-
-	{#if metadata.related.length}
-		<H2>Related</H2>
-		<div class="flex flex-wrap gap-2 mt-1">
-			{#each metadata.related as related}
-				<Button variant="fill-light" href="/{related}" size="sm">
-					{related}
-				</Button>
-			{/each}
 		</div>
 	{/if}
 {/if}

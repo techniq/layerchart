@@ -2,7 +2,7 @@
 description: Primitive component which draws a curved segment on a chart to represent portions of a whole or highlight specific data ranges.
 section: primitives
 layers: [svg, canvas]
-related: [components/Pie, components/ArcChart, components/PieChart]
+related: [Pie, ArcChart, PieChart]
 ---
 
 <script lang="ts">

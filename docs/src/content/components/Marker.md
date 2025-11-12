@@ -2,7 +2,7 @@
 description: Primitive component which draws visual symbols like circles, squares, or custom shapes at individual data points.
 section: primitives
 layers: [svg]
-related: ['components/Spline', 'components/Line', 'components/Rule', 'components/GeoSpline']
+related: [Spline, Line, Rule, GeoSpline]
 ---
 
 <script lang="ts">

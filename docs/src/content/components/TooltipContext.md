@@ -2,7 +2,7 @@
 description: Interaction component manages and provides the data and behavior needed to display dynamic tooltips within a chart.
 section: interactions
 layers: [svg, canvas]
-related: ['components/Chart', 'components/Tooltip', 'components/Highlight']
+related: [Chart, Tooltip, Highlight]
 ---
 
 <script lang="ts">

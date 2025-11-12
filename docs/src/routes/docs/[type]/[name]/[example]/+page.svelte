@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { Button } from 'svelte-ux';
+
 	import Example from '$lib/components/Example.svelte';
 	import { page } from '$app/state';
 	import H2 from '$lib/markdown/components/h2.svelte';
-	import { Button } from 'svelte-ux';
+
+	import LucideLink from '~icons/lucide/link';
 
 	let { data } = $props();
 
@@ -17,7 +20,12 @@
 <H2>Component Docs</H2>
 <div class="flex flex-wrap gap-2 mt-1">
 	{#each exampleInfo?.components as componentUsage}
-		<Button variant="fill-light" href="/docs/components/{componentUsage.component}" size="sm">
+		<Button
+			icon={LucideLink}
+			variant="fill-light"
+			href="/docs/components/{componentUsage.component}"
+			size="sm"
+		>
 			{componentUsage.component}
 		</Button>
 	{/each}

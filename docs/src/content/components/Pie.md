@@ -2,7 +2,7 @@
 description: Marking component which represents data as proportional slices of a circle, showing the relative contribution of each category to the whole.
 section: marks
 layers: [svg, canvas]
-related: [components/Arc, components/PieChart]
+related: [Arc, PieChart]
 ---
 
 <script lang="ts">

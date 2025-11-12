@@ -2,7 +2,7 @@
 description: Commonly used component representing a rectangular Chart bounding box and respecting padding or full size.
 section: common
 layers: [svg, canvas, html]
-related: [components/Rect]
+related: [Rect]
 ---
 
 <script lang="ts">
