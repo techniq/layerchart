@@ -1,8 +1,8 @@
 ---
-description: <circle> element with tweened properties using motionStore
+description: Primitive component which draws a circular shape to mark specific points or emphasize data visually.
 section: primitives
-layers: ['svg', 'canvas', 'html']
-related: ['components/Points', 'examples/Pack', 'examples/PunchCard']
+layers: [svg, canvas, html]
+related: [Points]
 ---
 
 <script lang="ts">

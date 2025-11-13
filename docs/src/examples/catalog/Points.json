@@ -1,0 +1,281 @@
+{
+  "component": "Points",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Points/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 14,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-scale",
+      "path": "/example/Points/color-via-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 27,
+          "line": "<Points class=\"stroke-surface-content/50\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-labels",
+      "path": "/example/Points/with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 14,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 15,
+          "line": "<Labels format=\"integer\" offset={10} />"
+        }
+      ]
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 23,
+          "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 24,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 27,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "playground",
+      "component": "Area",
+      "path": "/example/Area/playground",
+      "lineNumber": 45,
+      "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
+    },
+    {
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 45,
+      "line": "<Points />"
+    },
+    {
+      "example": "duration-points-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points-color",
+      "lineNumber": 52,
+      "line": "<Points />"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 39,
+      "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 62,
+      "line": "<Points>"
+    },
+    {
+      "example": "selection",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/selection",
+      "lineNumber": 35,
+      "line": "<Points>"
+    },
+    {
+      "example": "text",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/text",
+      "lineNumber": 102,
+      "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
+    },
+    {
+      "example": "scatter",
+      "component": "Hull",
+      "path": "/example/Hull/scatter",
+      "lineNumber": 39,
+      "line": "<Points r={3} {data} fill={color} />"
+    },
+    {
+      "example": "basic",
+      "component": "Points",
+      "path": "/example/Points/basic",
+      "lineNumber": 14,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "color-via-scale",
+      "component": "Points",
+      "path": "/example/Points/color-via-scale",
+      "lineNumber": 27,
+      "line": "<Points class=\"stroke-surface-content/50\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Points",
+      "path": "/example/Points/with-labels",
+      "lineNumber": 14,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 23,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 25,
+      "line": "<Points class=\"fill-secondary\" />"
+    },
+    {
+      "example": "custom",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/custom",
+      "lineNumber": 15,
+      "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Spline",
+      "path": "/example/Spline/playground",
+      "lineNumber": 45,
+      "line": "<Points"
+    },
+    {
+      "example": "radial-radar",
+      "component": "Spline",
+      "path": "/example/Spline/radial-radar",
+      "lineNumber": 38,
+      "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 44,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 43,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "scatter-plot",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/scatter-plot",
+      "lineNumber": 37,
+      "line": "<Points class=\"fill-primary stroke-primary\" />"
+    },
+    {
+      "example": "single-date-time",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time",
+      "lineNumber": 40,
+      "line": "<Points class=\"fill-primary\" />"
+    },
+    {
+      "example": "playground",
+      "component": "TransformContext",
+      "path": "/example/TransformContext/playground",
+      "lineNumber": 52,
+      "line": "<Points>"
+    },
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/example/Voronoi/radius",
+      "lineNumber": 27,
+      "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
+    }
+  ],
+  "updatedAt": "2025-11-12T17:29:18.510Z"
+}

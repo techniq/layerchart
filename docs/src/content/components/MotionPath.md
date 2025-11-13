@@ -1,8 +1,8 @@
 ---
-description: Animate an object along a path
+description: Component animates an object along a specified path using configurable motion parameters such as speed, duration, and easing.
 section: other
-layers: ['svg']
-related: ['components/Spline']
+layers: [svg]
+related: [Spline]
 ---
 
 <script lang="ts">

@@ -1,8 +1,8 @@
 ---
-description: Areas between two values (`y={["value", "baseline"]}`) depending on which is greater (ex. green/red)
+description: Marking component visualizing data relative to predefined limits, highlighting values that exceed or fall below set thresholds.
 section: marks
-layers: ['svg']
-related: ['components/Threshold', 'components/AreaChart']
+layers: [svg]
+related: [Threshold, AreaChart]
 ---
 
 <script lang="ts">

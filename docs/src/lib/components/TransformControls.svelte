@@ -45,6 +45,8 @@
 
 	import { getChartContext, type Without } from 'layerchart';
 
+	// <TransformControls placement="top-right" orientation="vertical" size="md" show={['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode']} />
+
 	let {
 		placement = 'top-right',
 		orientation = 'vertical',
@@ -83,7 +85,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class={['lc-transform-controls', className]}
+	class={['lc-transform-controls screenshot-hidden', className]}
 	data-orientation={orientation}
 	data-placement={placement}
 	ondblclick={(e) => {

@@ -29,7 +29,6 @@
 			}
 		};
 	})}
-	height={400}
 	legend
 	props={{
 		xAxis: { motion: { type: 'tween', duration: 200 } },
@@ -37,4 +36,6 @@
 		grid: { motion: { type: 'tween', duration: 200 } },
 		points: { motion: { type: 'tween', duration: 200 } }
 	}}
+	padding={{ left: 10, top: 10, right: 10, bottom: 48 }}
+	height={400}
 />

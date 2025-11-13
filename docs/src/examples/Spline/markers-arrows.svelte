@@ -1,23 +1,24 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
-	import { Field, RangeField, Switch } from 'svelte-ux';
+	import SplineControls from '$lib/components/SplineControls.svelte';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
 
-	let show = $state(true);
-	let pointCount = $state(100);
-	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
-	let amplitude = $state(1);
-	let frequency = $state(10);
-	let phase = $state(0);
-	let pathGenerator = $state((x: number) => x);
+	let config = $state({
+		show: true,
+		pointCount: 100,
+		amplitude: 1,
+		frequency: 10,
+		phase: 0,
+		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
+		pathGenerator: (x: number) => x
+	});
 
 	const data = $derived(
-		Array.from({ length: pointCount }).map((_, i) => {
+		Array.from({ length: config.pointCount }).map((_, i) => {
 			return {
 				x: i + 1,
-				y: pathGenerator(i / pointCount) ?? i
+				y: config.pathGenerator(i / config.pointCount) ?? i
 			};
 		})
 	);
@@ -25,21 +26,14 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-6">
-	<Field label="Show" let:id>
-		<Switch checked={show} on:change={() => (show = !show)} {id} size="md" />
-	</Field>
-	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-	<CurveMenuField bind:value={curve} />
-	<RangeField label="Points" bind:value={pointCount} min={2} />
-</div>
-<Chart {data} x="x" y="y" yNice padding={{ left: 36, bottom: 24 }} height={300}>
+<SplineControls bind:config />
+<Chart {data} x="x" y="y" yNice padding={25} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		{#if show}
+		{#if config.show}
 			<Spline
-				{curve}
+				curve={config.curve}
 				class="stroke-primary stroke-2"
 				markerStart="circle"
 				markerEnd={{ type: 'arrow', class: 'stroke-2' }}

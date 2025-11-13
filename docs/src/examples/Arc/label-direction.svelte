@@ -4,53 +4,52 @@
 	let value = $state(60);
 	let domain = $state<[number, number]>([0, 100]);
 	let cornerRadius = $state(8);
-
-	let spring = $state(true);
-
-	let outerText = $state('outer text');
-	let innerText = $state('inner text');
-	let centroidText = $state('centroid text');
+	let outerText = $state('Outer Text');
+	let innerText = $state('Inner Text');
+	let centroidText = $state('Centroid Text');
 
 	const labelExamples: Array<{ label: string; range: [number, number] }> = [
 		{
-			label: 'top cw',
+			label: 'Top CW',
 			range: [-90, 90]
 		},
 		{
-			label: 'top ccw',
+			label: 'Top CCW',
 			range: [90, -90]
 		},
 		{
-			label: 'bottom cw',
+			label: 'Bottom CW',
 			range: [-270, -90]
 		},
 		{
-			label: 'bottom ccw',
+			label: 'Bottom CCW',
 			range: [-90, -270]
 		},
 
 		{
-			label: 'left cw',
+			label: 'Left CW',
 			range: [-180, 0]
 		},
 		{
-			label: 'left ccw',
+			label: 'Left CCW',
 			range: [0, -180]
 		},
 		{
-			label: 'right cw',
+			label: 'Right CW',
 			range: [0, 180]
 		},
 		{
-			label: 'right ccw',
+			label: 'Right CCW',
 			range: [180, 0]
 		}
 	];
+
+	export const data = { value, labelExamples };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-4 gap-2 mb-2">
 	{#each labelExamples as example}
-		<div class="p-4 border rounded-sm">
+		<div class="px-4 py-1 border rounded-sm">
 			<Chart height={300}>
 				<Layer center>
 					<LinearGradient class="from-secondary to-primary" vertical>
@@ -73,7 +72,7 @@
 										dy={-8}
 									/>
 									<Text
-										value={example.range.join(',')}
+										value={example.range.map((r) => r + '°').join(', ')}
 										textAnchor="middle"
 										verticalAnchor="middle"
 										class="text-xs"
@@ -87,6 +86,7 @@
 										{...getArcTextProps('middle')}
 										value={centroidText}
 										font-size="12px"
+										class="fill-black"
 										truncate
 									/>
 								{/snippet}

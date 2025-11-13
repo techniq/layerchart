@@ -1,7 +1,7 @@
 ---
-description: BrushContext
+description: Interaction component providing an interactive brush context allowing selection, adjustment, and resetting of x/y domains with draggable handles and event callbacks.
 section: interactions
-layers: ['svg', 'canvas']
+layers: [svg, canvas]
 related: []
 ---
 
@@ -53,7 +53,7 @@ related: []
 
 ### Separate chart (clip data: y-axis)
 
-<Example name="separate-chart-(clip-data:-y-axis)" />
+<Example name="separate-chart-(clip-data-y-axis)" />
 
 ### Separate chart (filter data)
 
@@ -61,7 +61,7 @@ related: []
 
 ### Sync brushes with `bind:xDomain`
 
-<Example name="sync-brushes-with-bind:xdomain" />
+<Example name="sync-brushes-with-bind-xdomain" />
 
 ### Tooltip interop
 

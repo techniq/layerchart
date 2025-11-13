@@ -1,0 +1,643 @@
+{
+  "component": "Text",
+  "examples": [
+    {
+      "name": "playground",
+      "path": "/example/Text/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 44,
+          "line": "<Chart height={224}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer {type}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 46,
+          "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 48,
+          "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
+        }
+      ]
+    },
+    {
+      "name": "word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-n",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 8,
+          "line": "<Chart height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 9,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 10,
+          "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "draggable-arc",
+      "component": "Arc",
+      "path": "/example/Arc/draggable-arc",
+      "lineNumber": 66,
+      "line": "<Text"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 67,
+      "line": "<Text"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 74,
+      "line": "<Text"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 83,
+      "line": "<Text {...getArcTextProps('inner')} value={innerText} font-size=\"12px\" truncate />"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 84,
+      "line": "<Text {...getArcTextProps('outer')} value={outerText} font-size=\"12px\" truncate />"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 85,
+      "line": "<Text"
+    },
+    {
+      "example": "partial-arc",
+      "component": "Arc",
+      "path": "/example/Arc/partial-arc",
+      "lineNumber": 27,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 42,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 50,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 56,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 62,
+      "line": "<Text"
+    },
+    {
+      "example": "segmented-arc",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc",
+      "lineNumber": 33,
+      "line": "<Text"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 38,
+      "line": "<Text"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 21,
+      "line": "<Text"
+    },
+    {
+      "example": "series-labels",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-labels",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "explicit-axis-ticks-min-max",
+      "component": "Area",
+      "path": "/example/Area/explicit-axis-ticks-min-max",
+      "lineNumber": 16,
+      "line": "<Text {...props} textAnchor={index ? 'end' : 'start'} />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 62,
+      "line": "<Text"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 65,
+      "line": "<Text"
+    },
+    {
+      "example": "funnel",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/funnel",
+      "lineNumber": 82,
+      "line": "<Text"
+    },
+    {
+      "example": "extent-ticks-only",
+      "component": "Axis",
+      "path": "/example/Axis/extent-ticks-only",
+      "lineNumber": 23,
+      "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
+    },
+    {
+      "example": "custom-chart",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-chart",
+      "lineNumber": 20,
+      "line": "<text x=\"50\" y=\"50\" class=\"text-sm fill-surface-content\">Custom Chart Implementation</text>"
+    },
+    {
+      "example": "group-series-labels",
+      "component": "BarChart",
+      "path": "/example/BarChart/group-series-labels",
+      "lineNumber": 44,
+      "line": "<Text"
+    },
+    {
+      "example": "single-stack-with-indicator",
+      "component": "BarChart",
+      "path": "/example/BarChart/single-stack-with-indicator",
+      "lineNumber": 68,
+      "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
+    },
+    {
+      "example": "horizontal-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-average-annotation-rule",
+      "lineNumber": 35,
+      "line": "<Text"
+    },
+    {
+      "example": "vertical-average-annotation-rule",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-average-annotation-rule",
+      "lineNumber": 33,
+      "line": "<Text"
+    },
+    {
+      "example": "constant-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/constant-labels",
+      "lineNumber": 16,
+      "line": "<Text"
+    },
+    {
+      "example": "constant-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/constant-labels",
+      "lineNumber": 24,
+      "line": "<Text"
+    },
+    {
+      "example": "handle-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/handle-labels",
+      "lineNumber": 16,
+      "line": "<Text"
+    },
+    {
+      "example": "handle-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/handle-labels",
+      "lineNumber": 24,
+      "line": "<Text"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Calendar",
+      "path": "/example/Calendar/multiple-years",
+      "lineNumber": 41,
+      "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Dagre",
+      "path": "/example/Dagre/basic",
+      "lineNumber": 82,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Dagre",
+      "path": "/example/Dagre/playground",
+      "lineNumber": 100,
+      "line": "<Text"
+    },
+    {
+      "example": "software-user-flow",
+      "component": "Dagre",
+      "path": "/example/Dagre/software-user-flow",
+      "lineNumber": 72,
+      "line": "<Text"
+    },
+    {
+      "example": "software-user-flow",
+      "component": "Dagre",
+      "path": "/example/Dagre/software-user-flow",
+      "lineNumber": 98,
+      "line": "<Text"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Dagre",
+      "path": "/example/Dagre/tcp-state-diagram",
+      "lineNumber": 71,
+      "line": "<Text"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Dagre",
+      "path": "/example/Dagre/tcp-state-diagram",
+      "lineNumber": 97,
+      "line": "<Text"
+    },
+    {
+      "example": "us-country-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-country-map",
+      "lineNumber": 38,
+      "line": "<!-- <Text"
+    },
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/icons",
+      "lineNumber": 55,
+      "line": "<Text"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 39,
+      "line": "<Text"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 50,
+      "line": "<Text"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 76,
+      "line": "<Text"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 91,
+      "line": "<Text"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Group",
+      "path": "/example/Group/basic-usage",
+      "lineNumber": 14,
+      "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 48,
+      "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/example/Pack/basic",
+      "lineNumber": 140,
+      "line": "<Text"
+    },
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/example/Partition/filterable",
+      "lineNumber": 149,
+      "line": "<text"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/example/Partition/horizontal",
+      "lineNumber": 119,
+      "line": "<text"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 120,
+      "line": "<Text"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 130,
+      "line": "<Text"
+    },
+    {
+      "example": "labels",
+      "component": "Pie",
+      "path": "/example/Pie/labels",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-centroid",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-centroid-multiple",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "lineNumber": 35,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-centroid-multiple",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "lineNumber": 41,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-outer",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-outer-radial",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-radial",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "labels-outer-with-padding",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-with-padding",
+      "lineNumber": 31,
+      "line": "<Text"
+    },
+    {
+      "example": "tooltip-with-arcs-slot",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "lineNumber": 56,
+      "line": "<Text"
+    },
+    {
+      "example": "donut-with-text",
+      "component": "PieChart",
+      "path": "/example/PieChart/donut-with-text",
+      "lineNumber": 21,
+      "line": "<Text"
+    },
+    {
+      "example": "donut-with-text",
+      "component": "PieChart",
+      "path": "/example/PieChart/donut-with-text",
+      "lineNumber": 28,
+      "line": "<Text"
+    },
+    {
+      "example": "segments",
+      "component": "PieChart",
+      "path": "/example/PieChart/segments",
+      "lineNumber": 37,
+      "line": "<Text"
+    },
+    {
+      "example": "complex",
+      "component": "Sankey",
+      "path": "/example/Sankey/complex",
+      "lineNumber": 107,
+      "line": "<Text"
+    },
+    {
+      "example": "hierarchy",
+      "component": "Sankey",
+      "path": "/example/Sankey/hierarchy",
+      "lineNumber": 114,
+      "line": "<Text"
+    },
+    {
+      "example": "node-select",
+      "component": "Sankey",
+      "path": "/example/Sankey/node-select",
+      "lineNumber": 49,
+      "line": "<Text"
+    },
+    {
+      "example": "simple",
+      "component": "Sankey",
+      "path": "/example/Sankey/simple",
+      "lineNumber": 20,
+      "line": "<Text"
+    },
+    {
+      "example": "tooltip",
+      "component": "Sankey",
+      "path": "/example/Sankey/tooltip",
+      "lineNumber": 38,
+      "line": "<Text"
+    },
+    {
+      "example": "end-slot-with-draw-with-value",
+      "component": "Spline",
+      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "lineNumber": 39,
+      "line": "<Text"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/label-using-start-end-snippets",
+      "lineNumber": 39,
+      "line": "<Text value=\"start\" textAnchor=\"start\" verticalAnchor=\"middle\" dx={8} />"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/label-using-start-end-snippets",
+      "lineNumber": 44,
+      "line": "<Text value=\"end\" verticalAnchor=\"middle\" dx={8} />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 58,
+      "line": "<Text"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 61,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Text",
+      "path": "/example/Text/playground",
+      "lineNumber": 46,
+      "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
+    },
+    {
+      "example": "word-wrap-with-explicit-n",
+      "component": "Text",
+      "path": "/example/Text/word-wrap-with-explicit-n",
+      "lineNumber": 10,
+      "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/example/Tree/basic",
+      "lineNumber": 108,
+      "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Treemap",
+      "path": "/example/Treemap/basic",
+      "lineNumber": 48,
+      "line": "<Text"
+    },
+    {
+      "example": "complex",
+      "component": "Treemap",
+      "path": "/example/Treemap/complex",
+      "lineNumber": 146,
+      "line": "<text"
+    },
+    {
+      "example": "complex",
+      "component": "Treemap",
+      "path": "/example/Treemap/complex",
+      "lineNumber": 163,
+      "line": "<Text"
+    },
+    {
+      "example": "nested-filter",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-filter",
+      "lineNumber": 160,
+      "line": "<text"
+    },
+    {
+      "example": "nested-filter",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-filter",
+      "lineNumber": 176,
+      "line": "<!-- <Text"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 126,
+      "line": "<text"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 142,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 154,
+      "line": "<text"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 171,
+      "line": "<Text"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 112,
+      "line": "<Text"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 122,
+      "line": "<Text"
+    }
+  ],
+  "updatedAt": "2025-11-12T18:44:22.850Z"
+}

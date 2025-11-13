@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import { type ComponentProps, type Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
   import type { TimeInterval } from 'd3-time';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
@@ -10,6 +11,7 @@
     BaseRange,
     Nice,
     PaddingArray,
+    Without,
     XRangeWithScale,
     YRangeWithScale,
   } from '$lib/utils/types.js';
@@ -575,6 +577,13 @@
     /** Sets height of the chart container.  Uses parent height if not set (bind:clientHeight) */
     height?: number;
   };
+
+  export type ChartProps<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  > = ChartPropsWithoutHTML<T, XScale, YScale> &
+    Without<HTMLAttributes<HTMLDivElement>, ChartPropsWithoutHTML<T, XScale, YScale>>;
 </script>
 
 <script
@@ -585,7 +594,8 @@
     ref: refProp = $bindable(),
     context: contextProp = $bindable(),
     ...props
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
+  }: ChartPropsWithoutHTML<TData, XScale, YScale> &
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
 
   let {
     ssr = false,
@@ -601,6 +611,7 @@
     ondragend,
     ondragstart,
     brush,
+    class: className,
   } = $derived(props);
 
   const chartState = new ChartState<TData, XScale, YScale>(() => ({
@@ -666,7 +677,7 @@
     style:height={height ? `${height}px` : '100%'}
     bind:clientWidth={chartState._containerWidth}
     bind:clientHeight={chartState._containerHeight}
-    class="lc-root-container"
+    class={['lc-root-container', className]}
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->

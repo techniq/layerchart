@@ -1,0 +1,91 @@
+{
+  "component": "Link",
+  "examples": [],
+  "usage": [
+    {
+      "example": "disjoint-graph",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/disjoint-graph",
+      "lineNumber": 66,
+      "line": "<Link"
+    },
+    {
+      "example": "graph-drag",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-drag",
+      "lineNumber": 80,
+      "line": "<Link"
+    },
+    {
+      "example": "graph-playground",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-playground",
+      "lineNumber": 168,
+      "line": "<Link"
+    },
+    {
+      "example": "lattice",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/lattice",
+      "lineNumber": 37,
+      "line": "<Link"
+    },
+    {
+      "example": "tree",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/tree",
+      "lineNumber": 47,
+      "line": "<Link data={link} explicitCoords={linkPositions[i]} class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "complex",
+      "component": "Sankey",
+      "path": "/example/Sankey/complex",
+      "lineNumber": 60,
+      "line": "<Link"
+    },
+    {
+      "example": "hierarchy",
+      "component": "Sankey",
+      "path": "/example/Sankey/hierarchy",
+      "lineNumber": 75,
+      "line": "<Link"
+    },
+    {
+      "example": "node-select",
+      "component": "Sankey",
+      "path": "/example/Sankey/node-select",
+      "lineNumber": 17,
+      "line": "<Link"
+    },
+    {
+      "example": "simple",
+      "component": "Sankey",
+      "path": "/example/Sankey/simple",
+      "lineNumber": 13,
+      "line": "<Link sankey data={link} strokeWidth={link.width} class=\"stroke-surface-content/10\" />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Sankey",
+      "path": "/example/Sankey/tooltip",
+      "lineNumber": 17,
+      "line": "<Link"
+    },
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/example/Tree/basic",
+      "lineNumber": 65,
+      "line": "<Link"
+    },
+    {
+      "example": "html-nodes",
+      "component": "Tree",
+      "path": "/example/Tree/html-nodes",
+      "lineNumber": 65,
+      "line": "<Link"
+    }
+  ],
+  "updatedAt": "2025-11-10T21:19:03.806Z"
+}

@@ -6,15 +6,15 @@
 	const today = startOfInterval('day', new Date());
 </script>
 
-<Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }} height={48}>
+<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>
 	<Layer>
 		<Axis
 			placement="bottom"
 			rule
 			classes={{
-				rule: 'stroke-danger',
-				tick: 'stroke-danger/50',
-				tickLabel: 'fill-danger font-semibold'
+				rule: 'stroke-primary',
+				tick: 'stroke-primary/50',
+				tickLabel: 'fill-primary font-semibold'
 			}}
 		/>
 	</Layer>

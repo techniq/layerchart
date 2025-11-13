@@ -1,8 +1,8 @@
 ---
-description: Streamlined Chart configuration for Arc charts
+description: Streamlined visualization which draws curved segment of a chart to represent portions of a circle, such as in pie or radial charts.
 section: charts
 layers: [svg, canvas]
-related: [components/Chart, components/Pie, examples/Arc]
+related: [Chart, Pie]
 ---
 
 <script lang="ts">

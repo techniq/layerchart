@@ -1,0 +1,637 @@
+{
+  "component": "Highlight",
+  "examples": [],
+  "usage": [
+    {
+      "example": "clipped-area-on-tooltip",
+      "component": "Area",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "lineNumber": 46,
+      "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 44,
+      "line": "<Highlight lines points />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 33,
+      "line": "<Highlight"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 75,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 79,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 62,
+      "line": "<Highlight y={(d) => d.apples} points={{ fill: fruitColors.apples }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 63,
+      "line": "<Highlight y={(d) => d.bananas} points={{ fill: fruitColors.bananas }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 64,
+      "line": "<Highlight y={(d) => d.oranges} points={{ fill: fruitColors.oranges }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 65,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-with-labels",
+      "lineNumber": 50,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "stack",
+      "component": "Area",
+      "path": "/example/Area/stack",
+      "lineNumber": 63,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Area",
+      "path": "/example/Area/with-tooltip-and-highlight",
+      "lineNumber": 25,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "custom",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/custom",
+      "lineNumber": 16,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "series-individual-tooltip",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-individual-tooltip",
+      "lineNumber": 58,
+      "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
+    },
+    {
+      "example": "threshold-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold-gradient",
+      "lineNumber": 41,
+      "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
+    },
+    {
+      "example": "highlight-below-marks",
+      "component": "BarChart",
+      "path": "/example/BarChart/highlight-below-marks",
+      "lineNumber": 18,
+      "line": "<Highlight area={{ class: 'fill-surface-content/10' }} />"
+    },
+    {
+      "example": "horizontal-candlestick-bars",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-candlestick-bars",
+      "lineNumber": 30,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-click-handler",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-click-handler",
+      "lineNumber": 37,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-grouped",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-grouped",
+      "lineNumber": 41,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-grouped-and-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-grouped-and-stacked",
+      "lineNumber": 46,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
+      "lineNumber": 99,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
+      "lineNumber": 30,
+      "line": "<Highlight"
+    },
+    {
+      "example": "horizontal-highlight-individual-bar-line",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
+      "lineNumber": 31,
+      "line": "<Highlight"
+    },
+    {
+      "example": "horizontal-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-multiple-diverging",
+      "lineNumber": 34,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-multiple-overlapping",
+      "lineNumber": 33,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-stacked",
+      "lineNumber": 38,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-stacked-percent",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-stacked-percent",
+      "lineNumber": 43,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "horizontal-tooltip-and-bar-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
+      "lineNumber": 33,
+      "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
+    },
+    {
+      "example": "horizontal-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "lineNumber": 33,
+      "line": "<Highlight>"
+    },
+    {
+      "example": "horizontal-tooltip-and-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-tooltip-and-highlight",
+      "lineNumber": 32,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-click-handler",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-click-handler",
+      "lineNumber": 34,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-grouped",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped",
+      "lineNumber": 41,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-grouped-and-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-and-stacked",
+      "lineNumber": 46,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+      "lineNumber": 104,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "lineNumber": 32,
+      "line": "<Highlight"
+    },
+    {
+      "example": "vertical-highlight-individual-bar-line",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar-line",
+      "lineNumber": 24,
+      "line": "<Highlight"
+    },
+    {
+      "example": "vertical-multiple-diverging",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging",
+      "lineNumber": 32,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-multiple-diverging-rounded-specific",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "lineNumber": 34,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-multiple-overlapping",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-multiple-overlapping",
+      "lineNumber": 31,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked",
+      "lineNumber": 38,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-stacked-percent",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stacked-percent",
+      "lineNumber": 42,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "vertical-tooltip-and-bar-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+      "lineNumber": 30,
+      "line": "<Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />"
+    },
+    {
+      "example": "vertical-tooltip-and-clipped-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "lineNumber": 32,
+      "line": "<Highlight>"
+    },
+    {
+      "example": "vertical-tooltip-and-highlight",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-highlight",
+      "lineNumber": 30,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "tooltip-interop",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/tooltip-interop",
+      "lineNumber": 49,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 45,
+      "line": "<Highlight lines points />"
+    },
+    {
+      "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "lineNumber": 46,
+      "line": "<Highlight points={{ class: 'fill-secondary' }} y={(d) => context.y1Scale?.(d.efficiency)} />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 31,
+      "line": "<Highlight lines points />"
+    },
+    {
+      "example": "compound-dual-axis-with-stacked-charts",
+      "component": "Chart",
+      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "lineNumber": 53,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "custom",
+      "component": "LineChart",
+      "path": "/example/LineChart/custom",
+      "lineNumber": 16,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "gradient-encoding",
+      "component": "LineChart",
+      "path": "/example/LineChart/gradient-encoding",
+      "lineNumber": 28,
+      "line": "<Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />"
+    },
+    {
+      "example": "gradient-threshold",
+      "component": "LineChart",
+      "path": "/example/LineChart/gradient-threshold",
+      "lineNumber": 30,
+      "line": "<Highlight"
+    },
+    {
+      "example": "series-individual-tooltip",
+      "component": "LineChart",
+      "path": "/example/LineChart/series-individual-tooltip",
+      "lineNumber": 47,
+      "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Points",
+      "path": "/example/Points/with-tooltip-and-highlight",
+      "lineNumber": 24,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "candlestick",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick",
+      "lineNumber": 29,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-open-close-line-color",
+      "lineNumber": 29,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "candlestick-with-brushing",
+      "component": "Rule",
+      "path": "/example/Rule/candlestick-with-brushing",
+      "lineNumber": 37,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "lollipop",
+      "component": "Rule",
+      "path": "/example/Rule/lollipop",
+      "lineNumber": 26,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "custom",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/custom",
+      "lineNumber": 16,
+      "line": "<Highlight points lines axis=\"both\" />"
+    },
+    {
+      "example": "punchcard",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/punchcard",
+      "lineNumber": 34,
+      "line": "<Highlight area axis=\"x\" />"
+    },
+    {
+      "example": "punchcard",
+      "component": "ScatterChart",
+      "path": "/example/ScatterChart/punchcard",
+      "lineNumber": 35,
+      "line": "<Highlight area axis=\"y\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 69,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 73,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 33,
+      "line": "<Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 34,
+      "line": "<Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-using-overrides",
+      "lineNumber": 35,
+      "line": "<Highlight lines />"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-with-labels",
+      "lineNumber": 48,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "vertical",
+      "component": "Spline",
+      "path": "/example/Spline/vertical",
+      "lineNumber": 25,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Spline",
+      "path": "/example/Spline/with-tooltip-and-highlight",
+      "lineNumber": 24,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "anchor-location",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/anchor-location",
+      "lineNumber": 39,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "area",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/area",
+      "lineNumber": 42,
+      "line": "<Highlight"
+    },
+    {
+      "example": "basic",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/basic",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "color-swatch",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/color-swatch",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "color-swatch-using-theme",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/color-swatch-using-theme",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "custom-content",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/custom-content",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "data-snapping",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/data-snapping",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "default-mouse-position-with-offset",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/default-mouse-position-with-offset",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "disable-motion",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/disable-motion",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 45,
+      "line": "<Highlight"
+    },
+    {
+      "example": "externally-access-tooltip-data",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/externally-access-tooltip-data",
+      "lineNumber": 45,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "invert-variant",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/invert-variant",
+      "lineNumber": 30,
+      "line": "<Highlight points lines />"
+    },
+    {
+      "example": "multiple-overlapping-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "lineNumber": 51,
+      "line": "<Highlight points={false} lines={false} area={true} bar={false} axis={undefined} />"
+    },
+    {
+      "example": "multiple-overlapping-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "lineNumber": 52,
+      "line": "<Highlight bar={false} />"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 44,
+      "line": "<Highlight"
+    },
+    {
+      "example": "multiple-tooltips-with-fixed-single-axis",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis",
+      "lineNumber": 32,
+      "line": "<Highlight points lines axis=\"both\" />"
+    },
+    {
+      "example": "multiple-tooltips-with-fixed-single-axis-scaleband",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
+      "lineNumber": 35,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "scatter-plot",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/scatter-plot",
+      "lineNumber": 38,
+      "line": "<Highlight"
+    },
+    {
+      "example": "simple-bars",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/simple-bars",
+      "lineNumber": 48,
+      "line": "<Highlight"
+    },
+    {
+      "example": "single-date-time",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time",
+      "lineNumber": 41,
+      "line": "<Highlight"
+    },
+    {
+      "example": "stacked-area",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/stacked-area",
+      "lineNumber": 62,
+      "line": "<Highlight"
+    }
+  ],
+  "updatedAt": "2025-11-10T21:19:03.603Z"
+}

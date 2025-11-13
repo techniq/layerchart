@@ -33,6 +33,7 @@
 		Z,0.00074`,
 		autoType
 	).sort(sortFunc('letter'));
+
 	export { data };
 </script>
 
@@ -41,12 +42,12 @@
 	x="letter"
 	y="frequency"
 	yNice
-	padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+	padding={{ top: 20, bottom: 20, left: 30, right: 20 }}
 	height={300}
 >
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" />
-		<Rule class="stroke-2 stroke-primary" />
+		<Rule class="stroke-2 stroke-primary stroke-4" />
 	</Layer>
 </Chart>

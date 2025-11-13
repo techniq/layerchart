@@ -10,7 +10,7 @@
   import LucideBraces from '~icons/lucide/braces';
   import LucideDatabase from '~icons/lucide/database';
   import LucideFilePenLine from '~icons/lucide/file-pen-line';
-  import LucideGithub from '~icons/lucide/github.svelte';
+  import LucideGithub from '~icons/lucide/github';
   import LucideLink2 from '~icons/lucide/link-2';
   import IconSettings from '~icons/lucide/settings';
   import LucideX from '~icons/lucide/x';

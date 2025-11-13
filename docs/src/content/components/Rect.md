@@ -1,17 +1,8 @@
 ---
-description: <rect> element with tweened properties using motionStore
+description: Primitive component which draws a rectangle to highlight areas, ranges, or specific regions of interest.
 section: primitives
-layers: ['svg', 'canvas', 'html']
-related:
-  [
-    'components/Bars',
-    'components/Highlight',
-    'components/RectClipPath',
-    'examples/Partition',
-    'examples/Sankey',
-    'examples/Tree',
-    'examples/Treemap'
-  ]
+layers: [svg, canvas, html]
+related: [Bars, Highlight, RectClipPath]
 ---
 
 <script lang="ts">

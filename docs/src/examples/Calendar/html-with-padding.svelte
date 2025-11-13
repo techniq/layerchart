@@ -34,7 +34,7 @@
 		'var(--color-primary-700)'
 	]}
 	padding={{ top: 20 }}
-	height={200}
+	height={140}
 >
 	{#snippet children({ context })}
 		<Layer type="html">

@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { getGreenhouseGraph } from '$lib/graph.remote';
 	import type { SankeyNode } from 'd3-sankey';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, sankeyGraphFromNode } from 'layerchart';
 
-	let { data } = $props();
-
+	const data = await getGreenhouseGraph();
 	let selectedNode: SankeyNode<any, any> | null = $state.raw(null);
 
 	export { data };

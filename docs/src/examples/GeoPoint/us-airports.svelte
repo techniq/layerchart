@@ -4,7 +4,7 @@
 	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import { Chart, GeoPath, GeoPoint, getSettings, Layer, Tooltip } from 'layerchart';
-	import { getUsStatesTopology, getUsAirports } from '$lib/data.remote';
+	import { getUsStatesTopology, getUsAirports } from '$lib/geo.remote';
 
 	const [usData, airportsData] = $derived(
 		await Promise.all([getUsStatesTopology(), getUsAirports()])

@@ -1,8 +1,8 @@
 ---
-description: Radial Gradient
+description: Fill component which provides a radial gradient fill pattern for  chart elements.
 section: fill
-layers: ['svg']
-related: ['components/LinearGradient', 'components/Pattern']
+layers: [svg]
+related: [LinearGradient, Pattern]
 ---
 
 <script lang="ts">

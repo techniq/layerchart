@@ -1,7 +1,7 @@
 ---
-description: Hull
+description: Marking component which encloses a set of data points within a convex boundary to highlight clusters or groupings on a chart.
 section: marks
-layers: ['svg', 'canvas']
+layers: [svg, canvas]
 related: []
 ---
 

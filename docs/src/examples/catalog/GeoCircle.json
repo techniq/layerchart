@@ -1,0 +1,103 @@
+{
+  "component": "GeoCircle",
+  "examples": [
+    {
+      "name": "earthquake-globe",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 68,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 86,
+          "line": "<Layer disableHitCanvas={timer.running}>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 87,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 89,
+          "line": "<Graticule class=\"stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoCircle",
+          "lineNumber": 95,
+          "line": "<GeoCircle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 105,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "path": "/example/GeoCircle/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 54,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 61,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 62,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 63,
+          "line": "<Graticule class=\"stroke-surface-content/20\" />"
+        },
+        {
+          "component": "GeoCircle",
+          "lineNumber": 73,
+          "line": "<GeoCircle"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "earthquake-globe",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/earthquake-globe",
+      "lineNumber": 95,
+      "line": "<GeoCircle"
+    },
+    {
+      "example": "playground",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/playground",
+      "lineNumber": 73,
+      "line": "<GeoCircle"
+    },
+    {
+      "example": "playground",
+      "component": "GeoCircle",
+      "path": "/example/GeoCircle/playground",
+      "lineNumber": 81,
+      "line": "<GeoCircle"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 149,
+      "line": "<GeoCircle"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.849Z"
+}

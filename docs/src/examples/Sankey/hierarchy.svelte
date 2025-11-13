@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { scaleSequential } from 'd3-scale';
-	import { hierarchy } from 'd3-hierarchy';
+	import { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 	import { interpolateCool } from 'd3-scale-chromatic';
 	import { extent } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
@@ -17,8 +17,7 @@
 		sankeyGraphFromHierarchy
 	} from 'layerchart';
 	import SankeyControls from '../../lib/components/SankeyControls.svelte';
-
-	let { data } = $props();
+	import { getFlare } from '$lib/data.remote';
 
 	const colorScale = scaleSequential(interpolateCool);
 
@@ -43,20 +42,20 @@
 				}
 	);
 
-	const complexDataHierarchy = $derived(
-		hierarchy(data.flare)
+	const data = await getFlare();
+	const hierarchy = $derived(
+		d3Hierarchy(data)
 			.sum((d) => d.value)
 			.sort(sortFunc('value', 'desc'))
 	);
 
-	const hierarchyGraph = $derived(sankeyGraphFromHierarchy(complexDataHierarchy));
-
+	const graph = $derived(sankeyGraphFromHierarchy(hierarchy));
 	export { data };
 </script>
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
-<Chart data={hierarchyGraph} padding={{ right: 100 }} flatData={[]} height={2000}>
+<Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>
 	<Layer>
 		<Sankey
 			{nodeAlign}

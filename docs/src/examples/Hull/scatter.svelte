@@ -18,10 +18,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-4">
-	<CurveMenuField bind:value={curve} showOpenClosed />
-</div>
-
+<CurveMenuField bind:value={curve} showOpenClosed />
 <Chart
 	{data}
 	x="x"
@@ -30,7 +27,7 @@
 	y="y"
 	yPadding={[10, 10]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={20}
 	height={300}
 >
 	{@const dataByGroup = group(data, (d: any) => d.group)}

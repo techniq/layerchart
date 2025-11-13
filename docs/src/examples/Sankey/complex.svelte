@@ -8,8 +8,7 @@
 	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
 	import SankeyControls from '$lib/components/SankeyControls.svelte';
-
-	let { data } = $props();
+	import { getComplexGraph } from '$lib/graph.remote';
 
 	const colorScale = scaleSequential(interpolateCool);
 
@@ -34,6 +33,7 @@
 				}
 	);
 
+	const data = await getComplexGraph();
 	export { data };
 </script>
 

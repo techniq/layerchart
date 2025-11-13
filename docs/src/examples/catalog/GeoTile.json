@@ -1,0 +1,239 @@
+{
+  "component": "GeoTile",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/GeoTile/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 48,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 51,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 61,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "clipped",
+      "path": "/example/GeoTile/clipped",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 38,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 46,
+          "line": "<Layer>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 47,
+          "line": "<ClipPath useId=\"clip\">"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 48,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 50,
+          "line": "<GeoPath geojson={selectedFeature} id=\"clip\" class=\"stroke-none\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 62,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable",
+      "path": "/example/GeoTile/zoomable",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 49,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 67,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 69,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 70,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 73,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 91,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable-seamless-layers",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 49,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 67,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 69,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 71,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 77,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 95,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "zoomable-with-padding",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 49,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 73,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 75,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 76,
+          "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 79,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 97,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/basic",
+      "lineNumber": 48,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "clipped",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/clipped",
+      "lineNumber": 48,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable",
+      "lineNumber": 70,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 71,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 72,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 73,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "zoomable-seamless-layers",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-seamless-layers",
+      "lineNumber": 74,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/example/GeoTile/zoomable-with-padding",
+      "lineNumber": 76,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:10.014Z"
+}

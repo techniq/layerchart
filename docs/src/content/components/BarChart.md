@@ -1,15 +1,8 @@
 ---
-description: Streamlined Chart configuration for Bar charts
+description: Streamlined visualization displaying categorical data using rectangular bars whose lengths represent the values of each category.
 section: charts
-layers: ['svg', 'canvas']
-related:
-  [
-    'components/Chart',
-    'components/Bars',
-    'examples/Bars',
-    'examples/Histogram',
-    'examples/Sparkbar'
-  ]
+layers: [svg, canvas]
+related: [Chart, Bars]
 ---
 
 <script lang="ts">
@@ -166,9 +159,9 @@ related:
 
 <Example name="axis-labels-inside-bars-using-labels" />
 
-### Sparkline
+### Sparkbar
 
-<Example name="sparkline" />
+<Example name="sparkbar" />
 
 ### Single dimension
 

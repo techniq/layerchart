@@ -1,0 +1,41 @@
+{
+  "component": "Connector",
+  "examples": [
+    {
+      "name": "playground",
+      "path": "/example/Connector/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Connector",
+          "lineNumber": 22,
+          "line": "<Connector {source} {target} {sweep} {type} {radius} {curve} class=\"stroke-primary stroke-4\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 23,
+          "line": "<circle"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "playground",
+      "component": "Connector",
+      "path": "/example/Connector/playground",
+      "lineNumber": 22,
+      "line": "<Connector {source} {target} {sweep} {type} {radius} {curve} class=\"stroke-primary stroke-4\" />"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.711Z"
+}

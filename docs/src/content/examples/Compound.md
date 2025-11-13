@@ -1,15 +1,8 @@
 ---
-description: Compound
+description: Visualization combineing multiple chart types or multiple of same chart types to provide a more comprehensive view of the related data.
 section: cartesian & polar
-layers: ['svg', 'canvas']
-related:
-  [
-    'components/Bars',
-    'examples/Bars',
-    'examples/Histogram',
-    'examples/Sparkbar',
-    'examples/DualAxis'
-  ]
+layers: [svg, canvas]
+related: [components/Bars]
 ---
 
 <script lang="ts">
@@ -20,20 +13,20 @@ related:
 
 ### Common scale with extra marks
 
-<Example name="common-scale-with-extra-marks" />
+<Example component="Chart" name="compound-common-scale-with-extra-marks" />
 
 ### Separate scales with stacked charts and overridden marks
 
-<Example name="separate-scales-with-stacked-charts-and-overridden-marks" />
+<Example component="Chart" name="compound-separate-scales-with-stacked-charts-and-overridden-marks" />
 
 ### Dual axis with single chart using remapped scale
 
-<Example name="dual-axis-with-single-chart-using-remapped-scale" />
+<Example component="Chart" name="compound-dual-axis-with-single-chart-using-remapped-scale" />
 
 ### Dual axis with stacked charts
 
-<Example name="dual-axis-with-stacked-charts" />
+<Example component="Chart" name="compound-dual-axis-with-stacked-charts" />
 
 ### Separate scales with stacked charts with inverted range (top down)
 
-<Example name="separate-scales-with-stacked-charts-with-inverted-range-top-down" />
+<Example component="Chart" name="compound-separate-scales-with-stacked-charts-with-inverted-range-top-down" />

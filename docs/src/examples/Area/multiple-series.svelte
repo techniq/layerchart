@@ -45,7 +45,7 @@
 	c="fruit"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={{ left: 16, bottom: 24, right: 48 }}
+	padding={{ top: 20, left: 20, bottom: 20, right: 48 }}
 	tooltip={{ mode: 'quadtree' }}
 	height={300}
 >

@@ -1,59 +1,56 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 
-	import { Axis, Chart, Layer, MotionPath, Spline } from 'layerchart';
-	import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
+	import { Axis, Chart, Layer, MotionPath, Polygon, Spline } from 'layerchart';
 
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import PathDataMenuField from '$lib/components/PathDataMenuField.svelte';
+	import MotionPathControls from '$lib/components/MotionPathControls.svelte';
 
-	let pointCount = $state(100);
-
-	let pathGenerator = $state((x: number) => x);
-	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
-
-	let amplitude = $state(1);
-	let frequency = $state(10);
-	let phase = $state(0);
+	let config = $state({
+		pointCount: 100,
+		pathGenerator: (x: number) => x,
+		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
+		amplitude: 1,
+		frequency: 10,
+		phase: 0,
+		show: true,
+		duration: '5s',
+		repeatCount: 'indefinite' as number | 'indefinite',
+		start: undefined as string | undefined,
+		rotate: 'auto' as number | 'auto' | 'auto-reverse' | undefined
+	});
 
 	const data = $derived(
-		Array.from({ length: pointCount }).map((_, i) => {
+		Array.from({ length: config.pointCount }).map((_, i) => {
 			return {
 				x: i + 1,
-				y: pathGenerator(i / pointCount) ?? i
+				y: config.pathGenerator(i / config.pointCount) ?? i
 			};
 		})
 	);
 
 	export { data };
-
-	let show = $state(true);
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4">
-	<Field label="Show" let:id>
-		<Switch bind:checked={show} {id} size="md" />
-	</Field>
-	<PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
-	<CurveMenuField bind:value={curve} />
-	<RangeField label="Points" bind:value={pointCount} min={2} />
-</div>
-
+<MotionPathControls bind:config />
 <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		{#if show}
-			<MotionPath duration="5s" repeatCount="indefinite" rotate="auto">
+		{#if config.show}
+			<MotionPath
+				duration={config.duration}
+				repeatCount={config.repeatCount}
+				rotate={config.rotate}
+				{...config.start ? { begin: config.start } : {}}
+			>
 				{#snippet children({ pathId, objectId })}
-					<Spline id={pathId} {curve} />
-					<rect
+					<Spline id={pathId} curve={config.curve} />
+					<Polygon
 						id={objectId}
-						x={-10}
-						y={-10}
-						width={20}
-						height={20}
-						class="fill-surface-100 stroke-surface-content"
+						r={10}
+						points={3}
+						class="stroke-surface-content fill-surface-100"
 					/>
 				{/snippet}
 			</MotionPath>

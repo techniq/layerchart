@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { AnnotationRange, LineChart, type Placement } from 'layerchart';
-	import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
+	import AnnotationRangeControls from '$lib/components/AnnotationRangePointLineControls.svelte';
+
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	const placementOptions = [
 		'top-left',
@@ -23,34 +24,8 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
-	<Toggle let:on={open} let:toggle>
-		<Field label="Placement" class="cursor-pointer" on:click={toggle}>
-			<span class="text-sm">
-				{placement}
-			</span>
-		</Field>
-
-		<Menu {open} on:close={toggle} placement="bottom-start">
-			<div class="grid grid-cols-3 gap-1 p-1">
-				{#each placementOptions as option}
-					<Button
-						variant="outline"
-						color={option === placement ? 'primary' : 'default'}
-						on:click={() => (placement = option)}
-					>
-						{option}
-					</Button>
-				{/each}
-			</div>
-		</Menu>
-	</Toggle>
-
-	<RangeField label="X offset" bind:value={xOffset} max={10} />
-	<RangeField label="Y offset" bind:value={yOffset} max={10} />
-</div>
-
-<LineChart {data} x="date" y="value" height={300}>
+<AnnotationRangeControls bind:placement bind:xOffset bind:yOffset />
+<LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 5 }}>
 	{#snippet aboveMarks({ context })}
 		<AnnotationRange
 			x={[new Date('2010-01-01'), new Date('2010-12-31')]}

@@ -11,17 +11,19 @@
 	} from 'd3-geo';
 	import { range } from 'd3-array';
 	import { feature } from 'topojson-client';
-	import { getCountries } from '$lib/data.remote';
+	import { getCountriesTopology } from '$lib/geo.remote';
 
-	import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import GeoCircleControls from '$lib/components/GeoCircleControls.svelte';
 
-	let example: 'single' | 'multi' = $state('single');
-	let latitude = $state(0);
-	let longitude = $state(0);
-	let radius = $state(600);
-	let precision = $state(6);
+	let config = $state({
+		example: 'single' as 'single' | 'multi',
+		latitude: 0,
+		longitude: 0,
+		radius: 600,
+		precision: 6,
+		projection: geoNaturalEarth1
+	});
 
-	let projection = $state(geoNaturalEarth1);
 	const projections = [
 		{ label: 'Albers', value: geoAlbers },
 		{ label: 'Albers USA', value: geoAlbersUsa },
@@ -32,10 +34,10 @@
 		{ label: 'Orthographic', value: geoOrthographic }
 	];
 
-	const topojson = $derived(await getCountries());
-	const geojson = $derived(feature(topojson, topojson.objects.countries));
+	const topology = await getCountriesTopology();
+	const geojson = $derived(feature(topology, topology.objects.countries));
 	const features = $derived(
-		projection === geoAlbersUsa
+		config.projection === geoAlbersUsa
 			? geojson.features.filter((f) => f.properties.name === 'United States of America')
 			: geojson.features
 	);
@@ -48,44 +50,10 @@
 	});
 </script>
 
-<div class="grid grid-cols-2 gap-2 my-2">
-	<Field label="Example">
-		<ToggleGroup bind:value={example} variant="outline" inset class="w-full" size="sm">
-			<ToggleOption value="single">Single</ToggleOption>
-			<ToggleOption value="multi">Multi</ToggleOption>
-		</ToggleGroup>
-	</Field>
-
-	<SelectField
-		label="Projections"
-		options={projections}
-		bind:value={projection}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
-
-	<RangeField
-		label="Latitude"
-		bind:value={latitude}
-		min={-90}
-		max={90}
-		disabled={example != 'single'}
-	/>
-	<RangeField
-		label="Longitude"
-		bind:value={longitude}
-		min={-180}
-		max={180}
-		disabled={example != 'single'}
-	/>
-	<RangeField label="Radius (km)" bind:value={radius} max={6371} disabled={example != 'single'} />
-	<RangeField label="Precision" bind:value={precision} max={90} disabled={example != 'single'} />
-</div>
-
+<GeoCircleControls bind:config {projections} />
 <Chart
 	geo={{
-		projection,
+		projection: config.projection,
 		fitGeojson: geojson
 	}}
 	height={600}
@@ -101,19 +69,19 @@
 			/>
 		{/each}
 
-		{#if example === 'single'}
+		{#if config.example === 'single'}
 			<GeoCircle
-				center={[longitude, latitude]}
-				radius={(radius / (6371 * Math.PI * 2)) * 360}
-				{precision}
+				center={[config.longitude, config.latitude]}
+				radius={(config.radius / (6371 * Math.PI * 2)) * 360}
+				precision={config.precision}
 				class="fill-danger stroke-none"
 			/>
-		{:else if example === 'multi'}
+		{:else if config.example === 'multi'}
 			{#each coordinates as coords}
 				<GeoCircle
 					center={[coords[0], coords[1]]}
 					radius={step / 4}
-					{precision}
+					precision={config.precision}
 					class="stroke-danger"
 				/>
 			{/each}

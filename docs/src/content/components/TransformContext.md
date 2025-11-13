@@ -1,15 +1,16 @@
 ---
-description: TransformContext
+description: Interaction component which provides context to support panning, zooming, and dragging interactions for chart elements.
 section: interactions
-layers: ['svg', 'canvas', 'html']
+layers: [svg, canvas, html]
 related:
   [
-    'components/Chart',
-    'examples/Pack',
-    'examples/Tree',
-    'examples/ZoomableMap',
-    'examples/ZoomableTileMap',
-    'examples/LoftedArcsGlobe'
+    Chart,
+    Pack/basic,
+    Tree/basic,
+    GeoPath/transform-canvas,
+    GeoPath/transform-projection,
+    GeoTile/zoomable,
+    GeoSpline/draggable-globe
   ]
 ---
 

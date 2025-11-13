@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
 	import type { ComponentProps } from 'svelte';
-	import { Rule } from 'layerchart';
-	import { createTimeSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+
 	import { Duration } from 'svelte-ux';
+	import { Axis, Chart, Layer, Highlight, Points, Tooltip, Rule } from 'layerchart';
+	import TooltipControls from '$lib/components/TooltipControls.svelte';
+
+	import { createTimeSeries } from '$lib/utils/data.js';
 
 	const data = createTimeSeries({
 		min: 20,
@@ -19,9 +20,10 @@
 		highlight: ['area'],
 		axis: undefined,
 		snapToDataX: false,
-		snapToDataY: false,
-		debug: false
+		snapToDataY: false
 	}) as ComponentProps<typeof TooltipControls>['settings'];
+
+	export { data };
 </script>
 
 <TooltipControls bind:settings />
@@ -31,8 +33,7 @@
 	y="name"
 	padding={{ left: 36, bottom: 36 }}
 	tooltip={{
-		mode: settings.mode,
-		debug: settings.debug
+		mode: settings.mode
 	}}
 	height={300}
 >

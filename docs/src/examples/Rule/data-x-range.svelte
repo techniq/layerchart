@@ -3,6 +3,7 @@
 	import { Axis, Chart, Layer, Rule } from 'layerchart';
 
 	const data = createTimeSeries();
+
 	export { data };
 </script>
 
@@ -16,6 +17,6 @@
 	<Layer>
 		<Axis placement="bottom" />
 		<Axis placement="left" rule />
-		<Rule class="stroke-2 stroke-primary" />
+		<Rule class="stroke-4 stroke-primary" />
 	</Layer>
 </Chart>

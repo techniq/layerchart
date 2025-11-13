@@ -14,7 +14,7 @@
 	export { data };
 </script>
 
-<Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors} height={300}>
+<Chart {data} x="value" c="date" xRange={[-90, 90]} cRange={keyColors} height={300}>
 	<Layer center>
 		<Pie />
 	</Layer>

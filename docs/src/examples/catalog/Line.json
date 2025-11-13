@@ -1,0 +1,233 @@
+{
+  "component": "Line",
+  "examples": [
+    {
+      "name": "styling-using-attributes",
+      "path": "/example/Line/styling-using-attributes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 14,
+          "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} stroke=\"var(--color-primary)\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-classes",
+      "path": "/example/Line/styling-using-classes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 14,
+          "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} class=\"stroke-primary bg-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-css-variables",
+      "path": "/example/Line/styling-using-css-variables",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 14,
+          "line": "<Line"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "markers",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/markers",
+      "lineNumber": 28,
+      "line": "<Line"
+    },
+    {
+      "example": "horizontal-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-highlight-individual-bar",
+      "lineNumber": 36,
+      "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+    },
+    {
+      "example": "vertical-highlight-individual-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "lineNumber": 30,
+      "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-attributes",
+      "lineNumber": 14,
+      "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} stroke=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-attributes",
+      "lineNumber": 15,
+      "line": "<Line x1={50} y1={150} x2={400} y2={150} strokeWidth={2} stroke=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-attributes",
+      "lineNumber": 16,
+      "line": "<Line"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-classes",
+      "lineNumber": 14,
+      "line": "<Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} class=\"stroke-primary bg-primary\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-classes",
+      "lineNumber": 15,
+      "line": "<Line x1={50} y1={150} x2={400} y2={150} class=\"stroke-2 stroke-secondary bg-secondary\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Line",
+      "path": "/example/Line/styling-using-classes",
+      "lineNumber": 16,
+      "line": "<Line"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Line",
+      "path": "/example/Line/styling-using-css-variables",
+      "lineNumber": 14,
+      "line": "<Line"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Line",
+      "path": "/example/Line/styling-using-css-variables",
+      "lineNumber": 22,
+      "line": "<Line"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Line",
+      "path": "/example/Line/styling-using-css-variables",
+      "lineNumber": 30,
+      "line": "<Line"
+    },
+    {
+      "example": "line",
+      "component": "Marker",
+      "path": "/example/Marker/line",
+      "lineNumber": 32,
+      "line": "<Line"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 9,
+      "line": "<line x2=\"100%\" class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 27,
+      "line": "<line y2=\"100%\" class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 45,
+      "line": "<line x2=\"100%\" class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 46,
+      "line": "<line y2=\"100%\" class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 64,
+      "line": "<line x1={8} y2={8} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 82,
+      "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 100,
+      "line": "<line x1={8} y2={8} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "lines-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "lineNumber": 101,
+      "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:10.366Z"
+}

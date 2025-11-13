@@ -1,8 +1,8 @@
 ---
-description: Setup tooltip context, include mode to identify related data based on pointer position.  Typically used indirectly via the `tooltip` prop Chart
+description: Interaction component manages and provides the data and behavior needed to display dynamic tooltips within a chart.
 section: interactions
-layers: ['svg', 'canvas']
-related: ['components/Chart', 'components/Tooltip', 'components/Highlight']
+layers: [svg, canvas]
+related: [Chart, Tooltip, Highlight]
 ---
 
 <script lang="ts">

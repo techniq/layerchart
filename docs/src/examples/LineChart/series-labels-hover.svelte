@@ -26,6 +26,7 @@
 			color: 'var(--color-warning)'
 		}
 	]}
+	padding={20}
 	height={300}
 >
 	{#snippet aboveMarks({ getLabelsProps, series, highlightKey })}

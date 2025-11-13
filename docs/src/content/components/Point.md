@@ -1,8 +1,8 @@
 ---
-description: Convenient way to translate a data item to SVG x/y coordinates
+description: Primitive components which provides a convenient way to translate a data to x/y coordinates.
 section: primitives
-layers: ['svg', 'canvas', 'html']
-related: ['examples/Area']
+layers: [svg, canvas, html]
+related: []
 ---
 
 <script lang="ts">

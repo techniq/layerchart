@@ -22,7 +22,7 @@
 	import { type ComponentProps } from 'svelte';
 	import { getFlare } from '$lib/data.remote';
 
-	const data = $derived(await getFlare());
+	const data = await getFlare();
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)

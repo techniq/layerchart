@@ -1,0 +1,268 @@
+{
+  "component": "Group",
+  "examples": [
+    {
+      "name": "basic-usage",
+      "path": "/example/Group/basic-usage",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 7,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 9,
+          "line": "<Group center>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 10,
+          "line": "<Circle r={20} class=\"fill-surface-content\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 14,
+          "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "partial-arc",
+      "component": "Arc",
+      "path": "/example/Arc/partial-arc",
+      "lineNumber": 13,
+      "line": "<Group y={16}>"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 9,
+      "line": "<Group y={20}>"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Calendar",
+      "path": "/example/Calendar/multiple-years",
+      "lineNumber": 40,
+      "line": "<Group y={140 * i}>"
+    },
+    {
+      "example": "basic",
+      "component": "Dagre",
+      "path": "/example/Dagre/basic",
+      "lineNumber": 74,
+      "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
+    },
+    {
+      "example": "playground",
+      "component": "Dagre",
+      "path": "/example/Dagre/playground",
+      "lineNumber": 92,
+      "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
+    },
+    {
+      "example": "software-user-flow",
+      "component": "Dagre",
+      "path": "/example/Dagre/software-user-flow",
+      "lineNumber": 86,
+      "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
+    },
+    {
+      "example": "tcp-state-diagram",
+      "component": "Dagre",
+      "path": "/example/Dagre/tcp-state-diagram",
+      "lineNumber": 85,
+      "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
+    },
+    {
+      "example": "collision-detection",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/collision-detection",
+      "lineNumber": 56,
+      "line": "<Group center>"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Group",
+      "path": "/example/Group/basic-usage",
+      "lineNumber": 9,
+      "line": "<Group center>"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Group",
+      "path": "/example/Group/basic-usage",
+      "lineNumber": 12,
+      "line": "<Group x={100} y={100}>"
+    },
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/example/Pack/basic",
+      "lineNumber": 109,
+      "line": "<Group"
+    },
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/example/Partition/filterable",
+      "lineNumber": 124,
+      "line": "<Group"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/example/Partition/horizontal",
+      "lineNumber": 105,
+      "line": "<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 106,
+      "line": "<Group x={xScale(node.x0)} y={yScale(node.y0)} onclick={() => (selected = node)}>"
+    },
+    {
+      "example": "placement-left",
+      "component": "Pie",
+      "path": "/example/Pie/placement-left",
+      "lineNumber": 20,
+      "line": "<Group x={context.height / 2} center=\"y\">"
+    },
+    {
+      "example": "placement-right",
+      "component": "Pie",
+      "path": "/example/Pie/placement-right",
+      "lineNumber": 20,
+      "line": "<Group x={context.width - context.height / 2} center=\"y\">"
+    },
+    {
+      "example": "tooltip-with-arcs-slot",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "lineNumber": 38,
+      "line": "<Group"
+    },
+    {
+      "example": "arrow",
+      "component": "Polygon",
+      "path": "/example/Polygon/arrow",
+      "lineNumber": 15,
+      "line": "<Group x={context.width / 2} y={context.height / 2}>"
+    },
+    {
+      "example": "cross",
+      "component": "Polygon",
+      "path": "/example/Polygon/cross",
+      "lineNumber": 15,
+      "line": "<Group x={context.width / 2} y={context.height / 2}>"
+    },
+    {
+      "example": "complex",
+      "component": "Sankey",
+      "path": "/example/Sankey/complex",
+      "lineNumber": 88,
+      "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
+    },
+    {
+      "example": "hierarchy",
+      "component": "Sankey",
+      "path": "/example/Sankey/hierarchy",
+      "lineNumber": 99,
+      "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
+    },
+    {
+      "example": "node-select",
+      "component": "Sankey",
+      "path": "/example/Sankey/node-select",
+      "lineNumber": 30,
+      "line": "<Group"
+    },
+    {
+      "example": "simple",
+      "component": "Sankey",
+      "path": "/example/Sankey/simple",
+      "lineNumber": 18,
+      "line": "<Group x={node.x0} y={node.y0}>"
+    },
+    {
+      "example": "tooltip",
+      "component": "Sankey",
+      "path": "/example/Sankey/tooltip",
+      "lineNumber": 30,
+      "line": "<Group x={node.x0} y={node.y0}>"
+    },
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/example/Tree/basic",
+      "lineNumber": 78,
+      "line": "<Group"
+    },
+    {
+      "example": "html-nodes",
+      "component": "Tree",
+      "path": "/example/Tree/html-nodes",
+      "lineNumber": 82,
+      "line": "<Group"
+    },
+    {
+      "example": "basic",
+      "component": "Treemap",
+      "path": "/example/Treemap/basic",
+      "lineNumber": 39,
+      "line": "<Group x={node.x0} y={node.y0}>"
+    },
+    {
+      "example": "complex",
+      "component": "Treemap",
+      "path": "/example/Treemap/complex",
+      "lineNumber": 125,
+      "line": "<Group"
+    },
+    {
+      "example": "nested-filter",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-filter",
+      "lineNumber": 131,
+      "line": "<Group"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 103,
+      "line": "<Group"
+    },
+    {
+      "example": "playground",
+      "component": "Treemap",
+      "path": "/example/Treemap/playground",
+      "lineNumber": 133,
+      "line": "<Group"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 91,
+      "line": "<Group"
+    }
+  ],
+  "updatedAt": "2025-11-12T18:44:22.138Z"
+}

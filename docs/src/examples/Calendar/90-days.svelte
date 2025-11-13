@@ -31,7 +31,7 @@
 		'var(--color-primary-500)',
 		'var(--color-primary-700)'
 	]}
-	padding={{ top: 20 }}
+	padding={{ top: 20, bottom: 20 }}
 	height={200}
 >
 	{#snippet children({ context })}

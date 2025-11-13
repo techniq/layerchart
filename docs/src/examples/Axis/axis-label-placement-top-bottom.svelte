@@ -8,7 +8,7 @@
 
 <Chart
 	xDomain={[timeDay.offset(today, -10), today]}
-	padding={{ top: 40, bottom: 40, left: 20, right: 20 }}
+	padding={{ top: 40, bottom: 40, left: 24, right: 24 }}
 	height={200}
 >
 	<Layer>

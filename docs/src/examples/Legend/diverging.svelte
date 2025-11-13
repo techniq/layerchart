@@ -4,7 +4,7 @@
 	import { interpolatePiYG } from 'd3-scale-chromatic';
 </script>
 
-<div class="grid gap-6">
+<div class="grid gap-6 p-2">
 	<Legend
 		scale={scaleDiverging([-0.1, 0, 0.1], interpolatePiYG)}
 		title="Daily change"

@@ -1,0 +1,604 @@
+{
+  "component": "Circle",
+  "examples": [
+    {
+      "name": "styling-using-attributes",
+      "path": "/example/Circle/styling-using-attributes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} fill=\"var(--color-surface-content)\" />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-classes",
+      "path": "/example/Circle/styling-using-classes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} />"
+        }
+      ]
+    },
+    {
+      "name": "styling-using-css-variables",
+      "path": "/example/Circle/styling-using-css-variables",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 14,
+          "line": "<Circle cx={100} cy={100} r={20} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 61,
+      "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 64,
+      "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+    },
+    {
+      "example": "markers",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/markers",
+      "lineNumber": 35,
+      "line": "<Circle"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 71,
+      "line": "<Circle"
+    },
+    {
+      "example": "selection",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/selection",
+      "lineNumber": 44,
+      "line": "<Circle"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-attributes",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} fill=\"var(--color-surface-content)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-attributes",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} fill=\"var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-attributes",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-attributes",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-classes",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-classes",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} class=\"fill-primary bg-primary\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-classes",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} fill=\"var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-classes",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-css-variables",
+      "lineNumber": 14,
+      "line": "<Circle cx={100} cy={100} r={20} />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-css-variables",
+      "lineNumber": 15,
+      "line": "<Circle cx={200} cy={200} r={20} style=\"--fill-color:var(--color-primary)\" />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-css-variables",
+      "lineNumber": 16,
+      "line": "<Circle cx={200} cy={50} r={20} style=\"--fill-color:var(--color-secondary)\" />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/example/Circle/styling-using-css-variables",
+      "lineNumber": 17,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "Connector",
+      "path": "/example/Connector/playground",
+      "lineNumber": 23,
+      "line": "<circle"
+    },
+    {
+      "example": "playground",
+      "component": "Connector",
+      "path": "/example/Connector/playground",
+      "lineNumber": 36,
+      "line": "<circle"
+    },
+    {
+      "example": "beeswarm",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/beeswarm",
+      "lineNumber": 44,
+      "line": "<Circle"
+    },
+    {
+      "example": "collision-detection",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/collision-detection",
+      "lineNumber": 59,
+      "line": "<Circle"
+    },
+    {
+      "example": "disjoint-graph",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/disjoint-graph",
+      "lineNumber": 75,
+      "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
+    },
+    {
+      "example": "graph-drag",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-drag",
+      "lineNumber": 91,
+      "line": "<circle"
+    },
+    {
+      "example": "graph-playground",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/graph-playground",
+      "lineNumber": 179,
+      "line": "<Circle"
+    },
+    {
+      "example": "group",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/group",
+      "lineNumber": 71,
+      "line": "<Circle"
+    },
+    {
+      "example": "lattice",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/lattice",
+      "lineNumber": 46,
+      "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "tree",
+      "component": "ForceSimulation",
+      "path": "/example/ForceSimulation/tree",
+      "lineNumber": 51,
+      "line": "<Circle"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/bubble-map",
+      "lineNumber": 96,
+      "line": "<Circle"
+    },
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/icons",
+      "lineNumber": 61,
+      "line": "<Circle"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 38,
+      "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 49,
+      "line": "<Circle cx={x} cy={y} r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 75,
+      "line": "<Circle r={4} class=\"stroke-primary/50 fill-none\" />"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 90,
+      "line": "<Circle cx={x} cy={y} r={4} class=\"stroke-primary/50 fill-none\" />"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Group",
+      "path": "/example/Group/basic-usage",
+      "lineNumber": 10,
+      "line": "<Circle r={20} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Group",
+      "path": "/example/Group/basic-usage",
+      "lineNumber": 13,
+      "line": "<Circle r={10} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 47,
+      "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "sync-with-draw",
+      "component": "MotionPath",
+      "path": "/example/MotionPath/sync-with-draw",
+      "lineNumber": 50,
+      "line": "<Circle id={objectId} r={5} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/example/Pack/basic",
+      "lineNumber": 119,
+      "line": "<Circle"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 9,
+      "line": "<circle cx={2} cy={2} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 15,
+      "line": "<circle cx={4} cy={4} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 21,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 27,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 28,
+      "line": "<circle cx={0} cy={0} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 29,
+      "line": "<circle cx={0} cy={8} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 30,
+      "line": "<circle cx={8} cy={0} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 31,
+      "line": "<circle cx={8} cy={8} r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 37,
+      "line": "<circle cx={4} cy={4} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 38,
+      "line": "<circle cx={0} cy={0} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 39,
+      "line": "<circle cx={0} cy={8} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 40,
+      "line": "<circle cx={8} cy={0} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 41,
+      "line": "<circle cx={8} cy={8} r={1} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "circles-custom-pattern-svg-only",
+      "component": "Pattern",
+      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "lineNumber": 47,
+      "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content/30\" />"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Point",
+      "path": "/example/Point/basic-usage",
+      "lineNumber": 24,
+      "line": "<Circle cx={x} cy={y} r={10} />"
+    },
+    {
+      "example": "basic-usage",
+      "component": "Point",
+      "path": "/example/Point/basic-usage",
+      "lineNumber": 30,
+      "line": "<Circle cx={x} cy={y} r={15} class=\"fill-primary bg-primary\" />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 11,
+      "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 17,
+      "line": "<Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 23,
+      "line": "<Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 11,
+      "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 17,
+      "line": "<Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 23,
+      "line": "<Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 19,
+      "line": "<Circle"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/units",
+      "lineNumber": 12,
+      "line": "<Circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/units",
+      "lineNumber": 20,
+      "line": "<Circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />"
+    },
+    {
+      "example": "basic-start-and-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/basic-start-and-end-snippets",
+      "lineNumber": 37,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "basic-start-and-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/basic-start-and-end-snippets",
+      "lineNumber": 40,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "end-slot-with-draw-with-value",
+      "component": "Spline",
+      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "lineNumber": 38,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "end-snippet-with-draw",
+      "component": "Spline",
+      "path": "/example/Spline/end-snippet-with-draw",
+      "lineNumber": 37,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/label-using-start-end-snippets",
+      "lineNumber": 38,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "label-using-start-end-snippets",
+      "component": "Spline",
+      "path": "/example/Spline/label-using-start-end-snippets",
+      "lineNumber": 43,
+      "line": "<Circle r={5} class=\"fill-primary\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series",
+      "lineNumber": 57,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Spline",
+      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "lineNumber": 60,
+      "line": "<Circle r={4} fill={color} />"
+    },
+    {
+      "example": "playground",
+      "component": "Text",
+      "path": "/example/Text/playground",
+      "lineNumber": 48,
+      "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
+    },
+    {
+      "example": "playground",
+      "component": "TransformContext",
+      "path": "/example/TransformContext/playground",
+      "lineNumber": 55,
+      "line": "<Circle"
+    },
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/example/Voronoi/radius",
+      "lineNumber": 38,
+      "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
+    }
+  ],
+  "updatedAt": "2025-11-12T17:29:17.408Z"
+}

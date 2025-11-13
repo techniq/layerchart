@@ -2,12 +2,12 @@
 	import { AnnotationLine, LineChart } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300}>
+<LineChart {data} x="date" y="value" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>
 	{#snippet aboveMarks({ context })}
 		<AnnotationLine
 			x={new Date('2010-01-01')}

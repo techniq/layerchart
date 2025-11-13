@@ -1,8 +1,8 @@
 ---
-description: Tree
+description: Layout component which organizes hierarchical data into a branching structure with parent nodes connected to child nodes, visually representing relationships and levels of the hierarchy.
 section: layout
-layers: ['svg', 'canvas']
-related: ['examples/Tree']
+layers: [svg, canvas]
+related: []
 ---
 
 <script lang="ts">

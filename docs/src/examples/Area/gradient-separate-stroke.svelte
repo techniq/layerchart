@@ -8,15 +8,7 @@
 	export { data };
 </script>
 
-<Chart
-	{data}
-	x="date"
-	y="value"
-	yDomain={[0, null]}
-	yNice
-	padding={{ left: 16, bottom: 24 }}
-	height={300}
->
+<Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={20} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />

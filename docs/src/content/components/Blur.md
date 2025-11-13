@@ -1,7 +1,7 @@
 ---
-description: Blur
+description: Component applies a Gaussian blur effect to chart elements, softening their appearance for visual emphasis or stylistic purposes.
 section: other
-layers: ['svg']
+layers: [svg]
 related: []
 ---
 
@@ -9,4 +9,3 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-> TODO

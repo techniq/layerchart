@@ -1,0 +1,328 @@
+{
+  "component": "AnnotationRange",
+  "examples": [
+    {
+      "name": "bar-chart-(multiple)",
+      "path": "/example/AnnotationRange/bar-chart-(multiple)",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 18,
+          "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 20,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "bar-chart-(single)",
+      "path": "/example/AnnotationRange/bar-chart-(single)",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 18,
+          "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 20,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "bar-chart-(value)",
+      "path": "/example/AnnotationRange/bar-chart-(value)",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 18,
+          "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 20,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "hide-tooltip",
+      "path": "/example/AnnotationRange/hide-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-fill-multiple",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-pattern-lower-bound",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-pattern-range",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-range",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-pattern-upper-bound",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "label-placement",
+      "path": "/example/AnnotationRange/label-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 28,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 30,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-gradient-range",
+      "path": "/example/AnnotationRange/vertical-with-gradient-range",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-pattern-lower-bound",
+      "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-pattern-range",
+      "path": "/example/AnnotationRange/vertical-with-pattern-range",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-pattern-upper-bound",
+      "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "horizontal-with-range",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-with-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(multiple)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(multiple)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(single)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(single)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "bar-chart-(value)",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/bar-chart-(value)",
+      "lineNumber": 20,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "hide-tooltip",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/hide-tooltip",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 12,
+      "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 13,
+      "line": "<AnnotationRange y={[400, 600]} class=\"fill-warning/10\" />"
+    },
+    {
+      "example": "horizontal-with-fill-multiple",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
+      "lineNumber": 14,
+      "line": "<AnnotationRange y={[600, null]} class=\"fill-danger/10\" />"
+    },
+    {
+      "example": "horizontal-with-pattern-lower-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-pattern-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "horizontal-with-pattern-upper-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "label-placement",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/label-placement",
+      "lineNumber": 30,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-gradient-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-gradient-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-lower-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-range",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-range",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    },
+    {
+      "example": "vertical-with-pattern-upper-bound",
+      "component": "AnnotationRange",
+      "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
+      "lineNumber": 12,
+      "line": "<AnnotationRange"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.033Z"
+}

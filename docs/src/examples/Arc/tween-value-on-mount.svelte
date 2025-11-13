@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { Arc, Chart, Layer } from 'layerchart';
-	import { Field, Switch } from 'svelte-ux';
+	import ShowControl from '$lib/components/ShowControl.svelte';
 
 	let show = $state(true);
 	const data = {
@@ -15,13 +15,8 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
-	<Field label="Show" let:id>
-		<Switch checked={show} on:change={() => (show = !show)} {id} size="md" />
-	</Field>
-</div>
-
-<Chart height={200}>
+<ShowControl bind:show label="Show Arcs" />
+<Chart height={200} padding={20}>
 	<Layer center>
 		{#if show}
 			<Arc

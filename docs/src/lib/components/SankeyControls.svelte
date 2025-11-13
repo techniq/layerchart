@@ -2,6 +2,8 @@
 	import { RangeField, MenuField } from 'svelte-ux';
 	import type { SankeyProps } from 'layerchart';
 
+	// <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
+
 	let {
 		nodeAlign = $bindable(),
 		nodeColorBy = $bindable(),
@@ -17,7 +19,7 @@
 	} = $props();
 </script>
 
-<div class="grid grid-flow-col gap-1 mb-4">
+<div class="grid grid-flow-col gap-1 mb-4 screenshot-hidden">
 	<MenuField
 		label="Align"
 		bind:value={nodeAlign}
@@ -40,16 +42,18 @@
 		]}
 	/>
 
-	<MenuField
-		label="Link color"
-		bind:value={linkColorBy}
-		options={[
-			{ label: 'static', value: 'static' },
-			{ label: 'source', value: 'source' },
-			{ label: 'target', value: 'target' }
-		]}
-	/>
+	<div class="screenshot-hidden">
+		<MenuField
+			label="Link color"
+			bind:value={linkColorBy}
+			options={[
+				{ label: 'static', value: 'static' },
+				{ label: 'source', value: 'source' },
+				{ label: 'target', value: 'target' }
+			]}
+		/>
 
-	<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
-	<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
+		<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
+		<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
+	</div>
 </div>

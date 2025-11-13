@@ -15,6 +15,6 @@
 >
 	<Layer>
 		<Axis placement="bottom" />
-		<Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} />
+		<Axis placement="left" grid={{ style: 'stroke-dasharray: 6 4' }} />
 	</Layer>
 </Chart>

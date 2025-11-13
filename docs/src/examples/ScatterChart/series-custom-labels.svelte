@@ -30,6 +30,7 @@
 			}
 		};
 	})}
-	height={400}
 	legend
+	padding={{ left: 10, top: 10, right: 10, bottom: 48 }}
+	height={400}
 />

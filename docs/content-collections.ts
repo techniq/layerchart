@@ -10,10 +10,13 @@ const components = defineCollection({
 	directory: 'src/content/components',
 	include: '**/*.md',
 	schema: z.object({
+		name: z.string().optional(),
 		description: z.string().optional(),
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
-		related: z.array(z.string()).default([])
+		related: z.array(z.string()).default([]),
+		resize: z.boolean().default(true),
+		tableOfContents: z.boolean().default(true)
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -37,7 +40,7 @@ const components = defineCollection({
 
 		return {
 			...doc,
-			name: toPascalCase(fileName.replace('.md', '')),
+			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
 			slug: path,
 			source,
 			sourceUrl
@@ -51,10 +54,13 @@ const examples = defineCollection({
 	directory: 'src/content/examples',
 	include: '**/*.md',
 	schema: z.object({
+		name: z.string().optional(),
 		description: z.string().optional(),
 		section: z.string().optional(),
 		layers: z.array(z.string()).default([]),
-		related: z.array(z.string()).default([])
+		related: z.array(z.string()).default([]),
+		resize: z.boolean().default(true),
+		tableOfContents: z.boolean().default(true)
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -78,7 +84,7 @@ const examples = defineCollection({
 
 		return {
 			...doc,
-			name: toPascalCase(fileName.replace('.md', '')),
+			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
 			slug: path
 			// source,
 			// sourceUrl

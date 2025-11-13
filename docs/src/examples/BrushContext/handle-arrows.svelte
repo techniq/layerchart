@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Area, Chart, Layer } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
-	import LucideChevronLeft from '~icons/lucide/chevron-left.svelte';
-	import LucideChevronRight from '~icons/lucide/chevron-right.svelte';
+	import LucideChevronLeft from '~icons/lucide/chevron-left';
+	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 
 	export { data };
 </script>

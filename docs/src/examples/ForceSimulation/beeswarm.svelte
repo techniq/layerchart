@@ -6,7 +6,7 @@
 
 	import { getUsSenators } from '$lib/data.remote';
 
-	let usSenators = $derived(await getUsSenators());
+	let usSenators = await getUsSenators();
 
 	type MySimulationNodeDatum = (typeof usSenators)[number] & SimulationNodeDatum;
 

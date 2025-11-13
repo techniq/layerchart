@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/data.js';
-	import { Button, Field, Menu, MenuField, Toggle } from 'svelte-ux';
 	import type { ComponentProps } from 'svelte';
+
+	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import AnchorLocationControls from '$lib/components/TooltipControls2.svelte';
+
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
 		count: 30,
@@ -11,73 +13,22 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-	export { data };
 
-	const anchorOptions = [
-		'top-left',
-		'top',
-		'top-right',
-		'left',
-		'center',
-		'right',
-		'bottom-left',
-		'bottom',
-		'bottom-right'
-	] as const;
 	let anchor: ComponentProps<typeof Tooltip.Root>['anchor'] = $state('top-left');
 	let snap: 'pointer' | 'data' = $state('pointer');
 	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
+
+	export { data };
 </script>
 
-<div class="grid grid-cols-3 gap-2 mb-4">
-	<Toggle let:on={open} let:toggle>
-		<Field label="Anchor" class="cursor-pointer" on:click={toggle}>
-			<span class="text-sm">
-				{anchor}
-			</span>
-		</Field>
-
-		<Menu {open} on:close={toggle} placement="bottom-start">
-			<div class="grid grid-cols-3 gap-1 p-1">
-				{#each anchorOptions as option}
-					<Button
-						variant="outline"
-						color={option === anchor ? 'primary' : 'default'}
-						on:click={() => (anchor = option)}
-					>
-						{option}
-					</Button>
-				{/each}
-			</div>
-		</Menu>
-	</Toggle>
-	<MenuField
-		label="Snap"
-		bind:value={snap}
-		options={[
-			{ label: 'pointer', value: 'pointer' },
-			{ label: 'data', value: 'data' }
-		]}
-	/>
-
-	<MenuField
-		label="Contained"
-		bind:value={contained}
-		options={[
-			{ label: 'none', value: false },
-			{ label: 'container', value: 'container' },
-			{ label: 'window', value: 'window' }
-		]}
-	/>
-</div>
-
+<AnchorLocationControls bind:anchor bind:snap bind:contained />
 <Chart
 	{data}
 	x="date"
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={{ top: 5, left: 28, bottom: 24 }}
 	tooltip={{ mode: 'quadtree-x' }}
 	height={300}
 >

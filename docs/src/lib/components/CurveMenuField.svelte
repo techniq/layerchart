@@ -5,6 +5,8 @@
 	import { entries } from '@layerstack/utils';
 	import type { ComponentProps } from 'svelte';
 
+	// <CurveMenuField bind:value bind:showOpenClosed />
+
 	let {
 		value = $bindable(),
 		showOpenClosed = false,
@@ -34,11 +36,13 @@
 		});
 </script>
 
-<MenuField
-	label="Curve"
-	{options}
-	bind:value
-	stepper
-	classes={{ menuIcon: 'hidden' }}
-	{...restProps}
-/>
+<div class="screenshot-hidden">
+	<MenuField
+		label="Curve"
+		{options}
+		bind:value
+		stepper
+		classes={{ menuIcon: 'hidden' }}
+		{...restProps}
+	/>
+</div>

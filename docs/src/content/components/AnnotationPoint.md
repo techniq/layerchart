@@ -1,8 +1,8 @@
 ---
-description: AnnotationPoint
+description: Annotation component marking a specific data value or coordinate on a chart to highlight key events or notable points.
 section: annotations
-layers: ['svg', 'canvas', 'html']
-related: ['components/AnnotationLine', 'components/AnnotationRange']
+layers: [svg, canvas, html]
+related: [AnnotationLine, AnnotationRange]
 ---
 
 <script lang="ts">

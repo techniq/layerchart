@@ -10,7 +10,7 @@
 	xDomain={[timeDay.offset(today, -10), today]}
 	yDomain={[0, 100]}
 	yNice
-	padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+	padding={{ top: 20, bottom: 20, left: 20, right: 30 }}
 	height={300}
 >
 	<Layer>

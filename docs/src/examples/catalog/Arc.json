@@ -1,0 +1,439 @@
+{
+  "component": "Arc",
+  "examples": [
+    {
+      "name": "color-wheel",
+      "path": "/example/Arc/color-wheel",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart height={300} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 40,
+          "line": "<Arc"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 55,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "concentric",
+      "path": "/example/Arc/concentric",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={200} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 17,
+          "line": "<Arc"
+        }
+      ]
+    },
+    {
+      "name": "draggable-arc",
+      "path": "/example/Arc/draggable-arc",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart height={200} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 18,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 66,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "label-direction",
+      "path": "/example/Arc/label-direction",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 53,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 55,
+          "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 57,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 67,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "partial-arc",
+      "path": "/example/Arc/partial-arc",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={120} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 13,
+          "line": "<Group y={16}>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 14,
+          "line": "<LinearGradient class=\"from-secondary to-primary\">"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 16,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 27,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "path": "/example/Arc/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart height={350}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 27,
+          "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 29,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 42,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "segmented-arc",
+      "path": "/example/Arc/segmented-arc",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart height={240} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 19,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 33,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "segmented-arc-clip-mask",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart height={240} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 16,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 20,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 38,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "tween-value-on-mount",
+      "path": "/example/Arc/tween-value-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart height={200} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 22,
+          "line": "<Arc"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "color-wheel",
+      "component": "Arc",
+      "path": "/example/Arc/color-wheel",
+      "lineNumber": 40,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 17,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 25,
+      "line": "<Arc"
+    },
+    {
+      "example": "concentric",
+      "component": "Arc",
+      "path": "/example/Arc/concentric",
+      "lineNumber": 34,
+      "line": "<Arc"
+    },
+    {
+      "example": "draggable-arc",
+      "component": "Arc",
+      "path": "/example/Arc/draggable-arc",
+      "lineNumber": 18,
+      "line": "<Arc"
+    },
+    {
+      "example": "label-direction",
+      "component": "Arc",
+      "path": "/example/Arc/label-direction",
+      "lineNumber": 57,
+      "line": "<Arc"
+    },
+    {
+      "example": "partial-arc",
+      "component": "Arc",
+      "path": "/example/Arc/partial-arc",
+      "lineNumber": 16,
+      "line": "<Arc"
+    },
+    {
+      "example": "playground",
+      "component": "Arc",
+      "path": "/example/Arc/playground",
+      "lineNumber": 29,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc",
+      "lineNumber": 19,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 20,
+      "line": "<Arc"
+    },
+    {
+      "example": "segmented-arc-clip-mask",
+      "component": "Arc",
+      "path": "/example/Arc/segmented-arc-clip-mask",
+      "lineNumber": 29,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 22,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 31,
+      "line": "<Arc"
+    },
+    {
+      "example": "tween-value-on-mount",
+      "component": "Arc",
+      "path": "/example/Arc/tween-value-on-mount",
+      "lineNumber": 41,
+      "line": "<Arc"
+    },
+    {
+      "example": "gradient-with-text",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/gradient-with-text",
+      "lineNumber": 10,
+      "line": "<Arc"
+    },
+    {
+      "example": "series-labels",
+      "component": "ArcChart",
+      "path": "/example/ArcChart/series-labels",
+      "lineNumber": 29,
+      "line": "<Arc {...props}>"
+    },
+    {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/example/Partition/sunburst",
+      "lineNumber": 80,
+      "line": "<Arc"
+    },
+    {
+      "example": "default-slot-render-each-arc",
+      "component": "Pie",
+      "path": "/example/Pie/default-slot-render-each-arc",
+      "lineNumber": 40,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels",
+      "component": "Pie",
+      "path": "/example/Pie/labels",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-centroid",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-centroid-multiple",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "lineNumber": 27,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer-radial",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-radial",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "labels-outer-with-padding",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-with-padding",
+      "lineNumber": 24,
+      "line": "<Arc"
+    },
+    {
+      "example": "tooltip-with-arcs-slot",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "lineNumber": 48,
+      "line": "<Arc"
+    },
+    {
+      "example": "offset-slice",
+      "component": "PieChart",
+      "path": "/example/PieChart/offset-slice",
+      "lineNumber": 11,
+      "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.052Z"
+}

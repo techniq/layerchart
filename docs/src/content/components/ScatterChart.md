@@ -1,8 +1,8 @@
 ---
-description: Streamlined Chart configuration for Scatter charts
+description: Streamlined visualization of data with individual data points on two axes to reveal relationships, patterns, or correlations between variables.
 section: charts
 layers: [svg, canvas, html]
-related: [components/Chart, components/Points, examples/Scatter]
+related: [Chart, Points]
 ---
 
 <script lang="ts">
@@ -16,6 +16,10 @@ related: [components/Chart, components/Points, examples/Scatter]
 <Example name="basic" />
 
 ### Domain nice
+
+> Nice (xNice or yNice) is a feature that makes the numeric range of the axis align with round,
+> human-friendly values instead of tight, exact min/max data values. (see padding as compared to
+> [basic](#basic) example)
 
 <Example name="domain-nice" />
 

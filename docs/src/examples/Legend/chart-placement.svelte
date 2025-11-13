@@ -8,15 +8,15 @@
 	c="name"
 	cScale={scaleOrdinal()}
 	cRange={['var(--color-success)', 'var(--color-warning)', 'var(--color-danger)']}
-	height={300}
+	height={200}
 >
-	<Legend title="top-left" placement="top-left" variant="swatches" />
-	<Legend title="top" placement="top" variant="swatches" />
-	<Legend title="top-right" placement="top-right" variant="swatches" />
-	<Legend title="left" placement="left" variant="swatches" />
-	<Legend title="center" placement="center" variant="swatches" />
-	<Legend title="right" placement="right" variant="swatches" />
-	<Legend title="bottom-left" placement="bottom-left" variant="swatches" />
-	<Legend title="bottom" placement="bottom" variant="swatches" />
-	<Legend title="bottom-right" placement="bottom-right" variant="swatches" />
+	<Legend title="Top-Left" placement="top-left" variant="swatches" />
+	<Legend title="Top" placement="top" variant="swatches" />
+	<Legend title="Top-Right" placement="top-right" variant="swatches" />
+	<Legend title="Left" placement="left" variant="swatches" />
+	<Legend title="Center" placement="center" variant="swatches" />
+	<Legend title="Right" placement="right" variant="swatches" />
+	<Legend title="Bottom-Left" placement="bottom-left" variant="swatches" />
+	<Legend title="Bottom" placement="bottom" variant="swatches" />
+	<Legend title="Bottom-Right" placement="bottom-right" variant="swatches" />
 </Chart>

@@ -1,0 +1,254 @@
+{
+  "component": "Calendar",
+  "examples": [
+    {
+      "name": "90-days",
+      "path": "/example/Calendar/90-days",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 38,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 39,
+          "line": "<Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 42,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "fixed-cell-size",
+      "path": "/example/Calendar/fixed-cell-size",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 41,
+          "line": "<Calendar"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 50,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "html-with-padding",
+      "path": "/example/Calendar/html-with-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer type=\"html\">"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 41,
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 63,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "last-month",
+      "path": "/example/Calendar/last-month",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 41,
+          "line": "<Calendar"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 49,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-years",
+      "path": "/example/Calendar/multiple-years",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 40,
+          "line": "<Group y={140 * i}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 41,
+          "line": "<Text"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 50,
+          "line": "<Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 55,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "responsive-cell-size-default",
+      "path": "/example/Calendar/responsive-cell-size-default",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 41,
+          "line": "<Calendar"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 49,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "rounded-cells",
+      "path": "/example/Calendar/rounded-cells",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 41,
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 45,
+          "line": "<Rect"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 60,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "90-days",
+      "component": "Calendar",
+      "path": "/example/Calendar/90-days",
+      "lineNumber": 39,
+      "line": "<Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />"
+    },
+    {
+      "example": "fixed-cell-size",
+      "component": "Calendar",
+      "path": "/example/Calendar/fixed-cell-size",
+      "lineNumber": 41,
+      "line": "<Calendar"
+    },
+    {
+      "example": "html-with-padding",
+      "component": "Calendar",
+      "path": "/example/Calendar/html-with-padding",
+      "lineNumber": 41,
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>"
+    },
+    {
+      "example": "last-month",
+      "component": "Calendar",
+      "path": "/example/Calendar/last-month",
+      "lineNumber": 41,
+      "line": "<Calendar"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Calendar",
+      "path": "/example/Calendar/multiple-years",
+      "lineNumber": 50,
+      "line": "<Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />"
+    },
+    {
+      "example": "responsive-cell-size-default",
+      "component": "Calendar",
+      "path": "/example/Calendar/responsive-cell-size-default",
+      "lineNumber": 41,
+      "line": "<Calendar"
+    },
+    {
+      "example": "rounded-cells",
+      "component": "Calendar",
+      "path": "/example/Calendar/rounded-cells",
+      "lineNumber": 41,
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.306Z"
+}

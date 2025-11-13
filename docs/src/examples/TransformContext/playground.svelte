@@ -3,62 +3,52 @@
 	import { cubicOut } from 'svelte/easing';
 
 	import { Chart, Circle, Layer, Points, Spline } from 'layerchart';
-	import { Field, RangeField, Switch } from 'svelte-ux';
-
+	import TransformContextControls from '$lib/components/TransformContextControls.svelte';
 	import TransformControls from '$lib/components/TransformControls.svelte';
 	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+
 	import { getSpiral } from '$lib/utils/data';
 
-	let pointCount = $state(500);
-	let angle = $state(137.5); //
-	let showPoints = $state(true);
-	let showPath = $state(false);
-	let tweened = $state(true);
+	let config = $state({
+		pointCount: 500,
+		angle: 137.5,
+		showPoints: true,
+		showPath: false,
+		tweened: true,
+		curve: undefined as ComponentProps<typeof CurveMenuField>['value']
+	});
 
 	const data = $derived(
-		getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 })
+		getSpiral({
+			angle: config.angle,
+			radius: 10,
+			count: config.pointCount,
+			width: 500,
+			height: 500
+		})
 	);
-
-	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 </script>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 mb-2">
-	<RangeField label="Angle" bind:value={angle} min={1} max={360} />
-	<Field label="Tweened" let:id>
-		<Switch bind:checked={tweened} {id} size="md" />
-	</Field>
-</div>
-
-<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-6">
-	<RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
-	<CurveMenuField bind:value={curve} showOpenClosed />
-	<Field label="Show points" let:id>
-		<Switch bind:checked={showPoints} {id} size="md" />
-	</Field>
-	<Field label="Show path" let:id>
-		<Switch bind:checked={showPath} {id} size="md" />
-	</Field>
-</div>
-
+<TransformContextControls bind:config />
 <Chart
 	{data}
 	x="x"
 	y="y"
 	transform={{
 		mode: 'canvas',
-		motion: tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
+		motion: config.tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
 		initialScrollMode: 'scale'
 	}}
-	padding={40}
+	padding={50}
 	width={500}
 	height={500}
 >
 	<TransformControls />
-	<Layer class="border rounded overflow-hidden">
-		{#if showPath}
-			<Spline {curve} motion="tween" />
+	<Layer class="overflow-hidden">
+		{#if config.showPath}
+			<Spline curve={config.curve} motion="tween" />
 		{/if}
-		{#if showPoints}
+		{#if config.showPoints}
 			<Points>
 				{#snippet children({ points })}
 					{#each points as point, index}
@@ -67,7 +57,7 @@
 							cy={point.y}
 							r={2}
 							class={index % 2 ? 'fill-primary' : 'fill-secondary'}
-							motion={tweened ? 'tween' : undefined}
+							motion={config.tweened ? 'tween' : undefined}
 						/>
 					{/each}
 				{/snippet}

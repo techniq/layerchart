@@ -1,0 +1,221 @@
+{
+  "component": "AnnotationPoint",
+  "examples": [
+    {
+      "name": "band-scale-on-axis",
+      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 5, left: 25, bottom: 35 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 19,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "band-scale-on-value",
+      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 19,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "label-placement",
+      "path": "/example/AnnotationPoint/label-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 30,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 33,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "on-axis-with-tooltip",
+      "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 25,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 28,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 30,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "on-series-with-line-and-tooltip",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 25,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 29,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 38,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 54,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "on-series-with-tooltip",
+      "path": "/example/AnnotationPoint/on-series-with-tooltip",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 25,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 29,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 45,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "series-annotation",
+      "path": "/example/AnnotationPoint/series-annotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 19,
+          "line": "<AnnotationPoint"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "vertical-to-point",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-to-point",
+      "lineNumber": 34,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "band-scale-on-axis",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "band-scale-on-value",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "label-placement",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/label-placement",
+      "lineNumber": 33,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-axis-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+      "lineNumber": 30,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 38,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "on-series-with-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-tooltip",
+      "lineNumber": 29,
+      "line": "<AnnotationPoint"
+    },
+    {
+      "example": "series-annotation",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/series-annotation",
+      "lineNumber": 19,
+      "line": "<AnnotationPoint"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.018Z"
+}

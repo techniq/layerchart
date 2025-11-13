@@ -2,7 +2,7 @@
 	import { Area, Axis, Chart, Layer, LinearGradient, type DomainType } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
+	const data = await getAppleStock();
 	export { data };
 
 	let xDomain = $state<DomainType>([null, null]);

@@ -18,7 +18,7 @@
 	x="date"
 	y="value"
 	yNice
-	padding={{ left: 16, bottom: 24 }}
+	padding={20}
 	tooltip={{ mode: 'quadtree-x' }}
 	c={(d) => (d.value < 0 ? 'under' : 'over')}
 	cDomain={['over', 'under']}
