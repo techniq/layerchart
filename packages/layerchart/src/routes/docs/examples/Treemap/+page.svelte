@@ -44,7 +44,7 @@
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 
-  let selectedCarNode = $state<HierarchyRectangularNode<any>>();
+  let selectedCarNode = $state<HierarchyNode<any>>();
 
   let isFiltered = $state(false);
   const groupedCars = $derived(
@@ -70,7 +70,7 @@
       // d => d.year,
     )
   );
-  let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+  let groupedHierarchy = $state<HierarchyNode<any>>(hierarchy(groupedCars).count());
   $effect.pre(() => {
     untrack(() => {
       selectedCarNode = groupedHierarchy;
@@ -78,7 +78,7 @@
   });
 
   $effect.pre(() => {
-    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
+    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyNode<any>;
   });
 
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
