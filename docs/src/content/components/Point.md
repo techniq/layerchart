@@ -9,8 +9,6 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
 
-### Basic usage
-
-<Example name="basic-usage" />
+<Example name="basic" />

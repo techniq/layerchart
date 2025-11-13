@@ -9,7 +9,11 @@ related: [Chart, Bars]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="vertical-default" showCode />
+
+<!-- ## Examples
 
 ### Vertical (default)
 
@@ -261,4 +265,4 @@ related: [Chart, Bars]
 
 ### Custom chart
 
-<Example name="custom-chart" />
+<Example name="custom-chart" /> -->

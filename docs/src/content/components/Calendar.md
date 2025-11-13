@@ -9,7 +9,11 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="basic" showCode  />
+
+<!-- ## Examples
 
 ### Responsive cell size (default)
 
@@ -37,4 +41,4 @@ related: []
 
 ### 90 days
 
-<Example name="90-days" />
+<Example name="90-days" /> -->

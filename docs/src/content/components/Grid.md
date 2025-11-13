@@ -9,7 +9,11 @@ related: [Axis, Rule]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="basic" showCode />
+
+<!-- ## Examples
 
 ### Basic
 
@@ -67,4 +71,4 @@ Respects padding
 
 ### Remove default tick count
 
-<Example name="tick-count-null" />
+<Example name="tick-count-null" /> -->

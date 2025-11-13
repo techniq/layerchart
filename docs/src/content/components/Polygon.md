@@ -9,7 +9,11 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+### Usage
+
+<Example name="playground" showCode />
+
+<!-- ## Examples
 
 ### Playground
 
@@ -97,4 +101,4 @@ related: []
 
 #### Cross
 
-<Example name="cross" />
+<Example name="cross" /> -->

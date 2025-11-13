@@ -9,7 +9,11 @@ related: [Chart, Pie]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="basic" showCode />
+
+<!-- ## Examples
 
 ### Basic
 
@@ -127,4 +131,4 @@ related: [Chart, Pie]
 
 ### Motion (spring)
 
-<Example name="motion-spring" />
+<Example name="motion-spring" /> -->

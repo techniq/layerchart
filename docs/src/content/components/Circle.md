@@ -9,7 +9,11 @@ related: [Points]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="styling-using-classes" showCode />
+
+<!-- ## Examples
 
 ### Styling using classes
 
@@ -21,4 +25,4 @@ related: [Points]
 
 ### Styling using CSS variables
 
-<Example name="styling-using-css-variables" />
+<Example name="styling-using-css-variables" /> -->

@@ -9,12 +9,12 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
 
-### Scatter
+<Example name="scatter" showCode />
 
-<Example name="scatter" />
+## Geo context
 
-### Geo
+Hull can also be used within a geo context (i.e. `<Chart geo={{ projection: ... }}>`)
 
 <Example name="geo" />

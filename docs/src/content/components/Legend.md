@@ -9,7 +9,11 @@ related: []
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="sequential" showCode />
+
+<!-- ## Examples
 
 ### scaleSequential
 
@@ -85,4 +89,4 @@ related: []
 
 ### Children override
 
-<Example name="children-override" />
+<Example name="children-override" /> -->

@@ -1,7 +1,7 @@
 ---
 description: Base component providing chart dimensions and contexts such as TooltipContext, GeoContext, and TransformContext. See also simplified charts such as AreaChart and BarChart for streamlined implementations.
 section: charts
-layers: []
+layers: [svg, canvas, html]
 related:
   [ArcChart, AreaChart, BarChart, LineChart, PieChart, ScatterChart, TooltipContext, GeoContext]
 ---
@@ -9,5 +9,9 @@ related:
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
+
+## Usage
+
+<Example component="Area" name="basic" showCode />
 
 > Features: Adds support for x and y baselines (always show 0, etc)

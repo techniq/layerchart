@@ -63,13 +63,13 @@
 	});
 </script>
 
-<H2>Usage</H2>
+<!-- <H2>Usage</H2>
 
 <Code
 	source={`import { ${page.params.name} } from 'layerchart';`}
 	language="javascript"
 	class="bg-surface-100 border rounded"
-/>
+/> -->
 
 <!-- Markdown page -->
 <PageComponent />

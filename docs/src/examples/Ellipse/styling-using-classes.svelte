@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { Axis, Chart, Ellipse, Layer } from 'layerchart';
-
-	const data = undefined;
-	export { data };
 </script>
 
 <Chart

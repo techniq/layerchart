@@ -9,7 +9,7 @@ related: [AnnotationLine, AnnotationRange]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+<!-- ## Examples
 
 ### On axis with tooltip
 
@@ -37,4 +37,4 @@ related: [AnnotationLine, AnnotationRange]
 
 ### Band scale on value
 
-<Example name="band-scale-on-value" />
+<Example name="band-scale-on-value" /> -->

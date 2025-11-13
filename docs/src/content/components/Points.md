@@ -10,3 +10,7 @@ related: [ScatterChart]
 </script>
 
 > See also: [ScatterChart](/docs/components/ScatterChart) for simplified examples
+
+## Usage
+
+<Example name="basic" showCode />

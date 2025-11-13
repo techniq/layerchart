@@ -9,7 +9,7 @@ related: [AnnotationPoint, AnnotationRange]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+<!-- ## Examples
 
 ### Vertical
 
@@ -41,4 +41,4 @@ related: [AnnotationPoint, AnnotationRange]
 
 ### Bar chart
 
-<Example name="bar-chart" />
+<Example name="bar-chart" /> -->

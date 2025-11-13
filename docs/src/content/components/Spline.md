@@ -11,7 +11,15 @@ related: [MotionPath, LineChart]
 
 > See also: [LineChart](/docs/components/LineChart) for simplified examples
 
+## Usage
+
+<Example name="basic" showCode />
+
 ## Playground
+
+<Example name="playground" />
+
+<!-- ## Playground
 
 <Example name="playground" />
 
@@ -45,4 +53,4 @@ related: [MotionPath, LineChart]
 
 <Example name="end-slot-with-draw-with-value" />
 
-- Because the draw transition and tweened store use different timers, there is no guarantee they will start at the same time
+- Because the draw transition and tweened store use different timers, there is no guarantee they will start at the same time -->

@@ -9,7 +9,7 @@ related: [AnnotationLine, AnnotationPoint]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+<!-- ## Examples
 
 ### Horizontal with pattern, lower bound
 
@@ -61,4 +61,4 @@ related: [AnnotationLine, AnnotationPoint]
 
 ### Hide tooltip
 
-<Example name="hide-tooltip" />
+<Example name="hide-tooltip" /> -->

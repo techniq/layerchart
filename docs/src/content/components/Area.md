@@ -11,6 +11,10 @@ related: []
 
 > See also: [AreaChart](/docs/components/AreaChart) for simplified examples
 
+## Usage
+
+<Example name="basic" showCode />
+
 ## Playground
 
 <Example name="playground" />

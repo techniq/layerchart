@@ -11,12 +11,18 @@ related: [Pie, ArcChart, PieChart]
 
 > See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/PieChart) for simplified examples
 
-## Examples
+## Usage
 
-### Playground
+<Example name="partial-arc" showCode />
 
-<Example name="playground" />
+## Text along path
 
-### Label direction
+`Arc` can be used with the `children` snippet, `getArcTextProps`, and `Text` to write text along the `inner`, `outer`, or `middle` of the arc path.
+
+The text will smartly orientate based on the direction (clockwise / counter-clockwise) and location (top, bottom, left, right) of the arc
 
 <Example name="label-direction" />
+
+## Playground
+
+<Example name="playground" />

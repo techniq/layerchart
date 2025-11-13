@@ -7,7 +7,7 @@
 
 <p
 	class={cls(
-		'text-surface-content/95 leading-8 [main>&:not(:first-child)]:mt-6 ml-2 leading-relaxed',
+		'text-surface-content [main>&:not(:first-child)]:mt-6 ml-2 leading-relaxed',
 		className
 	)}
 	{...restProps}

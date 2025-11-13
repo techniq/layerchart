@@ -9,7 +9,11 @@ related: [Chart, Points]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="basic" showCode />
+
+<!-- ## Examples
 
 ### Basic
 
@@ -115,4 +119,4 @@ related: [Chart, Points]
 
 ### Custom
 
-<Example name="custom" />
+<Example name="custom" /> -->
