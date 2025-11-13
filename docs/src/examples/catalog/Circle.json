@@ -313,16 +313,16 @@
       "line": "<Circle cx={x} cy={y} r={4} class=\"stroke-primary/50 fill-none\" />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 10,
       "line": "<Circle r={20} class=\"fill-surface-content\" />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 13,
       "line": "<Circle r={10} class=\"fill-surface-content\" />"
     },
@@ -446,16 +446,16 @@
       "line": "<circle cx={4} cy={4} r={2} class=\"fill-surface-content/30\" />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 24,
       "line": "<Circle cx={x} cy={y} r={10} />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 30,
       "line": "<Circle cx={x} cy={y} r={15} class=\"fill-primary bg-primary\" />"
     },
@@ -600,5 +600,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-12T17:29:17.408Z"
+  "updatedAt": "2025-11-13T18:10:49.505Z"
 }

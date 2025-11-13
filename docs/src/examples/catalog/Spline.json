@@ -1057,16 +1057,16 @@
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 36,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 37,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
@@ -1106,5 +1106,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.884Z"
+  "updatedAt": "2025-11-13T18:10:50.473Z"
 }

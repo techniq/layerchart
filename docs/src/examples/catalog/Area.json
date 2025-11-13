@@ -1179,16 +1179,16 @@
       "line": "<Area"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 32,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 41,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
     },
@@ -1312,5 +1312,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.093Z"
+  "updatedAt": "2025-11-13T18:10:49.236Z"
 }

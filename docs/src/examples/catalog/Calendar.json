@@ -28,6 +28,27 @@
       ]
     },
     {
+      "name": "basic",
+      "path": "/example/Calendar/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Calendar",
+          "lineNumber": 40,
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} monthPath />"
+        }
+      ]
+    },
+    {
       "name": "fixed-cell-size",
       "path": "/example/Calendar/fixed-cell-size",
       "components": [
@@ -208,6 +229,13 @@
       "line": "<Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />"
     },
     {
+      "example": "basic",
+      "component": "Calendar",
+      "path": "/example/Calendar/basic",
+      "lineNumber": 40,
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} monthPath />"
+    },
+    {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/example/Calendar/fixed-cell-size",
@@ -250,5 +278,5 @@
       "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.306Z"
+  "updatedAt": "2025-11-13T18:10:49.430Z"
 }

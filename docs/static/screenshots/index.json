@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-11-12T18:44:20.667Z",
+  "generatedAt": "2025-11-13T18:10:48.738Z",
   "totalComponents": 57,
-  "totalExamples": 693,
+  "totalExamples": 694,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1672,6 +1672,11 @@
           "checksum": "9f31891353c3cc4a3bd561de54242650"
         },
         {
+          "name": "basic",
+          "path": "/example/Calendar/basic",
+          "checksum": "cfeb67b5333610bc9b7251106f3c4d84"
+        },
+        {
           "name": "fixed-cell-size",
           "path": "/example/Calendar/fixed-cell-size",
           "checksum": "7bda4d776cab0b794a21c943fad73a2f"
@@ -1819,7 +1824,7 @@
         {
           "name": "styling-using-classes",
           "path": "/example/Ellipse/styling-using-classes",
-          "checksum": "e8f7c6edde754dca6a9e80b79f332fbd"
+          "checksum": "80a2c63e858f12605f55b7304e8f8152"
         },
         {
           "name": "styling-using-css-variables",
@@ -2182,8 +2187,8 @@
       "component": "Group",
       "examples": [
         {
-          "name": "basic-usage",
-          "path": "/example/Group/basic-usage",
+          "name": "basic",
+          "path": "/example/Group/basic",
           "checksum": "8d44df5e448f13a164aefea1b14dbfa6"
         }
       ]
@@ -3002,8 +3007,8 @@
       "component": "Point",
       "examples": [
         {
-          "name": "basic-usage",
-          "path": "/example/Point/basic-usage",
+          "name": "basic",
+          "path": "/example/Point/basic",
           "checksum": "276e1c125fcc90b3b02f7344379cb214"
         }
       ]
@@ -3552,8 +3557,8 @@
       "component": "Threshold",
       "examples": [
         {
-          "name": "basic-threshold",
-          "path": "/example/Threshold/basic-threshold",
+          "name": "basic",
+          "path": "/example/Threshold/basic",
           "checksum": "335a763f0eb079d30a9c380c3500368a"
         },
         {

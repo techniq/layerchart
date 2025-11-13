@@ -2,8 +2,8 @@
   "component": "Group",
   "examples": [
     {
-      "name": "basic-usage",
-      "path": "/example/Group/basic-usage",
+      "name": "basic",
+      "path": "/example/Group/basic",
       "components": [
         {
           "component": "Chart",
@@ -96,16 +96,16 @@
       "line": "<Group center>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 9,
       "line": "<Group center>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 12,
       "line": "<Group x={100} y={100}>"
     },
@@ -264,5 +264,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:22.138Z"
+  "updatedAt": "2025-11-13T18:10:49.888Z"
 }

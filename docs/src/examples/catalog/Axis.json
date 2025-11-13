@@ -2850,14 +2850,14 @@
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 15,
+      "lineNumber": 12,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 16,
+      "lineNumber": 13,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2994,16 +2994,16 @@
       "line": "<Axis placement=\"bottom\" rule ticks={mdScreen.current ? 10 : 5} />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 7,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 8,
       "line": "<Axis placement=\"left\" rule />"
     },
@@ -3120,16 +3120,16 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 20,
       "line": "<Axis placement=\"left\" rule />"
     },
@@ -4016,5 +4016,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.138Z"
+  "updatedAt": "2025-11-13T18:10:49.281Z"
 }
