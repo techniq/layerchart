@@ -3,9 +3,6 @@
 	import { feature } from 'topojson-client';
 	import { index } from 'd3-array';
 
-	import LucidePlay from '~icons/lucide/play';
-	import LucideSquare from '~icons/lucide/square';
-
 	import {
 		Chart,
 		GeoPath,
@@ -17,12 +14,13 @@
 	} from 'layerchart';
 	import { Button, ButtonGroup } from 'svelte-ux';
 	import { sortFunc } from '@layerstack/utils';
-	// import { scrollIntoView } from '@layerstack/svelte-actions';
+	import { scrollIntoView } from '@layerstack/svelte-actions';
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
 
 	import { getCountriesTopology } from '$lib/geo.remote.js';
 	import { timings } from './animated-timings.js';
+	import AnimatedGlobeControls from '$lib/components/AnimatedGlobeControls.svelte';
 
 	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
@@ -106,33 +104,11 @@
 </script>
 
 <div class="h-[600px] grid grid-cols-[224px_1fr] relative">
-	<div class="absolute top-0 right-0 z-10 flex items-center gap-3">
-		{#if isPlaying && selectedFeature}
-			<span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">
-				{selectedFeature?.properties.name ?? ''}
-			</span>
-		{/if}
-		<ButtonGroup variant="fill-light" color="primary" size="sm">
-			<Button
-				icon={LucidePlay}
-				on:click={play}
-				disabled={isPlaying}
-				classes={{ icon: 'text-xs' }}
-			/>
-			<Button
-				icon={LucideSquare}
-				on:click={stop}
-				disabled={!isPlaying}
-				classes={{ icon: 'text-xs' }}
-			/>
-		</ButtonGroup>
-	</div>
-
+	<AnimatedGlobeControls {isPlaying} {selectedFeature} {play} {stop} />
 	<div class="overflow-auto scrollbar-none">
 		{#each countries.features.sort(sortFunc('properties.name')) as country (country)}
 			{@const isSelected = selectedFeature?.properties.name === country.properties.name}
-			<!-- <div use:scrollIntoView={{ condition: isSelected }}> -->
-			<div>
+			<div use:scrollIntoView={{ condition: isSelected }}>
 				<Button
 					variant={isSelected ? 'fill-light' : 'default'}
 					color={isSelected ? 'primary' : 'default'}
