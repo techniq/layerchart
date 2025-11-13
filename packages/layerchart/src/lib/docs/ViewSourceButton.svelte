@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { Button, Dialog, Toggle, Tooltip } from 'svelte-ux';
-  import LucideGithub from '~icons/lucide/github.svelte';
+  import LucideGithub from '~icons/lucide/github';
 
   import Code from './Code.svelte';
 

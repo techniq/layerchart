@@ -23,8 +23,8 @@
     type DomainType,
   } from 'layerchart';
 
-  import LucideChevronLeft from '~icons/lucide/chevron-left.svelte';
-  import LucideChevronRight from '~icons/lucide/chevron-right.svelte';
+  import LucideChevronLeft from '~icons/lucide/chevron-left';
+  import LucideChevronRight from '~icons/lucide/chevron-right';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
