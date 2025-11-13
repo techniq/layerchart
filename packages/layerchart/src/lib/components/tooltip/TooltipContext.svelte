@@ -518,6 +518,32 @@
                   height: ctx.yScale.step(),
                   data: d,
                 };
+              } else if (ctx.xInterval) {
+                // x-axis time scale with interval
+                const xVal = ctx.x(d);
+                const start = ctx.xInterval.floor(xVal);
+                const end = ctx.xInterval.offset(start);
+
+                return {
+                  x: ctx.xScale(start),
+                  y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
+                  width: ctx.xScale(end) - ctx.xScale(start),
+                  height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
+                  data: d,
+                };
+              } else if (ctx.yInterval) {
+                // y-axis time scale with interval
+                const yVal = ctx.y(d);
+                const start = ctx.yInterval.floor(yVal);
+                const end = ctx.yInterval.offset(start);
+
+                return {
+                  x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
+                  y: ctx.yScale(start),
+                  width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
+                  height: ctx.yScale(end) - ctx.yScale(start),
+                  data: d,
+                };
               } else if (isScaleTime(ctx.xScale)) {
                 // Find width to next data point
                 const index = ctx.flatData.findIndex(

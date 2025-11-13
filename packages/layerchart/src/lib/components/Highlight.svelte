@@ -264,6 +264,11 @@
         tmpArea.width = max(xCoord) - min(xCoord); // Use first/last values for width
       } else if (isScaleBand(ctx.xScale)) {
         tmpArea.width = ctx.xScale.step();
+      } else if (ctx.xInterval) {
+        // x-axis time scale with interval
+        const start = ctx.xInterval.floor(xValue);
+        const end = ctx.xInterval.offset(start);
+        tmpArea.width = ctx.xScale(end) - ctx.xScale(start);
       } else {
         // Find width to next data point
         const index = ctx.flatData.findIndex((d) => Number(x(d)) === Number(x(highlightData)));
@@ -290,6 +295,11 @@
         tmpArea.height = max(yCoord) - min(yCoord); // Use first/last values for width
       } else if (isScaleBand(ctx.yScale)) {
         tmpArea.height = ctx.yScale.step();
+      } else if (ctx.yInterval) {
+        // y-axis time scale with interval
+        const start = ctx.yInterval.floor(yValue);
+        const end = ctx.yInterval.offset(start);
+        tmpArea.height = ctx.yScale(end) - ctx.yScale(start);
       } else {
         // Find width to next data point
         const index = ctx.flatData.findIndex((d) => Number(y(d)) === Number(y(highlightData)));
