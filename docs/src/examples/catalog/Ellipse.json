@@ -33,22 +33,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 8,
+          "lineNumber": 5,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 14,
+          "lineNumber": 11,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 15,
+          "lineNumber": 12,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Ellipse",
-          "lineNumber": 17,
+          "lineNumber": 14,
           "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
         }
       ]
@@ -113,28 +113,28 @@
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 17,
+      "lineNumber": 14,
       "line": "<Ellipse cx={100} cy={100} rx={20} ry={10} />"
     },
     {
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 18,
+      "lineNumber": 15,
       "line": "<Ellipse cx={200} cy={200} rx={20} ry={10} class=\"fill-primary bg-primary\" />"
     },
     {
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 19,
+      "lineNumber": 16,
       "line": "<Ellipse cx={200} cy={50} rx={20} ry={10} fill=\"var(--color-secondary)\" />"
     },
     {
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 20,
+      "lineNumber": 17,
       "line": "<Ellipse"
     },
     {
@@ -166,5 +166,5 @@
       "line": "<Ellipse"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.774Z"
+  "updatedAt": "2025-11-13T18:10:49.618Z"
 }

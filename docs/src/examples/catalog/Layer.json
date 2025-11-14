@@ -1186,6 +1186,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "Calendar",
+      "path": "/example/Calendar/basic",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/example/Calendar/fixed-cell-size",
@@ -1315,7 +1322,7 @@
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 14,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
@@ -1816,9 +1823,9 @@
       "line": "<Layer>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 6,
       "line": "<Layer>"
     },
@@ -2229,9 +2236,9 @@
       "line": "<Layer center>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 18,
       "line": "<Layer>"
     },
@@ -2999,5 +3006,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:22.223Z"
+  "updatedAt": "2025-11-13T18:10:49.991Z"
 }

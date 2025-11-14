@@ -4,7 +4,7 @@
 	import { timeDay } from 'd3-time';
 
 	const data = createDateSeries({
-		count: 10,
+		count: 30,
 		min: 20,
 		max: 100,
 		value: 'integer',
@@ -14,4 +14,10 @@
 	export { data };
 </script>
 
-<BarChart {data} x="date" y="value" xInterval={timeDay} height={300} />
+<BarChart
+	data={data.filter((d) => Math.random() > 0.7)}
+	x="date"
+	y="value"
+	xInterval={timeDay}
+	height={300}
+/>

@@ -9,7 +9,39 @@ related: [Axis, Line, AnnotationLine]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="baseline-x-y" showCode />
+
+## Use cases
+
+A `Rule` component can be used for various use cases include:
+
+### Axis baseline
+
+with `x={true}` / `y={true}`
+
+<Example name="baseline-x-y" showCode />
+
+### Annotation
+
+with `x={Number}` / `y={Number}`
+
+<Example name="annotation-y" showCode />
+
+### Data mark
+
+using `<Chart data>` and either:
+
+- implicit `x` / `y` (using `<Chart x={..} y={...}>`)
+
+<Example name="data-x-range" showCode />
+
+- explicit `x="property"` / `y="property"`
+
+<Example name="candlestick" showCode />
+
+<!-- ## Examples
 
 ### Baseline (x / y)
 
@@ -49,4 +81,4 @@ related: [Axis, Line, AnnotationLine]
 
 ### Data driven (y range)
 
-<Example name="data-y-range" />
+<Example name="data-y-range" /> -->

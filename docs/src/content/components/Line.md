@@ -9,16 +9,6 @@ related: [Rule, Spline]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
 
-### Styling using classes
-
-<Example name="styling-using-classes" />
-
-### Styling using attributes
-
-<Example name="styling-using-attributes" />
-
-### Styling using CSS variables
-
-<Example name="styling-using-css-variables" />
+<Example name="styling-using-classes"  showCode />

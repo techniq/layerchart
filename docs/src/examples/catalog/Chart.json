@@ -1273,6 +1273,13 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Calendar",
+      "path": "/example/Calendar/basic",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/example/Calendar/fixed-cell-size",
@@ -1402,7 +1409,7 @@
       "example": "styling-using-classes",
       "component": "Ellipse",
       "path": "/example/Ellipse/styling-using-classes",
-      "lineNumber": 8,
+      "lineNumber": 5,
       "line": "<Chart"
     },
     {
@@ -1833,9 +1840,9 @@
       "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} height={300}>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 5,
       "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }} height={300}>"
     },
@@ -2253,9 +2260,9 @@
       "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 9,
       "line": "<Chart"
     },
@@ -3009,5 +3016,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:21.593Z"
+  "updatedAt": "2025-11-13T18:10:49.459Z"
 }

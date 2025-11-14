@@ -9,7 +9,11 @@ related: [Grid, Rule]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="placement-bottom-left" showCode />
+
+<!-- ## Examples
 
 ### Placement (bottom / left)
 
@@ -181,4 +185,4 @@ Specify explicit time intervals such as every day, every 6 months, etc with comp
 
 ### Time scale (brush) with multiline ticks
 
-<Example name="time-scale-brush-multiline" />
+<Example name="time-scale-brush-multiline" /> -->

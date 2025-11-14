@@ -2,8 +2,8 @@
   "component": "Threshold",
   "examples": [
     {
-      "name": "basic-threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "name": "basic",
+      "path": "/example/Threshold/basic",
       "components": [
         {
           "component": "AreaChart",
@@ -94,9 +94,9 @@
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 30,
       "line": "<Threshold curve={selectedCurve}>"
     },
@@ -115,5 +115,5 @@
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.940Z"
+  "updatedAt": "2025-11-13T18:10:50.532Z"
 }

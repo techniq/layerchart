@@ -96,14 +96,14 @@
 						class="text-surface-content/70 py-1"
 						on:click={() => (showCode = !showCode)}
 					>
-						{showCode ? 'Hide' : 'Show'} Code
+						{showCode ? 'Hide' : ''} Code
 					</Button>
 				{/if}
 
 				{#if data}
 					<Toggle let:on={open} let:toggle let:toggleOff>
 						<Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}>
-							View data
+							Data
 						</Button>
 
 						<Dialog
@@ -135,13 +135,13 @@
 				{/if}
 
 				{#if page.params.example == null}
-					<!-- Only show Inspect if not already viewing specific example -->
+					<!-- Only show View if not already viewing specific example -->
 					<Button
 						href="/docs/components/{component}/{name}"
 						icon={LucideFullscreen}
 						class="text-surface-content/70 py-1"
 					>
-						Inspect
+						View
 					</Button>
 				{/if}
 
@@ -150,7 +150,7 @@
 					class="text-surface-content/70 py-1"
 					on:click={() => openInStackBlitz(component, name)}
 				>
-					Edit in StackBlitz
+					Edit
 				</Button>
 			</div>
 		{/if}

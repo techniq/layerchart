@@ -11,7 +11,11 @@ related: [Arc, PieChart]
 
 > See also: [PieChart](/docs/components/PieChart) for simplified examples
 
-## Examples
+### Usage
+
+<Example name="basic" showCode />
+
+<!-- ## Examples
 
 ### Basic
 
@@ -113,4 +117,4 @@ related: [Arc, PieChart]
 
 #### Right
 
-<Example name="placement-right" />
+<Example name="placement-right" /> -->

@@ -9,13 +9,13 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const examplesBySection = flatGroup(allExamples, (d) => d.section?.toLowerCase())
-		.filter(([section]) => section !== 'examples')
-		.sort(
-			sortFunc(([section]) =>
-				['cartesian & polar', 'hierarchy', 'graph', 'force', 'geo'].indexOf(section)
-			)
-		);
+	// const examplesBySection = flatGroup(allExamples, (d) => d.section?.toLowerCase())
+	// 	.filter(([section]) => section !== 'examples')
+	// 	.sort(
+	// 		sortFunc(([section]) =>
+	// 			['cartesian & polar', 'hierarchy', 'graph', 'force', 'geo'].indexOf(section)
+	// 		)
+	// 	);
 
 	const componentsBySection = flatGroup(allComponents, (d) => d.section?.toLowerCase())
 		.filter(([section]) => section !== 'examples')
@@ -32,6 +32,7 @@
 					'annotations',
 					'fill',
 					'clipping',
+					'layers',
 					'other'
 				].indexOf(section)
 			)

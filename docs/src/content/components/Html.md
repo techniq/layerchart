@@ -1,6 +1,6 @@
 ---
 description: Html layer
-section: common
+section: layers
 layers: []
 related: [Layer]
 ---

@@ -904,9 +904,9 @@
       "line": "<AreaChart"
     },
     {
-      "example": "basic-threshold",
+      "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic-threshold",
+      "path": "/example/Threshold/basic",
       "lineNumber": 21,
       "line": "<AreaChart"
     },
@@ -925,5 +925,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.117Z"
+  "updatedAt": "2025-11-13T18:10:49.259Z"
 }

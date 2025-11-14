@@ -2,8 +2,8 @@
   "component": "Point",
   "examples": [
     {
-      "name": "basic-usage",
-      "path": "/example/Point/basic-usage",
+      "name": "basic",
+      "path": "/example/Point/basic",
       "components": [
         {
           "component": "Chart",
@@ -49,19 +49,19 @@
       "line": "<Point d={data[data.length - 1]}>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 22,
       "line": "<Point d={{ x: 50, y: 50 }}>"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic-usage",
+      "path": "/example/Point/basic",
       "lineNumber": 28,
       "line": "<Point d={{ x: 20, y: 20 }}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.684Z"
+  "updatedAt": "2025-11-13T18:10:50.286Z"
 }

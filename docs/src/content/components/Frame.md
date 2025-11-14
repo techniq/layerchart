@@ -9,7 +9,11 @@ related: [Rect]
 	import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="basic" showCode />
+
+<!-- ## Examples
 
 ### Basic
 
@@ -29,4 +33,4 @@ Full bounds (ignore padding)
 
 ### Gradient
 
-<Example name="gradient" />
+<Example name="gradient" /> -->

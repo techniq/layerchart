@@ -11,10 +11,18 @@ related: []
 
 ## Examples
 
-### Playground
+### Usage
 
-<Example name="playground" />
+<Example name="playground" showCode />
 
-### Word wrap with explicit `\n`
+## Along path
 
-<Example name="word-wrap-with-explicit-n" />
+`Text` can be used with `Arc`'s `children` snippet and `getArcTextProps` to write along the `inner`, `outer`, or `middle` of the arc path.
+
+The text will smartly orientate based on the direction (clockwise / counter-clockwise) and location (top, bottom, left, right) of the arc
+
+<Example component="Arc" name="label-direction" />
+
+<!-- ### Word wrap with explicit `\n`
+
+<Example name="word-wrap-with-explicit-n" /> -->

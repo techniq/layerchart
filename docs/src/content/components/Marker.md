@@ -9,7 +9,11 @@ related: [Spline, Line, Rule, GeoSpline]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+## Usage
+
+<Example name="spline" showCode />
+
+<!-- ## Examples
 
 ### Spline
 
@@ -29,4 +33,4 @@ related: [Spline, Line, Rule, GeoSpline]
 
 ### Orientation
 
-<Example name="orientation" />
+<Example name="orientation" /> -->

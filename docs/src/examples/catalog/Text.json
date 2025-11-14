@@ -345,9 +345,9 @@
       "line": "<Text"
     },
     {
-      "example": "basic-usage",
+      "example": "basic",
       "component": "Group",
-      "path": "/example/Group/basic-usage",
+      "path": "/example/Group/basic",
       "lineNumber": 14,
       "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
     },
@@ -639,5 +639,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:22.850Z"
+  "updatedAt": "2025-11-13T18:10:50.511Z"
 }

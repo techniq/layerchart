@@ -83,6 +83,7 @@
 					'interactions',
 					'fill',
 					'clipping',
+					'layers',
 					'other'
 				].indexOf(section)
 			)

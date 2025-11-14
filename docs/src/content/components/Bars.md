@@ -10,3 +10,7 @@ related: [Bar]
 </script>
 
 > See also: [BarChart](/docs/components/BarChart) for simplified examples
+
+## Usage
+
+<Example name="vertical-basic" showCode />

@@ -2,10 +2,10 @@
   import { onMount } from 'svelte';
   import { flatGroup } from 'd3-array';
 
-  import LucideAlignLeft from '~icons/lucide/align-left.svelte';
-  import LucideChevronRight from '~icons/lucide/chevron-right.svelte';
-  import LucideChevronDown from '~icons/lucide/chevron-down.svelte';
-  import LucideCircleCheck from '~icons/lucide/circle-check.svelte';
+  import LucideAlignLeft from '~icons/lucide/align-left';
+  import LucideChevronRight from '~icons/lucide/chevron-right';
+  import LucideChevronDown from '~icons/lucide/chevron-down';
+  import LucideCircleCheck from '~icons/lucide/circle-check';
   import LucideCode from '~icons/lucide/code';
   import LucideBraces from '~icons/lucide/braces';
   import LucideDatabase from '~icons/lucide/database';
