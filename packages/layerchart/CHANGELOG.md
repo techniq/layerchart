@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.43
+
+### Patch Changes
+
+- fix(Highlight|TooltipContext): Support xInterval / yInterval ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.42
 
 ### Patch Changes
