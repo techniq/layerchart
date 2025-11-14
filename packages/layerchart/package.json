@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "techniq/layerchart",
   "homepage": "https://layerchart.com",
-  "version": "2.0.0-next.42",
+  "version": "2.0.0-next.43",
   "scripts": {
     "dev": "pnpm package:watch",
     "dev:svelte": "vite dev --port 3002",
