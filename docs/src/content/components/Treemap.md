@@ -18,6 +18,10 @@ related: []
 <Blockquote>Examples broken due to Group not positioning correctly with Canvas layers</Blockquote>
 {/if}
 
+## Usage
+
+<Example name="basic" showCode />
+
 ## Playground
 
 <Example name="playground" />
