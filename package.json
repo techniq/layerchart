@@ -4,12 +4,17 @@
   "author": "Sean Lynch <techniq35@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://layerchart.com",
   "scripts": {
+    "dev": "pnpm -r dev",
     "test:unit": "pnpm -r test:unit",
-    "build": "rimraf packages/*/dist && pnpm -r build",
-    "package": "pnpm -r package",
-    "check": "pnpm -r check",
-    "lint": "pnpm -r lint",
+    "build:packages": "rimraf packages/*/dist && pnpm --filter './packages/*' build",
+    "build:examples": "rimraf packages/*/dist && pnpm --filter './packages/*' package &&  pnpm --filter './examples/*' build",
+    "package": "pnpm --filter './packages/*' package",
+    "check:packages": "pnpm --filter './packages/*' check",
+    "check:examples": "pnpm --filter './examples/*' check",
+    "lint:packages": "pnpm --filter './packages/*' lint",
+    "lint:examples": "pnpm --filter './examples/*' lint",
     "format": "pnpm -r format",
     "changeset": "changeset",
     "changeset:version": "changeset version",
@@ -17,10 +22,15 @@
     "up-deps": "pnpm update -r -i --latest"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.4",
+    "@changesets/cli": "2.29.6",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "rimraf": "6.0.1",
-    "wrangler": "^4.14.4"
+    "wrangler": "^4.30.0"
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@9.1.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }

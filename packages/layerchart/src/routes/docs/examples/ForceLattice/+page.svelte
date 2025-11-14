@@ -2,9 +2,10 @@
   import { forceManyBody, forceLink } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const n = 20;
   const nodes = Array.from({ length: n * n }, (_, i) => ({ index: i }));
@@ -23,27 +24,32 @@
 <h1>Examples</h1>
 
 <Preview data={nodes}>
-  <div class="h-[800px] p-4 border rounded overflow-hidden">
-    <Chart data={nodes}>
-      <Svg center>
-        <ForceSimulation
-          forces={{
-            charge: chargeForce,
-            link: linkForce,
-          }}
-          let:nodes
-        >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
+  <div class="h-[800px] p-4 border rounded-sm overflow-hidden">
+    <Chart>
+      <ForceSimulation
+        data={{ nodes, links }}
+        forces={{
+          charge: chargeForce,
+          link: linkForce,
+        }}
+      >
+        {#snippet children({ nodes, linkPositions })}
+          <Layer type={shared.renderContext} center>
+            {#each links as link, i (i)}
+              <Link
+                explicitCoords={linkPositions[i]}
+                data={link}
+                class="stroke-surface-content/20"
+                curve={curveLinear}
+              />
             {/each}
-          {/key}
 
-          {#each nodes as node}
-            <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
-          {/each}
-        </ForceSimulation>
-      </Svg>
+            {#each nodes as node}
+              <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
+            {/each}
+          </Layer>
+        {/snippet}
+      </ForceSimulation>
     </Chart>
   </div>
 </Preview>

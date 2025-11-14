@@ -6,7 +6,7 @@ import pageSource from './+page.svelte?raw';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     penguins: (await fetch('/data/examples/penguins.csv').then(async (r) =>
       csvParse(await r.text(), autoType)
@@ -16,6 +16,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Scatter charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Points', 'examples/Scatter'],
     },
   };

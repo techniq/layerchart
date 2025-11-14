@@ -5,66 +5,61 @@
   import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Graticule, Legend, Svg, Tooltip, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    Graticule,
+    Legend,
+    Layer,
+    Tooltip,
+    type ChartContextValue,
+  } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
   const eclipses = feature(data.eclipses, data.eclipses.objects.eclipses);
 
-  let transformContext: TransformContext;
+  let context = $state<ChartContextValue>(null!);
 
-  let velocity = 3;
-  let isSpinning = false;
-  const timer = timerStore({
+  let velocity = $state(3);
+  const timer = new TimerState({
     delay: 1,
-    onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
-    },
-    disabled: !isSpinning,
-  });
-  $: isSpinning ? timer.start() : timer.stop();
-  $timer;
+    tick: () => {
+      const value = context.transform.translate;
 
-  $: dateExtents = extent(eclipses.features.map((f) => f.properties.Date));
-  $: colorScale = scaleDiverging<string>(
-    [dateExtents[0] ?? 0, new Date(), dateExtents[1] ?? 0],
-    (t) => (t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t))
+      context.transform.translate = {
+        x: (value.x += velocity),
+        y: value.y,
+      };
+    },
+    disabled: true,
+  });
+
+  const dateExtents = $derived(extent(eclipses.features.map((f) => f.properties.Date)));
+  const colorScale = $derived(
+    scaleDiverging<string>([dateExtents[0] ?? 0, new Date(), dateExtents[1] ?? 0], (t) =>
+      t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t)
+    )
   );
 </script>
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
-
+<div class="flex gap-2 items-end mb-2">
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
       <ButtonGroup size="sm" variant="fill-light">
-        <Button
-          on:click={() => {
-            isSpinning = true;
-          }}
-          disabled={isSpinning}>Start</Button
-        >
-        <Button
-          on:click={() => {
-            isSpinning = false;
-          }}
-          disabled={!isSpinning}>Stop</Button
-        >
+        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
       </ButtonGroup>
     </Field>
 
@@ -73,7 +68,7 @@
       bind:value={velocity}
       min={-10}
       max={10}
-      disabled={!isSpinning}
+      disabled={!timer.running}
       labelPlacement="left"
     />
   </div>
@@ -87,44 +82,41 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      ondragstart={() => timer.stop()}
-      ondragend={() => {
-        if (isSpinning) {
-          // Restart
-          timer.start();
-        }
-      }}
-      bind:transformContext
+      ondragstart={timer.stop}
+      bind:context
       padding={{ top: 60 }}
-      let:tooltip
     >
-      <Legend
-        scale={colorScale}
-        title="Eclipse date"
-        tickFormat={(d) => new Date(d).getFullYear().toString()}
-      />
+      {#snippet children({ context })}
+        <Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
-        <Graticule class="stroke-surface-content/20" />
-        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-
-        {#each eclipses.features as feature}
-          {@const hasColor = tooltip.data == null || tooltip.data.ID === feature.properties.ID}
-
+        <Layer type={shared.renderContext}>
           <GeoPath
-            geojson={feature}
-            fill={hasColor ? colorScale(feature.properties.Date) : undefined}
-            class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-            onpointermove={(e) => tooltip?.show(e, feature.properties)}
-            onpointerleave={(e) => tooltip?.hide()}
+            geojson={{ type: 'Sphere' }}
+            class="fill-surface-200 stroke-surface-content/20"
           />
-        {/each}
-      </Svg>
+          <Graticule class="stroke-surface-content/20" />
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
 
-      <Tooltip.Root let:data>
-        {format(data.Date, PeriodType.Day, { variant: 'long' })}
-      </Tooltip.Root>
+          {#each eclipses.features as feature}
+            {@const hasColor =
+              context.tooltip.data == null || context.tooltip.data.ID === feature.properties.ID}
+
+            <GeoPath
+              geojson={feature}
+              fill={hasColor ? colorScale(feature.properties.Date) : undefined}
+              class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
+              onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+              onpointerleave={(e) => context.tooltip.hide()}
+            />
+          {/each}
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {format(data.Date, 'day', { variant: 'long' })}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

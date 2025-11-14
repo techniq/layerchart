@@ -1,10 +1,452 @@
 # LayerChart
 
-## 1.0.12
+## 2.0.0-next.43
 
 ### Patch Changes
 
-- fix(Axis): Fix reactivity issue with xRange/yRange in Svelte 5.34+. Fixes #641 ([#643](https://github.com/techniq/layerchart/pull/643))
+- fix(Highlight|TooltipContext): Support xInterval / yInterval ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.42
+
+### Patch Changes
+
+- fix(Calendar): Respect `start` instead of always start of year ([#657](https://github.com/techniq/layerchart/pull/657))
+
+## 2.0.0-next.41
+
+### Patch Changes
+
+- fix(Tooltip): Correctly set tooltip position on chart enter and exit ([#655](https://github.com/techniq/layerchart/pull/655))
+
+## 2.0.0-next.40
+
+### Patch Changes
+
+- fix(LineChart): Restore passing xScale / yScale overrides ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.39
+
+### Minor Changes
+
+- feat: Support css-only usage (no Tailwind required) while retaining first-class Tailwind support ([#557](https://github.com/techniq/layerchart/pull/557))
+
+### Patch Changes
+
+- feat: Simplify daisyUI, shadcn-svelte, and Skeleton integrations with single line `@import 'layerchart/{library}.css'` added to `app.css` ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- docs: Add examples for standalone, daisyUI v5, shadcn-svelte v1, Skeleton v3, and Svelte UX v2 (next) (including light/dark theming) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(LineChart): Support `orientation="vertical"`. Resolves #640 ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat: Add Html context support for applicable primitives such as Circle, Line, Rect, Text (and more) as well as transitively such as Axis, Grid, Labels (and more) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(LinearGradient): Support Html context ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(Text): Apply `fill: currentColor` to support more straightforward way of changing color (ex. `class="text-red-500"` or `style="color:red"`) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(TooltipContext): Revert back to pointer events (instead of mouse/touch) but with `touch-action: pan-y`. Provides simplified events while allowing horizontal scrubbing with vertical scrolling. ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(TooltipContext): Add `touchEvents` to control touch event behavior. Defaults to `pan-y` to allow vertical scrolling but horizontal scrubbing. ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(TooltipContext): Fix `band` mode regression when both x/y are scaleBand (ex. punchcard chart) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(SimplifiedCharts): Properly handle `legend` prop as object when determining bottom padding ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(AreaChart|LineChart|DefaultTooltip): Handle per-series data with different length ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(Highlight): Support passing `opacity` ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(SimplifiedChart): Still add selected legend item opacity when item classes are also applied ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(Legend): Add `selected` prop to fade out unselected items (if passed and non-empty) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- feat(SeriesState): Add `isHighlighted(seriesKey)` to easy check if series is hightlight (or should be faded) ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- fix(Primatives): Apply default classes when using Canvas context (like Svg). Resolves #544 ([#557](https://github.com/techniq/layerchart/pull/557))
+
+- refactor: Remove use of `layerClass` and apply `lc-{name}` class directly to allow easy component <style> targetting within LayerChart ([#557](https://github.com/techniq/layerchart/pull/557))
+
+## 2.0.0-next.38
+
+### Patch Changes
+
+- Update dependencies ([#629](https://github.com/techniq/layerchart/pull/629))
+
+- fix(autoScale): Ignore `null` domain values, fixing some brush examples ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Update `dagreAncestors()` and `dagreDescendants()` util types ([#629](https://github.com/techniq/layerchart/pull/629))
+
+## 2.0.0-next.37
+
+### Patch Changes
+
+- fix(ArcChart): Do not pass y accessor to use linear scale fallback ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.36
+
+### Patch Changes
+
+- fix(PieChart): Do not pass `y` accessor to use linear scale fallback ([#631](https://github.com/techniq/layerchart/pull/631))
+
+## 2.0.0-next.35
+
+### Patch Changes
+
+- feat(Chart): Automatically determine scale based on data and domain values (instead of defaulting to scaleLinear) ([#624](https://github.com/techniq/layerchart/pull/624))
+
+## 2.0.0-next.34
+
+### Minor Changes
+
+- feat(Rule): Support using as data-driven mark (ex. candlestick, lollipop) by default (`<Rule>` using Chart accessors) or passing explicit `x`/`y` accessors (ex. `<Rule y={["high", "low"]} />`). Resolves #64 ([#622](https://github.com/techniq/layerchart/pull/622))
+
+- breaking(Points): Remove `<Points links>` prop. Use `<Rule>` with x/y accessor instead ([#622](https://github.com/techniq/layerchart/pull/622))
+
+### Patch Changes
+
+- breaking(Axis): Rename `x="left|right"` and `y="top|bottom"` props with `# LayerChart prefix (ex. `<Axis x="$left">`) ([#622](https://github.com/techniq/layerchart/pull/622))
+
+## 2.0.0-next.33
+
+### Patch Changes
+
+- fix(Bars): Fix inverted rect when rendered top-to-bottom or right-to-left. Fixes #540 ([#613](https://github.com/techniq/layerchart/pull/613))
+
+- fix(Axis): Filter distinct tick values (useful when manually injecting extra values) ([#615](https://github.com/techniq/layerchart/pull/615))
+
+- feat(Axis): Use `format` to filter ticks (integer and date/time). Helpful to keep ticks above a threshold for wide charts or short durations. ([#615](https://github.com/techniq/layerchart/pull/615))
+
+## 2.0.0-next.32
+
+### Patch Changes
+
+- fix(Points): Update `point.x` / `point.y` based on `ctx.radial` to simplify children snippet usage ([#611](https://github.com/techniq/layerchart/pull/611))
+
+## 2.0.0-next.31
+
+### Minor Changes
+
+- feat(Chart): Add `xInterval` / `yInterval` for time scales usage with bar charts ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(BarChart): Support time scale with `xInterval` / `yInterval` props ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(TooltipContext): Support `band` mode with time scale (similar to band scale) ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(ForceSimulation): Added `onNodesChange` callback to `ForceSimulation` ([#607](https://github.com/techniq/layerchart/pull/607))
+
+### Patch Changes
+
+- fix(Bar): Clamp radius to width/height to not cause artifacts with small values (including `0`) when rounding a single edge. Fixes #383 ([#610](https://github.com/techniq/layerchart/pull/610))
+
+- fix(Highlight): Properly handle area highlights with y-axis time scales ([#562](https://github.com/techniq/layerchart/pull/562))
+
+## 2.0.0-next.30
+
+### Patch Changes
+
+- fix(AnnotationPoint): Do not propagate mouse/touch move/leave events to TooltipContext after switching from pointer events. Fixes #598 ([#602](https://github.com/techniq/layerchart/pull/602))
+
+## 2.0.0-next.29
+
+### Patch Changes
+
+- fix(Axis): Fix display of axis labels ([#591](https://github.com/techniq/layerchart/pull/591))
+
+## 2.0.0-next.28
+
+### Patch Changes
+
+- fix(Axis): Fix memory leak and improve performance when tick values are `Date` instances ([#586](https://github.com/techniq/layerchart/pull/586))
+
+## 2.0.0-next.27
+
+### Patch Changes
+
+- feat: Update `applyLanes()` util to support nested string key and function accessors for start/end properties ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Add `applyLanes()` as top-level export ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.26
+
+### Patch Changes
+
+- feat: Add `applyLanes()` array util to support densely packing timelines ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.25
+
+### Patch Changes
+
+- feat(TooltipContext): Support `quadtree-x` and `quadtree-y` modes. Resolves #525 ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(AreaChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(LineChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(ScatterChart): Change default tooltip mode from `voronoi` to `quadtree` ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix: Support passing `<*Chart tooltip={...}>` to underlying TooltipContext (as types already indicate) ([#576](https://github.com/techniq/layerchart/pull/576))
+
+## 2.0.0-next.24
+
+### Patch Changes
+
+- breaking(Legend): Rename `classes.swatches` to `classes.item` ([#571](https://github.com/techniq/layerchart/pull/571))
+
+- fix(Legend): Improve / simplify responsive use cases with additional default classes (center, shrink, truncate) ([#571](https://github.com/techniq/layerchart/pull/571))
+
+- fix(Axis): Correctly place multiline parts based on placement ([#574](https://github.com/techniq/layerchart/pull/574))
+
+- fix(Axis|Text): Improve Text y placement using lineHeight/capHeight and remove explicit adjustments, aligning with Html rendering ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.23
+
+### Patch Changes
+
+- fix(Highlight): Fix display of lines for first values (`0` coord). Fixes #568 ([#569](https://github.com/techniq/layerchart/pull/569))
+
+## 2.0.0-next.22
+
+### Patch Changes
+
+- fix(TooltipContext): Fix touch scrolling on mobile. Fixes #255 ([#566](https://github.com/techniq/layerchart/pull/566))
+
+## 2.0.0-next.21
+
+### Patch Changes
+
+- fix: Reduce bundle size by removing culori as transitive dependency ([#563](https://github.com/techniq/layerchart/pull/563))
+
+## 2.0.0-next.20
+
+### Patch Changes
+
+- fix(Canvas): Improve performance by skipping unnecessary work when hit canvas is unneeded ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Improve performance by reducing computed style lookups and memoizing responses ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Only apply text/font properties to canvas to improve performance ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Improve performance by only using custom geoCurvePath when `curve` overridden ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Fix reactivity with `curve` when using Canvas context ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Calendar): Support showing month labels without path via `monthLabel` prop (true by default) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.19
+
+### Patch Changes
+
+- fix(Calendar): Pass `cellSize` to children snippet (useful when responsive) ([#558](https://github.com/techniq/layerchart/pull/558))
+
+## 2.0.0-next.18
+
+### Patch Changes
+
+- refactor: Replace `date-fns` usage with existing `d3-time` to reduce bundle size ([#551](https://github.com/techniq/layerchart/pull/551))
+
+- fix(Text): Performance improvement by only determining word width if `width` prop defined (for word wrapping) ([#554](https://github.com/techniq/layerchart/pull/554))
+
+## 2.0.0-next.17
+
+### Patch Changes
+
+- feat: Add Polygon primitive ([#533](https://github.com/techniq/layerchart/pull/533))
+
+- feat: Add Ellipse primitive ([#533](https://github.com/techniq/layerchart/pull/533))
+
+- feat(Spline): Add `value` to `startContent` and `endContent` snippets to easily access the `x` and `y` data values ([#537](https://github.com/techniq/layerchart/pull/537))
+
+- breaking(Spline): Rename `splineRef` to `pathRef` ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(GeoPath): Do not register with hit canavs unless pointer events (onclick, onpointermove, etc) or tooltipContext are defined ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(Treemap): Fix reactivity of props (tile, padding, etc) ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- breaking(Treemap): Remove `selected` prop ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- fix(Treemap): Add `maintainAspectRatio` (default: false) to opt into tiling function adjustment (primarily for zoom) ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- fix(Treemap): Fix `padding*` prop types to support function or number constant ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- feat(ForceSimulation): Refined `onstart`/`ontick`/`onend` events of `ForceSimulation` ([#547](https://github.com/techniq/layerchart/pull/547))
+
+- fix(ForceSimulation): Fixed a bug that would sometimes keep a simulation running, when its inputs change, even if `alpha < alphaMin` ([#546](https://github.com/techniq/layerchart/pull/546))
+
+- fix(TooltipList): Align label to top (start) instead of center by default ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- breaking(Blur): Remove children snippet props (not needed and easier to support canvas in the future) ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(Calendar|MonthPath): Support canvas by using `Spline` instead of `path` ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- docs: Document each component's context support (svg, canvas, html) with interactive toggle ([#549](https://github.com/techniq/layerchart/pull/549))
+
+## 2.0.0-next.16
+
+### Patch Changes
+
+- fix(ForceSimulation): Expose default values by exporting them as constants ([#530](https://github.com/techniq/layerchart/pull/530))
+
+- fix(ForceSimulation): Export Forces<NodeDatum, LinkDatum> type. ([#531](https://github.com/techniq/layerchart/pull/531))
+
+## 2.0.0-next.15
+
+### Minor Changes
+
+- fix(ForceSimulation): Decouple from `ChartContext` by taking nodes and links via `data` prop. ([#526](https://github.com/techniq/layerchart/pull/526))
+
+- fix(ForceSimulation): Improve types of `nodes` and `links` via generics (i.e. `ForceSimulation<Node, Link>`). ([#527](https://github.com/techniq/layerchart/pull/527))
+
+- fix(ForceSimulation): Expose `links` via `children` snippet.
+
+## 2.0.0-next.14
+
+### Patch Changes
+
+- fix(AreaChart|BarChar|LineChart): Use value axis (typically y) property name/accessor for tooltip label if defined as string (ex. `<AreaChart x="date" y="visitors">` will use `visitors` instead of `value`) ([#523](https://github.com/techniq/layerchart/pull/523))
+
+## 2.0.0-next.13
+
+### Patch Changes
+
+- feat: Support passing `FormatConfig` (ex. `{ type: '...', options: { ... } }`) anywhere `FormatType` is supported to simplify custom formatting (ex. `variant`) ([#521](https://github.com/techniq/layerchart/pull/521))
+
+- feat: Support passing `PeriodTypeCode` strings for simplified date formatting and reduce imports. Example: `format={PeriodType.Day}` is now `format="day"`. Also supported with config object for passing additional options (ex. `format={{ type: 'day', options: { variant: 'long' } }}`). Supported for all `format` props include Axis, Labels, Legend and Tooltip. ([#521](https://github.com/techniq/layerchart/pull/521))
+
+## 2.0.0-next.12
+
+### Patch Changes
+
+- fix(Group): Default `opacity` to `undefined` instead of `1` to allow overriding via class (ex. `opacity-20`) ([#520](https://github.com/techniq/layerchart/pull/520))
+
+- fix(Axis): Additional multiline month fix for day ticks ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.11
+
+### Patch Changes
+
+- fix(Axis): Fix multiline month when day tick does not align on first of month ([#517](https://github.com/techniq/layerchart/pull/517))
+
+## 2.0.0-next.10
+
+### Patch Changes
+
+- fix(Tooltip): Use standard CSS classes (non-tailwind) for root element to simplify some usage (including shadcn-svelte) ([#511](https://github.com/techniq/layerchart/pull/511))
+
+## 2.0.0-next.9
+
+### Patch Changes
+
+- fix(Axis): Key using tick value instead string representation to support millisecond precision ([#508](https://github.com/techniq/layerchart/pull/508))
+
+- fix(Axis): Add time duration aware tick value/format support ([#508](https://github.com/techniq/layerchart/pull/508))
+
+- feat(Axis): Support multiline ticks for time intervals ([#508](https://github.com/techniq/layerchart/pull/508))
+
+- feat(Axis): Support responsive tick counts via `tickSpacing` prop ([#508](https://github.com/techniq/layerchart/pull/508))
+
+- fix(Text): Apply `dominant-baseline` to `<textPath>` instead of `<text>` to fix Safari. Fixes #507 ([#508](https://github.com/techniq/layerchart/pull/508))
+
+- feat(Text): Support explicit word wrapping with `\n` character ([#508](https://github.com/techniq/layerchart/pull/508))
+
+## 2.0.0-next.8
+
+### Patch Changes
+
+- docs: Add non-radial BarChart duration example and improve radial example ([#496](https://github.com/techniq/layerchart/pull/496))
+
+- fix(BarChart): Improve handling time scale for value axis (ex. xScale for horizontal orientation) ([#496](https://github.com/techniq/layerchart/pull/496))
+
+- fix(Spline): Only re-draw on data/path changes and not other context (such as width/height). Fixes #504 ([#505](https://github.com/techniq/layerchart/pull/505))
+
+- docs: Rename "Dot Plot" to "Duration" and add bars example along with points ([#496](https://github.com/techniq/layerchart/pull/496))
+
+## 2.0.0-next.7
+
+### Patch Changes
+
+- feat(Canvas): Support disabling the hit canavs (useful when animations are playing) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- refactor: Update `@layerstack/svelte-state` and replace remaining `@layerstack/svelte-stores` usage (media query) (mostly docs related except Canvas) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.6
+
+### Patch Changes
+
+- fix: Update dependencies, notable @layerstack/utils with improved metric number formatting ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Update dependencies, notable `@layerstack/utils` with improved `metric` number formatting ([`71920fc`](https://github.com/techniq/layerchart/commit/71920fc6d8bb91cc6a15fe5a33f805f166a9de13))
+
+## 2.0.0-next.5
+
+### Patch Changes
+
+- fix(AnnotationRange): Fix passing non-class/fill props (ex. pointer events) via `props.rect` ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.4
+
+### Patch Changes
+
+- fix(TooltipContext): Handle chart padding when using `quadtree` mode ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Voronoi): Support passing `r` to define a max radius (clip path) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(TooltipContext): Support `quadtree` mode for geo visualizations ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(TooltipContext): Support `radius` for voronoi mode ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.3
+
+### Patch Changes
+
+- breaking(AnnotationLine|AnnotationPoint): Change `labelOffset` into explicit `labelXOffset` and `labelYOffset` for greater control (aligns with AnnotationRange) ([#492](https://github.com/techniq/layerchart/pull/492))
+
+- fix(HighlightKey): Define `set()` with arrow function to solve `current` access when passed directly ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Improve memory leak caused by detached DOM increase when using Canvas rendering due to sometimes still rendering Svg components (ex. `<g>` vs `<Group>`) (#490) ([#490](https://github.com/techniq/layerchart/pull/490))
+
+- breaking(Bar): Rename `bar` prop to `data` to better represent usage ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.2
+
+### Major Changes
+
+- feat: Migrate to Svelte 5 runes/snippets (issue #159) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+### Minor Changes
+
+- feat: Add Annotation components (AnnotationPoint, AnnotationLine, AnnotationRange) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat: Integrate `annotations` into simplified charts ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat(Pattern): Simplified definitions via `lines`/`circles` props (issue #472) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat(Pattern): Canvas support ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat(BarChart): Radial support (vertical and horizontal) (issue #469) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat(Arc/Text): Arc path labels with inner/outer/middle placement and smart flipping (issue #7) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat: New ArcChart component ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat: New Connector component (issue #11) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat: Add `Layer` component to easily switch between Svg, Canavs, and Html layers ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- refactor: Remove LayerCake dependency (issue #432) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+### Patch Changes
+
+- fix(ForceSimulation): Restore performance to at/near Svelte 4 performance (issue #451) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- fix(ScatterChart): Support color scales based on value (such as threshold) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- fix(Highlight): Support radial area (issue #112) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat: Add classes for underlying element styling ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- fix: Resolves "Target div has zero or negative height" console warning (issue #291) ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- fix(Text): Respect font weight when canvas rendered ([#458](https://github.com/techniq/layerchart/pull/458))
 
 ## 1.0.11
 
@@ -31,6 +473,24 @@
 - fix: Improve treeshaking `d3-array` and `d3-shape` imports ([`450ca69`](https://github.com/techniq/layerchart/commit/450ca69a183156a25c471e4db235dabee6c65ad2))
 
 - fix: Remove `shapefile` and `topojson-client` as duplicated `dependencies` (`devDependencies` only) ([`da03573`](https://github.com/techniq/layerchart/commit/da035735ceaf2c685d9829b543eee3441da9685c))
+
+## 2.0.0-next.1
+
+### Patch Changes
+
+- Switch from @tailwindcss/postcss to @tailwindcss/vite. Update all non-major packages ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.0
+
+### Major Changes
+
+- Tailwind 4 support ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- fix: Support `opacity` prop/style when Canvas rendered for all primatives ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Spline): Pass `fillOpacity` prop (instead of `fill-opacity`) to support Canvas ([#449](https://github.com/techniq/layerchart/pull/449))
 
 ## 1.0.7
 
@@ -549,7 +1009,6 @@
 - breaking(Bar|Bars): Replaced `inset: number` prop with `insets: Insets | undefined`. ([#321](https://github.com/techniq/layerchart/pull/321))
 
   To migrate from `inset` to `insets` replace `inset = n` with:
-
   - `insets = { x: n / 2 }` if `orientation="vertical"`
   - `insets = { y: n / 2 }` if `orientation="horizontal"`
 
@@ -1645,7 +2104,6 @@
   ```
 
   **Additional**
-
   - Rename tooltipContext's `top`/`left` to `x`/`y`
   - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
   - Add more tooltip examples
@@ -1775,7 +2233,6 @@
 - Remove `ConnectedPoints` component and replace with `links` prop on `<Points>` ([`f514bb6`](https://github.com/techniq/layerchart/commit/f514bb69fa99c6243958cf9a620ca24a137b1d6d))
 
 - Highlight overhaul ([`d9dd4bf`](https://github.com/techniq/layerchart/commit/d9dd4bf38f17530950d29eb6edff400a7d6dff02))
-
   - Consolidate HighlightLine and HighlightRect
   - Support enabling `points`, `lines`, and `area` individually
   - Support passing props to underlying Line, Circle, and Rect

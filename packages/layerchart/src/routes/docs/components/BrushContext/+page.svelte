@@ -1,46 +1,72 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { range } from 'd3-array';
+  import { timeDay } from 'd3-time';
   import { State } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { subDays } from 'date-fns';
-  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   import {
     Area,
     Axis,
+    Bars,
     Chart,
     ChartClipPath,
     Circle,
     Highlight,
+    Layer,
     LinearGradient,
     Points,
     Rule,
     Text,
     Tooltip,
-    Svg,
   } from 'layerchart';
 
-  import Preview from '$lib/docs/Preview.svelte';
-  import { randomWalk } from '$lib/utils/genData.js';
-  import { asAny } from '$lib/utils/types.js';
-  import type { DomainType } from '$lib/utils/scales.js';
+  import LucideChevronLeft from '~icons/lucide/chevron-left';
+  import LucideChevronRight from '~icons/lucide/chevron-right';
 
-  export let data;
+  import Preview from '$lib/docs/Preview.svelte';
+  import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
+  import { asAny } from '$lib/utils/types.js';
+  import type { DomainType } from '$lib/utils/scales.svelte.js';
+  import { shared } from '../../shared.svelte.js';
+
+  let { data } = $props();
 
   const now = new Date();
-  let xDomain = [subDays(now, 60), subDays(now, 30)] as DomainType | undefined;
+  let xDomain = $state([timeDay.offset(now, -60), timeDay.offset(now, -30)]) as
+    | DomainType
+    | undefined;
 
   const seriesData = [
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
   ];
 
   const randomData = range(200).map((d) => {
     return { x: d, y: Math.random() };
+  });
+
+  const dataSeriesData = createDateSeries({
+    count: 30,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
   });
 </script>
 
@@ -50,10 +76,10 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
-      <Svg>
+    <Chart data={data.appleStock} x="date" y="value" brush>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -65,13 +91,12 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50' } }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -83,13 +108,12 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'striped-background' } }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -101,50 +125,40 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
-      let:brush
     >
-      <Svg>
-        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-        {#if brush.isActive}
-          <rect
-            x={brush.range.x}
-            width={brush.handleSize}
-            height={brush.range.height}
-            class={cls('fill-secondary cursor-ew-resize select-none')}
-          />
-          <svg
-            x={brush.range.x - 6}
-            y={brush.range.height / 2 - 10}
-            width="20px"
-            height="20px"
-            viewBox="0 0 24 24"
-            class="icon z-20"
-          >
-            <path d={mdiChevronLeft} class="fill-secondary-content origin-center" />
-          </svg>
+          {#if context.brush.isActive}
+            <rect
+              x={context.brush.range.x}
+              width={context.brush.handleSize}
+              height={context.brush.range.height}
+              class={cls('fill-secondary cursor-ew-resize select-none')}
+            />
+            <LucideChevronLeft
+              x={context.brush.range.x - 6}
+              y={context.brush.range.height / 2 - 10}
+              class="fill-secondary-content"
+            />
 
-          <rect
-            x={brush.range.x + brush.range.width - brush.handleSize}
-            width={brush.handleSize}
-            height={brush.range.height}
-            class={cls('fill-secondary cursor-ew-resize select-none')}
-          />
-          <svg
-            x={brush.range.x + brush.range.width - brush.handleSize - 6}
-            y={brush.range.height / 2 - 10}
-            width="20px"
-            height="20px"
-            viewBox="0 0 24 24"
-            class="icon z-20"
-          >
-            <path d={mdiChevronRight} class="fill-secondary-content origin-center" />
-          </svg>
-        {/if}
-      </Svg>
+            <rect
+              x={context.brush.range.x + context.brush.range.width - context.brush.handleSize}
+              width={context.brush.handleSize}
+              height={context.brush.range.height}
+              class={cls('fill-secondary cursor-ew-resize select-none')}
+            />
+            <LucideChevronRight
+              x={context.brush.range.x + context.brush.range.width - context.brush.handleSize - 6}
+              y={context.brush.range.height / 2 - 10}
+              class="fill-secondary-content"
+            />
+          {/if}
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -153,27 +167,29 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush let:brush>
-      <Svg>
-        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        {#if brush.isActive}
-          <Text
-            x={brush.range.x - 4}
-            y={brush.range.height / 2}
-            value={format(asAny(brush.xDomain?.[0]))}
-            textAnchor="end"
-            verticalAnchor="middle"
-            class="text-xs"
-          />
-          <Text
-            x={brush.range.x + brush.range.width + 4}
-            y={brush.range.height / 2}
-            value={format(asAny(brush.xDomain?.[1]))}
-            verticalAnchor="middle"
-            class="text-xs"
-          />
-        {/if}
-      </Svg>
+    <Chart data={data.appleStock} x="date" y="value" brush>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+          {#if context.brush.isActive}
+            <Text
+              x={context.brush.range.x - 4}
+              y={context.brush.range.height / 2}
+              value={format(asAny(context.brush.xDomain?.[0]))}
+              textAnchor="end"
+              verticalAnchor="middle"
+              class="text-xs"
+            />
+            <Text
+              x={context.brush.range.x + context.brush.range.width + 4}
+              y={context.brush.range.height / 2}
+              value={format(asAny(context.brush.xDomain?.[1]))}
+              verticalAnchor="middle"
+              class="text-xs"
+            />
+          {/if}
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -183,38 +199,30 @@
 <Preview data={data.appleStock}>
   <State initial={[null, null]} let:value={xDomain} let:set>
     <div class="h-[40px]">
-      <Chart
-        data={data.appleStock}
-        x="date"
-        xScale={scaleTime()}
-        y="value"
-        padding={{ left: 80, right: 80 }}
-        brush
-        let:brush
-        let:width
-        let:height
-      >
-        <Svg>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+      <Chart data={data.appleStock} x="date" y="value" padding={{ left: 80, right: 80 }} brush>
+        {#snippet children({ context })}
+          <Layer type={shared.renderContext}>
+            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-          {#if brush.isActive}
-            <Text
-              x={-4}
-              y={height / 2}
-              value={format(asAny(brush.xDomain?.[0]))}
-              textAnchor="end"
-              verticalAnchor="middle"
-              class="text-xs"
-            />
-            <Text
-              x={width + 4}
-              y={height / 2}
-              value={format(asAny(brush.xDomain?.[1]))}
-              verticalAnchor="middle"
-              class="text-xs"
-            />
-          {/if}
-        </Svg>
+            {#if context.brush.isActive}
+              <Text
+                x={-4}
+                y={context.height / 2}
+                value={format(asAny(context.brush.xDomain?.[0]))}
+                textAnchor="end"
+                verticalAnchor="middle"
+                class="text-xs"
+              />
+              <Text
+                x={context.width + 4}
+                y={context.height / 2}
+                value={format(asAny(context.brush.xDomain?.[1]))}
+                verticalAnchor="middle"
+                class="text-xs"
+              />
+            {/if}
+          </Layer>
+        {/snippet}
       </Chart>
     </div>
   </State>
@@ -223,34 +231,35 @@
 <h2>Integrated brush (x-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
           brush={{
             resetOnEnd: true,
-            onbrushend: (e) => {
+            onBrushEnd: (e) => {
               // @ts-expect-error
               set(e.xDomain);
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                {#snippet children({ gradient })}
+                  <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -260,34 +269,35 @@
 <h2>Integrated brush (y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div class="h-[300px]">
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
           brush={{
             axis: 'y',
             resetOnEnd: true,
-            onbrushend: (e) => {
+            onBrushEnd: (e) => {
               // @ts-expect-error
               set(e.yDomain);
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                {#snippet children({ gradient })}
+                  <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -297,13 +307,12 @@
 <h2>Integrated brush (both axis / area)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={{ xDomain: [null, null], yDomain: [0, null] }} let:value let:set>
       <div class="h-[300px]">
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           xDomain={value?.xDomain}
           y="value"
           yDomain={value?.yDomain}
@@ -311,7 +320,7 @@
           brush={{
             axis: 'both',
             resetOnEnd: true,
-            onbrushend: (e) => {
+            onBrushEnd: (e) => {
               set({
                 // @ts-expect-error
                 xDomain: e.xDomain,
@@ -321,15 +330,17 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                {#snippet children({ gradient })}
+                  <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -339,27 +350,28 @@
 <h2>Separate chart (clip data)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                {#snippet children({ gradient })}
+                  <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -367,19 +379,18 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
           brush={{
-            onchange: (e) => {
+            onChange: (e) => {
               // @ts-expect-error
               set(e.xDomain);
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -389,26 +400,25 @@
 <h2>Separate chart (clip data: y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid grid-cols-[40px,1fr] gap-2">
+  <div class="border rounded-sm p-4 grid grid-cols-[40px_1fr] gap-2">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div>
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ bottom: 24 }}
           brush={{
             axis: 'y',
-            onchange: (e) => {
+            onChange: (e) => {
               // @ts-expect-error
               set(e.yDomain);
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -416,20 +426,21 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                {#snippet children({ gradient })}
+                  <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -439,7 +450,7 @@
 <h2>Separate chart (filter data)</h2>
 
 <Preview {data}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -451,22 +462,26 @@
               (xDomain?.[1] == null || d.date <= xDomain?.[1])
           )}
           x="date"
-          xScale={scaleTime()}
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
-            <Axis placement="left" grid rule tweened={{ duration: 200 }} />
+          <Layer type={shared.renderContext}>
+            <Axis placement="left" grid rule motion={{ type: 'tween', duration: 200 }} />
             <Axis placement="bottom" rule />
-            <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-              <Area
-                line={{ class: 'stroke-2 stroke-primary' }}
-                fill={gradient}
-                tweened={{ duration: 200 }}
-              />
+            <LinearGradient class="from-primary/50 to-primary/1" vertical>
+              {#snippet children({ gradient })}
+                <Area
+                  line={{ class: 'stroke-2 stroke-primary' }}
+                  fill={gradient}
+                  motion={{
+                    type: 'tween',
+                    duration: 200,
+                  }}
+                />
+              {/snippet}
             </LinearGradient>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -474,19 +489,18 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
           brush={{
-            onchange: (e) => {
+            onChange: (e) => {
               // @ts-expect-error
               set(e.xDomain);
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -505,37 +519,31 @@
 
   <div class="grid grid-cols-2 gap-4">
     {#each seriesData as data, i}
-      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
+      <div class="border rounded-sm p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
         <div class="h-[100px]">
           <Chart
             {data}
             x="date"
-            xScale={scaleTime()}
             {xDomain}
             y="value"
             yBaseline={0}
             padding={{ left: 16, bottom: 24 }}
           >
-            <Svg>
+            <Layer type={shared.renderContext}>
               <Axis placement="left" grid rule />
-              <Axis
-                placement="bottom"
-                format={(v) => format(v, PeriodType.Day, { variant: 'short' })}
-              />
+              <Axis placement="bottom" />
               <Rule y={0} />
               <ChartClipPath>
                 <LinearGradient
-                  class="from-[hsl(var(--chart-color)/50%)] to-transparent"
+                  class="from-[color-mix(in_lch,var(--chart-color)_50%,_transparent)] to-transparent"
                   vertical
-                  let:gradient
                 >
-                  <Area
-                    line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                    fill={gradient}
-                  />
+                  {#snippet children({ gradient })}
+                    <Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />
+                  {/snippet}
                 </LinearGradient>
               </ChartClipPath>
-            </Svg>
+            </Layer>
           </Chart>
         </div>
 
@@ -543,23 +551,22 @@
           <Chart
             {data}
             x="date"
-            xScale={scaleTime()}
             y="value"
             padding={{ left: 16 }}
             brush={{
               mode: 'separated',
               xDomain,
-              onchange: (e) => (xDomain = e.xDomain),
-              onreset: (e) => (xDomain = null),
+              onChange: (e) => (xDomain = e.xDomain),
+              onReset: (e) => (xDomain = null),
             }}
           >
-            <Svg>
+            <Layer type={shared.renderContext}>
               <Area
-                line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                class="fill-[hsl(var(--chart-color)/20%)]"
+                line={{ class: 'stroke-2 stroke-(--chart-color)' }}
+                class="fill-(--chart-color) opacity-20"
               />
               <!-- <Brush bind:xDomain mode="separated" /> -->
-            </Svg>
+            </Layer>
           </Chart>
         </div>
       </div>
@@ -570,61 +577,64 @@
 <h2>Tooltip interop</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
-          tooltip={{ mode: 'bisect-x' }}
+          tooltip={{ mode: 'quadtree-x' }}
           brush={{
             resetOnEnd: true,
-            onbrushend: (e) => {
+            onBrushEnd: (e) => {
               // @ts-expect-error
               set(e.xDomain);
             },
           }}
-          let:height
-          let:padding
         >
-          <Svg>
-            <Axis placement="left" grid rule />
-            <Axis placement="bottom" rule />
-            <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
-              </LinearGradient>
-            </ChartClipPath>
-            <Highlight points lines />
-          </Svg>
+          {#snippet children({ context })}
+            <Layer type={shared.renderContext}>
+              <Axis placement="left" grid rule />
+              <Axis placement="bottom" rule />
+              <ChartClipPath>
+                <LinearGradient class="from-primary/50 to-primary/1" vertical>
+                  {#snippet children({ gradient })}
+                    <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+                  {/snippet}
+                </LinearGradient>
+              </ChartClipPath>
+              <Highlight points lines />
+            </Layer>
 
-          <Tooltip.Root
-            y="data"
-            xOffset={4}
-            anchor="bottom"
-            variant="none"
-            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
-            let:data
-          >
-            {format(data.value, 'currency')}
-          </Tooltip.Root>
+            <Tooltip.Root
+              y="data"
+              xOffset={4}
+              anchor="bottom"
+              variant="none"
+              class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-xs px-2 py-1 rounded-sm"
+            >
+              {#snippet children({ data })}
+                {format(data.value, 'currency')}
+              {/snippet}
+            </Tooltip.Root>
 
-          <Tooltip.Root
-            x="data"
-            y={height + padding.top}
-            yOffset={2}
-            anchor="top"
-            variant="none"
-            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
-            let:data
-          >
-            {format(data.date, PeriodType.Day)}
-          </Tooltip.Root>
+            <Tooltip.Root
+              x="data"
+              y={context.height + context.padding.top}
+              yOffset={2}
+              anchor="top"
+              variant="none"
+              class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
+            >
+              {#snippet children({ data })}
+                {format(data.date, 'day')}
+              {/snippet}
+            </Tooltip.Root>
+          {/snippet}
         </Chart>
       </div>
     </State>
@@ -635,7 +645,7 @@
 
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
-    <div class="h-[400px] p-4 border rounded">
+    <div class="h-[400px] p-4 border rounded-sm">
       <Chart
         data={randomData}
         x="x"
@@ -645,7 +655,7 @@
         padding={{ left: 16, bottom: 24 }}
         brush={{
           axis: 'both',
-          onchange: (e) => {
+          onChange: (e) => {
             set({
               // @ts-expect-error
               xDomain: e.xDomain,
@@ -655,97 +665,12 @@
           },
         }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
-          <Points let:points>
-            {#each points as point}
-              {@const isSelected =
-                value &&
-                (value.xDomain?.[0] == null || value.xDomain?.[0] <= point.data.x) &&
-                (value.xDomain?.[1] == null || point.data.x <= value.xDomain?.[1]) &&
-                (value.yDomain?.[0] == null || value.yDomain?.[0] <= point.data.y) &&
-                (value.yDomain?.[1] == null || point.data.y <= value.yDomain?.[1])}
-
-              <Circle
-                cx={point.x}
-                cy={point.y}
-                r={isSelected ? 4 : 2}
-                class={cls(
-                  isSelected ? 'fill-primary/30 stroke-primary' : 'fill-neutral/10 stroke-neutral'
-                )}
-                spring
-              />
-            {/each}
-          </Points>
-        </Svg>
-      </Chart>
-    </div>
-  </State>
-</Preview>
-
-<h2>Minimap</h2>
-
-<Preview data={randomData}>
-  <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
-    <div class="relative">
-      <div class="h-[400px] p-4 border rounded">
-        <Chart
-          data={randomData}
-          x="x"
-          xDomain={value?.xDomain}
-          y="y"
-          yDomain={value?.yDomain}
-          yNice
-          padding={{ left: 16, bottom: 24 }}
-          brush={{
-            axis: 'both',
-            resetOnEnd: true,
-            onbrushend: (e) => {
-              set({
-                // @ts-expect-error
-                xDomain: e.xDomain,
-                // @ts-expect-error
-                yDomain: e.yDomain,
-              });
-            },
-          }}
-        >
-          <Svg>
-            <Axis placement="left" grid rule />
-            <Axis placement="bottom" rule />
-
-            <ChartClipPath>
-              <Points class="fill-primary/30 stroke-primary" r={4} />
-            </ChartClipPath>
-          </Svg>
-        </Chart>
-      </div>
-
-      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded bg-surface-100">
-        <Chart
-          data={randomData}
-          x="x"
-          y="y"
-          yNice
-          brush={{
-            axis: 'both',
-            mode: 'separated',
-            xDomain: value?.xDomain,
-            yDomain: value?.yDomain,
-            onchange: (e) => {
-              set({
-                // @ts-expect-error
-                xDomain: e.xDomain,
-                // @ts-expect-error
-                yDomain: e.yDomain,
-              });
-            },
-          }}
-        >
-          <Svg>
-            <Points let:points>
+          <Points>
+            {#snippet children({ points })}
               {#each points as point}
                 {@const isSelected =
                   value &&
@@ -757,30 +682,131 @@
                 <Circle
                   cx={point.x}
                   cy={point.y}
-                  r={0.5}
+                  r={isSelected ? 4 : 2}
                   class={cls(
-                    isSelected
-                      ? 'fill-primary/30 stroke-primary'
-                      : 'fill-surface-content/10 stroke-neutral'
+                    isSelected ? 'fill-primary/30 stroke-primary' : 'fill-neutral/10 stroke-neutral'
                   )}
-                  spring
+                  motion="spring"
                 />
               {/each}
+            {/snippet}
+          </Points>
+        </Layer>
+      </Chart>
+    </div>
+  </State>
+</Preview>
+
+<h2>Minimap</h2>
+
+<Preview data={randomData}>
+  <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
+    <div class="relative">
+      <div class="h-[400px] p-4 border rounded-sm">
+        <Chart
+          data={randomData}
+          x="x"
+          xDomain={value?.xDomain}
+          y="y"
+          yDomain={value?.yDomain}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+          brush={{
+            axis: 'both',
+            resetOnEnd: true,
+            onBrushEnd: (e) => {
+              set({
+                // @ts-expect-error
+                xDomain: e.xDomain,
+                // @ts-expect-error
+                yDomain: e.yDomain,
+              });
+            },
+          }}
+        >
+          <Layer type={shared.renderContext}>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+
+            <ChartClipPath>
+              <Points class="fill-primary/30 stroke-primary" r={4} />
+            </ChartClipPath>
+          </Layer>
+        </Chart>
+      </div>
+
+      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded-sm bg-surface-100">
+        <Chart
+          data={randomData}
+          x="x"
+          y="y"
+          yNice
+          brush={{
+            axis: 'both',
+            mode: 'separated',
+            xDomain: value?.xDomain,
+            yDomain: value?.yDomain,
+            onChange: (e) => {
+              set({
+                // @ts-expect-error
+                xDomain: e.xDomain,
+                // @ts-expect-error
+                yDomain: e.yDomain,
+              });
+            },
+          }}
+        >
+          <Layer type={shared.renderContext}>
+            <Points>
+              {#snippet children({ points })}
+                {#each points as point}
+                  {@const isSelected =
+                    value &&
+                    (value.xDomain?.[0] == null || value.xDomain?.[0] <= point.data.x) &&
+                    (value.xDomain?.[1] == null || point.data.x <= value.xDomain?.[1]) &&
+                    (value.yDomain?.[0] == null || value.yDomain?.[0] <= point.data.y) &&
+                    (value.yDomain?.[1] == null || point.data.y <= value.yDomain?.[1])}
+
+                  <Circle
+                    cx={point.x}
+                    cy={point.y}
+                    r={0.5}
+                    class={cls(
+                      isSelected
+                        ? 'fill-primary/30 stroke-primary'
+                        : 'fill-surface-content/10 stroke-neutral'
+                    )}
+                    motion="spring"
+                  />
+                {/each}
+              {/snippet}
             </Points>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </div>
   </State>
 </Preview>
 
+<!-- <h2>Band scale</h2>
+
+<Preview data={dataSeriesData}>
+  <div class="h-[100px]">
+    <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
+      <Layer type={shared.renderContext}>
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview> -->
+
 <style>
   :global(.striped-background) {
-    outline: 1px solid hsl(var(--color-secondary) / 50%);
+    outline: 1px solid color-mix(in lch, var(--color-secondary) 50%, transparent);
     background: repeating-linear-gradient(
       135deg,
-      hsl(var(--color-secondary) / 30%) 0 1px,
-      hsl(var(--color-secondary) / 10%) 0 6px
+      color-mix(in lch, var(--color-secondary) 30%, transparent) 0 1px,
+      color-mix(in lch, var(--color-secondary) 10%, transparent) 0 6px
     );
   }
 </style>

@@ -3,26 +3,29 @@
   import { flatRollup } from 'd3-array';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Svg } from 'layerchart';
+  import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
   import { Field, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let debug = false;
-
   // Use a single link per source
-  $: singleLinks = flatRollup(
-    data.worldLinks,
-    (values) => {
-      return values[1];
-    },
-    (d) => d.sourceId
-  ).map((d) => d[1]);
+  const singleLinks = $derived(
+    flatRollup(
+      data.worldLinks,
+      (values) => {
+        return values[1];
+      },
+      (d) => d.sourceId
+    ).map((d) => d[1])
+  );
+
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -38,7 +41,7 @@
       }}
       padding={{ top: 16, bottom: 16, left: 16, right: 16 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         {#each countries.features as country}
@@ -50,23 +53,12 @@
           <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class="fill-black" />
           <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class="fill-black" />
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Draggable globe with EdgeFade</h2>
-
-  <div class="mb-2">
-    <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Debug
-        <Switch bind:checked={debug} {id} />
-      </label>
-    </Field>
-  </div>
-</div>
+<h2>Draggable globe with EdgeFade</h2>
 
 <Preview data={countries}>
   <div class="h-[600px] overflow-hidden">
@@ -81,7 +73,7 @@
       {#if debug}
         <GeoDebug class="absolute top-0 right-0 z-10" />
       {/if}
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20 pointer-events-none" />
         {#each countries.features as country}
@@ -98,7 +90,7 @@
             <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
           </GeoEdgeFade>
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

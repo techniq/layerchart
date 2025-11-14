@@ -1,25 +1,90 @@
-<script lang="ts">
-  import type { ComponentProps } from 'svelte';
-  import { uniqueId } from '@layerstack/utils';
+<script lang="ts" module>
+  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
+  import type { CommonEvents, Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
 
-  import ClipPath from './ClipPath.svelte';
-  import Rect from './Rect.svelte';
+  export type BaseRectClipPathPropsWithoutHTML = {
+    /**
+     * A unique id for the clipPath.
+     */
+    id?: string;
 
-  /** Unique id for clipPath */
-  export let id: string = uniqueId('clipPath-');
+    /**
+     * The x position of the clipPath.
+     *
+     * @default 0
+     */
+    x?: number;
 
-  export let x: number = 0;
-  export let y: number = 0;
-  export let width: number;
-  export let height: number;
-  export let spring: ComponentProps<Rect>['spring'] = undefined;
-  export let tweened: ComponentProps<Rect>['tweened'] = undefined;
+    /**
+     * The y position of the clipPath.
+     *
+     * @default 0
+     */
+    y?: number;
 
-  /** Disable clipping (show all) */
-  export let disabled: boolean = false;
+    /**
+     * The width of the clipPath.
+     *
+     * @required
+     */
+    width: number;
+
+    /**
+     * The height of the clipPath.
+     *
+     * @required
+     */
+    height: number;
+
+    /**
+     * Whether to disable clipping (show all).
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * The default children snippet which provides
+     * the id and url for the clipPath.
+     */
+    children?: Snippet<[{ id: string; url: string }]>;
+
+    motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+  };
+
+  export type RectClipPathPropsWithoutHTML = BaseRectClipPathPropsWithoutHTML &
+    Without<RectPropsWithoutHTML, BaseRectClipPathPropsWithoutHTML>;
+
+  export type RectClipPathProps = RectClipPathPropsWithoutHTML &
+    Without<SVGAttributes<SVGElement>, RectClipPathPropsWithoutHTML> &
+    CommonEvents;
 </script>
 
-<ClipPath {id} {disabled} let:url>
-  <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} {...$$restProps} />
-  <slot {id} {url} />
+<script lang="ts">
+  import ClipPath from './ClipPath.svelte';
+  import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
+
+  const uid = $props.id();
+
+  let {
+    id = createId('clipPath-', uid),
+    x = 0,
+    y = 0,
+    disabled = false,
+    children: childrenProp,
+    ...restProps
+  }: RectClipPathProps = $props();
+</script>
+
+<ClipPath {id} {disabled}>
+  {#snippet clip()}
+    <Rect {x} {y} {...extractLayerProps(restProps, 'lc-clip-path-rect')} />
+  {/snippet}
+  {#snippet children({ url })}
+    {@render childrenProp?.({ id, url })}
+  {/snippet}
 </ClipPath>

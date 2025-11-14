@@ -1,6 +1,6 @@
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     chartData: (await fetch('/data/examples/bench/series_arrays/data.json').then((r) =>
       r.json()
@@ -21,6 +21,7 @@ export async function load() {
     meta: {
       description: 'Array per series, each with `x` / `y` items',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

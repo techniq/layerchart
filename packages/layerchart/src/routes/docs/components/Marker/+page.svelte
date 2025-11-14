@@ -1,34 +1,37 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
 
-  import { Chart, Line, Spline, Svg } from 'layerchart';
+  import { Chart, Line, Spline, Layer } from 'layerchart';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  let pointCount = 10;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pointCount = $state(10);
+  let amplitude = $state(1);
+  let frequency = $state(10);
+  let phase = $state(0);
 
-  let amplitude = 1;
-  let frequency = 10;
-  let phase = 0;
+  let markerStart = $state(true);
+  let markerMid = $state(false);
+  let markerEnd = $state(true);
 
-  let markerStart = true;
-  let markerMid = false;
-  let markerEnd = true;
+  let tweened = $state(true);
+  const motion = $derived(tweened ? 'tween' : 'none');
 
-  let tweened = true;
-
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator(i / pointCount) ?? i,
+      };
+    })
+  );
 
   const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line'] as const;
 </script>
@@ -59,18 +62,18 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[100px] p-4 border rounded">
+      <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Spline
               {curve}
               class="stroke-primary"
               markerStart={markerStart ? marker : undefined}
               markerMid={markerMid ? marker : undefined}
               markerEnd={markerEnd ? marker : undefined}
-              {tweened}
+              {motion}
             />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     {/each}
@@ -101,18 +104,18 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[100px] p-4 border rounded">
+      <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Spline
               {curve}
               class="stroke-primary stroke-2"
               markerStart={markerStart ? { type: marker, 'stroke-width': 2 } : undefined}
               markerMid={markerMid ? { type: marker, 'stroke-width': 2 } : undefined}
               markerEnd={markerEnd ? { type: marker, 'stroke-width': 2 } : undefined}
-              {tweened}
+              {motion}
             />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     {/each}
@@ -121,7 +124,7 @@
 
 <h2>Line</h2>
 
-<div class="grid grid-cols-[60px,60px] gap-2 mb-2">
+<div class="grid grid-cols-[60px_60px] gap-2 mb-2">
   <Field label="Start" let:id>
     <Switch bind:checked={markerStart} {id} size="md" />
   </Field>
@@ -134,20 +137,22 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[35px] p-4 border rounded">
-        <Chart {data} x="x" y="y" let:width>
-          <Svg>
-            <Line
-              x1={0}
-              x2={width}
-              y1={0}
-              y2={0}
-              class="stroke-primary"
-              markerStart={markerStart ? marker : undefined}
-              markerMid={markerMid ? marker : undefined}
-              markerEnd={markerEnd ? marker : undefined}
-            />
-          </Svg>
+      <div class="h-[35px] p-4 border rounded-sm">
+        <Chart {data} x="x" y="y">
+          {#snippet children({ context })}
+            <Layer type={shared.renderContext}>
+              <Line
+                x1={0}
+                x2={context.width}
+                y1={0}
+                y2={0}
+                class="stroke-primary"
+                markerStart={markerStart ? marker : undefined}
+                markerMid={markerMid ? marker : undefined}
+                markerEnd={markerEnd ? marker : undefined}
+              />
+            </Layer>
+          {/snippet}
         </Chart>
       </div>
     {/each}
@@ -158,9 +163,9 @@
 
 <Preview {data}>
   <div class="grid gap-2">
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
@@ -172,7 +177,7 @@
               class: 'stroke-2 stroke-surface-100 fill-secondary',
             }}
           />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </div>
@@ -183,41 +188,41 @@
 <Preview {data}>
   <div class="grid gap-2">
     <div>default (auto)</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
             marker={{ type: 'line', class: 'stroke-2 stroke-accent' }}
           />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
 
     <div>0</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
             marker={{ type: 'line', orient: 0, class: 'stroke-2 stroke-accent' }}
           />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
 
     <div>90</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Spline
             {curve}
             class="stroke-primary stroke-2"
             marker={{ type: 'line', orient: 90, class: 'stroke-2 stroke-accent' }}
           />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </div>

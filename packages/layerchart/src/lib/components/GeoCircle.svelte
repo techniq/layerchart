@@ -1,24 +1,37 @@
-<script lang="ts">
-  import { geoCircle } from 'd3-geo';
+<script lang="ts" module>
+  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
+  import type { Without } from '$lib/utils/types.js';
+  export type GeoCirclePropsWithoutHTML = {
+    /**
+     * The radius of the circle in degrees.
+     * @default 90
+     */
+    radius?: number;
 
-  import GeoPath from './GeoPath.svelte';
-  import type { ComponentProps } from 'svelte';
+    /**
+     * The center point of the circle in degrees ([longitude, latitude]).
+     * @default [0, 0]
+     */
+    center?: [number, number];
 
-  /** Radius in degrees.  Default: 90 */
-  export let radius = 90;
+    /**
+     * The precision of the circle in degrees.
+     * @default 6
+     */
+    precision?: number;
+  };
 
-  /** Center point of circle in degree ([longitude, latitude]).  Default [0, 0] */
-  export let center: [number, number] = [0, 0];
-
-  /** sets the circle precision to the specified angle in degrees */
-  export let precision = 6;
-
-  export let onclick: ComponentProps<typeof GeoPath>['onclick'] = undefined;
-  export let onpointerenter: ComponentProps<typeof GeoPath>['onpointerenter'] = undefined;
-  export let onpointermove: ComponentProps<typeof GeoPath>['onpointermove'] = undefined;
-  export let onpointerleave: ComponentProps<typeof GeoPath>['onpointerleave'] = undefined;
-
-  $: geojson = geoCircle().radius(radius).center(center).precision(precision)();
+  export type GeoCircleProps = GeoCirclePropsWithoutHTML &
+    Without<GeoPathProps, GeoCirclePropsWithoutHTML>;
 </script>
 
-<GeoPath {geojson} {onclick} {onpointerenter} {onpointermove} {onpointerleave} {...$$restProps} />
+<script lang="ts">
+  import { geoCircle } from 'd3-geo';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
+  let { radius = 90, center = [0, 0], precision = 6, ...restProps }: GeoCircleProps = $props();
+
+  const geojson = $derived(geoCircle().radius(radius).center(center).precision(precision)());
+</script>
+
+<GeoPath {geojson} {...extractLayerProps(restProps, 'lc-geo-circle')} />

@@ -1,13 +1,86 @@
-<script lang="ts">
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-  import { pie as d3pie } from 'd3-shape';
-  import { min, max } from 'd3-array';
+<script lang="ts" module>
+  import { pie as d3pie, type PieArcDatum } from 'd3-shape';
 
+  export type PiePropsWithoutHTML = {
+    data?: any[];
+
+    /**
+     * Range [min,max] in degrees.  See also startAngle/endAngle
+     *
+     * @default [0, 360]
+     */
+    range?: [number, number] | number[];
+
+    /**
+     * Start angle in radians
+     */
+    startAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    endAngle?: number;
+
+    /**
+     * Define innerRadius.
+     *   value >= 1: discrete value
+     *   value >  0: percent of `outerRadius`
+     *   value <  0: offset of `outerRadius`
+     *   default: yRange min
+     */
+    innerRadius?: number;
+
+    /**
+     * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
+     */
+    outerRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+
+    cornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    padAngle?: number;
+
+    /**
+     * Offset all arcs from center
+     *
+     * @default 0
+     */
+    offset?: number;
+
+    /**
+     * Tooltip context to setup pointer events to show tooltip for related data
+     */
+    tooltipContext?: TooltipContextValue;
+
+    /**
+     * Sort function to sort the arcs
+     */
+    sort?: ((a: any, b: any) => number) | null;
+
+    children?: Snippet<[{ arcs: PieArcDatum<any>[] }]>;
+
+    motion?: MotionProp;
+  };
+</script>
+
+<script lang="ts">
+  import { min, max } from 'd3-array';
   import Arc from './Arc.svelte';
-  import { chartContext } from './ChartContext.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import { getChartContext } from './Chart.svelte';
+  import type { Snippet } from 'svelte';
 
   /*
     TODO:
@@ -17,84 +90,56 @@
     - [ ] Hover events / change innerRadius / outerRadius, etc
   */
 
-  export let data: any[] | undefined = undefined; // TODO: Update Type
+  let {
+    data,
+    range = [0, 360],
+    startAngle: startAngleProp,
+    endAngle: endAngleProp,
+    innerRadius,
+    outerRadius,
+    cornerRadius = 0,
+    padAngle = 0,
+    motion,
+    offset = 0,
+    tooltipContext,
+    sort,
+    children,
+  }: PiePropsWithoutHTML = $props();
 
-  /**
-   * Range [min,max] in degrees.  See also startAngle/endAngle
-   */
-  export let range = [0, 360]; // degrees
+  const ctx = getChartContext();
 
-  /**
-   * Start angle in radians
-   */
-  export let startAngle: number | undefined = undefined;
+  const endAngle = $derived(
+    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
+  );
 
-  /**
-   * End angle in radians
-   */
-  export let endAngle: number | undefined = undefined;
+  const motionEndAngle = createMotion(0, () => endAngle, motion);
 
-  /**
-   * Define innerRadius.
-   *   value >= 1: discrete value
-   *   value >  0: percent of `outerRadius`
-   *   value <  0: offset of `outerRadius`
-   *   default: yRange min
-   */
-  export let innerRadius: number | undefined = undefined;
-
-  /**
-   * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
-   */
-  export let outerRadius: number | undefined = undefined;
-
-  export let cornerRadius = 0;
-  export let padAngle = 0;
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  /**
-   * Offset all arcs from center
-   */
-  export let offset = 0;
-
-  /**
-   * Tooltip context to setup pointer events to show tooltip for related data
-   */
-  export let tooltip: TooltipContextValue | undefined = undefined;
-
-  export let sort: ((a: any, b: any) => number) | null | undefined = undefined;
-
-  const { data: contextData, x, y, xRange, c, cScale, config } = chartContext();
-
-  // @ts-expect-error
-  $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
-  let tweened_endAngle = motionStore(0, { spring, tweened });
-  $: tweened_endAngle.set(resolved_endAngle);
-
-  let pie: ReturnType<typeof d3pie<any>>;
-  $: {
-    pie = d3pie<any>()
-      // @ts-expect-error
-      .startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
-      .endAngle($tweened_endAngle)
+  const pie = $derived.by(() => {
+    let _pie = d3pie<any>()
+      .startAngle(
+        startAngleProp ?? degreesToRadians(ctx.config.xRange ? min(ctx.xRange) : min(range))
+      )
+      .endAngle(motionEndAngle.current)
       .padAngle(padAngle)
-      .value($x);
+      .value(ctx.x);
 
     if (sort === null) {
-      pie = pie.sort(null);
+      _pie = _pie.sort(null);
     } else if (sort) {
-      pie = pie.sort(sort);
+      _pie = _pie.sort(sort);
     }
-  }
+    return _pie;
+  });
 
-  $: arcs = pie(data ?? (Array.isArray($contextData) ? $contextData : []));
+  const arcs = $derived(pie(data ?? (Array.isArray(ctx.data) ? ctx.data : [])));
 </script>
 
-<slot {arcs}>
+{#if children}
+  {@render children({ arcs })}
+{:else}
   {#each arcs as arc}
     <Arc
+      class="lc-pie-arc"
       startAngle={arc.startAngle}
       endAngle={arc.endAngle}
       padAngle={arc.padAngle}
@@ -102,9 +147,9 @@
       {outerRadius}
       {cornerRadius}
       {offset}
-      fill={$config.c ? $cScale?.($c(arc.data)) : null}
+      fill={ctx.config.c ? ctx.cScale?.(ctx.c(arc.data)) : null}
       data={arc.data}
-      {tooltip}
+      {tooltipContext}
     />
   {/each}
-</slot>
+{/if}

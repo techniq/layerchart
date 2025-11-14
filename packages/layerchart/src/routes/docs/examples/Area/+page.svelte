@@ -1,37 +1,40 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleOrdinal } from 'd3-scale';
   import { flatGroup } from 'd3-array';
-  import { stack } from 'd3-shape';
-  import { format as formatDate } from 'date-fns';
-  import { flatten } from 'layercake';
+  import { stack, type Series } from 'd3-shape';
 
   import {
     Area,
     Axis,
     Chart,
     ChartClipPath,
+    Circle,
     Highlight,
     Labels,
+    Layer,
     LinearGradient,
     Point,
     RectClipPath,
     Rule,
     Spline,
-    Svg,
     Text,
     Tooltip,
+    asAny,
     chartDataArray,
     pivotLonger,
   } from 'layerchart';
   import { Field, Switch, Toggle } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import flatten from '$lib/utils/chart.js';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
   const negativeDateSeriesData = createDateSeries({
@@ -49,14 +52,30 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(multiSeriesData) as any[];
+
+  type FlatStackData = {
+    data: {
+      date: Date;
+    };
+  };
+
+  type B = Series<
+    {
+      date: number;
+    },
+    string
+  >[];
+
+  const stackData = stack().keys(keys)(multiSeriesData) as B;
+
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
+
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-danger))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-info))',
+    apples: 'var(--color-danger)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-info)',
   };
 </script>
 
@@ -67,27 +86,21 @@
 </Blockquote>
 
 <h2>Basic</h2>
-
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -95,32 +108,29 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      </Layer>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -129,26 +139,21 @@
 <h2>With Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Labels format="integer" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -156,30 +161,24 @@
 <h2>Explicit axis ticks (min/max)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day)}
-          rule
-          ticks={(scale) => scale.domain()}
-        >
-          <svelte:fragment slot="tickLabel" let:labelProps let:index>
-            <Text {...labelProps} textAnchor={index ? 'end' : 'start'} />
-          </svelte:fragment>
+        <Axis placement="bottom" format="day" rule ticks={(scale) => scale.domain()}>
+          {#snippet tickLabel({ props, index })}
+            <Text {...props} textAnchor={index ? 'end' : 'start'} />
+          {/snippet}
         </Axis>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -187,27 +186,24 @@
 <h2>Gradient</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+        <Axis placement="bottom" rule />
+        <LinearGradient class="from-primary/50 to-primary/1" vertical>
+          {#snippet children({ gradient })}
+            <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+          {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -215,29 +211,28 @@
 <h2>Gradient (separate stroke)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <LinearGradient class="from-secondary/0 to-secondary" let:gradient={strokeGradient}>
-          <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient={fillGradient}>
-            <Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />
-          </LinearGradient>
+        <Axis placement="bottom" rule />
+        <LinearGradient class="from-secondary/1 to-secondary">
+          {#snippet children({ gradient: strokeGradient })}
+            <LinearGradient class="from-primary/50 to-primary/1" vertical>
+              {#snippet children({ gradient: fillGradient })}
+                <Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />
+              {/snippet}
+            </LinearGradient>
+          {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -245,54 +240,59 @@
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'voronoi' }}
-      let:cScale
+      tooltip={{ mode: 'quadtree' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color = cScale?.(fruit)}
-          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-          <Point d={data[data.length - 1]} let:x let:y>
-            <circle cx={x} cy={y} r={4} fill={color} />
-            <Text
-              {x}
-              {y}
-              value={fruit}
-              verticalAnchor="middle"
-              dx={6}
-              dy={-2}
-              class="text-xs"
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#each dataByFruit as [fruit, data]}
+            {@const color = context.cScale?.(fruit)}
+            <Area
+              {data}
               fill={color}
+              fillOpacity={0.3}
+              line={{ class: 'stroke-2', stroke: color }}
             />
-          </Point>
-        {/each}
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+            <Point d={data[data.length - 1]}>
+              {#snippet children({ x, y })}
+                <Circle cx={x} cy={y} r={4} fill={color} />
+                <Text
+                  {x}
+                  {y}
+                  value={fruit}
+                  verticalAnchor="middle"
+                  dx={6}
+                  dy={-2}
+                  class="text-xs"
+                  fill={color}
+                />
+              {/snippet}
+            </Point>
+          {/each}
+          <Highlight points lines />
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -300,7 +300,7 @@
 <h2>Multiple series (using overrides)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesData}
       x="date"
@@ -308,15 +308,11 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
 
         <Area
           y1={(d) => d.apples}
@@ -346,14 +342,17 @@
         <Highlight y={(d) => d.bananas} points={{ fill: fruitColors.bananas }} />
         <Highlight y={(d) => d.oranges} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="apples" value={data.apples} />
-          <Tooltip.Item label="bananas" value={data.bananas} />
-          <Tooltip.Item label="oranges" value={data.oranges} />
-        </Tooltip.List>
+      </Layer>
+
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
+          <Tooltip.List>
+            <Tooltip.Item label="apples" value={data.apples} />
+            <Tooltip.Item label="bananas" value={data.bananas} />
+            <Tooltip.Item label="oranges" value={data.oranges} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -362,58 +361,62 @@
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'voronoi' }}
-      let:tooltip
-      let:cScale
+      tooltip={{ mode: 'quadtree' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-          <Point d={data[data.length - 1]} let:x let:y>
-            <circle cx={x} cy={y} r={4} fill={color} />
-            <Text
-              {x}
-              {y}
-              value={fruit}
-              verticalAnchor="middle"
-              dx={6}
-              dy={-2}
-              class="text-xs"
-              fill={color}
-            />
-          </Point>
-        {/each}
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#each dataByFruit as [fruit, data]}
+            {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
+            {@const color = context.cScale?.(fruit)}
+            <g class={cls(!active && 'opacity-20 saturate-0')}>
+              <Area
+                {data}
+                fill={color}
+                fillOpacity={0.3}
+                line={{ class: 'stroke-2', stroke: color }}
+              />
+              <Point d={data[data.length - 1]}>
+                {#snippet children({ x, y })}
+                  <Circle cx={x} cy={y} r={4} fill={color} />
+                  <Text
+                    {x}
+                    {y}
+                    value={fruit}
+                    verticalAnchor="middle"
+                    dx={6}
+                    dy={-2}
+                    class="text-xs"
+                    fill={color}
+                  />
+                {/snippet}
+              </Point>
+            </g>
+          {/each}
+          <Highlight points lines />
+        </Layer>
+
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -421,42 +424,45 @@
 <h2>Multiple series with labels</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'voronoi' }}
-      let:cScale
+      tooltip={{ mode: 'quadtree' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color = cScale?.(fruit)}
-          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-        {/each}
-        <Labels format="integer" />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#each dataByFruit as [fruit, data]}
+            {@const color = context.cScale?.(fruit)}
+            <Area
+              {data}
+              fill={color}
+              fillOpacity={0.3}
+              line={{ class: 'stroke-2', stroke: color }}
+            />
+          {/each}
+          <Labels format="integer" />
+          <Highlight points lines />
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -464,53 +470,48 @@
 <h2>Stack</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
-      x={(d) => d.data.date}
-      xScale={scaleTime()}
+      x={(d) => asAny(d).data.date}
       y={[0, 1]}
       yNice
       c="key"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:data
-      let:cGet
-      let:cScale
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
 
-        {#each stackData as seriesData}
-          {@const color = cGet(seriesData)}
-          <Area
-            data={seriesData}
-            line={{ stroke: color, 'stroke-width': 2 }}
-            fill={color}
-            fillOpacity={0.2}
-          />
-        {/each}
-
-        <Highlight points lines />
-      </Svg>
-
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          {#each keys as key}
-            <Tooltip.Item label={key} value={data.data[key]} color={cScale?.(key)} />
+          {#each stackData as seriesData}
+            {@const color = context.cGet(seriesData)}
+            <Area
+              data={seriesData}
+              line={{ stroke: color, 'stroke-width': 2 }}
+              fill={color}
+              fillOpacity={0.2}
+            />
           {/each}
-        </Tooltip.List>
-      </Tooltip.Root>
+
+          <Highlight points lines />
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              {#each keys as key}
+                <Tooltip.Item label={key} value={data.data[key]} color={context.cScale?.(key)} />
+              {/each}
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -518,48 +519,45 @@
 <h2>Stack with gradient</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
-      x={(d) => d.data.date}
-      xScale={scaleTime()}
+      x={(d) => asAny(d).data.date}
       y={[0, 1]}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         {@const primaryColors = [
-          'hsl(var(--color-danger-500))',
-          'hsl(var(--color-success-500))',
-          'hsl(var(--color-info-500))',
+          'var(--color-danger)',
+          'var(--color-success)',
+          'var(--color-info)',
         ]}
         {@const secondaryColors = [
-          'hsl(var(--color-danger-500) / 10%)',
-          'hsl(var(--color-success-500) / 10%)',
-          'hsl(var(--color-info-500) / 10%)',
+          'color-mix(in lch, var(--color-danger) 10%, transparent)',
+          'color-mix(in lch, var(--color-success) 10%, transparent)',
+          'color-mix(in lch, var(--color-info) 10%, transparent)',
         ]}
 
         {#each chartDataArray(stackData) as seriesData, index}
           {@const primaryColor = primaryColors[index]}
           {@const secondaryColor = secondaryColors[index]}
 
-          <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:gradient>
-            <Area
-              data={seriesData}
-              fill={gradient}
-              fillOpacity={0.5}
-              line={{ stroke: primaryColor }}
-            />
+          <LinearGradient stops={[primaryColor, secondaryColor]} vertical>
+            {#snippet children({ gradient })}
+              <Area
+                data={seriesData}
+                fill={gradient}
+                fillOpacity={0.5}
+                line={{ stroke: primaryColor }}
+              />
+            {/snippet}
           </LinearGradient>
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -574,32 +572,27 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <ChartClipPath
               initialWidth={0}
-              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+              motion={{ width: { type: 'tween', duration: 1000, easing: cubicInOut } }}
             >
               <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
             </ChartClipPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -613,33 +606,28 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-primary" />
             <ChartClipPath
               initialWidth={0}
-              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+              motion={{ width: { type: 'tween', duration: 1000, easing: cubicInOut } }}
             >
               <Area class="fill-primary/30" />
             </ChartClipPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -653,69 +641,66 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-primary" />
             <ChartClipPath
               initialY={300}
               initialHeight={0}
-              tweened={{
-                y: { duration: 1000, easing: cubicInOut, delay: 500 },
-                height: { duration: 1000, easing: cubicInOut, delay: 500 },
+              motion={{
+                y: { type: 'tween', duration: 1000, easing: cubicInOut, delay: 500 },
+                height: { type: 'tween', duration: 1000, easing: cubicInOut, delay: 500 },
               }}
             >
               <Area class="fill-primary/30" />
             </ChartClipPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
 </Toggle>
-
 <h2>Threshold with RectClipPath</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:width
-      let:height
-      let:yScale
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
-          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
-        </RectClipPath>
-        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
-          <Area line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
-        </RectClipPath>
-      </Svg>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
+            <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+          </RectClipPath>
+          <RectClipPath
+            x={0}
+            y={context.yScale(0)}
+            width={context.width}
+            height={context.height - context.yScale(0)}
+          >
+            <Area line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+          </RectClipPath>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -723,30 +708,33 @@
 <h2>Threshold with RectClipPath (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:width
-      let:height
-      let:yScale
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
-          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
-        </RectClipPath>
-        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
-          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
-        </RectClipPath>
-      </Svg>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
+            <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+          </RectClipPath>
+          <RectClipPath
+            x={0}
+            y={context.yScale(0)}
+            width={context.width}
+            height={context.height - context.yScale(0)}
+          >
+            <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+          </RectClipPath>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -754,42 +742,50 @@
 <h2>Highlight color based on value using color scale</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
       c={(d) => (d.value < 0 ? 'under' : 'over')}
-      cScale={scaleOrdinal()}
       cDomain={['over', 'under']}
-      cRange={['hsl(var(--color-success))', 'hsl(var(--color-danger))']}
-      let:width
-      let:height
-      let:yScale
+      cRange={['var(--color-success)', 'var(--color-danger)']}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
-          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
-        </RectClipPath>
-        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
-          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
-        </RectClipPath>
-        <Highlight lines points />
-      </Svg>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
+            <Area
+              y0={(d) => 0}
+              line={{ class: 'stroke-2 stroke-success' }}
+              class="fill-success/20"
+            />
+          </RectClipPath>
+          <RectClipPath
+            x={0}
+            y={context.yScale(0)}
+            width={context.width}
+            height={context.height - context.yScale(0)}
+          >
+            <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+          </RectClipPath>
+          <Highlight lines points />
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -797,46 +793,62 @@
 <h2>Highlight color based on value using tooltip slot prop</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:width
-      let:height
-      let:yScale
-      let:tooltip
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
-          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
-        </RectClipPath>
-        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
-          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
-        </RectClipPath>
-        <Highlight
-          lines={{
-            class: tooltip.data?.value < 0 ? 'stroke-danger' : 'stroke-success',
-          }}
-          points={{
-            class: tooltip.data?.value < 0 ? 'fill-danger' : 'fill-success',
-          }}
-        />
-      </Svg>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
+            <Area
+              y0={(d) => 0}
+              line={{ class: 'stroke-2 stroke-success' }}
+              class="fill-success/20"
+            />
+          </RectClipPath>
+          <RectClipPath
+            x={0}
+            y={context.yScale(0)}
+            width={context.width}
+            height={context.height - context.yScale(0)}
+          >
+            <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+          </RectClipPath>
+          <Highlight
+            lines={{
+              class: context.tooltip.data
+                ? context.tooltip.data?.value < 0
+                  ? 'stroke-danger'
+                  : 'stroke-success'
+                : undefined,
+            }}
+            points={{
+              class: context.tooltip.data
+                ? context.tooltip.data?.value < 0
+                  ? 'fill-danger'
+                  : 'fill-success'
+                : undefined,
+            }}
+          />
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -844,37 +856,41 @@
 <h2>Threshold with LinearGradient</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:yScale
-      let:height
-      let:padding
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      {@const thresholdValue = 0}
-      {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <LinearGradient
-          stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-          ]}
-          units="userSpaceOnUse"
-          vertical
-          let:gradient
-        >
-          <Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />
-        </LinearGradient>
-      </Svg>
+      {#snippet children({ context })}
+        {@const thresholdValue = 0}
+        {@const thresholdOffset =
+          context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <LinearGradient
+            stops={[
+              [thresholdOffset, 'var(--color-success)'],
+              [thresholdOffset, 'var(--color-danger)'],
+            ]}
+            units="userSpaceOnUse"
+            vertical
+          >
+            {#snippet children({ gradient })}
+              <Area
+                line={{ stroke: gradient, class: 'stroke-2' }}
+                fill={gradient}
+                fillOpacity={0.2}
+              />
+            {/snippet}
+          </LinearGradient>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -882,42 +898,42 @@
 <h2>Threshold with LinearGradient (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:yScale
-      let:height
-      let:padding
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      {@const thresholdValue = 0}
-      {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Rule y={0} />
-        <LinearGradient
-          stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-          ]}
-          units="userSpaceOnUse"
-          vertical
-          let:gradient
-        >
-          <Area
-            y0={(d) => 0}
-            line={{ stroke: gradient, class: 'stroke-2' }}
-            fill={gradient}
-            fillOpacity={0.2}
-          />
-        </LinearGradient>
-      </Svg>
+      {#snippet children({ context })}
+        {@const thresholdValue = 0}
+        {@const thresholdOffset =
+          context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
+        <Layer type={shared.renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" />
+          <Rule y={0} />
+          <LinearGradient
+            stops={[
+              [thresholdOffset, 'var(--color-success)'],
+              [thresholdOffset, 'var(--color-danger)'],
+            ]}
+            units="userSpaceOnUse"
+            vertical
+          >
+            {#snippet children({ gradient })}
+              <Area
+                y0={(d) => 0}
+                line={{ stroke: gradient, class: 'stroke-2' }}
+                fill={gradient}
+                fillOpacity={0.2}
+              />
+            {/snippet}
+          </LinearGradient>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -925,56 +941,65 @@
 <h2>Clipped area on Tooltip</h2>
 
 <Preview data={data.appleStock}>
-  <div class="h-[300px] border rounded">
+  <div class="h-[300px] border rounded-sm">
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ top: 48, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      let:width
-      let:height
-      let:padding
-      let:tooltip
+      tooltip={{ mode: 'quadtree-x' }}
     >
-      <Svg>
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-          <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />
-          <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
-            <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
-          </RectClipPath>
-        </LinearGradient>
-        <Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />
-        <Axis placement="bottom" />
-      </Svg>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <LinearGradient class="from-primary/50 to-primary/1" vertical>
+            {#snippet children({ gradient })}
+              <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />
+              <RectClipPath
+                x={0}
+                y={0}
+                width={context.tooltip.data ? context.tooltip.x : context.width}
+                height={context.height}
+                motion="spring"
+              >
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+              </RectClipPath>
+            {/snippet}
+          </LinearGradient>
+          <Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />
+          <Axis placement="bottom" />
+        </Layer>
 
-      <Tooltip.Root
-        y={48}
-        xOffset={4}
-        variant="none"
-        class="text-sm font-semibold text-primary leading-3"
-        let:data
-      >
-        {format(data.value, 'currency')}
-      </Tooltip.Root>
+        <Tooltip.Root
+          y={48}
+          xOffset={4}
+          variant="none"
+          class="text-sm font-semibold text-primary leading-3"
+        >
+          {#snippet children({ data })}
+            {format(data.value, 'currency')}
+          {/snippet}
+        </Tooltip.Root>
 
-      <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
-        {format(data.date, PeriodType.Day)}
-      </Tooltip.Root>
+        <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3">
+          {#snippet children({ data })}
+            {format(data.date, 'day')}
+          {/snippet}
+        </Tooltip.Root>
 
-      <Tooltip.Root
-        x="data"
-        y={height + padding.top + 2}
-        anchor="top"
-        variant="none"
-        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
-        let:data
-      >
-        {format(data.date, PeriodType.Day)}
-      </Tooltip.Root>
+        <Tooltip.Root
+          x="data"
+          y={context.height + context.padding.top + 2}
+          anchor="top"
+          variant="none"
+          class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
+        >
+          {#snippet children({ data })}
+            {format(data.date, 'day')}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

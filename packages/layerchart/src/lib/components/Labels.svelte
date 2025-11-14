@@ -1,56 +1,130 @@
-<script lang="ts">
-  import { type ComponentProps } from 'svelte';
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
-
-  import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales.js';
-  import { chartContext } from './ChartContext.svelte';
+<script lang="ts" module>
+  import Text, { type TextProps } from './Text.svelte';
+  import { type ComponentProps, type Snippet } from 'svelte';
+  import { format as formatValue, type FormatType, type FormatConfig } from '@layerstack/utils';
+  import type { Without } from '$lib/utils/types.js';
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
-  const { xScale, yScale } = chartContext();
+  export type LabelsPropsWithoutHTML<T = any> = {
+    /**
+     * Override data instead of using context
+     */
+    data?: T;
 
-  /** Override data instead of using context */
-  export let data: any = undefined;
+    /**
+     * Override display value accessor.  By default, uses `y` unless yScale is band scale
+     */
+    value?: Accessor<T>;
 
-  /** Override display value accessor.  By default, uses `y` unless yScale is band scale   */
-  export let value: Accessor = undefined;
+    /**
+     * The fill color of the label, which can either be a string or an accessor function
+     * that returns a valid `fill` color value.
+     *
+     * The accessor is useful for dynamic fill colors based on the data the label represents.
+     */
+    fill?: string | Accessor<T>;
 
-  /** Override `x` accessor from Chart context */
-  export let x: Accessor = undefined;
-  /** Override `y` accessor from Chart context */
-  export let y: Accessor = undefined;
+    /**
+     * Override `x` accessor from Chart context
+     */
+    x?: Accessor<T>;
 
-  export let placement: 'inside' | 'outside' | 'center' = 'outside';
-  export let offset = placement === 'center' ? 0 : 4;
-  export let format: FormatType | undefined = undefined;
+    /**
+     * Override `y` accessor from Chart context
+     */
+    y?: Accessor<T>;
 
-  /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
-  export let key: (d: any, index: number) => any = (d, i) => i;
+    /**
+     * The placement of the label relative to the point
+     * @default 'outside'
+     */
+    placement?: 'inside' | 'outside' | 'center';
 
-  $: getTextProps = (point: Point): ComponentProps<Text> => {
+    /**
+     * The offset of the label from the point
+     *
+     * @default placement === 'center' ? 0 : 4
+     */
+    offset?: number;
+
+    /**
+     * The format of the label
+     */
+    format?: FormatType | FormatConfig;
+
+    /**
+     * Define unique value for {#each} `(key)` expressions to improve transitions.
+     * `index` position used by default
+     *
+     * @default (d, index) => index
+     */
+    key?: (d: T, index: number) => any;
+
+    children?: Snippet<[{ data: Point; textProps: ComponentProps<typeof Text> }]>;
+  };
+
+  export type LabelsProps<T = any> = LabelsPropsWithoutHTML<T> &
+    Without<TextProps, LabelsPropsWithoutHTML<T>>;
+</script>
+
+<script lang="ts" generics="TData = any">
+  import { cls } from '@layerstack/tailwind';
+
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getChartContext } from './Chart.svelte';
+  import Group from './Group.svelte';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
+  const ctx = getChartContext();
+
+  let {
+    data,
+    value,
+    x,
+    y,
+    placement = 'outside',
+    offset = placement === 'center' ? 0 : 4,
+    format,
+    key = (_: any, i: number) => i,
+    children: childrenProp,
+    class: className,
+    fill,
+    ...restProps
+  }: LabelsProps<TData> = $props();
+
+  function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
-    const pointValue = isScaleBand($yScale) ? point.xValue : point.yValue;
+    const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
+
+    // extract the true fill value from `fill` which could be an
+    // accessor function or string/undefined
+    const fillValue = typeof fill === 'function' ? accessor(fill)(point.data) : fill;
 
     const displayValue = value
       ? accessor(value)(point.data)
-      : isScaleBand($yScale)
+      : isScaleBand(ctx.yScale)
         ? point.xValue
         : point.yValue;
 
     const formattedValue = formatValue(
       displayValue,
+      // @ts-expect-error - improve types
       format ??
-        (value ? undefined : isScaleBand($yScale) ? $xScale.tickFormat?.() : $yScale.tickFormat?.())
+        (value
+          ? undefined
+          : isScaleBand(ctx.yScale)
+            ? ctx.xScale.tickFormat?.()
+            : ctx.yScale.tickFormat?.())
     );
 
-    if (isScaleBand($yScale)) {
+    if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
       if (pointValue < 0) {
         // left
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
           y: point.y,
           textAnchor: placement === 'outside' ? 'end' : 'start',
@@ -61,6 +135,7 @@
         // right
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
           y: point.y,
           textAnchor: placement === 'outside' ? 'start' : 'end',
@@ -74,6 +149,7 @@
         // bottom
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x,
           y: point.y + (placement === 'outside' ? offset : -offset),
           capHeight: '.6rem',
@@ -85,6 +161,7 @@
         // top
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x,
           y: point.y + (placement === 'outside' ? -offset : offset),
           capHeight: '.6rem',
@@ -94,27 +171,41 @@
         };
       }
     }
-  };
+  }
 </script>
 
-<g class="Labels">
-  <Points {data} {x} {y} let:points>
-    {#each points as point, i (key(point.data, i))}
-      {@const textProps = getTextProps(point)}
-      <slot data={point} {textProps}>
-        <Text
-          {...textProps}
-          {...$$restProps}
-          class={cls(
-            'text-xs',
-            placement === 'inside'
-              ? 'fill-surface-300 stroke-surface-content'
-              : 'fill-surface-content stroke-surface-100',
-            textProps.class,
-            $$props.class
-          )}
-        />
-      </slot>
-    {/each}
+<Group class="lc-labels-g">
+  <Points {data} {x} {y}>
+    {#snippet children({ points })}
+      {#each points as point, i (key(point.data, i))}
+        {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
+        {#if childrenProp}
+          {@render childrenProp({ data: point, textProps })}
+        {:else}
+          <Text
+            data-placement={placement}
+            {...textProps}
+            {...restProps}
+            {...extractLayerProps(getTextProps(point), 'lc-labels-text', className ?? '')}
+          />
+        {/if}
+      {/each}
+    {/snippet}
   </Points>
-</g>
+</Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-labels-text)) {
+      font-size: 12px;
+
+      --fill-color: var(--color-surface-content, currentColor);
+      --stroke-color: var(--color-surface-100, light-dark(white, black));
+
+      &[data-placement='inside'] {
+        --fill-color: var(--color-surface-100, light-dark(white, black));
+        --stroke-color: var(--color-surface-content, currentColor);
+      }
+    }
+  }
+</style>

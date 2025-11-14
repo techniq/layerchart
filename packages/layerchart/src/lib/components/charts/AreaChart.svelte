@@ -1,27 +1,86 @@
+<script lang="ts" module>
+  /**
+   * The additional snippet props passed to the various snippets belonging
+   * to the `AreaChart` component.
+   */
+  export type AreaChartExtraSnippetProps<TData> = {
+    getAreaProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Area>;
+    getLabelsProps: (
+      s: SeriesData<TData, typeof Area>,
+      i: number
+    ) => ComponentProps<typeof Labels<TData>>;
+    getPointsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Points>;
+    getHighlightProps: (
+      s: SeriesData<TData, typeof Area>,
+      i: number
+    ) => ComponentProps<typeof Highlight>;
+    getGridProps: () => ComponentProps<typeof Grid>;
+    getAxisProps: (axisDirection?: 'x' | 'y') => ComponentProps<typeof Axis>;
+    getRuleProps: () => ComponentProps<typeof Rule>;
+  };
+
+  /**
+   * The accepted props via the `props` prop of the `AreaChart` component.
+   */
+  export type AreaChartPropsObjProp = Pick<
+    SimplifiedChartPropsObject,
+    | 'area'
+    | 'brush'
+    | 'canvas'
+    | 'grid'
+    | 'highlight'
+    | 'labels'
+    | 'legend'
+    | 'line'
+    | 'points'
+    | 'rule'
+    | 'svg'
+    | 'tooltip'
+    | 'xAxis'
+    | 'yAxis'
+  >;
+
+  export type AreaChartProps<TData> = SimplifiedChartProps<
+    TData,
+    typeof Area,
+    AreaChartExtraSnippetProps<TData>
+  > & {
+    /**
+     * A callback function called when a point in the chart is clicked.
+     *
+     * @param e - the original event that triggered the `onPointClick`
+     * @param details - an object containing the highlighted point data and series data
+     */
+    onPointClick?: (
+      e: MouseEvent,
+      details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
+    ) => void;
+
+    /**
+     * Additional props to be passed to the components rendered internally by the
+     * `AreaChart` component. This is useful for customizing the behavior of the individual
+     * components, without having to fully override them via a snippet.
+     */
+    props?: AreaChartPropsObjProp;
+  };
+</script>
+
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
-  import { sum } from 'd3-array';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
-  import BrushContext from '../BrushContext.svelte';
-  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Layer from '../layout/Layer.svelte';
   import Legend from '../Legend.svelte';
-  import Line from '../Line.svelte';
   import Points from '../Points.svelte';
   import Rule from '../Rule.svelte';
-  import Svg from '../layout/Svg.svelte';
-  import * as Tooltip from '../tooltip/index.js';
 
   import {
     accessor,
@@ -29,251 +88,262 @@
     defaultChartPadding,
     findRelatedData,
     type Accessor,
-  } from '../../utils/common.js';
-  import { asAny } from '../../utils/types.js';
+  } from '$lib/utils/common.js';
+  import { asAny } from '$lib/utils/types.js';
+  import Spline from '../Spline.svelte';
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { createLegendProps } from './utils.svelte.js';
+  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import DefaultTooltip from './DefaultTooltip.svelte';
+  import ChartAnnotations from './ChartAnnotations.svelte';
 
-  interface $$Props extends ComponentProps<Chart<TData>> {
-    axis?: typeof axis;
-    brush?: typeof brush;
-    debug?: typeof debug;
-    grid?: typeof grid;
-    labels?: typeof labels;
-    legend?: typeof legend;
-    points?: typeof points;
-    profile?: typeof profile;
-    props?: typeof props;
-    rule?: typeof rule;
-    series?: typeof series;
-    seriesLayout?: typeof seriesLayout;
-    renderContext?: typeof renderContext;
-    onpointclick?: typeof onpointclick;
-    ontooltipclick?: typeof ontooltipclick;
-  }
+  let {
+    data = [],
+    x,
+    y,
+    xDomain,
+    radial = false,
+    series: seriesProp,
+    seriesLayout = 'overlap',
+    axis = true,
+    brush = false,
+    grid = true,
+    labels = false,
+    legend = false,
+    points = false,
+    tooltip = true,
+    highlight = true,
+    annotations = [],
+    rule = true,
+    onTooltipClick = () => {},
+    onPointClick,
+    props = {},
+    renderContext = 'svg',
+    profile = false,
+    debug = false,
+    children: childrenProp,
+    aboveContext,
+    belowContext,
+    belowMarks,
+    aboveMarks,
+    marks,
+    context = $bindable(),
+    ...restProps
+  }: AreaChartProps<TData> = $props();
 
-  export let data: $$Props['data'] = [];
-  export let x: Accessor<TData> = undefined;
-  export let y: Accessor<TData> = undefined;
+  const series = $derived(
+    seriesProp === undefined
+      ? [
+          {
+            key: 'default',
+            label: typeof y === 'string' ? y : 'value',
+            value: y,
+            color: 'var(--color-primary, currentColor)',
+          },
+        ]
+      : seriesProp
+  );
 
-  /** Set xDomain.  Useful for external brush control */
-  export let xDomain: ComponentProps<typeof BrushContext>['xDomain'] = undefined;
+  const seriesState = new SeriesState(() => series);
 
-  /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
-  export let radial = false;
+  const stackSeries = $derived(seriesLayout.startsWith('stack'));
 
-  export let series: {
-    key: string;
-    label?: string;
-    value?: Accessor<TData>;
-    /** Provider series data, else uses chart data (with value/key accessor) */
-    data?: TData[];
-    color?: string;
-    props?: Partial<ComponentProps<Area>>;
-  }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
-  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
+  const chartData = $derived.by(() => {
+    let _chartData = (
+      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
+    ) as Array<TData>;
+    if (stackSeries) {
+      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
+      const offset =
+        seriesLayout === 'stackExpand'
+          ? stackOffsetExpand
+          : seriesLayout === 'stackDiverging'
+            ? stackOffsetDiverging
+            : stackOffsetNone;
 
-  /** Determine how to layout series.  Overlap (default) or stack */
-  export let seriesLayout: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' = 'overlap';
-  $: stackSeries = seriesLayout.startsWith('stack');
+      const stackData = stack()
+        .keys(seriesKeys)
+        .value((d, key) => {
+          const s = series.find((d) => d.key === key)!;
+          const value = accessor(s.value ?? y ?? s.key)(d as any);
+          return value;
+        })
+        .offset(offset)(_chartData as any[]);
 
-  export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let brush: ComponentProps<BrushContext> | boolean = false;
-  export let grid: ComponentProps<Grid> | boolean = true;
-  export let labels: ComponentProps<Labels> | boolean = false;
-  export let legend: ComponentProps<Legend> | boolean = false;
-  export let points: ComponentProps<Points> | boolean = false;
-  export let rule: ComponentProps<Rule> | boolean = true;
-
-  /** Expose tooltip context for external access */
-  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
-
-  /** Event dispatched with current tooltip data */
-  export let ontooltipclick: (e: MouseEvent, details: { data: any }) => void = () => {};
-
-  /** Event dispatched when Highlight point is clicked (useful with multiple series) */
-  export let onpointclick:
-    | ((
-        e: MouseEvent,
-        details: {
-          data: HighlightPointData;
-          series: (typeof series)[number];
+      // If series has data, add `stackData` to each data point
+      for (let [seriesIndex, s] of series.entries()) {
+        if (s.data) {
+          s.data = s.data.map((d, i) => {
+            return {
+              ...d,
+              stackData: stackData[seriesIndex][i],
+            };
+          });
         }
-      ) => void)
-    | undefined = undefined;
+      }
 
-  export let props: {
-    area?: Partial<ComponentProps<Area>>;
-    brush?: Partial<ComponentProps<BrushContext>>;
-    canvas?: Partial<ComponentProps<Canvas>>;
-    grid?: Partial<ComponentProps<Grid>>;
-    highlight?: Partial<ComponentProps<Highlight>>;
-    labels?: Partial<ComponentProps<Labels>>;
-    legend?: Partial<ComponentProps<Legend>>;
-    line?: Partial<ComponentProps<Line>>;
-    points?: Partial<ComponentProps<Points>>;
-    rule?: Partial<ComponentProps<Rule>>;
-    svg?: Partial<ComponentProps<Svg>>;
-    tooltip?: {
-      context?: Partial<ComponentProps<Tooltip.Context>>;
-      root?: Partial<ComponentProps<Tooltip.Root>>;
-      header?: Partial<ComponentProps<Tooltip.Header>>;
-      list?: Partial<ComponentProps<Tooltip.List>>;
-      item?: Partial<ComponentProps<Tooltip.Item>>;
-      separator?: Partial<ComponentProps<Tooltip.Separator>>;
-    };
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
-  } = {};
+      // Add `stackData` to each data point
+      _chartData = _chartData.map((d, i) => {
+        return {
+          ...d,
+          stackData: stackData.map((sd) => sd[i]),
+        };
+      });
+    }
 
-  export let renderContext: 'svg' | 'canvas' = 'svg';
+    return _chartData;
+  });
 
-  /** Log initial render performance using `console.time` */
-  export let profile = false;
-
-  /** Enable debug mode */
-  export let debug = false;
-
-  $: allSeriesData = visibleSeries
-    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-    .filter((d) => d) as Array<TData & { stackData?: any }>;
-
-  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
-    TData & { stackData?: any }
-  >;
-
-  $: if (stackSeries) {
-    const seriesKeys = visibleSeries.map((s) => s.key);
-    const offset =
-      seriesLayout === 'stackExpand'
-        ? stackOffsetExpand
-        : seriesLayout === 'stackDiverging'
-          ? stackOffsetDiverging
-          : stackOffsetNone;
-
-    const stackData = stack()
-      .keys(seriesKeys)
-      .value((d, key) => {
-        const s = series.find((d) => d.key === key)!;
-        return accessor(s.value ?? s.key)(d as any);
-      })
-      .offset(offset)(chartDataArray(data)) as any[];
-
-    chartData = chartData.map((d, i) => {
-      return {
-        ...d,
-        stackData: stackData.map((sd) => sd[i]),
-      };
-    });
+  function isStackData(d: TData): d is TData & { stackData: any[] } {
+    return d && typeof d === 'object' && 'stackData' in d;
   }
 
-  // Default xScale based on first data's `x` value
-  $: xScale =
-    $$props.xScale ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear());
-
-  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
-
-  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
-    highlightSeriesKey = seriesKey;
+  /**
+   * If series has data, return the stackData from series (enriched when setting up `chartData`)
+   */
+  function getStackData(
+    s: SeriesData<TData, typeof Area>,
+    d: TData & { stackData: any[] },
+    i: number
+  ) {
+    if (s.data) {
+      return d.stackData;
+    }
+    // TODO: Sometimes this returns `undefined` when toggling series visibility when legend overlaps chart container.  Return empty array to be more defensive
+    return d.stackData[i] ?? [];
   }
 
-  $: getAreaProps = (s: (typeof series)[number], i: number) => {
-    const lineProps = {
+  function getAreaProps(s: SeriesData<TData, typeof Area>, i: number): ComponentProps<typeof Area> {
+    const lineProps: ComponentProps<typeof Spline> = {
       ...props.line,
       ...(typeof props.area?.line === 'object' ? props.area.line : null),
       ...(typeof s.props?.line === 'object' ? s.props.line : null),
     };
 
-    const areaProps: ComponentProps<Area> = {
+    return {
       data: s.data,
-      y0: stackSeries ? (d) => d.stackData[i][0] : Array.isArray(s.value) ? s.value[0] : undefined,
+      y0: stackSeries
+        ? (d) => getStackData(s, d, i)[0]
+        : Array.isArray(s.value)
+          ? s.value[0]
+          : undefined,
       y1: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => getStackData(s, d, i)[1]
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
+      opacity:
+        // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+        seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.area,
       ...s.props,
-      class: cls(
-        'transition-opacity',
-        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        visibleSeries.length > 1 &&
-          highlightSeriesKey &&
-          highlightSeriesKey !== s.key &&
-          'opacity-10',
-        props.area?.class,
-        s.props?.class
-      ),
+      class: cls(props.area?.class, s.props?.class),
       line: {
         stroke: s.color,
+        opacity:
+          // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+          seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
         ...lineProps,
-        class: cls(
-          'transition-opacity',
-          visibleSeries.length > 1 &&
-            highlightSeriesKey &&
-            highlightSeriesKey !== s.key &&
-            'opacity-10',
-          lineProps.class
-        ),
       },
     };
+  }
 
-    return areaProps;
-  };
-
-  function getPointsProps(s: (typeof series)[number], i: number) {
-    const pointsProps: ComponentProps<Points> = {
+  function getPointsProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Points> {
+    return {
       data: s.data,
       y: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => getStackData(s, d, i)[1]
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
-        props.points?.class,
-        typeof points === 'object' && points.class
-      ),
+      class: cls(props.points?.class, typeof points === 'object' && points.class),
     };
-
-    return pointsProps;
   }
 
-  function getLabelsProps(s: (typeof series)[number], i: number) {
-    const labelsProps: ComponentProps<Labels> = {
+  function getLabelsProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Labels<TData>> {
+    return {
       data: s.data,
       y: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => (isStackData(d) ? getStackData(s, d, i)[1] : undefined)
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
+      stroke: 'var(--color-surface-100, light-dark(white, black))',
+      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
-      class: cls(
-        'stroke-surface-200 transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
-        props.labels?.class,
-        typeof labels === 'object' && labels.class
-      ),
+      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
     };
-
-    return labelsProps;
   }
 
-  const selectedSeries = selectionStore();
-  $: visibleSeries = series.filter((s) => {
-    return (
-      // @ts-expect-error
-      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-      // || highlightSeriesKey == s.key
-    );
-  });
+  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
-  $: brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush };
+  function getHighlightProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Highlight> {
+    if (!context) return {};
+    const seriesTooltipData =
+      s.data && context.tooltip.data
+        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
+        : null;
+    const highlightPointsProps =
+      typeof props.highlight?.points === 'object' ? props.highlight.points : null;
+
+    return {
+      data: seriesTooltipData,
+      y: stackSeries ? (d) => getStackData(s, d, i)[1] : (s.value ?? (s.data ? undefined : s.key)),
+      lines: i == 0,
+      onPointClick: onPointClick
+        ? (e, detail) => onPointClick(e, { ...detail, series: s })
+        : undefined,
+      onPointEnter: () => (seriesState.highlightKey.current = s.key),
+      onPointLeave: () => (seriesState.highlightKey.current = null),
+      ...props.highlight,
+      opacity:
+        seriesState.highlightKey.current && seriesState.highlightKey.current !== s.key ? 0.1 : 1,
+      points:
+        props.highlight?.points == false
+          ? false
+          : {
+              ...highlightPointsProps,
+              fill: s.color,
+            },
+    };
+  }
+
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return createLegendProps({
+      seriesState,
+      props: {
+        ...props.legend,
+        ...(typeof legend === 'object' ? legend : null),
+      },
+    });
+  }
+
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: radial,
+      y: true,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
 
   if (profile) {
     console.time('AreaChart render');
@@ -281,254 +351,211 @@
       console.timeEnd('AreaChart render');
     });
   }
+
+  setTooltipMetaContext({
+    type: 'area',
+    get stackSeries() {
+      return stackSeries;
+    },
+    get visibleSeries() {
+      return seriesState.visibleSeries;
+    },
+  });
+
+  function resolveAccessor(acc: Accessor<TData> | undefined) {
+    if (stackSeries) {
+      return (d: TData) =>
+        isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+    }
+    if (acc) return acc;
+    return seriesState.visibleSeries.map((s) => s.value ?? s.key);
+  }
+
+  function getAxisProps(axisDirection?: 'x' | 'y'): ComponentProps<typeof Axis> {
+    if (axisDirection === 'y') {
+      return {
+        placement: radial ? 'radius' : 'left',
+        format: seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
+        ...(typeof axis === 'object' ? axis : null),
+        ...props.yAxis,
+      };
+    }
+
+    return {
+      placement: radial ? 'angle' : 'bottom',
+      ...(typeof axis === 'object' ? axis : null),
+      ...props.xAxis,
+    };
+  }
+
+  function getRuleProps(): ComponentProps<typeof Rule> {
+    return {
+      x: 0,
+      y: 0,
+      ...(typeof rule === 'object' ? rule : null),
+      ...props.rule,
+    };
+  }
 </script>
 
+<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
+  bind:context
   data={chartData}
   {x}
   {xDomain}
-  {xScale}
-  y={y ??
-    (stackSeries
-      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
-      : visibleSeries.map((s) => s.value ?? s.key))}
+  y={resolveAccessor(y)}
   yBaseline={0}
   yNice
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
-  {...$$restProps}
-  tooltip={$$props.tooltip === false
+  {...restProps}
+  tooltip={tooltip === false
     ? false
     : {
-        mode: 'bisect-x',
-        onclick: ontooltipclick,
+        mode: 'quadtree-x',
+        onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...$$props.tooltip,
+        ...(typeof tooltip === 'object' ? tooltip : null),
       }}
-  bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
         axis: 'x',
         resetOnEnd: true,
         xDomain,
         ...brushProps,
-        onbrushend: (e) => {
+        onBrushEnd: (e) => {
           xDomain = e.xDomain;
-          brushProps.onbrushend?.(e);
+          brushProps.onBrushEnd?.(e);
         },
       }
     : false}
-  let:x
-  let:xScale
-  let:y
-  let:yScale
-  let:c
-  let:cScale
-  let:width
-  let:height
-  let:padding
-  let:tooltip
 >
-  {@const slotProps = {
-    x,
-    xScale,
-    y,
-    yScale,
-    c,
-    cScale,
-    width,
-    height,
-    padding,
-    tooltip,
-    series,
-    visibleSeries,
-    getAreaProps,
-    getLabelsProps,
-    getPointsProps,
-    highlightSeriesKey,
-    setHighlightSeriesKey,
-  }}
+  {#snippet children({ context })}
+    {@const snippetProps = {
+      context,
+      series,
+      visibleSeries: seriesState.visibleSeries,
+      getAreaProps,
+      getLabelsProps,
+      getPointsProps,
+      getHighlightProps,
+      getLegendProps,
+      getGridProps,
+      getAxisProps,
+      getRuleProps,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
+    }}
 
-  <slot {...slotProps}>
-    <slot name="belowContext" {...slotProps} />
-
-    <svelte:component
-      this={renderContext === 'canvas' ? Canvas : Svg}
-      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-      center={radial}
-      {debug}
-    >
-      <slot name="grid" {...slotProps}>
-        {#if grid}
-          <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+    {#if childrenProp}
+      {@render childrenProp(snippetProps)}
+    {:else}
+      {@render belowContext?.(snippetProps)}
+      <Layer
+        type={renderContext}
+        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        center={radial}
+        {debug}
+      >
+        {#if typeof grid === 'function'}
+          {@render grid(snippetProps)}
+        {:else if grid}
+          <Grid {...getGridProps()} />
         {/if}
-      </slot>
 
-      <ChartClipPath disabled={!brush}>
-        <slot name="belowMarks" {...slotProps} />
+        <ChartClipPath disabled={!brush}>
+          <ChartAnnotations
+            {annotations}
+            layer="below"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
 
-        <slot name="marks" {...slotProps}>
-          {#each visibleSeries as s, i (s.key)}
-            <Area {...getAreaProps(s, i)} />
-          {/each}
-        </slot>
-      </ChartClipPath>
+          {@render belowMarks?.(snippetProps)}
 
-      <slot name="aboveMarks" {...slotProps} />
+          {#if marks}
+            {@render marks(snippetProps)}
+          {:else}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Area {...getAreaProps(s, i)} />
+            {/each}
+          {/if}
+        </ChartClipPath>
 
-      <slot name="axis" {...slotProps}>
-        {#if axis}
+        {@render aboveMarks?.(snippetProps)}
+        {#if typeof axis === 'function'}
+          {@render axis(snippetProps)}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
+            <Rule {...getRuleProps()} />
+          {/if}
+        {:else if axis}
           {#if axis !== 'x'}
-            <Axis
-              placement={radial ? 'radius' : 'left'}
-              format={(value) => {
-                if (seriesLayout === 'stackExpand') {
-                  return format(value, 'percentRound');
-                } else {
-                  return format(value, undefined, { variant: 'short' });
-                }
-              }}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.yAxis}
-            />
+            <Axis {...getAxisProps('y')} />
           {/if}
 
           {#if axis !== 'y'}
-            <Axis
-              placement={radial ? 'angle' : 'bottom'}
-              format={(value) => format(value, undefined, { variant: 'short' })}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.xAxis}
-            />
+            <Axis {...getAxisProps('x')} />
           {/if}
 
-          {#if rule}
-            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
+            <Rule {...getRuleProps()} />
           {/if}
         {/if}
-      </slot>
 
-      <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-      <ChartClipPath disabled={!brush} full>
-        {#if points}
-          {#each visibleSeries as s, i (s.key)}
-            <Points {...getPointsProps(s, i)} />
-          {/each}
-        {/if}
+        <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
+        <ChartClipPath disabled={!brush} full>
+          {#if typeof points === 'function'}
+            {@render points(snippetProps)}
+          {:else if points}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Points {...getPointsProps(s, i)} />
+            {/each}
+          {/if}
 
-        <slot name="highlight" {...slotProps}>
-          {#each visibleSeries as s, i (s.key)}
-            {@const seriesTooltipData =
-              s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
-            {@const highlightPointsProps =
-              typeof props.highlight?.points === 'object' ? props.highlight.points : null}
+          {#if typeof highlight === 'function'}
+            {@render highlight(snippetProps)}
+          {:else if highlight}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Highlight {...getHighlightProps(s, i)} />
+            {/each}
+          {/if}
 
-            <Highlight
-              data={seriesTooltipData}
-              y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key))}
-              lines={i == 0}
-              onpointclick={onpointclick
-                ? (e, detail) => onpointclick(e, { ...detail, series: s })
-                : undefined}
-              onpointenter={() => (highlightSeriesKey = s.key)}
-              onpointleave={() => (highlightSeriesKey = null)}
-              {...props.highlight}
-              points={props.highlight?.points == false
-                ? false
-                : {
-                    ...highlightPointsProps,
-                    fill: s.color,
-                    class: cls(
-                      'transition-opacity',
-                      highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
-                      highlightPointsProps?.class
-                    ),
-                  }}
-            />
-          {/each}
-        </slot>
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Labels {...getLabelsProps(s, i)} />
+            {/each}
+          {/if}
 
-        {#if labels}
-          {#each visibleSeries as s, i (s.key)}
-            <Labels {...getLabelsProps(s, i)} />
-          {/each}
-        {/if}
-      </ChartClipPath>
-    </svelte:component>
+          <ChartAnnotations
+            {annotations}
+            layer="above"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
+        </ChartClipPath>
+      </Layer>
 
-    <slot name="aboveContext" {...slotProps} />
+      {@render aboveContext?.(snippetProps)}
 
-    <slot name="legend" {...slotProps}>
-      {#if legend}
-        <Legend
-          scale={isDefaultSeries
-            ? undefined
-            : scaleOrdinal(
-                series.map((s) => s.key),
-                series.map((s) => s.color)
-              )}
-          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-          placement="bottom"
-          variant="swatches"
-          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
-          onpointerleave={(e) => (highlightSeriesKey = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
+      {#if typeof legend === 'function'}
+        {@render legend(snippetProps)}
+      {:else if legend}
+        <Legend {...getLegendProps()} />
       {/if}
-    </slot>
 
-    <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.Header value={x(data)} {format} {...props.tooltip?.header} />
-
-        <Tooltip.List {...props.tooltip?.list}>
-          <!-- Reverse series order so tooltip items match stacks -->
-          {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
-          {#each seriesItems as s}
-            {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
-            {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
-
-            <Tooltip.Item
-              label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
-              color={s.color}
-              {format}
-              valueAlign="right"
-              onpointerenter={() => (highlightSeriesKey = s.key)}
-              onpointerleave={() => (highlightSeriesKey = null)}
-              {...props.tooltip?.item}
-            />
-          {/each}
-
-          {#if stackSeries && visibleSeries.length > 1}
-            <Tooltip.Separator {...props.tooltip?.separator} />
-
-            <Tooltip.Item
-              label="total"
-              value={sum(visibleSeries, (s) => {
-                const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data;
-                const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key));
-
-                return valueAccessor(seriesTooltipData);
-              })}
-              format="integer"
-              valueAlign="right"
-              {...props.tooltip?.root}
-            />
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </slot>
-  </slot>
+      {#if typeof tooltip === 'function'}
+        {@render tooltip(snippetProps)}
+      {:else if tooltip}
+        <DefaultTooltip tooltipProps={props.tooltip} {seriesState} canHaveTotal={stackSeries} />
+      {/if}
+    {/if}
+  {/snippet}
 </Chart>

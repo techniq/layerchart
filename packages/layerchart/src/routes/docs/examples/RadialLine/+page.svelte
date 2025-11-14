@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { scaleBand, scaleUtc } from 'd3-scale';
+  import { scaleUtc } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { PeriodType } from '@layerstack/utils';
 
-  import { Area, Axis, Chart, Points, Spline, Svg } from 'layerchart';
+  import { Area, Axis, Chart, Layer, Points, Spline } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const pitchData = [
     { name: 'fastball', value: 10 },
@@ -20,7 +20,7 @@
     { name: 'cutter', value: 8 },
     { name: 'curve', value: 5 },
   ];
-  let curve = curveLinearClosed;
+  let curve = $state(curveLinearClosed);
 </script>
 
 <h1>Examples</h1>
@@ -40,17 +40,16 @@
 </div>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       yPadding={[0, 10]}
       padding={{ top: 32, bottom: 8 }}
       radial
     >
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Axis
           placement="radius"
           grid={{ class: 'stroke-surface-content/20 fill-surface-200/50' }}
@@ -60,7 +59,7 @@
         <Axis placement="angle" grid={{ class: 'stroke-surface-content/20' }} />
         <Spline {curve} class="stroke-primary fill-primary/20" />
         <Points class="fill-primary stroke-surface-200" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -68,7 +67,7 @@
 <h2>Line with Areas</h2>
 
 <Preview data={data.sfoTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <Chart
       data={data.sfoTemperatures}
       x="date"
@@ -76,8 +75,9 @@
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial
+      padding={{ top: 12, bottom: 12 }}
     >
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Spline y={(d) => d.avg} curve={curveCatmullRom} class="stroke-primary" />
         <Area
           y0={(d) => d.min}
@@ -91,14 +91,14 @@
           curve={curveCatmullRomClosed}
           class="fill-primary/20"
         />
-        <Axis placement="angle" grid tickLength={0} format={PeriodType.Month} />
+        <Axis placement="angle" grid tickLength={0} format={'month'} />
         <Axis
           placement="radius"
-          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+          rule={{ y: '$top', class: 'stroke-surface-content/20' }}
           grid
           format={(v) => v + '° F'}
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -106,7 +106,7 @@
 <h2>Multi-year Lines</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <Chart
       data={data.dailyTemperatures}
       x="date"
@@ -117,32 +117,34 @@
       zDomain={[1940, 2024]}
       zRange={[0.1, 0.2]}
       radial
-      let:zScale
+      padding={{ top: 12, bottom: 12 }}
     >
-      <Svg center>
-        {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
-          <Spline
-            data={yearData}
-            curve={curveCatmullRom}
-            class={cls(
-              year === 2024
-                ? 'stroke-primary'
-                : year === 2023
-                  ? 'stroke-primary/50'
-                  : 'stroke-surface-content'
-            )}
-            opacity={[2023, 2024].includes(year) ? 1 : zScale(year)}
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext} center>
+          {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
+            <Spline
+              data={yearData}
+              curve={curveCatmullRom}
+              class={cls(
+                year === 2024
+                  ? 'stroke-primary'
+                  : year === 2023
+                    ? 'stroke-primary/50'
+                    : 'stroke-surface-content'
+              )}
+              opacity={[2023, 2024].includes(year) ? 1 : context.zScale(year)}
+            />
+          {/each}
+          <Axis placement="angle" tickLength={0} grid format={'month'} />
+          <Axis
+            placement="radius"
+            grid
+            rule={{ y: '$top', class: 'stroke-surface-content/20' }}
+            ticks={4}
+            format={(v) => v + '° F'}
           />
-        {/each}
-        <Axis placement="angle" tickLength={0} grid format={PeriodType.Month} />
-        <Axis
-          placement="radius"
-          grid
-          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
-          ticks={4}
-          format={(v) => v + '° F'}
-        />
-      </Svg>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

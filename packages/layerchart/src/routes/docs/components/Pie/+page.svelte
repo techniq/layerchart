@@ -1,27 +1,25 @@
 <script lang="ts">
-  import { scaleOrdinal } from 'd3-scale';
-  import { format } from 'date-fns';
   import { sum } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
-  import { format as formatUtil } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
-  import { Arc, Chart, Group, Pie, Svg, Text, Tooltip } from 'layerchart';
+  import { Arc, Chart, Group, Layer, Pie, Text, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { Field, Switch, Toggle } from 'svelte-ux';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 
-  $: dataSum = sum(data, (d) => d.value);
+  const dataSum = $derived(sum(data, (d) => d.value));
 
-  const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-success)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ];
 
   const keyClasses = [
@@ -37,11 +35,11 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -49,11 +47,11 @@
 <h2>Disable sorting</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie sort={null} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -61,11 +59,11 @@
 <h2>Partial range (Chart xRange)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -73,11 +71,11 @@
 <h2>Partial range (range prop)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie range={[-90, 90]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -85,11 +83,11 @@
 <h2>Pad angle</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie padAngle={0.05} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -97,11 +95,11 @@
 <h2>Pad angle</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} padAngle={0.03} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -111,11 +109,11 @@
 <h3>If value >= 1, value will be treated as discrete</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -123,11 +121,11 @@
 <h3>If value >= 0 and less than 1, value will be treated as a percentage of outerRadius</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={0.9} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -135,11 +133,11 @@
 <h3>If value less than 0, value will be treated as a offset of outerRadius</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={-30} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -147,11 +145,11 @@
 <h2>Outer radius</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie outerRadius={100} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -159,12 +157,12 @@
 <h2>Multiple (data prop)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} {data} />
         <Pie outerRadius={90} data={data2} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -178,13 +176,13 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded resize overflow-auto">
+    <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       <Chart {data} x="value" c="date" cRange={keyColors}>
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {#if show}
-            <Pie tweened />
+            <Pie motion="tween" />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -193,11 +191,11 @@
 <h2>Offset</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie offset={4} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -205,63 +203,198 @@
 <h2>default slot / render each `Arc`</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            <Arc
-              startAngle={arc.startAngle}
-              endAngle={arc.endAngle}
-              padAngle={arc.padAngle}
-              fill={keyColors[index]}
-              offset={index === 0 ? 16 : 0}
-            />
-          {/each}
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                fill={keyColors[index]}
+                offset={index === 0 ? 16 : 0}
+              />
+            {/each}
+          {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-<h2>Centroid labels</h2>
+<h2>Labels</h2>
+
+<h3>Centroid</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            {@const colors = keyClasses[index]}
-            <Arc
-              startAngle={arc.startAngle}
-              endAngle={arc.endAngle}
-              padAngle={arc.padAngle}
-              class={colors.shape}
-              let:centroid
-            >
-              <Text
-                value={formatUtil(arc.data.value / dataSum, 'percent')}
-                x={centroid[0]}
-                y={centroid[1]}
-                dy={-8}
-                textAnchor="middle"
-                verticalAnchoc="middle"
-                class={cls('text-base', colors.content)}
-              />
-              <Text
-                value={arc.data.value}
-                x={centroid[0]}
-                y={centroid[1]}
-                dy={8}
-                textAnchor="middle"
-                verticalAnchoc="middle"
-                class={cls('text-sm opacity-50', colors.content)}
-              />
-            </Arc>
-          {/each}
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('centroid')}
+                    class={cls('text-sm ', colors.content)}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Centroid (multiple)</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date">
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  {@const textProps = getArcTextProps('centroid')}
+                  <Text
+                    value={format(arc.data.value / dataSum, 'percent')}
+                    {...textProps}
+                    dy={-8}
+                    class={cls('text-base', colors.content)}
+                  />
+                  <Text
+                    value={arc.data.value}
+                    {...textProps}
+                    dy={8}
+                    class={cls('text-sm opacity-50', colors.content)}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Outer</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date">
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('outer', { startOffset: '50%' })}
+                    class={cls('text-sm ')}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Outer (with padding)</h3>
+
+<Preview {data}>
+  <div class="h-[320px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date">
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('outer', { startOffset: '50%', outerPadding: 8 })}
+                    class={cls('text-sm ')}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Outer Radial</h3>
+
+<Preview {data}>
+  <div class="h-[400px] p-4 border rounded-sm resize overflow-auto">
+    <!--
+	This is an example of what I meant when I said that labels aren't taken into account
+	when determining size. Perhaps when a label is added we can check the charts padding to see
+	if it meets the minimum needed to fit the label, and if not, we push it? Idk
+	-->
+    <Chart {data} x="value" c="date" padding={24}>
+      <Layer type={shared.renderContext} center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('outer-radial')}
+                    class={cls('text-sm ')}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -269,23 +402,27 @@
 <h2>Tooltip</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg center>
-        <Pie {tooltip} />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-          <Tooltip.Item
-            label="percent"
-            value={data.value / dataSum}
-            format="percent"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext} center>
+          <Pie tooltipContext={context.tooltip} />
+        </Layer>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+              <Tooltip.Item
+                label="percent"
+                value={data.value / dataSum}
+                format="percent"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -293,58 +430,63 @@
 <h2>Tooltip with Arcs (slot)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            {@const colors = keyClasses[index]}
-            {@const isHighlighted = tooltip.data?.date === arc.data.date}
-            {@const isFaded = tooltip.data != null && tooltip.data.date !== arc.data.date}
-            <Group
-              onpointerenter={(e) => tooltip?.show(e, arc.data)}
-              onpointermove={(e) => tooltip?.show(e, arc.data)}
-              onpointerleave={(e) => tooltip?.hide()}
-              preventTouchMove
-              class={cls(
-                // isHighlighted && 'stroke-surface-content stroke-2',
-                isFaded && 'opacity-50'
-              )}
-            >
-              <Arc
-                startAngle={arc.startAngle}
-                endAngle={arc.endAngle}
-                padAngle={arc.padAngle}
-                class={colors.shape}
-                _offset={isHighlighted ? 16 : 0}
-                let:centroid
-              >
-                <Text
-                  value={formatUtil(arc.data.value / dataSum, 'percent')}
-                  x={centroid[0]}
-                  y={centroid[1]}
-                  textAnchor="middle"
-                  verticalAnchoc="middle"
-                  class={cls('text-base', colors.content)}
-                />
-              </Arc>
-            </Group>
-          {/each}
-        </Pie>
-      </Svg>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext} center>
+          <Pie>
+            {#snippet children({ arcs })}
+              {#each arcs as arc, index}
+                {@const colors = keyClasses[index]}
+                {@const isHighlighted = context.tooltip.data?.date === arc.data.date}
+                {@const isFaded =
+                  context.tooltip.data != null && context.tooltip.data.date !== arc.data.date}
+                <Group
+                  onpointerenter={(e) => context.tooltip.show(e, arc.data)}
+                  onpointermove={(e) => context.tooltip.show(e, arc.data)}
+                  onpointerleave={(e) => context.tooltip.hide()}
+                  preventTouchMove
+                  class={cls(
+                    // isHighlighted && 'stroke-surface-content stroke-2',
+                    isFaded && 'opacity-50'
+                  )}
+                >
+                  <Arc
+                    startAngle={arc.startAngle}
+                    endAngle={arc.endAngle}
+                    padAngle={arc.padAngle}
+                    class={colors.shape}
+                    offset={isHighlighted ? 16 : 0}
+                  >
+                    {#snippet children({ getArcTextProps })}
+                      <Text
+                        value={format(arc.data.value / dataSum, 'percent')}
+                        {...getArcTextProps('centroid')}
+                        class={cls('text-base', colors.content)}
+                      />
+                    {/snippet}
+                  </Arc>
+                </Group>
+              {/each}
+            {/snippet}
+          </Pie>
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-          <Tooltip.Item
-            label="percent"
-            value={data.value / dataSum}
-            format="percent"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+              <Tooltip.Item
+                label="percent"
+                value={data.value / dataSum}
+                format="percent"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -354,13 +496,15 @@
 <h3>left</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:height>
-      <Svg>
-        <Group x={height / 2} center="y">
-          <Pie />
-        </Group>
-      </Svg>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Group x={context.height / 2} center="y">
+            <Pie />
+          </Group>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -368,11 +512,11 @@
 <h3>center</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -380,13 +524,15 @@
 <h3>right</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:width let:height>
-      <Svg>
-        <Group x={width - height / 2} center="y">
-          <Pie />
-        </Group>
-      </Svg>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <Group x={context.width - context.height / 2} center="y">
+            <Pie />
+          </Group>
+        </Layer>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

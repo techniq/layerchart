@@ -1,12 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@import '@layerstack/tailwind/core.css';
+@import '@layerstack/tailwind/utils.css';
+@import '@layerstack/tailwind/themes/all.css';
+
+@source '../../node_modules/svelte-ux/dist';
+@plugin '@tailwindcss/typography';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
+    outline-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
+  }
+}
 
 html {
   @apply bg-surface-200 accent-primary;
-  /* background-image:
-      radial-gradient(at 0% 0%, hsl(var(--color-secondary) / 0.33) 0px, transparent 50%),
-      radial-gradient(at 98% 1%, hsl(var(--color-primary) / 0.33) 0px, transparent 50%); */
 }
 
 nav h1 {
@@ -15,6 +36,18 @@ nav h1 {
 
 nav h2 {
   @apply pt-4 pb-2 pl-4 text-xs text-surface-content font-bold;
+}
+
+.prose {
+  h1 {
+    @apply text-2xl font-extrabold;
+  }
+  h2 {
+    @apply text-xl font-bold mt-3;
+  }
+  h3 {
+    @apply text-lg font-semibold;
+  }
 }
 
 main :is(h1, h2, h3):not(.prose *, .related *, .ApiDocs *) {

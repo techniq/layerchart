@@ -4,7 +4,7 @@ import { unique } from '@layerstack/utils/array';
 
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   const alpha = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 
   function getRandomDownstreamIds(index: number) {
@@ -58,6 +58,7 @@ export async function load() {
 
     meta: {
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
       related: ['components/Dagre', 'components/Link'],
     },
   };

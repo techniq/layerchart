@@ -232,11 +232,7 @@
       data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
       c="name"
       cScale={scaleOrdinal()}
-      cRange={[
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
-      ]}
+      cRange={['var(--color-success)', 'var(--color-warning)', 'var(--color-danger)']}
     >
       <Legend title="I am Legend" />
     </Chart>
@@ -251,11 +247,7 @@
       data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
       c="name"
       cScale={scaleOrdinal()}
-      cRange={[
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
-      ]}
+      cRange={['var(--color-success)', 'var(--color-warning)', 'var(--color-danger)']}
     >
       <Legend title="top-left" placement="top-left" variant="swatches" />
       <Legend title="top" placement="top" variant="swatches" />
@@ -281,7 +273,7 @@
       )}
       title="Age (years)"
       variant="swatches"
-      classes={{ swatch: 'rounded' }}
+      classes={{ swatch: 'rounded-sm' }}
     />
   </div>
 </Preview>
@@ -312,7 +304,7 @@
     tickFontSize={12}
     tickFormat={(value) => value + '°'}
     classes={{
-      root: 'border px-3 py-2 bg-surface-200 rounded',
+      root: 'border px-3 py-2 bg-surface-200 rounded-sm',
       title: 'text-lg text-center',
       label: 'fill-surface-content/50',
       tick: 'stroke-surface-100',
@@ -320,10 +312,10 @@
   />
 </Preview>
 
-<h2>Click handler</h2>
+<h2>Responsive swatches</h2>
 
 <Preview>
-  <div class="grid gap-6">
+  <div class="border rounded-sm resize overflow-auto">
     <Legend
       scale={scaleOrdinal(
         ['<10', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '≥80'],
@@ -331,12 +323,16 @@
       )}
       title="Age (years)"
       variant="swatches"
-      onclick={(d) => console.log(d)}
+      classes={{
+        root: 'w-full',
+        swatch: 'size-2',
+        item: 'text-xs',
+      }}
     />
   </div>
 </Preview>
 
-<h2>slot override</h2>
+<h2>Click handler</h2>
 
 <Preview>
   <Legend
@@ -345,16 +341,30 @@
       schemeSpectral[10]
     )}
     title="Age (years)"
-    let:values
-    let:scale
+    variant="swatches"
+    onclick={(d) => console.log(d)}
+  />
+</Preview>
+
+<h2>children override</h2>
+
+<Preview>
+  <Legend
+    scale={scaleOrdinal(
+      ['<10', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '≥80'],
+      schemeSpectral[10]
+    )}
+    title="Age (years)"
   >
-    <div class="flex gap-4">
-      {#each values as value}
-        <div class="flex gap-1">
-          <div class="h-4 w-4 rounded-full" style:background-color={scale(value)}></div>
-          <div class="text-xs text-surface-content/50">{value}</div>
-        </div>
-      {/each}
-    </div>
+    {#snippet children({ scale, values })}
+      <div class="flex gap-4">
+        {#each values as value}
+          <div class="flex gap-1">
+            <div class="h-4 w-4 rounded-full" style:background-color={scale?.(value)}></div>
+            <div class="text-xs text-surface-content/50">{value}</div>
+          </div>
+        {/each}
+      </div>
+    {/snippet}
   </Legend>
 </Preview>

@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       features: [
         'Various modes',
         [
@@ -15,7 +16,7 @@ export async function load() {
           'band',
           'bounds',
           'voronoi',
-          'quadtree',
+          'quadtree, quadtree-x, quadtree-y',
           'manual (ex. path, etc)',
         ],
         'Flexible positioning',

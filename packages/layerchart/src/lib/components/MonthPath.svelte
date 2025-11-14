@@ -1,32 +1,97 @@
-<script lang="ts">
-  import { timeWeek, timeYear } from 'd3-time';
-  import { endOfMonth } from 'date-fns';
+<script lang="ts" module>
+  import type { Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
 
-  export let date: Date;
+  export type MonthPathPropsWithoutHTML = {
+    /**
+     * The date to use for the month path.
+     */
+    date: Date;
 
-  /**
-   * Size of cell.  If `number`, sets width/height as same.  If array, sets [width,height].  If undefined, is based on Chart width/height
-   */
-  export let cellSize: number | [number, number];
+    /**
+     * Size of cell.
+     * - `number` - sets width/height as same.
+     * - array - sets [width, height].
+     */
+    cellSize: number | [number, number];
 
-  $: [cellWidth, cellHeight] = Array.isArray(cellSize) ? cellSize : [cellSize, cellSize];
+    /**
+     * The start date of the calendar (used to calculate week offsets).
+     */
+    startOfRange: Date;
 
-  // start of month
-  $: startDayOfWeek = date.getDay();
-  $: startWeek = timeWeek.count(timeYear(date), date);
+    /**
+     * A bindable reference to the underlying `<path>` element.
+     *
+     * @bindable
+     */
+    pathRef?: SVGPathElement;
+  };
 
-  // end of month
-  $: monthEnd = endOfMonth(date);
-  $: endDayOfWeek = monthEnd.getDay();
-  $: endWeek = timeWeek.count(timeYear(monthEnd), monthEnd);
-
-  $: pathData = `
-    M${(startWeek + 1) * cellWidth},${startDayOfWeek * cellHeight}
-    H${startWeek * cellWidth} V${cellHeight * 7}
-    H${endWeek * cellWidth} V${(endDayOfWeek + 1) * cellHeight}
-    H${(endWeek + 1) * cellWidth} V0
-    H${(startWeek + 1) * cellWidth}Z
-  `;
+  export type MonthPathProps = MonthPathPropsWithoutHTML &
+    // we omit the spline props to avoid conflicts with attribute names since we are
+    // passing them through to `<Spline />`
+    Without<SVGAttributes<SVGPathElement>, MonthPathPropsWithoutHTML & SplinePropsWithoutHTML>;
 </script>
 
-<path d={pathData} fill="none" class="stroke-surface-content/20" {...$$restProps} />
+<script lang="ts">
+  import { timeWeek } from 'd3-time';
+  import { cls } from '@layerstack/tailwind';
+  import { endOfInterval } from '@layerstack/utils';
+  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
+
+  let {
+    date,
+    cellSize: cellSizeProp,
+    startOfRange,
+    pathRef: pathRefProp = $bindable(),
+    class: className,
+    ...restProps
+  }: MonthPathProps = $props();
+
+  let pathRef = $state<SVGPathElement>();
+  $effect.pre(() => {
+    pathRefProp = pathRef;
+  });
+
+  const cellSize = $derived(
+    Array.isArray(cellSizeProp) ? cellSizeProp : [cellSizeProp, cellSizeProp]
+  );
+
+  // start of month
+  const startDayOfWeek = $derived(date.getDay());
+  const startWeek = $derived(timeWeek.count(startOfRange, date));
+
+  // end of month
+  const monthEnd = $derived(endOfInterval('month', date));
+  const endDayOfWeek = $derived(monthEnd.getDay());
+  const endWeek = $derived(timeWeek.count(startOfRange, monthEnd));
+
+  const pathData = $derived(`
+    M${(startWeek + 1) * cellSize[0]},${startDayOfWeek * cellSize[1]}
+    H${startWeek * cellSize[0]} V${cellSize[1] * 7}
+    H${endWeek * cellSize[0]} V${(endDayOfWeek + 1) * cellSize[1]}
+    H${(endWeek + 1) * cellSize[0]} V0
+    H${(startWeek + 1) * cellSize[0]}Z
+  `);
+</script>
+
+<Spline
+  bind:pathRef
+  {pathData}
+  fill="none"
+  class={cls('lc-month-path', className)}
+  {...restProps}
+/>
+
+<style>
+  @layer components {
+    :global(:where(.lc-month-path)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+    }
+  }
+</style>

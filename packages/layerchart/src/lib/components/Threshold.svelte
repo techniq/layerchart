@@ -1,40 +1,72 @@
+<script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
+  import type { CurveFactory } from 'd3-shape';
+  export type ThresholdSnippetProps = {
+    curve?: CurveFactory;
+    defined?: ComponentProps<typeof Area>['defined'];
+  };
+
+  export type ThresholdProps = {
+    /**
+     * The curve factory to use for the area.
+     *
+     */
+    curve?: CurveFactory;
+
+    /**
+     * Function to determine if a point is defined.
+     *
+     */
+    defined?: ComponentProps<typeof Area>['defined'];
+
+    /**
+     * Content to render above the threshold area.
+     */
+    above?: Snippet<[ThresholdSnippetProps]>;
+
+    /**
+     * Content to render below the threshold area.
+     */
+    below?: Snippet<[ThresholdSnippetProps]>;
+
+    children?: Snippet<[ThresholdSnippetProps]>;
+  };
+</script>
+
 <script lang="ts">
   /*
     See also:
       - https://observablehq.com/@d3/difference-chart
       - https://github.com/airbnb/visx/issues/245
   */
-  import type { ComponentProps } from 'svelte';
-  import type { CurveFactory } from 'd3-shape';
+
   import { min } from 'd3-array';
 
-  import { chartContext } from './ChartContext.svelte';
   import Area from './Area.svelte';
   import ClipPath from './ClipPath.svelte';
+  import { getChartContext } from './Chart.svelte';
 
-  const { y, yDomain } = chartContext();
+  const ctx = getChartContext();
 
-  export let curve: CurveFactory | undefined = undefined;
-  export let defined: ComponentProps<Area>['defined'] | undefined = undefined;
+  let { curve, defined, below, above, children }: ThresholdProps = $props();
 </script>
 
 <!-- Recreate on curve change as otherwise is 1 state change behind for some reason -->
 {#key curve}
   <ClipPath>
-    <svelte:fragment slot="clip">
-      <Area y0={(d) => $y(d)[0]} y1={(d) => min($yDomain)} {curve} {defined} />
-    </svelte:fragment>
-
-    <slot name="above" {curve} {defined} />
+    {#snippet clip()}
+      <Area y0={(d) => ctx.y(d)[0]} y1={(d) => min(ctx.yDomain)} {curve} {defined} />
+    {/snippet}
+    {@render above?.({ curve, defined })}
   </ClipPath>
 
   <ClipPath>
-    <svelte:fragment slot="clip">
-      <Area y0={(d) => min($yDomain)} y1={(d) => $y(d)[1]} {curve} {defined} />
-    </svelte:fragment>
+    {#snippet clip()}
+      <Area y0={(d) => min(ctx.yDomain)} y1={(d) => ctx.y(d)[1]} {curve} {defined} />
+    {/snippet}
 
-    <slot name="below" {curve} {defined} />
+    {@render below?.({ curve, defined })}
   </ClipPath>
 
-  <slot {curve} {defined} />
+  {@render children?.({ curve, defined })}
 {/key}

@@ -1,4 +1,78 @@
-<script lang="ts">
+<script lang="ts" module>
+  export type TreemapProps<T> = {
+    /**
+     * The tile function to use for the treemap layout.
+     *
+     * @default treemapSquarify
+     */
+    tile?:
+      | typeof treemapSquarify
+      | 'binary'
+      | 'squarify'
+      | 'resquarify'
+      | 'dice'
+      | 'slice'
+      | 'sliceDice';
+    /**
+     * The padding between nodes.
+     *
+     * @default 0
+     */
+    padding?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * The inner padding between nodes.
+     *
+     * @default 0
+     */
+    paddingInner?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * The outer padding between nodes.
+     *
+     * @default 0
+     */
+    paddingOuter?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * The top padding between nodes.
+     *
+     * @default 0
+     */
+    paddingTop?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * The bottom padding between nodes.
+     *
+     * @default 0
+     */
+    paddingBottom?: number | ((node: HierarchyRectangularNode<T>) => number);
+    /**
+     * The left padding between nodes.
+     *
+     */
+    paddingLeft?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * The right padding between nodes.
+     *
+     */
+    paddingRight?: number | ((node: HierarchyRectangularNode<T>) => number);
+
+    /**
+     * Modify tiling function for approapriate aspect ratio when treemap is zoomed in
+     *
+     * @default false
+     */
+    maintainAspectRatio?: boolean;
+
+    hierarchy?: HierarchyNode<T>;
+
+    children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
+  };
+</script>
+
+<script lang="ts" generics="T">
   import {
     treemap as d3treemap,
     treemapBinary,
@@ -9,33 +83,29 @@
     treemapSquarify,
     type HierarchyNode,
     type HierarchyRectangularNode,
-    type TreemapLayout,
   } from 'd3-hierarchy';
 
-  import { chartContext } from './ChartContext.svelte';
   import { aspectTile } from '../utils/treemap.js';
+  import { getChartContext } from './Chart.svelte';
+  import type { Snippet } from 'svelte';
 
-  const { data, width, height } = chartContext();
+  let {
+    hierarchy,
+    tile = treemapSquarify,
+    padding = 0,
+    paddingInner = 0,
+    paddingOuter = 0,
+    paddingTop = 0,
+    paddingBottom = 0,
+    paddingLeft,
+    paddingRight,
+    maintainAspectRatio = false,
+    children,
+  }: TreemapProps<T> = $props();
 
-  export let tile:
-    | typeof treemapSquarify
-    | 'binary'
-    | 'squarify'
-    | 'resquarify'
-    | 'dice'
-    | 'slice'
-    | 'sliceDice' = treemapSquarify;
-  export let padding = 0;
-  export let paddingInner = 0;
-  export let paddingOuter = 0;
-  export let paddingTop = 0;
-  export let paddingBottom = 0;
-  export let paddingLeft: number | undefined = undefined;
-  export let paddingRight: number | undefined = undefined;
+  const ctx = getChartContext();
 
-  export let selected: HierarchyRectangularNode<any> | null | undefined = null;
-
-  $: tileFunc =
+  const tileFunc = $derived(
     tile === 'squarify'
       ? treemapSquarify
       : tile === 'resquarify'
@@ -48,41 +118,85 @@
               ? treemapSlice
               : tile === 'sliceDice'
                 ? treemapSliceDice
-                : tile;
+                : tile
+  );
 
-  let treemap: TreemapLayout<any>;
-  $: {
-    treemap = d3treemap()
-      .size([$width, $height])
-      .tile(aspectTile(tileFunc, $width, $height));
+  const treemapData = $derived.by(() => {
+    const _treemap = d3treemap<T>()
+      .size([ctx.width, ctx.height])
+      .tile(maintainAspectRatio ? aspectTile(tileFunc, ctx.width, ctx.height) : tileFunc);
 
     if (padding) {
-      treemap.padding(padding);
+      // Make Typescript happy to pick the correct overload
+      // TODO: Better way to do this?
+      if (typeof padding === 'number') {
+        _treemap.padding(padding);
+      } else {
+        _treemap.padding(padding);
+      }
     }
+
     if (paddingInner) {
-      treemap.paddingInner(paddingInner);
+      if (typeof paddingInner === 'number') {
+        _treemap.paddingInner(typeof paddingInner === 'number' ? paddingInner : paddingInner);
+      } else {
+        _treemap.paddingInner(paddingInner);
+      }
     }
+
     if (paddingOuter) {
-      treemap.paddingOuter(paddingOuter);
+      if (typeof paddingOuter === 'number') {
+        _treemap.paddingOuter(paddingOuter);
+      } else {
+        _treemap.paddingOuter(paddingOuter);
+      }
     }
+
     if (paddingTop) {
-      treemap.paddingTop(paddingTop);
+      if (typeof paddingTop === 'number') {
+        _treemap.paddingTop(paddingTop);
+      } else {
+        _treemap.paddingTop(paddingTop);
+      }
     }
+
     if (paddingBottom) {
-      treemap.paddingBottom(paddingBottom);
+      if (typeof paddingBottom === 'number') {
+        _treemap.paddingBottom(paddingBottom);
+      } else {
+        _treemap.paddingBottom(paddingBottom);
+      }
     }
+
     if (paddingLeft) {
-      treemap.paddingLeft(paddingLeft);
+      if (typeof paddingLeft === 'number') {
+        _treemap.paddingLeft(paddingLeft);
+      } else {
+        _treemap.paddingLeft(paddingLeft);
+      }
     }
     if (paddingRight) {
-      treemap.paddingRight(paddingRight);
+      if (typeof paddingRight === 'number') {
+        _treemap.paddingRight(paddingRight);
+      } else {
+        _treemap.paddingRight(paddingRight);
+      }
     }
-  }
 
-  $: treemapData = treemap($data as HierarchyNode<any>);
+    if (hierarchy) {
+      const h = hierarchy.copy();
+      const treemapData = _treemap(h);
+      return {
+        links: treemapData.links(),
+        nodes: treemapData.descendants(),
+      };
+    }
 
-  // TODO: Remove selected
-  $: selected = treemapData; // set initial selection
+    return {
+      links: [],
+      nodes: [],
+    };
+  });
 </script>
 
-<slot nodes={treemapData.descendants()} />
+{@render children?.({ nodes: treemapData.nodes })}

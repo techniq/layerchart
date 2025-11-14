@@ -1,6 +1,6 @@
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     chartData: (await fetch('/data/examples/bench/dimension_arrays/data.json').then((r) =>
       r.json()
@@ -13,6 +13,7 @@ export async function load() {
     meta: {
       description: 'Individual arrays per dimension, similar to uplot',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

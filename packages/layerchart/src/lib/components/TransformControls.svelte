@@ -1,40 +1,60 @@
+<script lang="ts" module>
+  import type { Placement } from './types.js';
+
+  type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
+
+  export type TransformControlsPropsWithoutHTML = {
+    /**
+     * @default 'top-right'
+     */
+    placement?: Placement;
+
+    /**
+     * @default 'vertical'
+     */
+    orientation?: 'horizontal' | 'vertical';
+
+    /**
+     * @default 'md'
+     */
+    size?: ComponentProps<Button>['size'];
+
+    /**
+     * @default ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode']
+     */
+    show?: Actions[];
+  };
+
+  export type TransformControlsProps = TransformControlsPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TransformControlsPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
-  import { cls } from '@layerstack/tailwind';
 
-  import {
-    mdiArrowULeftTop,
-    mdiMagnifyPlusOutline,
-    mdiMagnifyMinusOutline,
-    mdiImageFilterCenterFocus,
-    mdiChevronDown,
-    mdiResize,
-    mdiArrowExpandAll,
-    mdiCancel,
-  } from '@mdi/js';
+  import LucideFocus from '~icons/lucide/focus';
+  import LucideChevronDown from '~icons/lucide/chevron-down';
+  import LucideCircleOff from '~icons/lucide/circle-off';
+  import LucideImageUpscale from '~icons/lucide/image-upscale';
+  import LucideMove from '~icons/lucide/move';
+  import LucideUndo2 from '~icons/lucide/undo-2';
+  import LucideZoomIn from '~icons/lucide/zoom-in';
+  import LucideZoomOut from '~icons/lucide/zoom-out';
 
-  import { transformContext } from './TransformContext.svelte';
+  import { getTransformContext } from './TransformContext.svelte';
+  import type { Without } from '$lib/utils/types.js';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  type Placement =
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'left'
-    | 'center'
-    | 'right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right';
+  let {
+    placement = 'top-right',
+    orientation = 'vertical',
+    size = 'md',
+    show = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'],
+    class: className,
+  }: TransformControlsProps = $props();
 
-  export let placement: Placement = 'top-right';
-  export let orientation: 'horizontal' | 'vertical' = 'vertical';
-  export let size: ComponentProps<Button>['size'] = 'md';
-
-  type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
-  export let show: Actions[] = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'];
-
-  $: menuPlacementByOrientationAndPlacement = {
+  const menuPlacementByOrientationAndPlacement = $derived({
     horizontal: {
       'top-left': 'bottom-end',
       top: 'bottom-end',
@@ -57,31 +77,17 @@
       bottom: 'right-end',
       'bottom-right': 'left-end',
     },
-  } as const;
+  } as const);
 
-  const transform = transformContext();
-  const scrollMode = transform.scrollMode;
+  const transform = getTransformContext();
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-  class={cls(
-    'bg-surface-300/50 border rounded-full m-1 backdrop-blur z-10 flex',
-    orientation === 'vertical' && 'flex-col',
-    {
-      'top-left': 'absolute top-0 left-0',
-      top: 'absolute top-0 left-1/2 -translate-x-1/2',
-      'top-right': 'absolute top-0 right-0',
-      left: 'absolute top-1/2 left-0 -translate-y-1/2',
-      center: 'absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2',
-      right: 'absolute top-1/2 right-0 -translate-y-1/2',
-      'bottom-left': 'absolute bottom-0 left-0',
-      bottom: 'absolute bottom-0 left-1/2 -translate-x-1/2',
-      'bottom-right': 'absolute bottom-0 right-0',
-    }[placement],
-    $$props.class
-  )}
-  on:dblclick={(e) => {
+  class={['lc-transform-controls', className]}
+  data-orientation={orientation}
+  data-placement={placement}
+  ondblclick={(e) => {
     // Stop from propagating to TransformContext
     e.stopPropagation();
   }}
@@ -89,7 +95,7 @@
   {#if show.includes('zoomIn')}
     <Tooltip title="Zoom in">
       <Button
-        icon={mdiMagnifyPlusOutline}
+        icon={LucideZoomIn}
         on:click={() => transform.zoomIn()}
         {size}
         class="text-surface-content p-2"
@@ -100,7 +106,7 @@
   {#if show.includes('zoomOut')}
     <Tooltip title="Zoom out">
       <Button
-        icon={mdiMagnifyMinusOutline}
+        icon={LucideZoomOut}
         on:click={() => transform.zoomOut()}
         {size}
         class="text-surface-content p-2"
@@ -111,7 +117,7 @@
   {#if show.includes('center')}
     <Tooltip title="Center">
       <Button
-        icon={mdiImageFilterCenterFocus}
+        icon={LucideFocus}
         on:click={() => transform.translateCenter()}
         {size}
         class="text-surface-content p-2"
@@ -122,7 +128,7 @@
   {#if show.includes('reset')}
     <Tooltip title="Reset">
       <Button
-        icon={mdiArrowULeftTop}
+        icon={LucideUndo2}
         on:click={() => transform.reset()}
         {size}
         class="text-surface-content p-2"
@@ -135,21 +141,90 @@
       <MenuButton
         iconOnly
         options={[
-          { label: 'None', value: 'none', icon: mdiCancel },
-          { label: 'Zoom', value: 'scale', icon: mdiResize },
-          { label: 'Move', value: 'translate', icon: mdiArrowExpandAll },
+          { label: 'None', value: 'none', icon: LucideCircleOff },
+          { label: 'Zoom', value: 'scale', icon: LucideImageUpscale },
+          { label: 'Move', value: 'translate', icon: LucideMove },
         ]}
         menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
         menuIcon={null}
         {size}
-        value={$scrollMode}
+        value={transform.scrollMode}
         on:change={(e) => transform.setScrollMode(e.detail.value)}
         class="text-surface-content"
       >
         <svelte:fragment slot="selection" let:value>
-          <Icon data={value?.icon ?? mdiChevronDown} />
+          <Icon data={value?.icon ?? LucideChevronDown} />
         </svelte:fragment>
       </MenuButton>
     </Tooltip>
   {/if}
 </div>
+
+<style>
+  @layer components {
+    :where(.lc-transform-controls) {
+      display: flex;
+      background: color-mix(
+        in oklab,
+        var(--color-surface-300, light-dark(white, black)) 50%,
+        transparent
+      );
+      border: 1px solid
+        color-mix(in oklab, var(--color-surface-content, currentColor) 20%, transparent);
+      border-radius: 9999px;
+      margin: 4px;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+
+      &[data-orientation='vertical'] {
+        flex-direction: column;
+      }
+
+      &[data-placement] {
+        position: absolute;
+      }
+
+      &[data-placement='top-left'] {
+        top: 0;
+        left: 0;
+      }
+      &[data-placement='top'] {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='top-right'] {
+        top: 0;
+        right: 0;
+      }
+      &[data-placement='left'] {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='center'] {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &[data-placement='right'] {
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
+      &[data-placement='bottom-left'] {
+        bottom: 0;
+        left: 0;
+      }
+      &[data-placement='bottom'] {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &[data-placement='bottom-right'] {
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+</style>

@@ -8,7 +8,7 @@ import pageSource from './+page.svelte?raw';
 
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     appleStock: await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
       parse<AppleStockData>(await r.text())
@@ -37,6 +37,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Line charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Spline', 'examples/Line'],
     },
   };

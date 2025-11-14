@@ -1,25 +1,92 @@
-<script lang="ts">
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+<script lang="ts" module>
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
+  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
 
-  import { uniqueId } from '@layerstack/utils';
+  export type CircleClipPathPropsWithoutHTML = {
+    /**
+     * A unique id for the clipPath.
+     */
+    id?: string;
 
-  import ClipPath from './ClipPath.svelte';
-  import Circle from './Circle.svelte';
+    /**
+     * The center x position of the circle.
+     *
+     * @default 0
+     */
+    cx?: number;
 
-  /** Unique id for clipPath */
-  export let id: string = uniqueId('clipPath-');
+    /**
+     * The center y position of the circle.
+     *
+     * @default 0
+     */
+    cy?: number;
 
-  export let cx: number = 0;
-  export let cy: number = 0;
-  export let r: number;
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+    /**
+     * The radius of the circle.
+     *
+     * @required
+     */
+    r: number;
 
-  /** Disable clipping (show all) */
-  export let disabled: boolean = false;
+    /**
+     * Whether to disable clipping (show all).
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * A bindable reference to the underlying `<circle>` element'
+     *
+     * @bindable
+     */
+    ref?: SVGCircleElement;
+
+    /**
+     * The children snippet to render content inside the clipPath.
+     */
+    children?: ClipPathPropsWithoutHTML['children'];
+
+    motion?: MotionProp;
+  };
 </script>
 
-<ClipPath {id} {disabled} let:url>
-  <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} {...$$restProps} />
-  <slot {id} {url} />
+<script lang="ts">
+  import Circle from './Circle.svelte';
+  import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
+  const uid = $props.id();
+
+  let {
+    id = createId('clipPath-', uid),
+    cx = 0,
+    cy = 0,
+    r,
+    motion,
+    disabled = false,
+    ref: refProp = $bindable(),
+    children,
+    ...restProps
+  }: CircleClipPathPropsWithoutHTML = $props();
+
+  let ref = $state<SVGCircleElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+</script>
+
+<ClipPath {id} {disabled} {children}>
+  {#snippet clip()}
+    <Circle
+      {cx}
+      {cy}
+      {r}
+      {motion}
+      {...extractLayerProps(restProps, 'lc-clip-path-circle')}
+      bind:ref
+    />
+  {/snippet}
 </ClipPath>

@@ -2,13 +2,14 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, ChartClipPath, GeoPath, Svg, Tooltip } from 'layerchart';
+  import { Chart, ChartClipPath, GeoPath, Layer, Tooltip } from 'layerchart';
   import { SelectField } from 'svelte-ux';
   import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -19,13 +20,13 @@
       .map((x) => ({ label: x.properties.name, value: x.id })),
     (d) => d.value
   );
-  let selectedStateId = '54'; // 'West Virginia';
-  $: selectedStateFeature = states.features.find((f) => f.id === selectedStateId);
-  $: selectedCountiesFeatures = counties.features.filter(
-    (f) => String(f.id).slice(0, 2) === selectedStateId
+  let selectedStateId = $state('54'); // 'West Virginia';
+  const selectedStateFeature = $derived(states.features.find((f) => f.id === selectedStateId));
+  const selectedCountiesFeatures = $derived(
+    counties.features.filter((f) => String(f.id).slice(0, 2) === selectedStateId)
   );
 
-  let projection = geoAlbersUsa;
+  let projection = $state(geoAlbersUsa);
   const projections = [
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
@@ -64,9 +65,9 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={selectedStateFeature} class="stroke-surface-content" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -80,25 +81,26 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      let:tooltip
     >
-      <Svg>
-        {#each selectedCountiesFeatures as feature}
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          {#each selectedCountiesFeatures as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
+              tooltipContext={context.tooltip}
+            />
+          {/each}
           <GeoPath
-            geojson={feature}
-            class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-            {tooltip}
+            geojson={selectedStateFeature}
+            class="fill-none stroke-surface-content pointer-events-none"
           />
-        {/each}
-        <GeoPath
-          geojson={selectedStateFeature}
-          class="fill-none stroke-surface-content pointer-events-none"
-        />
-      </Svg>
+        </Layer>
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {context.tooltip.data?.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -112,33 +114,34 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      let:tooltip
     >
-      <Svg>
-        <ChartClipPath>
-          {#each counties.features as feature}
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <ChartClipPath>
+            {#each counties.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
+                tooltipContext={context.tooltip}
+              />
+            {/each}
+            {#each states.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-none pointer-events-none stroke-surface-content/10"
+              />
+            {/each}
             <GeoPath
-              geojson={feature}
-              class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-              {tooltip}
+              geojson={selectedStateFeature}
+              class="fill-none stroke-surface-content pointer-events-none"
             />
-          {/each}
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-none pointer-events-none stroke-surface-content/10"
-            />
-          {/each}
-          <GeoPath
-            geojson={selectedStateFeature}
-            class="fill-none stroke-surface-content pointer-events-none"
-          />
-        </ChartClipPath>
-      </Svg>
+          </ChartClipPath>
+        </Layer>
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {context.tooltip.data?.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

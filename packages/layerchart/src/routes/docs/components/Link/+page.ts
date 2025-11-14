@@ -8,7 +8,8 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Points', 'examples/Sankey', 'examples/Tree'],
+      supportedContexts: ['svg', 'canvas'],
+      related: ['components/Connector', 'components/Points', 'examples/Sankey', 'examples/Tree'],
     },
   };
 }

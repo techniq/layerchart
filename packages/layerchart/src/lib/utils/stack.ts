@@ -131,7 +131,7 @@ export function stackOffsetSeparated(series, order) {
 
   // Standard series
   for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
-    (s0 = s1), (s1 = series[order[i]]);
+    ((s0 = s1), (s1 = series[order[i]]));
     // @ts-expect-error
     let base = max(s0, (d) => d[1]) + gap; // here is where you calculate the maximum of the previous layer
     for (var j = 0; j < m; ++j) {

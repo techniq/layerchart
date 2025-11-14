@@ -1,161 +1,320 @@
-<script lang="ts">
-  import { type ComponentProps } from 'svelte';
-  import { fade } from 'svelte/transition';
-  import { cubicIn } from 'svelte/easing';
+<script lang="ts" module>
+  import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
+
+  export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
+    /**
+     * Location of axis
+     */
+    placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+
+    /**
+     * The label for the axis.
+     *
+     * Can either be a string or a snippet to render custom content.
+     * The snippet receives spreadable props to apply to the label.
+     */
+    label?: string | Snippet<[{ props: ComponentProps<typeof Text> }]>;
+
+    /**
+     * Location of axis label
+     * @default 'middle'
+     */
+    labelPlacement?: 'start' | 'middle' | 'end';
+
+    /**
+     * Props applied to label Text
+     */
+    labelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * Draw a rule line. Use Rule component for greater rendering order control
+     * @default false
+     */
+    rule?: boolean | Partial<ComponentProps<typeof Rule>>;
+
+    /**
+     * Draw grid lines
+     * @default false
+     */
+    grid?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+
+    /**
+     * Control the number of ticks
+     */
+    ticks?: TicksConfig;
+
+    /**
+     * Width or height of each tick in pixels (enabling responsive count)
+     */
+    tickSpacing?: number;
+
+    /**
+     * Whether to render tick labels on multiple lines for additional context
+     *
+     * @default false
+     */
+    tickMultiline?: boolean;
+
+    /**
+     * Length of the tick line
+     * @default 4
+     */
+    tickLength?: number;
+
+    /**
+     * Whether to render tick marks.
+     *
+     * @default true
+     */
+    tickMarks?: boolean;
+
+    /**
+     * Format tick labels
+     */
+    format?: FormatType | FormatConfig;
+
+    /**
+     * Props to apply to each tick label
+     */
+    tickLabelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * A snippet to render your own custom tick label.
+     */
+    tickLabel?: Snippet<[{ props: ComponentProps<typeof Text>; index: number }]>;
+
+    /**
+     * Transition function for entering elements
+     * @default defaults to fade if the motion prop is set to tweened
+     */
+    transitionIn?: In;
+
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
+
+    /**
+     * Override scale for the axis
+     */
+    scale?: any;
+
+    /**
+     * Classes for styling various parts of the axis
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      label?: string;
+      rule?: string;
+      tick?: string;
+      tickLabel?: string;
+    };
+
+    motion?: MotionProp;
+  };
+
+  export type AxisProps<In extends Transition = Transition> = AxisPropsWithoutHTML<In> &
+    Without<GroupProps, AxisPropsWithoutHTML<In>>;
+</script>
+
+<script lang="ts" generics="T extends Transition = Transition">
+  import { type ComponentProps, type Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-  import type { TimeInterval } from 'd3-time';
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
+  import { timeDay, timeHour, timeMillisecond, timeMinute, timeSecond, timeYear } from 'd3-time';
 
-  import { format as formatValue, isLiteralObject, type FormatType } from '@layerstack/utils';
+  import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
-  import { chartContext } from './ChartContext.svelte';
+  import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
-  const { xScale, yScale, xRange, yRange, width, height, padding } = chartContext();
+  import { getChartContext } from './Chart.svelte';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';
 
-  /** Location of axis */
-  export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+  let {
+    placement,
+    label = '',
+    labelPlacement = 'middle',
+    labelProps,
+    rule = false,
+    grid = false,
+    ticks,
+    tickSpacing = ['top', 'bottom', 'angle'].includes(placement)
+      ? 80
+      : ['left', 'right', 'radius'].includes(placement)
+        ? 50
+        : undefined,
+    tickMultiline = false,
+    tickLength = 4,
+    tickMarks = true,
+    format,
+    tickLabelProps,
+    motion,
+    transitionIn,
+    transitionInParams,
+    scale: scaleProp,
+    classes = {},
+    class: className,
+    tickLabel,
+    ...restProps
+  }: AxisProps<T> = $props();
 
-  /** Axis label */
-  export let label = '';
+  const ctx = getChartContext();
 
-  /** Location of axis label */
-  export let labelPlacement: 'start' | 'middle' | 'end' = 'middle';
-
-  /** Props applied label Text */
-  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
-
-  /** Draw a rule line.  Use Rule component for greater rendering order control */
-  export let rule: boolean | Partial<ComponentProps<Rule>> = false;
-
-  /** Draw a grid lines */
-  export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
-
-  /** Control the number of ticks*/
-  export let ticks:
-    | number
-    | any[]
-    | ((scale: AnyScale) => any)
-    | { interval: TimeInterval | null }
-    | null
-    | undefined = undefined;
-
-  /** Length of the tick line */
-  export let tickLength = 4;
-
-  /** Format tick labels */
-  export let format: FormatType | undefined = undefined;
-
-  /** Props to apply to each tick label */
-  export let tickLabelProps: Partial<ComponentProps<Text>> | undefined = undefined;
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let transitionIn = tweened
-    ? fade
-    : () => {
-        return {};
-      };
-  export let transitionInParams: TransitionParams = { easing: cubicIn };
-
-  $: orientation =
+  const orientation = $derived(
     placement === 'angle'
       ? 'angle'
       : placement === 'radius'
         ? 'radius'
         : ['top', 'bottom'].includes(placement)
           ? 'horizontal'
-          : 'vertical';
+          : 'vertical'
+  );
 
-  export let scale: any = undefined;
-  $: _scale = scale ?? (['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale);
+  const scale = $derived(
+    scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
+  );
+  const interval = $derived(
+    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
 
-  export let classes: {
-    root?: string;
-    label?: string;
-    rule?: string;
-    tick?: string;
-    tickLabel?: string;
-  } = {};
+  const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
+  const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  $: tickVals = Array.isArray(ticks)
-    ? ticks
-    : typeof ticks === 'function'
-      ? ticks(_scale)
-      : isLiteralObject(ticks)
-        ? _scale.ticks(ticks.interval) // d3-time interval such as `timeDay.every(1)`
-        : isScaleBand(_scale)
-          ? ticks
-            ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
-            : _scale.domain()
-          : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
+  const ctxSize = $derived(
+    orientation === 'vertical'
+      ? ctx.height
+      : orientation === 'horizontal'
+        ? ctx.width
+        : orientation === 'radius'
+          ? ctx.height / 2
+          : orientation === 'angle'
+            ? ctx.width
+            : null
+  );
 
-  function getCoords(tick: any, xRange: [number, number], yRange: [number, number]) {
-    const [xRangeMin, xRangeMax] = extent(xRange) as [number, number];
-    const [yRangeMin, yRangeMax] = extent(yRange) as [number, number];
+  const tickCount = $derived(
+    typeof ticks === 'number'
+      ? ticks
+      : tickSpacing && ctxSize
+        ? Math.round(ctxSize / tickSpacing)
+        : undefined
+  );
+  const tickVals = $derived.by(() => {
+    let tickVals = autoTickVals(scale, ticks, tickCount);
 
+    if (interval != null) {
+      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
+      tickVals.pop();
+    }
+
+    // Use format to filter ticks (helpful to keep ticks above a threshold for wide charts or short durations)
+    const formatType = typeof format === 'object' ? format?.type : format;
+
+    if (formatType === 'integer') {
+      tickVals = tickVals.filter(Number.isInteger);
+    } else if (formatType === 'year' || formatType === PeriodType.CalendarYear) {
+      tickVals = tickVals.filter((val) => +timeYear.floor(val) === +val);
+    } else if (
+      formatType === 'month' ||
+      formatType === PeriodType.Month ||
+      formatType === PeriodType.MonthYear
+    ) {
+      // tickVals = tickVals.filter((val) => +timeMonth.floor(val) === +val);
+      tickVals = tickVals.filter((val) => val.getDate() < 7); // first week of the month
+    } else if (formatType === 'day' || formatType === PeriodType.Day) {
+      tickVals = tickVals.filter((val) => +timeDay.floor(val) === +val);
+    } else if (formatType === 'hour' || formatType === PeriodType.Hour) {
+      tickVals = tickVals.filter((val) => +timeHour.floor(val) === +val);
+    } else if (formatType === 'minute' || formatType === PeriodType.Minute) {
+      tickVals = tickVals.filter((val) => +timeMinute.floor(val) === +val);
+    } else if (formatType === 'second' || formatType === PeriodType.Second) {
+      tickVals = tickVals.filter((val) => +timeSecond.floor(val) === +val);
+    } else if (formatType === 'millisecond' || formatType === PeriodType.Millisecond) {
+      tickVals = tickVals.filter((val) => +timeMillisecond.floor(val) === +val);
+    }
+
+    // Remove any duplicates (manually added)
+    return unique(tickVals);
+  });
+
+  const tickFormat = $derived(
+    autoTickFormat({
+      scale,
+      ticks,
+      count: tickCount,
+      formatType: format,
+      multiline: tickMultiline,
+      placement,
+    })
+  );
+
+  function getCoords(tick: any) {
     switch (placement) {
       case 'top':
-        return {
-          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
-          y: yRangeMin,
-        };
-
       case 'bottom':
         return {
-          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
-          y: yRangeMax,
+          x:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.xInterval
+                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 width of time interval
+                : 0),
+          y: placement === 'top' ? yRangeMinMax[0] : yRangeMinMax[1],
         };
 
       case 'left':
-        return {
-          x: xRangeMin,
-          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
-        };
-
       case 'right':
         return {
-          x: xRangeMax,
-          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
+          x: placement === 'left' ? xRangeMinMax[0] : xRangeMinMax[1],
+          y:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.yInterval
+                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 height of time interval
+                : 0),
         };
 
       case 'angle':
         return {
-          x: _scale(tick),
-          y: yRangeMax,
+          x: scale(tick),
+          y: yRangeMinMax[1],
         };
 
       case 'radius':
         return {
-          x: xRangeMin,
-          y: _scale(tick),
+          x: xRangeMinMax[0],
+          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
         };
     }
   }
 
-  function getDefaultTickLabelProps(tick: any): ComponentProps<Text> {
+  function getDefaultTickLabelProps(tick: any): ComponentProps<typeof Text> {
     switch (placement) {
       case 'top':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -tickLength - 2, // manually adjusted until Text supports custom styles
+          dy: -tickLength,
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: tickLength, // manually adjusted until Text supports custom styles
+          dy: tickLength,
         };
 
       case 'left':
@@ -163,7 +322,6 @@
           textAnchor: 'end',
           verticalAnchor: 'middle',
           dx: -tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'right':
@@ -171,11 +329,10 @@
           textAnchor: 'start',
           verticalAnchor: 'middle',
           dx: tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'angle':
-        const xValue = _scale(tick); // angle in radians
+        const xValue = scale(tick); // angle in radians
         return {
           textAnchor:
             xValue === 0 ||
@@ -186,7 +343,7 @@
                 ? 'end'
                 : 'start',
           verticalAnchor: 'middle',
-          dx: Math.sin(xValue) * (tickLength + 2),
+          dx: Math.sin(xValue) * tickLength,
           dy: -Math.cos(xValue) * (tickLength + 4), // manually adjusted until Text supports custom styles
         };
 
@@ -195,69 +352,94 @@
           textAnchor: 'middle',
           verticalAnchor: 'middle',
           dx: 2,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
     }
   }
 
-  $: resolvedLabelProps = {
-    value: label,
-    x:
-      placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')
-        ? -$padding.left
-        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-          ? $width + $padding.right
-          : $width / 2,
-    y:
-      placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')
-        ? -$padding.top
-        : orientation === 'vertical' && labelPlacement === 'middle'
-          ? $height / 2
-          : placement === 'bottom' || labelPlacement === 'end'
-            ? $height + $padding.bottom
-            : 0,
-    textAnchor:
-      labelPlacement === 'middle'
-        ? 'middle'
-        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-          ? 'end'
-          : 'start',
-    verticalAnchor:
+  const resolvedLabelX = $derived.by(() => {
+    if (placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')) {
+      return -ctx.padding.left;
+    } else if (
+      placement === 'right' ||
+      (orientation === 'horizontal' && labelPlacement === 'end')
+    ) {
+      return ctx.width + ctx.padding.right;
+    }
+
+    return ctx.width / 2;
+  });
+
+  const resolvedLabelY = $derived.by(() => {
+    if (placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')) {
+      return -ctx.padding.top;
+    } else if (orientation === 'vertical' && labelPlacement === 'middle') {
+      return ctx.height / 2;
+    } else if (placement === 'bottom' || labelPlacement === 'end') {
+      return ctx.height + ctx.padding.bottom;
+    }
+    return '0';
+  });
+
+  const resolvedLabelTextAnchor = $derived.by(() => {
+    if (labelPlacement === 'middle') {
+      return 'middle';
+    } else if (
+      placement === 'right' ||
+      (orientation === 'horizontal' && labelPlacement === 'end')
+    ) {
+      return 'end';
+    }
+    return 'start';
+  });
+
+  const resolvedLabelVerticalAnchor = $derived.by(() => {
+    if (
       placement === 'top' ||
       (orientation === 'vertical' && labelPlacement === 'start') ||
       (placement === 'left' && labelPlacement === 'middle')
-        ? 'start'
-        : 'end',
+    ) {
+      return 'start';
+    }
+    return 'end';
+  });
+
+  const resolvedLabelProps = $derived({
+    value: typeof label === 'function' ? '' : label,
+    x: resolvedLabelX,
+    y: resolvedLabelY,
+    textAnchor: resolvedLabelTextAnchor,
+    verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
-    capHeight: '.5rem', // text-[10px]
+    // complement 10px text (until Text supports custom styles)
+    capHeight: '7px',
+    lineHeight: '11px',
     ...labelProps,
-    class: cls(
-      'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-      classes.label,
-      labelProps?.class
-    ),
-  } satisfies ComponentProps<Text>;
+    class: cls('lc-axis-label', classes.label, labelProps?.class),
+  }) satisfies ComponentProps<typeof Text>;
 </script>
 
-<g class={cls('Axis placement-{placement}', classes.root, $$props.class)}>
+<Group
+  {...restProps}
+  data-placement={placement}
+  class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
+>
   {#if rule !== false}
-    {@const ruleProps = typeof rule === 'object' ? rule : null}
     <Rule
-      x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
-      y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
-      {tweened}
-      {spring}
-      {...ruleProps}
-      class={cls('rule stroke-surface-content/50', classes.rule, ruleProps?.class)}
+      x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
+      y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
+      {motion}
+      {...extractLayerProps(rule, 'lc-axis-rule', classes.rule ?? '')}
     />
   {/if}
 
-  {#if label}
+  {#if typeof label === 'function'}
+    {@render label({ props: resolvedLabelProps })}
+  {:else if label}
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick)}
-    {@const tickCoords = getCoords(tick, $xRange, $yRange)}
+  {#each tickVals as tick, index (tick.valueOf())}
+    {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
       tickCoords.x,
@@ -266,68 +448,98 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
-      value: formatValue(tick, format ?? _scale.tickFormat?.() ?? ((v) => v)),
+      value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
-      tweened,
-      spring,
+      motion,
+      // complement 10px text (until Text supports custom styles)
+      capHeight: '7px',
+      lineHeight: '11px',
       ...tickLabelProps,
-      class: cls(
-        'tickLabel text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-        classes.tickLabel,
-        tickLabelProps?.class
-      ),
+      class: cls('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
     }}
 
-    <g in:transitionIn={transitionInParams}>
+    <Group {transitionIn} {transitionInParams} class="lc-axis-tick-group">
       {#if grid !== false}
-        {@const ruleProps = typeof grid === 'object' ? grid : null}
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
-          {tweened}
-          {spring}
-          {...ruleProps}
-          class={cls('grid stroke-surface-content/10', classes.rule, ruleProps?.class)}
+          {motion}
+          {...extractLayerProps(grid, 'lc-axis-grid', classes.rule ?? '')}
         />
       {/if}
 
-      <!-- Tick marks -->
-      {#if orientation === 'horizontal'}
-        <Line
-          x1={tickCoords.x}
-          y1={tickCoords.y}
-          x2={tickCoords.x}
-          y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
-          {tweened}
-          {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
-        />
-      {:else if orientation === 'vertical'}
-        <Line
-          x1={tickCoords.x}
-          y1={tickCoords.y}
-          x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
-          y2={tickCoords.y}
-          {tweened}
-          {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
-        />
-      {:else if orientation === 'angle'}
-        <Line
-          x1={radialTickCoordsX}
-          y1={radialTickCoordsY}
-          x2={radialTickMarkCoordsX}
-          y2={radialTickMarkCoordsY}
-          {tweened}
-          {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
-        />
+      {#if tickMarks}
+        {@const tickClasses = cls('lc-axis-tick', classes.tick)}
+        {#if orientation === 'horizontal'}
+          <Line
+            x1={tickCoords.x}
+            y1={tickCoords.y}
+            x2={tickCoords.x}
+            y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
+            {motion}
+            class={tickClasses}
+          />
+        {:else if orientation === 'vertical'}
+          <Line
+            x1={tickCoords.x}
+            y1={tickCoords.y}
+            x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
+            y2={tickCoords.y}
+            {motion}
+            class={tickClasses}
+          />
+        {:else if orientation === 'angle'}
+          <Line
+            x1={radialTickCoordsX}
+            y1={radialTickCoordsY}
+            x2={radialTickMarkCoordsX}
+            y2={radialTickMarkCoordsY}
+            {motion}
+            class={tickClasses}
+          />
+        {/if}
       {/if}
-      <!-- TODO: Add tick marks for radial (angle)? -->
 
-      <slot name="tickLabel" labelProps={resolvedTickLabelProps} {index}>
+      {#if tickLabel}
+        {@render tickLabel({ props: resolvedTickLabelProps, index })}
+      {:else}
         <Text {...resolvedTickLabelProps} />
-      </slot>
-    </g>
+      {/if}
+    </Group>
   {/each}
-</g>
+</Group>
+
+<style>
+  @layer components {
+    :global(:where(.lc-axis-rule)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-tick)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-grid)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-axis-label, .lc-axis-tick-label)) {
+      font-size: 10px;
+      stroke: var(--color-surface-100, light-dark(white, black));
+      stroke-width: 2px;
+      font-weight: 300;
+    }
+  }
+</style>

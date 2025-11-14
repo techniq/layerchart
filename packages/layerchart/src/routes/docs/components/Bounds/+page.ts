@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['examples/Partition', 'examples/Sunburst', 'examples/Treemap'],
     },
   };

@@ -2,21 +2,22 @@
   import { type ComponentProps } from 'svelte';
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
 
-  let renderContext = $state<'svg' | 'canvas'>('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
+  let show = $state(true);
+
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
-    xAxis: { format: PeriodType.Day },
-    yAxis: { format: 'metric' },
-    tooltip: { root: { motion } },
-    highlight: { motion },
+    tooltip: { root: { motion: motion ? 'spring' : 'none' } },
+    highlight: { motion: motion ? 'spring' : 'none' },
   });
 
   let chartData = $derived(
@@ -32,16 +33,16 @@
 </script>
 
 <div class="grid gap-4">
-  <div class="grid grid-cols-3 gap-3">
-    <Field label="Render context">
-      <ToggleGroup bind:value={renderContext} variant="outline">
-        <ToggleOption value="svg">Svg</ToggleOption>
-        <ToggleOption value="canvas">Canvas</ToggleOption>
+  <div class="flex gap-3">
+    <Field label="Motion">
+      <ToggleGroup bind:value={motion} variant="outline">
+        <ToggleOption value={true}>Yes</ToggleOption>
+        <ToggleOption value={false}>No</ToggleOption>
       </ToggleGroup>
     </Field>
 
-    <Field label="Motion">
-      <ToggleGroup bind:value={motion} variant="outline">
+    <Field label="Show">
+      <ToggleGroup bind:value={show} variant="outline">
         <ToggleOption value={true}>Yes</ToggleOption>
         <ToggleOption value={false}>No</ToggleOption>
       </ToggleGroup>
@@ -57,37 +58,41 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={chartData[0]}>
-          <div class="h-[500px] p-4 border rounded">
-            <LineChart
-              data={chartData}
-              x="date"
-              y="cpu"
-              props={chartProps}
-              brush
-              {renderContext}
-              profile
-            />
+          <div class="h-[500px] p-4 border rounded-sm">
+            {#if show}
+              <LineChart
+                data={chartData}
+                x="date"
+                y="cpu"
+                props={chartProps}
+                brush
+                {renderContext}
+                profile
+              />
+            {/if}
           </div>
         </Preview>
       {:else if example === 'series'}
         <Preview data={chartData[0]}>
-          <div class="h-[500px] p-4 border rounded">
-            <LineChart
-              data={chartData}
-              x="date"
-              series={[
-                { key: 'cpu', color: 'hsl(var(--color-danger))' },
-                {
-                  key: 'ram',
-                  color: 'hsl(var(--color-warning))',
-                },
-                { key: 'tcp', color: 'hsl(var(--color-success))' },
-              ]}
-              props={chartProps}
-              brush
-              {renderContext}
-              profile
-            />
+          <div class="h-[500px] p-4 border rounded-sm">
+            {#if show}
+              <LineChart
+                data={chartData}
+                x="date"
+                series={[
+                  { key: 'cpu', color: 'var(--color-danger)' },
+                  {
+                    key: 'ram',
+                    color: 'var(--color-warning)',
+                  },
+                  { key: 'tcp', color: 'var(--color-success)' },
+                ]}
+                props={chartProps}
+                brush
+                {renderContext}
+                profile
+              />
+            {/if}
           </div>
         </Preview>
       {/if}

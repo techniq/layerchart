@@ -1,6 +1,6 @@
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     simple: await fetch('/data/examples/graph/simple.json').then((r) => r.json()),
     complex: await fetch('/data/examples/graph/complex.json').then((r) => r.json()),
@@ -9,6 +9,7 @@ export async function load() {
 
     meta: {
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
       related: ['components/Sankey', 'components/Link'],
     },
   };

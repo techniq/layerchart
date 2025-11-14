@@ -2,29 +2,32 @@
   import type { ComponentProps } from 'svelte';
   import { linear } from 'svelte/easing';
 
-  import { Axis, Chart, MotionPath, Spline, Svg } from 'layerchart';
+  import { Axis, Chart, Circle, Layer, MotionPath, Spline } from 'layerchart';
   import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  let pointCount = 100;
+  let pointCount = $state(100);
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
-  let amplitude = 1;
-  let frequency = 10;
-  let phase = 0;
+  let amplitude = $state(1);
+  let frequency = $state(10);
+  let phase = $state(0);
 
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator(i / pointCount) ?? i,
+      };
+    })
+  );
 </script>
 
 <h1>Examples</h1>
@@ -42,18 +45,20 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <MotionPath duration="3s" repeatCount="indefinite" let:pathId let:objectId>
-              <Spline id={pathId} {curve} />
-              <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+            <MotionPath duration="3s" repeatCount="indefinite">
+              {#snippet children({ pathId, objectId })}
+                <Spline id={pathId} {curve} />
+                <Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+              {/snippet}
             </MotionPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -72,31 +77,27 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <MotionPath
-              duration="5s"
-              repeatCount="indefinite"
-              rotate="auto"
-              let:pathId
-              let:objectId
-            >
-              <Spline id={pathId} {curve} />
-              <rect
-                id={objectId}
-                x={-10}
-                y={-10}
-                width={20}
-                height={20}
-                class="fill-surface-100 stroke-surface-content"
-              />
+            <MotionPath duration="5s" repeatCount="indefinite" rotate="auto">
+              {#snippet children({ pathId, objectId })}
+                <Spline id={pathId} {curve} />
+                <rect
+                  id={objectId}
+                  x={-10}
+                  y={-10}
+                  width={20}
+                  height={20}
+                  class="fill-surface-100 stroke-surface-content"
+                />
+              {/snippet}
             </MotionPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -115,20 +116,22 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
             {#key data}
-              <MotionPath duration="3s" let:pathId let:objectId>
-                <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-                <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+              <MotionPath duration="3s">
+                {#snippet children({ pathId, objectId })}
+                  <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
+                  <Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+                {/snippet}
               </MotionPath>
             {/key}
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>

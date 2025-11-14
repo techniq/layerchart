@@ -23,3 +23,10 @@ export function getColorStr(color: RGBColor) {
     return `rgb(${color.r},${color.g},${color.b})`;
   }
 }
+
+export function getColorIfDefined(data: any): string | undefined {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return;
+
+  if ('color' in data) return data.color;
+  if ('fill' in data) return data.fill;
+}

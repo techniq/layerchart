@@ -5,6 +5,10 @@ import pageSource from './+page.svelte?raw';
 export async function load() {
   return {
     meta: {
+      api,
+      source,
+      pageSource,
+      supportedContexts: ['svg', 'canvas', 'html'],
       features: [
         'Adjustable anchor/origin point (center horizontally and vertically)',
         'Rotate (based on origin)',
@@ -12,9 +16,6 @@ export async function load() {
         'Scale to fit',
         'Easy offset with `dx` and `dy`',
       ],
-      api,
-      source,
-      pageSource,
     },
   };
 }

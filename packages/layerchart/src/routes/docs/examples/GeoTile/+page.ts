@@ -1,7 +1,7 @@
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
       r.json()
@@ -10,6 +10,7 @@ export async function load() {
     }>,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['examples/ZoomableTileMap'],
     },
   };

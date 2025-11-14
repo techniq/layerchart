@@ -1,135 +1,207 @@
-<script lang="ts">
-  import { onDestroy, tick } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-  import { cls } from '@layerstack/tailwind';
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
+  import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
+  import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+
+  export type GroupPropsWithoutHTML<In extends Transition = Transition> = {
+    /**
+     * Translate x
+     */
+    x?: number;
+
+    /**
+     * Initial translate x
+     *
+     * @default x
+     */
+    initialX?: number;
+
+    /**
+     * Translate y
+     */
+    y?: number;
+
+    /**
+     * Initial translate y
+     *
+     * @default y
+     */
+    initialY?: number;
+
+    /**
+     * Center within chart
+     *
+     * @default false
+     */
+    center?: boolean | 'x' | 'y';
+
+    /**
+     * Prevent `touchmove` default, which can interfere with `pointermove` when
+     * used with `Tooltip`, for example.
+     *
+     * @default false
+     */
+    preventTouchMove?: boolean;
+
+    /**
+     * The opacity of the element. (0 to 1)
+     */
+    opacity?: number;
+
+    children?: Snippet;
+
+    /**
+     * A reference to the rendered DOM element, which could be
+     * either nothing, a `<g>` element (when using `<Svg>`), or a `<div>` element
+     * (when using `<Html>`).
+     *
+     * @bindable
+     */
+    ref?: Element;
+
+    motion?: MotionProp;
+
+    /**
+     * Transition function for entering elements
+     * @default defaults to fade if the motion prop is set to tweened
+     */
+    transitionIn?: In;
+
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
+  };
+
+  export type GroupProps = GroupPropsWithoutHTML &
+    Without<HTMLAttributes<Element>, GroupPropsWithoutHTML>;
+</script>
+
+<script lang="ts" generics="T extends Transition = Transition">
+  import { fade } from 'svelte/transition';
+  import { cubicIn } from 'svelte/easing';
 
   import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
-  import { motionStore } from '$lib/stores/motionStore.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  const { width, height } = chartContext();
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
 
-  /**
-   * Translate x
-   */
-  export let x: number | undefined = undefined;
-  export let initialX = x;
+  import { getChartContext } from './Chart.svelte';
 
-  /**
-   * Translate x
-   */
-  export let y: number | undefined = undefined;
-  export let initialY = y;
+  const ctx = getChartContext();
 
-  /**
-   * Center within chart
-   */
-  export let center: boolean | 'x' | 'y' = false;
+  let {
+    x,
+    initialX: initialXProp,
+    y,
+    initialY: initialYProp,
+    center = false,
+    preventTouchMove = false,
+    opacity = undefined,
+    motion,
+    transitionIn: transitionInProp,
+    transitionInParams: transitionInParamsProp,
+    class: className,
+    children,
+    ref: refProp = $bindable(),
+    ...restProps
+  }: GroupProps = $props();
 
-  /**
-   * Prevent `touchmove` default, which can interfer with `pointermove` when used with `Tooltip`, for example
-   */
-  export let preventTouchMove = false;
+  let ref = $state<Element>();
 
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let ondblclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  let tweened_x = motionStore(initialX, { spring, tweened });
-  let tweened_y = motionStore(initialY, { spring, tweened });
-
-  $: tick().then(() => {
-    tweened_x.set(x ?? (center === 'x' || center === true ? $width / 2 : 0));
-    tweened_y.set(y ?? (center === 'y' || center === true ? $height / 2 : 0));
+  $effect.pre(() => {
+    refProp = ref;
   });
 
-  let transform: string | undefined = undefined;
-  $: if (center || x != null || y != null) {
-    transform = `translate(${$tweened_x ?? 0}px, ${$tweened_y ?? 0}px)`;
-  }
+  const initialX = initialXProp ?? x;
+  const initialY = initialYProp ?? y;
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const trueX = $derived(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
+  const trueY = $derived(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
+  const motionX = createMotion(initialX, () => trueX, motion);
+  const motionY = createMotion(initialY, () => trueY, motion);
 
-  function render(ctx: CanvasRenderingContext2D) {
-    ctx.translate($tweened_x ?? 0, $tweened_y ?? 0);
-  }
+  const transitionIn = $derived(
+    transitionInProp ? transitionInProp : extractTweenConfig(motion)?.options ? fade : () => {}
+  ) as T;
+  const transitionInParams = $derived(
+    transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }
+  );
 
-  $: if (renderContext === 'canvas') {
-    $tweened_x && $tweened_y;
-    canvasContext.invalidate();
-  }
+  const transform = $derived.by(() => {
+    if (center || x != null || y != null) {
+      return `translate(${motionX.current}px, ${motionY.current}px)`;
+    }
+  });
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  const renderCtx = getRenderContext();
+
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Group',
-      render,
+      render: (ctx) => {
+        const currentGlobalAlpha = ctx.globalAlpha;
+        ctx.globalAlpha = opacity ?? 1;
+
+        ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
+
+        // Restore in case it was modified by `opacity`
+        ctx.globalAlpha = currentGlobalAlpha;
+      },
       retainState: true,
       events: {
-        click: onclick,
-        dblclick: ondblclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
-        pointerdown: onpointerdown,
+        click: restProps.onclick,
+        dblclick: restProps.ondblclick,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
+        pointerdown: restProps.onpointerdown,
       },
+      deps: () => [motionX.current, motionY.current, opacity],
     });
   }
 
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
+  const handleTouchMove: TouchEventHandler<Element> = (e) => {
+    if (preventTouchMove) {
+      // Prevent touch to not interfere with pointer
+      e.preventDefault();
     }
-  });
+    restProps.ontouchmove?.(e);
+  };
 </script>
 
-{#if renderContext === 'canvas'}
-  <slot />
-{:else if renderContext === 'svg'}
-  <!-- TODO: Find out why `<svelte:element this={renderContext === 'html' ? 'div' : 'g'}>` doesn't work for the SVG use case -->
+{#if renderCtx === 'canvas'}
+  {@render children?.()}
+{:else if renderCtx === 'svg'}
   <g
     style:transform
-    {...$$restProps}
-    on:click={onclick}
-    on:dblclick={ondblclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
-    on:pointerdown={onpointerdown}
-    on:touchmove={(e) => {
-      if (preventTouchMove) {
-        // Prevent touch to not interfer with pointer
-        e.preventDefault();
-      }
-    }}
+    class={['lc-group-g', className]}
+    in:transitionIn={transitionInParams}
+    {opacity}
+    {...restProps}
+    ontouchmove={handleTouchMove}
+    bind:this={ref}
   >
-    <slot />
+    {@render children?.()}
   </g>
-{:else}
+{:else if renderCtx === 'html'}
   <div
+    bind:this={ref}
     style:transform
-    {...$$restProps}
-    class={cls('absolute', $$restProps.class)}
-    on:click={onclick}
-    on:dblclick={ondblclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
-    on:pointerdown={onpointerdown}
-    on:touchmove={(e) => {
-      if (preventTouchMove) {
-        // Prevent touch to not interfer with pointer
-        e.preventDefault();
-      }
-    }}
+    style:opacity
+    in:transitionIn={transitionInParams}
+    {...restProps}
+    class={['lc-group-div', className]}
+    ontouchmove={handleTouchMove}
   >
-    <slot />
+    {@render children?.()}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :where(.lc-group-div) {
+      position: absolute;
+    }
+  }
+</style>

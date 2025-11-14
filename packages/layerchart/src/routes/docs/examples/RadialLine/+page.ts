@@ -4,7 +4,7 @@ import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import pageSource from './+page.svelte?raw';
 import { celsiusToFahrenheit } from '$lib/utils/math.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     dailyTemperatures: await fetch('/data/examples/dailyTemperatures.csv').then(async (r) => {
       return csvParse<{ dayOfYear: number; year: number; value: number | 'NA' }>(
@@ -43,6 +43,7 @@ export async function load() {
     }),
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
     },
   };
 }

@@ -1,113 +1,247 @@
+<script lang="ts" module>
+  import type { Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+
+  export type BaseRulePropsWithoutHTML = {
+    /**
+     * Override the data from the context.
+     */
+    data?: any;
+
+    /**
+     * Create a vertical `x` line
+     * - If true or 'left', will draw at chart left (xRange[0])
+     * - If 'right', will draw at chart right (xRange[1])
+     * - Use `0` for baseline (yScale(0))
+     * - Use number | Date value for annotation (yScale(value))
+     *
+     * @default false
+     */
+    x?: number | Date | boolean | '$left' | '$right' | Accessor;
+
+    /**
+     * Pixel offset to apply to `x` coordinate
+     *
+     * @default 0
+     */
+    xOffset?: number;
+
+    /**
+     * Create a horizontal `y` line
+     * - If true or 'bottom', will draw at chart bottom (yRange[0])
+     * - If 'top', will draw at chart top (yRange[1])
+     * - Use `0` for baseline (xScale(0))
+     * - Use number | Date value for annotation (xScale(value))
+     *
+     * @default false
+     */
+    y?: number | Date | boolean | '$top' | '$bottom' | Accessor;
+
+    /**
+     * Pixel offset to apply to `y` coordinate
+     * @default 0
+     */
+    yOffset?: number;
+  };
+
+  export type RulePropsWithoutHTML = BaseRulePropsWithoutHTML &
+    Without<Partial<LinePropsWithoutHTML>, BaseRulePropsWithoutHTML>;
+
+  export type RuleProps = RulePropsWithoutHTML &
+    Without<SVGAttributes<SVGElement>, RulePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
-  import Line from './Line.svelte';
+  import Group from './Group.svelte';
+  import Line, { type LinePropsWithoutHTML } from './Line.svelte';
+  import { getChartContext } from './Chart.svelte';
+  import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
+  import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 
-  const { xScale, yScale, xRange, yRange, radial } = chartContext();
+  let {
+    data: dataProp,
+    x = false,
+    xOffset = 0,
+    y = false,
+    yOffset = 0,
+    stroke: strokeProp,
+    class: className,
+    children,
+    ...restProps
+  }: RuleProps = $props();
 
-  $: [xRangeMin, xRangeMax] = extent<number | Date>($xRange);
-  $: [yRangeMin, yRangeMax] = extent<number | Date>($yRange);
+  const ctx = getChartContext();
 
-  /**
-   * Create a vertical `x` line
-   * - If true or 'left', will draw at chart left (xRange[0])
-   * - If 'right', will draw at chart right (xRange[1])
-   * - Use `0` for baseline (yScale(0))
-   * - Use number | Date value for annotation (yScale(value))
-   */
-  export let x: number | Date | boolean | 'left' | 'right' = false;
+  const data = $derived(chartDataArray(dataProp ?? ctx.data));
 
-  /** Pixel offset to apply to `x` coordinate */
-  export let xOffset = 0;
+  const singleX = $derived(
+    typeof x === 'number' ||
+      x instanceof Date ||
+      x === true ||
+      x === '$left' ||
+      x === '$right' ||
+      (isScaleBand(ctx.xScale) && ctx.xDomain.includes(x as any))
+  );
+  const singleY = $derived(
+    typeof y === 'number' ||
+      y instanceof Date ||
+      y === true ||
+      y === '$bottom' ||
+      y === '$top' ||
+      (isScaleBand(ctx.yScale) && ctx.yDomain.includes(y as any))
+  );
 
-  /**
-   * Create a horizontal `y` line
-   * - If true or 'bottom', will draw at chart bottom (yRange[0])
-   * - If 'top', will draw at chart top (yRange[1])
-   * - Use `0` for baseline (xScale(0))
-   * - Use number | Date value for annotation (xScale(value))
-   */
-  export let y: number | Date | boolean | 'top' | 'bottom' = false;
+  const xRangeMinMax = $derived(extent<number>(ctx.xRange));
+  const yRangeMinMax = $derived(extent<number>(ctx.yRange));
 
-  /** Pixel offset to apply to `y` coordinate */
-  export let yOffset = 0;
+  const lines = $derived.by(() => {
+    const result: {
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      axis: 'x' | 'y';
+      stroke?: string;
+    }[] = [];
 
-  $: showRule = (value: typeof x | typeof y, axis: 'x' | 'y') => {
-    switch (typeof value) {
-      case 'boolean':
-        return value;
-      case 'string':
-        return true;
-      default:
-        if (axis === 'x') {
-          return $xScale(value) >= xRangeMin! && $xScale(value) <= xRangeMax!;
-        } else {
-          return $yScale(value) >= yRangeMin! && $yScale(value) <= yRangeMax!;
-        }
+    // Single x line
+    if (singleX) {
+      const _x =
+        x === true || x === '$left'
+          ? xRangeMinMax[0]!
+          : x === '$right'
+            ? xRangeMinMax[1]!
+            : ctx.xScale(x) + xOffset;
+
+      result.push({
+        x1: _x,
+        y1: ctx.yRange[0] || 0,
+        x2: _x,
+        y2: ctx.yRange[1] || 0,
+        axis: 'x',
+      });
     }
-  };
+
+    // Single y line
+    if (singleY) {
+      const _y =
+        y === true || y === '$bottom'
+          ? yRangeMinMax[1]!
+          : y === '$top'
+            ? yRangeMinMax[0]!
+            : ctx.yScale(y) + yOffset;
+
+      result.push({
+        x1: ctx.xRange[0] || 0,
+        y1: _y,
+        x2: ctx.xRange[1] || 0,
+        y2: _y,
+        axis: 'y',
+      });
+    }
+
+    // Data driven lines
+    if (!singleX && !singleY) {
+      const xAccessor = x !== false ? accessor(x as Accessor) : ctx.x;
+      const yAccessor = y !== false ? accessor(y as Accessor) : ctx.y;
+
+      const xBandOffset = isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0;
+      const yBandOffset = isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0;
+
+      for (const d of data) {
+        const xValue = xAccessor(d);
+        const yValue = yAccessor(d);
+
+        const x1Value = Array.isArray(xValue) ? xValue[0] : isScaleNumeric(ctx.xScale) ? 0 : xValue;
+        const x2Value = Array.isArray(xValue) ? xValue[1] : xValue;
+        const y1Value = Array.isArray(yValue) ? yValue[0] : isScaleNumeric(ctx.yScale) ? 0 : yValue;
+        const y2Value = Array.isArray(yValue) ? yValue[1] : yValue;
+
+        result.push({
+          x1: ctx.xScale(x1Value) + xBandOffset + xOffset,
+          y1: ctx.yScale(y1Value) + yBandOffset + yOffset,
+          x2: ctx.xScale(x2Value) + xBandOffset + xOffset,
+          y2: ctx.yScale(y2Value) + yBandOffset + yOffset,
+          axis: Array.isArray(yValue) || isScaleBand(ctx.xScale) ? 'x' : 'y', // TODO: what about single prop like lollipop?
+          stroke: (strokeProp ?? ctx.config.c) ? ctx.cGet(d) : null, // use color scale, if available
+        });
+      }
+    }
+
+    // Remove lines if out of range of chart (non-0 baseline, brushing, etc)
+    return result.filter((line) => {
+      return (
+        line.x1 >= xRangeMinMax[0]! &&
+        line.x2 <= xRangeMinMax[1]! &&
+        line.y1 >= yRangeMinMax[0]! &&
+        line.y2 <= yRangeMinMax[1]!
+      );
+    });
+  });
+
+  // $inspect({ lines });
 </script>
 
-<g class="rule">
-  {#if showRule(x, 'x')}
-    {@const xCoord =
-      x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x) + xOffset}
+<Group class="lc-rule-g">
+  {#each lines as line}
+    {@const stroke = line.stroke ?? strokeProp}
 
-    {#if $radial}
-      {@const [x1, y1] = pointRadial(xCoord, Number(yRangeMin))}
-      {@const [x2, y2] = pointRadial(xCoord, Number(yRangeMax))}
-
-      <Line
-        {x1}
-        {y1}
-        {x2}
-        {y2}
-        {...$$restProps}
-        class={cls('stroke-surface-content/10', $$props.class)}
-      />
+    {#if ctx.radial}
+      {#if line.axis === 'x'}
+        {@const [x1, y1] = pointRadial(line.x1, line.y1)}
+        {@const [x2, y2] = pointRadial(line.x2, line.y2)}
+        <Line
+          {...restProps}
+          {x1}
+          {y1}
+          {x2}
+          {y2}
+          {stroke}
+          class={cls('lc-rule-x-radial-line', className)}
+        />
+      {:else if line.axis === 'y'}
+        <Circle r={line.y1} {stroke} class={cls('lc-rule-y-radial-circle', className)} />
+      {/if}
     {:else}
       <Line
-        x1={xCoord}
-        x2={xCoord}
-        y1={$yRange[0] || 0}
-        y2={$yRange[1] || 0}
-        {...$$restProps}
-        class={cls('stroke-surface-content/50', $$props.class)}
+        {...restProps}
+        x1={line.x1}
+        y1={line.y1}
+        x2={line.x2}
+        y2={line.y2}
+        {stroke}
+        class={cls(line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line', className)}
       />
     {/if}
-  {/if}
+  {/each}
+</Group>
 
-  {#if showRule(y, 'y')}
-    {#if $radial}
-      <Circle
-        r={y === true || y === 'bottom'
-          ? yRangeMax
-          : y === 'top'
-            ? yRangeMin
-            : $yScale(y) + yOffset}
-        class={cls('fill-none stroke-surface-content/50', $$props.class)}
-      />
-    {:else}
-      <Line
-        x1={$xRange[0] || 0}
-        x2={$xRange[1] || 0}
-        y1={y === true || y === 'bottom'
-          ? yRangeMax
-          : y === 'top'
-            ? yRangeMin
-            : $yScale(y) + yOffset}
-        y2={y === true || y === 'bottom'
-          ? yRangeMax
-          : y === 'top'
-            ? yRangeMin
-            : $yScale(y) + yOffset}
-        {...$$restProps}
-        class={cls('stroke-surface-content/50', $$props.class)}
-      />
-    {/if}
-  {/if}
-</g>
+<style>
+  @layer components {
+    /* TODO: better way to handle this without affecting other components? */
+    /* Could add a layer between "components" and "base" but would require more setup (and not alignw with TW layers) */
+    :global(
+      :where(
+        .lc-rule-x-line,
+        .lc-rule-y-line,
+        .lc-rule-x-radial-line,
+        .lc-rule-y-radial-circle
+      ):not([class*='lc-axis'], [class*='lc-grid'])
+    ) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 50%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-rule-y-radial-circle)) {
+      --fill-color: none;
+    }
+  }
+</style>

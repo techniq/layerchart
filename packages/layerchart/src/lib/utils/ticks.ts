@@ -1,179 +1,190 @@
+import { timeYear, timeDay, type TimeInterval, timeTicks } from 'd3-time';
+
 import {
-  timeYear,
-  timeMonth,
-  timeWeek,
-  timeDay,
-  timeHour,
-  timeMinute,
-  timeSecond,
-  timeMillisecond,
-} from 'd3-time';
-import { format } from 'date-fns';
+  format,
+  Duration,
+  isLiteralObject,
+  type FormatType,
+  type FormatConfig,
+  DateToken,
+} from '@layerstack/utils';
+import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
+import type { AxisProps } from '$lib/components/Axis.svelte';
 
-import { formatDate, PeriodType, getDuration, fail } from '@layerstack/utils';
-
-type Duration = ReturnType<typeof getDuration>;
-
-// TODO: Use PeriodType along with Duration to format (and possibly select intervals)
-
-const majorTicks = [
-  {
-    predicate: (duration: Duration) => duration == null, // Unknown
-    interval: timeYear.every(1), // Better than rendering a lot of items
-    format: (date: Date) => date.toString(),
-  },
-  {
-    predicate: (duration: Duration) => duration!.years > 1,
-    interval: timeYear.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.CalendarYear, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.years,
-    interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days > 30,
-    interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days,
-    interval: timeDay.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.hours,
-    interval: timeHour.every(1),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.minutes > 10,
-    interval: timeMinute.every(10),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.minutes,
-    interval: timeMinute.every(1),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.seconds > 10,
-    interval: timeSecond.every(10),
-    format: (date: Date) => format(date, 'h:mm:ss'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.seconds,
-    interval: timeSecond.every(1),
-    format: (date: Date) => format(date, 'h:mm:ss'),
-  },
-  {
-    predicate: (duration: Duration) => true, // 0 or more milliseconds
-    interval: timeMillisecond.every(100),
-    format: (date: Date) => format(date, 'h:mm:ss.SSS'),
-  },
-];
-
-const minorTicks = [
-  {
-    predicate: (duration: Duration) => duration == null, // Unknown
-    interval: timeYear.every(1), // Better than rendering a lot of items
-    format: (date: Date) => date.toString(),
-  },
-  {
-    predicate: (duration: Duration) => duration!.years,
-    interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days > 90,
-    interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days > 30,
-    interval: timeWeek.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.WeekSun, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days > 7,
-    interval: timeDay.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days > 3,
-    interval: timeHour.every(8),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.days,
-    interval: timeHour.every(1),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.hours,
-    interval: timeMinute.every(15),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.minutes > 10,
-    interval: timeMinute.every(10),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.minutes > 2,
-    interval: timeMinute.every(1),
-    format: (date: Date) => format(date, 'h:mm a'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.minutes,
-    interval: timeSecond.every(10),
-    format: (date: Date) => format(date, 'h:mm:ss'),
-  },
-  {
-    predicate: (duration: Duration) => duration!.seconds,
-    interval: timeSecond.every(1),
-    format: (date: Date) => format(date, 'h:mm:ss'),
-  },
-  {
-    predicate: (duration: Duration) => true, // 0 or more milliseconds
-    interval: timeMillisecond.every(10),
-    format: (date: Date) => format(date, 'h:mm:ss.SSS'),
-  },
-];
-
-export function getMajorTicks(start: Date, end: Date) {
-  const duration = getDuration(start, end);
-
-  for (var t of majorTicks) {
-    if (t.predicate(duration)) {
-      return t.interval;
-    }
+export function getDurationFormat(
+  duration: Duration,
+  options: { multiline?: boolean; placement?: AxisProps['placement'] } = {
+    multiline: false,
   }
+) {
+  const { multiline = false, placement = 'bottom' } = options;
 
-  fail(`Unable to locate major ticks for duration: ${duration}`);
+  return function (date: Date, i: number) {
+    let result: string | Array<string | false> = '';
+
+    if (+duration >= +new Duration({ duration: { years: 1 } })) {
+      // Year
+      result = format(date, 'year');
+    } else if (+duration >= +new Duration({ duration: { days: 28 } })) {
+      // Month
+      const isFirst = i === 0 || +timeYear.floor(date) === +date;
+      if (multiline) {
+        result = [format(date, 'month', { variant: 'short' }), isFirst && format(date, 'year')];
+      } else {
+        result =
+          format(date, 'month', { variant: 'short' }) +
+          (isFirst ? ` '${format(date, 'year', { variant: 'short' })}` : '');
+      }
+    } else if (+duration >= +new Duration({ duration: { days: 1 } })) {
+      // Day
+      const isFirst = i === 0 || date.getDate() <= duration.days;
+      if (multiline) {
+        result = [
+          format(date, 'custom', { custom: DateToken.DayOfMonth_numeric }),
+          isFirst && format(date, 'month', { variant: 'short' }),
+        ];
+      } else {
+        result = format(date, 'day', { variant: 'short' });
+      }
+    } else if (+duration >= +new Duration({ duration: { hours: 1 } })) {
+      // Hours
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
+      if (multiline) {
+        result = [
+          format(date, 'custom', { custom: DateToken.Hour_numeric }),
+          isFirst && format(date, 'day', { variant: 'short' }),
+        ];
+      } else {
+        result = isFirst
+          ? format(date, 'day', { variant: 'short' })
+          : format(date, 'custom', { custom: DateToken.Hour_numeric });
+      }
+    } else if (+duration >= +new Duration({ duration: { minutes: 1 } })) {
+      // Minutes
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
+      if (multiline) {
+        result = [
+          format(date, 'time', { variant: 'short' }),
+          isFirst && format(date, 'day', { variant: 'short' }),
+        ];
+      } else {
+        result = format(date, 'time', { variant: 'short' });
+      }
+    } else if (+duration >= +new Duration({ duration: { seconds: 1 } })) {
+      // Seconds
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
+      result = [
+        format(date, 'time'),
+        multiline && isFirst && format(date, 'day', { variant: 'short' }),
+      ];
+    } else if (+duration >= +new Duration({ duration: { milliseconds: 1 } })) {
+      // Milliseconds
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
+      result = [
+        format(date, 'custom', {
+          custom: [
+            DateToken.Hour_2Digit,
+            DateToken.Minute_2Digit,
+            DateToken.Second_2Digit,
+            DateToken.MiliSecond_3,
+            DateToken.Hour_woAMPM,
+          ],
+        }),
+        multiline && isFirst && format(date, 'day', { variant: 'short' }),
+      ];
+    } else {
+      result = date.toString();
+    }
+
+    if (Array.isArray(result)) {
+      switch (placement) {
+        case 'top':
+          return result.filter(Boolean).reverse().join('\n');
+        case 'bottom':
+          return result.filter(Boolean).join('\n');
+        case 'left':
+          return result.filter(Boolean).reverse().join(' ');
+        case 'right':
+          return result.filter(Boolean).join(' ');
+        default:
+          return result.filter(Boolean).join('\n');
+      }
+    } else {
+      return result;
+    }
+  };
 }
 
-export function formatMajorTick(date: Date, rangeStart: Date, rangeEnd: Date) {
-  const duration = getDuration(rangeStart, rangeEnd);
+export type TicksConfig =
+  | number
+  | any[]
+  | ((scale: AnyScale) => any[] | undefined)
+  | { interval: TimeInterval | null }
+  | null;
 
-  for (var t of majorTicks) {
-    if (t.predicate(duration)) {
-      return t.format(date);
+export function autoTickVals(scale: AnyScale, ticks?: TicksConfig, count?: number): any[] {
+  // Explicit ticks
+  if (Array.isArray(ticks)) return ticks;
+
+  // Function
+  if (typeof ticks === 'function') return ticks(scale) ?? [];
+
+  // Interval
+  if (isLiteralObject(ticks) && 'interval' in ticks) {
+    if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
+      return []; // Explicitly return empty array for null interval or invalid scale
     }
+    return scale.ticks(ticks.interval as any);
   }
 
-  fail(`Unable to format major ticks for duration: ${duration}`);
+  // Band (use domain)
+  if (isScaleBand(scale)) {
+    return ticks && typeof ticks === 'number'
+      ? scale.domain().filter((_, i) => i % ticks === 0)
+      : scale.domain();
+  }
+
+  // Ticks from scale
+  if (scale.ticks && typeof scale.ticks === 'function') {
+    return scale.ticks(count ?? (typeof ticks === 'number' ? ticks : undefined));
+  }
+
+  return [];
 }
 
-export function getMinorTicks(start: Date, end: Date) {
-  const duration = getDuration(start, end);
+export function autoTickFormat(options: {
+  scale: AnyScale;
+  ticks?: TicksConfig;
+  count?: number;
+  formatType?: FormatType | FormatConfig;
+  multiline?: boolean;
+  placement?: AxisProps['placement'];
+}) {
+  const { scale, ticks, count, formatType, multiline, placement } = options;
 
-  for (var t of minorTicks) {
-    if (t.predicate(duration)) {
-      return t.interval;
+  // Explicit format
+  if (formatType) {
+    // @ts-expect-error - improve types
+    return (tick: any) => format(tick, formatType);
+  }
+
+  // Time scale
+  if (isScaleTime(scale) && count) {
+    if (isLiteralObject(ticks) && 'interval' in ticks && ticks.interval != null) {
+      const start = ticks.interval.floor(new Date());
+      const end = ticks.interval.ceil(new Date());
+      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
+    } else {
+      // Compare first 2 ticks to determine duration between ticks for formatting
+      const [start, end] = timeTicks(scale.domain()[0], scale.domain()[1], count);
+      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
     }
   }
 
-  fail(`Unable to locate minor ticks for duration: ${duration}`);
+  // Format from scale
+  if (scale.tickFormat) {
+    return scale.tickFormat(count);
+  }
+
+  return (tick: any) => `${tick}`;
 }

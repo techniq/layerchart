@@ -1,4 +1,4 @@
-import { addMinutes, startOfDay, startOfToday, subDays } from 'date-fns';
+import { timeMinute, timeDay } from 'd3-time';
 import { cumsum } from 'd3-array';
 import { randomNormal } from 'd3-random';
 
@@ -58,28 +58,31 @@ export function createSeries<TKey extends string>(options: {
   });
 }
 
-export function createDateSeries<TKey extends string>(options: {
-  count?: number;
-  min: number;
-  max: number;
-  keys?: TKey[];
-  value?: 'number' | 'integer';
-}) {
-  const now = startOfToday();
+export function createDateSeries<TKey extends string>(
+  options: {
+    count?: number;
+    min?: number;
+    max?: number;
+    keys?: TKey[];
+    value?: 'number' | 'integer';
+  } = {}
+) {
+  const now = timeDay.floor(new Date());
 
   const count = options.count ?? 10;
-  const min = options.min;
-  const max = options.max;
+  const min = options.min ?? 0;
+  const max = options.max ?? 100;
   const keys = options.keys ?? ['value'];
+  const valueType = options.value ?? 'number';
 
   return Array.from({ length: count }).map((_, i) => {
     return {
-      date: subDays(now, count - i - 1),
+      date: timeDay.offset(now, -count + i),
       ...Object.fromEntries(
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+            valueType === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
       ),
@@ -87,23 +90,26 @@ export function createDateSeries<TKey extends string>(options: {
   });
 }
 
-export function createTimeSeries<TKey extends string>(options: {
-  count?: number;
-  min: number;
-  max: number;
-  keys: TKey[];
-  value: 'number' | 'integer';
-}) {
+export function createTimeSeries<TKey extends string>(
+  options: {
+    count?: number;
+    min?: number;
+    max?: number;
+    keys?: TKey[];
+    value?: 'number' | 'integer';
+  } = {}
+) {
   const count = options.count ?? 10;
-  const min = options.min;
-  const max = options.max;
+  const min = options.min ?? 0;
+  const max = options.max ?? 100;
   const keys = options.keys ?? ['value'];
+  const valueType = options.value ?? 'number';
 
-  let lastStartDate = startOfDay(new Date());
+  let lastStartDate = timeDay.floor(new Date());
 
   const timeSeries = Array.from({ length: count }).map((_, i) => {
-    const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-    const endDate = addMinutes(startDate, getRandomInteger(5, 60));
+    const startDate = timeMinute.offset(lastStartDate, getRandomInteger(0, 60));
+    const endDate = timeMinute.offset(startDate, getRandomInteger(5, 60));
     lastStartDate = startDate;
     return {
       name: `item ${i + 1}`,
@@ -113,7 +119,7 @@ export function createTimeSeries<TKey extends string>(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+            valueType === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
       ),
@@ -189,4 +195,48 @@ export function getSpiral({
       y: height / 2 + r * Math.sin(a),
     };
   });
+}
+
+interface SineWaveOptions {
+  numPoints: number;
+  frequency?: number;
+  amplitude?: number;
+  noiseLevel?: number;
+  phase?: number;
+  xMin?: number;
+  xMax?: number;
+}
+
+export function generateSineWave(options: SineWaveOptions) {
+  const {
+    numPoints,
+    frequency = 1,
+    amplitude = 1,
+    noiseLevel = 0,
+    phase = 0,
+    xMin = 0,
+    xMax = 2 * Math.PI,
+  } = options;
+
+  if (numPoints <= 0) {
+    throw new Error('Number of points must be greater than 0');
+  }
+
+  const points: { x: number; y: number }[] = [];
+  const xStep = (xMax - xMin) / (numPoints - 1);
+
+  for (let i = 0; i < numPoints; i++) {
+    const x = xMin + i * xStep;
+
+    // Generate base sine wave
+    const sineValue = amplitude * Math.sin(frequency * x + phase);
+
+    // Add random noise if specified
+    const noise = noiseLevel > 0 ? (Math.random() - 0.5) * 2 * noiseLevel : 0;
+    const y = sineValue + noise;
+
+    points.push({ x, y });
+  }
+
+  return points;
 }

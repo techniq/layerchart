@@ -1,14 +1,17 @@
 <script lang="ts">
   import { curveStepAfter } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  let selectedCurve = curveStepAfter;
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+
+  let selectedCurve = $state(curveStepAfter);
 
   const data = createDateSeries({
     count: 30,
@@ -23,29 +26,38 @@
 
 <h1>Examples</h1>
 
+<Blockquote>
+  See also: <a href="/docs/components/AreaChart">AreaChart</a> for simplified examples
+</Blockquote>
+
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={false}
+      {renderContext}
     >
-      <svelte:fragment slot="marks">
-        <Threshold curve={selectedCurve} let:curve>
-          <g slot="above" let:curve>
+      {#snippet marks()}
+        <Threshold curve={selectedCurve}>
+          {#snippet above({ curve })}
             <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-          </g>
-          <g slot="below" let:curve>
+          {/snippet}
+
+          {#snippet children({ curve })}
+            <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+            <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
+
+          {#snippet below({ curve })}
             <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-          </g>
-          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
-          <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
         </Threshold>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -53,39 +65,48 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
-      props={{ highlight: { area: true, lines: false, points: false } }}
-      tooltip={{ mode: 'bisect-x', findTooltipData: 'left' }}
+      props={{
+        highlight: { area: true, lines: false, points: false },
+        tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } },
+      }}
+      {renderContext}
     >
-      <svelte:fragment slot="marks">
-        <Threshold curve={selectedCurve} let:curve>
-          <g slot="above" let:curve>
+      {#snippet marks()}
+        <Threshold curve={selectedCurve}>
+          {#snippet above({ curve })}
             <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-          </g>
-          <g slot="below" let:curve>
-            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-          </g>
-          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
-          <Spline y="value" {curve} class="stroke-[1.5]" />
-        </Threshold>
-      </svelte:fragment>
+          {/snippet}
 
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={data.value} />
-            <Tooltip.Item label="baseline" value={data.baseline} />
-            <Tooltip.Separator />
-            <Tooltip.Item label="variance" value={data.value - data.baseline} />
-          </Tooltip.List>
+          {#snippet below({ curve })}
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
+          {/snippet}
+
+          {#snippet children({ curve })}
+            <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+            <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
+        </Threshold>
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+              <Tooltip.Item label="baseline" value={data.baseline} />
+              <Tooltip.Separator />
+              <Tooltip.Item label="variance" value={data.value - data.baseline} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -93,7 +114,7 @@
 <h2>With Labels</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"
@@ -101,19 +122,24 @@
       padding={{ left: 16, bottom: 24 }}
       labels
       tooltip={false}
+      {renderContext}
     >
-      <svelte:fragment slot="marks">
-        <Threshold let:curve>
-          <g slot="above" let:curve>
+      {#snippet marks()}
+        <Threshold>
+          {#snippet above({ curve })}
             <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-          </g>
-          <g slot="below" let:curve>
+          {/snippet}
+
+          {#snippet below({ curve })}
             <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-          </g>
-          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
-          <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
+
+          {#snippet children({ curve })}
+            <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+            <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
         </Threshold>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>

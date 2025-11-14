@@ -9,6 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: '`<rect>` element with tweened properties using `motionStore`',
+      supportedContexts: ['svg', 'canvas', 'html'],
       related: [
         'components/Bars',
         'components/Highlight',

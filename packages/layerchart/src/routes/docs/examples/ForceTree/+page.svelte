@@ -1,30 +1,40 @@
 <script lang="ts">
-  import { hierarchy } from 'd3-hierarchy';
-  import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
+  import { hierarchy, type HierarchyLink, type HierarchyNode } from 'd3-hierarchy';
+  import { forceX, forceY, forceManyBody, forceLink, type SimulationNodeDatum } from 'd3-force';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  type NodeDatum = { name: string; value: number };
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
-  const root = hierarchy(data.flare);
-  const nodes = root.descendants();
-  const links = root.links();
+  let { data } = $props();
 
-  const linkForce = forceLink(links).distance(0).strength(1);
-  const chargeForce = forceManyBody().strength(-50);
-  const xForce = forceX();
-  const yForce = forceY();
+  const root: HierarchyNode<MySimulationNodeDatum> = hierarchy<MySimulationNodeDatum>(data.flare);
+  const nodes: HierarchyNode<MySimulationNodeDatum>[] = root.descendants();
+  const links: HierarchyLink<MySimulationNodeDatum>[] = root.links();
+
+  const linkForce = forceLink<
+    HierarchyNode<MySimulationNodeDatum>,
+    HierarchyLink<MySimulationNodeDatum>
+  >(links)
+    .distance(0)
+    .strength(1);
+  const chargeForce = forceManyBody<HierarchyNode<MySimulationNodeDatum>>().strength(-50);
+  const xForce = forceX<HierarchyNode<MySimulationNodeDatum>>();
+  const yForce = forceY<HierarchyNode<MySimulationNodeDatum>>();
 </script>
 
 <h1>Examples</h1>
 
 <Preview data={nodes}>
-  <div class="h-[600px] p-4 border rounded">
-    <Chart data={nodes} let:tooltip>
-      <Svg center>
+  <div class="h-[600px] p-4 border rounded-sm">
+    <Chart>
+      {#snippet children({ context })}
         <ForceSimulation
           forces={{
             link: linkForce,
@@ -32,40 +42,51 @@
             x: xForce,
             y: yForce,
           }}
-          let:nodes
+          data={{ nodes, links }}
+          cloneNodes
         >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/20" />
-            {/each}
-          {/key}
+          {#snippet children({ nodes, linkPositions })}
+            <Layer type={shared.renderContext} center>
+              {#each links as link, i}
+                <Link
+                  data={link}
+                  explicitCoords={linkPositions[i]}
+                  class="stroke-surface-content/20"
+                />
+              {/each}
 
-          {#each nodes as node}
-            <Circle
-              cx={node.x}
-              cy={node.y}
-              r={3}
-              class={cls(
-                node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
-              )}
-              onpointermove={(e) => tooltip.show(e, node)}
-              onpointerleave={tooltip.hide}
-            />
-          {/each}
+              {#each nodes as node ([node.data.name, node.parent?.data?.name].join('-'))}
+                <Circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={3}
+                  class={cls(
+                    node?.children
+                      ? 'fill-surface-100 stroke-surface-content'
+                      : 'fill-surface-content'
+                  )}
+                  onpointermove={(e) => context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
+                />
+              {/each}
+            </Layer>
+          {/snippet}
         </ForceSimulation>
-      </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.data.name}</Tooltip.Header>
-        <Tooltip.List>
-          {#if data.data.children}
-            <Tooltip.Item label="children" value={data.data.children.length} />
-          {/if}
-          {#if data.data.value}
-            <Tooltip.Item label="value" value={data.data.value} format="integer" />
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              {#if data.children}
+                <Tooltip.Item label="children" value={data.children.length} />
+              {/if}
+              {#if data.value}
+                <Tooltip.Item label="value" value={data.value} format="integer" />
+              {/if}
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

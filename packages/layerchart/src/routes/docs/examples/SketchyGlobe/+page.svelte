@@ -4,39 +4,38 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import { Chart, GeoPath, Graticule, Svg, TransformContext } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
-  let curve = curveCatmullRomClosed;
-  let minArea = 2;
+  let curve = $state(curveCatmullRomClosed);
+  let minArea = $state(2);
 
-  $: geojson = simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea));
-  $: land = feature(geojson, data.geojson.objects.land);
+  const geojson = $derived(simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea)));
+  const land = $derived(feature(geojson, data.geojson.objects.land));
 
-  let transformContext: TransformContext;
+  let context = $state<ChartContextValue>(null!);
 
-  let velocity = 3;
-  let isSpinning = false;
-  const timer = timerStore({
+  let velocity = $state(1);
+  const timer = new TimerState({
     delay: 1,
-    onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
+    tick: () => {
+      if (!context) return;
+      const curr = context.transform.translate;
+
+      context.transform.translate = {
+        x: (curr.x += velocity),
+        y: curr.y,
+      };
     },
-    disabled: !isSpinning,
+    disabled: true,
   });
-  $: isSpinning ? timer.start() : timer.stop();
-  $timer;
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
@@ -47,23 +46,13 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
+  <h2>Basic</h2>
 
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left">
       <ButtonGroup size="sm" variant="fill-light">
-        <Button
-          on:click={() => {
-            isSpinning = true;
-          }}
-          disabled={isSpinning}>Start</Button
-        >
-        <Button
-          on:click={() => {
-            isSpinning = false;
-          }}
-          disabled={!isSpinning}>Stop</Button
-        >
+        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
       </ButtonGroup>
     </Field>
 
@@ -72,7 +61,7 @@
       bind:value={velocity}
       min={-10}
       max={10}
-      disabled={!isSpinning}
+      disabled={!timer.running}
       labelPlacement="left"
     />
   </div>
@@ -86,20 +75,14 @@
         fitGeojson: land,
         applyTransform: ['rotate'],
       }}
-      ondragstart={() => timer.stop()}
-      ondragend={() => {
-        if (isSpinning) {
-          // Restart
-          timer.start();
-        }
-      }}
-      bind:transformContext
+      ondragstart={timer.stop}
+      bind:context
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         <GeoPath geojson={land} {curve} class="stroke-surface-content/50 fill-white" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

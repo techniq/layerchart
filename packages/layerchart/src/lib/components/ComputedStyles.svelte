@@ -1,16 +1,35 @@
+<script lang="ts" module>
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
+
+  export type ComputedStylesPropsWithoutHTML = {
+    class?: HTMLAttributes<HTMLElement>['class'];
+    children?: Snippet<[{ styles: CSSStyleDeclaration }]>;
+  };
+
+  export type ComputedStylesProps = ComputedStylesPropsWithoutHTML;
+</script>
+
 <script lang="ts">
   import { computedStyles } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
 
-  let className: string | undefined = undefined;
-  export { className as class };
+  let { class: className, children }: ComputedStylesProps = $props();
 
-  let styles: CSSStyleDeclaration;
+  let styles: CSSStyleDeclaration = $state({}) as CSSStyleDeclaration;
 </script>
 
 <div
-  class={cls('ComputedStyles hidden', className)}
+  class={cls('lc-computed-styles', className)}
   use:computedStyles={(_styles) => (styles = _styles)}
 ></div>
 
-<slot {styles} />
+{@render children?.({ styles })}
+
+<style>
+  @layer base {
+    :global(:where(.lc-computed-styles)) {
+      display: none;
+    }
+  }
+</style>

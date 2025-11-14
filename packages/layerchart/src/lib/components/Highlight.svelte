@@ -1,162 +1,197 @@
-<script lang="ts" context="module">
-  export type HighlightPointData = { x: any; y: any };
-</script>
-
-<script lang="ts">
-  import { type ComponentProps } from 'svelte';
-  import { max, min } from 'd3-array';
-  import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
-  import { notNull } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
-
-  import { chartContext } from './ChartContext.svelte';
+<script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
-  import { tooltipContext } from './tooltip/TooltipContext.svelte';
-
-  import { isScaleBand } from '$lib/utils/scales.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
-  import { asAny } from '$lib/utils/types.js';
 
-  const {
-    data: contextData,
-    flatData,
-    x: xContext,
-    xDomain,
-    xScale,
-    xRange,
-    y: yContext,
-    yDomain,
-    yScale,
-    yRange,
-    cGet,
-    config,
-    radial,
-  } = chartContext();
-  const tooltip = tooltipContext();
+  export type HighlightPointData = { x: any; y: any };
+  export type HighlightPoint = { x: number; y: number; fill: string; data: HighlightPointData };
 
-  /** Highlight specific data (annotate), espect uses tooltip data */
-  export let data: any = undefined;
+  export type HighlightPropsWithoutHTML = {
+    /**
+     * Highlight specific data (annotate), especte uses tooltip data
+     */
+    data?: any;
 
-  /**
-   * Override `x` from context
-   */
-  export let x: Accessor = $xContext;
+    /**
+     * Override `x` from context
+     */
+    x?: Accessor;
 
-  /**
-   * Override `y` from context
-   */
-  export let y: Accessor = $yContext;
+    /**
+     * Override `y` from context
+     */
+    y?: Accessor;
 
-  export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
+    axis?: 'x' | 'y' | 'both' | 'none';
 
-  /** Show points and pass props to Circles */
-  export let points: boolean | Partial<ComponentProps<Circle>> = false;
+    /**
+     * Show points and pass props to Circles
+     * @default false
+     */
+    points?:
+      | boolean
+      | Partial<ComponentProps<typeof Circle>>
+      | Snippet<
+          [
+            {
+              points: {
+                x: number;
+                y: number;
+                fill: string;
+                data: HighlightPointData;
+              }[];
+            },
+          ]
+        >;
 
-  /** Show lines and pass props to Lines */
-  export let lines: boolean | Partial<ComponentProps<Line>> = false;
+    /**
+     * Show lines and pass props to Lines
+     * @default false
+     */
+    lines?:
+      | boolean
+      | Partial<ComponentProps<typeof Line>>
+      | Snippet<
+          [
+            {
+              lines: {
+                x1: number;
+                y1: number;
+                x2: number;
+                y2: number;
+              }[];
+            },
+          ]
+        >;
 
-  /** Show area and pass props to Rect */
-  export let area: boolean | Partial<ComponentProps<Rect>> = false;
+    /**
+     * Show area and pass props to Rect
+     * @default false
+     */
+    area?:
+      | boolean
+      | Partial<ComponentProps<typeof Rect>>
+      | Snippet<
+          [
+            {
+              area: {
+                x: number;
+                y: number;
+                width: number;
+                height: number;
+              };
+            },
+          ]
+        >;
 
-  /** Show bar and pass props to Rect */
-  export let bar: boolean | Partial<ComponentProps<Bar>> = false;
+    /**
+     * Show bar and pass props to Rect
+     *
+     * @default false
+     */
+    bar?: boolean | Partial<ComponentProps<typeof Bar>> | Snippet;
 
-  /** Set to false to disable spring transitions */
-  export let motion = true;
+    /**
+     * Set to false to disable spring transitions
+     *
+     * @default true
+     */
+    motion?: MotionProp;
 
-  export let onareaclick: ((e: MouseEvent, detail: { data: any }) => void) | undefined = undefined;
-  export let onbarclick: ((e: MouseEvent, detail: { data: any }) => void) | undefined = undefined;
+    /**
+     * The opacity of the element. (0 to 1)
+     */
+    opacity?: number;
 
-  export let onpointclick:
-    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
-    | undefined = undefined;
-  export let onpointenter:
-    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
-    | undefined = undefined;
-  export let onpointleave:
-    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
-    | undefined = undefined;
+    onAreaClick?: (e: MouseEvent, detail: { data: any }) => void;
+    onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
-  const _x = accessor(x);
-  const _y = accessor(y);
-
-  let _points: { x: number; y: number; fill: string; data: HighlightPointData }[] = [];
-  let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
-  let _area = {
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
+    onPointClick?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
+    onPointEnter?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
+    onPointLeave?: (e: MouseEvent, detail: { point: HighlightPoint; data: any }) => void;
   };
+</script>
 
-  $: highlightData = data ?? $tooltip.data;
+<script lang="ts">
+  import { max, min } from 'd3-array';
+  import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
+  import { notNull } from '@layerstack/utils';
 
-  $: if (highlightData) {
-    const xValue = _x(highlightData);
-    const xCoord = Array.isArray(xValue) ? xValue.map((v) => $xScale(v)) : $xScale(xValue);
-    const xOffset = isScaleBand($xScale) && !$radial ? $xScale.bandwidth() / 2 : 0;
+  import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
+  import { asAny } from '$lib/utils/types.js';
+  import { getChartContext } from './Chart.svelte';
+  import { getTooltipContext } from './tooltip/TooltipContext.svelte';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
+  import Arc from './Arc.svelte';
 
-    const yValue = _y(highlightData);
-    const yCoord = Array.isArray(yValue) ? yValue.map((v) => $yScale(v)) : $yScale(yValue);
-    const yOffset = isScaleBand($yScale) && !$radial ? $yScale.bandwidth() / 2 : 0;
+  const ctx = getChartContext();
+  const tooltipCtx = getTooltipContext();
 
-    // Reset lines
-    _lines = [];
+  let {
+    data,
+    x: xProp = ctx.x,
+    y: yProp = ctx.y,
+    axis: axisProp,
+    points = false,
+    lines: linesProp = false,
+    area = false,
+    bar = false,
+    opacity,
+    motion = 'spring',
+    onAreaClick,
+    onBarClick,
+    onPointClick,
+    onPointEnter,
+    onPointLeave,
+  }: HighlightPropsWithoutHTML = $props();
 
-    const defaultAxis = isScaleBand($yScale) ? 'y' : 'x';
-    if (axis == null) {
-      axis = defaultAxis;
-    }
+  const x = $derived(accessor(xProp));
+  const y = $derived(accessor(yProp));
 
+  const highlightData = $derived(data ?? tooltipCtx.data);
+  const xValue = $derived(x(highlightData));
+  const xCoord = $derived(
+    Array.isArray(xValue) ? xValue.map((v) => ctx.xScale(v)) : ctx.xScale(xValue)
+  );
+  const xOffset = $derived(isScaleBand(ctx.xScale) && !ctx.radial ? ctx.xScale.bandwidth() / 2 : 0);
+  const yValue = $derived(y(highlightData));
+  const yCoord = $derived(
+    Array.isArray(yValue) ? yValue.map((v) => ctx.yScale(v)) : ctx.yScale(yValue)
+  );
+  const yOffset = $derived(isScaleBand(ctx.yScale) && !ctx.radial ? ctx.yScale.bandwidth() / 2 : 0);
+  const axis = $derived(
+    axisProp == null ? (isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) ? 'y' : 'x') : axisProp
+  );
+
+  const _lines: { x1: number; y1: number; x2: number; y2: number }[] = $derived.by(() => {
+    let tmpLines: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    if (!highlightData) return tmpLines;
     if (axis === 'x' || axis === 'both') {
-      // x lines
       if (Array.isArray(xCoord)) {
         // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-        _lines = [
-          ..._lines,
+        tmpLines = [
+          ...tmpLines,
           ...xCoord.filter(notNull).map((xItem, i) => ({
             x1: xItem + xOffset,
-            y1: min($yRange) as unknown as number,
+            y1: min(ctx.yRange) as unknown as number,
             x2: xItem + xOffset,
-            y2: max($yRange) as unknown as number,
+            y2: max(ctx.yRange) as unknown as number,
           })),
         ];
-      } else if (xCoord) {
-        _lines = [
-          ..._lines,
+      } else if (xCoord != null) {
+        tmpLines = [
+          ...tmpLines,
           {
             x1: xCoord + xOffset,
-            y1: min($yRange) as unknown as number,
+            y1: min(ctx.yRange) as unknown as number,
             x2: xCoord + xOffset,
-            y2: max($yRange) as unknown as number,
+            y2: max(ctx.yRange) as unknown as number,
           },
         ];
-      }
-
-      // x area
-      if (Array.isArray(xCoord)) {
-        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-        _area.width = max(xCoord) - min(xCoord); // Use first/last values for width
-      } else if (isScaleBand($xScale)) {
-        _area.width = $xScale.step();
-      } else {
-        // Find width to next data point
-        const index = $flatData.findIndex((d) => Number(_x(d)) === Number(_x(highlightData)));
-        const isLastPoint = index + 1 === $flatData.length;
-        const nextDataPoint = isLastPoint ? max($xDomain) : _x($flatData[index + 1]);
-        _area.width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
-      }
-
-      // If array, use left-most value for top left of rect
-      _area.x =
-        (Array.isArray(xCoord) ? min(xCoord) : xCoord) -
-        (isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0);
-
-      if (axis === 'x') {
-        _area.height = max($yRange) as unknown as number;
       }
     }
 
@@ -164,174 +199,30 @@
       // y lines
       if (Array.isArray(yCoord)) {
         // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
-        _lines = [
-          ..._lines,
+        tmpLines = [
+          ...tmpLines,
           ...yCoord.filter(notNull).map((yItem, i) => ({
-            x1: min($xRange) as unknown as number,
+            x1: min(ctx.xRange) as unknown as number,
             y1: yItem + yOffset,
-            x2: max($xRange) as unknown as number,
+            x2: max(ctx.xRange) as unknown as number,
             y2: yItem + yOffset,
           })),
         ];
-      } else if (yCoord) {
-        _lines = [
-          ..._lines,
+      } else if (yCoord != null) {
+        tmpLines = [
+          ...tmpLines,
           {
-            x1: min($xRange) as unknown as number,
+            x1: min(ctx.xRange) as unknown as number,
             y1: yCoord + yOffset,
-            x2: max($xRange) as unknown as number,
+            x2: max(ctx.xRange) as unknown as number,
             y2: yCoord + yOffset,
           },
         ];
       }
-
-      // y area
-      if (Array.isArray(yCoord)) {
-        // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
-        _area.height = max(yCoord) - min(yCoord); // Use first/last values for width
-      } else if (isScaleBand($yScale)) {
-        _area.height = $yScale.step();
-      } else {
-        // Find width to next data point
-        const index = $flatData.findIndex((d) => Number(_x(d)) === Number(_x(highlightData)));
-        const isLastPoint = index + 1 === $flatData.length;
-        const nextDataPoint = isLastPoint ? max($yDomain) : _x($flatData[index + 1]);
-        _area.height = ($yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
-      }
-
-      // If array, use left-most value for top left of rect
-      _area.y =
-        (Array.isArray(yCoord) ? min(yCoord) : yCoord) -
-        (isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0);
-
-      if (axis === 'y') {
-        _area.width = max($xRange) as unknown as number;
-      }
     }
 
-    // points
-    if (Array.isArray(xCoord)) {
-      // `x` accessor with multiple properties (ex. `x={['start', 'end']}` or `x={[0, 1]}`)
-
-      if (Array.isArray(highlightData)) {
-        // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
-        // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
-        const highlightSeriesPoint = highlightData as SeriesPoint<any>;
-
-        // Ignore non-array data such as hierarchy and graph (make Typescript happy)
-        if (Array.isArray($contextData)) {
-          // For each series, find the related data point
-          const seriesPointsData = $contextData
-            .map((series: Series<any, any>) => {
-              return {
-                series,
-                point: series.find((d) => _y(d) === _y(highlightSeriesPoint))!,
-              };
-            })
-            .filter((d) => d.point); // remove if no point found (ex. Histogram);
-
-          _points = seriesPointsData.map((seriesPoint, i) => {
-            return {
-              x: $xScale(seriesPoint.point[1]) + xOffset,
-              y: yCoord + yOffset,
-              fill: $config.c ? $cGet(seriesPoint.series) : null,
-              data: {
-                x: seriesPoint.point[1],
-                y: yValue,
-              },
-            };
-          });
-        }
-      } else {
-        // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
-        _points = xCoord.filter(notNull).map((xItem, i) => {
-          const $key = $config.x[i];
-          return {
-            x: xItem + xOffset,
-            y: yCoord + yOffset,
-            // TODO: is there a better way to expose the series key/value?
-            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
-            data: {
-              x: xValue, // TODO: use highlightData[$key]?
-              y: yValue,
-            },
-          };
-        });
-      }
-    } else if (Array.isArray(yCoord)) {
-      // `y` accessor with multiple properties (ex. `y={['apples', 'bananas', 'oranges']}` or `y={[0, 1]})
-
-      if (Array.isArray(highlightData)) {
-        // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
-        // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
-        const highlightSeriesPoint = highlightData as SeriesPoint<any>;
-
-        // Ignore non-array data such as hierarchy and graph (make Typescript happy)
-        if (Array.isArray($contextData)) {
-          // For each series, find the related data point
-          const seriesPointsData = $contextData
-            .map((series: Series<any, any>) => {
-              return {
-                series,
-                point: series.find((d) => _x(d) === _x(highlightSeriesPoint))!,
-              };
-            })
-            .filter((d) => d.point); // remove if no point found (ex. Histogram)
-
-          _points = seriesPointsData.map((seriesPoint, i) => ({
-            x: xCoord + xOffset,
-            y: $yScale(seriesPoint.point[1]) + yOffset,
-            fill: $config.c ? $cGet(seriesPoint.series) : null,
-            data: {
-              x: xValue,
-              y: seriesPoint.point[1],
-            },
-          }));
-        }
-      } else {
-        // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
-        _points = yCoord.filter(notNull).map((yItem, i) => {
-          const $key = $config.y[i];
-          return {
-            x: xCoord + xOffset,
-            y: yItem + yOffset,
-            // TODO: is there a better way to expose the series key/value?
-            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
-            data: {
-              x: xValue,
-              y: yValue, // TODO: use highlightData[$key] ?
-            },
-          };
-        });
-      }
-    } else if (xCoord != null && yCoord != null) {
-      _points = [
-        {
-          x: xCoord + xOffset,
-          y: yCoord + yOffset,
-          fill: $config.c ? $cGet(highlightData) : null,
-          data: {
-            x: xValue,
-            y: yValue,
-          },
-        },
-      ];
-    } else {
-      _points = [];
-    }
-
-    if ($radial) {
-      // Translate x/y to angle/radius
-      _points = _points.map((p) => {
-        const [x, y] = pointRadial(p.x, p.y);
-        return {
-          ...p,
-          x,
-          y,
-        };
-      });
-
-      _lines = _lines.map((l) => {
+    if (ctx.radial) {
+      tmpLines = tmpLines.map((l) => {
         const [x1, y1] = pointRadial(l.x1, l.y1);
         const [x2, y2] = pointRadial(l.x2, l.y2);
         return {
@@ -342,102 +233,350 @@
           y2,
         };
       });
-
-      // TODO: How to handle _areas
     }
-  }
+
+    return tmpLines;
+  });
+
+  const _area: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  } = $derived.by(() => {
+    const tmpArea: {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    } = {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    };
+    if (!highlightData) return tmpArea;
+
+    if (axis === 'x' || axis === 'both') {
+      // x area
+      if (Array.isArray(xCoord)) {
+        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+        tmpArea.width = max(xCoord) - min(xCoord); // Use first/last values for width
+      } else if (isScaleBand(ctx.xScale)) {
+        tmpArea.width = ctx.xScale.step();
+      } else if (ctx.xInterval) {
+        // x-axis time scale with interval
+        const start = ctx.xInterval.floor(xValue);
+        const end = ctx.xInterval.offset(start);
+        tmpArea.width = ctx.xScale(end) - ctx.xScale(start);
+      } else {
+        // Find width to next data point
+        const index = ctx.flatData.findIndex((d) => Number(x(d)) === Number(x(highlightData)));
+        const isLastPoint = index + 1 === ctx.flatData.length;
+        const nextDataPoint = isLastPoint ? max(ctx.xDomain) : x(ctx.flatData[index + 1]);
+        tmpArea.width = (ctx.xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
+      }
+
+      // If array, use left-most value for top left of rect
+      tmpArea.x =
+        (Array.isArray(xCoord) ? min(xCoord) : xCoord) -
+        (isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0);
+
+      if (axis === 'x') {
+        tmpArea.y = min(ctx.yRange) as unknown as number;
+        tmpArea.height = (max(ctx.yRange) - min(ctx.yRange)) as unknown as number;
+      }
+    }
+
+    if (axis === 'y' || axis === 'both') {
+      // y area
+      if (Array.isArray(yCoord)) {
+        // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
+        tmpArea.height = max(yCoord) - min(yCoord); // Use first/last values for width
+      } else if (isScaleBand(ctx.yScale)) {
+        tmpArea.height = ctx.yScale.step();
+      } else if (ctx.yInterval) {
+        // y-axis time scale with interval
+        const start = ctx.yInterval.floor(yValue);
+        const end = ctx.yInterval.offset(start);
+        tmpArea.height = ctx.yScale(end) - ctx.yScale(start);
+      } else {
+        // Find width to next data point
+        const index = ctx.flatData.findIndex((d) => Number(y(d)) === Number(y(highlightData)));
+        const isLastPoint = index + 1 === ctx.flatData.length;
+        const nextDataPoint = isLastPoint ? max(ctx.yDomain) : y(ctx.flatData[index + 1]);
+        tmpArea.height = (ctx.yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
+      }
+
+      // If array, use left-most value for top left of rect
+      tmpArea.y =
+        (Array.isArray(yCoord) ? min(yCoord) : yCoord) -
+        (isScaleBand(ctx.yScale) ? (ctx.yScale.padding() * ctx.yScale.step()) / 2 : 0);
+
+      if (axis === 'y') {
+        tmpArea.width = max(ctx.xRange) as unknown as number;
+      }
+    }
+    return tmpArea;
+  });
+
+  const _points: { x: number; y: number; fill: string; data: HighlightPointData }[] = $derived.by(
+    () => {
+      let tmpPoints: { x: number; y: number; fill: string; data: HighlightPointData }[] = [];
+      if (!highlightData) return tmpPoints;
+      if (Array.isArray(xCoord)) {
+        // `x` accessor with multiple properties (ex. `x={['start', 'end']}` or `x={[0, 1]}`)
+
+        if (Array.isArray(highlightData)) {
+          // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
+          // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
+          const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+
+          // Ignore non-array data such as hierarchy and graph (make Typescript happy)
+          if (Array.isArray(ctx.data)) {
+            // For each series, find the related data point
+            const seriesPointsData = (ctx.data as any[])
+              .map((series: Series<any, any>) => {
+                return {
+                  series,
+                  point: series.find((d) => y(d) === y(highlightSeriesPoint))!,
+                };
+              })
+              .filter((d) => d.point); // remove if no point found (ex. Histogram);
+
+            tmpPoints = seriesPointsData.map((seriesPoint, i) => {
+              return {
+                x: ctx.xScale(seriesPoint.point[1]) + xOffset,
+                y: yCoord + yOffset,
+                fill: ctx.config.c ? ctx.cGet(seriesPoint.series) : null,
+                data: {
+                  x: seriesPoint.point[1],
+                  y: yValue,
+                },
+              };
+            });
+          }
+        } else {
+          // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
+          tmpPoints = xCoord.filter(notNull).map((xItem, i) => {
+            // @ts-expect-error - TODO: fix type
+            const _key = ctx.config.x?.[i];
+            return {
+              x: xItem + xOffset,
+              y: yCoord + yOffset,
+              // TODO: is there a better way to expose the series key/value?
+              fill: ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null,
+              data: {
+                x: xValue, // TODO: use highlightData[$key]?
+                y: yValue,
+              },
+            };
+          });
+        }
+      } else if (Array.isArray(yCoord)) {
+        // `y` accessor with multiple properties (ex. `y={['apples', 'bananas', 'oranges']}` or `y={[0, 1]})
+
+        if (Array.isArray(highlightData)) {
+          // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
+          // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
+          const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+
+          // Ignore non-array data such as hierarchy and graph (make Typescript happy)
+          if (Array.isArray(ctx.data)) {
+            // For each series, find the related data point
+            const seriesPointsData = (ctx.data as any[])
+              .map((series: Series<any, any>) => {
+                return {
+                  series,
+                  point: series.find((d) => x(d) === x(highlightSeriesPoint))!,
+                };
+              })
+              .filter((d) => d.point); // remove if no point found (ex. Histogram)
+
+            tmpPoints = seriesPointsData.map((seriesPoint, i) => ({
+              x: xCoord + xOffset,
+              y: ctx.yScale(seriesPoint.point[1]) + yOffset,
+              fill: ctx.config.c ? ctx.cGet(seriesPoint.series) : null,
+              data: {
+                x: xValue,
+                y: seriesPoint.point[1],
+              },
+            }));
+          }
+        } else {
+          // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
+          tmpPoints = yCoord.filter(notNull).map((yItem, i) => {
+            // @ts-expect-error - TODO: fix type
+            const _key = ctx.config.y[i];
+            return {
+              x: xCoord + xOffset,
+              y: yItem + yOffset,
+              // TODO: is there a better way to expose the series key/value?
+              fill: ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null,
+              data: {
+                x: xValue,
+                y: yValue, // TODO: use highlightData[$key] ?
+              },
+            };
+          });
+        }
+      } else if (xCoord != null && yCoord != null) {
+        tmpPoints = [
+          {
+            x: xCoord + xOffset,
+            y: yCoord + yOffset,
+            fill: ctx.config.c ? ctx.cGet(highlightData) : null,
+            data: {
+              x: xValue,
+              y: yValue,
+            },
+          },
+        ];
+      } else {
+        tmpPoints = [];
+      }
+
+      if (ctx.radial) {
+        // Translate x/y to angle/radius
+        tmpPoints = tmpPoints.map((p) => {
+          const [x, y] = pointRadial(p.x, p.y);
+          return {
+            ...p,
+            x,
+            y,
+          };
+        });
+      }
+      return tmpPoints;
+    }
+  );
 </script>
 
 {#if highlightData}
   {#if area}
-    <slot name="area" area={_area}>
-      <Rect
-        spring={motion}
-        {..._area}
-        {...typeof area === 'object' ? area : null}
-        class={cls(
-          // @ts-expect-error
-          !area.fill && 'fill-surface-content/5',
-          typeof area === 'object' ? area.class : null
-        )}
-        onclick={onareaclick && ((e) => onareaclick(e, { data: highlightData }))}
+    {#if typeof area === 'function'}
+      {@render area({ area: _area })}
+    {:else if ctx.radial}
+      <!-- TODO: What should we do about areaProps -->
+      <Arc
+        motion={motion === 'spring' ? 'spring' : undefined}
+        startAngle={_area.x}
+        endAngle={_area.x + _area.width}
+        innerRadius={_area.y}
+        outerRadius={_area.y + _area.height}
+        {opacity}
+        class="lc-highlight-area"
+        onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
       />
-    </slot>
+    {:else}
+      <Rect
+        motion={motion === 'spring' ? 'spring' : undefined}
+        {opacity}
+        {..._area}
+        {...extractLayerProps(area, 'lc-highlight-area')}
+        onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
+      />
+    {/if}
   {/if}
 
   {#if bar}
-    <slot name="bar" {bar}>
+    {#if typeof bar === 'function'}
+      {@render bar()}
+    {:else}
       <Bar
-        spring={motion}
-        bar={highlightData}
-        {...typeof bar === 'object' ? bar : null}
-        class={cls(
-          // @ts-expect-error
-          !bar.fill && 'fill-primary',
-          typeof bar === 'object' ? bar.class : null
-        )}
-        onclick={onbarclick && ((e) => onbarclick(e, { data: highlightData }))}
+        motion={motion === 'spring' ? 'spring' : undefined}
+        data={highlightData}
+        {opacity}
+        {...extractLayerProps(bar, 'lc-highlight-bar')}
+        onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
       />
-    </slot>
+    {/if}
   {/if}
 
-  {#if lines}
-    <slot name="lines" lines={_lines}>
+  {#if linesProp}
+    {#if typeof linesProp === 'function'}
+      {@render linesProp({ lines: _lines })}
+    {:else}
       {#each _lines as line}
         <Line
-          spring={motion}
+          motion={motion === 'spring' ? 'spring' : undefined}
           x1={line.x1}
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
-          {...typeof lines === 'object' ? lines : null}
-          class={cls(
-            'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
-            typeof lines === 'object' ? lines.class : null
-          )}
+          {opacity}
+          {...extractLayerProps(linesProp, 'lc-highlight-line')}
         />
       {/each}
-    </slot>
+    {/if}
   {/if}
 
   {#if points}
-    <slot name="points" points={_points}>
+    {#if typeof points === 'function'}
+      {@render points({ points: _points })}
+    {:else}
       {#each _points as point}
         <Circle
-          spring={motion}
+          motion={motion === 'spring' ? 'spring' : undefined}
           cx={point.x}
           cy={point.y}
           fill={point.fill}
           r={4}
           strokeWidth={6}
-          {...typeof points === 'object' ? points : null}
-          class={cls(
-            'stroke-white [paint-order:stroke] drop-shadow',
-            !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
-            typeof points === 'object' ? points.class : null
-          )}
-          onpointerdown={onpointclick &&
+          {opacity}
+          {...extractLayerProps(points, 'lc-highlight-point')}
+          onpointerdown={onPointClick &&
             ((e) => {
               // Do not propagate `pointerdown` event to `BrushContext` if `onclick` is provided
               e.stopPropagation();
             })}
-          onclick={onpointclick && ((e) => onpointclick(e, { point, data: highlightData }))}
-          onpointerenter={onpointenter &&
+          onclick={onPointClick && ((e) => onPointClick(e, { point, data: highlightData }))}
+          onpointerenter={onPointEnter &&
             ((e) => {
-              if (onpointclick) {
+              if (onPointClick) {
                 asAny(e.target).style.cursor = 'pointer';
               }
-              onpointenter(e, { point, data: highlightData });
+              onPointEnter(e, { point, data: highlightData });
             })}
-          onpointerleave={onpointleave &&
+          onpointerleave={onPointLeave &&
             ((e) => {
-              if (onpointclick) {
+              if (onPointClick) {
                 asAny(e.target).style.cursor = 'default';
               }
-              onpointleave(e, { point, data: highlightData });
+              onPointLeave(e, { point, data: highlightData });
             })}
         />
       {/each}
-    </slot>
+    {/if}
   {/if}
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-highlight-area)) {
+      --fill-color: color-mix(in oklab, var(--color-surface-content, currentColor) 5%, transparent);
+    }
+
+    :global(:where(.lc-highlight-bar)) {
+      --fill-color: var(--color-primary, currentColor);
+    }
+
+    :global(:where(.lc-highlight-line)) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+      stroke-width: 2;
+      stroke-dasharray: 2 2;
+      pointer-events: none;
+    }
+
+    :global(:where(.lc-highlight-point)) {
+      --stroke-color: white;
+      --fill-color: var(--color-primary, currentColor);
+      paint-order: stroke;
+      filter: drop-shadow(var(--drop-shadow-sm, 0 1px 2px rgb(0 0 0 / 0.15)));
+    }
+  }
+</style>

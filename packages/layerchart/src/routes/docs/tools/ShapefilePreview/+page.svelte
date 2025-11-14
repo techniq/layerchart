@@ -11,7 +11,7 @@
     type GeoProjection,
   } from 'd3-geo';
 
-  import { Canvas, Chart, GeoPath } from 'layerchart';
+  import { Chart, GeoPath, Layer } from 'layerchart';
   import {
     Button,
     ButtonGroup,
@@ -23,17 +23,17 @@
     Toggle,
   } from 'svelte-ux';
 
-  import { mdiChevronDown } from '@mdi/js';
+  import LucideChevronDown from '~icons/lucide/chevron-down';
 
   import { goto } from '$app/navigation';
+  import { shared } from '../../shared.svelte.js';
+  let { data } = $props();
 
-  export let data;
+  const geojson = $derived(data.geojson);
 
-  $: geojson = data.geojson;
+  let file = $state(data.file);
 
-  let file = data.file;
-
-  let projection = geoIdentity as unknown as () => GeoProjection;
+  let projection = $state(geoIdentity as unknown as () => GeoProjection);
   const projections = [
     { label: 'Identity', value: geoIdentity as () => GeoProjection },
     { label: 'Albers', value: geoAlbers },
@@ -61,8 +61,8 @@
         <ButtonGroup variant="fill-outline" color="primary">
           <Button on:click={() => loadFile()}>Load file</Button>
           <Toggle let:on={open} let:toggle>
-            <span>
-              <Button icon={mdiChevronDown} on:click={toggle} rounded class="px-1" />
+            <span class="flex">
+              <Button icon={LucideChevronDown} on:click={toggle} rounded class="px-1" />
               <Menu {open} on:close={toggle} placement="bottom-end">
                 <MenuItem
                   on:click={() => {
@@ -106,9 +106,9 @@
           fitGeojson: geojson,
         }}
       >
-        <Canvas>
+        <Layer type={shared.renderContext}>
           <GeoPath {geojson} fill="white" />
-        </Canvas>
+        </Layer>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please specify a file</EmptyMessage>

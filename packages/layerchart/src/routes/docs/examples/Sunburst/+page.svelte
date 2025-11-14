@@ -5,22 +5,27 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Arc, Bounds, Chart, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
+  import { Arc, Bounds, Chart, Layer, Partition, Tooltip, findAncestor } from 'layerchart';
 
   import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
-    .sort(compoundSortFunc(sortFunc('height', 'desc'), sortFunc('value', 'desc')));
+    .sort(
+      compoundSortFunc(sortFunc('height', 'desc'), sortFunc('value', 'desc'))
+    ) as HierarchyRectangularNode<any>;
 
-  let colorBy = 'parent';
+  let colorBy = $state('parent');
 
-  let selected: HierarchyRectangularNode<any> = complexHierarchy as HierarchyRectangularNode<any>; // select root initially
+  let selected: HierarchyRectangularNode<any> = $state(
+    complexHierarchy
+  ) as HierarchyRectangularNode<any>; // select root initially
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -64,61 +69,69 @@
 
 <Preview data={complexHierarchy}>
   <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
-    <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
+    <Button
+      slot="item"
+      let:item
+      on:click={() => (selected = item)}
+      base
+      class="px-2 py-1 rounded-sm"
+    >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
         <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
-    <Chart data={complexHierarchy} let:tooltip>
-      <Svg center>
-        <Bounds
-          domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
-          range={({ height }) => ({
-            x0: 0,
-            x1: 2 * Math.PI,
-            y0: selected?.y0 ? 20 : 0,
-            y1: height / 2,
-          })}
-          tweened={{ duration: 800, easing: cubicOut }}
-          let:xScale
-          let:yScale
-        >
-          <Partition size={[1, 1]} let:nodes>
-            {#each nodes as node}
-              {@const nodeColor = getNodeColor(node, colorBy)}
-              <Arc
-                value={node.value}
-                startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
-                endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
-                innerRadius={Math.max(0, yScale(node.y0))}
-                outerRadius={Math.max(0, yScale(node.y1))}
-                fill={nodeColor}
-                _stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 2)}
-                stroke="hsl(0 0% 20%)"
-                class="cursor-pointer"
-                let:centroid
-                onclick={() => {
-                  selected = node;
-                }}
-                onpointermove={(e) => tooltip.show(e, node)}
-                onpointerleave={tooltip.hide}
-              >
-                <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
-              </Arc>
-            {/each}
-          </Partition>
-        </Bounds>
-      </Svg>
+  <div class="h-[600px] p-4 border rounded-sm">
+    <Chart>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext} center>
+          <Bounds
+            domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
+            range={({ height }) => ({
+              x0: 0,
+              x1: 2 * Math.PI,
+              y0: selected?.y0 ? 20 : 0,
+              y1: height / 2,
+            })}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+          >
+            {#snippet children({ xScale, yScale })}
+              <Partition hierarchy={complexHierarchy} size={[1, 1]}>
+                {#snippet children({ nodes })}
+                  {#each nodes as node}
+                    {@const nodeColor = getNodeColor(node, colorBy)}
+                    <Arc
+                      value={node.value}
+                      startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
+                      endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
+                      innerRadius={Math.max(0, yScale(node.y0))}
+                      outerRadius={Math.max(0, yScale(node.y1))}
+                      fill={nodeColor}
+                      stroke="black"
+                      class="cursor-pointer"
+                      onclick={() => {
+                        selected = node;
+                      }}
+                      onpointermove={(e) => context.tooltip.show(e, node)}
+                      onpointerleave={context.tooltip.hide}
+                    ></Arc>
+                  {/each}
+                {/snippet}
+              </Partition>
+            {/snippet}
+          </Bounds>
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

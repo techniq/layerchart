@@ -1,42 +1,84 @@
-<script lang="ts">
+<script lang="ts" module>
   import {
     partition as d3Partition,
     type HierarchyNode,
     type HierarchyRectangularNode,
   } from 'd3-hierarchy';
-  import { chartContext } from './ChartContext.svelte';
+  import type { Snippet } from 'svelte';
 
-  const { data, width, height } = chartContext();
+  export type PartitionProps<T> = {
+    /**
+     * The orientation of the partition layout.
+     *
+     * @default 'horizontal'
+     */
+    orientation?: 'vertical' | 'horizontal';
 
-  export let orientation: 'vertical' | 'horizontal' = 'horizontal';
+    /**
+     * The size of the partition layout.
+     */
+    size?: [number, number];
 
-  export let size: [number, number] | undefined = undefined;
+    /**
+     * The padding between nodes in the partition layout.
+     * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
+     */
+    padding?: number;
 
-  /**
-   * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
-   */
-  export let padding: number | undefined = undefined;
+    /**
+     * The round property of the partition layout.
+     * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
+     */
+    round?: boolean;
 
-  /**
-   * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
-   */
-  export let round: boolean | undefined = undefined;
+    hierarchy: HierarchyNode<T>;
 
-  let partition: ReturnType<typeof d3Partition>;
-  $: {
-    partition = d3Partition().size(
-      size ?? (orientation === 'horizontal' ? [$height, $width] : [$width, $height])
+    /**
+     * A bindable reference to the descendants of the partition layout.
+     *
+     * @bindable
+     */
+    nodes?: HierarchyRectangularNode<T>[];
+
+    children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
+  };
+</script>
+
+<script lang="ts" generics="T">
+  import { getChartContext } from './Chart.svelte';
+
+  let {
+    size,
+    padding,
+    round,
+    orientation = 'horizontal',
+    hierarchy,
+    children,
+    nodes = $bindable(),
+  }: PartitionProps<T> = $props();
+
+  const ctx = getChartContext();
+
+  const partitionData = $derived.by(() => {
+    const h = hierarchy.copy();
+    const _partition = d3Partition<T>().size(
+      size ?? (orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height])
     );
 
     if (padding) {
-      partition.padding(padding);
+      _partition.padding(padding);
     }
-    if (round) {
-      partition.round(round);
-    }
-  }
 
-  $: partitionData = partition($data as HierarchyNode<any>) as HierarchyRectangularNode<any>;
+    if (round) {
+      _partition.round(round);
+    }
+
+    return _partition(h).descendants();
+  });
+
+  $effect.pre(() => {
+    nodes = partitionData;
+  });
 </script>
 
-<slot nodes={partitionData.descendants()} />
+{@render children?.({ nodes: partitionData })}

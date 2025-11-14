@@ -6,6 +6,7 @@
     geoEquirectangular,
     geoMercator,
     geoNaturalEarth1,
+    geoOrthographic,
   } from 'd3-geo';
   import { extent } from 'd3-array';
   import { scaleSequential } from 'd3-scale';
@@ -14,28 +15,19 @@
   // @ts-expect-error
   import { century, equationOfTime, declination } from 'solar-calculator';
 
-  import {
-    Blur,
-    Chart,
-    ClipPath,
-    GeoCircle,
-    GeoPath,
-    Graticule,
-    Svg,
-    Tooltip,
-    antipode,
-  } from 'layerchart';
+  import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Layer, Tooltip, antipode } from 'layerchart';
   import { Field, SelectField, Switch } from 'svelte-ux';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
-  let enableClip = false;
-  let showDaylight = false;
+  let enableClip = $state(false);
+  let showDaylight = $state(false);
 
-  let projection = geoNaturalEarth1;
+  let projection = $state(geoNaturalEarth1);
   const projections = [
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
@@ -46,21 +38,25 @@
     // { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  $: geojson = feature(data.geojson, data.geojson.objects.countries);
-  $: features =
-    projection === geoAlbersUsa
-      ? geojson.features.filter((f) => f.properties.name === 'United States of America')
-      : geojson.features;
-
-  $: timezoneGeojson = feature(data.timezones, data.timezones.objects.timezones);
-
-  $: colorScale = scaleSequential(
-    // @ts-expect-error
-    extent(timezoneGeojson.features, (d) => d.properties.zone),
-    interpolateRdBu
+  const countriesGeojson = $derived(
+    feature(data.topojson.countries, data.topojson.countries.objects.countries)
+  );
+  const statesGeojson = $derived(
+    feature(data.topojson.states, data.topojson.states.objects.states)
+  );
+  const timezoneGeojson = $derived(
+    feature(data.topojson.timezones, data.topojson.timezones.objects.timezones)
   );
 
-  const dateTimer = timerStore();
+  const colorScale = $derived(
+    scaleSequential(
+      // @ts-expect-error
+      extent(timezoneGeojson.features, (d) => d.properties.zone),
+      interpolateRdBu
+    )
+  );
+
+  const dateTimer = new TimerState();
 
   function formatDate(date: Date, timeZone: string | null) {
     let result = '-';
@@ -105,64 +101,74 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
-<Preview data={geojson}>
+<Preview data={countriesGeojson}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection,
-        fitGeojson: geojson,
+        fitGeojson: countriesGeojson,
       }}
-      padding={{ left: 100, right: 100 }}
-      let:tooltip
+      padding={{ left: 10, right: 10 }}
     >
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
-        <Graticule class="stroke-surface-content/20" />
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
-        <GeoPath {geojson} id="clip" />
-        <ClipPath useId="clip" disabled={!enableClip}>
-          {#each timezoneGeojson.features as feature}
+          <GeoPath geojson={countriesGeojson} id="clip" />
+          <ClipPath useId="clip" disabled={!enableClip}>
+            {#each timezoneGeojson.features as feature}
+              <GeoPath
+                geojson={feature}
+                tooltipContext={context.tooltip}
+                fill={colorScale(feature.properties.zone)}
+                class="stroke-gray-900/50 hover:brightness-110"
+              />
+            {/each}
+          </ClipPath>
+
+          {#each countriesGeojson.features as feature}
             <GeoPath
               geojson={feature}
-              {tooltip}
-              fill={colorScale(feature.properties.zone)}
-              class="stroke-gray-900/50 hover:brightness-110"
+              class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
             />
           {/each}
-        </ClipPath>
 
-        {#each features as feature}
-          <GeoPath
-            geojson={feature}
-            class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
-          />
-        {/each}
+          {#each statesGeojson.features as feature}
+            <GeoPath geojson={feature} class="stroke-gray-900/10 pointer-events-none" />
+          {/each}
 
-        {#if showDaylight}
-          <ClipPath useId="globe">
-            <Blur>
-              <GeoCircle
-                center={antipode(sun)}
-                class="stroke-none fill-black/50 pointer-events-none"
+          {#if showDaylight}
+            <ClipPath useId="globe">
+              <Blur>
+                <GeoCircle
+                  center={antipode(sun)}
+                  class="stroke-none fill-black/50 pointer-events-none"
+                />
+              </Blur>
+            </ClipPath>
+          {/if}
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const { tz_name1st, time_zone, places } = data.properties}
+            <Tooltip.List>
+              <Tooltip.Item label="Name" value={tz_name1st} />
+              <Tooltip.Item label="Places" value={places} classes={{ value: 'max-w-[200px]' }} />
+              <Tooltip.Item label="Timezone" value={time_zone} />
+              <Tooltip.Item
+                label="Current time"
+                value={formatDate(
+                  dateTimer.current,
+                  time_zone.replace('UTC', '').replace('±', '+')
+                )}
               />
-            </Blur>
-          </ClipPath>
-        {/if}
-      </Svg>
-
-      <Tooltip.Root let:data>
-        {@const { tz_name1st, time_zone } = data.properties}
-        <Tooltip.List>
-          <Tooltip.Item label="Name" value={tz_name1st} />
-          <Tooltip.Item label="Timezone" value={time_zone} />
-          <Tooltip.Item
-            label="Current time"
-            value={formatDate($dateTimer, time_zone.replace('UTC', '').replace('±', '+'))}
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

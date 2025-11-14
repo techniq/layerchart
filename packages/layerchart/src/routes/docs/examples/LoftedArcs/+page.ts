@@ -17,6 +17,7 @@ export async function load({ fetch }) {
     )) as WorldLinksData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       reference: 'https://observablehq.com/@armollica/globe-with-lofted-arcs',
     },
   };

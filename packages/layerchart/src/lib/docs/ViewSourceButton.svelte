@@ -1,14 +1,17 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { Button, Dialog, Toggle, Tooltip } from 'svelte-ux';
-  import { mdiGithub } from '@mdi/js';
+  import LucideGithub from '~icons/lucide/github';
 
   import Code from './Code.svelte';
 
-  export let label: string;
-  export let source: string | undefined = undefined;
-  export let href: string | undefined = undefined;
-  export let icon: ComponentProps<Button>['icon'];
+  const {
+    label,
+    source,
+    href,
+    icon,
+  }: { label: string; source?: string; href?: string; icon: ComponentProps<Button>['icon'] } =
+    $props();
 </script>
 
 {#if source}
@@ -17,7 +20,7 @@
     <Dialog
       {open}
       on:close={toggleOff}
-      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
+      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
     >
       <div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
         <div class="overflow-auto">
@@ -26,13 +29,13 @@
         </div>
 
         {#if href}
-          <Button icon={mdiGithub} variant="fill-light" color="primary" {href} target="_blank">
+          <Button icon={LucideGithub} variant="fill-light" color="primary" {href} target="_blank">
             View on Github
           </Button>
         {/if}
       </div>
 
-      <div class="overflow-auto">
+      <div class="overflow-auto border-t">
         <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 

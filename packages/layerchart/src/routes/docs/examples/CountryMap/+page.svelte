@@ -2,16 +2,17 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, renderText, Svg, Text } from 'layerchart';
+  import { Canvas, Chart, GeoPath, Layer, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
   const states = feature(data.geojson, data.geojson.objects.states);
 </script>
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={states}>
   <div class="h-[600px]">
@@ -21,7 +22,7 @@
         fitGeojson: states,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <g class="states">
           {#each states.features as feature}
             <GeoPath
@@ -32,51 +33,22 @@
         </g>
         <g class="labels pointer-events-none">
           {#each states.features as feature}
-            <GeoPath geojson={feature} let:geoPath>
-              {@const [x, y] = geoPath.centroid(feature)}
-              <Text
-                {x}
-                {y}
-                value={feature.properties.name}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-              />
+            <GeoPath geojson={feature}>
+              {#snippet children({ geoPath })}
+                {@const [x, y] = geoPath?.centroid(feature) ?? []}
+                <Text
+                  {x}
+                  {y}
+                  value={feature.properties.name}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                />
+              {/snippet}
             </GeoPath>
           {/each}
         </g>
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={states}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection: geoAlbersUsa,
-        fitGeojson: states,
-      }}
-    >
-      <Canvas>
-        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
-
-        {#each states.features as feature}
-          <GeoPath geojson={feature} let:geoPath>
-            {@const [x, y] = geoPath.centroid(feature)}
-            <Text
-              {x}
-              {y}
-              value={feature.properties.name}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-            />
-          </GeoPath>
-        {/each}
-      </Canvas>
+      </Layer>
     </Chart>
   </div>
 </Preview>

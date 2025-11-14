@@ -1,25 +1,24 @@
-<script lang="ts" context="module">
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+<script lang="ts" module>
+  import { Context } from 'runed';
 
-  export const brushContextKey = Symbol();
+  const _BrushContext = new Context<BrushContextValue>('BrushContext');
+
+  export type BrushRange = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
 
   export type BrushContextValue = {
     xDomain: DomainType;
     yDomain: DomainType;
     isActive: boolean;
-    range: {
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    };
+    range: BrushRange;
     handleSize: number;
   };
 
-  export type BrushContext = Readable<BrushContextValue>;
-
-  const defaultContext: BrushContext = writable({
+  const defaultContext: BrushContextValue = {
     xDomain: null,
     yDomain: null,
     isActive: false,
@@ -30,14 +29,112 @@
       height: 0,
     },
     handleSize: 0,
-  });
-  export function brushContext() {
-    return getContext<BrushContext>(brushContextKey) ?? defaultContext;
+  };
+  export function getBrushContext() {
+    const defaults = $state(defaultContext);
+    return _BrushContext.getOr(defaults);
   }
 
-  function setBrushContext(brush: BrushContext) {
-    setContext(brushContextKey, brush);
+  export function setBrushContext(brush: BrushContextValue) {
+    return _BrushContext.set(brush);
   }
+
+  type BrushEventPayload = {
+    xDomain: DomainType | null;
+    yDomain: DomainType | null;
+  };
+
+  type BrushContextPropsWithoutHTML = {
+    /**
+     * The axis to apply brushing
+     *
+     * @default 'x'
+     */
+    axis?: 'x' | 'y' | 'both';
+
+    /**
+     * Size of the draggable handles (width/height)
+     *
+     * @default 5
+     */
+    handleSize?: number;
+
+    /**
+     * Only show range while actively brushing.
+     * Useful with `brushEnd` event
+     *
+     * @default false
+     */
+    resetOnEnd?: boolean;
+
+    /**
+     * Ignore click to reset.
+     * Useful to add click handlers to marks.  Requires external resetting (button, another chart, etc)
+     *
+     * @default false
+     */
+    ignoreResetClick?: boolean;
+
+    xDomain?: DomainType;
+
+    yDomain?: DomainType;
+
+    /**
+     * Mode of operation
+     *  - `integrated`: use with single chart
+     *  - `separated`: use with separate (typically smaller) chart and state can be managed
+     * externally (sync with other charts, etc).  Show active selection when domain does not equal
+     * original
+     *
+     * @default 'integrated'
+     */
+    mode?: 'integrated' | 'separated';
+
+    /**
+     * Disable brush
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * Attributes passed to the range <div> element
+     */
+    range?: Partial<HTMLAttributes<HTMLElement>>;
+
+    /**
+     * Attributes passed to the handle <div> elements
+     */
+    handle?: Partial<HTMLAttributes<HTMLElement>>;
+
+    /**
+     * Classes to apply to the various elements rendered
+     *
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      frame?: string;
+      range?: string;
+      handle?: string;
+      labels?: string;
+    };
+
+    onChange?: (detail: BrushEventPayload) => void;
+    onBrushStart?: (detail: BrushEventPayload) => void;
+    onBrushEnd?: (detail: BrushEventPayload) => void;
+    onReset?: (detail: BrushEventPayload) => void;
+
+    /**
+     * A reference to this brush's context for use in parent
+     * components.
+     *
+     * @bindable
+     */
+    brushContext?: BrushContextValue;
+
+    children?: Snippet<[{ brushContext: BrushContextValue }]>;
+  };
 </script>
 
 <script lang="ts">
@@ -46,84 +143,110 @@
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
-  import { chartContext } from './ChartContext.svelte';
-
-  import type { DomainType } from '../utils/scales.js';
+  import { scaleInvert, type DomainType } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
+  import { getChartContext } from './Chart.svelte';
+  import type { Snippet } from 'svelte';
 
-  const { xScale, yScale, width, height, padding, containerWidth, containerHeight, config } =
-    chartContext();
+  const ctx = getChartContext();
 
-  /** Axis to apply brushing */
-  export let axis: 'x' | 'y' | 'both' = 'x';
+  let {
+    brushContext: brushContextProp = $bindable(),
+    axis = 'x',
+    handleSize = 5,
+    resetOnEnd = false,
+    ignoreResetClick = false,
+    xDomain: xDomain,
+    yDomain: yDomain,
+    mode = 'integrated',
+    disabled = false,
+    range = {},
+    handle = {},
+    classes = {},
+    onBrushEnd = () => {},
+    onBrushStart = () => {},
+    onChange = () => {},
+    onReset = () => {},
+    children,
+  }: BrushContextPropsWithoutHTML = $props();
 
-  /** Size of draggable handles (width/height) */
-  export let handleSize = 5;
+  let rootEl = $state<HTMLElement>();
 
-  /** Only show range while actively brushing.  Useful with `brushEnd` event */
-  export let resetOnEnd = false;
+  if (xDomain === undefined) {
+    xDomain = ctx.xScale.domain();
+  }
+  if (yDomain === undefined) {
+    yDomain = ctx.yScale.domain();
+  }
 
-  export let xDomain: DomainType = $xScale.domain() as [number, number];
-  export let yDomain: DomainType = $yScale.domain() as [number, number];
-
-  /** Mode of operation
-   *   `integrated`: use with single chart
-   *   `separated`: use with separate (typically smaller) chart and state can be managed externally (sync with other charts, etc).  Show active selection when domain does not equal original
-   */
-  export let mode: 'integrated' | 'separated' = 'integrated';
-
-  /** Disable brush */
-  export let disabled = false;
-
-  // Capture original domains for reset()
-  const originalXDomain = $config.xDomain;
-  const originalYDomain = $config.yDomain;
-
-  $: [xDomainMin, xDomainMax] = extent<number>($xScale.domain()) as [number, number];
-  $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
-
-  /** Attributes passed to range <div> element */
-  export let range: Partial<HTMLAttributes<HTMLDivElement>> | undefined = undefined;
-
-  /** Attributes passed to handle <div> elements */
-  export let handle: Partial<HTMLAttributes<HTMLDivElement>> | undefined = undefined;
-
-  export let classes: {
-    root?: string;
-    frame?: string;
-    range?: string;
-    handle?: string;
-    labels?: string;
-  } = {};
-
-  export let onchange: (detail: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
-  export let onbrushstart: (detail: {
-    xDomain?: DomainType;
-    yDomain?: DomainType;
-  }) => void = () => {};
-  export let onbrushend: (detail: {
-    xDomain?: DomainType;
-    yDomain?: DomainType;
-  }) => void = () => {};
-  export let onreset: (detail: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
-
-  /** Exposed to allow binding in Chart */
-  export let brush = writable<BrushContextValue>({
-    xDomain: null,
-    yDomain: null,
-    isActive: false,
-    range: {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-    },
-    handleSize: 0,
+  $effect.pre(() => {
+    if (xDomain !== undefined) return;
+    xDomain = ctx.xScale.domain();
   });
-  setBrushContext(brush);
 
-  let rootEl: HTMLDivElement;
+  $effect.pre(() => {
+    if (yDomain !== undefined) return;
+    yDomain = ctx.yScale.domain();
+  });
+
+  const ogXDomain = xDomain;
+  const ogYDomain = yDomain;
+  const originalXDomain = ctx.config.xDomain;
+  const originalYDomain = ctx.config.yDomain;
+
+  const xDomainMinMax = $derived(extent<number>(ctx.xScale.domain()) as [number, number]);
+  const xDomainMin = $derived(xDomainMinMax[0]);
+  const xDomainMax = $derived(xDomainMinMax[1]);
+
+  const yDomainMinMax = $derived(extent<number>(ctx.yScale.domain()) as [number, number]);
+  const yDomainMin = $derived(yDomainMinMax[0]);
+  const yDomainMax = $derived(yDomainMinMax[1]);
+
+  const top = $derived(ctx.yScale(yDomain?.[1]));
+  const bottom = $derived(ctx.yScale(yDomain?.[0]));
+  const left = $derived(ctx.xScale(xDomain?.[0]));
+  const right = $derived(ctx.xScale(xDomain?.[1]));
+
+  const _range = $derived({
+    x: axis === 'both' || axis === 'x' ? left : 0,
+    y: axis === 'both' || axis === 'y' ? top : 0,
+    width: axis === 'both' || axis === 'x' ? right - left : ctx.width,
+    height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
+  });
+
+  let isActive = $state(false);
+
+  const brushContext = {
+    get xDomain() {
+      return xDomain!;
+    },
+    set xDomain(v: DomainType) {
+      xDomain = v;
+    },
+    get yDomain() {
+      return yDomain!;
+    },
+    set yDomain(v: DomainType) {
+      yDomain = v;
+    },
+    get isActive() {
+      return isActive;
+    },
+    set isActive(v: boolean) {
+      isActive = v;
+    },
+    get range() {
+      return _range;
+    },
+    get handleSize() {
+      return handleSize;
+    },
+  };
+
+  brushContextProp = brushContext;
+
+  setBrushContext(brushContext);
 
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
@@ -146,9 +269,16 @@
 
       if (
         startPoint &&
-        (startPoint.x < 0 || startPoint.x > $width || startPoint.y < 0 || startPoint.y > $height)
+        (startPoint.x < 0 ||
+          startPoint.x > ctx.width ||
+          startPoint.y < 0 ||
+          startPoint.y > ctx.height)
       ) {
-        logger.debug('ignoring click as outside of chart bounds', { startPoint, $width, $height });
+        logger.debug('ignoring click as outside of chart bounds', {
+          startPoint,
+          width: ctx.width,
+          height: ctx.height,
+        });
         return;
       }
 
@@ -156,21 +286,21 @@
         xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert?.(startPoint?.x ?? 0),
-          y: $yScale.invert?.(startPoint?.y ?? 0),
+          x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
+          y: scaleInvert(ctx.yScale, startPoint?.y ?? 0),
         },
       };
 
-      onbrushstart({ xDomain, yDomain });
+      onBrushStart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
         const currentPoint = localPoint(e, rootEl);
         fn(start, {
-          x: $xScale.invert?.(currentPoint?.x ?? 0),
-          y: $yScale.invert?.(currentPoint?.y ?? 0),
+          x: scaleInvert(ctx.xScale, currentPoint?.x ?? 0),
+          y: scaleInvert(ctx.yScale, currentPoint?.y ?? 0),
         });
 
-        onchange({ xDomain, yDomain });
+        onChange({ xDomain, yDomain });
       };
 
       const onPointerUp = (e: PointerEvent) => {
@@ -188,10 +318,14 @@
           _range.width < RESET_THRESHOLD ||
           _range.height < RESET_THRESHOLD
         ) {
-          // Clicked on frame, or pointer delta was <1
-          logger.debug('resetting due to frame click');
-          reset();
-          onchange({ xDomain, yDomain });
+          // Clicked on frame, or pointer delta was less than threshold (default: 1px)
+          if (ignoreResetClick) {
+            logger.debug('ignoring frame click reset');
+          } else {
+            logger.debug('resetting due to frame click');
+            reset();
+            onChange({ xDomain, yDomain });
+          }
         } else {
           logger.debug('drag end', {
             target: e.target,
@@ -202,10 +336,15 @@
           });
         }
 
-        onbrushend({ xDomain, yDomain });
+        onBrushEnd({ xDomain, yDomain });
 
         if (resetOnEnd) {
-          reset();
+          if (ignoreResetClick) {
+            // Still hide brush, but do not reset domain
+            brushContext.isActive = false;
+          } else {
+            reset();
+          }
         }
 
         window.removeEventListener('pointermove', onPointerMove);
@@ -219,7 +358,7 @@
 
   const createRange = handler((start, value) => {
     logger.debug('createRange');
-    isActive = true;
+    brushContext.isActive = true;
 
     xDomain = [
       // @ts-expect-error
@@ -288,12 +427,12 @@
 
   function reset() {
     logger.debug('reset');
-    isActive = false;
+    brushContext.isActive = false;
 
-    xDomain = originalXDomain;
-    yDomain = originalYDomain;
+    onReset({ xDomain, yDomain });
 
-    onreset({ xDomain, yDomain });
+    xDomain = ogXDomain;
+    yDomain = ogYDomain;
   }
 
   function selectAll() {
@@ -302,82 +441,58 @@
     yDomain = [yDomainMin, yDomainMax];
   }
 
-  $: top = $yScale(yDomain?.[1]);
-  $: bottom = $yScale(yDomain?.[0]);
-  $: left = $xScale(xDomain?.[0]);
-  $: right = $xScale(xDomain?.[1]);
+  $effect.pre(() => {
+    if (mode === 'separated') {
+      // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
+      const isXAxisActive =
+        xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
+        xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf();
 
-  $: _range = {
-    x: axis === 'both' || axis === 'x' ? left : 0,
-    y: axis === 'both' || axis === 'y' ? top : 0,
-    width: axis === 'both' || axis === 'x' ? right - left : $width,
-    height: axis === 'both' || axis === 'y' ? bottom - top : $height,
-  };
+      const isYAxisActive =
+        yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
+        yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
 
-  let isActive = false;
-  $: if (mode === 'separated') {
-    // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
-    const isXAxisActive =
-      xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
-      xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf();
-
-    const isYAxisActive =
-      yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
-      yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
-
-    isActive =
-      axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
-  }
-
-  $: $brush = {
-    xDomain,
-    yDomain,
-    isActive,
-    range: _range,
-    handleSize,
-  };
+      const result =
+        axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
+      brushContext.isActive = result;
+    }
+  });
 </script>
 
 {#if disabled}
-  <slot />
+  {@render children?.({ brushContext })}
 {:else}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
-    style:top="{$padding.top}px"
-    style:left="{$padding.left}px"
-    style:width="{$width}px"
-    style:height="{$height}px"
-    class={cls('BrushContext absolute touch-none')}
-    on:pointerdown={createRange}
-    on:dblclick={() => selectAll()}
     bind:this={rootEl}
+    style:top="{ctx.padding.top}px"
+    style:left="{ctx.padding.left}px"
+    style:width="{ctx.width}px"
+    style:height="{ctx.height}px"
+    class={cls('lc-brush-context')}
+    onpointerdown={createRange}
+    ondblclick={() => selectAll()}
   >
     <div
-      class="absolute"
-      style:top="-{$padding.top ?? 0}px"
-      style:left="-{$padding.left ?? 0}px"
-      style:width="{$containerWidth}px"
-      style:height="{$containerHeight}px"
+      class={cls('lc-brush-container')}
+      style:top="-{ctx.padding.top ?? 0}px"
+      style:left="-{ctx.padding.left ?? 0}px"
+      style:width="{ctx.containerWidth}px"
+      style:height="{ctx.containerHeight}px"
     >
-      <slot brush={$brush} />
+      {@render children?.({ brushContext })}
     </div>
 
-    {#if isActive}
+    {#if brushContext.isActive}
       <div
         {...range}
         style:left="{_range.x}px"
         style:top="{_range.y}px"
         style:width="{_range.width}px"
         style:height="{_range.height}px"
-        class={cls(
-          'range',
-          'absolute bg-surface-content/10 cursor-move select-none',
-          'z-10',
-          classes.range,
-          range?.class
-        )}
-        on:pointerdown={adjustRange}
-        on:dblclick={() => reset()}
+        class={cls('lc-brush-range', classes.range, range?.class)}
+        onpointerdown={adjustRange}
+        ondblclick={() => reset()}
       ></div>
 
       {#if axis === 'both' || axis === 'y'}
@@ -387,20 +502,14 @@
           style:top="{_range.y}px"
           style:width="{_range.width}px"
           style:height="{handleSize}px"
-          class={cls(
-            'handle top',
-            'cursor-ns-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
-          on:pointerdown={adjustTop}
-          on:dblclick={(e) => {
+          data-position="top"
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
+          onpointerdown={adjustTop}
+          ondblclick={(e) => {
             e.stopPropagation();
             if (yDomain) {
               yDomain[0] = yDomainMin;
-              onchange({ xDomain, yDomain });
+              onChange({ xDomain, yDomain });
             }
           }}
         ></div>
@@ -411,20 +520,14 @@
           style:top="{bottom - handleSize}px"
           style:width="{_range.width}px"
           style:height="{handleSize}px"
-          class={cls(
-            'handle bottom',
-            'cursor-ns-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
-          on:pointerdown={adjustBottom}
-          on:dblclick={(e) => {
+          data-position="bottom"
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
+          onpointerdown={adjustBottom}
+          ondblclick={(e) => {
             e.stopPropagation();
             if (yDomain) {
               yDomain[1] = yDomainMax;
-              onchange({ xDomain, yDomain });
+              onChange({ xDomain, yDomain });
             }
           }}
         ></div>
@@ -437,20 +540,14 @@
           style:top="{_range.y}px"
           style:width="{handleSize}px"
           style:height="{_range.height}px"
-          class={cls(
-            'handle left',
-            'cursor-ew-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
-          on:pointerdown={adjustLeft}
-          on:dblclick={(e) => {
+          data-position="left"
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
+          onpointerdown={adjustLeft}
+          ondblclick={(e) => {
             e.stopPropagation();
             if (xDomain) {
               xDomain[0] = xDomainMin;
-              onchange({ xDomain, yDomain });
+              onChange({ xDomain, yDomain });
             }
           }}
         ></div>
@@ -461,20 +558,14 @@
           style:top="{_range.y}px"
           style:width="{handleSize}px"
           style:height="{_range.height}px"
-          class={cls(
-            'handle right',
-            'cursor-ew-resize select-none',
-            'range absolute',
-            'z-10',
-            classes.handle,
-            handle?.class
-          )}
-          on:pointerdown={adjustRight}
-          on:dblclick={(e) => {
+          data-position="right"
+          class={cls('lc-brush-handle', classes.handle, handle?.class)}
+          onpointerdown={adjustRight}
+          ondblclick={(e) => {
             e.stopPropagation();
             if (xDomain) {
               xDomain[1] = xDomainMax;
-              onchange({ xDomain, yDomain });
+              onChange({ xDomain: xDomain, yDomain: yDomain });
             }
           }}
         ></div>
@@ -482,3 +573,40 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  @layer base {
+    :where(.lc-brush-context) {
+      position: absolute;
+      touch-action: none;
+    }
+
+    :where(.lc-brush-container) {
+      position: absolute;
+    }
+
+    :where(.lc-brush-range) {
+      position: absolute;
+      cursor: move;
+      user-select: none;
+      z-index: 10;
+      background: color-mix(in oklab, var(--color-surface-content, currentColor) 10%, transparent);
+    }
+
+    :where(.lc-brush-handle) {
+      position: absolute;
+      user-select: none;
+      z-index: 10;
+
+      &[data-position='top'],
+      &[data-position='bottom'] {
+        cursor: ns-resize;
+      }
+
+      &[data-position='left'],
+      &[data-position='right'] {
+        cursor: ew-resize;
+      }
+    }
+  }
+</style>

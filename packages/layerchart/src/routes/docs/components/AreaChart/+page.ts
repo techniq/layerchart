@@ -9,7 +9,7 @@ import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { celsiusToFahrenheit } from '$lib/utils/math.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     appleStock: await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
       parse<AppleStockData>(await r.text())
@@ -54,6 +54,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Area charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Area', 'examples/Area'],
     },
   };

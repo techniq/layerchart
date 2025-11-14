@@ -1,14 +1,15 @@
 <script lang="ts">
   import { NavItem } from 'svelte-ux';
-  import { mdiFormatListBulleted, mdiHome, mdiPlayCircle } from '@mdi/js';
 
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
+
+  import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
+  import LucideCirclePlay from '~icons/lucide/circle-play';
+  import LucideHouse from '~icons/lucide/house';
+  import LucideList from '~icons/lucide/list';
+  import LucideSettings2 from '~icons/lucide/settings-2';
 
   type LinkCollection = Record<string, Array<string | { label: string; value: string }>>;
-
-  const charts: LinkCollection = {
-    'Cartesian & Polar': ['AreaChart', 'BarChart'],
-  };
 
   const examples: LinkCollection = {
     'Cartesian & Polar': [
@@ -18,10 +19,10 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
       'Compound',
-      'DotPlot',
-      'DualAxis',
+      'Duration',
       'Histogram',
       'Line',
+      'Lollipop',
       'Oscilloscope',
       'PunchCard',
       'RadialLine',
@@ -67,9 +68,22 @@
   };
 
   const components: LinkCollection = {
-    Charts: ['Chart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
+    Charts: ['Chart', 'ArcChart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
     Common: ['Axis', 'Frame', 'Grid', 'Legend', 'Rule'],
-    Primitives: ['Arc', 'Bar', 'Circle', 'Group', 'Line', 'Marker', 'Point', 'Rect', 'Text'],
+    Primitives: [
+      'Arc',
+      'Bar',
+      'Circle',
+      'Connector',
+      'Ellipse',
+      'Group',
+      'Line',
+      'Marker',
+      'Point',
+      'Polygon',
+      'Rect',
+      'Text',
+    ],
     Marks: [
       'Area',
       'Bars',
@@ -82,6 +96,7 @@
       'Spline',
       'Threshold',
     ],
+    Annotations: ['AnnotationLine', 'AnnotationPoint', 'AnnotationRange'],
     Interactions: [
       'BrushContext',
       'Highlight',
@@ -102,17 +117,10 @@
       'Graticule',
       'TileImage',
     ],
-    Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Tree', 'Treemap'],
+    Layout: ['Dagre', 'ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Tree', 'Treemap'],
+    Fill: ['LinearGradient', 'RadialGradient', 'Pattern'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
-    Other: [
-      'Blur',
-      'Bounds',
-      'ColorRamp',
-      'LinearGradient',
-      'RadialGradient',
-      'MotionPath',
-      'Pattern',
-    ],
+    Other: ['Blur', 'Bounds', 'ColorRamp', 'MotionPath'],
   };
 
   const utils = ['pivot'];
@@ -123,20 +131,21 @@
     'series_arrays',
     'dimension_arrays',
     'dimension_arrays_processed',
+    'streaming',
   ];
 </script>
 
-<NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
+<NavItem text="Home" icon={LucideHouse} currentUrl={page.url} path="/" />
 <NavItem
   text="Getting Started"
-  icon={mdiPlayCircle}
-  currentUrl={$page.url}
+  icon={LucideCirclePlay}
+  currentUrl={page.url}
   path="/getting-started"
 />
 <NavItem
   text="Changelog"
-  icon={mdiFormatListBulleted}
-  currentUrl={$page.url}
+  icon={LucideList}
+  currentUrl={page.url}
   path="https://github.com/techniq/layerchart/releases"
   target="_blank"
 />
@@ -149,7 +158,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/charts/{pathValue}"
       class="pl-6 py-2"
     />
@@ -165,7 +174,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/examples/{pathValue}"
       class="pl-6 py-2"
     />
@@ -180,7 +189,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/components/{pathValue}"
       class="pl-6 py-2"
     />
@@ -189,14 +198,14 @@
 
 <h1>Utils</h1>
 {#each utils as item}
-  <NavItem text={item} currentUrl={$page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
+  <NavItem text={item} currentUrl={page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
 {/each}
 
 <h1>Tools</h1>
 {#each tools as item}
   <NavItem
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
-    currentUrl={$page.url}
+    currentUrl={page.url}
     path="/docs/tools/{item}"
     class="pl-6 py-2"
   />
@@ -206,7 +215,7 @@
 {#each performance as item}
   <NavItem
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
-    currentUrl={$page.url}
+    currentUrl={page.url}
     path="/docs/performance/{item}"
     class="pl-6 py-2"
   />

@@ -1,37 +1,41 @@
 <script lang="ts">
   import {
     Axis,
-    Canvas,
-    Circle,
+    defaultChartPadding,
     Highlight,
     Labels,
+    Layer,
     LinearGradient,
     LineChart,
     pivotLonger,
     Spline,
-    Svg,
-    Text,
     Tooltip,
   } from 'layerchart';
-  import { scaleBand, scaleSequential } from 'd3-scale';
+  import { scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { Field, Switch } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { interpolateTurbo } from 'd3-scale-chromatic';
+  import { cls } from '@layerstack/tailwind';
+  import { slide } from 'svelte/transition';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
-  $: dateSeriesDataWithNulls = dateSeriesData.map((d) => {
-    return {
-      ...d,
-      value: Math.random() < 0.2 ? null : d.value,
-    };
-  });
+  const dateSeriesDataWithNulls = $derived(
+    dateSeriesData.map((d) => {
+      return {
+        ...d,
+        value: Math.random() < 0.2 ? null : d.value,
+      };
+    })
+  );
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -41,6 +45,16 @@
     value: 'integer',
     keys,
   });
+  const multiSeriesDataWithNulls = $derived(
+    multiSeriesData.map((d) => {
+      const newItem = { ...d };
+      keys.forEach((key) => {
+        // @ts-expect-error shh
+        newItem[key] = Math.random() < 0.2 ? null : newItem[key];
+      });
+      return newItem;
+    })
+  );
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
 
@@ -66,42 +80,106 @@
     interpolateTurbo
   );
 
-  let dynamicData = ticks(-2, 2, 200).map(Math.sin);
-
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let dynamicData = $state(ticks(-2, 2, 200).map(Math.sin));
 
   // Get a few random points to use for annotations
-  $: annotations = [...dateSeriesData]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 5)
-    .sort(sortFunc('date'))
-    .map((d, i) => ({
-      date: d.date,
-      label: String.fromCharCode(65 + i),
-      description: `This is an annotation for ${format(d.date)}`,
-    }));
+  const annotations = $derived(
+    [...data.appleStock]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+      .sort(sortFunc('date'))
+      .map((d, i) => ({
+        date: d.date,
+        label: String.fromCharCode(65 + i),
+        details: `This is an annotation for ${format(d.date)}`,
+      }))
+  );
+
+  let show = $state(true);
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
+  let debug = $derived(shared.debug);
+
+  const monitorSeries = [
+    {
+      key: 'RespondActivityTaskCompleted',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.05875000000000004,
+        },
+        {
+          date: new Date('2025-09-14T00:05:00.000Z'),
+          value: 0.0195,
+        },
+        {
+          date: new Date('2025-09-14T12:00:00.000Z'),
+          value: 0.0195,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.08083333333333337,
+        },
+        {
+          date: new Date('2025-09-15T00:05:00.000Z'),
+          value: 0.04592857142857144,
+        },
+      ],
+      color: 'var(--color-blue-500)',
+    },
+    {
+      key: 'RespondWorkflowTaskCompleted',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.08999999999999998,
+        },
+        {
+          date: new Date('2025-09-14T00:05:00.000Z'),
+          value: 0.03275000000000002,
+        },
+        {
+          date: new Date('2025-09-14T12:00:00.000Z'),
+          value: 0.047,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.08666666666666673,
+        },
+        {
+          date: new Date('2025-09-15T00:05:00.000Z'),
+          value: 0.04625,
+        },
+        {
+          date: new Date('2025-09-15T12:00:00.000Z'),
+          value: 0.0485,
+        },
+      ],
+      color: 'var(--color-purple-500)',
+    },
+    {
+      key: 'StartWorkflowExecution',
+      data: [
+        {
+          date: new Date('2025-09-14T00:00:00.000Z'),
+          value: 0.16666666666666669,
+        },
+        {
+          date: new Date('2025-09-15T00:00:00.000Z'),
+          value: 0.1300000000000001,
+        },
+      ],
+      color: 'var(--color-green-500)',
+    },
+  ];
 </script>
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
-
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
@@ -109,11 +187,11 @@
 <h2>Override color</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
-      series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+      series={[{ key: 'value', color: 'var(--color-secondary)' }]}
       {renderContext}
       {debug}
     />
@@ -123,7 +201,7 @@
 <h2>Curve</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -135,17 +213,32 @@
   </div>
 </Preview>
 
+<h2>Vertical</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      orientation="vertical"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
@@ -153,10 +246,42 @@
   </div>
 </Preview>
 
+<h2>Series (with nulls)</h2>
+
+<Preview data={multiSeriesDataWithNulls}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesDataWithNulls}
+      x="date"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
+      ]}
+      {renderContext}
+      {debug}
+    >
+      {#snippet belowMarks({ visibleSeries, highlightKey })}
+        {#each visibleSeries as s}
+          <Spline
+            data={multiSeriesDataWithNulls.filter((d) => d[s.key] !== null)}
+            y={s.key}
+            stroke={s.color}
+            class={cls(
+              '[stroke-dasharray:3,3] transition-opacity',
+              highlightKey && highlightKey !== s.key && 'opacity-10'
+            )}
+          />
+        {/each}
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
 <h2>Series (separate data)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -164,17 +289,17 @@
         {
           key: 'apples',
           data: multiSeriesDataByFruit.get('apples'),
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
         },
         {
           key: 'bananas',
           data: multiSeriesDataByFruit.get('bananas'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           data: multiSeriesDataByFruit.get('oranges'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -183,50 +308,121 @@
   </div>
 </Preview>
 
-<h2>Series (voronoi tooltip with highlight)</h2>
+<h2>Series (separate data with different length)</h2>
+
+<Preview data={multiSeriesDataByFruit}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-danger)',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-success)',
+        },
+        {
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges')?.filter((d, i) => Math.random() > 0.3),
+          color: 'var(--color-warning)',
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<!-- <h2>Series (separate data (different lengths))</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart x="date" y="value" series={monitorSeries} {renderContext} {debug}>
+      {#snippet tooltip({ context, visibleSeries, highlightKey, setHighlightKey })}
+        {@const data = context.tooltip.data}
+        <Tooltip.Root>TODO</Tooltip.Root>
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview> -->
+
+<h2>Series (vertical)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesData}
+      y="date"
+      orientation="vertical"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Series (individual tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesFlatData}
       x="date"
       y="value"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      tooltip={{ mode: 'voronoi' }}
+      props={{ tooltip: { context: { mode: 'quadtree' } } }}
       {renderContext}
       {debug}
       brush
+      legend
     >
-      <svelte:fragment slot="marks" let:series let:tooltip>
-        {#each series as s}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === s.key
-              ? s.color
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline data={multiSeriesData} y={s.key} stroke={color} />
+      {#snippet marks({ context, visibleSeries, highlightKey })}
+        {#each visibleSeries as s}
+          {@const active =
+            (context.tooltip.data == null || s.key === context.tooltip.data?.fruit) &&
+            (highlightKey === null || s.key === highlightKey)}
+          <Spline
+            data={multiSeriesData}
+            y={s.key}
+            stroke={s.color}
+            class={cls(!active && 'opacity-20 saturate-0')}
+          />
         {/each}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:series let:tooltip>
-        <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find((s) => s.key === tooltip.data?.fruit)?.color}
+      {#snippet highlight({ series, context })}
+        {@const activeSeriesColor = series.find(
+          (s) => s.key === context.tooltip.data?.fruit
+        )?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:series let:tooltip let:x>
-        <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find((s) => s.key === tooltip.data?.fruit)?.color}
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
-          </Tooltip.List>
+      {#snippet tooltip({ context, series })}
+        {@const activeSeriesColor = series.find(
+          (s) => s.key === context.tooltip.data?.fruit
+        )?.color}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -234,16 +430,16 @@
 <h2>Series (point click)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      onpointclick={(e, detail) => {
+      onPointClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -256,14 +452,14 @@
 <h2>Series (custom highlight point)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
       {renderContext}
@@ -275,25 +471,24 @@
 <h2>Series (labels on point hover)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks" let:getLabelsProps let:series let:highlightSeriesKey>
-        {#if highlightSeriesKey}
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          {@const activeSeriesIndex = [...series].findIndex((s) => s.key === highlightSeriesKey)}
+      {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
+        {#if highlightKey}
+          {@const activeSeriesIndex = series.findIndex((s) => s.key === highlightKey)}
           <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
         {/if}
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -301,7 +496,7 @@
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -316,7 +511,7 @@
 <h2>Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -324,7 +519,7 @@
 <h2>Labels with Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -340,7 +535,7 @@
 <h2>Labels within points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -361,11 +556,10 @@
 <h2>Radar (linear grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       yPadding={[0, 8]}
       padding={{ top: 8 }}
@@ -390,8 +584,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -401,11 +599,10 @@
 <h2>Radar (rounded grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       padding={{ top: 8 }}
       radial
@@ -428,8 +625,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -439,22 +640,21 @@
 <h2>Radar with series data</h2>
 
 <Preview data={budgetData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={budgetData}
       x="name"
-      xScale={scaleBand()}
       yPadding={[0, 8]}
       radial
       series={[
         {
           key: 'budget',
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
           props: { class: 'fill-secondary/50' },
         },
         {
           key: 'actual',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { class: 'fill-primary/50' },
         },
       ]}
@@ -475,8 +675,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -486,7 +690,7 @@
 <h2>Gradient encoding</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -495,31 +699,31 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks">
-        <LinearGradient
-          stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
-          vertical
-          let:gradient
-        >
-          <Spline stroke={gradient} />
+      {#snippet marks()}
+        <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
+          {#snippet children({ gradient })}
+            <Spline stroke={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:tooltip let:y>
-        {#if tooltip.data}
-          <Highlight lines points={{ fill: temperatureColor(y(tooltip.data)) }} />
+      {#snippet highlight({ context })}
+        {#if context.tooltip.data}
+          <Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />
         {/if}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {@const value = y(data)}
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" {value} color={temperatureColor(value)} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const value = context.y(data)}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" {value} color={temperatureColor(value)} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -527,7 +731,7 @@
 <h2>Gradient threshold</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -536,20 +740,49 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks" let:yScale let:height let:padding>
-        {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
+      {#snippet marks({ context })}
+        {@const thresholdOffset = context.yScale(50) / (context.height + context.padding.bottom)}
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-            [thresholdOffset, 'hsl(var(--color-info))'],
+            [thresholdOffset, 'var(--color-danger)'],
+            [thresholdOffset, 'var(--color-info)'],
           ]}
           units="userSpaceOnUse"
           vertical
-          let:gradient
         >
-          <Spline stroke={gradient} />
+          {#snippet children({ gradient })}
+            <Spline stroke={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
+
+      {#snippet highlight({ context })}
+        {#if context.tooltip.data}
+          <Highlight
+            lines
+            points={{
+              fill:
+                context.y(context.tooltip.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)',
+            }}
+          />
+        {/if}
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const value = context.y(data)}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="value"
+                {value}
+                color={value > 50 ? 'var(--color-danger)' : 'var(--color-info)'}
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -557,31 +790,30 @@
 <h2>Large series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
       yDomain={null}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: 'month' },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
+        tooltip: {
+          context: {
+            mode: 'manual',
+          },
+        },
       }}
       series={flatGroup(data.dailyTemperatures, (d) => d.year).map(([year, data]) => {
         return {
-          key: year,
+          key: year.toString(),
           data,
-          color:
-            year === 2024
-              ? 'hsl(var(--color-primary))'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      tooltip={{ mode: 'manual' }}
       {renderContext}
       {debug}
     />
@@ -591,7 +823,7 @@
 <h2>Large radial series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -600,27 +832,26 @@
       yNice={false}
       yPadding={[0, 20]}
       radial
-      rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+      rule={{ y: '$top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month, tickLength: 0 },
+        xAxis: { format: 'month', tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
+        tooltip: {
+          context: {
+            mode: 'manual',
+          },
+        },
       }}
       series={flatGroup(data.dailyTemperatures, (d) => d.year).map(([year, data]) => {
         return {
-          key: year,
+          key: year.toString(),
           data,
-          color:
-            year === 2024
-              ? 'hsl(var(--color-primary))'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      tooltip={{ mode: 'manual' }}
       {renderContext}
       {debug}
     />
@@ -629,11 +860,11 @@
 
 <h2>Dynamic data (move over chart)</h2>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <Preview data={dynamicData}>
   <div
-    class="h-[300px] p-4 border rounded"
-    on:mousemove={(e) => {
+    class="h-[300px] p-4 border rounded-sm"
+    onmousemove={(e) => {
       const x = e.clientX;
       const y = e.clientY;
       dynamicData = dynamicData.slice(-200).concat(Math.atan2(x, y));
@@ -646,8 +877,8 @@
       yBaseline={undefined}
       tooltip={false}
       props={{
-        yAxis: { tweened: true },
-        grid: { tweened: true },
+        yAxis: { motion: 'tween' },
+        grid: { motion: 'tween' },
         // spline: {
         //   draw: {
         //     // easing function to only draw the last data point
@@ -670,7 +901,7 @@
 <h2>Null gaps</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -678,9 +909,9 @@
 <h2>Null with dashed lines</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="belowMarks" let:series>
+      {#snippet belowMarks({ series })}
         {#each series as s}
           <Spline
             data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}
@@ -689,7 +920,7 @@
             stroke={s.color}
           />
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -714,7 +945,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -722,22 +953,50 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Axis labels inside</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+      props={{
+        yAxis: {
+          tickLabelProps: {
+            textAnchor: 'start',
+            verticalAnchor: 'end',
+          },
+          tickLength: 0,
+        },
+      }}
+      padding={{
+        left: 0,
+        top: 10,
+        bottom: 24,
+      }}
+    />
   </div>
 </Preview>
 
 <h2>Legend</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', label: 'Apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', label: 'Bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', label: 'Oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', label: 'Apples', color: 'var(--color-danger)' },
+        { key: 'bananas', label: 'Bananas', color: 'var(--color-success)' },
+        { key: 'oranges', label: 'Oranges', color: 'var(--color-warning)' },
       ]}
       legend
       {renderContext}
@@ -749,12 +1008,12 @@
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -767,101 +1026,217 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
+      {#snippet tooltip({ context })}
         <Tooltip.Root
-          x={padding.left}
+          x={context.padding.left}
           y="data"
           anchor="right"
           contained={false}
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
-          let:data
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
-          {y(data)}
+          {#snippet children({ data })}
+            {context.y(data)}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root
           x="data"
-          y={height}
+          y={context.height}
           anchor="top"
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
-          let:data
         >
-          {format(x(data), PeriodType.Day)}
+          {#snippet children({ data })}
+            {format(context.x(data), 'day')}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
 
-<h2>Simple annotations</h2>
+<h2>Point annotations</h2>
 
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="aboveContext" let:xScale let:height let:tooltip>
-        <Svg>
-          {#each annotations as annotation}
-            <Circle
-              cx={xScale(annotation.date)}
-              cy={height}
-              r={6}
-              class="fill-secondary"
-              onpointermove={(e) => {
-                e.stopPropagation();
-                tooltip.show(e, { annotation });
-              }}
-              onpointerleave={() => {
-                tooltip.hide();
-              }}
-            />
-            <Text
-              x={xScale(annotation.date)}
-              y={height}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              dy={-2}
-              class="text-[10px] fill-secondary-content font-semibold pointer-events-none"
-              value={annotation.label}
-            />
-          {/each}
-        </Svg>
-      </svelte:fragment>
-
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {#if data.annotation}
-            <!-- Annotation -->
-            <div class="whitespace-nowrap">
-              {data.annotation.description}
-            </div>
-          {:else}
-            <!-- Normal tooltip -->
-            <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-            <Tooltip.List>
-              <Tooltip.Item label="value" value={y(data)} />
-            </Tooltip.List>
-          {/if}
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={annotations.map((a) => {
+        return {
+          type: 'point',
+          label: a.label,
+          details: a.details,
+          x: a.date,
+          r: 6,
+          props: {
+            circle: { class: 'fill-secondary' },
+            label: { class: 'text-[10px] fill-secondary-content font-bold' },
+          },
+        };
+      })}
+      {renderContext}
+      {debug}
+    >
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {#if data.annotation}
+              <!-- Annotation -->
+              <div class="whitespace-nowrap">
+                {data.annotation.details}
+              </div>
+            {:else}
+              <!-- Normal tooltip -->
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
+              <Tooltip.List>
+                <Tooltip.Item label="value" value={context.y(data)} />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'line',
+          y: 500,
+          label: 'Max',
+          labelXOffset: 4,
+          labelYOffset: 2,
+          props: {
+            label: { class: 'fill-danger' },
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          layer: 'below',
+          x: [new Date('2010-01-01'), new Date('2010-12-31')],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: 4,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Series point annotations</h2>
+
+<Preview data={data.appleStock}>
+  {@const series = [
+    {
+      key: 'apples',
+      data: multiSeriesDataByFruit.get('apples'),
+      color: 'var(--color-danger)',
+    },
+    {
+      key: 'bananas',
+      data: multiSeriesDataByFruit.get('bananas'),
+      color: 'var(--color-success)',
+    },
+    {
+      key: 'oranges',
+      data: multiSeriesDataByFruit.get('oranges'),
+      color: 'var(--color-warning)',
+    },
+  ]}
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      x="date"
+      y="value"
+      {series}
+      annotations={series.map((s) => {
+        const lastDataPoint = s.data?.[s.data.length - 1] ?? null;
+        return {
+          type: 'point',
+          seriesKey: s.key,
+          label: s.key,
+          labelPlacement: 'right',
+          labelXOffset: 4,
+          x: lastDataPoint.date,
+          y: lastDataPoint.value,
+          props: {
+            circle: { fill: s.color },
+            label: { fill: s.color },
+          },
+        };
+      })}
+      padding={{ ...defaultChartPadding(), right: 60 }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
 
 <h2>Brushing</h2>
 
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.appleStock}
       x="date"
       y="value"
       brush
       props={{
-        spline: { tweened: { duration: 200 } },
-        xAxis: { format: undefined, tweened: { duration: 200 } },
+        spline: { motion: { type: 'tween', duration: 200 } },
+        xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
       }}
       {renderContext}
       {debug}
@@ -871,47 +1246,72 @@
 
 <h2>Brush with series point events</h2>
 
-<div class="h-[300px] p-4 border rounded">
-  <LineChart
-    data={multiSeriesData}
-    x="date"
-    series={[
-      { key: 'apples', color: 'hsl(var(--color-danger))' },
-      { key: 'bananas', color: 'hsl(var(--color-success))' },
-      { key: 'oranges', color: 'hsl(var(--color-warning))' },
-    ]}
-    onpointclick={(e, detail) => {
-      console.log(e, detail);
-      alert(JSON.stringify(detail));
-    }}
-    brush
-    {renderContext}
-    {debug}
-  />
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
+      ]}
+      onPointClick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
+      }}
+      brush
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<div class="flex">
+  <h2 class="grow">Draw</h2>
+
+  <Field label="Show" labelPlacement="left" let:id>
+    <Switch {id} bind:checked={show} />
+  </Field>
 </div>
+
+<Preview data={dateSeriesData}>
+  {#if show}
+    <div class="h-[300px] p-4 border rounded-sm" transition:slide>
+      <LineChart
+        data={dateSeriesData}
+        x="date"
+        y="value"
+        props={{ spline: { draw: true } }}
+        {renderContext}
+        {debug}
+      />
+    </div>
+  {/if}
+</Preview>
 
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
-      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Spline class="stroke-2 stroke-primary" />
-        <Highlight points lines />
-      </svelte:component>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet children({ context })}
+        <Layer type={renderContext}>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <Spline class="stroke-2 stroke-primary" />
+          <Highlight points lines />
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>

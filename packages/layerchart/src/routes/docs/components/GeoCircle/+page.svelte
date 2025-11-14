@@ -11,20 +11,21 @@
   import { range } from 'd3-array';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoCircle, GeoPath, Graticule, Svg } from 'layerchart';
+  import { Chart, GeoCircle, GeoPath, Graticule, Layer } from 'layerchart';
   import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
-  export let data;
+  let { data } = $props();
 
-  let example: 'single' | 'multi' = 'single';
-  let latitude = 0;
-  let longitude = 0;
-  let radius = 600;
-  let precision = 6;
+  let example: 'single' | 'multi' = $state('single');
+  let latitude = $state(0);
+  let longitude = $state(0);
+  let radius = $state(600);
+  let precision = $state(6);
 
-  let projection = geoNaturalEarth1;
+  let projection = $state(geoNaturalEarth1);
   const projections = [
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
@@ -35,11 +36,12 @@
     { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  $: geojson = feature(data.geojson, data.geojson.objects.countries);
-  $: features =
+  const geojson = $derived(feature(data.geojson, data.geojson.objects.countries));
+  const features = $derived(
     projection === geoAlbersUsa
       ? geojson.features.filter((f) => f.properties.name === 'United States of America')
-      : geojson.features;
+      : geojson.features
+  );
 
   const step = 10;
   const coordinates = range(-80, 80 + step, step).flatMap((y) => {
@@ -97,7 +99,7 @@
       }}
       padding={{ left: 100, right: 100 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
         <Graticule class="stroke-surface-content/20" />
 
@@ -109,15 +111,12 @@
         {/each}
 
         {#if example === 'single'}
-          <!-- TODO: Not sure why {#key} is needed to fix "ghosting" -->
-          {#key [longitude, latitude]}
-            <GeoCircle
-              center={[longitude, latitude]}
-              radius={(radius / (6371 * Math.PI * 2)) * 360}
-              {precision}
-              class="fill-danger stroke-none"
-            />
-          {/key}
+          <GeoCircle
+            center={[longitude, latitude]}
+            radius={(radius / (6371 * Math.PI * 2)) * 360}
+            {precision}
+            class="fill-danger stroke-none"
+          />
         {:else if example === 'multi'}
           {#each coordinates as coords}
             <GeoCircle
@@ -128,7 +127,7 @@
             />
           {/each}
         {/if}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

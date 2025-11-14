@@ -1,17 +1,38 @@
 <script lang="ts">
-  import { forceManyBody, forceLink, forceCenter } from 'd3-force';
+  import {
+    forceManyBody,
+    forceLink,
+    forceCenter,
+    type SimulationNodeDatum,
+    type SimulationLinkDatum,
+  } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
   import { Field, Switch } from 'svelte-ux';
-  import { Chart, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
-  import { movable } from '@layerstack/svelte-actions';
-  import { clamp } from '@layerstack/utils';
+  import { clamp, type Prettify } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { movable } from '$lib/actions/movable.js';
+  import { shared } from '../../shared.svelte.js';
 
-  const nodes = Array.from({ length: 13 }, (_, i) => ({ id: i }));
-  const links = [
+  type NodeDatum = {
+    id: number;
+  };
+
+  type LinkDatum = {
+    source: number;
+    target: number;
+  };
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = Array.from({ length: 13 }, (_, i) => ({ id: i }));
+  const links: MySimulationLinkDatum[] = [
     { source: 0, target: 1 },
     { source: 1, target: 2 },
     { source: 2, target: 0 },
@@ -36,8 +57,8 @@
   const chargeForce = forceManyBody();
   const centerForce = forceCenter();
 
-  let sticky = true;
-  let dragging = false;
+  let sticky = $state(true);
+  let dragging = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -50,67 +71,86 @@
 </Field>
 
 <Preview data={nodes}>
-  <div class="h-[600px] p-4 border rounded overflow-hidden">
-    <Chart data={nodes} let:width let:height let:tooltip>
-      <Svg>
-        <ForceSimulation
-          forces={{
-            link: linkForce,
-            charge: chargeForce,
-            center: centerForce.x(width / 2).y(height / 2),
-          }}
-          let:nodes
-          let:simulation
-        >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} curve={curveLinear} class="stroke-surface-content/20" />
-            {/each}
-          {/key}
+  <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
+    <Chart>
+      {#snippet children({ context })}
+        <Layer type={shared.renderContext}>
+          <ForceSimulation
+            forces={{
+              link: linkForce,
+              charge: chargeForce,
+              center: centerForce.x(context.width / 2).y(context.height / 2),
+            }}
+            data={{ nodes, links }}
+          >
+            {#snippet children({ nodes, simulation, linkPositions })}
+              {#each links as link, i}
+                <Link
+                  data={link}
+                  explicitCoords={linkPositions[i]}
+                  curve={curveLinear}
+                  class="stroke-surface-content/20"
+                />
+              {/each}
 
-          {#each nodes as node}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <circle
-              cx={node.x}
-              cy={node.y}
-              r={12}
-              use:movable
-              on:movestart={() => {
-                tooltip.hide();
-                dragging = true;
-              }}
-              on:move={(e) => {
-                node.fx = clamp((node.fx ?? node.x) + e.detail.dx, 0, width);
-                node.fy = clamp((node.fy ?? node.y) + e.detail.dy, 0, height);
-                simulation.alpha(1).restart();
-              }}
-              on:moveend={(e) => {
-                dragging = false;
-                if (!sticky) {
-                  delete node.fx;
-                  delete node.fy;
-                  simulation.alpha(1).restart();
-                }
-              }}
-              on:click={(e) => {
-                if (node.fx) {
-                  delete node.fx;
-                  delete node.fy;
-                  simulation.alpha(1).restart();
-                }
-              }}
-              on:pointermove={(e) => !dragging && tooltip.show(e, node)}
-              on:pointerleave={tooltip.hide}
-              class={cls('cursor-all-scroll', node.fx ? 'fill-primary' : 'fill-surface-content')}
-            />
-          {/each}
-        </ForceSimulation>
-      </Svg>
+              {#each nodes as node, i}
+                {@const thisNode = simulation.nodes()[i]}
+                <!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={12}
+                  use:movable={{
+                    onMoveStart: () => {
+                      context.tooltip.hide();
+                      dragging = true;
+                    },
+                    onMove: (e) => {
+                      thisNode.fx = clamp(
+                        (thisNode.fx ?? thisNode.x ?? 0) + e.detail.dx,
+                        0,
+                        context.width
+                      );
+                      thisNode.fy = clamp(
+                        (thisNode.fy ?? thisNode.y ?? 0) + e.detail.dy,
+                        0,
+                        context.height
+                      );
+                      simulation.alpha(1).restart();
+                    },
+                    onMoveEnd: (e) => {
+                      dragging = false;
+                      if (!sticky) {
+                        const thisNode = simulation.nodes()[i];
+                        delete thisNode.fx;
+                        delete thisNode.fy;
+                        simulation.alpha(1).restart();
+                      }
+                    },
+                  }}
+                  onclick={() => {
+                    if (thisNode.fx) {
+                      delete thisNode.fx;
+                      delete thisNode.fy;
+                      simulation.alpha(1).restart();
+                    }
+                  }}
+                  onpointermove={(e) => !dragging && context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
+                  class={cls(
+                    'cursor-all-scroll',
+                    node.fx ? 'fill-primary' : 'fill-surface-content'
+                  )}
+                />
+              {/each}
+            {/snippet}
+          </ForceSimulation>
+        </Layer>
 
-      <Tooltip.Root let:data>
-        {data.id}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {context.tooltip.data?.id}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

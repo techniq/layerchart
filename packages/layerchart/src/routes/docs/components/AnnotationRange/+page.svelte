@@ -1,0 +1,344 @@
+<script lang="ts">
+  import type { ComponentProps } from 'svelte';
+
+  import { AnnotationRange, BarChart, LineChart, type Placement } from 'layerchart';
+  import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
+
+  import Preview from '$lib/docs/Preview.svelte';
+  import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
+
+  let { data } = $props();
+
+  const dateSeriesData = createDateSeries({
+    count: 10,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
+
+  const placementOptions = [
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'center',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const;
+  let placement: Placement = $state('center');
+  let xOffset = $state(0);
+  let yOffset = $state(0);
+
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
+  );
+  let debug = $derived(shared.debug);
+</script>
+
+<h1>Examples</h1>
+
+<h2>Horizontal with pattern, lower bound</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          y={[500, null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Horizontal with pattern, upper bound</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          y={[null, 500]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Horizontal with pattern, range</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          y={[300, 500]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Horizontal with fill, multiple</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange y={[0, 400]} class="fill-success/10" />
+        <AnnotationRange y={[400, 600]} class="fill-warning/10" />
+        <AnnotationRange y={[600, null]} class="fill-danger/10" />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical with pattern, lower bound</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical with pattern, upper bound</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[null, new Date('2010-12-31')]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical with pattern, range</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), new Date('2010-12-31')]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical with gradient, range</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2011-01-01'), new Date('2011-06-30')]}
+          gradient={{
+            class: 'from-danger/30 to-danger/1',
+            vertical: true,
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Label placement</h2>
+
+<div class="grid grid-cols-3 gap-2 mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Placement" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {placement}
+      </span>
+    </Field>
+
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 gap-1 p-1">
+        {#each placementOptions as option}
+          <Button
+            variant="outline"
+            color={option === placement ? 'primary' : 'default'}
+            on:click={() => (placement = option)}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+
+  <RangeField label="X offset" bind:value={xOffset} max={10} />
+  <RangeField label="Y offset" bind:value={yOffset} max={10} />
+</div>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), new Date('2010-12-31')]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+          label={placement}
+          labelPlacement={placement}
+          labelXOffset={xOffset}
+          labelYOffset={yOffset}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (single)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[dateSeriesData[2].date, dateSeriesData[2].date]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (multiple)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[dateSeriesData[2].date, dateSeriesData[4].date]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (value)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          y={[75, null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Hide tooltip</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+          props={{
+            rect: {
+              onpointermove: (e) => {
+                e.stopPropagation();
+                context.tooltip.hide();
+              },
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
