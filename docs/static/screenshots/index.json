@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-13T18:10:48.738Z",
+  "generatedAt": "2025-11-14T14:39:03.914Z",
   "totalComponents": 57,
   "totalExamples": 694,
   "components": [
@@ -1204,7 +1204,7 @@
         {
           "name": "time-scale-interval",
           "path": "/example/BarChart/time-scale-interval",
-          "checksum": "5d2f5f667f02ccb598754cd796ed1ff8"
+          "checksum": "8bf385b98d71b1cbf4a14f42b38bd5cb"
         },
         {
           "name": "time-scale-interval-horizontal",

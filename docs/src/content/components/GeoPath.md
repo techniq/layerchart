@@ -9,4 +9,6 @@ related: [Graticule]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-<Example name="tooltip" />
+## Usage
+
+<Example name="tooltip" showCode />

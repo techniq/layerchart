@@ -1040,7 +1040,7 @@
         {
           "component": "BarChart",
           "lineNumber": 17,
-          "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} height={300} />"
+          "line": "<BarChart"
         }
       ]
     },
@@ -1676,7 +1676,7 @@
       "component": "BarChart",
       "path": "/example/BarChart/time-scale-interval",
       "lineNumber": 17,
-      "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} height={300} />"
+      "line": "<BarChart"
     },
     {
       "example": "time-scale-interval-horizontal",
@@ -1742,5 +1742,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.184Z"
+  "updatedAt": "2025-11-14T14:39:04.524Z"
 }

@@ -9,8 +9,6 @@ related: []
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
-
-### Playground
+## Playground
 
 <Example name="playground" />
