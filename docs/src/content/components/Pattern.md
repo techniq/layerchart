@@ -9,32 +9,30 @@ related: [LinearGradient, RadialGradient]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
-
-### Lines
+## Lines
 
 <Example name="lines" />
 
-### Circles
+## Circles
 
 <Example name="circles" />
 
-### With Fill color
+## With Fill color
 
 <Example name="with-fill-color" />
 
-### With LinearGradient
+## With LinearGradient
 
 <Example name="with-lineargradient" />
 
-### LinearGradient as Pattern
+## LinearGradient as Pattern
 
 <Example name="lineargradient-as-pattern" />
 
-### Lines (custom pattern - svg only)
+## Lines (custom pattern - svg only)
 
 <Example name="lines-custom-pattern-svg-only" />
 
-### Circles (custom pattern - svg only)
+## Circles (custom pattern - svg only)
 
 <Example name="circles-custom-pattern-svg-only" />

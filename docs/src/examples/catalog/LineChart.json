@@ -682,13 +682,6 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
-      "example": "vertical-to-point",
-      "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical-to-point",
-      "lineNumber": 25,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
-    },
-    {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-with-rotation",
@@ -701,6 +694,13 @@
       "path": "/example/AnnotationPoint/label-placement",
       "lineNumber": 30,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+    },
+    {
+      "example": "line-to-point",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/line-to-point",
+      "lineNumber": 25,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "on-axis-with-tooltip",
@@ -1137,5 +1137,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.388Z"
+  "updatedAt": "2025-11-14T15:00:20.520Z"
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-14T14:39:03.914Z",
+  "generatedAt": "2025-11-14T15:00:18.519Z",
   "totalComponents": 57,
   "totalExamples": 694,
   "components": [
@@ -37,11 +37,6 @@
           "checksum": "474e72e4567f08ebb2a87675a4a53bf1"
         },
         {
-          "name": "vertical-to-point",
-          "path": "/example/AnnotationLine/vertical-to-point",
-          "checksum": "d428a34ea01836fb95a2b82b3ef63d39"
-        },
-        {
           "name": "vertical-with-rotation",
           "path": "/example/AnnotationLine/vertical-with-rotation",
           "checksum": "0cb70ffdb9f21683c6f4fcc01a988457"
@@ -65,6 +60,11 @@
           "name": "label-placement",
           "path": "/example/AnnotationPoint/label-placement",
           "checksum": "b02d3d4648233d270a5172715f838456"
+        },
+        {
+          "name": "line-to-point",
+          "path": "/example/AnnotationPoint/line-to-point",
+          "checksum": "d428a34ea01836fb95a2b82b3ef63d39"
         },
         {
           "name": "on-axis-with-tooltip",

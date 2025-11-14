@@ -9,20 +9,18 @@ related: [LinearGradient, Pattern]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
-
-### Focal location and radius with custom colors
+## Focal location and radius with custom colors
 
 <Example name="focal-location-and-radius-with-custom-colors" />
 
-### Tailwind colors
+## Tailwind colors
 
 <Example name="tailwind-colors" />
 
-### spreadMethod
+## spreadMethod
 
 <Example name="spreadmethod" />
 
-### units
+## units
 
 <Example name="units" />
