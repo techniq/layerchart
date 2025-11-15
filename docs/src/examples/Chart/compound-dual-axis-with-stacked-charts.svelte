@@ -3,20 +3,13 @@
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
 	const data = await getNewPassengerCars();
+
 	export { data };
 </script>
 
-<div class="grid grid-stack p-4 border rounded-sm">
+<div class="grid grid-stack p-6">
 	<!-- Sales chart-->
-	<Chart
-		{data}
-		x="year"
-		y="sales"
-		yDomain={[0, null]}
-		yNice
-		padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
-		height={300}
-	>
+	<Chart {data} x="year" y="sales" yDomain={[0, null]} yNice height={300}>
 		<Layer>
 			<Axis
 				placement="left"
@@ -33,13 +26,7 @@
 	</Chart>
 
 	<!-- Efficiency chart, provides tooltip for both values  -->
-	<Chart
-		{data}
-		x="year"
-		y="efficiency"
-		padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
-		tooltip={{ mode: 'quadtree-x' }}
-	>
+	<Chart {data} x="year" y="efficiency" tooltip={{ mode: 'quadtree-x' }}>
 		<Layer>
 			<Axis
 				placement="right"

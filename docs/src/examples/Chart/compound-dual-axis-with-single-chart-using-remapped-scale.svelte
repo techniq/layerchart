@@ -4,6 +4,7 @@
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
 	const data = await getNewPassengerCars();
+
 	export { data };
 </script>
 
@@ -16,8 +17,8 @@
 	yNice
 	y1="efficiency"
 	y1Range={({ yScale }) => yScale.domain()}
-	padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
 	tooltip={{ mode: 'quadtree-x' }}
+	padding={30}
 	height={300}
 >
 	{#snippet children({ context })}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Area, BarChart, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
+	import { timeDay } from 'd3-time';
 
 	const data = createDateSeries({
 		count: 30,
@@ -9,6 +10,7 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
+
 	export { data };
 </script>
 
@@ -16,9 +18,11 @@
 	{data}
 	x="date"
 	y={['baseline', 'value']}
+	xInterval={timeDay}
 	props={{
 		bars: { y: 'baseline' }
 	}}
+	padding={20}
 	height={300}
 >
 	{#snippet aboveMarks()}
