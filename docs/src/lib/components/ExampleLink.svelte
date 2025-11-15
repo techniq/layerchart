@@ -41,16 +41,19 @@
 		class="flex items-center truncate p-3 gap-1 text-sm font-medium transition-colors group-hover:text-primary-content"
 	>
 		<LucideFileCode
-			class="shrink-0 transition text-surface-content/50 group-hover:text-primary-content mr-1"
+			class="shrink-0 transition text-surface-content/50 group-hover:text-primary-content/50 mr-1"
 		/>
 
 		{#if showComponent}
-			<span>{component}</span> <LucideChevronRight class="text-surface-content/50" />
+			<span>{component}</span>
+			<LucideChevronRight
+				class="shrink-0 text-surface-content/50 group-hover:text-primary-content/50"
+			/>
 		{/if}
 		<span class="first-letter:capitalize truncate">{example.replaceAll('-', ' ')}</span>
 
 		<LucideArrowRight
-			class="shrink-0 transition-all transform opacity-0 group-hover:opacity-100  -translate-x-full group-hover:translate-x-0"
+			class="shrink-0 transition-all transform opacity-0 group-hover:opacity-100  -translate-x-full group-hover:translate-x-0 group-hover:text-primary-content/50"
 		/>
 	</p>
 </a>
