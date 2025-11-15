@@ -3,7 +3,18 @@
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+
 	export { data };
 </script>
 
-<LineChart {data} x="value" y="date" orientation="vertical" width={400} height={600} />
+<div class="flex justify-center">
+	<LineChart
+		{data}
+		x="value"
+		y="date"
+		orientation="vertical"
+		padding={20}
+		width={400}
+		height={600}
+	/>
+</div>

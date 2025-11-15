@@ -1,11 +1,19 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, LinearGradient, Spline } from 'layerchart';
 	import { Button } from 'svelte-ux';
+	import { scaleSequential } from 'd3-scale';
+	import { interpolateViridis } from 'd3-scale-chromatic';
+	import { ticks } from 'd3-array';
 
 	import LucideCirclePlay from '~icons/lucide/circle-play';
 	import LucideCircleStop from '~icons/lucide/circle-stop';
 
 	const FFT_SIZE = 1024;
+
+	// Color scale based on y-value range
+	const yMin = -256;
+	const yMax = 512;
+	const heightColor = $derived(scaleSequential([yMin, yMax], interpolateViridis));
 
 	// Generate mock time domain data for demonstration
 	const mockData = Array.from({ length: 512 }, (_, i) => ({
@@ -123,10 +131,18 @@
 	{data}
 	x="key"
 	y="value"
-	yDomain={[-256, 512]}
+	yDomain={[yMin, yMax]}
 	axis={false}
 	grid={false}
-	props={{ spline: { class: 'stroke-surface-content' } }}
 	tooltip={{ mode: 'manual' }}
+	padding={20}
 	height={200}
-/>
+>
+	{#snippet marks()}
+		<LinearGradient stops={ticks(1, 0, 10).map(heightColor.interpolator())} vertical>
+			{#snippet children({ gradient })}
+				<Spline stroke={gradient} class="stroke-2" />
+			{/snippet}
+		</LinearGradient>
+	{/snippet}
+</LineChart>

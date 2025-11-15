@@ -8,7 +8,7 @@
 	export { data };
 </script>
 
-<p>
+<p class="px-4 py-2">
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
 	ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
 	<LineChart
@@ -21,6 +21,7 @@
 		props={{
 			highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } }
 		}}
+		padding={5}
 		height={18}
 		width={124}
 		class="inline-block"
@@ -32,7 +33,7 @@
 						{format(data.date, 'day')}
 					</div>
 					<div class="font-semibold">
-						{data.value}
+						{format(data.value, 'decimal', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
 					</div>
 				{/snippet}
 			</Tooltip.Root>

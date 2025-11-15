@@ -17,6 +17,7 @@
 	props={{
 		highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } }
 	}}
+	padding={{ left: 20 }}
 	width={124}
 	height={24}
 >
@@ -26,7 +27,7 @@
 			class="text-xs"
 			contained={false}
 			y={-3}
-			x={context.width + 8}
+			x={context.width + 35}
 			variant="none"
 		>
 			{#snippet children({ data })}
@@ -34,7 +35,7 @@
 					{format(data.date, 'day')}
 				</div>
 				<div class="font-semibold">
-					{data.value}
+					{format(data.value, 'decimal', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
 				</div>
 			{/snippet}
 		</Tooltip.Root>

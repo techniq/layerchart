@@ -6,4 +6,4 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300} />
+<LineChart {data} x="date" y="value" height={300} padding={20} />

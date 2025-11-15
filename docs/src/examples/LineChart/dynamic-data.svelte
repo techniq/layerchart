@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { LineChart } from 'layerchart';
 	import { ticks } from 'd3-array';
+	import Blockquote from '$lib/components/Blockquote.svelte';
 
 	let data = $state(ticks(-2, 2, 200).map(Math.sin));
+
 	export { data };
 </script>
 
@@ -14,6 +16,7 @@
 		data = data.slice(-200).concat(Math.atan2(x, y));
 	}}
 >
+	<Blockquote>Move your mouse over the chart to update the data</Blockquote>
 	<LineChart
 		data={data.map((d, i) => ({ x: i, y: d }))}
 		x="x"
@@ -36,6 +39,7 @@
 			//   },
 			// },
 		}}
+		padding={20}
 		height={300}
 	/>
 </div>

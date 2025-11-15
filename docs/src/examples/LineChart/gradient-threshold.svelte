@@ -4,10 +4,11 @@
 	import { format } from '@layerstack/utils';
 
 	const data = await getDailyTemperature();
+
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" yDomain={null} height={300}>
+<LineChart {data} x="date" y="value" yDomain={null} padding={20} height={300}>
 	{#snippet marks({ context })}
 		{@const thresholdOffset =
 			context.yScale(50) / (context.height + context.padding.top + context.padding.bottom)}

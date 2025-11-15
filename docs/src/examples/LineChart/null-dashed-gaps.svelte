@@ -8,10 +8,11 @@
 			value: Math.random() < 0.2 ? null : d.value
 		};
 	});
+
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300}>
+<LineChart {data} x="date" y="value" padding={20} height={300}>
 	{#snippet belowMarks({ series })}
 		{#each series as s}
 			<Spline

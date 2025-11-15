@@ -14,7 +14,6 @@
 
 	const flatData = pivotLonger(data, keys, 'fruit', 'value');
 	const dataByFruit = group(flatData, (d) => d.fruit);
-	export { dataByFruit as data };
 
 	const series = $derived([
 		{
@@ -33,6 +32,8 @@
 			color: 'var(--color-warning)'
 		}
 	]);
+
+	export { dataByFruit as data };
 </script>
 
 <LineChart

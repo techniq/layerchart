@@ -3,7 +3,8 @@
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" axis="x" height={300} />
+<LineChart {data} x="date" y="value" axis="x" padding={20} height={300} />

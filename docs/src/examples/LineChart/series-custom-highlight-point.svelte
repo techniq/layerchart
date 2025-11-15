@@ -9,6 +9,7 @@
 		value: 'integer',
 		keys: ['apples', 'bananas', 'oranges']
 	});
+
 	export { data };
 </script>
 
@@ -27,5 +28,6 @@
 		}
 	]}
 	props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
+	padding={20}
 	height={300}
 />

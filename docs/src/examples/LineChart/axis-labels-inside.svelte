@@ -13,16 +13,14 @@
 	height={300}
 	props={{
 		yAxis: {
+			rule: true,
 			tickLabelProps: {
 				textAnchor: 'start',
-				verticalAnchor: 'end'
+				verticalAnchor: 'end',
+				x: 5
 			},
 			tickLength: 0
 		}
 	}}
-	padding={{
-		left: 0,
-		top: 10,
-		bottom: 24
-	}}
+	padding={20}
 />

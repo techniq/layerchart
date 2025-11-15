@@ -4,6 +4,7 @@
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
+
 	export { data };
 
 	// Get a few random points to use for annotations
@@ -38,6 +39,7 @@
 		};
 	})}
 	height={300}
+	padding={20}
 >
 	{#snippet tooltip({ context })}
 		<Tooltip.Root>

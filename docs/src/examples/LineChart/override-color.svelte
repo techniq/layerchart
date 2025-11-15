@@ -8,6 +8,7 @@
 			visits: d.value
 		};
 	});
+
 	export { data };
 </script>
 
@@ -15,5 +16,6 @@
 	{data}
 	x="date"
 	series={[{ key: 'value', color: 'var(--color-secondary)' }]}
+	padding={20}
 	height={300}
 />
