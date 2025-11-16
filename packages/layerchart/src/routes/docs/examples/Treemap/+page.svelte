@@ -70,7 +70,10 @@
       // d => d.year,
     )
   );
-  let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+  // svelte-ignore state_referenced_locally
+  let groupedHierarchy = $state<HierarchyRectangularNode<any>>(
+    hierarchy(groupedCars).count() as HierarchyRectangularNode<any>
+  );
   $effect.pre(() => {
     untrack(() => {
       selectedCarNode = groupedHierarchy;
