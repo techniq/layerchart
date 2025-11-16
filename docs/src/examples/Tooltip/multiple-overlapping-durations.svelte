@@ -11,7 +11,6 @@
 		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] }),
 		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] })
 	];
-	export { data };
 
 	let settings = $state({
 		mode: 'bounds',

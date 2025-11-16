@@ -13,7 +13,6 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-	export { data };
 
 	let settings = $state({
 		mode: 'band',

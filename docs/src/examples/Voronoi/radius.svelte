@@ -5,7 +5,6 @@
 	import VoronoiControls from '$lib/components/VoronoiControls.svelte';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
-	export { data };
 
 	let point = $state({ x: 0, y: 0 });
 	function onPointerMove(e: PointerEvent) {

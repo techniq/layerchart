@@ -15,7 +15,6 @@
 		keys
 	});
 	const data = stack().keys(keys)(stackDateSeries) as any[];
-	export { data };
 
 	let settings = $state({
 		mode: 'quadtree-x',
