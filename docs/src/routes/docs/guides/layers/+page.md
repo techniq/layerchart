@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FeatureTable from './FeatureTable.svelte';
 
-	import { styles, gradient, text, other } from './features';
+	import { graphics, styles, gradient, text, other } from './features';
 </script>
 
 # Layers
@@ -57,6 +57,10 @@ At the moment LayerChart does not provide WebGL primitive support, but is consid
 - Weaknesses: complexity, concurrency limits, styling, interactivity, introspection, text
 
 ## Comparison
+
+### Graphics
+
+<FeatureTable data={graphics} />
 
 ### Styles
 

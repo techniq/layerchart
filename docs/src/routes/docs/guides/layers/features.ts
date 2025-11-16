@@ -1,3 +1,96 @@
+export const graphics = [
+	{
+		feature: 'line',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
+		feature: 'rectangle',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
+		feature: 'circle',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
+		feature: 'ellipse',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
+		feature: 'path',
+		html: {
+			support: false
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	},
+	{
+		feature: 'text',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
+	}
+];
+
 export const styles = [
 	{
 		feature: 'hover styling',
@@ -9,7 +102,7 @@ export const styles = [
 		},
 		canvas: {
 			support: false,
-			note: 'LayerChart uses a HitCanvas to provide pointer events, but no `hover:` styling'
+			note: 'LayerChart uses a HitCanvas to provide pointer events, but no `hover:` styling out of the box'
 		},
 		webgl: {
 			support: false
