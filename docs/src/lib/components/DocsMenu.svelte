@@ -59,9 +59,11 @@
 
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Guides</h2>
-		{#each guides as guide}
-			{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
-		{/each}
+		<div class="border-l border-surface-content/10">
+			{#each guides as guide}
+				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
+			{/each}
+		</div>
 	</section>
 
 	<!-- <section>
