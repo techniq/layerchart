@@ -10,7 +10,7 @@
 
 	const onCheckedChange = (event: { checked: boolean }) => {
 		const mode = event.checked ? 'dark' : 'light';
-		document.documentElement.setAttribute('data-mode', mode);
+		document.documentElement.classList.toggle('dark', event.checked);
 		localStorage.setItem('mode', mode);
 		checked = event.checked;
 	};
