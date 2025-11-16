@@ -41,7 +41,7 @@
 
 <nav class={cls('grid gap-6', className)}>
 	<section class="border-l border-surface-content/10">
-		{@render navItem({ label: 'Introduction', path: '/docs/introduction' })}
+		{@render navItem({ label: 'Getting Started', path: '/docs/getting-started' })}
 		{@render navItem({ label: 'Examples', path: '/docs/examples' })}
 	</section>
 
