@@ -97,6 +97,7 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import type { BrushDomainType } from '../../states/brush.svelte.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
   const settings = getSettings();
@@ -429,10 +430,10 @@
     ? {
         axis: 'x',
         resetOnEnd: true,
-        xDomain,
+        x: xDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.xDomain;
+          xDomain = e.brush.x;
           brushProps.onBrushEnd?.(e);
         },
       }

@@ -26,7 +26,7 @@ import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
 import type { ChartProps } from '../Chart.svelte';
-import type { ChartContextValue } from '$lib/contexts/chart.js';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
@@ -51,7 +51,7 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
   /**
    * The chart context
    */
-  context: ChartContextValue<TData>;
+  context: ChartState<TData>;
 
   /**
    * The series of data for the chart.
@@ -138,12 +138,6 @@ export type BaseChartProps<
    */
   y?: Accessor<TData>;
 
-  xScale?: AnyScale;
-  /**
-   * The x domain to be used for the chart.
-   *
-   */
-  xDomain?: ComponentProps<typeof BrushContext>['xDomain'];
   /**
    * Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to
    * radial.  Radial lines are positioned relative to the origin, use transform
@@ -152,18 +146,21 @@ export type BaseChartProps<
    * @default false
    */
   radial?: boolean;
+
   /**
    * The series data to be used for the chart.
    *
    * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
    */
   series?: SeriesData<TData, TComponent>[];
+
   /**
    * The layout of the series.
    *
    * @default 'overlap'
    */
   seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
+
   /**
    * The axis to be used for the chart.
    *
@@ -175,6 +172,7 @@ export type BaseChartProps<
     | 'y'
     | boolean
     | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+
   /**
    * The brush to be used for the chart.
    *
@@ -195,6 +193,7 @@ export type BaseChartProps<
    * @default false
    */
   labels?: ComponentProps<typeof Labels<TData>> | boolean | ChartSnippet;
+
   /**
    * The legend to be used for the chart.
    *
@@ -261,7 +260,7 @@ export type BaseChartProps<
   /**
    * A bindable reference to the chart context.
    */
-  context?: ChartContextValue<TData>;
+  context?: ChartState<TData>;
 
   children?: ChartSnippet;
   aboveContext?: ChartSnippet;

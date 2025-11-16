@@ -14,7 +14,7 @@
     Points,
     Rule,
     Tooltip,
-    type ChartContextValue,
+    type ChartState,
   } from 'layerchart';
   import { Button, Duration, Field, Menu, MenuField, Toggle } from 'svelte-ux';
   import { flatten, format } from '@layerstack/utils';
@@ -137,7 +137,7 @@
   let snap: 'pointer' | 'data' = $state('pointer');
   let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
 
-  let context: ChartContextValue<(typeof dateSeries)[number]> | undefined = $state();
+  let context: ChartState<(typeof dateSeries)[number]> | undefined = $state();
 </script>
 
 <h1>Examples</h1>

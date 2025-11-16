@@ -14,7 +14,7 @@
     Threshold,
     pivotLonger,
     accessor,
-    type ChartContextValue,
+    type ChartState,
     defaultChartPadding,
     Layer,
     getSettings,
@@ -129,7 +129,7 @@
   let xDomain: DomainType | undefined = $state();
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
-  let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
+  let context = $state<ChartState<(typeof denseDateSeriesData)[number]>>(null!);
 
   let selectedCurve = $state(curveStepAfter);
 
@@ -1228,7 +1228,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.brush.x) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
@@ -1241,8 +1241,7 @@
         data={denseDateSeriesData2}
         x="date"
         y="value"
-        {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.brush.x) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
           xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },

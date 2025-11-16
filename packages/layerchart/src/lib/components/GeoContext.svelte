@@ -1,10 +1,7 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
-
-  import { setGeoContext, type GeoContextValue } from '$lib/contexts/geo.js';
-  import { getTransformContext } from '$lib/contexts/transform.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
+  import { GeoState } from '$lib/states/geo.svelte.js';
 
   export type GeoContextProps = {
     /**
@@ -43,118 +40,56 @@
      *
      * @bindable
      */
-    geoContext?: GeoContextValue;
+    geoState?: GeoState;
+    /**
+     * Backwards compatible binding (deprecated - use geoState instead)
+     *
+     * @bindable
+     * @deprecated Use geoState instead
+     */
+    geoContext?: GeoState;
 
-    children: Snippet<[{ geoContext: GeoContextValue }]>;
+    children: Snippet<[{ geoState: GeoState }]>;
   };
 </script>
 
 <script lang="ts">
+  import { setGeoContext } from '$lib/contexts/geo.js';
+  import { getTransformContext } from '$lib/contexts/transform.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
+
   let {
-    projection: projectionProp,
-    fitGeojson,
-    fixedAspectRatio,
-    clipAngle,
-    clipExtent,
-    rotate,
-    scale,
-    translate,
-    center,
-    applyTransform = [],
-    reflectX,
-    reflectY,
-    geoContext: geoContextProp = $bindable() as GeoContextValue,
-    children,
+    geoState: geoStateProp = $bindable() as GeoState,
+    geoContext: geoContextProp = $bindable() as GeoState,
+    ...props
   }: GeoContextProps = $props();
 
-  const ctx = getChartContext();
+  const chartCtx = getChartContext();
   const transformCtx = getTransformContext();
 
-  let projection = $state<GeoProjection>();
+  // Create GeoState instance
+  const geoState = new GeoState(() => props);
+  geoStateProp = geoState;
 
-  const geoContext = {
-    get projection() {
-      return projection;
-    },
-    set projection(v: GeoProjection | undefined) {
-      projection = v;
-    },
-  };
-
-  geoContextProp = geoContext;
-
-  setGeoContext(geoContext);
-
-  const fitSizeRange = $derived(
-    fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [ctx.width, ctx.height]
-  ) as [number, number];
-
-  $effect.pre(() => {
-    if (!projectionProp) return;
-    const _projection = projectionProp();
-
-    if (fitGeojson && 'fitSize' in _projection) {
-      _projection.fitSize(fitSizeRange, fitGeojson);
-    }
-
-    if ('scale' in _projection) {
-      if (scale) {
-        _projection.scale(scale);
-      }
-
-      if (applyTransform.includes('scale')) {
-        _projection.scale(transformCtx.scale);
-      }
-    }
-
-    if ('rotate' in _projection) {
-      if (rotate) {
-        _projection.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
-      }
-
-      if (applyTransform.includes('rotate')) {
-        _projection.rotate([
-          transformCtx.translate.x, // yaw
-          transformCtx.translate.y, // pitch
-          // TODO: `roll` from `transformContext`?
-        ]);
-      }
-    }
-
-    if ('translate' in _projection) {
-      if (translate) {
-        _projection.translate(translate);
-      }
-
-      if (applyTransform.includes('translate')) {
-        _projection.translate([transformCtx.translate.x, transformCtx.translate.y]);
-      }
-    }
-
-    if (center && 'center' in _projection) {
-      _projection.center(center);
-    }
-
-    if (reflectX) {
-      _projection.reflectX(reflectX);
-    }
-
-    if (reflectY) {
-      _projection.reflectY(reflectY);
-    }
-
-    if (clipAngle && 'clipAngle' in _projection) {
-      _projection.clipAngle(clipAngle);
-    }
-
-    if (clipExtent && 'clipExtent' in _projection) {
-      _projection.clipExtent(clipExtent);
-    }
-
-    geoContext.projection = _projection;
+  // Sync chart dimensions to geo state
+  $effect(() => {
+    geoState.chartWidth = chartCtx.width;
+    geoState.chartHeight = chartCtx.height;
   });
+
+  // Sync transform context to geo state
+  $effect(() => {
+    geoState.transformScale = transformCtx.scale;
+    geoState.transformTranslateX = transformCtx.translate.x;
+    geoState.transformTranslateY = transformCtx.translate.y;
+  });
+
+  // Set both bindable props for backwards compatibility
+  geoContextProp = geoState;
+
+  setGeoContext(geoState);
 </script>
 
-{@render children({
-  geoContext,
+{@render props.children({
+  geoState,
 })}

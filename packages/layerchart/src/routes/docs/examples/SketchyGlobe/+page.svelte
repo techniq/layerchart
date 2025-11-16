@@ -4,7 +4,7 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import { Chart, GeoPath, Graticule, Layer, type ChartContextValue } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, type ChartState } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
@@ -19,7 +19,7 @@
   const geojson = $derived(simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea)));
   const land = $derived(feature(geojson, data.geojson.objects.land));
 
-  let context = $state<ChartContextValue>(null!);
+  let context = $state<ChartState>(null!);
 
   let velocity = $state(1);
   const timer = new TimerState({

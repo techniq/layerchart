@@ -6,7 +6,7 @@ import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
 import { accessor, findRelatedData, type Accessor } from '$lib/utils/common.js';
 import type { SeriesData } from '../charts/index.js';
-import type { ChartContextValue } from '$lib/contexts/chart.js';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 import { asAny } from '$lib/utils/types.js';
 
 export type SimplifiedChartType = 'bar' | 'area' | 'line' | 'pie' | 'scatter';
@@ -77,7 +77,7 @@ export type TooltipPayload = {
 };
 
 type BasePayloadHandlerProps = {
-  ctx: ChartContextValue;
+  ctx: ChartState;
   data: any;
 };
 
@@ -243,7 +243,7 @@ export function getTooltipPayload({
   tooltipData,
   metaCtx,
 }: {
-  ctx: ChartContextValue;
+  ctx: ChartState;
   tooltipData: any;
   metaCtx: TooltipMetaContextValue | null;
 }): TooltipPayload[] {

@@ -5,15 +5,7 @@
   import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import {
-    Chart,
-    GeoPath,
-    Graticule,
-    Legend,
-    Layer,
-    Tooltip,
-    type ChartContextValue,
-  } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Legend, Layer, Tooltip, type ChartState } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { format } from '@layerstack/utils';
@@ -27,7 +19,7 @@
   const countries = feature(data.geojson, data.geojson.objects.countries);
   const eclipses = feature(data.eclipses, data.eclipses.objects.eclipses);
 
-  let context = $state<ChartContextValue>(null!);
+  let context = $state<ChartState>(null!);
 
   let velocity = $state(3);
   const timer = new TimerState({

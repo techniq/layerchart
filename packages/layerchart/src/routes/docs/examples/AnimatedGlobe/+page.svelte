@@ -13,7 +13,7 @@
     Graticule,
     Layer,
     Tooltip,
-    type ChartContextValue,
+    type ChartState,
   } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
@@ -31,7 +31,7 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let context = $state<ChartContextValue>(null!);
+  let context = $state<ChartState>(null!);
 
   let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 

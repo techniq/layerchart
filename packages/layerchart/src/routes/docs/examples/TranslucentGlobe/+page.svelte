@@ -9,7 +9,7 @@
     Graticule,
     Layer,
     Tooltip,
-    type ChartContextValue,
+    type ChartState,
   } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
@@ -20,7 +20,7 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let context = $state<ChartContextValue>();
+  let context = $state<ChartState>();
 
   let velocity = $state(3);
   const timer = new TimerState({

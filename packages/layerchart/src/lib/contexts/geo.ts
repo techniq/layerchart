@@ -1,19 +1,17 @@
 import { Context } from 'runed';
-import { type GeoProjection } from 'd3-geo';
+import type { GeoState } from '$lib/states/geo.svelte.js';
 
-export type GeoContextValue = {
-  projection: GeoProjection | undefined;
-};
+export type { GeoState };
 
 /**
  * Access or set the current GeoContext.
  */
-const _GeoContext = new Context<GeoContextValue>('GeoContext');
+const _GeoContext = new Context<GeoState>('GeoContext');
 
 export function getGeoContext() {
-  return _GeoContext.getOr({ projection: undefined } as GeoContextValue);
+  return _GeoContext.getOr({ projection: undefined } as GeoState);
 }
 
-export function setGeoContext(geo: GeoContextValue) {
+export function setGeoContext(geo: GeoState) {
   return _GeoContext.set(geo);
 }

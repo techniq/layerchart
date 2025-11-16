@@ -146,7 +146,7 @@
      * Optionally pass the chart's context to the tooltip to get
      * type inference for the data.
      */
-    context?: ChartContextValue<T, any, any>;
+    context?: ChartState<T, any, any>;
   };
 
   export type TooltipProps<T = any> = TooltipPropsWithoutHTML<T> &
@@ -158,7 +158,8 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
-  import { getChartContext, type ChartContextValue } from '$lib/contexts/chart.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import type { ChartState } from '$lib/states/chart.svelte.js';
   import { getTooltipContext } from '$lib/contexts/tooltip.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { type Snippet } from 'svelte';
