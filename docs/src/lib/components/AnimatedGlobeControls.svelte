@@ -21,18 +21,18 @@
 			{selectedFeature?.properties.name ?? ''}
 		</span>
 	{/if}
-	<ButtonGroup variant="fill-light" color="primary" size="sm" class="outline-1 rounded-full">
+	<ButtonGroup variant="fill-light" color="primary" size="sm" class="outline rounded-full">
 		<Button
 			icon={LucidePlay}
 			on:click={play}
 			disabled={isPlaying}
-			classes={{ icon: 'text-xs', root: 'px-3 py-2' }}
+			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
 		/>
 		<Button
 			icon={LucideSquare}
 			on:click={stop}
 			disabled={!isPlaying}
-			classes={{ icon: 'text-xs', root: 'px-3 py-2' }}
+			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
 		/>
 	</ButtonGroup>
 </div>
