@@ -91,6 +91,7 @@
       'Hull',
       'Labels',
       'Link',
+      'Month',
       'Pie',
       'Points',
       'Spline',
