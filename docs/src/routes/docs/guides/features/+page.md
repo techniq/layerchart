@@ -26,14 +26,12 @@ Example use cases
 
 ## Interactivity
 
-- Pan/zoom transforms, brusing, legends, annotations, etc
-- Imperative access (`transform.zoomTo()`, `<Chart bind:transformContext>`)
+- Robust [Tooltips](/docs/components/Tooltip) with various modes
+- Pan/zoom transforms
+  - Imperative access (`transform.zoomTo()`, `<Chart bind:transformContext>`)
+- Brushing
 
 ## Annotations (line, point, range) with series integration
-
-## Interactions
-
-- `link`
 
 ## Styling
 

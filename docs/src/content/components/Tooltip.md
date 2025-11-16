@@ -9,7 +9,87 @@ related: [TooltipContext, Highlight]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
+Tooltips have 2 parts, the `TooltipContext` (which is integrated into `<Chart tooltip={...})>`
+and used for data selection and state management, `Tooltip` components (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, and `Tooltip.Item`) which are used for visual display.
+
+# Features
+
+- HTML first
+- Can be interactive (clickable / hover)
+- Smart placement (contained in container, window, etc)
+- Multiple instances supported
+- Different modes (bisect, band, voronoi, path/shape, quadtree, hit canvas)
+
+## Modes
+
+There are multiple tooltip modes for different situations, which can be controlled by passing `<Chart tooltip={{ mode: '...' }}>`.
+
+## `bisect-x` | `bisect-y`
+
+Finds the closest data point along a give axis based on your pointer position.
+
+### `band`
+
+Uses transparent `<path>` to enable full-bandwidth hit targets (i.e not just the bar itself). This is especially useful for very small values (short bars) and consistent scrubbing across the data.
+
+### `voronoi`
+
+Path based, easier to reason about than quadtree. Supports max `radius`
+
+### `quadtree`
+
+In memory and typically faster than `voronoi`. Supports max `radius`
+
+Useful for point-based visualizations such as geographic points and scatter plots
+
+### `manual`
+
+Useful for shape based triggering such as on geo boundaries and radial charts with arc slices (ex. pie chart).
+
+You can call `tooltip.show(e, DATA)` and `tooltip.hide()` recommended within `onpointerenter`, `onpointermove`, and `onpointerleave`
+
+Canvas layers leverage an integrated "hit canvas" which enables the same shape-based triggering as you are accustomed with Svg.
+
+## Location
+
+Tooltips can be positions based on
+
+- Pointer position
+- Data location
+- Fixed
+  Each of these are set on a per-axis bases, allowing:
+- Tooltip following pointer on both axis (i.e. stays next to pointer)
+- Tooltip "snaps" to each data point as the pointer moves
+- Tooltip stays within the axis/padding but trackings the pointer left/right (a axis) or up/down (y axis)
+- Fixed tooltip location (ex. top left) regardless of pointer or data
+
+```html
+<Tooltip.Root x={"pointer"|"data"|number} y={"pointer"|"data"|number}>
+```
+
+Offsets are available (`xOffset`, `yOffset`) to not overlap data (or provide more space for course pointer devices such as a finger).
+
+You can render any number of `Tooltip` instances, which can be useful to have one in each axis area
+
+Tooltips can be contained within the chart container, window/viewport, or none. When contained, the tooltip will "swap sides" instead of moving outside the container.
+
+```html
+<Tooltip.Root contained={"container"|"window"|"none"}>
+```
+
+Tooltip locking
+
+Delayed closing
+
+Anchor placement
+
+Externally access tooltip data
+
+```html
+<Chart bind:tooltipContext></Chart>
+```
+
+<!-- ## Examples
 
 ### Basic
 
@@ -125,4 +205,4 @@ related: [TooltipContext, Highlight]
 
 > voronoi or quadtree recommended
 
-<Example name="scatter-plot" />
+<Example name="scatter-plot" /> -->
