@@ -15,6 +15,6 @@
 	)}
 	{...restProps}
 >
-	<LucideInfo class="text-primary" />
+	<LucideInfo class="text-primary shrink-0" />
 	{@render children?.()}
 </div>
