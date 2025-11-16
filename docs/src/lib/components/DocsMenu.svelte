@@ -9,6 +9,16 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
+	const guides = [
+		{ name: 'Features', path: 'features' },
+		{ name: 'Layers', path: 'layers' },
+		{ name: 'Primitives', path: 'primitives' },
+		{ name: 'Simplified charts', path: 'simplified-charts' },
+		{ name: 'Scales', path: 'scales' },
+		{ name: 'State', path: 'state' },
+		{ name: 'Styles', path: 'styles' }
+	];
+
 	// const examplesBySection = flatGroup(allExamples, (d) => d.section?.toLowerCase())
 	// 	.filter(([section]) => section !== 'examples')
 	// 	.sort(
@@ -43,6 +53,15 @@
 	<section class="border-l border-surface-content/10">
 		{@render navItem({ label: 'Getting Started', path: '/docs/getting-started' })}
 		{@render navItem({ label: 'Examples', path: '/docs/examples' })}
+		{@render navItem({ label: 'Showcase', path: '/docs/showcase' })}
+		{@render navItem({ label: 'Releases', path: 'https://github.com/techniq/layerchart/releases' })}
+	</section>
+
+	<section>
+		<h2 class="mb-4 text-base font-semibold capitalize">Guides</h2>
+		{#each guides as guide}
+			{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
+		{/each}
 	</section>
 
 	<!-- <section>
@@ -76,6 +95,7 @@
 	<NavItem
 		text={label}
 		currentUrl={page.url}
+		target={path.startsWith('http') ? '_blank' : '_self'}
 		{path}
 		classes={{
 			root: 'relative text-sm text-surface-content/50 pl-6 py-1 my-px rounded-r hover:border-surface-content/20 hover:bg-surface-content/5 -ml-px',

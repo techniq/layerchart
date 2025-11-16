@@ -10,6 +10,7 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
+	import A from '$lib/markdown/components/a.svelte';
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -43,7 +44,6 @@
 		{ component: 'BarChart', example: 'radial-weather' },
 		{ component: 'BarChart', example: 'series-diverging' },
 		{ component: 'BarChart', example: 'series-horizontal-diverging' },
-		{ component: 'BarChart', example: 'series-horizontal-diverging' },
 		{ component: 'BarChart', example: 'stack-series' },
 		{ component: 'BarChart', example: 'series' },
 		{ component: 'BarChart', example: 'series-horizontal' },
@@ -68,7 +68,6 @@
 		{ component: 'ScatterChart', example: 'series' },
 		// Common
 		{ component: 'Axis', example: 'axis-label-placement-top-bottom' },
-		{ component: 'Axis', example: 'axis-label-placement-left-right' },
 		{ component: 'Rule', example: 'candlestick-with-brushing' },
 		// Primitives
 		{ component: 'Arc', example: 'color-wheel' },
@@ -222,7 +221,7 @@
 
 <div class="relative h-140 perspective-[1000px] overflow-clip">
 	<h1
-		class="text-6xl lg:text-8xl text-center mt-4 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
+		class="text-6xl lg:text-8xl text-center mt-8 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
 	>
 		LayerChart
 	</h1>
@@ -245,6 +244,27 @@
 		<ExampleLink {component} {example} hideLabel aspect="square" />
 	{/each}
 </div>
+
+<footer class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm">
+	<div>
+		Made by <a href="https://github.com/techniq" target="_blank" class="text-surface-content">
+			Sean Lynch
+		</a>
+		and
+		<a
+			href="https://github.com/techniq/layerchart/graphs/contributors"
+			target="_blank"
+			class="text-surface-content"
+		>
+			contributors
+		</a>
+	</div>
+
+	<div class="flex gap-5">
+		<a href="https://github.com/techniq/layerchart" target="_blank"> Github </a>
+		<a href="https://github.com/techniq/layerchart/releases" target="_blank"> Releases </a>
+	</div>
+</footer>
 
 <style>
 	.grid-bg {
