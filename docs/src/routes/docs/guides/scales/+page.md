@@ -1,21 +1,12 @@
 # Scales
 
-> TODO
-
-LayerChart uses D3 for scales, projections, and more.
+> WIP
 
 ## What is a scale
 
-The short/simple answer is `domain` and `range` are used together to map from data values (`domain`) to pixel values (`range`). `yDomain` is specific to the y-axis and is used with `yRange` to determine the pixel value for a given data value
+At its essenece, a scale is a function that maps data values (`domain`) to pixel values (`range`) on a per-dimension basis (x, y, color, etc).
 
-This is ultimately using `d3-scale` under the hood which provides many different scales (i.e. "mappers") including `scaleLinear`, `scaleTime`, `scaleBand`, and others.
-
-- [Introducing d3-scale](https://medium.com/@mbostock/introducing-d3-scale-61980c51545f 'https://medium.com/@mbostock/introducing-d3-scale-61980c51545f')
-- [D3 in Depth: D3 Scale functions](https://www.d3indepth.com/scales/)
-- [https://scottmurray.org/tutorials/d3/scales](https://scottmurray.org/tutorials/d3/scales 'https://scottmurray.org/tutorials/d3/scales')
-- [https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/](https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/ 'https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/')
-- [d3-scale documentation](https://d3js.org/d3-scale)
-- https://observablehq.com/@d3/continuous-scales?collection=@d3/d3-scale
+LayerChart uses [d3-scale](https://d3js.org/d3-scale) under the hood which provides many different scales (i.e. "mappers") including `scaleLinear`, `scaleTime`, `scaleBand`, and others.
 
 ![d3 scale image](https://jckr.github.io/blog/wp-content/uploads/2011/08/d3scale1.png)
 
@@ -23,6 +14,12 @@ this example basically says data/domain values are between `20` and `80` and ran
 
 ```js
 const xScale = scaleLinear().domain([20, 80]).range([0, 120]);
+```
+
+or shorthand
+
+```js
+const xScale = scaleLinear([20, 80], [0, 120]);
 ```
 
 and would produce the following:
@@ -33,12 +30,12 @@ and would produce the following:
 
 In LayerChart, range and domain are determined / defaulted for you
 
-- `xDomain` => all x values in data,
-- `xRange` => width of chart,
-- `yDomain` => all y values in data,
-- `yRange` => height of chart
+- `xDomain` => all `x` values in data (based on value accessor),
+- `xRange` => `width` of chart (minus left/right padding),
+- `yDomain` => all `y` values in data (based on value accessor),
+- `yRange` => `height` of chart (minus top/bottom padding)
 
-for most scales, like scaleLinear, you specify the extents (min/max), which is why it is a 2 item array (edited)
+for most scales, like scaleLinear, you specify the extents (min/max), which is why it is a 2 item array
 
 LayerChart will calcualte these for you, or you can pass an explicit value for one of both. If the other value is `null`, it will be calculated based on the data/chart dimensions
 
@@ -53,3 +50,12 @@ this guarantees you always show `0` on your a-axis
 ## Ticks
 
 https://observablehq.com/@d3/scale-ticks?collection=@d3/d3-scale
+
+## Resources
+
+- [Introducing d3-scale](https://medium.com/@mbostock/introducing-d3-scale-61980c51545f 'https://medium.com/@mbostock/introducing-d3-scale-61980c51545f')
+- [D3 in Depth: D3 Scale functions](https://www.d3indepth.com/scales/)
+- [https://scottmurray.org/tutorials/d3/scales](https://scottmurray.org/tutorials/d3/scales 'https://scottmurray.org/tutorials/d3/scales')
+- [https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/](https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/ 'https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/')
+- [d3-scale documentation](https://d3js.org/d3-scale)
+- https://observablehq.com/@d3/continuous-scales?collection=@d3/d3-scale
