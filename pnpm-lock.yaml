@@ -31,19 +31,19 @@ importers:
         version: 1.11.0
     devDependencies:
       '@content-collections/core':
-        specifier: ^0.12.0
-        version: 0.12.0(typescript@5.9.3)
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.9.3)
       '@content-collections/markdown':
         specifier: ^0.1.4
-        version: 0.1.4(@content-collections/core@0.12.0(typescript@5.9.3))
+        version: 0.1.4(@content-collections/core@0.11.1(typescript@5.9.3))
       '@content-collections/vite':
         specifier: ^0.2.7
-        version: 0.2.7(@content-collections/core@0.12.0(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
+        version: 0.2.7(@content-collections/core@0.11.1(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
       '@eslint/compat':
-        specifier: ^2.0.0
-        version: 2.0.0(eslint@9.39.1(jiti@2.6.1))
+        specifier: ^1.4.1
+        version: 1.4.1(eslint@9.39.1(jiti@2.6.1))
       '@eslint/js':
-        specifier: ^9.39.1
+        specifier: ^9.38.0
         version: 9.39.1
       '@iconify-json/lucide':
         specifier: ^1.2.73
@@ -971,8 +971,8 @@ packages:
   '@cloudflare/workers-types@4.20251011.0':
     resolution: {integrity: sha512-gQpih+pbq3sP4uXltUeCSbPgZxTNp2gQd8639SaIbQMwgA6oJNHLhIART1fWy6DQACngiRzDVULA2x0ohmkGTQ==}
 
-  '@content-collections/core@0.12.0':
-    resolution: {integrity: sha512-fAweH9JtME6edGzSDavHrDTxyt2jLzikw+I75yKOd/QBmxuAQrK/cFRqxmDznbdm6m3AZnpDPvh63IQ4jpvYvw==}
+  '@content-collections/core@0.11.1':
+    resolution: {integrity: sha512-4ZbjxOjaDAxnj7mIij1q1vxZgOJQkA20ThoNZ0CsnmhJmUp+IDqIRLUyDyZ+4ZAk+zQy6bKeOzWzyLg32vMgRQ==}
     peerDependencies:
       typescript: ^5.0.2
 
@@ -1478,9 +1478,9 @@ packages:
     resolution: {integrity: sha512-EriSTlt5OC9/7SXkRSCAhfSxxoSUgBm33OH+IkwbdpgoqsSsUg7y3uh+IICI/Qg4BBWr3U2i39RpmycbxMq4ew==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
-  '@eslint/compat@2.0.0':
-    resolution: {integrity: sha512-T9AfE1G1uv4wwq94ozgTGio5EUQBqAVe1X9qsQtSNVEYW6j3hvtZVm8Smr4qL1qDPFg+lOB2cL5RxTRMzq4CTA==}
-    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+  '@eslint/compat@1.4.1':
+    resolution: {integrity: sha512-cfO82V9zxxGBxcQDr1lfaYB7wykTa0b00mGa36FrJl7iTFd0Z2cHfEYuxcBRP/iNijCsWsEkA+jzT8hGYmv33w==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.40 || 9
     peerDependenciesMeta:
@@ -1498,10 +1498,6 @@ packages:
   '@eslint/core@0.17.0':
     resolution: {integrity: sha512-yL/sLrpmtDaFEiUj1osRP4TI2MDz1AddJL+jZ7KSqvBuliN4xqYY54IfdN8qD8Toa6g1iloph1fxQNkjOxrrpQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@eslint/core@1.0.0':
-    resolution: {integrity: sha512-PRfWP+8FOldvbApr6xL7mNCw4cJcSTq4GA7tYbgq15mRb0kWKO/wEB2jr+uwjFH3sZvEZneZyCUGTxsv4Sahyw==}
-    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@eslint/eslintrc@3.3.1':
     resolution: {integrity: sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ==}
@@ -5227,7 +5223,7 @@ snapshots:
 
   '@cloudflare/workers-types@4.20251011.0': {}
 
-  '@content-collections/core@0.12.0(typescript@5.9.3)':
+  '@content-collections/core@0.11.1(typescript@5.9.3)':
     dependencies:
       '@standard-schema/spec': 1.0.0
       camelcase: 8.0.0
@@ -5241,14 +5237,15 @@ snapshots:
       tinyglobby: 0.2.15
       typescript: 5.9.3
       yaml: 2.8.1
+      zod: 3.25.64
 
-  '@content-collections/integrations@0.3.0(@content-collections/core@0.12.0(typescript@5.9.3))':
+  '@content-collections/integrations@0.3.0(@content-collections/core@0.11.1(typescript@5.9.3))':
     dependencies:
-      '@content-collections/core': 0.12.0(typescript@5.9.3)
+      '@content-collections/core': 0.11.1(typescript@5.9.3)
 
-  '@content-collections/markdown@0.1.4(@content-collections/core@0.12.0(typescript@5.9.3))':
+  '@content-collections/markdown@0.1.4(@content-collections/core@0.11.1(typescript@5.9.3))':
     dependencies:
-      '@content-collections/core': 0.12.0(typescript@5.9.3)
+      '@content-collections/core': 0.11.1(typescript@5.9.3)
       rehype-raw: 7.0.0
       rehype-stringify: 10.0.1
       remark-parse: 11.0.0
@@ -5257,10 +5254,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@content-collections/vite@0.2.7(@content-collections/core@0.12.0(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))':
+  '@content-collections/vite@0.2.7(@content-collections/core@0.11.1(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))':
     dependencies:
-      '@content-collections/core': 0.12.0(typescript@5.9.3)
-      '@content-collections/integrations': 0.3.0(@content-collections/core@0.12.0(typescript@5.9.3))
+      '@content-collections/core': 0.11.1(typescript@5.9.3)
+      '@content-collections/integrations': 0.3.0(@content-collections/core@0.11.1(typescript@5.9.3))
       vite: 7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)
 
   '@cspotcode/source-map-support@0.8.1':
@@ -5516,9 +5513,9 @@ snapshots:
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/compat@2.0.0(eslint@9.39.1(jiti@2.6.1))':
+  '@eslint/compat@1.4.1(eslint@9.39.1(jiti@2.6.1))':
     dependencies:
-      '@eslint/core': 1.0.0
+      '@eslint/core': 0.17.0
     optionalDependencies:
       eslint: 9.39.1(jiti@2.6.1)
 
@@ -5535,10 +5532,6 @@ snapshots:
       '@eslint/core': 0.17.0
 
   '@eslint/core@0.17.0':
-    dependencies:
-      '@types/json-schema': 7.0.15
-
-  '@eslint/core@1.0.0':
     dependencies:
       '@types/json-schema': 7.0.15
 
