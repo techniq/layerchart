@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-14T15:00:18.519Z",
+  "generatedAt": "2025-11-17T15:41:51.263Z",
   "totalComponents": 57,
   "totalExamples": 694,
   "components": [
@@ -1939,7 +1939,7 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "07247e75246e3b51a76618c32e3c218b"
+          "checksum": "34f5484c482c403d9f68dd6b5c5b745d"
         },
         {
           "name": "bubble-map",
@@ -2099,7 +2099,7 @@
         {
           "name": "basic",
           "path": "/example/Graticule/basic",
-          "checksum": "f0f8bf9199ac7a01056fead1dabd9eff"
+          "checksum": "943f68332ffc1a920255d271d3903b36"
         }
       ]
     },
@@ -3624,7 +3624,7 @@
         {
           "name": "duration",
           "path": "/example/Tooltip/duration",
-          "checksum": "c47d7d579db71f9b4cae60fecf480c42"
+          "checksum": "6da527d106d1e3077c93778cf9724956"
         },
         {
           "name": "externally-access-tooltip-data",
@@ -3644,7 +3644,7 @@
         {
           "name": "multiple-overlapping-durations",
           "path": "/example/Tooltip/multiple-overlapping-durations",
-          "checksum": "80bb0794ba6ba45e58d8a550b386fcac"
+          "checksum": "547c2b73307fce85233e81b71c722952"
         },
         {
           "name": "multiple-tooltips-with-fixed-single-axis",
@@ -3659,22 +3659,22 @@
         {
           "name": "scatter-plot",
           "path": "/example/Tooltip/scatter-plot",
-          "checksum": "39d9a86e5bb2ac54448758a39ba86519"
+          "checksum": "c2da907c90ca0409035044ad0cdba784"
         },
         {
           "name": "simple-bars",
           "path": "/example/Tooltip/simple-bars",
-          "checksum": "56099b495b2dd87b9517d590438624d6"
+          "checksum": "3f725f8e8091d20e6e2adb860413110c"
         },
         {
           "name": "single-date-time",
           "path": "/example/Tooltip/single-date-time",
-          "checksum": "0bd0db6decdfa0fc5eaa7a2f8474e0fa"
+          "checksum": "5577c38c423a7c818bf80c361db2fac6"
         },
         {
           "name": "stacked-area",
           "path": "/example/Tooltip/stacked-area",
-          "checksum": "5c61efce95183d2381b568ca2e0c0ed2"
+          "checksum": "e858c7589cf4e35df5c68960ab4047de"
         }
       ]
     },
@@ -3754,7 +3754,7 @@
         {
           "name": "radius",
           "path": "/example/Voronoi/radius",
-          "checksum": "0d7254d1a4029ed1095478b4e44b2d44"
+          "checksum": "57439e9cf4f5d7dda5af713df50b9603"
         }
       ]
     }
