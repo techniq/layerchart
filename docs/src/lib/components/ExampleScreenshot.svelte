@@ -17,6 +17,7 @@
 <div
 	class={cls(
 		className,
+		'h-full',
 		aspect === 'video' && 'aspect-video',
 		aspect === 'square' && 'aspect-square',
 		aspect === 'screenshot' && 'aspect-8/3' // roughly 800x300 for many cartesian
