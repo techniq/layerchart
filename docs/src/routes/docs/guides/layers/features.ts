@@ -88,6 +88,21 @@ export const graphics = [
 		webgl: {
 			support: true
 		}
+	},
+	{
+		feature: 'image',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: true
+		},
+		webgl: {
+			support: true
+		}
 	}
 ];
 
@@ -196,6 +211,21 @@ export const styles = [
 		canvas: {
 			support: false,
 			note: 'stroke: along (1/2 in/out)'
+		},
+		webgl: {
+			support: false
+		}
+	},
+	{
+		feature: 'Transitions (`in:`, `out:`)',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: false
 		},
 		webgl: {
 			support: false
@@ -351,21 +381,6 @@ export const other = [
 		},
 		webgl: {
 			support: true
-		}
-	},
-	{
-		feature: 'Transitions (`in:`, `out:`)',
-		html: {
-			support: true
-		},
-		svg: {
-			support: true
-		},
-		canvas: {
-			support: false
-		},
-		webgl: {
-			support: false
 		}
 	}
 ];

@@ -53,7 +53,7 @@
 							{getCellContent(column, rowData, rowIndex)}
 						{:else}
 							<Tooltip
-								title={[value.note, value.link].filter(Boolean).join('\n') ?? ''}
+								title={[value.note?.trim(), value.link?.trim()].filter(Boolean).join('\n') ?? ''}
 								placement="top"
 								offset={2}
 								classes={{ title: 'whitespace-pre-line' }}

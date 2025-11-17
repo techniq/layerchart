@@ -16,7 +16,7 @@ Each layer type provides both unique and overlapping feature sets and LayerChart
 
 ### Svg
 
-The most common and well rounded layer type.
+`Svg` is the the most common and well rounded layer type.
 
 While it can struggle with large data sets and complex geojson due to the overhead of DOM elements, Svg layers should typically be the first considered due to it's robust graphical capabilities, interactivity, and styling support.
 
@@ -29,9 +29,9 @@ The layer is also easier to inspect than Canavs or WebGL through its use of DOM 
 
 ### Html
 
-Provides some unique capabilities such as layout (flexbox, grid), native word wrapping / truncation and some styling use cases.
-
 `Html` has limited graphical capabilities. While it can render basic shapes such as line, rect, circles, ellipses, and text, it is unable to render complex paths and shapes.
+
+Provides some unique capabilities such as layout (flexbox, grid), native word wrapping / truncation and some styling use cases.
 
 Like Svg, Html layers are DOM-driven and thus provide browser-native elements and events.
 
@@ -40,7 +40,7 @@ Like Svg, Html layers are DOM-driven and thus provide browser-native elements an
 
 ### Canvas
 
-Provides better performance than DOM-driven Svg and Html elements with many of the same graphical capabilities as Svg.
+`Canvas` provides better performance than DOM-driven `Svg` and `Html` elements and has many of the same graphical capabilities as `Svg`.
 
 While LayerChart enables pointer-level events within Canvas layers to enable hover, click, etc via an invisible hit canvas, it can require additional setup to have similar features as Svg (ex. hover styling).
 
