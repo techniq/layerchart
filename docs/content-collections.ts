@@ -38,12 +38,16 @@ const components = defineCollection({
 			// );
 		}
 
+		// Extract the first Example component's name from the markdown content
+		const usageExample = doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1];
+
 		return {
 			...doc,
 			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
 			slug: path,
 			source,
-			sourceUrl
+			sourceUrl,
+			usageExample
 			// html: await compileMarkdown(context, doc)
 		};
 	}
