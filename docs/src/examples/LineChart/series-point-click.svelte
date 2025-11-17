@@ -9,6 +9,7 @@
 		value: 'integer',
 		keys: ['apples', 'bananas', 'oranges']
 	});
+
 	export { data };
 </script>
 
@@ -30,5 +31,6 @@
 		console.log(e, detail);
 		alert(JSON.stringify(detail));
 	}}
+	padding={20}
 	height={300}
 />

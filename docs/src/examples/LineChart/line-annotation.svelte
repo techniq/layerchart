@@ -3,6 +3,7 @@
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
+
 	export { data };
 </script>
 
@@ -10,7 +11,6 @@
 	{data}
 	x="date"
 	y="value"
-	height={300}
 	annotations={[
 		{
 			type: 'line',
@@ -24,4 +24,6 @@
 			}
 		}
 	]}
+	padding={20}
+	height={300}
 />

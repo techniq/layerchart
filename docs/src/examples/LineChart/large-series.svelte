@@ -4,6 +4,7 @@
 	import { getDailyTemperatures } from '$lib/data.remote';
 
 	const data = await getDailyTemperatures();
+
 	export { data };
 </script>
 
@@ -30,5 +31,6 @@
 			props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 }
 		};
 	})}
+	padding={{ left: 40, top: 20, right: 20, bottom: 20 }}
 	height={500}
 />

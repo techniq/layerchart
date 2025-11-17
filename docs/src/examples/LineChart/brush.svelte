@@ -3,6 +3,7 @@
 	import { LineChart } from 'layerchart';
 
 	const data = await getAppleStock();
+
 	export { data };
 </script>
 
@@ -15,5 +16,6 @@
 		spline: { motion: { type: 'tween', duration: 200 } },
 		xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true }
 	}}
+	padding={25}
 	height={300}
 />

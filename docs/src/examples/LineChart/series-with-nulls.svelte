@@ -18,6 +18,7 @@
 		});
 		return newItem;
 	});
+
 	export { data };
 </script>
 
@@ -29,6 +30,7 @@
 		{ key: 'bananas', color: 'var(--color-success)' },
 		{ key: 'oranges', color: 'var(--color-warning)' }
 	]}
+	padding={20}
 	height={300}
 >
 	{#snippet belowMarks({ visibleSeries, highlightKey })}

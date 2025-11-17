@@ -9,6 +9,7 @@
 		{ name: 'cutter', value: 8 },
 		{ name: 'curve', value: 5 }
 	];
+
 	export { data };
 </script>
 
@@ -17,7 +18,6 @@
 	x="name"
 	y="value"
 	yPadding={[0, 8]}
-	padding={{ top: 8 }}
 	radial
 	points
 	props={{
@@ -45,5 +45,6 @@
 			}
 		}
 	}}
+	padding={20}
 	height={300}
 />

@@ -16,6 +16,7 @@
 
 	const flatData = pivotLonger(data, keys, 'fruit', 'value');
 	const dataByFruit = group(flatData, (d) => d.fruit);
+
 	export { dataByFruit as data };
 </script>
 
@@ -31,6 +32,7 @@
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
 	brush
 	legend
+	padding={{ left: 20, top: 20, right: 20, bottom: 50 }}
 	height={300}
 >
 	{#snippet marks({ context, visibleSeries, highlightKey })}

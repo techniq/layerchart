@@ -9,6 +9,7 @@
 		value: 'integer',
 		keys: ['apples', 'bananas', 'oranges']
 	});
+
 	export { data };
 </script>
 

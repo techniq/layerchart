@@ -8,7 +8,8 @@
 			visits: d.value
 		};
 	});
+
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="visits" height={300} />
+<LineChart {data} x="date" y="visits" padding={20} height={300} />

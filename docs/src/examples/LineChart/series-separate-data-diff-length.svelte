@@ -14,6 +14,7 @@
 
 	const flatData = pivotLonger(data, keys, 'fruit', 'value');
 	const dataByFruit = group(flatData, (d) => d.fruit);
+
 	export { dataByFruit as data };
 </script>
 
@@ -37,5 +38,6 @@
 			color: 'var(--color-warning)'
 		}
 	]}
+	padding={20}
 	height={300}
 />

@@ -9,6 +9,7 @@
 		value: 'integer',
 		keys: ['apples', 'bananas', 'oranges']
 	});
+
 	export { data };
 </script>
 
@@ -26,5 +27,6 @@
 			color: 'var(--color-warning)'
 		}
 	]}
+	padding={20}
 	height={300}
 />

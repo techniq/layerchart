@@ -34,6 +34,7 @@
 			actual: 21000
 		}
 	];
+
 	export { data };
 </script>
 
@@ -77,5 +78,6 @@
 			}
 		}
 	}}
+	padding={20}
 	height={300}
 />

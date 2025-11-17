@@ -8,7 +8,8 @@
 			value: Math.random() < 0.2 ? null : d.value
 		};
 	});
+
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" points height={300} />
+<LineChart {data} x="date" y="value" points padding={20} height={300} />
