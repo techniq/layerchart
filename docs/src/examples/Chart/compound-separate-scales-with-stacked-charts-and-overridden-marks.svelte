@@ -3,10 +3,11 @@
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
+
 	export { data };
 </script>
 
-<div class="grid grid-stack p-4 border rounded-sm">
+<div class="grid grid-stack p-4">
 	<!-- First chart (bar), with different domain scale for volume -->
 	<BarChart
 		{data}

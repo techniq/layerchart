@@ -5,10 +5,11 @@
 	import { getHydro } from '$lib/data.remote.js';
 
 	const data = await getHydro();
+
 	export { data };
 </script>
 
-<div class="grid grid-stack p-4 border rounded-sm">
+<div class="grid grid-stack p-2">
 	<!-- First chart with inverted yRange (top down) -->
 	<BarChart
 		{data}
