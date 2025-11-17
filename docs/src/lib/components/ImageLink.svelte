@@ -25,7 +25,7 @@
 	)}
 >
 	{#if image}
-		<div class="overflow-hidden rounded-lg outline outline-surface-content/10">
+		<div class="contents overflow-hidden rounded-lg outline outline-surface-content/10">
 			{@render image()}
 		</div>
 	{/if}
