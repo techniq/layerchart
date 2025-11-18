@@ -117,7 +117,7 @@ export const styles = [
 		},
 		canvas: {
 			support: false,
-			note: 'LayerChart uses a HitCanvas to provide pointer events, but no `hover:` styling out of the box'
+			note: 'LayerChart provides pointer events via a "hit canvas", but no `hover:` styling is provided out of the box'
 		},
 		webgl: {
 			support: false
