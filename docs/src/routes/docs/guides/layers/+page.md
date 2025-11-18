@@ -6,11 +6,11 @@
 
 # Layers
 
-LayerChart provides first-class support for different types of layers including [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) via [Layer](/docs/components/Layer) and [Primitives](/docs/guides/primitives) components.
+LayerChart provides first-class support for different types of layers including [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) via [Layer](/docs/components/Layer) and [Primitive](/docs/guides/primitives) components.
 
-Each layer type provides both unique and overlapping feature sets and LayerChart supports mixing types within the same chart to leverage a type's strengths or workaround a weakness.
+Each layer type provides unique and overlapping feature sets. LayerChart supports using layers of different types within the same chart to leverage a type's strengths or workaround a weakness.
 
-[Layer](/docs/components/Layer) is a convenient wrapper component over [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) components to simplify imports (ex. `<Layer type="svg">`) and also integrates with context `settings` for default type.
+[Layer](/docs/components/Layer) is a convenient wrapper component over [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) components to simplify imports (ex. `<Layer type="svg">`) as awell as integrates with context `settings` for default type.
 
 ## Types
 
@@ -18,24 +18,24 @@ Each layer type provides both unique and overlapping feature sets and LayerChart
 
 `Svg` is the the most common and well rounded layer type.
 
-While it can struggle with large data sets and complex geojson due to the overhead of DOM elements, Svg layers should typically be the first considered due to it's robust graphical capabilities, interactivity, and styling support.
+While it can struggle with large data sets and complex paths due to the overhead of DOM elements, `Svg` layers are typically the first to consider due to it's robust graphical capabilities, interactivity, and styling support.
 
-`Svg` also provides some unique features such as text along a path and point markers (with orientation) along a path.
+`Svg` also provides some unique features including writing text along a path and adding point markers along a path (with orientation).
 
-The layer is also easier to inspect than Canavs or WebGL through its use of DOM elements.
+This layer is also easier to inspect compared to Canavs or WebGL through its use of DOM elements, although this also comes at a performance cost.
 
 - Stengths: graphical capabilities, interactivity, introspection, text on path/arc, path markers
 - Weaknesses: performance, multiline text, some styling
 
 ### Html
 
-`Html` has limited graphical capabilities. While it can render basic shapes such as line, rect, circles, ellipses, and text, it is unable to render complex paths and shapes.
+While `Html` has limited graphical capabilities, it can still be used to render many basic shapes such as lines, rects, circles, ellipses, and text, although not paths / arcs.
 
-Provides some unique capabilities such as layout (flexbox, grid), native word wrapping / truncation and some styling use cases.
+`Html` provides some unique capabilities such as layout (flexbox, grid), native word wrapping / truncation and some styling use cases.
 
-Like Svg, Html layers are DOM-driven and thus provide browser-native elements and events.
+Like `Svg`, `Html` layers are DOM-driven and thus provide browser-native elements and events, and are easier to inspect.
 
-- Stengths: text (multiline, truncating) and styling, interactivity, introspection
+- Stengths: text (multiline, truncating), styling, layout, interactivity, introspection
 - Weaknesses: limited graphical capabilities, performance
 
 ### Canvas
@@ -44,7 +44,9 @@ Like Svg, Html layers are DOM-driven and thus provide browser-native elements an
 
 While LayerChart enables pointer-level events within Canvas layers to enable hover, click, etc via an invisible hit canvas, it can require additional setup to have similar features as Svg (ex. hover styling).
 
-- Stengths: performance, graphical capabilities,
+LayerChart also support CSS classes and styling for the `Canvas` layer.
+
+- Stengths: performance, graphical capabilities
 - Weaknesses: styling, interactivity, introspection, text
 
 ### WebGL
