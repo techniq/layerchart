@@ -123,7 +123,7 @@
 </div>
 
 <div
-	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200 z-1"
+	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200/50 backdrop-blur z-1"
 >
 	<TextField placeholder="Filter" bind:value={filterQuery} clearable>
 		{#snippet prepend()}

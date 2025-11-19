@@ -50,7 +50,7 @@
 </script>
 
 <nav class={cls('grid gap-6', className)}>
-	<section class="border-l border-surface-content/10">
+	<section class="border-l border-primary/20">
 		{@render navItem({ label: 'Getting Started', path: '/docs/getting-started' })}
 		{@render navItem({ label: 'Examples', path: '/docs/examples' })}
 		{@render navItem({ label: 'Showcase', path: '/docs/showcase' })}
@@ -59,7 +59,7 @@
 
 	<section>
 		<h2 class="mb-4 text-base font-semibold capitalize">Guides</h2>
-		<div class="border-l border-surface-content/10">
+		<div class="border-l border-primary/20">
 			{#each guides as guide}
 				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
 			{/each}
@@ -83,7 +83,7 @@
 		{#each componentsBySection as [section, components]}
 			<div class="mb-6">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{section}</h3>
-				<div class="border-l border-surface-content/10">
+				<div class="border-l border-primary/20">
 					{#each components.sort(sortFunc('name')) as component}
 						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 					{/each}
@@ -100,9 +100,9 @@
 		target={path.startsWith('http') ? '_blank' : '_self'}
 		{path}
 		classes={{
-			root: 'relative text-sm text-surface-content/50 pl-6 py-1 my-px rounded-r hover:border-surface-content/20 hover:bg-surface-content/5 -ml-px',
+			root: 'relative text-sm text-surface-content/50 pl-6 py-1 my-px rounded-r hover:border-primary/20 hover:bg-primary/5 -ml-px',
 			active: cls(
-				'text-surface-content! border-surface-content! hover:bg-surface-content/10! font-medium bg-surface-content/10 border-l'
+				'text-primary-400! border-primary! hover:bg-primary/10! font-medium bg-primary/10 border-l'
 			)
 		}}
 		on:click={() => onItemClick?.()}

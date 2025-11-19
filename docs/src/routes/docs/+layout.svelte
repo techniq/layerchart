@@ -120,7 +120,9 @@
 	{/if}
 </svelte:head>
 
-<header class="bg-surface-300 sticky top-0 z-10 flex h-16 items-center border-b px-4 py-2">
+<header
+	class="bg-surface-300/75 backdrop-blur sticky top-0 z-10 flex h-16 items-center border-b border-primary/10 px-4 py-2"
+>
 	<Button icon={LucidePanelLeftOpen} onclick={() => (showDrawer = true)} class="mr-2 lg:hidden">
 		<!-- {#if pageContent.breadcrumbs}
 		<Breadcrumb items={pageContent.breadcrumbs}>
@@ -243,9 +245,14 @@
 </header>
 
 <div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
+	<div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
+	<div
+		class="absolute top-0 w-full h-256 background-grid pointer-events-none mask-b-to-50% mask-x-from-50%"
+	></div>
+
 	<aside
 		class={cls(
-			'bg-surface-300 sticky top-16 hidden max-h-[calc(100dvh-64px)] border-r transition-[width]',
+			'bg-surface-300/30 sticky top-16 hidden max-h-[calc(100dvh-64px)] border-r border-primary/10 transition-[width]',
 			'lg:grid lg:grid-rows-[1fr_56px]',
 			showSidebar ? 'w-62' : 'w-0'
 		)}
@@ -254,7 +261,7 @@
 			<DocsMenu class="px-3 py-4" />
 		</div>
 
-		<div class="relative border-t">
+		<div class="relative border-t border-primary/10">
 			<Button
 				onclick={() => (showSidebar = !showSidebar)}
 				iconOnly
@@ -393,3 +400,27 @@
 		}
 	}}
 />
+
+<style>
+	:global(html) {
+		background: var(--color-surface-200);
+	}
+
+	.background-gradient {
+		background: radial-gradient(
+			49.63% 57.02% at 58.99% -7.2%,
+			color-mix(in oklab, var(--color-primary) 5%, transparent) 39.4%,
+			transparent 100%
+		);
+	}
+
+	.background-grid {
+		--size: 50px;
+		--_g: #0000 90deg, color-mix(in srgb, var(--color-primary) 3%, transparent) 0;
+
+		background:
+			conic-gradient(from 90deg at 2px 2px, var(--_g)) 0 0 / var(--size) var(--size),
+			conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0 / calc(var(--size) / 5)
+				calc(var(--size) / 5);
+	}
+</style>
