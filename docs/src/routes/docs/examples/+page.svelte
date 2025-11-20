@@ -14,7 +14,7 @@
 
 	let { data } = $props();
 
-	let columnCount = $state(3);
+	let columnCount = $state(typeof window !== 'undefined' && window.innerWidth > 800 ? 3 : 2);
 	let filterQuery = $state<string | null>(null);
 	let selectedSection = $state<string | null>(null);
 
@@ -147,18 +147,18 @@
 
 	<div class="flex gap-2">
 		<Button
-			icon={LucideZoomOut}
-			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-			variant="fill-outline"
-			class="size-9 border-surface-content/30 pt-1"
-			disabled={columnCount >= 5}
-		/>
-		<Button
 			icon={LucideZoomIn}
 			on:click={() => (columnCount = Math.max(1, columnCount - 1))}
 			variant="fill-outline"
 			class="size-9 border-surface-content/30 pt-1"
 			disabled={columnCount <= 1}
+		/>
+		<Button
+			icon={LucideZoomOut}
+			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+			variant="fill-outline"
+			class="size-9 border-surface-content/30 pt-1"
+			disabled={columnCount >= 5}
 		/>
 	</div>
 </div>

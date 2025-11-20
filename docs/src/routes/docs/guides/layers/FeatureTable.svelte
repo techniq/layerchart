@@ -16,7 +16,10 @@
 		{
 			name: 'feature',
 			header: 'Feature',
-			classes: { td: 'w-100' }
+			classes: { th: 'bg-surface-200', td: 'w-100 bg-surface-200' },
+			sticky: {
+				left: true
+			}
 		},
 		{
 			name: 'svg',
@@ -36,6 +39,7 @@
 		}
 	]}
 	classes={{
+		container: 'overflow-x-auto',
 		table: 'text-sm mt-1',
 		th: 'border-b px-3 py-2 text-surface-content/50',
 		tr: 'border-b last:border-b-0',

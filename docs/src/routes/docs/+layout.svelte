@@ -294,7 +294,7 @@
 		<DocsMenu onItemClick={() => (showDrawer = false)} />
 	</Drawer>
 
-	<main class="flex-1 overflow-x-clip px-6 py-4 lg:px-20 lg:py-8 isolate">
+	<main class="flex-1 overflow-auto px-6 py-4 lg:px-20 lg:py-8 isolate">
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
 				{#snippet divider()}
