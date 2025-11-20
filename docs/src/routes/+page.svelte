@@ -10,7 +10,6 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
-	import A from '$lib/markdown/components/a.svelte';
 
 	const links = [
 		{ label: 'Home', href: '/' },

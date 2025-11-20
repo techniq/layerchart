@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ComponentProps } from 'svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import LucideBlocks from '~icons/lucide/blocks';
@@ -11,20 +12,21 @@
 		example,
 		variant = 'default',
 		aspect = undefined,
-		supportedLayers
+		supportedLayers,
+		...restProps
 	}: {
 		component: string;
 		example: string;
 		showComponent?: boolean;
-		variant?: 'default' | 'hover-label';
-		aspect?: 'video' | 'square' | 'screenshot';
+		variant?: ComponentProps<typeof ImageLink>['variant'];
+		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
 		supportedLayers?: string[];
-	} = $props();
+	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 </script>
 
-<ImageLink href="/docs/components/{component}/{example}" {variant}>
+<ImageLink href="/docs/components/{component}/{example}" {variant} {...restProps}>
 	{#snippet image()}
-		<ExampleScreenshot {component} {example} {aspect} />
+		<ExampleScreenshot {component} {example} {aspect} background />
 	{/snippet}
 
 	{#snippet label()}
