@@ -139,8 +139,8 @@
 			<a
 				{href}
 				class={cls(
-					'text-sm px-3 py-1 rounded-full text-surface-content hover:bg-surface-200',
-					href === '/' && 'bg-surface-200 text-initial'
+					'text-sm px-3 py-1 rounded-full text-surface-content hover:bg-primary/10 ',
+					href === '/' && 'bg-primary-500/10 text-initial'
 				)}
 				target={href.startsWith('http') ? '_blank' : '_self'}
 			>

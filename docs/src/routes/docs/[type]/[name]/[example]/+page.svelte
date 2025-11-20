@@ -6,6 +6,7 @@
 	import H2 from '$lib/markdown/components/h2.svelte';
 
 	import LucideLink from '~icons/lucide/link';
+	import ComponentLink from '$lib/components/ComponentLink.svelte';
 
 	let { data } = $props();
 
@@ -13,6 +14,7 @@
 	let component = page.url.searchParams.get('component') ?? page.params.name!;
 
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
+	// console.log({ exampleInfo, data });
 </script>
 
 <Example name={example} {component} showCode />
@@ -28,5 +30,6 @@
 		>
 			{componentUsage.component}
 		</Button>
+		<!-- <ComponentLink component={componentUsage.component} example="basic" /> -->
 	{/each}
 </div>
