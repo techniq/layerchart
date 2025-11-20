@@ -17,6 +17,12 @@ export const sites = [
 		url: 'https://zipline.ai/'
 	},
 	{
+		name: 'Tenzir',
+		description: 'Open source data pipelines for security teams',
+		url: 'https://tenzir.com/',
+		source: 'https://github.com/tenzir'
+	},
+	{
 		name: 'shadcn-svelte',
 		description: 'shadcn/ui, but for Svelte.',
 		url: 'https://shadcn-svelte.com/',

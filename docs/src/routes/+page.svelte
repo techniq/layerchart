@@ -219,6 +219,8 @@
 	</div>
 </header>
 
+<div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
+
 <div class="relative h-140 perspective-[1000px] overflow-clip">
 	<h1
 		class="text-6xl lg:text-8xl text-center mt-8 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
@@ -235,7 +237,7 @@
 	</div>
 
 	<div
-		class="absolute bottom-0 left-0 right-0 grid-bg h-140 mask-x-from-80% mask-y-from-80% transform-[rotateX(60deg)] -z-1"
+		class="absolute bottom-0 left-0 right-0 background-grid h-140 mask-x-from-80% mask-y-from-80% transform-[rotateX(60deg)] -z-1"
 	></div>
 </div>
 
@@ -267,8 +269,8 @@
 </footer>
 
 <style>
-	.grid-bg {
-		--size: 100px; /* control the size */
+	.background-grid {
+		--size: 100px;
 		--_g: #0000 90deg, color-mix(in srgb, var(--color-surface-content) 5%, transparent) 0;
 
 		background:

@@ -11,8 +11,8 @@
 
 <div class="grid grid-cols-sm gap-3">
   {#each sites as site}
-    <div class="flex flex-col border rounded-lg px-3 py-2">
-      <a href={site.url} target="_blank" class="text-base font-medium">
+    <div class="flex flex-col border border-primary/20 rounded-lg px-3 py-2 backdrop-blur">
+      <a href={site.url} target="_blank" class="text-lg font-medium">
         {site.name}
       </a>
       {#if site.description}

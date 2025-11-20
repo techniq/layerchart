@@ -10,6 +10,7 @@
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
+	import { cls } from '@layerstack/tailwind';
 
 	let { data } = $props();
 
@@ -118,12 +119,21 @@
 
 <div class="sticky top-29 h-0">
 	<div
-		class="relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline"
+		class={cls(
+			// 'relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline',
+			'relative h-16 mask-b-from-50%',
+			// dot background
+			'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+		)}
 	></div>
 </div>
 
 <div
-	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200/50 backdrop-blur z-1"
+	class={cls(
+		'sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 z-1',
+		// dot background
+		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+	)}
 >
 	<TextField placeholder="Filter" bind:value={filterQuery} clearable>
 		{#snippet prepend()}
