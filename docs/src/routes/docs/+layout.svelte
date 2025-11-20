@@ -294,7 +294,8 @@
 		<DocsMenu onItemClick={() => (showDrawer = false)} />
 	</Drawer>
 
-	<main class="flex-1 overflow-auto px-6 py-4 lg:px-20 lg:py-8 isolate">
+	<!-- TODO: adding overflow-auto breaks sticky headers on examples, but needed for table overflow on layers -->
+	<main class="flex-1 _overflow-auto px-6 py-4 lg:px-20 lg:py-8">
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
 				{#snippet divider()}

@@ -3,7 +3,7 @@
 	import type { ComponentProps } from 'svelte';
 
 	import LucideChevronRight from '~icons/lucide/chevron-right';
-	import LucideFileCode from '~icons/lucide/file-code';
+	import LucideFileCode2 from '~icons/lucide/file-code-2';
 	import ExampleScreenshot from './ExampleScreenshot.svelte';
 	import ImageLink from './ImageLink.svelte';
 
@@ -29,7 +29,7 @@
 	{/snippet}
 
 	{#snippet label()}
-		<LucideFileCode
+		<LucideFileCode2
 			class={cls(
 				'shrink-0 transition text-surface-content/50 mr-1',
 				variant === 'default' && 'group-hover:text-primary-content/50'

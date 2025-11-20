@@ -44,11 +44,14 @@
 					: 'transition-colors group-hover:text-primary-content'
 			)}
 		>
-			{@render label()}
+			<span class="grow flex gap-1">
+				{@render label()}
+			</span>
 
 			<LucideArrowRight
 				class={cls(
-					'shrink-0 text-surface-content/50 transition-all transform opacity-0 group-hover:opacity-100 -translate-x-full group-hover:translate-x-0',
+					'text-surface-content/50 transition-all transform opacity-0 group-hover:opacity-100 -translate-x-full group-hover:translate-x-0',
+					'basis-0 group-hover:basis-5',
 					variant === 'default' && 'group-hover:text-primary-content/50'
 				)}
 			/>

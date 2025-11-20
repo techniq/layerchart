@@ -39,14 +39,14 @@
 
 		<span class="mr-2">{component}</span>
 
-		<div class="flex gap-1">
+		<div class="grow flex justify-end gap-1">
 			{#each supportedLayers as layer}
 				<div
 					class={cls(
 						'border border-current rounded-full px-2 text-surface-content font-semibold',
-						layer === 'svg' && 'text-blue-500 bg-blue-500/10',
-						layer === 'canvas' && 'text-orange-500 bg-orange-500/10',
-						layer === 'html' && 'text-green-500 bg-green-500/10'
+						layer === 'svg' && 'text-secondary bg-secondary/10',
+						layer === 'canvas' && 'text-info bg-info/10',
+						layer === 'html' && 'text-success bg-success/10'
 					)}
 				>
 					{layer}
