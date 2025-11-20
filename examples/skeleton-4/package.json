@@ -17,17 +17,17 @@
 		"@skeletonlabs/skeleton": "^4.3.2",
 		"@skeletonlabs/skeleton-svelte": "^4.3.2",
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.48.5",
+		"@sveltejs/kit": "^2.48.7",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@tailwindcss/vite": "^4.1.17",
 		"layerchart": "workspace:*",
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
-		"svelte": "^5.43.12",
+		"svelte": "^5.43.14",
 		"svelte-check": "^4.3.4",
 		"tailwindcss": "^4.1.17",
 		"typescript": "^5.9.3",
-		"vite": "^7.2.2"
+		"vite": "^7.2.4"
 	}
 }
