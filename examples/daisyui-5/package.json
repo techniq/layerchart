@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
-		"@sveltejs/kit": "^2.48.7",
+		"@sveltejs/kit": "^2.49.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@tailwindcss/vite": "^4.1.17",
 		"daisyui": "^5.5.5",
