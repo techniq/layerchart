@@ -2,17 +2,22 @@
 	import { bin } from 'd3-array';
 	import { randomNormal } from 'd3-random';
 	import { BarChart, Tooltip } from 'layerchart';
+	import BarChartControls2 from '$lib/components/controls/BarChartControls2.svelte';
 
-	const random = randomNormal();
-	const randomData = Array.from({ length: 1000 }, () => random());
-	const binByValues = bin();
-	const data = binByValues(randomData);
+	let selectedGenerator = $state('normal');
+	let randomCount = $state(1000);
+	let random = $state(randomNormal());
+	const randomData = $derived(Array.from({ length: randomCount }, () => random()));
+	const binByValues = $derived(bin()); //.domain([0, 1]);
+	const randomBins = $derived(binByValues(randomData));
 
 	export { data };
 </script>
 
+<BarChartControls2 bind:random bind:selectedGenerator bind:randomCount />
+
 <BarChart
-	{data}
+	data={randomBins}
 	x="x0"
 	y="length"
 	bandPadding={0.2}

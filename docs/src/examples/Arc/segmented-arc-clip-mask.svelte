@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Arc, Chart, ClipPath, Layer, Text } from 'layerchart';
 	import { SpringValue } from 'svelte-ux';
-	import ArcControls from '$lib/components/ArcControls.svelte';
+	import ArcControls from '$lib/components/controls/ArcControls.svelte';
 
 	let value = $state(75);
 	let segments = $state(60);
@@ -10,6 +10,7 @@
 </script>
 
 <ArcControls bind:value bind:segments />
+
 <Chart height={240} padding={20}>
 	<Layer center>
 		<SpringValue {value} let:value>

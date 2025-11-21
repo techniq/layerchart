@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Arc, Chart, LinearGradient, Text, Layer } from 'layerchart';
-	import ArcPlaygroundControls from '$lib/components/ArcPlaygroundControls.svelte';
+	import ArcPlaygroundControls from '$lib/components/controls/ArcPlaygroundControls.svelte';
 
 	let config = $state({
 		show: true,
@@ -20,6 +20,7 @@
 </script>
 
 <ArcPlaygroundControls bind:config />
+
 <Chart height={350}>
 	<Layer center>
 		{#if config.show}

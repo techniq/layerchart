@@ -5,9 +5,9 @@
 	import { slide } from 'svelte/transition';
 	import { cls } from '@layerstack/tailwind';
 	import { Chart, Dagre, Group, Layer, Rect, Spline, Text } from 'layerchart';
-	import { Field, Switch } from 'svelte-ux';
-	import DagreControls from '$lib/components/DagreControls.svelte';
-	import TransformControls from '$lib/components/TransformControls.svelte';
+	import DagreControls from '$lib/components/controls/DagreControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
+	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';
 	import { getSoftwareUserFlowGraph } from '$lib/graph.remote';
 
 	let data = await getSoftwareUserFlowGraph();
@@ -29,18 +29,9 @@
 	let showSettings = $state(false);
 </script>
 
-<div class="flex justify-end gap-2 items-end mb-2">
-	<Field label="Settings" labelPlacement="left" let:id>
-		<Switch
-			checked={showSettings}
-			on:change={() => (showSettings = !showSettings)}
-			{id}
-			size="md"
-		/>
-	</Field>
-</div>
+<ShowControls bind:show={showSettings} label="Show Settings" />
 
-<div class="flex gap-2">
+<div class="flex gap-2 pt-6">
 	<div class="flex-1 p-4 border rounded-sm overflow-hidden">
 		<Chart
 			transform={{
@@ -52,7 +43,7 @@
 			}}
 			height={700}
 		>
-			<TransformControls />
+			<TransformContextControls />
 
 			<Layer>
 				<Dagre data={data as any} edges={(d) => d.links} {...settings}>

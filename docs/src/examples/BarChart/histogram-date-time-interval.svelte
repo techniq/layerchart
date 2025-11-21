@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { bin } from 'd3-array';
 	import { scaleTime } from 'd3-scale';
-	import { timeDay, timeMonth, timeWeek } from 'd3-time';
+	import { timeDay, timeWeek } from 'd3-time';
 	import { BarChart, Tooltip } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { MenuField, NumberStepper } from 'svelte-ux';
+	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 	import { randomNormal } from 'd3-random';
 
 	let randomCount = $state(1000);
@@ -37,24 +37,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[148px_1fr] gap-2 mb-4">
-	<NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
-	<MenuField
-		label="Interval"
-		options={[
-			{ label: 'Days', value: 'days', interval: timeDay.range },
-			{ label: 'Weeks', value: 'weeks', interval: timeWeek.range },
-			{ label: 'Months', value: 'months', interval: timeMonth.range }
-		]}
-		value={intervalValue}
-		on:change={(e) => {
-			intervalValue = e.detail.value;
-			intervalFunc = e.detail.option.interval;
-		}}
-		stepper
-		classes={{ menuIcon: 'hidden' }}
-	/>
-</div>
+<BarChartControls bind:dateRange bind:intervalValue />
 
 <BarChart
 	{data}

@@ -20,7 +20,7 @@
 		type ChartContextValue
 	} from 'layerchart';
 
-	import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+	import GeoPathEclipsesControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
@@ -61,25 +61,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2 items-end mb-4">
-	<div class="mb-2 flex gap-6">
-		<Field label="Spin:" dense labelPlacement="left" let:id>
-			<ButtonGroup size="sm" variant="fill-light">
-				<Button on:click={timer.start} disabled={timer.running}>Start</Button>
-				<Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
-			</ButtonGroup>
-		</Field>
-
-		<RangeField
-			label="Velocity:"
-			bind:value={velocity}
-			min={-10}
-			max={10}
-			disabled={!timer.running}
-			labelPlacement="left"
-		/>
-	</div>
-</div>
+<GeoPathEclipsesControls {timer} bind:velocity />
 
 <Chart
 	geo={{

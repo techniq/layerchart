@@ -2,7 +2,7 @@
 	import { Axis, Chart, Layer, type DomainType } from 'layerchart';
 	import { timeYear } from 'd3-time';
 	import { startOfInterval } from '@layerstack/utils';
-	import AxisControl from '$lib/components/AxisControl.svelte';
+	import AxisControls from '$lib/components/controls/AxisControls.svelte';
 
 	const today = startOfInterval('day', new Date());
 
@@ -12,7 +12,7 @@
 	let tickSpacing = $state(80); // x-axis default
 </script>
 
-<AxisControl bind:value={tickSpacing} />
+<AxisControls bind:value={tickSpacing} />
 
 <Chart
 	{xDomain}

@@ -12,7 +12,7 @@
 		Tooltip,
 		type ChartContextValue
 	} from 'layerchart';
-	import { Button, ButtonGroup } from 'svelte-ux';
+	import { Button } from 'svelte-ux';
 	import { sortFunc } from '@layerstack/utils';
 	import { scrollIntoView } from '@layerstack/svelte-actions';
 	import { cls } from '@layerstack/tailwind';
@@ -20,7 +20,7 @@
 
 	import { getCountriesTopology } from '$lib/geo.remote.js';
 	import { timings } from './animated-timings.js';
-	import AnimatedGlobeControls from '$lib/components/AnimatedGlobeControls.svelte';
+	import AnimatedGlobeControls from '$lib/components/controls/GeoPathGlobeControls.svelte';
 
 	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);

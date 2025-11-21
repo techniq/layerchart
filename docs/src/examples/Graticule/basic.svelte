@@ -13,7 +13,7 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
-	import GraticuleControls from '$lib/components/GraticuleControls.svelte';
+	import GraticuleControls from '$lib/components/controls/GraticuleControls.svelte';
 	import { getCountriesTopology } from '$lib/geo.remote';
 
 	let config = $state({
@@ -47,6 +47,7 @@
 </script>
 
 <GraticuleControls bind:config {projections} />
+
 <Chart
 	geo={{
 		projection: config.projection,

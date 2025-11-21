@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { Chart, ChartClipPath, Circle, Layer, Points, Voronoi } from 'layerchart';
 	import { getSpiral } from '$lib/utils/data.js';
-
-	import VoronoiControls from '$lib/components/VoronoiControls.svelte';
+	import VoronoiControls from '$lib/components/controls/VoronoiControls.svelte';
 
 	const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -19,6 +18,7 @@
 </script>
 
 <VoronoiControls bind:radius />
+
 <Chart {data} x="x" y="y" height={400}>
 	{#snippet children({ context })}
 		<Layer onpointermove={onPointerMove}>

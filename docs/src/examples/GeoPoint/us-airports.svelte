@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import GeoPointControls from '$lib/components/controls/GeoPointControls.svelte';
 
 	import { Chart, GeoPath, GeoPoint, getSettings, Layer, Tooltip } from 'layerchart';
 	import { getUsStatesTopology, getUsAirports } from '$lib/geo.remote';
@@ -21,16 +21,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2">
-	<Field label="Tooltip mode" class="grow">
-		<ToggleGroup bind:value={tooltipMode} variant="outline">
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-		</ToggleGroup>
-	</Field>
-
-	<RangeField label="Tooltip radius" bind:value={tooltipRadius} max={100} class="grow" />
-</div>
+<GeoPointControls bind:tooltipMode bind:tooltipRadius />
 
 <Chart
 	data={data.us.airports}

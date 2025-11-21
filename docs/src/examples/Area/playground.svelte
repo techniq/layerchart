@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Area, Axis, Chart, Points, Layer } from 'layerchart';
-	import AreaPlaygroundControls from '$lib/components/AreaPlaygroundControls.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import AreaPlaygroundControls from '$lib/components/controls/AreaPlaygroundControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
 		pathGenerator: (x: number) => x,
@@ -29,6 +29,7 @@
 </script>
 
 <AreaPlaygroundControls bind:config />
+
 <Chart {data} x="x" y="y" yNice padding={20} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />

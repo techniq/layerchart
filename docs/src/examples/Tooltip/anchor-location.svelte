@@ -2,7 +2,7 @@
 	import type { ComponentProps } from 'svelte';
 
 	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import AnchorLocationControls from '$lib/components/TooltipControls2.svelte';
+	import TooltipContextControls2 from '$lib/components/controls/TooltipContextControls2.svelte';
 
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -16,12 +16,13 @@
 
 	let anchor: ComponentProps<typeof Tooltip.Root>['anchor'] = $state('top-left');
 	let snap: 'pointer' | 'data' = $state('pointer');
-	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
+	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state('container');
 
 	export { data };
 </script>
 
-<AnchorLocationControls bind:anchor bind:snap bind:contained />
+<TooltipContextControls2 bind:anchor bind:snap bind:contained />
+
 <Chart
 	{data}
 	x="date"

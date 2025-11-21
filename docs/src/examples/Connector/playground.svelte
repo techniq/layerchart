@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Connector, Chart, Layer } from 'layerchart';
-	import ConnectorPlaygroundControls from '$lib/components/ConnectorPlaygroundControls.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import ConnectorPlaygroundControls from '$lib/components/controls/ConnectorControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 
 	import { movable } from '$lib/actions/movable.js';
@@ -17,6 +17,7 @@
 </script>
 
 <ConnectorPlaygroundControls bind:type bind:curve bind:sweep bind:radius />
+
 <Chart padding={{ left: 16, bottom: 24 }} height={400}>
 	<Layer>
 		<Connector {source} {target} {sweep} {type} {radius} {curve} class="stroke-primary stroke-4" />

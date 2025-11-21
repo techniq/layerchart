@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { Arc, Chart, Layer } from 'layerchart';
-	import ShowControl from '$lib/components/ShowControl.svelte';
+	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 
 	let show = $state(true);
 	const data = {
@@ -16,6 +16,7 @@
 </script>
 
 <ShowControl bind:show label="Show Arcs" />
+
 <Chart height={200} padding={20}>
 	<Layer center>
 		{#if show}

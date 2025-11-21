@@ -8,7 +8,7 @@
 	} from 'd3-force';
 	import { curveLinear } from 'd3-shape';
 
-	import StickyControl from '$lib/components/StickyControl.svelte';
+	import StickyControl from '$lib/components/controls/ForceSimluationControls2.svelte';
 	import { Chart, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
 	import { clamp, type Prettify } from '@layerstack/utils';
@@ -64,6 +64,7 @@
 </script>
 
 <StickyControl bind:sticky />
+
 <Chart height={600}>
 	{#snippet children({ context })}
 		<Layer>

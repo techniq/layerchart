@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { curveLinearClosed } from 'd3-shape';
 	import { Axis, Chart, Layer, Points, Spline } from 'layerchart';
-	import RadialControl from '$lib/components/RadialControl.svelte';
+	import RadialControls from '$lib/components/controls/fields/RadialField.svelte';
 
 	const data = [
 		{ name: 'fastball', value: 10 },
@@ -16,7 +16,8 @@
 	export { data };
 </script>
 
-<RadialControl bind:curve />
+<RadialControls bind:curve />
+
 <Chart
 	{data}
 	x="name"

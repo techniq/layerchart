@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Chart, Layer, Text, Circle } from 'layerchart';
 	import type { ComponentProps } from 'svelte';
-	import TextPlaygroundControls from '$lib/components/TextPlaygroundControls.svelte';
+	import TextPlaygroundControls from '$lib/components/controls/TextPlaygroundControls.svelte';
 	import { toTitleCase } from '@layerstack/utils';
 
 	let config = $state({
@@ -32,6 +32,7 @@
 </script>
 
 <TextPlaygroundControls bind:config />
+
 <div class="grid grid-cols-3">
 	{#each ['svg', 'canvas', 'html'] as const as type}
 		<div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { curveStepAfter } from 'd3-shape';
 	import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	let selectedCurve = $state(curveStepAfter);
@@ -13,11 +13,12 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-	
+
 	export { data };
 </script>
 
 <CurveMenuField bind:value={selectedCurve} class="mb-6" />
+
 <AreaChart
 	{data}
 	x="date"

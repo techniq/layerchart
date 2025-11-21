@@ -12,7 +12,7 @@
 	} from 'd3-time';
 	import { startOfInterval } from '@layerstack/utils';
 	import type { ComponentProps } from 'svelte';
-	import AxisControl from '$lib/components/AxisControl.svelte';
+	import AxisControls from '$lib/components/controls/AxisControls.svelte';
 
 	const today = startOfInterval('day', new Date());
 
@@ -105,7 +105,7 @@
 	let tickSpacing = $state(80); // x-axis default
 </script>
 
-<AxisControl bind:value={tickSpacing} />
+<AxisControls bind:value={tickSpacing} />
 
 <div class="grid gap-3">
 	{#each examples as example}

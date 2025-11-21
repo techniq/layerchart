@@ -6,7 +6,7 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Legend, Layer, Tooltip, getSettings } from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
 
@@ -70,7 +70,7 @@
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
-		<TransformControls />
+		<TransformContextControls />
 
 		<Layer>
 			{#each enrichedCountiesFeatures as feature}

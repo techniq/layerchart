@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { PieChart, Text } from 'layerchart';
-	import { RangeField } from 'svelte-ux';
 	import { Spring } from 'svelte/motion';
-	import PieChartControls from '$lib/components/PieChartControls.svelte';
+	import PieChartControls from '$lib/components/controls/PieChartControls.svelte';
 
 	let count = $state(60);
 	let value = new Spring(75);
@@ -22,6 +21,7 @@
 </script>
 
 <PieChartControls bind:count bind:value={value.target} />
+
 <PieChart
 	{data}
 	key="key"

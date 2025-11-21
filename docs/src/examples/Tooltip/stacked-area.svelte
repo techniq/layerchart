@@ -4,7 +4,7 @@
 	import { Area, asAny, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { flatten } from '@layerstack/utils';
 	import { createDateSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	const keys = ['apples', 'bananas', 'oranges'];
 	const stackDateSeries = createDateSeries({
@@ -22,12 +22,13 @@
 		axis: undefined,
 		snapToDataX: false,
 		snapToDataY: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 
 	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	flatData={flatten(data)}

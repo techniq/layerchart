@@ -4,7 +4,7 @@
 	import { interpolateGnBu, schemeSpectral } from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import TreemapControls from '$lib/components/TreemapControls.svelte';
+	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 

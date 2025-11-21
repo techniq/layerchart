@@ -27,7 +27,7 @@
 	import { cls } from '@layerstack/tailwind';
 	import PartitionControls, {
 		type PartitionControlsProps
-	} from '$lib/components/PartitionControls.svelte';
+	} from '$lib/components/controls/PartitionControls.svelte';
 
 	let colorBy = $state<PartitionControlsProps['colorBy']>('children');
 	let padding = $state(0);

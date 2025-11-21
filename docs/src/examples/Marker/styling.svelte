@@ -1,12 +1,15 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Chart, Spline, Layer } from 'layerchart';
-	import MarkerControls2 from '$lib/components/MarkerControls2.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import MarkerControls from '$lib/components/controls/MarkerControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
 		show: true,
 		tweened: true,
+		markerStart: true,
+		markerMid: false,
+		markerEnd: true,
 		pathGenerator: (x: number) => x,
 		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
 		pointCount: 10,
@@ -27,7 +30,8 @@
 	export { data };
 </script>
 
-<MarkerControls2 bind:config />
+<MarkerControls bind:config />
+
 <Chart {data} x="x" y="y" height={200}>
 	<Layer>
 		{#if config.show}

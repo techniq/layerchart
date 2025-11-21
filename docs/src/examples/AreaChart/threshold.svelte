@@ -3,7 +3,7 @@
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 	import { curveStepAfter } from 'd3-shape';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	const data = createDateSeries({
 		count: 30,

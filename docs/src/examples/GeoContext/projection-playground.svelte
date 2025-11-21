@@ -13,8 +13,8 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
-	import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
 	import { getCountriesTopology, getCountriesDetailTopology } from '$lib/geo.remote';
+	import GeoContextPlaygroundControls from '$lib/components/controls/GeoContextPlaygroundControls.svelte';
 
 	let config = $state({
 		projection: geoOrthographic,
@@ -52,25 +52,13 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_auto] gap-2 my-2">
-	<SelectField
-		label="Projections"
-		options={projections}
-		bind:value={config.projection}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
-	<RangeField label="Scale" bind:value={config.scale} min={-100} max={3000} />
-	<Field label="Detail" let:id>
-		<Switch bind:checked={config.detailed} {id} />
-	</Field>
-</div>
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-2">
-	<RangeField label="Yaw" bind:value={config.rotate.yaw} min={-360} max={360} />
-	<RangeField label="Pitch" bind:value={config.rotate.pitch} min={-90} max={90} />
-	<RangeField label="Roll" bind:value={config.rotate.roll} min={-180} max={180} />
-</div>
+<GeoContextPlaygroundControls
+	{projections}
+	bind:projection={config.projection}
+	bind:scale={config.scale}
+	bind:detailed={config.detailed}
+	bind:rotate={config.rotate}
+/>
 
 <Chart
 	geo={{

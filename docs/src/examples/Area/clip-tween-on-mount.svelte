@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { Area, Axis, Chart, ChartClipPath, Layer } from 'layerchart';
-	import ShowControl from '$lib/components/ShowControl.svelte';
+	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -12,6 +12,7 @@
 </script>
 
 <ShowControl bind:show label="Show Area" />
+
 <Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={20} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />

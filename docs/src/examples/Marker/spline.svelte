@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Chart, Spline, Layer } from 'layerchart';
-	import MarkerControls from '$lib/components/MarkerControls.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import MarkerControls from '$lib/components/controls/MarkerControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
 		show: true,
@@ -34,6 +34,7 @@
 </script>
 
 <MarkerControls bind:config />
+
 <div class="grid gap-2">
 	{#each markerTypes as marker}
 		<div>{marker}</div>

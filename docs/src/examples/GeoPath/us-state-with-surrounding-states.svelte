@@ -3,7 +3,7 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, ChartClipPath, GeoPath, Layer, Tooltip } from 'layerchart';
-	import { SelectField } from 'svelte-ux';
+	import GeopathControls from '$lib/components/controls/GeoPathStatesControls.svelte';
 	import { sort } from '@layerstack/utils';
 
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
@@ -33,24 +33,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-4">
-	<SelectField
-		label="State"
-		options={stateOptions}
-		bind:value={selectedStateId}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
-	<SelectField
-		label="Projections"
-		options={projections}
-		bind:value={projection}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
-</div>
+<GeopathControls {stateOptions} {projections} bind:selectedStateId bind:projection />
 
 <Chart
 	geo={{

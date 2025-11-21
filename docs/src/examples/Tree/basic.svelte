@@ -5,18 +5,20 @@
 	import { curveBumpX } from 'd3-shape';
 
 	import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
+	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 	import { getFlare } from '$lib/data.remote';
 	import { cls } from '@layerstack/tailwind';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
-	import TreeControls from '$lib/components/TreeControls.svelte';
 
-	let orientation: ComponentProps<typeof Tree>['orientation'] = $state('horizontal');
-	let curve = $state(curveBumpX);
-	let layout: 'chart' | 'node' = $state('chart');
-	let sweep: ConnectorSweep = $state('none'); // Sweep direction
-	let type: ConnectorType = $state('d3'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
-	let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
+	let config = $state({
+		orientation: 'horizontal' as 'horizontal' | 'vertical',
+		layout: 'chart' as 'chart' | 'node',
+		type: 'd3' as ConnectorType,
+		sweep: 'none' as ConnectorSweep,
+		curve: curveBumpX,
+		radius: 60
+	});
 
 	let data = await getFlare();
 
@@ -37,7 +39,7 @@
 	const nodeSiblingGap = 20;
 	const nodeParentGap = 100;
 	const nodeSize = $derived(
-		orientation === 'horizontal'
+		config.orientation === 'horizontal'
 			? ([nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] as [number, number])
 			: ([nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] as [number, number])
 	);
@@ -45,7 +47,7 @@
 	export { data };
 </script>
 
-<TreeControls bind:orientation bind:layout bind:type bind:sweep bind:curve bind:radius />
+<TreeControls bind:config />
 
 <Chart
 	padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
@@ -56,19 +58,23 @@
 	height={800}
 >
 	{#snippet children()}
-		<TransformControls orientation="horizontal" class="-m-2" />
+		<TransformContextControls orientation="horizontal" class="-m-2" />
 
-		<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
+		<Tree
+			{hierarchy}
+			orientation={config.orientation}
+			nodeSize={config.layout === 'node' ? nodeSize : undefined}
+		>
 			{#snippet children({ nodes, links })}
 				<Layer>
 					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 						<Link
 							data={link}
-							{orientation}
-							{curve}
-							{type}
-							{sweep}
-							{radius}
+							orientation={config.orientation}
+							curve={config.curve}
+							type={config.type}
+							sweep={config.sweep}
+							radius={config.radius}
 							motion="tween"
 							class="stroke-surface-content opacity-20"
 						/>
@@ -76,8 +82,8 @@
 
 					{#each nodes as node (getNodeKey(node))}
 						<Group
-							x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
-							y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
+							x={(config.orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
+							y={(config.orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
 							motion="tween"
 							onclick={() => {
 								if (expandedNodeNames.includes(node.data.name)) {

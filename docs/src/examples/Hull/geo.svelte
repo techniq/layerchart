@@ -3,7 +3,7 @@
 	import { curveLinearClosed } from 'd3-shape';
 	import { feature } from 'topojson-client';
 	import { Chart, Circle, GeoPath, GeoPoint, Hull, Layer, Text } from 'layerchart';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 
 	let topology = $state(await getUsStatesTopology());

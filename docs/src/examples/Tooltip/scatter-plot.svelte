@@ -2,7 +2,7 @@
 	import type { ComponentProps } from 'svelte';
 
 	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	import { getSpiral } from '$lib/utils/data.js';
 
@@ -14,12 +14,13 @@
 		axis: 'both',
 		snapToDataX: true,
 		snapToDataY: true
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 
 	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	x="x"

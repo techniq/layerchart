@@ -5,7 +5,7 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, getSettings, Layer, spikePath, Spline, Tooltip } from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
 
@@ -68,8 +68,7 @@
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
-
-		<TransformControls />
+		<TransformContextControls />
 
 		<Layer>
 			<GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" {strokeWidth} />

@@ -7,7 +7,7 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { getFlare } from '$lib/data.remote';
-	import TreemapControls from '$lib/components/TreemapControls.svelte';
+	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
@@ -69,7 +69,7 @@
 	export { data };
 </script>
 
-<TreemapControls bind:config hidePadding />
+<TreemapControls bind:config />
 
 <Breadcrumb items={selected?.ancestors().reverse() ?? []} class="my-2">
 	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">

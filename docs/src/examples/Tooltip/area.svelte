@@ -2,7 +2,7 @@
 	import type { ComponentProps } from 'svelte';
 	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	const data = createDateSeries({
 		count: 30,
@@ -19,10 +19,11 @@
 		axis: undefined,
 		snapToDataX: false,
 		snapToDataY: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	x="date"

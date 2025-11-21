@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { interpolateRgb, interpolateLab, interpolateHclLong } from 'd3-interpolate';
 	import * as d3chromatic from 'd3-scale-chromatic';
-	import StepsControl from '$lib/components/ColorRampControl.svelte';
+	import StepsControl from '$lib/components/controls/ColorRampControls.svelte';
 
 	import { ColorRamp } from 'layerchart';
-	import { NumberStepper } from 'svelte-ux';
 	import { entries } from '@layerstack/utils';
 
 	let width = $state('100%');
@@ -20,6 +19,7 @@
 </script>
 
 <StepsControl bind:steps />
+
 <div class="grid gap-4 h-100">
 	{#each interpolators as [name, interpolator]}
 		<div>

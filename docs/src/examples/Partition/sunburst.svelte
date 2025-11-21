@@ -8,7 +8,7 @@
 	import { Arc, Bounds, Chart, Layer, Partition, Tooltip, findAncestor } from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
-	import SunburstControls from '$lib/components/SunburstControls.svelte';
+	import SunburstControls from '$lib/components/controls/SunburstControls.svelte';
 
 	let colorBy = $state<'parent' | 'depth'>('parent');
 

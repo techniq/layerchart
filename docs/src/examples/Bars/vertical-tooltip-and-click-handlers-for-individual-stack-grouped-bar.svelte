@@ -5,6 +5,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { unique } from '@layerstack/utils';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import GroupedStackedComboField from '$lib/components/controls/fields/GroupedStackedComboField.svelte';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
 	const keyColors = [
@@ -14,7 +15,7 @@
 		'var(--color-danger)'
 	];
 
-	let chartMode = $state('group');
+	let chartMode = $state<'group' | 'stack' | 'groupStack'>('group');
 
 	const groupBy = $derived(
 		chartMode === 'group' ? 'fruit' : chartMode === 'groupStack' ? 'basket' : undefined
@@ -41,13 +42,7 @@
 	export { data };
 </script>
 
-<Field label="Mode" class="mb-4">
-	<ToggleGroup bind:value={chartMode} variant="outline" size="sm" inset class="w-full">
-		<ToggleOption value="group">Grouped</ToggleOption>
-		<ToggleOption value="stack">Stacked</ToggleOption>
-		<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-	</ToggleGroup>
-</Field>
+<GroupedStackedComboField bind:chartMode />
 
 <Chart
 	{data}
