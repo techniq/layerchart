@@ -236,8 +236,14 @@
 	</div>
 
 	<div
-		class="absolute bottom-0 left-0 right-0 background-grid h-140 mask-x-from-80% mask-y-from-80% transform-[rotateX(60deg)] -z-1"
-	></div>
+		class="pointer-events-none absolute inset-0 overflow-hidden opacity-30 dark:opacity-20 perspective-[1000px] perspective-origin-bottom mask-y-from-50%"
+	>
+		<div class="absolute inset-0 transform-3d">
+			<div
+				class="background-grid absolute left-[-200%] bottom-0 h-[300vh] w-[600vw] origin-bottom"
+			></div>
+		</div>
+	</div>
 </div>
 
 <div class="grid grid-cols-xs gap-4 px-4 mb-4">
@@ -270,11 +276,51 @@
 <style>
 	.background-grid {
 		--size: 100px;
-		--_g: #0000 90deg, color-mix(in srgb, var(--color-surface-content) 5%, transparent) 0;
+		--line: color-mix(in srgb, var(--color-surface-content) 30%, transparent);
+		--line-major: color-mix(in srgb, var(--color-surface-content) 40%, transparent);
 
-		background:
-			conic-gradient(from 90deg at 2px 2px, var(--_g)) 0 0 / var(--size) var(--size),
-			conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0 / calc(var(--size) / 5)
-				calc(var(--size) / 5);
+		background-image:
+			/* Major vertical lines */
+			repeating-linear-gradient(
+				to right,
+				var(--line-major) 0,
+				var(--line-major) 2px,
+				transparent 2px,
+				transparent var(--size)
+			),
+			/* Minor vertical lines */
+				repeating-linear-gradient(
+					to right,
+					var(--line) 0,
+					var(--line) 0.5px,
+					transparent 0.5px,
+					transparent calc(var(--size) / 5)
+				),
+			/* Major horizontal lines */
+				repeating-linear-gradient(
+					to bottom,
+					var(--line-major) 0,
+					var(--line-major) 2px,
+					transparent 2px,
+					transparent var(--size)
+				),
+			/* Minor horizontal lines */
+				repeating-linear-gradient(
+					to bottom,
+					var(--line) 0,
+					var(--line) 0.5px,
+					transparent 0.5px,
+					transparent calc(var(--size) / 5)
+				);
+		animation: grid-scroll 2s linear infinite;
+	}
+
+	@keyframes grid-scroll {
+		0% {
+			transform: rotateX(45deg) translateY(0);
+		}
+		100% {
+			transform: rotateX(45deg) translateY(var(--size));
+		}
 	}
 </style>
