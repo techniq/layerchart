@@ -114,7 +114,7 @@
           />
           <Tooltip.Item
             label="Est. Percent under 18"
-            value={d?.percentUnder18 ?? 0 / 100}
+            value={d ? d.percentUnder18 / 100 : 0}
             format="percentRound"
             valueAlign="right"
           />
