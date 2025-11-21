@@ -36,7 +36,7 @@
 >
 	{#if source}
 		<pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
-      <code class={cls('text-xs', classes.code)}>
+      <code class={cls('text-sm', classes.code)}>
         {#await highlighter}
 					<div>Loading...</div>
 				{:then h}

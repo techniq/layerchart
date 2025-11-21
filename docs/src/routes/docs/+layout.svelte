@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import posthog from 'posthog-js';
 	import {
 		Breadcrumb,
 		Button,
@@ -17,7 +15,6 @@
 	import { env } from '@layerstack/utils';
 	import { watch } from 'runed';
 
-	import { dev } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
@@ -53,52 +50,6 @@
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
-
-	settings({
-		components: {
-			// NavItem: {
-			//   classes: {
-			//     root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
-			//     active:
-			//       'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow-sm z-10',
-			//   },
-			// },
-		},
-		themes: data.themes
-	});
-
-	let currentPath = '';
-	onMount(() => {
-		// Delay adding `scroll-smooth` to `<html>` as provides better refresh experience
-		// and fixes issue where sometimes doesn't scroll far enough
-		setTimeout(() => {
-			document.documentElement.classList.add('scroll-smooth');
-		}, 0);
-
-		// Posthog analytics
-		if (!dev) {
-			watch(
-				() => page,
-				() => {
-					if (currentPath && currentPath !== page.url.pathname) {
-						// Page navigated away
-						posthog.capture('$pageleave');
-					}
-					// Page entered
-					currentPath = page.url.pathname;
-					posthog.capture('$pageview');
-				}
-			);
-			const handleBeforeUnload = () => {
-				// Hard reloads or browser exit
-				posthog.capture('$pageleave');
-			};
-			window.addEventListener('beforeunload', handleBeforeUnload);
-			return () => {
-				window.removeEventListener('beforeunload', handleBeforeUnload);
-			};
-		}
-	});
 </script>
 
 <svelte:head>

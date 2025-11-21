@@ -6,6 +6,12 @@
 
 @source '../node_modules/svelte-ux/dist';
 
+@theme {
+	--font-sans: 'Inter Variable', sans-serif;
+	/* --font-mono: 'Departure Mono', 'monospace'; */
+	--font-pixel: 'Departure Mono', 'monospace';
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -43,4 +49,30 @@
 			conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0 / calc(var(--size) / 5)
 				calc(var(--size) / 5);
 	}
+}
+
+@font-face {
+	font-family: 'Departure Mono';
+	src: url('/fonts/DepartureMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Shiki light/dark theming */
+code[data-theme*=' '],
+code[data-theme*=' '] span {
+	color: var(--shiki-light);
+	background-color: var(--shiki-light-bg);
+}
+
+.dark code[data-theme*=' '],
+.dark code[data-theme*=' '] span {
+	color: var(--shiki-dark);
+	background-color: var(--shiki-dark-bg);
+}
+
+/* Inline code styling */
+code:not(pre > code):not(.custom) {
+	@apply text-sm font-medium bg-surface-100 text-secondary font-pixel px-2 rounded border border-primary/5;
 }

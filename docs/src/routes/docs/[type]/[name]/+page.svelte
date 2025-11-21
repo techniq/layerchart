@@ -162,8 +162,8 @@
 		data={api?.properties}
 		columns={[
 			{ name: 'name', header: 'Property' },
-			{ name: 'type', header: 'Type' },
-			{ name: 'description', header: 'Description' }
+			{ name: 'description', header: 'Description' },
+			{ name: 'type', header: 'Type' }
 		]}
 		classes={{
 			table: 'text-sm mt-1',
@@ -181,7 +181,9 @@
 						<td use:tableCell={{ column, rowData, rowIndex, tableData: data }}>
 							{#if column.name === 'name'}
 								<div class="flex items-center wrap gap-1">
-									<span class="bg-surface-content/10 px-2 py-1 rounded border">{value}</span>
+									<span class="text-xs font-pixel bg-surface-content/10 px-2 py-1 rounded border"
+										>{value}</span
+									>
 									{#if rowData.required}
 										<span
 											class="bg-danger/10 px-1 py-0.5 font-medium rounded border border-danger text-danger text-xs"
@@ -190,12 +192,12 @@
 									{/if}
 								</div>
 							{:else if column.name === 'type'}
-								<span class="font-mono text-surface-content/70">{value}</span>
+								<span class="font-pixel text-xs text-surface-content/70">{value}</span>
 							{:else if column.name === 'description'}
 								<span class="whitespace-pre-line">{value}</span>
 								{#if rowData.default != null}
 									<div class="mt-2 text-surface-content/70">
-										Default: <span class="font-mono">{rowData.default}</span>
+										default: <span class="font-pixel">{rowData.default}</span>
 									</div>
 								{/if}
 							{:else}

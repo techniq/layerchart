@@ -45,6 +45,9 @@ importers:
       '@eslint/js':
         specifier: ^9.38.0
         version: 9.39.1
+      '@fontsource-variable/inter':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@iconify-json/lucide':
         specifier: ^1.2.74
         version: 1.2.74
@@ -684,7 +687,7 @@ importers:
         version: 1.2.74
       '@rollup/plugin-dsv':
         specifier: ^3.0.5
-        version: 3.0.5(rollup@2.79.2)
+        version: 3.0.5(rollup@4.53.3)
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.4
         version: 7.2.4(@sveltejs/kit@2.49.0(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.14)(vite@7.2.4(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)))(svelte@5.43.14)(vite@7.2.4(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)))(wrangler@4.50.0)
@@ -792,7 +795,7 @@ importers:
         version: 6.0.0
       rollup-plugin-visualizer:
         specifier: ^6.0.5
-        version: 6.0.5(rollup@2.79.2)
+        version: 6.0.5(rollup@4.53.3)
       shapefile:
         specifier: ^0.6.6
         version: 0.6.6
@@ -1526,6 +1529,9 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource-variable/inter@5.2.8':
+    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -5538,6 +5544,8 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
+  '@fontsource-variable/inter@5.2.8': {}
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -5839,15 +5847,15 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@rollup/plugin-dsv@3.0.5(rollup@2.79.2)':
+  '@rollup/plugin-dsv@3.0.5(rollup@4.53.3)':
     dependencies:
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
+      '@rollup/pluginutils': 5.1.2(rollup@4.53.3)
       '@types/d3-dsv': 3.0.7
       d3-dsv: 2.0.0
       strip-bom: 4.0.0
       tosource: 2.0.0-alpha.3
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   '@rollup/plugin-node-resolve@13.3.0(rollup@2.79.2)':
     dependencies:
@@ -5871,13 +5879,13 @@ snapshots:
       estree-walker: 2.0.2
       picomatch: 2.3.1
 
-  '@rollup/pluginutils@5.1.2(rollup@2.79.2)':
+  '@rollup/pluginutils@5.1.2(rollup@4.53.3)':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 2.3.1
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     optional: true
@@ -8810,14 +8818,14 @@ snapshots:
       rollup: 2.79.2
       svelte: 4.2.20
 
-  rollup-plugin-visualizer@6.0.5(rollup@2.79.2):
+  rollup-plugin-visualizer@6.0.5(rollup@4.53.3):
     dependencies:
       open: 8.4.2
       picomatch: 4.0.3
       source-map: 0.7.6
       yargs: 17.7.2
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   rollup@2.79.2:
     optionalDependencies:
