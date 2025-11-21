@@ -13,7 +13,7 @@
 	label={(d) => {
 		switch (d.fruit) {
 			case 'apples':
-				return 'Apples 🍎';
+				return 'Apples 🍏';
 			case 'bananas':
 				return 'Bananas 🍌';
 			case 'cherries':

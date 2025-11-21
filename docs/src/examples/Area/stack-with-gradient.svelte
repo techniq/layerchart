@@ -39,11 +39,11 @@
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		{@const primaryColors = ['var(--color-danger)', 'var(--color-success)', 'var(--color-info)']}
+		{@const primaryColors = ['var(--color-apples)', 'var(--color-bananas)', 'var(--color-oranges)']}
 		{@const secondaryColors = [
-			'color-mix(in lch, var(--color-danger) 10%, transparent)',
-			'color-mix(in lch, var(--color-success) 10%, transparent)',
-			'color-mix(in lch, var(--color-info) 10%, transparent)'
+			'color-mix(in lch, var(--color-apples) 10%, transparent)',
+			'color-mix(in lch, var(--color-bananas) 10%, transparent)',
+			'color-mix(in lch, var(--color-oranges) 10%, transparent)'
 		]}
 
 		{#each chartDataArray(stackData) as seriesData, index}

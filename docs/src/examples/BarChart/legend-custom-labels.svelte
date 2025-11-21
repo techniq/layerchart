@@ -11,20 +11,20 @@
 	{data}
 	x="year"
 	series={[
-		{ key: 'apples', color: 'var(--color-danger)', label: 'Red Apples' },
+		{ key: 'apples', color: 'var(--color-apples)', label: 'Green Apples' },
 		{
 			key: 'bananas',
-			color: 'var(--color-warning)',
+			color: 'var(--color-bananas)',
 			label: 'Yellow Bananas'
 		},
 		{
 			key: 'cherries',
-			color: 'var(--color-success)',
+			color: 'var(--color-cherries)',
 			label: 'Sweet Cherries'
 		},
 		{
 			key: 'grapes',
-			color: 'var(--color-info)',
+			color: 'var(--color-grapes)',
 			label: 'Purple Grapes'
 		}
 	]}

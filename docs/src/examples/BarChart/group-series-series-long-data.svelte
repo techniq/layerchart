@@ -13,21 +13,21 @@
 	x="year"
 	y="value"
 	series={[
-		{ key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-danger)' },
+		{ key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-apples)' },
 		{
 			key: 'bananas',
 			data: dataByFruit.get('bananas'),
-			color: 'var(--color-warning)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'cherries',
 			data: dataByFruit.get('cherries'),
-			color: 'var(--color-success)'
+			color: 'var(--color-cherries)'
 		},
 		{
 			key: 'grapes',
 			data: dataByFruit.get('grapes'),
-			color: 'var(--color-info)'
+			color: 'var(--color-grapes)'
 		}
 	]}
 	seriesLayout="group"

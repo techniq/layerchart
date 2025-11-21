@@ -10,6 +10,11 @@
 	--font-sans: 'Inter Variable', sans-serif;
 	/* --font-mono: 'Departure Mono', 'monospace'; */
 	--font-pixel: 'Departure Mono', 'monospace';
+	--color-apples: color-mix(in oklab, var(--color-green-500) 90%, transparent);
+	--color-bananas: color-mix(in oklab, var(--color-yellow-500) 90%, transparent);
+	--color-cherries: color-mix(in oklab, var(--color-red-500) 90%, transparent);
+	--color-grapes: color-mix(in oklab, var(--color-purple-500) 90%, transparent);
+	--color-oranges: color-mix(in oklab, var(--color-orange-500) 90%, transparent);
 }
 
 /*

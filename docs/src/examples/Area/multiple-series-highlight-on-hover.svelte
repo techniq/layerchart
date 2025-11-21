@@ -29,9 +29,9 @@
 	const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
 	const fruitColors = {
-		apples: 'var(--color-danger)',
-		bananas: 'var(--color-success)',
-		oranges: 'var(--color-info)'
+		apples: 'var(--color-apples)',
+		bananas: 'var(--color-bananas)',
+		oranges: 'var(--color-oranges)'
 	};
 
 	export { multiSeriesFlatData as data };

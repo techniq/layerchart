@@ -16,14 +16,14 @@
 	{data}
 	y="date"
 	series={[
-		{ key: 'apples', color: 'var(--color-danger)' },
+		{ key: 'apples', color: 'var(--color-apples)' },
 		{
 			key: 'bananas',
-			color: 'var(--color-success)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'oranges',
-			color: 'var(--color-warning)'
+			color: 'var(--color-oranges)'
 		}
 	]}
 	orientation="vertical"

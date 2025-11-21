@@ -16,16 +16,16 @@
 	{data}
 	x="date"
 	series={[
-		{ key: 'apples', label: 'Apples 🍎 ', color: 'var(--color-danger)' },
+		{ key: 'apples', label: 'Apples 🍏 ', color: 'var(--color-apples)' },
 		{
 			key: 'bananas',
 			label: 'Bananas 🍌',
-			color: 'var(--color-success)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'oranges',
 			label: 'Oranges 🍊',
-			color: 'var(--color-warning)'
+			color: 'var(--color-oranges)'
 		}
 	]}
 	seriesLayout="stack"
