@@ -42,17 +42,30 @@
 		}
 
 		const query = params.filter.toLowerCase().trim();
+		// Split query into words
+		const queryWords = query.split(/\s+/);
+
+		// Helper function to split text by hyphens and underscores into words
+		const getWords = (text: string) => text.toLowerCase().split(/[-_]/);
+
+		// Helper function to check if all query words match
+		const matchesQuery = (text: string) => {
+			const textWords = getWords(text);
+			// All query words must have a match in the text words
+			return queryWords.every((queryWord) =>
+				textWords.some((textWord) => textWord.includes(queryWord))
+			);
+		};
+
 		return filtered
 			.map(({ component, section, examples }) => {
 				// If component name matches, return all examples for this component
-				if (component.toLowerCase().includes(query)) {
+				if (matchesQuery(component)) {
 					return { component, section, examples };
 				}
 
 				// Otherwise, filter examples by name
-				const filteredExamples = examples.filter((example) =>
-					example.name.toLowerCase().includes(query)
-				);
+				const filteredExamples = examples.filter((example) => matchesQuery(example.name));
 
 				// Only return component if it has matching examples
 				if (filteredExamples.length > 0) {
