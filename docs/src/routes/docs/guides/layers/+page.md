@@ -24,8 +24,8 @@ While it can struggle with large data sets and complex paths due to the overhead
 
 This layer is also easier to inspect compared to Canavs or WebGL through its use of DOM elements, although this also comes at a performance cost.
 
-- Stengths: graphical capabilities, interactivity, introspection, text on path/arc, path markers
-- Weaknesses: performance, multiline text, some styling
+- **Stengths:** graphical capabilities, interactivity, introspection, text on path/arc, path markers
+- **Weaknesses:** performance, multiline text, some styling
 
 ### Html
 
@@ -35,8 +35,8 @@ While `Html` has limited graphical capabilities, it can still be used to render 
 
 Like `Svg`, `Html` layers are DOM-driven and thus provide browser-native elements and events, and are easier to inspect.
 
-- Stengths: text (multiline, truncating), styling, layout, interactivity, introspection
-- Weaknesses: limited graphical capabilities, performance
+- **Stengths:** text (multiline, truncating), styling, layout, interactivity, introspection
+- **Weaknesses:** limited graphical capabilities, performance
 
 ### Canvas
 
@@ -46,8 +46,8 @@ While LayerChart enables pointer-level events within Canvas layers to enable hov
 
 LayerChart also support CSS classes and styling for the `Canvas` layer.
 
-- Stengths: performance, graphical capabilities
-- Weaknesses: styling, interactivity, introspection, text
+- **Stengths:** performance, graphical capabilities
+- **Weaknesses:** styling, interactivity, introspection, text
 
 ### WebGL
 
@@ -55,8 +55,8 @@ At the moment LayerChart does not provide WebGL primitive support, but is consid
 
 > Most browsers limit the number of concurrent WebGL contexts by page/domain (references: [Chromium](https://issues.chromium.org/issues/40543269), [Rive](https://rive.app/docs/runtimes/web/canvas-vs-webgl)) and is why some libraries such as [μPlot](https://github.com/leeoniya/uPlot) do not leverage it.
 
-- Stengths: performance
-- Weaknesses: complexity, concurrency limits, styling, interactivity, introspection, text
+- **Stengths:** performance
+- **Weaknesses:** complexity, concurrency limits, styling, interactivity, introspection, text
 
 ## Comparison
 

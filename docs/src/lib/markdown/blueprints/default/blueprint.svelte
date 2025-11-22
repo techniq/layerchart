@@ -11,6 +11,7 @@
 		ol,
 		p,
 		pre,
+		strong,
 		table,
 		tr,
 		th,

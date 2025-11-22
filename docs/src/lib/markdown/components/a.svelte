@@ -13,7 +13,10 @@
 	{href}
 	{target}
 	{rel}
-	class={cls('link leading-7 text-primary font-semibold', className)}
+	class={cls(
+		'link leading-7 text-primary font-semibold hover:underline decoration-1 underline-offset-2 decoration-primary/50',
+		className
+	)}
 	{...restProps}
 >
 	{@render children?.()}
