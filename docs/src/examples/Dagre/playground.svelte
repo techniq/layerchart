@@ -7,7 +7,7 @@
 	import { Chart, Dagre, Group, Layer, Rect, Spline, Text } from 'layerchart';
 	import DagreControls from '$lib/components/controls/DagreControls.svelte';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-	import DagrePlayground from '../../components/controls/DagrePlayground.svelte';
+	import DagrePlaygroundControls from '$lib/components/controls/DagrePlaygroundControls.svelte';
 
 	import { getGraph } from '$lib/graph.remote';
 
@@ -30,7 +30,7 @@
 	let showSettings = $state(false);
 </script>
 
-<DagrePlayground bind:selectedGraphValue bind:showSettings />
+<DagrePlaygroundControls bind:selectedGraphValue bind:showSettings />
 
 <div class="flex gap-2">
 	<div class="flex-1 p-4 border rounded-sm overflow-hidden">
