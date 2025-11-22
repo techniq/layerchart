@@ -70,7 +70,9 @@
 		<H2>Examples</H2>
 		<div class="flex items-center gap-2 mb-2">
 			{#if catalog.examples?.length}
-				<Button href="/docs/{page.params.type}/{page.params.name}/examples">View all</Button>
+				<Button href="/docs/{page.params.type}/{page.params.name}/examples?filter={filterQuery}">
+					View all
+				</Button>
 			{/if}
 
 			<TextField placeholder="Filter" bind:value={filterQuery} dense>
