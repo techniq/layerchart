@@ -13,13 +13,13 @@
 	series={[
 		{
 			key: 'apples',
-			color: 'var(--color-danger)',
+			color: 'var(--color-apples)',
 			props: { rounded: 'bottom' }
 		},
 		{
 			key: 'bananas',
 			value: (d) => -d.bananas,
-			color: 'var(--color-warning)',
+			color: 'var(--color-bananas)',
 			props: { rounded: 'top' }
 		}
 	]}

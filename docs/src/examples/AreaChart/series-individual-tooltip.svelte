@@ -26,17 +26,17 @@
 		{
 			key: 'apples',
 			data: dataByFruit.get('apples'),
-			color: 'var(--color-danger)'
+			color: 'var(--color-apples)'
 		},
 		{
 			key: 'bananas',
 			data: dataByFruit.get('bananas'),
-			color: 'var(--color-success)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'oranges',
 			data: dataByFruit.get('oranges'),
-			color: 'var(--color-warning)'
+			color: 'var(--color-oranges)'
 		}
 	]}
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}

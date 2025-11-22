@@ -36,7 +36,7 @@
 	yNice
 	c="key"
 	cDomain={keys}
-	cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
+	cRange={['var(--color-apples)', 'var(--color-bananas)', 'var(--color-oranges)']}
 	padding={{ top: 5, left: 28, bottom: 24 }}
 	tooltip={{
 		mode: settings.mode

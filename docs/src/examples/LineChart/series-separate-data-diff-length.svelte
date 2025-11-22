@@ -24,17 +24,17 @@
 		{
 			key: 'apples',
 			data: dataByFruit.get('apples')?.filter((d, i) => Math.random() > 0.3),
-			color: 'var(--color-danger)'
+			color: 'var(--color-apples)'
 		},
 		{
 			key: 'bananas',
 			data: dataByFruit.get('bananas')?.filter((d, i) => Math.random() > 0.3),
-			color: 'var(--color-success)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'oranges',
 			data: dataByFruit.get('oranges')?.filter((d, i) => Math.random() > 0.3),
-			color: 'var(--color-warning)'
+			color: 'var(--color-oranges)'
 		}
 	]}
 	height={300}

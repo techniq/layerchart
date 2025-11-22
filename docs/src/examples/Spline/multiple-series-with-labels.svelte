@@ -15,9 +15,9 @@
 	const dataByFruit = flatGroup(data, (d) => d.fruit);
 
 	const fruitColors = {
-		apples: 'var(--color-info)',
-		bananas: 'var(--color-success)',
-		oranges: 'var(--color-warning)'
+		apples: 'var(--color-apples)',
+		bananas: 'var(--color-bananas)',
+		oranges: 'var(--color-oranges)'
 	};
 
 	export { data };

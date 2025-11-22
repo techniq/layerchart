@@ -24,9 +24,9 @@
 	x="date"
 	y="value"
 	series={[
-		{ key: 'apples', color: 'var(--color-danger)' },
-		{ key: 'bananas', color: 'var(--color-success)' },
-		{ key: 'oranges', color: 'var(--color-warning)' }
+		{ key: 'apples', color: 'var(--color-apples)' },
+		{ key: 'bananas', color: 'var(--color-bananas)' },
+		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
 	brush

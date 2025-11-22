@@ -12,18 +12,18 @@
 	orientation="horizontal"
 	y="year"
 	series={[
-		{ key: 'apples', color: 'var(--color-danger)' },
+		{ key: 'apples', color: 'var(--color-apples)' },
 		{
 			key: 'bananas',
-			color: 'var(--color-warning)'
+			color: 'var(--color-bananas)'
 		},
 		{
 			key: 'cherries',
-			color: 'var(--color-success)'
+			color: 'var(--color-cherries)'
 		},
 		{
 			key: 'grapes',
-			color: 'var(--color-info)'
+			color: 'var(--color-grapes)'
 		}
 	]}
 	seriesLayout="group"
