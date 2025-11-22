@@ -14,17 +14,17 @@
 		"lint": "prettier --check ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-cloudflare": "^7.0.0",
-		"@sveltejs/kit": "^2.22.0",
-		"@sveltejs/vite-plugin-svelte": "^6.0.0",
+		"@sveltejs/adapter-cloudflare": "^7.2.4",
+		"@sveltejs/kit": "^2.49.0",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"layerchart": "workspace:*",
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "^5.0.0",
-		"svelte-check": "^4.0.0",
-		"typescript": "^5.0.0",
-		"vite": "^7.0.4",
+		"svelte": "5.43.14",
+		"svelte-check": "^4.3.4",
+		"typescript": "^5.9.3",
+		"vite": "^7.2.4",
 		"vite-plugin-devtools-json": "^1.0.0"
 	}
 }

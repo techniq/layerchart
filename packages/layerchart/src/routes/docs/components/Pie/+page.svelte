@@ -8,7 +8,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { Field, Switch, Toggle } from 'svelte-ux';
-  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
@@ -37,7 +36,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie />
       </Layer>
     </Chart>
@@ -49,7 +48,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie sort={null} />
       </Layer>
     </Chart>
@@ -61,7 +60,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie />
       </Layer>
     </Chart>
@@ -73,7 +72,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie range={[-90, 90]} />
       </Layer>
     </Chart>
@@ -85,7 +84,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie padAngle={0.05} />
       </Layer>
     </Chart>
@@ -97,7 +96,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie innerRadius={100} padAngle={0.03} />
       </Layer>
     </Chart>
@@ -111,7 +110,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie innerRadius={100} />
       </Layer>
     </Chart>
@@ -123,7 +122,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie innerRadius={0.9} />
       </Layer>
     </Chart>
@@ -135,7 +134,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie innerRadius={-30} />
       </Layer>
     </Chart>
@@ -147,7 +146,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie outerRadius={100} />
       </Layer>
     </Chart>
@@ -159,7 +158,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie innerRadius={100} {data} />
         <Pie outerRadius={90} data={data2} />
       </Layer>
@@ -178,7 +177,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       <Chart {data} x="value" c="date" cRange={keyColors}>
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           {#if show}
             <Pie motion="tween" />
           {/if}
@@ -193,7 +192,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie offset={4} />
       </Layer>
     </Chart>
@@ -205,7 +204,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -231,7 +230,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -263,7 +262,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -303,7 +302,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -335,7 +334,7 @@
 <Preview {data}>
   <div class="h-[320px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -372,7 +371,7 @@
 	if it meets the minimum needed to fit the label, and if not, we push it? Idk
 	-->
     <Chart {data} x="value" c="date" padding={24}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -405,7 +404,7 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           <Pie tooltipContext={context.tooltip} />
         </Layer>
         <Tooltip.Root>
@@ -433,7 +432,7 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           <Pie>
             {#snippet children({ arcs })}
               {#each arcs as arc, index}
@@ -499,7 +498,7 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Group x={context.height / 2} center="y">
             <Pie />
           </Group>
@@ -514,7 +513,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Pie />
       </Layer>
     </Chart>
@@ -527,7 +526,7 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Group x={context.width - context.height / 2} center="y">
             <Pie />
           </Group>

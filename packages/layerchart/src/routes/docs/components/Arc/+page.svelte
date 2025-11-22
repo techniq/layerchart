@@ -3,7 +3,6 @@
   import { Arc, Chart, LinearGradient, Text, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let value = $state(60);
   // let value = 100;
@@ -98,7 +97,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         {#key spring}
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
@@ -157,7 +156,7 @@
   {#each labelExamples as example}
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart>
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
               <Arc

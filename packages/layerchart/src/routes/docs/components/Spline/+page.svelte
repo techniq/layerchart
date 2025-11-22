@@ -1,15 +1,14 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
 
-  import { Axis, Canvas, Chart, Circle, Layer, Points, Spline, Text } from 'layerchart';
+  import { Axis, Chart, Circle, Layer, Points, Spline, Text } from 'layerchart';
   import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
-  import { format } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(100);
   let showPoints = $state(false);
@@ -31,6 +30,8 @@
       };
     })
   );
+
+  export { data };
 </script>
 
 <h1>Playground</h1>
@@ -63,7 +64,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
 
@@ -105,7 +106,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -132,7 +133,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -159,7 +160,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -191,7 +192,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -225,7 +226,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 48, bottom: 24, right: 48 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -262,7 +263,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -293,7 +294,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, right: 40, bottom: 24 }}>
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}

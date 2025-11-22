@@ -26,7 +26,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import SankeyControls from './SankeyControls.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -78,7 +77,7 @@
 <Preview data={data.simple}>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart data={data.simple} flatData={[]}>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Sankey nodeId={(d) => d.id}>
           {#snippet children({ links, nodes })}
             {#each links as link ([link.value, link.source.id, link.target.id].join('-'))}
@@ -111,7 +110,7 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={data.greenhouse} flatData={[]}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Sankey nodeId={(d) => d.name} nodeWidth={8}>
             {#snippet children({ links, nodes })}
               {#each links as link ([link.value, link.source.name, link.target.name].join('-'))}
@@ -197,7 +196,7 @@
 <Preview data={selectedNode ? sankeyGraphFromNode(selectedNode) : data.greenhouse}>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={selectedNode ? sankeyGraphFromNode(selectedNode) : data.greenhouse} flatData={[]}>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Sankey nodeId={(d) => d.name} nodeWidth={8}>
           {#snippet children({ links, nodes })}
             {#each links as link ([link.value, link.source.name, link.target.name].join('-'))}
@@ -260,7 +259,7 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={data.complex} padding={{ right: 164 }} flatData={[]}>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Sankey
             {nodeAlign}
             {nodePadding}
@@ -386,7 +385,7 @@
 <Preview data={hierarchyGraph}>
   <div class="h-[2000px] p-4 border rounded-sm">
     <Chart data={hierarchyGraph} padding={{ right: 100 }} flatData={[]}>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Sankey
           {nodeAlign}
           {nodePadding}

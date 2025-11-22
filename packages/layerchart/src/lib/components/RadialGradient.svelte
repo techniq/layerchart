@@ -83,11 +83,11 @@
 </script>
 
 <script lang="ts">
-  import { getRenderContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
@@ -114,7 +114,7 @@
 
   const ctx = getChartContext();
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   let canvasGradient = $state<CanvasGradient>();
 
@@ -144,7 +144,7 @@
     canvasGradient = gradient;
   }
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Gradient',
       render,
@@ -153,9 +153,9 @@
   }
 </script>
 
-{#if renderCtx === 'canvas'}
+{#if layerCtx === 'canvas'}
   {@render children?.({ id, gradient: canvasGradient as any })}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <defs>
     <radialGradient
       {id}

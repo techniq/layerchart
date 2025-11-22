@@ -7,7 +7,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import type { USSenatorsDatum } from '$static/data/examples/us-senators.js';
   import type { Prettify } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = USSenatorsDatum;
 
@@ -36,7 +35,7 @@
     >
       {#snippet children({ context })}
         {@const r = 6}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="bottom" format="none" rule grid />
           <ForceSimulation
             forces={{

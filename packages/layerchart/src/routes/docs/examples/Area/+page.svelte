@@ -1,6 +1,5 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { scaleOrdinal } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { stack, type Series } from 'd3-shape';
 
@@ -32,7 +31,6 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import flatten from '$lib/utils/chart.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -96,7 +94,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
@@ -118,7 +116,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
@@ -148,7 +146,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
@@ -170,7 +168,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format="day" rule ticks={(scale) => scale.domain()}>
           {#snippet tickLabel({ props, index })}
@@ -195,7 +193,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient class="from-primary/50 to-primary/1" vertical>
@@ -220,7 +218,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient class="from-secondary/1 to-secondary">
@@ -254,7 +252,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -310,7 +308,7 @@
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
 
@@ -375,7 +373,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -438,7 +436,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -484,7 +482,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
@@ -528,7 +526,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {@const primaryColors = [
@@ -581,7 +579,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -615,7 +613,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -650,7 +648,7 @@
         yNice
         padding={{ left: 16, bottom: 24 }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -684,7 +682,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -718,7 +716,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -755,7 +753,7 @@
       cRange={['var(--color-success)', 'var(--color-danger)']}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -803,7 +801,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -869,7 +867,7 @@
         {@const thresholdValue = 0}
         {@const thresholdOffset =
           context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -911,7 +909,7 @@
         {@const thresholdValue = 0}
         {@const thresholdOffset =
           context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" />
           <Rule y={0} />
@@ -952,7 +950,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <LinearGradient class="from-primary/50 to-primary/1" vertical>
             {#snippet children({ gradient })}
               <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />

@@ -35,7 +35,7 @@
 <script lang="ts">
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {

@@ -2,11 +2,9 @@
   import { scaleUtc } from 'd3-scale';
   import { utcDay } from 'd3-time';
 
-  import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip } from 'layerchart';
+  import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip, type DomainType } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
-  import type { DomainType } from '$lib/utils/scales.svelte.js';
 
   let { data } = $props();
 
@@ -31,7 +29,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} />
@@ -76,7 +74,7 @@
         padding={{ left: 20, bottom: 32 }}
         tooltip={{ mode: 'quadtree-x' }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule tickSpacing={20} />
           <Axis placement="bottom" rule tickMultiline />
           <Rule y={['high', 'low']} />
@@ -112,7 +110,7 @@
           },
         }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Bars insets={{ x: 0.5 }} />
         </Layer>
       </Chart>
@@ -136,7 +134,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} class="stroke-surface-content" />
@@ -176,7 +174,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Bars y={['high', 'low']} insets={{ x: 1.5 }} class="fill-surface-content" />

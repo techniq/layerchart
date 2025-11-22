@@ -78,8 +78,8 @@
   import Arc from './Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { getChartContext } from './Chart.svelte';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 
   /*

@@ -2,7 +2,6 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   import { Axis, Chart, Line, Layer } from 'layerchart';
-  import { shared } from '../../shared.svelte.js';
 </script>
 
 <h1>Examples</h1>
@@ -16,7 +15,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line
@@ -51,7 +50,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line x1={100} y1={100} x2={200} y2={200} strokeWidth={10} stroke="var(--color-primary)" />
@@ -80,7 +79,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line

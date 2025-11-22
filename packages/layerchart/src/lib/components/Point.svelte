@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let { d, children }: PointProps = $props();
 

@@ -76,9 +76,9 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -114,7 +114,7 @@
   const initialRx = initialRxProp ?? rx;
   const initialRy = initialRyProp ?? ry;
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   const motionCx = createMotion(initialCx, () => cx, motion);
   const motionCy = createMotion(initialCy, () => cy, motion);
@@ -141,7 +141,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Ellipse',
       render,
@@ -168,7 +168,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <ellipse
     bind:this={ref}
     cx={motionCx.current}
@@ -183,7 +183,7 @@
     class={cls('lc-ellipse', className)}
     {...restProps}
   />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <div
     style:position="absolute"
     style:left="{motionCx.current}px"

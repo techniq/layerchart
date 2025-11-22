@@ -2,8 +2,8 @@
   import { Checkbox } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
   import { format } from '@layerstack/utils';
-  import { getChartContext } from '$lib/components/Chart.svelte';
-  import { getGeoContext } from '$lib/components/GeoContext.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   const ctx = getChartContext();

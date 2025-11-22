@@ -1,0 +1,5282 @@
+[
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Washington, D.C.",
+        "sourceId": "los-angeles",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "washington,-d.c.",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "New York",
+        "sourceId": "los-angeles",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "new-york",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Moscow",
+        "sourceId": "los-angeles",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "moscow",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Mexico City",
+        "sourceId": "los-angeles",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "mexico-city",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Lagos",
+        "sourceId": "los-angeles",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "lagos",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Beijing",
+        "sourceId": "los-angeles",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "beijing",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Jakarta",
+        "sourceId": "los-angeles",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "jakarta",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Shanghai",
+        "sourceId": "los-angeles",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "shanghai",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Tokyo",
+        "sourceId": "los-angeles",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "tokyo",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Mumbai",
+        "sourceId": "los-angeles",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "mumbai",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Kolkata",
+        "sourceId": "los-angeles",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "kolkata",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "los-angeles",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "rio-de-janeiro",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Sao Paulo",
+        "sourceId": "los-angeles",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "sao-paulo",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Singapore",
+        "sourceId": "los-angeles",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "singapore",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-118.18192636994041, 33.99192410876543],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Los Angeles",
+        "targetName": "Hong Kong",
+        "sourceId": "los-angeles",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "los-angeles",
+    "targetId": "hong-kong",
+    "source": [-118.18192636994041, 33.99192410876543],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Los Angeles",
+        "sourceId": "washington,-d.c.",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "los-angeles",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "New York",
+        "sourceId": "washington,-d.c.",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "new-york",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Moscow",
+        "sourceId": "washington,-d.c.",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "moscow",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Mexico City",
+        "sourceId": "washington,-d.c.",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "mexico-city",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Lagos",
+        "sourceId": "washington,-d.c.",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "lagos",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Beijing",
+        "sourceId": "washington,-d.c.",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "beijing",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Jakarta",
+        "sourceId": "washington,-d.c.",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "jakarta",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Shanghai",
+        "sourceId": "washington,-d.c.",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "shanghai",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Tokyo",
+        "sourceId": "washington,-d.c.",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "tokyo",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Mumbai",
+        "sourceId": "washington,-d.c.",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "mumbai",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Kolkata",
+        "sourceId": "washington,-d.c.",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "kolkata",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "washington,-d.c.",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "rio-de-janeiro",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Sao Paulo",
+        "sourceId": "washington,-d.c.",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "sao-paulo",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Singapore",
+        "sourceId": "washington,-d.c.",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "singapore",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.01136443943716, 38.901495235087054],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Washington, D.C.",
+        "targetName": "Hong Kong",
+        "sourceId": "washington,-d.c.",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "washington,-d.c.",
+    "targetId": "hong-kong",
+    "source": [-77.01136443943716, 38.901495235087054],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Los Angeles",
+        "sourceId": "new-york",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "los-angeles",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Washington, D.C.",
+        "sourceId": "new-york",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "washington,-d.c.",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Moscow",
+        "sourceId": "new-york",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "moscow",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Mexico City",
+        "sourceId": "new-york",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "mexico-city",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Lagos",
+        "sourceId": "new-york",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "lagos",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Beijing",
+        "sourceId": "new-york",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "beijing",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Jakarta",
+        "sourceId": "new-york",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "jakarta",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Shanghai",
+        "sourceId": "new-york",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "shanghai",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Tokyo",
+        "sourceId": "new-york",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "tokyo",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Mumbai",
+        "sourceId": "new-york",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "mumbai",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Kolkata",
+        "sourceId": "new-york",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "kolkata",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "new-york",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "rio-de-janeiro",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Sao Paulo",
+        "sourceId": "new-york",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "sao-paulo",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Singapore",
+        "sourceId": "new-york",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "singapore",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.98196278740681, 40.75192492259464],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "New York",
+        "targetName": "Hong Kong",
+        "sourceId": "new-york",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "new-york",
+    "targetId": "hong-kong",
+    "source": [-73.98196278740681, 40.75192492259464],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Los Angeles",
+        "sourceId": "moscow",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "los-angeles",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Washington, D.C.",
+        "sourceId": "moscow",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "washington,-d.c.",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "New York",
+        "sourceId": "moscow",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "new-york",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Mexico City",
+        "sourceId": "moscow",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "mexico-city",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Lagos",
+        "sourceId": "moscow",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "lagos",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Beijing",
+        "sourceId": "moscow",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "beijing",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Jakarta",
+        "sourceId": "moscow",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "jakarta",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Shanghai",
+        "sourceId": "moscow",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "shanghai",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Tokyo",
+        "sourceId": "moscow",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "tokyo",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Mumbai",
+        "sourceId": "moscow",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "mumbai",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Kolkata",
+        "sourceId": "moscow",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "kolkata",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "moscow",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "rio-de-janeiro",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Sao Paulo",
+        "sourceId": "moscow",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "sao-paulo",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Singapore",
+        "sourceId": "moscow",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "singapore",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.6135769672714, 55.75410998124818],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Moscow",
+        "targetName": "Hong Kong",
+        "sourceId": "moscow",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "moscow",
+    "targetId": "hong-kong",
+    "source": [37.6135769672714, 55.75410998124818],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Los Angeles",
+        "sourceId": "mexico-city",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "los-angeles",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Washington, D.C.",
+        "sourceId": "mexico-city",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "washington,-d.c.",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "New York",
+        "sourceId": "mexico-city",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "new-york",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Moscow",
+        "sourceId": "mexico-city",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "moscow",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Lagos",
+        "sourceId": "mexico-city",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "lagos",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Beijing",
+        "sourceId": "mexico-city",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "beijing",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Jakarta",
+        "sourceId": "mexico-city",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "jakarta",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Shanghai",
+        "sourceId": "mexico-city",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "shanghai",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Tokyo",
+        "sourceId": "mexico-city",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "tokyo",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Mumbai",
+        "sourceId": "mexico-city",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "mumbai",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Kolkata",
+        "sourceId": "mexico-city",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "kolkata",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "mexico-city",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "rio-de-janeiro",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Sao Paulo",
+        "sourceId": "mexico-city",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "sao-paulo",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Singapore",
+        "sourceId": "mexico-city",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "singapore",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.1329340602939, 19.444388301415472],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mexico City",
+        "targetName": "Hong Kong",
+        "sourceId": "mexico-city",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "mexico-city",
+    "targetId": "hong-kong",
+    "source": [-99.1329340602939, 19.444388301415472],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Los Angeles",
+        "sourceId": "lagos",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "los-angeles",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Washington, D.C.",
+        "sourceId": "lagos",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "washington,-d.c.",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "New York",
+        "sourceId": "lagos",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "new-york",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Moscow",
+        "sourceId": "lagos",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "moscow",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Mexico City",
+        "sourceId": "lagos",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "mexico-city",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Beijing",
+        "sourceId": "lagos",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "beijing",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Jakarta",
+        "sourceId": "lagos",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "jakarta",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Shanghai",
+        "sourceId": "lagos",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "shanghai",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Tokyo",
+        "sourceId": "lagos",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "tokyo",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Mumbai",
+        "sourceId": "lagos",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "mumbai",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Kolkata",
+        "sourceId": "lagos",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "kolkata",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "lagos",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "rio-de-janeiro",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Sao Paulo",
+        "sourceId": "lagos",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "sao-paulo",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Singapore",
+        "sourceId": "lagos",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "singapore",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [3.389585212598433, 6.445207512093191],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Lagos",
+        "targetName": "Hong Kong",
+        "sourceId": "lagos",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "lagos",
+    "targetId": "hong-kong",
+    "source": [3.389585212598433, 6.445207512093191],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Los Angeles",
+        "sourceId": "beijing",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "los-angeles",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Washington, D.C.",
+        "sourceId": "beijing",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "washington,-d.c.",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "New York",
+        "sourceId": "beijing",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "new-york",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Moscow",
+        "sourceId": "beijing",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "moscow",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Mexico City",
+        "sourceId": "beijing",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "mexico-city",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Lagos",
+        "sourceId": "beijing",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "lagos",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Jakarta",
+        "sourceId": "beijing",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "jakarta",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Shanghai",
+        "sourceId": "beijing",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "shanghai",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Tokyo",
+        "sourceId": "beijing",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "tokyo",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Mumbai",
+        "sourceId": "beijing",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "mumbai",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Kolkata",
+        "sourceId": "beijing",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "kolkata",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "beijing",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "rio-de-janeiro",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Sao Paulo",
+        "sourceId": "beijing",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "sao-paulo",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Singapore",
+        "sourceId": "beijing",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "singapore",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [116.38633982565943, 39.93083808990906],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Beijing",
+        "targetName": "Hong Kong",
+        "sourceId": "beijing",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "beijing",
+    "targetId": "hong-kong",
+    "source": [116.38633982565943, 39.93083808990906],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Los Angeles",
+        "sourceId": "jakarta",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "los-angeles",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Washington, D.C.",
+        "sourceId": "jakarta",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "washington,-d.c.",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "New York",
+        "sourceId": "jakarta",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "new-york",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Moscow",
+        "sourceId": "jakarta",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "moscow",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Mexico City",
+        "sourceId": "jakarta",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "mexico-city",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Lagos",
+        "sourceId": "jakarta",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "lagos",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Beijing",
+        "sourceId": "jakarta",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "beijing",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Shanghai",
+        "sourceId": "jakarta",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "shanghai",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Tokyo",
+        "sourceId": "jakarta",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "tokyo",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Mumbai",
+        "sourceId": "jakarta",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "mumbai",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Kolkata",
+        "sourceId": "jakarta",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "kolkata",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "jakarta",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "rio-de-janeiro",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Sao Paulo",
+        "sourceId": "jakarta",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "sao-paulo",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Singapore",
+        "sourceId": "jakarta",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "singapore",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [106.82749176247012, -6.172471846798885],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Jakarta",
+        "targetName": "Hong Kong",
+        "sourceId": "jakarta",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "jakarta",
+    "targetId": "hong-kong",
+    "source": [106.82749176247012, -6.172471846798885],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Los Angeles",
+        "sourceId": "shanghai",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "los-angeles",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Washington, D.C.",
+        "sourceId": "shanghai",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "washington,-d.c.",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "New York",
+        "sourceId": "shanghai",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "new-york",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Moscow",
+        "sourceId": "shanghai",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "moscow",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Mexico City",
+        "sourceId": "shanghai",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "mexico-city",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Lagos",
+        "sourceId": "shanghai",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "lagos",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Beijing",
+        "sourceId": "shanghai",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "beijing",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Jakarta",
+        "sourceId": "shanghai",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "jakarta",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Tokyo",
+        "sourceId": "shanghai",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "tokyo",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Mumbai",
+        "sourceId": "shanghai",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "mumbai",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Kolkata",
+        "sourceId": "shanghai",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "kolkata",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "shanghai",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "rio-de-janeiro",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Sao Paulo",
+        "sourceId": "shanghai",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "sao-paulo",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Singapore",
+        "sourceId": "shanghai",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "singapore",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.43455881982015, 31.218398311228327],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Shanghai",
+        "targetName": "Hong Kong",
+        "sourceId": "shanghai",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "shanghai",
+    "targetId": "hong-kong",
+    "source": [121.43455881982015, 31.218398311228327],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Los Angeles",
+        "sourceId": "tokyo",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "los-angeles",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Washington, D.C.",
+        "sourceId": "tokyo",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "washington,-d.c.",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "New York",
+        "sourceId": "tokyo",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "new-york",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Moscow",
+        "sourceId": "tokyo",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "moscow",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Mexico City",
+        "sourceId": "tokyo",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "mexico-city",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Lagos",
+        "sourceId": "tokyo",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "lagos",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Beijing",
+        "sourceId": "tokyo",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "beijing",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Jakarta",
+        "sourceId": "tokyo",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "jakarta",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Shanghai",
+        "sourceId": "tokyo",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "shanghai",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Mumbai",
+        "sourceId": "tokyo",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "mumbai",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Kolkata",
+        "sourceId": "tokyo",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "kolkata",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "tokyo",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "rio-de-janeiro",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Sao Paulo",
+        "sourceId": "tokyo",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "sao-paulo",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Singapore",
+        "sourceId": "tokyo",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "singapore",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.74946157054467, 35.686962764371174],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Tokyo",
+        "targetName": "Hong Kong",
+        "sourceId": "tokyo",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "tokyo",
+    "targetId": "hong-kong",
+    "source": [139.74946157054467, 35.686962764371174],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Los Angeles",
+        "sourceId": "mumbai",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "los-angeles",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Washington, D.C.",
+        "sourceId": "mumbai",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "washington,-d.c.",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "New York",
+        "sourceId": "mumbai",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "new-york",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Moscow",
+        "sourceId": "mumbai",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "moscow",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Mexico City",
+        "sourceId": "mumbai",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "mexico-city",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Lagos",
+        "sourceId": "mumbai",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "lagos",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Beijing",
+        "sourceId": "mumbai",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "beijing",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Jakarta",
+        "sourceId": "mumbai",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "jakarta",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Shanghai",
+        "sourceId": "mumbai",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "shanghai",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Tokyo",
+        "sourceId": "mumbai",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "tokyo",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Kolkata",
+        "sourceId": "mumbai",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "kolkata",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "mumbai",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "rio-de-janeiro",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Sao Paulo",
+        "sourceId": "mumbai",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "sao-paulo",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Singapore",
+        "sourceId": "mumbai",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "singapore",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [72.85504343876647, 19.0189362343566],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Mumbai",
+        "targetName": "Hong Kong",
+        "sourceId": "mumbai",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "mumbai",
+    "targetId": "hong-kong",
+    "source": [72.85504343876647, 19.0189362343566],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Los Angeles",
+        "sourceId": "kolkata",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "los-angeles",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Washington, D.C.",
+        "sourceId": "kolkata",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "washington,-d.c.",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "New York",
+        "sourceId": "kolkata",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "new-york",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Moscow",
+        "sourceId": "kolkata",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "moscow",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Mexico City",
+        "sourceId": "kolkata",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "mexico-city",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Lagos",
+        "sourceId": "kolkata",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "lagos",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Beijing",
+        "sourceId": "kolkata",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "beijing",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Jakarta",
+        "sourceId": "kolkata",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "jakarta",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Shanghai",
+        "sourceId": "kolkata",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "shanghai",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Tokyo",
+        "sourceId": "kolkata",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "tokyo",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Mumbai",
+        "sourceId": "kolkata",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "mumbai",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "kolkata",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "rio-de-janeiro",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Sao Paulo",
+        "sourceId": "kolkata",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "sao-paulo",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Singapore",
+        "sourceId": "kolkata",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "singapore",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [88.32272979950551, 22.49691515689642],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Kolkata",
+        "targetName": "Hong Kong",
+        "sourceId": "kolkata",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "kolkata",
+    "targetId": "hong-kong",
+    "source": [88.32272979950551, 22.49691515689642],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Los Angeles",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "los-angeles",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Washington, D.C.",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "washington,-d.c.",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "New York",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "new-york",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Moscow",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "moscow",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Mexico City",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "mexico-city",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Lagos",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "lagos",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Beijing",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "beijing",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Jakarta",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "jakarta",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Shanghai",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "shanghai",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Tokyo",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "tokyo",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Mumbai",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "mumbai",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Kolkata",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "kolkata",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Sao Paulo",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "sao-paulo",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Singapore",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "singapore",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-43.22696665284366, -22.923077315615956],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Rio de Janeiro",
+        "targetName": "Hong Kong",
+        "sourceId": "rio-de-janeiro",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "rio-de-janeiro",
+    "targetId": "hong-kong",
+    "source": [-43.22696665284366, -22.923077315615956],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Los Angeles",
+        "sourceId": "sao-paulo",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "los-angeles",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Washington, D.C.",
+        "sourceId": "sao-paulo",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "washington,-d.c.",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "New York",
+        "sourceId": "sao-paulo",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "new-york",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Moscow",
+        "sourceId": "sao-paulo",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "moscow",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Mexico City",
+        "sourceId": "sao-paulo",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "mexico-city",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Lagos",
+        "sourceId": "sao-paulo",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "lagos",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Beijing",
+        "sourceId": "sao-paulo",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "beijing",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Jakarta",
+        "sourceId": "sao-paulo",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "jakarta",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Shanghai",
+        "sourceId": "sao-paulo",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "shanghai",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Tokyo",
+        "sourceId": "sao-paulo",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "tokyo",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Mumbai",
+        "sourceId": "sao-paulo",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "mumbai",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Kolkata",
+        "sourceId": "sao-paulo",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "kolkata",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "sao-paulo",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "rio-de-janeiro",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Singapore",
+        "sourceId": "sao-paulo",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "singapore",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [103.85387481909902, 1.294979325105942]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-46.62696583905523, -23.55673372837896],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Sao Paulo",
+        "targetName": "Hong Kong",
+        "sourceId": "sao-paulo",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "sao-paulo",
+    "targetId": "hong-kong",
+    "source": [-46.62696583905523, -23.55673372837896],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Los Angeles",
+        "sourceId": "singapore",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "los-angeles",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Washington, D.C.",
+        "sourceId": "singapore",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "washington,-d.c.",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "New York",
+        "sourceId": "singapore",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "new-york",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Moscow",
+        "sourceId": "singapore",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "moscow",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Mexico City",
+        "sourceId": "singapore",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "mexico-city",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Lagos",
+        "sourceId": "singapore",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "lagos",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Beijing",
+        "sourceId": "singapore",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "beijing",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Jakarta",
+        "sourceId": "singapore",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "jakarta",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Shanghai",
+        "sourceId": "singapore",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "shanghai",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Tokyo",
+        "sourceId": "singapore",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "tokyo",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Mumbai",
+        "sourceId": "singapore",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "mumbai",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Kolkata",
+        "sourceId": "singapore",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "kolkata",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "singapore",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "rio-de-janeiro",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Sao Paulo",
+        "sourceId": "singapore",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "sao-paulo",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [103.85387481909902, 1.294979325105942],
+          [114.18306345846304, 22.30692675357551]
+        ]
+      },
+      "properties": {
+        "sourceName": "Singapore",
+        "targetName": "Hong Kong",
+        "sourceId": "singapore",
+        "targetId": "hong-kong"
+      }
+    },
+    "sourceId": "singapore",
+    "targetId": "hong-kong",
+    "source": [103.85387481909902, 1.294979325105942],
+    "target": [114.18306345846304, 22.30692675357551]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-118.18192636994041, 33.99192410876543]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Los Angeles",
+        "sourceId": "hong-kong",
+        "targetId": "los-angeles"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "los-angeles",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-118.18192636994041, 33.99192410876543]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-77.01136443943716, 38.901495235087054]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Washington, D.C.",
+        "sourceId": "hong-kong",
+        "targetId": "washington,-d.c."
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "washington,-d.c.",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-77.01136443943716, 38.901495235087054]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-73.98196278740681, 40.75192492259464]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "New York",
+        "sourceId": "hong-kong",
+        "targetId": "new-york"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "new-york",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-73.98196278740681, 40.75192492259464]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [37.6135769672714, 55.75410998124818]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Moscow",
+        "sourceId": "hong-kong",
+        "targetId": "moscow"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "moscow",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [37.6135769672714, 55.75410998124818]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-99.1329340602939, 19.444388301415472]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Mexico City",
+        "sourceId": "hong-kong",
+        "targetId": "mexico-city"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "mexico-city",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-99.1329340602939, 19.444388301415472]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [3.389585212598433, 6.445207512093191]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Lagos",
+        "sourceId": "hong-kong",
+        "targetId": "lagos"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "lagos",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [3.389585212598433, 6.445207512093191]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [116.38633982565943, 39.93083808990906]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Beijing",
+        "sourceId": "hong-kong",
+        "targetId": "beijing"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "beijing",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [116.38633982565943, 39.93083808990906]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [106.82749176247012, -6.172471846798885]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Jakarta",
+        "sourceId": "hong-kong",
+        "targetId": "jakarta"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "jakarta",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [106.82749176247012, -6.172471846798885]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [121.43455881982015, 31.218398311228327]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Shanghai",
+        "sourceId": "hong-kong",
+        "targetId": "shanghai"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "shanghai",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [121.43455881982015, 31.218398311228327]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [139.74946157054467, 35.686962764371174]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Tokyo",
+        "sourceId": "hong-kong",
+        "targetId": "tokyo"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "tokyo",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [139.74946157054467, 35.686962764371174]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [72.85504343876647, 19.0189362343566]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Mumbai",
+        "sourceId": "hong-kong",
+        "targetId": "mumbai"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "mumbai",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [72.85504343876647, 19.0189362343566]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [88.32272979950551, 22.49691515689642]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Kolkata",
+        "sourceId": "hong-kong",
+        "targetId": "kolkata"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "kolkata",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [88.32272979950551, 22.49691515689642]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-43.22696665284366, -22.923077315615956]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Rio de Janeiro",
+        "sourceId": "hong-kong",
+        "targetId": "rio-de-janeiro"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "rio-de-janeiro",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-43.22696665284366, -22.923077315615956]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [-46.62696583905523, -23.55673372837896]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Sao Paulo",
+        "sourceId": "hong-kong",
+        "targetId": "sao-paulo"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "sao-paulo",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [-46.62696583905523, -23.55673372837896]
+  },
+  {
+    "feature": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [114.18306345846304, 22.30692675357551],
+          [103.85387481909902, 1.294979325105942]
+        ]
+      },
+      "properties": {
+        "sourceName": "Hong Kong",
+        "targetName": "Singapore",
+        "sourceId": "hong-kong",
+        "targetId": "singapore"
+      }
+    },
+    "sourceId": "hong-kong",
+    "targetId": "singapore",
+    "source": [114.18306345846304, 22.30692675357551],
+    "target": [103.85387481909902, 1.294979325105942]
+  }
+]

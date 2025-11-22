@@ -16,7 +16,6 @@
   import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -88,7 +87,7 @@
       padding={{ left: 100, right: 100 }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20 pointer-events-none" />
           {#each features as feature}

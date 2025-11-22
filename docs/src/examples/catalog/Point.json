@@ -1,0 +1,67 @@
+{
+  "component": "Point",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Point/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Point",
+          "lineNumber": 22,
+          "line": "<Point d={{ x: 50, y: 50 }}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 24,
+          "line": "<Circle cx={x} cy={y} r={10} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 59,
+      "line": "<Point d={data[data.length - 1]}>"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 62,
+      "line": "<Point d={data[data.length - 1]}>"
+    },
+    {
+      "example": "basic",
+      "component": "Point",
+      "path": "/example/Point/basic",
+      "lineNumber": 22,
+      "line": "<Point d={{ x: 50, y: 50 }}>"
+    },
+    {
+      "example": "basic",
+      "component": "Point",
+      "path": "/example/Point/basic",
+      "lineNumber": 28,
+      "line": "<Point d={{ x: 20, y: 20 }}>"
+    }
+  ],
+  "updatedAt": "2025-11-13T18:10:50.286Z"
+}

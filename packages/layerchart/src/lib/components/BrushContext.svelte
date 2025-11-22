@@ -146,7 +146,7 @@
   import { scaleInvert, type DomainType } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 
   const ctx = getChartContext();

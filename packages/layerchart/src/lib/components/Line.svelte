@@ -94,8 +94,8 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { getRenderContext } from './Chart.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
@@ -134,7 +134,7 @@
   const motionX2 = createMotion(initialX2, () => x2, motion);
   const motionY2 = createMotion(initialY2, () => y2, motion);
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -156,7 +156,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Line',
       render,
@@ -181,7 +181,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <line
     x1={motionX1.current}
     y1={motionY1.current}
@@ -201,7 +201,7 @@
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
   <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
   <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   {@const { angle, length } = pointsToAngleAndLength(
     { x: motionX1.current, y: motionY1.current },
     { x: motionX2.current, y: motionY2.current }

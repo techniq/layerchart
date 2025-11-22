@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import type { HTMLAttributes } from 'svelte/elements';
   import type { Placement } from './types.js';
 
   type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
@@ -42,9 +43,8 @@
   import LucideZoomIn from '~icons/lucide/zoom-in';
   import LucideZoomOut from '~icons/lucide/zoom-out';
 
-  import { getTransformContext } from './TransformContext.svelte';
+  import { getTransformContext } from '$lib/contexts/transform.js';
   import type { Without } from '$lib/utils/types.js';
-  import type { HTMLAttributes } from 'svelte/elements';
 
   let {
     placement = 'top-right',

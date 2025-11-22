@@ -24,13 +24,15 @@
     | 'marks'
     | 'onTooltipClick'
     | 'profile'
-    | 'renderContext'
+    | 'layer'
     | 'series'
     | 'tooltip'
     | 'tooltipContext'
     | 'cRange'
     | 'padding'
     | 'context'
+    | 'width'
+    | 'height'
   > & {
     /**
      * Key accessor
@@ -181,7 +183,7 @@
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -197,6 +199,9 @@
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -219,9 +224,9 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -234,6 +239,9 @@
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
@@ -404,8 +412,8 @@
       {@render belowContext?.(snippetProps)}
 
       <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        type={layer}
+        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
         {center}
         {debug}
       >

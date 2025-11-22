@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import {
     AnnotationLine,
     AnnotationPoint,
@@ -13,7 +12,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -53,11 +51,6 @@
   let placement: Placement = $state('top-right');
   let xOffset = $state(0);
   let yOffset = $state(0);
-
-  let renderContext = $derived(
-    shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
-  );
-  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -66,7 +59,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           x={new Date('2010-03-30')}
@@ -86,7 +79,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           x={new Date('2010-01-01')}
@@ -129,7 +122,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           y={500}
@@ -175,7 +168,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           y={500}
@@ -224,7 +217,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           x={new Date('2010-03-30')}
@@ -246,7 +239,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         {#each annotations as annotation}
           <AnnotationLine
@@ -276,7 +269,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+    <LineChart data={data.appleStock} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationRange
           y={[500, null]}
@@ -307,7 +300,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+    <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           y={50}

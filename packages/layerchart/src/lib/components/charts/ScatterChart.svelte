@@ -55,7 +55,7 @@
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
   import Rule from '../Rule.svelte';
@@ -65,6 +65,9 @@
   import { asAny } from '../../utils/types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -85,9 +88,9 @@
     context = $bindable(),
     onTooltipClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -98,6 +101,9 @@
     annotations = [],
     ...restProps
   }: ScatterChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series: SeriesData<TData, typeof Points>[] = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
@@ -265,11 +271,7 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-        {debug}
-      >
+      <Layer type={layer} {...asAny(layer === 'canvas' ? props.canvas : props.svg)} {debug}>
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}

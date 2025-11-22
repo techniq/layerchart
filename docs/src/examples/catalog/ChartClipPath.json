@@ -1,0 +1,119 @@
+{
+  "component": "ChartClipPath",
+  "examples": [],
+  "usage": [
+    {
+      "example": "clip-tween-on-mount",
+      "component": "Area",
+      "path": "/example/Area/clip-tween-on-mount",
+      "lineNumber": 20,
+      "line": "<ChartClipPath"
+    },
+    {
+      "example": "integrated-brush-(both-axis-area)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
+      "lineNumber": 40,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "integrated-brush-(x-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(x-axis)",
+      "lineNumber": 37,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "integrated-brush-(y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(y-axis)",
+      "lineNumber": 38,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/minimap",
+      "lineNumber": 38,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 44,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 31,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 68,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "tooltip-interop",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/tooltip-interop",
+      "lineNumber": 42,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 64,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/example/Partition/filterable",
+      "lineNumber": 116,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/example/Partition/horizontal",
+      "lineNumber": 96,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/example/Partition/vertical",
+      "lineNumber": 97,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/nested-zoom",
+      "lineNumber": 89,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/example/Treemap/stacked-zoom",
+      "lineNumber": 87,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/example/Voronoi/radius",
+      "lineNumber": 26,
+      "line": "<ChartClipPath>"
+    }
+  ],
+  "updatedAt": "2025-11-12T18:44:21.627Z"
+}

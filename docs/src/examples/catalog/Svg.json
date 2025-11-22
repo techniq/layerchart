@@ -1,0 +1,35 @@
+{
+  "component": "Svg",
+  "examples": [],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/basic",
+      "lineNumber": 23,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "pixelated",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/pixelated",
+      "lineNumber": 27,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 20,
+      "line": "<svg {width} {height}>"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 34,
+      "line": "<svg {width} {height}>"
+    }
+  ],
+  "updatedAt": "2025-11-09T02:04:07.640Z"
+}

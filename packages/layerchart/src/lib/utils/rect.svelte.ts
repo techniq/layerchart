@@ -1,7 +1,7 @@
-import type { ChartContextValue } from '$lib/components/Chart.svelte';
+import { max, min } from 'd3-array';
+import type { ChartContextValue } from '$lib/contexts/chart.js';
 import { accessor, type Accessor } from './common.js';
 import { isScaleBand } from './scales.svelte.js';
-import { max, min } from 'd3-array';
 
 /**
  * A set of inset distances, applied to a rectangle to shrink or expand

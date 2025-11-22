@@ -1,0 +1,14 @@
+{
+  "component": "Blur",
+  "examples": [],
+  "usage": [
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/timezones",
+      "lineNumber": 148,
+      "line": "<Blur>"
+    }
+  ],
+  "updatedAt": "2025-11-03T14:52:10.705Z"
+}

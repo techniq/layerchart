@@ -5,7 +5,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -16,8 +15,6 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
-
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -33,7 +30,6 @@
       props={{
         bars: { y: 'baseline' },
       }}
-      {renderContext}
     >
       {#snippet aboveMarks()}
         <Area y1="value" class="fill-secondary/20" line={{ class: 'stroke-secondary' }} />
@@ -70,7 +66,6 @@
       props={{
         bars: { radius: 1, class: 'stroke-none fill-surface-content/10' },
       }}
-      {renderContext}
     />
 
     <!-- Second chart (line), responsible for tooltip -->
@@ -85,7 +80,6 @@
         xAxis: { ticks: 10, rule: true },
         tooltip: { context: { mode: 'band' } },
       }}
-      {renderContext}
     >
       {#snippet marks()}
         <Spline y="open" class="stroke-primary" />
@@ -127,7 +121,7 @@
       tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis
             placement="left"
             rule
@@ -182,7 +176,7 @@
       yNice
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis
           placement="left"
           rule
@@ -205,7 +199,7 @@
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis
           placement="right"
           rule
@@ -250,7 +244,6 @@
           class: '_stroke-none fill-blue-500',
         },
       }}
-      {renderContext}
     />
 
     <BarChart
@@ -285,7 +278,6 @@
         },
       ]}
       seriesLayout="stack"
-      {renderContext}
     >
       {#snippet axis({ context })}
         <Axis placement="left" />

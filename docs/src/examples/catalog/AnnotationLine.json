@@ -1,0 +1,195 @@
+{
+  "component": "AnnotationLine",
+  "examples": [
+    {
+      "name": "bar-chart",
+      "path": "/example/AnnotationLine/bar-chart",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 18,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "path": "/example/AnnotationLine/horizontal",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 12,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-placement",
+      "path": "/example/AnnotationLine/horizontal-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 16,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 18,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-with-range",
+      "path": "/example/AnnotationLine/horizontal-with-range",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationRange",
+          "lineNumber": 12,
+          "line": "<AnnotationRange"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 23,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical",
+      "path": "/example/AnnotationLine/vertical",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 12,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical-placement",
+      "path": "/example/AnnotationLine/vertical-placement",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 16,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 18,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
+      "name": "vertical-with-rotation",
+      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 10,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 12,
+          "line": "<AnnotationLine"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "bar-chart",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/bar-chart",
+      "lineNumber": 18,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-placement",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-placement",
+      "lineNumber": 18,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "horizontal-with-range",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/horizontal-with-range",
+      "lineNumber": 23,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-placement",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-placement",
+      "lineNumber": 18,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 12,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "vertical-with-rotation",
+      "component": "AnnotationLine",
+      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "lineNumber": 29,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "line-to-point",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/line-to-point",
+      "lineNumber": 28,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "on-series-with-line-and-tooltip",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "lineNumber": 29,
+      "line": "<AnnotationLine"
+    }
+  ],
+  "updatedAt": "2025-11-14T15:00:19.104Z"
+}

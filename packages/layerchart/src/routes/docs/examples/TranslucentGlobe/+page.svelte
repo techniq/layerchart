@@ -15,7 +15,6 @@
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -76,7 +75,7 @@
     >
       {#snippet children({ context })}
         {@const [yaw, pitch, roll] = context.geo.projection?.rotate() ?? [0, 0, 0]}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
           <!-- Back -->

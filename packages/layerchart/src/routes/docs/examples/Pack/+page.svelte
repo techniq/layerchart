@@ -20,10 +20,8 @@
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
@@ -123,7 +121,7 @@
       }}
       bind:context
     >
-      <Layer type={renderContext} onclick={() => (selected = complexHierarchy)}>
+      <Layer onclick={() => (selected = complexHierarchy)}>
         <Pack {padding} hierarchy={complexHierarchy} bind:nodes>
           {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
             <Group

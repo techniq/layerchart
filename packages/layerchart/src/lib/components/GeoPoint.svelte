@@ -31,8 +31,8 @@
 
 <script lang="ts">
   import Group from './Group.svelte';
-  import { getRenderContext } from './Chart.svelte';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { lat, long, ref: refProp = $bindable(), children, ...restProps }: GeoPointProps = $props();
@@ -48,10 +48,10 @@
   const x = $derived(points[0]);
   const y = $derived(points[1]);
 
-  const renderContext = getRenderContext();
+  const layerCtx = getLayerContext();
 </script>
 
-{#if renderContext === 'svg'}
+{#if layerCtx === 'svg'}
   {#if children}
     <Group {x} {y} {...extractLayerProps(restProps, 'lc-geo-point-group')}>
       {@render children({ x, y })}
@@ -61,7 +61,7 @@
   {/if}
 {/if}
 
-{#if renderContext === 'canvas'}
+{#if layerCtx === 'canvas'}
   {#if children}
     <!-- TODO: Handle Canvas translation. Consolidate with svg use case above -->
     <!-- <Group {x} {y} {...$$restProps}> -->

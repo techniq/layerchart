@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Axis, Chart, Circle, Point, Layer } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let data: Array<{ x: number; y: number }> = [];
 </script>
@@ -18,7 +17,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
 

@@ -44,11 +44,12 @@
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
-  import { getRenderContext, getChartContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
@@ -63,7 +64,7 @@
 
   const ctx = getChartContext();
   const geoCtx = getGeoContext();
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
 
@@ -90,7 +91,7 @@
     }
   }
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'GeoTile',
       render,
@@ -99,7 +100,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg' && url}
+{#if layerCtx === 'svg' && url}
   {#if children}
     {@render children({ tiles })}
   {:else}

@@ -7,13 +7,10 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ count: 60, min: 10, max: 100, value: 'integer' });
 
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -39,8 +36,6 @@
         grid: { x: false, y: true, bandAlign: 'between' },
         tooltip: { context: { mode: 'band' } },
       }}
-      {renderContext}
-      debug={shared.debug}
     >
       {#snippet highlight()}
         <Highlight area axis="x" />

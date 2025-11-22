@@ -22,17 +22,17 @@
 
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { createId } from '$lib/utils/createId.js';
 
   const uid = $props.id();
 
   let { id = createId('blur-', uid), stdDeviation = 5, children }: BlurProps = $props();
 
-  const renderContext = getRenderContext();
+  const layerCtx = getLayerContext();
 </script>
 
-{#if renderContext === 'svg'}
+{#if layerCtx === 'svg'}
   <defs>
     <filter {id} class="lc-blur-filter">
       <feGaussianBlur in="SourceGraphic" {stdDeviation} />

@@ -7,7 +7,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
   import { applyLanes } from 'layerchart/utils/array.js';
 
   let { data } = $props();
@@ -30,8 +29,6 @@
   function formatYear(number: number): string {
     return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
   }
-
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -48,7 +45,6 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -96,7 +92,6 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -147,7 +142,6 @@
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
       props={{ tooltip: { context: { mode: 'bounds' } } }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -182,7 +176,6 @@
       rule={false}
       orientation="horizontal"
       padding={{ bottom: 36 }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -218,7 +211,6 @@
       orientation="horizontal"
       padding={{ bottom: 36 }}
       props={{ tooltip: { context: { mode: 'bounds' } } }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -258,7 +250,6 @@
           points: true,
         },
       }}
-      {renderContext}
     >
       {#snippet marks()}
         <Rule />
@@ -318,7 +309,6 @@
           points: true,
         },
       }}
-      {renderContext}
     >
       {#snippet marks()}
         <Rule />
@@ -381,7 +371,6 @@
           },
         },
       }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -436,7 +425,6 @@
         },
         tooltip: { context: { mode: 'bounds' } },
       }}
-      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>

@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { ref: refProp = $bindable(), full = false, ...restProps }: FrameProps = $props();

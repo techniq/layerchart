@@ -1,0 +1,112 @@
+{
+  "component": "Marker",
+  "examples": [
+    {
+      "name": "line",
+      "path": "/example/Marker/line",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 29,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={35}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 32,
+          "line": "<Line"
+        }
+      ]
+    },
+    {
+      "name": "orientation",
+      "path": "/example/Marker/orientation",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 37,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "spline",
+      "path": "/example/Marker/spline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 43,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "spline-w-thicker-stroke",
+      "path": "/example/Marker/spline-w-thicker-stroke",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 43,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "styling",
+      "path": "/example/Marker/styling",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 32,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 34,
+          "line": "<Spline"
+        }
+      ]
+    }
+  ],
+  "usage": [],
+  "updatedAt": "2025-11-12T16:58:10.447Z"
+}

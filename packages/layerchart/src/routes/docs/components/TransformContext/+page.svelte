@@ -9,7 +9,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(500);
   let angle = $state(137.5); //
@@ -57,7 +56,7 @@
       }}
     >
       <TransformControls />
-      <Layer type={shared.renderContext}>
+      <Layer>
         {#if showPath}
           <Spline {curve} motion="tween" />
         {/if}

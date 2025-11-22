@@ -3,7 +3,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, createTimeSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
   import { sort } from 'd3-array';
 
   let { data } = $props();
@@ -24,7 +23,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule x y />
@@ -42,7 +41,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="top" />
         <Axis placement="right" />
         <Rule x="$right" y="$top" />
@@ -60,7 +59,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule x={0} />
@@ -78,7 +77,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rule x={70} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
@@ -96,7 +95,7 @@
       yDomain={[-20, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule y={0} />
@@ -114,7 +113,7 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rule y={70} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
@@ -134,7 +133,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" />
         <Rule class="stroke-2 stroke-primary" />
@@ -154,7 +153,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" />
         <Rule class="stroke-2 stroke-primary" />
@@ -173,7 +172,7 @@
       y="name"
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" />
         <Axis placement="left" rule />
         <Rule class="stroke-2 stroke-primary" />
@@ -193,7 +192,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" />
         <Rule class="stroke-2 stroke-primary" />

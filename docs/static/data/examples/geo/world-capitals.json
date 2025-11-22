@@ -1,0 +1,827 @@
+[
+  {
+    "label": "Vienna",
+    "latitude": 48.2092,
+    "longitude": 16.3728
+  },
+  {
+    "label": "Minsk",
+    "latitude": 53.9678,
+    "longitude": 27.5766
+  },
+  {
+    "label": "Brussels",
+    "latitude": 50.8371,
+    "longitude": 4.3676
+  },
+  {
+    "label": "Sarajevo",
+    "latitude": 43.8608,
+    "longitude": 18.4214
+  },
+  {
+    "label": "Sofia",
+    "latitude": 42.7105,
+    "longitude": 23.3238
+  },
+  {
+    "label": "Zagreb",
+    "latitude": 45.815,
+    "longitude": 15.9785
+  },
+  {
+    "label": "Pristina",
+    "latitude": 42.666667,
+    "longitude": 21.166667
+  },
+  {
+    "label": "Prague",
+    "latitude": 50.0878,
+    "longitude": 14.4205
+  },
+  {
+    "label": "Copenhagen",
+    "latitude": 55.6763,
+    "longitude": 12.5681
+  },
+  {
+    "label": "Tallinn",
+    "latitude": 59.4389,
+    "longitude": 24.7545
+  },
+  {
+    "label": "Helsinki",
+    "latitude": 60.1699,
+    "longitude": 24.9384
+  },
+  {
+    "label": "Paris",
+    "latitude": 48.8567,
+    "longitude": 2.351
+  },
+  {
+    "label": "Berlin",
+    "latitude": 52.5235,
+    "longitude": 13.4115
+  },
+  {
+    "label": "Athens",
+    "latitude": 37.9792,
+    "longitude": 23.7166
+  },
+  {
+    "label": "Budapest",
+    "latitude": 47.4984,
+    "longitude": 19.0408
+  },
+  {
+    "label": "Reykjavik",
+    "latitude": 64.1353,
+    "longitude": -21.8952
+  },
+  {
+    "label": "Dublin",
+    "latitude": 53.3441,
+    "longitude": -6.2675
+  },
+  {
+    "label": "Rome",
+    "latitude": 41.8955,
+    "longitude": 12.4823
+  },
+  {
+    "label": "Riga",
+    "latitude": 56.9465,
+    "longitude": 24.1049
+  },
+  {
+    "label": "Vaduz",
+    "latitude": 47.1411,
+    "longitude": 9.5215
+  },
+  {
+    "label": "Vilnius",
+    "latitude": 54.6896,
+    "longitude": 25.2799
+  },
+  {
+    "label": "Luxembourg",
+    "latitude": 49.61,
+    "longitude": 6.1296
+  },
+  {
+    "label": "Skopje",
+    "latitude": 42.0024,
+    "longitude": 21.4361
+  },
+  {
+    "label": "Valletta",
+    "latitude": 35.9042,
+    "longitude": 14.5189
+  },
+  {
+    "label": "Chisinau",
+    "latitude": 47.0167,
+    "longitude": 28.8497
+  },
+  {
+    "label": "Monaco",
+    "latitude": 43.7325,
+    "longitude": 7.4189
+  },
+  {
+    "label": "Podgorica",
+    "latitude": 42.4602,
+    "longitude": 19.2595
+  },
+  {
+    "label": "Amsterdam",
+    "latitude": 52.3738,
+    "longitude": 4.891
+  },
+  {
+    "label": "Oslo",
+    "latitude": 59.9138,
+    "longitude": 10.7387
+  },
+  {
+    "label": "Warsaw",
+    "latitude": 52.2297,
+    "longitude": 21.0122
+  },
+  {
+    "label": "Lisbon",
+    "latitude": 38.7072,
+    "longitude": -9.1355
+  },
+  {
+    "label": "Bucharest",
+    "latitude": 44.4479,
+    "longitude": 26.0979
+  },
+  {
+    "label": "Moscow",
+    "latitude": 55.7558,
+    "longitude": 37.6176
+  },
+  {
+    "label": "San Marino",
+    "latitude": 43.9424,
+    "longitude": 12.4578
+  },
+  {
+    "label": "Belgrade",
+    "latitude": 44.8048,
+    "longitude": 20.4781
+  },
+  {
+    "label": "Bratislava",
+    "latitude": 48.2116,
+    "longitude": 17.1547
+  },
+  {
+    "label": "Ljubljana",
+    "latitude": 46.0514,
+    "longitude": 14.506
+  },
+  {
+    "label": "Madrid",
+    "latitude": 40.4167,
+    "longitude": -3.7033
+  },
+  {
+    "label": "Stockholm",
+    "latitude": 59.3328,
+    "longitude": 18.0645
+  },
+  {
+    "label": "Bern",
+    "latitude": 46.948,
+    "longitude": 7.4481
+  },
+  {
+    "label": "Kiev",
+    "latitude": 50.4422,
+    "longitude": 30.5367
+  },
+  {
+    "label": "London",
+    "latitude": 51.5002,
+    "longitude": -0.1262
+  },
+  {
+    "label": "Gibraltar",
+    "latitude": 36.1377,
+    "longitude": -5.3453
+  },
+  {
+    "label": "Saint Peter Port",
+    "latitude": 49.466,
+    "longitude": -2.5522
+  },
+  {
+    "label": "Douglas",
+    "latitude": 54.167,
+    "longitude": -4.4821
+  },
+  {
+    "label": "Saint Helier",
+    "latitude": 49.1919,
+    "longitude": -2.1071
+  },
+  {
+    "label": "Longyearbyen",
+    "latitude": 78.2186,
+    "longitude": 15.6488
+  },
+  {
+    "label": "Kabul",
+    "latitude": 34.5155,
+    "longitude": 69.1952
+  },
+  {
+    "label": "Yerevan",
+    "latitude": 40.1596,
+    "longitude": 44.509
+  },
+  {
+    "label": "Baku",
+    "latitude": 40.3834,
+    "longitude": 49.8932
+  },
+  {
+    "label": "Manama",
+    "latitude": 26.1921,
+    "longitude": 50.5354
+  },
+  {
+    "label": "Dhaka",
+    "latitude": 23.7106,
+    "longitude": 90.3978
+  },
+  {
+    "label": "Thimphu",
+    "latitude": 27.4405,
+    "longitude": 89.673
+  },
+  {
+    "label": "Bandar Seri Begawan",
+    "latitude": 4.9431,
+    "longitude": 114.9425
+  },
+  {
+    "label": "Phnom Penh",
+    "latitude": 11.5434,
+    "longitude": 104.8984
+  },
+  {
+    "label": "Peking",
+    "latitude": 39.9056,
+    "longitude": 116.3958
+  },
+  {
+    "label": "Nicosia",
+    "latitude": 35.1676,
+    "longitude": 33.3736
+  },
+  {
+    "label": "T'bilisi",
+    "latitude": 41.701,
+    "longitude": 44.793
+  },
+  {
+    "label": "New Delhi",
+    "latitude": 28.6353,
+    "longitude": 77.225
+  },
+  {
+    "label": "Jakarta",
+    "latitude": -6.1862,
+    "longitude": 106.8063
+  },
+  {
+    "label": "Teheran",
+    "latitude": 35.7061,
+    "longitude": 51.4358
+  },
+  {
+    "label": "Baghdad",
+    "latitude": 33.3157,
+    "longitude": 44.3922
+  },
+  {
+    "label": "Jerusalem",
+    "latitude": 31.76,
+    "longitude": 35.17
+  },
+  {
+    "label": "Tokyo",
+    "latitude": 35.6785,
+    "longitude": 139.6823
+  },
+  {
+    "label": "Amman",
+    "latitude": 31.9394,
+    "longitude": 35.9349
+  },
+  {
+    "label": "Astana",
+    "latitude": 51.1796,
+    "longitude": 71.4475
+  },
+  {
+    "label": "Kuwait",
+    "latitude": 29.3721,
+    "longitude": 47.9824
+  },
+  {
+    "label": "Bishkek",
+    "latitude": 42.8679,
+    "longitude": 74.5984
+  },
+  {
+    "label": "Vientiane",
+    "latitude": 17.9689,
+    "longitude": 102.6137
+  },
+  {
+    "label": "Beyrouth / Beirut",
+    "latitude": 33.8872,
+    "longitude": 35.5134
+  },
+  {
+    "label": "Kuala Lumpur",
+    "latitude": 3.1502,
+    "longitude": 101.7077
+  },
+  {
+    "label": "Ulan Bator",
+    "latitude": 47.9138,
+    "longitude": 106.922
+  },
+  {
+    "label": "Pyinmana",
+    "latitude": 19.7378,
+    "longitude": 96.2083
+  },
+  {
+    "label": "Kathmandu",
+    "latitude": 27.7058,
+    "longitude": 85.3157
+  },
+  {
+    "label": "Muscat",
+    "latitude": 23.6086,
+    "longitude": 58.5922
+  },
+  {
+    "label": "Islamabad",
+    "latitude": 33.6751,
+    "longitude": 73.0946
+  },
+  {
+    "label": "Manila",
+    "latitude": 14.579,
+    "longitude": 120.9726
+  },
+  {
+    "label": "Doha",
+    "latitude": 25.2948,
+    "longitude": 51.5082
+  },
+  {
+    "label": "Riyadh",
+    "latitude": 24.6748,
+    "longitude": 46.6977
+  },
+  {
+    "label": "Singapore",
+    "latitude": 1.2894,
+    "longitude": 103.85
+  },
+  {
+    "label": "Seoul",
+    "latitude": 37.5139,
+    "longitude": 126.9828
+  },
+  {
+    "label": "Colombo",
+    "latitude": 6.9155,
+    "longitude": 79.8572
+  },
+  {
+    "label": "Damascus",
+    "latitude": 33.5158,
+    "longitude": 36.2939
+  },
+  {
+    "label": "Taipei",
+    "latitude": 25.0338,
+    "longitude": 121.5645
+  },
+  {
+    "label": "Dushanbe",
+    "latitude": 38.5737,
+    "longitude": 68.7738
+  },
+  {
+    "label": "Bangkok",
+    "latitude": 13.7573,
+    "longitude": 100.502
+  },
+  {
+    "label": "Dili",
+    "latitude": -8.5662,
+    "longitude": 125.588
+  },
+  {
+    "label": "Ankara",
+    "latitude": 39.9439,
+    "longitude": 32.856
+  },
+  {
+    "label": "Ashgabat",
+    "latitude": 37.9509,
+    "longitude": 58.3794
+  },
+  {
+    "label": "Abu Dhabi",
+    "latitude": 24.4764,
+    "longitude": 54.3705
+  },
+  {
+    "label": "Tashkent",
+    "latitude": 41.3193,
+    "longitude": 69.2481
+  },
+  {
+    "label": "Hanoi",
+    "latitude": 21.0341,
+    "longitude": 105.8372
+  },
+  {
+    "label": "Sanaa",
+    "latitude": 15.3556,
+    "longitude": 44.2081
+  },
+  {
+    "label": "Buenos Aires",
+    "latitude": -34.6118,
+    "longitude": -58.4173
+  },
+  {
+    "label": "Bridgetown",
+    "latitude": 13.0935,
+    "longitude": -59.6105
+  },
+  {
+    "label": "Belmopan",
+    "latitude": 17.2534,
+    "longitude": -88.7713
+  },
+  {
+    "label": "Sucre",
+    "latitude": -19.0421,
+    "longitude": -65.2559
+  },
+  {
+    "label": "Brasilia",
+    "latitude": -15.7801,
+    "longitude": -47.9292
+  },
+  {
+    "label": "Ottawa",
+    "latitude": 45.4235,
+    "longitude": -75.6979
+  },
+  {
+    "label": "Santiago",
+    "latitude": -33.4691,
+    "longitude": -70.642
+  },
+  {
+    "label": "Bogota",
+    "latitude": 4.6473,
+    "longitude": -74.0962
+  },
+  {
+    "label": "San Jose",
+    "latitude": 9.9402,
+    "longitude": -84.1002
+  },
+  {
+    "label": "Havana",
+    "latitude": 23.1333,
+    "longitude": -82.3667
+  },
+  {
+    "label": "Roseau",
+    "latitude": 15.2976,
+    "longitude": -61.39
+  },
+  {
+    "label": "Santo Domingo",
+    "latitude": 18.479,
+    "longitude": -69.8908
+  },
+  {
+    "label": "Quito",
+    "latitude": -0.2295,
+    "longitude": -78.5243
+  },
+  {
+    "label": "San Salvador",
+    "latitude": 13.7034,
+    "longitude": -89.2073
+  },
+  {
+    "label": "Guatemala",
+    "latitude": 14.6248,
+    "longitude": -90.5328
+  },
+  {
+    "label": "Ciudad de Mexico",
+    "latitude": 19.4271,
+    "longitude": -99.1276
+  },
+  {
+    "label": "Managua",
+    "latitude": 12.1475,
+    "longitude": -86.2734
+  },
+  {
+    "label": "Panama",
+    "latitude": 8.9943,
+    "longitude": -79.5188
+  },
+  {
+    "label": "Asuncion",
+    "latitude": -25.3005,
+    "longitude": -57.6362
+  },
+  {
+    "label": "Lima",
+    "latitude": -12.0931,
+    "longitude": -77.0465
+  },
+  {
+    "label": "Castries",
+    "latitude": 13.9972,
+    "longitude": -60.0018
+  },
+  {
+    "label": "Paramaribo",
+    "latitude": 5.8232,
+    "longitude": -55.1679
+  },
+  {
+    "label": "Washington D.C.",
+    "latitude": 38.8921,
+    "longitude": -77.0241
+  },
+  {
+    "label": "Montevideo",
+    "latitude": -34.8941,
+    "longitude": -56.0675
+  },
+  {
+    "label": "Caracas",
+    "latitude": 10.4961,
+    "longitude": -66.8983
+  },
+  {
+    "label": "Oranjestad",
+    "latitude": 12.5246,
+    "longitude": -70.0265
+  },
+  {
+    "label": "Cayenne",
+    "latitude": 4.9346,
+    "longitude": -52.3303
+  },
+  {
+    "label": "Plymouth",
+    "latitude": 16.6802,
+    "longitude": -62.2014
+  },
+  {
+    "label": "San Juan",
+    "latitude": 18.45,
+    "longitude": -66.0667
+  },
+  {
+    "label": "Algiers",
+    "latitude": 36.7755,
+    "longitude": 3.0597
+  },
+  {
+    "label": "Luanda",
+    "latitude": -8.8159,
+    "longitude": 13.2306
+  },
+  {
+    "label": "Porto-Novo",
+    "latitude": 6.4779,
+    "longitude": 2.6323
+  },
+  {
+    "label": "Gaborone",
+    "latitude": -24.657,
+    "longitude": 25.9089
+  },
+  {
+    "label": "Ouagadougou",
+    "latitude": 12.3569,
+    "longitude": -1.5352
+  },
+  {
+    "label": "Bujumbura",
+    "latitude": -3.3818,
+    "longitude": 29.3622
+  },
+  {
+    "label": "Yaounde",
+    "latitude": 3.8612,
+    "longitude": 11.5217
+  },
+  {
+    "label": "Bangui",
+    "latitude": 4.3621,
+    "longitude": 18.5873
+  },
+  {
+    "label": "Brazzaville",
+    "latitude": -4.2767,
+    "longitude": 15.2662
+  },
+  {
+    "label": "Kinshasa",
+    "latitude": -4.3369,
+    "longitude": 15.3271
+  },
+  {
+    "label": "Yamoussoukro",
+    "latitude": 6.8067,
+    "longitude": -5.2728
+  },
+  {
+    "label": "Djibouti",
+    "latitude": 11.5806,
+    "longitude": 43.1425
+  },
+  {
+    "label": "Cairo",
+    "latitude": 30.0571,
+    "longitude": 31.2272
+  },
+  {
+    "label": "Asmara",
+    "latitude": 15.3315,
+    "longitude": 38.9183
+  },
+  {
+    "label": "Addis Abeba",
+    "latitude": 9.0084,
+    "longitude": 38.7575
+  },
+  {
+    "label": "Libreville",
+    "latitude": 0.3858,
+    "longitude": 9.4496
+  },
+  {
+    "label": "Banjul",
+    "latitude": 13.4399,
+    "longitude": -16.6775
+  },
+  {
+    "label": "Accra",
+    "latitude": 5.5401,
+    "longitude": -0.2074
+  },
+  {
+    "label": "Conakry",
+    "latitude": 9.537,
+    "longitude": -13.6785
+  },
+  {
+    "label": "Bissau",
+    "latitude": 11.8598,
+    "longitude": -15.5875
+  },
+  {
+    "label": "Nairobi",
+    "latitude": -1.2762,
+    "longitude": 36.7965
+  },
+  {
+    "label": "Maseru",
+    "latitude": -29.2976,
+    "longitude": 27.4854
+  },
+  {
+    "label": "Monrovia",
+    "latitude": 6.3106,
+    "longitude": -10.8047
+  },
+  {
+    "label": "Tripoli",
+    "latitude": 32.883,
+    "longitude": 13.1897
+  },
+  {
+    "label": "Antananarivo",
+    "latitude": -18.9201,
+    "longitude": 47.5237
+  },
+  {
+    "label": "Lilongwe",
+    "latitude": -13.9899,
+    "longitude": 33.7703
+  },
+  {
+    "label": "Bamako",
+    "latitude": 12.653,
+    "longitude": -7.9864
+  },
+  {
+    "label": "Nouakchott",
+    "latitude": 18.0669,
+    "longitude": -15.99
+  },
+  {
+    "label": "Port Louis",
+    "latitude": -20.1654,
+    "longitude": 57.4896
+  },
+  {
+    "label": "Rabat",
+    "latitude": 33.9905,
+    "longitude": -6.8704
+  },
+  {
+    "label": "Maputo",
+    "latitude": -25.9686,
+    "longitude": 32.5804
+  },
+  {
+    "label": "Windhoek",
+    "latitude": -22.5749,
+    "longitude": 17.0805
+  },
+  {
+    "label": "Niamey",
+    "latitude": 13.5164,
+    "longitude": 2.1157
+  },
+  {
+    "label": "Abuja",
+    "latitude": 9.058,
+    "longitude": 7.4891
+  },
+  {
+    "label": "Kigali",
+    "latitude": -1.9441,
+    "longitude": 30.0619
+  },
+  {
+    "label": "Dakar",
+    "latitude": 14.6953,
+    "longitude": -17.4439
+  },
+  {
+    "label": "Freetown",
+    "latitude": 8.4697,
+    "longitude": -13.2659
+  },
+  {
+    "label": "Mogadishu",
+    "latitude": 2.0411,
+    "longitude": 45.3426
+  },
+  {
+    "label": "Pretoria",
+    "latitude": -25.7463,
+    "longitude": 28.1876
+  },
+  {
+    "label": "Mbabane",
+    "latitude": -26.3186,
+    "longitude": 31.141
+  },
+  {
+    "label": "Dodoma",
+    "latitude": -6.167,
+    "longitude": 35.7497
+  },
+  {
+    "label": "Lome",
+    "latitude": 6.1228,
+    "longitude": 1.2255
+  },
+  {
+    "label": "Tunis",
+    "latitude": 36.8117,
+    "longitude": 10.1761
+  }
+]

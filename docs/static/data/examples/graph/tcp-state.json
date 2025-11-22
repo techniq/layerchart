@@ -1,0 +1,35 @@
+{
+  "nodes": [
+    { "id": "CLOSED" },
+    { "id": "LISTEN" },
+    { "id": "SYN RCVD" },
+    { "id": "SYN SENT" },
+    { "id": "ESTAB" },
+    { "id": "FINWAIT-1" },
+    { "id": "CLOSE WAIT" },
+    { "id": "FINWAIT-2" },
+    { "id": "CLOSING" },
+    { "id": "LAST-ACK" },
+    { "id": "TIME WAIT" }
+  ],
+  "links": [
+    { "source": "CLOSED", "target": "LISTEN", "label": "open" },
+    { "source": "LISTEN", "target": "SYN RCVD", "label": "rcv SYN" },
+    { "source": "LISTEN", "target": "SYN SENT", "label": "send" },
+    { "source": "LISTEN", "target": "CLOSED", "label": "close" },
+    { "source": "SYN RCVD", "target": "FINWAIT-1", "label": "close" },
+    { "source": "SYN RCVD", "target": "ESTAB", "label": "rcv ACK of SYN" },
+    { "source": "SYN SENT", "target": "SYN RCVD", "label": "rcv SYN" },
+    { "source": "SYN SENT", "target": "ESTAB", "label": "rcv SYN, ACK" },
+    { "source": "SYN SENT", "target": "CLOSED", "label": "close" },
+    { "source": "ESTAB", "target": "FINWAIT-1", "label": "close" },
+    { "source": "ESTAB", "target": "CLOSE WAIT", "label": "rcv FIN" },
+    { "source": "FINWAIT-1", "target": "FINWAIT-2", "label": "rcv ACK of FIN" },
+    { "source": "FINWAIT-1", "target": "CLOSING", "label": "rcv FIN" },
+    { "source": "CLOSE WAIT", "target": "LAST-ACK", "label": "close" },
+    { "source": "FINWAIT-2", "target": "TIME WAIT", "label": "rcv FIN" },
+    { "source": "CLOSING", "target": "TIME WAIT", "label": "rcv ACK of FIN" },
+    { "source": "LAST-ACK", "target": "CLOSED", "label": "rcv ACK of FIN" },
+    { "source": "TIME WAIT", "target": "CLOSED", "label": "timeout=2MSL" }
+  ]
+}

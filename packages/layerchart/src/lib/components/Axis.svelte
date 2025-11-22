@@ -136,7 +136,7 @@
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
   import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';

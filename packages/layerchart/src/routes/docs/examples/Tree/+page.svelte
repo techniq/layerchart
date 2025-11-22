@@ -13,7 +13,6 @@
   import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -116,7 +115,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Layer type={shared.renderContext}>
+            <Layer>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}
@@ -205,7 +204,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Layer type={shared.renderContext}>
+            <Layer>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}

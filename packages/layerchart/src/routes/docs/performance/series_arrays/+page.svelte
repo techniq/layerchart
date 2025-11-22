@@ -5,13 +5,11 @@
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -53,15 +51,7 @@
         <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded-sm">
             {#if show}
-              <LineChart
-                data={data.chartData.cpu}
-                x="x"
-                y="y"
-                props={chartProps}
-                brush
-                {renderContext}
-                profile
-              />
+              <LineChart data={data.chartData.cpu} x="x" y="y" props={chartProps} brush profile />
             {/if}
           </div>
         </Preview>
@@ -79,7 +69,6 @@
                 ]}
                 props={chartProps}
                 brush
-                {renderContext}
                 profile
               />
             {/if}

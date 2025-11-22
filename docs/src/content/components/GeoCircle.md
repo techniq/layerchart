@@ -1,0 +1,14 @@
+---
+description: Geographic component which displays circular areas on a map to represent a specific geographic region or radius around a point.
+section: geo
+layers: [svg, canvas]
+related: []
+---
+
+<script lang="ts">
+  import Example from '$lib/components/Example.svelte';
+</script>
+
+## Playground
+
+<Example name="playground" />

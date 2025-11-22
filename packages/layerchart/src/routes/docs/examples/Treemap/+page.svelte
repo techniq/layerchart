@@ -37,7 +37,6 @@
     findAncestor,
   } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -71,7 +70,10 @@
       // d => d.year,
     )
   );
-  let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+  // svelte-ignore state_referenced_locally
+  let groupedHierarchy = $state<HierarchyRectangularNode<any>>(
+    hierarchy(groupedCars).count() as HierarchyRectangularNode<any>
+  );
   $effect.pre(() => {
     untrack(() => {
       selectedCarNode = groupedHierarchy;
@@ -185,7 +187,7 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Bounds
             domain={asAny(selectedNested)}
             motion={{ type: 'tween', duration: 800, easing: cubicOut }}
@@ -349,7 +351,7 @@
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Treemap
           hierarchy={groupedHierarchy}
           {tile}
@@ -484,7 +486,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Bounds
           domain={asAny(selectedZoomable)}
           motion={{ type: 'tween', duration: 800, easing: cubicOut }}

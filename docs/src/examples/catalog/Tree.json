@@ -1,0 +1,104 @@
+{
+  "component": "Tree",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Tree/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 59,
+          "line": "<TransformControls orientation=\"horizontal\" class=\"-m-2\" />"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 61,
+          "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 63,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 65,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 78,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 97,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 108,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "html-nodes",
+      "path": "/example/Tree/html-nodes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 59,
+          "line": "<TransformControls orientation=\"horizontal\" class=\"-m-2\" />"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 61,
+          "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 63,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 65,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 82,
+          "line": "<Group"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/example/Tree/basic",
+      "lineNumber": 61,
+      "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+    },
+    {
+      "example": "html-nodes",
+      "component": "Tree",
+      "path": "/example/Tree/html-nodes",
+      "lineNumber": 61,
+      "line": "<Tree {hierarchy} {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:11.151Z"
+}

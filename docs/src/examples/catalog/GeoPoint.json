@@ -1,0 +1,295 @@
+{
+  "component": "GeoPoint",
+  "examples": [
+    {
+      "name": "icons",
+      "path": "/example/GeoPoint/icons",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 45,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 52,
+          "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 55,
+          "line": "<Text"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 61,
+          "line": "<Circle"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 72,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "us-airports",
+      "path": "/example/GeoPoint/us-airports",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 49,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 56,
+          "line": "<GeoPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 78,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "us-state-capitals",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 27,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 37,
+          "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 38,
+          "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 39,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "world-airports",
+      "path": "/example/GeoPoint/world-airports",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 49,
+          "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 53,
+          "line": "<GeoPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 75,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "world-capitals",
+      "path": "/example/GeoPoint/world-capitals",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 47,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 49,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "GeoPoint",
+          "lineNumber": 56,
+          "line": "<GeoPoint"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 75,
+          "line": "<Circle r={4} class=\"stroke-primary/50 fill-none\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 76,
+          "line": "<Text"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "submarine-cables-globe",
+      "component": "GeoPath",
+      "path": "/example/GeoPath/submarine-cables-globe",
+      "lineNumber": 108,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "icons",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/icons",
+      "lineNumber": 52,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-airports",
+      "lineNumber": 56,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-airports",
+      "lineNumber": 68,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 37,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "us-state-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/us-state-capitals",
+      "lineNumber": 47,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-airports",
+      "lineNumber": 53,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-airports",
+      "lineNumber": 65,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 56,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 70,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "world-capitals",
+      "component": "GeoPoint",
+      "path": "/example/GeoPoint/world-capitals",
+      "lineNumber": 84,
+      "line": "<GeoPoint"
+    },
+    {
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/draggable-globe",
+      "lineNumber": 34,
+      "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "draggable-globe",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/draggable-globe",
+      "lineNumber": 35,
+      "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/world-map",
+      "lineNumber": 46,
+      "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "world-map",
+      "component": "GeoSpline",
+      "path": "/example/GeoSpline/world-map",
+      "lineNumber": 47,
+      "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
+    },
+    {
+      "example": "geo",
+      "component": "Hull",
+      "path": "/example/Hull/geo",
+      "lineNumber": 46,
+      "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.962Z"
+}

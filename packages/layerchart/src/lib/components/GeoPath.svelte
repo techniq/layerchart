@@ -1,9 +1,6 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import {
     geoPath as d3GeoPath,
     geoTransform as d3geoTransform,
@@ -12,6 +9,10 @@
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
+  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
+
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {
@@ -68,10 +69,10 @@
 <script lang="ts">
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { createKey } from '$lib/utils/key.svelte.js';
 
   let {
@@ -111,7 +112,7 @@
     return geoCurvePath(projection, curve);
   });
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -155,7 +156,7 @@
     tooltipContext?.hide();
   };
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'GeoPath',
       render,
@@ -184,7 +185,7 @@
 
 {#if children}
   {@render children({ geoPath })}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <path
     bind:this={ref}
     {...restProps}

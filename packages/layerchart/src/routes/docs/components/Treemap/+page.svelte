@@ -22,7 +22,6 @@
     findAncestor,
   } from 'layerchart';
   import { type ComponentProps } from 'svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -145,7 +144,7 @@
   <div class="aspect-[16/9]">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Treemap
             hierarchy={rootPopulation}
             {tile}
@@ -278,7 +277,7 @@
   <div class="h-[800px]">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Treemap
             hierarchy={root.copy()}
             {tile}
@@ -366,7 +365,7 @@
 <Preview data={rootFlat}>
   <div class="h-[400px]">
     <Chart>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Treemap hierarchy={rootFlat}>
           {#snippet children({ nodes })}
             {#each nodes.filter((n) => n.depth > 0) as node}

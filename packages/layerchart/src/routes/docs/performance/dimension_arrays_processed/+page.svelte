@@ -6,13 +6,11 @@
   import { zip } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -66,7 +64,6 @@
                 y={(d) => d[1]}
                 props={chartProps}
                 brush
-                {renderContext}
                 profile
               />
             {/if}
@@ -98,7 +95,6 @@
                 ]}
                 props={chartProps}
                 brush
-                {renderContext}
                 profile
               />
             {/if}

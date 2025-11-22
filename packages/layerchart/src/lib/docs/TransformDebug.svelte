@@ -2,7 +2,7 @@
   import { cls } from '@layerstack/tailwind';
   import { format } from '@layerstack/utils';
 
-  import { getTransformContext } from '$lib/components/TransformContext.svelte';
+  import { getTransformContext } from '$lib/contexts/transform.js';
 
   const transform = getTransformContext();
 </script>

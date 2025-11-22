@@ -1,0 +1,70 @@
+{
+  "component": "Bar",
+  "examples": [],
+  "usage": [
+    {
+      "example": "horizontal-customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-customize-individual-styles",
+      "lineNumber": 32,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
+      "lineNumber": 70,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
+      "lineNumber": 37,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 68,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-customize-individual-styles",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-customize-individual-styles",
+      "lineNumber": 29,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+      "lineNumber": 75,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount",
+      "lineNumber": 39,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+      "lineNumber": 39,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 74,
+      "line": "<Bar"
+    }
+  ],
+  "updatedAt": "2025-11-10T21:19:02.825Z"
+}

@@ -1,0 +1,231 @@
+{
+  "component": "RadialGradient",
+  "examples": [
+    {
+      "name": "focal-location-and-radius-with-custom-colors",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 8,
+          "line": "<Layer>"
+        },
+        {
+          "component": "RadialGradient",
+          "lineNumber": 9,
+          "line": "<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 11,
+          "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "spreadmethod",
+      "path": "/example/RadialGradient/spreadmethod",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart height={100}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 8,
+          "line": "<Layer>"
+        },
+        {
+          "component": "RadialGradient",
+          "lineNumber": 9,
+          "line": "<RadialGradient class=\"from-green-500 to-blue-500\" r=\"30%\" spreadMethod=\"pad\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 11,
+          "line": "<Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "tailwind-colors",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart height={220}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 8,
+          "line": "<Layer>"
+        },
+        {
+          "component": "RadialGradient",
+          "lineNumber": 9,
+          "line": "<RadialGradient id=\"tw-1\" class=\"from-pink-500 to-yellow-500\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 19,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
+      "name": "units",
+      "path": "/example/RadialGradient/units",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 7,
+          "line": "<Chart height={220}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 8,
+          "line": "<Layer>"
+        },
+        {
+          "component": "RadialGradient",
+          "lineNumber": 9,
+          "line": "<RadialGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 12,
+          "line": "<Circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 9,
+      "line": "<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 15,
+      "line": "<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} fx=\"20%\" fy=\"20%\">"
+    },
+    {
+      "example": "focal-location-and-radius-with-custom-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/focal-location-and-radius-with-custom-colors",
+      "lineNumber": 21,
+      "line": "<RadialGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} r=\"30%\">"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 9,
+      "line": "<RadialGradient class=\"from-green-500 to-blue-500\" r=\"30%\" spreadMethod=\"pad\">"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 15,
+      "line": "<RadialGradient class=\"from-green-500 to-blue-500\" r=\"30%\" spreadMethod=\"reflect\">"
+    },
+    {
+      "example": "spreadmethod",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/spreadmethod",
+      "lineNumber": 21,
+      "line": "<RadialGradient class=\"from-green-500 to-blue-500\" r=\"30%\" spreadMethod=\"repeat\">"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 9,
+      "line": "<RadialGradient id=\"tw-1\" class=\"from-pink-500 to-yellow-500\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 10,
+      "line": "<RadialGradient id=\"tw-2\" class=\"from-green-300 to-purple-600\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 11,
+      "line": "<RadialGradient id=\"tw-3\" class=\"from-gray-600 to-black\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 12,
+      "line": "<RadialGradient id=\"tw-4\" class=\"from-pink-300 to-indigo-400\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 13,
+      "line": "<RadialGradient id=\"tw-5\" class=\"from-yellow-100 to-yellow-500\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 14,
+      "line": "<RadialGradient id=\"tw-6\" class=\"from-blue-700 to-gray-900\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 15,
+      "line": "<RadialGradient id=\"tw-7\" class=\"from-sky-300 to-blue-500\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 16,
+      "line": "<RadialGradient id=\"tw-8\" class=\"from-red-500 to-red-800\" />"
+    },
+    {
+      "example": "tailwind-colors",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/tailwind-colors",
+      "lineNumber": 17,
+      "line": "<RadialGradient id=\"tw-9\" class=\"from-blue-400 to-emerald-400\" />"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/units",
+      "lineNumber": 9,
+      "line": "<RadialGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
+    },
+    {
+      "example": "units",
+      "component": "RadialGradient",
+      "path": "/example/RadialGradient/units",
+      "lineNumber": 17,
+      "line": "<RadialGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:10.750Z"
+}

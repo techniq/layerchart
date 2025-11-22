@@ -2,9 +2,8 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Layer, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, getSettings, Layer, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -25,7 +24,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -42,8 +41,8 @@
 
         <!-- Draw tooltip path for canvas since hover: not supported -->
         <!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->
-        {#if shared.renderContext === 'canvas'}
-          <Layer type={shared.renderContext} pointerEvents={false}>
+        {#if getSettings().layer === 'canvas'}
+          <Layer pointerEvents={false}>
             {#if context.tooltip.data}
               <GeoPath
                 geojson={context.tooltip.data}

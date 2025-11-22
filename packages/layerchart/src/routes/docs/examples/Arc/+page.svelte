@@ -19,7 +19,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let value = $state(75);
   let segments = $state(60);
@@ -60,7 +59,7 @@
 <Preview>
   <div class="h-[120px] p-4 border resize overflow-auto">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Group y={16}>
           <LinearGradient class="from-secondary to-primary">
             {#snippet children({ gradient })}
@@ -96,7 +95,7 @@
 <Preview>
   <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <Arc
           value={400}
           domain={[0, 1000]}
@@ -137,7 +136,7 @@
 <Preview>
   <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <SpringValue {value} let:value>
           {#each { length: segments } as _, segmentIndex}
             {@const segmentAngle = (2 * Math.PI) / segments}
@@ -177,7 +176,7 @@
 <Preview>
   <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
-      <Layer type={shared.renderContext} center>
+      <Layer center>
         <SpringValue {value} let:value>
           <ClipPath>
             {#snippet clip()}
@@ -220,7 +219,7 @@
   <div class="h-[300px] p-4 border resize overflow-auto">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           {#each { length: layerCount } as _, layerIndex}
             {@const layer = layerIndex + 1}
             {#each { length: divisions } as _, segmentIndex}
@@ -265,7 +264,7 @@
   <Preview>
     <div class="h-[200px] p-4 border resize overflow-auto">
       <Chart>
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           {#if show}
             <Arc
               initialValue={0}
@@ -309,7 +308,7 @@
   <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext} center>
+        <Layer center>
           {@const arcWidth = 20}
           {@const maxValue = 100}
           <SpringValue {value} let:value={springValue}>

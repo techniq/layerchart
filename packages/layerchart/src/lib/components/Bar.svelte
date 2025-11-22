@@ -84,7 +84,7 @@
 
   import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';

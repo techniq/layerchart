@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Axis, Chart, Rect, Layer } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 </script>
 
 <h1>Examples</h1>
@@ -15,7 +14,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />
@@ -41,7 +40,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />
@@ -69,7 +68,7 @@
       yDomain={[0, 100]}
       padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />

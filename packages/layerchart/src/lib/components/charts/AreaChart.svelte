@@ -77,7 +77,7 @@
   import Grid from '../Grid.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
   import Rule from '../Rule.svelte';
@@ -97,6 +97,9 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -119,9 +122,9 @@
     onTooltipClick = () => {},
     onPointClick,
     props = {},
-    renderContext = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -131,6 +134,9 @@
     context = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined
@@ -454,8 +460,8 @@
     {:else}
       {@render belowContext?.(snippetProps)}
       <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        type={layer}
+        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
         center={radial}
         {debug}
       >

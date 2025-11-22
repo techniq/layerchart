@@ -2,9 +2,8 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Layer, Text } from 'layerchart';
+  import { Chart, GeoPath, Layer, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -22,7 +21,7 @@
         fitGeojson: states,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <g class="states">
           {#each states.features as feature}
             <GeoPath

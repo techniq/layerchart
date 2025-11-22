@@ -2,7 +2,6 @@
   import { Axis, Chart, Highlight, Layer, Points, Rule, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
   import { sort } from '@layerstack/utils';
 
   let { data } = $props();
@@ -24,7 +23,7 @@
       padding={{ left: 20, bottom: 32 }}
       tooltip={{ mode: 'band' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule format="percentRound" />
         <Axis placement="bottom" rule />
         <Rule />

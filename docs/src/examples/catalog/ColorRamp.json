@@ -1,0 +1,84 @@
+{
+  "component": "ColorRamp",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/ColorRamp/basic",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 23,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 24,
+          "line": "<ColorRamp {interpolator} {width} {height} />"
+        }
+      ]
+    },
+    {
+      "name": "pixelated",
+      "path": "/example/ColorRamp/pixelated",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 27,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 28,
+          "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
+        }
+      ]
+    },
+    {
+      "name": "schemes",
+      "path": "/example/ColorRamp/schemes",
+      "components": [
+        {
+          "component": "Svg",
+          "lineNumber": 20,
+          "line": "<svg {width} {height}>"
+        },
+        {
+          "component": "ColorRamp",
+          "lineNumber": 21,
+          "line": "<ColorRamp"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/basic",
+      "lineNumber": 24,
+      "line": "<ColorRamp {interpolator} {width} {height} />"
+    },
+    {
+      "example": "pixelated",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/pixelated",
+      "lineNumber": 28,
+      "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 21,
+      "line": "<ColorRamp"
+    },
+    {
+      "example": "schemes",
+      "component": "ColorRamp",
+      "path": "/example/ColorRamp/schemes",
+      "lineNumber": 35,
+      "line": "<ColorRamp"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:09.675Z"
+}

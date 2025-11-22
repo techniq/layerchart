@@ -7,7 +7,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { name: string; value: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -46,7 +45,7 @@
           cloneNodes
         >
           {#snippet children({ nodes, linkPositions })}
-            <Layer type={shared.renderContext} center>
+            <Layer center>
               {#each links as link, i}
                 <Link
                   data={link}

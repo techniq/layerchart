@@ -16,7 +16,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -278,7 +277,7 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <ForceSimulation
             forces={{
               ...(hasLinkForce && { link: linkForce }),

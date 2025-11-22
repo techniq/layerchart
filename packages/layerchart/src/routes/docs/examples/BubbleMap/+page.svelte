@@ -7,11 +7,10 @@
   import { feature } from 'topojson-client';
   import { sortFunc } from '@layerstack/utils';
 
-  import { Chart, GeoPath, Legend, Layer, Tooltip, Circle } from 'layerchart';
+  import { Chart, GeoPath, Legend, Layer, Tooltip, Circle, getSettings } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -86,7 +85,7 @@
         {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
-        <Layer type={shared.renderContext}>
+        <Layer>
           <GeoPath
             geojson={states}
             class="fill-surface-content/10 stroke-surface-100"
@@ -123,8 +122,8 @@
         </Layer>
 
         <!-- Add extra path to mimic hover stroke on canvas -->
-        <Layer type={shared.renderContext} pointerEvents={false}>
-          {#if context.tooltip.data && shared.renderContext === 'canvas'}
+        <Layer pointerEvents={false}>
+          {#if context.tooltip.data && getSettings().layer === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"

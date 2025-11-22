@@ -1,0 +1,843 @@
+{
+  "component": "Pie",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Pie/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 36,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "default-slot-render-each-arc",
+      "path": "/example/Pie/default-slot-render-each-arc",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 37,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 40,
+          "line": "<Arc"
+        }
+      ]
+    },
+    {
+      "name": "disable-sorting",
+      "path": "/example/Pie/disable-sorting",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 34,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 36,
+          "line": "<Pie sort={null} />"
+        }
+      ]
+    },
+    {
+      "name": "inner-radius-negative",
+      "path": "/example/Pie/inner-radius-negative",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie innerRadius={0.9} />"
+        }
+      ]
+    },
+    {
+      "name": "inner-radius-positive",
+      "path": "/example/Pie/inner-radius-positive",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie innerRadius={100} />"
+        }
+      ]
+    },
+    {
+      "name": "inner-radius-zero-one",
+      "path": "/example/Pie/inner-radius-zero-one",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie innerRadius={100} />"
+        }
+      ]
+    },
+    {
+      "name": "labels",
+      "path": "/example/Pie/labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 24,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 31,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels-centroid",
+      "path": "/example/Pie/labels-centroid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 24,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 31,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels-centroid-multiple",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart {data} x=\"value\" c=\"date\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 23,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 27,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 35,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels-outer",
+      "path": "/example/Pie/labels-outer",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 24,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 31,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels-outer-radial",
+      "path": "/example/Pie/labels-outer-radial",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" padding={24} height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 24,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 31,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "labels-outer-with-padding",
+      "path": "/example/Pie/labels-outer-with-padding",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" height={320}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 24,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 31,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "multiple-data-prop",
+      "path": "/example/Pie/multiple-data-prop",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 20,
+          "line": "<Pie innerRadius={100} {data} />"
+        }
+      ]
+    },
+    {
+      "name": "offset",
+      "path": "/example/Pie/offset",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie offset={4} />"
+        }
+      ]
+    },
+    {
+      "name": "outer-radius",
+      "path": "/example/Pie/outer-radius",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie outerRadius={100} />"
+        }
+      ]
+    },
+    {
+      "name": "pad-angle",
+      "path": "/example/Pie/pad-angle",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie padAngle={0.05} />"
+        }
+      ]
+    },
+    {
+      "name": "pad-angle-with-inner-radius",
+      "path": "/example/Pie/pad-angle-with-inner-radius",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie innerRadius={100} padAngle={0.03} />"
+        }
+      ]
+    },
+    {
+      "name": "partial-range-chart-xrange",
+      "path": "/example/Pie/partial-range-chart-xrange",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" xRange={[-90, 90]} cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "partial-range-range-prop",
+      "path": "/example/Pie/partial-range-range-prop",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie range={[-90, 90]} />"
+        }
+      ]
+    },
+    {
+      "name": "placement",
+      "path": "/example/Pie/placement",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "placement-center",
+      "path": "/example/Pie/placement-center",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 19,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "placement-left",
+      "path": "/example/Pie/placement-left",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 20,
+          "line": "<Group x={context.height / 2} center=\"y\">"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 21,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "placement-right",
+      "path": "/example/Pie/placement-right",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 20,
+          "line": "<Group x={context.width - context.height / 2} center=\"y\">"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 21,
+          "line": "<Pie />"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "path": "/example/Pie/tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 22,
+          "line": "<Pie tooltipContext={context.tooltip} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 24,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-with-arcs-slot",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 30,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 31,
+          "line": "<Pie>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 38,
+          "line": "<Group"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 48,
+          "line": "<Arc"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 56,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 69,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "tweened",
+      "path": "/example/Pie/tweened",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Pie",
+          "lineNumber": 24,
+          "line": "<Pie motion=\"tween\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Pie",
+      "path": "/example/Pie/basic",
+      "lineNumber": 36,
+      "line": "<Pie />"
+    },
+    {
+      "example": "default-slot-render-each-arc",
+      "component": "Pie",
+      "path": "/example/Pie/default-slot-render-each-arc",
+      "lineNumber": 37,
+      "line": "<Pie>"
+    },
+    {
+      "example": "disable-sorting",
+      "component": "Pie",
+      "path": "/example/Pie/disable-sorting",
+      "lineNumber": 36,
+      "line": "<Pie sort={null} />"
+    },
+    {
+      "example": "inner-radius-negative",
+      "component": "Pie",
+      "path": "/example/Pie/inner-radius-negative",
+      "lineNumber": 19,
+      "line": "<Pie innerRadius={0.9} />"
+    },
+    {
+      "example": "inner-radius-positive",
+      "component": "Pie",
+      "path": "/example/Pie/inner-radius-positive",
+      "lineNumber": 19,
+      "line": "<Pie innerRadius={100} />"
+    },
+    {
+      "example": "inner-radius-zero-one",
+      "component": "Pie",
+      "path": "/example/Pie/inner-radius-zero-one",
+      "lineNumber": 19,
+      "line": "<Pie innerRadius={100} />"
+    },
+    {
+      "example": "labels",
+      "component": "Pie",
+      "path": "/example/Pie/labels",
+      "lineNumber": 20,
+      "line": "<Pie>"
+    },
+    {
+      "example": "labels-centroid",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid",
+      "lineNumber": 20,
+      "line": "<Pie>"
+    },
+    {
+      "example": "labels-centroid-multiple",
+      "component": "Pie",
+      "path": "/example/Pie/labels-centroid-multiple",
+      "lineNumber": 23,
+      "line": "<Pie>"
+    },
+    {
+      "example": "labels-outer",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer",
+      "lineNumber": 20,
+      "line": "<Pie>"
+    },
+    {
+      "example": "labels-outer-radial",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-radial",
+      "lineNumber": 20,
+      "line": "<Pie>"
+    },
+    {
+      "example": "labels-outer-with-padding",
+      "component": "Pie",
+      "path": "/example/Pie/labels-outer-with-padding",
+      "lineNumber": 20,
+      "line": "<Pie>"
+    },
+    {
+      "example": "multiple-data-prop",
+      "component": "Pie",
+      "path": "/example/Pie/multiple-data-prop",
+      "lineNumber": 20,
+      "line": "<Pie innerRadius={100} {data} />"
+    },
+    {
+      "example": "multiple-data-prop",
+      "component": "Pie",
+      "path": "/example/Pie/multiple-data-prop",
+      "lineNumber": 21,
+      "line": "<Pie outerRadius={90} data={data2} />"
+    },
+    {
+      "example": "offset",
+      "component": "Pie",
+      "path": "/example/Pie/offset",
+      "lineNumber": 19,
+      "line": "<Pie offset={4} />"
+    },
+    {
+      "example": "outer-radius",
+      "component": "Pie",
+      "path": "/example/Pie/outer-radius",
+      "lineNumber": 19,
+      "line": "<Pie outerRadius={100} />"
+    },
+    {
+      "example": "pad-angle",
+      "component": "Pie",
+      "path": "/example/Pie/pad-angle",
+      "lineNumber": 19,
+      "line": "<Pie padAngle={0.05} />"
+    },
+    {
+      "example": "pad-angle-with-inner-radius",
+      "component": "Pie",
+      "path": "/example/Pie/pad-angle-with-inner-radius",
+      "lineNumber": 19,
+      "line": "<Pie innerRadius={100} padAngle={0.03} />"
+    },
+    {
+      "example": "partial-range-chart-xrange",
+      "component": "Pie",
+      "path": "/example/Pie/partial-range-chart-xrange",
+      "lineNumber": 19,
+      "line": "<Pie />"
+    },
+    {
+      "example": "partial-range-range-prop",
+      "component": "Pie",
+      "path": "/example/Pie/partial-range-range-prop",
+      "lineNumber": 19,
+      "line": "<Pie range={[-90, 90]} />"
+    },
+    {
+      "example": "placement",
+      "component": "Pie",
+      "path": "/example/Pie/placement",
+      "lineNumber": 19,
+      "line": "<Pie />"
+    },
+    {
+      "example": "placement-center",
+      "component": "Pie",
+      "path": "/example/Pie/placement-center",
+      "lineNumber": 19,
+      "line": "<Pie />"
+    },
+    {
+      "example": "placement-left",
+      "component": "Pie",
+      "path": "/example/Pie/placement-left",
+      "lineNumber": 21,
+      "line": "<Pie />"
+    },
+    {
+      "example": "placement-right",
+      "component": "Pie",
+      "path": "/example/Pie/placement-right",
+      "lineNumber": 21,
+      "line": "<Pie />"
+    },
+    {
+      "example": "tooltip",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip",
+      "lineNumber": 22,
+      "line": "<Pie tooltipContext={context.tooltip} />"
+    },
+    {
+      "example": "tooltip-with-arcs-slot",
+      "component": "Pie",
+      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "lineNumber": 31,
+      "line": "<Pie>"
+    },
+    {
+      "example": "tweened",
+      "component": "Pie",
+      "path": "/example/Pie/tweened",
+      "lineNumber": 24,
+      "line": "<Pie motion=\"tween\" />"
+    }
+  ],
+  "updatedAt": "2025-11-12T16:58:10.598Z"
+}

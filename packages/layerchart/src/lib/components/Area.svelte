@@ -58,13 +58,13 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import Spline from './Spline.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
     extractTweenConfig,
@@ -75,7 +75,7 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   let {
     clipPath,
@@ -215,7 +215,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Area',
       render,
@@ -250,7 +250,7 @@
   />
 {/if}
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <path
     d={tweenState.current}
     clip-path={clipPath}

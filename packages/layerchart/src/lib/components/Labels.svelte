@@ -72,7 +72,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import Group from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 

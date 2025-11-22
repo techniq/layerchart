@@ -26,7 +26,7 @@
   import LucideChevronDown from '~icons/lucide/chevron-down';
 
   import { goto } from '$app/navigation';
-  import { shared } from '../../shared.svelte.js';
+
   let { data } = $props();
 
   const geojson = $derived(data.geojson);
@@ -106,7 +106,7 @@
           fitGeojson: geojson,
         }}
       >
-        <Layer type={shared.renderContext}>
+        <Layer>
           <GeoPath {geojson} fill="white" />
         </Layer>
       </Chart>

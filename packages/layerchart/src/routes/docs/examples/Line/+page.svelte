@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleSequential } from 'd3-scale';
+  import { scaleSequential } from 'd3-scale';
   import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
@@ -22,7 +22,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -70,7 +69,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
@@ -92,7 +91,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
@@ -123,7 +122,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
@@ -138,7 +137,7 @@
 <Preview data={temperatureData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart data={temperatureData} x="date" y="value" yNice padding={{ left: 16, bottom: 24 }}>
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
@@ -166,7 +165,7 @@
       {#snippet children({ context })}
         {@const thresholdOffset =
           (context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <LinearGradient
@@ -199,7 +198,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-y' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
@@ -235,7 +234,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -287,7 +286,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
@@ -326,7 +325,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -378,7 +377,7 @@
       tooltip={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}

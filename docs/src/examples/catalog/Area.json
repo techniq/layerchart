@@ -1,0 +1,1316 @@
+{
+  "component": "Area",
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Area/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 15,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        }
+      ]
+    },
+    {
+      "name": "clip-tween-on-mount",
+      "path": "/example/Area/clip-tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 20,
+          "line": "<ChartClipPath"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 24,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        }
+      ]
+    },
+    {
+      "name": "clipped-area-on-tooltip",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 20,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 32,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 34,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 35,
+          "line": "<RectClipPath"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 46,
+          "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 47,
+          "line": "<Axis placement=\"bottom\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 50,
+          "line": "<Tooltip.Root"
+        }
+      ]
+    },
+    {
+      "name": "explicit-axis-ticks-min-max",
+      "path": "/example/Area/explicit-axis-ticks-min-max",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 16,
+          "line": "<Text {...props} textAnchor={index ? 'end' : 'start'} />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 19,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        }
+      ]
+    },
+    {
+      "name": "gradient",
+      "path": "/example/Area/gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 15,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 17,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "gradient-separate-stroke",
+      "path": "/example/Area/gradient-separate-stroke",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 15,
+          "line": "<LinearGradient class=\"from-secondary/1 to-secondary\">"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 19,
+          "line": "<Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />"
+        }
+      ]
+    },
+    {
+      "name": "highlight-color-based-on-value-using-color-scale",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 32,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 33,
+          "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 34,
+          "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 44,
+          "line": "<Highlight lines points />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 47,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 21,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 22,
+          "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 23,
+          "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 33,
+          "line": "<Highlight"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 51,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-series",
+      "path": "/example/Area/multiple-series",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 39,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 53,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 54,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 58,
+          "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+        },
+        {
+          "component": "Point",
+          "lineNumber": 59,
+          "line": "<Point d={data[data.length - 1]}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 61,
+          "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 62,
+          "line": "<Text"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 75,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 78,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-series-highlight-on-hover",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 40,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 54,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 55,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 61,
+          "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+        },
+        {
+          "component": "Point",
+          "lineNumber": 62,
+          "line": "<Point d={data[data.length - 1]}>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 64,
+          "line": "<Circle cx={x} cy={y} r={4} fill={color} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 65,
+          "line": "<Text"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 79,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 82,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-series-using-overrides",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 34,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 35,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 38,
+          "line": "<Area"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 62,
+          "line": "<Highlight y={(d) => d.apples} points={{ fill: fruitColors.apples }} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 68,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "multiple-series-with-labels",
+      "path": "/example/Area/multiple-series-with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 42,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 43,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 49,
+          "line": "<Labels format=\"integer\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 50,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 53,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "path": "/example/Area/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 34,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 37,
+          "line": "<Area"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 45,
+          "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "stack",
+      "path": "/example/Area/stack",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 49,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 50,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 55,
+          "line": "<Area"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 63,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 66,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "stack-with-gradient",
+      "path": "/example/Area/stack-with-gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 53,
+          "line": "<LinearGradient stops={[primaryColor, secondaryColor]} vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 55,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
+      "name": "threshold-with-lineargradient",
+      "path": "/example/Area/threshold-with-lineargradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 24,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 25,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 34,
+          "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
+        }
+      ]
+    },
+    {
+      "name": "threshold-with-lineargradient-over-under",
+      "path": "/example/Area/threshold-with-lineargradient-over-under",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 24,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 25,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 34,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
+      "name": "threshold-with-rectclippath",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 21,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 22,
+          "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 23,
+          "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "threshold-with-rectclippath-over-under",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 18,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 19,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Rule",
+          "lineNumber": 21,
+          "line": "<Rule y={0} />"
+        },
+        {
+          "component": "RectClipPath",
+          "lineNumber": 22,
+          "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 23,
+          "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-labels",
+      "path": "/example/Area/with-labels",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 15,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        },
+        {
+          "component": "Labels",
+          "lineNumber": 16,
+          "line": "<Labels format=\"integer\" />"
+        }
+      ]
+    },
+    {
+      "name": "with-tooltip-and-highlight",
+      "path": "/example/Area/with-tooltip-and-highlight",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 22,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 24,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 25,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 27,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Area",
+      "path": "/example/Area/basic",
+      "lineNumber": 15,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "clip-tween-on-mount",
+      "component": "Area",
+      "path": "/example/Area/clip-tween-on-mount",
+      "lineNumber": 24,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "clipped-area-on-tooltip",
+      "component": "Area",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "lineNumber": 34,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
+    },
+    {
+      "example": "clipped-area-on-tooltip",
+      "component": "Area",
+      "path": "/example/Area/clipped-area-on-tooltip",
+      "lineNumber": 42,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "explicit-axis-ticks-min-max",
+      "component": "Area",
+      "path": "/example/Area/explicit-axis-ticks-min-max",
+      "lineNumber": 19,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "gradient",
+      "component": "Area",
+      "path": "/example/Area/gradient",
+      "lineNumber": 17,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "gradient-separate-stroke",
+      "component": "Area",
+      "path": "/example/Area/gradient-separate-stroke",
+      "lineNumber": 19,
+      "line": "<Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 34,
+      "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-color-scale",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "lineNumber": 42,
+      "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 23,
+      "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+    },
+    {
+      "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "component": "Area",
+      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "lineNumber": 31,
+      "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
+    },
+    {
+      "example": "multiple-series",
+      "component": "Area",
+      "path": "/example/Area/multiple-series",
+      "lineNumber": 58,
+      "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+    },
+    {
+      "example": "multiple-series-highlight-on-hover",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "lineNumber": 61,
+      "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 38,
+      "line": "<Area"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 46,
+      "line": "<Area"
+    },
+    {
+      "example": "multiple-series-using-overrides",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-using-overrides",
+      "lineNumber": 54,
+      "line": "<Area"
+    },
+    {
+      "example": "multiple-series-with-labels",
+      "component": "Area",
+      "path": "/example/Area/multiple-series-with-labels",
+      "lineNumber": 47,
+      "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
+    },
+    {
+      "example": "playground",
+      "component": "Area",
+      "path": "/example/Area/playground",
+      "lineNumber": 37,
+      "line": "<Area"
+    },
+    {
+      "example": "stack",
+      "component": "Area",
+      "path": "/example/Area/stack",
+      "lineNumber": 55,
+      "line": "<Area"
+    },
+    {
+      "example": "stack-with-gradient",
+      "component": "Area",
+      "path": "/example/Area/stack-with-gradient",
+      "lineNumber": 55,
+      "line": "<Area"
+    },
+    {
+      "example": "threshold-with-lineargradient",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient",
+      "lineNumber": 34,
+      "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
+    },
+    {
+      "example": "threshold-with-lineargradient-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient-over-under",
+      "lineNumber": 34,
+      "line": "<Area"
+    },
+    {
+      "example": "threshold-with-rectclippath",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "lineNumber": 23,
+      "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+    },
+    {
+      "example": "threshold-with-rectclippath",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath",
+      "lineNumber": 31,
+      "line": "<Area line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
+    },
+    {
+      "example": "threshold-with-rectclippath-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "lineNumber": 23,
+      "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+    },
+    {
+      "example": "threshold-with-rectclippath-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "lineNumber": 31,
+      "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Area",
+      "path": "/example/Area/with-labels",
+      "lineNumber": 15,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Area",
+      "path": "/example/Area/with-tooltip-and-highlight",
+      "lineNumber": 24,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "custom",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/custom",
+      "lineNumber": 15,
+      "line": "<Area line={{ class: 'stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
+      "example": "funnel",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/funnel",
+      "lineNumber": 71,
+      "line": "<Area"
+    },
+    {
+      "example": "gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/gradient",
+      "lineNumber": 13,
+      "line": "<Area line={{ class: 'stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "series-individual-tooltip",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-individual-tooltip",
+      "lineNumber": 51,
+      "line": "<Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />"
+    },
+    {
+      "example": "series-stack-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/series-stack-gradient",
+      "lineNumber": 42,
+      "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
+    },
+    {
+      "example": "threshold",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold",
+      "lineNumber": 36,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+    },
+    {
+      "example": "threshold",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold",
+      "lineNumber": 40,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
+    },
+    {
+      "example": "threshold-gradient",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/threshold-gradient",
+      "lineNumber": 29,
+      "line": "<Area"
+    },
+    {
+      "example": "basic",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/basic",
+      "lineNumber": 12,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "constant-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/constant-labels",
+      "lineNumber": 13,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "handle-arrows",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/handle-arrows",
+      "lineNumber": 22,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "handle-labels",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/handle-labels",
+      "lineNumber": 14,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "integrated-brush-(both-axis-area)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
+      "lineNumber": 43,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "integrated-brush-(x-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(x-axis)",
+      "lineNumber": 40,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "integrated-brush-(y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/integrated-brush-(y-axis)",
+      "lineNumber": 41,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 35,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 47,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 34,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 54,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "separate-chart-(filter-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(filter-data)",
+      "lineNumber": 28,
+      "line": "<Area"
+    },
+    {
+      "example": "separate-chart-(filter-data)",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/separate-chart-(filter-data)",
+      "lineNumber": 54,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "simple-styling",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/simple-styling",
+      "lineNumber": 18,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "striped-background",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/striped-background",
+      "lineNumber": 12,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 74,
+      "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
+    },
+    {
+      "example": "sync-brushes-with-bind-xdomain",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
+      "lineNumber": 95,
+      "line": "<Area"
+    },
+    {
+      "example": "tooltip-interop",
+      "component": "BrushContext",
+      "path": "/example/BrushContext/tooltip-interop",
+      "lineNumber": 45,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "compound-common-scale-with-extra-marks",
+      "component": "Chart",
+      "path": "/example/Chart/compound-common-scale-with-extra-marks",
+      "lineNumber": 25,
+      "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
+    },
+    {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 24,
+      "line": "<Area"
+    },
+    {
+      "example": "radial-line-with-areas",
+      "component": "Spline",
+      "path": "/example/Spline/radial-line-with-areas",
+      "lineNumber": 30,
+      "line": "<Area"
+    },
+    {
+      "example": "basic",
+      "component": "Threshold",
+      "path": "/example/Threshold/basic",
+      "lineNumber": 32,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Threshold",
+      "path": "/example/Threshold/basic",
+      "lineNumber": 41,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-labels",
+      "lineNumber": 33,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-labels",
+      "lineNumber": 37,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 35,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 39,
+      "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
+    },
+    {
+      "example": "anchor-location",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/anchor-location",
+      "lineNumber": 38,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "area",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/area",
+      "lineNumber": 41,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "basic",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/basic",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "color-swatch",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/color-swatch",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "color-swatch-using-theme",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/color-swatch-using-theme",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "custom-content",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/custom-content",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "data-snapping",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/data-snapping",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "default-mouse-position-with-offset",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/default-mouse-position-with-offset",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "disable-motion",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/disable-motion",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "externally-access-tooltip-data",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/externally-access-tooltip-data",
+      "lineNumber": 44,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "invert-variant",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/invert-variant",
+      "lineNumber": 29,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "multiple-tooltips-with-fixed-single-axis",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis",
+      "lineNumber": 31,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
+      "example": "stacked-area",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/stacked-area",
+      "lineNumber": 54,
+      "line": "<Area"
+    }
+  ],
+  "updatedAt": "2025-11-13T18:10:49.236Z"
+}

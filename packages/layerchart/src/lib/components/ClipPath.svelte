@@ -3,7 +3,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
 
   export type ClipPathPropsWithoutHTML = {
     /**
@@ -56,10 +56,10 @@
 
   const url = $derived(`url(#${id})`);
 
-  const renderContext = getRenderContext();
+  const layerCtx = getLayerContext();
 </script>
 
-{#if renderContext === 'svg'}
+{#if layerCtx === 'svg'}
   <defs>
     <clipPath {id} {...restProps}>
       {@render clip?.({ id })}
@@ -72,7 +72,7 @@
 {/if}
 
 {#if children}
-  {#if disabled || renderContext !== 'svg'}
+  {#if disabled || layerCtx !== 'svg'}
     {@render children({ id, url, useId })}
   {:else}
     <g style:clip-path={url} class="lc-clip-path-g">

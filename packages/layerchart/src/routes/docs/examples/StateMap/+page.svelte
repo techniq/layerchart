@@ -7,7 +7,6 @@
   import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -65,7 +64,7 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      <Layer type={shared.renderContext}>
+      <Layer>
         <GeoPath geojson={selectedStateFeature} class="stroke-surface-content" />
       </Layer>
     </Chart>
@@ -83,7 +82,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           {#each selectedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
@@ -116,7 +115,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <ChartClipPath>
             {#each counties.features as feature}
               <GeoPath

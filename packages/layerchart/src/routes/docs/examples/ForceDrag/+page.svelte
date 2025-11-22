@@ -15,7 +15,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { movable } from '$lib/actions/movable.js';
-  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = {
     id: number;
@@ -74,7 +73,7 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer>
           <ForceSimulation
             forces={{
               link: linkForce,

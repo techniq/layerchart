@@ -5,13 +5,11 @@
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { shared } from '../../shared.svelte.js';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
 
-  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -59,7 +57,6 @@
                 y={(d) => 100 - d.idl}
                 props={chartProps}
                 brush
-                {renderContext}
                 profile
               />
             {/if}
@@ -83,7 +80,6 @@
                 ]}
                 props={chartProps}
                 brush
-                {renderContext}
                 profile
               />
             {/if}
