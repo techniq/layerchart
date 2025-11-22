@@ -7,7 +7,7 @@
 
 <pre
 	class={cls(
-		'text-sm rounded-lg bg-surface-100 dark:bg-surface-300 border border-primary/10 px-4 overflow-auto',
+		'text-sm rounded-lg bg-surface-100 dark:bg-surface-300 border border-primary/10 px-4 overflow-x-auto max-w-full',
 		className
 	)}
 	{...restProps}>

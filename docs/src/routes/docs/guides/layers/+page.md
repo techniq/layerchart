@@ -10,7 +10,7 @@ LayerChart provides first-class support for different types of layers including 
 
 Each layer type provides unique and overlapping feature sets. LayerChart supports using layers of different types within the same chart to leverage a type's strengths or workaround a weakness.
 
-[Layer](/docs/components/Layer) is a convenient wrapper component over [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) components to simplify imports (ex. `<Layer type="svg">`) as awell as integrates with context `settings` for default type.
+[Layer](/docs/components/Layer) is a convenient wrapper component over [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) components to simplify imports (ex. `<Layer type="svg">`) as awell as integrates with context `settings` for default type (ex. `<Layer>`).
 
 ## Types
 

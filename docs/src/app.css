@@ -79,5 +79,5 @@ code[data-theme*=' '] span {
 
 /* Inline code styling */
 code:not(pre > code):not(.custom) {
-	@apply text-sm font-medium bg-surface-100 text-secondary font-pixel px-2 rounded border border-primary/5;
+	@apply text-sm font-medium bg-surface-100 text-[initial] font-pixel px-2 rounded border border-primary/10;
 }
