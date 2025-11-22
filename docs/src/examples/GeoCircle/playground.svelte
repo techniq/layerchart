@@ -13,7 +13,7 @@
 	import { feature } from 'topojson-client';
 	import { getCountriesTopology } from '$lib/geo.remote';
 
-	import GeoCircleControls from '$lib/components/GeoCircleControls.svelte';
+	import GeoCircleControls from '$lib/components/controls/GeoCirclePlaygroundControls.svelte';
 
 	let config = $state({
 		example: 'single' as 'single' | 'multi',
@@ -51,6 +51,7 @@
 </script>
 
 <GeoCircleControls bind:config {projections} />
+
 <Chart
 	geo={{
 		projection: config.projection,

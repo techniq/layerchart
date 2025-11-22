@@ -33,7 +33,6 @@
 				<GeoPath geojson={feature}>
 					{#snippet children({ geoPath })}
 						{@const [x, y] = geoPath?.centroid(feature) ?? []}
-
 						<!-- TODO: Why has this locking up the browser (Svelte release)? -->
 						<!-- <Text
 							{x}

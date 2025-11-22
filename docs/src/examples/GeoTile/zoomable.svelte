@@ -12,10 +12,9 @@
 		geoFitObjectTransform,
 		getSettings
 	} from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
-	import { RangeField } from 'svelte-ux';
+	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
+	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 
-	import TilesetField from '$lib/components/TilesetField.svelte';
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesTopology();
@@ -39,67 +38,62 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 my-2">
-	<TilesetField bind:serviceUrl />
-	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
-</div>
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
 
 {#if serviceUrl}
-	<div class="h-[600px] relative overflow-hidden">
-		<Chart
-			geo={{
-				projection: geoMercator,
-				fitGeojson: filteredStates,
-				applyTransform: ['translate', 'scale']
-			}}
-			transform={{
-				initialScrollMode: 'scale'
-			}}
-			height={600}
-		>
-			{#snippet children({ context })}
-				{#if settings.debug}
-					<div class="absolute top-0 left-0 z-10 grid gap-1">
-						<!-- Debug component removed for simplified example -->
-					</div>
-				{/if}
+	<Chart
+		geo={{
+			projection: geoMercator,
+			fitGeojson: filteredStates,
+			applyTransform: ['translate', 'scale']
+		}}
+		transform={{
+			initialScrollMode: 'scale'
+		}}
+		height={600}
+	>
+		{#snippet children({ context })}
+			{#if settings.debug}
+				<div class="absolute top-0 left-0 z-10 grid gap-1">
+					<!-- Debug component removed for simplified example -->
+				</div>
+			{/if}
 
-				<TransformControls />
+			<TransformControls />
 
-				<Layer>
-					<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
+			<Layer>
+				<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
 
-					{#each filteredStates.features as feature}
-						<GeoPath
-							geojson={feature}
-							class="stroke-none"
-							tooltipContext={context.tooltip}
-							onclick={() => {
-								if (!context.geo.projection) return;
-								const featureTransform = geoFitObjectTransform(
-									context.geo.projection,
-									[context.width, context.height],
-									feature
-								);
-								context.transform.setTranslate(featureTransform.translate);
-								context.transform.setScale(featureTransform.scale);
-							}}
-						/>
-					{/each}
-				</Layer>
+				{#each filteredStates.features as feature}
+					<GeoPath
+						geojson={feature}
+						class="stroke-none"
+						tooltipContext={context.tooltip}
+						onclick={() => {
+							if (!context.geo.projection) return;
+							const featureTransform = geoFitObjectTransform(
+								context.geo.projection,
+								[context.width, context.height],
+								feature
+							);
+							context.transform.setTranslate(featureTransform.translate);
+							context.transform.setScale(featureTransform.scale);
+						}}
+					/>
+				{/each}
+			</Layer>
 
-				<Tooltip.Root>
-					{#snippet children({ data })}
-						{@const [longitude, latitude] =
-							context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
-						<Tooltip.Header>{data.properties.name}</Tooltip.Header>
-						<Tooltip.List>
-							<Tooltip.Item label="longitude" value={longitude} format="decimal" />
-							<Tooltip.Item label="latitude" value={latitude} format="decimal" />
-						</Tooltip.List>
-					{/snippet}
-				</Tooltip.Root>
-			{/snippet}
-		</Chart>
-	</div>
+			<Tooltip.Root>
+				{#snippet children({ data })}
+					{@const [longitude, latitude] =
+						context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
+					<Tooltip.Header>{data.properties.name}</Tooltip.Header>
+					<Tooltip.List>
+						<Tooltip.Item label="longitude" value={longitude} format="decimal" />
+						<Tooltip.Item label="latitude" value={latitude} format="decimal" />
+					</Tooltip.List>
+				{/snippet}
+			</Tooltip.Root>
+		{/snippet}
+	</Chart>
 {/if}

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
 	import type { ComponentProps } from 'svelte';
+	import { Axis, Chart, Layer, Highlight, Points, Tooltip } from 'layerchart';
 	import { createTimeSeries } from '$lib/utils/data.js';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	const data = createTimeSeries({
 		min: 20,
@@ -17,12 +17,13 @@
 		axis: 'x',
 		snapToDataX: false,
 		snapToDataY: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 
 	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	x="startDate"

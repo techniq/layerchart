@@ -3,7 +3,7 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { curveLinearClosed } from 'd3-shape';
 	import { Axis, Chart, Hull, Layer, Points } from 'layerchart';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import { getGroupData } from '$lib/data.remote';
 
 	let data = $state(await getGroupData());
@@ -19,6 +19,7 @@
 </script>
 
 <CurveMenuField bind:value={curve} showOpenClosed />
+
 <Chart
 	{data}
 	x="x"

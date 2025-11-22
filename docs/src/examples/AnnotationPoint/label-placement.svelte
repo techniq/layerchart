@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { AnnotationPoint, LineChart, type Placement } from 'layerchart';
-	import AnnotationPointControls from '$lib/components/AnnotationRangePointLineControls.svelte';
-	import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
+	import AnnotationPointControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 	import { maxIndex } from 'd3-array';
 	import { getAppleStock } from '$lib/data.remote';
 
@@ -26,7 +25,8 @@
 	export { data };
 </script>
 
-<AnnotationPointControls bind:placement bind:xOffset bind:yOffset bind:radius includeRadius />
+<AnnotationPointControls bind:placement bind:xOffset bind:yOffset bind:radius />
+
 <LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 15 }}>
 	{#snippet aboveMarks({ context })}
 		{@const maxPoint = data[maxIndex(data, (d) => d.value)]}

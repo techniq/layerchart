@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, Layer, Polygon } from 'layerchart';
-	import PolygonPlaygroundControls from '$lib/components/PolygonPlaygroundControls.svelte';
+	import PolygonPlaygroundControls from '$lib/components/controls/PolygonPlaygroundControls.svelte';
 
 	let config = $state({
 		points: 8,
@@ -17,6 +17,7 @@
 </script>
 
 <PolygonPlaygroundControls bind:config />
+
 <Chart height={300}>
 	{#snippet children({ context })}
 		<Layer>

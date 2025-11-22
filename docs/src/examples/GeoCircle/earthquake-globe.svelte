@@ -3,7 +3,7 @@
 	import { scaleSqrt } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+	import EarthquakeControls from '$lib/components/controls/GeoCircleEarthquakeControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
 	import {
@@ -47,23 +47,7 @@
 	export { data };
 </script>
 
-<div class="flex gap-2 items-end mb-4">
-	<Field label="Spin:" dense labelPlacement="left" let:id>
-		<ButtonGroup size="sm" variant="fill-light">
-			<Button on:click={timer.start} disabled={timer.running}>Start</Button>
-			<Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
-		</ButtonGroup>
-	</Field>
-
-	<RangeField
-		label="Velocity:"
-		bind:value={velocity}
-		min={-10}
-		max={10}
-		disabled={!timer.running}
-		labelPlacement="left"
-	/>
-</div>
+<EarthquakeControls {timer} bind:velocity />
 
 <Chart
 	bind:context

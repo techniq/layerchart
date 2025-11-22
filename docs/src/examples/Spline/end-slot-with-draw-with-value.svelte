@@ -2,8 +2,8 @@
 	import type { ComponentProps } from 'svelte';
 	import { format } from '@layerstack/utils';
 	import { Axis, Chart, Layer, Spline, Circle, Text } from 'layerchart';
-	import SplineControls from '$lib/components/SplineControls.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import SplineControls from '$lib/components/controls/SplineControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
 		show: true,
@@ -28,6 +28,7 @@
 </script>
 
 <SplineControls bind:config />
+
 <Chart {data} x="x" y="y" yNice padding={{ top: 25, left: 25, bottom: 25, right: 35 }} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />

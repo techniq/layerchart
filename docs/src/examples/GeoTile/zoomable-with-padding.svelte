@@ -12,10 +12,9 @@
 		geoFitObjectTransform,
 		getSettings
 	} from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
-	import { RangeField } from 'svelte-ux';
+	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
+	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 
-	import TilesetField from '$lib/components/TilesetField.svelte';
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
 
 	const geojson = await getUsCountiesTopology();
@@ -39,10 +38,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 my-2">
-	<TilesetField bind:serviceUrl />
-	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
-</div>
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
 
 {#if serviceUrl}
 	<div class="h-[600px] relative overflow-hidden">

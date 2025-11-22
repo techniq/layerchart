@@ -23,7 +23,7 @@
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
-	import PartitionControls from '$lib/components/PartitionControls.svelte';
+	import PartitionControls from '$lib/components/controls/PartitionControls.svelte';
 	import { getCars } from '$lib/data.remote';
 
 	let colorBy = $state<'children' | 'parent' | 'depth'>('children');
@@ -91,14 +91,7 @@
 	export { data };
 </script>
 
-<PartitionControls
-	bind:padding
-	bind:fullSizeLeafNodes
-	bind:round
-	bind:colorBy
-	bind:isFiltered
-	filterable={true}
-/>
+<PartitionControls bind:padding bind:fullSizeLeafNodes bind:round bind:colorBy bind:isFiltered />
 
 <Breadcrumb items={breadcrumbItems}>
 	<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">

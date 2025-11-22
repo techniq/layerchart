@@ -11,9 +11,8 @@
 		Tooltip,
 		type ChartContextValue
 	} from 'layerchart';
-	import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+	import GeoPathTranslucentControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
-
 	import { getCountriesTopology } from '$lib/geo.remote.js';
 
 	const topology = await getCountriesTopology();
@@ -41,25 +40,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-	<div class="mb-2 flex gap-6">
-		<Field label="Spin:" dense labelPlacement="left" let:id>
-			<ButtonGroup size="sm" variant="fill-light">
-				<Button on:click={timer.start} disabled={timer.running}>Start</Button>
-				<Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
-			</ButtonGroup>
-		</Field>
-
-		<RangeField
-			label="Velocity:"
-			bind:value={velocity}
-			min={-10}
-			max={10}
-			disabled={!timer.running}
-			labelPlacement="left"
-		/>
-	</div>
-</div>
+<GeoPathTranslucentControls {timer} bind:velocity />
 
 <Chart
 	geo={{

@@ -12,7 +12,7 @@
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
 	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
-	import ForceGraphControls from '$lib/components/ForceGraphControls.svelte';
+	import ForceGraphControls from '$lib/components/controls/ForceGraphPlaygroundControls.svelte';
 	import { getMiserablesGraph } from '$lib/graph.remote';
 
 	import type { Prettify } from '@layerstack/utils';

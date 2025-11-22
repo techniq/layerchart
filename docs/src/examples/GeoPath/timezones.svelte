@@ -16,7 +16,7 @@
 	import { century, equationOfTime, declination } from 'solar-calculator';
 
 	import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Layer, Tooltip, antipode } from 'layerchart';
-	import { Field, SelectField, Switch } from 'svelte-ux';
+	import TimezonesControls from '$lib/components/controls/GeoPathTimezonesControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
 	import { getCountriesTopology, getUsStatesTopology, getTimezones } from '$lib/geo.remote.js';
@@ -88,87 +88,68 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_auto_auto_2fr] gap-2 my-2">
-	<SelectField
-		label="Projections"
-		options={projections}
-		bind:value={projection}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
+<TimezonesControls bind:enableClip bind:showDaylight {projections} bind:projection />
 
-	<Field label="Clip" let:id>
-		<Switch bind:checked={enableClip} {id} size="md" />
-	</Field>
+<Chart
+	geo={{
+		projection,
+		fitGeojson: countriesGeojson
+	}}
+	padding={{ left: 10, right: 10 }}
+	height={600}
+>
+	{#snippet children({ context })}
+		<Layer>
+			<GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
-	<Field label="Daylight" let:id>
-		<Switch bind:checked={showDaylight} {id} size="md" />
-	</Field>
-</div>
-
-<div class="h-[600px] overflow-hidden">
-	<Chart
-		geo={{
-			projection,
-			fitGeojson: countriesGeojson
-		}}
-		padding={{ left: 10, right: 10 }}
-		height={600}
-	>
-		{#snippet children({ context })}
-			<Layer>
-				<GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
-
-				<GeoPath geojson={countriesGeojson} id="clip" />
-				<ClipPath useId="clip" disabled={!enableClip}>
-					{#each timezoneGeojson.features as feature}
-						<GeoPath
-							geojson={feature}
-							tooltipContext={context.tooltip}
-							fill={colorScale(feature.properties.zone)}
-							class="stroke-gray-900/50 hover:brightness-110"
-						/>
-					{/each}
-				</ClipPath>
-
-				{#each countriesGeojson.features as feature}
+			<GeoPath geojson={countriesGeojson} id="clip" />
+			<ClipPath useId="clip" disabled={!enableClip}>
+				{#each timezoneGeojson.features as feature}
 					<GeoPath
 						geojson={feature}
-						class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
+						tooltipContext={context.tooltip}
+						fill={colorScale(feature.properties.zone)}
+						class="stroke-gray-900/50 hover:brightness-110"
 					/>
 				{/each}
+			</ClipPath>
 
-				{#each statesGeojson.features as feature}
-					<GeoPath geojson={feature} class="stroke-gray-900/10 pointer-events-none" />
-				{/each}
+			{#each countriesGeojson.features as feature}
+				<GeoPath
+					geojson={feature}
+					class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
+				/>
+			{/each}
 
-				{#if showDaylight}
-					<ClipPath useId="globe">
-						<Blur>
-							<GeoCircle
-								center={antipode(sun)}
-								class="stroke-none fill-black/50 pointer-events-none"
-							/>
-						</Blur>
-					</ClipPath>
-				{/if}
-			</Layer>
+			{#each statesGeojson.features as feature}
+				<GeoPath geojson={feature} class="stroke-gray-900/10 pointer-events-none" />
+			{/each}
 
-			<Tooltip.Root>
-				{#snippet children({ data })}
-					{@const { tz_name1st, time_zone, places } = data.properties}
-					<Tooltip.List>
-						<Tooltip.Item label="Name" value={tz_name1st} />
-						<Tooltip.Item label="Places" value={places} classes={{ value: 'max-w-[200px]' }} />
-						<Tooltip.Item label="Timezone" value={time_zone} />
-						<Tooltip.Item
-							label="Current time"
-							value={formatDate(dateTimer.current, time_zone.replace('UTC', '').replace('±', '+'))}
+			{#if showDaylight}
+				<ClipPath useId="globe">
+					<Blur>
+						<GeoCircle
+							center={antipode(sun)}
+							class="stroke-none fill-black/50 pointer-events-none"
 						/>
-					</Tooltip.List>
-				{/snippet}
-			</Tooltip.Root>
-		{/snippet}
-	</Chart>
-</div>
+					</Blur>
+				</ClipPath>
+			{/if}
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				{@const { tz_name1st, time_zone, places } = data.properties}
+				<Tooltip.List>
+					<Tooltip.Item label="Name" value={tz_name1st} />
+					<Tooltip.Item label="Places" value={places} classes={{ value: 'max-w-[200px]' }} />
+					<Tooltip.Item label="Timezone" value={time_zone} />
+					<Tooltip.Item
+						label="Current time"
+						value={formatDate(dateTimer.current, time_zone.replace('UTC', '').replace('±', '+'))}
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</Chart>

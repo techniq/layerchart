@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Chart, Layer, Pie } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
-	import ShowControls from '$lib/components/ShowControl.svelte';
+	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 
 	let show = $state(true);
 
@@ -17,7 +17,8 @@
 	export { data };
 </script>
 
-<ShowControls bind:show label="Show Pie" />
+<ShowControl bind:show label="Show Pie" />
+
 <Chart {data} x="value" c="date" cRange={keyColors} height={300}>
 	<Layer center>
 		{#if show}

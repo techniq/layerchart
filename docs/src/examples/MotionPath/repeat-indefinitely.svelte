@@ -3,8 +3,8 @@
 
 	import { Axis, Chart, Layer, MotionPath, Polygon, Spline } from 'layerchart';
 
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
-	import MotionPathControls from '$lib/components/MotionPathControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
+	import MotionPathControls from '$lib/components/controls/MotionPathControls.svelte';
 
 	let config = $state({
 		pointCount: 100,
@@ -32,6 +32,7 @@
 </script>
 
 <MotionPathControls bind:config />
+
 <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />

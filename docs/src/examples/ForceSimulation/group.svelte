@@ -9,7 +9,7 @@
 	} from 'd3-force';
 
 	import { asAny, Chart, Circle, ForceSimulation, Layer } from 'layerchart';
-	import GroupControl from '$lib/components/GroupControl.svelte';
+	import GroupControl from '$lib/components/controls/ForceSimulationControls.svelte';
 	import { getForceGroupDots } from '$lib/data.remote';
 
 	import type { Prettify } from '@layerstack/utils';
@@ -46,6 +46,7 @@
 </script>
 
 <GroupControl bind:groupBy />
+
 <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]} height={300}>
 	{#snippet children({ context })}
 		{@const nodeStrokeWidth = 1}

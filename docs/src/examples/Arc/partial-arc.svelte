@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { Arc, Chart, Group, Layer, LinearGradient, Text } from 'layerchart';
-	import ArcControls from '$lib/components/ArcControls.svelte';
+	import ArcControls from '$lib/components/controls/ArcControls.svelte';
 
 	let value = $state(75);
 
 	export { value as data };
 </script>
 
-<ArcControls bind:value includeSegments={false} />
+<ArcControls bind:value />
+
 <Chart height={120} padding={20}>
 	<Layer center>
 		<Group y={16}>

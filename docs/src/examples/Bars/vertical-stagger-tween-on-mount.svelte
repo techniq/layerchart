@@ -3,7 +3,7 @@
 	import { Axis, Bar, Chart, Layer } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { cubicInOut } from 'svelte/easing';
-	import { Field, Switch } from 'svelte-ux';
+	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';
 
 	const data = createDateSeries({
 		count: 20,
@@ -15,11 +15,7 @@
 	let show = $state(true);
 </script>
 
-<div class="absolute p-1 top-1 right-1 rounded z-1 backdrop-blur-sm bg-surface-100/50">
-	<Field label="Show" labelPlacement="left" let:id>
-		<Switch bind:checked={show} {id} size="md" />
-	</Field>
-</div>
+<ShowControls bind:show label="Show Bars" />
 
 <Chart
 	{data}

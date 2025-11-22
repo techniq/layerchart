@@ -18,7 +18,7 @@
 	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
-	import PackControls from '$lib/components/PackControls.svelte';
+	import PackControls from '$lib/components/controls/PackControls.svelte';
 	import { getFlare } from '$lib/data.remote';
 
 	let colorBy: 'depth' | 'parent' | 'children' = $state('parent');

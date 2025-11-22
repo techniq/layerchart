@@ -3,7 +3,7 @@
 
 	import { Duration } from 'svelte-ux';
 	import { Axis, Chart, Layer, Highlight, Points, Tooltip, Rule } from 'layerchart';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	import { createTimeSeries } from '$lib/utils/data.js';
 
@@ -20,12 +20,13 @@
 		axis: undefined,
 		snapToDataX: false,
 		snapToDataY: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 
 	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	x={['startDate', 'endDate']}

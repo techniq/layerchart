@@ -2,7 +2,7 @@
 	import { bin } from 'd3-array';
 	import { BarChart, Tooltip } from 'layerchart';
 	import { getOlympians } from '$lib/data.remote';
-	import { RangeField } from 'svelte-ux';
+	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 
 	const olympians = await getOlympians();
 	let thresholds = $state(10);
@@ -17,7 +17,7 @@
 	export { data };
 </script>
 
-<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} />
+<BarChartControls bind:thresholds />
 
 <BarChart
 	{data}

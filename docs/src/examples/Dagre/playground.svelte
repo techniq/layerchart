@@ -5,9 +5,9 @@
 	import { slide } from 'svelte/transition';
 	import { cls } from '@layerstack/tailwind';
 	import { Chart, Dagre, Group, Layer, Rect, Spline, Text } from 'layerchart';
-	import { Field, MenuField, Switch } from 'svelte-ux';
-	import DagreControls from '$lib/components/DagreControls.svelte';
-	import TransformControls from '$lib/components/TransformControls.svelte';
+	import DagreControls from '$lib/components/controls/DagreControls.svelte';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
+	import DagrePlayground from '../../components/controls/DagrePlayground.svelte';
 
 	import { getGraph } from '$lib/graph.remote';
 
@@ -30,33 +30,7 @@
 	let showSettings = $state(false);
 </script>
 
-<div class="flex justify-end gap-2 items-end mb-2">
-	<MenuField
-		label="Graph"
-		options={[
-			{ label: 'Simple', value: 'simple' },
-			{ label: 'Medium', value: 'medium' },
-			{ label: 'Large', value: 'large' },
-			{ label: 'Les Misérables', value: 'miserables' },
-			{ label: 'Generated (simple)', value: 'simple-generated' },
-			{ label: 'Generated (complex)', value: 'complex-generated' }
-		]}
-		bind:value={selectedGraphValue}
-		menuIcon=""
-		dense
-		stepper
-		class="w-64"
-	/>
-
-	<Field label="Settings" labelPlacement="inset" let:id dense>
-		<Switch
-			checked={showSettings}
-			on:change={() => (showSettings = !showSettings)}
-			{id}
-			size="md"
-		/>
-	</Field>
-</div>
+<DagrePlayground bind:selectedGraphValue bind:showSettings />
 
 <div class="flex gap-2">
 	<div class="flex-1 p-4 border rounded-sm overflow-hidden">
@@ -68,7 +42,7 @@
 			}}
 			height={700}
 		>
-			<TransformControls />
+			<TransformContextControls />
 
 			<Layer>
 				<Dagre {data} edges={(d) => d.links} {...settings}>

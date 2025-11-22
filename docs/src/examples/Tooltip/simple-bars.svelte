@@ -3,7 +3,7 @@
 
 	import { timeDay } from 'd3-time';
 	import { Bars, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
-	import TooltipControls from '$lib/components/TooltipControls.svelte';
+	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -21,12 +21,13 @@
 		axis: undefined,
 		snapToDataX: false,
 		snapToDataY: false
-	}) as ComponentProps<typeof TooltipControls>['settings'];
+	}) as ComponentProps<typeof TooltipContextControls>['settings'];
 
 	export { data };
 </script>
 
-<TooltipControls bind:settings />
+<TooltipContextControls bind:settings />
+
 <Chart
 	{data}
 	x="date"

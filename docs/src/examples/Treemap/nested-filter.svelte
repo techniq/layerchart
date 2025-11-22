@@ -7,7 +7,7 @@
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
 	import { getCars } from '$lib/data.remote';
-	import TreemapControls from '$lib/components/TreemapControls.svelte';
+	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
@@ -93,7 +93,7 @@
 	export { data };
 </script>
 
-<TreemapControls bind:config filterable />
+<TreemapControls bind:config />
 
 <Breadcrumb {items} class="my-2">
 	<Button

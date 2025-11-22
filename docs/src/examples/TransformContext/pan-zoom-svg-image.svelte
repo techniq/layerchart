@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { Chart, Layer } from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
-
-	const data = undefined;
-	export { data };
+	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 </script>
 
 <Chart
@@ -16,6 +13,7 @@
 	height={500}
 >
 	<TransformControls />
+
 	<Layer type="svg">
 		<image
 			href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg"

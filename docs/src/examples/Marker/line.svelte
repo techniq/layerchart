@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Chart, Line, Layer } from 'layerchart';
-	import StartEndControls from '$lib/components/StartEndControls.svelte';
+	import StartEndControls from '$lib/components/controls/MarkerControls2.svelte';
 
 	let pathGenerator = $state((x: number) => x);
 	let pointCount = $state(10);

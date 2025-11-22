@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Axis, Chart, Layer, Spline, Points } from 'layerchart';
-	import SplineControls from '$lib/components/SplineControls.svelte';
-	import CurveMenuField from '$lib/components/CurveMenuField.svelte';
+	import SplineControls from '$lib/components/controls/SplineControls.svelte';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
 		show: true,
@@ -28,7 +28,8 @@
 	export { data };
 </script>
 
-<SplineControls bind:config includeShowpointsMotion={true} />
+<SplineControls bind:config />
+
 <Chart {data} x="x" y="y" yNice padding={25} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />

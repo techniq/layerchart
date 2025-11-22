@@ -4,7 +4,7 @@
 	import { timeDay } from 'd3-time';
 	import { BarChart, Tooltip, thresholdTime } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { NumberStepper } from 'svelte-ux';
+	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 
 	let randomCount = $state(1000);
 	let random = $state(randomNormal());
@@ -31,15 +31,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-2 gap-2 mb-4">
-	<NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
-	<NumberStepper
-		label="Thresholds"
-		value={thresholds}
-		on:change={(e) => (thresholds = e.detail.value)}
-		class="w-full"
-	/>
-</div>
+<BarChartControls bind:dateRange bind:thresholds />
 
 <BarChart
 	{data}

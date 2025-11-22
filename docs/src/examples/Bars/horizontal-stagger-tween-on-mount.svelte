@@ -2,7 +2,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand } from 'd3-scale';
 	import { Bar, Axis, Chart, Layer } from 'layerchart';
-	import ShowControl from '$lib/components/ShowControl.svelte';
+	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -19,6 +19,7 @@
 </script>
 
 <ShowControl bind:show label="Show Bars" />
+
 <Chart
 	{data}
 	x="value"

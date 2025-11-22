@@ -2,7 +2,7 @@
 	import { scaleBand } from 'd3-scale';
 	import { sum } from 'd3-array';
 	import { Bar, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
-	import GroupedStackedComboControls from '$lib/components/GroupedStackedCombo.svelte';
+	import GroupedStackedComboControls from '$lib/components/controls/BarsControls.svelte';
 	import { longData } from '$lib/utils/data.js';
 	import { unique } from '@layerstack/utils';
 	import { cubicInOut } from 'svelte/easing';

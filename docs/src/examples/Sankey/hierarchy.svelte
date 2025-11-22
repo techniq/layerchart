@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
 	import { scaleSequential } from 'd3-scale';
 	import { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 	import { interpolateCool } from 'd3-scale-chromatic';
@@ -16,22 +15,24 @@
 		Text,
 		sankeyGraphFromHierarchy
 	} from 'layerchart';
-	import SankeyControls from '../../lib/components/SankeyControls.svelte';
+	import SankeyControls, {
+		type SankeyConfig
+	} from '$lib/components/controls/SankeyControls.svelte';
 	import { getFlare } from '$lib/data.remote';
 
 	const colorScale = scaleSequential(interpolateCool);
 
-	type SankeyControlsProps = ComponentProps<typeof SankeyControls>;
-
 	let highlightLinkIndexes: Array<number | undefined> = $state([]);
-	let nodeAlign: SankeyControlsProps['nodeAlign'] = $state('justify');
-	let nodePadding: SankeyControlsProps['nodePadding'] = $state(4);
-	let nodeWidth: SankeyControlsProps['nodeWidth'] = $state(10);
-	let nodeColorBy: SankeyControlsProps['nodeColorBy'] = $state('layer');
-	let linkColorBy: SankeyControlsProps['linkColorBy'] = $state('static');
+	let config: SankeyConfig = $state({
+		nodeAlign: 'justify',
+		nodePadding: 4,
+		nodeWidth: 10,
+		nodeColorBy: 'layer',
+		linkColorBy: 'static'
+	});
 
 	const linkOpacity = $derived(
-		linkColorBy === 'static'
+		config.linkColorBy === 'static'
 			? {
 					default: 0.1,
 					inactive: 0.01
@@ -53,19 +54,19 @@
 	export { data };
 </script>
 
-<SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
+<SankeyControls bind:config />
 
 <Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>
 	<Layer>
 		<Sankey
-			{nodeAlign}
-			{nodePadding}
-			{nodeWidth}
+			nodeAlign={config.nodeAlign}
+			nodePadding={config.nodePadding}
+			nodeWidth={config.nodeWidth}
 			onUpdate={(e) => {
 				// Calculate domain extents from Sankey data
 				// TODO: Update as 'nodeColorBy' changes
 				// @ts-expect-error
-				const extents = extent(e.nodes, (d) => d[nodeColorBy]);
+				const extents = extent(e.nodes, (d) => d[config.nodeColorBy]);
 				// @ts-expect-error
 				colorScale.domain(extents);
 			}}
@@ -75,9 +76,9 @@
 					<Link
 						sankey
 						data={link}
-						stroke={linkColorBy === 'static'
+						stroke={config.linkColorBy === 'static'
 							? undefined
-							: colorScale(link[linkColorBy][nodeColorBy])}
+							: colorScale(link[config.linkColorBy][config.nodeColorBy])}
 						stroke-opacity={highlightLinkIndexes.length &&
 						!highlightLinkIndexes.includes(link.index)
 							? linkOpacity.inactive
@@ -85,7 +86,7 @@
 						strokeWidth={link.width}
 						class={cls(
 							'transition[stroke-opacity] duration-300',
-							linkColorBy === 'static' && 'stroke-surface-content'
+							config.linkColorBy === 'static' && 'stroke-surface-content'
 						)}
 						onpointerenter={() => (highlightLinkIndexes = [link.index])}
 						onpointerleave={() => (highlightLinkIndexes = [])}
@@ -100,7 +101,7 @@
 						<Rect
 							width={nodeWidth}
 							height={nodeHeight}
-							fill={colorScale(node[nodeColorBy])}
+							fill={colorScale(node[config.nodeColorBy])}
 							fillOpacity={0.5}
 							onpointerenter={() => {
 								highlightLinkIndexes = [

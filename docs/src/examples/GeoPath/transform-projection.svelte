@@ -5,8 +5,8 @@
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Layer, Tooltip, geoFitObjectTransform, getSettings } from 'layerchart';
-	import TransformControls from '$lib/components/TransformControls.svelte';
-	import { SelectField } from 'svelte-ux';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
+	import GeoPathProjectionControls from '$lib/components/controls/GeoPathProjectionControls.svelte';
 
 	import type { GeometryObjectA } from 'topojson-specification';
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
@@ -44,16 +44,7 @@
 	export { data };
 </script>
 
-<div class="grid grid-cols-[1fr_2fr] gap-2 mb-4">
-	<SelectField
-		label="Projections"
-		options={projections}
-		bind:value={projection}
-		clearable={false}
-		toggleIcon={null}
-		stepper
-	/>
-</div>
+<GeoPathProjectionControls {projections} bind:projection />
 
 <div class="h-[600px] relative overflow-hidden">
 	<Chart
@@ -69,7 +60,7 @@
 		height={600}
 	>
 		{#snippet children({ context })}
-			<TransformControls />
+			<TransformContextControls />
 
 			<Layer>
 				{#each states.features as feature}
