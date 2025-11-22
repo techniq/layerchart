@@ -2,6 +2,8 @@
 	import { Button, MenuField, ScrollingValue, TextField } from 'svelte-ux';
 	import { sum } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
+	import { useSearchParams } from 'runed/kit';
+	import { z } from 'zod';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 	import H1 from '$lib/markdown/components/h1.svelte';
@@ -14,29 +16,32 @@
 
 	let { data } = $props();
 
+	export const schema = z.object({
+		filter: z.string().nullable().default(null),
+		section: z.string().nullable().default(null)
+	});
+	let params = useSearchParams(schema);
+
 	let columnCount = $state(typeof window !== 'undefined' && window.innerWidth > 800 ? 3 : 2);
-	let filterQuery = $state<string | null>(null);
-	let selectedSection = $state<string | null>(null);
 
 	let visibleExamples = $derived.by(() => {
 		let filtered = data.components;
 
 		// Filter by selected section (component or section)
-		if (selectedSection) {
-			const selected = selectedSection.toLowerCase();
+		if (params.section) {
+			const selected = params.section.toLowerCase();
 			filtered = filtered.filter(
 				({ component, section }) =>
-					component === selectedSection || section?.toLowerCase() === selected
+					component === params.section || section?.toLowerCase() === selected
 			);
 		}
 
 		// Filter by search query
-		if (!filterQuery) {
+		if (!params.filter) {
 			return filtered;
 		}
 
-		const query = filterQuery.toLowerCase().trim();
-
+		const query = params.filter.toLowerCase().trim();
 		return filtered
 			.map(({ component, section, examples }) => {
 				// If component name matches, return all examples for this component
@@ -135,14 +140,14 @@
 		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
 >
-	<TextField placeholder="Filter" bind:value={filterQuery} clearable>
+	<TextField placeholder="Filter" bind:value={params.filter} clearable>
 		{#snippet prepend()}
 			<LucideSearch class="text-surface-content/50 mr-4" />
 		{/snippet}
 	</TextField>
 
 	<div>
-		<MenuField options={sectionOptions} bind:value={selectedSection} />
+		<MenuField options={sectionOptions} bind:value={params.section} />
 	</div>
 
 	<div class="flex gap-2">
