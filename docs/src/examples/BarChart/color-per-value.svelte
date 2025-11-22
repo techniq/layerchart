@@ -13,10 +13,10 @@
 	y="value"
 	c="fruit"
 	cRange={[
-		'var(--color-danger)',
-		'var(--color-warning)',
-		'var(--color-success)',
-		'var(--color-info)'
+		'var(--color-apples)',
+		'var(--color-bananas)',
+		'var(--color-cherries)',
+		'var(--color-grapes)'
 	]}
 	props={{
 		yAxis: { format: 'metric' }
