@@ -83,7 +83,7 @@
 		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold capitalize">
 			<LucideGlobe class="size-4 text-surface-content/70" /> Guides
 		</h2>
-		<div class="border-l border-primary/20">
+		<div class="border-l">
 			{#each guides as guide}
 				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
 			{/each}
@@ -109,7 +109,7 @@
 		{#each componentsBySection as [section, components]}
 			<div class="mb-6">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{section}</h3>
-				<div class="border-l border-primary/20">
+				<div class="border-l">
 					{#each components.sort(sortFunc('name')) as component}
 						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 					{/each}
@@ -128,7 +128,7 @@
 		{icon}
 		classes={{
 			root: cls(
-				'relative text-sm text-surface-content/50 py-1 my-px rounded-r hover:border-primary/20 hover:bg-primary/5 -ml-px',
+				'relative text-sm text-surface-content/50 py-1 my-px rounded-r border-l hover:border-primary/50 hover:bg-primary/5 hover:text-primary-600 -ml-px',
 				icon ? 'pl-3' : 'pl-6'
 			),
 			active: cls(
