@@ -20,7 +20,7 @@ import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$l
 import { printDebug } from '$lib/utils/debug.js';
 
 import type { GeoState } from '$lib/contexts/geo.js';
-import type { TransformContextValue } from '$lib/contexts/transform.js';
+import type { TransformState } from './transform.svelte.js';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type { BrushState } from './brush.svelte.js';
 
@@ -44,7 +44,7 @@ export class ChartState<
 
   // Context references
   geoContext = $state<GeoState>(null!);
-  transformContext = $state<TransformContextValue>(null!);
+  transformContext = $state<TransformState>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
   brushContext = $state<BrushState>(null!);
 

@@ -29,7 +29,7 @@
       const curr = context.transform.translate;
 
       context.transform.translate = {
-        x: (curr.x += velocity),
+        x: curr.x + velocity,
         y: curr.y,
       };
     },

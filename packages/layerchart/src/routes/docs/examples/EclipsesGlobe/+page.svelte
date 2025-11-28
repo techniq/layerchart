@@ -28,7 +28,7 @@
       const value = context.transform.translate;
 
       context.transform.translate = {
-        x: (value.x += velocity),
+        x: value.x + velocity,
         y: value.y,
       };
     },

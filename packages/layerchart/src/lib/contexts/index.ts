@@ -4,3 +4,4 @@ export * from './layer.js';
 export * from './legendPayload.js';
 export * from './settings.js';
 export * from './tooltip.js';
+export * from './transform.js';
