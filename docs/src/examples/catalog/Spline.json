@@ -33,27 +33,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
         },
         {
           "component": "Circle",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         }
       ]
@@ -64,22 +64,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
         }
       ]
@@ -90,8 +90,44 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ top: 25, left: 25, bottom: 25, right: 35 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 34,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 37,
+          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 39,
+          "line": "<Circle r={5} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 40,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "end-snippet-with-draw",
+      "path": "/example/Spline/end-snippet-with-draw",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 31,
+          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
@@ -111,42 +147,6 @@
         {
           "component": "Circle",
           "lineNumber": 38,
-          "line": "<Circle r={5} class=\"fill-primary\" />"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 39,
-          "line": "<Text"
-        }
-      ]
-    },
-    {
-      "name": "end-snippet-with-draw",
-      "path": "/example/Spline/end-snippet-with-draw",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 30,
-          "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 31,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 32,
-          "line": "<Axis placement=\"left\" grid rule />"
-        },
-        {
-          "component": "Spline",
-          "lineNumber": 35,
-          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
-        },
-        {
-          "component": "Circle",
-          "lineNumber": 37,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         }
       ]
@@ -260,22 +260,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Spline"
         }
       ]
@@ -455,27 +455,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 33,
+          "lineNumber": 34,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 34,
+          "lineNumber": 35,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Spline"
         },
         {
           "component": "Points",
-          "lineNumber": 45,
+          "lineNumber": 46,
           "line": "<Points"
         }
       ]
@@ -543,27 +543,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 20,
+          "lineNumber": 21,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 29,
+          "lineNumber": 30,
           "line": "<Layer center>"
         },
         {
           "component": "Axis",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Axis"
         },
         {
           "component": "Spline",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
         },
         {
           "component": "Points",
-          "lineNumber": 38,
+          "lineNumber": 39,
           "line": "<Points class=\"fill-primary stroke-surface-200\" />"
         }
       ]
@@ -574,22 +574,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 32,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Spline",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
         }
       ]
@@ -766,35 +766,35 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
-      "lineNumber": 60,
+      "lineNumber": 51,
       "line": "<Spline"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/example/Dagre/playground",
-      "lineNumber": 78,
+      "lineNumber": 52,
       "line": "<Spline"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 62,
+      "lineNumber": 53,
       "line": "<Spline"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 61,
+      "lineNumber": 51,
       "line": "<Spline"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/example/GeoPath/spike-map",
-      "lineNumber": 83,
+      "lineNumber": 82,
       "line": "<Spline"
     },
     {
@@ -843,63 +843,63 @@
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 37,
+      "lineNumber": 40,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 51,
+      "lineNumber": 54,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 65,
+      "lineNumber": 68,
       "line": "<Spline"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Spline"
     },
     {
       "example": "spline-w-thicker-stroke",
       "component": "Marker",
       "path": "/example/Marker/spline-w-thicker-stroke",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Spline"
     },
     {
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 34,
+      "lineNumber": 38,
       "line": "<Spline"
     },
     {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Spline id={pathId} curve={config.curve} draw={{ duration: 3000, easing: linear }} />"
     },
     {
@@ -913,28 +913,28 @@
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
@@ -962,7 +962,7 @@
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Spline"
     },
     {
@@ -1004,7 +1004,7 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Spline"
     },
     {
@@ -1025,14 +1025,14 @@
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
     },
     {
@@ -1060,51 +1060,51 @@
       "example": "basic",
       "component": "Threshold",
       "path": "/example/Threshold/basic",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "basic",
       "component": "Threshold",
       "path": "/example/Threshold/basic",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Threshold",
-      "path": "/example/Threshold/with-labels",
-      "lineNumber": 41,
-      "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
       "path": "/example/Threshold/with-labels",
       "lineNumber": 42,
-      "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
+      "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
-      "example": "with-tooltip-and-highlight",
+      "example": "with-labels",
       "component": "Threshold",
-      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "path": "/example/Threshold/with-labels",
       "lineNumber": 43,
-      "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
+      "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
       "path": "/example/Threshold/with-tooltip-and-highlight",
       "lineNumber": 44,
+      "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
+    },
+    {
+      "example": "with-tooltip-and-highlight",
+      "component": "Threshold",
+      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "lineNumber": 45,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 49,
+      "lineNumber": 51,
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:50.473Z"
+  "updatedAt": "2025-11-23T01:49:02.804Z"
 }

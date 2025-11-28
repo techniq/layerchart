@@ -43,42 +43,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 109,
+          "lineNumber": 71,
           "line": "<Chart height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 111,
+          "lineNumber": 73,
           "line": "<Layer>"
         },
         {
           "component": "Treemap",
-          "lineNumber": 112,
+          "lineNumber": 74,
           "line": "<Treemap"
         },
         {
           "component": "Group",
-          "lineNumber": 125,
+          "lineNumber": 87,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 134,
+          "lineNumber": 96,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 145,
+          "lineNumber": 107,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Text",
-          "lineNumber": 146,
+          "lineNumber": 108,
           "line": "<text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 181,
+          "lineNumber": 143,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -290,7 +290,7 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 112,
+      "lineNumber": 74,
       "line": "<Treemap"
     },
     {
@@ -322,5 +322,5 @@
       "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:23.113Z"
+  "updatedAt": "2025-11-23T01:49:03.055Z"
 }

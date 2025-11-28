@@ -1,6 +1,6 @@
 ---
 description: Visualization of quantitative data over a continuous interval, with filled areas beneath a line to emphasize magnitude or cumulative values.
-section: charts
+category: charts
 layers: [svg, canvas]
 related: [Chart, Area]
 ---

@@ -1,6 +1,6 @@
 ---
 description: Primitive component which draws a circular shape to mark specific points or emphasize data visually.
-section: primitives
+category: primitives
 layers: [svg, canvas, html]
 related: [Points]
 ---

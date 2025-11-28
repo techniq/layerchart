@@ -7,8 +7,15 @@ coverage/
 .svelte-kit/
 .env
 .DS_Store
+.vscode
 
 test-*
 
 # Content Collections
 .content-collections
+
+# Generated API documentation
+**/generated/api/*.json
+
+# Generated StackBlitz files
+**/static/stackblitz-files.json

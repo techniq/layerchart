@@ -1,26 +1,39 @@
 <script lang="ts">
-	import { NavItem } from 'svelte-ux';
+	import { NavItem, type IconProp } from 'svelte-ux';
 	import { flatGroup } from 'd3-array';
 
-	import { allComponents, allExamples } from 'content-collections';
+	import { allComponents, allUtils } from 'content-collections';
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 
+	import LucideCompass from '~icons/lucide/compass';
+	import LucideGalleryVertical from '~icons/lucide/gallery-vertical';
+	import LucideGalleryHorizontalEnd from '~icons/lucide/gallery-horizontal-end';
+	import LucideGalleryVerticalEnd from '~icons/lucide/gallery-vertical-end';
+	import LucideGlobe from '~icons/lucide/globe';
+	import LucideNotebookPen from '~icons/lucide/notebook-pen';
+	import LucideBlocks from '~icons/lucide/blocks';
+	import LucideFileCode2 from '~icons/lucide/file-code-2';
+	import LucideCirclePlay from '~icons/lucide/circle-play';
+	import LucideParentheses from '~icons/lucide/parentheses';
+
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	// const examplesBySection = flatGroup(allExamples, (d) => d.section?.toLowerCase())
-	// 	.filter(([section]) => section !== 'examples')
-	// 	.sort(
-	// 		sortFunc(([section]) =>
-	// 			['cartesian & polar', 'hierarchy', 'graph', 'force', 'geo'].indexOf(section)
-	// 		)
-	// 	);
+	const guides = [
+		{ name: 'Features', path: 'features' },
+		{ name: 'Layers', path: 'layers' },
+		{ name: 'Primitives', path: 'primitives' },
+		{ name: 'Simplified charts', path: 'simplified-charts' },
+		{ name: 'Scales', path: 'scales' },
+		{ name: 'State', path: 'state' },
+		{ name: 'Styles', path: 'styles' }
+	];
 
-	const componentsBySection = flatGroup(allComponents, (d) => d.section?.toLowerCase())
-		.filter(([section]) => section !== 'examples')
+	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
+		.filter(([category]) => category !== 'examples')
 		.sort(
-			sortFunc(([section]) =>
+			sortFunc(([category]) =>
 				[
 					'charts',
 					'common',
@@ -34,53 +47,94 @@
 					'clipping',
 					'layers',
 					'other'
-				].indexOf(section)
+				].indexOf(category)
 			)
 		);
 </script>
 
 <nav class={cls('grid gap-6', className)}>
 	<section class="border-l border-surface-content/10">
-		{@render navItem({ label: 'Introduction', path: '/docs/introduction' })}
-		{@render navItem({ label: 'Examples', path: '/docs/examples' })}
+		{@render navItem({
+			label: 'Getting Started',
+			path: '/docs/getting-started',
+			icon: LucideCirclePlay
+		})}
+		{@render navItem({
+			label: 'Examples',
+			path: '/docs/examples',
+			icon: LucideFileCode2
+		})}
+		{@render navItem({ label: 'Showcase', path: '/docs/showcase', icon: LucideGalleryVertical })}
+		{@render navItem({
+			label: 'Releases',
+			path: 'https://github.com/techniq/layerchart/releases',
+			icon: LucideNotebookPen
+		})}
 	</section>
 
-	<!-- <section>
-		<h2 class="mb-4 text-base font-semibold capitalize">Examples</h2>
-		{#each examplesBySection as [section, examples]}
-			<div class="mb-6">
-				<h3 class="text-surface-content/50 mb-3 text-sm font-medium capitalize">{section}</h3>
-				{#each examples.sort(sortFunc('name')) as example}
-					{@render navItem({ label: example.name, path: `/docs/components/${example.slug}` })}
-				{/each}
-			</div>
-		{/each}
-	</section> -->
+	<section>
+		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold capitalize">
+			<LucideGlobe class="size-4 text-surface-content/70" /> Guides
+		</h2>
+		<div class="border-l border-surface-content/10">
+			{#each guides as guide}
+				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
+			{/each}
+		</div>
+	</section>
 
 	<section>
-		<h2 class="mb-4 text-base font-semibold capitalize">Components</h2>
-		{#each componentsBySection as [section, components]}
+		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold capitalize">
+			<LucideBlocks class="size-4 text-surface-content/70" /> Components
+		</h2>
+		{#each componentsByCategory as [category, components]}
 			<div class="mb-6">
-				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{section}</h3>
+				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
-					{#each components.sort(sortFunc('name')) as component}
+					{#each components.sort((a, b) => {
+						// If both have order, sort by order
+						if (a.order !== undefined && b.order !== undefined) {
+							return a.order - b.order;
+						}
+						// Items with order come first
+						if (a.order !== undefined) return -1;
+						if (b.order !== undefined) return 1;
+						// Both without order, sort alphabetically by name
+						return a.name.localeCompare(b.name);
+					}) as component}
 						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 					{/each}
 				</div>
 			</div>
 		{/each}
 	</section>
+
+	<section>
+		<h2 class="flex gap-2 items-center mb-3 text-base font-semibold capitalize">
+			<LucideParentheses class="size-4 text-surface-content/70" /> Utils
+		</h2>
+		<div class="border-l border-surface-content/10">
+			{#each allUtils as util}
+				{@render navItem({ label: util.name, path: `/docs/utils/${util.slug}` })}
+			{/each}
+		</div>
+	</section>
 </nav>
 
-{#snippet navItem({ label, path }: { label: string; path: string })}
+{#snippet navItem({ label, path, icon }: { label: string; path: string; icon?: IconProp })}
 	<NavItem
 		text={label}
 		currentUrl={page.url}
+		target={path.startsWith('http') ? '_blank' : '_self'}
 		{path}
+		{icon}
 		classes={{
-			root: 'relative text-sm text-surface-content/50 pl-6 py-1 my-px rounded-r hover:border-surface-content/20 hover:bg-surface-content/5 -ml-px',
+			root: cls(
+				'relative text-sm text-surface-content/50 py-1 my-px rounded-r border-l border-transparent border-surface-content/5 hover:border-primary/50 hover:bg-primary/5 hover:text-primary-600 -ml-px',
+				icon ? 'pl-3' : 'pl-6'
+			),
 			active: cls(
-				'text-surface-content! border-surface-content! hover:bg-surface-content/10! font-medium bg-surface-content/10 border-l'
+				'text-primary-400! border-primary! hover:bg-primary/10! font-medium bg-primary/10 border-l'
 			)
 		}}
 		on:click={() => onItemClick?.()}

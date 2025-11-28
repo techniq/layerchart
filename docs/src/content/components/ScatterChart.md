@@ -1,6 +1,6 @@
 ---
 description: Streamlined visualization of data with individual data points on two axes to reveal relationships, patterns, or correlations between variables.
-section: charts
+category: charts
 layers: [svg, canvas, html]
 related: [Chart, Points]
 ---

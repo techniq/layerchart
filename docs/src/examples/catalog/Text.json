@@ -7,22 +7,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 44,
+          "lineNumber": 45,
           "line": "<Chart height={224}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 45,
+          "lineNumber": 46,
           "line": "<Layer {type}>"
         },
         {
           "component": "Text",
-          "lineNumber": 46,
+          "lineNumber": 47,
           "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 48,
+          "lineNumber": 49,
           "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
         }
       ]
@@ -96,49 +96,49 @@
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 56,
+      "lineNumber": 57,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 62,
+      "lineNumber": 63,
       "line": "<Text"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Text"
     },
     {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Text"
     },
     {
@@ -191,17 +191,10 @@
       "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
     },
     {
-      "example": "custom-chart",
-      "component": "BarChart",
-      "path": "/example/BarChart/custom-chart",
-      "lineNumber": 20,
-      "line": "<text x=\"50\" y=\"50\" class=\"text-sm fill-surface-content\">Custom Chart Implementation</text>"
-    },
-    {
       "example": "group-series-labels",
       "component": "BarChart",
       "path": "/example/BarChart/group-series-labels",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Text"
     },
     {
@@ -264,56 +257,56 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
-      "lineNumber": 82,
+      "lineNumber": 73,
       "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/example/Dagre/playground",
-      "lineNumber": 100,
+      "lineNumber": 74,
       "line": "<Text"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 72,
+      "lineNumber": 63,
       "line": "<Text"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 98,
+      "lineNumber": 89,
       "line": "<Text"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 71,
+      "lineNumber": 61,
       "line": "<Text"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 97,
+      "lineNumber": 87,
       "line": "<Text"
     },
     {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-country-map",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<!-- <Text"
     },
     {
       "example": "icons",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/icons",
-      "lineNumber": 55,
+      "lineNumber": 46,
       "line": "<Text"
     },
     {
@@ -334,14 +327,14 @@
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-capitals",
-      "lineNumber": 76,
+      "lineNumber": 67,
       "line": "<Text"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-capitals",
-      "lineNumber": 91,
+      "lineNumber": 82,
       "line": "<Text"
     },
     {
@@ -369,7 +362,7 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 149,
+      "lineNumber": 142,
       "line": "<text"
     },
     {
@@ -474,14 +467,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/example/Sankey/complex",
-      "lineNumber": 107,
+      "lineNumber": 108,
       "line": "<Text"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/example/Sankey/hierarchy",
-      "lineNumber": 114,
+      "lineNumber": 115,
       "line": "<Text"
     },
     {
@@ -509,7 +502,7 @@
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Text"
     },
     {
@@ -544,7 +537,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
     },
     {
@@ -558,7 +551,7 @@
       "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
-      "lineNumber": 108,
+      "lineNumber": 114,
       "line": "<Text"
     },
     {
@@ -572,14 +565,14 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 146,
+      "lineNumber": 108,
       "line": "<text"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 163,
+      "lineNumber": 125,
       "line": "<Text"
     },
     {
@@ -639,5 +632,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:50.511Z"
+  "updatedAt": "2025-11-24T01:39:38.545Z"
 }

@@ -1,6 +1,6 @@
 ---
 description: Clipping component which conditionally applies a circular clip region to its child elements based on the rendering context and provided properties.
-section: clipping
+category: clipping
 layers: [svg]
 related: []
 ---

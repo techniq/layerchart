@@ -114,8 +114,8 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 19,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" props={{ spline: { draw: true } }} height={300} />"
+          "lineNumber": 17,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" props={{ spline: { draw: true } }} />"
         }
       ]
     },
@@ -302,7 +302,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 122,
+          "lineNumber": 94,
           "line": "<LineChart"
         }
       ]
@@ -315,6 +315,72 @@
           "component": "LineChart",
           "lineNumber": 14,
           "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "perf-dimension-arrays",
+      "path": "/example/LineChart/perf-dimension-arrays",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 52,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "perf-dimension-arrays-processed",
+      "path": "/example/LineChart/perf-dimension-arrays-processed",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 58,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "perf-series-arrays",
+      "path": "/example/LineChart/perf-series-arrays",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 51,
+          "line": "<LineChart data={data.cpu} x=\"x\" y=\"y\" props={chartProps} brush profile />"
+        }
+      ]
+    },
+    {
+      "name": "perf-streaming",
+      "path": "/example/LineChart/perf-streaming",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 131,
+          "line": "<LineChart x=\"date\" y=\"value\" data={chartData} brush />"
+        }
+      ]
+    },
+    {
+      "name": "perf-wide-data",
+      "path": "/example/LineChart/perf-wide-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 51,
+          "line": "<LineChart {data} x=\"epoch\" y={(d) => 100 - d.idl} props={chartProps} brush profile />"
+        }
+      ]
+    },
+    {
+      "name": "perf-wide-data-processed",
+      "path": "/example/LineChart/perf-wide-data-processed",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 58,
+          "line": "<LineChart data={chartData} x=\"date\" y=\"cpu\" props={chartProps} brush profile />"
         }
       ]
     },
@@ -657,7 +723,7 @@
       "example": "horizontal-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal-placement",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -678,14 +744,7 @@
       "example": "vertical-placement",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/vertical-placement",
-      "lineNumber": 16,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
-    },
-    {
-      "example": "vertical-to-point",
-      "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical-to-point",
-      "lineNumber": 25,
+      "lineNumber": 17,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -701,6 +760,13 @@
       "path": "/example/AnnotationPoint/label-placement",
       "lineNumber": 30,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
+    },
+    {
+      "example": "line-to-point",
+      "component": "AnnotationPoint",
+      "path": "/example/AnnotationPoint/line-to-point",
+      "lineNumber": 25,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "on-axis-with-tooltip",
@@ -769,7 +835,7 @@
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
     },
     {
@@ -853,8 +919,8 @@
       "example": "draw",
       "component": "LineChart",
       "path": "/example/LineChart/draw",
-      "lineNumber": 19,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" props={{ spline: { draw: true } }} height={300} />"
+      "lineNumber": 17,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" props={{ spline: { draw: true } }} />"
     },
     {
       "example": "dynamic-data",
@@ -944,7 +1010,7 @@
       "example": "oscilloscope-time",
       "component": "LineChart",
       "path": "/example/LineChart/oscilloscope-time",
-      "lineNumber": 122,
+      "lineNumber": 94,
       "line": "<LineChart"
     },
     {
@@ -952,6 +1018,83 @@
       "component": "LineChart",
       "path": "/example/LineChart/override-color",
       "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-dimension-arrays",
+      "lineNumber": 52,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-dimension-arrays",
+      "lineNumber": 73,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays-processed",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-dimension-arrays-processed",
+      "lineNumber": 58,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays-processed",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-dimension-arrays-processed",
+      "lineNumber": 71,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-series-arrays",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-series-arrays",
+      "lineNumber": 51,
+      "line": "<LineChart data={data.cpu} x=\"x\" y=\"y\" props={chartProps} brush profile />"
+    },
+    {
+      "example": "perf-series-arrays",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-series-arrays",
+      "lineNumber": 57,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-streaming",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-streaming",
+      "lineNumber": 131,
+      "line": "<LineChart x=\"date\" y=\"value\" data={chartData} brush />"
+    },
+    {
+      "example": "perf-wide-data",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-wide-data",
+      "lineNumber": 51,
+      "line": "<LineChart {data} x=\"epoch\" y={(d) => 100 - d.idl} props={chartProps} brush profile />"
+    },
+    {
+      "example": "perf-wide-data",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-wide-data",
+      "lineNumber": 57,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-wide-data-processed",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-wide-data-processed",
+      "lineNumber": 58,
+      "line": "<LineChart data={chartData} x=\"date\" y=\"cpu\" props={chartProps} brush profile />"
+    },
+    {
+      "example": "perf-wide-data-processed",
+      "component": "LineChart",
+      "path": "/example/LineChart/perf-wide-data-processed",
+      "lineNumber": 64,
       "line": "<LineChart"
     },
     {
@@ -1137,5 +1280,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.388Z"
+  "updatedAt": "2025-11-24T01:39:38.048Z"
 }

@@ -126,7 +126,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
     },
     {
@@ -175,7 +175,7 @@
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
@@ -224,14 +224,14 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Points"
     },
     {
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Points class=\"fill-primary stroke-surface-200\" />"
     },
     {
@@ -266,16 +266,16 @@
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 52,
+      "lineNumber": 54,
       "line": "<Points>"
     },
     {
       "example": "radius",
       "component": "Voronoi",
       "path": "/example/Voronoi/radius",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-12T17:29:18.510Z"
+  "updatedAt": "2025-11-23T01:49:02.635Z"
 }

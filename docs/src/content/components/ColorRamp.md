@@ -1,6 +1,6 @@
 ---
 description: Component generates a color ramp (gradient) based on specified colors and stops, useful for mapping data values to colors in visualizations.
-section: other
+category: other
 layers: [svg]
 related: []
 ---

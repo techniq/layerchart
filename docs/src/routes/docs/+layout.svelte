@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import posthog from 'posthog-js';
 	import {
 		Breadcrumb,
 		Button,
@@ -17,9 +15,9 @@
 	import { env } from '@layerstack/utils';
 	import { watch } from 'runed';
 
-	import { dev } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import { examples } from '$lib/context.js';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 
@@ -41,6 +39,15 @@
 
 	let { data, children } = $props();
 
+	// Set examples context for all /docs pages
+	// Child layouts (like docs/components/[name]) can override with merged data
+	const examplesContext = {
+		get current() {
+			return data.examples;
+		}
+	};
+	examples.set(examplesContext);
+
 	let searchQuery = $state('');
 
 	function handleSearch() {
@@ -53,52 +60,6 @@
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
-
-	settings({
-		components: {
-			// NavItem: {
-			//   classes: {
-			//     root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
-			//     active:
-			//       'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow-sm z-10',
-			//   },
-			// },
-		},
-		themes: data.themes
-	});
-
-	let currentPath = '';
-	onMount(() => {
-		// Delay adding `scroll-smooth` to `<html>` as provides better refresh experience
-		// and fixes issue where sometimes doesn't scroll far enough
-		setTimeout(() => {
-			document.documentElement.classList.add('scroll-smooth');
-		}, 0);
-
-		// Posthog analytics
-		if (!dev) {
-			watch(
-				() => page,
-				() => {
-					if (currentPath && currentPath !== page.url.pathname) {
-						// Page navigated away
-						posthog.capture('$pageleave');
-					}
-					// Page entered
-					currentPath = page.url.pathname;
-					posthog.capture('$pageview');
-				}
-			);
-			const handleBeforeUnload = () => {
-				// Hard reloads or browser exit
-				posthog.capture('$pageleave');
-			};
-			window.addEventListener('beforeunload', handleBeforeUnload);
-			return () => {
-				window.removeEventListener('beforeunload', handleBeforeUnload);
-			};
-		}
-	});
 </script>
 
 <svelte:head>
@@ -120,7 +81,18 @@
 	{/if}
 </svelte:head>
 
-<header class="bg-surface-300 sticky top-0 z-10 flex h-16 items-center border-b px-4 py-2">
+<div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
+<div
+	class="absolute top-0 w-full h-256 background-grid pointer-events-none mask-b-to-50% mask-x-from-50%"
+></div>
+
+<header
+	class={cls(
+		'sticky top-0 z-30 flex h-16 items-center border-b border-primary/10 px-4 py-2',
+		// dot background
+		'bg-radial from-black/0 from-[1px] to-surface-100/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+	)}
+>
 	<Button icon={LucidePanelLeftOpen} onclick={() => (showDrawer = true)} class="mr-2 lg:hidden">
 		<!-- {#if pageContent.breadcrumbs}
 		<Breadcrumb items={pageContent.breadcrumbs}>
@@ -245,7 +217,7 @@
 <div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
 	<aside
 		class={cls(
-			'bg-surface-300 sticky top-16 hidden max-h-[calc(100dvh-64px)] border-r transition-[width]',
+			'bg-surface-300/30 sticky top-16 hidden max-h-[calc(100dvh-64px)] border-r border-primary/10 transition-[width]',
 			'lg:grid lg:grid-rows-[1fr_56px]',
 			showSidebar ? 'w-62' : 'w-0'
 		)}
@@ -254,7 +226,7 @@
 			<DocsMenu class="px-3 py-4" />
 		</div>
 
-		<div class="relative border-t">
+		<div class="relative border-t border-primary/10">
 			<Button
 				onclick={() => (showSidebar = !showSidebar)}
 				iconOnly
@@ -283,7 +255,7 @@
 		<DocsMenu onItemClick={() => (showDrawer = false)} />
 	</Drawer>
 
-	<main class="flex-1 overflow-x-clip px-6 py-4 lg:px-20 lg:py-8">
+	<main class="flex-1 min-w-0 px-6 py-4 lg:px-20 lg:py-8">
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
 				{#snippet divider()}

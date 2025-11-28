@@ -135,12 +135,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<AnnotationRange"
         }
       ]
@@ -292,7 +292,7 @@
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<AnnotationRange"
     },
     {
@@ -324,5 +324,5 @@
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.033Z"
+  "updatedAt": "2025-11-23T01:49:01.649Z"
 }

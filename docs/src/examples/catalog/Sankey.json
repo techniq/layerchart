@@ -7,42 +7,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 42,
+          "lineNumber": 43,
           "line": "<Chart {data} padding={{ right: 164 }} flatData={[]} height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 44,
+          "lineNumber": 45,
           "line": "<Layer>"
         },
         {
           "component": "Sankey",
-          "lineNumber": 45,
+          "lineNumber": 46,
           "line": "<Sankey"
         },
         {
           "component": "Link",
-          "lineNumber": 60,
+          "lineNumber": 61,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 88,
+          "lineNumber": 89,
           "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 89,
+          "lineNumber": 90,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 107,
+          "lineNumber": 108,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 121,
+          "lineNumber": 122,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -53,37 +53,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 59,
           "line": "<Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 59,
+          "lineNumber": 60,
           "line": "<Layer>"
         },
         {
           "component": "Sankey",
-          "lineNumber": 60,
+          "lineNumber": 61,
           "line": "<Sankey"
         },
         {
           "component": "Link",
-          "lineNumber": 75,
+          "lineNumber": 76,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 99,
+          "lineNumber": 100,
           "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 100,
+          "lineNumber": 101,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 114,
+          "lineNumber": 115,
           "line": "<Text"
         }
       ]
@@ -222,14 +222,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/example/Sankey/complex",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Sankey"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/example/Sankey/hierarchy",
-      "lineNumber": 60,
+      "lineNumber": 61,
       "line": "<Sankey"
     },
     {
@@ -254,5 +254,5 @@
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.827Z"
+  "updatedAt": "2025-11-23T01:49:02.761Z"
 }

@@ -10,7 +10,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			$examples: './src/examples',
+			$examples: './src/examples/components',
 			'$static/*': 'static/*',
 			'content-collections': './.content-collections/generated'
 		},

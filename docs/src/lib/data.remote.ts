@@ -3,7 +3,8 @@ import { parse, sortFunc } from '@layerstack/utils';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
 import { csvParse, autoType } from 'd3-dsv';
 
-import { prerender, getRequestEvent } from '$app/server';
+import { prerender, getRequestEvent, query } from '$app/server';
+import { z } from 'zod';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
@@ -189,4 +190,59 @@ export const getForceGroupDots = prerender(async () => {
 		value: number;
 	}[];
 	return data;
+});
+
+export const getWideData = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/bench/wide_data/data.json').then((r) => r.json())) as {
+		epoch: number;
+		idl: number;
+		recv: number;
+		send: number;
+		writ: number;
+		used: number;
+		free: number;
+	}[];
+	return data;
+});
+
+export const getDimensionArrays = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/bench/dimension_arrays/data.json').then((r) =>
+		r.json()
+	)) as {
+		date: number[];
+		cpu: number[];
+		ram: number[];
+		tcp: number[];
+	};
+	return data;
+});
+
+export const getSeriesArrays = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/bench/series_arrays/data.json').then((r) =>
+		r.json()
+	)) as {
+		cpu: {
+			x: Date;
+			y: number;
+		}[];
+		ram: {
+			x: Date;
+			y: number;
+		}[];
+		tcp: {
+			x: Date;
+			y: number;
+		}[];
+	};
+	return data;
+});
+
+export const getShapeData = query(z.string().nullable(), async (file) => {
+	if (!file) return null;
+	const { fetch } = getRequestEvent();
+	const geojson = await fetch(file).then((r) => r.json());
+	return geojson;
 });

@@ -1,6 +1,6 @@
 ---
 description: Canvas layer
-section: layers
+category: layers
 layers: []
 related: [Layer]
 ---

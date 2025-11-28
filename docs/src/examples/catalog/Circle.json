@@ -204,14 +204,14 @@
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<circle"
     },
     {
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<circle"
     },
     {
@@ -239,7 +239,7 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 91,
+      "lineNumber": 92,
       "line": "<circle"
     },
     {
@@ -253,7 +253,7 @@
       "example": "group",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/group",
-      "lineNumber": 71,
+      "lineNumber": 72,
       "line": "<Circle"
     },
     {
@@ -281,7 +281,7 @@
       "example": "icons",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/icons",
-      "lineNumber": 61,
+      "lineNumber": 52,
       "line": "<Circle"
     },
     {
@@ -302,14 +302,14 @@
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-capitals",
-      "lineNumber": 75,
+      "lineNumber": 66,
       "line": "<Circle r={4} class=\"stroke-primary/50 fill-none\" />"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-capitals",
-      "lineNumber": 90,
+      "lineNumber": 81,
       "line": "<Circle cx={x} cy={y} r={4} class=\"stroke-primary/50 fill-none\" />"
     },
     {
@@ -337,7 +337,7 @@
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 50,
+      "lineNumber": 51,
       "line": "<Circle id={objectId} r={5} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
@@ -526,28 +526,28 @@
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
@@ -582,23 +582,23 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
     },
     {
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<Circle"
     },
     {
       "example": "radius",
       "component": "Voronoi",
       "path": "/example/Voronoi/radius",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.505Z"
+  "updatedAt": "2025-11-23T01:49:01.951Z"
 }

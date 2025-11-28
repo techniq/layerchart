@@ -1,6 +1,6 @@
 ---
 description: Marking component which shades the space under a line on a chart to emphasize the magnitude and trend of data over a range.
-section: marks
+category: marks
 layers: [svg, canvas]
 related: []
 ---

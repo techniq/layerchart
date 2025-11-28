@@ -1,6 +1,6 @@
 ---
 description: Commonly used component which explains the symbols, colors, or patterns used in a chart, helping interpret the represented data categories. Filtering and toggling visibility of data series can be enabled for interactivity.
-section: common
+category: common
 layers: [html]
 related: []
 ---

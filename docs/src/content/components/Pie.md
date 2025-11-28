@@ -1,6 +1,6 @@
 ---
 description: Marking component which represents data as proportional slices of a circle, showing the relative contribution of each category to the whole.
-section: marks
+category: marks
 layers: [svg, canvas]
 related: [Arc, PieChart]
 ---

@@ -5,7 +5,7 @@ import remoteSources from '$static/remote-sources.json';
 
 // Import all example files at build time using Vite's import.meta.glob
 // This works on Cloudflare Workers since files are bundled at build time
-const exampleModules = import.meta.glob('/src/examples/**/*.svelte', {
+const exampleModules = import.meta.glob('/src/examples/components/**/*.svelte', {
 	query: '?raw',
 	import: 'default',
 	eager: true
@@ -167,7 +167,7 @@ export const getExample = query(
 	}),
 	async ({ component, name }) => {
 		// Construct the path to match import.meta.glob pattern
-		const examplePath = `/src/examples/${component}/${name}.svelte`;
+		const examplePath = `/src/examples/components/${component}/${name}.svelte`;
 
 		// Get the source code from the pre-loaded modules
 		const code = exampleModules[examplePath] as string | undefined;

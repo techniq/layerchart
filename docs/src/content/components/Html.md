@@ -1,6 +1,6 @@
 ---
 description: Html layer
-section: layers
+category: layers
 layers: []
 related: [Layer]
 ---

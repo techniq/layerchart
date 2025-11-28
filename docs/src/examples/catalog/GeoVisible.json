@@ -6,9 +6,9 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 107,
+      "lineNumber": 89,
       "line": "<GeoVisible {lat} {long}>"
     }
   ],
-  "updatedAt": "2025-11-03T15:05:01.286Z"
+  "updatedAt": "2025-11-23T01:49:02.240Z"
 }

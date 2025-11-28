@@ -907,23 +907,23 @@
       "example": "basic",
       "component": "Threshold",
       "path": "/example/Threshold/basic",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<AreaChart"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
       "path": "/example/Threshold/with-labels",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<AreaChart"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
       "path": "/example/Threshold/with-tooltip-and-highlight",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.259Z"
+  "updatedAt": "2025-11-23T01:49:01.727Z"
 }

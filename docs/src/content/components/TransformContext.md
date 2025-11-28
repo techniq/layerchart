@@ -1,6 +1,6 @@
 ---
 description: Interaction component which provides context to support panning, zooming, and dragging interactions for chart elements.
-section: interactions
+category: interactions
 layers: [svg, canvas, html]
 related:
   [
@@ -18,16 +18,14 @@ related:
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
-
-### Playground
+## Playground
 
 <Example name="playground" />
 
-### Pan/Zoom SVG image
+## Pan/Zoom SVG image
 
 <Example name="pan-zoom-svg-image" />
 
-### Pan/Zoom HTML image
+## Pan/Zoom HTML image
 
 <Example name="pan-zoom-html-image" />

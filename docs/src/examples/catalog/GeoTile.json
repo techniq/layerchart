@@ -7,27 +7,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 39,
+          "lineNumber": 34,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 47,
+          "lineNumber": 42,
           "line": "<Layer>"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 48,
+          "lineNumber": 43,
           "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 51,
+          "lineNumber": 46,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 61,
+          "lineNumber": 55,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -38,32 +38,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 38,
+          "lineNumber": 33,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 46,
+          "lineNumber": 41,
           "line": "<Layer>"
         },
         {
           "component": "ClipPath",
-          "lineNumber": 47,
+          "lineNumber": 42,
           "line": "<ClipPath useId=\"clip\">"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 48,
+          "lineNumber": 43,
           "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 50,
+          "lineNumber": 45,
           "line": "<GeoPath geojson={selectedFeature} id=\"clip\" class=\"stroke-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 62,
+          "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -74,32 +74,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 44,
           "line": "<Chart"
         },
         {
           "component": "TransformControls",
-          "lineNumber": 67,
+          "lineNumber": 62,
           "line": "<TransformControls />"
         },
         {
           "component": "Layer",
-          "lineNumber": 69,
+          "lineNumber": 64,
           "line": "<Layer>"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 70,
+          "lineNumber": 65,
           "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 73,
+          "lineNumber": 68,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 91,
+          "lineNumber": 86,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -110,32 +110,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 44,
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 67,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
-          "lineNumber": 69,
+          "lineNumber": 64,
           "line": "<Layer>"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 71,
+          "lineNumber": 66,
           "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 77,
+          "lineNumber": 72,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 95,
+          "lineNumber": 90,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -146,32 +141,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 45,
           "line": "<Chart"
         },
         {
           "component": "TransformControls",
-          "lineNumber": 73,
+          "lineNumber": 69,
           "line": "<TransformControls />"
         },
         {
           "component": "Layer",
-          "lineNumber": 75,
+          "lineNumber": 71,
           "line": "<Layer>"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 76,
+          "lineNumber": 72,
           "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 79,
+          "lineNumber": 75,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 97,
+          "lineNumber": 93,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -179,61 +174,117 @@
   ],
   "usage": [
     {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/geojson-preview",
+      "lineNumber": 104,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/geojson-preview",
+      "lineNumber": 105,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/geojson-preview",
+      "lineNumber": 106,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/geojson-preview",
+      "lineNumber": 107,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/topojson-preview",
+      "lineNumber": 112,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/topojson-preview",
+      "lineNumber": 113,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/topojson-preview",
+      "lineNumber": 114,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/topojson-preview",
+      "lineNumber": 115,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
       "example": "basic",
       "component": "GeoTile",
       "path": "/example/GeoTile/basic",
-      "lineNumber": 48,
+      "lineNumber": 43,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
       "example": "clipped",
       "component": "GeoTile",
       "path": "/example/GeoTile/clipped",
-      "lineNumber": 48,
+      "lineNumber": 43,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
     },
     {
       "example": "zoomable",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable",
-      "lineNumber": 70,
+      "lineNumber": 65,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 71,
+      "lineNumber": 66,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 72,
+      "lineNumber": 67,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 73,
+      "lineNumber": 68,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 74,
+      "lineNumber": 69,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
       "example": "zoomable-with-padding",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-with-padding",
-      "lineNumber": 76,
+      "lineNumber": 72,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.014Z"
+  "updatedAt": "2025-11-24T01:39:37.739Z"
 }

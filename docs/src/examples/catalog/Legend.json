@@ -240,7 +240,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/eclipses-globe",
-      "lineNumber": 96,
+      "lineNumber": 78,
       "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
     },
     {
@@ -517,5 +517,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.346Z"
+  "updatedAt": "2025-11-23T01:49:02.385Z"
 }

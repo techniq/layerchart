@@ -2,6 +2,8 @@
 	import { Button, MenuField, ScrollingValue, TextField } from 'svelte-ux';
 	import { sum } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
+	import { useSearchParams } from 'runed/kit';
+	import { z } from 'zod';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 	import H1 from '$lib/markdown/components/h1.svelte';
@@ -10,47 +12,64 @@
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
+	import { cls } from '@layerstack/tailwind';
 
 	let { data } = $props();
 
-	let columnCount = $state(3);
-	let filterQuery = $state<string | null>(null);
-	let selectedSection = $state<string | null>(null);
+	export const schema = z.object({
+		filter: z.string().nullable().default(null),
+		category: z.string().nullable().default(null)
+	});
+	let params = useSearchParams(schema);
+
+	let columnCount = $state(typeof window !== 'undefined' && window.innerWidth > 800 ? 3 : 2);
 
 	let visibleExamples = $derived.by(() => {
 		let filtered = data.components;
 
-		// Filter by selected section (component or section)
-		if (selectedSection) {
-			const selected = selectedSection.toLowerCase();
+		// Filter by selected category (component or category)
+		if (params.category) {
+			const selected = params.category.toLowerCase();
 			filtered = filtered.filter(
-				({ component, section }) =>
-					component === selectedSection || section?.toLowerCase() === selected
+				({ component, category }) =>
+					component === params.category || category?.toLowerCase() === selected
 			);
 		}
 
 		// Filter by search query
-		if (!filterQuery) {
+		if (!params.filter) {
 			return filtered;
 		}
 
-		const query = filterQuery.toLowerCase().trim();
+		const query = params.filter.toLowerCase().trim();
+		// Split query into words
+		const queryWords = query.split(/\s+/);
+
+		// Helper function to split text by hyphens and underscores into words
+		const getWords = (text: string) => text.toLowerCase().split(/[-_]/);
+
+		// Helper function to check if all query words match
+		const matchesQuery = (text: string) => {
+			const textWords = getWords(text);
+			// All query words must have a match in the text words
+			return queryWords.every((queryWord) =>
+				textWords.some((textWord) => textWord.includes(queryWord))
+			);
+		};
 
 		return filtered
-			.map(({ component, section, examples }) => {
+			.map(({ component, category, examples }) => {
 				// If component name matches, return all examples for this component
-				if (component.toLowerCase().includes(query)) {
-					return { component, section, examples };
+				if (matchesQuery(component)) {
+					return { component, category, examples };
 				}
 
 				// Otherwise, filter examples by name
-				const filteredExamples = examples.filter((example) =>
-					example.name.toLowerCase().includes(query)
-				);
+				const filteredExamples = examples.filter((example) => matchesQuery(example.name));
 
 				// Only return component if it has matching examples
 				if (filteredExamples.length > 0) {
-					return { component, section, examples: filteredExamples };
+					return { component, category, examples: filteredExamples };
 				}
 
 				return null;
@@ -62,16 +81,16 @@
 		() => sum(visibleExamples.map(({ examples }) => examples.length)) ?? 0
 	);
 
-	// Get unique sections from components
-	let componentSections = $derived.by(() => {
-		const sections = new Set<string>();
-		data.components.forEach(({ section }) => {
-			if (section) {
-				sections.add(section);
+	// Get unique categories from components
+	let componentCategories = $derived.by(() => {
+		const categories = new Set<string>();
+		data.components.forEach(({ category }) => {
+			if (category) {
+				categories.add(category);
 			}
 		});
-		return Array.from(sections).sort(
-			sortFunc((section) =>
+		return Array.from(categories).sort(
+			sortFunc((category) =>
 				[
 					'charts',
 					'common',
@@ -85,17 +104,17 @@
 					'clipping',
 					'layers',
 					'other'
-				].indexOf(section)
+				].indexOf(category)
 			)
 		);
 	});
 
-	let sectionOptions = $derived.by(() => [
+	let categoryOptions = $derived.by(() => [
 		{ label: 'All', value: null },
-		...componentSections.map((section) => ({
-			label: section.charAt(0).toUpperCase() + section.slice(1),
-			value: section,
-			group: 'Sections'
+		...componentCategories.map((category) => ({
+			label: category.charAt(0).toUpperCase() + category.slice(1),
+			value: category,
+			group: 'Categories'
 		})),
 		...data.components.map(({ component }) => ({
 			label: component,
@@ -118,37 +137,46 @@
 
 <div class="sticky top-29 h-0">
 	<div
-		class="relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline"
+		class={cls(
+			// 'relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline',
+			'relative h-16 mask-b-from-50%',
+			// dot background
+			'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+		)}
 	></div>
 </div>
 
 <div
-	class="sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 bg-surface-200 z-1"
+	class={cls(
+		'sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 z-1',
+		// dot background
+		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
+	)}
 >
-	<TextField placeholder="Filter" bind:value={filterQuery} clearable>
+	<TextField placeholder="Filter" bind:value={params.filter} clearable>
 		{#snippet prepend()}
 			<LucideSearch class="text-surface-content/50 mr-4" />
 		{/snippet}
 	</TextField>
 
 	<div>
-		<MenuField options={sectionOptions} bind:value={selectedSection} />
+		<MenuField options={categoryOptions} bind:value={params.category} />
 	</div>
 
 	<div class="flex gap-2">
-		<Button
-			icon={LucideZoomOut}
-			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-			variant="fill-outline"
-			class="size-9 border-surface-content/30 pt-1"
-			disabled={columnCount >= 5}
-		/>
 		<Button
 			icon={LucideZoomIn}
 			on:click={() => (columnCount = Math.max(1, columnCount - 1))}
 			variant="fill-outline"
 			class="size-9 border-surface-content/30 pt-1"
 			disabled={columnCount <= 1}
+		/>
+		<Button
+			icon={LucideZoomOut}
+			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+			variant="fill-outline"
+			class="size-9 border-surface-content/30 pt-1"
+			disabled={columnCount >= 5}
 		/>
 	</div>
 </div>

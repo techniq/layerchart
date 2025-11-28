@@ -28,17 +28,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 34,
+          "lineNumber": 37,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 37,
+          "lineNumber": 40,
           "line": "<Spline"
         }
       ]
@@ -49,17 +49,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 40,
+          "lineNumber": 41,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Spline"
         }
       ]
@@ -70,17 +70,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 40,
+          "lineNumber": 41,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Spline"
         }
       ]
@@ -91,22 +91,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 31,
+          "lineNumber": 35,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 32,
+          "lineNumber": 36,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 34,
+          "lineNumber": 38,
           "line": "<Spline"
         }
       ]
     }
   ],
   "usage": [],
-  "updatedAt": "2025-11-12T16:58:10.447Z"
+  "updatedAt": "2025-11-23T01:49:02.469Z"
 }

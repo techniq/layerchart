@@ -20,12 +20,14 @@
 		component = page.params.name!,
 		name,
 		showCode = false,
-		variant = 'default'
+		variant = 'default',
+		resize
 	}: {
 		component: string;
 		name: string;
 		showCode?: boolean;
 		variant?: 'default' | 'basic';
+		resize?: boolean;
 	} = $props();
 
 	const example = examples.get()?.current[component]?.[name];
@@ -56,7 +58,25 @@
 	let ref = $state<SvelteComponent | null>(null);
 	let data = $derived(ref?.data);
 
-	let canResize = $derived(page.data.metadata?.resize);
+	let canResize = $derived.by(() => {
+		// Prop
+		if (resize !== undefined) {
+			return resize;
+		}
+
+		// Page setting
+		if (page.data.metadata?.resize !== undefined) {
+			return page.data.metadata.resize;
+		}
+
+		// Check if source has any Chart component has explicit width in
+		if (example?.source) {
+			const hasExplicitWidth = /<\w*Chart[^>]*[\s\n]+width=\{[^}]+\}/.test(example.source);
+			return !hasExplicitWidth;
+		}
+
+		return true;
+	});
 </script>
 
 <div class="example relative">
@@ -70,8 +90,8 @@
 		>
 			<div
 				class={cls(
-					variant === 'default' && 'p-4 outline rounded bg-surface-200 shadow-lg',
-					canResize && 'resize-x overflow-hidden max-w-full'
+					variant === 'default' && 'p-4 rounded bg-surface-200 shadow-lg',
+					canResize && 'outline resize-x overflow-hidden max-w-full'
 				)}
 			>
 				<!-- {#if page.params.example} -->

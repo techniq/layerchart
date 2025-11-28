@@ -147,7 +147,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 21,
+          "lineNumber": 19,
           "line": "<ArcChart"
         }
       ]
@@ -158,7 +158,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 21,
+          "lineNumber": 19,
           "line": "<ArcChart"
         }
       ]
@@ -283,14 +283,14 @@
       "example": "series-motion-spring",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-motion-spring",
-      "lineNumber": 21,
+      "lineNumber": 19,
       "line": "<ArcChart"
     },
     {
       "example": "series-motion-tween",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-motion-tween",
-      "lineNumber": 21,
+      "lineNumber": 19,
       "line": "<ArcChart"
     },
     {
@@ -322,5 +322,5 @@
       "line": "<ArcChart"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.070Z"
+  "updatedAt": "2025-11-23T01:49:01.683Z"
 }

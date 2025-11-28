@@ -6,30 +6,30 @@
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<ClipPath>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/example/GeoPath/timezones",
-      "lineNumber": 124,
+      "lineNumber": 106,
       "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/example/GeoPath/timezones",
-      "lineNumber": 147,
+      "lineNumber": 129,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
       "example": "clipped",
       "component": "GeoTile",
       "path": "/example/GeoTile/clipped",
-      "lineNumber": 47,
+      "lineNumber": 42,
       "line": "<ClipPath useId=\"clip\">"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.134Z"
+  "updatedAt": "2025-11-23T01:49:01.979Z"
 }

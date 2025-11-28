@@ -48,27 +48,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 22,
+          "lineNumber": 23,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 34,
+          "lineNumber": 35,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Points",
-          "lineNumber": 39,
+          "lineNumber": 40,
           "line": "<Points r={3} {data} fill={color} />"
         },
         {
           "component": "Hull",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<Hull"
         }
       ]
@@ -86,9 +86,9 @@
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Hull"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.269Z"
+  "updatedAt": "2025-11-23T01:49:02.338Z"
 }

@@ -1,6 +1,6 @@
 ---
 description: Primitive components which provides a convenient way to translate a data to x/y coordinates.
-section: primitives
+category: primitives
 layers: [svg, canvas, html]
 related: []
 ---

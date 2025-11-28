@@ -1,6 +1,6 @@
 ---
 description: Marking component which highlights specific dates or time periods on a chart to emphasize events, milestones, or temporal patterns.
-section: marks
+category: marks
 layers: [svg, canvas, html]
 related: []
 ---

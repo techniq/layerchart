@@ -118,14 +118,14 @@
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<LinearGradient class=\"from-secondary to-primary\">"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<LinearGradient class=\"from-secondary to-primary\" vertical>"
     },
     {
@@ -223,7 +223,7 @@
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/example/BarChart/oscilloscope-frequency",
-      "lineNumber": 142,
+      "lineNumber": 114,
       "line": "<LinearGradient"
     },
     {
@@ -528,5 +528,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.404Z"
+  "updatedAt": "2025-11-23T01:49:02.437Z"
 }

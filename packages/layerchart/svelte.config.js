@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import { codePreview } from 'svelte-ux/plugins/svelte.js';

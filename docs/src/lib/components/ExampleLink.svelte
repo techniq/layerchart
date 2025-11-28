@@ -1,56 +1,47 @@
 <script lang="ts">
 	import { cls } from '@layerstack/tailwind';
+	import type { ComponentProps } from 'svelte';
 
 	import LucideChevronRight from '~icons/lucide/chevron-right';
-	import LucideArrowRight from '~icons/lucide/arrow-right';
-	import LucideFileCode from '~icons/lucide/file-code';
+	import LucideFileCode2 from '~icons/lucide/file-code-2';
+	import ExampleScreenshot from './ExampleScreenshot.svelte';
+	import ImageLink from './ImageLink.svelte';
 
 	let {
 		component,
 		example,
 		showComponent,
-		aspect = false
-	}: { component: string; example: string; showComponent?: boolean; aspect?: boolean } = $props();
+		variant = 'default',
+		aspect = undefined,
+		...restProps
+	}: {
+		component: string;
+		example: string;
+		showComponent?: boolean;
+		variant?: ComponentProps<typeof ImageLink>['variant'];
+		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
+	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 </script>
 
-<a
-	href="/docs/components/{component}/{example}"
-	class="grid grid-rows-[1fr_auto] group border border-surface-content/10 bg-surface-100 rounded-xl overflow-hidden hover:border-primary transition-colors elevation-1 hover:bg-primary"
->
-	<div
-		class={cls(
-			'overflow-hidden rounded-lg outline outline-surface-content/10',
-			aspect && 'aspect-8/3'
-		)}
-	>
-		<img
-			src="/screenshots/{component}/{example}-light.png"
-			alt="{component} - {example}"
-			class="w-full h-full object-scale-down object-center dark:hidden bg-surface-100 p-2"
-			loading="lazy"
-		/>
-		<img
-			src="/screenshots/{component}/{example}-dark.png"
-			alt="{component} - {example}"
-			class="w-full h-full object-scale-down object-center hidden dark:block bg-surface-200 p-2"
-			loading="lazy"
-		/>
-	</div>
+<ImageLink href="/docs/components/{component}/{example}" {variant} {...restProps}>
+	{#snippet image()}
+		<ExampleScreenshot {component} {example} {aspect} background={variant !== 'screenshot-only'} />
+	{/snippet}
 
-	<p
-		class="flex items-center truncate p-3 gap-1 text-sm font-medium transition-colors group-hover:text-primary-content"
-	>
-		<LucideFileCode
-			class="shrink-0 transition text-surface-content/50 group-hover:text-primary-content mr-1"
+	{#snippet label()}
+		<LucideFileCode2
+			class={cls(
+				'shrink-0 transition text-surface-content/50 mr-1',
+				variant === 'default' && 'group-hover:text-primary-content/50'
+			)}
 		/>
 
 		{#if showComponent}
-			<span>{component}</span> <LucideChevronRight class="text-surface-content/50" />
+			<span>{component}</span>
+			<LucideChevronRight
+				class="shrink-0 text-surface-content/50 group-hover:text-primary-content/50"
+			/>
 		{/if}
 		<span class="first-letter:capitalize truncate">{example.replaceAll('-', ' ')}</span>
-
-		<LucideArrowRight
-			class="shrink-0 transition-all transform opacity-0 group-hover:opacity-100  -translate-x-full group-hover:translate-x-0"
-		/>
-	</p>
-</a>
+	{/snippet}
+</ImageLink>

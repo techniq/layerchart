@@ -111,13 +111,33 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
         },
         {
-          "component": "Text",
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
           "lineNumber": 20,
-          "line": "<text x=\"50\" y=\"50\" class=\"text-sm fill-surface-content\">Custom Chart Implementation</text>"
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 22,
+          "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 23,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 26,
+          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -382,7 +402,7 @@
         },
         {
           "component": "Text",
-          "lineNumber": 44,
+          "lineNumber": 45,
           "line": "<Text"
         }
       ]
@@ -420,12 +440,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 44,
+          "lineNumber": 36,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 57,
+          "lineNumber": 49,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -436,12 +456,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 59,
+          "lineNumber": 42,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 77,
+          "lineNumber": 60,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -468,12 +488,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 14,
+          "lineNumber": 19,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 27,
+          "lineNumber": 32,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -588,17 +608,17 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 125,
+          "lineNumber": 97,
           "line": "<BarChart"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 142,
+          "lineNumber": 114,
           "line": "<LinearGradient"
         },
         {
           "component": "Bars",
-          "lineNumber": 148,
+          "lineNumber": 120,
           "line": "<Bars radius={1} fill={gradient} />"
         }
       ]
@@ -823,7 +843,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 56,
+          "lineNumber": 57,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -839,7 +859,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 57,
+          "lineNumber": 58,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -968,12 +988,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 12,
+          "lineNumber": 13,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 25,
+          "lineNumber": 26,
           "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
         }
       ]
@@ -1040,7 +1060,7 @@
         {
           "component": "BarChart",
           "lineNumber": 17,
-          "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} height={300} />"
+          "line": "<BarChart"
         }
       ]
     },
@@ -1199,7 +1219,7 @@
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<BarChart {data} x=\"date\" y=\"value\" height={300}>"
     },
     {
@@ -1332,14 +1352,14 @@
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-count",
-      "lineNumber": 44,
+      "lineNumber": 36,
       "line": "<BarChart"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 59,
+      "lineNumber": 42,
       "line": "<BarChart"
     },
     {
@@ -1353,7 +1373,7 @@
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-random-distribution",
-      "lineNumber": 14,
+      "lineNumber": 19,
       "line": "<BarChart"
     },
     {
@@ -1423,7 +1443,7 @@
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/example/BarChart/oscilloscope-frequency",
-      "lineNumber": 125,
+      "lineNumber": 97,
       "line": "<BarChart"
     },
     {
@@ -1633,7 +1653,7 @@
       "example": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
       "component": "BarChart",
       "path": "/example/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
-      "lineNumber": 12,
+      "lineNumber": 13,
       "line": "<BarChart"
     },
     {
@@ -1676,7 +1696,7 @@
       "component": "BarChart",
       "path": "/example/BarChart/time-scale-interval",
       "lineNumber": 17,
-      "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} height={300} />"
+      "line": "<BarChart"
     },
     {
       "example": "time-scale-interval-horizontal",
@@ -1742,5 +1762,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.184Z"
+  "updatedAt": "2025-11-24T01:39:37.113Z"
 }

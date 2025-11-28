@@ -170,35 +170,35 @@
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 11,
+      "lineNumber": 12,
       "line": "<Chart height={120} padding={20}>"
     },
     {
       "example": "playground",
       "component": "Arc",
       "path": "/example/Arc/playground",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<Chart height={350}>"
     },
     {
       "example": "segmented-arc",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={240} padding={20}>"
     },
     {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/example/Arc/segmented-arc-clip-mask",
-      "lineNumber": 13,
+      "lineNumber": 14,
       "line": "<Chart height={240} padding={20}>"
     },
     {
       "example": "tween-value-on-mount",
       "component": "Arc",
       "path": "/example/Arc/tween-value-on-mount",
-      "lineNumber": 19,
+      "lineNumber": 20,
       "line": "<Chart height={200} padding={20}>"
     },
     {
@@ -212,7 +212,7 @@
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 15,
+      "lineNumber": 16,
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
@@ -289,7 +289,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
     },
     {
@@ -709,7 +709,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 46,
+      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -793,7 +793,7 @@
       "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -828,7 +828,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 46,
+      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -849,7 +849,7 @@
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -933,7 +933,7 @@
       "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
-      "lineNumber": 52,
+      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -1024,14 +1024,14 @@
       "example": "vertical-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount",
-      "lineNumber": 24,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
       "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
-      "lineNumber": 24,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
@@ -1073,7 +1073,7 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 52,
+      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -1094,14 +1094,14 @@
       "example": "vertical-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount",
-      "lineNumber": 24,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
       "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
-      "lineNumber": 24,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
@@ -1367,35 +1367,35 @@
       "example": "playground",
       "component": "Connector",
       "path": "/example/Connector/playground",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
-      "lineNumber": 45,
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/example/Dagre/playground",
-      "lineNumber": 63,
+      "lineNumber": 37,
       "line": "<Chart"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 45,
+      "lineNumber": 36,
       "line": "<Chart"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 45,
+      "lineNumber": 35,
       "line": "<Chart"
     },
     {
@@ -1444,7 +1444,7 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Chart height={600}>"
     },
     {
@@ -1458,7 +1458,7 @@
       "example": "group",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/group",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Chart data={nodes} x=\"category\" xScale={scaleBand()} r=\"value\" rRange={[3, 12]} height={300}>"
     },
     {
@@ -1514,28 +1514,49 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 68,
+      "lineNumber": 52,
       "line": "<Chart"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 54,
+      "lineNumber": 55,
+      "line": "<Chart"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/geojson-preview",
+      "lineNumber": 89,
       "line": "<Chart"
     },
     {
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/example/GeoContext/projection-playground",
-      "lineNumber": 75,
+      "lineNumber": 63,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapefile-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/shapefile-preview",
+      "lineNumber": 103,
+      "line": "<Chart"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/example/GeoContext/topojson-preview",
+      "lineNumber": 97,
       "line": "<Chart"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/animated-globe",
-      "lineNumber": 148,
+      "lineNumber": 124,
       "line": "<Chart"
     },
     {
@@ -1556,14 +1577,14 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/eclipses-globe",
-      "lineNumber": 84,
+      "lineNumber": 66,
       "line": "<Chart"
     },
     {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 67,
+      "lineNumber": 42,
       "line": "<Chart"
     },
     {
@@ -1577,14 +1598,14 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 74,
+      "lineNumber": 56,
       "line": "<Chart"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/example/GeoPath/timezones",
-      "lineNumber": 111,
+      "lineNumber": 93,
       "line": "<Chart"
     },
     {
@@ -1598,21 +1619,21 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/example/GeoPath/transform-canvas",
-      "lineNumber": 59,
+      "lineNumber": 49,
       "line": "<Chart"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/example/GeoPath/transform-projection",
-      "lineNumber": 59,
+      "lineNumber": 50,
       "line": "<Chart"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 64,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
@@ -1626,35 +1647,35 @@
       "example": "us-state",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state",
-      "lineNumber": 54,
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
       "example": "us-state-with-counties",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state-with-counties",
-      "lineNumber": 58,
+      "lineNumber": 41,
       "line": "<Chart"
     },
     {
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 55,
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
       "example": "icons",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/icons",
-      "lineNumber": 35,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/us-airports",
-      "lineNumber": 35,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
@@ -1668,14 +1689,14 @@
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-airports",
-      "lineNumber": 35,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/example/GeoPoint/world-capitals",
-      "lineNumber": 35,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
@@ -1696,42 +1717,42 @@
       "example": "basic",
       "component": "GeoTile",
       "path": "/example/GeoTile/basic",
-      "lineNumber": 39,
+      "lineNumber": 34,
       "line": "<Chart"
     },
     {
       "example": "clipped",
       "component": "GeoTile",
       "path": "/example/GeoTile/clipped",
-      "lineNumber": 38,
+      "lineNumber": 33,
       "line": "<Chart"
     },
     {
       "example": "zoomable",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable",
-      "lineNumber": 49,
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 49,
+      "lineNumber": 44,
       "line": "<Chart"
     },
     {
       "example": "zoomable-with-padding",
       "component": "GeoTile",
       "path": "/example/GeoTile/zoomable-with-padding",
-      "lineNumber": 49,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
       "example": "basic",
       "component": "Graticule",
       "path": "/example/Graticule/basic",
-      "lineNumber": 69,
+      "lineNumber": 51,
       "line": "<Chart"
     },
     {
@@ -1857,7 +1878,7 @@
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -1934,63 +1955,63 @@
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 34,
+      "lineNumber": 37,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 48,
+      "lineNumber": 51,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 62,
+      "lineNumber": 65,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
     },
     {
       "example": "spline-w-thicker-stroke",
       "component": "Marker",
       "path": "/example/Marker/spline-w-thicker-stroke",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
     },
     {
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 31,
+      "lineNumber": 35,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ left: 16, bottom: 24 }} height={300}>"
     },
     {
@@ -2004,7 +2025,7 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 112,
+      "lineNumber": 105,
       "line": "<Chart height={600}>"
     },
     {
@@ -2256,7 +2277,7 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
     },
     {
@@ -2298,147 +2319,147 @@
       "example": "10-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/10-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "12-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/12-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "14-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/14-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "16-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/16-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "18-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/18-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "20-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/20-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "6-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/6-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "8-point-star",
       "component": "Polygon",
       "path": "/example/Polygon/8-point-star",
-      "lineNumber": 14,
+      "lineNumber": 15,
       "line": "<Chart height={150}>"
     },
     {
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 12,
+      "lineNumber": 13,
       "line": "<Chart height={150}>"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 12,
+      "lineNumber": 13,
       "line": "<Chart height={150}>"
     },
     {
       "example": "diamond",
       "component": "Polygon",
       "path": "/example/Polygon/diamond",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "hexagon",
       "component": "Polygon",
       "path": "/example/Polygon/hexagon",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "octagon",
       "component": "Polygon",
       "path": "/example/Polygon/octagon",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "parallelogram",
       "component": "Polygon",
       "path": "/example/Polygon/parallelogram",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "pentagon",
       "component": "Polygon",
       "path": "/example/Polygon/pentagon",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "playground",
       "component": "Polygon",
       "path": "/example/Polygon/playground",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Chart height={300}>"
     },
     {
       "example": "rectangle",
       "component": "Polygon",
       "path": "/example/Polygon/rectangle",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "rhombus",
       "component": "Polygon",
       "path": "/example/Polygon/rhombus",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "square",
       "component": "Polygon",
       "path": "/example/Polygon/square",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "trapezoid",
       "component": "Polygon",
       "path": "/example/Polygon/trapezoid",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
       "example": "triangle",
       "component": "Polygon",
       "path": "/example/Polygon/triangle",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Chart height={150}>"
     },
     {
@@ -2599,14 +2620,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/example/Sankey/complex",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Chart {data} padding={{ right: 164 }} flatData={[]} height={800}>"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/example/Sankey/hierarchy",
-      "lineNumber": 58,
+      "lineNumber": 59,
       "line": "<Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>"
     },
     {
@@ -2641,28 +2662,28 @@
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={{ top: 25, left: 25, bottom: 25, right: 35 }} height={300}>"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
@@ -2690,7 +2711,7 @@
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
@@ -2725,7 +2746,7 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
@@ -2746,14 +2767,14 @@
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Chart"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
@@ -2781,7 +2802,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Chart height={224}>"
     },
     {
@@ -2795,14 +2816,14 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 25,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 26,
+      "lineNumber": 27,
       "line": "<Chart"
     },
     {
@@ -2879,7 +2900,7 @@
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Chart"
     },
     {
@@ -2935,35 +2956,35 @@
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/example/TransformContext/pan-zoom-html-image",
-      "lineNumber": 10,
+      "lineNumber": 7,
       "line": "<Chart"
     },
     {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/example/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 10,
+      "lineNumber": 7,
       "line": "<Chart"
     },
     {
       "example": "playground",
       "component": "TransformContext",
       "path": "/example/TransformContext/playground",
-      "lineNumber": 33,
+      "lineNumber": 35,
       "line": "<Chart"
     },
     {
       "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
-      "lineNumber": 50,
+      "lineNumber": 52,
       "line": "<Chart"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/example/Tree/html-nodes",
-      "lineNumber": 50,
+      "lineNumber": 52,
       "line": "<Chart"
     },
     {
@@ -2977,7 +2998,7 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 109,
+      "lineNumber": 71,
       "line": "<Chart height={800}>"
     },
     {
@@ -3012,9 +3033,9 @@
       "example": "radius",
       "component": "Voronoi",
       "path": "/example/Voronoi/radius",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.459Z"
+  "updatedAt": "2025-11-24T01:39:37.320Z"
 }

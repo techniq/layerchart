@@ -855,14 +855,14 @@
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 18,
+      "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1002,14 +1002,14 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1622,6 +1622,20 @@
       "line": "<Axis"
     },
     {
+      "example": "custom-chart",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-chart",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "custom-chart",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-chart",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
@@ -1772,14 +1786,14 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 65,
+      "lineNumber": 77,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 66,
+      "lineNumber": 78,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -1940,14 +1954,14 @@
       "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2010,14 +2024,14 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 64,
+      "lineNumber": 76,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 65,
+      "lineNumber": 77,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2052,14 +2066,14 @@
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tween-on-mount",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2220,14 +2234,14 @@
       "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
-      "lineNumber": 71,
+      "lineNumber": 77,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
-      "lineNumber": 72,
+      "lineNumber": 78,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2402,28 +2416,28 @@
       "example": "vertical-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount",
-      "lineNumber": 35,
+      "lineNumber": 31,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-stagger-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount",
-      "lineNumber": 36,
+      "lineNumber": 32,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
-      "lineNumber": 35,
+      "lineNumber": 31,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-stagger-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
-      "lineNumber": 36,
+      "lineNumber": 32,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2500,14 +2514,14 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 70,
+      "lineNumber": 76,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 71,
+      "lineNumber": 77,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2542,28 +2556,28 @@
       "example": "vertical-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount",
-      "lineNumber": 35,
+      "lineNumber": 31,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-tween-on-mount",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount",
-      "lineNumber": 36,
+      "lineNumber": 32,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
-      "lineNumber": 35,
+      "lineNumber": 31,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Bars",
       "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
-      "lineNumber": 36,
+      "lineNumber": 32,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3011,14 +3025,14 @@
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "scatter",
       "component": "Hull",
       "path": "/example/Hull/scatter",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3081,42 +3095,42 @@
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/example/MotionPath/repeat-indefinitely",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
       "path": "/example/MotionPath/rotate-object-with-path",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3459,56 +3473,56 @@
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
       "path": "/example/Spline/basic-start-and-end-snippets",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "draw",
       "component": "Spline",
       "path": "/example/Spline/draw",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "end-slot-with-draw-with-value",
-      "component": "Spline",
-      "path": "/example/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 33,
-      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/example/Spline/end-slot-with-draw-with-value",
       "lineNumber": 34,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "end-slot-with-draw-with-value",
+      "component": "Spline",
+      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "lineNumber": 35,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
       "path": "/example/Spline/end-snippet-with-draw",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3557,14 +3571,14 @@
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "markers-arrows",
       "component": "Spline",
       "path": "/example/Spline/markers-arrows",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3627,14 +3641,14 @@
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "playground",
       "component": "Spline",
       "path": "/example/Spline/playground",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3669,28 +3683,28 @@
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Axis"
     },
     {
       "example": "radial-radar",
       "component": "Spline",
       "path": "/example/Spline/radial-radar",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "tweened",
       "component": "Spline",
       "path": "/example/Spline/tweened",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3739,28 +3753,28 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3907,14 +3921,14 @@
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 48,
+      "lineNumber": 49,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4016,5 +4030,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.281Z"
+  "updatedAt": "2025-11-24T01:39:37.066Z"
 }

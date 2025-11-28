@@ -43,7 +43,7 @@
       "example": "partial-arc",
       "component": "Arc",
       "path": "/example/Arc/partial-arc",
-      "lineNumber": 13,
+      "lineNumber": 14,
       "line": "<Group y={16}>"
     },
     {
@@ -64,28 +64,28 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
-      "lineNumber": 74,
+      "lineNumber": 65,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/example/Dagre/playground",
-      "lineNumber": 92,
+      "lineNumber": 66,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 86,
+      "lineNumber": 77,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 85,
+      "lineNumber": 75,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
@@ -120,7 +120,7 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 124,
+      "lineNumber": 117,
       "line": "<Group"
     },
     {
@@ -162,28 +162,28 @@
       "example": "arrow",
       "component": "Polygon",
       "path": "/example/Polygon/arrow",
-      "lineNumber": 15,
+      "lineNumber": 16,
       "line": "<Group x={context.width / 2} y={context.height / 2}>"
     },
     {
       "example": "cross",
       "component": "Polygon",
       "path": "/example/Polygon/cross",
-      "lineNumber": 15,
+      "lineNumber": 16,
       "line": "<Group x={context.width / 2} y={context.height / 2}>"
     },
     {
       "example": "complex",
       "component": "Sankey",
       "path": "/example/Sankey/complex",
-      "lineNumber": 88,
+      "lineNumber": 89,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/example/Sankey/hierarchy",
-      "lineNumber": 99,
+      "lineNumber": 100,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
@@ -211,14 +211,14 @@
       "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
-      "lineNumber": 78,
+      "lineNumber": 84,
       "line": "<Group"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/example/Tree/html-nodes",
-      "lineNumber": 82,
+      "lineNumber": 88,
       "line": "<Group"
     },
     {
@@ -232,7 +232,7 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 125,
+      "lineNumber": 87,
       "line": "<Group"
     },
     {
@@ -264,5 +264,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.888Z"
+  "updatedAt": "2025-11-23T01:49:02.292Z"
 }

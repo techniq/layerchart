@@ -1,6 +1,6 @@
 ---
 description: Primitive component which draws an oval shape  to highlight areas, emphasize points, or decorate visual elements.
-section: primitives
+category: primitives
 layers: [svg, canvas, html]
 related: []
 ---

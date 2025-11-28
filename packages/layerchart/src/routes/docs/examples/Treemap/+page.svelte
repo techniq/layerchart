@@ -70,7 +70,10 @@
       // d => d.year,
     )
   );
-  let groupedHierarchy = $state<HierarchyNode<any>>(hierarchy(groupedCars).count());
+  // svelte-ignore state_referenced_locally
+  let groupedHierarchy = $state<HierarchyRectangularNode<any>>(
+    hierarchy(groupedCars).count() as HierarchyRectangularNode<any>
+  );
   $effect.pre(() => {
     untrack(() => {
       selectedCarNode = groupedHierarchy;
@@ -78,7 +81,7 @@
   });
 
   $effect.pre(() => {
-    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyNode<any>;
+    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
   });
 
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');

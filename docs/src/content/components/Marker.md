@@ -1,6 +1,6 @@
 ---
 description: Primitive component which draws visual symbols like circles, squares, or custom shapes at individual data points.
-section: primitives
+category: primitives
 layers: [svg]
 related: [Spline, Line, Rule, GeoSpline]
 ---

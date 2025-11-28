@@ -1,6 +1,6 @@
 ---
 description: Clipping component which defines a clipping region to constrain the rendering of chart elements within a specified shape or boundary.
-section: clipping
+category: clipping
 layers: [svg]
 related:
   [
@@ -9,6 +9,7 @@ related:
     components/RectClipPath,
     components/Threshold
   ]
+order: 1
 ---
 
 <script lang="ts">

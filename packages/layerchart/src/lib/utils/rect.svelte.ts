@@ -74,17 +74,20 @@ export function createDimensionGetter<TData>(
     const _x1 = accessor(options?.x1 ?? ctx.x1);
     const _y1 = accessor(options?.y1 ?? ctx.y1);
 
+    const hasX1 = ctx.config.x1;
+    const hasY1 = ctx.config.y1;
+
     if (isScaleBand(ctx.yScale)) {
       // Horizontal band
       const y =
         firstValue(ctx.yScale(_y(item)) ?? 0) +
-        (ctx.y1Scale ? ctx.y1Scale(_y1(item)) : 0) +
+        (hasY1 && ctx.y1Scale ? ctx.y1Scale(_y1(item)) : 0) +
         insets.top;
 
       const height = Math.max(
         0,
         ctx.yScale.bandwidth
-          ? (ctx.y1Scale ? (ctx.y1Scale.bandwidth?.() ?? 0) : ctx.yScale.bandwidth()) -
+          ? (hasY1 && ctx.y1Scale ? (ctx.y1Scale.bandwidth?.() ?? 0) : ctx.yScale.bandwidth()) -
               insets.bottom -
               insets.top
           : 0
@@ -119,12 +122,14 @@ export function createDimensionGetter<TData>(
     } else if (isScaleBand(ctx.xScale)) {
       // Vertical band or linear
       const x =
-        firstValue(ctx.xScale(_x(item))) + (ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) + insets.left;
+        firstValue(ctx.xScale(_x(item))) +
+        (hasX1 && ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) +
+        insets.left;
 
       const width = Math.max(
         0,
         ctx.xScale.bandwidth
-          ? (ctx.x1Scale ? (ctx.x1Scale.bandwidth?.() ?? 0) : ctx.xScale.bandwidth()) -
+          ? (hasX1 && ctx.x1Scale ? (ctx.x1Scale.bandwidth?.() ?? 0) : ctx.xScale.bandwidth()) -
               insets.left -
               insets.right
           : 0

@@ -1,6 +1,6 @@
 ---
 description: Streamlined visualization of data points connected by lines to visualize trends or changes over time.
-section: charts
+category: charts
 layers: [svg, canvas]
 related: [Chart, Spline]
 ---

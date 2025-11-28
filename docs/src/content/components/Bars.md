@@ -1,6 +1,6 @@
 ---
 description: Marking component which applies horizontal bars to represent and visually compare discrete data values.
-section: marks
+category: marks
 layers: [svg, canvas]
 related: [Bar]
 ---

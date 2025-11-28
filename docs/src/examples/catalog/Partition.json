@@ -7,47 +7,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 112,
+          "lineNumber": 105,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 113,
+          "lineNumber": 106,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 114,
+          "lineNumber": 107,
           "line": "<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 116,
+          "lineNumber": 109,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Partition",
-          "lineNumber": 117,
+          "lineNumber": 110,
           "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
         },
         {
           "component": "Group",
-          "lineNumber": 124,
+          "lineNumber": 117,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 133,
+          "lineNumber": 126,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 144,
+          "lineNumber": 137,
           "line": "<RectClipPath"
         },
         {
           "component": "Text",
-          "lineNumber": 149,
+          "lineNumber": 142,
           "line": "<text"
         }
       ]
@@ -196,7 +196,7 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 117,
+      "lineNumber": 110,
       "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
     },
     {
@@ -221,5 +221,5 @@
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.555Z"
+  "updatedAt": "2025-11-23T01:49:02.548Z"
 }

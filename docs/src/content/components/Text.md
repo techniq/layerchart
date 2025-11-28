@@ -1,6 +1,6 @@
 ---
 description: Primitive component which adds custom text for labeling, annotation, or commentary.
-section: primitives
+category: primitives
 layers: [svg, canvas, html]
 related: []
 ---

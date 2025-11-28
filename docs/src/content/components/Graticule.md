@@ -1,6 +1,6 @@
 ---
 description: Geographic component which overlays latitude and longitude lines on a map to provide geographic reference and context.
-section: geo
+category: geo
 layers: [svg, canvas]
 related: []
 ---
@@ -8,3 +8,7 @@ related: []
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
+
+## Usage
+
+<Example name="basic" showCode />

@@ -1,6 +1,6 @@
 ---
 description: Layout component which arranges directed graphs in layers, positioning nodes to minimize edge crossings and create a clear, hierarchical flow.
-section: layout
+category: layout
 layers: [svg, canvas]
 related: []
 ---
@@ -8,3 +8,7 @@ related: []
 <script lang="ts">
   import Example from '$lib/components/Example.svelte';
 </script>
+
+## Usage
+
+<Example name="basic"  />

@@ -108,6 +108,13 @@
       "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
     },
     {
+      "example": "custom-chart",
+      "component": "BarChart",
+      "path": "/example/BarChart/custom-chart",
+      "lineNumber": 23,
+      "line": "<Highlight area />"
+    },
+    {
       "example": "highlight-below-marks",
       "component": "BarChart",
       "path": "/example/BarChart/highlight-below-marks",
@@ -146,7 +153,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 99,
+      "lineNumber": 111,
       "line": "<Highlight area />"
     },
     {
@@ -237,7 +244,7 @@
       "example": "vertical-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
-      "lineNumber": 104,
+      "lineNumber": 110,
       "line": "<Highlight area />"
     },
     {
@@ -489,14 +496,14 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Highlight points lines />"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Highlight"
     },
     {
@@ -573,15 +580,8 @@
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-bars",
-      "lineNumber": 51,
-      "line": "<Highlight points={false} lines={false} area={true} bar={false} axis={undefined} />"
-    },
-    {
-      "example": "multiple-overlapping-bars",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars",
       "lineNumber": 52,
-      "line": "<Highlight bar={false} />"
+      "line": "<Highlight"
     },
     {
       "example": "multiple-overlapping-durations",
@@ -633,5 +633,5 @@
       "line": "<Highlight"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.603Z"
+  "updatedAt": "2025-11-24T01:39:37.888Z"
 }

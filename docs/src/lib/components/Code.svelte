@@ -15,12 +15,14 @@
 	interface Props {
 		source?: string | null;
 		language?: string;
+		includeCopyButton?: boolean;
 		classes?: { root?: string; pre?: string; code?: string };
 	}
 
 	let {
 		source = null,
 		language = 'svelte',
+		includeCopyButton = true,
 		classes = {},
 		class: className
 	}: Props & HTMLAttributes<HTMLDivElement> = $props();
@@ -36,7 +38,7 @@
 >
 	{#if source}
 		<pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
-      <code class={cls('text-xs', classes.code)}>
+      <code class={cls('text-sm', classes.code)}>
         {#await highlighter}
 					<div>Loading...</div>
 				{:then h}
@@ -55,13 +57,15 @@
       </code>
     </pre>
 
-		<div class="absolute top-0 right-0 p-2 z-10">
-			<CopyButton
-				value={source ?? ''}
-				class="text-surface-content/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
-				size="sm"
-			/>
-		</div>
+		{#if includeCopyButton}
+			<div class="absolute top-0 right-0 p-2 z-10">
+				<CopyButton
+					value={source ?? ''}
+					class="text-surface-content/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
+					size="sm"
+				/>
+			</div>
+		{/if}
 	{/if}
 </div>
 

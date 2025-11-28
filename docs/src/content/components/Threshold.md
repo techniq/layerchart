@@ -1,6 +1,6 @@
 ---
 description: Marking component visualizing data relative to predefined limits, highlighting values that exceed or fall below set thresholds.
-section: marks
+category: marks
 layers: [svg]
 related: [Threshold, AreaChart]
 ---

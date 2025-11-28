@@ -1,6 +1,6 @@
 ---
 description: Commonly used component representing a rectangular Chart bounding box and respecting padding or full size.
-section: common
+category: common
 layers: [svg, canvas, html]
 related: [Rect]
 ---

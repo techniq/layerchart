@@ -1,6 +1,6 @@
 ---
 description: Streamlined visualization of data as proportional slices of a circle to represent parts of a whole.
-section: charts
+category: charts
 layers: [svg, canvas]
 related: [Chart, Pie]
 ---

@@ -33,7 +33,7 @@ import crypto from 'crypto';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples');
+const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples/components');
 const SCREENSHOTS_DIR = path.resolve(__dirname, '../static/screenshots');
 const INDEX_FILE = path.resolve(__dirname, '../static/screenshots/index.json');
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3002';
@@ -182,7 +182,7 @@ async function captureScreenshots(
 	exampleName: string,
 	modes: ('light' | 'dark')[]
 ): Promise<void> {
-	const url = `${BASE_URL}/example/${componentName}/${exampleName}`;
+	const url = `${BASE_URL}/docs/examples/${componentName}/${exampleName}`;
 	const screenshotDir = path.join(SCREENSHOTS_DIR, componentName);
 
 	// Ensure directory exists

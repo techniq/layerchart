@@ -1,6 +1,6 @@
 ---
 description: Fill component providing a linear gradient fill pattern for chart elements.
-section: fill
+category: fill
 layers: [svg, canvas, html]
 related: [RadialGradient, Pattern]
 ---
@@ -9,20 +9,18 @@ related: [RadialGradient, Pattern]
   import Example from '$lib/components/Example.svelte';
 </script>
 
-## Examples
-
-### Direction with custom colors
+## Direction with custom colors
 
 <Example name="direction-with-custom-colors" />
 
-### Explicit offsets
+## Explicit offsets
 
 <Example name="explicit-offsets" />
 
-### Tailwind colors
+## Tailwind colors
 
 <Example name="tailwind-colors" />
 
-### Units
+## Units
 
 <Example name="units" />

@@ -34,7 +34,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
-const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples');
+const EXAMPLES_DIR = path.resolve(__dirname, '../src/examples/components');
 const CATALOG_DIR = path.resolve(__dirname, '../src/examples/catalog');
 
 /**

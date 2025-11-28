@@ -1,6 +1,6 @@
 ---
 description: Marking component which plots individual data points on a graph to show distribution, relationships, or clusters without connecting lines.
-section: marks
+category: marks
 layers: [svg, canvas]
 related: [ScatterChart]
 ---

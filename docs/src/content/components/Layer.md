@@ -1,6 +1,6 @@
 ---
 description: Convientent wrapper to use Svg, Canvas, or Html layer
-section: common
+category: common
 layers: [svg, canvas, html]
 related: [Canvas, Html, Svg]
 ---

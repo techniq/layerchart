@@ -33,27 +33,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 16,
           "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 20,
+          "lineNumber": 21,
           "line": "<ChartClipPath"
         },
         {
           "component": "Area",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
         }
       ]
@@ -474,27 +474,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 32,
+          "lineNumber": 33,
           "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 33,
+          "lineNumber": 34,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 34,
+          "lineNumber": 35,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Area"
         },
         {
           "component": "Points",
-          "lineNumber": 45,
+          "lineNumber": 46,
           "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
         }
       ]
@@ -790,7 +790,7 @@
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
@@ -902,7 +902,7 @@
       "example": "playground",
       "component": "Area",
       "path": "/example/Area/playground",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Area"
     },
     {
@@ -1182,56 +1182,56 @@
       "example": "basic",
       "component": "Threshold",
       "path": "/example/Threshold/basic",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
     },
     {
       "example": "basic",
       "component": "Threshold",
       "path": "/example/Threshold/basic",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
       "path": "/example/Threshold/with-labels",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
       "path": "/example/Threshold/with-labels",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
       "path": "/example/Threshold/with-tooltip-and-highlight",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-success/30\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
       "path": "/example/Threshold/with-tooltip-and-highlight",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Area y0=\"value\" y1=\"baseline\" {curve} class=\"fill-danger/30\" />"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/example/Tooltip/anchor-location",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
       "example": "area",
       "component": "Tooltip",
       "path": "/example/Tooltip/area",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
@@ -1312,5 +1312,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:49.236Z"
+  "updatedAt": "2025-11-23T01:49:01.703Z"
 }

@@ -632,17 +632,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 21,
+          "lineNumber": 22,
           "line": "<Chart {data} x=\"value\" c=\"date\" cRange={keyColors} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 22,
+          "lineNumber": 23,
           "line": "<Layer center>"
         },
         {
           "component": "Pie",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Pie motion=\"tween\" />"
         }
       ]
@@ -835,9 +835,9 @@
       "example": "tweened",
       "component": "Pie",
       "path": "/example/Pie/tweened",
-      "lineNumber": 24,
+      "lineNumber": 25,
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.598Z"
+  "updatedAt": "2025-11-23T01:49:02.586Z"
 }

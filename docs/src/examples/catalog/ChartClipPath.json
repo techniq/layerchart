@@ -6,7 +6,7 @@
       "example": "clip-tween-on-mount",
       "component": "Area",
       "path": "/example/Area/clip-tween-on-mount",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<ChartClipPath"
     },
     {
@@ -69,14 +69,14 @@
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 64,
+      "lineNumber": 47,
       "line": "<ChartClipPath>"
     },
     {
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 116,
+      "lineNumber": 109,
       "line": "<ChartClipPath>"
     },
     {
@@ -111,9 +111,9 @@
       "example": "radius",
       "component": "Voronoi",
       "path": "/example/Voronoi/radius",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:21.627Z"
+  "updatedAt": "2025-11-23T01:49:01.936Z"
 }

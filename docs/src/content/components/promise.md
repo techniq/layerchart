@@ -1,6 +1,6 @@
 ---
 description: Use `{#await}` to load each example and source
-section: examples
+category: examples
 ---
 
 <script lang="ts">

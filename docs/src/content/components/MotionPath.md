@@ -1,6 +1,6 @@
 ---
 description: Component animates an object along a specified path using configurable motion parameters such as speed, duration, and easing.
-section: other
+category: other
 layers: [svg]
 related: [Spline]
 ---

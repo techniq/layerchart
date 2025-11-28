@@ -105,32 +105,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 67,
+          "lineNumber": 68,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 69,
+          "lineNumber": 70,
           "line": "<Layer>"
         },
         {
           "component": "ForceSimulation",
-          "lineNumber": 70,
+          "lineNumber": 71,
           "line": "<ForceSimulation"
         },
         {
           "component": "Link",
-          "lineNumber": 80,
+          "lineNumber": 81,
           "line": "<Link"
         },
         {
           "component": "Circle",
-          "lineNumber": 91,
+          "lineNumber": 92,
           "line": "<circle"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 139,
+          "lineNumber": 140,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -177,22 +177,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 50,
           "line": "<Chart data={nodes} x=\"category\" xScale={scaleBand()} r=\"value\" rRange={[3, 12]} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 52,
+          "lineNumber": 53,
           "line": "<Layer>"
         },
         {
           "component": "ForceSimulation",
-          "lineNumber": 53,
+          "lineNumber": 54,
           "line": "<ForceSimulation"
         },
         {
           "component": "Circle",
-          "lineNumber": 71,
+          "lineNumber": 72,
           "line": "<Circle"
         }
       ]
@@ -317,7 +317,7 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/graph-drag",
-      "lineNumber": 70,
+      "lineNumber": 71,
       "line": "<ForceSimulation"
     },
     {
@@ -331,7 +331,7 @@
       "example": "group",
       "component": "ForceSimulation",
       "path": "/example/ForceSimulation/group",
-      "lineNumber": 53,
+      "lineNumber": 54,
       "line": "<ForceSimulation"
     },
     {
@@ -356,5 +356,5 @@
       "line": "<ForceSimulation"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.803Z"
+  "updatedAt": "2025-11-23T01:49:02.089Z"
 }

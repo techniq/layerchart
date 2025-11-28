@@ -7,17 +7,12 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 7,
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 18,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
-          "lineNumber": 19,
+          "lineNumber": 17,
           "line": "<Layer type=\"html\">"
         }
       ]
@@ -28,17 +23,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 7,
           "line": "<Chart"
         },
         {
           "component": "TransformControls",
-          "lineNumber": 18,
+          "lineNumber": 15,
           "line": "<TransformControls />"
         },
         {
           "component": "Layer",
-          "lineNumber": 19,
+          "lineNumber": 17,
           "line": "<Layer type=\"svg\">"
         }
       ]
@@ -49,37 +44,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 33,
+          "lineNumber": 35,
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 46,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
-          "lineNumber": 47,
+          "lineNumber": 49,
           "line": "<Layer class=\"overflow-hidden\">"
         },
         {
           "component": "Spline",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Spline curve={config.curve} motion=\"tween\" />"
         },
         {
           "component": "Points",
-          "lineNumber": 52,
+          "lineNumber": 54,
           "line": "<Points>"
         },
         {
           "component": "Circle",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Circle"
         }
       ]
     }
   ],
   "usage": [],
-  "updatedAt": "2025-11-12T16:58:11.116Z"
+  "updatedAt": "2025-11-23T01:49:03.006Z"
 }

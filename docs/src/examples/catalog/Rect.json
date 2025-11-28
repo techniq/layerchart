@@ -120,28 +120,28 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/example/Dagre/basic",
-      "lineNumber": 75,
+      "lineNumber": 66,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Dagre",
       "path": "/example/Dagre/playground",
-      "lineNumber": 93,
+      "lineNumber": 67,
       "line": "<Rect"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/example/Dagre/software-user-flow",
-      "lineNumber": 87,
+      "lineNumber": 78,
       "line": "<Rect"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 86,
+      "lineNumber": 76,
       "line": "<Rect"
     },
     {
@@ -267,7 +267,7 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/example/Partition/filterable",
-      "lineNumber": 133,
+      "lineNumber": 126,
       "line": "<Rect"
     },
     {
@@ -645,14 +645,14 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/example/Sankey/complex",
-      "lineNumber": 89,
+      "lineNumber": 90,
       "line": "<Rect"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/example/Sankey/hierarchy",
-      "lineNumber": 100,
+      "lineNumber": 101,
       "line": "<Rect"
     },
     {
@@ -680,7 +680,7 @@
       "example": "basic",
       "component": "Tree",
       "path": "/example/Tree/basic",
-      "lineNumber": 97,
+      "lineNumber": 103,
       "line": "<Rect"
     },
     {
@@ -694,7 +694,7 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/example/Treemap/complex",
-      "lineNumber": 134,
+      "lineNumber": 96,
       "line": "<Rect"
     },
     {
@@ -726,5 +726,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-12T18:44:22.677Z"
+  "updatedAt": "2025-11-23T01:49:02.701Z"
 }

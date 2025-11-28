@@ -1,6 +1,6 @@
 ---
 description: Svg layer
-section: layers
+category: layers
 layers: []
 related: [Layer]
 ---
