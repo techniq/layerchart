@@ -26,7 +26,7 @@
 	brush={{
 		resetOnEnd: true,
 		onBrushEnd: (e) => {
-			xDomain = e.xDomain;
+			xDomain = e.brush.x;
 		}
 	}}
 	height={300}

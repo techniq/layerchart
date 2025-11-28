@@ -85,8 +85,8 @@
 				padding={{ left: 16 }}
 				brush={{
 					mode: 'separated',
-					xDomain,
-					onChange: (e) => (xDomain = e.xDomain),
+					x: xDomain as any,
+					onChange: (e) => (xDomain = e.brush.x),
 					onReset: (e) => (xDomain = null)
 				}}
 				height={20}

@@ -25,8 +25,8 @@
 			axis: 'both',
 			resetOnEnd: true,
 			onBrushEnd: (e) => {
-				xDomain = e.xDomain;
-				yDomain = e.yDomain;
+				xDomain = e.brush.x;
+				yDomain = e.brush.y;
 			}
 		}}
 		height={400}
@@ -50,11 +50,11 @@
 			brush={{
 				axis: 'both',
 				mode: 'separated',
-				xDomain: xDomain,
-				yDomain: yDomain,
+				x: xDomain as any,
+				y: yDomain as any,
 				onChange: (e) => {
-					xDomain = e.xDomain;
-					yDomain = e.yDomain;
+					xDomain = e.brush.x;
+					yDomain = e.brush.y;
 				}
 			}}
 		>

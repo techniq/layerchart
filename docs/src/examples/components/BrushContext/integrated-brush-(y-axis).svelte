@@ -27,7 +27,7 @@
 			axis: 'y',
 			resetOnEnd: true,
 			onBrushEnd: (e) => {
-				yDomain = e.yDomain;
+				yDomain = e.brush.y;
 			}
 		}}
 		height={300}

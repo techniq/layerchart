@@ -26,7 +26,7 @@
 			brush={{
 				axis: 'y',
 				onChange: (e) => {
-					yDomain = e.yDomain;
+					yDomain = e.brush.y;
 				}
 			}}
 			height={300}
