@@ -4,6 +4,8 @@
 @import '@skeletonlabs/skeleton-svelte';
 @import '@skeletonlabs/skeleton/themes/cerberus';
 
-@import 'layerchart/skeleton-4.css';
+/* Use `skeleton-4.css` after next release, although 3 and 4 are identical */
+/* @import 'layerchart/skeleton-4.css'; */
+@import 'layerchart/skeleton-3.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
