@@ -39,7 +39,12 @@ export class TransformState {
 
   // Options
   mode: TransformMode;
-  processTranslate: (x: number, y: number, deltaX: number, deltaY: number) => {
+  processTranslate: (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number
+  ) => {
     x: number;
     y: number;
   };
@@ -170,7 +175,10 @@ export class TransformState {
     }
   }
 
-  setTranslate(point: { x: number; y: number }, options?: Parameters<typeof this._translate.set>[1]) {
+  setTranslate(
+    point: { x: number; y: number },
+    options?: Parameters<typeof this._translate.set>[1]
+  ) {
     this._translating.handle(this._translate.set(point, options));
   }
 
