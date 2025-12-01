@@ -146,7 +146,6 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
-      seriesState,
       props: {
         ...props.legend,
         ...(typeof legend === 'object' ? legend : null),
@@ -250,20 +249,17 @@
         },
       }
     : false}
+  {seriesState}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      series,
-      visibleSeries: seriesState.visibleSeries,
       getLabelsProps,
       getPointsProps,
       getLegendProps,
       getHighlightProps,
       getAxisProps,
       getRuleProps,
-      highlightKey: seriesState.highlightKey.current,
-      setHighlightKey: seriesState.highlightKey.set,
     }}
 
     {#if childrenProp}
@@ -281,7 +277,7 @@
           <ChartAnnotations
             {annotations}
             layer="below"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
 
@@ -340,7 +336,7 @@
           <ChartAnnotations
             {annotations}
             layer="above"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
         </ChartClipPath>
@@ -371,18 +367,16 @@
                 label={typeof context.config.x === 'string' ? context.config.x : 'x'}
                 value={context.x(data)}
                 {format}
-                onpointerenter={() =>
-                  (seriesState.highlightKey.current = activeSeries?.key ?? null)}
-                onpointerleave={() => (seriesState.highlightKey.current = null)}
+                onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
+                onpointerleave={() => (seriesState.highlightKey = null)}
                 {...props.tooltip?.item}
               />
               <Tooltip.Item
                 label={typeof context.config.y === 'string' ? context.config.y : 'y'}
                 value={context.y(data)}
                 {format}
-                onpointerenter={() =>
-                  (seriesState.highlightKey.current = activeSeries?.key ?? null)}
-                onpointerleave={() => (seriesState.highlightKey.current = null)}
+                onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
+                onpointerleave={() => (seriesState.highlightKey = null)}
                 {...props.tooltip?.item}
               />
               {#if context.config.r}
@@ -390,9 +384,8 @@
                   label={typeof context.config.r === 'string' ? context.config.r : 'r'}
                   value={context.r(data)}
                   {format}
-                  onpointerenter={() =>
-                    (seriesState.highlightKey.current = activeSeries?.key ?? null)}
-                  onpointerleave={() => (seriesState.highlightKey.current = null)}
+                  onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
+                  onpointerleave={() => (seriesState.highlightKey = null)}
                   {...props.tooltip?.item}
                 />
               {/if}

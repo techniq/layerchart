@@ -266,7 +266,6 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
-      seriesState,
       props: {
         tickFormat: (tick) => {
           // Use data label instead of series label
@@ -390,6 +389,7 @@
   tooltip={tooltip === false
     ? false
     : { ...props.tooltip?.context, ...(typeof tooltip === 'object' ? tooltip : null) }}
+  {seriesState}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
@@ -398,11 +398,7 @@
       value: valueAccessor,
       color: cAccessor,
       context,
-      series,
-      visibleSeries: seriesState.visibleSeries,
       visibleData,
-      highlightKey: seriesState.highlightKey.current,
-      setHighlightKey: seriesState.highlightKey.set,
       getLegendProps,
       getGroupProps,
     }}
@@ -476,8 +472,8 @@
                 value={valueAccessor(data)}
                 color={context.cScale?.(context.c(data))}
                 {format}
-                onpointerenter={() => (seriesState.highlightKey.current = keyAccessor(data))}
-                onpointerleave={() => (seriesState.highlightKey.current = null)}
+                onpointerenter={() => (seriesState.highlightKey = keyAccessor(data))}
+                onpointerleave={() => (seriesState.highlightKey = null)}
                 {...props.tooltip?.item}
               />
             </Tooltip.List>

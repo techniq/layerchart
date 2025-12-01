@@ -246,8 +246,8 @@
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
         : undefined,
-      onPointEnter: () => (seriesState.highlightKey.current = s.key),
-      onPointLeave: () => (seriesState.highlightKey.current = null),
+      onPointEnter: () => (seriesState.highlightKey = s.key),
+      onPointLeave: () => (seriesState.highlightKey = null),
       opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
       ...props.highlight,
       points:
@@ -262,7 +262,6 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
-      seriesState,
       props: {
         ...(typeof legend === 'object' ? legend : null),
         ...props.legend,
@@ -357,12 +356,11 @@
         },
       }
     : false}
+  {seriesState}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      series,
-      visibleSeries: seriesState.visibleSeries,
       getLabelsProps,
       getPointsProps,
       getSplineProps,
@@ -371,8 +369,6 @@
       getGridProps,
       getAxisProps,
       getRuleProps,
-      highlightKey: seriesState.highlightKey.current,
-      setHighlightKey: seriesState.highlightKey.set,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -395,7 +391,7 @@
           <ChartAnnotations
             {annotations}
             layer="below"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
 
@@ -468,7 +464,7 @@
           <ChartAnnotations
             {annotations}
             layer="above"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
         </ChartClipPath>

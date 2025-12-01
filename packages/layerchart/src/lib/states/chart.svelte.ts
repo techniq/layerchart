@@ -23,6 +23,7 @@ import type { GeoState } from '$lib/contexts/geo.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type { BrushState } from './brush.svelte.js';
+import { SeriesState } from './series.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -42,11 +43,14 @@ export class ChartState<
   // Props - accessed via getter function for fine-grained reactivity
   props = $derived(this._propsGetter());
 
-  // Context references
+  // Context/state
+  // TODO: Rename
   geoContext = $state<GeoState>(null!);
   transformContext = $state<TransformState>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
   brushContext = $state<BrushState>(null!);
+  // TODO: handle TComponent
+  seriesState = $state<SeriesState<TData, any>>(new SeriesState(() => []));
 
   // Container dimensions
   _containerWidth = $state(100);
@@ -478,6 +482,7 @@ export class ChartState<
   get radial() {
     return this.props.radial ?? false;
   }
+  // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
   get tooltip() {
     return this.tooltipContext;
   }
@@ -489,6 +494,9 @@ export class ChartState<
   }
   get transform() {
     return this.transformContext;
+  }
+  get series() {
+    return this.seriesState;
   }
 
   get config() {

@@ -54,26 +54,6 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
   context: ChartState<TData>;
 
   /**
-   * The series of data for the chart.
-   */
-  series: SeriesData<TData, TComponent>[];
-
-  /**
-   * The visible series of data for the chart.
-   */
-  visibleSeries: SeriesData<TData, TComponent>[];
-
-  /**
-   * The current highlight series key for the chart.
-   */
-  highlightKey: SeriesData<TData, TComponent>['key'] | null;
-
-  /**
-   * A function to set the highlight series key for the chart.
-   */
-  setHighlightKey: (seriesKey: SeriesData<TData, TComponent>['key'] | null) => void;
-
-  /**
    * Get the default props for the legend component.
    */
   getLegendProps: () => ComponentProps<typeof Legend>;

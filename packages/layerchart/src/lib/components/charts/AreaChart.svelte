@@ -318,11 +318,10 @@
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
         : undefined,
-      onPointEnter: () => (seriesState.highlightKey.current = s.key),
-      onPointLeave: () => (seriesState.highlightKey.current = null),
+      onPointEnter: () => (seriesState.highlightKey = s.key),
+      onPointLeave: () => (seriesState.highlightKey = null),
       ...props.highlight,
-      opacity:
-        seriesState.highlightKey.current && seriesState.highlightKey.current !== s.key ? 0.1 : 1,
+      opacity: seriesState.highlightKey && seriesState.highlightKey !== s.key ? 0.1 : 1,
       points:
         props.highlight?.points == false
           ? false
@@ -335,7 +334,6 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
-      seriesState,
       props: {
         ...props.legend,
         ...(typeof legend === 'object' ? legend : null),
@@ -438,12 +436,11 @@
         },
       }
     : false}
+  {seriesState}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      series,
-      visibleSeries: seriesState.visibleSeries,
       getAreaProps,
       getLabelsProps,
       getPointsProps,
@@ -452,8 +449,6 @@
       getGridProps,
       getAxisProps,
       getRuleProps,
-      highlightKey: seriesState.highlightKey.current,
-      setHighlightKey: seriesState.highlightKey.set,
     }}
 
     {#if childrenProp}
@@ -476,7 +471,7 @@
           <ChartAnnotations
             {annotations}
             layer="below"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
 
@@ -544,7 +539,7 @@
           <ChartAnnotations
             {annotations}
             layer="above"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
         </ChartClipPath>

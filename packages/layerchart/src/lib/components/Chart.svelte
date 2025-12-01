@@ -25,6 +25,7 @@
 
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
+  import { SeriesState } from '$lib/states/series.svelte.js';
 
   export type ChartResizeDetail = {
     width: number;
@@ -561,6 +562,9 @@
     /** Props passed to BrushContext */
     brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
 
+    /** The state object managing the series data and visibility */
+    seriesState?: SeriesState<T, any>;
+
     /**
      * A callback function that is called when the chart is resized.
      */
@@ -593,6 +597,7 @@
   let {
     ref: refProp = $bindable(),
     context: contextProp = $bindable(),
+    seriesState = $bindable<SeriesState<TData, any>>(),
     ...props
   }: ChartPropsWithoutHTML<TData, XScale, YScale> &
     Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
@@ -628,6 +633,8 @@
 
   // Update bindable
   contextProp = chartState;
+
+  chartState.seriesState = seriesState;
 
   setChartContext(chartState);
 

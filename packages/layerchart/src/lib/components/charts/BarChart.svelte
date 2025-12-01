@@ -346,7 +346,6 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
-      seriesState,
       props: {
         ...props.legend,
         ...(typeof legend === 'object' ? legend : null),
@@ -481,12 +480,11 @@
         },
       }
     : false}
+  {seriesState}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      series,
-      visibleSeries: seriesState.visibleSeries,
       getBarsProps,
       getLabelsProps,
       getLegendProps,
@@ -494,8 +492,6 @@
       getHighlightProps,
       getAxisProps,
       getRuleProps,
-      highlightKey: seriesState.highlightKey.current,
-      setHighlightKey: seriesState.highlightKey.set,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -518,7 +514,7 @@
           <ChartAnnotations
             {annotations}
             layer="below"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
 
@@ -577,7 +573,7 @@
           <ChartAnnotations
             {annotations}
             layer="above"
-            highlightKey={seriesState.highlightKey.current}
+            highlightKey={seriesState.highlightKey}
             visibleSeries={seriesState.visibleSeries}
           />
         </ChartClipPath>

@@ -5,10 +5,10 @@ import { cls } from '@layerstack/tailwind';
 
 import type Legend from '../Legend.svelte';
 import { resolveMaybeFn } from '$lib/utils/common.js';
-import type { SeriesState } from '$lib/states/series.svelte.js';
+import { getChartContext } from '$lib/contexts/chart.js';
 
 type CreateLegendPropsOptions<TData, TComponent extends Component> = {
-  seriesState: SeriesState<TData, TComponent>;
+  // TODO: pass props directly since seriesState is accessible via context now
   props: Partial<ComponentProps<typeof Legend>>;
 };
 
@@ -18,20 +18,21 @@ type CreateLegendPropsOptions<TData, TComponent extends Component> = {
 export function createLegendProps<TData, TComponent extends Component>(
   opts: CreateLegendPropsOptions<TData, TComponent>
 ): ComponentProps<typeof Legend> {
+  const ctx = getChartContext<TData>();
   return {
-    scale: opts.seriesState.isDefaultSeries
+    scale: ctx.seriesState.isDefaultSeries
       ? undefined
       : scaleOrdinal(
-          opts.seriesState.series.map((s) => s.key),
-          opts.seriesState.series.map((s) => s.color)
+          ctx.seriesState.series.map((s) => s.key),
+          ctx.seriesState.series.map((s) => s.color)
         ),
-    tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
+    tickFormat: (key) => ctx.seriesState.series.find((s) => s.key === key)?.label ?? key,
     placement: 'bottom',
     variant: 'swatches',
-    selected: opts.seriesState.selectedKeys.current,
-    onclick: (_, item) => opts.seriesState.selectedKeys.toggle(item.value),
-    onpointerenter: (_, item) => (opts.seriesState.highlightKey.current = item.value),
-    onpointerleave: () => (opts.seriesState.highlightKey.current = null),
+    selected: ctx.seriesState.selectedKeys.current,
+    onclick: (_, item) => ctx.seriesState.selectedKeys.toggle(item.value),
+    onpointerenter: (_, item) => (ctx.seriesState.highlightKey = item.value),
+    onpointerleave: () => (ctx.seriesState.highlightKey = null),
     ...opts.props,
     classes: {
       item: (item) => {
