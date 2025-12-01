@@ -35,7 +35,7 @@
 <script lang="ts">
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
-  import { getGeoContext } from '$lib/contexts/geo.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
@@ -51,27 +51,27 @@
     pathRefProp = pathRef;
   });
 
-  const geoCtx = getGeoContext();
+  const ctx = getChartContext();
 
   const loftedProjection = $derived(
-    geoCtx.projection
+    ctx.geo.projection
       ? geoOrthographic()
-          .translate(geoCtx.projection.translate())
-          .rotate(geoCtx.projection.rotate())
-          .scale(geoCtx.projection.scale() * loft)
+          .translate(ctx.geo.projection.translate())
+          .rotate(ctx.geo.projection.rotate())
+          .scale(ctx.geo.projection.scale() * loft)
       : undefined
   );
 
-  const source = $derived(geoCtx.projection ? geoCtx.projection(link.source) : [0, 0]) as [
+  const source = $derived(ctx.geo.projection ? ctx.geo.projection(link.source) : [0, 0]) as [
     number,
     number,
   ];
-  const target = $derived(geoCtx.projection ? geoCtx.projection(link.target) : [0, 0]) as [
+  const target = $derived(ctx.geo.projection ? ctx.geo.projection(link.target) : [0, 0]) as [
     number,
     number,
   ];
   const middle = $derived(
-    geoCtx.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
+    ctx.geo.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
   ) as [number, number];
 </script>
 
