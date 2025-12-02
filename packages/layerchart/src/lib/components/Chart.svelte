@@ -703,7 +703,7 @@
         {ondragend}
       >
         <!-- svelte-ignore ownership_invalid_binding -->
-        <BrushContext {...brushProps} bind:brushContext={chartState.brushContext}>
+        <BrushContext {...brushProps} bind:state={chartState.brushState}>
           <!-- svelte-ignore ownership_invalid_binding -->
           <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
             {@render children?.({

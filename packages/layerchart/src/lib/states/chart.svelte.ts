@@ -43,12 +43,12 @@ export class ChartState<
   // Props - accessed via getter function for fine-grained reactivity
   props = $derived(this._propsGetter());
 
-  // Context/state
+  // State / contexts
   geoState: GeoState;
   transformState = $state<TransformState>(null!);
   // TODO: Rename
   tooltipContext = $state<TooltipContextValue>(null!);
-  brushContext = $state<BrushState>(null!);
+  brushState = $state<BrushState>(null!);
   // TODO: handle TComponent
   seriesState = $state<SeriesState<TData, any>>(new SeriesState(() => []));
 
@@ -508,7 +508,7 @@ export class ChartState<
     return this.geoState;
   }
   get brush() {
-    return this.brushContext;
+    return this.brushState;
   }
   get transform() {
     return this.transformState;

@@ -109,9 +109,9 @@
      *
      * @bindable
      */
-    brushContext?: BrushState;
+    state?: BrushState;
 
-    children?: Snippet<[{ brushContext: BrushState }]>;
+    children?: Snippet<[{ state: BrushState }]>;
   };
 </script>
 
@@ -134,7 +134,7 @@
     // yDomain,
     x,
     y,
-    brushContext: brushContextProp = $bindable(),
+    state: stateProp = $bindable(),
 
     axis = 'x',
     handleSize = 5,
@@ -155,6 +155,8 @@
   let rootEl = $state<HTMLElement>();
 
   const brushState = new BrushState(ctx, { x, y, axis });
+  stateProp = brushState;
+  setBrushContext(brushState);
 
   // if (xDomain === undefined) {
   //   xDomain = ctx.xScale.domain();
@@ -191,12 +193,6 @@
   $effect(() => {
     brushState.handleSize = handleSize;
   });
-
-  // brushContextProp = brushContext;
-  brushContextProp = brushState;
-
-  // setBrushContext(brushContext);
-  setBrushContext(brushState);
 
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
@@ -408,7 +404,7 @@
 </script>
 
 {#if disabled}
-  {@render children?.({ brushContext: brushState })}
+  {@render children?.({ state: brushState })}
 {:else}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
@@ -428,7 +424,7 @@
       style:width="{ctx.containerWidth}px"
       style:height="{ctx.containerHeight}px"
     >
-      {@render children?.({ brushContext: brushState })}
+      {@render children?.({ state: brushState })}
     </div>
 
     {#if brushState.active}
