@@ -3,7 +3,7 @@
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
   import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
-  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -117,7 +117,7 @@
      *
      * **Must set `data` prop as well**
      */
-    tooltipContext?: TooltipContextValue;
+    tooltipContext?: TooltipState;
 
     /**
      * Data to set when showing tooltip

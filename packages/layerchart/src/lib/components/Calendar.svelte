@@ -41,7 +41,7 @@
     /**
      * Tooltip context to setup mouse events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue;
+    tooltipContext?: TooltipState;
 
     children?: Snippet<[{ cells: CalendarCell[]; cellSize: [number, number] }]>;
   } & Omit<
@@ -60,7 +60,7 @@
   import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';

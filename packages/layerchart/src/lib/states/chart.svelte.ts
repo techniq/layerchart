@@ -21,7 +21,7 @@ import { printDebug } from '$lib/utils/debug.js';
 
 import { GeoState } from './geo.svelte.js';
 import type { TransformState } from './transform.svelte.js';
-import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushState } from './brush.svelte.js';
 import { SeriesState } from './series.svelte.js';
 
@@ -46,8 +46,7 @@ export class ChartState<
   // State / contexts
   geoState: GeoState;
   transformState = $state<TransformState>(null!);
-  // TODO: Rename
-  tooltipContext = $state<TooltipContextValue>(null!);
+  tooltipState = $state<TooltipState>(null!);
   brushState = $state<BrushState>(null!);
   // TODO: handle TComponent
   seriesState = $state<SeriesState<TData, any>>(new SeriesState(() => []));
@@ -502,7 +501,7 @@ export class ChartState<
   }
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
   get tooltip() {
-    return this.tooltipContext;
+    return this.tooltipState;
   }
   get geo() {
     return this.geoState;

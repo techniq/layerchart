@@ -1,7 +1,8 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { setTooltipContext, type TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import { setTooltipContext } from '$lib/contexts/tooltip.js';
+  import type { TooltipState as TooltipStateType } from '$lib/states/tooltip.svelte.js';
 
   export type TooltipMode =
     | 'bisect-x' // requires values to be sorted
@@ -71,7 +72,7 @@
      * Exposed to allow binding in Chart
      * @default { x: 0, y: 0, data: null, show: showTooltip, hide: hideTooltip, mode }
      */
-    tooltipContext?: TooltipContextValue<T>;
+    state?: TooltipStateType<T>;
 
     /**
      * Delay in ms before hiding tooltip
@@ -86,7 +87,7 @@
      */
     ref?: HTMLElement;
 
-    children?: Snippet<[{ tooltipContext: TooltipContextValue<T> }]>;
+    children?: Snippet<[{ state: TooltipStateType<T> }]>;
   };
 
   export type TooltipContextProps<T = any> = TooltipContextPropsWithoutHTML<T> &
@@ -116,6 +117,7 @@
     getTooltipPayload,
     type TooltipPayload,
   } from './tooltipMetaContext.js';
+  import { TooltipState } from '$lib/states/tooltip.svelte.js';
 
   const ctx = getChartContext<any>();
   const geo = getGeoContext();
@@ -131,7 +133,7 @@
     onclick = () => {},
     radius = Infinity,
     raiseTarget = false,
-    tooltipContext: tooltipContextProp = $bindable() as TooltipContextValue<TData>,
+    state: stateProp = $bindable() as TooltipStateType<TData>,
     children,
   }: TooltipContextProps<TData> = $props();
 
@@ -140,52 +142,10 @@
     refProp = ref;
   });
 
-  let x = $state(0);
-  let y = $state(0);
-  let data = $state(null);
-  let payload = $state<TooltipPayload[]>([]);
-
-  /**
-   * If we're hovering the tooltip area on the chart
-   */
-  let isHoveringTooltipArea = $state(false);
-
-  /**
-   * If we're hovering the tooltip content container
-   */
-  let isHoveringTooltipContent = $state(false);
-
   const metaCtx = getTooltipMetaContext();
 
-  const tooltipContext: TooltipContextValue = {
-    get x() {
-      return x;
-    },
-    get y() {
-      return y;
-    },
-    get data() {
-      return data;
-    },
-    get payload() {
-      return payload;
-    },
-    show: showTooltip,
-    hide: hideTooltip,
-    get mode() {
-      return mode;
-    },
-    get isHoveringTooltipArea() {
-      return isHoveringTooltipArea;
-    },
-    get isHoveringTooltipContent() {
-      return isHoveringTooltipContent;
-    },
-    set isHoveringTooltipContent(value) {
-      isHoveringTooltipContent = value;
-    },
-  };
-  tooltipContextProp = tooltipContext;
+  const tooltipState = new TooltipState<TData>(mode, showTooltip, hideTooltip);
+  stateProp = tooltipState;
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -197,7 +157,7 @@
 		- scaleBand, scaleLinear: band (or bounds) - multiple (overlapping) bars
 		- scaleLinear, scaleLinear: voronoi (or quadtree)
 	*/
-  setTooltipContext(tooltipContext);
+  setTooltipContext(tooltipState);
 
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 
@@ -359,10 +319,10 @@
 
       const payloadData = getTooltipPayload({ ctx, tooltipData, metaCtx });
 
-      x = point.x;
-      y = point.y;
-      data = tooltipData;
-      payload = payloadData;
+      tooltipState.x = point.x;
+      tooltipState.y = point.y;
+      tooltipState.data = tooltipData;
+      tooltipState.payload = payloadData;
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -375,15 +335,15 @@
       return;
     }
 
-    isHoveringTooltipArea = false;
+    tooltipState.isHoveringTooltipArea = false;
 
     // Wait an event loop tick in case `showTooltip` is called immediately on another element,
     // to allow tweening (ex. moving between bands/bars)
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
-      if (!isHoveringTooltipArea && !isHoveringTooltipContent) {
-        data = null;
-        payload = [];
+      if (!tooltipState.isHoveringTooltipArea && !tooltipState.isHoveringTooltipContent) {
+        tooltipState.data = null;
+        tooltipState.payload = [];
       }
     }, hideDelay);
   }
@@ -579,7 +539,7 @@
   );
 
   function onPointerEnter(e: PointerEvent | MouseEvent | TouchEvent) {
-    isHoveringTooltipArea = true;
+    tooltipState.isHoveringTooltipArea = true;
     if (triggerPointerEvents) {
       showTooltip(e);
     }
@@ -592,7 +552,7 @@
   }
 
   function onPointerLeave(e: PointerEvent | MouseEvent | TouchEvent) {
-    isHoveringTooltipArea = false;
+    tooltipState.isHoveringTooltipArea = false;
     hideTooltip();
   }
 </script>
@@ -611,8 +571,8 @@
   onpointerleave={onPointerLeave}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
-    if (triggerPointerEvents && tooltipContext.data != null) {
-      onclick(e, { data: tooltipContext.data });
+    if (triggerPointerEvents && tooltipState.data != null) {
+      onclick(e, { data: tooltipState.data });
     }
   }}
   onkeydown={() => {}}
@@ -626,7 +586,7 @@
     style:width="{ctx.containerWidth}px"
     style:height="{ctx.containerHeight}px"
   >
-    {@render children?.({ tooltipContext: tooltipContext })}
+    {@render children?.({ state: tooltipState })}
 
     {#if mode === 'voronoi'}
       <Svg>

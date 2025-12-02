@@ -60,7 +60,7 @@
     /**
      * Tooltip context to setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue;
+    tooltipContext?: TooltipState;
 
     /**
      * Sort function to sort the arcs
@@ -78,7 +78,7 @@
   import Arc from './Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 

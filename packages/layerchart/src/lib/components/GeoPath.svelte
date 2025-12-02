@@ -12,7 +12,7 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
 
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
+  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {
@@ -24,7 +24,7 @@
     /**
      * Tooltip context to setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue | undefined;
+    tooltipContext?: TooltipState | undefined;
 
     /**
      * Click event handler
