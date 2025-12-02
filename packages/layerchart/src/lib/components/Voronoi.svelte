@@ -68,6 +68,7 @@
   import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import CircleClipPath from './CircleClipPath.svelte';
 
   let {
@@ -83,12 +84,13 @@
   }: VoronoiProps = $props();
 
   const ctx = getChartContext();
+  const geo = getGeoContext();
 
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {
       // geo voronoi needs raw latitude/longitude, not mapped to range (chart dimensions)
-      const xValue = ctx.geo?.projection ? ctx.x(d) : ctx.xGet(d);
-      const yValue = ctx.geo?.projection ? ctx.y(d) : ctx.yGet(d);
+      const xValue = geo.projection ? ctx.x(d) : ctx.xGet(d);
+      const yValue = geo.projection ? ctx.y(d) : ctx.yGet(d);
 
       const x = Array.isArray(xValue) ? min(xValue) : xValue;
       const y = Array.isArray(yValue) ? min(yValue) : yValue;
@@ -115,10 +117,10 @@
 </script>
 
 <Group {...restProps} class={cls('lc-voronoi-g', classes.root, className)}>
-  {#if ctx.geo.projection}
+  {#if geo.projection}
     {@const polygons = geoVoronoi().polygons(points)}
     {#each polygons.features as feature}
-      {@const point = r ? ctx.geo.projection?.(feature.properties.sitecoordinates) : null}
+      {@const point = r ? geo.projection?.(feature.properties.sitecoordinates) : null}
       <CircleClipPath
         cx={point?.[0]}
         cy={point?.[1]}

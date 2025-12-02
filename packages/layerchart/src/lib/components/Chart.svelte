@@ -15,7 +15,7 @@
     XRangeWithScale,
     YRangeWithScale,
   } from '$lib/utils/types.js';
-  import GeoContext from './GeoContext.svelte';
+  import type { GeoStateProps } from '$lib/states/geo.svelte.js';
   import TooltipContext from './tooltip/TooltipContext.svelte';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
@@ -545,9 +545,9 @@
     context?: ChartState<T, XScale, YScale>;
 
     /**
-     * Props passed to GeoContext
+     * Props passed to GeoState
      */
-    geo?: Partial<ComponentProps<typeof GeoContext>>;
+    geo?: Partial<GeoStateProps>;
 
     /**
      * Props passed to the `TooltipContext` component.
@@ -594,6 +594,8 @@
   lang="ts"
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
+  import { setGeoContext } from '$lib/contexts/geo.js';
+
   let {
     ref: refProp = $bindable(),
     context: contextProp = $bindable(),
@@ -637,6 +639,7 @@
   chartState.seriesState = seriesState;
 
   setChartContext(chartState);
+  setGeoContext(chartState.geoState);
 
   const initialTransform = $derived(
     geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
@@ -651,10 +654,10 @@
   const processTranslate = $derived.by(() => {
     if (!geo) return undefined;
     return (x: number, y: number, deltaX: number, deltaY: number) => {
-      if (geo.applyTransform?.includes('rotate') && chartState.geoContext?.projection) {
+      if (geo.applyTransform?.includes('rotate') && chartState.geoState?.projection) {
         // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
         // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-        const projectionScale = chartState.geoContext.projection.scale() ?? 0;
+        const projectionScale = chartState.geoState.projection.scale() ?? 0;
         const sensitivity = 75;
         return {
           x: x + deltaX * (sensitivity / projectionScale),
@@ -700,17 +703,14 @@
         {ondragend}
       >
         <!-- svelte-ignore ownership_invalid_binding -->
-        <GeoContext {...geo} bind:geoContext={chartState.geoContext}>
+        <BrushContext {...brushProps} bind:brushContext={chartState.brushContext}>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <BrushContext {...brushProps} bind:brushContext={chartState.brushContext}>
-            <!-- svelte-ignore ownership_invalid_binding -->
-            <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
-              {@render children?.({
-                context: chartState,
-              })}
-            </TooltipContext>
-          </BrushContext>
-        </GeoContext>
+          <TooltipContext {...tooltipProps} bind:tooltipContext={chartState.tooltipContext}>
+            {@render children?.({
+              context: chartState,
+            })}
+          </TooltipContext>
+        </BrushContext>
       </TransformContext>
     {/key}
   </div>

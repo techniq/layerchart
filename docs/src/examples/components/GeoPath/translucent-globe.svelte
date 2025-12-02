@@ -4,12 +4,12 @@
 
 	import {
 		Chart,
-		GeoContext,
+		GeoProjection,
 		GeoPath,
 		Graticule,
 		Layer,
 		Tooltip,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import GeoPathTranslucentControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
@@ -18,7 +18,7 @@
 	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue>();
+	let context = $state<ChartState>();
 
 	let velocity = $state(3);
 	const timer = new TimerState({
@@ -58,7 +58,7 @@
 			<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
 			<!-- Back -->
-			<GeoContext
+			<GeoProjection
 				projection={geoOrthographic}
 				fitGeojson={countries}
 				rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
@@ -68,7 +68,7 @@
 				{#each countries.features as country}
 					<GeoPath geojson={country} class="stroke-surface-content/5 fill-surface-content/10" />
 				{/each}
-			</GeoContext>
+			</GeoProjection>
 
 			<!-- Front -->
 			<Graticule class="stroke-surface-content/20" />

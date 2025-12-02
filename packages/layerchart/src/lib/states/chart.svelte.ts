@@ -19,7 +19,7 @@ import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
 
-import type { GeoState } from '$lib/contexts/geo.js';
+import { GeoState } from './geo.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type { BrushState } from './brush.svelte.js';
@@ -44,8 +44,8 @@ export class ChartState<
   props = $derived(this._propsGetter());
 
   // Context/state
+  geoState: GeoState;
   // TODO: Rename
-  geoContext = $state<GeoState>(null!);
   transformContext = $state<TransformState>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
   brushContext = $state<BrushState>(null!);
@@ -68,11 +68,29 @@ export class ChartState<
   constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this._propsGetter = propsGetter;
 
+    // Create GeoState instance
+    this.geoState = new GeoState(() => this.props.geo ?? {});
+
     const logDebug = useDebounce(printDebug, 200);
 
     // Set mounted state once component initializes
     $effect(() => {
       this.isMounted = true;
+    });
+
+    // Sync chart dimensions to geo state
+    $effect(() => {
+      this.geoState.chartWidth = this.width;
+      this.geoState.chartHeight = this.height;
+    });
+
+    // Sync transform context to geo state
+    $effect(() => {
+      if (this.transformContext) {
+        this.geoState.transformScale = this.transformContext.scale;
+        this.geoState.transformTranslateX = this.transformContext.translate.x;
+        this.geoState.transformTranslateY = this.transformContext.translate.y;
+      }
     });
 
     // Call onResize callback when dimensions change
@@ -487,7 +505,7 @@ export class ChartState<
     return this.tooltipContext;
   }
   get geo() {
-    return this.geoContext;
+    return this.geoState;
   }
   get brush() {
     return this.brushContext;

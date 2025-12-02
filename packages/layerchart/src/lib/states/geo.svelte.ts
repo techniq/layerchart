@@ -1,9 +1,42 @@
-import type { GeoProjection } from 'd3-geo';
-import type { GeoContextProps } from '$lib/components/GeoContext.svelte';
+import type { GeoProjection, GeoPermissibleObjects } from 'd3-geo';
+
+export type GeoStateProps = {
+  /**
+   * A d3 projection function. Pass this in as an uncalled function, e.g.
+   * `projection={geoAlbersUsa}`.
+   */
+  projection?: () => GeoProjection;
+  fitGeojson?: GeoPermissibleObjects;
+  /**
+   * By default, the map fills to fit the $width and $height. If instead you want a
+   * fixed-aspect ratio, like for a server-side rendered map, set that here.
+   */
+  fixedAspectRatio?: number;
+  clipAngle?: number;
+  clipExtent?: [[number, number], [number, number]];
+  rotate?: {
+    /** Lambda (Center Meridian) */
+    yaw: number;
+    /** Phi */
+    pitch: number;
+    /** Gamma */
+    roll: number;
+  };
+  scale?: number;
+  translate?: [number, number];
+  center?: [number, number];
+  /**
+   * Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are
+   * mutually selected
+   */
+  applyTransform?: ('scale' | 'translate' | 'rotate')[];
+  reflectX?: boolean;
+  reflectY?: boolean;
+};
 
 export class GeoState {
   // Props getter function - set in constructor
-  private _propsGetter!: () => GeoContextProps;
+  private _propsGetter!: () => GeoStateProps;
 
   // Props - accessed via getter function for fine-grained reactivity
   props = $derived(this._propsGetter());
@@ -18,7 +51,7 @@ export class GeoState {
   // The actual projection instance
   projection = $state<GeoProjection | undefined>(undefined);
 
-  constructor(propsGetter: () => GeoContextProps) {
+  constructor(propsGetter: () => GeoStateProps) {
     this._propsGetter = propsGetter;
 
     // Main effect to build and configure the projection

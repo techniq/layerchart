@@ -32,7 +32,7 @@
 <script lang="ts">
   import Group from './Group.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { lat, long, ref: refProp = $bindable(), children, ...restProps }: GeoPointProps = $props();
@@ -42,9 +42,9 @@
     refProp = ref;
   });
 
-  const ctx = getChartContext();
+  const geo = getGeoContext();
 
-  const points = $derived(ctx.geo.projection?.([long, lat]) ?? [0, 0]);
+  const points = $derived(geo.projection?.([long, lat]) ?? [0, 0]);
   const x = $derived(points[0]);
   const y = $derived(points[1]);
 

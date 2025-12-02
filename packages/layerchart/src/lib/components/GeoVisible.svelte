@@ -12,12 +12,12 @@
 
 <script lang="ts">
   import { isVisible } from '$lib/utils/geo.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
 
   let { lat, long, children }: GeoVisibleProps = $props();
-  const ctx = getChartContext();
+  const geo = getGeoContext();
 </script>
 
-{#if ctx.geo.projection && isVisible(ctx.geo.projection)([long, lat])}
+{#if geo.projection && isVisible(geo.projection)([long, lat])}
   {@render children?.()}
 {/if}

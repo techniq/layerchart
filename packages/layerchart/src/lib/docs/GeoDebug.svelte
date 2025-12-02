@@ -1,35 +1,37 @@
 <script lang="ts">
+  import type { HTMLAttributes } from 'svelte/elements';
   import { Checkbox } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
   import { format } from '@layerstack/utils';
+
   import { getChartContext } from '$lib/contexts/chart.js';
-  import type { HTMLAttributes } from 'svelte/elements';
+  import { getGeoContext } from '$lib/contexts/geo.js';
 
   const ctx = getChartContext();
-
+  const geo = getGeoContext();
   let { class: className }: HTMLAttributes<HTMLElement> = $props();
 
   let showCenter = $state(false);
 </script>
 
-{#if ctx.geo.projection}
+{#if geo.projection}
   <div class={cls('bg-surface-300/50 rounded-sm m-1 backdrop-blur-sm p-2 tabular-nums', className)}>
     <div class="grid gap-2 text-xs">
       <div>
         <span class="opacity-50">scale:</span>
-        {format(ctx.geo.projection.scale(), 'decimal')}
+        {format(geo.projection.scale(), 'decimal')}
       </div>
 
       <div>
         <span class="opacity-50">translate:</span>
-        {#each ctx.geo.projection.translate() as coord}
+        {#each geo.projection.translate() as coord}
           <div class="text-right">{format(coord, 'decimal')}</div>
         {/each}
       </div>
 
       <div>
         <span class="opacity-50">rotate:</span>
-        {#each ctx.geo.projection.rotate() as angle}
+        {#each geo.projection.rotate() as angle}
           <div class="text-right">{format(angle, 'decimal')}</div>
         {/each}
       </div>
@@ -37,13 +39,13 @@
       <div class="grid grid-cols-[auto_1fr]">
         <span class="opacity-50">center:</span>
         <span class="text-right">
-          {ctx.geo.projection.center?.()}
+          {geo.projection.center?.()}
         </span>
       </div>
 
       <div>
         <span class="opacity-50">long/lat: <Checkbox bind:checked={showCenter} size="xs" /></span>
-        {#each ctx.geo.projection.invert?.([ctx.width / 2, ctx.height / 2]) ?? [] as coord}
+        {#each geo.projection.invert?.([ctx.width / 2, ctx.height / 2]) ?? [] as coord}
           <div class="text-right">{format(coord, 'decimal')}</div>
         {/each}
       </div>

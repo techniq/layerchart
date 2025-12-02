@@ -45,6 +45,7 @@
   import { tile as d3Tile } from 'd3-tile';
 
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import Group from './Group.svelte';
@@ -62,16 +63,17 @@
   }: GeoTilePropsWithoutHTML = $props();
 
   const ctx = getChartContext();
+  const geo = getGeoContext();
   const layerCtx = getLayerContext();
 
-  const center = $derived(ctx.geo.projection?.([0, 0]) ?? [0, 0]);
+  const center = $derived(geo.projection?.([0, 0]) ?? [0, 0]);
 
   const tiles = $derived(
     d3Tile()
       .size([ctx.containerWidth, ctx.containerHeight])
       .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
       // TODO: is this fine to add the 0 as a default?
-      .scale(ctx.geo.projection ? ctx.geo.projection.scale() * 2 * Math.PI : undefined)
+      .scale(geo.projection ? geo.projection.scale() * 2 * Math.PI : undefined)
       .tileSize(tileSize)
       .zoomDelta(zoomDelta)()
   );

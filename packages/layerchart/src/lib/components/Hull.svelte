@@ -64,6 +64,7 @@
   import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
 
   let {
     data,
@@ -84,6 +85,7 @@
   });
 
   const ctx = getChartContext();
+  const geo = getGeoContext();
 
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {
@@ -102,7 +104,7 @@
 </script>
 
 <Group {...restProps} class={cls('lc-hull-g', classes.root, className)} bind:ref>
-  {#if ctx.geo.projection}
+  {#if geo.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
       geojson={polygon}

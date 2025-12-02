@@ -72,7 +72,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { createKey } from '$lib/utils/key.svelte.js';
 
   let {
@@ -96,12 +96,10 @@
     refProp = ref;
   });
 
-  const ctx = getChartContext();
+  const geo = getGeoContext();
 
   const projection = $derived(
-    geoTransform && ctx.geo.projection
-      ? d3geoTransform(geoTransform(ctx.geo.projection))
-      : ctx.geo.projection
+    geoTransform && geo.projection ? d3geoTransform(geoTransform(geo.projection)) : geo.projection
   );
 
   const geoPath = $derived.by(() => {

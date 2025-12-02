@@ -4,7 +4,7 @@
 
   import {
     Chart,
-    GeoContext,
+    GeoProjection,
     GeoPath,
     Graticule,
     Layer,
@@ -79,7 +79,7 @@
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
           <!-- Back -->
-          <GeoContext
+          <GeoProjection
             projection={geoOrthographic}
             fitGeojson={countries}
             rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
@@ -89,7 +89,7 @@
             {#each countries.features as country}
               <GeoPath geojson={country} class="stroke-surface-content/5 fill-surface-content/10" />
             {/each}
-          </GeoContext>
+          </GeoProjection>
 
           <!-- Front -->
           <Graticule class="stroke-surface-content/20" />

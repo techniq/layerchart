@@ -101,6 +101,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Svg from './../layers/Svg.svelte';
   import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
@@ -117,6 +118,7 @@
   } from './tooltipMetaContext.js';
 
   const ctx = getChartContext<any>();
+  const geo = getGeoContext();
 
   let {
     ref: refProp = $bindable(),
@@ -394,10 +396,10 @@
             return 0;
           }
 
-          if (ctx.geo.projection) {
+          if (geo.projection) {
             const lat = ctx.x(d);
             const long = ctx.y(d);
-            const geoValue = ctx.geo.projection([lat, long]) ?? [0, 0];
+            const geoValue = geo.projection([lat, long]) ?? [0, 0];
             return geoValue[0];
           }
 
@@ -418,10 +420,10 @@
             return 0;
           }
 
-          if (ctx.geo.projection) {
+          if (geo.projection) {
             const lat = ctx.x(d);
             const long = ctx.y(d);
-            const geoValue = ctx.geo.projection([lat, long]) ?? [0, 0];
+            const geoValue = geo.projection([lat, long]) ?? [0, 0];
             return geoValue[1];
           }
 

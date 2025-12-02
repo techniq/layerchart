@@ -1,7 +1,7 @@
 import { Context } from 'runed';
-import type { GeoState } from '$lib/states/geo.svelte.js';
+import type { GeoState, GeoStateProps } from '$lib/states/geo.svelte.js';
 
-export type { GeoState };
+export type { GeoState, GeoStateProps };
 
 /**
  * Access or set the current GeoContext.
