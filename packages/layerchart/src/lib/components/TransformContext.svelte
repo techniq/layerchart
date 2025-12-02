@@ -1,6 +1,5 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-  import { setTransformContext } from '$lib/contexts/transform.js';
   import { TransformState, type TransformStateOptions } from '$lib/states/transform.svelte.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -112,8 +111,6 @@
     onwheel?.(e);
     transformState.onWheel(e);
   }
-
-  setTransformContext(transformState);
 </script>
 
 <div
