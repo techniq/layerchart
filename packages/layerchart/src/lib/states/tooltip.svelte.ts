@@ -10,12 +10,20 @@ export class TooltipState<T = any> {
   isHoveringTooltipContent = $state(false);
 
   mode: TooltipMode;
-  show: (e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any, payload?: TooltipPayload) => void;
+  show: (
+    e: PointerEvent | MouseEvent | TouchEvent,
+    tooltipData?: any,
+    payload?: TooltipPayload
+  ) => void;
   hide: (e?: PointerEvent) => void;
 
   constructor(
     mode: TooltipMode,
-    show: (e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any, payload?: TooltipPayload) => void,
+    show: (
+      e: PointerEvent | MouseEvent | TouchEvent,
+      tooltipData?: any,
+      payload?: TooltipPayload
+    ) => void,
     hide: (e?: PointerEvent) => void
   ) {
     this.mode = mode;
