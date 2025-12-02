@@ -222,8 +222,8 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value">
-      {#snippet marks({ series, getBarsProps })}
-        {#each series as s, i (s.key)}
+      {#snippet marks({ context, getBarsProps })}
+        {#each context.series.series as s, i (s.key)}
           <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
             {#snippet children({ gradient })}
               <Bars {...getBarsProps(s, i)} fill={gradient} />
@@ -408,12 +408,12 @@
         },
       ]}
     >
-      {#snippet tooltip({ context, series })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
             <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              {#each series as s}
+              {#each context.series.series as s}
                 {@const valueAccessor = accessor(s.value ?? s.key)}
                 {@const value = Math.abs(valueAccessor(data))}
                 <Tooltip.Item label={s.key} color={s.color}>
@@ -464,12 +464,12 @@
         },
       ]}
     >
-      {#snippet tooltip({ series, context })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
             <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              {#each series as s}
+              {#each context.series.series as s}
                 {@const valueAccessor = accessor(s.value ?? s.key)}
                 {@const value = Math.abs(valueAccessor(data))}
                 <Tooltip.Item label={s.key} color={s.color}>
@@ -557,8 +557,8 @@
       }}
     >
       <!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
-      {#snippet aboveMarks({ context, visibleSeries })}
-        {#each visibleSeries as s}
+      {#snippet aboveMarks({ context })}
+        {#each context.series.visibleSeries as s}
           {#each wideData as d}
             {@const valueAccessor = accessor(s.key)}
             {@const value = valueAccessor(d)}

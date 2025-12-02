@@ -29,8 +29,8 @@
 	seriesLayout="stack"
 	height={300}
 >
-	{#snippet marks({ series, getAreaProps })}
-		{#each series as s, i (s.key)}
+	{#snippet marks({ context, getAreaProps })}
+		{#each context.series.series as s, i (s.key)}
 			<!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
 			<LinearGradient
 				stops={s.color

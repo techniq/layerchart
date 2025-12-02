@@ -37,8 +37,8 @@
 	height={300}
 >
 	<!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
-	{#snippet aboveMarks({ context, visibleSeries })}
-		{#each visibleSeries as s}
+	{#snippet aboveMarks({ context })}
+		{#each context.series.visibleSeries as s}
 			{#each wideData as d}
 				{@const valueAccessor = accessor(s.key)}
 				{@const value = valueAccessor(d)}

@@ -33,22 +33,26 @@
 	legend
 	height={300}
 >
-	{#snippet marks({ context, visibleSeries, highlightKey })}
-		{#each visibleSeries as s}
+	{#snippet marks({ context })}
+		{#each context.series.visibleSeries as s}
 			{@const active =
 				(context.tooltip.data == null || s.key === context.tooltip.data?.fruit) &&
-				(highlightKey === null || s.key === highlightKey)}
+				(context.series.highlightKey === null || s.key === context.series.highlightKey)}
 			<Spline {data} y={s.key} stroke={s.color} class={cls(!active && 'opacity-20 saturate-0')} />
 		{/each}
 	{/snippet}
 
-	{#snippet highlight({ series, context })}
-		{@const activeSeriesColor = series.find((s) => s.key === context.tooltip.data?.fruit)?.color}
+	{#snippet highlight({ context })}
+		{@const activeSeriesColor = context.series.series.find(
+			(s) => s.key === context.tooltip.data?.fruit
+		)?.color}
 		<Highlight lines points={{ fill: activeSeriesColor }} />
 	{/snippet}
 
-	{#snippet tooltip({ context, series })}
-		{@const activeSeriesColor = series.find((s) => s.key === context.tooltip.data?.fruit)?.color}
+	{#snippet tooltip({ context })}
+		{@const activeSeriesColor = context.series.series.find(
+			(s) => s.key === context.tooltip.data?.fruit
+		)?.color}
 		<Tooltip.Root>
 			{#snippet children({ data })}
 				<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>

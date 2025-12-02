@@ -243,15 +243,15 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
     >
-      {#snippet belowMarks({ visibleSeries, highlightKey })}
-        {#each visibleSeries as s}
+      {#snippet belowMarks({ context })}
+        {#each context.series.visibleSeries as s}
           <Spline
             data={multiSeriesDataWithNulls.filter((d) => d[s.key] !== null)}
             y={s.key}
             stroke={s.color}
             class={cls(
               '[stroke-dasharray:3,3] transition-opacity',
-              highlightKey && highlightKey !== s.key && 'opacity-10'
+              context.series.highlightKey && context.series.highlightKey !== s.key && 'opacity-10'
             )}
           />
         {/each}
@@ -363,11 +363,11 @@
       brush
       legend
     >
-      {#snippet marks({ context, visibleSeries, highlightKey })}
-        {#each visibleSeries as s}
+      {#snippet marks({ context })}
+        {#each context.series.visibleSeries as s}
           {@const active =
             (context.tooltip.data == null || s.key === context.tooltip.data?.fruit) &&
-            (highlightKey === null || s.key === highlightKey)}
+            (context.series.highlightKey === null || s.key === context.series.highlightKey)}
           <Spline
             data={multiSeriesData}
             y={s.key}
@@ -377,15 +377,15 @@
         {/each}
       {/snippet}
 
-      {#snippet highlight({ series, context })}
-        {@const activeSeriesColor = series.find(
+      {#snippet highlight({ context })}
+        {@const activeSeriesColor = context.series.series.find(
           (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
       {/snippet}
 
-      {#snippet tooltip({ context, series })}
-        {@const activeSeriesColor = series.find(
+      {#snippet tooltip({ context })}
+        {@const activeSeriesColor = context.series.series.find(
           (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Tooltip.Root>
@@ -451,10 +451,15 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
     >
-      {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
-        {#if highlightKey}
-          {@const activeSeriesIndex = series.findIndex((s) => s.key === highlightKey)}
-          <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
+      {#snippet aboveMarks({ context, getLabelsProps })}
+        {#if context.series.highlightKey}
+          {@const activeSeriesIndex = context.series.series.findIndex(
+            (s) => s.key === context.series.highlightKey
+          )}
+          <Labels
+            {...getLabelsProps(context.series.series[activeSeriesIndex], activeSeriesIndex)}
+            offset={10}
+          />
         {/if}
       {/snippet}
     </LineChart>
@@ -836,8 +841,8 @@
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value">
-      {#snippet belowMarks({ series })}
-        {#each series as s}
+      {#snippet belowMarks({ context })}
+        {#each context.series.series as s}
           <Spline
             data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}
             y={s.value}

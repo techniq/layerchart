@@ -31,15 +31,15 @@
 	]}
 	height={300}
 >
-	{#snippet belowMarks({ visibleSeries, highlightKey })}
-		{#each visibleSeries as s}
+	{#snippet belowMarks({ context })}
+		{#each context.series.visibleSeries as s}
 			<Spline
 				data={data.filter((d) => d[s.key] !== null)}
 				y={s.key}
 				stroke={s.color}
 				class={cls(
 					'[stroke-dasharray:3,3] transition-opacity',
-					highlightKey && highlightKey !== s.key && 'opacity-10'
+					context.series.highlightKey && context.series.highlightKey !== s.key && 'opacity-10'
 				)}
 			/>
 		{/each}

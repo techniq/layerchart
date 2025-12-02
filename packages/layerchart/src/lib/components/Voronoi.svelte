@@ -87,8 +87,8 @@
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {
       // geo voronoi needs raw latitude/longitude, not mapped to range (chart dimensions)
-      const xValue = ctx.geo.projection ? ctx.x(d) : ctx.xGet(d);
-      const yValue = ctx.geo.projection ? ctx.y(d) : ctx.yGet(d);
+      const xValue = ctx.geo?.projection ? ctx.x(d) : ctx.xGet(d);
+      const yValue = ctx.geo?.projection ? ctx.y(d) : ctx.yGet(d);
 
       const x = Array.isArray(xValue) ? min(xValue) : xValue;
       const y = Array.isArray(yValue) ? min(yValue) : yValue;

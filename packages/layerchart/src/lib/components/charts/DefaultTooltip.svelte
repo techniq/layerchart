@@ -4,17 +4,14 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import * as Tooltip from '../tooltip/index.js';
   import type { SimplifiedChartPropsObject } from './types.js';
-  import type { SeriesState } from '$lib/states/series.svelte.js';
   import { format } from '@layerstack/utils';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
 
   let {
     tooltipProps,
-    seriesState,
     canHaveTotal = false,
   }: {
     tooltipProps?: SimplifiedChartPropsObject['tooltip'];
-    seriesState: SeriesState<any, any>;
     canHaveTotal?: boolean;
   } = $props();
 
@@ -34,8 +31,8 @@
           color={p.color}
           {format}
           valueAlign="right"
-          onpointerenter={() => (seriesState.highlightKey.current = p.key)}
-          onpointerleave={() => (seriesState.highlightKey.current = null)}
+          onpointerenter={() => (context.seriesState.highlightKey = p.key)}
+          onpointerleave={() => (context.seriesState.highlightKey = null)}
           {...tooltipProps?.item}
         />
       {/each}
@@ -45,7 +42,7 @@
 
         <Tooltip.Item
           label="total"
-          value={sum(seriesState.visibleSeries, (s) => {
+          value={sum(context.seriesState.visibleSeries, (s) => {
             const seriesTooltipData = s.data ? findRelatedData(s.data, data, context.x) : data;
             const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
             return seriesTooltipData ? valueAccessor(seriesTooltipData) : 0;

@@ -42,8 +42,8 @@
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
 	height={300}
 >
-	{#snippet marks({ series, context })}
-		{#each series as s}
+	{#snippet marks({ context })}
+		{#each context.series.series as s}
 			{@const activeSeries =
 				context.tooltip?.data == null || context.tooltip?.data?.fruit === s.key}
 
@@ -53,13 +53,17 @@
 		{/each}
 	{/snippet}
 
-	{#snippet highlight({ series, context })}
-		{@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
+	{#snippet highlight({ context })}
+		{@const activeSeries = context.series.series.find(
+			(s) => s.key === context.tooltip?.data?.fruit
+		)}
 		<Highlight lines points={{ fill: activeSeries?.color }} />
 	{/snippet}
 
-	{#snippet tooltip({ series, context })}
-		{@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
+	{#snippet tooltip({ context })}
+		{@const activeSeries = context.series.series.find(
+			(s) => s.key === context.tooltip?.data?.fruit
+		)}
 		<Tooltip.Root>
 			{#snippet children({ data })}
 				<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>

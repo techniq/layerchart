@@ -357,8 +357,8 @@
       ]}
       props={{ tooltip: { context: { mode: 'quadtree' } } }}
     >
-      {#snippet marks({ series, context })}
-        {#each series as s}
+      {#snippet marks({ context })}
+        {#each context.series.series as s}
           {@const activeSeries =
             context.tooltip?.data == null || context.tooltip?.data?.fruit === s.key}
 
@@ -368,13 +368,17 @@
         {/each}
       {/snippet}
 
-      {#snippet highlight({ series, context })}
-        {@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
+      {#snippet highlight({ context })}
+        {@const activeSeries = context.series.series.find(
+          (s) => s.key === context.tooltip?.data?.fruit
+        )}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       {/snippet}
 
-      {#snippet tooltip({ series, context })}
-        {@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
+      {#snippet tooltip({ context })}
+        {@const activeSeries = context.series.series.find(
+          (s) => s.key === context.tooltip?.data?.fruit
+        )}
         <Tooltip.Root>
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
@@ -477,8 +481,8 @@
       ]}
       seriesLayout="stack"
     >
-      {#snippet marks({ series, getAreaProps })}
-        {#each series as s, i (s.key)}
+      {#snippet marks({ context, getAreaProps })}
+        {#each context.series.series as s, i (s.key)}
           <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
           <LinearGradient
             stops={s.color
@@ -934,7 +938,7 @@
       ]}
       props={{ tooltip: { context: { locked: lockedTooltip } } }}
     >
-      {#snippet tooltip({ context, setHighlightKey, series })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root pointerEvents>
           {#snippet children({ data })}
             <Tooltip.Header>
@@ -942,14 +946,14 @@
             </Tooltip.Header>
 
             <Tooltip.List>
-              {#each series as s}
+              {#each context.series.series as s}
                 {@const valueAccessor = accessor(s.value ?? s.key)}
                 {@const value = Math.abs(valueAccessor(data))}
                 <Tooltip.Item
                   label={s.key}
                   color={s.color}
-                  onpointerenter={() => setHighlightKey(s.key)}
-                  onpointerleave={() => setHighlightKey(null)}
+                  onpointerenter={() => (context.series.highlightKey = s.key)}
+                  onpointerleave={() => (context.series.highlightKey = null)}
                 >
                   {format(value)}
 
@@ -993,7 +997,7 @@
       ]}
       props={{ tooltip: { context: { hideDelay: 500 } } }}
     >
-      {#snippet tooltip({ context, setHighlightKey, series })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root x="data" y={context.height + 24} pointerEvents>
           {#snippet children({ data })}
             <Tooltip.Header>
@@ -1001,14 +1005,14 @@
             </Tooltip.Header>
 
             <Tooltip.List>
-              {#each series as s}
+              {#each context.series.series as s}
                 {@const valueAccessor = accessor(s.value ?? s.key)}
                 {@const value = valueAccessor(data)}
                 <Tooltip.Item
                   label={s.key}
                   color={s.color}
-                  onpointerenter={() => setHighlightKey(s.key)}
-                  onpointerleave={() => setHighlightKey(null)}
+                  onpointerenter={() => (context.series.highlightKey = s.key)}
+                  onpointerleave={() => (context.series.highlightKey = null)}
                 >
                   {format(value)}
                 </Tooltip.Item>

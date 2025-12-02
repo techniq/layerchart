@@ -54,12 +54,12 @@
 	]}
 	height={600}
 >
-	{#snippet tooltip({ series, context })}
+	{#snippet tooltip({ context })}
 		<Tooltip.Root>
 			{#snippet children({ data })}
 				<Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
 				<Tooltip.List>
-					{#each series as s}
+					{#each context.series.series as s}
 						{@const valueAccessor = accessor(s.value ?? s.key)}
 						{@const value = Math.abs(valueAccessor(data))}
 						<Tooltip.Item label={s.key} color={s.color}>

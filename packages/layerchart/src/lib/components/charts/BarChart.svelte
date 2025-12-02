@@ -593,7 +593,6 @@
         <DefaultTooltip
           tooltipProps={props.tooltip}
           canHaveTotal={isStackSeries || isGroupSeries}
-          {seriesState}
         />
       {/if}
     {/if}

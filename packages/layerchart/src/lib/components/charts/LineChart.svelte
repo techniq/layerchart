@@ -481,7 +481,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <DefaultTooltip tooltipProps={props.tooltip} {seriesState} canHaveTotal />
+        <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
       {/if}
     {/if}
   {/snippet}
