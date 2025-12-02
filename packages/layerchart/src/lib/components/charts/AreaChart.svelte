@@ -468,12 +468,7 @@
         {/if}
 
         <ChartClipPath disabled={!brush}>
-          <ChartAnnotations
-            {annotations}
-            layer="below"
-            highlightKey={seriesState.highlightKey}
-            visibleSeries={seriesState.visibleSeries}
-          />
+          <ChartAnnotations {annotations} layer="below" />
 
           {@render belowMarks?.(snippetProps)}
 
@@ -536,12 +531,7 @@
             {/each}
           {/if}
 
-          <ChartAnnotations
-            {annotations}
-            layer="above"
-            highlightKey={seriesState.highlightKey}
-            visibleSeries={seriesState.visibleSeries}
-          />
+          <ChartAnnotations {annotations} layer="above" />
         </ChartClipPath>
       </Layer>
 
