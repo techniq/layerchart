@@ -4,19 +4,6 @@
 
   import { BrushState, type BrushDomainType } from '$lib/states/brush.svelte.js';
 
-  const _BrushContext = new Context<BrushState>('BrushContext');
-
-  const defaultContext = new BrushState(null);
-
-  export function getBrushContext() {
-    const defaults = $state(defaultContext);
-    return _BrushContext.getOr(defaults);
-  }
-
-  export function setBrushContext(brush: BrushState) {
-    return _BrushContext.set(brush);
-  }
-
   type BrushEventPayload = {
     // xDomain: DomainType | null;
     // yDomain: DomainType | null;
@@ -156,7 +143,6 @@
 
   const brushState = new BrushState(ctx, { x, y, axis });
   stateProp = brushState;
-  setBrushContext(brushState);
 
   // if (xDomain === undefined) {
   //   xDomain = ctx.xScale.domain();
