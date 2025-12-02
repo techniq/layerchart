@@ -692,7 +692,7 @@
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
       <TransformContext
-        bind:transformContext={chartState.transformContext}
+        bind:state={chartState.transformState}
         mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}

@@ -45,8 +45,8 @@ export class ChartState<
 
   // Context/state
   geoState: GeoState;
+  transformState = $state<TransformState>(null!);
   // TODO: Rename
-  transformContext = $state<TransformState>(null!);
   tooltipContext = $state<TooltipContextValue>(null!);
   brushContext = $state<BrushState>(null!);
   // TODO: handle TComponent
@@ -86,10 +86,10 @@ export class ChartState<
 
     // Sync transform context to geo state
     $effect(() => {
-      if (this.transformContext) {
-        this.geoState.transformScale = this.transformContext.scale;
-        this.geoState.transformTranslateX = this.transformContext.translate.x;
-        this.geoState.transformTranslateY = this.transformContext.translate.y;
+      if (this.transformState) {
+        this.geoState.transformScale = this.transformState.scale;
+        this.geoState.transformTranslateX = this.transformState.translate.x;
+        this.geoState.transformTranslateY = this.transformState.translate.y;
       }
     });
 
@@ -511,7 +511,7 @@ export class ChartState<
     return this.brushContext;
   }
   get transform() {
-    return this.transformContext;
+    return this.transformState;
   }
   get series() {
     return this.seriesState;

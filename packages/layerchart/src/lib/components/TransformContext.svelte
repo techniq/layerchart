@@ -6,19 +6,11 @@
 
   type TransformContextPropsWithoutHTML = TransformStateOptions & {
     /**
-     * Backwards compatible binding (deprecated - use transformState instead)
-     *
-     * @bindable
-     * @deprecated Use transformState instead
-     */
-    transformContext?: TransformState;
-
-    /**
      * A bindable reference to TransformState.
      *
      * @bindable
      */
-    transformState?: TransformState;
+    state?: TransformState;
 
     ref?: HTMLElement;
     children?: Snippet<[{ transformState: TransformState }]>;
@@ -36,8 +28,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
-    transformContext: transformContextProp = $bindable(),
-    transformState: transformStateProp = $bindable(),
+    state: stateProp = $bindable(),
     onwheel = () => {},
     onpointerdown = () => {},
     onpointermove = () => {},
@@ -86,9 +77,8 @@
   // Create TransformState instance
   const transformState = new TransformState(ctx, options);
 
-  // Set both bindable props for backwards compatibility
-  transformContextProp = transformState;
-  transformStateProp = transformState;
+  // Bind `state` prop
+  stateProp = transformState;
 
   function onPointerDown(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerdown?.(e);
