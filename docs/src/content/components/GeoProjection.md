@@ -10,18 +10,8 @@ order: 1
   import Example from '$lib/components/Example.svelte';
 </script>
 
+> Geographic projections / state are integrated into `<Chart geo={...}>` but `GeoProjection` can be used to provide a secondary projection / context, such as for a translucent globe effect
+
 ## Playground
 
 <Example name="projection-playground" />
-
-## Geojson Preview
-
-<Example name="geojson-preview" />
-
-## Topojson Preview
-
-<Example name="topojson-preview" />
-
-## Shapefile Preview
-
-<Example name="shapefile-preview" />
