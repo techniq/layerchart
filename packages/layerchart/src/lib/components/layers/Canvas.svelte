@@ -104,14 +104,13 @@
   import { Logger, localPoint } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
-  import { getTransformContext } from '$lib/contexts/transform.js';
   import { getPixelColor, scaleCanvas } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { useMutationObserver, watch } from 'runed';
   import type { HTMLCanvasAttributes, PointerEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
   import {
     getCanvasContext,
     setCanvasContext,
@@ -154,7 +153,6 @@
   });
 
   const ctx = getChartContext();
-  const transformCtx = getTransformContext();
 
   const logger = new Logger('Canvas');
 
@@ -265,9 +263,9 @@
         y: center === 'y' || center === true ? ctx.height / 2 : 0,
       };
       context.translate(newTranslate.x, newTranslate.y);
-    } else if (transformCtx.mode === 'canvas' && !ignoreTransform) {
-      context.translate(transformCtx.translate.x, transformCtx.translate.y);
-      context.scale(transformCtx.scale, transformCtx.scale);
+    } else if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
+      context.translate(ctx.transform.translate.x, ctx.transform.translate.y);
+      context.scale(ctx.transform.scale, ctx.transform.scale);
     }
 
     // separate components into those that retain state and those that don't
@@ -301,8 +299,8 @@
      * Sync hit canvas with main canvas
      */
     if (hitCanvasContext) {
-      const inactiveMoving = !activeCanvas && transformCtx.moving;
-      if (disableHitCanvas || transformCtx.dragging || inactiveMoving) {
+      const inactiveMoving = !activeCanvas && ctx.transform.moving;
+      if (disableHitCanvas || ctx.transform.dragging || inactiveMoving) {
         // Skip rendering hit canvas
         hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
       } else {
@@ -393,7 +391,7 @@
   const canvasContext = createCanvasContext();
 
   $effect.pre(() => {
-    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, transformCtx.dragging];
+    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, ctx.transform.dragging];
     canvasContext.invalidate();
   });
 

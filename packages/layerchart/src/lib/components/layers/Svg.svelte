@@ -63,10 +63,8 @@
 </script>
 
 <script lang="ts">
-  import { getTransformContext } from '$lib/contexts/transform.js';
-
-  import { setLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { setLayerContext } from '$lib/contexts/layer.js';
 
   let {
     ref: refProp = $bindable(),
@@ -94,11 +92,10 @@
   });
 
   const ctx = getChartContext();
-  const transformCtx = getTransformContext();
 
   const transform = $derived.by(() => {
-    if (transformCtx.mode === 'canvas' && !ignoreTransform) {
-      return `translate(${transformCtx.translate.x},${transformCtx.translate.y}) scale(${transformCtx.scale})`;
+    if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
+      return `translate(${ctx.transform.translate.x},${ctx.transform.translate.y}) scale(${ctx.transform.scale})`;
     } else if (center) {
       return `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`;
     }

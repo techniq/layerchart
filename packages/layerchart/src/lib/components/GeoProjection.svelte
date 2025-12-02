@@ -9,28 +9,26 @@
 
 <script lang="ts">
   import { setGeoContext } from '$lib/contexts/geo.js';
-  import { getTransformContext } from '$lib/contexts/transform.js';
   import { getChartContext } from '$lib/contexts/chart.js';
 
   let { children, ...props }: GeoProjectionProps = $props();
 
-  const chartCtx = getChartContext();
-  const transformCtx = getTransformContext();
+  const ctx = getChartContext();
 
   // Create GeoState instance
   const geoState = new GeoState(() => props);
 
   // Sync chart dimensions to geo state
   $effect(() => {
-    geoState.chartWidth = chartCtx.width;
-    geoState.chartHeight = chartCtx.height;
+    geoState.chartWidth = ctx.width;
+    geoState.chartHeight = ctx.height;
   });
 
   // Sync transform context to geo state
   $effect(() => {
-    geoState.transformScale = transformCtx.scale;
-    geoState.transformTranslateX = transformCtx.translate.x;
-    geoState.transformTranslateY = transformCtx.translate.y;
+    geoState.transformScale = ctx.transform.scale;
+    geoState.transformTranslateX = ctx.transform.translate.x;
+    geoState.transformTranslateY = ctx.transform.translate.y;
   });
 
   setGeoContext(geoState);
