@@ -160,7 +160,6 @@
   import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { ChartState } from '$lib/states/chart.svelte.js';
-  import { getTooltipContext } from '$lib/contexts/tooltip.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { type Snippet } from 'svelte';
 
@@ -191,7 +190,6 @@
   });
 
   const ctx = getChartContext();
-  const tooltipCtx = getTooltipContext();
 
   let tooltipWidth = $state<number | null>(null);
   let tooltipHeight = $state<number | null>(null);
@@ -203,7 +201,7 @@
 
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
-    if (!tooltipCtx.data || tooltipWidth === null || tooltipHeight === null) {
+    if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
       return { x: null, y: null };
     }
 
@@ -215,8 +213,8 @@
       typeof x === 'number'
         ? x
         : x === 'data'
-          ? ctx.xGet(tooltipCtx.data) + ctx.padding.left + xBandOffset
-          : tooltipCtx.x;
+          ? ctx.xGet(ctx.tooltip.data) + ctx.padding.left + xBandOffset
+          : ctx.tooltip.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -246,8 +244,8 @@
       typeof y === 'number'
         ? y
         : y === 'data'
-          ? ctx.yGet(tooltipCtx.data) + ctx.padding.top + yBandOffset
-          : tooltipCtx.y;
+          ? ctx.yGet(ctx.tooltip.data) + ctx.padding.top + yBandOffset
+          : ctx.tooltip.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {
@@ -349,13 +347,13 @@
   const motionY = createMotion(null, () => positions.y, motion);
 
   $effect(() => {
-    if (!tooltipCtx.data) {
-      tooltipCtx.isHoveringTooltipContent = false;
+    if (!ctx.tooltip.data) {
+      ctx.tooltip.isHoveringTooltipContent = false;
     }
   });
 </script>
 
-{#if tooltipCtx.data}
+{#if ctx.tooltip.data}
   <div
     {...props.root}
     class={cls('lc-tooltip-root', classes.root, props.root?.class)}
@@ -367,10 +365,10 @@
     bind:clientHeight={tooltipHeight}
     bind:this={rootRef}
     onpointerenter={() => {
-      tooltipCtx.isHoveringTooltipContent = true;
+      ctx.tooltip.isHoveringTooltipContent = true;
     }}
     onpointerleave={() => {
-      tooltipCtx.isHoveringTooltipContent = false;
+      ctx.tooltip.isHoveringTooltipContent = false;
     }}
   >
     <div
@@ -380,7 +378,7 @@
     >
       {#if children}
         <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
-          {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
+          {@render children({ data: ctx.tooltip.data, payload: ctx.tooltip.payload })}
         </div>
       {/if}
     </div>

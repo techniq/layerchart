@@ -1,7 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { setTooltipContext } from '$lib/contexts/tooltip.js';
   import type { TooltipState as TooltipStateType } from '$lib/states/tooltip.svelte.js';
 
   export type TooltipMode =
@@ -157,7 +156,6 @@
 		- scaleBand, scaleLinear: band (or bounds) - multiple (overlapping) bars
 		- scaleLinear, scaleLinear: voronoi (or quadtree)
 	*/
-  setTooltipContext(tooltipState);
 
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 

@@ -123,13 +123,11 @@
   import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { getTooltipContext } from '$lib/contexts/tooltip.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import Arc from './Arc.svelte';
 
   const ctx = getChartContext();
-  const tooltipCtx = getTooltipContext();
 
   let {
     data,
@@ -152,7 +150,7 @@
   const x = $derived(accessor(xProp));
   const y = $derived(accessor(yProp));
 
-  const highlightData = $derived(data ?? tooltipCtx.data);
+  const highlightData = $derived(data ?? ctx.tooltip.data);
   const xValue = $derived(x(highlightData));
   const xCoord = $derived(
     Array.isArray(xValue) ? xValue.map((v) => ctx.xScale(v)) : ctx.xScale(xValue)
