@@ -15,7 +15,8 @@
  * - Storing checksums inline with each example in index.json for change detection
  *
  * @usage
- * pnpm extract:screenshots
+ * pnpm extract:screenshots         # Generate only changed screenshots
+ * pnpm extract:screenshots --all   # Generate all screenshots (ignore checksums)
  *
  * @example
  * // Generates screenshots and index like:
@@ -46,6 +47,9 @@ const VIEWPORT = {
 
 // Limit for testing (set to undefined to process all)
 const TEST_LIMIT: number | undefined = undefined;
+
+// Parse command line arguments
+const FORCE_ALL = process.argv.includes('--all');
 
 interface ExampleInfo {
 	component: string;
@@ -182,7 +186,7 @@ async function captureScreenshots(
 	exampleName: string,
 	modes: ('light' | 'dark')[]
 ): Promise<void> {
-	const url = `${BASE_URL}/docs/examples/${componentName}/${exampleName}`;
+	const url = `${BASE_URL}/docs/screenshot/${componentName}/${exampleName}`;
 	const screenshotDir = path.join(SCREENSHOTS_DIR, componentName);
 
 	// Ensure directory exists
@@ -324,6 +328,10 @@ async function main() {
 	console.log('LayerChart Screenshot Extractor');
 	console.log('================================\n');
 
+	if (FORCE_ALL) {
+		console.log('⚡ Running with --all flag: regenerating all screenshots\n');
+	}
+
 	// Get all examples
 	let examples = getExampleFiles(EXAMPLES_DIR);
 	console.log(`Found ${examples.length} examples`);
@@ -370,8 +378,8 @@ async function main() {
 		const lightExists = screenshotExists(component, exampleName, 'light');
 		const darkExists = screenshotExists(component, exampleName, 'dark');
 
-		// Skip if both screenshots exist and file hasn't changed
-		if (lightExists && darkExists && !fileChanged) {
+		// Skip if both screenshots exist and file hasn't changed (unless --all flag is used)
+		if (lightExists && darkExists && !fileChanged && !FORCE_ALL) {
 			console.log('  ⊘ Skipped (unchanged)');
 			skippedCount += 2;
 			// Keep existing checksum
@@ -380,7 +388,9 @@ async function main() {
 		}
 
 		// Show reason for regeneration
-		if (fileChanged && (lightExists || darkExists)) {
+		if (FORCE_ALL && (lightExists || darkExists)) {
+			console.log('  ↻ Force regenerating (--all flag)...');
+		} else if (fileChanged && (lightExists || darkExists)) {
 			console.log('  ↻ File changed, regenerating...');
 		}
 
@@ -388,14 +398,14 @@ async function main() {
 			// Determine which modes need to be captured
 			const modesToCapture: ('light' | 'dark')[] = [];
 
-			if (!lightExists || fileChanged) {
+			if (!lightExists || fileChanged || FORCE_ALL) {
 				modesToCapture.push('light');
 			} else {
 				console.log('  ⊘ light: already exists');
 				skippedCount++;
 			}
 
-			if (!darkExists || fileChanged) {
+			if (!darkExists || fileChanged || FORCE_ALL) {
 				modesToCapture.push('dark');
 			} else {
 				console.log('  ⊘ dark: already exists');

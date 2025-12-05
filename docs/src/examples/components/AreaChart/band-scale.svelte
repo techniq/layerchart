@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
+	import { AreaChart, defaultChartPadding } from 'layerchart';
 	import { scaleBand } from 'd3-scale';
 	import { longData } from '$lib/utils/data.js';
 
@@ -15,5 +15,6 @@
 	tooltip={{
 		mode: 'band'
 	}}
+	padding={{ ...defaultChartPadding(), left: 30 }}
 	height={300}
 />

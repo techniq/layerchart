@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, pivotLonger } from 'layerchart';
+	import { AreaChart, defaultChartPadding, pivotLonger } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { group } from 'd3-array';
 
@@ -38,5 +38,6 @@
 		}
 	]}
 	seriesLayout="stack"
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 />

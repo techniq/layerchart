@@ -19,7 +19,10 @@ import type { ComponentCatalog } from '$examples/catalog/types.js';
  * @param type - The type of content ('components' or 'utils')
  * @returns
  */
-export async function getMarkdownComponent(slug: string = 'index', type: 'components' | 'utils' = 'components') {
+export async function getMarkdownComponent(
+	slug: string = 'index',
+	type: 'components' | 'utils' = 'components'
+) {
 	const modules = import.meta.glob<{
 		default: Component;
 		metadata: ComponentMetadata | ExampleMetadata | UtilMetadata;
@@ -48,7 +51,10 @@ export async function getMarkdownComponent(slug: string = 'index', type: 'compon
 /**
  * Get full metadata (authored frontmatter + content-collection transformed)
  */
-function getMetadata(slug: string, type: 'components' | 'utils' = 'components'): ComponentMetadata | UtilMetadata {
+function getMetadata(
+	slug: string,
+	type: 'components' | 'utils' = 'components'
+): ComponentMetadata | UtilMetadata {
 	if (type === 'utils') {
 		return allUtils.find((u) => u.slug === slug) as any;
 	}

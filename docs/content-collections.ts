@@ -117,10 +117,7 @@ const utils = defineCollection({
 		const { filePath, fileName, directory, path } = doc._meta;
 
 		// Read the source file from the layerchart package
-		const sourcePath = join(
-			process.cwd(),
-			`../packages/layerchart/src/lib/utils/${path}.ts`
-		);
+		const sourcePath = join(process.cwd(), `../packages/layerchart/src/lib/utils/${path}.ts`);
 
 		let source = '';
 		let sourceUrl = '';
@@ -138,7 +135,7 @@ const utils = defineCollection({
 
 		return {
 			...doc,
-			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
+			name: doc.name ?? fileName.replace('.md', ''),
 			slug: fileName.replace('.md', '').toLowerCase(), // Use lowercase for utils slugs
 			source,
 			sourceUrl,

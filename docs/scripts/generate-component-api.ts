@@ -220,10 +220,7 @@ function extractElementType(typeString: string): string | undefined {
 /**
  * Parse extended types from an intersection type
  */
-function parseExtendedTypes(
-	typeNode: ts.TypeNode,
-	sourceFile: ts.SourceFile
-): ExtendedType[] {
+function parseExtendedTypes(typeNode: ts.TypeNode, sourceFile: ts.SourceFile): ExtendedType[] {
 	const extendedTypes: ExtendedType[] = [];
 
 	if (!ts.isIntersectionTypeNode(typeNode)) {
@@ -247,7 +244,7 @@ function parseExtendedTypes(
 				name: elementTypeFromWithout.replace(/Element$/, 'Attributes'),
 				fullType: typeText,
 				elementType: elementTypeFromWithout,
-				isLibraryType: true,
+				isLibraryType: true
 			});
 			continue;
 		}
@@ -259,7 +256,7 @@ function parseExtendedTypes(
 				name: elementType.replace(/Element$/, 'Attributes'),
 				fullType: typeText,
 				elementType,
-				isLibraryType: true,
+				isLibraryType: true
 			});
 			continue;
 		}
@@ -270,7 +267,7 @@ function parseExtendedTypes(
 			extendedTypes.push({
 				name: typeName,
 				fullType: typeText,
-				isLibraryType: false, // We should extract these types
+				isLibraryType: false // We should extract these types
 			});
 		}
 	}
@@ -296,7 +293,7 @@ function findPropsTypeName(componentName: string, moduleScript: string): string 
 		{ regex: new RegExp(`export type (\\w*Props)(?!WithoutHTML)`, 'g') },
 		// Last resort: any Props type (exported or not)
 		{ regex: new RegExp(`type (\\w*PropsWithoutHTML)`, 'g') },
-		{ regex: new RegExp(`type (\\w*Props)(?!WithoutHTML)`, 'g') },
+		{ regex: new RegExp(`type (\\w*Props)(?!WithoutHTML)`, 'g') }
 	];
 
 	for (const config of patterns) {
@@ -430,7 +427,7 @@ ${moduleScript}
 		// Try both removing "WithoutHTML" and looking for types that end with "Props"
 		const possibleFullPropsNames = [
 			propsTypeName.replace('WithoutHTML', ''),
-			`${componentName}Props`,
+			`${componentName}Props`
 		];
 
 		for (const fullPropsTypeName of possibleFullPropsNames) {
@@ -440,7 +437,7 @@ ${moduleScript}
 
 					// Merge with existing, avoiding duplicates
 					for (const extType of newExtendedTypes) {
-						if (!extendedTypes.some(et => et.name === extType.name)) {
+						if (!extendedTypes.some((et) => et.name === extType.name)) {
 							extendedTypes.push(extType);
 						}
 					}
@@ -451,10 +448,14 @@ ${moduleScript}
 							// Find this type definition and extract its properties
 							ts.forEachChild(sourceFile, (typeNode) => {
 								if (ts.isTypeAliasDeclaration(typeNode) && typeNode.name.text === extType.name) {
-									const extProperties = extractPropertiesFromType(typeNode.type, checker, sourceFile);
+									const extProperties = extractPropertiesFromType(
+										typeNode.type,
+										checker,
+										sourceFile
+									);
 									// Add these properties to the main list, avoiding duplicates
 									for (const prop of extProperties) {
-										if (!properties.some(p => p.name === prop.name)) {
+										if (!properties.some((p) => p.name === prop.name)) {
 											properties.push(prop);
 										}
 									}

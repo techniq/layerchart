@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { accessor, AreaChart, Tooltip } from 'layerchart';
+	import { accessor, AreaChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 	import { Button, Kbd } from 'svelte-ux';
@@ -31,6 +31,7 @@
 		}
 	]}
 	props={{ tooltip: { context: { locked: lockedTooltip } } }}
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet tooltip({ context, setHighlightKey, series })}

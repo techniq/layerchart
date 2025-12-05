@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, Tooltip } from 'layerchart';
+	import { AreaChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 
@@ -7,7 +7,7 @@
 	export { data };
 </script>
 
-<AreaChart {data} x="date" y="value" height={300}>
+<AreaChart {data} x="date" y="value" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>
 	{#snippet tooltip({ context })}
 		<Tooltip.Root
 			x={context.padding.left}

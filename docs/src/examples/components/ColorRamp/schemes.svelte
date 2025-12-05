@@ -12,7 +12,7 @@
 	) as unknown as Array<[name: string, scheme: string[]]>;
 </script>
 
-<div class="grid gap-4 h-100">
+<div class="grid gap-4 h-100 overflow-auto">
 	{#each schemes as [name, scheme]}
 		{#if typeof scheme[0] === 'string'}
 			<div>

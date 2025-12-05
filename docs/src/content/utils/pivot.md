@@ -11,10 +11,10 @@ related: []
 
 ## Usage
 
-### PivotLonger (Columns to Rows)
+### pivotLonger (columns to rows)
 
-<Example name="pivot-longer"  />
+<Example name="pivot-longer" noResize />
 
-### PivotWider (Rows to Columns)
+### pivotWider (rows to columns)
 
-<Example name="pivot-wider"  />
+<Example name="pivot-wider" noResize />

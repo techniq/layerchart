@@ -29,9 +29,9 @@
 </script>
 
 <script lang="ts">
-  import Canvas from './Canvas.svelte';
-  import Html from './Html.svelte';
-  import Svg from './Svg.svelte';
+  import Canvas, { type CanvasProps } from './Canvas.svelte';
+  import Svg, { type SVGProps } from './Svg.svelte';
+  import Html, { type HTMLProps } from './Html.svelte';
   import Frame from '../Frame.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
 
@@ -42,7 +42,7 @@
 </script>
 
 {#if layer === 'canvas'}
-  <Canvas {...restProps as ComponentProps<typeof Canvas>}>
+  <Canvas {...restProps as CanvasProps}>
     {#snippet children(props)}
       {#if settings.debug}
         <Frame class="lc-debug-frame" />
@@ -53,7 +53,7 @@
     {/snippet}
   </Canvas>
 {:else if layer === 'svg'}
-  <Svg {...restProps as ComponentProps<typeof Svg>}>
+  <Svg {...restProps as SVGProps}>
     {#snippet children(props)}
       {#if settings.debug}
         <Frame class="lc-debug-frame" />
@@ -64,7 +64,7 @@
     {/snippet}
   </Svg>
 {:else if layer === 'html'}
-  <Html {...restProps as ComponentProps<typeof Html>}>
+  <Html {...restProps as HTMLProps}>
     {#snippet children(props)}
       {#if settings.debug}
         <Frame class="lc-debug-frame" />

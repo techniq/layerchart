@@ -5,12 +5,12 @@
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
-	import { page } from '$app/state';
 
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
-	import LucideLink from '~icons/lucide/link';
+
+	import RelatedLink from '$lib/components/RelatedLink.svelte';
 
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
@@ -144,9 +144,7 @@
 	<H2>Related</H2>
 	<div class="flex flex-wrap gap-2 mt-1">
 		{#each metadata.related as related}
-			<Button icon={LucideLink} variant="fill-light" href="/docs/utils/{related}" size="sm">
-				{related}
-			</Button>
+			<RelatedLink value={related} />
 		{/each}
 	</div>
 {/if}

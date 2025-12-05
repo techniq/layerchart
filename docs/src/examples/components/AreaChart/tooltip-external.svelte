@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, type ChartContextValue } from 'layerchart';
+	import { AreaChart, defaultChartPadding, type ChartContextValue } from 'layerchart';
 	import { timeDay } from 'd3-time';
 	import { randomWalk } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
@@ -18,10 +18,17 @@
 <div class="text-sm">
 	{#if context && context.tooltip.data}
 		date: {format(context.tooltip.data.date, 'day', { variant: 'short' })}
-		value: {context.tooltip.data.value}
+		value: {format(context.tooltip.data.value, 'decimal')}
 	{:else}
 		[hover chart]
 	{/if}
 </div>
 
-<AreaChart bind:context {data} x="date" y="value" height={300} />
+<AreaChart
+	bind:context
+	{data}
+	x="date"
+	y="value"
+	padding={{ ...defaultChartPadding(), top: 10 }}
+	height={300}
+/>

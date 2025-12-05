@@ -11,16 +11,16 @@ related: [RadialGradient, Pattern]
 
 ## Direction with custom colors
 
-<Example name="direction-with-custom-colors" />
+<Example name="direction-with-custom-colors" noResize />
 
 ## Explicit offsets
 
-<Example name="explicit-offsets" />
+<Example name="explicit-offsets" noResize />
 
 ## Tailwind colors
 
-<Example name="tailwind-colors" />
+<Example name="tailwind-colors" noResize clip />
 
 ## Units
 
-<Example name="units" />
+<Example name="units" noResize clip />

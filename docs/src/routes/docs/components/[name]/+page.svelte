@@ -10,7 +10,7 @@
 	import LucideSearch from '~icons/lucide/search';
 	import LucideZoomIn from '~icons/lucide/zoom-in';
 	import LucideZoomOut from '~icons/lucide/zoom-out';
-	import LucideLink from '~icons/lucide/link';
+	import RelatedLink from '$lib/components/RelatedLink.svelte';
 
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
@@ -154,9 +154,7 @@
 	<H2>Related</H2>
 	<div class="flex flex-wrap gap-2 mt-1">
 		{#each metadata.related as related}
-			<Button icon={LucideLink} variant="fill-light" href="/docs/components/{related}" size="sm">
-				{related}
-			</Button>
+			<RelatedLink value={related} />
 		{/each}
 	</div>
 {/if}

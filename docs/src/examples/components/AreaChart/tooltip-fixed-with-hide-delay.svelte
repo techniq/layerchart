@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { accessor, AreaChart, Tooltip } from 'layerchart';
+	import { accessor, AreaChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 
@@ -22,6 +22,7 @@
 		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
 	props={{ tooltip: { context: { hideDelay: 500 } } }}
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet tooltip({ context, setHighlightKey, series })}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
+	import { AreaChart, defaultChartPadding } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -21,5 +21,6 @@
 			class: 'cursor-crosshair'
 		}
 	}}
+	padding={{ ...defaultChartPadding(), left: 25 }}
 	height={300}
 />

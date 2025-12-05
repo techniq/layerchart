@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
+	import { AreaChart, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -28,7 +28,8 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	seriesLayout="stack"
-	height={300}
 	legend
+	seriesLayout="stack"
+	padding={{ ...defaultChartPadding(), bottom: 45, right: 10 }}
+	height={300}
 />

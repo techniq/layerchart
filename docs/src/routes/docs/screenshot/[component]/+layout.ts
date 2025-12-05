@@ -29,10 +29,7 @@ export const load = async ({ params, parent }) => {
 		}
 	}
 
-	// Merge with parent examples
-	const mergedExamples = { ...parentData.examples, ...examples };
-
 	return {
-		examples: mergedExamples
+		examples
 	};
 };

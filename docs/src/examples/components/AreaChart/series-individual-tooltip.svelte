@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { Area, AreaChart, Highlight, Tooltip, pivotLonger } from 'layerchart';
+	import {
+		Area,
+		AreaChart,
+		Highlight,
+		Tooltip,
+		defaultChartPadding,
+		pivotLonger
+	} from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { group } from 'd3-array';
 	import { cls } from '@layerstack/tailwind';
@@ -40,6 +47,7 @@
 		}
 	]}
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet marks({ context })}

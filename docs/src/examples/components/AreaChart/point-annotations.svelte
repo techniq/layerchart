@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, Tooltip } from 'layerchart';
+	import { AreaChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { getAppleStock } from '$lib/data.remote';
 
@@ -37,6 +37,7 @@
 			}
 		};
 	})}
+	padding={{ ...defaultChartPadding(), left: 25 }}
 	height={300}
 >
 	{#snippet tooltip({ context })}

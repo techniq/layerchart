@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Button } from 'svelte-ux';
-	import { toTitleCase } from '@layerstack/utils';
 
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
@@ -48,7 +47,7 @@
 	</div>
 
 	<div class="flex items-center gap-4">
-		<h1 class="text-3xl font-bold first-letter:capitalize">
+		<h1 class="text-3xl font-bold">
 			{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
 		</h1>
 	</div>

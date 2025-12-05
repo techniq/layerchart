@@ -110,7 +110,10 @@ function rehypeComponentExample() {
 function getComponentSourceFileContent(component, name) {
 	if (!component || !name) return null;
 
-	const filePath = path.join(process.cwd(), `./src/examples/components/${component}/${name}.svelte`);
+	const filePath = path.join(
+		process.cwd(),
+		`./src/examples/components/${component}/${name}.svelte`
+	);
 	try {
 		const fileContents = readFileSync(filePath, 'utf-8');
 

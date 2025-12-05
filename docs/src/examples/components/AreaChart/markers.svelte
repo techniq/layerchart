@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, Circle, Layer, Line } from 'layerchart';
+	import { AreaChart, Circle, defaultChartPadding, Layer, Line } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { Button } from 'svelte-ux';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
@@ -21,6 +21,7 @@
 			markerPoints = [...markerPoints, detail.data];
 		}
 	}}
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet aboveMarks({ context })}

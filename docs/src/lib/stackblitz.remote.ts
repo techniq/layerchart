@@ -27,11 +27,9 @@ const graphRemoteSource = remoteSources['graph.remote.ts'];
 // Parse remote.ts files to extract function names, their fetch URLs, and function bodies
 function parseRemoteFunctions(source: string) {
 	// Match pattern: export const functionName = prerender(async () => { ... fetch('url') ... });
-	const functionPattern = /export const (\w+) = prerender\(async \(\) => \{[\s\S]*?fetch\(['"]([^'"]+)['"]\)[\s\S]*?\}\);/g;
-	const functionToDataMap = new Map<
-		string,
-		{ fetchUrl: string; functionBody: string }
-	>();
+	const functionPattern =
+		/export const (\w+) = prerender\(async \(\) => \{[\s\S]*?fetch\(['"]([^'"]+)['"]\)[\s\S]*?\}\);/g;
+	const functionToDataMap = new Map<string, { fetchUrl: string; functionBody: string }>();
 
 	let match;
 	while ((match = functionPattern.exec(source)) !== null) {
@@ -48,7 +46,8 @@ function parseRemoteFunctions(source: string) {
 // Parse type imports from remote.ts files
 function parseTypeImports(source: string) {
 	// Match pattern: import type { TypeName } from '$static/data/examples/path/file.js';
-	const typeImportPattern = /import type \{ ([^}]+) \} from ['"]\$static\/data\/examples\/([^'"]+)['"]/g;
+	const typeImportPattern =
+		/import type \{ ([^}]+) \} from ['"]\$static\/data\/examples\/([^'"]+)['"]/g;
 	const typeToPathMap = new Map<string, string>();
 
 	let match;
@@ -82,7 +81,8 @@ function parseRegularImports(source: string) {
 // Parse $lib/components imports from example code
 function parseComponentImports(source: string): string[] {
 	// Match pattern: import Something from '$lib/components/path/to/Component.svelte';
-	const componentImportPattern = /import\s+(?:\{[^}]+\}|\w+)\s+from\s+['"]\$lib\/components\/([^'"]+)['"]/g;
+	const componentImportPattern =
+		/import\s+(?:\{[^}]+\}|\w+)\s+from\s+['"]\$lib\/components\/([^'"]+)['"]/g;
 	const componentPaths: string[] = [];
 
 	let match;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
+	import { AreaChart, defaultChartPadding } from 'layerchart';
 	import { scalePoint } from 'd3-scale';
 	import { longData } from '$lib/utils/data.js';
 
@@ -7,4 +7,11 @@
 	export { data };
 </script>
 
-<AreaChart {data} xScale={scalePoint()} x="fruit" y="value" height={300} />
+<AreaChart
+	{data}
+	xScale={scalePoint()}
+	x="fruit"
+	y="value"
+	padding={{ ...defaultChartPadding(), left: 30, right: 15 }}
+	height={300}
+/>

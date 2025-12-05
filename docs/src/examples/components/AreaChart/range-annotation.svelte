@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart } from 'layerchart';
+	import { AreaChart, defaultChartPadding } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -11,6 +11,7 @@
 	x="date"
 	y="value"
 	height={300}
+	padding={{ ...defaultChartPadding(), left: 25 }}
 	annotations={[
 		{
 			type: 'range',

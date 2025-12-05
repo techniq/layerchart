@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, AreaChart, Spline, Threshold, Tooltip } from 'layerchart';
+	import { Area, AreaChart, defaultChartPadding, Spline, Threshold, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 	import { curveStepAfter } from 'd3-shape';
@@ -23,11 +23,11 @@
 	{data}
 	x="date"
 	y={['value', 'baseline']}
-	padding={{ left: 16, bottom: 24 }}
 	props={{
 		highlight: { area: true, lines: false, points: false },
 		tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } }
 	}}
+	padding={{ ...defaultChartPadding(), top: 10, right: 10 }}
 	height={300}
 >
 	{#snippet marks()}

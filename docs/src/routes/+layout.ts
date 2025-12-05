@@ -17,14 +17,20 @@ export const load = async () => {
 
 	// Only provide the glob imports - don't load anything yet
 	// Child layouts will load only what they need
-	const allExamples = import.meta.glob(['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'], {
-		import: 'default'
-	});
+	const allExamples = import.meta.glob(
+		['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'],
+		{
+			import: 'default'
+		}
+	);
 
-	const allSources = import.meta.glob(['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'], {
-		import: 'default',
-		query: '?raw'
-	});
+	const allSources = import.meta.glob(
+		['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'],
+		{
+			import: 'default',
+			query: '?raw'
+		}
+	);
 
 	return {
 		allExamples,

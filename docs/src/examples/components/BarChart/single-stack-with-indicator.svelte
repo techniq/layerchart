@@ -60,7 +60,7 @@
 			context: { mode: 'bounds' }
 		}
 	}}
-	height={68}
+	height={40}
 >
 	{#snippet axis({ context })}
 		<Axis placement="bottom" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>

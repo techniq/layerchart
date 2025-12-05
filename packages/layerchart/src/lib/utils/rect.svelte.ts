@@ -74,8 +74,8 @@ export function createDimensionGetter<TData>(
     const _x1 = accessor(options?.x1 ?? ctx.x1);
     const _y1 = accessor(options?.y1 ?? ctx.y1);
 
-    const hasX1 = ctx.config.x1;
-    const hasY1 = ctx.config.y1;
+    const hasX1 = (options?.x1 ?? ctx.config.x1) != null;
+    const hasY1 = (options?.y1 ?? ctx.config.y1) != null;
 
     if (isScaleBand(ctx.yScale)) {
       // Horizontal band

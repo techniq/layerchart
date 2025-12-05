@@ -13,3 +13,10 @@
 </script>
 
 {@render children()}
+
+<style>
+	:global(body) {
+		/* Remove background set in `app.html` to allow for transparent screenshots */
+		background: unset;
+	}
+</style>

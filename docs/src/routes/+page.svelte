@@ -289,7 +289,7 @@
 				transparent var(--size)
 			),
 			/* Minor vertical lines */
-				repeating-linear-gradient(
+			repeating-linear-gradient(
 					to right,
 					var(--line) 0,
 					var(--line) 0.5px,
@@ -297,7 +297,7 @@
 					transparent calc(var(--size) / 5)
 				),
 			/* Major horizontal lines */
-				repeating-linear-gradient(
+			repeating-linear-gradient(
 					to bottom,
 					var(--line-major) 0,
 					var(--line-major) 2px,
@@ -305,7 +305,7 @@
 					transparent var(--size)
 				),
 			/* Minor horizontal lines */
-				repeating-linear-gradient(
+			repeating-linear-gradient(
 					to bottom,
 					var(--line) 0,
 					var(--line) 0.5px,

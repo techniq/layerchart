@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, AreaChart, LinearGradient } from 'layerchart';
+	import { Area, AreaChart, defaultChartPadding, LinearGradient } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -27,6 +27,7 @@
 		}
 	]}
 	seriesLayout="stack"
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet marks({ context, getAreaProps })}

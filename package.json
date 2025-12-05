@@ -22,11 +22,11 @@
     "up-deps": "pnpm update -r -i --latest"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.7",
+    "@changesets/cli": "2.29.8",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "prettier-plugin-svelte": "^3.4.0",
     "rimraf": "6.1.2",
-    "wrangler": "^4.50.0"
+    "wrangler": "^4.51.0"
   },
   "packageManager": "pnpm@10.18.2",
   "pnpm": {

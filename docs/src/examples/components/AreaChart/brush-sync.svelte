@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, type DomainType } from 'layerchart';
+	import { AreaChart, defaultChartPadding, type DomainType } from 'layerchart';
 	import { randomWalk } from '$lib/utils/data.js';
 	import { timeDay } from 'd3-time';
 
@@ -33,6 +33,7 @@
 					tickMultiline: true
 				}
 			}}
+			padding={{ ...defaultChartPadding(), bottom: 30 }}
 			height={300}
 		/>
 	</div>
@@ -51,6 +52,7 @@
 					tickMultiline: true
 				}
 			}}
+			padding={{ ...defaultChartPadding(), bottom: 30 }}
 			height={300}
 		/>
 	</div>

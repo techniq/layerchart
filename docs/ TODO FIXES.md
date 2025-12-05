@@ -6,15 +6,15 @@
 
 ```css
 :root {
-  --header-height: 140px;
+	--header-height: 140px;
 }
 header {
-  position: sticky;
-  top: 0;
-  height: var(--header-height);
+	position: sticky;
+	top: 0;
+	height: var(--header-height);
 }
 section {
-  scroll-margin-top: var(--header-height);
+	scroll-margin-top: var(--header-height);
 }
 ```
 
@@ -22,19 +22,19 @@ or tailwind
 
 ```html
 <style>
-  @layer base {
-    :root {
-      --header-height: 140px;
-    }
-  }
+	@layer base {
+		:root {
+			--header-height: 140px;
+		}
+	}
 </style>
 
-<header class="sticky top-0 h-[var(--header-height)]" >
-  <!-- [ ] header content -->
+<header class="sticky top-0 h-[var(--header-height)]">
+	<!-- [ ] header content -->
 </header>
 
 <section class="[scroll-margin-top:var(--header-height)] p-8">
-  <!-- [ ] section content -->
+	<!-- [ ] section content -->
 </section>
 ```
 
@@ -42,7 +42,7 @@ or tailwind
 
 ```html
 <a href="#top" class="fixed bottom-4 right-4 p-3">
-  <LucideArrowUpCircle />
+	<LucideArrowUpCircle />
 </a>
 ```
 
@@ -59,7 +59,6 @@ or tailwind
 1. [ ] script section imports order/sectioning w/empty lines for consistency? svelte -> d3 -> layerchart -> other libs -> local imports?
 
 1. [ ] script order for consistency?
-
    - imports
    - var assignments
    - functions
@@ -75,31 +74,39 @@ or tailwind
 1. [ ] For fruit examples define css var corresponding to expected color. Something about non corresponding colors feels off
 
 ```css
-banana { --color: yellow; }
-apple { --color: green; }
-cherry { --color: red; }
-grape { --color: purple; }
+banana {
+	--color: yellow;
+}
+apple {
+	--color: green;
+}
+cherry {
+	--color: red;
+}
+grape {
+	--color: purple;
+}
 ```
 
 - searched references for grapes:
-docs/src/examples/BarChart/group-series-bar-click.svelte
-docs/src/examples/BarChart/group-series-horizontal.svelte
-docs/src/examples/BarChart/group-series-labels.svelte
-docs/src/examples/BarChart/group-series-series-long-data.svelte
-docs/src/examples/BarChart/group-series.svelte
-docs/src/examples/BarChart/legend-custom-labels.svelte
-docs/src/examples/BarChart/legend-group-series.svelte
-docs/src/examples/BarChart/legend-placement.svelte
-docs/src/examples/BarChart/legend-stack-series.svelte
-docs/src/examples/BarChart/stack-series-expand.svelte
-docs/src/examples/BarChart/stack-series-horizontal.svelte
-docs/src/examples/BarChart/stack-series-padded.svelte
-docs/src/examples/BarChart/stack-series.svelte
-examples/daisyui-5/src/routes/+page.svelte
-examples/shadcn-svelte-1/src/routes/+page.svelte
-examples/skeleton-3/src/routes/+page.svelte
-examples/standalone/src/routes/+page.svelte
-examples/svelte-ux-2/src/routes/+page.svelte
+  docs/src/examples/BarChart/group-series-bar-click.svelte
+  docs/src/examples/BarChart/group-series-horizontal.svelte
+  docs/src/examples/BarChart/group-series-labels.svelte
+  docs/src/examples/BarChart/group-series-series-long-data.svelte
+  docs/src/examples/BarChart/group-series.svelte
+  docs/src/examples/BarChart/legend-custom-labels.svelte
+  docs/src/examples/BarChart/legend-group-series.svelte
+  docs/src/examples/BarChart/legend-placement.svelte
+  docs/src/examples/BarChart/legend-stack-series.svelte
+  docs/src/examples/BarChart/stack-series-expand.svelte
+  docs/src/examples/BarChart/stack-series-horizontal.svelte
+  docs/src/examples/BarChart/stack-series-padded.svelte
+  docs/src/examples/BarChart/stack-series.svelte
+  examples/daisyui-5/src/routes/+page.svelte
+  examples/shadcn-svelte-1/src/routes/+page.svelte
+  examples/skeleton-3/src/routes/+page.svelte
+  examples/standalone/src/routes/+page.svelte
+  examples/svelte-ux-2/src/routes/+page.svelte
 
 ## Examples
 
@@ -116,13 +123,13 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ### Bar Chart (Horizontal) 11/2/25
 
 - [ ] Description - "Creates horizontal bars to represent and compare discrete data values visually"
-- [ ] Breakout controls for "Tween on mount", "Stagger tween on mount", "Stagger tween on mount (rounded edge)  - ShowControls.svelte
+- [ ] Breakout controls for "Tween on mount", "Stagger tween on mount", "Stagger tween on mount (rounded edge) - ShowControls.svelte
 - [ ] "Tooltip and click handlers for indvidual stack/grouped bar", Group stacked, group & stacked mode is broken
 
 ### Bar Chart (Vertical) 11/2/25
 
 - [ ] Description - "Creates vertical bars to represent and compare discrete data values visually"
-- [ ] Breakout controls for "Tween on mount", "Tween in mount (rounded edge), "Stagger tween on mount", "Stagger tween on mount (rounded edge)  - ShowControls.svelte
+- [ ] Breakout controls for "Tween on mount", "Tween in mount (rounded edge), "Stagger tween on mount", "Stagger tween on mount (rounded edge) - ShowControls.svelte
 - [ ] "Tooltip and click handlers for indvidual stack/grouped bar", Group stacked, group & stacked mode is broken
 
 ### Candlestick 11/2/25
@@ -147,7 +154,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 
 - [ ] Description - "Groups continuous data into bins and displays their frequencies as bars to show data distribution"
 - [ ] All examples broken - Referencing Duration not Histogram
-  
+
 ### Line 10/31/2025
 
 - [ ] Description - "Connects data points with straight lines to show trends, patterns, or relationships over a continuous range"
@@ -202,20 +209,20 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ## Partition
 
 - [ ] "Filterable" move apply partial filter to controls
-- [X] controls separated
+- [x] controls separated
 
 ## Sunburst
 
-- [X] controls separated
+- [x] controls separated
 
 ## Tree
 
 - [ ] Control for Curve (now in $lib/components/TreeControls.svelte) overflows, need 2 col span (was same in old docs)
-- [X] controls separated
+- [x] controls separated
 
 ## Treemap
 
-- [X] controls separated
+- [x] controls separated
 
 ### Dagre
 
@@ -237,7 +244,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 
 ### Force DisjointGraph 11/2/25
 
-- [X] Description
+- [x] Description
 - [ ] Broken link for "basic"
 
 ### ForceDrag 11/2/25
@@ -281,7 +288,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ### Bubble Map 11/2/25
 
 - [ ] Description - "Displays data points on a geographical map using bubbles to represent values or magnitudes at specific locations."
-- [ ] 
+- [ ]
 
 ### CountryMap 11/2/25
 
@@ -553,7 +560,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 - [ ] Labels "Centroid" and "Centroid Multiple" need more spacing b/w examples
 - [ ] Placement (Left, Center, Right) combined to Single "placement.svelte
 - [ ] "Placement" controls broken out - PieLeftCenterRightControls.svelte
-  
+
 ### Points 11/2/25
 
 - [ ] Description - "plots individual data points on a graph to show distribution, relationships, or clusters without connecting lines"
@@ -562,7 +569,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ### Spline 11/2/25
 
 - [ ] Description "data points connected by smooth, curved lines to show trends or patterns over a continuous range." or CURRENT "`<path>` using `d3-shape` line generator to support `curve` and `defined`. Works as data-driven via context or `data` prop, or pre-made `pathData`. Adding tweening via `d3-interpolate-path`" REMOVE BACKTICKS
-- [ ] remove show from all except "tweened", "end snippet with draw", "end slot with draw with value"  examples
+- [ ] remove show from all except "tweened", "end snippet with draw", "end slot with draw with value" examples
 - [ ] Change comment for - to >
 - [ ] Controls broken out - SplineControls.svelte - nonbound prop includeShow allows no show toggle for examples w/o tween/draw
 - [ ] Controls broken out - SplinePlaygroundControls.svelte
@@ -610,7 +617,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ### Tooltip 11/2/25
 
 - [ ] Description - "Provides a Svelte context to manage and display tooltips within charts, enabling dynamic information display based on user interactions. Typically used indirectly via the tooltip prop on Chart." Current "Setup tooltip context, include mode to identify related data based on pointer position. Typically used indirectly via the `tooltip` prop Chart" REMOVE BACKTICKS
-- [ ] Chart Types/Area, Stacked Area, Single Date/Time, Duration, Multi (Overlapping) Durations, simple bars, Multiple overlapping Bars, Scatterplot  use > for Blockquote
+- [ ] Chart Types/Area, Stacked Area, Single Date/Time, Duration, Multi (Overlapping) Durations, simple bars, Multiple overlapping Bars, Scatterplot use > for Blockquote
 - [ ] Spacing of b/w 4 Position examples
 
 ### Tooltip Context 11/2/25
@@ -639,7 +646,7 @@ examples/svelte-ux-2/src/routes/+page.svelte
 ### GeoContext 11/2/25
 
 - [ ] update description - "provides geographic projection and scaling context to children for accurate rendering of geographic data."
-current "Setup geo context, particularly the projection used by other geo components. Typically used indirectly via the `geo` prop on Chart" REMOVE BACKTICKS
+      current "Setup geo context, particularly the projection used by other geo components. Typically used indirectly via the `geo` prop on Chart" REMOVE BACKTICKS
 - [ ] components/Chart 404
 
 ### GeoEdgeFade 11/2/25
@@ -742,7 +749,7 @@ current "Setup geo context, particularly the projection used by other geo compon
 
 - [ ] Add description - "Applies mask or clip parts of SVG graphics — e.g., to hide content outside a chart’s bounds or apply shape-based visibility limits.
 - [ ] To 1st of aside Clipping category?
-It works inside the LayerChart rendering context (getLayerContext())"
+      It works inside the LayerChart rendering context (getLayerContext())"
 
 ### RectClipPath 11/2/25
 
@@ -764,7 +771,7 @@ It works inside the LayerChart rendering context (getLayerContext())"
 
 ### MotionPath 11/2/25
 
-- [ ] Description - "Animates an object along a specified path using configurable motion parameters such as speed, duration, and easing." 
+- [ ] Description - "Animates an object along a specified path using configurable motion parameters such as speed, duration, and easing."
 - [ ] convert "Repeat indefinitely" to same square of "Rotation object with path" to call attention to difference in rotate object along path vs moving along path
 - [ ] "Repeat indefinitely" same speed as "Rotation object with path"?
 - [ ] Breakout controls
