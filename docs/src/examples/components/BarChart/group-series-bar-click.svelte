@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
-
 	export { data };
 </script>
 
@@ -26,6 +25,7 @@
 		}
 	]}
 	seriesLayout="group"
+	padding={{ ...defaultChartPadding(), left: 24 }}
 	props={{
 		xAxis: { format: 'none' },
 		yAxis: { format: 'metric' },

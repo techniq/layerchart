@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Tooltip, thresholdTime } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { randomNormal } from 'd3-random';
 	import { timeDay } from 'd3-time';
-	import { BarChart, Tooltip, thresholdTime } from 'layerchart';
 	import { format } from '@layerstack/utils';
 	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 
@@ -27,7 +27,6 @@
 
 	let binByTime = $derived(bin().thresholds(thresholdTime(thresholds ?? 0)));
 	let data = $derived(binByTime(randomData));
-
 	export { data };
 </script>
 
@@ -43,6 +42,7 @@
 		yAxis: { format: 'metric', motion: 'tween' },
 		bars: { motion: 'tween' }
 	}}
+	padding={{ ...defaultChartPadding(), left: 30 }}
 	height={300}
 >
 	{#snippet tooltip()}

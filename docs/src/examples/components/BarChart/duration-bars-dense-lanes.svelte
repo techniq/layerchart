@@ -1,13 +1,12 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { Duration } from 'svelte-ux';
-	import { BarChart, Tooltip } from 'layerchart';
 	import { getUsEvents } from '$lib/data.remote';
 	import { applyLanes } from 'layerchart';
 
 	const usEvents = await getUsEvents();
 	const data = applyLanes(usEvents, { start: 'startDate', end: 'endDate' });
-
 	export { data };
 </script>
 
@@ -20,7 +19,7 @@
 	grid={{ x: true, y: false, bandAlign: 'between' }}
 	rule={false}
 	orientation="horizontal"
-	padding={{ bottom: 36 }}
+	padding={{ ...defaultChartPadding(), left: 10, right: 25 }}
 	height={300}
 	props={{ tooltip: { context: { mode: 'bounds' } } }}
 >

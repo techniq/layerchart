@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 
 	const data = [
 		{ browser: 'chrome', visitors: 200 },
@@ -8,7 +8,6 @@
 		{ browser: 'edge', visitors: 100 },
 		{ browser: 'other', visitors: 90 }
 	];
-
 	export { data };
 </script>
 
@@ -28,4 +27,5 @@
 	radial
 	orientation="horizontal"
 	height={400}
+	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
 />

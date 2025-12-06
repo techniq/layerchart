@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 	import { group } from 'd3-array';
 
 	const dataByFruit = group(longData, (d) => d.fruit);
 	const data = dataByFruit;
-
 	export { data };
 </script>
 
@@ -38,5 +37,6 @@
 			header: { format: 'none' }
 		}
 	}}
+	padding={{ ...defaultChartPadding(), left: 24 }}
 	height={300}
 />

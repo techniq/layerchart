@@ -3,7 +3,6 @@
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
-
 	export { data };
 </script>
 

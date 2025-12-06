@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Points, Rule, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { timeMinute, timeDay } from 'd3-time';
 	import { Duration } from 'svelte-ux';
-	import { BarChart, Points, Rule, Tooltip } from 'layerchart';
 	import { getRandomInteger } from '$lib/utils/data.js';
 
 	const count = 10;
@@ -19,7 +19,6 @@
 			endDate
 		};
 	});
-
 	export { data };
 </script>
 
@@ -30,7 +29,7 @@
 	y="name"
 	grid={{ x: false, y: true, bandAlign: 'between' }}
 	orientation="horizontal"
-	padding={{ left: 36, bottom: 36 }}
+	padding={{ ...defaultChartPadding(), left: 36, right: 25 }}
 	props={{
 		highlight: {
 			axis: 'x',
