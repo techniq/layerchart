@@ -16,7 +16,7 @@
 		{
 			name: 'feature',
 			header: 'Feature',
-			classes: { th: 'bg-surface-200', td: 'w-100 bg-surface-200' },
+			classes: { th: 'bg-surface-200', td: 'w-100 max-sm:bg-surface-200' },
 			sticky: {
 				left: true
 			}
