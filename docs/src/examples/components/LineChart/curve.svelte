@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { curveCatmullRom } from 'd3-shape';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -7,4 +7,11 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300} props={{ spline: { curve: curveCatmullRom } }} />
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	props={{ spline: { curve: curveCatmullRom } }}
+	padding={{ ...defaultChartPadding(), right: 10 }}
+	height={300}
+/>

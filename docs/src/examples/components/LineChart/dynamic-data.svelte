@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { ticks } from 'd3-array';
 
 	let data = $state(ticks(-2, 2, 200).map(Math.sin));
@@ -36,6 +36,7 @@
 			//   },
 			// },
 		}}
+		padding={{ ...defaultChartPadding(), right: 10 }}
 		height={300}
 	/>
 </div>

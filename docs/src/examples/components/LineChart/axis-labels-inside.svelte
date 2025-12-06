@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
@@ -10,19 +10,18 @@
 	{data}
 	x="date"
 	y="value"
+	xNice
 	height={300}
 	props={{
 		yAxis: {
 			tickLabelProps: {
 				textAnchor: 'start',
-				verticalAnchor: 'end'
+				verticalAnchor: 'end',
+				dx: 4
 			},
-			tickLength: 0
+			tickLength: 0,
+			rule: true
 		}
 	}}
-	padding={{
-		left: 0,
-		top: 10,
-		bottom: 24
-	}}
+	padding={{ ...defaultChartPadding(), top: 15, right: 10 }}
 />

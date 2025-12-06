@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart, Spline } from 'layerchart';
+	import { LineChart, Spline, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { cls } from '@layerstack/tailwind';
 
@@ -30,6 +30,7 @@
 		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
 	height={300}
+	padding={{ ...defaultChartPadding(), right: 10 }}
 >
 	{#snippet belowMarks({ visibleSeries, highlightKey })}
 		{#each visibleSeries as s}
