@@ -4,6 +4,8 @@
 	import { localPoint } from '@layerstack/utils';
 	import { scaleLinear } from 'd3-scale';
 
+	import LucideGripVertical from '~icons/lucide/grip-vertical';
+
 	const rectHeight = 64;
 	const handleWidth = 16;
 
@@ -50,7 +52,7 @@
 				y={0}
 				width={context.xScale(domain[1]) - context.xScale(domain[0])}
 				height={rectHeight}
-				class="bg-primary/10 border-2 border-primary/70 rounded-lg"
+				class="bg-primary/10 border-2 border-primary/70 rounded-lg grid items-center"
 				onpointermove={(e) => {
 					const { x } = localPoint(e);
 					domainValue = Math.round(domainScale(x));
@@ -64,7 +66,7 @@
 				width={handleWidth}
 				height={rectHeight}
 				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize"
+				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -74,7 +76,10 @@
 						}
 					}
 				})}
-			/>
+			>
+				<LucideGripVertical class="text-primary/50" />
+			</Rect>
+
 			<!-- Right handle -->
 			<Rect
 				x={context.xScale(domain[1]) - handleWidth}
@@ -82,7 +87,7 @@
 				width={handleWidth}
 				height={rectHeight}
 				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize"
+				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -92,7 +97,9 @@
 						}
 					}
 				})}
-			/>
+			>
+				<LucideGripVertical class="text-primary/50" />
+			</Rect>
 			<Text
 				value={domain[0]}
 				x={context.xScale(domain[0])}
@@ -149,7 +156,7 @@
 				width={handleWidth}
 				height={rectHeight}
 				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize"
+				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -159,7 +166,9 @@
 						}
 					}
 				})}
-			/>
+			>
+				<LucideGripVertical class="text-primary/50" />
+			</Rect>
 			<!-- Right handle -->
 			<Rect
 				x={context.xScale(range[1]) - handleWidth}
@@ -167,7 +176,7 @@
 				width={handleWidth}
 				height={rectHeight}
 				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize"
+				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -177,7 +186,9 @@
 						}
 					}
 				})}
-			/>
+			>
+				<LucideGripVertical class="text-primary/50" />
+			</Rect>
 			<Text
 				value={range[0]}
 				x={context.xScale(range[0])}
