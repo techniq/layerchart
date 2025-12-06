@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { Axis, BarChart, Tooltip, defaultChartPadding } from 'layerchart';
+	1;
 	import { scaleTime } from 'd3-scale';
 	import { extent } from 'd3-array';
-	import { Axis, BarChart, Tooltip } from 'layerchart';
 	import { getHydro } from '$lib/data.remote.js';
 
 	const data = await getHydro();
@@ -31,7 +32,6 @@
 		{data}
 		x="date"
 		yDomain={[0, 1000]}
-		padding={{ left: 32, right: 32, bottom: 20 }}
 		series={[
 			{
 				key: 'infiltration',
@@ -59,6 +59,7 @@
 			}
 		]}
 		seriesLayout="stack"
+		padding={{ ...defaultChartPadding(), top: 20, bottom: 30, right: 32, left: 32 }}
 		height={300}
 	>
 		{#snippet axis({ context })}
