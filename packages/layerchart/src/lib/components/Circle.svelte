@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type CirclePropsWithoutHTML = {
@@ -52,6 +53,9 @@
     ref?: SVGCircleElement;
 
     motion?: MotionProp;
+
+    /** Children content to render.  Note: Only works for Html layers */
+    children?: Snippet;
   } & CommonStyleProps;
 
   export type CircleProps = CirclePropsWithoutHTML &
@@ -84,6 +88,7 @@
     opacity,
     class: className,
     ref: refProp = $bindable(),
+    children,
     ...restProps
   }: CircleProps = $props();
 
@@ -179,7 +184,9 @@
     style:transform="translate(-50%, -50%)"
     class={cls('lc-circle', className)}
     {...restProps}
-  ></div>
+  >
+    {@render children?.()}
+  </div>
 {/if}
 
 <style>
