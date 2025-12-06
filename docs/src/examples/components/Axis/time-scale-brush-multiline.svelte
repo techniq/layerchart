@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Chart, Layer, type DomainType } from 'layerchart';
+	import { Axis, Chart, Layer, defaultChartPadding, type DomainType } from 'layerchart';
 	import { timeYear } from 'd3-time';
 	import { startOfInterval } from '@layerstack/utils';
 	import AxisControls from '$lib/components/controls/AxisControls.svelte';
@@ -17,7 +17,7 @@
 <Chart
 	{xDomain}
 	yDomain={[0, 100]}
-	padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+	padding={{ ...defaultChartPadding(), top: 30, bottom: 30, left: 25, right: 25 }}
 	brush={{
 		resetOnEnd: true,
 		onBrushEnd: (e) => {

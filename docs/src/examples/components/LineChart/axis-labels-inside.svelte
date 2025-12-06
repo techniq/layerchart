@@ -23,6 +23,7 @@
 	padding={{
 		left: 0,
 		top: 10,
+		right: 10,
 		bottom: 24
 	}}
 />
