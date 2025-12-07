@@ -3,8 +3,12 @@
 	import { movable } from '$lib/attachments/movable';
 	import { localPoint } from '@layerstack/utils';
 	import { scaleLinear } from 'd3-scale';
+	import { AnimationFrames } from 'runed';
+	import { Button, ButtonGroup } from 'svelte-ux';
 
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
+	import LucidePlay from '~icons/lucide/play';
+	import LucideSquare from '~icons/lucide/square';
 
 	const rectHeight = 64;
 	const handleWidth = 16;
@@ -38,6 +42,35 @@
 		}
 	});
 
+	// Track hover state for domain and range rects
+	let isHoveringDomain = $state(false);
+	let isHoveringRange = $state(false);
+
+	// Animation state
+	let isPlaying = $state(true);
+	let animationDirection = $state<'forward' | 'backward'>('forward');
+	const animationSpeed = 1; // whole integers per step
+
+	const animationFrames = new AnimationFrames(
+		() => {
+			if (isPlaying && !isHoveringDomain && !isHoveringRange) {
+				if (animationDirection === 'forward') {
+					value = Math.min(Math.round(value! + animationSpeed), domain[1]);
+					if (value >= domain[1]) {
+						animationDirection = 'backward';
+					}
+				} else {
+					value = Math.max(Math.round(value! - animationSpeed), domain[0]);
+					if (value <= domain[0]) {
+						animationDirection = 'forward';
+					}
+				}
+				rangeValue = Math.round(scale(value));
+			}
+		},
+		{ fpsLimit: 60 }
+	);
+
 	let context = $state<ChartContextValue>(null!);
 
 	// Map domain rect width to domain values
@@ -53,6 +86,23 @@
 			.range(range)
 	);
 </script>
+
+<div class="text-right">
+	<ButtonGroup variant="fill-light" color="primary" size="sm" class="outline rounded-full">
+		<Button
+			icon={LucidePlay}
+			on:click={() => (isPlaying = true)}
+			disabled={isPlaying}
+			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
+		/>
+		<Button
+			icon={LucideSquare}
+			on:click={() => (isPlaying = false)}
+			disabled={!isPlaying}
+			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
+		/>
+	</ButtonGroup>
+</div>
 
 <Chart
 	xDomain={chartDomain}
@@ -70,6 +120,12 @@
 				width={context.xScale(domain[1]) - context.xScale(domain[0])}
 				height={rectHeight}
 				class="bg-primary/10 border-2 border-primary/70 rounded-lg grid items-center"
+				onpointerenter={() => {
+					isHoveringDomain = true;
+				}}
+				onpointerleave={() => {
+					isHoveringDomain = false;
+				}}
 				onpointermove={(e) => {
 					const { x } = localPoint(e);
 					value = Math.round(domainScale(x));
@@ -161,6 +217,12 @@
 				height={rectHeight}
 				rx={8}
 				class="bg-primary/10 border-2 border-primary/70 rounded-lg"
+				onpointerenter={() => {
+					isHoveringRange = true;
+				}}
+				onpointerleave={() => {
+					isHoveringRange = false;
+				}}
 				onpointermove={(e) => {
 					const { x } = localPoint(e);
 					rangeValue = Math.round(rangeScale(x));
