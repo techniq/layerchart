@@ -6,4 +6,6 @@
 	export { data };
 </script>
 
-<LineChart {data} x="value" y="date" orientation="vertical" width={400} height={600} />
+<div class="flex justify-center">
+	<LineChart {data} x="value" y="date" orientation="vertical" width={400} height={600} />
+</div>

@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" axis="y" height={300} />
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	axis="y"
+	padding={{ ...defaultChartPadding(), bottom: 10 }}
+	height={300}
+/>
