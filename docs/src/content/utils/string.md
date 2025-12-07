@@ -14,6 +14,8 @@ related: [/docs/components/BarChart/duration-civilization-timeline, /docs/compon
 
 ### truncate
 
+> <a href="https://www.layerstack.dev/docs/utils/string" target="_blank">Full API</a>
+
 {truncate("This is a really long string of text.", 21)}
 
 <Example component="string" name="truncate" resize={false} showcode />
