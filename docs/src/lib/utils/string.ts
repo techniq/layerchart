@@ -59,3 +59,25 @@ function getPixel(imageData: ImageData, x: number, y: number) {
 	const d = imageData.data;
 	return [d[i], d[i + 1], d[i + 2], d[i + 3]];
 }
+
+/**
+ * Remove leading indentation from multiline string (useful for template literals)
+ */
+export function stripIndent(text: string) {
+	const lines = text.split('\n');
+
+	// Find the minimum indentation (ignoring empty lines)
+	const minIndent = lines
+		.filter((line) => line.trim().length > 0)
+		.reduce((min, line) => {
+			const match = line.match(/^(\s*)/);
+			const indent = match ? match[1].length : 0;
+			return Math.min(min, indent);
+		}, Infinity);
+
+	// Remove the minimum indentation from all lines
+	return lines
+		.map((line) => line.slice(minIndent))
+		.filter((line) => line !== '')
+		.join('\n');
+}
