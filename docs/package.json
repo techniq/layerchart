@@ -110,6 +110,7 @@
 		"zod": "^4.1.13"
 	},
 	"dependencies": {
-		"@stackblitz/sdk": "^1.11.0"
+		"@stackblitz/sdk": "^1.11.0",
+		"@webcontainer/api": "^1.6.1"
 	}
 }
