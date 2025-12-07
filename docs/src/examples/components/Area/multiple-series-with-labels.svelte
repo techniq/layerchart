@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { flatGroup } from 'd3-array';
 	import { Area, Axis, Chart, Highlight, Labels, Layer, Tooltip, pivotLonger } from 'layerchart';
-
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const keys = ['apples', 'bananas', 'oranges'];
