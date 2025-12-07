@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Axis, Chart, Layer } from 'layerchart';
+	import { Axis, Chart, Layer, defaultChartPadding } from 'layerchart';
 	import {
 		timeDay,
 		timeHour,
@@ -107,7 +107,10 @@
 		<div>
 			<div class="text-sm mb-1">{example.label}</div>
 			<div class="h-[100px] p-4 border rounded-sm">
-				<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
+				<Chart
+					xDomain={example.domain}
+					padding={{ ...defaultChartPadding(), top: 20, bottom: 20, left: 30, right: 30 }}
+				>
 					<Layer>
 						<Axis placement="bottom" rule grid ticks={{ interval: example.interval }} />
 					</Layer>

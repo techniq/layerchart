@@ -4,10 +4,11 @@
 	import { timeDay } from 'd3-time';
 
 	const today = startOfInterval('day', new Date());
+	const yesterday = new Date(today.getTime() - 1);
 </script>
 
 <Chart
-	xDomain={[timeDay.offset(today, -10), today]}
+	xDomain={[timeDay.offset(today, -10), yesterday]}
 	yDomain={[0, 100]}
 	radial
 	padding={24}

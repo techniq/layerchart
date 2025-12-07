@@ -23,5 +23,10 @@
 			rule: true
 		}
 	}}
-	padding={{ ...defaultChartPadding(), top: 15, right: 10 }}
+	padding={{
+		left: 0,
+		top: 12,
+		right: 10,
+		bottom: 24
+	}}
 />
