@@ -38,18 +38,7 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let {
-    link,
-    loft = 1.0,
-    curve = curveNatural,
-    pathRef: pathRefProp = $bindable(),
-    ...restProps
-  }: GeoSplineProps = $props();
-
-  let pathRef = $state<SVGPathElement>();
-  $effect.pre(() => {
-    pathRefProp = pathRef;
-  });
+  let { link, loft = 1.0, curve = curveNatural, ...restProps }: GeoSplineProps = $props();
 
   const geoCtx = getGeoContext();
 
@@ -76,7 +65,6 @@
 </script>
 
 <Spline
-  bind:pathRef
   data={[source, middle, target]}
   x={(d) => d[0]}
   y={(d) => d[1]}

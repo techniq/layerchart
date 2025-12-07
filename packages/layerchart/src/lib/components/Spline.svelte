@@ -39,7 +39,7 @@
      * @type {CurveFactory | CurveFactoryLineOnly | undefined}
      */
     curve?: CurveFactory | CurveFactoryLineOnly;
-  } & PathProps;
+  } & Omit<PathProps, 'x' | 'y'>;
 
   export type SplineProps = SplinePropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, SplinePropsWithoutHTML>;
