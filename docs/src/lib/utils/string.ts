@@ -78,6 +78,6 @@ export function stripIndent(text: string) {
 	// Remove the minimum indentation from all lines
 	return lines
 		.map((line) => line.slice(minIndent))
-		.filter((line) => line !== '')
-		.join('\n');
+		.join('\n')
+		.trim();
 }
