@@ -1,22 +1,20 @@
 <script lang="ts">
-	import { Chart, Layer, Line, Rect, Text, type ChartContextValue } from 'layerchart';
-	import { movable } from '$lib/attachments/movable';
+	import { Chart, Layer, Line, type ChartContextValue } from 'layerchart';
 	import { scaleLinear } from 'd3-scale';
 	import { AnimationFrames } from 'runed';
 	import { Button, ButtonGroup } from 'svelte-ux';
+	import ResizableRect from './ResizableRect.svelte';
 
-	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucidePlay from '~icons/lucide/play';
 	import LucideSquare from '~icons/lucide/square';
 
 	const rectHeight = 64;
-	const handleWidth = 16;
 
 	let {
 		domain = $bindable([100, 400]),
 		range = $bindable([0, 500]),
-		value = $bindable(),
-		rangeValue = $bindable()
+		value = $bindable(0),
+		rangeValue = $bindable(0)
 	}: {
 		domain?: number[];
 		range?: number[];
@@ -28,16 +26,13 @@
 
 	const chartDomain = [0, 500];
 
-	let midDomain = $derived(Math.round(domain[0] + (domain[1] - domain[0]) / 2));
-	let midRange = $derived(Math.round(range[0] + (range[1] - range[0]) / 2));
-
 	// Initialize domainValue and rangeValue if not provided
 	$effect(() => {
-		if (value === undefined) {
-			value = midDomain;
+		if (value === 0) {
+			value = Math.round(domain[0] + (domain[1] - domain[0]) / 2);
 		}
-		if (rangeValue === undefined) {
-			rangeValue = Math.round(scale(midDomain));
+		if (rangeValue === 0) {
+			rangeValue = Math.round(scale(value));
 		}
 	});
 
@@ -71,19 +66,6 @@
 	);
 
 	let context = $state<ChartContextValue>(null!);
-
-	// Map domain rect width to domain values
-	let domainScale = $derived(
-		scaleLinear()
-			.domain([0, context ? context.xScale(domain[1]) - context.xScale(domain[0]) : 0])
-			.range(domain)
-	);
-	// Map range rect width to range values
-	let rangeScale = $derived(
-		scaleLinear()
-			.domain([0, context ? context.xScale(range[1]) - context.xScale(range[0]) : 0])
-			.range(range)
-	);
 </script>
 
 <div class="text-right">
@@ -112,236 +94,30 @@
 >
 	{#snippet children({ context })}
 		<Layer type="html">
-			<!-- Domain -->
-			<Rect
-				x={context.xScale(domain[0])}
+			<ResizableRect
+				{context}
+				bind:bounds={domain}
+				bind:value
+				bind:isHovering={isHoveringDomain}
+				label="Domain"
 				y={0}
-				width={context.xScale(domain[1]) - context.xScale(domain[0])}
-				height={rectHeight}
-				class="bg-primary/10 border-2 border-primary/70 rounded-lg grid items-center"
-				onpointerenter={() => {
-					isHoveringDomain = true;
+				{chartDomain}
+				onValueChange={(v) => {
+					rangeValue = Math.round(scale(v));
 				}}
-				onpointerleave={() => {
-					isHoveringDomain = false;
-				}}
-				onpointermove={(e) => {
-					value = Math.round(domainScale(e.offsetX));
-					rangeValue = Math.round(scale(value));
-				}}
-			/>
-			<!-- Left handle -->
-			<Rect
-				x={context.xScale(domain[0])}
-				y={0}
-				width={handleWidth}
-				height={rectHeight}
-				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
-				onpointerenter={() => {
-					isHoveringDomain = true;
-				}}
-				onpointerleave={() => {
-					isHoveringDomain = false;
-				}}
-				onpointermove={(e) => {
-					value = Math.round(domainScale(e.offsetX));
-					rangeValue = Math.round(scale(value));
-				}}
-				{@attach movable({
-					onMove: ({ dx }) => {
-						// @ts-expect-error
-						const newLow = context.xScale.invert(context.xScale(domain[0]) + dx);
-						if (newLow >= 0 && newLow < domain[1]) {
-							domain = [Math.round(newLow), domain[1]];
-						}
-					}
-				})}
-			>
-				<LucideGripVertical class="text-primary/50" />
-			</Rect>
-
-			<!-- Right handle -->
-			<Rect
-				x={context.xScale(domain[1]) - handleWidth}
-				y={0}
-				width={handleWidth}
-				height={rectHeight}
-				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
-				onpointerenter={() => {
-					isHoveringDomain = true;
-				}}
-				onpointerleave={() => {
-					isHoveringDomain = false;
-				}}
-				onpointermove={(e) => {
-					const rectWidth = context.xScale(domain[1]) - context.xScale(domain[0]);
-					value = Math.round(domainScale(rectWidth - handleWidth + e.offsetX));
-					rangeValue = Math.round(scale(value));
-				}}
-				{@attach movable({
-					onMove: ({ dx }) => {
-						// @ts-expect-error
-						const newHigh = context.xScale.invert(context.xScale(domain[1]) + dx);
-						if (newHigh <= chartDomain[1] && newHigh > domain[0]) {
-							domain = [domain[0], Math.round(newHigh)];
-						}
-					}
-				})}
-			>
-				<LucideGripVertical class="text-primary/50" />
-			</Rect>
-			<Text
-				value={domain[0]}
-				x={context.xScale(domain[0])}
-				dx={handleWidth + 2}
-				y={rectHeight / 2}
-				textAnchor="start"
-				verticalAnchor="middle"
-				class="text-sm text-primary pointer-events-none"
-			/>
-			<Text
-				value="Domain"
-				x={context.xScale(midDomain)}
-				y={rectHeight / 2}
-				textAnchor="middle"
-				verticalAnchor="middle"
-				class="text-primary font-semibold pointer-events-none"
-			/>
-			<Text
-				{value}
-				x={context.xScale(value)}
-				y={rectHeight}
-				dy={-3}
-				textAnchor="middle"
-				verticalAnchor="end"
-				class="text-sm text-white bg-primary rounded-full px-2 font-medium pointer-events-none"
-			/>
-			<Text
-				value={domain[1]}
-				x={context.xScale(domain[1])}
-				dx={-handleWidth - 2}
-				y={rectHeight / 2}
-				textAnchor="end"
-				verticalAnchor="middle"
-				class="text-sm text-primary pointer-events-none"
 			/>
 
-			<!-- Range -->
-			<Rect
-				x={context.xScale(range[0])}
-				y={context.height - rectHeight}
-				width={context.xScale(range[1]) - context.xScale(range[0])}
-				height={rectHeight}
-				rx={8}
-				class="bg-primary/10 border-2 border-primary/70 rounded-lg"
-				onpointerenter={() => {
-					isHoveringRange = true;
+			<ResizableRect
+				{context}
+				bind:bounds={range}
+				bind:value={rangeValue}
+				bind:isHovering={isHoveringRange}
+				label="Range"
+				y={context.height - 64}
+				{chartDomain}
+				onValueChange={(v) => {
+					value = Math.round(scale.invert(v));
 				}}
-				onpointerleave={() => {
-					isHoveringRange = false;
-				}}
-				onpointermove={(e) => {
-					rangeValue = Math.round(rangeScale(e.offsetX));
-					value = Math.round(scale.invert(rangeValue));
-				}}
-			/>
-			<!-- Left handle -->
-			<Rect
-				x={context.xScale(range[0])}
-				y={context.height - rectHeight}
-				width={handleWidth}
-				height={rectHeight}
-				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
-				onpointerenter={() => {
-					isHoveringRange = true;
-				}}
-				onpointerleave={() => {
-					isHoveringRange = false;
-				}}
-				onpointermove={(e) => {
-					rangeValue = Math.round(rangeScale(e.offsetX));
-					value = Math.round(scale.invert(rangeValue));
-				}}
-				{@attach movable({
-					onMove: ({ dx }) => {
-						// @ts-expect-error
-						const newLow = context.xScale.invert(context.xScale(range[0]) + dx);
-						if (newLow >= 0 && newLow < range[1]) {
-							range = [Math.round(newLow), range[1]];
-						}
-					}
-				})}
-			>
-				<LucideGripVertical class="text-primary/50" />
-			</Rect>
-			<!-- Right handle -->
-			<Rect
-				x={context.xScale(range[1]) - handleWidth}
-				y={context.height - rectHeight}
-				width={handleWidth}
-				height={rectHeight}
-				rx={2}
-				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
-				onpointerenter={() => {
-					isHoveringRange = true;
-				}}
-				onpointerleave={() => {
-					isHoveringRange = false;
-				}}
-				onpointermove={(e) => {
-					const rectWidth = context.xScale(range[1]) - context.xScale(range[0]);
-					rangeValue = Math.round(rangeScale(rectWidth - handleWidth + e.offsetX));
-					value = Math.round(scale.invert(rangeValue));
-				}}
-				{@attach movable({
-					onMove: ({ dx }) => {
-						// @ts-expect-error
-						const newHigh = context.xScale.invert(context.xScale(range[1]) + dx);
-						if (newHigh <= chartDomain[1] && newHigh > range[0]) {
-							range = [range[0], Math.round(newHigh)];
-						}
-					}
-				})}
-			>
-				<LucideGripVertical class="text-primary/50" />
-			</Rect>
-			<Text
-				value={range[0]}
-				x={context.xScale(range[0])}
-				dx={handleWidth + 2}
-				y={context.height - rectHeight / 2}
-				textAnchor="start"
-				verticalAnchor="middle"
-				class="text-sm text-primary pointer-events-none"
-			/>
-			<Text
-				value="Range"
-				x={context.xScale(midRange)}
-				y={context.height - rectHeight / 2}
-				textAnchor="middle"
-				verticalAnchor="middle"
-				class="text-primary font-semibold pointer-events-none"
-			/>
-			<Text
-				value={rangeValue}
-				x={context.xScale(rangeValue)}
-				y={context.height - rectHeight}
-				dy={3}
-				textAnchor="middle"
-				verticalAnchor="start"
-				class="text-sm text-white bg-primary rounded-full px-2 font-medium pointer-events-none"
-			/>
-			<Text
-				value={range[1]}
-				x={context.xScale(range[1])}
-				dx={-handleWidth - 2}
-				y={context.height - rectHeight / 2}
-				textAnchor="end"
-				verticalAnchor="middle"
-				class="text-sm text-primary pointer-events-none"
 			/>
 		</Layer>
 
