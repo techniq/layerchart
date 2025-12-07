@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
-
 	export { data };
 </script>
 
@@ -35,4 +34,5 @@
 		}
 	}}
 	height={300}
+	padding={{ ...defaultChartPadding(), left: 30, right: 10 }}
 />

@@ -90,35 +90,35 @@
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 16,
+      "lineNumber": 24,
       "line": "<Highlight points lines />"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 58,
+      "lineNumber": 66,
       "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
     },
     {
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 41,
+      "lineNumber": 48,
       "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Highlight area />"
     },
     {
       "example": "highlight-below-marks",
       "component": "BarChart",
       "path": "/example/BarChart/highlight-below-marks",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Highlight area={{ class: 'fill-surface-content/10' }} />"
     },
     {
@@ -356,7 +356,7 @@
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 16,
+      "lineNumber": 24,
       "line": "<Highlight points lines />"
     },
     {
@@ -374,10 +374,17 @@
       "line": "<Highlight"
     },
     {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 113,
+      "line": "<Highlight lines points={{ fill: valueColor(context.y(context.tooltip.data)) }} />"
+    },
+    {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 47,
+      "lineNumber": 55,
       "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
     },
     {
@@ -633,5 +640,5 @@
       "line": "<Highlight"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.888Z"
+  "updatedAt": "2025-12-07T04:39:09.593Z"
 }

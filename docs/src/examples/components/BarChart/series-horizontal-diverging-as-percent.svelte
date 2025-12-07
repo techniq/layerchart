@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, Tooltip, accessor } from 'layerchart';
+	import { BarChart, Tooltip, accessor, defaultChartPadding } from 'layerchart';
 	import { sum } from 'd3-array';
 	import { format } from '@layerstack/utils';
 
@@ -26,7 +26,6 @@
 	];
 
 	const totalPopulation = sum(data, (d) => d.male + d.female);
-
 	export { data };
 </script>
 
@@ -34,7 +33,7 @@
 	{data}
 	y="age"
 	orientation="horizontal"
-	padding={{ left: 32, bottom: 16 }}
+	padding={{ ...defaultChartPadding(), left: 32, right: 10 }}
 	xPadding={[50, 50]}
 	labels={{ format: (value) => format(Math.abs(value), 'percent') }}
 	props={{

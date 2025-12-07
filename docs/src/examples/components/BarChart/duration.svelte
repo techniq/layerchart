@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, Tooltip } from 'layerchart';
+	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { format } from '@layerstack/utils';
 
@@ -50,7 +50,6 @@
 			end: new Date('2021-12-31')
 		}
 	];
-
 	export { data };
 </script>
 
@@ -79,6 +78,7 @@
 			context: { mode: 'bounds' }
 		}
 	}}
+	padding={{ ...defaultChartPadding(), left: 30 }}
 	height={400}
 >
 	{#snippet tooltip({ context })}

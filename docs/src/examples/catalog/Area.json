@@ -979,7 +979,7 @@
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 15,
+      "lineNumber": 23,
       "line": "<Area line={{ class: 'stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
@@ -1000,14 +1000,14 @@
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 51,
+      "lineNumber": 59,
       "line": "<Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />"
     },
     {
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-stack-gradient",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
     },
     {
@@ -1028,7 +1028,7 @@
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 29,
+      "lineNumber": 36,
       "line": "<Area"
     },
     {
@@ -1312,5 +1312,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.703Z"
+  "updatedAt": "2025-12-07T04:39:08.887Z"
 }

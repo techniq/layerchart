@@ -7,11 +7,11 @@
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 
 	const data = await getDailyTemperature();
-	export { data };
 
 	const temperatureColor = $derived(
 		scaleSequential(extent(data, (d) => d.value as number) as [number, number], interpolateTurbo)
 	);
+	export { data };
 </script>
 
 <LineChart {data} x="date" y="value" yDomain={null} height={300}>

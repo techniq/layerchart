@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const data = longData.filter((d) => d.year === 2019);
-
 	export { data };
 </script>
 
@@ -21,5 +20,6 @@
 	props={{
 		yAxis: { format: 'metric' }
 	}}
+	padding={{ ...defaultChartPadding(), left: 24 }}
 	height={300}
 />

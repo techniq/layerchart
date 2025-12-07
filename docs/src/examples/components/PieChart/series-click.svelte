@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PieChart } from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruits';
 	import { longData } from '$lib/utils/data';
 	import { group } from 'd3-array';
 
@@ -10,6 +11,7 @@
 <PieChart
 	key="fruit"
 	value="value"
+	cRange={fruitColors}
 	series={Array.from(data, ([key, data]) => ({
 		key: key.toString(),
 		data

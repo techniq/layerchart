@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, Spline, Tooltip } from 'layerchart';
+	import { BarChart, Spline, Tooltip, defaultChartPadding } from 'layerchart';
 	import { getAppleTicker } from '$lib/data.remote.js';
 
 	const data = await getAppleTicker();
@@ -15,11 +15,11 @@
 		yNice
 		axis={false}
 		grid={false}
-		padding={{ left: 16, bottom: 16 }}
-		height={300}
 		props={{
 			bars: { radius: 1, class: 'stroke-none fill-surface-content/10' }
 		}}
+		padding={{ ...defaultChartPadding(), left: 25 }}
+		height={300}
 	/>
 
 	<!-- Second chart (line), responsible for tooltip -->
@@ -29,12 +29,12 @@
 		y={['open', 'close']}
 		yNice
 		yDomain={null}
-		padding={{ left: 16, bottom: 16 }}
 		height={300}
 		props={{
 			xAxis: { ticks: 10, rule: true },
 			tooltip: { context: { mode: 'band' } }
 		}}
+		padding={{ ...defaultChartPadding(), left: 25 }}
 	>
 		{#snippet marks()}
 			<Spline y="open" class="stroke-primary" />

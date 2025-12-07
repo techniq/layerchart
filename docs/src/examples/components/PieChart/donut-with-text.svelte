@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PieChart, Text } from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruits';
 	import { longData } from '$lib/utils/data';
 	import { format } from '@layerstack/utils';
 	import { sum } from 'd3-array';
@@ -12,6 +13,7 @@
 	{data}
 	key="fruit"
 	value="value"
+	cRange={fruitColors}
 	innerRadius={-20}
 	cornerRadius={5}
 	padAngle={0.02}

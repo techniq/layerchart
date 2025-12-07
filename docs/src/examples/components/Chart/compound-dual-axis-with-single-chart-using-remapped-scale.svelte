@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { scaleLinear } from 'd3-scale';
 	import { Axis, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
+	import { scaleLinear } from 'd3-scale';
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
 	const data = await getNewPassengerCars();

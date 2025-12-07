@@ -33,7 +33,6 @@
 			end: 40
 		}
 	];
-
 	export { data };
 </script>
 

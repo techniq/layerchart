@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { curveLinearClosed } from 'd3-shape';
 
 	const data = [
@@ -16,7 +16,6 @@
 	{data}
 	x="name"
 	y="value"
-	padding={{ top: 8 }}
 	radial
 	points
 	props={{
@@ -43,5 +42,6 @@
 			}
 		}
 	}}
+	padding={{ ...defaultChartPadding(), top: 20 }}
 	height={300}
 />

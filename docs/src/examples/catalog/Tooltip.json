@@ -1087,28 +1087,28 @@
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 22,
+      "lineNumber": 30,
       "line": "<Tooltip.List>"
     },
     {
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 23,
+      "lineNumber": 31,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
@@ -1129,56 +1129,56 @@
       "example": "point-annotations",
       "component": "AreaChart",
       "path": "/example/AreaChart/point-annotations",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "point-annotations",
-      "component": "AreaChart",
-      "path": "/example/AreaChart/point-annotations",
-      "lineNumber": 52,
-      "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "point-annotations",
       "component": "AreaChart",
       "path": "/example/AreaChart/point-annotations",
       "lineNumber": 53,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "point-annotations",
       "component": "AreaChart",
       "path": "/example/AreaChart/point-annotations",
       "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "point-annotations",
+      "component": "AreaChart",
+      "path": "/example/AreaChart/point-annotations",
+      "lineNumber": 55,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 63,
+      "lineNumber": 71,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 65,
+      "lineNumber": 73,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 66,
+      "lineNumber": 74,
       "line": "<Tooltip.List>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 67,
+      "lineNumber": 75,
       "line": "<Tooltip.Item label={data?.fruit} value={data?.value} color={activeSeries?.color} />"
     },
     {
@@ -1234,147 +1234,147 @@
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 45,
+      "lineNumber": 52,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 48,
+      "lineNumber": 55,
       "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 49,
+      "lineNumber": 56,
       "line": "<Tooltip.List>"
     },
     {
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 50,
+      "lineNumber": 57,
       "line": "<Tooltip.Item"
     },
     {
       "example": "tooltip-fixed-with-hide-delay",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Tooltip.Root x=\"data\" y={context.height + 24} pointerEvents>"
     },
     {
       "example": "tooltip-fixed-with-hide-delay",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "tooltip-fixed-with-hide-delay",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Tooltip.List>"
     },
     {
       "example": "tooltip-fixed-with-hide-delay",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-fixed-with-hide-delay",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Tooltip.Item"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-locking",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Tooltip.Root pointerEvents>"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-locking",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-locking",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Tooltip.List>"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-locking",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<Tooltip.Item"
     },
     {
       "example": "tooltip-locking",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-locking",
-      "lineNumber": 71,
+      "lineNumber": 72,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 29,
+      "lineNumber": 28,
       "line": "<Tooltip.List>"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
       "example": "custom-tooltip",
       "component": "BarChart",
       "path": "/example/BarChart/custom-tooltip",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "custom-tooltip",
       "component": "BarChart",
       "path": "/example/BarChart/custom-tooltip",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>"
     },
     {
       "example": "custom-tooltip",
       "component": "BarChart",
       "path": "/example/BarChart/custom-tooltip",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Tooltip.List>"
     },
     {
       "example": "custom-tooltip",
       "component": "BarChart",
       "path": "/example/BarChart/custom-tooltip",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
@@ -1416,245 +1416,245 @@
       "example": "duration-bars",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars",
-      "lineNumber": 37,
+      "lineNumber": 36,
       "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "duration-bars",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars",
+      "lineNumber": 38,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration-bars",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars",
       "lineNumber": 39,
-      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "duration-bars",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars",
       "lineNumber": 40,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "duration-bars",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-bars",
-      "lineNumber": 41,
       "line": "<Tooltip.Item"
     },
     {
       "example": "duration-bars",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Tooltip.Item"
+    },
+    {
+      "example": "duration-bars",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars",
+      "lineNumber": 50,
+      "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-bars",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars",
       "lineNumber": 51,
-      "line": "<Tooltip.Separator />"
-    },
-    {
-      "example": "duration-bars",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-bars",
-      "lineNumber": 52,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "duration-bars-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-color",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "duration-bars-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-color",
+      "lineNumber": 45,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration-bars-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-color",
       "lineNumber": 46,
-      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "duration-bars-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-color",
       "lineNumber": 47,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "duration-bars-color",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-bars-color",
-      "lineNumber": 48,
       "line": "<Tooltip.Item"
     },
     {
       "example": "duration-bars-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-color",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<Tooltip.Item"
+    },
+    {
+      "example": "duration-bars-color",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-color",
+      "lineNumber": 57,
+      "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-bars-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-color",
       "lineNumber": 58,
-      "line": "<Tooltip.Separator />"
-    },
-    {
-      "example": "duration-bars-color",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-bars-color",
-      "lineNumber": 59,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "duration-bars-dense",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-bars-dense",
+      "lineNumber": 26,
+      "line": "<Tooltip.Header>{data.event}</Tooltip.Header>"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
       "lineNumber": 27,
-      "line": "<Tooltip.Header>{data.event}</Tooltip.Header>"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
       "lineNumber": 28,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Item label=\"start\" value={data.startDate} valueAlign=\"right\" format=\"day\" />"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
       "lineNumber": 29,
-      "line": "<Tooltip.Item label=\"start\" value={data.startDate} valueAlign=\"right\" format=\"day\" />"
-    },
-    {
-      "example": "duration-bars-dense",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-bars-dense",
-      "lineNumber": 30,
       "line": "<Tooltip.Item label=\"end\" value={data.endDate} valueAlign=\"right\" format=\"day\" />"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Tooltip.Header>{data.event}</Tooltip.Header>"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Tooltip.List>"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Tooltip.Item label=\"start\" value={data.startDate} valueAlign=\"right\" format=\"day\" />"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Tooltip.Item label=\"end\" value={data.endDate} valueAlign=\"right\" format=\"day\" />"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 34,
+      "lineNumber": 33,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 35,
+      "lineNumber": 34,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<Tooltip.List>"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Tooltip.Item label=\"start\" value={data.startDate} format=\"day\" />"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 55,
+      "lineNumber": 54,
       "line": "<Tooltip.Item label=\"end\" value={data.endDate} format=\"day\" />"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-bars-lanes",
       "component": "BarChart",
       "path": "/example/BarChart/duration-bars-lanes",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
@@ -1787,98 +1787,98 @@
       "example": "duration-points",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 50,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points",
       "lineNumber": 51,
-      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points",
       "lineNumber": 52,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "duration-points",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-points",
-      "lineNumber": 53,
       "line": "<Tooltip.Item"
     },
     {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points",
-      "lineNumber": 58,
+      "lineNumber": 57,
       "line": "<Tooltip.Item"
+    },
+    {
+      "example": "duration-points",
+      "component": "BarChart",
+      "path": "/example/BarChart/duration-points",
+      "lineNumber": 62,
+      "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points",
       "lineNumber": 63,
-      "line": "<Tooltip.Separator />"
-    },
-    {
-      "example": "duration-points",
-      "component": "BarChart",
-      "path": "/example/BarChart/duration-points",
-      "lineNumber": 64,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 56,
+      "lineNumber": 55,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 58,
+      "lineNumber": 57,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 59,
+      "lineNumber": 58,
       "line": "<Tooltip.List>"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 60,
+      "lineNumber": 59,
       "line": "<Tooltip.Item"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 65,
+      "lineNumber": 64,
       "line": "<Tooltip.Item"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 70,
+      "lineNumber": 69,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration-points-color",
       "component": "BarChart",
       "path": "/example/BarChart/duration-points-color",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
@@ -1927,84 +1927,84 @@
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 60,
+      "lineNumber": 59,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 62,
+      "lineNumber": 61,
       "line": "<Tooltip.Header class=\"text-center\">"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 65,
+      "lineNumber": 64,
       "line": "<Tooltip.List>"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-date-time-interval",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
       "lineNumber": 66,
-      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 67,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-date-time-interval",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-horizontal",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
@@ -2053,154 +2053,154 @@
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-vertical",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "histogram-vertical",
-      "component": "BarChart",
-      "path": "/example/BarChart/histogram-vertical",
-      "lineNumber": 37,
-      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-vertical",
       "lineNumber": 38,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-vertical",
       "lineNumber": 39,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/example/BarChart/histogram-vertical",
+      "lineNumber": 40,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-vertical",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/example/BarChart/histogram-vertical",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
       "example": "series-horizontal-diverging",
       "component": "BarChart",
       "path": "/example/BarChart/series-horizontal-diverging",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "series-horizontal-diverging",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging",
+      "lineNumber": 58,
+      "line": "<Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>"
     },
     {
       "example": "series-horizontal-diverging",
       "component": "BarChart",
       "path": "/example/BarChart/series-horizontal-diverging",
       "lineNumber": 59,
-      "line": "<Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>"
-    },
-    {
-      "example": "series-horizontal-diverging",
-      "component": "BarChart",
-      "path": "/example/BarChart/series-horizontal-diverging",
-      "lineNumber": 60,
       "line": "<Tooltip.List>"
     },
     {
       "example": "series-horizontal-diverging",
       "component": "BarChart",
       "path": "/example/BarChart/series-horizontal-diverging",
+      "lineNumber": 63,
+      "line": "<Tooltip.Item label={s.key} color={s.color}>"
+    },
+    {
+      "example": "series-horizontal-diverging-as-percent",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
+      "lineNumber": 57,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "series-horizontal-diverging-as-percent",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
+      "lineNumber": 59,
+      "line": "<Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>"
+    },
+    {
+      "example": "series-horizontal-diverging-as-percent",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
+      "lineNumber": 60,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "series-horizontal-diverging-as-percent",
+      "component": "BarChart",
+      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
       "lineNumber": 64,
       "line": "<Tooltip.Item label={s.key} color={s.color}>"
     },
     {
-      "example": "series-horizontal-diverging-as-percent",
-      "component": "BarChart",
-      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-      "lineNumber": 58,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "series-horizontal-diverging-as-percent",
-      "component": "BarChart",
-      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-      "lineNumber": 60,
-      "line": "<Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>"
-    },
-    {
-      "example": "series-horizontal-diverging-as-percent",
-      "component": "BarChart",
-      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-      "lineNumber": 61,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "series-horizontal-diverging-as-percent",
-      "component": "BarChart",
-      "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-      "lineNumber": 65,
-      "line": "<Tooltip.Item label={s.key} color={s.color}>"
-    },
-    {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/example/BarChart/single-dimension",
-      "lineNumber": 37,
+      "lineNumber": 36,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/example/BarChart/single-dimension",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/example/BarChart/single-dimension",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Tooltip.List>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/example/BarChart/single-dimension",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Tooltip.Item"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 85,
+      "lineNumber": 84,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 87,
+      "lineNumber": 86,
       "line": "<Tooltip.List>"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 88,
+      "lineNumber": 87,
       "line": "<Tooltip.Item label=\"Label:\" value={data.label} />"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 89,
+      "lineNumber": 88,
       "line": "<Tooltip.Item label=\"Range:\" value=\"{data.start} - {data.end}\" />"
     },
     {
@@ -3481,49 +3481,49 @@
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 80,
+      "lineNumber": 81,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 82,
+      "lineNumber": 83,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 83,
+      "lineNumber": 84,
       "line": "<Tooltip.List>"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 84,
+      "lineNumber": 85,
       "line": "<Tooltip.Item label=\"rain\" color=\"hsl(200 100% 50%)\" value={data.rain} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 85,
+      "lineNumber": 86,
       "line": "<Tooltip.Item"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 90,
+      "lineNumber": 91,
       "line": "<Tooltip.Item label=\"dirtyh2o\" color=\"hsl(0, 84%, 60%)\" value={data.dirtyh2o} />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 91,
+      "lineNumber": 92,
       "line": "<Tooltip.Item"
     },
     {
@@ -4293,28 +4293,28 @@
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 22,
+      "lineNumber": 30,
       "line": "<Tooltip.List>"
     },
     {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 23,
+      "lineNumber": 31,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
@@ -4388,59 +4388,87 @@
       "line": "<Tooltip.Item"
     },
     {
-      "example": "point-annotations",
+      "example": "oscilloscope-time",
       "component": "LineChart",
-      "path": "/example/LineChart/point-annotations",
-      "lineNumber": 43,
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 118,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 121,
+      "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
+    },
+    {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 122,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 123,
+      "line": "<Tooltip.Item label=\"value\" {value} color={valueColor(value)} />"
     },
     {
       "example": "point-annotations",
       "component": "LineChart",
       "path": "/example/LineChart/point-annotations",
-      "lineNumber": 52,
-      "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
+      "lineNumber": 44,
+      "line": "<Tooltip.Root>"
     },
     {
       "example": "point-annotations",
       "component": "LineChart",
       "path": "/example/LineChart/point-annotations",
       "lineNumber": 53,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>"
     },
     {
       "example": "point-annotations",
       "component": "LineChart",
       "path": "/example/LineChart/point-annotations",
       "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "point-annotations",
+      "component": "LineChart",
+      "path": "/example/LineChart/point-annotations",
+      "lineNumber": 55,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 52,
+      "lineNumber": 60,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 54,
+      "lineNumber": 62,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 55,
+      "lineNumber": 63,
       "line": "<Tooltip.List>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 56,
+      "lineNumber": 64,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />"
     },
     {
@@ -5823,5 +5851,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:38.618Z"
+  "updatedAt": "2025-12-07T04:39:10.323Z"
 }

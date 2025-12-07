@@ -202,28 +202,28 @@
       "example": "series-stack-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-stack-gradient",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<LinearGradient"
     },
     {
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 20,
+      "lineNumber": 27,
       "line": "<LinearGradient"
     },
     {
       "example": "gradient",
       "component": "BarChart",
       "path": "/example/BarChart/gradient",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<LinearGradient class=\"from-blue-500 to-green-400\" vertical units=\"userSpaceOnUse\">"
     },
     {
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/example/BarChart/oscilloscope-frequency",
-      "lineNumber": 114,
+      "lineNumber": 113,
       "line": "<LinearGradient"
     },
     {
@@ -437,6 +437,13 @@
       "line": "<LinearGradient"
     },
     {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 104,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(valueColor.interpolator())} vertical>"
+    },
+    {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
       "path": "/example/Pattern/lineargradient-as-pattern",
@@ -528,5 +535,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.437Z"
+  "updatedAt": "2025-12-07T04:39:09.739Z"
 }

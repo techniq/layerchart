@@ -307,16 +307,16 @@
         {
           "component": "Chart",
           "lineNumber": 9,
-          "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 10,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 11,
+          "lineNumber": 15,
           "line": "<Axis"
         }
       ]
@@ -401,16 +401,16 @@
         {
           "component": "Chart",
           "lineNumber": 9,
-          "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 10,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 11,
+          "lineNumber": 15,
           "line": "<Axis"
         }
       ]
@@ -422,7 +422,7 @@
         {
           "component": "Chart",
           "lineNumber": 7,
-          "line": "<Chart yDomain={[0, 100]} padding={{ top: 8, bottom: 8, right: 90 }} height={300}>"
+          "line": "<Chart yDomain={[0, 100]} padding={{ ...defaultChartPadding(), right: 90 }} height={300}>"
         },
         {
           "component": "Layer",
@@ -547,17 +547,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<Layer center>"
         },
         {
           "component": "Axis",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<Axis placement=\"radius\" grid />"
         }
       ]
@@ -568,17 +568,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<Layer center>"
         },
         {
           "component": "Axis",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<Axis placement=\"radius\" rule />"
         }
       ]
@@ -590,16 +590,16 @@
         {
           "component": "Chart",
           "lineNumber": 9,
-          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 10,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 11,
+          "lineNumber": 15,
           "line": "<Axis placement=\"bottom\" rule tickMarks={false} />"
         }
       ]
@@ -737,16 +737,16 @@
         {
           "component": "Chart",
           "lineNumber": 115,
-          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 116,
+          "lineNumber": 119,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 117,
+          "lineNumber": 120,
           "line": "<Axis placement=\"top\" rule grid tickMultiline {tickSpacing} />"
         }
       ]
@@ -800,16 +800,16 @@
         {
           "component": "Chart",
           "lineNumber": 110,
-          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 111,
+          "lineNumber": 114,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 112,
+          "lineNumber": 115,
           "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: example.interval }} />"
         }
       ]
@@ -821,16 +821,16 @@
         {
           "component": "Chart",
           "lineNumber": 110,
-          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 111,
+          "lineNumber": 114,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 112,
+          "lineNumber": 115,
           "line": "<Axis"
         }
       ]
@@ -1128,14 +1128,14 @@
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 13,
+      "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 14,
+      "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1338,7 +1338,7 @@
       "example": "multiline-tick-labels",
       "component": "Axis",
       "path": "/example/Axis/multiline-tick-labels",
-      "lineNumber": 11,
+      "lineNumber": 15,
       "line": "<Axis"
     },
     {
@@ -1387,14 +1387,14 @@
       "example": "multiple-axis-same-placement-bottom",
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-bottom",
-      "lineNumber": 11,
+      "lineNumber": 15,
       "line": "<Axis"
     },
     {
       "example": "multiple-axis-same-placement-bottom",
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-bottom",
-      "lineNumber": 17,
+      "lineNumber": 21,
       "line": "<Axis"
     },
     {
@@ -1478,35 +1478,35 @@
       "example": "radial-grid",
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<Axis placement=\"radius\" grid />"
     },
     {
       "example": "radial-grid",
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
-      "lineNumber": 18,
+      "lineNumber": 19,
       "line": "<Axis placement=\"angle\" grid />"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<Axis placement=\"radius\" rule />"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
-      "lineNumber": 18,
+      "lineNumber": 19,
       "line": "<Axis placement=\"angle\" rule />"
     },
     {
       "example": "remove-tick-marks",
       "component": "Axis",
       "path": "/example/Axis/remove-tick-marks",
-      "lineNumber": 11,
+      "lineNumber": 15,
       "line": "<Axis placement=\"bottom\" rule tickMarks={false} />"
     },
     {
@@ -1555,14 +1555,14 @@
       "example": "time-scale-auto-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
-      "lineNumber": 117,
+      "lineNumber": 120,
       "line": "<Axis placement=\"top\" rule grid tickMultiline {tickSpacing} />"
     },
     {
       "example": "time-scale-auto-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
-      "lineNumber": 118,
+      "lineNumber": 121,
       "line": "<Axis placement=\"bottom\" rule grid tickMultiline {tickSpacing} />"
     },
     {
@@ -1611,35 +1611,35 @@
       "example": "time-scale-explicit",
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit",
-      "lineNumber": 112,
+      "lineNumber": 115,
       "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: example.interval }} />"
     },
     {
       "example": "time-scale-explicit-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit-multiline",
-      "lineNumber": 112,
+      "lineNumber": 115,
       "line": "<Axis"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 66,
+      "lineNumber": 65,
       "line": "<Axis placement=\"bottom\" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>"
     },
     {
@@ -2794,14 +2794,14 @@
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 65,
+      "lineNumber": 66,
       "line": "<Axis placement=\"left\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 67,
+      "lineNumber": 68,
       "line": "<Axis"
     },
     {
@@ -3081,14 +3081,14 @@
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 13,
+      "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 14,
+      "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4030,5 +4030,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.066Z"
+  "updatedAt": "2025-12-07T04:39:08.940Z"
 }

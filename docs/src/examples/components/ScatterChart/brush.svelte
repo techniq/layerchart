@@ -8,6 +8,7 @@
 
 <ScatterChart
 	{data}
+	xNice
 	x="x"
 	y="y"
 	props={{

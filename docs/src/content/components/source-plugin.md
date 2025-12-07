@@ -6,7 +6,7 @@ category: examples
 <script lang="ts">
 	import SourceExample from '$lib/components/SourceExample.svelte';
 
-	import Basic from '$examples/AreaChart/basic.svelte';
+	import Basic from '$examples/components/AreaChart/basic.svelte';
 </script>
 
 ```svelte
@@ -14,7 +14,7 @@ category: examples
 	import SourceExample from '$lib/components/SourceExample.svelte';
 
 	// repeat for each example
-	import Basic from '$examples/AreaChart/basic.svelte';
+	import Basic from '$examples/components/AreaChart/basic.svelte';
 </script>
 
 <!-- repeat for each example -->

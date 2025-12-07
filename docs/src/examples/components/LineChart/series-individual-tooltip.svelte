@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { LineChart, Highlight, pivotLonger, Spline, Tooltip } from 'layerchart';
+	import {
+		LineChart,
+		Highlight,
+		pivotLonger,
+		Spline,
+		Tooltip,
+		defaultChartPadding
+	} from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { group } from 'd3-array';
 	import { cls } from '@layerstack/tailwind';
@@ -31,6 +38,7 @@
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
 	brush
 	legend
+	padding={{ ...defaultChartPadding(), right: 10 }}
 	height={300}
 >
 	{#snippet marks({ context })}

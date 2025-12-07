@@ -1,6 +1,7 @@
 <script lang="ts" module>
-  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
+  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
@@ -36,6 +37,9 @@
     ref?: SVGRectElement;
 
     motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+
+    /** Children content to render.  Note: Only works for Html layers */
+    children?: Snippet;
   } & CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
@@ -75,6 +79,7 @@
     onpointerleave,
     onpointerover,
     onpointerout,
+    children,
     ...restProps
   }: RectProps = $props();
 
@@ -190,7 +195,9 @@
     {onpointerleave}
     {onpointerover}
     {onpointerout}
-  ></div>
+  >
+    {@render children?.()}
+  </div>
 {/if}
 
 <style>

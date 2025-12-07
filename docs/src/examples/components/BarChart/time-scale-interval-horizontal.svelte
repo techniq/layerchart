@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { timeDay } from 'd3-time';
 
@@ -10,8 +10,15 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-
 	export { data };
 </script>
 
-<BarChart {data} x="value" y="date" yInterval={timeDay} orientation="horizontal" height={300} />
+<BarChart
+	{data}
+	x="value"
+	y="date"
+	yInterval={timeDay}
+	orientation="horizontal"
+	padding={{ ...defaultChartPadding(), left: 30, right: 10 }}
+	height={300}
+/>

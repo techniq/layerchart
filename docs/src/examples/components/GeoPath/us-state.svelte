@@ -7,7 +7,6 @@
 	import { sort } from '@layerstack/utils';
 
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
-	import Geo from '$examples/Hull/geo.svelte';
 
 	const topology = await getUsCountiesTopology();
 	const states = feature(topology, topology.objects.states);

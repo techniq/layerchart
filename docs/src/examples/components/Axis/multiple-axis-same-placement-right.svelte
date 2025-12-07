@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Axis, Chart, Layer } from 'layerchart';
+	import { Axis, Chart, Layer, defaultChartPadding } from 'layerchart';
 	import { scaleLinear } from 'd3-scale';
 	import { range } from 'd3-array';
 </script>
 
-<Chart yDomain={[0, 100]} padding={{ top: 8, bottom: 8, right: 90 }} height={300}>
+<Chart yDomain={[0, 100]} padding={{ ...defaultChartPadding(), right: 90 }} height={300}>
 	{#snippet children({ context })}
 		<Layer>
 			<Axis

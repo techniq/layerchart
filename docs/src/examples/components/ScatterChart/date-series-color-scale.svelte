@@ -9,6 +9,7 @@
 
 <ScatterChart
 	{data}
+	xNice
 	x="date"
 	y="value"
 	yBaseline={0}
