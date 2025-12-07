@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Chart, Layer, Line, Rect, Text, type ChartContextValue } from 'layerchart';
 	import { movable } from '$lib/attachments/movable';
-	import { localPoint } from '@layerstack/utils';
 	import { scaleLinear } from 'd3-scale';
 	import { AnimationFrames } from 'runed';
 	import { Button, ButtonGroup } from 'svelte-ux';
@@ -127,8 +126,7 @@
 					isHoveringDomain = false;
 				}}
 				onpointermove={(e) => {
-					const { x } = localPoint(e);
-					value = Math.round(domainScale(x));
+					value = Math.round(domainScale(e.offsetX));
 					rangeValue = Math.round(scale(value));
 				}}
 			/>
@@ -140,6 +138,16 @@
 				height={rectHeight}
 				rx={2}
 				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
+				onpointerenter={() => {
+					isHoveringDomain = true;
+				}}
+				onpointerleave={() => {
+					isHoveringDomain = false;
+				}}
+				onpointermove={(e) => {
+					value = Math.round(domainScale(e.offsetX));
+					rangeValue = Math.round(scale(value));
+				}}
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -161,6 +169,17 @@
 				height={rectHeight}
 				rx={2}
 				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
+				onpointerenter={() => {
+					isHoveringDomain = true;
+				}}
+				onpointerleave={() => {
+					isHoveringDomain = false;
+				}}
+				onpointermove={(e) => {
+					const rectWidth = context.xScale(domain[1]) - context.xScale(domain[0]);
+					value = Math.round(domainScale(rectWidth - handleWidth + e.offsetX));
+					rangeValue = Math.round(scale(value));
+				}}
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -224,8 +243,7 @@
 					isHoveringRange = false;
 				}}
 				onpointermove={(e) => {
-					const { x } = localPoint(e);
-					rangeValue = Math.round(rangeScale(x));
+					rangeValue = Math.round(rangeScale(e.offsetX));
 					value = Math.round(scale.invert(rangeValue));
 				}}
 			/>
@@ -237,6 +255,16 @@
 				height={rectHeight}
 				rx={2}
 				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
+				onpointerenter={() => {
+					isHoveringRange = true;
+				}}
+				onpointerleave={() => {
+					isHoveringRange = false;
+				}}
+				onpointermove={(e) => {
+					rangeValue = Math.round(rangeScale(e.offsetX));
+					value = Math.round(scale.invert(rangeValue));
+				}}
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
@@ -257,6 +285,17 @@
 				height={rectHeight}
 				rx={2}
 				class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
+				onpointerenter={() => {
+					isHoveringRange = true;
+				}}
+				onpointerleave={() => {
+					isHoveringRange = false;
+				}}
+				onpointermove={(e) => {
+					const rectWidth = context.xScale(range[1]) - context.xScale(range[0]);
+					rangeValue = Math.round(rangeScale(rectWidth - handleWidth + e.offsetX));
+					value = Math.round(scale.invert(rangeValue));
+				}}
 				{@attach movable({
 					onMove: ({ dx }) => {
 						// @ts-expect-error
