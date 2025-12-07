@@ -24,6 +24,7 @@
 		{ name: 'Features', path: 'features' },
 		{ name: 'Layers', path: 'layers' },
 		{ name: 'Primitives', path: 'primitives' },
+		{ name: 'Data', path: 'data' },
 		{ name: 'Simplified charts', path: 'simplified-charts' },
 		{ name: 'Scales', path: 'scales' },
 		{ name: 'State', path: 'state' },
