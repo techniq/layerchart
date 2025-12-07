@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { accessor, BarChart, Text } from 'layerchart';
+	import { BarChart, defaultChartPadding, accessor, Text } from 'layerchart';
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
-
 	export { data };
 </script>
 
@@ -34,6 +33,7 @@
 			header: { format: 'none' }
 		}
 	}}
+	padding={{ ...defaultChartPadding(), left: 24 }}
 	height={300}
 >
 	<!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->

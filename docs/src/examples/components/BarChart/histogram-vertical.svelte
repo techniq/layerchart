@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
-	import { BarChart, Tooltip } from 'layerchart';
 	import { getOlympians } from '$lib/data.remote';
 	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 
@@ -24,6 +24,7 @@
 	x="x0"
 	y="length"
 	bandPadding={0.2}
+	padding={{ ...defaultChartPadding(), left: 30, top: 20 }}
 	props={{
 		xAxis: { motion: 'tween' },
 		yAxis: { format: 'metric', motion: 'tween' },

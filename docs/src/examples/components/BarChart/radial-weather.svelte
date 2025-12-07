@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, asAny } from 'layerchart';
+	import { BarChart, asAny, defaultChartPadding } from 'layerchart';
 	import { extent } from 'd3-array';
 	import { scaleLinear } from 'd3-scale';
 	import { interpolate, quantize } from 'd3-interpolate';
@@ -20,7 +20,6 @@
 	});
 
 	const avgExtents = extent(data, (d) => d.avg);
-
 	export { data };
 </script>
 
@@ -40,5 +39,6 @@
 		yAxis: { ticks: 4, format: (v) => v + '° F' },
 		grid: { xTicks: 12 }
 	}}
+	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
 	height={600}
 />

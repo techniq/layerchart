@@ -4,7 +4,6 @@
 	import { scaleThreshold } from 'd3-scale';
 
 	const data = createDateSeries({ count: 10, min: -20, max: 50, value: 'integer' });
-
 	export { data };
 </script>
 

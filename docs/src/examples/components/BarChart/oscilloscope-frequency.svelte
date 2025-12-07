@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { BarChart, Bars, LinearGradient, defaultChartPadding } from 'layerchart';
 	import { range, ticks } from 'd3-array';
 	import { scaleLinear, scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
-	import { BarChart, Bars, LinearGradient } from 'layerchart';
 	import OscilloscopeField from '$lib/components/controls/fields/OscilloscopeField.svelte';
 
 	const FFT_SIZE = 256;
@@ -88,7 +88,6 @@
 			stopMicrophone();
 		};
 	});
-
 	export { data };
 </script>
 
@@ -101,13 +100,13 @@
 	y="value"
 	yDomain={[0, 256]}
 	bandPadding={0.2}
-	padding={{ left: 24 }}
 	rule={false}
 	axis="y"
 	tooltip={{ mode: 'manual' }}
 	props={{
 		yAxis: { format: (d) => decibels(d)?.toFixed(1) }
 	}}
+	padding={{ ...defaultChartPadding(), left: 40 }}
 	height={200}
 >
 	{#snippet marks()}
