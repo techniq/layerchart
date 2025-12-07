@@ -3,6 +3,8 @@
 	import { scaleLinear } from 'd3-scale';
 	import { AnimationFrames } from 'runed';
 	import { Button, ButtonGroup } from 'svelte-ux';
+	import { cls } from '@layerstack/tailwind';
+
 	import ResizableRect from './ResizableRect.svelte';
 
 	import LucidePlay from '~icons/lucide/play';
@@ -122,17 +124,28 @@
 		</Layer>
 
 		<Layer type="svg" pointerEvents={false}>
-			<!-- left line -->
-			<Line
-				x1={context.xScale(domain[0])}
-				y1={rectHeight}
-				x2={context.xScale(range[0])}
-				y2={context.height - rectHeight}
-				strokeWidth={2}
-				class="stroke-surface-content/20 [stroke-dasharray:2]"
-			/>
+			<!-- Background grid lines -->
+			{@const lineCount = 20}
+			{#each Array.from({ length: lineCount }) as _, i}
+				{@const t = i / (lineCount - 1)}
+				{@const domainVal = domain[0] + (domain[1] - domain[0]) * t}
+				{@const rangeVal = range[0] + (range[1] - range[0]) * t}
+				<Line
+					x1={context.xScale(domainVal)}
+					y1={rectHeight}
+					x2={context.xScale(rangeVal)}
+					y2={context.height - rectHeight}
+					strokeWidth={2}
+					class={cls(
+						'',
+						i === 0 || i === lineCount - 1
+							? 'stroke-surface-content/20'
+							: 'stroke-surface-content/10 '
+					)}
+				/>
+			{/each}
 
-			<!-- mid line -->
+			<!-- Current value line -->
 			<Line
 				x1={context.xScale(value)}
 				y1={rectHeight}
@@ -141,16 +154,6 @@
 				strokeWidth={2}
 				class="stroke-surface-content"
 				markerEnd="triangle"
-			/>
-
-			<!-- right line -->
-			<Line
-				x1={context.xScale(domain[1])}
-				y1={rectHeight}
-				x2={context.xScale(range[1])}
-				y2={context.height - rectHeight}
-				strokeWidth={2}
-				class="stroke-surface-content/20 [stroke-dasharray:2]"
 			/>
 		</Layer>
 	{/snippet}
