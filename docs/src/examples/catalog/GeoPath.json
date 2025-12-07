@@ -430,17 +430,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 38,
+          "lineNumber": 37,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 46,
+          "lineNumber": 45,
           "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
         }
       ]
@@ -865,7 +865,7 @@
       "example": "us-state",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
     },
     {
@@ -1023,5 +1023,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.685Z"
+  "updatedAt": "2025-12-07T04:39:09.447Z"
 }

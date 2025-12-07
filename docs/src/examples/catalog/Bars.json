@@ -2196,21 +2196,21 @@
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "gradient",
       "component": "BarChart",
       "path": "/example/BarChart/gradient",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
     },
     {
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/example/BarChart/oscilloscope-frequency",
-      "lineNumber": 120,
+      "lineNumber": 119,
       "line": "<Bars radius={1} fill={gradient} />"
     },
     {
@@ -2739,5 +2739,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.157Z"
+  "updatedAt": "2025-12-07T04:39:09.018Z"
 }

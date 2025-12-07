@@ -19,7 +19,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -52,7 +52,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 10,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} props={{ area: { curve: curveCatmullRom } }} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -62,32 +62,32 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 10,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+          "lineNumber": 18,
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 12,
+          "lineNumber": 20,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 13,
+          "lineNumber": 21,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 15,
+          "lineNumber": 23,
           "line": "<Area line={{ class: 'stroke-primary' }} class=\"fill-primary/30\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 16,
+          "lineNumber": 24,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 19,
+          "lineNumber": 27,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -99,7 +99,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 10,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
         },
         {
           "component": "Tooltip",
@@ -115,7 +115,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 14,
-          "line": "<AreaChart {data} x=\"date\" y=\"visits\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -152,7 +152,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
         },
         {
           "component": "LinearGradient",
@@ -173,7 +173,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" labels brush height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -199,17 +199,17 @@
         },
         {
           "component": "Line",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Line"
         },
         {
           "component": "Circle",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Circle"
         },
         {
           "component": "Layer",
-          "lineNumber": 45,
+          "lineNumber": 46,
           "line": "<Layer type=\"html\">"
         }
       ]
@@ -221,7 +221,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 14,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -236,7 +236,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -248,7 +248,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 10,
-          "line": "<AreaChart {data} xScale={scalePoint()} x=\"fruit\" y=\"value\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -259,7 +259,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -307,22 +307,22 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 22,
+          "lineNumber": 29,
           "line": "<AreaChart"
         },
         {
           "component": "Area",
-          "lineNumber": 51,
+          "lineNumber": 59,
           "line": "<Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 58,
+          "lineNumber": 66,
           "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 63,
+          "lineNumber": 71,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -404,12 +404,12 @@
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 42,
+          "lineNumber": 43,
           "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
         }
       ]
@@ -476,7 +476,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"x\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -487,7 +487,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"y\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -539,27 +539,27 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 15,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+          "lineNumber": 22,
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 20,
+          "lineNumber": 27,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 29,
+          "lineNumber": 36,
           "line": "<Area"
         },
         {
           "component": "Highlight",
-          "lineNumber": 41,
+          "lineNumber": 48,
           "line": "<Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 45,
+          "lineNumber": 52,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -571,7 +571,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 27,
-          "line": "<AreaChart bind:context {data} x=\"date\" y=\"value\" height={300} />"
+          "line": "<AreaChart"
         }
       ]
     },
@@ -586,7 +586,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Tooltip.Root x=\"data\" y={context.height + 24} pointerEvents>"
         }
       ]
@@ -602,7 +602,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Tooltip.Root pointerEvents>"
         }
       ]
@@ -621,7 +621,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/basic",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "brush",
@@ -641,7 +641,7 @@
       "example": "brush-sync",
       "component": "AreaChart",
       "path": "/example/AreaChart/brush-sync",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<AreaChart"
     },
     {
@@ -649,28 +649,28 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/curve",
       "lineNumber": 10,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} props={{ area: { curve: curveCatmullRom } }} />"
+      "line": "<AreaChart"
     },
     {
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 10,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 18,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
     },
     {
       "example": "custom-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom-tooltip",
       "lineNumber": 10,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
     },
     {
       "example": "default-series-label",
       "component": "AreaChart",
       "path": "/example/AreaChart/default-series-label",
       "lineNumber": 14,
-      "line": "<AreaChart {data} x=\"date\" y=\"visits\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "funnel",
@@ -684,14 +684,14 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/gradient",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
     },
     {
       "example": "labels",
       "component": "AreaChart",
       "path": "/example/AreaChart/labels",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" labels brush height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "line-annotation",
@@ -712,7 +712,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/null-gaps",
       "lineNumber": 14,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "point-annotations",
@@ -726,14 +726,14 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/point-scale",
       "lineNumber": 10,
-      "line": "<AreaChart {data} xScale={scalePoint()} x=\"fruit\" y=\"value\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "points",
       "component": "AreaChart",
       "path": "/example/AreaChart/points",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" points height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "radial",
@@ -760,7 +760,7 @@
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/series-individual-tooltip",
-      "lineNumber": 22,
+      "lineNumber": 29,
       "line": "<AreaChart"
     },
     {
@@ -852,14 +852,14 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/single-axis-x",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"x\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "single-axis-y",
       "component": "AreaChart",
       "path": "/example/AreaChart/single-axis-y",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" axis=\"y\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "sparkline",
@@ -879,15 +879,15 @@
       "example": "threshold-gradient",
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
-      "lineNumber": 15,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300}>"
+      "lineNumber": 22,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
     },
     {
       "example": "tooltip-external",
       "component": "AreaChart",
       "path": "/example/AreaChart/tooltip-external",
       "lineNumber": 27,
-      "line": "<AreaChart bind:context {data} x=\"date\" y=\"value\" height={300} />"
+      "line": "<AreaChart"
     },
     {
       "example": "tooltip-fixed-with-hide-delay",
@@ -925,5 +925,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.727Z"
+  "updatedAt": "2025-12-07T04:39:08.916Z"
 }

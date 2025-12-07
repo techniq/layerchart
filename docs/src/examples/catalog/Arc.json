@@ -431,9 +431,9 @@
       "example": "offset-slice",
       "component": "PieChart",
       "path": "/example/PieChart/offset-slice",
-      "lineNumber": 11,
+      "lineNumber": 12,
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.667Z"
+  "updatedAt": "2025-12-07T04:39:08.842Z"
 }

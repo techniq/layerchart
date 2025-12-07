@@ -251,14 +251,14 @@
       "example": "custom",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
-      "lineNumber": 12,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
       "example": "markers",
       "component": "AreaChart",
       "path": "/example/AreaChart/markers",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Layer type=\"html\">"
     },
     {
@@ -363,7 +363,7 @@
       "example": "multiline-tick-labels",
       "component": "Axis",
       "path": "/example/Axis/multiline-tick-labels",
-      "lineNumber": 10,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
@@ -391,7 +391,7 @@
       "example": "multiple-axis-same-placement-bottom",
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-bottom",
-      "lineNumber": 10,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
@@ -440,21 +440,21 @@
       "example": "radial-grid",
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<Layer center>"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<Layer center>"
     },
     {
       "example": "remove-tick-marks",
       "component": "Axis",
       "path": "/example/Axis/remove-tick-marks",
-      "lineNumber": 10,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
@@ -503,7 +503,7 @@
       "example": "time-scale-auto-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
-      "lineNumber": 116,
+      "lineNumber": 119,
       "line": "<Layer>"
     },
     {
@@ -538,21 +538,21 @@
       "example": "time-scale-explicit",
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit",
-      "lineNumber": 111,
+      "lineNumber": 114,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-explicit-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit-multiline",
-      "lineNumber": 111,
+      "lineNumber": 114,
       "line": "<Layer>"
     },
     {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/example/BarChart/custom-chart",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Layer>"
     },
     {
@@ -1630,7 +1630,7 @@
       "example": "us-state",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Layer>"
     },
     {
@@ -1938,7 +1938,7 @@
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 12,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
@@ -3048,5 +3048,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.966Z"
+  "updatedAt": "2025-12-07T04:39:09.661Z"
 }

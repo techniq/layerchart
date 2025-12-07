@@ -121,17 +121,17 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 13,
+          "lineNumber": 14,
           "line": "<BarChart"
         },
         {
           "component": "Axis",
-          "lineNumber": 65,
+          "lineNumber": 66,
           "line": "<Axis placement=\"left\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 80,
+          "lineNumber": 81,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -451,7 +451,7 @@
       "component": "Axis",
       "path": "/example/Axis/multiline-tick-labels",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+      "line": "<Chart"
     },
     {
       "example": "multiple-axis-grid-and-rules",
@@ -479,14 +479,14 @@
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-bottom",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeYear.offset(today, -2), today]} padding={24} height={48}>"
+      "line": "<Chart"
     },
     {
       "example": "multiple-axis-same-placement-right",
       "component": "Axis",
       "path": "/example/Axis/multiple-axis-same-placement-right",
       "lineNumber": 7,
-      "line": "<Chart yDomain={[0, 100]} padding={{ top: 8, bottom: 8, right: 90 }} height={300}>"
+      "line": "<Chart yDomain={[0, 100]} padding={{ ...defaultChartPadding(), right: 90 }} height={300}>"
     },
     {
       "example": "override-axis-ticks-scale",
@@ -527,14 +527,14 @@
       "example": "radial-grid",
       "component": "Axis",
       "path": "/example/Axis/radial-grid",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<Chart"
     },
     {
       "example": "radial-rule",
       "component": "Axis",
       "path": "/example/Axis/radial-rule",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<Chart"
     },
     {
@@ -542,7 +542,7 @@
       "component": "Axis",
       "path": "/example/Axis/remove-tick-marks",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+      "line": "<Chart"
     },
     {
       "example": "rotate-labels",
@@ -591,7 +591,7 @@
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-multiline",
       "lineNumber": 115,
-      "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+      "line": "<Chart"
     },
     {
       "example": "time-scale-brush",
@@ -626,14 +626,14 @@
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit",
       "lineNumber": 110,
-      "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+      "line": "<Chart"
     },
     {
       "example": "time-scale-explicit-multiline",
       "component": "Axis",
       "path": "/example/Axis/time-scale-explicit-multiline",
       "lineNumber": 110,
-      "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+      "line": "<Chart"
     },
     {
       "example": "horizontal-average-annotation-rule",
@@ -1647,7 +1647,7 @@
       "example": "us-state",
       "component": "GeoPath",
       "path": "/example/GeoPath/us-state",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Chart"
     },
     {
@@ -3037,5 +3037,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.320Z"
+  "updatedAt": "2025-12-07T04:39:09.125Z"
 }

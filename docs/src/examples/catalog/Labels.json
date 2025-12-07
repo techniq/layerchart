@@ -20,7 +20,7 @@
       "example": "axis-labels-inside-bars-using-labels",
       "component": "BarChart",
       "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
     },
     {
@@ -80,5 +80,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-11-10T21:19:03.671Z"
+  "updatedAt": "2025-12-07T04:39:09.643Z"
 }

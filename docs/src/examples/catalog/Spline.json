@@ -801,7 +801,7 @@
       "example": "custom",
       "component": "LineChart",
       "path": "/example/LineChart/custom",
-      "lineNumber": 15,
+      "lineNumber": 23,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
@@ -826,17 +826,24 @@
       "line": "<Spline"
     },
     {
+      "example": "oscilloscope-time",
+      "component": "LineChart",
+      "path": "/example/LineChart/oscilloscope-time",
+      "lineNumber": 106,
+      "line": "<Spline stroke={gradient} />"
+    },
+    {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/series-individual-tooltip",
-      "lineNumber": 41,
+      "lineNumber": 49,
       "line": "<Spline {data} y={s.key} stroke={s.color} class={cls(!active && 'opacity-20 saturate-0')} />"
     },
     {
       "example": "series-with-nulls",
       "component": "LineChart",
       "path": "/example/LineChart/series-with-nulls",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Spline"
     },
     {
@@ -1106,5 +1113,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.804Z"
+  "updatedAt": "2025-12-07T04:39:10.236Z"
 }

@@ -93,7 +93,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<ArcChart"
         }
       ]
@@ -104,7 +104,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<ArcChart"
         }
       ]
@@ -169,7 +169,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<ArcChart"
         }
       ]
@@ -180,7 +180,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<ArcChart"
         }
       ]
@@ -191,7 +191,7 @@
       "components": [
         {
           "component": "ArcChart",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<ArcChart"
         }
       ]
@@ -255,14 +255,14 @@
       "example": "series",
       "component": "ArcChart",
       "path": "/example/ArcChart/series",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-arc",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-arc",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
@@ -297,21 +297,21 @@
       "example": "series-start-180",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-start-180",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-start-90",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-start-90",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-track-color",
       "component": "ArcChart",
       "path": "/example/ArcChart/series-track-color",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
@@ -322,5 +322,5 @@
       "line": "<ArcChart"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.683Z"
+  "updatedAt": "2025-12-07T04:39:08.863Z"
 }

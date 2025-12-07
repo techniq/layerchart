@@ -201,7 +201,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/example/BarChart/single-stack-with-indicator",
-      "lineNumber": 68,
+      "lineNumber": 67,
       "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
     },
     {
@@ -446,14 +446,14 @@
       "example": "donut-with-text",
       "component": "PieChart",
       "path": "/example/PieChart/donut-with-text",
-      "lineNumber": 21,
+      "lineNumber": 23,
       "line": "<Text"
     },
     {
       "example": "donut-with-text",
       "component": "PieChart",
       "path": "/example/PieChart/donut-with-text",
-      "lineNumber": 28,
+      "lineNumber": 30,
       "line": "<Text"
     },
     {
@@ -632,5 +632,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:38.545Z"
+  "updatedAt": "2025-12-07T04:39:10.271Z"
 }
