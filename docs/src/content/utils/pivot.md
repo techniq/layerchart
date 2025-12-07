@@ -2,7 +2,7 @@
 description: Utility function to reshape and aggregate tabular data, converting between long and wide formats.
 category: tools
 layers: []
-related: []
+related: [/docs/components/LineChart/series-separate-data]
 ---
 
 <script lang="ts">

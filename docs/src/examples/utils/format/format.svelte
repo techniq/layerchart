@@ -18,18 +18,14 @@
 </` +
 		`script>
 `;
-
-	// Evaluate each line and capture all outputs
-	const evaluatedOutput = fmtSource
-		.split('\n')
-		.map((line) => {
-			const trimmed = line.trim();
-			if (trimmed.startsWith('format(')) {
-				return `${line} // ${eval(trimmed)}`;
-			}
-			return line;
-		})
-		.join('\n');
 </script>
 
-<Code source={evaluatedOutput} language="js" copyButton={false} lang="ts" />
+{format(1234.56, 'integer')}<br />
+{format(1234.56, 'decimal')}<br />
+{format(1234.56, 'currency')}<br />
+{format(0.5678, 'percent')}<br />
+{format(0.5678, 'percentRound')}<br />
+{format(1_234_567, 'metric')}<br />
+{format(new Date(), 'day', { variant: 'short' })}<br />
+{format(new Date(), 'custom', { custom: 'eee, MMMM do' })}<br />
+<Code source={fmtSource} language="js" copyButton={false} lang="ts" />

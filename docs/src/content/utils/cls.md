@@ -2,7 +2,7 @@
 description: Utility function wrapper around tailwind-merge and clsx for easy style overrides.
 category: tools
 layers: []
-related: [https://github.com/dcastil/tailwind-merge, https://github.com/lukeed/clsx, https://www.layerstack.dev/docs/tailwind/utils]
+related: [/docs/components/BrushContext/selection, https://github.com/dcastil/tailwind-merge, https://github.com/lukeed/clsx, https://www.layerstack.dev/docs/tailwind/utils]
 ---
 
 <script lang="ts">

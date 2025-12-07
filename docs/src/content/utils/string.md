@@ -2,7 +2,7 @@
 description: Utility string functions.
 category: tools
 layers: []
-related: [https://www.layerstack.dev/docs/utils/string]
+related: [/docs/components/BarChart/duration-civilization-timeline, /docs/components/BarChart/duration-civilization-timeline-dense, /docs/components/Text/playground, components/Text, https://www.layerstack.dev/docs/utils/string]
 ---
 
 <script lang="ts">
