@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ScatterChart } from 'layerchart';
+	import { ScatterChart, defaultChartPadding } from 'layerchart';
 	import { getPenguins } from '$lib/data.remote';
 	import { flatGroup } from 'd3-array';
 
@@ -15,6 +15,7 @@
 </script>
 
 <ScatterChart
+	xNice
 	x="flipper_length_mm"
 	y="bill_length_mm"
 	series={data.map(([species, data], i) => {
@@ -22,6 +23,7 @@
 		return {
 			key: species,
 			label: species + ' 🐧',
+			fontSize: 16,
 			data,
 			color,
 			props: {
@@ -31,6 +33,6 @@
 		};
 	})}
 	legend
-	padding={{ left: 10, top: 10, right: 10, bottom: 48 }}
+	padding={{ ...defaultChartPadding, top: 20, bottom: 48, left: 20, right: 20 }}
 	height={400}
 />
