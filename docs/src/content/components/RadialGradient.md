@@ -11,16 +11,16 @@ related: [LinearGradient, Pattern]
 
 ## Focal location and radius with custom colors
 
-<Example name="focal-location-and-radius-with-custom-colors" />
+<Example name="focal-location-and-radius-with-custom-colors" noResize clip />
 
 ## Tailwind colors
 
-<Example name="tailwind-colors" />
+<Example name="tailwind-colors" noResize clip />
 
 ## spreadMethod
 
-<Example name="spreadmethod" />
+<Example name="spreadmethod" noResize clip />
 
 ## units
 
-<Example name="units" />
+<Example name="units" noResize clip />

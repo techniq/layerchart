@@ -13,8 +13,8 @@ related: []
 
 ### pivotLonger (columns to rows)
 
-<Example name="pivot-longer" resize={false} />
+<Example name="pivot-longer" noResize />
 
 ### pivotWider (rows to columns)
 
-<Example name="pivot-wider" resize={false} />
+<Example name="pivot-wider" noResize />

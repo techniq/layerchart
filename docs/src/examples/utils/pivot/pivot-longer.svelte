@@ -9,13 +9,14 @@
 <Code
 	source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'grapes'], 'fruit', 'value')"
 	language="js"
+	class="mb-4"
 />
 
-<h2 class="pt-4">Before</h2>
+<div>Before</div>
 
 <Json value={wideData} class="rounded-sm" />
 
-<h2>After</h2>
+<div>After</div>
 
 <Json
 	value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'grapes'], 'fruit', 'value')}

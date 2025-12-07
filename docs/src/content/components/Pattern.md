@@ -11,28 +11,28 @@ related: [LinearGradient, RadialGradient]
 
 ## Lines
 
-<Example name="lines" />
+<Example name="lines" noResize clip />
 
 ## Circles
 
-<Example name="circles" />
+<Example name="circles" noResize clip />
 
 ## With Fill color
 
-<Example name="with-fill-color" />
+<Example name="with-fill-color" noResize clip />
 
 ## With LinearGradient
 
-<Example name="with-lineargradient" />
+<Example name="with-lineargradient" noResize clip />
 
 ## LinearGradient as Pattern
 
-<Example name="lineargradient-as-pattern" />
+<Example name="lineargradient-as-pattern" noResize clip />
 
 ## Lines (custom pattern - svg only)
 
-<Example name="lines-custom-pattern-svg-only" />
+<Example name="lines-custom-pattern-svg-only" noResize clip />
 
 ## Circles (custom pattern - svg only)
 
-<Example name="circles-custom-pattern-svg-only" />
+<Example name="circles-custom-pattern-svg-only" noResize clip />

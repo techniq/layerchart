@@ -6,12 +6,12 @@
 	import { longData } from '$lib/utils/data';
 </script>
 
-<Code source="pivotWider(longData, 'year', 'fruit', 'value')" language="js" />
+<Code source="pivotWider(longData, 'year', 'fruit', 'value')" language="js" class="mb-4" />
 
-<h2 class="pt-4">Before</h2>
+<div>Before</div>
 
 <Json value={longData} class="rounded-sm" />
 
-<h2>After</h2>
+<div>After</div>
 
 <Json value={pivotWider(longData, 'year', 'fruit', 'value')} class="rounded-sm" />

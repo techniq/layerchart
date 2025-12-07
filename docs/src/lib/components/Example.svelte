@@ -23,13 +23,17 @@
 		name,
 		showCode = false,
 		variant = 'default',
-		resize
+		noResize = false,
+		clip = false,
+		class: className
 	}: {
 		component: string;
 		name: string;
 		showCode?: boolean;
 		variant?: 'default' | 'basic';
-		resize?: boolean;
+		noResize?: boolean;
+		clip?: boolean;
+		class?: string;
 	} = $props();
 
 	const example = examples.get()?.current[component]?.[name];
@@ -66,8 +70,8 @@
 
 	let canResize = $derived.by(() => {
 		// Prop
-		if (resize !== undefined) {
-			return resize;
+		if (noResize) {
+			return !noResize;
 		}
 
 		// Page setting
@@ -85,7 +89,7 @@
 	});
 </script>
 
-<div class="example relative">
+<div class={cls('example relative', clip && 'overflow-clip', className)}>
 	{#if example}
 		<div
 			class={cls(
