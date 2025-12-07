@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-07T04:39:08.301Z",
+  "generatedAt": "2025-12-07T04:45:08.422Z",
   "totalComponents": 57,
   "totalExamples": 703,
   "components": [
@@ -244,12 +244,12 @@
         {
           "name": "series",
           "path": "/example/ArcChart/series",
-          "checksum": "c16ef5ff1dadae002785729559d3472c"
+          "checksum": "4fe87d135d44cee05ea938a3c2261796"
         },
         {
           "name": "series-arc",
           "path": "/example/ArcChart/series-arc",
-          "checksum": "a2d1fd5e2f05fa2319f005c30b29aab1"
+          "checksum": "2bd729da2471df6c43761c723b19f934"
         },
         {
           "name": "series-individual",
@@ -274,17 +274,17 @@
         {
           "name": "series-start-180",
           "path": "/example/ArcChart/series-start-180",
-          "checksum": "6c80832199bc0ee15a553ba3554b811c"
+          "checksum": "f3b422f0ecd17d3dd5f693d5acba3c0e"
         },
         {
           "name": "series-start-90",
           "path": "/example/ArcChart/series-start-90",
-          "checksum": "4953600b5286b56233f15240fceb58c8"
+          "checksum": "43d46e2194024b65806289438f7438cc"
         },
         {
           "name": "series-track-color",
           "path": "/example/ArcChart/series-track-color",
-          "checksum": "520534887eb13b9e46fe7fb09011aedd"
+          "checksum": "df510274d5f20e97f39f08258581933c"
         },
         {
           "name": "track-size",
@@ -689,7 +689,7 @@
         {
           "name": "multiline-tick-labels",
           "path": "/example/Axis/multiline-tick-labels",
-          "checksum": "bec845bd6ea016b45af22c1ff71765a8"
+          "checksum": "dd2b142eedb5de719d280e25e9535210"
         },
         {
           "name": "multiple-axis-grid-and-rules",
@@ -709,12 +709,12 @@
         {
           "name": "multiple-axis-same-placement-bottom",
           "path": "/example/Axis/multiple-axis-same-placement-bottom",
-          "checksum": "a452d2c80f72ecd59cf2137453aaf2d4"
+          "checksum": "df82082e242d51048023ab6fedcd41b0"
         },
         {
           "name": "multiple-axis-same-placement-right",
           "path": "/example/Axis/multiple-axis-same-placement-right",
-          "checksum": "6446232b8a58d53e16410835dd66412c"
+          "checksum": "be6f125e7b65aab7f3f53dbc5b59213f"
         },
         {
           "name": "override-axis-ticks-scale",
@@ -744,17 +744,17 @@
         {
           "name": "radial-grid",
           "path": "/example/Axis/radial-grid",
-          "checksum": "c8e3482e82df2fdcbb589050f2444eda"
+          "checksum": "b4f6a1f387f0437783713f5f1eb171fc"
         },
         {
           "name": "radial-rule",
           "path": "/example/Axis/radial-rule",
-          "checksum": "9349f73053b992e8a6bd6028e1a097f0"
+          "checksum": "695c865a4059680b11fefe62785962ac"
         },
         {
           "name": "remove-tick-marks",
           "path": "/example/Axis/remove-tick-marks",
-          "checksum": "f470dbdc8f694cf1118b8812bebbfb2b"
+          "checksum": "6787a7b953bc068a97cec0b8f89e22f6"
         },
         {
           "name": "rotate-labels",
@@ -789,7 +789,7 @@
         {
           "name": "time-scale-auto-multiline",
           "path": "/example/Axis/time-scale-auto-multiline",
-          "checksum": "8b7aad2dda87587583a98e72aa55e75e"
+          "checksum": "51cc4b7c2691c17c4096dab68f43d702"
         },
         {
           "name": "time-scale-brush",
@@ -799,17 +799,17 @@
         {
           "name": "time-scale-brush-multiline",
           "path": "/example/Axis/time-scale-brush-multiline",
-          "checksum": "2030ea0fc172dac43100df8982dec7b6"
+          "checksum": "03f91620a8b153d450a8546684e49f5f"
         },
         {
           "name": "time-scale-explicit",
           "path": "/example/Axis/time-scale-explicit",
-          "checksum": "4ff7c67f613f5e811326772258666673"
+          "checksum": "f2329cf04a33458e39de20f7c8026dd2"
         },
         {
           "name": "time-scale-explicit-multiline",
           "path": "/example/Axis/time-scale-explicit-multiline",
-          "checksum": "f5737723196a036e5e25237ab2dd8737"
+          "checksum": "b493a5e20d2fc51d7822042250363548"
         }
       ]
     },
@@ -819,337 +819,337 @@
         {
           "name": "axis-labels-inside-bars",
           "path": "/example/BarChart/axis-labels-inside-bars",
-          "checksum": "d4e7e70428e37281dc876b592299e7b8"
+          "checksum": "8c035ba2c321aa11da889262e85e12c9"
         },
         {
           "name": "axis-labels-inside-bars-using-labels",
           "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
-          "checksum": "7f8b6b2198267ca84fc784e8e975add8"
+          "checksum": "c9a84ab7b1d814bcb0386f721260e6cc"
         },
         {
           "name": "both-axis-grid",
           "path": "/example/BarChart/both-axis-grid",
-          "checksum": "fe401eb3ce5045ab37c3c8cfd8973bac"
+          "checksum": "e817b450b0dc574cc8d5565283c16a43"
         },
         {
           "name": "both-axis-grid-align-between",
           "path": "/example/BarChart/both-axis-grid-align-between",
-          "checksum": "1db534bddd6c86d190bc6de870f3bd1d"
+          "checksum": "6ec5fe2dfecbae311aa4df46344c5729"
         },
         {
           "name": "brushing",
           "path": "/example/BarChart/brushing",
-          "checksum": "70c882b263e02fde8f770e0d8a8fb1b8"
+          "checksum": "4b39996c958561578c7d85b6d6fb9682"
         },
         {
           "name": "color-bars-class",
           "path": "/example/BarChart/color-bars-class",
-          "checksum": "2194015a3e0f59c4acdc3c30c2369b1b"
+          "checksum": "4ec9a4f2f6ae3cdfd6d2a2f6a8040fdb"
         },
         {
           "name": "color-per-value",
           "path": "/example/BarChart/color-per-value",
-          "checksum": "9616a5f2e66f091c047a81aa02c3f6e4"
+          "checksum": "8cc6c8fad192ac9d7866883392da2a93"
         },
         {
           "name": "color-threshold",
           "path": "/example/BarChart/color-threshold",
-          "checksum": "1e2d95e8f8afd2f49649d4b19441956b"
+          "checksum": "eb3c4c49330f9eaf1b326acf7a0b5408"
         },
         {
           "name": "color-using-scale",
           "path": "/example/BarChart/color-using-scale",
-          "checksum": "e28e38fa72b8a2c7c11b1748de4dde84"
+          "checksum": "0df6a9556a3ee916dd104fff879b23c8"
         },
         {
           "name": "custom-chart",
           "path": "/example/BarChart/custom-chart",
-          "checksum": "dffb67cc035d7b0321ee67d0c30cceb4"
+          "checksum": "92752845212701f133a526ac2e979663"
         },
         {
           "name": "custom-tooltip",
           "path": "/example/BarChart/custom-tooltip",
-          "checksum": "c0c417fd6f281f46420ca026fc1b6f85"
+          "checksum": "2cbb9789e4ad9acdaf15238c74544ed2"
         },
         {
           "name": "duration",
           "path": "/example/BarChart/duration",
-          "checksum": "8c0557ff4341ed7928c4307ed4ea292d"
+          "checksum": "f4adc31dbe35e55adffd2bf3473c5a98"
         },
         {
           "name": "duration-bars",
           "path": "/example/BarChart/duration-bars",
-          "checksum": "a4e4e9adf76ef4e0ad7facb0e275ef85"
+          "checksum": "f1c2e0ef141ea20d77f68ed895961919"
         },
         {
           "name": "duration-bars-color",
           "path": "/example/BarChart/duration-bars-color",
-          "checksum": "b64e9b6f53960f09e6501bbc20d6f686"
+          "checksum": "567a02d0529e5348c7f2b20d91ebb8af"
         },
         {
           "name": "duration-bars-dense",
           "path": "/example/BarChart/duration-bars-dense",
-          "checksum": "2b7b4f17d17e4bf14da38f1dddd3d22e"
+          "checksum": "0472319518ca0b2e1b2f5cc67ac48737"
         },
         {
           "name": "duration-bars-dense-lanes",
           "path": "/example/BarChart/duration-bars-dense-lanes",
-          "checksum": "cef5115358ac477f4bcc74743530d91b"
+          "checksum": "b872027ece42047800c55a7130e2a83c"
         },
         {
           "name": "duration-bars-lanes",
           "path": "/example/BarChart/duration-bars-lanes",
-          "checksum": "76d715a2cdc324982b9517b2ffa5074e"
+          "checksum": "127f01872ed73d3d49b223c663515ecc"
         },
         {
           "name": "duration-civilization-timeline",
           "path": "/example/BarChart/duration-civilization-timeline",
-          "checksum": "60cb7fd1160e0a753266f598148003e9"
+          "checksum": "aad2e39612feb7bc3df7726e26bdb88e"
         },
         {
           "name": "duration-civilization-timeline-dense",
           "path": "/example/BarChart/duration-civilization-timeline-dense",
-          "checksum": "c98b2d226b13fc2847bd2f250cda203f"
+          "checksum": "af1b9acb7ca324d73a01a78d4e534633"
         },
         {
           "name": "duration-points",
           "path": "/example/BarChart/duration-points",
-          "checksum": "91d5800719212baa3ce1ad819c17ba0c"
+          "checksum": "f450d3d988354948c505f1114bc55b43"
         },
         {
           "name": "duration-points-color",
           "path": "/example/BarChart/duration-points-color",
-          "checksum": "37cb27f418028cdff5fa3ca9d9c67faa"
+          "checksum": "57073117e54ebba149e20bf2ae6ff718"
         },
         {
           "name": "gradient",
           "path": "/example/BarChart/gradient",
-          "checksum": "95b2bc4524490d285fb90c8dbea97bdd"
+          "checksum": "24478da8d18f4000e87c8978a09ab2b9"
         },
         {
           "name": "group-series",
           "path": "/example/BarChart/group-series",
-          "checksum": "ea283822520b5028ffcc470e190b6c96"
+          "checksum": "8f4ab0e28f29bdde8ff99ebb56aabdad"
         },
         {
           "name": "group-series-bar-click",
           "path": "/example/BarChart/group-series-bar-click",
-          "checksum": "e3727d3bfc8d0b341a1f82f751bf6130"
+          "checksum": "dc04868e5b53f3dea9b03e4b7b3f9ba6"
         },
         {
           "name": "group-series-horizontal",
           "path": "/example/BarChart/group-series-horizontal",
-          "checksum": "62a83e98b4ee08a8fa9e762ab66a62dc"
+          "checksum": "19e87b972e924f4f88f6e6071bfd8211"
         },
         {
           "name": "group-series-labels",
           "path": "/example/BarChart/group-series-labels",
-          "checksum": "9b7ceb63269278c4004acc6ab5346ed7"
+          "checksum": "23327588f2fd60976159ba63a64b3df1"
         },
         {
           "name": "group-series-series-long-data",
           "path": "/example/BarChart/group-series-series-long-data",
-          "checksum": "1ab5443583f52e70b005ef0caa679579"
+          "checksum": "281dce4639fef470074892a4d1595603"
         },
         {
           "name": "highlight-below-marks",
           "path": "/example/BarChart/highlight-below-marks",
-          "checksum": "0f7f8140e2501c7ea67ad4dedd45dcc1"
+          "checksum": "6b68a0c0357ecaa8c064e5ea64b9e0cb"
         },
         {
           "name": "histogram-date-time-count",
           "path": "/example/BarChart/histogram-date-time-count",
-          "checksum": "6ba43129adcfefbd06d4ce7f256d80f6"
+          "checksum": "af5a1c389d691072870b135d58dccdd8"
         },
         {
           "name": "histogram-date-time-interval",
           "path": "/example/BarChart/histogram-date-time-interval",
-          "checksum": "fbb0411158401c092dbda6514baf88cd"
+          "checksum": "c6d98ffadf71c9d3e303b5b0acf37336"
         },
         {
           "name": "histogram-horizontal",
           "path": "/example/BarChart/histogram-horizontal",
-          "checksum": "e845274fb8ae3089e00f9272718c393e"
+          "checksum": "f4dea70140e767ddeb19fbfbb74e4bfd"
         },
         {
           "name": "histogram-random-distribution",
           "path": "/example/BarChart/histogram-random-distribution",
-          "checksum": "e1ec8a4bf3d30c65a1ae9a526e746c10"
+          "checksum": "0d5df1c23ed4c9843de4ae9448e8504a"
         },
         {
           "name": "histogram-vertical",
           "path": "/example/BarChart/histogram-vertical",
-          "checksum": "34f5e8296eaccbf295801f217a371568"
+          "checksum": "f68fbf20fce76f50d5bba2ad0fe28703"
         },
         {
           "name": "horizontal",
           "path": "/example/BarChart/horizontal",
-          "checksum": "070829089e426d2248bfa4306bad2c93"
+          "checksum": "8ddc66b9e0b1e9c68f4ed4a503f1e663"
         },
         {
           "name": "labels",
           "path": "/example/BarChart/labels",
-          "checksum": "88f0a433d0c60084f4806655410cfdee"
+          "checksum": "2a56585648b8154d7db699de03e72fd7"
         },
         {
           "name": "labels-inside-placement",
           "path": "/example/BarChart/labels-inside-placement",
-          "checksum": "0e5fd0284291cbbdd63b46e6748cbba8"
+          "checksum": "ccf493026818850c9815fb2c743ce6c1"
         },
         {
           "name": "legend-custom-labels",
           "path": "/example/BarChart/legend-custom-labels",
-          "checksum": "bac5d1caa54fc96d0cd187c83e36a6d3"
+          "checksum": "6722592ba96dc7f6f71f350201ec632f"
         },
         {
           "name": "legend-group-series",
           "path": "/example/BarChart/legend-group-series",
-          "checksum": "ebc3caa37e411de86d9c740341467951"
+          "checksum": "2877956b51b0b89fe58ddb033ae85eb6"
         },
         {
           "name": "legend-placement",
           "path": "/example/BarChart/legend-placement",
-          "checksum": "fe86ae67c1dfa99ecce98884edf325da"
+          "checksum": "101b0f2bf70031bfd19639e4ad05eb30"
         },
         {
           "name": "legend-stack-series",
           "path": "/example/BarChart/legend-stack-series",
-          "checksum": "25803183dc744fc1b4e15498c4a4ada9"
+          "checksum": "9dc378ac34027aa55883967d4d7d13a9"
         },
         {
           "name": "line-annotation",
           "path": "/example/BarChart/line-annotation",
-          "checksum": "0cea72c2fbdf45f248a68e1f2ee795a5"
+          "checksum": "7d6f753a09c14174a0d64f6d05e78e91"
         },
         {
           "name": "oscilloscope-frequency",
           "path": "/example/BarChart/oscilloscope-frequency",
-          "checksum": "9f91ef414a8cf9f008d864e8560c8a41"
+          "checksum": "124c6d32280a577c22ffe2bec15eebc2"
         },
         {
           "name": "override-axis-ticks-with-custom-scale",
           "path": "/example/BarChart/override-axis-ticks-with-custom-scale",
-          "checksum": "b3a308aa3cb89167ab7db0eaa8944c8c"
+          "checksum": "026168606f6ad4a127e27e3a5eb3b36c"
         },
         {
           "name": "point-annotation",
           "path": "/example/BarChart/point-annotation",
-          "checksum": "1204c2560f8990c1064080fa64fba240"
+          "checksum": "8679e2a97a44687c14cb1283f3c6d923"
         },
         {
           "name": "radial-horizontal",
           "path": "/example/BarChart/radial-horizontal",
-          "checksum": "6eb687441b23f42dcd83bab094254afe"
+          "checksum": "27cf4dd606f1f3946a4042fbfd64d88d"
         },
         {
           "name": "radial-horizontal-color-per-value",
           "path": "/example/BarChart/radial-horizontal-color-per-value",
-          "checksum": "59b64f303a89e7fb37272610270e17be"
+          "checksum": "b4a3b2745a39c1db277782423e39c2a7"
         },
         {
           "name": "radial-horizontal-duration",
           "path": "/example/BarChart/radial-horizontal-duration",
-          "checksum": "d5140e432f4f1a99f91d7ff771826aff"
+          "checksum": "e7d381ab379de0d84a29c07d2109df48"
         },
         {
           "name": "radial-horizontal-grid-between",
           "path": "/example/BarChart/radial-horizontal-grid-between",
-          "checksum": "5613a637be98be095c117d2562665bb9"
+          "checksum": "38b5bcfb1700d291c14f94508463ac32"
         },
         {
           "name": "radial-vertical",
           "path": "/example/BarChart/radial-vertical",
-          "checksum": "7591d6472e476b2eb638c17a43dccc07"
+          "checksum": "8000cb6d72644654bbc2aab7f8e3816e"
         },
         {
           "name": "radial-vertical-arcpadding",
           "path": "/example/BarChart/radial-vertical-arcpadding",
-          "checksum": "48c3d0bf105589bf88188b4254cb3154"
+          "checksum": "1438e16c82aaffc11e86311906b4609b"
         },
         {
           "name": "radial-vertical-yrange",
           "path": "/example/BarChart/radial-vertical-yrange",
-          "checksum": "8ff50bebfcc5d221f2c644d8d7371c21"
+          "checksum": "e7b8a0bce148f9b78f156486c819ae60"
         },
         {
           "name": "radial-weather",
           "path": "/example/BarChart/radial-weather",
-          "checksum": "362113e8fbe302e116786282c97b7ea6"
+          "checksum": "74c161d2892b2b75f8fa36b5071a4eea"
         },
         {
           "name": "range-annotation-multiple",
           "path": "/example/BarChart/range-annotation-multiple",
-          "checksum": "af889a27c7845a85367e5844f65f6103"
+          "checksum": "ce791997448744554e9efca1b391023a"
         },
         {
           "name": "range-annotation-single",
           "path": "/example/BarChart/range-annotation-single",
-          "checksum": "f5da7331a904d9944d8a193d0190eaf1"
+          "checksum": "a1bfa6b05fc47c90db837c9e3298bffb"
         },
         {
           "name": "range-annotation-value",
           "path": "/example/BarChart/range-annotation-value",
-          "checksum": "338df075be974a5804aca6cc8855b488"
+          "checksum": "918a80e2cf8a7d858c9129f99c7397bf"
         },
         {
           "name": "remove-rounding",
           "path": "/example/BarChart/remove-rounding",
-          "checksum": "a43287e7d130db9fd26f6a1736c70a5e"
+          "checksum": "5bc954ffd51237063ff59da849d05c90"
         },
         {
           "name": "scale-override",
           "path": "/example/BarChart/scale-override",
-          "checksum": "53fe1fef7aba5771e9532c950a720e76"
+          "checksum": "ac9b8b6bf6f7548198e09f5ffa151985"
         },
         {
           "name": "series",
           "path": "/example/BarChart/series",
-          "checksum": "9c61cc06b87b0fa55e42a9cbc04f2391"
+          "checksum": "f44592bacb35d9b131fa40d9abbeed21"
         },
         {
           "name": "series-data",
           "path": "/example/BarChart/series-data",
-          "checksum": "aab3ae509ec0e8a255211ab02fb8ba79"
+          "checksum": "75aa00f31978c818689b616910b9b11a"
         },
         {
           "name": "series-diverging",
           "path": "/example/BarChart/series-diverging",
-          "checksum": "d503a06e8d412808b8f8f23565637846"
+          "checksum": "1ad3d332876566e21f929baf20ddbba6"
         },
         {
           "name": "series-horizontal",
           "path": "/example/BarChart/series-horizontal",
-          "checksum": "3598b0e5d069022549004c794339aabd"
+          "checksum": "6b6f2ccf060ce78f5cfeee5bdb261f25"
         },
         {
           "name": "series-horizontal-diverging",
           "path": "/example/BarChart/series-horizontal-diverging",
-          "checksum": "e2683c5d8e322ab0e501290e862630d8"
+          "checksum": "eded13add1ad33e265c3a49f075f21db"
         },
         {
           "name": "series-horizontal-diverging-as-percent",
           "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-          "checksum": "90461c95db3bf3e38b8afe955fa7a854"
+          "checksum": "ec10032a434b0f628624ef4c01d6285f"
         },
         {
           "name": "single-axis-x",
           "path": "/example/BarChart/single-axis-x",
-          "checksum": "493eb57e5af670806d5604e2a87258c5"
+          "checksum": "728fcdb1b07f1c7eb5c782c0ca26c14a"
         },
         {
           "name": "single-axis-y",
           "path": "/example/BarChart/single-axis-y",
-          "checksum": "4e228845d30c152acac08c8f3699de29"
+          "checksum": "7f483e94345a8afaa6c136a925816516"
         },
         {
           "name": "single-dimension",
           "path": "/example/BarChart/single-dimension",
-          "checksum": "fcdc673558c40e650e500018b33a6d5e"
+          "checksum": "823d2494e2a8c2b1b2234306ff25dc82"
         },
         {
           "name": "single-stack-with-indicator",
           "path": "/example/BarChart/single-stack-with-indicator",
-          "checksum": "da8b91f03031ee455f86ca5d2c80c355"
+          "checksum": "2af706a966b31c6e9ff732875e488d35"
         },
         {
           "name": "sparkbar",
@@ -1179,52 +1179,52 @@
         {
           "name": "stack-series",
           "path": "/example/BarChart/stack-series",
-          "checksum": "6c5c2268b56f75c05a8b8ab9e78ac450"
+          "checksum": "5eb4e194cdce83ba4e9f41bce3524857"
         },
         {
           "name": "stack-series-diverging",
           "path": "/example/BarChart/stack-series-diverging",
-          "checksum": "dc199b9b5a55c7fa2e89290b8e952e3c"
+          "checksum": "f18f17beb4e134b269c0b355e234b98d"
         },
         {
           "name": "stack-series-expand",
           "path": "/example/BarChart/stack-series-expand",
-          "checksum": "c56312a087c06bae6ccc2b26533d03ef"
+          "checksum": "c4b13f5ffb25d2f57fd4923af23ecc02"
         },
         {
           "name": "stack-series-horizontal",
           "path": "/example/BarChart/stack-series-horizontal",
-          "checksum": "a971ddd7b963c1ae328d73441058b8d0"
+          "checksum": "4678db19ebbed610e929a628516aaa16"
         },
         {
           "name": "stack-series-padded",
           "path": "/example/BarChart/stack-series-padded",
-          "checksum": "9c7b18444ef303e844335cae34c51a5f"
+          "checksum": "46764537a395369722fa547c86e8e152"
         },
         {
           "name": "time-scale-interval",
           "path": "/example/BarChart/time-scale-interval",
-          "checksum": "8bf385b98d71b1cbf4a14f42b38bd5cb"
+          "checksum": "4a271388bbe97e78d3a11ff0570bd02c"
         },
         {
           "name": "time-scale-interval-horizontal",
           "path": "/example/BarChart/time-scale-interval-horizontal",
-          "checksum": "86f4a82dde1497609b865d6f0af884d9"
+          "checksum": "ca7c1972601cb5889a8a17c725a79923"
         },
         {
           "name": "time-scale-interval-with-inset",
           "path": "/example/BarChart/time-scale-interval-with-inset",
-          "checksum": "185d1b9bca037656cf66642efdaf4cf2"
+          "checksum": "e56aa2d7f3bccc64a25b4799c6cfd1ba"
         },
         {
           "name": "tooltip-click",
           "path": "/example/BarChart/tooltip-click",
-          "checksum": "ee4260988fa3d10669f0f195dcc89534"
+          "checksum": "661ae9dc8009fc1653158150c1a06e64"
         },
         {
           "name": "vertical-default",
           "path": "/example/BarChart/vertical-default",
-          "checksum": "584f0efe384731579bc5372c9396faab"
+          "checksum": "fbc64ff1e4a255e2cb8f79400bb22d0e"
         }
       ]
     },
@@ -1719,7 +1719,7 @@
         {
           "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
           "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-          "checksum": "ea988fe8989592d7167a24f949fca753"
+          "checksum": "7ecc74ab817c4c409d9fc9f7f34baa3f"
         },
         {
           "name": "compound-dual-axis-with-stacked-charts",
@@ -1729,12 +1729,12 @@
         {
           "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
           "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-          "checksum": "0c4a044b0b2d92762199d8dee1f83c88"
+          "checksum": "b75c6ad6d5768d7559d6fe0e1cc2e32d"
         },
         {
           "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
           "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-          "checksum": "ee7ef0243ab60e9fef50b207ea53ec58"
+          "checksum": "af420839780bd3972b2537c2e6aeff82"
         }
       ]
     },
@@ -1764,17 +1764,17 @@
         {
           "name": "basic",
           "path": "/example/ColorRamp/basic",
-          "checksum": "7472326fefb45dca331ba2105796ed87"
+          "checksum": "6566baaf9080ed5716792744e687b2af"
         },
         {
           "name": "pixelated",
           "path": "/example/ColorRamp/pixelated",
-          "checksum": "8568819f655d8a9bddc024bbf7ac7a34"
+          "checksum": "a31c061777b50a51ea03a67e3615062d"
         },
         {
           "name": "schemes",
           "path": "/example/ColorRamp/schemes",
-          "checksum": "02913bd3d1165478071b72fc179906a8"
+          "checksum": "1080f70d0adfa945f5ffb46690b4812c"
         }
       ]
     },
@@ -2019,7 +2019,7 @@
         {
           "name": "us-state",
           "path": "/example/GeoPath/us-state",
-          "checksum": "ec18c7a5220541ade03218da3c493cb4"
+          "checksum": "768518293437cad0729cc61e5006d70f"
         },
         {
           "name": "us-state-with-counties",
@@ -2374,52 +2374,52 @@
         {
           "name": "axis-labels-inside",
           "path": "/example/LineChart/axis-labels-inside",
-          "checksum": "041b755ca70e2319efde59dae49ce042"
+          "checksum": "27ee3910ee48bce691b64f970fbcea35"
         },
         {
           "name": "basic",
           "path": "/example/LineChart/basic",
-          "checksum": "0c6115e2f4e08bf317e41a2a60506ca4"
+          "checksum": "b5e2d9ccc5359e426c98aabe2c543ed5"
         },
         {
           "name": "brush",
           "path": "/example/LineChart/brush",
-          "checksum": "a78146fbd5c05b923e2935769515aaab"
+          "checksum": "7a3733fc800493581070fb870683b3bd"
         },
         {
           "name": "curve",
           "path": "/example/LineChart/curve",
-          "checksum": "ebfd5811983ff8f163ff38befad3ced9"
+          "checksum": "8a6ab031f2d5812c9bc8c6f1ddd285c4"
         },
         {
           "name": "custom",
           "path": "/example/LineChart/custom",
-          "checksum": "d134a8c2850701c271c64dd32c589dca"
+          "checksum": "70a61ab2f15ef6a951ea4367db8e6c70"
         },
         {
           "name": "custom-tooltip",
           "path": "/example/LineChart/custom-tooltip",
-          "checksum": "302250a4cbd5919485c139ffe15c64f6"
+          "checksum": "c67f11268b1a9ddecf54eb2f213ae2dd"
         },
         {
           "name": "default-series-label",
           "path": "/example/LineChart/default-series-label",
-          "checksum": "58548370d5365b2565e143c29e6b9bf5"
+          "checksum": "f54c009517ea4c13d1bfe0548b1a5473"
         },
         {
           "name": "draw",
           "path": "/example/LineChart/draw",
-          "checksum": "0895de4834a760f26b1eddf146e79aff"
+          "checksum": "c2d40ec701cb94638374d89bfd7aca7c"
         },
         {
           "name": "dynamic-data",
           "path": "/example/LineChart/dynamic-data",
-          "checksum": "32296d9ee99de82038ea5931c698a75d"
+          "checksum": "66879a50e70254bf41e2b2ddc3dd0e59"
         },
         {
           "name": "gradient-encoding",
           "path": "/example/LineChart/gradient-encoding",
-          "checksum": "69158c17f00299e503d7f24e458fe5ab"
+          "checksum": "9eabf8368b1433d7b46ac7875ce4eef6"
         },
         {
           "name": "gradient-threshold",
@@ -2429,57 +2429,57 @@
         {
           "name": "labels",
           "path": "/example/LineChart/labels",
-          "checksum": "6ef16565ad265793f34338a2f17470b6"
+          "checksum": "eef02fb8489258bf3a2dbdc1e4fbfdd4"
         },
         {
           "name": "labels-with-points",
           "path": "/example/LineChart/labels-with-points",
-          "checksum": "efdeb5c3009cea3b64e3242a7e01659e"
+          "checksum": "a7cee19935445e0f17d15c6862ae8a9b"
         },
         {
           "name": "labels-within-points",
           "path": "/example/LineChart/labels-within-points",
-          "checksum": "875f9348706620c457e4b7ab86fd063b"
+          "checksum": "2c7677239259b3a763498915a5fcd713"
         },
         {
           "name": "large-radial-series",
           "path": "/example/LineChart/large-radial-series",
-          "checksum": "ca8359746d4a7188d43969650300e97c"
+          "checksum": "795da9c9824cb393be1d7ee4d0f8a0d9"
         },
         {
           "name": "large-series",
           "path": "/example/LineChart/large-series",
-          "checksum": "6ca31bdaf511a864fd64f5f074885952"
+          "checksum": "22be45cd4c8e2ddc4b3f8850d9696c67"
         },
         {
           "name": "legend",
           "path": "/example/LineChart/legend",
-          "checksum": "ef6da86dc38f392108d360f0459dd907"
+          "checksum": "2aed76b6293ae1441f3936ed3e539298"
         },
         {
           "name": "line-annotation",
           "path": "/example/LineChart/line-annotation",
-          "checksum": "14f0a2bff6ea5b9b1794537b0c5bef89"
+          "checksum": "3e51bd7edd274a646b99b6026044ca2b"
         },
         {
           "name": "null-dashed-gaps",
           "path": "/example/LineChart/null-dashed-gaps",
-          "checksum": "feafaaed63be240e7c1e077cee8e6a9f"
+          "checksum": "027516d6627d19ce37b32ac53b836df1"
         },
         {
           "name": "null-gaps",
           "path": "/example/LineChart/null-gaps",
-          "checksum": "bcd41e9b79735c5a77d64394e67d9478"
+          "checksum": "dba3259de3eddbafe15f90db90f3d176"
         },
         {
           "name": "oscilloscope-time",
           "path": "/example/LineChart/oscilloscope-time",
-          "checksum": "ed9481183747f5251d2c84d141b280bf"
+          "checksum": "e71eb384a1d09048f44435d9eadd54a0"
         },
         {
           "name": "override-color",
           "path": "/example/LineChart/override-color",
-          "checksum": "c34b62c55cb3fcb67bb0d25755865c42"
+          "checksum": "4702c273ba4b8ef71e884ade2ced1e3f"
         },
         {
           "name": "perf-dimension-arrays",
@@ -2514,12 +2514,12 @@
         {
           "name": "point-annotations",
           "path": "/example/LineChart/point-annotations",
-          "checksum": "1f7883314c9aa6e8739e258267909511"
+          "checksum": "10bb6f548f85816319ff75ae25929e18"
         },
         {
           "name": "points",
           "path": "/example/LineChart/points",
-          "checksum": "3ddcacd3ea024af66fbf7cdb74b3da9d"
+          "checksum": "7d7f460b3acddfab1c10c9dadf4e60f4"
         },
         {
           "name": "radar",
@@ -2529,37 +2529,37 @@
         {
           "name": "radar-rounded",
           "path": "/example/LineChart/radar-rounded",
-          "checksum": "f17341a82f0d9d496d2c1a8f2a6f6d5b"
+          "checksum": "28a1a4109484f8ecc959f723919d3b30"
         },
         {
           "name": "radar-series",
           "path": "/example/LineChart/radar-series",
-          "checksum": "b516f9784f84c5b00f99634a322e21b7"
+          "checksum": "45c3708d16736227a8413b4befd50fd8"
         },
         {
           "name": "range-annotation",
           "path": "/example/LineChart/range-annotation",
-          "checksum": "914210d57dee797ec42545db09061920"
+          "checksum": "e0bcbef63eb882ae9ea57502a1d05046"
         },
         {
           "name": "series",
           "path": "/example/LineChart/series",
-          "checksum": "cabfc159317e8cb68da82517d882fb02"
+          "checksum": "212a72b03afa82cf3ac7133e97bfe2a8"
         },
         {
           "name": "series-brush",
           "path": "/example/LineChart/series-brush",
-          "checksum": "9a021e506242aa9d38c5561c2d263e2f"
+          "checksum": "858a627da79c1b69b8cdaf55d45f04d5"
         },
         {
           "name": "series-custom-highlight-point",
           "path": "/example/LineChart/series-custom-highlight-point",
-          "checksum": "23aa76ef08c3e9f2c6bbfa6b2a88ee3d"
+          "checksum": "d2b6999323afb6014dbea1bed53a9ec8"
         },
         {
           "name": "series-individual-tooltip",
           "path": "/example/LineChart/series-individual-tooltip",
-          "checksum": "9fbb8753d865e2b3833004bb487b2fdd"
+          "checksum": "db9454045962d43cdd12a5ffd83cc8ce"
         },
         {
           "name": "series-labels-hover",
@@ -2574,37 +2574,37 @@
         {
           "name": "series-point-click",
           "path": "/example/LineChart/series-point-click",
-          "checksum": "583733fe7b431ed29e41f02071c4a7ff"
+          "checksum": "c23421cda08db7256713ebb1a985d344"
         },
         {
           "name": "series-separate-data",
           "path": "/example/LineChart/series-separate-data",
-          "checksum": "0fe9d31c202904dc395380a7a8024a3f"
+          "checksum": "6cd9f48c05d4bbd017abc0ac97aff54a"
         },
         {
           "name": "series-separate-data-diff-length",
           "path": "/example/LineChart/series-separate-data-diff-length",
-          "checksum": "0b5c1c6632e81944bf3436690d01a6bb"
+          "checksum": "a8b25c00b266882ab18743f161481967"
         },
         {
           "name": "series-vertical",
           "path": "/example/LineChart/series-vertical",
-          "checksum": "7f662972b829d9a8f6348ac96e0109ff"
+          "checksum": "df57642acd09af5b8b7d2a6ec6cb98a8"
         },
         {
           "name": "series-with-nulls",
           "path": "/example/LineChart/series-with-nulls",
-          "checksum": "08ebaa84a9736d4d278b3e828fd36b32"
+          "checksum": "892bff1af193700775d0bd26eb6a9e3e"
         },
         {
           "name": "single-axis-x",
           "path": "/example/LineChart/single-axis-x",
-          "checksum": "a4d13b45a0f5e182f44d1965283b05f0"
+          "checksum": "61a72430f85aa0359ea13d4a44c10ae0"
         },
         {
           "name": "single-axis-y",
           "path": "/example/LineChart/single-axis-y",
-          "checksum": "858617af74a943de8ada9b034a419091"
+          "checksum": "2281647597d25d27a91bc8760d8640c9"
         },
         {
           "name": "sparkline",
@@ -2634,12 +2634,12 @@
         {
           "name": "tooltip-click",
           "path": "/example/LineChart/tooltip-click",
-          "checksum": "11a23d470929a8aabb5be5346bf55617"
+          "checksum": "f27e20fa2c6d9d06206bad2f6bfb8999"
         },
         {
           "name": "vertical",
           "path": "/example/LineChart/vertical",
-          "checksum": "4d21fcee30df3a2db526be2febc2ee88"
+          "checksum": "f218b2a2669148b773e570175487e1fb"
         }
       ]
     },
@@ -2909,22 +2909,22 @@
         {
           "name": "arc",
           "path": "/example/PieChart/arc",
-          "checksum": "85f611cdcf43eadc11e9351cdb383586"
+          "checksum": "3d14695344f452f4d0c31ecf13937088"
         },
         {
           "name": "arc-props",
           "path": "/example/PieChart/arc-props",
-          "checksum": "0f0cde61a7f800c988860f3d834c3387"
+          "checksum": "9f574ba0acfe0b555b61965a4032a59a"
         },
         {
           "name": "basic",
           "path": "/example/PieChart/basic",
-          "checksum": "6a9f0261e4de82275540fe58b2bab5b4"
+          "checksum": "5a0ab9d57b00fee6d709df089bd5367c"
         },
         {
           "name": "colors-data-prop",
           "path": "/example/PieChart/colors-data-prop",
-          "checksum": "81321e4ac442047946b56cf4f08d1f8e"
+          "checksum": "6455cdd62590baacef072d081a545a72"
         },
         {
           "name": "colors-interpolator",
@@ -2939,87 +2939,87 @@
         {
           "name": "colors-variables",
           "path": "/example/PieChart/colors-variables",
-          "checksum": "bb5ffe9491970bb45e1d146f2b1ae7dc"
+          "checksum": "cd148424209aec4e114950ce551ce972"
         },
         {
           "name": "donut",
           "path": "/example/PieChart/donut",
-          "checksum": "5d9b867d1c7c652df1ad1ac1b6d1b93d"
+          "checksum": "61074dd778a16345a0ae6267f3e7e02c"
         },
         {
           "name": "donut-with-text",
           "path": "/example/PieChart/donut-with-text",
-          "checksum": "bf92fb8fafd12134c889ff7e87e5354b"
+          "checksum": "e2d1522aefb38746d6935a8219c7084d"
         },
         {
           "name": "legend",
           "path": "/example/PieChart/legend",
-          "checksum": "738d878e2fe3b74f35cee35d28f501a4"
+          "checksum": "177f0d4c0cdf43a49963c0c7ff34185f"
         },
         {
           "name": "legend-custom-label",
           "path": "/example/PieChart/legend-custom-label",
-          "checksum": "5421f3b24db812b0344ba4378d6cff50"
+          "checksum": "9ecb0e3db7f9cef3eaea45e03c67888b"
         },
         {
           "name": "legend-placement",
           "path": "/example/PieChart/legend-placement",
-          "checksum": "738d878e2fe3b74f35cee35d28f501a4"
+          "checksum": "8d48163a9216a5df893c287931c6371f"
         },
         {
           "name": "legend-responsive",
           "path": "/example/PieChart/legend-responsive",
-          "checksum": "00693a1397de0996c72b4c27361d7fa4"
+          "checksum": "c5f44996b468c0125633910debbb5831"
         },
         {
           "name": "legend-with-padding",
           "path": "/example/PieChart/legend-with-padding",
-          "checksum": "e9e98c8d49e40f5eadf29485193c46e9"
+          "checksum": "fd466e848fe69a673651a747eda9b74b"
         },
         {
           "name": "motion-spring",
           "path": "/example/PieChart/motion-spring",
-          "checksum": "dbb342bdb02ea4693118c1f6ed5c6ed4"
+          "checksum": "81db57362ccf3a0b86321422b86b8d94"
         },
         {
           "name": "motion-tween",
           "path": "/example/PieChart/motion-tween",
-          "checksum": "b3595f8a0b786a7630c00dc4aff1a5c6"
+          "checksum": "af4d4e3930ab55be392eae460da17fc5"
         },
         {
           "name": "offset-slice",
           "path": "/example/PieChart/offset-slice",
-          "checksum": "ca702d05039c9752b72400e4f118dd2a"
+          "checksum": "82d8ffdea4384dbcb6dd313facd1b067"
         },
         {
           "name": "placement-custom",
           "path": "/example/PieChart/placement-custom",
-          "checksum": "cf92a8ad33f4e9430ba5c18bf1a2d3f7"
+          "checksum": "f044f66c7e182e5372da432ca6aadefc"
         },
         {
           "name": "placement-left",
           "path": "/example/PieChart/placement-left",
-          "checksum": "f514d55188e35428fac506d838be5c1e"
+          "checksum": "c7906f5ba456b72f0fedd66c36290eb6"
         },
         {
           "name": "placement-right",
           "path": "/example/PieChart/placement-right",
-          "checksum": "d7b2f78e4d21833801805a35a37567d8"
+          "checksum": "60de5bb8e14229320e56274fcb66295e"
         },
         {
           "name": "radius-fixed",
           "path": "/example/PieChart/radius-fixed",
-          "checksum": "c10cdd5f7e13abcecf4fb23a85c3ebae"
+          "checksum": "29cc3aa2418917c9c6e28ef11c8ab970"
         },
         {
           "name": "radius-offset",
           "path": "/example/PieChart/radius-offset",
-          "checksum": "029e7194a56204a096d6a57f7000ea13"
+          "checksum": "4e391d058d2254f2b46231514e737714"
         },
         {
           "name": "radius-percent",
           "path": "/example/PieChart/radius-percent",
-          "checksum": "4b6cb78b59f90238a44e3d8b0f64c714"
+          "checksum": "38edecf5757c6b5dc43a4fccf698fdec"
         },
         {
           "name": "segments",
@@ -3029,22 +3029,22 @@
         {
           "name": "series",
           "path": "/example/PieChart/series",
-          "checksum": "736fca6d7d01b31192dd4e75ac8f0c3b"
+          "checksum": "b5a86a6b4f63f4e0c832292547100a99"
         },
         {
           "name": "series-click",
           "path": "/example/PieChart/series-click",
-          "checksum": "406f1ee8685ade6948cfa55e553caa8b"
+          "checksum": "183116b4edb9a445b763ccb0d45ffc35"
         },
         {
           "name": "series-props",
           "path": "/example/PieChart/series-props",
-          "checksum": "ac78cdc4f13750ae3d24ba8af53142bb"
+          "checksum": "a83e6d55c46dc254cc046832526229b0"
         },
         {
           "name": "tooltip-click",
           "path": "/example/PieChart/tooltip-click",
-          "checksum": "1282a2c6e601c91fe8dee3346d6250de"
+          "checksum": "e2d42b0b0b3c2735471f290dc7ede1ec"
         }
       ]
     },
@@ -3349,27 +3349,27 @@
         {
           "name": "basic",
           "path": "/example/ScatterChart/basic",
-          "checksum": "09f9e720b246ccd1273102f5e8f0f4e4"
+          "checksum": "67ad96d65960c795abd838afa3d4d9bf"
         },
         {
           "name": "brush",
           "path": "/example/ScatterChart/brush",
-          "checksum": "c9216b0872136dd7c17d4b3bb5701e57"
+          "checksum": "67b1f40eec6d6aca43667761a9506387"
         },
         {
           "name": "custom",
           "path": "/example/ScatterChart/custom",
-          "checksum": "e0fe59178462eda6eb17f86d84c1ec93"
+          "checksum": "c74806b7046dcf329562c342b533176f"
         },
         {
           "name": "custom-tooltip",
           "path": "/example/ScatterChart/custom-tooltip",
-          "checksum": "464804ee2120c66d2d198712099e864a"
+          "checksum": "16a0d8c0a2c05738f7bd2d743b9f016a"
         },
         {
           "name": "date-series-color-scale",
           "path": "/example/ScatterChart/date-series-color-scale",
-          "checksum": "920010c167558d4c06b8480f98abef38"
+          "checksum": "4705009c9549a5dc0af296c54562479b"
         },
         {
           "name": "domain-baseline",
@@ -3379,7 +3379,7 @@
         {
           "name": "domain-nice",
           "path": "/example/ScatterChart/domain-nice",
-          "checksum": "1e776e1b858bbf6b0cc6d38bf8ff0919"
+          "checksum": "d24250a01887e2d0d60344fdc1a07208"
         },
         {
           "name": "domain-padding",
@@ -3389,17 +3389,17 @@
         {
           "name": "labels",
           "path": "/example/ScatterChart/labels",
-          "checksum": "2ce356c0201cfb7d997d047935b0ec30"
+          "checksum": "eab8f6113c3b33435fb4932266b32b8b"
         },
         {
           "name": "line-annotation",
           "path": "/example/ScatterChart/line-annotation",
-          "checksum": "da35259a077a37827edf5aacb4b1e3f1"
+          "checksum": "68f5eb03bf873739460fd2c92b0f1948"
         },
         {
           "name": "point-annotations",
           "path": "/example/ScatterChart/point-annotations",
-          "checksum": "5e82442a2f56e2572bbbc4b8ea48b0d7"
+          "checksum": "226815d41e90e95ada32b4063cfe383e"
         },
         {
           "name": "punchcard",
@@ -3414,42 +3414,42 @@
         {
           "name": "range-annotation-both",
           "path": "/example/ScatterChart/range-annotation-both",
-          "checksum": "f62bce4ec0c4a5ffc4c0a161189b03ad"
+          "checksum": "af356cb13ae5300b10a29bd2441b2990"
         },
         {
           "name": "range-annotation-horizontal",
           "path": "/example/ScatterChart/range-annotation-horizontal",
-          "checksum": "0baff04f1e389c3e2eae613d108844f6"
+          "checksum": "4dbaa44805d78ecacf0b95c5d4b68f6f"
         },
         {
           "name": "range-annotation-vertical",
           "path": "/example/ScatterChart/range-annotation-vertical",
-          "checksum": "1bdeac21a6b1899849f1b542ba11a56e"
+          "checksum": "89100ea72c647ca935993d2e717699a8"
         },
         {
           "name": "series",
           "path": "/example/ScatterChart/series",
-          "checksum": "ab38e89833a36df01fefa211bd875764"
+          "checksum": "0cc8ae3061ca88f64bca8250424bf678"
         },
         {
           "name": "series-custom-labels",
           "path": "/example/ScatterChart/series-custom-labels",
-          "checksum": "00d122422258b871fbb9897ecab6919a"
+          "checksum": "7c90a1865a7de436e7f06ce9f83791c6"
         },
         {
           "name": "series-legend",
           "path": "/example/ScatterChart/series-legend",
-          "checksum": "395c2150fa14e4a754bfc0f06abaa760"
+          "checksum": "ce26dba1a0085eff372389e36904e587"
         },
         {
           "name": "series-tween",
           "path": "/example/ScatterChart/series-tween",
-          "checksum": "c9050fcaf14886ea957dc39cc31e13e3"
+          "checksum": "fbf339e0345b498609acb301031ce6fa"
         },
         {
           "name": "series-with-radius",
           "path": "/example/ScatterChart/series-with-radius",
-          "checksum": "0766b0124ba0a75ad3637561c7a75c82"
+          "checksum": "47850a24803a69d7cf8200bae1c34742"
         },
         {
           "name": "single-axis-x",
@@ -3459,7 +3459,7 @@
         {
           "name": "single-axis-y",
           "path": "/example/ScatterChart/single-axis-y",
-          "checksum": "884977049dbde8ee0dc9610a47a8fc0b"
+          "checksum": "a4b150843139b59ded6bc4d0e8d0c1da"
         },
         {
           "name": "single-dimension",
@@ -3469,7 +3469,7 @@
         {
           "name": "tooltip-click",
           "path": "/example/ScatterChart/tooltip-click",
-          "checksum": "8e7cb72156f4928c277cb2179aa7092b"
+          "checksum": "b8d7a8998752c7bff664de06656c6a22"
         }
       ]
     },
