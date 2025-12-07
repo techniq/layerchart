@@ -1,18 +1,21 @@
 <script lang="ts">
+	import {
+		Axis,
+		Bar,
+		Chart,
+		Layer,
+		Tooltip,
+		defaultChartPadding,
+		groupStackData
+	} from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruitColors';
 	import { scaleBand } from 'd3-scale';
-	import { Axis, Bar, Chart, Layer, Tooltip, groupStackData } from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 	import { cubicInOut } from 'svelte/easing';
 	import { unique } from '@layerstack/utils';
 	import GroupedStackedComboField from '$lib/components/controls/fields/GroupedStackedComboField.svelte';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
-	const keyColors = [
-		'var(--color-info)',
-		'var(--color-success)',
-		'var(--color-warning)',
-		'var(--color-danger)'
-	];
 
 	let chartMode = $state<'group' | 'stack' | 'groupStack'>('group');
 
@@ -63,7 +66,7 @@
 	yNice
 	c="fruit"
 	cDomain={colorKeys}
-	cRange={keyColors}
+	cRange={fruitColors}
 	x1={groupBy}
 	x1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
 	x1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
