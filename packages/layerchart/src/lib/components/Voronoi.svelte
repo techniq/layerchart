@@ -66,7 +66,7 @@
 
   import GeoPath from './GeoPath.svelte';
   import Group, { type GroupProps } from './Group.svelte';
-  import Spline from './Spline.svelte';
+  import Path from './Path.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import CircleClipPath from './CircleClipPath.svelte';
@@ -147,10 +147,10 @@
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
     {#each points as point, i}
       {@const pathData = voronoi.renderCell(i)}
-      <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
+      <!-- Wait to render Path until pathData is available to fix path artifacts from injected tweened points in Path  -->
       {#if pathData}
         <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
-          <Spline
+          <Path
             {pathData}
             class={['lc-voronoi-path', classes.path]}
             onclick={(e) => onclick?.(e, { data: point.data, point })}

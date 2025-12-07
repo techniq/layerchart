@@ -80,7 +80,7 @@
   import { greatestAbs } from '@layerstack/utils';
 
   import Rect from './Rect.svelte';
-  import Spline from './Spline.svelte';
+  import Path from './Path.svelte';
 
   import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
@@ -204,7 +204,7 @@
   />
 {:else}
   {@const tweenMotion = extractTweenConfig(motion)}
-  <Spline
+  <Path
     {pathData}
     {fill}
     {fillOpacity}

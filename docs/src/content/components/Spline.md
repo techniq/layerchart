@@ -2,7 +2,7 @@
 description: Marking component which applies data points connected by smooth, curved lines to show trends or patterns over a continuous range.
 category: marks
 layers: [svg, canvas]
-related: [MotionPath, LineChart]
+related: [Path, LineChart]
 ---
 
 <script lang="ts">

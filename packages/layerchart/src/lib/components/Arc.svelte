@@ -2,7 +2,7 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
   import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -128,7 +128,7 @@
      * Pass true to enable the track with default props, or pass an object
      * of props to enable the track.
      */
-    track?: boolean | Partial<ComponentProps<typeof Spline>>;
+    track?: boolean | Partial<ComponentProps<typeof Path>>;
 
     /**
      * A reference to the track element
@@ -160,9 +160,9 @@
   } & CommonStyleProps;
 
   export type ArcProps = ArcPropsWithoutHTML &
-    // we omit the spline props to avoid conflicts with attribute names since we are
-    // passing them through to `<Spline />`
-    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & SplinePropsWithoutHTML>;
+    // we omit the path props to avoid conflicts with attribute names since we are
+    // passing them through to `<Path />`
+    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & PathPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -398,7 +398,7 @@
 </script>
 
 {#if track}
-  <Spline
+  <Path
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
@@ -406,7 +406,7 @@
   />
 {/if}
 
-<Spline
+<Path
   bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
