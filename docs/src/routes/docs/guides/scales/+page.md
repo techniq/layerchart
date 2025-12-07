@@ -26,7 +26,7 @@
 
 At its essenece, a scale is a function that maps data values (`domain`) to pixel or color values (`range`) on a per-dimension basis (x, y, color, etc).
 
-LayerChart uses [d3-scale](https://d3js.org/d3-scale) under the hood which provides many different scales (i.e. "mappers") including `scaleLinear`, `scaleTime`, `scaleBand`, and others.
+LayerChart uses [d3-scale](https://d3js.org/d3-scale) under the hood which provides many different scales (i.e. "mappers") including [`scaleLinear`](https://d3js.org/d3-scale/linear), [`scaleTime`](https://d3js.org/d3-scale/time), [`scaleBand`](https://d3js.org/d3-scale/band), and others.
 
 <DomainRangeChart bind:domain bind:range bind:value />
 
