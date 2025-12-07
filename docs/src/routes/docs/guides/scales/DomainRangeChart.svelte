@@ -9,8 +9,18 @@
 	const rectHeight = 64;
 	const handleWidth = 16;
 
-	let domain = $state([100, 400]);
-	let range = $state([0, 500]);
+	let {
+		domain = $bindable([100, 400]),
+		range = $bindable([0, 500]),
+		value = $bindable(),
+		rangeValue = $bindable()
+	}: {
+		domain?: number[];
+		range?: number[];
+		value?: number;
+		rangeValue?: number;
+	} = $props();
+
 	let scale = $derived(scaleLinear().domain(domain).range(range));
 
 	const chartDomain = [0, 500];
@@ -18,8 +28,15 @@
 	let midDomain = $derived(Math.round(domain[0] + (domain[1] - domain[0]) / 2));
 	let midRange = $derived(Math.round(range[0] + (range[1] - range[0]) / 2));
 
-	let domainValue = $derived(midDomain);
-	let rangeValue = $derived(Math.round(scale(midDomain)));
+	// Initialize domainValue and rangeValue if not provided
+	$effect(() => {
+		if (value === undefined) {
+			value = midDomain;
+		}
+		if (rangeValue === undefined) {
+			rangeValue = Math.round(scale(midDomain));
+		}
+	});
 
 	let context = $state<ChartContextValue>(null!);
 
@@ -55,8 +72,8 @@
 				class="bg-primary/10 border-2 border-primary/70 rounded-lg grid items-center"
 				onpointermove={(e) => {
 					const { x } = localPoint(e);
-					domainValue = Math.round(domainScale(x));
-					rangeValue = Math.round(scale(domainValue));
+					value = Math.round(domainScale(x));
+					rangeValue = Math.round(scale(value));
 				}}
 			/>
 			<!-- Left handle -->
@@ -118,11 +135,12 @@
 				class="text-primary font-semibold pointer-events-none"
 			/>
 			<Text
-				value={domainValue}
-				x={context.xScale(domainValue)}
+				{value}
+				x={context.xScale(value)}
 				y={rectHeight}
+				dy={-3}
 				textAnchor="middle"
-				verticalAnchor="middle"
+				verticalAnchor="end"
 				class="text-sm text-white bg-primary rounded-full px-2 font-medium pointer-events-none"
 			/>
 			<Text
@@ -146,7 +164,7 @@
 				onpointermove={(e) => {
 					const { x } = localPoint(e);
 					rangeValue = Math.round(rangeScale(x));
-					domainValue = Math.round(scale.invert(rangeValue));
+					value = Math.round(scale.invert(rangeValue));
 				}}
 			/>
 			<!-- Left handle -->
@@ -210,8 +228,9 @@
 				value={rangeValue}
 				x={context.xScale(rangeValue)}
 				y={context.height - rectHeight}
+				dy={3}
 				textAnchor="middle"
-				verticalAnchor="middle"
+				verticalAnchor="start"
 				class="text-sm text-white bg-primary rounded-full px-2 font-medium pointer-events-none"
 			/>
 			<Text
@@ -238,10 +257,10 @@
 
 			<!-- mid line -->
 			<Line
-				x1={context.xScale(domainValue)}
-				y1={rectHeight + 10}
+				x1={context.xScale(value)}
+				y1={rectHeight}
 				x2={context.xScale(rangeValue)}
-				y2={context.height - rectHeight - 11}
+				y2={context.height - rectHeight}
 				strokeWidth={2}
 				class="stroke-surface-content"
 				markerEnd="triangle"

@@ -1,7 +1,21 @@
 <script lang="ts">
-	import DomainRange from './DomainRange.svelte';
+  import { scaleLinear } from 'd3-scale';
+  import { format } from '@layerstack/utils';
+
+  import Code from '$lib/components/Code.svelte';
 	import DomainRangeChart from './DomainRangeChart.svelte';
-  let [lowDomain, highDomain, lowRange, highRange] = [20, 60, 0, 120];
+
+  let domain = $state([100, 400]);
+  let range = $state([0, 500]);
+  let value = $state(250);
+
+  let scale = $derived(scaleLinear(domain, range));
+
+  let scaleExample = $derived(`
+    xScale(${domain[0]}) => ${scale(domain[0])};
+    xScale(${domain[1]}) => ${scale(domain[1])};
+    xScale(${value}) => ${format(scale(value), 'decimal')};
+  `);
 </script>
 
 # Scales
@@ -10,41 +24,38 @@
 
 ## What is a scale
 
-At its essenece, a scale is a function that maps data values (`domain`) to pixel values (`range`) on a per-dimension basis (x, y, color, etc).
+At its essenece, a scale is a function that maps data values (`domain`) to pixel or color values (`range`) on a per-dimension basis (x, y, color, etc).
 
 LayerChart uses [d3-scale](https://d3js.org/d3-scale) under the hood which provides many different scales (i.e. "mappers") including `scaleLinear`, `scaleTime`, `scaleBand`, and others.
 
-<DomainRangeChart />
+<DomainRangeChart bind:domain bind:range bind:value />
 
-<DomainRange bind:lowDomain bind:highDomain bind:lowRange bind:highRange />
-
-this example basically says data/domain values are between <code>{lowDomain}</code> and <code>{highDomain}</code> and range/pixels values are between <code>{lowRange}</code> and <code>{highRange}</code>, and you would setup this (under the hood, what LayerChart does for you).
+This example basically says data/domain values are between <code>{domain[0]}</code> and <code>{domain[1]}</code> and range/pixels values are between <code>{range[0]}</code> and <code>{range[1]}</code>, and you would setup this (under the hood, what LayerChart does for you).
 
 <br />
-<code>
-const xScale = scaleLinear().domain([{lowDomain}, {highDomain}]).range([{lowRange}, {highRange}]);
-</code>
+
+```js
+const xScale = scaleLinear().domain(domain).range(range);
+```
 
 or shorthand
 
-<code>
-const xScale = scaleLinear([{lowDomain}, {highDomain}], [{lowRange}, {highRange}]);
-</code>
+```js
+const xScale = scaleLinear(domain, range);
+```
 
 and would produce the following:
 
-<code>xScale({lowDomain}) => {lowRange}</code><br />
-<code>xScale({highDomain}) => {highRange}</code><br />
-<code>xScale(50) => 60</code>
+<Code source={scaleExample} language="js" />
 
 In LayerChart, range and domain are determined / defaulted for you
 
-- `xDomain` => all `x` values in data (based on value accessor),
-- `xRange` => `width` of chart (minus left/right padding),
-- `yDomain` => all `y` values in data (based on value accessor),
-- `yRange` => `height` of chart (minus top/bottom padding)
+- `xDomain`: extents of all `x` values in data (based on value accessor),
+- `xRange`: `width` of chart (minus left/right padding),
+- `yDomain`: extents of all `y` values in data (based on value accessor),
+- `yRange`: `height` of chart (minus top/bottom padding)
 
-for most scales, like scaleLinear, you specify the extents (min/max), which is why it is a 2 item array
+for most scales, like `scaleLinear`, you specify the extents (min/max), which is why it is a 2 item array
 
 LayerChart will calcualte these for you, or you can pass an explicit value for one of both. If the other value is `null`, it will be calculated based on the data/chart dimensions
 
