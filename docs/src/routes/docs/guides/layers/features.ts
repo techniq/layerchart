@@ -382,5 +382,21 @@ export const other = [
 		webgl: {
 			support: true
 		}
+	},
+	{
+		feature: 'Marks can contain children',
+		html: {
+			support: true,
+			note: '<Rect>Example content</Rect>'
+		},
+		svg: {
+			support: false
+		},
+		canvas: {
+			support: false
+		},
+		webgl: {
+			support: false
+		}
 	}
 ];

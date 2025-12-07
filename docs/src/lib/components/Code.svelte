@@ -19,6 +19,7 @@
 	import SimpleIconsTerminal from '~icons/simple-icons/windowsterminal';
 	import SimpleIconsSvelte from '~icons/simple-icons/svelte';
 	import SimpleIconsHTML5 from '~icons/simple-icons/html5';
+	import { stripIndent } from '$lib/utils/string';
 
 	interface Props {
 		source?: string | null;
@@ -37,6 +38,8 @@
 		classes = {},
 		class: className
 	}: Props & HTMLAttributes<HTMLDivElement> = $props();
+
+	let sourceStr = $derived(stripIndent(source ?? ''));
 </script>
 
 <div class={cls('rounded-sm overflow-hidden', classes.root, className)}>
@@ -76,7 +79,7 @@
 						<div>Loading...</div>
 					{:then h}
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						{@html h.codeToHtml(source, {
+						{@html h.codeToHtml(sourceStr, {
 							lang: language,
 							themes: {
 								light: 'github-light-default',
@@ -98,7 +101,7 @@
 					)}
 				>
 					<CopyButton
-						value={source ?? ''}
+						value={sourceStr ?? ''}
 						class="text-surface-content/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
 						size="sm"
 					/>
