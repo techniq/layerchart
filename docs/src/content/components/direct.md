@@ -6,8 +6,8 @@ category: examples
 <script lang="ts">
 	import Code from '$lib/components/Code.svelte';
 
-	import Basic from '$examples/AreaChart/basic.svelte';
-	import BasicSource from '$examples/AreaChart/basic.svelte?raw';
+	import Basic from '$examples/components/AreaChart/basic.svelte';
+	import BasicSource from '$examples/components/AreaChart/basic.svelte?raw';
 </script>
 
 ```svelte
@@ -15,8 +15,8 @@ category: examples
 	import Code from '$lib/components/Code.svelte';
 
 	// repeat for each example
-	import Basic from '$examples/AreaChart/basic.svelte';
-	import BasicSource from '$examples/AreaChart/basic.svelte?raw';
+	import Basic from '$examplescomponents/AreaChart/basic.svelte';
+	import BasicSource from '$examples/components/AreaChart/basic.svelte?raw';
 </script>
 
 <!-- repeat for each example -->
