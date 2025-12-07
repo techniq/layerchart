@@ -133,7 +133,7 @@
 		}}
 		tooltip={{ touchEvents: 'none' }}
 		bind:context
-		padding={{ ...defaultChartPadding, left: 10, right: 10 }}
+		padding={{ ...defaultChartPadding, left: 5, right: 5 }}
 		height={600}
 	>
 		{#snippet children()}

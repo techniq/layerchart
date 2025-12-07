@@ -62,7 +62,7 @@
 	}}
 	ondragstart={timer.stop}
 	bind:context
-	padding={{ ...defaultChartPadding, top: 10 }}
+	padding={{ ...defaultChartPadding, top: 5 }}
 	height={600}
 >
 	{#snippet children({ context })}
