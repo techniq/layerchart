@@ -85,33 +85,6 @@
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
-  function defaultPathData() {
-    // if (!tweenedOptions) {
-    //   // If not tweened, return empty string (faster initial render)
-    //   return '';
-    // } else if (pathData) {
-    //   // Flatten all `y` coordinates of pre-defined `pathData`
-    //   return flattenPathData(pathData, Math.min(ctx.yScale(0) ?? ctx.yRange[0], ctx.yRange[0]));
-    if (ctx.config.x) {
-      // Only use default line if `x` accessor is defined (cartesian chart)
-      const path = ctx.radial
-        ? lineRadial()
-            .angle((d) => ctx.xScale(xAccessor(d)) + 0) // Never apply xOffset (LineChart radar, BarChart radial, ...)?
-
-            .radius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
-        : d3Line()
-            .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
-            .y((d) => Math.min(ctx.yScale(0), ctx.yRange[0]));
-
-      path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
-
-      if (curve) path.curve(curve);
-
-      return path(data ?? ctx.data);
-    }
-  }
-
   const d = $derived.by(() => {
     const path = ctx.radial
       ? lineRadial()
