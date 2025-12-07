@@ -32,6 +32,7 @@ all supporting single and multiple marks per Chart.
 <Example component="Chart" name="data-chart-multi" showCode />
 
 > TODO: improve tooltip, legend support without requiring series
+
 > TODO: do not require passing in `y={[...]}` as well
 
 ## Marks data
