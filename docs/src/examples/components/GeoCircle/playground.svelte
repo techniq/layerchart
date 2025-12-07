@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, GeoCircle, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, GeoCircle, GeoPath, Graticule, Layer, defaultChartPadding } from 'layerchart';
 	import {
 		geoAlbersUsa,
 		geoAlbers,
@@ -57,6 +57,7 @@
 		projection: config.projection,
 		fitGeojson: geojson
 	}}
+	padding={{ ...defaultChartPadding, left: 10, right: 10 }}
 	height={600}
 >
 	<Layer>

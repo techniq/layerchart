@@ -1,11 +1,6 @@
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { scaleSqrt } from 'd3-scale';
-	import { feature } from 'topojson-client';
-
-	import EarthquakeControls from '$lib/components/controls/GeoCircleEarthquakeControls.svelte';
-	import { TimerState } from '@layerstack/svelte-state';
-
 	import {
 		Chart,
 		GeoCircle,
@@ -13,8 +8,13 @@
 		Graticule,
 		Layer,
 		Tooltip,
+		defaultChartPadding,
 		type ChartContextValue
 	} from 'layerchart';
+	import { feature } from 'topojson-client';
+
+	import EarthquakeControls from '$lib/components/controls/GeoCircleEarthquakeControls.svelte';
+	import { TimerState } from '@layerstack/svelte-state';
 
 	import { getTectonicPlates, getEarthquakes, getCountriesTopology } from '$lib/geo.remote.js';
 
@@ -64,6 +64,7 @@
 		applyTransform: ['rotate']
 	}}
 	ondragstart={timer.stop}
+	padding={{ ...defaultChartPadding, top: 10, left: 20, right: 20 }}
 	height={600}
 >
 	{#snippet children({ context })}

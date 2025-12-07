@@ -10,6 +10,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
+		defaultChartPadding,
 		type ChartContextValue
 	} from 'layerchart';
 	import { Button } from 'svelte-ux';
@@ -132,6 +133,7 @@
 		}}
 		tooltip={{ touchEvents: 'none' }}
 		bind:context
+		padding={{ ...defaultChartPadding, left: 10, right: 10 }}
 		height={600}
 	>
 		{#snippet children()}
