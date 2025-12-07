@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { slide } from 'svelte/transition';
 	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';
@@ -14,6 +14,12 @@
 
 <div class="h-[300px]">
 	{#if show}
-		<LineChart {data} x="date" y="value" props={{ spline: { draw: true } }} />
+		<LineChart
+			{data}
+			x="date"
+			y="value"
+			padding={{ ...defaultChartPadding(), right: 10 }}
+			props={{ spline: { draw: true } }}
+		/>
 	{/if}
 </div>

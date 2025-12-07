@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ArcChart } from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruitColors';
 	import { longData } from '$lib/utils/data';
 
 	const data = longData.filter((d) => d.year === 2019);
@@ -10,6 +11,7 @@
 	{data}
 	key="fruit"
 	value="value"
+	cRange={fruitColors}
 	range={[180, -180]}
 	outerRadius={-25}
 	innerRadius={-20}

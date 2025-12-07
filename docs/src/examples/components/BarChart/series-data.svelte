@@ -12,7 +12,6 @@
 	const dateSeriesBaselineData = dateSeriesData.map((d) => ({ ...d, value: d.baseline }));
 
 	const data = { dateSeriesData, dateSeriesBaselineData };
-
 	export { data };
 </script>
 

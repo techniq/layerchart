@@ -1,11 +1,10 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { Duration } from 'svelte-ux';
-	import { BarChart, Tooltip } from 'layerchart';
 	import { getUsEvents } from '$lib/data.remote';
 
 	const data = await getUsEvents();
-
 	export { data };
 </script>
 
@@ -18,7 +17,7 @@
 	grid={{ x: true, y: false, bandAlign: 'between' }}
 	rule={false}
 	orientation="horizontal"
-	padding={{ bottom: 36 }}
+	padding={{ ...defaultChartPadding(), right: 25 }}
 	height={300}
 >
 	{#snippet tooltip({ context })}

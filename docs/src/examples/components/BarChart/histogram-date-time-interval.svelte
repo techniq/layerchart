@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { scaleTime } from 'd3-scale';
 	import { timeDay, timeWeek } from 'd3-time';
-	import { BarChart, Tooltip } from 'layerchart';
 	import { format } from '@layerstack/utils';
 	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
 	import { randomNormal } from 'd3-random';
@@ -33,7 +33,6 @@
 		)
 	);
 	let data = $derived(binByTime(randomData));
-
 	export { data };
 </script>
 
@@ -44,7 +43,7 @@
 	x="x0"
 	y="length"
 	bandPadding={0.2}
-	padding={{ left: 16, bottom: 48 }}
+	padding={{ ...defaultChartPadding(), left: 30, bottom: 30 }}
 	props={{
 		xAxis: {
 			ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),

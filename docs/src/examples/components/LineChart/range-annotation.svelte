@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -10,7 +10,6 @@
 	{data}
 	x="date"
 	y="value"
-	height={300}
 	annotations={[
 		{
 			type: 'range',
@@ -27,4 +26,6 @@
 			}
 		}
 	]}
+	padding={{ ...defaultChartPadding(), left: 30 }}
+	height={300}
 />

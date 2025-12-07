@@ -3,11 +3,11 @@
 	import { getCivilizationEvents } from '$lib/data.remote.js';
 
 	const data = await getCivilizationEvents();
-	export { data };
 
 	function formatYear(number: number): string {
 		return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
 	}
+	export { data };
 </script>
 
 <BarChart

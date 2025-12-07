@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { Axis, Highlight, Layer, LineChart, Spline, Tooltip } from 'layerchart';
+	import {
+		LineChart,
+		Axis,
+		Highlight,
+		Layer,
+		defaultChartPadding,
+		Spline,
+		Tooltip
+	} from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
 
@@ -7,7 +15,7 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300}>
+<LineChart {data} x="date" y="value" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>
 	{#snippet children({ context })}
 		<Layer>
 			<Axis placement="left" grid rule />

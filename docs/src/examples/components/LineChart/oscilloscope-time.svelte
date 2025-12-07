@@ -1,6 +1,10 @@
 <script lang="ts">
-	import { LineChart } from 'layerchart';
+	import { LinearGradient, LineChart, Highlight, Spline, Tooltip } from 'layerchart';
 	import OscilloscopeField from '$lib/components/controls/fields/OscilloscopeField.svelte';
+	import { extent, ticks } from 'd3-array';
+	import { format } from '@layerstack/utils';
+	import { scaleSequential } from 'd3-scale';
+	import { interpolateRainbow } from 'd3-scale-chromatic';
 
 	const FFT_SIZE = 1024;
 
@@ -17,6 +21,10 @@
 	let animationId: number | null = $state(null);
 	let isListening = $state(false);
 	let error = $state('');
+
+	const valueColor = $derived(
+		scaleSequential(extent(data, (d) => d.value as number) as [number, number], interpolateRainbow)
+	);
 
 	$effect(() => {
 		if (!isListening) {
@@ -91,14 +99,30 @@
 
 <OscilloscopeField bind:isListening bind:error {startMicrophone} {stopMicrophone} />
 
-<LineChart
-	{data}
-	x="key"
-	y="value"
-	yDomain={[-256, 512]}
-	axis={false}
-	grid={false}
-	props={{ spline: { class: 'stroke-surface-content' } }}
-	tooltip={{ mode: 'manual' }}
-	height={200}
-/>
+<LineChart {data} x="key" y="value" yDomain={[-256, 512]} axis="y" grid={false} height={200}>
+	{#snippet marks()}
+		<LinearGradient stops={ticks(1, 0, 10).map(valueColor.interpolator())} vertical>
+			{#snippet children({ gradient })}
+				<Spline stroke={gradient} />
+			{/snippet}
+		</LinearGradient>
+	{/snippet}
+
+	{#snippet highlight({ context })}
+		{#if context.tooltip.data}
+			<Highlight lines points={{ fill: valueColor(context.y(context.tooltip.data)) }} />
+		{/if}
+	{/snippet}
+
+	{#snippet tooltip({ context })}
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				{@const value = context.y(data)}
+				<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+				<Tooltip.List>
+					<Tooltip.Item label="value" {value} color={valueColor(value)} />
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</LineChart>
