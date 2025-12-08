@@ -1,12 +1,15 @@
 import type { PageServerLoad } from './$types';
-import { readAllFilesFromDirectory, buildWebContainerFiles } from '../../../../scripts/stackblitz-utils.js';
+import {
+	readAllFilesFromDirectory,
+	buildWebContainerFiles
+} from '../../../../scripts/stackblitz-utils.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 
 // Import custom page template
-import templatePageSvelte from './template-page.svelte?raw';
-import templateDataTs from './template-data.ts?raw';
+import templatePageSvelte from './template/+page.svelte?raw';
+import templateDataTs from './template/data.ts?raw';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

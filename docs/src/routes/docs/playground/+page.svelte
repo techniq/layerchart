@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import CodeEditor from './CodeEditor.svelte';
+	import { Overlay, ProgressCircle } from 'svelte-ux';
 
 	let { data }: { data: PageData } = $props();
 
@@ -20,6 +21,10 @@
 	let fileContent = $state<string>('');
 	let editableFiles = $state<string[]>([]);
 	let isLoadingFile = $state(false);
+
+	// Loading state
+	let loadingStatus = $state<string | null>('Initializing WebContainer...');
+	let isReady = $state(false);
 
 	async function getWebContainerInstance() {
 		if (!webcontainerPromise) {
@@ -43,11 +48,8 @@
 			}
 		}
 		traverse(data.templateProjectFiles);
-		return files.filter(f =>
-			f.endsWith('.svelte') ||
-			f.endsWith('.ts') ||
-			f.endsWith('.js') ||
-			f.endsWith('.css')
+		return files.filter(
+			(f) => f.endsWith('.svelte') || f.endsWith('.ts') || f.endsWith('.js') || f.endsWith('.css')
 		);
 	}
 
@@ -85,26 +87,35 @@
 	}
 
 	onMount(async () => {
-		webcontainerInstance = await getWebContainerInstance();
+		try {
+			loadingStatus = 'Booting WebContainer...';
+			webcontainerInstance = await getWebContainerInstance();
 
-		if (!webcontainerInstance) {
-			throw new Error('Failed to boot WebContainer');
-		}
-		await webcontainerInstance.mount(data.templateProjectFiles);
-
-		// Get editable files list
-		editableFiles = getEditableFiles();
-
-		// Load initial file
-		await loadFileContent(selectedFile);
-
-		webcontainerInstance.on('server-ready', (port, url) => {
-			if (iframeEl) {
-				iframeEl.src = url;
+			if (!webcontainerInstance) {
+				throw new Error('Failed to boot WebContainer');
 			}
-		});
 
-		await startDevServer();
+			loadingStatus = 'Mounting project files...';
+			await webcontainerInstance.mount(data.templateProjectFiles);
+
+			// Get editable files list
+			editableFiles = getEditableFiles();
+
+			loadingStatus = 'Loading editor...';
+			await loadFileContent(selectedFile);
+
+			webcontainerInstance.on('server-ready', (port, url) => {
+				if (iframeEl) {
+					iframeEl.src = url;
+				}
+				loadingStatus = null;
+				isReady = true;
+			});
+
+			await startDevServer();
+		} catch (error) {
+			loadingStatus = 'Error: ' + (error instanceof Error ? error.message : 'Unknown error');
+		}
 	});
 
 	async function startDevServer() {
@@ -113,6 +124,7 @@
 		}
 
 		// Install dependencies
+		loadingStatus = 'Installing dependencies...';
 		const installProcess = await webcontainerInstance.spawn('npm', ['install']);
 		const installExitCode = await installProcess.exit;
 
@@ -121,6 +133,7 @@
 		}
 
 		// Start dev server
+		loadingStatus = 'Starting dev server...';
 		await webcontainerInstance.spawn('npm', ['run', 'dev']);
 	}
 </script>
@@ -154,7 +167,19 @@
 	</div>
 
 	<!-- Preview Panel -->
-	<div class="w-1/2">
+	<div class="relative w-1/2">
+		{#if loadingStatus}
+			<Overlay class="flex flex-col gap-4 bg-surface-100/50" center>
+				<ProgressCircle width={2} />
+				<div class="text-lg font-medium">{loadingStatus}</div>
+			</Overlay>
+			<!-- <div class="bg-surface/95 flex items-center justify-center z-50">
+				<div class="flex flex-col items-center gap-4">
+					<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+					<div class="text-lg font-medium">{loadingStatus}</div>
+				</div>
+			</div> -->
+		{/if}
 		<iframe
 			bind:this={iframeEl}
 			title="LayerChart Playground"
