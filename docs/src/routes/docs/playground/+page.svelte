@@ -8,6 +8,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import CodeEditor from './CodeEditor.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -147,12 +148,7 @@
 					<div class="text-surface-content/50">Loading...</div>
 				</div>
 			{:else}
-				<textarea
-					bind:value={fileContent}
-					oninput={saveFileContent}
-					class="w-full h-full p-4 font-mono text-sm bg-surface resize-none focus:outline-none"
-					spellcheck="false"
-				></textarea>
+				<CodeEditor bind:value={fileContent} filename={selectedFile} oninput={saveFileContent} />
 			{/if}
 		</div>
 	</div>
