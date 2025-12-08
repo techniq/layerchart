@@ -82,68 +82,6 @@
             />
           {/each}
 
-<<<<<<< HEAD
-=======
-      <Legend
-        scale={colorScale}
-        title="Population"
-        tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
-        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
-      />
-
-      <Tooltip.Root let:data>
-        {@const d = populationByFips.get(data.id)}
-        <Tooltip.Header>
-          {data.properties.name + ' - ' + data.properties.data?.state}
-        </Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item
-            label="Total Population"
-            value={d?.population}
-            format="integer"
-            valueAlign="right"
-          />
-          <Tooltip.Item
-            label="Est. Population under 18"
-            value={d?.populationUnder18}
-            format="integer"
-            valueAlign="right"
-          />
-          <Tooltip.Item
-            label="Est. Percent under 18"
-            value={d ? d.percentUnder18 / 100 : 0}
-            format="percentRound"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={states}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection,
-        fitGeojson: states,
-      }}
-      transform={{
-        mode: 'canvas',
-        initialScrollMode: 'scale',
-      }}
-      padding={{ top: 60 }}
-      let:tooltip
-      let:transform
-    >
-      {@const strokeWidth = 1 / transform.scale}
-      <TransformControls />
-
-      <Canvas>
-        {#each enrichedCountiesFeatures as feature}
->>>>>>> origin
           <GeoPath
             geojson={states}
             class="fill-none stroke-black/30 pointer-events-none"
