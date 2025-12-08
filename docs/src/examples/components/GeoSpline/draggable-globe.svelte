@@ -2,7 +2,16 @@
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
+	import {
+		Chart,
+		GeoEdgeFade,
+		GeoPath,
+		GeoPoint,
+		GeoSpline,
+		Graticule,
+		Layer,
+		defaultChartPadding
+	} from 'layerchart';
 
 	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
 
@@ -20,7 +29,7 @@
 		fitGeojson: countries,
 		applyTransform: ['rotate']
 	}}
-	padding={{ top: 100, bottom: 100 }}
+	padding={{ ...defaultChartPadding, top: 80, bottom: 80, left: 80, right: 80 }}
 	height={800}
 >
 	<Layer>

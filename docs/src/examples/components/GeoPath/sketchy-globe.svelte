@@ -4,7 +4,14 @@
 	import { feature } from 'topojson-client';
 	import { presimplify, simplify } from 'topojson-simplify';
 
-	import { Chart, GeoPath, Graticule, Layer, type ChartContextValue } from 'layerchart';
+	import {
+		Chart,
+		GeoPath,
+		Graticule,
+		Layer,
+		defaultChartPadding,
+		type ChartContextValue
+	} from 'layerchart';
 	import GeoPathGlobeControls2 from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
@@ -47,6 +54,7 @@
 	}}
 	ondragstart={timer.stop}
 	bind:context
+	padding={{ ...defaultChartPadding, top: 5 }}
 	height={600}
 >
 	<Layer>
