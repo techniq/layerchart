@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { flatGroup } from 'd3-array';
 	import {
 		Area,
 		Axis,
@@ -10,9 +9,10 @@
 		Point,
 		Text,
 		Tooltip,
+		defaultChartPadding,
 		pivotLonger
 	} from 'layerchart';
-
+	import { flatGroup } from 'd3-array';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const keys = ['apples', 'bananas', 'oranges'];
@@ -45,8 +45,8 @@
 	c="fruit"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={{ top: 20, left: 20, bottom: 20, right: 48 }}
 	tooltip={{ mode: 'quadtree' }}
+	padding={{ ...defaultChartPadding, top: 10, bottom: 10, left: 20, right: 60 }}
 	height={300}
 >
 	{#snippet children({ context })}

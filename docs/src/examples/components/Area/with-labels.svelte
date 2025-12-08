@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Area, Axis, Chart, Labels, Layer } from 'layerchart';
-
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });

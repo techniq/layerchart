@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Area, Axis, Chart, Layer, LinearGradient, Rule } from 'layerchart';
-
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({

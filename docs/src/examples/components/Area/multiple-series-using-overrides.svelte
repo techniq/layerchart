@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Area, Axis, Chart, Highlight, Layer, Tooltip } from 'layerchart';
-
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const keys = ['apples', 'bananas', 'oranges'];

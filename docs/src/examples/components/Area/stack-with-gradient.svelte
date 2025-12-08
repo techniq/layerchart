@@ -1,9 +1,17 @@
 <script lang="ts">
+	import {
+		Area,
+		Axis,
+		Chart,
+		Layer,
+		LinearGradient,
+		asAny,
+		chartDataArray,
+		defaultChartPadding
+	} from 'layerchart';
 	import { stack, type Series } from 'd3-shape';
-	import { Area, Axis, Chart, Layer, LinearGradient, asAny, chartDataArray } from 'layerchart';
-
-	import { createDateSeries } from '$lib/utils/data.js';
 	import flatten from '$lib/utils/flatten.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const keys = ['apples', 'bananas', 'oranges'];
 
@@ -33,7 +41,7 @@
 	x={(d) => asAny(d).data.date}
 	y={[0, 1]}
 	yNice
-	padding={20}
+	padding={{ ...defaultChartPadding, left: 25, bottom: 20 }}
 	height={300}
 >
 	<Layer>

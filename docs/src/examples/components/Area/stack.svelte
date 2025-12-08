@@ -1,9 +1,17 @@
 <script lang="ts">
+	import {
+		Area,
+		Axis,
+		Chart,
+		Highlight,
+		Layer,
+		Tooltip,
+		asAny,
+		defaultChartPadding
+	} from 'layerchart';
 	import { stack, type Series } from 'd3-shape';
-	import { Area, Axis, Chart, Highlight, Layer, Tooltip, asAny } from 'layerchart';
-
-	import { createDateSeries } from '$lib/utils/data.js';
 	import flatten from '$lib/utils/flatten.js';
+	import { createDateSeries } from '$lib/utils/data.js';
 
 	const keys = ['apples', 'bananas', 'oranges'];
 	const multiSeriesData = createDateSeries({
@@ -41,8 +49,8 @@
 	c="key"
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
-	padding={20}
 	tooltip={{ mode: 'quadtree-x' }}
+	padding={{ ...defaultChartPadding, left: 25, bottom: 20 }}
 	height={300}
 >
 	{#snippet children({ context })}
