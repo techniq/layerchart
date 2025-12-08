@@ -9,6 +9,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
+		defaultChartPadding,
 		type ChartState
 	} from 'layerchart';
 	import GeoPathTranslucentControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
@@ -50,6 +51,7 @@
 	}}
 	ondragstart={timer.stop}
 	bind:context
+	padding={{ ...defaultChartPadding, top: 5 }}
 	height={600}
 >
 	{#snippet children({ context })}
