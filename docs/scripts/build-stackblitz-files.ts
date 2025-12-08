@@ -18,6 +18,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readAllFilesFromDirectory } from './stackblitz-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,35 +36,9 @@ function readSource(sourcePath: string): string {
 	return fs.readFileSync(filePath, 'utf-8');
 }
 
-/**
- * Recursively read all files from a directory and return them as a flat object
- * with relative paths as keys and file contents as values
- */
-function readAllFilesFromDirectory(dir: string, baseDir: string = dir): Record<string, string> {
-	const files: Record<string, string> = {};
-
-	const entries = fs.readdirSync(dir, { withFileTypes: true });
-
-	for (const entry of entries) {
-		const fullPath = path.join(dir, entry.name);
-
-		if (entry.isDirectory()) {
-			// Recursively read subdirectories
-			Object.assign(files, readAllFilesFromDirectory(fullPath, baseDir));
-		} else if (entry.isFile()) {
-			// Skip README.md as it's documentation for the templates directory
-			if (entry.name === 'README.md') {
-				continue;
-			}
-
-			// Get relative path from base directory
-			const relativePath = path.relative(baseDir, fullPath);
-			files[relativePath] = fs.readFileSync(fullPath, 'utf-8');
-		}
-	}
-
-	return files;
-}
+// Suppress unused variable warnings - fs and path are used via the imported function
+void fs;
+void path;
 
 /**
  * Generate the base files object by reading from template files
