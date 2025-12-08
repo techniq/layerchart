@@ -25,6 +25,8 @@
 	// Loading state
 	let loadingStatus = $state<string | null>('Initializing WebContainer...');
 	let isReady = $state(false);
+	let viteConnected = $state(false);
+	let viteTimeoutId: number | null = null;
 
 	async function getWebContainerInstance() {
 		if (!webcontainerPromise) {
@@ -104,12 +106,36 @@
 			loadingStatus = 'Loading editor...';
 			await loadFileContent(selectedFile);
 
+			// Listen for messages from the iframe to detect Vite connection
+			const handleMessage = (event: MessageEvent) => {
+				// Only process messages from our iframe
+				if (event.source !== iframeEl?.contentWindow) return;
+
+				// Check if message is from Vite client
+				if (event.data && typeof event.data === 'object') {
+					const data = event.data;
+					// Vite HMR sends various message types - we'll clear loading on any HMR activity
+					if (data.type && (data.type.includes('vite') || data.type === 'connected')) {
+						if (!viteConnected) {
+							viteConnected = true;
+							if (viteTimeoutId) {
+								clearTimeout(viteTimeoutId);
+								viteTimeoutId = null;
+							}
+							loadingStatus = null;
+							isReady = true;
+						}
+					}
+				}
+			};
+
+			window.addEventListener('message', handleMessage);
+
 			webcontainerInstance.on('server-ready', (port, url) => {
 				if (iframeEl) {
+					loadingStatus = 'Loading preview...';
 					iframeEl.src = url;
 				}
-				loadingStatus = null;
-				isReady = true;
 			});
 
 			await startDevServer();
@@ -134,7 +160,24 @@
 
 		// Start dev server
 		loadingStatus = 'Starting dev server...';
-		await webcontainerInstance.spawn('npm', ['run', 'dev']);
+		const devProcess = await webcontainerInstance.spawn('npm', ['run', 'dev']);
+
+		// Listen to output to detect when Vite is building
+		devProcess.output.pipeTo(
+			new WritableStream({
+				write(data) {
+					const text = data.toString();
+					console.log('[WebContainer]:', text);
+
+					// Update status based on Vite output
+					if (text.includes('VITE') && text.includes('ready')) {
+						loadingStatus = 'Ready! Loading preview...';
+					} else if (text.includes('build started') || text.includes('building')) {
+						loadingStatus = 'Building application...';
+					}
+				}
+			})
+		);
 	}
 </script>
 
@@ -185,6 +228,23 @@
 			title="LayerChart Playground"
 			class="w-full h-full border-none"
 			allowfullscreen
+			onload={() => {
+				// Wait for Vite to connect before clearing loading status
+				if (iframeEl?.src && !viteConnected) {
+					loadingStatus = 'Connecting to Vite...';
+					// Fallback: clear after 3 seconds if Vite doesn't connect
+					viteTimeoutId = window.setTimeout(() => {
+						if (loadingStatus === 'Connecting to Vite...') {
+							loadingStatus = null;
+							isReady = true;
+							viteConnected = true;
+						}
+					}, 3000);
+				} else if (viteConnected) {
+					loadingStatus = null;
+					isReady = true;
+				}
+			}}
 		></iframe>
 	</div>
 </div>
