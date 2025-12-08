@@ -1,18 +1,21 @@
 <script lang="ts">
+	import {
+		Bar,
+		Axis,
+		Chart,
+		Layer,
+		Tooltip,
+		defaultChartPadding,
+		groupStackData
+	} from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruitColors';
 	import { scaleBand } from 'd3-scale';
-	import { Bar, Axis, Chart, Layer, Tooltip, groupStackData } from 'layerchart';
 	import GroupedStackedComboControls from '$lib/components/controls/BarsControls.svelte';
 	import { longData } from '$lib/utils/data.js';
 	import { unique } from '@layerstack/utils';
 	import { cubicInOut } from 'svelte/easing';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
-	const keyColors = [
-		'var(--color-info)',
-		'var(--color-success)',
-		'var(--color-warning)',
-		'var(--color-danger)'
-	];
 
 	let chartMode = $state<'group' | 'stack' | 'groupStack'>('group');
 
@@ -63,12 +66,12 @@
 	yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
 	c="fruit"
 	cDomain={colorKeys}
-	cRange={keyColors}
+	cRange={fruitColors}
 	y1={groupBy}
 	y1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
 	y1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	y1Range={({ yScale }) => [0, yScale.bandwidth()]}
-	padding={{ left: 32, bottom: 20, right: 8 }}
+	padding={{ ...defaultChartPadding, left: 30, right: 15, bottom: 20 }}
 	height={400}
 >
 	{#snippet children({ context })}
