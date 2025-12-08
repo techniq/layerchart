@@ -4,8 +4,9 @@
 	import { javascript } from '@codemirror/lang-javascript';
 	import { html } from '@codemirror/lang-html';
 	import { css } from '@codemirror/lang-css';
-	import { oneDark } from '@codemirror/theme-one-dark';
+	import { githubLight, githubDark } from '@uiw/codemirror-theme-github';
 	import { EditorState, Compartment } from '@codemirror/state';
+	import { getSettings } from 'svelte-ux';
 
 	let {
 		value = $bindable(''),
@@ -21,8 +22,12 @@
 	let editorView: EditorView | null = null;
 	let updating = false;
 
-	// Use Compartment for reconfigurable language extension
+	// Use Compartments for reconfigurable extensions
 	const languageCompartment = new Compartment();
+	const themeCompartment = new Compartment();
+
+	// Get current theme mode from svelte-ux settings
+	const { currentTheme } = getSettings();
 
 	// Determine language based on file extension
 	function getLanguageExtension(filename: string) {
@@ -36,13 +41,21 @@
 		return javascript();
 	}
 
+	// Get theme based on current mode
+	function getCurrentTheme() {
+		// TODO: read from
+		console.log({ $currentTheme });
+		return $currentTheme.dark ? githubDark : githubLight;
+		// return githubDark;
+	}
+
 	onMount(() => {
 		const startState = EditorState.create({
 			doc: value,
 			extensions: [
 				basicSetup,
 				languageCompartment.of(getLanguageExtension(filename)),
-				oneDark,
+				themeCompartment.of(getCurrentTheme()),
 				EditorView.updateListener.of((update) => {
 					if (update.docChanged && !updating) {
 						const newValue = update.state.doc.toString();
@@ -52,10 +65,16 @@
 				}),
 				EditorView.theme({
 					'&': {
-						height: '100%'
+						height: '100%',
+						background: 'var(--color-surface-100)'
 					},
 					'.cm-scroller': {
 						overflow: 'auto'
+					},
+					'.cm-gutters': {
+						backgroundColor: 'var(--color-surface-300)',
+						color: 'var(--color-surface-content)',
+						border: 'none'
 					}
 				})
 			]
@@ -87,6 +106,17 @@
 		if (editorView && filename) {
 			editorView.dispatch({
 				effects: languageCompartment.reconfigure(getLanguageExtension(filename))
+			});
+		}
+	});
+
+	// Reconfigure theme when mode changes
+	$effect(() => {
+		if (editorView) {
+			// Access $currentTheme to create reactive dependency
+			const theme = $currentTheme;
+			editorView.dispatch({
+				effects: themeCompartment.reconfigure(getCurrentTheme())
 			});
 		}
 	});

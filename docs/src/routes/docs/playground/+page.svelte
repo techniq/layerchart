@@ -181,7 +181,7 @@
 	}
 </script>
 
-<div class="h-screen -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex">
+<div class="h-screen -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
 	<!-- Editor Panel -->
 	<div class="w-1/2 flex flex-col border-r border-surface-content/10">
 		<!-- File Selector -->
@@ -210,18 +210,12 @@
 	</div>
 
 	<!-- Preview Panel -->
-	<div class="relative w-1/2">
+	<div class="relative w-1/2 bg-surface-100">
 		{#if loadingStatus}
 			<Overlay class="flex flex-col gap-4 bg-surface-100/50" center>
 				<ProgressCircle width={2} />
 				<div class="text-lg font-medium">{loadingStatus}</div>
 			</Overlay>
-			<!-- <div class="bg-surface/95 flex items-center justify-center z-50">
-				<div class="flex flex-col items-center gap-4">
-					<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-					<div class="text-lg font-medium">{loadingStatus}</div>
-				</div>
-			</div> -->
 		{/if}
 		<iframe
 			bind:this={iframeEl}
