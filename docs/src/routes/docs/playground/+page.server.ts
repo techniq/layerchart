@@ -9,7 +9,6 @@ import fs from 'fs';
 
 // Import custom page template
 import templatePageSvelte from './template/+page.svelte?raw';
-import templateDataTs from './template/data.ts?raw';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,7 +28,6 @@ function generatePlaygroundFiles(): Record<string, string> {
 		...readAllFilesFromDirectory(TEMPLATES_DIR),
 		// Override/add custom files for the playground
 		'src/routes/+page.svelte': templatePageSvelte,
-		'src/lib/data.ts': templateDataTs,
 		// Add utility data file
 		'src/lib/utils/data.ts': readSource('lib/utils/data.ts')
 	};
