@@ -17,6 +17,7 @@
 	import LucideFileCode2 from '~icons/lucide/file-code-2';
 	import LucideCirclePlay from '~icons/lucide/circle-play';
 	import LucideParentheses from '~icons/lucide/parentheses';
+	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz';
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
@@ -63,6 +64,11 @@
 			label: 'Examples',
 			path: '/docs/examples',
 			icon: LucideFileCode2
+		})}
+		{@render navItem({
+			label: 'Playground',
+			path: '/docs/playground',
+			icon: SimpleIconsStackblitz
 		})}
 		{@render navItem({ label: 'Showcase', path: '/docs/showcase', icon: LucideGalleryVertical })}
 		{@render navItem({
