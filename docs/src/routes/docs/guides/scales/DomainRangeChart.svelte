@@ -76,13 +76,13 @@
 			icon={LucidePlay}
 			on:click={() => (isPlaying = true)}
 			disabled={isPlaying}
-			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
+			classes={{ icon: 'text-xs', root: 'pl-2 pr-1 py-1' }}
 		/>
 		<Button
 			icon={LucideSquare}
 			on:click={() => (isPlaying = false)}
 			disabled={!isPlaying}
-			classes={{ icon: 'text-xs', root: 'px-2 py-1' }}
+			classes={{ icon: 'text-xs', root: 'pl-1 pr-2 py-1' }}
 		/>
 	</ButtonGroup>
 </div>
