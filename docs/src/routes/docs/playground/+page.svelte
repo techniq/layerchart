@@ -1,5 +1,14 @@
 <script lang="ts" module>
 	import { WebContainer } from '@webcontainer/api';
+	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
+	import { Icon } from 'svelte-ux';
+	import SimpleIconsCss from '~icons/simple-icons/css';
+	import SimpleIconsJavascript from '~icons/simple-icons/javascript';
+	import SimpleIconsTypescript from '~icons/simple-icons/typescript';
+	import SimpleIconsTerminal from '~icons/simple-icons/windowsterminal';
+	import SimpleIconsSvelte from '~icons/simple-icons/svelte';
+	import RefreshCcwIcon from '~icons/lucide/refresh-ccw';
+	import TrashIcon from '~icons/lucide/trash';
 
 	// Singleton instance stored outside component lifecycle
 	let webcontainerPromise: Promise<WebContainer> | null = null;
@@ -15,6 +24,24 @@
 
 	let iframeEl = $state<HTMLIFrameElement | null>(null);
 	let webcontainerInstance = $state<WebContainer | null>(null);
+
+	let consolePane: ReturnType<typeof Pane>;
+	let consoleCollapsed = $state(true);
+	let consoleOutput = $state('// This needs wired up...');
+
+	let fileIcon = $derived.by(() => {
+		if (selectedFile.endsWith('.svelte')) {
+			return SimpleIconsSvelte;
+		} else if (selectedFile.endsWith('.ts')) {
+			return SimpleIconsTypescript;
+		} else if (selectedFile.endsWith('.js')) {
+			return SimpleIconsJavascript;
+		} else if (selectedFile.endsWith('.css')) {
+			return SimpleIconsCss;
+		} else {
+			return SimpleIconsTerminal;
+		}
+	});
 
 	// File editing state
 	let selectedFile = $state<string>('src/routes/+page.svelte');
@@ -183,62 +210,129 @@
 
 <div class="h-screen -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
 	<!-- Editor Panel -->
-	<div class="w-1/2 flex flex-col border-r border-surface-content/10">
-		<!-- File Selector -->
-		<div class="p-2 border-b border-surface-content/10 bg-surface-100">
-			<select
-				bind:value={selectedFile}
-				onchange={() => handleFileSelect(selectedFile)}
-				class="w-full px-3 py-2 rounded border border-surface-content/20 bg-surface text-sm font-mono"
-			>
-				{#each editableFiles as file}
-					<option value={file}>{file}</option>
-				{/each}
-			</select>
-		</div>
-
-		<!-- Code Editor -->
-		<div class="flex-1 overflow-hidden">
-			{#if isLoadingFile}
-				<div class="flex items-center justify-center h-full">
-					<div class="text-surface-content/50">Loading...</div>
+	<PaneGroup direction="horizontal">
+		<Pane defaultSize={50}>
+			<div class="flex flex-col h-full border-r border-surface-content/10">
+				<!-- File Selector -->
+				<div class="p-2 border-b border-surface-content/10 bg-surface-100 relative">
+					<select
+						bind:value={selectedFile}
+						onchange={() => handleFileSelect(selectedFile)}
+						class="w-full px-8 py-2 rounded border border-surface-content/20 bg-surface text-sm font-mono"
+					>
+						{#each editableFiles as file}
+							<option value={file}>{file}</option>
+						{/each}
+					</select>
+					<Icon
+						data={fileIcon}
+						class="absolute left-4 top-1/2 -translate-y-1/2 text-surface-content/50"
+					/>
 				</div>
-			{:else}
-				<CodeEditor bind:value={fileContent} filename={selectedFile} oninput={saveFileContent} />
-			{/if}
-		</div>
-	</div>
 
-	<!-- Preview Panel -->
-	<div class="relative w-1/2 bg-surface-100">
-		{#if loadingStatus}
-			<Overlay class="flex flex-col gap-4 bg-surface-100/50" center>
-				<ProgressCircle width={2} />
-				<div class="text-lg font-medium">{loadingStatus}</div>
-			</Overlay>
-		{/if}
-		<iframe
-			bind:this={iframeEl}
-			title="LayerChart Playground"
-			class="w-full h-full border-none"
-			allowfullscreen
-			onload={() => {
-				// Wait for Vite to connect before clearing loading status
-				if (iframeEl?.src && !viteConnected) {
-					loadingStatus = 'Connecting to Vite...';
-					// Fallback: clear after 3 seconds if Vite doesn't connect
-					viteTimeoutId = window.setTimeout(() => {
-						if (loadingStatus === 'Connecting to Vite...') {
-							loadingStatus = null;
-							isReady = true;
-							viteConnected = true;
-						}
-					}, 3000);
-				} else if (viteConnected) {
-					loadingStatus = null;
-					isReady = true;
-				}
-			}}
-		></iframe>
-	</div>
+				<!-- Code Editor -->
+				<div class="flex-1 overflow-hidden">
+					{#if isLoadingFile}
+						<div class="flex items-center justify-center h-full">
+							<div class="text-surface-content/50">Loading...</div>
+						</div>
+					{:else}
+						<CodeEditor
+							bind:value={fileContent}
+							filename={selectedFile}
+							oninput={saveFileContent}
+						/>
+					{/if}
+				</div>
+			</div>
+		</Pane>
+		<PaneResizer data-enabled={!isLoadingFile && !isReady} />
+
+		<!-- Preview Panel -->
+		<Pane defaultSize={50}>
+			<PaneGroup direction="vertical">
+				<Pane defaultSize={90}>
+					<div class="relative h-full bg-surface-100 pt-6">
+						{#if loadingStatus}
+							<Overlay class="flex flex-col gap-4 bg-surface-100/50" center>
+								<ProgressCircle width={2} />
+								<div class="text-lg font-medium">{loadingStatus}</div>
+							</Overlay>
+						{:else}
+							<button
+								class="absolute top-2 right-2"
+								onclick={() => {
+									window.location.reload();
+								}}
+							>
+								<Icon
+									data={RefreshCcwIcon}
+									class="text-surface-content/50 hover:text-primary absolute top-2 right-2"
+								/>
+							</button>
+						{/if}
+						<iframe
+							bind:this={iframeEl}
+							title="LayerChart Playground"
+							class="w-full h-full border-none"
+							allowfullscreen
+							onload={() => {
+								// Wait for Vite to connect before clearing loading status
+								if (iframeEl?.src && !viteConnected) {
+									loadingStatus = 'Connecting to Vite...';
+									// Fallback: clear after 3 seconds if Vite doesn't connect
+									viteTimeoutId = window.setTimeout(() => {
+										if (loadingStatus === 'Connecting to Vite...') {
+											loadingStatus = null;
+											isReady = true;
+											viteConnected = true;
+										}
+									}, 3000);
+								} else if (viteConnected) {
+									loadingStatus = null;
+									isReady = true;
+								}
+							}}
+						></iframe>
+					</div>
+				</Pane>
+				<PaneResizer data-enabled={!isLoadingFile && !isReady} />
+
+				<!-- Console Panel -->
+				<Pane
+					bind:this={consolePane as Pane}
+					defaultSize={10}
+					collapsedSize={10}
+					minSize={10}
+					maxSize={50}
+					collapsible={true}
+					onCollapse={() => (consoleCollapsed = true)}
+					onExpand={() => (consoleCollapsed = false)}
+				>
+					<div class="h-full overflow-auto relative bg-surface-300">
+						<div class="flex justify-between items-center bg-primary/10 p-1">
+							<div class="flex-1">
+								<button
+									class="flex items-center justify-start gap-2 text-sm font-mono group w-full"
+									onclick={() =>
+										consolePane.isCollapsed() ? consolePane.expand() : consolePane.collapse()}
+								>
+									<Icon data={SimpleIconsTerminal} class=" text-surface-content/50" />
+									<span class="group-hover:underline">Console</span>
+								</button>
+							</div>
+							<button
+								class="text-xs font-mono relative py-1 px-2 outline outline-primary/10 rounded-sm flex items-center gap-2"
+								onclick={() => (consoleOutput = '')}
+								>Clear <Icon data={TrashIcon} class="text-surface-content/50" /></button
+							>
+						</div>
+						<div class="text-xs font-mono p-1">
+							{consoleOutput}
+						</div>
+					</div>
+				</Pane>
+			</PaneGroup>
+		</Pane>
+	</PaneGroup>
 </div>

@@ -117,6 +117,7 @@
 		"@stackblitz/sdk": "^1.11.0",
 		"@uiw/codemirror-theme-github": "^4.25.3",
 		"@webcontainer/api": "^1.6.1",
-		"codemirror": "^6.0.2"
+		"codemirror": "^6.0.2",
+		"paneforge": "^1.0.2"
 	}
 }
