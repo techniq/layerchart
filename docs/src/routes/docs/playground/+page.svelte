@@ -10,8 +10,14 @@
 	import RefreshCcwIcon from '~icons/lucide/refresh-ccw';
 	import TrashIcon from '~icons/lucide/trash';
 
-	// Singleton instance stored outside component lifecycle
-	let webcontainerPromise: Promise<WebContainer> | null = null;
+	// Singleton instance stored in globalThis to persist across hot reloads
+	const WEBCONTAINER_KEY = '__webcontainer_instance__';
+
+	declare global {
+		interface Window {
+			[WEBCONTAINER_KEY]?: Promise<WebContainer>;
+		}
+	}
 </script>
 
 <script lang="ts">
@@ -56,10 +62,13 @@
 	let viteTimeoutId: number | null = null;
 
 	async function getWebContainerInstance() {
-		if (!webcontainerPromise) {
-			webcontainerPromise = WebContainer.boot();
+		if (typeof window !== 'undefined') {
+			if (!window[WEBCONTAINER_KEY]) {
+				window[WEBCONTAINER_KEY] = WebContainer.boot();
+			}
+			return window[WEBCONTAINER_KEY];
 		}
-		return webcontainerPromise;
+		throw new Error('WebContainer can only be initialized in browser');
 	}
 
 	// Get list of editable files from the template
