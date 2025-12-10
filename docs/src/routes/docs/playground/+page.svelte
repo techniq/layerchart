@@ -25,15 +25,17 @@
 	import type { PageData } from './$types';
 	import CodeEditor from './CodeEditor.svelte';
 	import { Overlay, ProgressCircle } from 'svelte-ux';
+	import { AnsiUp } from 'ansi_up';
 
 	let { data }: { data: PageData } = $props();
+	const ansiUp = new AnsiUp();
 
 	let iframeEl = $state<HTMLIFrameElement | null>(null);
 	let webcontainerInstance = $state<WebContainer | null>(null);
 
 	let consolePane: ReturnType<typeof Pane>;
 	let consoleCollapsed = $state(true);
-	let consoleOutput = $state('// This needs wired up...');
+	let consoleOutput = $state('');
 
 	let fileIcon = $derived.by(() => {
 		if (selectedFile.endsWith('.svelte')) {
@@ -142,7 +144,7 @@
 			loadingStatus = 'Loading editor...';
 			await loadFileContent(selectedFile);
 
-			// Listen for messages from the iframe to detect Vite connection
+			// Listen for messages from the iframe to detect Vite connection and console logs
 			const handleMessage = (event: MessageEvent) => {
 				// Only process messages from our iframe
 				if (event.source !== iframeEl?.contentWindow) return;
@@ -150,6 +152,29 @@
 				// Check if message is from Vite client
 				if (event.data && typeof event.data === 'object') {
 					const data = event.data;
+
+					// Handle console logs from iframe
+					if (data.type === 'console') {
+						const logType = data.level || 'log';
+						const args = data.args || [];
+						const logText = args.map((arg: any) => {
+							if (typeof arg === 'object') {
+								return JSON.stringify(arg, null, 2);
+							}
+							return String(arg);
+						}).join(' ');
+
+						const colorMap: Record<string, string> = {
+							log: '#e5e7eb',
+							warn: '#fbbf24',
+							error: '#ef4444',
+							info: '#3b82f6'
+						};
+						const color = colorMap[logType] || colorMap.log;
+
+						consoleOutput += `<span style="color: ${color}">[${logType}] ${logText}</span>\n`;
+					}
+
 					// Vite HMR sends various message types - we'll clear loading on any HMR activity
 					if (data.type && (data.type.includes('vite') || data.type === 'connected')) {
 						if (!viteConnected) {
@@ -188,6 +213,18 @@
 		// Install dependencies
 		loadingStatus = 'Installing dependencies...';
 		const installProcess = await webcontainerInstance.spawn('pnpm', ['install']);
+
+		// Capture install output
+		installProcess.output.pipeTo(
+			new WritableStream({
+				write(data) {
+					const text = data.toString();
+					console.log('[WebContainer install]:', text);
+					consoleOutput += ansiUp.ansi_to_html(text);
+				}
+			})
+		);
+
 		const installExitCode = await installProcess.exit;
 
 		if (installExitCode !== 0) {
@@ -204,6 +241,9 @@
 				write(data) {
 					const text = data.toString();
 					console.log('[WebContainer]:', text);
+
+					// Append to console output (converting ANSI codes to HTML)
+					consoleOutput += ansiUp.ansi_to_html(text);
 
 					// Update status based on Vite output
 					if (text.includes('VITE') && text.includes('ready')) {
@@ -344,8 +384,8 @@
 								>Clear <Icon data={TrashIcon} class="text-surface-content/50" /></button
 							>
 						</div>
-						<div class="text-xs font-mono p-1">
-							{consoleOutput}
+						<div class="text-xs font-mono p-1 whitespace-pre-wrap">
+							{@html consoleOutput}
 						</div>
 					</div>
 				</Pane>

@@ -118,6 +118,7 @@
 		"@stackblitz/sdk": "^1.11.0",
 		"@uiw/codemirror-theme-github": "^4.25.3",
 		"@webcontainer/api": "^1.6.1",
+		"ansi_up": "^6.0.6",
 		"codemirror": "^6.0.2"
 	}
 }
