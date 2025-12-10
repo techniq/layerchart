@@ -300,12 +300,16 @@
 						></iframe>
 					</div>
 				</Pane>
-				<PaneResizer data-enabled={!isLoadingFile && !isReady} />
+
+				<PaneResizer
+					data-enabled={!isLoadingFile && !isReady}
+					class="h-1 hover:bg-surface-content/10"
+				/>
 
 				<!-- Console Panel -->
 				<Pane
 					bind:this={consolePane as Pane}
-					defaultSize={10}
+					defaultSize={20}
 					collapsedSize={10}
 					minSize={10}
 					maxSize={50}
