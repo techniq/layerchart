@@ -225,6 +225,9 @@ importers:
       mdsx:
         specifier: ^0.0.7
         version: 0.0.7(svelte@5.45.5)
+      paneforge:
+        specifier: ^1.0.2
+        version: 1.0.2(svelte@5.45.5)
       playwright:
         specifier: ^1.57.0
         version: 1.57.0
@@ -711,7 +714,7 @@ importers:
         version: 1.2.77
       '@rollup/plugin-dsv':
         specifier: ^3.0.5
-        version: 3.0.5(rollup@2.79.2)
+        version: 3.0.5(rollup@4.53.3)
       '@sveltejs/adapter-auto':
         specifier: ^7.0.0
         version: 7.0.0(@sveltejs/kit@2.49.1(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.45.5)(vite@7.2.6(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.1)))(svelte@5.45.5)(vite@7.2.6(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.1)))
@@ -819,7 +822,7 @@ importers:
         version: 6.0.0
       rollup-plugin-visualizer:
         specifier: ^6.0.5
-        version: 6.0.5(rollup@2.79.2)
+        version: 6.0.5(rollup@4.53.3)
       shapefile:
         specifier: ^0.6.6
         version: 0.6.6
@@ -4012,6 +4015,11 @@ packages:
   package-manager-detector@1.5.0:
     resolution: {integrity: sha512-uBj69dVlYe/+wxj8JOpr97XfsxH/eumMt6HqjNTmJDf/6NO9s+0uxeOneIz3AsPt2m6y9PqzDzd3ATcU17MNfw==}
 
+  paneforge@1.0.2:
+    resolution: {integrity: sha512-KzmIXQH1wCfwZ4RsMohD/IUtEjVhteR+c+ulb/CHYJHX8SuDXoJmChtsc/Xs5Wl8NHS4L5Q7cxL8MG40gSU1bA==}
+    peerDependencies:
+      svelte: ^5.29.0
+
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -4397,6 +4405,11 @@ packages:
     peerDependencies:
       svelte: ^5.7.0
 
+  runed@0.29.2:
+    resolution: {integrity: sha512-0cq6cA6sYGZwl/FvVqjx9YN+1xEBu9sDDyuWdDW1yWX7JF2wmvmVKfH+hVCZs+csW+P3ARH92MjI3H9QTagOQA==}
+    peerDependencies:
+      svelte: ^5.7.0
+
   runed@0.31.1:
     resolution: {integrity: sha512-v3czcTnO+EJjiPvD4dwIqfTdHLZ8oH0zJheKqAHh9QMViY7Qb29UlAMRpX7ZtHh7AFqV60KmfxaJ9QMy+L1igQ==}
     peerDependencies:
@@ -4649,6 +4662,12 @@ packages:
     engines: {node: '>=18', pnpm: '>=8.7.0'}
     peerDependencies:
       svelte: ^5.0.0
+
+  svelte-toolbelt@0.9.3:
+    resolution: {integrity: sha512-HCSWxCtVmv+c6g1ACb8LTwHVbDqLKJvHpo6J8TaqwUme2hj9ATJCpjCPNISR1OCq2Q4U1KT41if9ON0isINQZw==}
+    engines: {node: '>=18', pnpm: '>=8.7.0'}
+    peerDependencies:
+      svelte: ^5.30.2
 
   svelte-ux@2.0.0-next.17:
     resolution: {integrity: sha512-jKE/4baK3Q0SsdlHIH7o2kZDIPtktIdddlzFiqumME7hSafzGHW61HU/x2FhfaQoMBC5yyvtA6DcEh5UOylwhw==}
@@ -6078,15 +6097,15 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@rollup/plugin-dsv@3.0.5(rollup@2.79.2)':
+  '@rollup/plugin-dsv@3.0.5(rollup@4.53.3)':
     dependencies:
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
+      '@rollup/pluginutils': 5.1.2(rollup@4.53.3)
       '@types/d3-dsv': 3.0.7
       d3-dsv: 2.0.0
       strip-bom: 4.0.0
       tosource: 2.0.0-alpha.3
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   '@rollup/plugin-node-resolve@13.3.0(rollup@2.79.2)':
     dependencies:
@@ -6110,13 +6129,13 @@ snapshots:
       estree-walker: 2.0.2
       picomatch: 2.3.1
 
-  '@rollup/pluginutils@5.1.2(rollup@2.79.2)':
+  '@rollup/pluginutils@5.1.2(rollup@4.53.3)':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 2.3.1
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     optional: true
@@ -8821,6 +8840,12 @@ snapshots:
 
   package-manager-detector@1.5.0: {}
 
+  paneforge@1.0.2(svelte@5.45.5):
+    dependencies:
+      runed: 0.23.4(svelte@5.45.5)
+      svelte: 5.45.5
+      svelte-toolbelt: 0.9.3(svelte@5.45.5)
+
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
@@ -9110,14 +9135,14 @@ snapshots:
       rollup: 2.79.2
       svelte: 4.2.20
 
-  rollup-plugin-visualizer@6.0.5(rollup@2.79.2):
+  rollup-plugin-visualizer@6.0.5(rollup@4.53.3):
     dependencies:
       open: 8.4.2
       picomatch: 4.0.3
       source-map: 0.7.6
       yargs: 17.7.2
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.53.3
 
   rollup@2.79.2:
     optionalDependencies:
@@ -9161,6 +9186,11 @@ snapshots:
       svelte: 5.45.5
 
   runed@0.25.0(svelte@5.45.5):
+    dependencies:
+      esm-env: 1.2.2
+      svelte: 5.45.5
+
+  runed@0.29.2(svelte@5.45.5):
     dependencies:
       esm-env: 1.2.2
       svelte: 5.45.5
@@ -9420,6 +9450,13 @@ snapshots:
       clsx: 2.1.1
       runed: 0.23.4(svelte@5.45.5)
       style-to-object: 1.0.9
+      svelte: 5.45.5
+
+  svelte-toolbelt@0.9.3(svelte@5.45.5):
+    dependencies:
+      clsx: 2.1.1
+      runed: 0.29.2(svelte@5.45.5)
+      style-to-object: 1.0.14
       svelte: 5.45.5
 
   svelte-ux@2.0.0-next.17(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(yaml@2.8.1))(postcss@8.5.6)(svelte@5.45.5):
