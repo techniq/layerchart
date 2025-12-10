@@ -72,8 +72,7 @@
 	{y}
 	width={handleWidth}
 	height={rectHeight}
-	rx={2}
-	class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5"
+	class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pl-0.5 rounded-l-lg"
 	onpointerenter={() => {
 		isHovering = true;
 	}}
@@ -100,8 +99,7 @@
 	{y}
 	width={handleWidth}
 	height={rectHeight}
-	rx={2}
-	class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5"
+	class="bg-primary/20 hover:bg-primary/30 cursor-ew-resize flex items-center justify-center pr-0.5 rounded-r-lg"
 	onpointerenter={() => {
 		isHovering = true;
 	}}
@@ -130,7 +128,7 @@
 	y={y + rectHeight / 2}
 	textAnchor="start"
 	verticalAnchor="middle"
-	class="text-sm text-primary pointer-events-none"
+	class="text-sm text-primary pointer-events-none pl-[2px]"
 />
 
 <!-- Label text -->
@@ -162,5 +160,5 @@
 	y={y + rectHeight / 2}
 	textAnchor="end"
 	verticalAnchor="middle"
-	class="text-sm text-primary pointer-events-none"
+	class="text-sm text-primary pointer-events-none pr-[2px]"
 />
