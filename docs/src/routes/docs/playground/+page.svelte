@@ -211,7 +211,7 @@
 <div class="h-screen -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
 	<!-- Editor Panel -->
 	<PaneGroup direction="horizontal">
-		<Pane defaultSize={50}>
+		<Pane defaultSize={50} minSize={5}>
 			<div class="flex flex-col h-full border-r border-surface-content/10">
 				<!-- File Selector -->
 				<div class="p-2 border-b border-surface-content/10 bg-surface-100 relative">
@@ -253,7 +253,7 @@
 		/>
 
 		<!-- Preview Panel -->
-		<Pane defaultSize={50}>
+		<Pane defaultSize={50} minSize={5}>
 			<PaneGroup direction="vertical">
 				<Pane defaultSize={90}>
 					<div class="relative h-full bg-surface-100 pt-6">
