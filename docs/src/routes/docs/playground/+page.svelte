@@ -178,16 +178,16 @@
 
 		// Install dependencies
 		loadingStatus = 'Installing dependencies...';
-		const installProcess = await webcontainerInstance.spawn('npm', ['install']);
+		const installProcess = await webcontainerInstance.spawn('pnpm', ['install']);
 		const installExitCode = await installProcess.exit;
 
 		if (installExitCode !== 0) {
-			throw new Error('Unable to run npm install');
+			throw new Error('Unable to run pnpm install');
 		}
 
 		// Start dev server
 		loadingStatus = 'Starting dev server...';
-		const devProcess = await webcontainerInstance.spawn('npm', ['run', 'dev']);
+		const devProcess = await webcontainerInstance.spawn('pnpm', ['run', 'dev']);
 
 		// Listen to output to detect when Vite is building
 		devProcess.output.pipeTo(
