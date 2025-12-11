@@ -81,6 +81,7 @@
 		"globals": "^16.5.0",
 		"layerchart": "workspace:*",
 		"mdsx": "^0.0.7",
+		"paneforge": "^1.0.2",
 		"playwright": "^1.57.0",
 		"posthog-js": "^1.300.0",
 		"prettier": "^3.7.4",
@@ -110,6 +111,14 @@
 		"zod": "^4.1.13"
 	},
 	"dependencies": {
-		"@stackblitz/sdk": "^1.11.0"
+		"@codemirror/lang-css": "^6.3.1",
+		"@codemirror/lang-html": "^6.4.11",
+		"@codemirror/lang-javascript": "^6.2.4",
+		"@codemirror/state": "^6.5.2",
+		"@stackblitz/sdk": "^1.11.0",
+		"@uiw/codemirror-theme-github": "^4.25.3",
+		"@webcontainer/api": "^1.6.1",
+		"ansi_up": "^6.0.6",
+		"codemirror": "^6.0.2"
 	}
 }
