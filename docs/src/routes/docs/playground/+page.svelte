@@ -1,15 +1,21 @@
 <script lang="ts" module>
 	import { WebContainer } from '@webcontainer/api';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
-	import { Icon } from 'svelte-ux';
-	import SimpleIconsCss from '~icons/simple-icons/css';
-	import SimpleIconsJavascript from '~icons/simple-icons/javascript';
-	import SimpleIconsTypescript from '~icons/simple-icons/typescript';
+	import { Icon, Button, Tooltip } from 'svelte-ux';
+	import { slide } from 'svelte/transition';
+	import FileTree from './FileTree/FileTree.svelte';
+	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz';
 	import SimpleIconsTerminal from '~icons/simple-icons/windowsterminal';
 	import SimpleIconsSvelte from '~icons/simple-icons/svelte';
+	import VscodeIconsFileTypeSvelte from '~icons/vscode-icons/file-type-svelte';
+	import VscodeIconsFileTypeTypescript from '~icons/vscode-icons/file-type-typescript';
+	import VscodeIconsFileTypeJavascript from '~icons/vscode-icons/file-type-js';
+	import VscodeIconsFileTypeCss from '~icons/vscode-icons/file-type-css';
 	import RefreshCcwIcon from '~icons/lucide/refresh-ccw';
+	import ChevronDown from '~icons/lucide/chevron-down';
+	import ChevronUp from '~icons/lucide/chevron-up';
 	import TrashIcon from '~icons/lucide/trash';
-
+	import Download from '~icons/lucide/download';
 	// Singleton instance stored in globalThis to persist across hot reloads
 	const WEBCONTAINER_KEY = '__webcontainer_instance__';
 
@@ -27,29 +33,31 @@
 	import { Overlay, ProgressCircle } from 'svelte-ux';
 	import { AnsiUp } from 'ansi_up';
 
+	/* TODO:
+	- incase you didn't see it you can click console to expand/collapse.
+	- second pass background colors, etc. I'm always open for revisions.
+	- console output seems to missing some later stage loading state - "load preview..."
+	- filter blank \n going to console output?
+	- collapse console when loaded is working, but performing too early.
+	- Refresh correct, or something thru webcontainer?
+	- Buttons from Svelte-UX w/Icons - icons not centered vertically.
+	- Code - Open Project in StackBlitz
+	- Code - Open Project in Svelte REPL
+	- Code - Download Project
+	*/
+
 	let { data }: { data: PageData } = $props();
 	const ansiUp = new AnsiUp();
 
-	let iframeEl = $state<HTMLIFrameElement | null>(null);
+	// Container, Pane, and Elements state
 	let webcontainerInstance = $state<WebContainer | null>(null);
-
-	let consolePane: ReturnType<typeof Pane>;
-	let consoleCollapsed = $state(true);
-	let consoleOutput = $state('');
-
-	let fileIcon = $derived.by(() => {
-		if (selectedFile.endsWith('.svelte')) {
-			return SimpleIconsSvelte;
-		} else if (selectedFile.endsWith('.ts')) {
-			return SimpleIconsTypescript;
-		} else if (selectedFile.endsWith('.js')) {
-			return SimpleIconsJavascript;
-		} else if (selectedFile.endsWith('.css')) {
-			return SimpleIconsCss;
-		} else {
-			return SimpleIconsTerminal;
-		}
-	});
+	let iframeEl = $state<HTMLIFrameElement | null>(null);
+	let fileSelectorEl = $state<HTMLDivElement | null>(null);
+	let previewPaneGroup = $state<ReturnType<typeof PaneGroup>>(); // Preview and Console Pane Groups
+	let consolePane = $state<ReturnType<typeof Pane>>();
+	let consoleOutput = $state('Provisioning...\n\n');
+	let consoleScrollContainer = $state<HTMLDivElement>();
+	let fileTreeShowing = $state<boolean>(false);
 
 	// File editing state
 	let selectedFile = $state<string>('src/routes/+page.svelte');
@@ -62,6 +70,27 @@
 	let isReady = $state(false);
 	let viteConnected = $state(false);
 	let viteTimeoutId: number | null = null;
+
+	function scrollConsoleToBottom() {
+		if (consoleScrollContainer) {
+			consoleScrollContainer.scrollTo({
+				top: consoleScrollContainer.scrollHeight,
+				behavior: 'instant'
+			});
+		}
+	}
+
+	let fileIcon = $derived.by(() => {
+		if (selectedFile.endsWith('.svelte')) {
+			return VscodeIconsFileTypeSvelte;
+		} else if (selectedFile.endsWith('.ts')) {
+			return VscodeIconsFileTypeTypescript;
+		} else if (selectedFile.endsWith('.js')) {
+			return VscodeIconsFileTypeJavascript;
+		} else if (selectedFile.endsWith('.css')) {
+			return VscodeIconsFileTypeCss;
+		}
+	});
 
 	async function getWebContainerInstance() {
 		if (typeof window !== 'undefined') {
@@ -109,7 +138,7 @@
 		}
 	}
 
-	// Save file content
+	// Save selected file content
 	async function saveFileContent() {
 		if (!webcontainerInstance || !selectedFile) return;
 
@@ -124,6 +153,21 @@
 	async function handleFileSelect(filepath: string) {
 		selectedFile = filepath;
 		await loadFileContent(filepath);
+	}
+
+	// Save Project Locally
+	async function saveProject() {
+		// This needs wired up
+	}
+
+	// Open Project in StackBlitz
+	async function openInStackBlitz() {
+		// This needs wired up
+	}
+
+	// Open Project in REPL
+	async function openInREPL() {
+		// This needs wired up
 	}
 
 	onMount(async () => {
@@ -157,12 +201,14 @@
 					if (data.type === 'console') {
 						const logType = data.level || 'log';
 						const args = data.args || [];
-						const logText = args.map((arg: any) => {
-							if (typeof arg === 'object') {
-								return JSON.stringify(arg, null, 2);
-							}
-							return String(arg);
-						}).join(' ');
+						const logText = args
+							.map((arg: any) => {
+								if (typeof arg === 'object') {
+									return JSON.stringify(arg, null, 2);
+								}
+								return String(arg);
+							})
+							.join(' ');
 
 						const colorMap: Record<string, string> = {
 							log: '#e5e7eb',
@@ -244,10 +290,12 @@
 
 					// Append to console output (converting ANSI codes to HTML)
 					consoleOutput += ansiUp.ansi_to_html(text);
+					scrollConsoleToBottom();
 
 					// Update status based on Vite output
 					if (text.includes('VITE') && text.includes('ready')) {
 						loadingStatus = 'Ready! Loading preview...';
+						consolePane?.collapse();
 					} else if (text.includes('build started') || text.includes('building')) {
 						loadingStatus = 'Building application...';
 					}
@@ -255,28 +303,100 @@
 			})
 		);
 	}
+
+	function toggleConsole() {
+		if (consolePane?.isCollapsed()) {
+			consolePane.expand();
+		} else {
+			consolePane?.collapse();
+		}
+	}
+
+	// Handle click outside of file tree to close it
+	function handleClickOutside(event: MouseEvent) {
+		// Don't close if clicking on SVG icons (folder toggles)
+		const target = event.target as Element;
+		if (target instanceof SVGElement) return;
+
+		if (fileTreeShowing && fileSelectorEl && !fileSelectorEl.contains(event.target as Node)) {
+			fileTreeShowing = false;
+		}
+	}
 </script>
 
-<div class="h-screen -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
+<svelte:window onclick={handleClickOutside} />
+
+<div class="h-full -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
 	<!-- Editor Panel -->
 	<PaneGroup direction="horizontal">
 		<Pane defaultSize={50} minSize={5}>
 			<div class="flex flex-col h-full border-r border-surface-content/10">
-				<!-- File Selector -->
-				<div class="p-2 border-b border-surface-content/10 bg-surface-100 relative">
-					<select
-						bind:value={selectedFile}
-						onchange={() => handleFileSelect(selectedFile)}
-						class="w-full px-8 py-2 rounded border border-surface-content/20 bg-surface text-sm font-mono"
-					>
-						{#each editableFiles as file}
-							<option value={file}>{file}</option>
-						{/each}
-					</select>
-					<Icon
-						data={fileIcon}
-						class="absolute left-4 top-1/2 -translate-y-1/2 text-surface-content/50"
-					/>
+				<div
+					class="relative flex items-center gap-4 p-2 border-b border-surface-content/10 bg-transparent"
+				>
+					<!-- File Selector -->
+					<div bind:this={fileSelectorEl} class="flex-1">
+						{#if fileTreeShowing}
+							<div
+								transition:slide={{ duration: 200 }}
+								class="absolute left-0 right-0 top-full z-10 bg-surface-100 border-t border-surface-content/10 shadow-lg"
+							>
+								<FileTree
+									class="w-full py-2 pl-4 pr-2 bg-surface-100 overlow-x-clip overflow-y-auto"
+									filePaths={editableFiles}
+									{selectedFile}
+									onSelect={(path: any) => {
+										handleFileSelect(path);
+										fileTreeShowing = false;
+									}}
+								/>
+							</div>
+						{/if}
+						<Button
+							class="border py-1 px-2 w-full justify-between bg-surface-100"
+							on:click={() => (fileTreeShowing = !fileTreeShowing)}
+						>
+							<span class="flex items-center gap-2 flex-1 text-left">
+								<Icon data={fileIcon} />
+								{selectedFile}
+							</span>
+							{#key fileTreeShowing}
+								<Icon
+									data={fileTreeShowing ? ChevronUp : ChevronDown}
+									class="text-surface-content/50"
+								/>
+							{/key}</Button
+						>
+					</div>
+					<Tooltip title="Open in StackBlitz" placement="top" offset={6}>
+						<Button
+							href="https://stackblitz.com"
+							icon={SimpleIconsStackblitz}
+							size="sm"
+							variant="fill-light"
+							target="_blank"
+							onclick={openInStackBlitz()}
+						/>
+					</Tooltip>
+					<Tooltip title="Open in REPL" placement="top" offset={6}>
+						<Button
+							href="https://svelte.dev/playground"
+							icon={SimpleIconsSvelte}
+							size="sm"
+							variant="fill-light"
+							target="_blank"
+							onclick={openInREPL()}
+						/>
+					</Tooltip>
+					<Tooltip title="Download" placement="top" offset={6}>
+						<Button
+							icon={Download}
+							size="sm"
+							variant="fill-light"
+							target="_blank"
+							onclick={saveProject}
+						/>
+					</Tooltip>
 				</div>
 
 				<!-- Code Editor -->
@@ -296,16 +416,13 @@
 			</div>
 		</Pane>
 
-		<PaneResizer
-			data-enabled={!isLoadingFile && !isReady}
-			class="w-1 hover:bg-surface-content/10"
-		/>
+		<PaneResizer class="w-0.5 bg-surface-content/10" />
 
 		<!-- Preview Panel -->
 		<Pane defaultSize={50} minSize={5}>
-			<PaneGroup direction="vertical">
-				<Pane defaultSize={90}>
-					<div class="relative h-full bg-surface-100 pt-6">
+			<PaneGroup direction="vertical" bind:this={previewPaneGroup}>
+				<Pane defaultSize={70}>
+					<div class="relative h-full bg-surface-100 pt-[47px]">
 						{#if loadingStatus}
 							<Overlay class="flex flex-col gap-4 bg-surface-100/50" center>
 								<ProgressCircle width={2} />
@@ -314,20 +431,21 @@
 						{:else}
 							<button
 								class="absolute top-2 right-2"
-								onclick={() => {
+								onclick={async () => {
+									// await startDevServer();
 									window.location.reload();
 								}}
 							>
-								<Icon
-									data={RefreshCcwIcon}
-									class="text-surface-content/50 hover:text-primary absolute top-2 right-2"
-								/>
+								<Tooltip title="Reload">
+									<Button icon={RefreshCcwIcon} size="sm" variant="fill-light" target="_blank"
+									></Button>
+								</Tooltip>
 							</button>
 						{/if}
 						<iframe
 							bind:this={iframeEl}
 							title="LayerChart Playground"
-							class="w-full h-full border-none"
+							class="w-full h-[calc(100%-20px)]"
 							allowfullscreen
 							onload={() => {
 								// Wait for Vite to connect before clearing loading status
@@ -350,41 +468,62 @@
 					</div>
 				</Pane>
 
-				<PaneResizer
-					data-enabled={!isLoadingFile && !isReady}
-					class="h-1 hover:bg-surface-content/10"
-				/>
+				<PaneResizer class="h-0.5 bg-surface-content/10" />
 
-				<!-- Console Panel -->
+				<!-- Console Header Pane (fixed size, always visible) -->
+				<Pane defaultSize={5} minSize={0} maxSize={100} class="!flex-none !h-8">
+					<div
+						role="button"
+						tabindex="-1"
+						class="h-full flex justify-between items-center bg-surface-300/30 px-1 cursor-pointer group/header select-none"
+						onclick={toggleConsole}
+						onkeydown={(e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault();
+								toggleConsole();
+							}
+						}}
+					>
+						<button
+							type="button"
+							class="flex items-center gap-2 text-sm font-mono cursor-pointer"
+							onclick={toggleConsole}
+						>
+							<Icon data={SimpleIconsTerminal} class="text-surface-content/50" />
+							<span class="group-hover/header:underline group-hover/header:decoration-current/50"
+								>Console</span
+							>
+						</button>
+						<button
+							type="button"
+							class="text-xs font-mono relative py-1 px-2 outline outline-primary/10 rounded-sm flex items-center gap-2"
+							onclick={(e) => {
+								e.stopPropagation();
+								consoleOutput = '';
+							}}>Clear <Icon data={TrashIcon} class="text-surface-content/50" /></button
+						>
+					</div>
+				</Pane>
+
+				<!-- Console Content Pane (collapsible) -->
 				<Pane
 					bind:this={consolePane as Pane}
-					defaultSize={20}
-					collapsedSize={10}
-					minSize={10}
-					maxSize={50}
+					defaultSize={25}
+					collapsedSize={0}
+					minSize={0}
+					maxSize={65}
 					collapsible={true}
-					onCollapse={() => (consoleCollapsed = true)}
-					onExpand={() => (consoleCollapsed = false)}
+					onCollapse={scrollConsoleToBottom}
+					onExpand={scrollConsoleToBottom}
+					onResize={scrollConsoleToBottom}
+					class="[transition:flex-grow_200ms_ease-out]"
 				>
-					<div class="h-full overflow-auto relative bg-surface-300">
-						<div class="flex justify-between items-center bg-primary/10 p-1">
-							<div class="flex-1">
-								<button
-									class="flex items-center justify-start gap-2 text-sm font-mono group w-full"
-									onclick={() =>
-										consolePane.isCollapsed() ? consolePane.expand() : consolePane.collapse()}
-								>
-									<Icon data={SimpleIconsTerminal} class=" text-surface-content/50" />
-									<span class="group-hover:underline">Console</span>
-								</button>
-							</div>
-							<button
-								class="text-xs font-mono relative py-1 px-2 outline outline-primary/10 rounded-sm flex items-center gap-2"
-								onclick={() => (consoleOutput = '')}
-								>Clear <Icon data={TrashIcon} class="text-surface-content/50" /></button
-							>
-						</div>
-						<div class="text-xs font-mono p-1 whitespace-pre-wrap">
+					<div class="h-full flex flex-col">
+						<!-- Scrolling content area -->
+						<div
+							bind:this={consoleScrollContainer}
+							class="flex-1 overflow-auto text-xs font-mono p-1 whitespace-pre-wrap bg-surface-100/50"
+						>
 							{@html consoleOutput}
 						</div>
 					</div>
@@ -393,3 +532,10 @@
 		</Pane>
 	</PaneGroup>
 </div>
+
+<style>
+	/* Hide "Edit this page" */
+	:global(div:has(> a[href*='/github'])) {
+		display: none;
+	}
+</style>
