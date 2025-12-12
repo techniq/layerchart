@@ -31,6 +31,7 @@
 		"@fontsource-variable/inter": "^5.2.8",
 		"@iconify-json/lucide": "^1.2.77",
 		"@iconify-json/simple-icons": "^1.2.61",
+		"@iconify-json/vscode-icons": "^1.2.37",
 		"@layerstack/svelte-actions": "1.0.1-next.14",
 		"@layerstack/svelte-state": "0.1.0-next.19",
 		"@layerstack/svelte-table": "1.0.1-next.16",
