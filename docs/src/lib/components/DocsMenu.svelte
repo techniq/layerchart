@@ -94,7 +94,7 @@
 			<LucideBlocks class="size-4 text-surface-content/70" /> Components
 		</h2>
 		{#each componentsByCategory as [category, components]}
-			<div class="mb-6">
+			<div class="mb-6 last:mb-0">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
 					{#each components.sort((a, b) => {
