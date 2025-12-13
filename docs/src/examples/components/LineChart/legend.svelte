@@ -26,7 +26,7 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={{ ...defaultChartPadding(), right: 10, bottom: 45 }}
 	height={300}
 	legend
 />
