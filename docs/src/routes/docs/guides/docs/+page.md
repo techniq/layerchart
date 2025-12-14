@@ -10,14 +10,6 @@
 <div>Test</div>
 ```
 
-```svelte title="+layout.svelte"
-<script lang="ts">
-	let { data } = $props();
-</script>
-
-<div>Test</div>
-```
-
 ## Diff
 
 <!-- prettier-ignore -->
@@ -41,4 +33,14 @@
 <div>Line 5</div>
 <div>Line 6</div>
 <div>Line 7</div>
+```
+
+## Title/file (WIP)
+
+```svelte title="+layout.svelte"
+<script lang="ts">
+	let { data } = $props();
+</script>
+
+<div>Test</div>
 ```
