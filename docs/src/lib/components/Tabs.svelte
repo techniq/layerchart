@@ -1,11 +1,12 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Snippet, Component } from 'svelte';
 	import { Tabs, Tab } from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 
 	interface Props {
 		value?: number; // 0-indexed, starting tab index
 		keys: string[];
+		icons?: Component[];
 		content?: Snippet<[number]>;
 		placement?: 'top' | 'left' | 'right' | 'bottom';
 		activeClass?: string;
@@ -20,6 +21,7 @@
 	let {
 		value = $bindable(0),
 		keys,
+		icons,
 		content,
 		placement = 'top',
 		activeClass = 'bg-surface-100 border-b-surface-100' /* assuming title header is present */,
@@ -44,10 +46,12 @@
 <Tabs {placement} classes={mergedClasses} bind:value>
 	{#each keys as key, v}
 		{@const isActive = value === v}
+		{@const Icon = icons?.[v] ?? null}
 		<Tab
 			class={cls(mergedClasses.tabs, isActive && activeClass)}
 			on:click={() => (value = v)}
-			selected={isActive}>{key}</Tab
+			selected={isActive}
+			>{#if Icon}<Icon />{:else}{/if}{key}</Tab
 		>
 	{/each}
 	<svelte:fragment slot="content" let:value>

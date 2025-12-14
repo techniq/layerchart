@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'svelte-ux';
+	import { Button, Icon } from 'svelte-ux';
 
 	import A from '$lib/markdown/components/a.svelte';
 	import Code from '$lib/components/Code.svelte';
@@ -11,6 +11,11 @@
 
 	import LucideGithub from '~icons/lucide/github';
 	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz'
+	import VscodeIconsPnpm from '~icons/vscode-icons/file-type-pnpm';
+	import VSCodeIconNpm from '~icons/vscode-icons/file-type-npm';
+	import VSCodeIconBUN from '~icons/vscode-icons/file-type-bun';
+	import VSCodeIconDeno from '~icons/vscode-icons/file-type-deno';
+	import VSCodeIconYarn from '~icons/vscode-icons/file-type-yarn';
 
 	const appcss = `.lc-root-container {
 	/* Default marks color when not using explicit color or color scale */
@@ -24,6 +29,8 @@
 	/* Content (text) color */
 	--color-surface-content: var(--color-gray-900);
 }`;
+
+let bundlerIndex = 0;
 </script>
 
 # Getting Started
@@ -37,7 +44,7 @@ Provides built-in first class support for <A href="https://tailwindcss.com/" tar
 		<p class="text-surface-content pt-2">
 			Use the Svelte CLI to generate a new SvelteKit project, or continue with an existing project.
 		</p>
-		<Tabs keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} classes={{ root: "py-2", content: 'p-0' }}>
+		<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} classes={{ root: "py-2", content: 'p-0' }}>
 			{#snippet content(value)}
 				{#if value === 0}
 					<Code language="sh" title="sh" source={`pnpx sv create my-app add --tailwindcss\ncd my-app`} />
@@ -55,7 +62,7 @@ Provides built-in first class support for <A href="https://tailwindcss.com/" tar
 		<Blockquote>To add tailwind to an existing project you can <code>npv sv add tailwindcss</code></Blockquote>
 	</Step>
 	<Step title={`Import <code>layerchart</code> with your package manager of choice.`}>
-		<Tabs keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} classes={{ root: "py-2", content: 'p-0' }}>
+		<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']}  icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} classes={{ root: "py-2", content: 'p-0' }}>
 			{#snippet content(value)}
 				{#if value === 0}
 					<Code language="sh" title="sh" source={`pnpm i layerchart`} />
@@ -118,7 +125,7 @@ Provides built-in first class support for <A href="https://tailwindcss.com/" tar
 			<p class="text-surface-content pt-2">
 				All set!  Now just fire up the dev server and start iterating.  Have fun!
 			</p>
-			<Tabs keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} hasTitle={false}  classes={{ root: "pt-2", content: 'p-0' }}>
+			<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} hasTitle={false}  classes={{ root: "pt-2", content: 'p-0' }}>
 				{#snippet content(value)}
 				{#if value === 0}
 						<Code language="sh" title="sh" source={`pnpm dev`} />
