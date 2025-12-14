@@ -67,17 +67,30 @@
 /* Shiki light/dark theming */
 code[data-theme*=' '],
 code[data-theme*=' '] span {
-	color: var(--shiki-light);
-	background-color: var(--shiki-light-bg);
-}
-
-.dark code[data-theme*=' '],
-.dark code[data-theme*=' '] span {
-	color: var(--shiki-dark);
-	background-color: var(--shiki-dark-bg);
+	@apply text-(--shiki-light) dark:text-(--shiki-dark);
+	/* @apply bg-(--shiki-light-bg) dark:bg-(--shiki-dark-bg); */
 }
 
 /* Inline code styling */
 code:not(pre > code):not(.custom) {
 	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
+}
+
+/* Code block highlighting */
+pre {
+	/* Diff highlighting */
+	&.has-diff {
+		& .diff-add {
+			@apply bg-green-500/15 dark:bg-green-500/10 border-l-[3px] border-l-green-500 pl-2 -ml-2;
+		}
+
+		& .diff-remove {
+			@apply bg-red-500/15 dark:bg-red-500/10 border-l-[3px] border-l-red-500 pl-2 -ml-2 opacity-70;
+		}
+	}
+
+	/* Line highlighting */
+	& .line-highlight {
+		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
+	}
 }
