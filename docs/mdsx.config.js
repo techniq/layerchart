@@ -218,6 +218,10 @@ function getComponentSourceFileContent(component, name) {
 	}
 }
 
+// TODO: improve `title` display
+// https://github.com/svecosystem/svecodocs/blob/main/packages/kit/src/lib/configs/mdsx-config.ts#L83
+// https://github.com/svecosystem/svecodocs/blob/main/packages/kit/src/lib/styles/globals.css
+
 /**
  * Adds custom classes and data attributes to code blocks based on meta string
  * Supports syntax like ```js frame title="My Code" showLineNumbers
