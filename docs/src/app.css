@@ -105,7 +105,7 @@ pre {
 	}
 
 	/* Line highlighting */
-	& .line-highlight {
+	& .highlighted {
 		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
 	}
 }

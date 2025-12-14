@@ -3,6 +3,7 @@ import { defineConfig } from 'mdsx';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
+import { transformerMetaHighlight } from '@shikijs/transformers';
 
 import { readFileSync } from 'node:fs';
 import path, { resolve } from 'node:path';
@@ -62,50 +63,6 @@ function shikiDiffTransformer() {
 }
 
 /**
- * Custom transformer for line highlighting
- * Processes code blocks with {1,2,3} or {1-5} syntax in the meta string
- */
-function shikiLineHighlightTransformer() {
-	return {
-		name: 'line-highlight-transformer',
-		code(node) {
-			const metaString = this.options.meta?.__raw || '';
-
-			// Match {1,2,3} or {1-5} or {1,3-5,7}
-			const highlightMatch = metaString.match(/\{([\d,-]+)\}/);
-			if (!highlightMatch) return;
-
-			// Parse the line numbers
-			const lineNumbersStr = highlightMatch[1];
-			const highlightLines = new Set();
-
-			lineNumbersStr.split(',').forEach((part) => {
-				if (part.includes('-')) {
-					// Range: 1-5
-					const [start, end] = part.split('-').map(Number);
-					for (let i = start; i <= end; i++) {
-						highlightLines.add(i);
-					}
-				} else {
-					// Single line: 3
-					highlightLines.add(Number(part));
-				}
-			});
-
-			// Get all line elements
-			const lines = node.children.filter((child) => child.type === 'element');
-
-			lines.forEach((line, index) => {
-				const lineNumber = index + 1;
-				if (highlightLines.has(lineNumber)) {
-					this.addClassToHast(line, 'line-highlight');
-				}
-			});
-		}
-	};
-}
-
-/**
  * @type {import('rehype-pretty-code').Options}
  */
 const prettyCodeOptions = {
@@ -118,7 +75,7 @@ const prettyCodeOptions = {
 		block: 'plaintext'
 		// inline: "plaintext",
 	},
-	transformers: [shikiDiffTransformer(), shikiLineHighlightTransformer()]
+	transformers: [shikiDiffTransformer(), transformerMetaHighlight()]
 };
 
 export const mdsxConfig = defineConfig({
