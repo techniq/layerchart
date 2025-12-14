@@ -7,7 +7,6 @@
 	let config = $state({
 		show: true,
 		markerStart: true,
-		markerMid: false,
 		markerEnd: true,
 		tweened: true,
 		pathGenerator: (x: number) => x,
@@ -45,7 +44,6 @@
 						curve={config.curve}
 						class="stroke-primary"
 						markerStart={config.markerStart ? marker : undefined}
-						markerMid={config.markerMid ? marker : undefined}
 						markerEnd={config.markerEnd ? marker : undefined}
 						{motion}
 					/>

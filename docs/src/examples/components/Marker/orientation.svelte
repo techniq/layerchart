@@ -7,9 +7,6 @@
 	let config = $state({
 		show: true,
 		tweened: true,
-		markerStart: true,
-		markerMid: false,
-		markerEnd: true,
 		pathGenerator: (x: number) => x,
 		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
 		pointCount: 10,
