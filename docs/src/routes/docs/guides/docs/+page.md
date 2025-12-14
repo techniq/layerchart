@@ -35,7 +35,7 @@
 <div>Line 7</div>
 ```
 
-## Title/file (WIP)
+## Title (file)
 
 ```svelte title="+layout.svelte"
 <script lang="ts">

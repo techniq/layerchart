@@ -76,6 +76,21 @@ code:not(pre > code):not(.custom) {
 	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
 }
 
+/* Code block figure container */
+figure[data-rehype-pretty-code-figure] {
+	@apply rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden;
+
+	/* Title/filename display */
+	& figcaption[data-rehype-pretty-code-title] {
+		@apply text-sm font-mono font-medium leading-tight text-surface-content/50 border-b border-surface-content/20 dark:border-surface-content/10 px-4 py-2 bg-surface-100;
+	}
+
+	/* Pre element within figure */
+	& pre {
+		@apply my-0 rounded-none border-0;
+	}
+}
+
 /* Code block highlighting */
 pre {
 	/* Diff highlighting */

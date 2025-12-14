@@ -128,7 +128,8 @@ export const mdsxConfig = defineConfig({
 		rehypeSlug,
 		// rehypeComponentExample,
 		[rehypePrettyCode, prettyCodeOptions],
-		rehypeAddCodeBlockClasses
+		rehypeCodeBlockTitle,
+		rehypeHandleCodeBlocks
 	],
 	blueprints: {
 		default: {
@@ -218,15 +219,41 @@ function getComponentSourceFileContent(component, name) {
 	}
 }
 
-// TODO: improve `title` display
-// https://github.com/svecosystem/svecodocs/blob/main/packages/kit/src/lib/configs/mdsx-config.ts#L83
-// https://github.com/svecosystem/svecodocs/blob/main/packages/kit/src/lib/styles/globals.css
+/**
+ * Handles metadata attributes for code blocks with titles
+ * Adds data-metadata attribute when a figcaption (title) is present
+ */
+function rehypeCodeBlockTitle() {
+	return (tree) => {
+		visit(tree, 'element', (node) => {
+			if (
+				node.tagName === 'figure' &&
+				node.properties?.['data-rehype-pretty-code-figure'] !== undefined
+			) {
+				const preElement = node.children?.at(-1);
+				const firstChild = node.children?.at(0);
+
+				if (
+					preElement &&
+					preElement.type === 'element' &&
+					preElement.tagName === 'pre' &&
+					firstChild &&
+					firstChild.type === 'element' &&
+					firstChild.tagName === 'figcaption'
+				) {
+					node.properties['data-metadata'] = '';
+					preElement.properties['data-metadata'] = '';
+				}
+			}
+		});
+	};
+}
 
 /**
  * Adds custom classes and data attributes to code blocks based on meta string
  * Supports syntax like ```js frame title="My Code" showLineNumbers
  */
-function rehypeAddCodeBlockClasses() {
+function rehypeHandleCodeBlocks() {
 	return (tree) => {
 		visit(tree, 'element', (node) => {
 			if (node.tagName === 'pre') {
