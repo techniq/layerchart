@@ -109,3 +109,31 @@ pre {
 		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
 	}
 }
+
+/* Custom scrollbar styling */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent) transparent;
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+	@apply w-2.5 h-2.5;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-surface-content/5;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply bg-surface-content/20 rounded-full;
+	transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	@apply bg-surface-content/30;
+}
+
+*::-webkit-scrollbar-thumb:active {
+	@apply bg-surface-content/40;
+}
