@@ -16,7 +16,7 @@
 	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
 </script>
 
-<div class="grid gap-4 h-100 overflow-auto">
+<div class="grid gap-4 h-100 overflow-auto pr-2">
 	{#each interpolators as [name, interpolator]}
 		<div>
 			<div class="text-sm">{name}</div>

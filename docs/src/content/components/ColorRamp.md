@@ -13,12 +13,12 @@ related: []
 
 ### Basic
 
-<Example name="basic" />
+<Example name="basic" noResize />
 
 ### Pixelated
 
-<Example name="pixelated" />
+<Example name="pixelated" noResize />
 
 ### Schemes
 
-<Example name="schemes" />
+<Example name="schemes" noResize />
