@@ -67,17 +67,73 @@
 /* Shiki light/dark theming */
 code[data-theme*=' '],
 code[data-theme*=' '] span {
-	color: var(--shiki-light);
-	background-color: var(--shiki-light-bg);
-}
-
-.dark code[data-theme*=' '],
-.dark code[data-theme*=' '] span {
-	color: var(--shiki-dark);
-	background-color: var(--shiki-dark-bg);
+	@apply text-(--shiki-light) dark:text-(--shiki-dark);
+	/* @apply bg-(--shiki-light-bg) dark:bg-(--shiki-dark-bg); */
 }
 
 /* Inline code styling */
 code:not(pre > code):not(.custom) {
 	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
+}
+
+/* Code block figure container */
+figure[data-rehype-pretty-code-figure] {
+	@apply rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden;
+
+	/* Title/filename display */
+	& figcaption[data-rehype-pretty-code-title] {
+		@apply text-sm font-mono font-medium leading-tight text-surface-content/50 border-b border-surface-content/20 dark:border-surface-content/10 px-4 py-2 bg-surface-100;
+	}
+
+	/* Pre element within figure */
+	& pre {
+		@apply my-0 rounded-none border-0;
+	}
+}
+
+/* Code block highlighting */
+pre {
+	/* Diff highlighting */
+	&.has-diff {
+		& .diff-add {
+			@apply bg-green-500/15 dark:bg-green-500/10 border-l-[3px] border-l-green-500 pl-2 -ml-2;
+		}
+
+		& .diff-remove {
+			@apply bg-red-500/15 dark:bg-red-500/10 border-l-[3px] border-l-red-500 pl-2 -ml-2 opacity-70;
+		}
+	}
+
+	/* Line highlighting */
+	& .highlighted {
+		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
+	}
+}
+
+/* Custom scrollbar styling */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent) transparent;
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+	@apply w-2.5 h-2.5;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-surface-content/5;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply bg-surface-content/20 rounded-full;
+	transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	@apply bg-surface-content/30;
+}
+
+*::-webkit-scrollbar-thumb:active {
+	@apply bg-surface-content/40;
 }

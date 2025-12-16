@@ -3,6 +3,7 @@ import { defineConfig } from 'mdsx';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
+import { transformerMetaHighlight } from '@shikijs/transformers';
 
 import { readFileSync } from 'node:fs';
 import path, { resolve } from 'node:path';
@@ -17,6 +18,51 @@ import { visit } from 'unist-util-visit';
 // import { rehypeCustomHighlight } from '@mdsx/rehype-custom-highlighter';
 
 /**
+ * Custom transformer for diff highlighting
+ * Processes code blocks with 'diff' in the meta string to add/remove line styling
+ */
+function shikiDiffTransformer() {
+	return {
+		name: 'diff-transformer',
+		code(node) {
+			// Check if this code block has 'diff' in the meta string
+			const metaString = this.options.meta?.__raw || '';
+			if (!metaString.includes('diff')) return;
+
+			// Add class to the pre element
+			this.addClassToHast(this.pre, 'has-diff');
+
+			// Get all line elements
+			const lines = node.children.filter((child) => child.type === 'element');
+
+			for (const line of lines) {
+				// Get all text tokens in this line
+				const tokens = line.children.filter((child) => child.type === 'element');
+
+				if (tokens.length === 0) continue;
+
+				// Check the first token's text content
+				const firstToken = tokens[0];
+				const textNodes = firstToken.children?.filter((child) => child.type === 'text');
+
+				if (!textNodes || textNodes.length === 0) continue;
+
+				const firstText = textNodes[0];
+				const text = firstText.value;
+
+				if (text.startsWith('+')) {
+					this.addClassToHast(line, 'diff-add');
+					firstText.value = text.slice(1);
+				} else if (text.startsWith('-')) {
+					this.addClassToHast(line, 'diff-remove');
+					firstText.value = text.slice(1);
+				}
+			}
+		}
+	};
+}
+
+/**
  * @type {import('rehype-pretty-code').Options}
  */
 const prettyCodeOptions = {
@@ -28,7 +74,8 @@ const prettyCodeOptions = {
 	defaultLang: {
 		block: 'plaintext'
 		// inline: "plaintext",
-	}
+	},
+	transformers: [shikiDiffTransformer(), transformerMetaHighlight()]
 };
 
 export const mdsxConfig = defineConfig({
@@ -38,7 +85,8 @@ export const mdsxConfig = defineConfig({
 		rehypeSlug,
 		// rehypeComponentExample,
 		[rehypePrettyCode, prettyCodeOptions],
-		rehypeAddCodeBlockClasses
+		rehypeCodeBlockTitle,
+		rehypeHandleCodeBlocks
 	],
 	blueprints: {
 		default: {
@@ -129,10 +177,40 @@ function getComponentSourceFileContent(component, name) {
 }
 
 /**
+ * Handles metadata attributes for code blocks with titles
+ * Adds data-metadata attribute when a figcaption (title) is present
+ */
+function rehypeCodeBlockTitle() {
+	return (tree) => {
+		visit(tree, 'element', (node) => {
+			if (
+				node.tagName === 'figure' &&
+				node.properties?.['data-rehype-pretty-code-figure'] !== undefined
+			) {
+				const preElement = node.children?.at(-1);
+				const firstChild = node.children?.at(0);
+
+				if (
+					preElement &&
+					preElement.type === 'element' &&
+					preElement.tagName === 'pre' &&
+					firstChild &&
+					firstChild.type === 'element' &&
+					firstChild.tagName === 'figcaption'
+				) {
+					node.properties['data-metadata'] = '';
+					preElement.properties['data-metadata'] = '';
+				}
+			}
+		});
+	};
+}
+
+/**
  * Adds custom classes and data attributes to code blocks based on meta string
  * Supports syntax like ```js frame title="My Code" showLineNumbers
  */
-function rehypeAddCodeBlockClasses() {
+function rehypeHandleCodeBlocks() {
 	return (tree) => {
 		visit(tree, 'element', (node) => {
 			if (node.tagName === 'pre') {

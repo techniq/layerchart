@@ -2,7 +2,13 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { cls } from '@layerstack/tailwind';
 
-	let { class: className, children, ...restProps }: HTMLAttributes<HTMLPreElement> = $props();
+	let {
+		class: className,
+		children,
+		'data-title': dataTitle,
+		...restProps
+	}: HTMLAttributes<HTMLPreElement> = $props();
+	$inspect({ restProps });
 </script>
 
 <pre

@@ -70,7 +70,7 @@
 
 	let canResize = $derived.by(() => {
 		// Prop
-		if (noResize) {
+		if (typeof noResize === 'boolean') {
 			return !noResize;
 		}
 

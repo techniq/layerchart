@@ -15,20 +15,20 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.49.1",
+		"@sveltejs/kit": "^2.49.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
-		"@tailwindcss/vite": "^4.1.17",
-		"daisyui": "^5.5.8",
+		"@tailwindcss/vite": "^4.1.18",
+		"daisyui": "^5.5.14",
 		"layerchart": "next",
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"svelte": "5.45.5",
+		"svelte": "5.46.0",
 		"svelte-check": "^4.3.4",
-		"tailwindcss": "^4.1.17",
+		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
-		"vite": "^7.2.6",
+		"vite": "^7.2.7",
 		"vite-plugin-devtools-json": "^1.0.0"
 	}
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AnnotationPoint, defaultChartPadding, LineChart } from 'layerchart';
+	import { AnnotationPoint, LineChart, defaultChartPadding } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -11,7 +11,7 @@
 	{data}
 	x="date"
 	y="value"
-	padding={{ ...defaultChartPadding(), right: 40, bottom: 15, left: 25 }}
+	padding={{ ...defaultChartPadding(), right: 45, bottom: 15, left: 25 }}
 	height={300}
 >
 	{#snippet aboveMarks({ context })}
@@ -23,8 +23,8 @@
 			labelPlacement="right"
 			labelXOffset={4}
 			props={{
-				circle: { class: 'fill-primary' },
-				label: { class: 'fill-primary font-bold' }
+				circle: { class: 'fill-secondary' },
+				label: { class: 'fill-secondary font-bold' }
 			}}
 		/>
 	{/snippet}

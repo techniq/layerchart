@@ -17,6 +17,7 @@
 	import LucideFileCode2 from '~icons/lucide/file-code-2';
 	import LucideCirclePlay from '~icons/lucide/circle-play';
 	import LucideParentheses from '~icons/lucide/parentheses';
+	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz';
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
@@ -65,6 +66,11 @@
 			path: '/docs/examples',
 			icon: LucideFileCode2
 		})}
+		{@render navItem({
+			label: 'Playground',
+			path: '/docs/playground',
+			icon: SimpleIconsStackblitz
+		})}
 		{@render navItem({ label: 'Showcase', path: '/docs/showcase', icon: LucideGalleryVertical })}
 		{@render navItem({
 			label: 'Releases',
@@ -89,7 +95,7 @@
 			<LucideBlocks class="size-4 text-surface-content/70" /> Components
 		</h2>
 		{#each componentsByCategory as [category, components]}
-			<div class="mb-6">
+			<div class="mb-6 last:mb-0">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
 					{#each components.sort((a, b) => {
