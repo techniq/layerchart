@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AnnotationLine, AnnotationPoint, LineChart, Tooltip, Text, Layer } from 'layerchart';
+	import { AnnotationLine, AnnotationPoint, LineChart, Tooltip, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
 	import { getAppleStock } from '$lib/data.remote';
 
