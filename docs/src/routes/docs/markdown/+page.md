@@ -10,7 +10,7 @@
 <div>Test</div>
 ```
 
-## Diff
+### Diff
 
 <!-- prettier-ignore -->
 ```svelte diff
@@ -22,7 +22,7 @@
 + <div>After</div>
 ```
 
-## Line highlighting
+### Line highlighting
 
 <!-- prettier-ignore -->
 ```svelte {2,5-7}
@@ -35,7 +35,7 @@
 <div>Line 7</div>
 ```
 
-## Title (file)
+### Title (file)
 
 ```svelte title="+layout.svelte"
 <script lang="ts">
@@ -44,3 +44,10 @@
 
 <div>Test</div>
 ```
+
+## Table
+
+| First | Second | Third |
+| ----- | ------ | ----- |
+| 1     | 2      | 3     |
+| 4     | 5      | 6     |
