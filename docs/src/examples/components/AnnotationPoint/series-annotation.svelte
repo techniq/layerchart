@@ -23,8 +23,8 @@
 			labelPlacement="right"
 			labelXOffset={4}
 			props={{
-				circle: { class: 'fill-apples' },
-				label: { class: 'fill-apples font-bold' }
+				circle: { class: 'fill-secondary' },
+				label: { class: 'fill-secondary font-bold' }
 			}}
 		/>
 	{/snippet}
