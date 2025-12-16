@@ -58,7 +58,7 @@
 				label={annotation.label}
 				details={annotation.details}
 				props={{
-					circle: { class: 'fill-apples' },
+					circle: { class: 'fill-secondary' },
 					label: { class: 'text-[10px] fill-secondary-content font-bold' }
 				}}
 			/>
