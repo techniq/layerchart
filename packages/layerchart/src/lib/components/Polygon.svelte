@@ -131,7 +131,7 @@
 <script lang="ts">
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
   import { interpolatePath } from 'd3-interpolate-path';
 
   import { getLayerContext } from '$lib/contexts/layer.js';

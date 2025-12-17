@@ -64,7 +64,7 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';

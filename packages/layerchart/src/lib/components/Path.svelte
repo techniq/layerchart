@@ -79,7 +79,7 @@
 <script lang="ts">
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
   import { interpolatePath } from 'd3-interpolate-path';
   import { cls } from '@layerstack/tailwind';

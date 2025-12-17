@@ -92,7 +92,7 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
