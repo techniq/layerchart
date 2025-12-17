@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button, Icon } from 'svelte-ux';
 
-	import A from '$lib/markdown/components/a.svelte';
 	import Code from '$lib/components/Code.svelte';
   import Example from '$lib/components/Example.svelte';
 	import Steps from '$lib/components/Steps.svelte';
@@ -16,6 +15,13 @@
 	import VSCodeIconBUN from '~icons/vscode-icons/file-type-bun';
 	import VSCodeIconDeno from '~icons/vscode-icons/file-type-deno';
 	import VSCodeIconYarn from '~icons/vscode-icons/file-type-yarn';
+	import VSCodeIconCSS from '~icons/vscode-icons/file-type-css';
+	import CustomSvelteUX from '~icons/custom-brands/svelteux';
+	import CustomDaisyUI from '~icons/custom-brands/daisyUI';
+	import CustomTailwindCSS from '~icons/custom-brands/tailwindcss';
+	import CustomShadCNSvelte from '~icons/custom-brands/shadcnsvelte';
+	import CustomSkeleton from '~icons/custom-brands/skeleton';
+	import CustomUnoCSS from '~icons/custom-brands/unocss';
 
 	const appcss = `.lc-root-container {
 	/* Default marks color when not using explicit color or color scale */
@@ -37,7 +43,7 @@ let bundlerIndex = 0;
 
 LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
 
-Provides built-in first class support for <A href="https://tailwindcss.com/" target="_blank">tailwindcss 4</A>, but is completely optional and also works seamlessly with regular CSS and inline styles.
+Provides built-in first class support for <a href="https://tailwindcss.com/" target="_blank"> <Icon data={CustomTailwindCSS} class="inline-block align-middle" /> tailwindcss 4</a>, but is completely optional. It also works seamlessly with regular CSS via inline styles and <a href="https://unocss.dev/" target="_blank"><Icon data={CustomUnoCSS} class="inline-block align-middle" /> unoCSS</a>.
 
 <Steps>
 	<Step title={`Create a new project or <a href="#git-up-and-running-even-quicker">git a project</a>`} >
@@ -94,6 +100,7 @@ Provides built-in first class support for <A href="https://tailwindcss.com/" tar
 				</p>
 				<Tabs
 					keys={['shadcn-svelte', 'Skeleton 3', 'Skeleton 4', 'Svelte UX', 'DaisyUI 5']}
+					icons={[CustomShadCNSvelte, CustomSkeleton, CustomSkeleton, CustomSvelteUX, CustomDaisyUI]}
 					classes={{ root: 'mt-4', content: 'p-0' }}
 				>
 					{#snippet content(value)}
@@ -147,7 +154,7 @@ Provides built-in first class support for <A href="https://tailwindcss.com/" tar
 
 Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples) are available for popular UI frameworks.
 
-<Tabs keys={["shadcn-svelte","Skeleton", "Svelte UX", "daisyUI", "Standalone CSS"]} classes={{content: 'h-[120px] [&_a]:text-primary [&_a:hover]:underline'}} activeClass="bg-surface-200 border-b-surface-200">
+<Tabs keys={["shadcn-svelte", "Skeleton", "Svelte UX", "daisyUI", "UnoCSS", "Vanilla CSS"]} icons={[CustomShadCNSvelte,CustomSkeleton,CustomSvelteUX,CustomDaisyUI,CustomUnoCSS, VSCodeIconCSS]} classes={{content: 'h-[120px] [&_a]:text-primary [&_a:hover]:underline'}} activeClass="bg-surface-200 border-b-surface-200">
 {#snippet content(value)}
 {#if value === 0}
 
@@ -172,10 +179,14 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
 {:else if value === 3}
 <div><a href="https://daisyui.com/", target="_blank">Daisy UI</a></div>
 <div class='pt-2'>v5:
-{@render githubButton('dauilyui-5')}
+{@render githubButton('daisyui-5')}
 {@render stackBlitzButton('daisyui-5')}</div>
 {:else if value === 4}
-<div class='pt-2'>Standalone CSS: {@render githubButton('standalone')}
+<div><a href="https://unocss.dev/" target="_blank">UnoCSS</a></div>
+<div class='pt-2'>
+v1: {@render githubButton('unoCSS')}{@render stackBlitzButton('unocss-1')}</div>
+{:else if value === 5}
+<div class='pt-2'>Vanilla CSS: {@render githubButton('standalone')}
 {@render stackBlitzButton('standalone')}</div>
 {/if}
 {/snippet}
