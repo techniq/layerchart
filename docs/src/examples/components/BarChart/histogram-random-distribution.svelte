@@ -10,7 +10,7 @@
 	const randomData = $derived(Array.from({ length: randomCount }, () => random()));
 	const binByValues = $derived(bin()); //.domain([0, 1]);
 	const randomBins = $derived(binByValues(randomData));
-	export { data };
+	export { randomBins as data };
 </script>
 
 <BarChartControls2 bind:random bind:selectedGenerator bind:randomCount />

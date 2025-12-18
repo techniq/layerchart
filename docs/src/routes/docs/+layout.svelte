@@ -255,7 +255,12 @@
 		<DocsMenu onItemClick={() => (showDrawer = false)} />
 	</Drawer>
 
-	<main class="flex-1 min-w-0 px-6 py-4 lg:px-20 lg:py-8">
+	<main
+		class={cls(
+			'flex-1 min-w-0',
+			page.data.meta?.fullWidth ? '' : 'px-6 py-4 lg:px-20 lg:py-8'
+		)}
+	>
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
 				{#snippet divider()}

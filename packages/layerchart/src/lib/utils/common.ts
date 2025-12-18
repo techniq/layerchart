@@ -1,5 +1,5 @@
 import type { Component, ComponentProps } from 'svelte';
-import { get } from 'lodash-es';
+import { get } from '@layerstack/utils';
 
 import type Chart from '../components/Chart.svelte';
 import type { SimplifiedChartProps } from '$lib/components/charts/types.js';

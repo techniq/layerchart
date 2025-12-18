@@ -17,18 +17,21 @@
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 	import { movable } from '$lib/actions/movable';
+	import { resolveExamplePath } from '$lib/markdown/utils';
 
 	let {
 		component = page.params.name!,
 		name,
+		path,
 		showCode = false,
 		variant = 'default',
 		noResize = false,
 		clip = false,
 		class: className
 	}: {
-		component: string;
-		name: string;
+		component?: string;
+		name?: string;
+		path?: string;
 		showCode?: boolean;
 		variant?: 'default' | 'basic';
 		noResize?: boolean;
@@ -36,7 +39,15 @@
 		class?: string;
 	} = $props();
 
-	const example = examples.get()?.current[component]?.[name];
+	let example = $derived.by(() => {
+		if (path) {
+			// Resolve relative path and get from context (server-loaded)
+			const resolvedPath = resolveExamplePath(path, page.url.pathname);
+			return examples.get()?.current['__path__']?.[resolvedPath];
+		} else if (component && name) {
+			return examples.get()?.current[component]?.[name];
+		}
+	});
 
 	let containerEl = $state<HTMLElement | null>(null);
 	let containerWidth = $state<number | undefined>(undefined);
@@ -178,7 +189,7 @@
 					</Toggle>
 				{/if}
 
-				{#if page.params.example == null}
+				{#if page.params.example == null && component && name}
 					<!-- Only show View if not already viewing specific example -->
 					<Button
 						href="/docs/components/{component}/{name}"
@@ -189,19 +200,24 @@
 					</Button>
 				{/if}
 
-				<Button
-					icon={LucideFilePen}
-					class="text-surface-content/70 py-1"
-					on:click={() => openInStackBlitz(component, name)}
-				>
-					Edit
-				</Button>
+				{#if component && name}
+					<Button
+						icon={LucideFilePen}
+						class="text-surface-content/70 py-1"
+						on:click={() => openInStackBlitz(component, name)}
+					>
+						Edit
+					</Button>
+				{/if}
 			</div>
 		{/if}
 	{:else}
 		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
-			Example <span class="font-bold">`{name}`</span> for
-			<span class="font-bold">`{component}`</span> not found.
+			Example <span class="font-bold">`{name ?? path}`</span>
+			{#if component}
+				for <span class="font-bold">`{component}`</span>
+			{/if}
+			not found.
 		</div>
 	{/if}
 </div>

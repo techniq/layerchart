@@ -326,7 +326,7 @@
 
 <svelte:window onclick={handleClickOutside} />
 
-<div class="h-full -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
+<div class="h-[calc(100vh-64px)] flex bg-surface-100">
 	<!-- Editor Panel -->
 	<PaneGroup direction="horizontal">
 		<Pane defaultSize={50} minSize={5}>
@@ -484,16 +484,12 @@
 							}
 						}}
 					>
-						<button
-							type="button"
-							class="flex items-center gap-2 text-sm font-mono cursor-pointer"
-							onclick={toggleConsole}
-						>
+						<div class="flex items-center gap-2 text-sm font-mono">
 							<Icon data={SimpleIconsTerminal} class="text-surface-content/50" />
 							<span class="group-hover/header:underline group-hover/header:decoration-current/50"
 								>Console</span
 							>
-						</button>
+						</div>
 						<button
 							type="button"
 							class="text-xs font-mono relative py-1 px-2 outline outline-primary/10 rounded-sm flex items-center gap-2"

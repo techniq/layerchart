@@ -56,7 +56,7 @@
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import Spline from './Spline.svelte';
