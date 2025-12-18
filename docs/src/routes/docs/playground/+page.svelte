@@ -484,16 +484,12 @@
 							}
 						}}
 					>
-						<button
-							type="button"
-							class="flex items-center gap-2 text-sm font-mono cursor-pointer"
-							onclick={toggleConsole}
-						>
+						<div class="flex items-center gap-2 text-sm font-mono">
 							<Icon data={SimpleIconsTerminal} class="text-surface-content/50" />
 							<span class="group-hover/header:underline group-hover/header:decoration-current/50"
 								>Console</span
 							>
-						</button>
+						</div>
 						<button
 							type="button"
 							class="text-xs font-mono relative py-1 px-2 outline outline-primary/10 rounded-sm flex items-center gap-2"
