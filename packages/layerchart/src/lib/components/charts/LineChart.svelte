@@ -333,6 +333,7 @@
   yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
   yNice={orientation === 'horizontal'}
   {radial}
+  {orientation}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false
@@ -358,121 +359,9 @@
     : false}
   {seriesState}
 >
-  {#snippet children({ context })}
-    {@const snippetProps = {
-      context,
-      getLabelsProps,
-      getPointsProps,
-      getSplineProps,
-      getHighlightProps,
-      getLegendProps,
-      getGridProps,
-      getAxisProps,
-      getRuleProps,
-    }}
-    {#if childrenProp}
-      {@render childrenProp(snippetProps)}
-    {:else}
-      {@render belowContext?.(snippetProps)}
-
-      <Layer
-        type={layer}
-        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
-        center={radial}
-        {debug}
-      >
-        {#if typeof grid === 'function'}
-          {@render grid(snippetProps)}
-        {:else if grid}
-          <Grid {...getGridProps()} />
-        {/if}
-
-        <ChartClipPath disabled={!brush}>
-          <ChartAnnotations {annotations} layer="below" />
-
-          {@render belowMarks?.(snippetProps)}
-          {#if marks}
-            {@render marks(snippetProps)}
-          {:else}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              {#if typeof spline === 'function'}
-                {@render spline({ ...snippetProps, props: getSplineProps(s, i), seriesIndex: i })}
-              {:else}
-                <Spline {...getSplineProps(s, i)} />
-              {/if}
-            {/each}
-          {/if}
-
-          {@render aboveMarks?.(snippetProps)}
-        </ChartClipPath>
-
-        {#if typeof axis === 'function'}
-          {@render axis(snippetProps)}
-
-          {#if typeof rule === 'function'}
-            {@render rule(snippetProps)}
-          {:else if rule}
-            <Rule {...getRuleProps()} />
-          {/if}
-        {:else if axis}
-          {#if axis !== 'x'}
-            <Axis {...getAxisProps('y')} />
-          {/if}
-
-          {#if axis !== 'y'}
-            <Axis {...getAxisProps('x')} />
-          {/if}
-
-          {#if typeof rule === 'function'}
-            {@render rule(snippetProps)}
-          {:else if rule}
-            <Rule {...getRuleProps()} />
-          {/if}
-        {/if}
-
-        <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-        <ChartClipPath disabled={!brush} full>
-          {#if typeof points === 'function'}
-            {@render points(snippetProps)}
-          {:else if points}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              <Points {...getPointsProps(s, i)} />
-            {/each}
-          {/if}
-
-          {#if typeof labels === 'function'}
-            {@render labels(snippetProps)}
-          {:else if labels}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              <Labels {...getLabelsProps(s, i)} />
-            {/each}
-          {/if}
-
-          {#if typeof highlight === 'function'}
-            {@render highlight(snippetProps)}
-          {:else if highlight}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              <Highlight {...getHighlightProps(s, i)} />
-            {/each}
-          {/if}
-
-          <ChartAnnotations {annotations} layer="above" />
-        </ChartClipPath>
-      </Layer>
-
-      {@render aboveContext?.(snippetProps)}
-
-      {#if typeof legend === 'function'}
-        {@render legend(snippetProps)}
-      {:else if legend}
-        <Legend {...getLegendProps()} />
-      {/if}
-
-      {#if typeof tooltip === 'function'}
-        {@render tooltip(snippetProps)}
-      {:else if tooltip}
-        <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
-      {/if}
-    {/if}
+  {#snippet marks()}
+    {#each seriesState.visibleSeries as s, i (s.key)}
+      <Spline seriesKey={s.key} {...props.spline} />
+    {/each}
   {/snippet}
 </Chart>

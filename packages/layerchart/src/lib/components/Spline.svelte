@@ -22,6 +22,11 @@
     y?: Accessor;
 
     /**
+     * Series key to use for accessor.  Only applicable if `<Chart>` uses `series` and `x`/`y` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * Function to determine if a point is defined
      *
      * @example
@@ -57,7 +62,7 @@
 
   const ctx = getChartContext();
 
-  let { data, x, y, defined, curve, ...restProps }: SplineProps = $props();
+  let { data, x, y, seriesKey, defined, curve, ...restProps }: SplineProps = $props();
 
   function getScaleValue(
     data: any,
@@ -79,8 +84,13 @@
     }
   }
 
-  const xAccessor = $derived(x ? accessor(x) : ctx.x);
-  const yAccessor = $derived(y ? accessor(y) : ctx.y);
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
+
+  const xAccessor = $derived(accessor(x ?? (ctx.isVertical ? seriesAccessor : undefined) ?? ctx.x));
+  const yAccessor = $derived(
+    accessor(y ?? (!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y)
+  );
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
@@ -98,8 +108,22 @@
     path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
     if (curve) path.curve(curve);
 
-    return path(data ?? ctx.data) ?? '';
+    return path(data ?? series?.data ?? ctx.data) ?? '';
   });
 </script>
 
-<Path pathData={d} {...restProps} />
+<!-- TODO: handle in LineChart/etc? -->
+<!-- class: cls(props.spline?.class, s.props?.class), -->
+
+<Path
+  pathData={d}
+  stroke={series?.color}
+  opacity={series?.key == null ||
+  // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+  ctx.series.visibleSeries.length <= 1 ||
+  ctx.series.isHighlighted(series.key, true)
+    ? 1
+    : 0.1}
+  {...series?.props}
+  {...restProps}
+/>

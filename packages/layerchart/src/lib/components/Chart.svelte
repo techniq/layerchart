@@ -27,6 +27,8 @@
   import { ChartState } from '$lib/states/chart.svelte.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
 
+  import type { ChartChildrenProps } from './ChartChildren.svelte';
+
   export type ChartResizeDetail = {
     width: number;
     height: number;
@@ -585,7 +587,7 @@
 
     /** Sets height of the chart container.  Uses parent height if not set (bind:clientHeight) */
     height?: number;
-  };
+  } & ChartChildrenProps<T, XScale, YScale>;
 
   export type ChartProps<
     T,
@@ -600,6 +602,7 @@
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
   import { setGeoContext } from '$lib/contexts/geo.js';
+  import ChartChildren from './ChartChildren.svelte';
 
   let {
     ref: refProp = $bindable(),
@@ -624,6 +627,7 @@
     ondragstart,
     brush,
     class: className,
+    ...restProps
   } = $derived(props);
 
   const chartState = new ChartState<TData, XScale, YScale>(() => ({
@@ -711,9 +715,7 @@
         <BrushContext {...brushProps} bind:state={chartState.brushState}>
           <!-- svelte-ignore ownership_invalid_binding -->
           <TooltipContext {...tooltipProps} bind:state={chartState.tooltipState}>
-            {@render children?.({
-              context: chartState,
-            })}
+            <ChartChildren {children} {tooltip} {...restProps} />
           </TooltipContext>
         </BrushContext>
       </TransformContext>
