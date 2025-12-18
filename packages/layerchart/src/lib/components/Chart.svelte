@@ -526,7 +526,12 @@
      */
     yInterval?: TimeInterval | null;
 
-    /* Props passed to ChartContext */
+    /**
+     * The orientation of the chart.
+     *
+     * @default 'horizontal'
+     */
+    orientation?: 'horizontal' | 'vertical';
 
     /**
      * Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.

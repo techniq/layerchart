@@ -499,6 +499,12 @@ export class ChartState<
   get radial() {
     return this.props.radial ?? false;
   }
+  get orientation() {
+    return this.props.orientation ?? 'horizontal';
+  }
+  get isVertical() {
+    return this.props.orientation === 'vertical';
+  }
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
   get tooltip() {
     return this.tooltipState;
