@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Icon } from 'svelte-ux';
+	import { Button } from 'svelte-ux';
 
 	import Code from '$lib/components/Code.svelte';
   import Example from '$lib/components/Example.svelte';
@@ -16,8 +16,8 @@
 	import VSCodeIconDeno from '~icons/vscode-icons/file-type-deno';
 	import VSCodeIconYarn from '~icons/vscode-icons/file-type-yarn';
 	import VSCodeIconCSS from '~icons/vscode-icons/file-type-css';
-	import VscodeIconsFileTypeTailwind from '~icons/vscode-icons/file-type-tailwind'
-	import VscodeIconsFileTypeUnocss from '~icons/vscode-icons/file-type-unocss'
+	import LogosTailwindcssIcon from '~icons/logos/tailwindcss-icon'
+	import LogosUnocss from '~icons/logos/unocss'
 	import CustomSvelteUX from '~icons/custom-brands/svelteux';
 	import CustomDaisyUI from '~icons/custom-brands/daisyUI';
 	import CustomShadCNSvelte from '~icons/custom-brands/shadcnsvelte';
@@ -43,7 +43,7 @@ let bundlerIndex = 0;
 
 LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
 
-Provides built-in first class support for <a href="https://tailwindcss.com/" target="_blank"> <Icon data={VscodeIconsFileTypeTailwind} class="inline-block align-middle" /> tailwindcss 4</a>, but is completely optional. It also works seamlessly with regular CSS via inline styles and <a href="https://unocss.dev/" target="_blank"><Icon data={VscodeIconsFileTypeUnocss} class="inline-block align-middle" /> unoCSS</a>.
+Provides built-in first class support for <a href="https://tailwindcss.com/" target="_blank"> <LogosTailwindcssIcon  class="inline-block size-5" /> tailwindcss 4</a>, but is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and <a href="https://unocss.dev/" target="_blank"><LogosUnocss class="inline-block size-4" /> unoCSS</a>.
 
 <Steps>
 	<Step title={`Create a new project or <a href="#git-up-and-running-even-quicker">git a project</a>`} >
@@ -154,7 +154,7 @@ Provides built-in first class support for <a href="https://tailwindcss.com/" tar
 
 Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples) are available for popular UI frameworks.
 
-<Tabs keys={["shadcn-svelte", "Skeleton", "Svelte UX", "daisyUI", "UnoCSS", "Vanilla CSS"]} icons={[CustomShadCNSvelte,CustomSkeleton,CustomSvelteUX,CustomDaisyUI,VscodeIconsFileTypeUnocss,VSCodeIconCSS]} classes={{content: 'h-[120px] [&_a]:text-primary [&_a:hover]:underline'}} activeClass="bg-surface-200 border-b-surface-200">
+<Tabs keys={["shadcn-svelte", "Skeleton", "Svelte UX", "daisyUI", "UnoCSS", "Vanilla CSS"]} icons={[CustomShadCNSvelte,CustomSkeleton,CustomSvelteUX,CustomDaisyUI,LogosUnocss,VSCodeIconCSS]} classes={{content: 'h-[120px] [&_a]:text-primary [&_a:hover]:underline'}} activeClass="bg-surface-200 border-b-surface-200">
 {#snippet content(value)}
 {#if value === 0}
 
