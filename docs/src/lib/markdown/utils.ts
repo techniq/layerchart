@@ -14,6 +14,19 @@ import type { Examples } from '$lib/types.js';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 
 /**
+ * Resolve a relative or absolute path to a full Svelte component path
+ */
+export function resolveExamplePath(path: string, currentPath: string): string {
+	if (path.startsWith('./')) {
+		return `/src/routes${currentPath}/${path.slice(2)}`;
+	} else if (path.startsWith('/')) {
+		return `/src${path}`;
+	} else {
+		return `/src/routes${currentPath}/${path}`;
+	}
+}
+
+/**
  * Get markdown document component and metadata (frontmatter)
  * @param slug
  * @param type - The type of content ('components' or 'utils')
@@ -69,6 +82,7 @@ function getMetadata(
  * @param allSources - Glob import of all example sources
  * @param defaultComponent - Optional default component name (from route params)
  * @param type - The type of content ('components' or 'utils')
+ * @param currentPath - Optional current path for resolving relative paths
  * @returns Examples object with loaded components and sources
  */
 export async function loadExamplesFromMarkdown(
@@ -77,19 +91,56 @@ export async function loadExamplesFromMarkdown(
 	allExamples: Record<string, () => Promise<any>>,
 	allSources: Record<string, () => Promise<any>>,
 	defaultComponent?: string,
-	type: 'components' | 'utils' = 'components'
+	type: 'components' | 'utils' = 'components',
+	currentPath?: string
 ): Promise<Examples> {
-	// Extract all <Example component="..." name="..."> from markdown content
+	// Extract all <Example component="..." name="..."> and <Example path="..."> from markdown content
 	const regex = /<Example\s+([^>]*?)\/>/g;
 	const matches = [...markdownContent.matchAll(regex)];
 	const pageExamples = matches.map((match) => {
 		const attrs = match[1];
 		const component = attrs.match(/component="([^"]*?)"/)?.[1] || defaultComponent; // use default component if not explicit (ex. <Example name="basic" />)
 		const name = attrs.match(/name="([^"]*?)"/)?.[1] || null;
-		return { component, name };
+		const path = attrs.match(/path="([^"]*?)"/)?.[1] || null;
+		return { component, name, path };
+	});
+
+	// Load all Svelte files from /src for path-based examples
+	const allSvelteComponents = import.meta.glob('/src/**/*.svelte');
+	const allSvelteSources = import.meta.glob('/src/**/*.svelte', {
+		query: '?raw',
+		import: 'default'
 	});
 
 	const examples: Examples = {};
+
+	// Handle path-based examples
+	for (const example of pageExamples) {
+		if (example.path && currentPath) {
+			const resolvedPath = resolveExamplePath(example.path, currentPath);
+
+			// Load component and source
+			if (allSvelteComponents[resolvedPath] && allSvelteSources[resolvedPath]) {
+				try {
+					const component = (await allSvelteComponents[resolvedPath]()) as any;
+					const source = (await allSvelteSources[resolvedPath]()) as string;
+
+					// Store path-based examples under '__path__' namespace
+					if (!examples['__path__']) {
+						examples['__path__'] = {};
+					}
+					examples['__path__'][resolvedPath] = {
+						component: component.default,
+						source
+					};
+				} catch (e) {
+					console.error(`Failed to load path-based example: ${resolvedPath}`, e);
+				}
+			}
+		}
+	}
+
+	// Handle traditional component/name-based examples
 	for (const path in allExamples) {
 		// Check if this path matches catalog examples
 		const catalogMatch = catalog?.examples.some(
@@ -98,7 +149,10 @@ export async function loadExamplesFromMarkdown(
 
 		// Check if this path matches page examples
 		const pageMatch = pageExamples.some(
-			(example) => path === `/src/examples/${type}/${example.component}/${example.name}.svelte`
+			(example) =>
+				example.component &&
+				example.name &&
+				path === `/src/examples/${type}/${example.component}/${example.name}.svelte`
 		);
 
 		if (catalogMatch || pageMatch) {

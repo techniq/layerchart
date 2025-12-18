@@ -35,7 +35,10 @@ export const load = async ({ parent, url }) => {
 						markdownContent,
 						null, // no catalog for standalone pages
 						allExamples,
-						allSources
+						allSources,
+						undefined, // no default component
+						'components',
+						pathname // pass current path for resolving relative paths
 					);
 					break;
 				} catch (e) {
