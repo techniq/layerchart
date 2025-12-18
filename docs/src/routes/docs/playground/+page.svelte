@@ -326,7 +326,7 @@
 
 <svelte:window onclick={handleClickOutside} />
 
-<div class="h-full -mx-6 -my-4 lg:-mx-20 lg:-my-8 flex bg-surface-100">
+<div class="h-[calc(100vh-64px)] flex bg-surface-100">
 	<!-- Editor Panel -->
 	<PaneGroup direction="horizontal">
 		<Pane defaultSize={50} minSize={5}>
