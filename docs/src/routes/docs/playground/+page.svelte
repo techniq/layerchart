@@ -27,7 +27,7 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import type { PageData } from './$types';
 	import CodeEditor from './CodeEditor.svelte';
 	import { Overlay, ProgressCircle } from 'svelte-ux';
@@ -57,6 +57,7 @@
 	let consolePane = $state<ReturnType<typeof Pane>>();
 	let consoleOutput = $state('Provisioning...\n\n');
 	let consoleScrollContainer = $state<HTMLDivElement>();
+	let isConsoleScrollAtBottom = $state(true);
 	let fileTreeShowing = $state<boolean>(false);
 
 	// File editing state
@@ -71,14 +72,34 @@
 	let viteConnected = $state(false);
 	let viteTimeoutId: number | null = null;
 
-	function scrollConsoleToBottom() {
-		if (consoleScrollContainer) {
-			consoleScrollContainer.scrollTo({
-				top: consoleScrollContainer.scrollHeight,
-				behavior: 'instant'
-			});
-		}
+	function isScrolledToBottom() {
+		if (!consoleScrollContainer) return false;
+		const threshold = 5; // pixels threshold to account for rounding
+		return (
+			consoleScrollContainer.scrollHeight - consoleScrollContainer.scrollTop <=
+			consoleScrollContainer.clientHeight + threshold
+		);
 	}
+
+	// Track scroll position changes to know if user has manually scrolled
+	function handleConsoleScroll() {
+		isConsoleScrollAtBottom = isScrolledToBottom();
+	}
+
+	async function scrollConsoleToBottom() {
+		await tick();
+		consoleScrollContainer?.scrollTo({
+			top: consoleScrollContainer.scrollHeight,
+			behavior: 'instant'
+		});
+	}
+
+	// Auto-scroll console when output changes, only if we were at the bottom
+	$effect(() => {
+		if (consoleOutput && consolePane && !consolePane.isCollapsed() && isConsoleScrollAtBottom) {
+			scrollConsoleToBottom();
+		}
+	});
 
 	let fileIcon = $derived.by(() => {
 		if (selectedFile.endsWith('.svelte')) {
@@ -286,16 +307,25 @@
 			new WritableStream({
 				write(data) {
 					const text = data.toString();
+
+					// Skip large amount of blank lines
+					if (
+						text ===
+						'\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n'
+					) {
+						return;
+					}
+
 					console.log('[WebContainer]:', text);
 
 					// Append to console output (converting ANSI codes to HTML)
 					consoleOutput += ansiUp.ansi_to_html(text);
-					scrollConsoleToBottom();
 
 					// Update status based on Vite output
 					if (text.includes('VITE') && text.includes('ready')) {
 						loadingStatus = 'Ready! Loading preview...';
-						consolePane?.collapse();
+						// TODO: Consider reeanbling auto-hiding once the timing is better
+						// consolePane?.collapse();
 					} else if (text.includes('build started') || text.includes('building')) {
 						loadingStatus = 'Building application...';
 					}
@@ -509,15 +539,13 @@
 					minSize={0}
 					maxSize={65}
 					collapsible={true}
-					onCollapse={scrollConsoleToBottom}
-					onExpand={scrollConsoleToBottom}
-					onResize={scrollConsoleToBottom}
 					class="[transition:flex-grow_200ms_ease-out]"
 				>
 					<div class="h-full flex flex-col">
 						<!-- Scrolling content area -->
 						<div
 							bind:this={consoleScrollContainer}
+							onscroll={handleConsoleScroll}
 							class="flex-1 overflow-auto text-xs font-mono p-1 whitespace-pre-wrap bg-surface-100/50"
 						>
 							{@html consoleOutput}
