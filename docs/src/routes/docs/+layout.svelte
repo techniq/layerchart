@@ -81,9 +81,9 @@
 	{/if}
 </svelte:head>
 
-<div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
+<div class="absolute top-0 w-screen h-screen background-gradient pointer-events-none"></div>
 <div
-	class="absolute top-0 w-full h-256 background-grid pointer-events-none mask-b-to-50% mask-x-from-50%"
+	class="absolute top-0 w-screen h-screen background-grid pointer-events-none mask-b-to-50% mask-x-from-50%"
 ></div>
 
 <header
@@ -256,10 +256,7 @@
 	</Drawer>
 
 	<main
-		class={cls(
-			'flex-1 min-w-0',
-			page.data.meta?.fullWidth ? '' : 'px-6 py-4 lg:px-20 lg:py-8'
-		)}
+		class={cls('flex-1 min-w-0', page.data.meta?.fullWidth ? '' : 'px-6 py-4 lg:px-20 lg:py-8')}
 	>
 		<!-- {#if pageContent.breadcrumbs}
 			<Breadcrumb items={pageContent.breadcrumbs.slice(0, -1)} class="mb-1">
