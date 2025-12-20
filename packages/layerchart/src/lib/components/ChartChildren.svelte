@@ -175,13 +175,13 @@
       <Grid x={context.radial} y />
     {/if}
 
-    <!-- <ChartClipPath disabled={!brush}> -->
-    <!-- <ChartAnnotations {annotations} layer="below" /> -->
+    <ChartClipPath disabled={!context.props.brush}>
+      <!-- <ChartAnnotations {annotations} layer="below" /> -->
 
-    {@render belowMarks?.(snippetProps)}
-    {@render marks?.(snippetProps)}
-    {@render aboveMarks?.(snippetProps)}
-    <!-- </ChartClipPath> -->
+      {@render belowMarks?.(snippetProps)}
+      {@render marks?.(snippetProps)}
+      {@render aboveMarks?.(snippetProps)}
+    </ChartClipPath>
 
     {#if typeof axis === 'function'}
       {@render axis(snippetProps)}
@@ -190,24 +190,34 @@
         {@render rule(snippetProps)}
       {:else if rule}
         <!-- <Rule {...getRuleProps()} /> -->
-        <Rule />
+        <Rule x={0} y={0} {...getObjectOrNull(rule)} {...props.rule} />
       {/if}
     {:else if axis}
       {#if axis !== 'x'}
         <!-- <Axis {...getAxisProps('y')} /> -->
-        <Axis placement={context.radial ? 'radius' : 'left'} />
+        <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
+        <Axis
+          placement={context.radial ? 'radius' : 'left'}
+          {...getObjectOrNull(axis)}
+          {...props.yAxis}
+        />
       {/if}
 
       {#if axis !== 'y'}
         <!-- <Axis {...getAxisProps('x')} /> -->
-        <Axis placement={context.radial ? 'angle' : 'bottom'} />
+        <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
+        <Axis
+          placement={context.radial ? 'angle' : 'bottom'}
+          {...getObjectOrNull(axis)}
+          {...props.xAxis}
+        />
       {/if}
 
       {#if typeof rule === 'function'}
         {@render rule(snippetProps)}
       {:else if rule}
         <!-- <Rule {...getRuleProps()} /> -->
-        <Rule x={0} y={0} />
+        <Rule x={0} y={0} {...getObjectOrNull(rule)} {...props.rule} />
       {/if}
     {/if}
 
@@ -258,7 +268,6 @@
     {@render legend(snippetProps)}
   {:else if legend}
     <!-- <Legend {...getLegendProps()} /> -->
-    <!-- TODO: handle `legend` and `props.legend` -->
     <Legend {...getObjectOrNull(legend)} {...props.legend} />
   {/if}
 

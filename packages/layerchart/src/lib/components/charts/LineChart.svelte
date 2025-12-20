@@ -320,6 +320,7 @@
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
+<!-- TODO: Pass rule, legend, etc (without triggering: "Expression produces a union type that is too complex to represent.") -->
 <Chart
   bind:context
   data={chartData}
@@ -358,10 +359,20 @@
       }
     : false}
   {seriesState}
+  rule={rule as any}
+  legend={legend as any}
+  highlight={highlight as any}
+  {props}
 >
-  {#snippet marks()}
-    {#each seriesState.visibleSeries as s, i (s.key)}
-      <Spline seriesKey={s.key} {...props.spline} />
-    {/each}
+  <!-- TODO: Pass `tooltip` snippet -->
+
+  {#snippet marks(snippetProps)}
+    {#if typeof marks === 'function'}
+      {@render marks(snippetProps)}
+    {:else}
+      {#each seriesState.visibleSeries as s, i (s.key)}
+        <Spline seriesKey={s.key} {...props.spline} />
+      {/each}
+    {/if}
   {/snippet}
 </Chart>
