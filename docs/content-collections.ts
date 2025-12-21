@@ -22,10 +22,12 @@ const components = defineCollection({
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
 
+		const name = doc.name ?? toPascalCase(fileName.replace('.md', ''));
+
 		// Read the source file from the layerchart package
 		const sourcePath = join(
 			process.cwd(),
-			`../packages/layerchart/src/lib/components/${doc.category === 'charts' ? 'charts/' : ''}${path}.svelte`
+			`../packages/layerchart/src/lib/components/${doc.category === 'charts' && name != 'Chart' ? 'charts/' : ''}${path}.svelte`
 		);
 
 		let source = '';
@@ -44,7 +46,7 @@ const components = defineCollection({
 
 		return {
 			...doc,
-			name: doc.name ?? toPascalCase(fileName.replace('.md', '')),
+			name,
 			slug: path,
 			source,
 			sourceUrl,
