@@ -114,7 +114,7 @@
           {#each enrichedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
-              tooltipContext={context.tooltip}
+              tooltip
               class="stroke-none hover:fill-surface-content/10"
               {strokeWidth}
             />

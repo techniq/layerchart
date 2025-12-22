@@ -12,7 +12,6 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
 
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import type { PathProps } from './Path.svelte';
 
   export type GeoPathPropsWithoutHTML = {
@@ -22,9 +21,9 @@
     geojson?: GeoPermissibleObjects | null;
 
     /**
-     * Tooltip context to setup pointer events to show tooltip for related data
+     * Setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipState | undefined;
+    tooltip?: boolean;
 
     /**
      * Click event handler
@@ -81,13 +80,14 @@
   import { cls } from '@layerstack/tailwind';
 
   import { geoCurvePath } from '$lib/utils/geo.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import Path from './Path.svelte';
 
   let {
     geoTransform,
     geojson,
-    tooltipContext,
+    tooltip,
     curve = curveLinearClosed,
     onclick,
     onpointerenter,
@@ -99,6 +99,7 @@
     ...restProps
   }: GeoPathProps = $props();
 
+  const ctx = getChartContext();
   const geo = getGeoContext();
 
   const projection = $derived(
@@ -124,17 +125,23 @@
 
   function _onPointerEnter(e: PointerEvent & { currentTarget: EventTarget & SVGPathElement }) {
     onpointerenter?.(e);
-    tooltipContext?.show(e, geojson);
+    if (tooltip) {
+      ctx?.tooltip.show(e, geojson);
+    }
   }
 
   function _onPointerMove(e: PointerEvent & { currentTarget: EventTarget & SVGPathElement }) {
     onpointermove?.(e);
-    tooltipContext?.show(e, geojson);
+    if (tooltip) {
+      ctx.tooltip.show(e, geojson);
+    }
   }
 
   function _onPointerLeave(e: PointerEvent & { currentTarget: EventTarget & SVGPathElement }) {
     onpointerleave?.(e);
-    tooltipContext?.hide();
+    if (tooltip) {
+      ctx.tooltip.hide();
+    }
   }
 </script>
 
@@ -145,9 +152,9 @@
     {pathData}
     {...restProps}
     onclick={_onClick}
-    onpointerenter={tooltipContext || onpointerenter ? _onPointerEnter : undefined}
-    onpointermove={tooltipContext || onpointermove ? _onPointerMove : undefined}
-    onpointerleave={tooltipContext || onpointerleave ? _onPointerLeave : undefined}
+    onpointerenter={tooltip || onpointerenter ? _onPointerEnter : undefined}
+    onpointermove={tooltip || onpointermove ? _onPointerMove : undefined}
+    onpointerleave={tooltip || onpointerleave ? _onPointerLeave : undefined}
     class={cls('lc-geo-path', className)}
     pathRef={refProp}
   />

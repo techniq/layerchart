@@ -120,7 +120,7 @@
             {#each timezoneGeojson.features as feature}
               <GeoPath
                 geojson={feature}
-                tooltipContext={context.tooltip}
+                tooltip
                 fill={colorScale(feature.properties.zone)}
                 class="stroke-gray-900/50 hover:brightness-110"
               />

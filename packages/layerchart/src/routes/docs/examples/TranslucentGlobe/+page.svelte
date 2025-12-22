@@ -97,7 +97,7 @@
             <GeoPath
               geojson={country}
               class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
-              tooltipContext={context.tooltip}
+              tooltip
             />
           {/each}
         </Layer>

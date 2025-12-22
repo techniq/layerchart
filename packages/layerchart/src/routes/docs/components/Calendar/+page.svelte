@@ -49,33 +49,21 @@
       ]}
       padding={{ top: 20 }}
     >
-      {#snippet children({ context })}
-        <Layer>
-          <Calendar
-            start={firstDayOfYear}
-            end={lastDayOfYear}
-            tooltipContext={context.tooltip}
-            monthPath
-          />
-        </Layer>
+      <Layer>
+        <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip monthPath />
+      </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            <Tooltip.Header value={data.date} format="day" />
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
 
-            {#if data.value != null}
-              <Tooltip.List>
-                <Tooltip.Item
-                  label="value"
-                  value={data.value}
-                  format="integer"
-                  valueAlign="right"
-                />
-              </Tooltip.List>
-            {/if}
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
+          {#if data.value != null}
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+            </Tooltip.List>
+          {/if}
+        {/snippet}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -98,34 +86,21 @@
       ]}
       padding={{ top: 20 }}
     >
-      {#snippet children({ context })}
-        <Layer>
-          <Calendar
-            start={firstDayOfYear}
-            end={lastDayOfYear}
-            tooltipContext={context.tooltip}
-            cellSize={16}
-            monthPath
-          />
-        </Layer>
+      <Layer>
+        <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip cellSize={16} monthPath />
+      </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            <Tooltip.Header value={data.date} format="day" />
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
 
-            {#if data.value != null}
-              <Tooltip.List>
-                <Tooltip.Item
-                  label="value"
-                  value={data.value}
-                  format="integer"
-                  valueAlign="right"
-                />
-              </Tooltip.List>
-            {/if}
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
+          {#if data.value != null}
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+            </Tooltip.List>
+          {/if}
+        {/snippet}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -148,43 +123,36 @@
       ]}
       padding={{ top: 20, left: 20 }}
     >
-      {#snippet children({ context })}
-        <Layer>
-          {#each range(2019, 2024) as year, i}
-            {@const start = new Date(year, 0, 1)}
-            {@const end = endOfInterval('year', start)}
-            <Group y={140 * i}>
-              <Text
-                value={year}
-                class="text-xs"
-                rotate={270}
-                x={-20}
-                y={(16 * 7) / 2}
-                textAnchor="middle"
-                verticalAnchor="start"
-              />
-              <Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />
-            </Group>
-          {/each}
-        </Layer>
+      <Layer>
+        {#each range(2019, 2024) as year, i}
+          {@const start = new Date(year, 0, 1)}
+          {@const end = endOfInterval('year', start)}
+          <Group y={140 * i}>
+            <Text
+              value={year}
+              class="text-xs"
+              rotate={270}
+              x={-20}
+              y={(16 * 7) / 2}
+              textAnchor="middle"
+              verticalAnchor="start"
+            />
+            <Calendar {start} {end} tooltip cellSize={16} monthPath />
+          </Group>
+        {/each}
+      </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            <Tooltip.Header value={data.date} format="day" />
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
 
-            {#if data.value != null}
-              <Tooltip.List>
-                <Tooltip.Item
-                  label="value"
-                  value={data.value}
-                  format="integer"
-                  valueAlign="right"
-                />
-              </Tooltip.List>
-            {/if}
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
+          {#if data.value != null}
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+            </Tooltip.List>
+          {/if}
+        {/snippet}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -269,7 +237,7 @@
     >
       {#snippet children({ context })}
         <Layer type="html">
-          <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>
+          <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip>
             {#snippet children({ cells, cellSize })}
               {#each cells as cell}
                 <div
@@ -330,33 +298,21 @@
       ]}
       padding={{ top: 20 }}
     >
-      {#snippet children({ context })}
-        <Layer>
-          <Calendar
-            start={firstDayOfPreviousMonth}
-            end={lastDayOfPreviousMonth}
-            tooltipContext={context.tooltip}
-            monthPath
-          />
-        </Layer>
+      <Layer>
+        <Calendar start={firstDayOfPreviousMonth} end={lastDayOfPreviousMonth} tooltip monthPath />
+      </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            <Tooltip.Header value={data.date} format="day" />
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
 
-            {#if data.value != null}
-              <Tooltip.List>
-                <Tooltip.Item
-                  label="value"
-                  value={data.value}
-                  format="integer"
-                  valueAlign="right"
-                />
-              </Tooltip.List>
-            {/if}
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
+          {#if data.value != null}
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+            </Tooltip.List>
+          {/if}
+        {/snippet}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -379,28 +335,21 @@
       ]}
       padding={{ top: 20 }}
     >
-      {#snippet children({ context })}
-        <Layer>
-          <Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />
-        </Layer>
+      <Layer>
+        <Calendar start={ninetyDaysAgo} end={now} tooltip monthPath />
+      </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            <Tooltip.Header value={data.date} format="day" />
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header value={data.date} format="day" />
 
-            {#if data.value != null}
-              <Tooltip.List>
-                <Tooltip.Item
-                  label="value"
-                  value={data.value}
-                  format="integer"
-                  valueAlign="right"
-                />
-              </Tooltip.List>
-            {/if}
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
+          {#if data.value != null}
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+            </Tooltip.List>
+          {/if}
+        {/snippet}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

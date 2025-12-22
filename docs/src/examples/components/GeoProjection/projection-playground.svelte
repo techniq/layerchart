@@ -78,7 +78,7 @@
 			{#each features as feature}
 				<GeoPath
 					geojson={feature}
-					tooltipContext={context.tooltip}
+					tooltip
 					class="stroke-surface-content/50 fill-white hover:fill-gray-300"
 				/>
 			{/each}

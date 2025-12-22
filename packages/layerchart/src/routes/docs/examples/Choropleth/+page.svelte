@@ -78,7 +78,7 @@
               fill={colorScale(feature.properties.data?.population ?? 0)}
               class="stroke-none hover:stroke-white"
               {strokeWidth}
-              tooltipContext={context.tooltip}
+              tooltip
             />
           {/each}
 

@@ -72,7 +72,7 @@
 					<GeoPath
 						geojson={feature}
 						class="stroke-none"
-						tooltipContext={context.tooltip}
+						tooltip
 						onclick={() => {
 							if (!context.geo.projection) return;
 							const featureTransform = geoFitObjectTransform(

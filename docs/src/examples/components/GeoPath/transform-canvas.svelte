@@ -67,7 +67,7 @@
 					geojson={feature}
 					class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
 					strokeWidth={1 / context.transform.scale}
-					tooltipContext={context.tooltip}
+					tooltip
 					onclick={(e, geoPath) => {
 						context.tooltip.hide();
 						if (selectedStateId === feature.id) {
@@ -96,7 +96,7 @@
 				<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
 					<GeoPath
 						geojson={feature}
-						tooltipContext={context.tooltip}
+						tooltip
 						strokeWidth={1 / context.transform.scale}
 						class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
 						onclick={() => {

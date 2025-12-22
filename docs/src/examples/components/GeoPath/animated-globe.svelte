@@ -11,7 +11,7 @@
 		Layer,
 		Tooltip,
 		defaultChartPadding,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { Button } from 'svelte-ux';
 	import { sortFunc } from '@layerstack/utils';
@@ -26,7 +26,7 @@
 	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 
 	let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 
@@ -136,44 +136,42 @@
 		padding={{ ...defaultChartPadding, left: 5, right: 5 }}
 		height={600}
 	>
-		{#snippet children()}
-			{#if debug}
-				<div class="absolute bottom-0 right-0 z-10 grid gap-1">
-					<!-- Debug components removed for simplified example -->
-				</div>
-			{/if}
+		{#if debug}
+			<div class="absolute bottom-0 right-0 z-10 grid gap-1">
+				<!-- Debug components removed for simplified example -->
+			</div>
+		{/if}
 
-			<Layer {debug}>
-				<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-				<Graticule class="stroke-surface-content/20" />
+		<Layer {debug}>
+			<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+			<Graticule class="stroke-surface-content/20" />
 
-				{#each countries.features as country (country)}
-					<GeoPath
-						geojson={country}
-						class={cls(
-							'stroke-surface-content/50 fill-white cursor-pointer',
-							selectedFeature?.properties.name === country.properties.name
-								? 'stroke-primary-900 fill-primary'
-								: 'hover:fill-gray-200' // Canvas highlight handled below
-						)}
-						onclick={() => (selectedFeature = country)}
-						tooltipContext={context.tooltip}
-					/>
-				{/each}
+			{#each countries.features as country (country)}
+				<GeoPath
+					geojson={country}
+					class={cls(
+						'stroke-surface-content/50 fill-white cursor-pointer',
+						selectedFeature?.properties.name === country.properties.name
+							? 'stroke-primary-900 fill-primary'
+							: 'hover:fill-gray-200' // Canvas highlight handled below
+					)}
+					onclick={() => (selectedFeature = country)}
+					tooltip
+				/>
+			{/each}
+		</Layer>
+
+		{#if layer === 'canvas'}
+			<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+			<Layer type="canvas" pointerEvents={false}>
+				{#if context.tooltip.data}
+					<GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
+				{/if}
 			</Layer>
+		{/if}
 
-			{#if layer === 'canvas'}
-				<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-				<Layer type="canvas" pointerEvents={false}>
-					{#if context.tooltip.data}
-						<GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
-					{/if}
-				</Layer>
-			{/if}
-
-			<Tooltip.Root>
-				{context.tooltip.data.properties.name}
-			</Tooltip.Root>
-		{/snippet}
+		<Tooltip.Root>
+			{context.tooltip.data.properties.name}
+		</Tooltip.Root>
 	</Chart>
 </div>

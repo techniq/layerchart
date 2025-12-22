@@ -97,42 +97,40 @@
 				}}
 				padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
 			>
-				{#snippet children({ context })}
-					{#if projection === geoMercator && serviceUrl}
-						<Layer>
-							<!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
-							<GeoTile url={serviceUrl} zoomDelta={-100} />
-							<GeoTile url={serviceUrl} zoomDelta={-4} />
-							<GeoTile url={serviceUrl} zoomDelta={-1} />
-							<GeoTile url={serviceUrl} {zoomDelta} />
-						</Layer>
-					{/if}
-
-					<TransformControls />
-
+				{#if projection === geoMercator && serviceUrl}
 					<Layer>
-						{#if geojson?.features}
-							{#each geojson?.features as feature}
-								<GeoPath
-									geojson={feature}
-									fill={colorScale(String(feature.id))}
-									class="stroke-black"
-									tooltipContext={context.tooltip}
-								/>
-							{/each}
-						{/if}
+						<!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
+						<GeoTile url={serviceUrl} zoomDelta={-100} />
+						<GeoTile url={serviceUrl} zoomDelta={-4} />
+						<GeoTile url={serviceUrl} zoomDelta={-1} />
+						<GeoTile url={serviceUrl} {zoomDelta} />
 					</Layer>
+				{/if}
 
-					<Tooltip.Root>
-						{#snippet children({ data })}
-							<Tooltip.List>
-								{#each Object.entries(data.properties) as [key, value]}
-									<Tooltip.Item label={key} {value} />
-								{/each}
-							</Tooltip.List>
-						{/snippet}
-					</Tooltip.Root>
-				{/snippet}
+				<TransformControls />
+
+				<Layer>
+					{#if geojson?.features}
+						{#each geojson?.features as feature}
+							<GeoPath
+								geojson={feature}
+								fill={colorScale(String(feature.id))}
+								class="stroke-black"
+								tooltip
+							/>
+						{/each}
+					{/if}
+				</Layer>
+
+				<Tooltip.Root>
+					{#snippet children({ data })}
+						<Tooltip.List>
+							{#each Object.entries(data.properties) as [key, value]}
+								<Tooltip.Item label={key} {value} />
+							{/each}
+						</Tooltip.List>
+					{/snippet}
+				</Tooltip.Root>
 			</Chart>
 		{:else}
 			<EmptyMessage class="h-full">Please enter input below</EmptyMessage>

@@ -45,7 +45,7 @@
 				<!-- TODO: Renders on canvas if put on separate Layer  -->
 				<GeoPath
 					geojson={feature}
-					tooltipContext={context.tooltip}
+					tooltip
 					class="stroke-black/20 hover:fill-white/30"
 					onclick={() => (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
 				/>

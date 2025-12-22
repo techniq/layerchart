@@ -125,7 +125,7 @@
                   geojson={feature}
                   fill={colorScale(String(feature.id))}
                   class="stroke-black"
-                  tooltipContext={context.tooltip}
+                  tooltip
                 />
               {/each}
             {/if}

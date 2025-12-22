@@ -38,7 +38,7 @@
 >
 	{#snippet children({ context })}
 		<Layer type="html">
-			<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>
+			<Calendar start={firstDayOfYear} end={lastDayOfYear}>
 				{#snippet children({ cells, cellSize })}
 					{#each cells as cell}
 						<div

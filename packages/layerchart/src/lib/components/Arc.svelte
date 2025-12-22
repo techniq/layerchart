@@ -3,7 +3,6 @@
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
   import Path, { type PathPropsWithoutHTML } from './Path.svelte';
-  import type { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -113,11 +112,11 @@
     offset?: number;
 
     /**
-     * Tooltip context to setup pointer events to show tooltip for related data.
+     * Setup pointer events to show tooltip for related data.
      *
      * **Must set `data` prop as well**
      */
-    tooltipContext?: TooltipState;
+    tooltip?: boolean;
 
     /**
      * Data to set when showing tooltip
@@ -230,7 +229,7 @@
     onpointermove = () => {},
     onpointerleave = () => {},
     ontouchmove = () => {},
-    tooltipContext,
+    tooltip,
     track = false,
     children,
     class: className,
@@ -353,17 +352,17 @@
 
   const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);
-    tooltipContext?.show(e, data);
+    if (tooltip) ctx.tooltip.show(e, data);
   };
 
   const onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
     onpointermove?.(e);
-    tooltipContext?.show(e, data);
+    if (tooltip) ctx.tooltip.show(e, data);
   };
 
   const onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerleave?.(e);
-    tooltipContext?.hide();
+    if (tooltip) ctx.tooltip.hide();
   };
 
   function getTrackTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
@@ -422,9 +421,10 @@
   onpointerleave={onPointerLeave}
   ontouchmove={(e) => {
     ontouchmove?.(e);
-    if (!tooltipContext) return;
-    // Prevent touch to not interfere with pointer when using tooltip
-    e.preventDefault();
+    if (tooltip) {
+      // Prevent touch to not interfere with pointer when using tooltip
+      e.preventDefault();
+    }
   }}
 />
 

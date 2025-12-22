@@ -179,7 +179,7 @@
                   : 'hover:fill-gray-200' // Canvas highlight handled below
               )}
               onclick={() => (selectedFeature = country)}
-              tooltipContext={context.tooltip}
+              tooltip
             />
           {/each}
         </Layer>

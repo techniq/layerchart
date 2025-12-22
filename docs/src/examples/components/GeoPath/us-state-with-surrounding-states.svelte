@@ -49,7 +49,7 @@
 					<GeoPath
 						geojson={feature}
 						class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-						tooltipContext={context.tooltip}
+						tooltip
 					/>
 				{/each}
 				{#each states.features as feature}

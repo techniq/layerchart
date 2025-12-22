@@ -29,7 +29,7 @@
             <GeoPath
               geojson={feature}
               class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
-              tooltipContext={context.tooltip}
+              tooltip
             />
           {/each}
 
