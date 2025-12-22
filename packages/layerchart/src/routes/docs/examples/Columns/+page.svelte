@@ -165,7 +165,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -197,7 +197,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -229,7 +229,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -607,7 +607,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltipContext={{ mode: 'bisect-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -640,7 +640,7 @@
       y={['value', (d) => -d.baseline]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltipContext={{ mode: 'bisect-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
@@ -922,7 +922,7 @@
       x1Domain={colorKeys}
       x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -976,7 +976,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1030,7 +1030,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1088,7 +1088,7 @@
       x1Domain={[1, 2]}
       x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1158,7 +1158,7 @@
         : undefined}
       x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1336,7 +1336,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{
+      tooltipContext={{
         mode: 'band',
         onclick(e, { data }) {
           alert('You clicked on:\n' + JSON.stringify(data, null, 2));

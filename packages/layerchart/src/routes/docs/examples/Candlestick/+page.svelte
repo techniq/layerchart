@@ -27,7 +27,7 @@
       cDomain={['desc', 'asc']}
       cRange={['var(--color-danger)', 'var(--color-success)']}
       padding={{ left: 20, bottom: 32 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />
@@ -72,7 +72,7 @@
         cDomain={['desc', 'asc']}
         cRange={['var(--color-danger)', 'var(--color-success)']}
         padding={{ left: 20, bottom: 32 }}
-        tooltip={{ mode: 'quadtree-x' }}
+        tooltipContext={{ mode: 'quadtree-x' }}
       >
         <Layer>
           <Axis placement="left" grid rule tickSpacing={20} />
@@ -132,7 +132,7 @@
       cDomain={['desc', 'asc']}
       cRange={['var(--color-danger)', 'var(--color-success)']}
       padding={{ left: 20, bottom: 32 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />
@@ -172,7 +172,7 @@
       cDomain={['desc', 'asc']}
       cRange={['var(--color-danger)', 'var(--color-success)']}
       padding={{ left: 20, bottom: 32 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule tickSpacing={20} />

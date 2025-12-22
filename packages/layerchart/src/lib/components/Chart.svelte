@@ -559,7 +559,7 @@
     /**
      * Props passed to the `TooltipContext` component.
      */
-    tooltip?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
+    tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
     /**
      * Props passed to TransformContext
@@ -620,7 +620,7 @@
     position = 'relative',
     children,
     geo,
-    tooltip,
+    tooltipContext: tooltip,
     transform,
     onTransform,
     ondragend,

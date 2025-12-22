@@ -41,7 +41,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />

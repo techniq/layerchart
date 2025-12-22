@@ -154,7 +154,7 @@
       transform={{
         motion: { type: 'spring', stiffness: 0.04 },
       }}
-      tooltip={{ touchEvents: 'none' }}
+      tooltipContext={{ touchEvents: 'none' }}
       bind:context
     >
       {#snippet children()}

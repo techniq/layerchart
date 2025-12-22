@@ -153,7 +153,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -184,7 +184,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -208,7 +208,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -239,7 +239,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -270,7 +270,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -302,7 +302,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -333,7 +333,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -364,7 +364,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -415,7 +415,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24, top: 16 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -467,7 +467,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -541,7 +541,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -590,7 +590,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
       bind:context
     >
       <Layer>
@@ -628,7 +628,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.area.mode,
         debug: charts.area.debug,
       }}
@@ -677,7 +677,7 @@
       cDomain={keys}
       cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.areaStack.mode,
         debug: charts.areaStack.debug,
       }}
@@ -735,7 +735,7 @@
       x="startDate"
       y="name"
       padding={{ left: 36, bottom: 36 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.dateTime.mode,
         debug: charts.dateTime.debug,
       }}
@@ -785,7 +785,7 @@
       x={['startDate', 'endDate']}
       y="name"
       padding={{ left: 36, bottom: 36 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.duration.mode,
         debug: charts.duration.debug,
       }}
@@ -844,7 +844,7 @@
       x={['startDate', 'endDate']}
       y="name"
       padding={{ left: 36, bottom: 36 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.multiDuration.mode,
         debug: charts.multiDuration.debug,
       }}
@@ -907,7 +907,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.bars.mode,
         debug: charts.bars.debug,
       }}
@@ -958,7 +958,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.multiBars.mode,
         debug: charts.multiBars.debug,
       }}
@@ -1012,7 +1012,7 @@
       x="x"
       y="y"
       padding={{ left: 30, bottom: 30 }}
-      tooltip={{
+      tooltipContext={{
         mode: charts.scatter.mode,
         debug: charts.scatter.debug,
       }}

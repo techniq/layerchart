@@ -337,7 +337,7 @@
   {orientation}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltip={tooltip === false
+  tooltipContext={tooltip === false
     ? false
     : {
         mode: isVertical ? 'quadtree-y' : 'quadtree-x',

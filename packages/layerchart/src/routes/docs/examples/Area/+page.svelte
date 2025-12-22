@@ -114,7 +114,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -249,7 +249,7 @@
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'quadtree' }}
+      tooltipContext={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -306,7 +306,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       <Layer>
         <Axis placement="left" grid rule />
@@ -370,7 +370,7 @@
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'quadtree' }}
+      tooltipContext={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -433,7 +433,7 @@
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree' }}
+      tooltipContext={{ mode: 'quadtree' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -479,7 +479,7 @@
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -679,7 +679,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -713,7 +713,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -747,7 +747,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
       c={(d) => (d.value < 0 ? 'under' : 'over')}
       cDomain={['over', 'under']}
       cRange={['var(--color-success)', 'var(--color-danger)']}
@@ -798,7 +798,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -861,7 +861,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         {@const thresholdValue = 0}
@@ -903,7 +903,7 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         {@const thresholdValue = 0}
@@ -947,7 +947,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ top: 48, bottom: 24 }}
-      tooltip={{ mode: 'quadtree-x' }}
+      tooltipContext={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer>

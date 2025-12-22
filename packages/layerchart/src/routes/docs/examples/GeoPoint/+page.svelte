@@ -96,7 +96,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
+      tooltipContext={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -172,7 +172,7 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
+      tooltipContext={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -232,7 +232,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
+      tooltipContext={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Layer>

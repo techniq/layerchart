@@ -665,7 +665,7 @@
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
-          tooltip={{ mode: 'quadtree-x' }}
+          tooltipContext={{ mode: 'quadtree-x' }}
           brush={{
             resetOnEnd: true,
             onBrushEnd: (e) => {

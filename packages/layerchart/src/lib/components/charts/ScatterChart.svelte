@@ -226,7 +226,7 @@
   cRange={['var(--color-primary, currentColor)']}
   padding={defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltip={tooltip === false
+  tooltipContext={tooltip === false
     ? false
     : {
         mode: 'quadtree',

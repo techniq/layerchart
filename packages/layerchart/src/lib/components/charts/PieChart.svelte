@@ -386,7 +386,7 @@
     bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
   }}
   {...restProps}
-  tooltip={tooltip === false
+  tooltipContext={tooltip === false
     ? false
     : { ...props.tooltip?.context, ...(typeof tooltip === 'object' ? tooltip : null) }}
   {seriesState}

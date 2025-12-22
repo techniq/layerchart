@@ -165,7 +165,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="bottom" grid rule />
@@ -197,7 +197,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="bottom" grid rule />
@@ -229,7 +229,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="bottom" grid rule />
@@ -605,7 +605,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="bottom" grid rule />
@@ -638,7 +638,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       <Layer>
         <Axis placement="bottom" grid rule />
@@ -830,7 +830,7 @@
       y1Domain={colorKeys}
       y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -885,7 +885,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -940,7 +940,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -999,7 +999,7 @@
       y1Domain={[1, 2]}
       y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1071,7 +1071,7 @@
         : undefined}
       y1Range={({ yScale }) => [0, yScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      tooltipContext={{ mode: 'band' }}
     >
       {#snippet children({ context })}
         <Layer>
@@ -1251,7 +1251,7 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
-      tooltip={{
+      tooltipContext={{
         mode: 'band',
         onclick(e, { data }) {
           alert('You clicked on:\n' + JSON.stringify(data, null, 2));
