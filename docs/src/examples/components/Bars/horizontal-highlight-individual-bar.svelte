@@ -27,13 +27,14 @@
 	<Layer>
 		<Axis placement="bottom" grid rule />
 		<Axis placement="left" rule />
-		<Highlight
-			data={data[3]}
-			area={{ fill: 'url(#highlight-pattern)', class: 'stroke-secondary/50' }}
-		/>
-		<Pattern id="highlight-pattern" width={8} height={8}>
-			<rect width={8} height={8} class="fill-secondary/10" />
-			<line x1={8} y2={8} class="stroke-secondary/30" />
+		<Pattern
+			size={8}
+			lines={{ rotate: -45, color: 'var(--color-secondary)', opacity: 0.3 }}
+			background="color-mix(in oklab, var(--color-secondary) 10%, transparent)"
+		>
+			{#snippet children({ pattern })}
+				<Highlight data={data[3]} area={{ fill: pattern, class: 'stroke-secondary/50' }} />
+			{/snippet}
 		</Pattern>
 		<Bars strokeWidth={1} class="fill-primary" />
 	</Layer>
