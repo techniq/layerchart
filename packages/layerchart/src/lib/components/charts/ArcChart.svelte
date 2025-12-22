@@ -294,7 +294,7 @@
       fill: s.color ?? context.cScale?.(context.c(d)),
       track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
       opacity: seriesState.isHighlighted(keyAccessor(d), true) ? 1 : 0.1,
-      tooltipContext: context.tooltip,
+      tooltip: true,
       data: d,
       onclick: (e) => {
         onArcClick(e, { data: d, series: s });
