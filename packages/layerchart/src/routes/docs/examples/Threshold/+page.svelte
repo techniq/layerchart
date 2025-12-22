@@ -36,7 +36,7 @@
       x="date"
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={false}
+      tooltipContext={false}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -116,7 +116,7 @@
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
       labels
-      tooltip={false}
+      tooltipContext={false}
     >
       {#snippet marks()}
         <Threshold>

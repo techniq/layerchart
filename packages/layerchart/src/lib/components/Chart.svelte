@@ -5,7 +5,7 @@
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
 
-  import { type Accessor } from '$lib/utils/common.js';
+  import { getObjectOrNull, type Accessor } from '$lib/utils/common.js';
   import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
@@ -620,7 +620,7 @@
     position = 'relative',
     children,
     geo,
-    tooltipContext: tooltip,
+    tooltipContext,
     transform,
     onTransform,
     ondragend,
@@ -680,7 +680,6 @@
   });
 
   const brushProps = $derived(typeof brush === 'object' ? brush : { disabled: !brush });
-  const tooltipProps = $derived(typeof tooltip === 'object' ? tooltip : {});
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -714,8 +713,8 @@
         <!-- svelte-ignore ownership_invalid_binding -->
         <BrushContext {...brushProps} bind:state={chartState.brushState}>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <TooltipContext {...tooltipProps} bind:state={chartState.tooltipState}>
-            <ChartChildren {children} {tooltip} {...restProps} />
+          <TooltipContext {...getObjectOrNull(tooltipContext)} bind:state={chartState.tooltipState}>
+            <ChartChildren {children} {tooltipContext} {...restProps} />
           </TooltipContext>
         </BrushContext>
       </TransformContext>

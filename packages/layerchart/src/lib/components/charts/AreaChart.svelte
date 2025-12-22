@@ -116,7 +116,7 @@
     labels = false,
     legend = false,
     points = false,
-    tooltip = true,
+    tooltipContext = true,
     highlight = true,
     annotations = [],
     rule = true,
@@ -132,6 +132,7 @@
     belowMarks,
     aboveMarks,
     marks,
+    tooltip,
     context = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
@@ -415,14 +416,14 @@
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltipContext={tooltip === false
+  tooltipContext={tooltipContext === false
     ? false
     : {
         mode: 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...(typeof tooltip === 'object' ? tooltip : null),
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {

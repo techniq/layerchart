@@ -657,7 +657,7 @@
           xTicks: funnelSegments.map((d) => d.index),
         },
       }}
-      tooltip={false}
+      tooltipContext={false}
     >
       {#snippet marks({ context })}
         {@const segmentWidth = context.width / (funnelSegments.length - 1)}
@@ -1277,7 +1277,7 @@
       xScale={scaleBand()}
       x="fruit"
       y="value"
-      tooltip={{
+      tooltipContext={{
         mode: 'band',
         debug: settings.debug,
       }}

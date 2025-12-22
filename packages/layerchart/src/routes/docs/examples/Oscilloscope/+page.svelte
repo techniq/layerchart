@@ -82,7 +82,7 @@
       axis={false}
       grid={false}
       props={{ spline: { class: 'stroke-surface-content' } }}
-      tooltip={{ mode: 'manual' }}
+      tooltipContext={{ mode: 'manual' }}
     />
   </div>
 </Preview>
@@ -100,7 +100,7 @@
       bandPadding={0.2}
       padding={{ left: 24 }}
       axis="y"
-      tooltip={{ mode: 'manual' }}
+      tooltipContext={{ mode: 'manual' }}
       props={{
         yAxis: { format: (d) => decibels(d)?.toFixed(1) },
       }}

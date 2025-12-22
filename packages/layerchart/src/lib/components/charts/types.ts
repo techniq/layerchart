@@ -198,7 +198,7 @@ export type BaseChartProps<
   /**
    * The tooltip to be used for the chart.
    */
-  tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
+  // tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
 
   highlight?: boolean | ChartSnippet;
 
@@ -208,7 +208,7 @@ export type BaseChartProps<
   /**
    * The tooltip context to be used for the chart.
    */
-  tooltipContext?: TooltipState;
+  // tooltipContext?: TooltipState;
 
   /**
    * The event to be dispatched when the tooltip is clicked.
@@ -248,6 +248,7 @@ export type BaseChartProps<
   belowMarks?: ChartSnippet;
   aboveMarks?: ChartSnippet;
   marks?: ChartSnippet;
+  tooltip?: ChartSnippet;
 };
 
 export type SimplifiedChartProps<

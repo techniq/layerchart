@@ -84,7 +84,7 @@
     legend = false,
     points = false,
     rule = true,
-    tooltip = true,
+    tooltipContext = true,
     context = $bindable(),
     onTooltipClick = () => {},
     props = {},
@@ -95,8 +95,9 @@
     aboveContext,
     belowContext,
     belowMarks,
-    aboveMarks,
     marks,
+    aboveMarks,
+    tooltip,
     highlight = true,
     annotations = [],
     ...restProps
@@ -226,14 +227,14 @@
   cRange={['var(--color-primary, currentColor)']}
   padding={defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltipContext={tooltip === false
+  tooltipContext={tooltipContext === false
     ? false
     : {
         mode: 'quadtree',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...(typeof tooltip === 'object' ? tooltip : null),
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {

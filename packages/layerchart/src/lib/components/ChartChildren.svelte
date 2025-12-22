@@ -57,9 +57,14 @@
     rule?: ComponentProps<typeof Rule> | boolean | ChartSnippet;
 
     /**
-     * The tooltip to be used for the chart.
+     * The tooltip snippet to be used for the chart.
      */
-    tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
+    tooltip?: ChartSnippet;
+
+    /**
+     * Tooltip context to be used for the chart.
+     */
+    tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
     highlight?: boolean | ChartSnippet;
 
@@ -151,6 +156,7 @@
     aboveContext,
     legend,
     tooltip,
+    tooltipContext,
   }: ChartChildrenProps<TData, XScale, YScale> = $props();
 
   let snippetProps = $derived({ context });
@@ -273,7 +279,7 @@
 
   {#if typeof tooltip === 'function'}
     {@render tooltip(snippetProps)}
-  {:else if tooltip}
+  {:else if tooltipContext}
     <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
   {/if}
 {/if}

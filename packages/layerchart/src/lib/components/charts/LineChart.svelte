@@ -133,14 +133,15 @@
     layer: layerProp,
     profile = false,
     debug: debugProp,
-    tooltip = true,
+    tooltipContext = true,
     children: childrenProp,
     aboveContext,
     belowContext,
     belowMarks,
-    aboveMarks,
     marks,
+    aboveMarks,
     spline,
+    tooltip,
     highlight = true,
     annotations = [],
     context = $bindable(),
@@ -337,14 +338,14 @@
   {orientation}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltipContext={tooltip === false
+  tooltipContext={tooltipContext === false
     ? false
     : {
         mode: isVertical ? 'quadtree-y' : 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...(typeof tooltip === 'object' ? tooltip : null),
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
@@ -363,9 +364,8 @@
   legend={legend as any}
   highlight={highlight as any}
   {props}
+  tooltip={tooltip as any}
 >
-  <!-- TODO: Pass `tooltip` snippet -->
-
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}
       {@render marks(snippetProps)}

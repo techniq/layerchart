@@ -151,7 +151,7 @@
       innerRadius={-20}
       cornerRadius={4}
       padAngle={0.02}
-      tooltip={false}
+      tooltipContext={false}
     >
       {#snippet aboveMarks()}
         <Text

@@ -807,7 +807,7 @@
       x="x"
       y="y"
       yBaseline={undefined}
-      tooltip={false}
+      tooltipContext={false}
       props={{
         yAxis: { motion: 'tween' },
         grid: { motion: 'tween' },

@@ -643,7 +643,7 @@
           header: { format: 'none' },
         },
       }}
-      tooltip={false}
+      tooltipContext={false}
       onBarClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));

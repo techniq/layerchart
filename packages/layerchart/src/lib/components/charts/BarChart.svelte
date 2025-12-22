@@ -148,13 +148,14 @@
     stackPadding = 0,
     xInterval,
     yInterval,
-    tooltip = true,
+    tooltipContext = true,
     children: childrenProp,
     aboveContext,
     belowContext,
     belowMarks,
-    aboveMarks,
     marks,
+    aboveMarks,
+    tooltip,
     highlight = true,
     annotations = [],
     context = $bindable(),
@@ -451,14 +452,14 @@
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
-  tooltipContext={tooltip === false
+  tooltipContext={tooltipContext === false
     ? false
     : {
         mode: 'band',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...(typeof tooltip === 'object' ? tooltip : null),
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {

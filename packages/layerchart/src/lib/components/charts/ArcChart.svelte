@@ -27,6 +27,7 @@
     | 'profile'
     | 'layer'
     | 'series'
+    | 'tooltipContext'
     | 'tooltip'
     | 'cRange'
     | 'padding'
@@ -174,13 +175,14 @@
     layer: layerProp,
     profile = false,
     debug: debugProp,
-    tooltip = true,
+    tooltipContext = true,
     children: childrenProp,
     aboveContext,
     belowContext,
     belowMarks,
-    aboveMarks,
     marks,
+    aboveMarks,
+    tooltip,
     arc,
     context = $bindable(),
     trackCornerRadius,
@@ -355,9 +357,12 @@
         ]}
   padding={{ bottom: legend ? 32 : 0 }}
   {...restProps}
-  tooltipContext={tooltip === false
+  tooltipContext={tooltipContext === false
     ? false
-    : { ...props.tooltip?.context, ...(typeof tooltip === 'object' ? tooltip : null) }}
+    : {
+        ...props.tooltip?.context,
+        ...(typeof tooltipContext === 'object' ? tooltipContext : null),
+      }}
   {seriesState}
 >
   {#snippet children({ context })}
