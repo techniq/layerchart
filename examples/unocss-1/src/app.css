@@ -1,3 +1,7 @@
+body {
+	font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
 .lc-root-container {
 	/* Default marks color when not using explicit color or color scale */
 	--color-primary: var(--colors-blue-500);

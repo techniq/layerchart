@@ -64,5 +64,4 @@
 			cornerRadius={10}
 		/>
 	</div>
-	<div class="bg-blue-500">If UnoCSS is working, this text should be blue.</div>
 </main>
