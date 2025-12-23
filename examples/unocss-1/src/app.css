@@ -1,0 +1,24 @@
+body {
+	font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.lc-root-container {
+	/* Default marks color when not using explicit color or color scale */
+	--color-primary: var(--colors-blue-500);
+
+	/* Progressively darker shades representing surfaces (backgrounds). */
+	--color-surface-100: var(--colors-white);
+	--color-surface-200: var(--colors-gray-100);
+	--color-surface-300: var(--colors-gray-300);
+
+	/* Content (text) color */
+	--color-surface-content: var(--colors-gray-900);
+
+	/* Dark mode */
+	html.dark & {
+		--color-surface-100: var(--colors-zinc-800);
+		--color-surface-200: var(--colors-zinc-900);
+		--color-surface-300: var(--colors-zinc-950);
+		--color-surface-content: var(--colors-zinc-100);
+	}
+}
