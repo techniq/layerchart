@@ -13,7 +13,7 @@
 
 <ModeWatcher />
 
-<main>
+<main class="p-4">
 	<div class="pb-4 text-right">
 		<button onclick={toggleMode}>
 			{mode.current === 'dark' ? '🌞' : '🌙'} Toggle mode
