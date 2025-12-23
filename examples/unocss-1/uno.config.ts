@@ -1,5 +1,14 @@
-import { defineConfig, presetWind3 } from 'unocss';
+import { defineConfig } from 'unocss';
+import { presetWind4 } from '@unocss/preset-wind4';
 
 export default defineConfig({
-	presets: [presetWind3()]
+	presets: [
+		presetWind4({
+			preflights: {
+				theme: {
+					mode: true // Generate all theme CSS variables (or use 'on-demand')
+				}
+			}
+		})
+	]
 });

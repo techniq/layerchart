@@ -1,25 +1,20 @@
-.lc-root-container-old {
-	/* Default marks color when not using explicit color or color scale */
-	--color-primary: var(--color-blue-500);
-
-	/* Progressively darker shades representing surfaces (backgrounds). */
-	--color-surface-100: var(--color-white);
-	--color-surface-200: var(--color-gray-100);
-	--color-surface-300: var(--color-gray-300);
-
-	/* Content (text) color */
-	--color-surface-content: var(--color-gray-900);
-}
-
 .lc-root-container {
 	/* Default marks color when not using explicit color or color scale */
-	--color-primary: hsl(217 91% 60%); // --color-primary: var(--color-blue-500);
+	--color-primary: var(--colors-blue-500);
 
 	/* Progressively darker shades representing surfaces (backgrounds). */
-	--color-surface-100: hsl(0 0% 100%); // --color-surface-100: var(--color-white);
-	--color-surface-200: hsl(220 14% 96%); // --color-surface-200: var(--color-gray-100);
-	--color-surface-300: hsl(220 9% 87%);
+	--color-surface-100: var(--colors-white);
+	--color-surface-200: var(--colors-gray-100);
+	--color-surface-300: var(--colors-gray-300);
 
 	/* Content (text) color */
-	--color-surface-content: hsl(222 47% 11%);
+	--color-surface-content: var(--colors-gray-900);
+
+	/* Dark mode */
+	html.dark & {
+		--color-surface-100: var(--colors-zinc-800);
+		--color-surface-200: var(--colors-zinc-900);
+		--color-surface-300: var(--colors-zinc-950);
+		--color-surface-content: var(--colors-zinc-100);
+	}
 }
