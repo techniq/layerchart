@@ -90,14 +90,38 @@
 <div>Test</div>
 ```
 
+### Live Code
+
+```svelte live title="Counter.svelte"
+<script>
+	let count = $state(0);
+</script>
+
+<button onclick={() => count++}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+</button>
+
+<style>
+	button {
+		padding: 0.5rem 1rem;
+		background: purple;
+		color: white;
+		border: none;
+		border-radius: 0.25rem;
+		cursor: pointer;
+	}
+</style>
+```
+
 ## Table
 
-````md
+```md
 | First | Second | Third |
 | ----- | ------ | ----- |
 | 1     | 2      | 3     |
 | 4     | 5      | 6     |
-````
+```
 
 | First | Second | Third |
 | ----- | ------ | ----- |

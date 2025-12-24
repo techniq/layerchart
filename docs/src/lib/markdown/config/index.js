@@ -1,3 +1,6 @@
+// Remark plugins
+export { remarkLiveCode } from '../rehype/live-code.js';
+
 // Rehype plugins
 export { rehypeCodeBlockTitle } from '../rehype/code-block-title.js';
 export { rehypeHandleCodeBlocks } from '../rehype/handle-code-blocks.js';

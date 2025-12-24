@@ -7,12 +7,13 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import {
 	prettyCodeOptions,
 	rehypeCodeBlockTitle,
-	rehypeHandleCodeBlocks
+	rehypeHandleCodeBlocks,
+	remarkLiveCode
 } from './src/lib/markdown/config/index.js';
 
 export const mdsxConfig = defineConfig({
 	extensions: ['.md'],
-	remarkPlugins: [remarkGfm],
+	remarkPlugins: [remarkGfm, remarkLiveCode],
 	rehypePlugins: [
 		rehypeSlug,
 		// rehypeComponentExample,

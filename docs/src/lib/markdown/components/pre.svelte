@@ -8,7 +8,6 @@
 		'data-title': dataTitle,
 		...restProps
 	}: HTMLAttributes<HTMLPreElement> = $props();
-	$inspect({ restProps });
 </script>
 
 <pre
