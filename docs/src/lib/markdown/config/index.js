@@ -1,5 +1,6 @@
 // Remark plugins
 export { remarkLiveCode } from '../rehype/live-code.js';
+export { remarkDirectives } from '../remark/directives.js';
 
 // Rehype plugins
 export { rehypeCodeBlockTitle } from '../rehype/code-block-title.js';

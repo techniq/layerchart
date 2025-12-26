@@ -127,3 +127,50 @@
 | ----- | ------ | ----- |
 | 1     | 2      | 3     |
 | 4     | 5      | 6     |
+
+## Directives
+
+### Note
+
+:::note
+Here's some additional information. This uses the new `:::note` directive syntax!
+:::
+
+### Tip
+
+:::tip
+Here's a helpful suggestion using the `:::tip` directive.
+:::
+
+### Warning
+
+:::warning
+Be careful with this action as it might have unexpected results. This uses `:::warning`.
+:::
+
+### Caution
+
+:::caution
+This action cannot be undone. This uses `:::caution`.
+:::
+
+### Steps
+
+:::steps
+
+## Step 1: Install dependencies
+
+First, install the required packages:
+
+```bash
+npm install remark-directive
+```
+
+## Step 2: Configure mdsx
+
+Add the directive plugins to your mdsx configuration.
+
+## Step 3: Use directives
+
+Start using `:::directive` syntax in your markdown files!
+:::

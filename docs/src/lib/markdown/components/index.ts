@@ -15,3 +15,7 @@ export { default as td } from './td.svelte';
 export { default as th } from './th.svelte';
 export { default as tr } from './tr.svelte';
 export { default as ul } from './ul.svelte';
+
+// Directive components
+export { default as Note } from './Note.svelte';
+export { default as Steps } from './Steps.svelte';
