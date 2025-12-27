@@ -20,11 +20,15 @@
 
 	// Register this tab and get its index
 	// Use untrack to capture the initial values without creating a reactive dependency
-	const tabIndex = tabsContext?.registerTab(untrack(() => label), untrack(() => icon)) ?? 0;
+	const tabIndex =
+		tabsContext?.registerTab(
+			untrack(() => label),
+			untrack(() => icon)
+		) ?? 0;
 
 	const isActive = $derived(tabsContext?.activeTab === tabIndex);
 </script>
 
-<div class={cls('tab-content', !isActive && 'hidden', className)} {...restProps}>
+<div class={cls('tab', !isActive && 'hidden', className)} {...restProps}>
 	{@render children?.()}
 </div>
