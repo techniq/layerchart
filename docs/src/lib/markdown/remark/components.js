@@ -14,6 +14,7 @@ import { visit, EXIT } from 'unist-util-visit';
  * - ::tab / :::tab - renders as Tab component (used inside tabs, supports icon attribute)
  * - :icon - renders as Icon component (inline icon with name attribute)
  * - :button - renders as Button component (inline button)
+ * - :example - renders as Example component (inline example)
  *
  * @returns {(tree: any) => void} A remark transformer function
  */
@@ -86,6 +87,14 @@ export function remarkComponents() {
 					data.hProperties = {
 						...(node.attributes || {})
 					};
+				} else if (componentName === 'example') {
+					componentsToImport.add('Example');
+
+					const data = node.data || (node.data = {});
+					data.hName = 'Example';
+					data.hProperties = {
+						...(node.attributes || {})
+					};
 				}
 			}
 		});
@@ -94,7 +103,11 @@ export function remarkComponents() {
 		if (componentsToImport.size > 0) {
 			const componentArray = Array.from(componentsToImport);
 			const importStatements = componentArray
-				.map((comp) => `import ${comp} from '$lib/markdown/components/${comp}.svelte';`)
+				.map((comp) => {
+					// Example component lives in $lib/components, not $lib/markdown/components
+					const path = comp === 'Example' ? '$lib/components' : '$lib/markdown/components';
+					return `import ${comp} from '${path}/${comp}.svelte';`;
+				})
 				.join('\n');
 
 			// Check if there's already a script tag
