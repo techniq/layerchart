@@ -13,6 +13,7 @@ import { visit, EXIT } from 'unist-util-visit';
  * - ::tabs / :::tabs - renders as Tabs component (supports nested ::tab)
  * - ::tab / :::tab - renders as Tab component (used inside tabs, supports icon attribute)
  * - :icon - renders as Icon component (inline icon with name attribute)
+ * - :button - renders as Button component (inline button)
  *
  * @returns {(tree: any) => void} A remark transformer function
  */
@@ -74,6 +75,14 @@ export function remarkDirectives() {
 
 					const data = node.data || (node.data = {});
 					data.hName = 'Icon';
+					data.hProperties = {
+						...(node.attributes || {})
+					};
+				} else if (componentName === 'button') {
+					componentsToImport.add('Button');
+
+					const data = node.data || (node.data = {});
+					data.hName = 'Button';
 					data.hProperties = {
 						...(node.attributes || {})
 					};
