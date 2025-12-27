@@ -1,29 +1,101 @@
-<script lang="ts">
-	import { Button } from 'svelte-ux';
+# Getting Started
 
-	import Code from '$lib/components/Code.svelte';
-  import Example from '$lib/components/Example.svelte';
-	import Steps from '$lib/components/Steps.svelte';
-	import Step from '$lib/components/Step.svelte';
-	import Tabs from '$lib/components/Tabs.svelte';
-	import Blockquote from '$lib/components/Blockquote.svelte';
+LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
 
-	import LucideGithub from '~icons/lucide/github';
-	import SimpleIconsStackblitz from '~icons/simple-icons/stackblitz'
-	import VscodeIconsPnpm from '~icons/vscode-icons/file-type-pnpm';
-	import VSCodeIconNpm from '~icons/vscode-icons/file-type-npm';
-	import VSCodeIconBUN from '~icons/vscode-icons/file-type-bun';
-	import VSCodeIconDeno from '~icons/vscode-icons/file-type-deno';
-	import VSCodeIconYarn from '~icons/vscode-icons/file-type-yarn';
-	import VSCodeIconCSS from '~icons/vscode-icons/file-type-css';
-	import LogosTailwindcssIcon from '~icons/logos/tailwindcss-icon'
-	import LogosUnocss from '~icons/logos/unocss'
-	import CustomSvelteUX from '~icons/custom-brands/svelteux';
-	import CustomDaisyUI from '~icons/custom-brands/daisyUI';
-	import CustomShadCNSvelte from '~icons/custom-brands/shadcnsvelte';
-	import CustomSkeleton from '~icons/custom-brands/skeleton';
+Provides built-in first class support for [:icon{name="logos:tailwindcss-icon" class="text-xs"} tailwindcss 4](https://tailwindcss.com/),
+but is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and [:icon{name="logos:unocss"} unoCSS](https://unocss.dev/).
 
-	const appcss = `.lc-root-container {
+::steps
+
+## Create a new project or [git a project](#git-up-and-running-even-quicker)
+
+Use the Svelte CLI to generate a new SvelteKit project, or continue with an existing project.
+
+:::tabs{key="bundler"}
+
+    ::tab{label="pnpm" icon="vscode-icons:file-type-pnpm"}
+    ```sh
+    pnpx sv create my-app add --tailwindcss
+    cd my-app
+    ```
+    ::
+
+    ::tab{label="npm" icon="vscode-icons:file-type-npm"}
+    ```sh
+    npx sv create my-app add --tailwindcss
+    cd my-app
+    ```
+    ::
+
+    ::tab{label="bun" icon="vscode-icons:file-type-bun"}
+    ```sh
+    bunx sv create my-app add --tailwindcss
+    cd my-app
+    ```
+    ::
+
+    ::tab{label="deno" icon="vscode-icons:file-type-deno"}
+    ```sh
+    npx sv create my-app add --tailwindcss
+    cd my-app
+    ```
+    ::
+
+    ::tab{label="yarn" icon="vscode-icons:file-type-yarn"}
+    ```sh
+    npx sv create my-app add --tailwindcss
+    cd my-app
+    ```
+    ::
+
+:::
+
+::note
+To add tailwind to an existing project you can `npv sv add tailwindcss`
+::
+
+## Import `layerchart` with your package manager of choice.
+
+:::tabs{key="bundler"}
+
+    ::tab{label="pnpm" icon="vscode-icons:file-type-pnpm"}
+    ```sh
+    pnpm i layerchart
+    ```
+    ::
+
+    ::tab{label="npm" icon="vscode-icons:file-type-npm"}
+    ```sh
+    npm i layerchart
+    ```
+    ::
+
+    ::tab{label="bun" icon="vscode-icons:file-type-bun"}
+    ```sh
+    bun add layerchart
+    ```
+    ::
+
+    ::tab{label="deno" icon="vscode-icons:file-type-deno"}
+    ```sh
+    deno add layerchart
+    ```
+    ::
+
+    ::tab{label="yarn" icon="vscode-icons:file-type-yarn"}
+    ```sh
+    yarn add layerchart
+    ```
+    ::
+
+:::
+
+## Apply CSS
+
+Out of the box LayerChart will use [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value#currentcolor_keyword) as the default color, but you can customize the CSS globally with a few CSS variables.
+
+```css title="app.css"
+.lc-root-container {
 	/* Default marks color when not using explicit color or color scale */
 	--color-primary: var(--color-blue-500);
 
@@ -34,168 +106,144 @@
 
 	/* Content (text) color */
 	--color-surface-content: var(--color-gray-900);
-}`;
+}
+```
 
-let bundlerIndex = 0;
-</script>
+or with a single `.css` import, Layerchart [provides](https://github.com/techniq/layerchart/tree/next/packages/layerchart/src/lib/styles) theming conventions for many popular UI frameworks.
 
-# Getting Started
+:::tabs{key="framework"}
 
-LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
+    ::tab{label="shadcn-svelte" icon="custom-brands:shadcnsvelte"}
+    ```css title="app.css"
+    @import 'layerchart/shadcn-svelte.css';
+    ```
+    ::
 
-Provides built-in first class support for <a href="https://tailwindcss.com/" target="_blank"> <LogosTailwindcssIcon  class="inline-block size-5" /> tailwindcss 4</a>, but is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and <a href="https://unocss.dev/" target="_blank"><LogosUnocss class="inline-block size-4" /> unoCSS</a>.
+    ::tab{label="Skeleton 3" icon="custom-brands:skeleton"}
+    ```css title="app.css"
+    @import 'layerchart/skeleton-3.css';
+    ```
+    ::
 
-<Steps>
-	<Step title={`Create a new project or <a href="#git-up-and-running-even-quicker">git a project</a>`} >
-		<p class="text-surface-content pt-2">
-			Use the Svelte CLI to generate a new SvelteKit project, or continue with an existing project.
-		</p>
-		<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} classes={{ root: "py-2", content: 'p-0' }}>
-			{#snippet content(value)}
-				{#if value === 0}
-					<Code language="sh" title="sh" source={`pnpx sv create my-app add --tailwindcss\ncd my-app`} />
-				{:else if value === 1}
-					<Code language="sh" title="sh" source={`npx sv create my-app add --tailwindcss\ncd my-app`} />
-				{:else if value === 2}
-					<Code language="sh" title="sh" source={`bunx sv create my-app add --tailwindcss\ncd my-app`} />
-				{:else if value === 3}
-					<Code language="sh" title="sh" source={`npx sv create my-app add --tailwindcss\ncd my-app`} />
-				{:else if value === 4}
-					<Code language="sh" title="sh" source={`npx sv create my-app add --tailwindcss\ncd my-app`} />
-				{/if}
-			{/snippet}
-		</Tabs>
-		<Blockquote>To add tailwind to an existing project you can <code>npv sv add tailwindcss</code></Blockquote>
-	</Step>
-	<Step title={`Import <code>layerchart</code> with your package manager of choice.`}>
-		<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']}  icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} classes={{ root: "py-2", content: 'p-0' }}>
-			{#snippet content(value)}
-				{#if value === 0}
-					<Code language="sh" title="sh" source={`pnpm i layerchart`} />
-				{:else if value === 1}
-					<Code language="sh" title="sh" source={`npm i layerchart`} />
-				{:else if value === 2}
-					<Code language="sh" title="sh" source={`bun add layerchart`} />
-				{:else if value === 3}
-					<Code language="sh" title="sh" source={`deno add layerchart`} />
-				{:else if value === 4}
-					<Code language="sh" title="sh" source={`yarn add layerchart`} />
-				{/if}
-			{/snippet}
-		</Tabs>
-	</Step>
-	<Step title= {`Apply CSS`} >
-		<p class="text-surface-content pt-2">
-			Out of the box LayerChart will use <a
-				href="https://www.digitalocean.com/community/tutorials/css-currentcolor"
-				target="_blank"><code>currentColor</code></a
-			> as the default color, but you can customize the CSS globally with a few CSS variables.
-		</p>
-		<Code language="css" title="app.css" source={appcss} class="mt-4 outline" />
-		<p class="pt-4 text-surface-content">
-					or with a single <code>.css</code> import, Layerchart <a
-						href="https://github.com/techniq/layerchart/tree/next/packages/layerchart/src/lib/styles"
-						>provides</a
-					> theming conventions for many popular UI frameworks.
-				</p>
-				<Tabs
-					keys={['shadcn-svelte', 'Skeleton 3', 'Skeleton 4', 'Svelte UX', 'DaisyUI 5']}
-					icons={[CustomShadCNSvelte, CustomSkeleton, CustomSkeleton, CustomSvelteUX, CustomDaisyUI]}
-					classes={{ root: 'mt-4', content: 'p-0' }}
-				>
-					{#snippet content(value)}
-						{#if value === 0}
-							<Code language="css" title="app.css" source={`@import 'layerchart/shadcn-svelte.css';`} />
-						{:else if value === 1}
-							<Code language="css" title="app.css" source={`@import 'layerchart/skeleton-3.css';`} />
-						{:else if value === 2}
-							<Code language="css" title="app.css" source={`@import 'layerchart/skeleton-4.css';`} />
-						{:else if value === 3}
-							<Code language="css" title="app.css" source={`/* Works out of the box! */`} />
-						{:else if value === 4}
-							<Code language="css" title="app.css" source={`@import 'layerchart/daisyui-5.css';`} />
-						{:else if value === 5}
-							<Code language="css" title="app.css" source={`@import 'layerchart/standalone.css';`} />
-						{/if}
-					{/snippet}
-				</Tabs>
-		</Step>
-		<Step title={`Create you first chart`} >
-			<p class="text-surface-content pt-2">
-				Import the charting components you need from <code>layerchart</code>. Don't forget to take a look at the large collection of <a href="/docs/examples">examples</a> for some additonal inspiration.
-			</p>
-			<div class="mt-4">
-				<Example component="LineChart" name="basic" showCode={true} />
-			</div>
-		</Step>
-		<Step title={`Done!`} >
-			<p class="text-surface-content pt-2">
-				All set!  Now just fire up the dev server and start iterating.  Have fun!
-			</p>
-			<Tabs bind:value={bundlerIndex} keys={['pnpm', 'npm', 'bun', 'deno', 'yarn']} icons={[VscodeIconsPnpm, VSCodeIconNpm, VSCodeIconBUN, VSCodeIconDeno, VSCodeIconYarn]} hasTitle={false}  classes={{ root: "pt-2", content: 'p-0' }}>
-				{#snippet content(value)}
-				{#if value === 0}
-						<Code language="sh" title="sh" source={`pnpm dev`} />
-					{:else if value === 1}
-						<Code language="sh" title="sh" source={`npm run dev`} />
-					{:else if value === 2}
-						<Code language="sh" title="sh" source={`bun run dev`} />
-					{:else if value === 3}
-						<Code language="sh" title="sh" source={`deno task dev`} />
-					{:else if value === 4}
-						<Code language="sh" title="sh" source={`yarn dev`} />
-					{/if}
-				{/snippet}
-			</Tabs>
-	</Step>
-</Steps>
+    ::tab{label="Skeleton 4" icon="custom-brands:skeleton"}
+    ```css title="app.css"
+    @import 'layerchart/skeleton-4.css';
+    ```
+    ::
+
+    ::tab{label="Svelte UX" icon="custom-brands:svelteux"}
+    ```css title="app.css"
+    /* Works out of the box! */
+    ```
+    ::
+
+    ::tab{label="DaisyUI 5" icon="custom-brands:daisyui"}
+    ```css title="app.css"
+    @import 'layerchart/daisyui-5.css';
+    ```
+    ::
+
+:::
+
+## Create you first chart
+
+Import the charting components you need from `layerchart`. Don't forget to take a look at the large collection of [examples](/docs/examples) for some additonal inspiration.
+
+:example{component="LineChart" name="basic" showCode=true}
+
+## Done!
+
+All set! Now just fire up the dev server and start iterating. Have fun!
+
+:::tabs{key="bundler"}
+
+    ::tab{label="pnpm" icon="vscode-icons:file-type-pnpm"}
+    ```sh
+    pnpm dev
+    ```
+    ::
+
+    ::tab{label="npm" icon="vscode-icons:file-type-npm"}
+    ```sh
+    npm run dev
+    ```
+    ::
+
+    ::tab{label="bun" icon="vscode-icons:file-type-bun"}
+    ```sh
+    bun run dev
+    ```
+    ::
+
+    ::tab{label="deno" icon="vscode-icons:file-type-deno"}
+    ```sh
+    deno task dev
+    ```
+    ::
+
+    ::tab{label="yarn" icon="vscode-icons:file-type-yarn"}
+    ```sh
+    yarn dev
+    ```
+    ::
+
+:::
+
+::
 
 ### Git up and running even quicker!
 
 Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples) are available for popular UI frameworks.
 
-<Tabs keys={["shadcn-svelte", "Skeleton", "Svelte UX", "daisyUI", "UnoCSS", "Vanilla CSS"]} icons={[CustomShadCNSvelte,CustomSkeleton,CustomSvelteUX,CustomDaisyUI,LogosUnocss,VSCodeIconCSS]} classes={{content: 'h-[120px] [&_a]:text-primary [&_a:hover]:underline'}} activeClass="bg-surface-200 border-b-surface-200">
-{#snippet content(value)}
-{#if value === 0}
+:::tabs{key="framework"}
 
-<div><a href="https://www.shadcn-svelte.com/", target="_blank">shadcn-svelte</a></div>
-<div class='pt-2'>v1:
-{@render githubButton('shadcn-svelte-1')}
-{@render stackBlitzButton('shadcn-svelte-1')}</div>
-{:else if value === 1}
-<div><a href="https://www.skeleton.dev/", target="_blank">Skeleton</a></div>
-<div class='pt-2'>v3:
-{@render githubButton('skeleton-3')}
-{@render stackBlitzButton('skeleton-3')}</div>
-<div>v4:
-{@render githubButton('skeleton-4')}
-{@render stackBlitzButton('skeleton-4')}</div>
-{:else if value === 2}
-<div><a href="https://svelte-ux.techniq.dev/", target="_blank">Svelte UX</a></div>
-<div class='pt-2'>v2: 
-{@render githubButton('svelte-ux-2')}
-{@render stackBlitzButton('svelte-ux-2')}
-</div>
-{:else if value === 3}
-<div><a href="https://daisyui.com/", target="_blank">Daisy UI</a></div>
-<div class='pt-2'>v5:
-{@render githubButton('daisyui-5')}
-{@render stackBlitzButton('daisyui-5')}</div>
-{:else if value === 4}
-<div><a href="https://unocss.dev/" target="_blank">UnoCSS</a></div>
-<div class='pt-2'>
-v1: {@render githubButton('unoCSS')}{@render stackBlitzButton('unocss-1')}</div>
-{:else if value === 5}
-<div class='pt-2'>Vanilla CSS: {@render githubButton('standalone')}
-{@render stackBlitzButton('standalone')}</div>
-{/if}
-{/snippet}
-</Tabs>
+    ::tab{label="shadcn-svelte" icon="custom-brands:shadcnsvelte"}
+    [shadcn-svelte](https://www.shadcn-svelte.com/)
 
-{#snippet githubButton(path, text = 'Source')}
-<Button href="https://github.com/techniq/layerchart/tree/docs-v2/examples/{path}" icon={LucideGithub} size="sm" variant="fill-light" target="_blank">{text}</Button>
-{/snippet}
+    v1:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="simple-icons:stackblitz"}
+    ::
 
-{#snippet stackBlitzButton(path, text = 'Open in StackBlitz')}
-<Button href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/{path}" icon={SimpleIconsStackblitz} size="sm" variant="fill-light" target="_blank">{text}</Button>
-{/snippet}
+    ::tab{label="Skeleton" icon="custom-brands:skeleton"}
+    [Skeleton](https://www.skeleton.dev/)
+
+    v3:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="simple-icons:stackblitz"}
+
+    v4:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
+    ::
+
+    ::tab{label="Svelte UX" icon="custom-brands:svelteux"}
+    [Svelte UX](https://svelte-ux.techniq.dev/)
+
+    v2:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="simple-icons:stackblitz"}
+    ::
+
+    ::tab{label="daisyUI" icon="custom-brands:daisyui"}
+    [daisyUI](https://daisyui.com/)
+
+    v5:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="simple-icons:stackblitz"}
+    ::
+
+    ::tab{label="UnoCSS" icon="logos:unocss"}
+    [UnoCSS](https://unocss.dev/)
+
+    1:
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/unocss" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/unocss-1" size="sm" icon="simple-icons:stackblitz"}
+    ::
+
+    ::tab{label="Vanilla CSS" icon="vscode-icons:file-type-css"}
+    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="lucide:github"}
+    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="simple-icons:stackblitz"}
+    ::
+
+:::
