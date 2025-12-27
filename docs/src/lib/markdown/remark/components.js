@@ -17,7 +17,7 @@ import { visit, EXIT } from 'unist-util-visit';
  *
  * @returns {(tree: any) => void} A remark transformer function
  */
-export function remarkDirectives() {
+export function remarkComponents() {
 	return (tree) => {
 		const componentsToImport = new Set();
 
