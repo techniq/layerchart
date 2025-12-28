@@ -5,10 +5,6 @@ layers: [svg, canvas, html]
 related: [AnnotationPoint, AnnotationRange]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="horizontal" showCode />
+:example{ name="horizontal" showCode }

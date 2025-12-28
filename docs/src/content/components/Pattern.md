@@ -5,34 +5,30 @@ layers: [svg, canvas]
 related: [LinearGradient, RadialGradient]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Lines
 
-<Example name="lines" noResize clip />
+:example{ name="lines" noResize clip}
 
 ## Circles
 
-<Example name="circles" noResize clip />
+:example{ name="circles" noResize clip}
 
 ## With Fill color
 
-<Example name="with-fill-color" noResize clip />
+:example{ name="with-fill-color" noResize clip}
 
 ## With LinearGradient
 
-<Example name="with-lineargradient" noResize clip />
+:example{ name="with-lineargradient" noResize clip}
 
 ## LinearGradient as Pattern
 
-<Example name="lineargradient-as-pattern" noResize clip />
+:example{ name="lineargradient-as-pattern" noResize clip}
 
 ## Lines (custom pattern - svg only)
 
-<Example name="lines-custom-pattern-svg-only" noResize clip />
+:example{ name="lines-custom-pattern-svg-only" noResize clip}
 
 ## Circles (custom pattern - svg only)
 
-<Example name="circles-custom-pattern-svg-only" noResize clip />
+:example{ name="circles-custom-pattern-svg-only" noResize clip}

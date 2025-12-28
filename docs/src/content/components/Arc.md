@@ -5,15 +5,11 @@ layers: [svg, canvas]
 related: [Pie, ArcChart, PieChart]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
-> See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/PieChart) for simplified examples
+:tip See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/PieChart) for simplified examples
 
 ## Usage
 
-<Example name="partial-arc" showCode />
+:example{ name="partial-arc" showCode }
 
 ## Text along path
 
@@ -21,8 +17,9 @@ related: [Pie, ArcChart, PieChart]
 
 The text will smartly orientate based on the direction (clockwise / counter-clockwise) and location (top, bottom, left, right) of the arc
 
-<Example name="label-direction" />
+:example{ name="label-direction" }
 
 ## Playground
 
-<Example name="playground" />
+:example{ name="playground" }
+

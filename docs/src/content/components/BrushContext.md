@@ -5,72 +5,68 @@ layers: [svg, canvas]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{name="basic"}
 
 ### Simple styling
 
-<Example name="simple-styling" />
+:example{name="simple-styling"}
 
 ### Striped background
 
-<Example name="striped-background" />
+:example{name="striped-background"}
 
 ### Handle arrows
 
-<Example name="handle-arrows" />
+:example{name="handle-arrows"}
 
 ### Handle labels
 
-<Example name="handle-labels" />
+:example{name="handle-labels"}
 
 ### Constant labels
 
-<Example name="constant-labels" />
+:example{name="constant-labels"}
 
 ### Integrated brush (x-axis)
 
-<Example name="integrated-brush-(x-axis)" />
+:example{name="integrated-brush-(x-axis)"}
 
 ### Integrated brush (y-axis)
 
-<Example name="integrated-brush-(y-axis)" />
+:example{name="integrated-brush-(y-axis)"}
 
 ### Integrated brush (both axis / area)
 
-<Example name="integrated-brush-(both-axis-area)" />
+:example{name="integrated-brush-(both-axis-area)"}
 
 ### Separate chart (clip data)
 
-<Example name="separate-chart-(clip-data)" />
+:example{name="separate-chart-(clip-data)"}
 
 ### Separate chart (clip data: y-axis)
 
-<Example name="separate-chart-(clip-data-y-axis)" />
+:example{name="separate-chart-(clip-data-y-axis)"}
 
 ### Separate chart (filter data)
 
-<Example name="separate-chart-(filter-data)" />
+:example{name="separate-chart-(filter-data)"}
 
 ### Sync brushes with `bind:xDomain`
 
-<Example name="sync-brushes-with-bind-xdomain" />
+:example{name="sync-brushes-with-bind-xdomain"}
 
 ### Tooltip interop
 
-<Example name="tooltip-interop" />
+:example{name="tooltip-interop"}
 
 ### Selection
 
-<Example name="selection" />
+:example{name="selection"}
 
 ### Minimap
 
-<Example name="minimap" />
+:example{name="minimap"}

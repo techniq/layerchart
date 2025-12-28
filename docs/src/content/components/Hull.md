@@ -5,16 +5,12 @@ layers: [svg, canvas]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="scatter" showCode />
+:example{ name="scatter" showCode }
 
 ## Geo context
 
 Hull can also be used within a geo context (i.e. `<Chart geo={{ projection: ... }}>`)
 
-<Example name="geo" />
+:example{ name="geo" }

@@ -20,8 +20,8 @@ related: []
 
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 ## Playground
 
-<Example name="playground" />
+:example{ name="playground" }

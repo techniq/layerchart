@@ -5,10 +5,6 @@ layers: [svg, canvas]
 related: [TooltipContext, Highlight]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 Tooltips have 2 parts, the `TooltipContext` (which is integrated into `<Chart tooltip={...})>`
 and used for data selection and state management, `Tooltip` components (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, and `Tooltip.Item`) which are used for visual display.
 
@@ -93,53 +89,53 @@ Externally access tooltip data
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" }
 
 ### Custom content
 
-<Example name="custom-content" />
+:example{ name="custom-content" }
 
 ### Color swatch
 
-<Example name="color-swatch" />
+:example{ name="color-swatch" }
 
 ### Color swatch using theme
 
-<Example name="color-swatch-using-theme" />
+:example{ name="color-swatch-using-theme" }
 
 ### Invert variant
 
-<Example name="invert-variant" />
+:example{ name="invert-variant" }
 
 ### Position
 
 #### Default (mouse position with offset)
 
-<Example name="default-mouse-position-with-offset" />
+:example{ name="default-mouse-position-with-offset" }
 
 #### Data Snapping
 
-<Example name="data-snapping" />
+:example{ name="data-snapping" }
 
 #### Multiple Tooltips with Fixed Single Axis
 
-<Example name="multiple-tooltips-with-fixed-single-axis" />
+:example{ name="multiple-tooltips-with-fixed-single-axis" }
 
 #### Multiple Tooltips with Fixed Single Axis (scaleBand)
 
-<Example name="multiple-tooltips-with-fixed-single-axis-scaleband" />
+:example{ name="multiple-tooltips-with-fixed-single-axis-scaleband" }
 
 ### Disable motion
 
-<Example name="disable-motion" />
+:example{ name="disable-motion" }
 
 ### Anchor location
 
-<Example name="anchor-location" />
+:example{ name="anchor-location" }
 
 ### Externally access tooltip data
 
-<Example name="externally-access-tooltip-data" />
+:example{ name="externally-access-tooltip-data" }
 
 ## Chart Types
 
@@ -149,7 +145,7 @@ Externally access tooltip data
 
 > quadtree-x recommended. bisect-x, voronoi, and quadtree supported. bounds and band to be improved
 
-<Example name="area" />
+:example{ name="area" }
 
 ### Stacked Area
 
@@ -157,7 +153,7 @@ Externally access tooltip data
 
 > voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
 
-<Example name="stacked-area" />
+:example{ name="stacked-area" }
 
 ### Single Date / Time
 
@@ -165,7 +161,7 @@ Externally access tooltip data
 
 > bisect-x recommended. band, voronoi, and quadtree supported
 
-<Example name="single-date-time" />
+:example{ name="single-date-time" }
 
 ### Duration
 
@@ -173,7 +169,7 @@ Externally access tooltip data
 
 > bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 
-<Example name="duration" />
+:example{ name="duration" }
 
 ### Multiple (overlapping) Durations
 
@@ -181,7 +177,7 @@ Externally access tooltip data
 
 > bounds recommended. voronoi and quadtree partially supported (using first point)
 
-<Example name="multiple-overlapping-durations" />
+:example{ name="multiple-overlapping-durations" }
 
 ### Simple Bars
 
@@ -189,7 +185,7 @@ Externally access tooltip data
 
 > band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<Example name="simple-bars" />
+:example{ name="simple-bars" }
 
 ### Multiple (overlapping) Bars
 
@@ -197,7 +193,7 @@ Externally access tooltip data
 
 > band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<Example name="multiple-overlapping-bars" />
+:example{ name="multiple-overlapping-bars" }
 
 ### Scatter Plot
 
@@ -205,4 +201,4 @@ Externally access tooltip data
 
 > voronoi or quadtree recommended
 
-<Example name="scatter-plot" /> -->
+:example{ name="scatter-plot" } -->

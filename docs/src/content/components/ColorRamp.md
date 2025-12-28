@@ -5,20 +5,16 @@ layers: [svg]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Examples
 
 ### Basic
 
-<Example name="basic" noResize />
+:example{name="basic" noResize }
 
 ### Pixelated
 
-<Example name="pixelated" noResize />
+:example{name="pixelated" noResize }
 
 ### Schemes
 
-<Example name="schemes" noResize />
+:example{name="schemes" noResize }

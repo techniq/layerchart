@@ -5,19 +5,15 @@ layers: [svg, canvas, html]
 related: [Chart, Points]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" }
 
 ### Domain nice
 
@@ -25,98 +21,98 @@ related: [Chart, Points]
 > human-friendly values instead of tight, exact min/max data values. (see padding as compared to
 > [basic](#basic) example)
 
-<Example name="domain-nice" />
+:example{ name="domain-nice" }
 
 ### Domain padding
 
-<Example name="domain-padding" />
+:example{ name="domain-padding" }
 
 ### Domain 0 (zero) baseline
 
-<Example name="domain-baseline" />
+:example{ name="domain-baseline" }
 
 ### Radius scale
 
-<Example name="radius-scale" />
+:example{ name="radius-scale" }
 
 ### Labels
 
-<Example name="labels" />
+:example{ name="labels" }
 
 ### Series
 
-<Example name="series" />
+:example{ name="series" }
 
 ### Series (with radius)
 
-<Example name="series-with-radius" />
+:example{ name="series-with-radius" }
 
 ### Series (legend)
 
-<Example name="series-legend" />
+:example{ name="series-legend" }
 
 ### Series (tween)
 
-<Example name="series-tween" />
+:example{ name="series-tween" }
 
 ### Series (custom labels)
 
-<Example name="series-custom-labels" />
+:example{ name="series-custom-labels" }
 
 ### Single axis (x)
 
-<Example name="single-axis-x" />
+:example{ name="single-axis-x" }
 
 ### Single axis (y)
 
-<Example name="single-axis-y" />
+:example{ name="single-axis-y" }
 
 ### Single dimension
 
-<Example name="single-dimension" />
+:example{ name="single-dimension" }
 
 ### Date series (with color scale)
 
-<Example name="date-series-color-scale" />
+:example{ name="date-series-color-scale" }
 
 ### Tooltip click
 
-<Example name="tooltip-click" />
+:example{ name="tooltip-click" }
 
 ### Point annotations
 
-<Example name="point-annotations" />
+:example{ name="point-annotations" }
 
 > See also: [AnnotationPoint](/components/AnnotationPoint) for more examples
 
 ### Line annotation
 
-<Example name="line-annotation" />
+:example{ name="line-annotation" }
 
 > See also: [AnnotationLine](/components/AnnotationLine) for more examples
 
 ### Range annotation (vertical)
 
-<Example name="range-annotation-vertical" />
+:example{ name="range-annotation-vertical" }
 
 > See also: [AnnotationRange](/components/AnnotationRange) for more examples
 
 ### Range annotation (horizontal)
 
-<Example name="range-annotation-horizontal" />
+:example{ name="range-annotation-horizontal" }
 
 > See also: [AnnotationRange](/components/AnnotationRange) for more examples
 
 ### Range annotation (both)
 
-<Example name="range-annotation-both" />
+:example{ name="range-annotation-both" }
 
 > See also: [AnnotationRange](/components/AnnotationRange) for more examples
 
 ### Brush
 
-<Example name="brush" />
+:example{ name="brush" }
 
 ### Custom
 
-<Example name="custom" /> -->
+:example{ name="custom" } -->

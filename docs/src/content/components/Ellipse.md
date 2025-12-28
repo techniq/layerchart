@@ -5,24 +5,20 @@ layers: [svg, canvas, html]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="styling-using-classes" showCode />
+:example{ name="styling-using-classes" showCode }
 
 <!-- ## Examples
 
 ### Styling using classes
 
-<Example name="styling-using-classes" />
+:example{ name="styling-using-classes" }
 
 ### Styling using attributes
 
-<Example name="styling-using-attributes" />
+:example{ name="styling-using-attributes" }
 
 ### Styling using CSS variables
 
-<Example name="styling-using-css-variables" /> -->
+:example{ name="styling-using-css-variables" } -->
