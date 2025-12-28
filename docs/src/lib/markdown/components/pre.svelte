@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { cls } from '@layerstack/tailwind';
+	import { CopyButton } from 'svelte-ux';
 
 	import SimpleIconsCss from '~icons/simple-icons/css';
 	import SimpleIconsJavascript from '~icons/simple-icons/javascript';
@@ -17,6 +18,10 @@
 		'data-language': dataLanguage,
 		...restProps
 	}: HTMLAttributes<HTMLPreElement> = $props();
+
+	// Extract text content for copying
+	let preElement: HTMLPreElement | undefined = $state();
+	let sourceText = $derived(preElement?.textContent ?? '');
 
 	let Icon = $derived.by(() => {
 		switch (dataLanguage) {
@@ -43,21 +48,35 @@
 	});
 </script>
 
-{#if dataTitle}
-	<div
-		class="text-sm font-bold text-surface-content/70 border-b border-surface-content/10 bg-surface-100 px-4 py-2 flex gap-2 items-center"
-	>
-		<Icon />
-		{dataTitle}
-	</div>
-{/if}
+<div class="relative group">
+	{#if dataTitle}
+		<div
+			class="text-sm font-bold text-surface-content/70 border-b border-surface-content/10 bg-surface-100 px-4 py-2 flex gap-2 items-center"
+		>
+			<Icon />
+			{dataTitle}
+		</div>
+	{/if}
 
-<pre
-	class={cls(
-		'text-sm rounded-lg bg-surface-100 dark:bg-surface-300 border border-primary/10 px-4 overflow-x-auto max-w-full',
-		dataTitle && 'rounded-t-none',
-		className
-	)}
-	{...restProps}>
-	{@render children?.()}
-</pre>
+	<pre
+		bind:this={preElement}
+		class={cls(
+			'text-sm rounded-lg bg-surface-100 dark:bg-surface-300 border border-primary/10 px-4 py-3 overflow-x-auto max-w-full',
+			dataTitle && 'rounded-t-none',
+			className
+		)}
+		{...restProps}>{@render children?.()}</pre>
+
+	<div
+		class={cls(
+			'absolute right-0 p-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity',
+			dataTitle ? 'top-8' : '-top-px'
+		)}
+	>
+		<CopyButton
+			value={sourceText}
+			class="text-surface-content/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
+			size="sm"
+		/>
+	</div>
+</div>
