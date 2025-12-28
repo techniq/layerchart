@@ -78,11 +78,9 @@ code:not(pre > code):not(.custom) {
 
 /* Code block figure container */
 figure[data-rehype-pretty-code-figure] {
-	@apply rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden;
-
-	/* Title/filename display */
+	/* Title/filename display - hidden, handled by pre.svelte component */
 	& figcaption[data-rehype-pretty-code-title] {
-		@apply text-sm font-mono font-medium leading-tight text-surface-content/50 border-b border-surface-content/20 dark:border-surface-content/10 px-4 py-2 bg-surface-100;
+		@apply hidden;
 	}
 
 	/* Pre element within figure */
@@ -108,6 +106,18 @@ pre {
 	& .highlighted {
 		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
 	}
+}
+
+/* Line numbers */
+code[data-line-numbers] {
+	counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+	counter-increment: line;
+	content: counter(line);
+	@apply inline-block w-4 mr-6 pr-2 text-right text-surface-content/40;
+	@apply border-r border-surface-content/10;
 }
 
 /* Custom scrollbar styling */
@@ -140,18 +150,18 @@ pre {
 
 /* Steps component styling - inspired by Docus */
 .steps {
-	@apply ms-4 ps-8 border-l border-surface-content/10;
+	@apply ms-4 pl-7 border-l border-surface-content/10;
 	counter-reset: step;
 
 	/* Headings (h2, h3, h4) in steps */
 	& :is(h2, h3, h4) {
 		counter-increment: step;
-		@apply relative font-semibold text-base mb-2 mt-6 first:mt-0;
+		@apply relative font-semibold text-lg mb-2 mt-6 first:mt-0;
 
 		/* Counter circle */
 		&::before {
 			content: counter(step);
-			@apply absolute size-6 -start-[45px] bg-surface-100 rounded-full;
+			@apply absolute size-6 -left-10 bg-surface-100 rounded-full;
 			@apply font-semibold text-sm tabular-nums;
 			@apply inline-flex items-center justify-center;
 			@apply ring-1 ring-surface-content/20;

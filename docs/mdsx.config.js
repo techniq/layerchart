@@ -7,10 +7,9 @@ import rehypePrettyCode from 'rehype-pretty-code';
 
 import {
 	prettyCodeOptions,
-	rehypeCodeBlockTitle,
-	rehypeHandleCodeBlocks,
+	rehypeCodeBlocks,
 	remarkLiveCode,
-	remarkDirectives
+	remarkComponents
 } from './src/lib/markdown/config/index.js';
 
 export const mdsxConfig = defineConfig({
@@ -18,15 +17,14 @@ export const mdsxConfig = defineConfig({
 	remarkPlugins: [
 		remarkGfm,
 		remarkMDC, // Parse MDC syntax (::component, :::component)
-		remarkDirectives, // Transform MDC components to Svelte components
+		remarkComponents, // Transform MDC components to Svelte components
 		remarkLiveCode
 	],
 	rehypePlugins: [
 		rehypeSlug,
 		// rehypeComponentExample,
 		[rehypePrettyCode, prettyCodeOptions],
-		rehypeCodeBlockTitle,
-		rehypeHandleCodeBlocks
+		rehypeCodeBlocks
 	],
 	blueprints: {
 		default: {

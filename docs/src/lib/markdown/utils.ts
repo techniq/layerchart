@@ -95,8 +95,12 @@ export async function loadExamplesFromMarkdown(
 	currentPath?: string
 ): Promise<Examples> {
 	// Extract all <Example component="..." name="..."> and <Example path="..."> from markdown content
-	const regex = /<Example\s+([^>]*?)\/>/g;
-	const matches = [...markdownContent.matchAll(regex)];
+	// Also support :example{component="..." name="..."} and :example{path="..."} syntax
+	const componentRegex = /<Example\s+([^>]*?)\/>/g;
+	const mdcRegex = /:example\{([^}]*?)\}/g;
+	const componentMatches = [...markdownContent.matchAll(componentRegex)];
+	const mdcMatches = [...markdownContent.matchAll(mdcRegex)];
+	const matches = [...componentMatches, ...mdcMatches];
 	const pageExamples = matches.map((match) => {
 		const attrs = match[1];
 		const component = attrs.match(/component="([^"]*?)"/)?.[1] || defaultComponent; // use default component if not explicit (ex. <Example name="basic" />)

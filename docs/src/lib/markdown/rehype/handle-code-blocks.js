@@ -5,7 +5,7 @@ import { visit } from 'unist-util-visit';
  * Supports syntax like ```js frame title="My Code" showLineNumbers
  * @returns {(tree: import('hast').Root) => void}
  */
-export function rehypeHandleCodeBlocks() {
+export function rehypeCodeBlocks() {
 	return (tree) => {
 		visit(tree, 'element', (node) => {
 			if (node.tagName === 'pre') {

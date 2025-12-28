@@ -16,6 +16,10 @@
     xScale(${domain[1]}) => ${scale(domain[1])};
     xScale(${value}) => ${format(scale(value), 'decimal')};
   `);
+
+  // array access (`domain[0]`) doesn't work in markdown
+  let [minDomain, maxDomain] = $derived(domain);
+  let [minRange, maxRange] = $derived(range);
 </script>
 
 # Scales
@@ -28,7 +32,7 @@ LayerChart uses [d3-scale](https://d3js.org/d3-scale) under the hood, which prov
 
 <DomainRangeChart bind:domain bind:range bind:value />
 
-In this interactive example, the **domain** (top bar) represents your data values ranging from <code>{domain[0]}</code> to <code>{domain[1]}</code>, while the **range** (bottom bar) represents the pixel values from <code>{range[0]}</code> to <code>{range[1]}</code>. The animated line shows how a domain value maps to its corresponding range value. Try dragging the edges to resize the domain/range, or mouse over to see how different values map between them.
+In this interactive example, the **domain** (top bar) represents your data values ranging from <code>{minDomain}</code> to <code>{maxDomain}</code>, while the **range** (bottom bar) represents the pixel values from <code>{minRange}</code> to <code>{maxRange}</code>. The animated line shows how a domain value maps to its corresponding range value. Try dragging the edges to resize the domain/range, or mouse over to see how different values map between them.
 
 ### Creating a scale
 

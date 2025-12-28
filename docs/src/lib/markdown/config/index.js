@@ -1,10 +1,9 @@
 // Remark plugins
 export { remarkLiveCode } from '../rehype/live-code.js';
-export { remarkDirectives } from '../remark/directives.js';
+export { remarkComponents } from '../remark/components.js';
 
 // Rehype plugins
-export { rehypeCodeBlockTitle } from '../rehype/code-block-title.js';
-export { rehypeHandleCodeBlocks } from '../rehype/handle-code-blocks.js';
+export { rehypeCodeBlocks } from '../rehype/handle-code-blocks.js';
 export { rehypeComponentExample } from '../rehype/component-example.js';
 
 // Transformers
