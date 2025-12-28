@@ -71,7 +71,7 @@
 	});
 </script>
 
-<div class={cls('tabs mt-4 flex flex-col', className)} {...restProps}>
+<div class={cls('tabs flex my-5 flex-col', className)} {...restProps}>
 	<!-- Tabs -->
 	<div class="flex gap-1 overflow-auto z-1 -mb-px">
 		{#each tabs as tab, index}

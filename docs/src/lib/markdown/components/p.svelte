@@ -5,9 +5,6 @@
 	let { class: className, children, ...restProps }: HTMLAttributes<HTMLParagraphElement> = $props();
 </script>
 
-<p
-	class={cls('text-surface-content [main>&:not(:first-child)]:mt-6 leading-relaxed', className)}
-	{...restProps}
->
+<p class={cls('text-surface-content first:mt-0 my-5 leading-relaxed', className)} {...restProps}>
 	{@render children?.()}
 </p>
