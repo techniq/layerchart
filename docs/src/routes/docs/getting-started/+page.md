@@ -200,42 +200,41 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     [shadcn-svelte](https://www.shadcn-svelte.com/)
 
     v1:
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="simple-icons:stackblitz"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="Skeleton" icon="custom-brands:skeleton"}
     [Skeleton](https://www.skeleton.dev/)
 
     v3:
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="simple-icons:stackblitz"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="simple-icons:stackblitz"}
 
     v4:
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="Svelte UX" icon="custom-brands:svelteux"}
     [Svelte UX](https://svelte-ux.techniq.dev/)
 
     v2:
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="simple-icons:stackblitz"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="daisyUI" icon="custom-brands:daisyUI"}
     [daisyUI](https://daisyui.com/)
 
     v5:
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="simple-icons:stackblitz"}
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="UnoCSS" icon="logos:unocss"}
     [UnoCSS](https://unocss.dev/)
 
-    1:
     :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/unocss" size="sm" icon="lucide:github"}
     :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/unocss-1" size="sm" icon="simple-icons:stackblitz"}
     ::
