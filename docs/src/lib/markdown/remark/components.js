@@ -1,4 +1,5 @@
 import { cls } from '@layerstack/tailwind';
+import { toCamelCase } from '@layerstack/utils';
 import { visit, EXIT } from 'unist-util-visit';
 
 /**
@@ -19,6 +20,22 @@ import { visit, EXIT } from 'unist-util-visit';
  *
  * @returns {(tree: any) => void} A remark transformer function
  */
+/**
+ * Convert kebab-case attributes to camelCase for Svelte props
+ * @param {Record<string, any>} attributes - Attributes object with potentially kebab-cased keys
+ * @returns {Record<string, any>} - Attributes object with camelCase keys
+ */
+function kebabToCamelCase(attributes) {
+	/** @type {Record<string, any>} */
+	const camelCaseAttributes = {};
+	for (const [key, value] of Object.entries(attributes)) {
+		// Convert kebab-case to camelCase
+		const camelKey = toCamelCase(key);
+		camelCaseAttributes[camelKey] = value;
+	}
+	return camelCaseAttributes;
+}
+
 /**
  * Convert icon name from various formats to unplugin-icons import format
  * @param {string} name - Icon name (e.g., "logos:tailwindcss-icon", "i-logos-tailwindcss-icon", "lucide:code")
@@ -96,16 +113,20 @@ export function remarkComponents() {
 				// Get component attributes from MDC
 				const attributes = node.attributes || {};
 
+				// Convert kebab-case to camelCase for Svelte props
+				let processedAttributes = kebabToCamelCase(attributes);
+
 				// Handle icon attribute on tab components (e.g., ::tab{label="pnpm" icon="vscode-icons:file-type-pnpm"})
-				let processedAttributes = { ...attributes };
-				if (componentName === 'tab' && attributes.icon) {
-					const { importPath, componentName: iconCompName } = convertIconName(attributes.icon);
+				if (componentName === 'tab' && processedAttributes.icon) {
+					const { importPath, componentName: iconCompName } = convertIconName(
+						processedAttributes.icon
+					);
 					iconImports.set(iconCompName, importPath);
 
 					// Replace icon string with component reference expression
 					// Remove quotes so it becomes {ComponentName} instead of "ComponentName"
 					processedAttributes = {
-						...attributes,
+						...processedAttributes,
 						icon: `{${iconCompName}}`
 					};
 				}
@@ -150,15 +171,19 @@ export function remarkComponents() {
 
 					const attributes = node.attributes || {};
 
+					// Convert kebab-case to camelCase for Svelte props
+					let processedAttributes = kebabToCamelCase(attributes);
+
 					// Handle icon attribute on button components (e.g., :button{icon="lucide:github"})
-					let processedAttributes = { ...attributes };
-					if (attributes.icon) {
-						const { importPath, componentName: iconCompName } = convertIconName(attributes.icon);
+					if (processedAttributes.icon) {
+						const { importPath, componentName: iconCompName } = convertIconName(
+							processedAttributes.icon
+						);
 						iconImports.set(iconCompName, importPath);
 
 						// Replace icon string with component reference expression
 						processedAttributes = {
-							...attributes,
+							...processedAttributes,
 							icon: `{${iconCompName}}`
 						};
 					}
@@ -169,11 +194,14 @@ export function remarkComponents() {
 				} else if (componentName === 'example') {
 					componentsToImport.add('Example');
 
+					const attributes = node.attributes || {};
+
+					// Convert kebab-case to camelCase for Svelte props
+					const processedAttributes = kebabToCamelCase(attributes);
+
 					const data = node.data || (node.data = {});
 					data.hName = 'Example';
-					data.hProperties = {
-						...(node.attributes || {})
-					};
+					data.hProperties = processedAttributes;
 				}
 			}
 		});
