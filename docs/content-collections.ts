@@ -42,7 +42,10 @@ const components = defineCollection({
 		}
 
 		// Extract the first Example component's name from the markdown content
-		const usageExample = doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1];
+		// Support both <Example name="..."> and :example{name="..."} syntax
+		const usageExample =
+			doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1] ||
+			doc.content.match(/:example\{[^}]*name=["']([^"']+)["'][^}]*\}/)?.[1];
 
 		return {
 			...doc,
@@ -133,7 +136,10 @@ const utils = defineCollection({
 		}
 
 		// Extract the first Example component's name from the markdown content
-		const usageExample = doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1];
+		// Support both <Example name="..."> and :example{name="..."} syntax
+		const usageExample =
+			doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1] ||
+			doc.content.match(/:example\{[^}]*name=["']([^"']+)["'][^}]*\}/)?.[1];
 
 		return {
 			...doc,

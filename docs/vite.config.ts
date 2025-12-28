@@ -25,6 +25,11 @@ export default defineConfig({
 			}
 		}) /*, devtoolsJson()*/
 	],
+	server: {
+		fs: {
+			allow: ['.live-code']
+		}
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
