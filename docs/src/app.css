@@ -108,6 +108,18 @@ pre {
 	}
 }
 
+/* Line numbers */
+code[data-line-numbers] {
+	counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+	counter-increment: line;
+	content: counter(line);
+	@apply inline-block w-4 mr-6 pr-2 text-right text-surface-content/40;
+	@apply border-r border-surface-content/10;
+}
+
 /* Custom scrollbar styling */
 * {
 	scrollbar-width: thin;

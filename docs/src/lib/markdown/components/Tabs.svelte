@@ -103,7 +103,7 @@
 	</div>
 
 	<!-- Tab content -->
-	<div class="border rounded-lg rounded-tl-none p-3 bg-surface-100">
+	<div class="border rounded-lg rounded-tl-none px-3 py-1 bg-surface-100">
 		{@render children?.()}
 	</div>
 </div>

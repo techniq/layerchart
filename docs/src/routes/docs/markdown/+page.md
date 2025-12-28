@@ -20,6 +20,26 @@
 <div>Test</div>
 ```
 
+## Line numbers
+
+````md
+```svelte showLineNumbers
+<script lang="ts">
+	let { data } = $props();
+</script>
+
+<div>Test</div>
+```
+````
+
+```svelte showLineNumbers
+<script lang="ts">
+	let { data } = $props();
+</script>
+
+<div>Test</div>
+```
+
 ### Diff
 
 ````md
@@ -158,24 +178,26 @@ This action cannot be undone. This uses `:::caution`.
 
 :::steps
 
-## Step 1: Install dependencies
+## Install dependencies
 
 First, install the required packages:
 
 ```bash
-npm install remark-mdc
+npm install layerchart
 ```
 
-## Step 2: Configure mdsx
+## Configure
 
-Add the remark-mdc plugin to your mdsx configuration.
+Do something else
 
-## Step 3: Use MDC components
+## ???
+
+## Profit!
 
 Start using `::component` and `:::component` syntax in your markdown files!
 :::
 
-### Tabs (Nested Components)
+### Tabs
 
 :::tabs
 
