@@ -51,7 +51,7 @@ Use the Svelte CLI to generate a new SvelteKit project, or continue with an exis
 :::
 
 ::note
-To add tailwind to an existing project you can `npv sv add tailwindcss`
+To add tailwind to an existing project you can `npm sv add tailwindcss`
 ::
 
 ## Import `layerchart` with your package manager of choice.
