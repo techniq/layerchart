@@ -119,14 +119,13 @@ or with a single `.css` import, Layerchart [provides](https://github.com/techniq
     ```
     ::
 
-    ::tab{label="Skeleton 3" icon="custom-brands:skeleton"}
-    ```css title="app.css"
-    @import 'layerchart/skeleton-3.css';
-    ```
-    ::
 
-    ::tab{label="Skeleton 4" icon="custom-brands:skeleton"}
+    ::tab{label="Skeleton" icon="custom-brands:skeleton"}
     ```css title="app.css"
+    /* v3 */
+    @import 'layerchart/skeleton-3.css';
+
+    /* v4 */
     @import 'layerchart/skeleton-4.css';
     ```
     ::
@@ -137,7 +136,7 @@ or with a single `.css` import, Layerchart [provides](https://github.com/techniq
     ```
     ::
 
-    ::tab{label="DaisyUI 5" icon="custom-brands:daisyUI"}
+    ::tab{label="daisyUI" icon="custom-brands:daisyUI"}
     ```css title="app.css"
     @import 'layerchart/daisyui-5.css';
     ```
