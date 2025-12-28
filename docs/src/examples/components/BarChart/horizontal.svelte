@@ -17,6 +17,6 @@
 	x="value"
 	y="date"
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), left: 30 }}
+	padding={defaultChartPadding({ left: 30 })}
 	height={300}
 />

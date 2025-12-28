@@ -27,5 +27,5 @@
 	radial
 	orientation="horizontal"
 	height={400}
-	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
+	padding={defaultChartPadding({ top: 15, bottom: 15 })}
 />

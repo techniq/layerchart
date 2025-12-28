@@ -19,6 +19,6 @@
 	y="date"
 	yInterval={timeDay}
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), left: 30, right: 10 }}
+	padding={defaultChartPadding({ left: 30, right: 10 })}
 	height={300}
 />

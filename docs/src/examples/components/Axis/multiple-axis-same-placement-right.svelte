@@ -4,7 +4,7 @@
 	import { range } from 'd3-array';
 </script>
 
-<Chart yDomain={[0, 100]} padding={{ ...defaultChartPadding(), right: 90 }} height={300}>
+<Chart yDomain={[0, 100]} padding={defaultChartPadding({ right: 90 })} height={300}>
 	{#snippet children({ context })}
 		<Layer>
 			<Axis

@@ -25,7 +25,7 @@
 		yAxis: { format: 'metric', motion: 'tween' },
 		bars: { motion: 'tween' }
 	}}
-	padding={{ ...defaultChartPadding(), left: 30 }}
+	padding={defaultChartPadding({ left: 30 })}
 	height={300}
 >
 	{#snippet tooltip()}

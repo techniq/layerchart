@@ -47,7 +47,7 @@
 		}
 	]}
 	props={{ tooltip: { context: { mode: 'quadtree' } } }}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 >
 	{#snippet marks({ series, context })}

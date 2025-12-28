@@ -18,6 +18,6 @@
 			points: false
 		}
 	}}
-	padding={{ ...defaultChartPadding(), top: 25, right: 10 }}
+	padding={defaultChartPadding({ top: 25, right: 10 })}
 	height={300}
 />

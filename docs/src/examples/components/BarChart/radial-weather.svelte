@@ -39,6 +39,6 @@
 		yAxis: { ticks: 4, format: (v) => v + '° F' },
 		grid: { xTicks: 12 }
 	}}
-	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
+	padding={defaultChartPadding({ top: 15, bottom: 15 })}
 	height={600}
 />

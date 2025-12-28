@@ -449,7 +449,7 @@
   c={isVertical ? yProp : xProp}
   cRange={['var(--color-primary, currentColor)']}
   {radial}
-  padding={radial ? undefined : defaultChartPadding(axis, legend)}
+  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltip={tooltip === false
     ? false

@@ -28,7 +28,7 @@
 			}
 		]}
 		orientation="vertical"
-		padding={{ ...defaultChartPadding(), bottom: 25, left: 25 }}
+		padding={defaultChartPadding({ bottom: 25, left: 25 })}
 		height={600}
 		width={400}
 	/>

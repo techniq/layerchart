@@ -333,7 +333,7 @@
   yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
   yNice={orientation === 'horizontal'}
   {radial}
-  padding={radial ? undefined : defaultChartPadding(axis, legend)}
+  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltip={tooltip === false
     ? false

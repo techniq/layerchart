@@ -33,7 +33,7 @@
 					tickMultiline: true
 				}
 			}}
-			padding={{ ...defaultChartPadding(), bottom: 30 }}
+			padding={defaultChartPadding({ bottom: 30 })}
 			height={300}
 		/>
 	</div>
@@ -52,7 +52,7 @@
 					tickMultiline: true
 				}
 			}}
-			padding={{ ...defaultChartPadding(), bottom: 30 }}
+			padding={defaultChartPadding({ bottom: 30 })}
 			height={300}
 		/>
 	</div>

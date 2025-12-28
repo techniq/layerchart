@@ -226,7 +226,7 @@
   yNice
   c={yProp}
   cRange={['var(--color-primary, currentColor)']}
-  padding={defaultChartPadding(axis, legend)}
+  padding={defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltip={tooltip === false
     ? false

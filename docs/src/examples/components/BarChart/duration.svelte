@@ -78,7 +78,7 @@
 			context: { mode: 'bounds' }
 		}
 	}}
-	padding={{ ...defaultChartPadding(), left: 30 }}
+	padding={defaultChartPadding({ left: 30 })}
 	height={400}
 >
 	{#snippet tooltip({ context })}

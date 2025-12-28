@@ -414,7 +414,7 @@
   yBaseline={0}
   yNice
   {radial}
-  padding={radial ? undefined : defaultChartPadding(axis, legend)}
+  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltip={tooltip === false
     ? false

@@ -20,6 +20,6 @@
 	props={{
 		yAxis: { format: 'metric' }
 	}}
-	padding={{ ...defaultChartPadding(), left: 24 }}
+	padding={defaultChartPadding({ left: 24 })}
 	height={300}
 />

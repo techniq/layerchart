@@ -29,6 +29,6 @@
 	{data}
 	x="date"
 	y="value"
-	padding={{ ...defaultChartPadding(), top: 10 }}
+	padding={defaultChartPadding({ top: 10 })}
 	height={300}
 />

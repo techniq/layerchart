@@ -35,6 +35,6 @@
 			props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 }
 		};
 	})}
-	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
+	padding={defaultChartPadding({ top: 15, bottom: 15 })}
 	height={500}
 />

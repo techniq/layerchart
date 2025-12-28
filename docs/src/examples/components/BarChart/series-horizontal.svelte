@@ -20,6 +20,6 @@
 		{ key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
 		{ key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } }
 	]}
-	padding={{ ...defaultChartPadding(), left: 30, right: 25 }}
+	padding={defaultChartPadding({ left: 30, right: 25 })}
 	height={400}
 />

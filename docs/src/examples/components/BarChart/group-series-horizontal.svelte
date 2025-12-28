@@ -33,6 +33,6 @@
 			header: { format: 'none' }
 		}
 	}}
-	padding={{ ...defaultChartPadding(), left: 24 }}
+	padding={defaultChartPadding({ left: 24 })}
 	height={500}
 />

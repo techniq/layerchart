@@ -31,7 +31,7 @@
 		}
 	]}
 	props={{ tooltip: { context: { locked: lockedTooltip } } }}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 >
 	{#snippet tooltip({ context, setHighlightKey, series })}

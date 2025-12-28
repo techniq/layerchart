@@ -19,6 +19,6 @@
 	yRange={({ height }) => [height / 5, height / 2]}
 	radial
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), top: 15, bottom: 15 }}
+	padding={defaultChartPadding({ top: 15, bottom: 15 })}
 	height={400}
 />

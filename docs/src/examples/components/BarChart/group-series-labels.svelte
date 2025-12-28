@@ -33,7 +33,7 @@
 			header: { format: 'none' }
 		}
 	}}
-	padding={{ ...defaultChartPadding(), left: 24 }}
+	padding={defaultChartPadding({ left: 24 })}
 	height={300}
 >
 	<!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->

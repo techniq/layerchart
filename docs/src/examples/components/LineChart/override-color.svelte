@@ -15,6 +15,6 @@
 	{data}
 	x="date"
 	series={[{ key: 'value', color: 'var(--color-secondary)' }]}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

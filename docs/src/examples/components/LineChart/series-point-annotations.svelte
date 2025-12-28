@@ -55,6 +55,6 @@
 			}
 		};
 	})}
-	padding={{ ...defaultChartPadding(), right: 60 }}
+	padding={defaultChartPadding({ right: 60 })}
 	height={300}
 />
