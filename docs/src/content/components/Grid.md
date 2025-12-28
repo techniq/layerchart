@@ -5,70 +5,66 @@ layers: [svg, canvas, html]
 related: [Axis, Rule]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" }
 
 ### Padding
 
 Respects padding
 
-<Example name="padding" />
+:example{ name="padding" }
 
 ### Single axis (x)
 
-<Example name="x-only" />
+:example{ name="x-only" }
 
 ### Single axis (y)
 
-<Example name="y-only" />
+:example{ name="y-only" }
 
 ### Dashed lines
 
-<Example name="dashed-lines" />
+:example{ name="dashed-lines" }
 
 ### Band scale (align center / default)
 
-<Example name="band-scale-default" />
+:example{ name="band-scale-default" }
 
 ### Band scale (align between)
 
-<Example name="band-scale-between" />
+:example{ name="band-scale-between" }
 
 ### Radial
 
-<Example name="radial" />
+:example{ name="radial" }
 
 ### Radial (linear)
 
-<Example name="radial-linear" />
+:example{ name="radial-linear" }
 
 ### Integer-only ticks
 
-<Example name="integer-only" />
+:example{ name="integer-only" }
 
 ### Explicit ticks
 
-<Example name="explicit-ticks" />
+:example{ name="explicit-ticks" }
 
 ### Inject tick value
 
-<Example name="inject-tick-value" />
+:example{ name="inject-tick-value" }
 
 ### Tick count
 
-<Example name="tick-count" />
+:example{ name="tick-count" }
 
 ### Remove default tick count
 
-<Example name="tick-count-null" /> -->
+:example{ name="tick-count-null" } -->

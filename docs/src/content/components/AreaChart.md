@@ -5,176 +5,172 @@ layers: [svg, canvas]
 related: [Chart, Area]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ component="LineChart" name="basic" showCode }
 
 ### Default series label
 
-<Example name="default-series-label" />
+:example{ name="default-series-label" showCode }
 
 ### Gradient
 
-<Example name="gradient" />
+:example{ name="gradient" showCode }
 
 ### Threshold Gradient
 
-<Example name="threshold-gradient" />
+:example{ name="threshold-gradient" showCode }
 
 ### Curve
 
-<Example name="curve" />
+:example{ name="curve" showCode }
 
 ### Series
 
-<Example name="series" />
+:example{ name="series" showCode }
 
 ### Series (separate data)
 
-<Example name="series-separate-data" />
+:example{ name="series-separate-data" showCode }
 
 ### Series (point click)
 
-<Example name="series-point-click" />
+:example{ name="series-point-click" showCode }
 
 ### Series (individual tooltip with highlight)
 
-<Example name="series-individual-tooltip" />
+:example{ name="series-individual-tooltip" showCode }
 
 ### Stack series
 
-<Example name="series-stack" />
+:example{ name="series-stack" showCode }
 
 ### Stack series (expand)
 
-<Example name="series-stack-expand" />
+:example{ name="series-stack-expand" showCode }
 
 ### Stack series (diverging)
 
-<Example name="series-stack-diverging" />
+:example{ name="series-stack-diverging" showCode }
 
 ### Stack series with gradient
 
-<Example name="series-stack-gradient" />
+:example{ name="series-stack-gradient" showCode }
 
 ### Stack series (separate data)
 
-<Example name="series-stack-separate-data" />
+:example{ name="series-stack-separate-data" showCode }
 
 ### Legend
 
-<Example name="series-stack-legend" />
+:example{ name="series-stack-legend" showCode }
 
 ### Legend (placement)
 
-<Example name="series-stack-legend-placement" />
+:example{ name="series-stack-legend-placement" showCode }
 
 ### Legend (custom labels)
 
-<Example name="series-stack-legend-labels" />
+:example{ name="basseries-stack-legend-labelsic" showCode }
 
 ### Threshold
 
-<Example name="threshold" />
+:example{ name="threshold" showCode }
 
 ### Labels
 
-<Example name="labels" />
+:example{ name="labels" showCode }
 
 ### Points
 
-<Example name="points" />
+:example{ name="points" showCode }
 
 ### Radial
 
-<Example name="radial" />
+:example{ name="radial" showCode }
 
 ### Funnel
 
-<Example name="funnel" />
+:example{ name="funnel" showCode }
 
 ### Null gaps
 
-<Example name="null-gaps" />
+:example{ name="null-gaps" showCode }
 
 ### Sparkline
 
-<Example name="sparkline" />
+:example{ name="sparkline" showCode }
 
 ### Single axis (x)
 
-<Example name="single-axis-x" />
+:example{ name="single-axis-x" showCode }
 
 ### Single axis (y)
 
-<Example name="single-axis-y" />
+:example{ name="single-axis-y" showCode }
 
 ### Tooltip click
 
-<Example name="series-tooltip-click" />
+:example{ name="series-tooltip-click" showCode }
 
 ### Markers
 
-<Example name="markers" />
+:example{ name="markers" showCode }
 
 ### Custom tooltip
 
-<Example name="custom-tooltip" />
+:example{ name="custom-tooltip" showCode }
 
 ### Locking and clickable tooltip
 
-<Example name="tooltip-locking" />
+:example{ name="tooltip-locking" showCode }
 
 ### Fixed tooltip below chart with hide delay
 
-<Example name="tooltip-fixed-with-hide-delay" />
+:example{ name="tooltip-fixed-with-hide-delay" showCode }
 
 ### Externally access tooltip data
 
-<Example name="tooltip-external" />
+:example{ name="tooltip-external" showCode }
 
 ### Point annotations
 
-<Example name="point-annotations" />
+:example{ name="point-annotations" showCode }
 
 ### Line annotation
 
-<Example name="line-annotation" />
+:example{ name="line-annotation" showCode }
 
 ### Range annotation
 
-<Example name="range-annotation" />
+:example{ name="range-annotation" showCode }
 
 ### Series point annotations
 
-<Example name="series-point-annotations" />
+:example{ name="series-point-annotations" showCode }
 
 ### Brushing
 
-<Example name="brush" />
+:example{ name="brush" showCode }
 
 ### Brush syncing
 
-<Example name="brush-sync" />
+:example{ name="brush-sync" showCode }
 
 ### Point scale
 
-<Example name="point-scale" />
+:example{ name="point-scale" showCode }
 
 ### Band scale
 
-<Example name="band-scale" />
+:example{ name=""band-scale" showCode }
 
 ### Custom
 
-<Example name="custom" /> -->
+:example{ name="custom" showCode } -->

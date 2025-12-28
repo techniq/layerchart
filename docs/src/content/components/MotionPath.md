@@ -5,22 +5,18 @@ layers: [svg]
 related: [Spline]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Examples
 
 ### Repeat indefinitely
 
-<Example name="repeat-indefinitely" />
+:example{ name="repeat-indefinitely"}
 
 ### Rotate object with path
 
-<Example name="rotate-object-with-path" />
+:example{ name="rotate-object-with-path"}
 
 ### Sync with draw
 
-<Example name="sync-with-draw" />
+:example{ name="sync-with-draw"}
 
 > Because the draw transition and `animateMotion` using different timers, there is no guarantee they will start at the same time

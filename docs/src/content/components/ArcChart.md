@@ -5,82 +5,83 @@ layers: [svg, canvas]
 related: [Chart, Pie]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" showCode }
 
 ### Gradient with text
 
-<Example name="gradient-with-text" />
+:example{ name="gradient-with-text" showCode }
 
 ### Color
 
-<Example name="color" />
+:example{ name="color" showCode }
 
 ### Track size
 
-<Example name="track-size" />
+:example{ name="track-size" showCode }
 
 ### Radius (offset)
 
-> If a `*radius` property is negative (ex. `-20`), the value will be applied as an offset from the charts `width` / `height`.
+::note
+If a `*radius` property is negative (ex. `-20`), the value will be applied as an offset from the charts `width` / `height`.
+::
 
-<Example name="radius-offset" />
+:example{ name="radius-offset" showCode }
 
 ### Radius (percent)
 
-> If a `*radius` property is `>0` and `<1` (ex: `0.8`), the value will be applied as an offset from the charts `width` / `height`.
+::note If a `*radius` property is `>0` and `<1` (ex: `0.8`), the value will be applied as an offset from the charts `width` / `height`.
+::
 
-<Example name="radius-percent" />
+:example{ name="radius-percent" showCode }
 
 ### Radius (fixed)
 
-> If a `*radius` property is `>=1` (ex: `80`), the value will be applied as a discrete value.
+::note
+If a `*radius` property is `>=1` (ex: `80`), the value will be applied as a discrete value.
+::
 
-<Example name="radius-fixed" />
+:example{ name="radius-fixed" showCode }
 
 ### Series
 
-<Example name="series" />
+:example{ name="series" showCode }
 
 ### Series (arc)
 
-<Example name="series-arc" />
+:example{ name="series-arc" showCode }
 
 ### Series (90° starting angle)
 
-<Example name="series-start-90" />
+:example{ name="series-start-90" showCode }
 
 ### Series (180° starting angle)
 
-<Example name="series-start-180" />
+:example{ name="series-start-180" showCode }
 
 ### Series (track color)
 
-<Example name="series-track-color" />
+:example{ name="series-track-color" showCode }
 
 ### Series (individual tracks, max value, and color)
 
-<Example name="series-individual" />
+:example{ name="series-individual" showCode }
 
 ### Series (labels)
 
-<Example name="series-labels" />
+:example{ name="series-labels" showCode }
 
 ### Motion (tween)
 
-<Example name="series-motion-tween" />
+:example{ name="series-motion-tween" showCode }
 
 ### Motion (spring)
 
-<Example name="series-motion-spring" /> -->
+:example{ name="series-motion-spring" showCode } -->

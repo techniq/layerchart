@@ -5,163 +5,159 @@ layers: [svg, canvas, html]
 related: [Grid, Rule]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="placement-bottom-left" showCode />
+:example{ name="placement-bottom-left" showCode }
 
 <!-- ## Examples
 
 ### Placement (bottom / left)
 
-<Example name="placement-bottom-left" />
+:example{ name="placement-bottom-left" showCode }
 
 ### Placement (top / right)
 
-<Example name="placement-top-right" />
+:example{ name="placement-top-right" showCode }
 
 ### Placement (bottom / left with rule)
 
-<Example name="placement-bottom-left-rule" />
+:example{ name="placement-bottom-left-rule" showCode }
 
 ### Placement (top / right with rule)
 
-<Example name="placement-top-right-rule" />
+:example{ name="placement-top-right-rule" showCode }
 
 ### Grid
 
-<Example name="grid" />
+:example{ name="grid" showCode }
 
 ### Grid (dashed)
 
-<Example name="grid-dashed" />
+:example{ name="grid-dashed" showCode }
 
 ### Multiple axis grids with single rule
 
-<Example name="multiple-axis-grid-with-single-rule" />
+:example{ name="basic" showCode }
 
 > Axis with rule should be rendered last
 
 ### Multiple axis grids and rules
 
-<Example name="multiple-axis-grid-and-rules" />
+:example{ name="multiple-axis-grid-and-rules" showCode }
 
 > Top-most axis must have separate rule due to SVG rendering order
 
 ### Multiple axis grids and rules (separate grid)
 
-<Example name="multiple-axis-grid-and-rules" />
+:example{ name="multiple-axis-grid-and-rules" showCode }
 
 ### Arrow markers
 
-<Example name="arrow-markers" />
+:example{ name="arrow-markers" showCode }
 
 ### Tick label styling
 
-<Example name="tick-label-styling" />
+:example{ name="tick-label-styling" showCode }
 
 ### Rotate labels
 
-<Example name="rotate-labels" />
+:example{ name="rotate-labels" showCode }
 
 ### Remove tick marks
 
-<Example name="remove-tick-marks" />
+:example{ name="remove-tick-marks" showCode }
 
 ### Show first/last ticks only with alignment
 
-<Example name="extent-ticks-only" />
+:example{ name="extent-ticks-only" showCode }
 
 ### Integer-only ticks (via filter)
 
-<Example name="integer-only-filter" />
+:example{ name="integer-only-filter" showCode }
 
 ### Integer-only ticks (via format)
 
-<Example name="integer-only-format" />
+:example{ name="integer-only-format" showCode }
 
 ### Hide `0` (via filter)
 
-<Example name="hide-zero-filter" />
+:example{ name="hide-zero-filter" showCode }
 
 ### Hide `0` (via format)
 
-<Example name="hide-zero-format" />
+:example{ name="hide-zero-format" showCode }
 
 ### Explicit ticks
 
-<Example name="explicit-ticks" />
+:example{ name="explicit-ticks" showCode }
 
 ### Inject tick value
 
-<Example name="inject-ticks" />
+:example{ name="inject-ticks" showCode }
 
 ### Tick count
 
-<Example name="tick-count" />
+:example{ name="tick-count" showCode }
 
 ### Tick spacing
 
-<Example name="tick-spacing" />
+:example{ name="tick-spacing" showCode }
 
 ### Label next to hash
 
-<Example name="labels-next-hash" />
+:example{ name="labels-next-hash" showCode }
 
 ### Override axis ticks with custom scale
 
-<Example name="override-axis-ticks-scale" />
+:example{ name="override-axis-ticks-scale" showCode }
 
 ### Axis label placements (top / bottom)
 
-<Example name="axis-label-placement-top-bottom" />
+:example{ name="axis-label-placement-top-bottom" showCode }
 
 ### Axis label placements (left / right)
 
-<Example name="axis-label-placement-left-right" />
+:example{ name="axis-label-placement-left-right" showCode }
 
 ### Multiline tick labels with format (`\n`)
 
-<Example name="multiline-tick-labels" />
+:example{ name="multiline-tick-labels" showCode }
 
 ### Multiple time axis with same placement (bottom)
 
-<Example name="multiple-axis-same-placement-bottom" />
+:example{ name="multiple-axis-same-placement-bottom" showCode }
 
 ### Multiple time axis with same placement (right)
 
-<Example name="multiple-axis-same-placement-right" />
+:example{ name="multiple-axis-same-placement-right" showCode }
 
 ### Radial rule
 
-<Example name="radial-rule" />
+:example{ name="radial-rule" showCode }
 
 ### Radial grid
 
-<Example name="radial-grid" />
+:example{ name="radial-grid" showCode }
 
 ### Log scale
 
-<Example name="log-scale" />
+:example{ name="log-scale" showCode }
 
 ### Time scale (auto)
 
-<Example name="time-scale-auto" />
+:example{ name="time-scale-auto" showCode }
 
 ### Time scale (auto) with multiline ticks
 
 Provides a compact multiline representation of dates. Also useful to see boundary changes (years, months, etc)
 
-<Example name="time-scale-auto-multiline" />
+:example{ name="time-scale-auto-multiline" showCode }
 
 ### Time scale (auto) with format (filtering)
 
 Useful when you want to keep all ticks at the same resolution (ex. day) while still allowing tickSpacing/count to reduce ticks
 
-<Example name="time-scale-auto-format-filtering" />
+:example{ name="time-scale-auto-format-filtering" showCode }
 
 ### Time scale (explicit)
 
@@ -169,7 +165,7 @@ Specify explicit time intervals such as every day, every 6 months, etc.
 
 > Note: `tickSpacing` / `count` have no effect
 
-<Example name="time-scale-explicit" />
+:example{ name="time-scale-explicit" showCode }
 
 ### Time scale (explicit) with multiline ticks
 
@@ -177,12 +173,12 @@ Specify explicit time intervals such as every day, every 6 months, etc with comp
 
 > Note: `tickSpacing` / `count` have no effect
 
-<Example name="time-scale-explicit-multiline" />
+:example{ name="time-scale-explicit-multiline" showCode }
 
 ### Time scale (brush)
 
-<Example name="time-scale-brush" />
+:example{ name="time-scale-brush" showCode }
 
 ### Time scale (brush) with multiline ticks
 
-<Example name="time-scale-brush-multiline" /> -->
+:example{ name="time-scale-brush-multiline" showCode } -->

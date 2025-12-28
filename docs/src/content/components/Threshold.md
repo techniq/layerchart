@@ -5,10 +5,6 @@ layers: [svg]
 related: [Threshold, AreaChart]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }

@@ -6,10 +6,6 @@ related: [Chart]
 order: 1
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Playground
 
-<Example name="projection-playground" />
+:example{name="projection-playground"}

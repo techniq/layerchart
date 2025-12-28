@@ -5,10 +5,6 @@ layers: [svg, canvas, html]
 related: [Rule, Spline]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="styling-using-classes"  showCode />
+:example{ name="styling-using-classes" showCode }

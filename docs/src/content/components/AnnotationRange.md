@@ -5,10 +5,6 @@ layers: [svg, canvas, html]
 related: [AnnotationLine, AnnotationPoint]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="vertical-with-pattern-range" showCode />
+:example{ name="vertical-with-pattern-range" showCode }

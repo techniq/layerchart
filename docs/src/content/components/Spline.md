@@ -5,52 +5,50 @@ layers: [svg, canvas]
 related: [Path, LineChart]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
-> See also: [LineChart](/docs/components/LineChart) for simplified examples
+::tip
+See also: [LineChart](/docs/components/LineChart) for simplified examples
+::
 
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 ## Playground
 
-<Example name="playground" />
+:example{ name="playground" }
 
 <!-- ## Playground
 
-<Example name="playground" />
+:example{ name="playground" }
 
 ## Examples
 
 ### draw
 
-<Example name="draw" />
+:example{ name="draw" }
 
 ### tweened
 
-<Example name="tweened" />
+:example{ name="tweened" }
 
 ### markers / arrows
 
-<Example name="markers-arrows" />
+:example{ name="markers-arrows" }
 
 ### basic start and end snippets
 
-<Example name="basic-start-and-end-snippets" />
+:example{ name="basic-start-and-end-snippets" }
 
 ### label using start/end snippets
 
-<Example name="label-using-start-end-snippets" />
+:example{ name="label-using-start-end-snippets" }
 
 ### end snippet with draw
 
-<Example name="end-snippet-with-draw" />
+:example{ name="end-snippet-with-draw" }
 
 ### end slot with draw with value
 
-<Example name="end-slot-with-draw-with-value" />
+:example{ name="end-slot-with-draw-with-value" }
 
 - Because the draw transition and tweened store use different timers, there is no guarantee they will start at the same time -->

@@ -7,12 +7,10 @@ related:
 order: 1
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example component="Area" name="basic" showCode />
+:example{ component="Area" name="basic" showCode }
 
-> Features: Adds support for x and y baselines (always show 0, etc)
+::note
+Features: Adds support for x and y baselines (always show 0, etc)
+::

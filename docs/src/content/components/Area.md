@@ -5,16 +5,14 @@ layers: [svg, canvas]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
-> See also: [AreaChart](/docs/components/AreaChart) for simplified examples
+::info
+See also: [AreaChart](/docs/components/AreaChart) for simplified examples
+::
 
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 ## Playground
 
-<Example name="playground" />
+:example{ name="playground" showCode }
