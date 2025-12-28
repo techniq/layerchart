@@ -6,10 +6,7 @@
 </script>
 
 <p
-	class={cls(
-		'text-surface-content [main>&:not(:first-child)]:mt-6 ml-2 leading-relaxed',
-		className
-	)}
+	class={cls('text-surface-content [main>&:not(:first-child)]:mt-6 leading-relaxed', className)}
 	{...restProps}
 >
 	{@render children?.()}

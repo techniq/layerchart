@@ -140,18 +140,18 @@ pre {
 
 /* Steps component styling - inspired by Docus */
 .steps {
-	@apply ms-4 ps-8 border-l border-surface-content/10;
+	@apply ms-4 pl-7 border-l border-surface-content/10;
 	counter-reset: step;
 
 	/* Headings (h2, h3, h4) in steps */
 	& :is(h2, h3, h4) {
 		counter-increment: step;
-		@apply relative font-semibold text-base mb-2 mt-6 first:mt-0;
+		@apply relative font-semibold text-lg mb-2 mt-6 first:mt-0;
 
 		/* Counter circle */
 		&::before {
 			content: counter(step);
-			@apply absolute size-6 -start-[45px] bg-surface-100 rounded-full;
+			@apply absolute size-6 -left-10 bg-surface-100 rounded-full;
 			@apply font-semibold text-sm tabular-nums;
 			@apply inline-flex items-center justify-center;
 			@apply ring-1 ring-surface-content/20;
