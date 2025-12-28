@@ -19,7 +19,7 @@
 	};
 </script>
 
-<AreaChart {data} x="date" y="value" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>
+<AreaChart {data} x="date" y="value" padding={defaultChartPadding({ right: 10 })} height={300}>
 	{#snippet marks({ context })}
 		{@const thresholdValue = 0}
 		{@const thresholdOffset =

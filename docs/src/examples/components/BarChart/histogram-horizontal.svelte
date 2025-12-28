@@ -25,7 +25,7 @@
 	y="x0"
 	bandPadding={0.2}
 	height={16 + 24 + data.length * 20}
-	padding={{ ...defaultChartPadding(), right: 20 }}
+	padding={defaultChartPadding({ right: 20 })}
 	props={{
 		xAxis: { motion: 'tween' },
 		yAxis: { motion: 'tween' },

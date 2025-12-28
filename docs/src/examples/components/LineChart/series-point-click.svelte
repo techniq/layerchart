@@ -30,6 +30,6 @@
 		console.log(e, detail);
 		alert(JSON.stringify(detail));
 	}}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

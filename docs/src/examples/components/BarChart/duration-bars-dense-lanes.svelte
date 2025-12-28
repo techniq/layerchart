@@ -19,7 +19,7 @@
 	grid={{ x: true, y: false, bandAlign: 'between' }}
 	rule={false}
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), left: 10, right: 25 }}
+	padding={defaultChartPadding({ left: 10, right: 25 })}
 	height={300}
 	props={{ tooltip: { context: { mode: 'bounds' } } }}
 >

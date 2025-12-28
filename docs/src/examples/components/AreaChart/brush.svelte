@@ -21,6 +21,6 @@
 			class: 'cursor-crosshair'
 		}
 	}}
-	padding={{ ...defaultChartPadding(), left: 25 }}
+	padding={defaultChartPadding({ left: 25 })}
 	height={300}
 />

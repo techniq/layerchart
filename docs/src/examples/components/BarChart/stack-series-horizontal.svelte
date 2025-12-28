@@ -34,5 +34,5 @@
 		}
 	}}
 	height={300}
-	padding={{ ...defaultChartPadding(), left: 30, right: 10 }}
+	padding={defaultChartPadding({ left: 30, right: 10 })}
 />

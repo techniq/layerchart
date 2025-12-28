@@ -114,7 +114,7 @@
 			<div class="h-[100px] p-4 border rounded-sm">
 				<Chart
 					xDomain={example.domain}
-					padding={{ ...defaultChartPadding(), top: 30, bottom: 30, left: 25, right: 25 }}
+					padding={defaultChartPadding({ top: 30, bottom: 30, left: 25, right: 25 })}
 				>
 					<Layer>
 						<Axis placement="top" rule grid tickMultiline {tickSpacing} />

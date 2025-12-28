@@ -30,7 +30,7 @@
 		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
 	height={300}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 >
 	{#snippet belowMarks({ visibleSeries, highlightKey })}
 		{#each visibleSeries as s}

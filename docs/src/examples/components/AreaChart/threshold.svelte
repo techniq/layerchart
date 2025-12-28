@@ -27,7 +27,7 @@
 		highlight: { area: true, lines: false, points: false },
 		tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } }
 	}}
-	padding={{ ...defaultChartPadding(), top: 10, right: 10 }}
+	padding={defaultChartPadding({ top: 10, right: 10 })}
 	height={300}
 >
 	{#snippet marks()}

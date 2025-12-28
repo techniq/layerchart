@@ -109,7 +109,7 @@
 			<div class="h-[100px] p-4 border rounded-sm">
 				<Chart
 					xDomain={example.domain}
-					padding={{ ...defaultChartPadding(), top: 20, bottom: 30, left: 30, right: 30 }}
+					padding={defaultChartPadding({ top: 20, bottom: 30, left: 30, right: 30 })}
 				>
 					<Layer>
 						<Axis

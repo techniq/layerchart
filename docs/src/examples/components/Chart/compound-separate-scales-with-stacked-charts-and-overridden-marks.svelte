@@ -18,7 +18,7 @@
 		props={{
 			bars: { radius: 1, class: 'stroke-none fill-surface-content/10' }
 		}}
-		padding={{ ...defaultChartPadding(), left: 25 }}
+		padding={defaultChartPadding({ left: 25 })}
 		height={300}
 	/>
 
@@ -34,7 +34,7 @@
 			xAxis: { ticks: 10, rule: true },
 			tooltip: { context: { mode: 'band' } }
 		}}
-		padding={{ ...defaultChartPadding(), left: 25 }}
+		padding={defaultChartPadding({ left: 25 })}
 	>
 		{#snippet marks()}
 			<Spline y="open" class="stroke-primary" />

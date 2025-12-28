@@ -17,7 +17,7 @@
 	grid={{ x: true, y: false, bandAlign: 'between' }}
 	rule={false}
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), right: 25 }}
+	padding={defaultChartPadding({ right: 25 })}
 	height={300}
 >
 	{#snippet tooltip({ context })}

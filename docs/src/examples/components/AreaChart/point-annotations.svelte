@@ -37,7 +37,7 @@
 			}
 		};
 	})}
-	padding={{ ...defaultChartPadding(), left: 25 }}
+	padding={defaultChartPadding({ left: 25 })}
 	height={300}
 >
 	{#snippet tooltip({ context })}

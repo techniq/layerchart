@@ -12,6 +12,6 @@
 	x="date"
 	y="value"
 	props={{ area: { curve: curveCatmullRom } }}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

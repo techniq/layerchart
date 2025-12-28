@@ -106,7 +106,7 @@
 	props={{
 		yAxis: { format: (d) => decibels(d)?.toFixed(1) }
 	}}
-	padding={{ ...defaultChartPadding(), left: 40 }}
+	padding={defaultChartPadding({ left: 40 })}
 	height={200}
 >
 	{#snippet marks()}

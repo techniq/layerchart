@@ -27,6 +27,6 @@
 		}
 	]}
 	seriesLayout="stackExpand"
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

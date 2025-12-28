@@ -27,6 +27,6 @@
 		}
 	]}
 	props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

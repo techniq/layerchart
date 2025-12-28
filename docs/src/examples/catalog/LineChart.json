@@ -52,7 +52,7 @@
         {
           "component": "LineChart",
           "lineNumber": 18,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "Layer",
@@ -88,7 +88,7 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "Tooltip",
@@ -276,7 +276,7 @@
         {
           "component": "LineChart",
           "lineNumber": 14,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "Spline",
@@ -919,14 +919,14 @@
       "component": "LineChart",
       "path": "/example/LineChart/custom",
       "lineNumber": 18,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "custom-tooltip",
       "component": "LineChart",
       "path": "/example/LineChart/custom-tooltip",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "default-series-label",
@@ -1017,7 +1017,7 @@
       "component": "LineChart",
       "path": "/example/LineChart/null-dashed-gaps",
       "lineNumber": 14,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "null-gaps",

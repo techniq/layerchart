@@ -11,7 +11,7 @@
 	x="date"
 	y="value"
 	xNice
-	padding={{ ...defaultChartPadding(), top: 25, right: 10 }}
+	padding={defaultChartPadding({ top: 25, right: 10 })}
 	height={300}
 	points
 	labels={{ offset: 10 }}
