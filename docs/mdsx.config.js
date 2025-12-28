@@ -7,8 +7,7 @@ import rehypePrettyCode from 'rehype-pretty-code';
 
 import {
 	prettyCodeOptions,
-	rehypeCodeBlockTitle,
-	rehypeHandleCodeBlocks,
+	rehypeCodeBlocks,
 	remarkLiveCode,
 	remarkComponents
 } from './src/lib/markdown/config/index.js';
@@ -25,8 +24,7 @@ export const mdsxConfig = defineConfig({
 		rehypeSlug,
 		// rehypeComponentExample,
 		[rehypePrettyCode, prettyCodeOptions],
-		rehypeCodeBlockTitle,
-		rehypeHandleCodeBlocks
+		rehypeCodeBlocks
 	],
 	blueprints: {
 		default: {
