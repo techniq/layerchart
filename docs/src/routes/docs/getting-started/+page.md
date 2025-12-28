@@ -137,7 +137,7 @@ or with a single `.css` import, Layerchart [provides](https://github.com/techniq
     ```
     ::
 
-    ::tab{label="DaisyUI 5" icon="custom-brands:daisyui"}
+    ::tab{label="DaisyUI 5" icon="custom-brands:daisyUI"}
     ```css title="app.css"
     @import 'layerchart/daisyui-5.css';
     ```
@@ -225,7 +225,7 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="simple-icons:stackblitz"}
     ::
 
-    ::tab{label="daisyUI" icon="custom-brands:daisyui"}
+    ::tab{label="daisyUI" icon="custom-brands:daisyUI"}
     [daisyUI](https://daisyui.com/)
 
     v5:

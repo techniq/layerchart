@@ -7,7 +7,7 @@
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		children: Snippet;
 		label?: string;
-		icon?: string | Component;
+		icon?: Component;
 	}
 
 	const { children, label, icon, class: className, ...restProps }: Props = $props();
@@ -15,7 +15,7 @@
 	const tabsContext = getContext<{
 		activeTab: number;
 		setActiveTab: (index: number) => void;
-		registerTab: (label: string | undefined, icon: string | Component | undefined) => number;
+		registerTab: (label: string | undefined, icon: Component | undefined) => number;
 	}>('tabs');
 
 	// Register this tab and get its index

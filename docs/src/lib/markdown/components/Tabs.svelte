@@ -31,7 +31,7 @@
 	let localActiveIndex = $state(0);
 	let syncedState = $derived(key ? getSyncedState(key) : null);
 
-	let tabs = $state<Array<{ label?: string; icon?: string | Component }>>([]);
+	let tabs = $state<Array<{ label?: string; icon?: Component }>>([]);
 	let tabCounter = 0;
 
 	// Compute active tab index based on synced label or local index
@@ -63,37 +63,14 @@
 				localActiveIndex = index;
 			}
 		},
-		registerTab: (label: string | undefined, icon: string | Component | undefined) => {
+		registerTab: (label: string | undefined, icon: Component | undefined) => {
 			const index = tabCounter++;
 			tabs = [...tabs, { label, icon }];
 			return index;
 		}
 	});
 
-	// Convert i-collection-name format to collection:name format for Iconify
-	function getIconifyName(name: string): string {
-		// If already in collection:name format, use as-is
-		if (name.includes(':')) return name;
-		// Convert i-collection-name to collection:name
-		const match = name.match(/^i-([^-]+)-(.+)$/);
-		if (match) {
-			const [, collection, iconName] = match;
-			return `${collection}:${iconName.replace(/-/g, '-')}`;
-		}
-		return name;
-	}
-
-	// Check if any tabs have string icons (need Iconify)
-	const hasIconifyIcons = $derived(tabs.some((tab) => typeof tab.icon === 'string'));
 </script>
-
-<svelte:head>
-	<!-- Load Iconify web component if needed -->
-	{#if hasIconifyIcons}
-		<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js">
-		</script>
-	{/if}
-</svelte:head>
 
 <div class={cls('tabs mt-4 flex flex-col', className)} {...restProps}>
 	<!-- Tabs -->
@@ -117,14 +94,9 @@
 				}}
 			>
 				{#if tab.icon}
-					{#if typeof tab.icon === 'string'}
-						<!-- Iconify web component -->
-						<iconify-icon icon={getIconifyName(tab.icon)} class="size-4"></iconify-icon>
-					{:else}
-						<!-- Component import (dynamic by default in runes mode) -->
-						{@const IconComponent = tab.icon}
-						<IconComponent class="size-4" />
-					{/if}
+					<!-- unplugin-icons component -->
+					{@const IconComponent = tab.icon}
+					<IconComponent class="size-4" />
 				{/if}
 				{tab.label || `Tab ${index + 1}`}
 			</button>
