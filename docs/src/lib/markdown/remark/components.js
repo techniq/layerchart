@@ -1,3 +1,4 @@
+import { cls } from '@layerstack/tailwind';
 import { visit, EXIT } from 'unist-util-visit';
 
 /**
@@ -141,8 +142,7 @@ export function remarkComponents() {
 						data.hName = iconComponentName;
 						data.hProperties = {
 							...otherAttributes,
-							// Always add inline-block, and append any user-provided classes
-							class: className ? `inline-block ${className}` : 'inline-block'
+							class: cls('inline-block', className)
 						};
 					}
 				} else if (componentName === 'button') {

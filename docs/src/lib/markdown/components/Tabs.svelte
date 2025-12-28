@@ -69,7 +69,6 @@
 			return index;
 		}
 	});
-
 </script>
 
 <div class={cls('tabs mt-4 flex flex-col', className)} {...restProps}>
@@ -96,7 +95,7 @@
 				{#if tab.icon}
 					<!-- unplugin-icons component -->
 					{@const IconComponent = tab.icon}
-					<IconComponent class="size-4" />
+					<IconComponent class="size-4 fill-surface-content" />
 				{/if}
 				{tab.label || `Tab ${index + 1}`}
 			</button>
