@@ -48,7 +48,9 @@
 	});
 </script>
 
-<div class="relative group">
+<div
+	class="relative group rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden my-2"
+>
 	{#if dataTitle}
 		<div
 			class="text-sm font-bold text-surface-content/70 border-b border-surface-content/10 bg-surface-100 px-4 py-2 flex gap-2 items-center"

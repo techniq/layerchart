@@ -78,8 +78,6 @@ code:not(pre > code):not(.custom) {
 
 /* Code block figure container */
 figure[data-rehype-pretty-code-figure] {
-	@apply rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden;
-
 	/* Title/filename display - hidden, handled by pre.svelte component */
 	& figcaption[data-rehype-pretty-code-title] {
 		@apply hidden;
