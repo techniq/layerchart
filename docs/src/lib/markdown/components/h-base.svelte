@@ -15,9 +15,9 @@
 
 <svelte:element this={tag} {id} class={cls('scroll-m-20', className)} {...restProps}>
 	<a href="#{id}" class="group relative">
-		{@render children?.()}
 		<LucideLink
-			class="inline text-surface-content/50 opacity-0 group-hover:opacity-100 -translate-x-full group-hover:translate-x-0 transition-all scale-70"
+			class="absolute top-1/2 left-0 text-surface-content/50 opacity-0 group-hover:opacity-100 translate-x-0 -translate-y-1/2 group-hover:-translate-x-full transition-all scale-70"
 		/>
+		{@render children?.()}
 	</a>
 </svelte:element>
