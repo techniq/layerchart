@@ -5,12 +5,10 @@ layers: [svg, canvas]
 related: [ScatterChart]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
-> See also: [ScatterChart](/docs/components/ScatterChart) for simplified examples
+::tip
+See also: [ScatterChart](/docs/components/ScatterChart) for simplified examples
+::
 
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }

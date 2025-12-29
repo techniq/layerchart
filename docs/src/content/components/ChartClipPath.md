@@ -4,7 +4,3 @@ category: clipping
 layers: [svg]
 related: [RectClipPath, Rect]
 ---
-
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>

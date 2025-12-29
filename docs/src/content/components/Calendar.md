@@ -5,40 +5,36 @@ layers: [svg, canvas, html]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode  />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Responsive cell size (default)
 
-<Example name="responsive-cell-size-default" />
+:example{ name="responsive-cell-size-default" showCode }
 
 ### Fixed cell size
 
-<Example name="fixed-cell-size" />
+:example{ name="fixed-cell-size" showCode }
 
 ### Multiple Years
 
-<Example name="multiple-years" />
+:example{ name="multiple-years" showCode }
 
 ### Rounded cells
 
-<Example name="rounded-cells" />
+:example{ name="rounded-cells" showCode }
 
 ### Html with padding
 
-<Example name="html-with-padding" />
+:example{ name="html-with-padding" showCode }
 
 ### Last month
 
-<Example name="last-month" />
+:example{ name="last-month" showCode }
 
 ### 90 days
 
-<Example name="90-days" /> -->
+:example{ name="90-days" showCode } -->

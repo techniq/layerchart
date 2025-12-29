@@ -5,130 +5,126 @@ layers: [svg, canvas]
 related: [Chart, Pie]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" }
 
 ### onTooltipClick
 
-<Example name="tooltip-click" />
+:example{ name="tooltip-click" }
 
 ### Radius (offset)
 
 > If a `*radius` property is negative (ex. `-20`), the value will be applied as an offset from the charts `width` / `height`.
 
-<Example name="radius-offset" />
+:example{ name="radius-offset" }
 
 ### Radius (percent)
 
 > If a `*radius` property is `>0` and `<1` (ex: `0.8`), the value will be applied as an offset from the charts `width` / `height`.
 
-<Example name="radius-percent" />
+:example{ name="radius-percent" }
 
 ### Radius (fixed)
 
 > If a `*radius` property is `>=1` (ex: `80`), the value will be applied as a discrete value.
 
-<Example name="radius-fixed" />
+:example{ name="radius-fixed" }
 
 ### Donut (innerRadius)
 
-<Example name="donut" />
+:example{ name="donut" }
 
 ### Donut with inner text
 
-<Example name="donut-with-text" />
+:example{ name="donut-with-text" }
 
 ### Arc (range)
 
-<Example name="arc" />
+:example{ name="arc" }
 
 ### Segments
 
-<Example name="segments" />
+:example{ name="segments" }
 
 ### Series
 
-<Example name="series" />
+:example{ name="series" }
 
 ### Series (props)
 
-<Example name="series-props" />
+:example{ name="series-props" }
 
 ### Series (arc click)
 
-<Example name="series-click" />
+:example{ name="series-click" }
 
 ### Arc props
 
-<Example name="arc-props" />
+:example{ name="arc-props" }
 
 ### Legend
 
-<Example name="legend" />
+:example{ name="legend" }
 
 ### Legend (placement)
 
-<Example name="legend-placement" />
+:example{ name="legend-placement" }
 
 ### Legend (with padding)
 
-<Example name="legend-with-padding" />
+:example{ name="legend-with-padding" }
 
 ### Legend (responsive)
 
-<Example name="legend-responsive" />
+:example{ name="legend-responsive" }
 
 ### Legend (custom label)
 
-<Example name="legend-custom-label" />
+:example{ name="legend-custom-label" }
 
 ### Placement (left)
 
-<Example name="placement-left" />
+:example{ name="placement-left" }
 
 ### Placement (right)
 
-<Example name="placement-right" />
+:example{ name="placement-right" }
 
 ### Placement (custom)
 
-<Example name="placement-custom" />
+:example{ name="placement-custom" }
 
 ### Colors (CSS variables)
 
-<Example name="colors-variables" />
+:example{ name="colors-variables" }
 
 ### Colors (scheme)
 
-<Example name="colors-scheme" />
+:example{ name="colors-scheme" }
 
 ### Colors (interpolator)
 
-<Example name="colors-interpolator" />
+:example{ name="colors-interpolator" }
 
 ### Colors (data prop)
 
-<Example name="colors-data-prop" />
+:example{ name="colors-data-prop" }
 
 ### Offset slice
 
-<Example name="offset-slice" />
+:example{ name="offset-slice" }
 
 ### Motion (tween)
 
-<Example name="motion-tween" />
+:example{ name="motion-tween" }
 
 ### Motion (spring)
 
-<Example name="motion-spring" /> -->
+:example{ name="motion-spring" } -->

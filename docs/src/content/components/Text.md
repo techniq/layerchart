@@ -5,15 +5,11 @@ layers: [svg, canvas, html]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Examples
 
 ### Usage
 
-<Example name="playground" showCode />
+:example{ name="playground" showCode }
 
 ## Along path
 
@@ -21,8 +17,8 @@ related: []
 
 The text will smartly orientate based on the direction (clockwise / counter-clockwise) and location (top, bottom, left, right) of the arc
 
-<Example component="Arc" name="label-direction" />
+:example{ component="Arc" name="label-direction" }
 
 <!-- ### Word wrap with explicit `\n`
 
-<Example name="word-wrap-with-explicit-n" /> -->
+:example{ name="word-wrap-with-explicit-n" } -->

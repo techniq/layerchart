@@ -4,7 +4,3 @@ category: geo
 layers: [svg, canvas]
 related: [GeoTile]
 ---
-
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
