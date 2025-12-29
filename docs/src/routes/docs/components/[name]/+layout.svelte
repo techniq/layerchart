@@ -20,9 +20,25 @@
 	const { metadata } = $derived(data);
 
 	// Add examples to context for Example component to use
+	// Merges layout examples with any page-specific examples
 	const examplesContext = {
 		get current() {
-			return data.examples;
+			const base = data.examples ?? {};
+
+			// If there's an example from page data (for individual example pages), merge it in
+			if (page.data.example && page.params.name && page.params.example) {
+				const componentName = page.params.name;
+				const exampleName = page.params.example;
+				return {
+					...base,
+					[componentName]: {
+						...base[componentName],
+						[exampleName]: page.data.example
+					}
+				};
+			}
+
+			return base;
 		}
 	};
 	examples.set(examplesContext);
