@@ -327,6 +327,36 @@ print('Hello from Python')
 
 :::
 
+## Tabs with live code
+
+::tabs
+
+:::tab{label="A"}
+
+```svelte live
+<script>
+	let a = 10;
+</script>
+
+{a}
+```
+
+:::
+
+:::tab{label="B"}
+
+```svelte live
+<script>
+	let b = 20;
+</script>
+
+{b}
+```
+
+:::
+
+::
+
 ### Icons (Inline)
 
 ```md
