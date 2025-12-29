@@ -22,10 +22,10 @@ export const load = async ({ params, parent }) => {
 	const catalog: ComponentCatalog | null =
 		catalogPath in allCatalogs ? ((await allCatalogs[catalogPath]()) as ComponentCatalog) : null;
 
-	// Load examples from markdown content and catalog
+	// Eagerly load examples referenced in the markdown content
+	// Only examples explicitly in the markdown are included (not the full catalog)
 	const pageExamples = await loadExamplesFromMarkdown(
 		metadata.content,
-		catalog,
 		allExamples,
 		allSources,
 		params.name, // default component for implicit <Example name="..." /> usage

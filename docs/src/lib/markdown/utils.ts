@@ -10,8 +10,14 @@ import {
 	type Util as UtilMetadata
 } from 'content-collections';
 
-import type { Examples } from '$lib/types.js';
-import type { ComponentCatalog } from '$examples/catalog/types.js';
+import type { Examples, LoadedExample } from '$lib/types.js';
+
+/**
+ * Helper to clean up source code by removing export statements
+ */
+function cleanupSourceCode(source: string): string {
+	return source.replace(/^.*export .*;.*$/gm, '');
+}
 
 /**
  * Resolve a relative or absolute path to a full Svelte component path
@@ -75,9 +81,12 @@ function getMetadata(
 }
 
 /**
- * Extract examples from markdown content and load their components
+ * Extract examples from markdown content and eagerly load them.
+ *
+ * Only examples explicitly referenced in the markdown are loaded - the catalog
+ * is NOT used here to avoid loading all examples when only a few are shown.
+ *
  * @param markdownContent - The markdown content to extract examples from
- * @param catalog - Optional catalog to include examples from
  * @param allExamples - Glob import of all example components
  * @param allSources - Glob import of all example sources
  * @param defaultComponent - Optional default component name (from route params)
@@ -87,7 +96,6 @@ function getMetadata(
  */
 export async function loadExamplesFromMarkdown(
 	markdownContent: string,
-	catalog: ComponentCatalog | null,
 	allExamples: Record<string, () => Promise<any>>,
 	allSources: Record<string, () => Promise<any>>,
 	defaultComponent?: string,
@@ -118,65 +126,67 @@ export async function loadExamplesFromMarkdown(
 
 	const examples: Examples = {};
 
+	// Collect all load promises
+	const loadPromises: Promise<void>[] = [];
+
 	// Handle path-based examples
 	for (const example of pageExamples) {
 		if (example.path && currentPath) {
 			const resolvedPath = resolveExamplePath(example.path, currentPath);
 
-			// Load component and source
 			if (allSvelteComponents[resolvedPath] && allSvelteSources[resolvedPath]) {
-				try {
-					const component = (await allSvelteComponents[resolvedPath]()) as any;
-					const source = (await allSvelteSources[resolvedPath]()) as string;
+				loadPromises.push(
+					(async () => {
+						const [componentModule, rawSource] = await Promise.all([
+							allSvelteComponents[resolvedPath](),
+							allSvelteSources[resolvedPath]()
+						]);
 
-					// Store path-based examples under '__path__' namespace
-					if (!examples['__path__']) {
-						examples['__path__'] = {};
-					}
-					examples['__path__'][resolvedPath] = {
-						component: component.default,
-						source
-					};
-				} catch (e) {
-					console.error(`Failed to load path-based example: ${resolvedPath}`, e);
-				}
+						if (!examples['__path__']) {
+							examples['__path__'] = {};
+						}
+
+						examples['__path__'][resolvedPath] = {
+							component: (componentModule as any).default,
+							source: cleanupSourceCode(rawSource as string)
+						} satisfies LoadedExample;
+					})()
+				);
 			}
 		}
 	}
 
 	// Handle traditional component/name-based examples
-	for (const path in allExamples) {
-		// Check if this path matches catalog examples
-		const catalogMatch = catalog?.examples.some(
-			(example) => path === `/src/examples/${type}/${catalog.component}/${example.name}.svelte`
-		);
+	// ONLY for examples referenced in the markdown content (not the full catalog)
+	// This ensures we don't load 54 examples when only 1 is shown on the page
+	for (const example of pageExamples) {
+		if (example.component && example.name) {
+			const examplePath = `/src/examples/${type}/${example.component}/${example.name}.svelte`;
 
-		// Check if this path matches page examples
-		const pageMatch = pageExamples.some(
-			(example) =>
-				example.component &&
-				example.name &&
-				path === `/src/examples/${type}/${example.component}/${example.name}.svelte`
-		);
+			if (allExamples[examplePath] && allSources[examplePath]) {
+				loadPromises.push(
+					(async () => {
+						const [componentModule, rawSource] = await Promise.all([
+							allExamples[examplePath](),
+							allSources[examplePath]()
+						]);
 
-		if (catalogMatch || pageMatch) {
-			const component = (await allExamples[path]()) as Component;
-			const source = (await allSources[path]()) as string;
-			const pathParts = path.split('/');
-			const componentName = pathParts[pathParts.length - 2];
-			const filename = pathParts[pathParts.length - 1];
-			const name = filename.replace('.svelte', '');
+						if (!examples[example.component!]) {
+							examples[example.component!] = {};
+						}
 
-			// Remove `export { data };`
-			// TODO: Also remove blank lines left behind
-			const cleanupSource = source.replace(/^.*export .*;.*$/gm, '');
-
-			if (!examples[componentName]) {
-				examples[componentName] = {};
+						examples[example.component!][example.name!] = {
+							component: (componentModule as any).default ?? componentModule,
+							source: cleanupSourceCode(rawSource as string)
+						} satisfies LoadedExample;
+					})()
+				);
 			}
-			examples[componentName][name] = { component, source: cleanupSource };
 		}
 	}
+
+	// Wait for all examples to load in parallel
+	await Promise.all(loadPromises);
 
 	return examples;
 }
