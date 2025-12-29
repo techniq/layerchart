@@ -417,7 +417,7 @@
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else if tooltip}
+      {:else if tooltipContext}
         <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data })}
             <Tooltip.List {...props.tooltip?.list}>

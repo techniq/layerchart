@@ -324,7 +324,7 @@
       padAngle,
       fill: context.cScale?.(context.c(arc.data)),
       data: arc.data,
-      tooltipContext: context.tooltip,
+      tooltip: true,
       onclick: (e) => {
         onArcClick(e, { data: arc.data, series: s });
         // Workaround for `tooltip={{ mode: 'manual' }}
@@ -467,7 +467,7 @@
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else if tooltip}
+      {:else if tooltipContext}
         <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data })}
             <Tooltip.List {...props.tooltip?.list}>

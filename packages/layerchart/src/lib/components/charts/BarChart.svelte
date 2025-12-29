@@ -580,7 +580,7 @@
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else if tooltip}
+      {:else if tooltipContext}
         <DefaultTooltip
           tooltipProps={props.tooltip}
           canHaveTotal={isStackSeries || isGroupSeries}
