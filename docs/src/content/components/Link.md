@@ -5,10 +5,6 @@ layers: [svg, canvas]
 related: [Connector, Points]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example component="Tree" name="basic" />
+:example{ component="Tree" name="basic" }

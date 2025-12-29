@@ -5,10 +5,6 @@ layers: [svg, canvas]
 related: [Link]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="playground" showCode />
+:example{name="playground" showCode }

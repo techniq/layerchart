@@ -14,7 +14,10 @@ import path from 'path';
  *
  * Note: This is only available in Node.js context (build scripts)
  */
-export function readAllFilesFromDirectory(dir: string, baseDir: string = dir): Record<string, string> {
+export function readAllFilesFromDirectory(
+	dir: string,
+	baseDir: string = dir
+): Record<string, string> {
 	const files: Record<string, string> = {};
 
 	const entries = fs.readdirSync(dir, { withFileTypes: true });

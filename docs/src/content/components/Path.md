@@ -5,12 +5,8 @@ layers: [svg, canvas]
 related: [Arc, Area, Bar, Connector, GeoPath, MotionPath, Spline]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<!-- <Example name="basic" showCode /> -->
+<!-- :example{ name="basic" showCode } -->
 
 > TODO

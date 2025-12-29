@@ -5,13 +5,9 @@ layers: [svg, canvas, html]
 related: [Axis, Line, AnnotationLine]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="baseline-x-y" showCode />
+:example{ name="baseline-x-y" showCode }
 
 ## Use cases
 
@@ -21,13 +17,13 @@ A `Rule` component can be used for various use cases include:
 
 with `x={true}` / `y={true}`
 
-<Example name="baseline-x-y" showCode />
+:example{ name="baseline-x-y" showCode }
 
 ### Annotation
 
 with `x={Number}` / `y={Number}`
 
-<Example name="annotation-y" showCode />
+:example{ name="annotation-y" showCode }
 
 ### Data mark
 
@@ -35,50 +31,50 @@ using `<Chart data>` and either:
 
 - implicit `x` / `y` (using `<Chart x={..} y={...}>`)
 
-<Example name="data-x-range" showCode />
+:example{ name="data-x-range" showCode }
 
 - explicit `x="property"` / `y="property"`
 
-<Example name="candlestick" showCode />
+:example{ name="candlestick" showCode }
 
 <!-- ## Examples
 
 ### Baseline (x / y)
 
-<Example name="baseline-x-y" />
+:example{ name="baseline-x-y" }
 
 ### Baseline (top / right)
 
-<Example name="baseline-top-right" />
+:example{ name="baseline-top-right" }
 
 ### Baseline (x with negative values)
 
-<Example name="baseline-x-negative" />
+:example{ name="baseline-x-negative" }
 
 ### Baseline (y with negative values)
 
-<Example name="baseline-y-negative" />
+:example{ name="baseline-y-negative" }
 
 ### Annotation (x)
 
-<Example name="annotation-x" />
+:example{ name="annotation-x" }
 
 ### Annotation (y)
 
-<Example name="annotation-y" />
+:example{ name="annotation-y" }
 
 ### Data driven (x date)
 
-<Example name="data-x-date" />
+:example{ name="data-x-date" }
 
 ### Data driven (x band)
 
-<Example name="data-x-band" />
+:example{ name="data-x-band" }
 
 ### Data driven (x range)
 
-<Example name="data-x-range" />
+:example{ name="data-x-range" }
 
 ### Data driven (y range)
 
-<Example name="data-y-range" /> -->
+:example{ name="data-y-range" } -->

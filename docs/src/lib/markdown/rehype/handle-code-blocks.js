@@ -49,9 +49,7 @@ export function rehypeCodeBlocks() {
 						return true;
 					}
 					if (element.children) {
-						return element.children.some(
-							(child) => child.type === 'element' && hasDataLine(child)
-						);
+						return element.children.some((child) => child.type === 'element' && hasDataLine(child));
 					}
 					return false;
 				}
@@ -64,7 +62,7 @@ export function rehypeCodeBlocks() {
 				const codeClassName = codeNode.properties?.className;
 				if (Array.isArray(codeClassName)) {
 					const langClass = codeClassName.find(
-						(cls) => (typeof cls === 'string' && cls.startsWith('language-'))
+						(cls) => typeof cls === 'string' && cls.startsWith('language-')
 					);
 					if (typeof langClass === 'string') {
 						const language = langClass.replace('language-', '');

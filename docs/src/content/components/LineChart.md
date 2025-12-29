@@ -5,190 +5,186 @@ layers: [svg, canvas]
 related: [Chart, Spline]
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="basic" showCode />
+:example{ name="basic" showCode }
 
 <!-- ## Examples
 
 ### Basic
 
-<Example name="basic" />
+:example{ name="basic" }
 
 ### Default series label
 
-<Example name="default-series-label" />
+:example{ name="default-series-label" }
 
 ### Override color
 
-<Example name="override-color" />
+:example{ name="override-color" }
 
 ### Curve
 
-<Example name="curve" />
+:example{ name="curve" }
 
 ### Vertical
 
-<Example name="vertical" />
+:example{ name="vertical" }
 
 ### Series
 
-<Example name="series" />
+:example{ name="series" }
 
 ### Series (with nulls)
 
-<Example name="series-with-nulls" />
+:example{ name="series-with-nulls" }
 
 ### Series (separate data)
 
-<Example name="series-separate-data" />
+:example{ name="series-separate-data" }
 
 ### Series (separate data with different length)
 
-<Example name="series-separate-data-diff-length" />
+:example{ name="series-separate-data-diff-length" }
 
 ### Series (vertical)
 
-<Example name="series-vertical" />
+:example{ name="series-vertical" }
 
 ### Series (individual tooltip with highlight)
 
-<Example name="series-individual-tooltip" />
+:example{ name="series-individual-tooltip" }
 
 ### Series (point click)
 
-<Example name="series-point-click" />
+:example{ name="series-point-click" }
 
 ### Series (custom highlight point)
 
-<Example name="series-custom-highlight-point" />
+:example{ name="series-custom-highlight-point" }
 
 ### Series (labels on point hover)
 
-<Example name="series-labels-hover" />
+:example{ name="series-labels-hover" }
 
 ### Labels
 
-<Example name="labels" />
+:example{ name="labels" }
 
 ### Points
 
-<Example name="points" />
+:example{ name="points" }
 
 ### Labels with points
 
-<Example name="labels-with-points" />
+:example{ name="labels-with-points" }
 
 ### Points within labels
 
-<Example name="labels-within-points" />
+:example{ name="labels-within-points" }
 
 ### Radar (linear grid)
 
-<Example name="radar" />
+:example{ name="radar" }
 
 ### Radar (rounded grid)
 
-<Example name="radar-rounded" />
+:example{ name="radar-rounded" }
 
 ### Radar with series data
 
-<Example name="radar-series" />
+:example{ name="radar-series" }
 
 ### Gradient encoding
 
-<Example name="gradient-encoding" />
+:example{ name="gradient-encoding" }
 
 ### Gradient threshold
 
-<Example name="gradient-threshold" />
+:example{ name="gradient-threshold" }
 
 ### Large series
 
-<Example name="large-series" />
+:example{ name="large-series" }
 
 ### Large radial series
 
-<Example name="large-radial-series" />
+:example{ name="large-radial-series" }
 
 ### Dynamic data (move over chart)
 
-<Example name="dynamic-data" />
+:example{ name="dynamic-data" }
 
 ### Null gaps
 
-<Example name="null-gaps" />
+:example{ name="null-gaps" }
 
 ### Null with dashed lines
 
-<Example name="null-dashed-gaps" />
+:example{ name="null-dashed-gaps" }
 
 ### Sparkline
 
-<Example name="sparkline" />
+:example{ name="sparkline" }
 
 ### Single axis (x)
 
-<Example name="single-axis-x" />
+:example{ name="single-axis-x" }
 
 ### Single axis (y)
 
-<Example name="single-axis-y" />
+:example{ name="single-axis-y" }
 
 ### Axis labels inside
 
-<Example name="axis-labels-inside" />
+:example{ name="axis-labels-inside" }
 
 ### Legend
 
-<Example name="legend" />
+:example{ name="legend" }
 
 ### Tooltip click
 
-<Example name="tooltip-click" />
+:example{ name="tooltip-click" }
 
 ### Custom tooltip
 
-<Example name="custom-tooltip" />
+:example{ name="custom-tooltip" }
 
 ### Point annotations
 
-<Example name="point-annotations" />
+:example{ name="point-annotations" }
 
 > See also: [AnnotationPoint](/components/AnnotationPoint) for more examples
 
 ### Line annotation
 
-<Example name="line-annotation" />
+:example{ name="line-annotation" }
 
 > See also: [AnnotationLine](/components/AnnotationLine) for more examples
 
 ### Range annotation
 
-<Example name="range-annotation" />
+:example{ name="range-annotation" }
 
 > See also: [AnnotationRange](/components/AnnotationRange) for more examples
 
 ### Series point annotations
 
-<Example name="series-point-annotations" />
+:example{ name="series-point-annotations" }
 
 ### Brushing
 
-<Example name="brush" />
+:example{ name="brush" }
 
 ### Brush with series point events
 
-<Example name="series-brush" />
+:example{ name="series-brush" }
 
 ### Draw
 
-<Example name="draw" />
+:example{ name="draw" }
 
 ### Custom
 
-<Example name="custom" /> -->
+:example{ name="custom" } -->
