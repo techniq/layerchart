@@ -12,27 +12,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 70,
+          "lineNumber": 71,
           "line": "<Layer disableHitCanvas={timer.running}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 71,
+          "lineNumber": 72,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 73,
+          "lineNumber": 74,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 79,
+          "lineNumber": 80,
           "line": "<GeoCircle"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 89,
+          "lineNumber": 90,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -48,22 +48,22 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 62,
+          "lineNumber": 63,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 63,
+          "lineNumber": 64,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 64,
+          "lineNumber": 65,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 74,
+          "lineNumber": 75,
           "line": "<GeoCircle"
         }
       ]
@@ -74,21 +74,21 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 79,
+      "lineNumber": 80,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 74,
+      "lineNumber": 75,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 82,
+      "lineNumber": 83,
       "line": "<GeoCircle"
     },
     {
@@ -99,5 +99,5 @@
       "line": "<GeoCircle"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.121Z"
+  "updatedAt": "2025-12-29T21:36:44.710Z"
 }

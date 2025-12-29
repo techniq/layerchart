@@ -65,18 +65,28 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 25,
+          "lineNumber": 44,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
+          "component": "Text",
+          "lineNumber": 46,
+          "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
+        },
+        {
           "component": "AnnotationLine",
-          "lineNumber": 28,
+          "lineNumber": 48,
           "line": "<AnnotationLine"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 34,
+          "lineNumber": 54,
           "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 68,
+          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -206,7 +216,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 34,
+      "lineNumber": 54,
       "line": "<AnnotationPoint"
     },
     {
@@ -238,5 +248,5 @@
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2025-11-14T15:00:19.265Z"
+  "updatedAt": "2025-12-29T21:36:44.209Z"
 }

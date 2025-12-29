@@ -28,17 +28,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 37,
+          "lineNumber": 34,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 38,
+          "lineNumber": 35,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 40,
+          "lineNumber": 37,
           "line": "<Spline"
         }
       ]
@@ -49,17 +49,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Spline"
         }
       ]
@@ -91,22 +91,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 35,
+          "lineNumber": 32,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 36,
+          "lineNumber": 33,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 38,
+          "lineNumber": 35,
           "line": "<Spline"
         }
       ]
     }
   ],
   "usage": [],
-  "updatedAt": "2025-11-23T01:49:02.469Z"
+  "updatedAt": "2025-12-29T21:36:45.031Z"
 }

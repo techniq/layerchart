@@ -19,7 +19,7 @@
         {
           "component": "LineChart",
           "lineNumber": 9,
-          "line": "<LineChart"
+          "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
       ]
     },
@@ -104,7 +104,7 @@
         {
           "component": "LineChart",
           "lineNumber": 14,
-          "line": "<LineChart"
+          "line": "<LineChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
       ]
     },
@@ -785,7 +785,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 25,
+      "lineNumber": 44,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -898,7 +898,7 @@
       "component": "LineChart",
       "path": "/example/LineChart/basic",
       "lineNumber": 9,
-      "line": "<LineChart"
+      "line": "<LineChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
     },
     {
       "example": "brush",
@@ -933,7 +933,7 @@
       "component": "LineChart",
       "path": "/example/LineChart/default-series-label",
       "lineNumber": 14,
-      "line": "<LineChart"
+      "line": "<LineChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
     },
     {
       "example": "draw",
@@ -1300,5 +1300,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.722Z"
+  "updatedAt": "2025-12-29T21:36:44.985Z"
 }

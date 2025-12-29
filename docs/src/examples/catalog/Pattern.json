@@ -209,15 +209,15 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 34,
-      "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+      "lineNumber": 30,
+      "line": "<Pattern"
     },
     {
       "example": "vertical-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-highlight-individual-bar",
-      "lineNumber": 28,
-      "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+      "lineNumber": 27,
+      "line": "<Pattern"
     },
     {
       "example": "circles",
@@ -507,5 +507,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.579Z"
+  "updatedAt": "2025-12-29T21:36:45.128Z"
 }

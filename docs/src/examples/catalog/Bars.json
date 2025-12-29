@@ -322,32 +322,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 62,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 76,
+          "lineNumber": 80,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 77,
+          "lineNumber": 81,
           "line": "<Axis placement=\"bottom\" grid rule />"
         },
         {
           "component": "Bar",
-          "lineNumber": 82,
+          "lineNumber": 86,
           "line": "<Bar"
         },
         {
           "component": "Highlight",
-          "lineNumber": 111,
+          "lineNumber": 115,
           "line": "<Highlight area />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 114,
+          "lineNumber": 118,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -372,28 +372,18 @@
           "line": "<Axis placement=\"bottom\" grid rule />"
         },
         {
-          "component": "Highlight",
-          "lineNumber": 30,
-          "line": "<Highlight"
-        },
-        {
           "component": "Pattern",
-          "lineNumber": 34,
-          "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
+          "lineNumber": 30,
+          "line": "<Pattern"
         },
         {
-          "component": "Rect",
-          "lineNumber": 35,
-          "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
-        },
-        {
-          "component": "Line",
+          "component": "Highlight",
           "lineNumber": 36,
-          "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+          "line": "<Highlight data={data[3]} area={{ fill: pattern, class: 'stroke-secondary/50' }} />"
         },
         {
           "component": "Bars",
-          "lineNumber": 38,
+          "lineNumber": 39,
           "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
       ]
@@ -874,27 +864,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 61,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 75,
+          "lineNumber": 78,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 76,
+          "lineNumber": 79,
           "line": "<Axis placement=\"bottom\" grid rule />"
         },
         {
           "component": "Bar",
-          "lineNumber": 80,
+          "lineNumber": 83,
           "line": "<Bar"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 118,
+          "lineNumber": 121,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1389,29 +1379,19 @@
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
-          "component": "Bars",
-          "lineNumber": 27,
-          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
-        },
-        {
           "component": "Pattern",
-          "lineNumber": 28,
-          "line": "<Pattern id=\"highlight-pattern\" width={8} height={8}>"
-        },
-        {
-          "component": "Rect",
-          "lineNumber": 29,
-          "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
-        },
-        {
-          "component": "Line",
-          "lineNumber": 30,
-          "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
+          "lineNumber": 27,
+          "line": "<Pattern"
         },
         {
           "component": "Highlight",
-          "lineNumber": 32,
-          "line": "<Highlight"
+          "lineNumber": 33,
+          "line": "<Highlight data={data[3]} area={{ fill: pattern, class: 'stroke-secondary/50' }} />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 36,
+          "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
         }
       ]
     },
@@ -1984,27 +1964,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 61,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 75,
+          "lineNumber": 78,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 76,
+          "lineNumber": 79,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Bar",
-          "lineNumber": 80,
+          "lineNumber": 83,
           "line": "<Bar"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 118,
+          "lineNumber": 121,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -2294,7 +2274,7 @@
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
@@ -2518,7 +2498,7 @@
       "example": "vertical-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-highlight-individual-bar",
-      "lineNumber": 27,
+      "lineNumber": 36,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
@@ -2739,5 +2719,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.018Z"
+  "updatedAt": "2025-12-29T21:36:44.400Z"
 }

@@ -421,42 +421,42 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Rule y={0} />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Rule y={0} />"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Rule y={0} />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Rule y={0} />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Rule y={0} />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Rule y={0} />"
     },
     {
@@ -684,5 +684,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:10.169Z"
+  "updatedAt": "2025-12-29T21:36:45.270Z"
 }

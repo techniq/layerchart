@@ -125,35 +125,35 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 12,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 12,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 12,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 29,
+      "lineNumber": 28,
       "line": "<Layer>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Layer>"
     },
     {
@@ -174,14 +174,14 @@
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 34,
+      "lineNumber": 33,
       "line": "<Layer>"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
@@ -195,56 +195,56 @@
       "example": "stack",
       "component": "Area",
       "path": "/example/Area/stack",
-      "lineNumber": 49,
+      "lineNumber": 57,
       "line": "<Layer>"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 39,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Layer>"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 12,
+      "lineNumber": 11,
       "line": "<Layer>"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Area",
       "path": "/example/Area/with-tooltip-and-highlight",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Layer>"
     },
     {
@@ -629,7 +629,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 76,
+      "lineNumber": 80,
       "line": "<Layer>"
     },
     {
@@ -748,7 +748,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 75,
+      "lineNumber": 78,
       "line": "<Layer>"
     },
     {
@@ -993,7 +993,7 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 75,
+      "lineNumber": 78,
       "line": "<Layer>"
     },
     {
@@ -1434,14 +1434,14 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 70,
+      "lineNumber": 71,
       "line": "<Layer disableHitCanvas={timer.running}>"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 62,
+      "lineNumber": 63,
       "line": "<Layer>"
     },
     {
@@ -1490,14 +1490,14 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/animated-globe",
-      "lineNumber": 144,
+      "lineNumber": 146,
       "line": "<Layer {debug}>"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/animated-globe",
-      "lineNumber": 165,
+      "lineNumber": 167,
       "line": "<Layer type=\"canvas\" pointerEvents={false}>"
     },
     {
@@ -1539,7 +1539,7 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 52,
+      "lineNumber": 60,
       "line": "<Layer>"
     },
     {
@@ -1560,7 +1560,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 67,
+      "lineNumber": 69,
       "line": "<Layer disableHitCanvas={timer.running}>"
     },
     {
@@ -1616,7 +1616,7 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 57,
+      "lineNumber": 59,
       "line": "<Layer>"
     },
     {
@@ -1707,7 +1707,7 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 26,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
@@ -1924,14 +1924,14 @@
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 6,
+      "lineNumber": 7,
       "line": "<Layer>"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 6,
+      "lineNumber": 7,
       "line": "<Layer>"
     },
     {
@@ -1952,28 +1952,28 @@
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 38,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 52,
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 66,
+      "lineNumber": 63,
       "line": "<Layer>"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
@@ -1987,7 +1987,7 @@
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 36,
+      "lineNumber": 33,
       "line": "<Layer>"
     },
     {
@@ -3048,5 +3048,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.661Z"
+  "updatedAt": "2025-12-29T21:36:44.933Z"
 }

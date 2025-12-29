@@ -19,7 +19,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
       ]
     },
@@ -115,7 +115,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 14,
-          "line": "<AreaChart"
+          "line": "<AreaChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
         }
       ]
     },
@@ -621,7 +621,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/basic",
       "lineNumber": 9,
-      "line": "<AreaChart"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300} />"
     },
     {
       "example": "brush",
@@ -670,7 +670,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/default-series-label",
       "lineNumber": 14,
-      "line": "<AreaChart"
+      "line": "<AreaChart {data} x=\"date\" y=\"visits\" padding={defaultChartPadding({ right: 10 })} height={300} />"
     },
     {
       "example": "funnel",
@@ -925,5 +925,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:08.916Z"
+  "updatedAt": "2025-12-29T21:36:44.309Z"
 }

@@ -850,28 +850,28 @@
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 40,
+      "lineNumber": 37,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 54,
+      "lineNumber": 51,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 68,
+      "lineNumber": 65,
       "line": "<Spline"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Spline"
     },
     {
@@ -885,7 +885,7 @@
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 38,
+      "lineNumber": 35,
       "line": "<Spline"
     },
     {
@@ -1113,5 +1113,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:10.236Z"
+  "updatedAt": "2025-12-29T21:36:45.318Z"
 }

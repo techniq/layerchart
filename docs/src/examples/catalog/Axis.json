@@ -876,70 +876,70 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Axis placement=\"bottom\" format=\"day\" rule ticks={(scale) => scale.domain()}>"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "gradient-separate-stroke",
+      "component": "Area",
+      "path": "/example/Area/gradient-separate-stroke",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
       "lineNumber": 13,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "gradient-separate-stroke",
-      "component": "Area",
-      "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 14,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -974,28 +974,28 @@
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 35,
+      "lineNumber": 34,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 43,
+      "lineNumber": 42,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1016,112 +1016,112 @@
       "example": "stack",
       "component": "Area",
       "path": "/example/Area/stack",
-      "lineNumber": 50,
+      "lineNumber": 58,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stack",
       "component": "Area",
       "path": "/example/Area/stack",
-      "lineNumber": 51,
+      "lineNumber": 59,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 40,
+      "lineNumber": 48,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 41,
+      "lineNumber": 49,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "threshold-with-lineargradient-over-under",
+      "component": "Area",
+      "path": "/example/Area/threshold-with-lineargradient-over-under",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
       "lineNumber": 22,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "threshold-with-lineargradient-over-under",
-      "component": "Area",
-      "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "with-labels",
+      "component": "Area",
+      "path": "/example/Area/with-labels",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
       "lineNumber": 13,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "with-labels",
-      "component": "Area",
-      "path": "/example/Area/with-labels",
-      "lineNumber": 14,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Area",
       "path": "/example/Area/with-tooltip-and-highlight",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Area",
       "path": "/example/Area/with-tooltip-and-highlight",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -1786,14 +1786,14 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 77,
+      "lineNumber": 81,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 78,
+      "lineNumber": 82,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2024,14 +2024,14 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 76,
+      "lineNumber": 79,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 77,
+      "lineNumber": 80,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2514,14 +2514,14 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 76,
+      "lineNumber": 79,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 77,
+      "lineNumber": 80,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4030,5 +4030,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:08.940Z"
+  "updatedAt": "2025-12-29T21:36:44.331Z"
 }
