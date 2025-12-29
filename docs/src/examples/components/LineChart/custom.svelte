@@ -15,7 +15,7 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>
+<LineChart {data} x="date" y="value" padding={defaultChartPadding({ right: 10 })} height={300}>
 	{#snippet children({ context })}
 		<Layer>
 			<Axis placement="left" grid rule />

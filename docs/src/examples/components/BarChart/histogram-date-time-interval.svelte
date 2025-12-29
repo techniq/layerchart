@@ -43,7 +43,7 @@
 	x="x0"
 	y="length"
 	bandPadding={0.2}
-	padding={{ ...defaultChartPadding(), left: 30, bottom: 30 }}
+	padding={defaultChartPadding({ left: 30, bottom: 30 })}
 	props={{
 		xAxis: {
 			ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),

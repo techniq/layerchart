@@ -42,6 +42,6 @@
 			}
 		}
 	}}
-	padding={{ ...defaultChartPadding(), top: 20 }}
+	padding={defaultChartPadding({ top: 20 })}
 	height={300}
 />

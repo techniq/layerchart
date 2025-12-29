@@ -33,7 +33,7 @@
 	{data}
 	y="age"
 	orientation="horizontal"
-	padding={{ ...defaultChartPadding(), left: 32, right: 10 }}
+	padding={defaultChartPadding({ left: 32, right: 10 })}
 	xPadding={[5, 5]}
 	labels={{ format: (value) => format(Math.abs(value), 'metric') }}
 	props={{

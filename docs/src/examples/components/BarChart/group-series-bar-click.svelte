@@ -25,7 +25,7 @@
 		}
 	]}
 	seriesLayout="group"
-	padding={{ ...defaultChartPadding(), left: 24 }}
+	padding={defaultChartPadding({ left: 24 })}
 	props={{
 		xAxis: { format: 'none' },
 		yAxis: { format: 'metric' },

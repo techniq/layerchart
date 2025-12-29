@@ -22,7 +22,7 @@
 		{ key: 'oranges', color: 'var(--color-oranges)' }
 	]}
 	props={{ tooltip: { context: { hideDelay: 500 } } }}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 >
 	{#snippet tooltip({ context, setHighlightKey, series })}

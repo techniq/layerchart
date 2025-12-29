@@ -422,7 +422,7 @@
         {
           "component": "Chart",
           "lineNumber": 7,
-          "line": "<Chart yDomain={[0, 100]} padding={{ ...defaultChartPadding(), right: 90 }} height={300}>"
+          "line": "<Chart yDomain={[0, 100]} padding={defaultChartPadding({ right: 90 })} height={300}>"
         },
         {
           "component": "Layer",

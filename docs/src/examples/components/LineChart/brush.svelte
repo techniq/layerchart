@@ -15,6 +15,6 @@
 		spline: { motion: { type: 'tween', duration: 200 } },
 		xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true }
 	}}
-	padding={{ ...defaultChartPadding(), left: 25 }}
+	padding={defaultChartPadding({ left: 25 })}
 	height={300}
 />

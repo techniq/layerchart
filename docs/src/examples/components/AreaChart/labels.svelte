@@ -12,6 +12,6 @@
 	y="value"
 	labels
 	brush
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

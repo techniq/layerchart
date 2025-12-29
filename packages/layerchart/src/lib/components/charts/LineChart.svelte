@@ -337,7 +337,7 @@
   yNice={orientation === 'horizontal'}
   {radial}
   {orientation}
-  padding={radial ? undefined : defaultChartPadding(axis, legend)}
+  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false

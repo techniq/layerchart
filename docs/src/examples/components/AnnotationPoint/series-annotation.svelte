@@ -11,7 +11,7 @@
 	{data}
 	x="date"
 	y="value"
-	padding={{ ...defaultChartPadding(), right: 45, bottom: 15, left: 25 }}
+	padding={defaultChartPadding({ right: 45, bottom: 15, left: 25 })}
 	height={300}
 >
 	{#snippet aboveMarks({ context })}

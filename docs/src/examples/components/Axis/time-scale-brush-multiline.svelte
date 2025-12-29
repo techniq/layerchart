@@ -17,7 +17,7 @@
 <Chart
 	{xDomain}
 	yDomain={[0, 100]}
-	padding={{ ...defaultChartPadding(), top: 30, bottom: 30, left: 25, right: 25 }}
+	padding={defaultChartPadding({ top: 30, bottom: 30, left: 25, right: 25 })}
 	brush={{
 		resetOnEnd: true,
 		onBrushEnd: (e) => {

@@ -26,6 +26,6 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	padding={{ ...defaultChartPadding(), right: 10 }}
+	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 />

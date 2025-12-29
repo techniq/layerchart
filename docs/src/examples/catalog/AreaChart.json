@@ -63,7 +63,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 18,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "Layer",
@@ -99,7 +99,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 10,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "Tooltip",
@@ -152,7 +152,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 9,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "LinearGradient",
@@ -540,7 +540,7 @@
         {
           "component": "AreaChart",
           "lineNumber": 22,
-          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
         },
         {
           "component": "LinearGradient",
@@ -656,14 +656,14 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/custom",
       "lineNumber": 18,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "custom-tooltip",
       "component": "AreaChart",
       "path": "/example/AreaChart/custom-tooltip",
       "lineNumber": 10,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "default-series-label",
@@ -684,7 +684,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/gradient",
       "lineNumber": 9,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "labels",
@@ -880,7 +880,7 @@
       "component": "AreaChart",
       "path": "/example/AreaChart/threshold-gradient",
       "lineNumber": 22,
-      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={{ ...defaultChartPadding(), right: 10 }} height={300}>"
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" padding={defaultChartPadding({ right: 10 })} height={300}>"
     },
     {
       "example": "tooltip-external",

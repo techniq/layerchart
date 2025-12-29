@@ -10,7 +10,7 @@
 	{data}
 	x="date"
 	y="value"
-	padding={{ ...defaultChartPadding(), left: 25 }}
+	padding={defaultChartPadding({ left: 25 })}
 	height={300}
 	annotations={[
 		{

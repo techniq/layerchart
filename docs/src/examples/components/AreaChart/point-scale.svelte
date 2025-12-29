@@ -12,6 +12,6 @@
 	xScale={scalePoint()}
 	x="fruit"
 	y="value"
-	padding={{ ...defaultChartPadding(), left: 30, right: 15 }}
+	padding={defaultChartPadding({ left: 30, right: 15 })}
 	height={300}
 />

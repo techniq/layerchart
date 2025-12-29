@@ -15,6 +15,6 @@
 	tooltip={{
 		mode: 'band'
 	}}
-	padding={{ ...defaultChartPadding(), left: 30 }}
+	padding={defaultChartPadding({ left: 30 })}
 	height={300}
 />
