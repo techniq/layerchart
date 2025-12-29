@@ -5,7 +5,9 @@ layers: [svg, canvas]
 related: [Pie, ArcChart, PieChart]
 ---
 
-:tip See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/PieChart) for simplified examples
+::tip
+See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/PieChart) for simplified examples
+::
 
 ## Usage
 
