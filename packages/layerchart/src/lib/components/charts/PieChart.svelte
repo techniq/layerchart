@@ -198,7 +198,6 @@
   } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
   const settings = getSettings();
@@ -344,23 +343,17 @@
     });
   }
 
-  setTooltipMetaContext({
-    type: 'pie',
-    get color() {
-      return c;
-    },
-    get value() {
-      return value;
-    },
-    get label() {
-      return label;
-    },
-    get key() {
-      return key;
-    },
-    get visibleSeries() {
-      return seriesState.visibleSeries;
-    },
+  // Configure tooltip payload generation (single item for pie charts)
+  $effect(() => {
+    if (context?.tooltipState) {
+      context.tooltipState.payloadConfig = {
+        singleItemPayload: true,
+        keyAccessor: key,
+        labelAccessor: label,
+        valueAccessor: value,
+        colorAccessor: c,
+      };
+    }
   });
 </script>
 

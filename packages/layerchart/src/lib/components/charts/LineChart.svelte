@@ -100,7 +100,6 @@
   } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import { isScaleTime } from '../../utils/scales.svelte.js';
@@ -312,11 +311,13 @@
     });
   }
 
-  setTooltipMetaContext({
-    type: 'line',
-    get visibleSeries() {
-      return seriesState.visibleSeries;
-    },
+  // Configure tooltip payload generation
+  $effect(() => {
+    if (context?.tooltipState) {
+      context.tooltipState.payloadConfig = {
+        stackedSeries: false,
+      };
+    }
   });
 </script>
 

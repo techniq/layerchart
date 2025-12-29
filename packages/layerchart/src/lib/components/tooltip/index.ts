@@ -10,3 +10,7 @@ export { default as Separator } from './TooltipSeparator.svelte';
 export * from './TooltipSeparator.svelte';
 export { default as Root } from './Tooltip.svelte';
 export * from './Tooltip.svelte';
+
+// Export tooltip payload types and state from the canonical location
+export type { TooltipPayload, TooltipPayloadConfig } from '$lib/states/tooltip.svelte.js';
+export { TooltipState } from '$lib/states/tooltip.svelte.js';

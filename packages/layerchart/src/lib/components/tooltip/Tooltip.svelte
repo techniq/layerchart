@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import type { TooltipPayload } from './tooltipMetaContext.js';
+  import type { TooltipPayload } from './tooltipPayload.js';
   import type { Placement } from '../types.js';
 
   export type Align = 'start' | 'center' | 'end';

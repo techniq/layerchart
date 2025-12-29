@@ -145,7 +145,6 @@
   } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
@@ -316,23 +315,17 @@
     });
   }
 
-  setTooltipMetaContext({
-    type: 'arc',
-    get color() {
-      return c;
-    },
-    get value() {
-      return value;
-    },
-    get label() {
-      return label;
-    },
-    get key() {
-      return key;
-    },
-    get visibleSeries() {
-      return seriesState.visibleSeries;
-    },
+  // Configure tooltip payload generation (single item for arc charts)
+  $effect(() => {
+    if (context?.tooltipState) {
+      context.tooltipState.payloadConfig = {
+        singleItemPayload: true,
+        keyAccessor: key,
+        labelAccessor: label,
+        valueAccessor: value,
+        colorAccessor: c,
+      };
+    }
   });
 </script>
 

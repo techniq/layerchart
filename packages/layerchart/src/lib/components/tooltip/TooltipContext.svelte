@@ -111,11 +111,7 @@
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
-  import {
-    getTooltipMetaContext,
-    getTooltipPayload,
-    type TooltipPayload,
-  } from './tooltipMetaContext.js';
+  import { buildTooltipPayload, type TooltipPayload } from './tooltipPayload.js';
   import { TooltipState } from '$lib/states/tooltip.svelte.js';
 
   const ctx = getChartContext<any>();
@@ -140,8 +136,6 @@
   $effect.pre(() => {
     refProp = ref;
   });
-
-  const metaCtx = getTooltipMetaContext();
 
   const tooltipState = new TooltipState<TData>(mode, showTooltip, hideTooltip);
   stateProp = tooltipState;
@@ -315,7 +309,7 @@
         raise(e.target as Element);
       }
 
-      const payloadData = getTooltipPayload({ ctx, tooltipData, metaCtx });
+      const payloadData = buildTooltipPayload({ ctx, tooltipData });
 
       tooltipState.x = point.x;
       tooltipState.y = point.y;

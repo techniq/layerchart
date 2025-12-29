@@ -94,7 +94,6 @@
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
@@ -358,14 +357,13 @@
     });
   }
 
-  setTooltipMetaContext({
-    type: 'area',
-    get stackSeries() {
-      return stackSeries;
-    },
-    get visibleSeries() {
-      return seriesState.visibleSeries;
-    },
+  // Configure tooltip payload generation
+  $effect(() => {
+    if (context?.tooltipState) {
+      context.tooltipState.payloadConfig = {
+        stackedSeries: stackSeries,
+      };
+    }
   });
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {

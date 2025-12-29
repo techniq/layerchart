@@ -111,7 +111,6 @@
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
-  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
@@ -403,17 +402,13 @@
     });
   }
 
-  setTooltipMetaContext({
-    type: 'bar',
-    get orientation() {
-      return orientation;
-    },
-    get stackSeries() {
-      return isStackSeries;
-    },
-    get visibleSeries() {
-      return seriesState.visibleSeries;
-    },
+  // Configure tooltip payload generation
+  $effect(() => {
+    if (context?.tooltipState) {
+      context.tooltipState.payloadConfig = {
+        stackedSeries: isStackSeries,
+      };
+    }
   });
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {
