@@ -63,12 +63,7 @@ export function rehypeComponentExample() {
 					]
 				});
 
-				if (
-					index !== undefined &&
-					parent &&
-					typeof parent === 'object' &&
-					'children' in parent
-				) {
+				if (index !== undefined && parent && typeof parent === 'object' && 'children' in parent) {
 					const parentNode = /** @type {{ children: unknown[] }} */ (parent);
 					if (Array.isArray(parentNode.children)) {
 						parentNode.children.splice(index + 1, 0, sourceCodeNode);

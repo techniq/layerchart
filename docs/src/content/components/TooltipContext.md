@@ -4,5 +4,3 @@ category: interactions
 layers: [svg, canvas]
 related: [Chart, Tooltip, Highlight]
 ---
-
-

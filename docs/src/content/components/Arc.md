@@ -22,4 +22,3 @@ The text will smartly orientate based on the direction (clockwise / counter-cloc
 ## Playground
 
 :example{ name="playground" }
-

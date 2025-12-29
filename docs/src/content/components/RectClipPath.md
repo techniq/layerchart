@@ -4,5 +4,3 @@ category: clipping
 layers: [svg]
 related: [ChartClipPath]
 ---
-
-

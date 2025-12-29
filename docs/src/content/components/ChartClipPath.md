@@ -4,4 +4,3 @@ category: clipping
 layers: [svg]
 related: [RectClipPath, Rect]
 ---
-

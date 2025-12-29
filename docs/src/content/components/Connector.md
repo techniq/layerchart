@@ -5,7 +5,6 @@ layers: [svg, canvas]
 related: [Link]
 ---
 
-
 ## Usage
 
 :example{name="playground" showCode }

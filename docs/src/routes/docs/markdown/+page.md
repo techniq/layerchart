@@ -112,17 +112,18 @@
 
 ### Live Code
 
-````md
+```md
 ``svelte live title="Counter.svelte"
+
 <script>
 	let count = $state(0);
 </script>
 
 <button onclick={() => count++}>
-	Clicked {count}
-	{count === 1 ? 'time' : 'times'}
+Clicked {count}
+{count === 1 ? 'time' : 'times'}
 </button>
-````
+```
 
 ```svelte live title="Counter.svelte"
 <script>
@@ -147,20 +148,21 @@
 ```
 
 ### Example
-````md
+
+```md
 :example{component="LineChart" name="basic" showCode=true}
-````
+```
 
 :example{component="LineChart" name="basic" showCode=true}
 
 ## Table
 
-````md
+```md
 | First | Second | Third |
 | ----- | ------ | ----- |
 | 1     | 2      | 3     |
 | 4     | 5      | 6     |
-````
+```
 
 | First | Second | Third |
 | ----- | ------ | ----- |
@@ -170,11 +172,12 @@
 ## Directives
 
 ### Note
-````md
+
+```md
 :::note
 Here's some additional information. This uses the new `:::note` directive syntax!
 :::
-````
+```
 
 :::note
 Here's some additional information. This uses the new `:::note` directive syntax!
@@ -182,39 +185,42 @@ Here's some additional information. This uses the new `:::note` directive syntax
 
 ### Tip
 
-````md
+```md
 :::tip
 Here's a helpful suggestion using the `:::tip` directive.
 :::
-````
+```
 
 :::tip
 Here's a helpful suggestion using the `:::tip` directive.
 :::
 
 ### Warning
-````md
+
+```md
 :::warning
 Be careful with this action as it might have unexpected results. This uses `:::warning`.
 :::
-````
+```
 
 :::warning
 Be careful with this action as it might have unexpected results. This uses `:::warning`.
 :::
 
 ### Caution
-````md
+
+```md
 :::caution
 This action cannot be undone. This uses `:::caution`.
 :::
-````
+```
 
 :::caution
 This action cannot be undone. This uses `:::caution`.
 :::
 
 ### Steps
+
 ````md
 :::steps
 
@@ -237,6 +243,7 @@ Do something else
 Start using `::component` and `:::component` syntax in your markdown files!
 :::
 ````
+
 :::steps
 
 ## Install dependencies
@@ -259,6 +266,7 @@ Start using `::component` and `:::component` syntax in your markdown files!
 :::
 
 ### Tabs
+
 ````md
 :::tabs
 
@@ -320,9 +328,10 @@ print('Hello from Python')
 :::
 
 ### Icons (Inline)
-````md
+
+```md
 Here's a :icon{name="lucide:code" class="text-primary"} code icon, a :icon{name="lucide:rocket" class="text-green-500"} rocket, and a :icon{name="simple-icons:github"} GitHub logo.
-````
+```
 
 You can also use icons inline with the `:icon` directive:
 

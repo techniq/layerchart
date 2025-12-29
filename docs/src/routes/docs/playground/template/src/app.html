@@ -7,7 +7,7 @@
 		%sveltekit.head%
 		<script>
 			// Intercept console methods and send to parent window
-			(function() {
+			(function () {
 				const originalConsole = {
 					log: console.log,
 					warn: console.warn,
@@ -15,29 +15,32 @@
 					info: console.info
 				};
 
-				['log', 'warn', 'error', 'info'].forEach(level => {
-					console[level] = function(...args) {
+				['log', 'warn', 'error', 'info'].forEach((level) => {
+					console[level] = function (...args) {
 						// Call original console method
 						originalConsole[level].apply(console, args);
 
 						// Send to parent window if in iframe
 						if (window.parent !== window) {
 							try {
-								window.parent.postMessage({
-									type: 'console',
-									level: level,
-									args: args.map(arg => {
-										// Handle objects/arrays
-										if (typeof arg === 'object' && arg !== null) {
-											try {
-												return JSON.parse(JSON.stringify(arg));
-											} catch (e) {
-												return String(arg);
+								window.parent.postMessage(
+									{
+										type: 'console',
+										level: level,
+										args: args.map((arg) => {
+											// Handle objects/arrays
+											if (typeof arg === 'object' && arg !== null) {
+												try {
+													return JSON.parse(JSON.stringify(arg));
+												} catch (e) {
+													return String(arg);
+												}
 											}
-										}
-										return arg;
-									})
-								}, '*');
+											return arg;
+										})
+									},
+									'*'
+								);
 							} catch (e) {
 								// Ignore errors posting message
 							}
