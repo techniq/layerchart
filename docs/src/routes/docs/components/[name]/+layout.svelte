@@ -38,6 +38,17 @@
 				};
 			}
 
+			// If there are examples from page data (for /examples page), merge them in
+			if (page.data.examples) {
+				const pageExamples = page.data.examples as typeof base;
+				// Deep merge the examples
+				const merged = { ...base };
+				for (const [comp, exs] of Object.entries(pageExamples)) {
+					merged[comp] = { ...merged[comp], ...exs };
+				}
+				return merged;
+			}
+
 			return base;
 		}
 	};

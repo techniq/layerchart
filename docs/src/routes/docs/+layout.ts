@@ -1,8 +1,6 @@
 import { loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
 
-export const load = async ({ parent, url }) => {
-	const { allExamples, allSources } = await parent();
-
+export const load = async ({ url }) => {
 	let examples = {};
 
 	// Only load examples for standalone markdown pages (not component/example routes)
@@ -34,11 +32,8 @@ export const load = async ({ parent, url }) => {
 					// Eagerly load examples referenced in the markdown
 					examples = await loadExamplesFromMarkdown(
 						markdownContent,
-						allExamples,
-						allSources,
 						undefined, // no default component
-						'components',
-						pathname // pass current path for resolving relative paths
+						'components'
 					);
 					break;
 				} catch (e) {
