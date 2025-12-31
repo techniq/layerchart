@@ -18,6 +18,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { examples } from '$lib/context.js';
+	import Search from './search/Search.svelte';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 
@@ -112,38 +113,7 @@
 
 	<a href="/" class="text-xl font-bold lg:w-60">LayerChart</a>
 
-	<div class="flex grow justify-end sm:justify-center lg:justify-start">
-		<!-- TODO: Add search functionality -->
-		<Button icon={LucideSearch} class="inline-block sm:hidden" />
-		<TextField
-			placeholder="Search"
-			bind:value={searchQuery}
-			on:keydown={(e) => {
-				if (e.key === 'Enter') {
-					handleSearch();
-				}
-			}}
-			bind:inputEl={searchInput}
-			classes={{
-				root: 'hidden sm:block px-2',
-				container: 'hover:border-surface-content/20'
-			}}
-		>
-			{#snippet prepend()}
-				<LucideSearch class="text-surface-content/50 mr-4" />
-			{/snippet}
-			{#snippet append()}
-				<div class="flex items-center gap-1">
-					<Kbd
-						command={env.isMac()}
-						control={!env.isMac()}
-						class="size-4 items-center justify-center text-xs"
-					/>
-					<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
-				</div>
-			{/snippet}
-		</TextField>
-	</div>
+	<Search />
 
 	<div class="flex items-center gap-2">
 		<div class="flex items-center border-r pr-2">
@@ -359,11 +329,3 @@
 		</div>
 	{/if}
 </div>
-
-<svelte:window
-	onkeydown={(e) => {
-		if (e[env.getModifierKey()] && e.key === 'k') {
-			searchInput?.focus();
-		}
-	}}
-/>

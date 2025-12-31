@@ -125,6 +125,7 @@
 		"@uiw/codemirror-theme-github": "^4.25.4",
 		"@webcontainer/api": "^1.6.1",
 		"ansi_up": "^6.0.6",
-		"codemirror": "^6.0.2"
+		"codemirror": "^6.0.2",
+		"flexsearch": "^0.8.212"
 	}
 }
