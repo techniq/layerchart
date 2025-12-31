@@ -109,9 +109,10 @@
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
 			>
 				<example.component bind:this={ref} />
+
 				{#if canResize}
 					<div
-						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity"
+						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
 						title="Drag to resize"
 						use:movable={{
 							axis: 'x',

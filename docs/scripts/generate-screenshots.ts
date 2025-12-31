@@ -10,18 +10,23 @@
  * - Using MD5 checksums to detect file changes and regenerate screenshots when needed
  * - Navigating to /example/[componentName]/[exampleName]
  * - Capturing screenshots in both light and dark mode
- * - Saving to docs/static/screenshots/[componentName]/[exampleName]-{light|dark}.png
+ * - Saving as WebP in multiple sizes for responsive loading:
+ *   docs/static/screenshots/[componentName]/[exampleName]-{light|dark}-{800|400|240}w.webp
  * - Skipping screenshots that already exist and haven't changed
  * - Storing checksums inline with each example in index.json for change detection
  *
  * @usage
- * pnpm extract:screenshots         # Generate only changed screenshots
- * pnpm extract:screenshots --all   # Generate all screenshots (ignore checksums)
+ * pnpm generate:screenshots         # Generate only changed screenshots
+ * pnpm generate:screenshots --all   # Generate all screenshots (ignore checksums)
  *
  * @example
  * // Generates screenshots and index like:
- * // docs/static/screenshots/Area/basic-light.png
- * // docs/static/screenshots/Area/basic-dark.png
+ * // docs/static/screenshots/Area/basic-light-800w.webp
+ * // docs/static/screenshots/Area/basic-light-400w.webp
+ * // docs/static/screenshots/Area/basic-light-240w.webp
+ * // docs/static/screenshots/Area/basic-dark-800w.webp
+ * // docs/static/screenshots/Area/basic-dark-400w.webp
+ * // docs/static/screenshots/Area/basic-dark-240w.webp
  * // docs/static/screenshots/index.json (with inline checksums per example)
  */
 
@@ -30,6 +35,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { chromium } from 'playwright';
 import crypto from 'crypto';
+import sharp from 'sharp';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +50,10 @@ const VIEWPORT = {
 	width: 800,
 	height: 1000
 };
+
+// Image sizes to generate (width in pixels)
+// Full size (800), half (400), 30% (240)
+const IMAGE_SIZES = [800, 400, 240] as const;
 
 // Limit for testing (set to undefined to process all)
 const TEST_LIMIT: number | undefined = undefined;
@@ -166,19 +176,27 @@ function ensureDir(dirPath: string): void {
 }
 
 /**
- * Check if screenshot already exists
+ * Check if all screenshot sizes already exist for a mode
  */
 function screenshotExists(
 	componentName: string,
 	exampleName: string,
 	mode: 'light' | 'dark'
 ): boolean {
-	const screenshotPath = path.join(SCREENSHOTS_DIR, componentName, `${exampleName}-${mode}.png`);
-	return fs.existsSync(screenshotPath);
+	// Check if all WebP sizes exist
+	return IMAGE_SIZES.every((size) => {
+		const screenshotPath = path.join(
+			SCREENSHOTS_DIR,
+			componentName,
+			`${exampleName}-${mode}-${size}w.webp`
+		);
+		return fs.existsSync(screenshotPath);
+	});
 }
 
 /**
  * Generate screenshots for an example in both light and dark modes
+ * Outputs WebP format in multiple sizes for responsive loading
  */
 async function captureScreenshots(
 	page: any,
@@ -223,18 +241,28 @@ async function captureScreenshots(
 
 		// Capture screenshots for each mode
 		for (const mode of modes) {
-			const screenshotPath = path.join(screenshotDir, `${exampleName}-${mode}.png`);
-
 			// Set color scheme preference
 			await page.emulateMedia({ colorScheme: mode });
 
-			// Take screenshot of the element
-			await element.screenshot({
-				path: screenshotPath,
+			// Capture full-size screenshot as PNG buffer
+			const pngBuffer = await element.screenshot({
 				omitBackground: true
 			});
 
-			console.log(`  ✓ ${mode}: ${screenshotPath}`);
+			// Generate WebP in multiple sizes
+			const sizes: string[] = [];
+			for (const width of IMAGE_SIZES) {
+				const webpPath = path.join(screenshotDir, `${exampleName}-${mode}-${width}w.webp`);
+
+				await sharp(pngBuffer)
+					.resize({ width, withoutEnlargement: true })
+					.webp({ quality: 80 })
+					.toFile(webpPath);
+
+				sizes.push(`${width}w`);
+			}
+
+			console.log(`  ✓ ${mode}: ${sizes.join(', ')}`);
 		}
 	} catch (error) {
 		console.error(`  ✗ failed:`, error instanceof Error ? error.message : error);
@@ -248,12 +276,14 @@ async function captureScreenshots(
 function cleanupOrphanedScreenshots(validExamples: ExampleInfo[]): void {
 	console.log('Checking for orphaned screenshots...\n');
 
-	// Create a set of valid example paths for quick lookup
+	// Create a set of valid example paths for quick lookup (all sizes and modes)
 	const validPaths = new Set(
-		validExamples.flatMap((ex) => [
-			`${ex.component}/${ex.example}-light.png`,
-			`${ex.component}/${ex.example}-dark.png`
-		])
+		validExamples.flatMap((ex) =>
+			IMAGE_SIZES.flatMap((size) => [
+				`${ex.component}/${ex.example}-light-${size}w.webp`,
+				`${ex.component}/${ex.example}-dark-${size}w.webp`
+			])
+		)
 	);
 
 	// Create a set of valid component names
@@ -291,8 +321,8 @@ function cleanupOrphanedScreenshots(validExamples: ExampleInfo[]): void {
 		// Check files within the component directory
 		const files = fs.readdirSync(componentDir);
 		for (const file of files) {
-			// Skip non-PNG files and hidden files
-			if (!file.endsWith('.png') || file.startsWith('.')) {
+			// Skip non-WebP/PNG files and hidden files (PNG for legacy cleanup)
+			if ((!file.endsWith('.webp') && !file.endsWith('.png')) || file.startsWith('.')) {
 				continue;
 			}
 
