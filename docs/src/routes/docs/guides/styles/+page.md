@@ -2,7 +2,7 @@
 
 ## Colors
 
-Colors represent the main style requirement for Layerchart. 
+Colors represent the main style requirement for Layerchart.
 
 Instead of requiring explicit color props for each element, LayerChart leverages CSS’s [CSS currentColor](https://www.digitalocean.com/community/tutorials/css-currentcolor) under the hood. This allows developers to style charts using familiar, standard CSS color utilities, rather than targeting different attributes for each rendering layer (svg, canvas, or html).
 
@@ -21,7 +21,6 @@ Apply a Layerchart base "theme" in app.css to globally style base elements of yo
 :::tip
 If you are not seeing the chart, or it is colored incorrectly, then the probably likely residesing in this file. Debug cia browser devtools to see CSS color variables.
 :::
-
 
 ```css title="app.css"
 .lc-root-container {
@@ -88,25 +87,25 @@ Inline options are recommended for one-off color definitions. Use [global option
     ::tab{label="Tailwind / UnoCSS"}
     Here the color is set via HTML class attribute supporting tailwindcss and unoCSS.
     ```svelte live {8}
-      <script lang="ts">
-        import { Chart, Layer, Text } from 'layerchart';
-      </script>
+    <script lang="ts">
+      import { Chart, Layer, Text } from 'layerchart';
+    </script>
 
-      <Chart height={60}>
-        <Layer center>
-          <Text
-            class="text-red-500 text-4xl"
-            value={'LayerChart'}
-            textAnchor="middle"
-            verticalAnchor="middle"
-          />
-        </Layer>
-      </Chart>
+    <Chart height={60}>
+      <Layer center>
+        <Text
+          class="text-red-500 text-4xl"
+          value="LayerChart"
+          textAnchor="middle"
+          verticalAnchor="middle"
+        />
+      </Layer>
+    </Chart>
     ```
     ::
 
     ::tab{label="CSS Variables"}
-    Here the color is set via a class using CSS variables.   
+    Here the color is set via a class using CSS variables.
     ```svelte live {8}
     <script lang="ts">
       import { Chart, Layer, Text } from 'layerchart';
@@ -116,7 +115,7 @@ Inline options are recommended for one-off color definitions. Use [global option
       <Layer center>
         <Text
           class="text-4xl text-[var(--color-orange-500)]"
-          value={'LayerChart'}
+          value="LayerChart"
           textAnchor="middle"
           verticalAnchor="middle"
         />
@@ -135,11 +134,10 @@ Inline options are recommended for one-off color definitions. Use [global option
     <Chart height={60}>
       <Layer center>
         <Text
-          style="color: yellow;"
-          value={'LayerChart'}
+          style="color: yellow; font-size: 2.25rem;"
+          value="LayerChart"
           textAnchor="middle"
           verticalAnchor="middle"
-          class="text-4xl"
         />
       </Layer>
     </Chart>
@@ -148,25 +146,26 @@ Inline options are recommended for one-off color definitions. Use [global option
 
     ::tab{label="SVG style attributes"}
     Here the color is set via [SVG Attributes]("https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute") such as `stroke`, `fill`, `strokeWidth`.
-
     ```svelte live {8}
-      <script lang="ts">
-        import { Chart, Layer, Text } from 'layerchart';
-      </script>
+    <script lang="ts">
+      import { Chart, Layer, Text } from 'layerchart';
+    </script>
 
-      <Chart height={60}>
-        <Layer center>
-          <Text
-            fill="blue"
-            value={'LayerChart'}
-            textAnchor="middle"
-            verticalAnchor="middle"
-            class="text-4xl"
-          />
-        </Layer>
-      </Chart>
+    <Chart height={60}>
+      <Layer center>
+        <Text
+          fill="blue"
+          font-size="2.25rem"
+          value="LayerChart"
+          textAnchor="middle"
+          verticalAnchor="middle"
+        />
+      </Layer>
+    </Chart>
     ```
+
     ::
+
 :::
 
 #### Component class props using Tailwind/UnoCSS
@@ -175,7 +174,6 @@ All components accepts a class prop for styling, and this is the most common why
 
 :example{ component="AnnotationPoint" name="series-annotation" showCode noResize showLineNumbers }
 `ADD LINE HIGHLIGHTING {26-27}`
-
 
 #### Color Schemes via cRange
 
@@ -194,34 +192,35 @@ more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/comp
 
 :::tabs{key="color-enhancements"}
 
-	::tab{label="Linear gradient"}
+    ::tab{label="Linear gradient"}
     `ADD LINE HIGHLIGHTING {11-15}`
     :example{ component="AreaChart" name="gradient" noResize showCode }
-	::
+    ::
 
-	::tab{label="Radial gradient"}
-	  ```svelte live {9}
-			<script lang="ts">
-				import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
-			</script>
+    ::tab{label="Radial gradient"}
+      ```svelte live {9}
+    		<script lang="ts">
+    			import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
+    		</script>
 
-			<Chart height={300}>
-				<Layer center>
-					<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
-						{#snippet children({ gradient })}
-							<Circle r={150} fill={gradient} />
-						{/snippet}
-					</RadialGradient>
-				</Layer>
-			</Chart>
-		```
+    		<Chart height={300}>
+    			<Layer center>
+    				<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
+    					{#snippet children({ gradient })}
+    						<Circle r={150} fill={gradient} />
+    					{/snippet}
+    				</RadialGradient>
+    			</Layer>
+    		</Chart>
+    	```
     `NOTE FIX triple backtick showing`
-	::
+    ::
 
-	::tab{label="Pattern"}
+    ::tab{label="Pattern"}
     ADD LINE HIGHLIGHTING {14-20}
-	  :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode }
-	::
+      :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode }
+    ::
+
 :::
 
 ## Padding
