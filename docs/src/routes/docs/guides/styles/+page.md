@@ -104,26 +104,6 @@ Inline options are recommended for one-off color definitions. Use [global option
     ```
     ::
 
-    ::tab{label="CSS Variables"}
-    Here the color is set via a class using CSS variables.
-    ```svelte live {8}
-    <script lang="ts">
-      import { Chart, Layer, Text } from 'layerchart';
-    </script>
-
-    <Chart height={60}>
-      <Layer center>
-        <Text
-          class="text-4xl text-[var(--color-orange-500)]"
-          value="LayerChart"
-          textAnchor="middle"
-          verticalAnchor="middle"
-        />
-      </Layer>
-    </Chart>
-    ```
-    ::
-
     ::tab{label="Vanilla CSS"}
     Here the color is set via HTML style attribute.
     ```svelte live {8}
@@ -143,6 +123,28 @@ Inline options are recommended for one-off color definitions. Use [global option
     </Chart>
     ```
     ::
+
+    ::tab{label="CSS Variables"}
+    Here the color is set via a class using CSS variables.
+    ```svelte live {8}
+    <script lang="ts">
+      import { Chart, Layer, Text } from 'layerchart';
+    </script>
+
+    <Chart height={60}>
+      <Layer center>
+        <Text
+          class="text-4xl text-(--color-orange-500)"
+          value="LayerChart"
+          textAnchor="middle"
+          verticalAnchor="middle"
+        />
+      </Layer>
+    </Chart>
+    ```
+    ::
+
+
 
     ::tab{label="SVG style attributes"}
     Here the color is set via [SVG Attributes]("https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute") such as `stroke`, `fill`, `strokeWidth`.
