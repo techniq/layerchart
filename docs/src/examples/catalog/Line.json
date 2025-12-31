@@ -89,20 +89,6 @@
       "line": "<Line"
     },
     {
-      "example": "horizontal-highlight-individual-bar",
-      "component": "Bars",
-      "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 36,
-      "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
-    },
-    {
-      "example": "vertical-highlight-individual-bar",
-      "component": "Bars",
-      "path": "/example/Bars/vertical-highlight-individual-bar",
-      "lineNumber": 30,
-      "line": "<line x1={8} y2={8} class=\"stroke-secondary/30\" />"
-    },
-    {
       "example": "styling-using-attributes",
       "component": "Line",
       "path": "/example/Line/styling-using-attributes",
@@ -229,5 +215,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.697Z"
+  "updatedAt": "2025-12-29T21:36:44.963Z"
 }

@@ -15,25 +15,7 @@ export const load = async () => {
 		});
 	}
 
-	// Only provide the glob imports - don't load anything yet
-	// Child layouts will load only what they need
-	const allExamples = import.meta.glob(
-		['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'],
-		{
-			import: 'default'
-		}
-	);
-
-	const allSources = import.meta.glob(
-		['/src/examples/components/**/*.svelte', '/src/examples/utils/**/*.svelte'],
-		{
-			import: 'default',
-			query: '?raw'
-		}
-	);
-
-	return {
-		allExamples,
-		allSources
-	};
+	// Note: Example globs are now imported directly where needed from $lib/examples.ts
+	// This avoids serializing glob manifests through the load data chain
+	return {};
 };

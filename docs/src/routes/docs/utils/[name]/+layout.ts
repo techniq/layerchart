@@ -3,9 +3,8 @@ import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
 
 export const load = async ({ params, parent }) => {
-	// Get allExamples, allSources, and examples from parent layout
+	// Get examples from parent layout
 	const parentData = await parent();
-	const { allExamples, allSources } = parentData;
 
 	const allAPIs = import.meta.glob('/src/generated/api/*.json', {
 		import: 'default'
@@ -22,12 +21,10 @@ export const load = async ({ params, parent }) => {
 	const catalog: ComponentCatalog | null =
 		catalogPath in allCatalogs ? ((await allCatalogs[catalogPath]()) as ComponentCatalog) : null;
 
-	// Load examples from markdown content and catalog
+	// Eagerly load examples referenced in the markdown content
+	// Only examples explicitly in the markdown are included (not the full catalog)
 	const pageExamples = await loadExamplesFromMarkdown(
 		metadata.content,
-		catalog,
-		allExamples,
-		allSources,
 		params.name, // default component for implicit <Example name="..." /> usage
 		'utils' // type parameter to look in /src/examples/utils/
 	);

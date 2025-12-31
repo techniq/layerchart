@@ -182,7 +182,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 90,
+      "lineNumber": 92,
       "line": "<GeoPoint"
     },
     {
@@ -259,14 +259,14 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 34,
+      "lineNumber": 43,
       "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 35,
+      "lineNumber": 44,
       "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
     },
     {
@@ -291,5 +291,5 @@
       "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.190Z"
+  "updatedAt": "2025-12-29T21:36:44.772Z"
 }

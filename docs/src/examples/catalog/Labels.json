@@ -6,14 +6,14 @@
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Labels format=\"integer\" />"
     },
     {
@@ -80,5 +80,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.643Z"
+  "updatedAt": "2025-12-29T21:36:44.915Z"
 }

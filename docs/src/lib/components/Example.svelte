@@ -17,12 +17,10 @@
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 	import { movable } from '$lib/actions/movable';
-	import { resolveExamplePath } from '$lib/markdown/utils';
 
 	let {
 		component = page.params.name!,
 		name,
-		path,
 		showCode = false,
 		variant = 'default',
 		noResize = false,
@@ -31,7 +29,6 @@
 	}: {
 		component?: string;
 		name?: string;
-		path?: string;
 		showCode?: boolean;
 		variant?: 'default' | 'basic';
 		noResize?: boolean;
@@ -39,15 +36,10 @@
 		class?: string;
 	} = $props();
 
-	let example = $derived.by(() => {
-		if (path) {
-			// Resolve relative path and get from context (server-loaded)
-			const resolvedPath = resolveExamplePath(path, page.url.pathname);
-			return examples.get()?.current['__path__']?.[resolvedPath];
-		} else if (component && name) {
-			return examples.get()?.current[component]?.[name];
-		}
-	});
+	// Get example from context (eagerly loaded by layout)
+	let example = $derived(
+		component && name ? examples.get()?.current[component]?.[name] : undefined
+	);
 
 	let containerEl = $state<HTMLElement | null>(null);
 	let containerWidth = $state<number | undefined>(undefined);
@@ -117,9 +109,10 @@
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
 			>
 				<example.component bind:this={ref} />
+
 				{#if canResize}
 					<div
-						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity"
+						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
 						title="Drag to resize"
 						use:movable={{
 							axis: 'x',

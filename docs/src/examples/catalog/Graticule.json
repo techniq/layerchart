@@ -38,14 +38,14 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 73,
+      "lineNumber": 74,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/playground",
-      "lineNumber": 64,
+      "lineNumber": 65,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -59,7 +59,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/animated-globe",
-      "lineNumber": 146,
+      "lineNumber": 148,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -73,35 +73,35 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 54,
+      "lineNumber": 62,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 69,
+      "lineNumber": 71,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 67,
+      "lineNumber": 69,
       "line": "<Graticule class=\"stroke-surface-content/5\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 74,
+      "lineNumber": 76,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 28,
+      "lineNumber": 37,
       "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
@@ -119,5 +119,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.255Z"
+  "updatedAt": "2025-12-29T21:36:44.832Z"
 }

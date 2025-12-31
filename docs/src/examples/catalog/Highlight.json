@@ -13,14 +13,14 @@
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Highlight lines points />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Highlight"
     },
     {
@@ -41,49 +41,49 @@
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 62,
+      "lineNumber": 61,
       "line": "<Highlight y={(d) => d.apples} points={{ fill: fruitColors.apples }} />"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 63,
+      "lineNumber": 62,
       "line": "<Highlight y={(d) => d.bananas} points={{ fill: fruitColors.bananas }} />"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 64,
+      "lineNumber": 63,
       "line": "<Highlight y={(d) => d.oranges} points={{ fill: fruitColors.oranges }} />"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 65,
+      "lineNumber": 64,
       "line": "<Highlight lines />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Highlight points lines />"
     },
     {
       "example": "stack",
       "component": "Area",
       "path": "/example/Area/stack",
-      "lineNumber": 63,
+      "lineNumber": 71,
       "line": "<Highlight points lines />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Area",
       "path": "/example/Area/with-tooltip-and-highlight",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Highlight points lines />"
     },
     {
@@ -153,15 +153,15 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 111,
+      "lineNumber": 115,
       "line": "<Highlight area />"
     },
     {
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 30,
-      "line": "<Highlight"
+      "lineNumber": 36,
+      "line": "<Highlight data={data[3]} area={{ fill: pattern, class: 'stroke-secondary/50' }} />"
     },
     {
       "example": "horizontal-highlight-individual-bar-line",
@@ -251,8 +251,8 @@
       "example": "vertical-highlight-individual-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-highlight-individual-bar",
-      "lineNumber": 32,
-      "line": "<Highlight"
+      "lineNumber": 33,
+      "line": "<Highlight data={data[3]} area={{ fill: pattern, class: 'stroke-secondary/50' }} />"
     },
     {
       "example": "vertical-highlight-individual-bar-line",
@@ -640,5 +640,5 @@
       "line": "<Highlight"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.593Z"
+  "updatedAt": "2025-12-29T21:36:44.874Z"
 }

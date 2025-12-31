@@ -13,7 +13,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 82,
+      "lineNumber": 86,
       "line": "<Bar"
     },
     {
@@ -27,7 +27,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 80,
+      "lineNumber": 83,
       "line": "<Bar"
     },
     {
@@ -62,9 +62,9 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 80,
+      "lineNumber": 83,
       "line": "<Bar"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:37.083Z"
+  "updatedAt": "2025-12-29T21:36:44.348Z"
 }
