@@ -206,7 +206,7 @@
 		{/if}
 	{:else}
 		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
-			Example <span class="font-bold">`{name ?? path}`</span>
+			Example <span class="font-bold">`{name}`</span>
 			{#if component}
 				for <span class="font-bold">`{component}`</span>
 			{/if}
