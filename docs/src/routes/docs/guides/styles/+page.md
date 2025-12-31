@@ -8,7 +8,7 @@ Instead of requiring explicit color props for each element, LayerChart leverages
 
 Color is simply inherited and propagated through the component tree, and LayerChart automatically applies it appropriately for each display layer—using `fill` or `stroke` for SVG, `fillStyle`, `fillRect` for canvas, and `color` or `background-color` for HTML.
 
-If you can think of a way to define a color, Layerchart probably [supports it](#inline-option-overrides)!
+If you can think of a way to define a color, Layerchart probably [supports it](#user-defined-options)!
 
 `"Canvas supports all" here? Not sure what text should be. `
 
