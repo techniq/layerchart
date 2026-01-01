@@ -33,7 +33,8 @@ export const load = async ({ url }) => {
 					examples = await loadExamplesFromMarkdown(
 						markdownContent,
 						undefined, // no default component
-						'components'
+						'components',
+						pathname // for resolving relative paths
 					);
 					break;
 				} catch (e) {

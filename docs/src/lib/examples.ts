@@ -60,3 +60,35 @@ export async function loadExamples(
 
 	return results;
 }
+
+/**
+ * Load an example by its path (relative to /src/routes or absolute from /src)
+ * @param resolvedPath - The resolved path (e.g., "/src/routes/docs/guides/styles/color-schemes.svelte")
+ */
+export async function loadExampleByPath(resolvedPath: string): Promise<LoadedExample | null> {
+	try {
+		// Use import.meta.glob to load path-based examples
+		// This is necessary because dynamic imports with fully dynamic paths don't work in Vite
+		const modules = import.meta.glob<{ default: Component }>('/src/routes/**/*.svelte');
+		const rawModules = import.meta.glob<{ default: string }>('/src/routes/**/*.svelte', {
+			query: '?raw',
+			import: 'default'
+		});
+
+		const componentModule = await modules[resolvedPath]?.();
+		const rawSource = await rawModules[resolvedPath]?.();
+
+		if (!componentModule || rawSource === undefined) {
+			console.warn(`Failed to load example by path: ${resolvedPath}`);
+			return null;
+		}
+
+		const comp = componentModule.default as Component;
+		const source = (rawSource as string).replace(/^.*export .*;.*$/gm, '');
+
+		return { component: comp, source };
+	} catch (e) {
+		console.warn(`Failed to load example by path: ${resolvedPath}`, e);
+		return null;
+	}
+}
