@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { PieChart } from 'layerchart';
 	import { longData } from '$lib/utils/data';
-	import { SelectField } from 'svelte-ux';
 	import {
 		schemeAccent,
 		schemeCategory10,
@@ -28,11 +27,10 @@
 		{ label: 'Set3', value: schemeSet3 }
 	];
 	const data = longData.filter((d) => d.year === 2019);
-	let selectedScheme = $state<readonly string[] | undefined>(undefined);
+	let selectedScheme = $state<(typeof schemes)[number]['value'] | undefined>(undefined);
 </script>
 
-<!-- Could not get SvelteUX SelectField to work here. -->
-<select class="w-[200px] p-2 border rounded" bind:value={selectedScheme}>
+<select class="w-50 p-2 border rounded" bind:value={selectedScheme}>
 	{#each schemes as scheme}
 		<option value={scheme.value}>{scheme.label}</option>
 	{/each}
