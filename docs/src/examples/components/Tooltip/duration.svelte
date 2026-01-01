@@ -2,7 +2,16 @@
 	import type { ComponentProps } from 'svelte';
 
 	import { Duration } from 'svelte-ux';
-	import { Axis, Chart, Layer, Highlight, Points, Tooltip, Rule } from 'layerchart';
+	import {
+		Axis,
+		Chart,
+		Layer,
+		Highlight,
+		Points,
+		Tooltip,
+		Rule,
+		defaultChartPadding
+	} from 'layerchart';
 	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
 
 	import { createTimeSeries } from '$lib/utils/data.js';
@@ -31,10 +40,11 @@
 	{data}
 	x={['startDate', 'endDate']}
 	y="name"
-	padding={{ left: 36, bottom: 36 }}
+	xNice
 	tooltip={{
 		mode: settings.mode
 	}}
+	padding={defaultChartPadding({ left: 36, bottom: 36, right: 20 })}
 	height={300}
 >
 	<Layer>
