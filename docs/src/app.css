@@ -169,6 +169,10 @@ code[data-line-numbers] > [data-line]::before {
 	}
 }
 
+.ToggleGroup {
+	user-select: none;
+}
+
 /* Disable view transitions for reduced motion */
 @media (prefers-reduced-motion: reduce) {
 	::view-transition-old(root),

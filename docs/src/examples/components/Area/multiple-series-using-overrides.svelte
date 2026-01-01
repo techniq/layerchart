@@ -26,7 +26,7 @@
 	y={['apples', 'bananas', 'oranges']}
 	yDomain={[0, null]}
 	yNice
-	padding={{ top: 20, left: 20, bottom: 20, right: 48 }}
+	padding={{ top: 20, left: 20, bottom: 20, right: 15 }}
 	tooltip={{ mode: 'quadtree-x' }}
 	height={300}
 >

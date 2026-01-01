@@ -5,7 +5,9 @@ layers: [svg, canvas]
 related: [Bar]
 ---
 
-> See also: [BarChart](/docs/components/BarChart) for simplified examples
+:::tip
+See also: [BarChart](/docs/components/BarChart) for simplified examples
+:::
 
 ## Usage
 

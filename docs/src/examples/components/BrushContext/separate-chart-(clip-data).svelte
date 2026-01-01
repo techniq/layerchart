@@ -6,6 +6,7 @@
 		ChartClipPath,
 		Layer,
 		LinearGradient,
+		defaultChartPadding,
 		type DomainType
 	} from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
@@ -22,7 +23,7 @@
 	{xDomain}
 	y="value"
 	yDomain={[0, null]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={defaultChartPadding({ left: 25, bottom: 24 })}
 	height={300}
 >
 	<Layer>

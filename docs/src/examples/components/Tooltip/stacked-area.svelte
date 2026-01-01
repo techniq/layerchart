@@ -1,7 +1,16 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { stack } from 'd3-shape';
-	import { Area, asAny, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import {
+		Area,
+		asAny,
+		Axis,
+		Chart,
+		Layer,
+		Highlight,
+		Tooltip,
+		defaultChartPadding
+	} from 'layerchart';
 	import { flatten } from '@layerstack/utils';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import TooltipContextControls from '$lib/components/controls/TooltipContextControls.svelte';
@@ -38,7 +47,7 @@
 	c="key"
 	cDomain={keys}
 	cRange={['var(--color-apples)', 'var(--color-bananas)', 'var(--color-oranges)']}
-	padding={{ top: 5, left: 28, bottom: 24 }}
+	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
 	tooltip={{
 		mode: settings.mode
 	}}
