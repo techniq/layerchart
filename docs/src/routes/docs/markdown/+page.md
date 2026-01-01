@@ -158,14 +158,15 @@ Supported props w/defaults
 	noResize=false,
 	clip=false,
 	variant:'default' | 'basic',
+	highlight:string (ie "7", "7-9")
 	class:string
 :::
 
 ```md
-:example{component="LineChart" name="basic" showCode}
+:example{component="LineChart" name="basic" hightlight="9" showCode}
 ```
 
-:example{component="LineChart" name="basic" showCode}
+:example{component="LineChart" name="basic" highlight="9" showCode}
 
 ## Table
 
