@@ -10,16 +10,26 @@ Color is simply inherited and propagated through the component tree, and LayerCh
 
 If you can think of a way to define a color, Layerchart probably [supports it](#user-defined-options)!
 
-`"Canvas supports all" here? Not sure what text should be. `
+### Canvas
+
+Primitives rendered within Canvas layers support the same CSS classes and inline styles as Svg, allowing for use of `fill`, `stroke`, `font`, and even `paint-order`. Canvas layers also support CSS variables and light/dark mode, and will respond with media queries changes.
 
 ### Global CSS colors
 
-Apply a Layerchart base "theme" in app.css to globally style base elements of your charts including primary color of chart visualization (ie line of LineChart), backgrounds, axises and text content.
+By default, LayerChart uses `currentColor` for default colors, but you can override these defaults by defining CSS variables in your global stylesheet. LayerChart defines a set of CSS variables that can be customized to change the default appearance of charts.
+
+- **--color-primary**: The primary color used for marks (e.g., lines, bars).
+- **--color-surface-100**: A light surface color used for surface/backgrounds.
+- **--color-surface-200**: A medium surface color used for surface/backgrounds.
+- **--color-surface-300**: A darker surface color used for surface/backgrounds.
+- **--color-surface-content**: The color used for text and content.
+
+You can apply a base "theme" in `app.css` to globally style base elements of your charts including primary color of chart visualization (i.e. line of LineChart), backgrounds, axises and text content.
 
 #### User defined global CSS colors
 
 :::tip
-If you are not seeing the chart, or it is colored incorrectly, then the probably likely residesing in this file. Debug cia browser devtools to see CSS color variables.
+If you are not seeing the chart, or it is colored incorrectly, then the probably likely residesing in this file. Debug via browser devtools to see CSS color variables.
 :::
 
 ```css title="app.css"
@@ -28,8 +38,8 @@ If you are not seeing the chart, or it is colored incorrectly, then the probably
 	--color-primary: var(--color-blue-500);
 
 	/* Progressively darker shades representing surfaces (backgrounds). */
-	--color-surface-30: var(--color-white);
-	--color-surface-200: var(--color-gray-30);
+	--color-surface-100: var(--color-white);
+	--color-surface-200: var(--color-gray-100);
 	--color-surface-300: var(--color-gray-300);
 
 	/* Content (text) color */
@@ -37,9 +47,23 @@ If you are not seeing the chart, or it is colored incorrectly, then the probably
 }
 ```
 
-#### Third party UI taiwindcss frameworks assigned colors
+and for dark mode support:
 
-If you're already using one of these CSS UI frameworks with themes, use one of these built in integrations to translate the chosen theme into layerchart colors.
+```css title="app.css"
+@media (prefers-color-scheme: dark) {
+	.lc-root-container {
+		--color-primary: var(--color-blue-400);
+		--color-surface-100: var(--color-gray-900);
+		--color-surface-200: var(--color-gray-800);
+		--color-surface-300: var(--color-gray-700);
+		--color-surface-content: var(--color-gray-100);
+	}
+}
+```
+
+#### Third party framework colors
+
+If you're already using one of these popular UI frameworks, use can easily leverage it's theming with built-in integrations to map the framework's theme into layerchart colors.
 
 :::tabs{key="framework"}
 
@@ -74,9 +98,11 @@ If you're already using one of these CSS UI frameworks with themes, use one of t
 
 :::
 
-### User Defined Options
+### User Defined options
 
-#### Inline Option Overrides via Native attributes
+Each component can be customized via style attributes and CSS classes. This allows you to define colors in a variety of ways.
+
+#### Per-component styling
 
 ::tip
 Inline options are recommended for one-off color definitions. Use [global options](#global-css-colors) for base colors.
@@ -170,14 +196,16 @@ Inline options are recommended for one-off color definitions. Use [global option
 
 :::
 
-#### Component class props using Tailwind/UnoCSS
+#### Nested components / elements
 
-All components accepts a class prop for styling, and this is the most common why to define colors for your chart components. In this example the color is set via a class prop on AnnotationPoint.
+Along with `class` and `style` props for direct component styling, some components have internal components and elements that can be targetted via `props` and `classes` props to style these nested elements for complex components.
+
+In this example we can target the `AnnotationPoint`'s internal `circle` and `label` components.
 
 :example{ component="AnnotationPoint" name="series-annotation" showCode noResize showLineNumbers }
 `ADD LINE HIGHLIGHTING {26-27}`
 
-#### Color Schemes via cRange
+#### Color scales
 
 Picking a color isn't easy. Picking many colors that appear cohesive is even tougher. Why not use designer crafted color schemes?
 
