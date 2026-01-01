@@ -26,7 +26,7 @@
 			color: 'var(--color-oranges)'
 		}
 	]}
-	padding={defaultChartPadding({ right: 10, bottom: 45 })}
+	padding={defaultChartPadding({ legend: true, right: 10 })}
 	height={300}
 	legend
 />

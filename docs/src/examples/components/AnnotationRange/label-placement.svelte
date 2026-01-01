@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AnnotationRange, LineChart, type Placement } from 'layerchart';
+	import { AnnotationRange, LineChart, defaultChartPadding, type Placement } from 'layerchart';
 	import AnnotationRangeControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 
 	import { getAppleStock } from '$lib/data.remote';
@@ -26,7 +26,13 @@
 
 <AnnotationRangeControls bind:placement bind:xOffset bind:yOffset />
 
-<LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 5 }}>
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	height={300}
+	padding={defaultChartPadding({ left: 25, bottom: 15 })}
+>
 	{#snippet aboveMarks({ context })}
 		<AnnotationRange
 			x={[new Date('2010-01-01'), new Date('2010-12-31')]}

@@ -37,14 +37,7 @@
 	export { data };
 </script>
 
-<Chart
-	{data}
-	x="letter"
-	y="frequency"
-	yNice
-	padding={{ top: 20, bottom: 20, left: 30, right: 20 }}
-	height={300}
->
+<Chart {data} x="letter" y="frequency" yNice padding={{ left: 25, bottom: 20 }} height={300}>
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" />
