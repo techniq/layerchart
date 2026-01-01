@@ -22,6 +22,6 @@
 		<Axis placement="left" rule />
 		<Rule x={0} />
 		<Bars strokeWidth={1} class="fill-primary" />
-		<Labels placement="inside" format="integer" />
+		<Labels placement="inside" format="integer" class="fill-black" />
 	</Layer>
 </Chart>

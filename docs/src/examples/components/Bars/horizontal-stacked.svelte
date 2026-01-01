@@ -1,7 +1,16 @@
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { sum } from 'd3-array';
-	import { Bars, Axis, Chart, Highlight, Layer, Tooltip, groupStackData } from 'layerchart';
+	import {
+		Bars,
+		Axis,
+		Chart,
+		Highlight,
+		Layer,
+		Tooltip,
+		groupStackData,
+		defaultChartPadding
+	} from 'layerchart';
 	import { longData } from '$lib/utils/data.js';
 
 	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
@@ -26,7 +35,7 @@
 	c="fruit"
 	cDomain={colorKeys}
 	cRange={keyColors}
-	padding={{ left: 32, bottom: 20, right: 8 }}
+	padding={defaultChartPadding({ left: 32, bottom: 20, right: 15 })}
 	tooltip={{ mode: 'band' }}
 	height={300}
 >

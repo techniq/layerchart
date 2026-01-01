@@ -8,6 +8,7 @@
 		Layer,
 		LinearGradient,
 		Tooltip,
+		defaultChartPadding,
 		type DomainType
 	} from 'layerchart';
 	import { format } from '@layerstack/utils';
@@ -25,7 +26,7 @@
 	{xDomain}
 	y="value"
 	yDomain={[0, null]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={defaultChartPadding({ left: 25, bottom: 24 })}
 	tooltip={{ mode: 'quadtree-x' }}
 	brush={{
 		resetOnEnd: true,

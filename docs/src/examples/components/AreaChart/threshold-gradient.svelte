@@ -2,10 +2,10 @@
 	import {
 		Area,
 		AreaChart,
-		defaultChartPadding,
 		Highlight,
 		LinearGradient,
-		Tooltip
+		Tooltip,
+		defaultChartPadding
 	} from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
@@ -19,7 +19,7 @@
 	};
 </script>
 
-<AreaChart {data} x="date" y="value" padding={defaultChartPadding({ right: 10 })} height={300}>
+<AreaChart {data} x="date" y="value" padding={defaultChartPadding({ right: 15 })} height={300}>
 	{#snippet marks({ context })}
 		{@const thresholdValue = 0}
 		{@const thresholdOffset =

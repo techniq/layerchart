@@ -5,6 +5,7 @@
 
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
+	import { loadExample } from '$lib/examples.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
@@ -53,6 +54,15 @@
 		}
 	};
 	examples.set(examplesContext);
+
+	const example = $derived(
+		page.params.name && page.params.example
+			? await loadExample(page.params.name, page.params.example)
+			: null
+	);
+
+	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
+	let layers = $derived(example?.module.layers ?? metadata.layers ?? []);
 </script>
 
 <div class="mb-4">
@@ -84,7 +94,7 @@
 			{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
 		</h1>
 		<span class="flex items-center gap-1">
-			{#if metadata.layers}
+			{#if layers}
 				<ToggleGroup
 					bind:value={settings.layer}
 					variant="outline"
@@ -93,7 +103,7 @@
 					rounded="full"
 					size="sm"
 				>
-					{#each metadata.layers as layer}
+					{#each layers as layer}
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
 					{/each}
 				</ToggleGroup>
