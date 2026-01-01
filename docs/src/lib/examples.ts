@@ -24,10 +24,13 @@ export async function loadExample(
 			import(`../examples/${type}/${component}/${name}.svelte?raw`)
 		]);
 
-		const comp = componentModule.default as Component;
+		const { default: comp, ...module } = componentModule as {
+			default: Component;
+			layers?: string[];
+		};
 		const source = (rawSource.default as string).replace(/^.*export .*;.*$/gm, '');
 
-		return { component: comp, source };
+		return { component: comp, source, module };
 	} catch (e) {
 		console.warn(`Failed to load example: ${type}/${component}/${name}`, e);
 		return null;
