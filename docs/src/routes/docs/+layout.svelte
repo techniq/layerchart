@@ -222,7 +222,7 @@
 			showSidebar ? 'w-62' : 'w-0'
 		)}
 	>
-		<div class="overflow-auto">
+		<div class="overflow-auto" data-sveltekit-preserve-scroll>
 			<DocsMenu class="px-3 py-4" />
 		</div>
 
