@@ -209,7 +209,7 @@ In this example we can target the `AnnotationPoint`'s internal `circle` and `lab
 Picking a color isn't easy. Picking many colors that appear cohesive is even tougher. Why not use designer crafted color schemes?
 
 ::info
-more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/components/ColorRamp#schemes)
+more info [Color Schemes](/docs/components/ColorRamp#schemes)
 ::
 
 :example{ path="./color-schemes.svelte" noResize showCode highight="40" }
@@ -225,22 +225,21 @@ more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/comp
     ::
 
     ::tab{label="Radial gradient"}
-      ```svelte live {9}
-    		<script lang="ts">
-    			import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
-    		</script>
+      ```svelte live {7-10}
+        <script lang="ts">
+          import { Chart, Circle, Layer, RadialGradient } from 'layerchart';
+        </script>
 
-    		<Chart height={300}>
-    			<Layer center>
-    				<RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
-    					{#snippet children({ gradient })}
-    						<Circle r={150} fill={gradient} />
-    					{/snippet}
-    				</RadialGradient>
-    			</Layer>
-    		</Chart>
-    	```
-    `NOTE FIX triple backtick showing`
+        <Chart height={300}>
+          <Layer center>
+            <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
+              {#snippet children({ gradient })}
+                <Circle r={150} fill={gradient} />
+              {/snippet}
+            </RadialGradient>
+          </Layer>
+        </Chart>
+      ```
     ::
 
     ::tab{label="Pattern"}
@@ -255,4 +254,3 @@ Chart padding is the only other commonly styled element.
 `Can xPadding and yPadding be added to example below?`
 
 :example{ path="./padding.svelte" noResize }
-`WHY PADDING FOR LEGEND NOT HANDLED?`

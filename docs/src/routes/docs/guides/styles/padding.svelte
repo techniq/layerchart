@@ -67,9 +67,9 @@
 	let paddingPseudoCode = $derived.by(() => {
 		let code = [];
 		let padding = '';
-		if (!axis) code.push('axis:{false}');
-		if (!legend) code.push('legend:{false}');
-		if (!xNice) code.push('xNice:{false}');
+		if (!axis) code.push('axis={false}');
+		if (legend) code.push('legend');
+		if (!xNice) code.push('xNice');
 		if (paddingOption === 0) {
 			let pad = [];
 			if (statePadding.left !== defaultPadding.left) pad.push(`left: ${statePadding.left}`);
