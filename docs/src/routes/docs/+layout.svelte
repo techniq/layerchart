@@ -19,6 +19,7 @@
 	import { page } from '$app/state';
 	import { examples } from '$lib/context.js';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
+	import { preparePageTransition } from '$lib/page-transitions';
 	import favicon from '$lib/assets/favicon.svg';
 
 	import LucideAlignLeft from '~icons/lucide/align-left';
@@ -38,6 +39,9 @@
 	import CustomDiscord from '~icons/custom-brands/discord';
 
 	let { data, children } = $props();
+
+	// View transition for navigation
+	preparePageTransition();
 
 	// Set examples context for all /docs pages
 	// Child layouts (like docs/components/[name]) can override with merged data
