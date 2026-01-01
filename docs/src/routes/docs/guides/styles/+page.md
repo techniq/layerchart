@@ -202,8 +202,7 @@ Along with `class` and `style` props for direct component styling, some componen
 
 In this example we can target the `AnnotationPoint`'s internal `circle` and `label` components.
 
-:example{ component="AnnotationPoint" name="series-annotation" showCode noResize showLineNumbers }
-`ADD LINE HIGHLIGHTING {26-27}`
+:example{ component="AnnotationPoint" name="series-annotation" showCode noResize highlight="26-27" }
 
 #### Color scales
 
@@ -213,8 +212,7 @@ Picking a color isn't easy. Picking many colors that appear cohesive is even tou
 more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/components/ColorRamp#schemes)
 ::
 
-:example{ path="./color-schemes.svelte" noResize showCode }
-`ADD LINE HIGHLIGHTING {40}`
+:example{ path="./color-schemes.svelte" noResize showCode highight="40" }
 
 #### Data Driven Colors (choropleth, color prop on data for pie chart, etc)
 
@@ -223,8 +221,7 @@ more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/comp
 :::tabs{key="color-enhancements"}
 
     ::tab{label="Linear gradient"}
-    `ADD LINE HIGHLIGHTING {11-15}`
-    :example{ component="AreaChart" name="gradient" noResize showCode }
+    :example{ component="AreaChart" name="gradient" noResize showCode highlight="11-15" }
     ::
 
     ::tab{label="Radial gradient"}
@@ -247,8 +244,7 @@ more info [Color Schemes](https://techniq-docs-v2.layerchart.pages.dev/docs/comp
     ::
 
     ::tab{label="Pattern"}
-    ADD LINE HIGHLIGHTING {14-20}
-      :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode }
+      :example{ component="AnnotationRange" name="vertical-with-pattern-range" noResize showCode highlight="14-20" }
     ::
 
 :::

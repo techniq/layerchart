@@ -23,6 +23,8 @@
 		name,
 		path,
 		showCode = false,
+		showLineNumbers = false,
+		highlight,
 		variant = 'default',
 		noResize = false,
 		clip = false,
@@ -32,6 +34,8 @@
 		name?: string;
 		path?: string;
 		showCode?: boolean;
+		showLineNumbers?: boolean;
+		highlight?: string;
 		variant?: 'default' | 'basic';
 		noResize?: boolean;
 		clip?: boolean;
@@ -155,7 +159,7 @@
 
 		{#if showCode}
 			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<Code source={example.source} class="outline-none" />
+				<Code source={example.source} {showLineNumbers} {highlight} class="outline-none" />
 			</div>
 		{/if}
 
