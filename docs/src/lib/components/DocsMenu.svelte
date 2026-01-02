@@ -131,7 +131,7 @@
 	<NavItem
 		text={label}
 		currentUrl={page.url}
-		target={path.startsWith('http') ? '_blank' : '_self'}
+		target={path.startsWith('http') ? '_blank' : undefined}
 		{path}
 		{icon}
 		classes={{
