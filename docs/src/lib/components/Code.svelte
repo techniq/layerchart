@@ -1,9 +1,14 @@
 <script module>
-	import { createHighlighter } from 'shiki';
+	import { createHighlighter, type Highlighter } from 'shiki';
+	import { transformerMetaHighlight } from '@shikijs/transformers';
 
-	const highlighter = createHighlighter({
+	let highlighter = $state<Highlighter | null>(null);
+
+	createHighlighter({
 		themes: ['github-light-default', 'github-dark-default'],
 		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh']
+	}).then((h) => {
+		highlighter = h;
 	});
 </script>
 
@@ -26,6 +31,8 @@
 		language?: string;
 		title?: string;
 		copyButton?: boolean | 'hover';
+		showLineNumbers?: boolean;
+		highlight?: string;
 		classes?: { root?: string; pre?: string; code?: string };
 		class?: string;
 	}
@@ -35,6 +42,8 @@
 		source = null,
 		language = 'svelte',
 		copyButton = true,
+		showLineNumbers = false,
+		highlight,
 		classes = {},
 		class: className
 	}: Props & HTMLAttributes<HTMLDivElement> = $props();
@@ -69,28 +78,31 @@
 		class={cls(
 			'Code',
 			'relative bg-surface-200 dark:bg-surface-300 p-4 overflow-auto not-prose [tab-size:2]',
-			copyButton === 'hover' && 'group'
+			copyButton === 'hover' && 'group',
+			showLineNumbers && 'show-line-numbers'
 		)}
 	>
 		{#if source}
 			<pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
 				<code class={cls('text-sm', classes.code)}>
-					{#await highlighter}
-						<div>Loading...</div>
-					{:then h}
+					{#if highlighter}
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						{@html h.codeToHtml(sourceStr, {
-							lang: language,
-							themes: {
-								light: 'github-light-default',
-								dark: 'github-dark-default'
+						{@html highlighter.codeToHtml(
+							sourceStr,
+							{
+								lang: language,
+								themes: {
+									light: 'github-light-default',
+									dark: 'github-dark-default'
+								},
+								meta: highlight ? { __raw: `{${highlight}}` } : undefined,
+								transformers: highlight ? [transformerMetaHighlight()] : undefined
 							}
-						})}
-					{:catch error}
-						<div class="text-red-500">Error loading code highlighting: {error.message}</div>
-					{/await}
-				
-      </code>
+						)}
+					{:else}
+						<div>Loading...</div>
+					{/if}
+				</code>
     </pre>
 
 			{#if copyButton !== false}
@@ -123,5 +135,34 @@
 		font-style: var(--shiki-dark-font-style) !important;
 		font-weight: var(--shiki-dark-font-weight) !important;
 		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
+
+	/* Line highlighting */
+	:global(.shiki .line.highlighted) {
+		background-color: rgba(101, 117, 133, 0.16);
+		margin: 0 -1rem;
+		padding: 0 1rem;
+		display: inline-block;
+		width: calc(100% + 2rem);
+	}
+
+	:global(html.dark .shiki .line.highlighted) {
+		background-color: rgba(142, 150, 170, 0.14);
+	}
+
+	/* Line numbers */
+	.show-line-numbers :global(.shiki code) {
+		counter-reset: line;
+	}
+
+	.show-line-numbers :global(.shiki .line::before) {
+		counter-increment: line;
+		content: counter(line);
+		display: inline-block;
+		width: 2rem;
+		margin-right: 1rem;
+		text-align: right;
+		color: rgba(115, 138, 148, 0.4);
+		user-select: none;
 	}
 </style>

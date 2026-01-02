@@ -6,8 +6,8 @@ import { shikiDiffTransformer } from '../transformers/shiki-diff.js';
  */
 export const prettyCodeOptions = {
 	theme: {
-		light: 'github-light',
-		dark: 'github-dark'
+		light: 'github-light-default',
+		dark: 'github-dark-default'
 	},
 	keepBackground: false,
 	defaultLang: {

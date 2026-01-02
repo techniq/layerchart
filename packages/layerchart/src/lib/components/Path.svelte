@@ -77,6 +77,7 @@
 </script>
 
 <script lang="ts">
+  import { tick } from 'svelte';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
   import { merge } from '@layerstack/utils';
@@ -246,10 +247,17 @@
   $effect(() => {
     if (!startContent && !endContent) return;
     d;
-    if (!pathRef || !pathRef.getTotalLength()) return;
-    startPoint = pathRef.getPointAtLength(0);
-    const totalLength = pathRef.getTotalLength();
-    endPoint.target = pathRef.getPointAtLength(totalLength);
+    if (!pathRef) return;
+
+    // Wait for DOM to update before querying path geometry
+    tick().then(() => {
+      if (!pathRef) return;
+      const totalLength = pathRef.getTotalLength();
+      if (!totalLength) return;
+
+      startPoint = pathRef.getPointAtLength(0);
+      endPoint.target = pathRef.getPointAtLength(totalLength);
+    });
   });
 
   $effect(() => {

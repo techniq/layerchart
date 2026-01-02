@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip, type ChartContextValue } from 'layerchart';
+	import {
+		Area,
+		Axis,
+		Chart,
+		Layer,
+		Highlight,
+		Tooltip,
+		defaultChartPadding,
+		type ChartContextValue
+	} from 'layerchart';
 	import { format } from '@layerstack/utils';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -33,7 +42,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ top: 5, left: 28, bottom: 24 }}
+	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
 	tooltip={{ mode: 'quadtree-x' }}
 	bind:context
 	height={300}

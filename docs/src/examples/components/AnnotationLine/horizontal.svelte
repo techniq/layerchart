@@ -1,3 +1,7 @@
+<script module>
+	export const layers = ['svg', 'canvas'];
+</script>
+
 <script lang="ts">
 	import { AnnotationLine, LineChart } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';

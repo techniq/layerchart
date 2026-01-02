@@ -25,6 +25,8 @@
 	{data}
 	x="x"
 	y="y"
+	xNice
+	yNice
 	padding={{ left: 30, bottom: 30 }}
 	tooltip={{
 		mode: settings.mode
