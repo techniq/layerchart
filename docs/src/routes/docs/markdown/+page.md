@@ -123,7 +123,7 @@ Supported props: `title`, `live`, `diff`, `showLineNumbers`, Line highlighting `
 ```
 ````
 
-```svelte live title="Counter.svelte" showCode=false
+```svelte live title="Counter.svelte"
 <script>
 	let count = $state(0);
 </script>
