@@ -6,6 +6,7 @@
 
 	import { dev } from '$app/environment';
 	import { page } from '$app/state';
+	import { preparePageTransition } from '$lib/page-transitions';
 
 	import '@fontsource-variable/inter';
 	import '../app.css';
@@ -51,6 +52,9 @@
 			};
 		}
 	});
+
+	// View transition for navigation
+	preparePageTransition();
 </script>
 
 {@render children()}

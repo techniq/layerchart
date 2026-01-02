@@ -98,6 +98,15 @@
 	let ref = $state<SvelteComponent | null>(null);
 	let data = $derived(ref?.data);
 
+	// Ensure component name is always resolved consistently
+	const resolvedComponent = $derived(component ?? page.params.name ?? '');
+	// Only set view-transition-name on detail pages (when page.params.example matches)
+	// This prevents conflicts with ExampleScreenshot on listing pages
+	const isDetailPage = $derived(page.params.example === name);
+	const viewTransitionName = $derived(
+		isDetailPage && resolvedComponent && name ? `lc-${resolvedComponent}-${name}` : undefined
+	);
+
 	let canResize = $derived.by(() => {
 		// Prop
 		if (typeof noResize === 'boolean') {
@@ -134,6 +143,7 @@
 				)}
 				bind:this={containerEl}
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
+				style:view-transition-name={viewTransitionName}
 			>
 				<example.component bind:this={ref} />
 

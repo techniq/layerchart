@@ -1,10 +1,14 @@
 <script module>
-	import { createHighlighter } from 'shiki';
+	import { createHighlighter, type Highlighter } from 'shiki';
 	import { transformerMetaHighlight } from '@shikijs/transformers';
 
-	const highlighter = createHighlighter({
+	let highlighter = $state<Highlighter | null>(null);
+
+	createHighlighter({
 		themes: ['github-light-default', 'github-dark-default'],
 		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh']
+	}).then((h) => {
+		highlighter = h;
 	});
 </script>
 
@@ -81,24 +85,24 @@
 		{#if source}
 			<pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
 				<code class={cls('text-sm', classes.code)}>
-					{#await highlighter}
-						<div>Loading...</div>
-					{:then h}
+					{#if highlighter}
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						{@html h.codeToHtml(sourceStr, {
-							lang: language,
-							themes: {
-								light: 'github-light-default',
-								dark: 'github-dark-default'
-							},
-							meta: highlight ? { __raw: `{${highlight}}` } : undefined,
-							transformers: highlight ? [transformerMetaHighlight()] : undefined
-						})}
-					{:catch error}
-						<div class="text-red-500">Error loading code highlighting: {error.message}</div>
-					{/await}
-				
-      </code>
+						{@html highlighter.codeToHtml(
+							sourceStr,
+							{
+								lang: language,
+								themes: {
+									light: 'github-light-default',
+									dark: 'github-dark-default'
+								},
+								meta: highlight ? { __raw: `{${highlight}}` } : undefined,
+								transformers: highlight ? [transformerMetaHighlight()] : undefined
+							}
+						)}
+					{:else}
+						<div>Loading...</div>
+					{/if}
+				</code>
     </pre>
 
 			{#if copyButton !== false}
