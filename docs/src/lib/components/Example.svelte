@@ -104,9 +104,7 @@
 	// This prevents conflicts with ExampleScreenshot on listing pages
 	const isDetailPage = $derived(page.params.example === name);
 	const viewTransitionName = $derived(
-		isDetailPage && resolvedComponent && name
-			? `lc-${String(resolvedComponent)}-${String(name)}`
-			: undefined
+		isDetailPage && resolvedComponent && name ? `lc-${resolvedComponent}-${name}` : undefined
 	);
 
 	let canResize = $derived.by(() => {
