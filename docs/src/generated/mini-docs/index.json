@@ -1,0 +1,329 @@
+{
+  "generatedAt": "2026-01-03T18:37:21.934Z",
+  "components": [
+    {
+      "component": "AnnotationLine",
+      "file": "AnnotationLine.svelte"
+    },
+    {
+      "component": "AnnotationPoint",
+      "file": "AnnotationPoint.svelte"
+    },
+    {
+      "component": "AnnotationRange",
+      "file": "AnnotationRange.svelte"
+    },
+    {
+      "component": "Arc",
+      "file": "Arc.svelte"
+    },
+    {
+      "component": "ArcChart",
+      "file": "ArcChart.svelte"
+    },
+    {
+      "component": "Area",
+      "file": "Area.svelte"
+    },
+    {
+      "component": "AreaChart",
+      "file": "AreaChart.svelte"
+    },
+    {
+      "component": "Axis",
+      "file": "Axis.svelte"
+    },
+    {
+      "component": "Bar",
+      "file": "Bar.svelte"
+    },
+    {
+      "component": "BarChart",
+      "file": "BarChart.svelte"
+    },
+    {
+      "component": "Bars",
+      "file": "Bars.svelte"
+    },
+    {
+      "component": "Blur",
+      "file": "Blur.svelte"
+    },
+    {
+      "component": "Bounds",
+      "file": "Bounds.svelte"
+    },
+    {
+      "component": "BrushContext",
+      "file": "BrushContext.svelte"
+    },
+    {
+      "component": "Calendar",
+      "file": "Calendar.svelte"
+    },
+    {
+      "component": "Canvas",
+      "file": "Canvas.svelte"
+    },
+    {
+      "component": "Chart",
+      "file": "Chart.svelte"
+    },
+    {
+      "component": "ChartClipPath",
+      "file": "ChartClipPath.svelte"
+    },
+    {
+      "component": "Circle",
+      "file": "Circle.svelte"
+    },
+    {
+      "component": "CircleClipPath",
+      "file": "CircleClipPath.svelte"
+    },
+    {
+      "component": "ClipPath",
+      "file": "ClipPath.svelte"
+    },
+    {
+      "component": "cls",
+      "file": "cls.svelte"
+    },
+    {
+      "component": "ColorRamp",
+      "file": "ColorRamp.svelte"
+    },
+    {
+      "component": "Connector",
+      "file": "Connector.svelte"
+    },
+    {
+      "component": "Dagre",
+      "file": "Dagre.svelte"
+    },
+    {
+      "component": "direct",
+      "file": "direct.svelte"
+    },
+    {
+      "component": "Ellipse",
+      "file": "Ellipse.svelte"
+    },
+    {
+      "component": "ForceSimulation",
+      "file": "ForceSimulation.svelte"
+    },
+    {
+      "component": "format",
+      "file": "format.svelte"
+    },
+    {
+      "component": "Frame",
+      "file": "Frame.svelte"
+    },
+    {
+      "component": "GeoCircle",
+      "file": "GeoCircle.svelte"
+    },
+    {
+      "component": "GeoContext",
+      "file": "GeoContext.svelte"
+    },
+    {
+      "component": "GeoEdgeFade",
+      "file": "GeoEdgeFade.svelte"
+    },
+    {
+      "component": "GeoPath",
+      "file": "GeoPath.svelte"
+    },
+    {
+      "component": "GeoPoint",
+      "file": "GeoPoint.svelte"
+    },
+    {
+      "component": "GeoSpline",
+      "file": "GeoSpline.svelte"
+    },
+    {
+      "component": "GeoTile",
+      "file": "GeoTile.svelte"
+    },
+    {
+      "component": "GeoVisible",
+      "file": "GeoVisible.svelte"
+    },
+    {
+      "component": "Graticule",
+      "file": "Graticule.svelte"
+    },
+    {
+      "component": "Grid",
+      "file": "Grid.svelte"
+    },
+    {
+      "component": "Group",
+      "file": "Group.svelte"
+    },
+    {
+      "component": "Highlight",
+      "file": "Highlight.svelte"
+    },
+    {
+      "component": "Html",
+      "file": "Html.svelte"
+    },
+    {
+      "component": "Hull",
+      "file": "Hull.svelte"
+    },
+    {
+      "component": "Labels",
+      "file": "Labels.svelte"
+    },
+    {
+      "component": "Layer",
+      "file": "Layer.svelte"
+    },
+    {
+      "component": "Legend",
+      "file": "Legend.svelte"
+    },
+    {
+      "component": "Line",
+      "file": "Line.svelte"
+    },
+    {
+      "component": "LinearGradient",
+      "file": "LinearGradient.svelte"
+    },
+    {
+      "component": "LineChart",
+      "file": "LineChart.svelte"
+    },
+    {
+      "component": "Link",
+      "file": "Link.svelte"
+    },
+    {
+      "component": "Marker",
+      "file": "Marker.svelte"
+    },
+    {
+      "component": "MotionPath",
+      "file": "MotionPath.svelte"
+    },
+    {
+      "component": "Pack",
+      "file": "Pack.svelte"
+    },
+    {
+      "component": "Partition",
+      "file": "Partition.svelte"
+    },
+    {
+      "component": "Path",
+      "file": "Path.svelte"
+    },
+    {
+      "component": "Pattern",
+      "file": "Pattern.svelte"
+    },
+    {
+      "component": "Pie",
+      "file": "Pie.svelte"
+    },
+    {
+      "component": "PieChart",
+      "file": "PieChart.svelte"
+    },
+    {
+      "component": "pivot",
+      "file": "pivot.svelte"
+    },
+    {
+      "component": "Point",
+      "file": "Point.svelte"
+    },
+    {
+      "component": "Points",
+      "file": "Points.svelte"
+    },
+    {
+      "component": "Polygon",
+      "file": "Polygon.svelte"
+    },
+    {
+      "component": "RadialGradient",
+      "file": "RadialGradient.svelte"
+    },
+    {
+      "component": "Rect",
+      "file": "Rect.svelte"
+    },
+    {
+      "component": "RectClipPath",
+      "file": "RectClipPath.svelte"
+    },
+    {
+      "component": "Rule",
+      "file": "Rule.svelte"
+    },
+    {
+      "component": "Sankey",
+      "file": "Sankey.svelte"
+    },
+    {
+      "component": "ScatterChart",
+      "file": "ScatterChart.svelte"
+    },
+    {
+      "component": "Spline",
+      "file": "Spline.svelte"
+    },
+    {
+      "component": "string",
+      "file": "string.svelte"
+    },
+    {
+      "component": "Svg",
+      "file": "Svg.svelte"
+    },
+    {
+      "component": "Text",
+      "file": "Text.svelte"
+    },
+    {
+      "component": "Threshold",
+      "file": "Threshold.svelte"
+    },
+    {
+      "component": "TileImage",
+      "file": "TileImage.svelte"
+    },
+    {
+      "component": "Tooltip",
+      "file": "Tooltip.svelte"
+    },
+    {
+      "component": "TooltipContext",
+      "file": "TooltipContext.svelte"
+    },
+    {
+      "component": "TransformContext",
+      "file": "TransformContext.svelte"
+    },
+    {
+      "component": "Tree",
+      "file": "Tree.svelte"
+    },
+    {
+      "component": "Treemap",
+      "file": "Treemap.svelte"
+    },
+    {
+      "component": "Voronoi",
+      "file": "Voronoi.svelte"
+    }
+  ]
+}

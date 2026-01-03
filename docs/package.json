@@ -19,8 +19,9 @@
 		"generate:api": "tsx scripts/generate-component-api.ts",
 		"generate:screenshots": "tsx scripts/generate-screenshots.ts",
 		"generate:catalog": "tsx scripts/generate-example-catalog.ts",
+		"generate:mini-docs": "tsx scripts/generate-mini-docs.ts",
 		"generate:stackblitz": "tsx scripts/build-stackblitz-files.ts",
-		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz"
+		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:mini-docs && pnpm generate:stackblitz"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.11.1",
