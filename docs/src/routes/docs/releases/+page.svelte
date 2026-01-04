@@ -1,13 +1,23 @@
 <script lang="ts">
 	import H1 from '$lib/markdown/components/h1.svelte';
 	import { format } from '@layerstack/utils';
+	import { Button } from 'svelte-ux';
 	import ReleaseContent from './ReleaseContent.svelte';
 
+	import LucideChevronLeft from '~icons/lucide/chevron-left';
+	import LucideChevronRight from '~icons/lucide/chevron-right';
+
 	let { data } = $props();
+	const { pagination } = $derived(data);
 </script>
 
 <div class="prose max-w-4xl">
-	<H1>Releases</H1>
+	<H1
+		>Releases
+		<span class="text-xl text-surface-content/70">
+			({pagination.totalReleases})
+		</span>
+	</H1>
 
 	<div class="space-y-6 mt-8">
 		{#each data.releases as release}
@@ -50,4 +60,34 @@
 			</article>
 		{/each}
 	</div>
+
+	{#if pagination.totalPages > 1}
+		<div class="flex items-center justify-between mt-8 pt-6 border-t">
+			<Button
+				href="/docs/releases?page={pagination.currentPage - 1}"
+				icon={LucideChevronLeft}
+				disabled={!pagination.hasPrevPage}
+				variant="outline"
+				size="sm"
+			>
+				Previous
+			</Button>
+
+			<div class="text-sm text-surface-content/70">
+				Page {pagination.currentPage} of {pagination.totalPages}
+			</div>
+
+			<Button
+				href="/docs/releases?page={pagination.currentPage + 1}"
+				disabled={!pagination.hasNextPage}
+				variant="outline"
+				size="sm"
+			>
+				Next
+				{#snippet append()}
+					<LucideChevronRight />
+				{/snippet}
+			</Button>
+		</div>
+	{/if}
 </div>
