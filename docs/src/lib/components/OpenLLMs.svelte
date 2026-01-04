@@ -5,10 +5,7 @@
 	import ChevronDownIcon from '~icons/lucide/chevron-down';
 	import SimpleIconsOpenai from '~icons/simple-icons/openai';
 	import SimpleIconsClaude from '~icons/simple-icons/claude';
-	import CustomGrokIcon from '~icons/custom-brands/grok';
 	import ClipboardIcon from '~icons/lucide/clipboard-copy';
-	// import CustomDeepseekIcon from '~icons/custom-brands/deepseek';
-	// import SimpleIconsGemini from '~icons/simple-icons/googlegemini';
 
 	let { buttonLabel = 'LLM Chat' } = $props();
 
@@ -37,23 +34,6 @@
 			value: generateLlmUrl('https://claude.ai/new?q='),
 			icon: SimpleIconsClaude
 		},
-		/* Gemini does not support native URL query params */
-		// {
-		// 	label: 'Open in Gemini',
-		// 	value: generateLlmUrl('https://google.com'),
-		// 	icon: SimpleIconsGemini
-		// },
-		{
-			label: 'Open in Grok',
-			value: generateLlmUrl('https://grok.com/?q='),
-			icon: CustomGrokIcon
-		},
-		/* DeepSeek does not support native URL query params */
-		// {
-		// 	label: 'Open in DeepSeek',
-		// 	value: generateLlmUrl('https://deepseek.com/?q='),
-		// 	icon: CustomDeepseekIcon
-		// },
 		{
 			label: 'Copy Page URL to Clipboard',
 			value: null,
