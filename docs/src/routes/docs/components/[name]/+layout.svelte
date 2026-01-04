@@ -2,6 +2,7 @@
 	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
+	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
 
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
@@ -137,6 +138,8 @@
 					icon={LucideCode}
 				/>
 			{/if}
+
+			<OpenLLMsbutton />
 
 			<!-- <ViewSourceButton
         label="Page source"
