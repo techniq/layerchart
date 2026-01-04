@@ -1,5 +1,5 @@
 import { defineCollection, defineConfig } from '@content-collections/core';
-// import { compileMarkdown } from '@content-collections/markdown';
+import { compileMarkdown } from '@content-collections/markdown';
 import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
 import { readFileSync } from 'fs';
@@ -152,6 +152,30 @@ const utils = defineCollection({
 	}
 });
 
+const releases = defineCollection({
+	name: 'releases',
+	directory: 'src/content/releases',
+	include: '**/*.md',
+	schema: z.object({
+		title: z.string(),
+		tag: z.string(),
+		date: z.coerce.date(),
+		url: z.string(),
+		draft: z.boolean().default(false),
+		prerelease: z.boolean().default(false),
+		author: z.string()
+	}),
+	transform: async (doc, context) => {
+		const { fileName } = doc._meta;
+
+		return {
+			...doc,
+			slug: fileName.replace('.md', ''),
+			html: await compileMarkdown(context, doc)
+		};
+	}
+});
+
 export default defineConfig({
-	collections: [components, examples, utils]
+	collections: [components, examples, utils, releases]
 });
