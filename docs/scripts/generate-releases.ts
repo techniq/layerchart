@@ -131,17 +131,33 @@ async function main() {
 		console.log(`Created directory: ${RELEASES_DIR}`);
 	}
 
-	// Write each release to a file
+	// Write each release to a file (skip if already exists to preserve local edits)
+	let newCount = 0;
+	let skippedCount = 0;
+
 	for (const release of publishedReleases) {
 		const filename = getReleaseFilename(release);
 		const filepath = path.join(RELEASES_DIR, filename);
-		const markdown = releaseToMarkdown(release);
 
+		// Skip if file already exists (preserves local edits)
+		if (fs.existsSync(filepath)) {
+			console.log(`⊝ Skipped ${filename} (already exists)`);
+			skippedCount++;
+			continue;
+		}
+
+		const markdown = releaseToMarkdown(release);
 		fs.writeFileSync(filepath, markdown, 'utf-8');
 		console.log(`✓ Wrote ${filename}`);
+		newCount++;
 	}
 
-	console.log(`\nSuccessfully wrote ${publishedReleases.length} release files to ${RELEASES_DIR}`);
+	console.log(
+		`\nSuccessfully wrote ${newCount} new release file${newCount === 1 ? '' : 's'} to ${RELEASES_DIR}`
+	);
+	if (skippedCount > 0) {
+		console.log(`Skipped ${skippedCount} existing file${skippedCount === 1 ? '' : 's'}`);
+	}
 }
 
 // Run the script
