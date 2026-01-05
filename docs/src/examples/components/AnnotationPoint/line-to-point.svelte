@@ -13,27 +13,39 @@
 			details: 'iPhone (1st Gen)'
 		},
 		{
-			x: new Date('July 7, 2008'),
+			x: new Date('July 11, 2008'),
 			y: 175.16,
 			label: 'B',
-			details: 'iPad (1st Gen)'
+			details: 'iPhone 3G'
 		},
 		{
-			x: new Date('January 27, 2010'),
-			y: 207.88,
+			x: new Date('April 3, 2010'),
+			y: 232.39,
 			label: 'C',
 			details: 'iPad (1st Gen)'
 		},
 		{
+			x: new Date('June 24, 2010'),
+			y: 254.28,
+			label: 'D',
+			details: 'iPhone 4'
+		},
+		{
+			x: new Date('September 1, 2010'),
+			y: 258.77,
+			label: 'E',
+			details: 'Apple TV (2nd Gen)'
+		},
+		{
 			x: new Date('March 11, 2011'),
 			y: 352.47,
-			label: 'D',
-			details: 'iPad (1st Gen)'
+			label: 'F',
+			details: 'iPad (2nd Gen)'
 		},
 		{
 			x: new Date('March 7, 2012'),
 			y: 545.18,
-			label: 'E',
+			label: 'G',
 			details: 'Apple TV (3rd Gen)'
 		}
 	];

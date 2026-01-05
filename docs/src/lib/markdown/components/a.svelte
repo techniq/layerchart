@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 	import { cls } from '@layerstack/tailwind';
+	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 
 	let { class: className, href = '', children, ...restProps }: HTMLAnchorAttributes = $props();
 
@@ -20,4 +21,7 @@
 	{...restProps}
 >
 	{@render children?.()}
+	{#if !internal}
+		<LucideArrowUpRight class="inline-block text-xs -ml-1 mb-2 opacity-70" />
+	{/if}
 </a>

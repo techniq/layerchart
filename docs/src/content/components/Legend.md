@@ -5,88 +5,84 @@ layers: [html]
 related: []
 ---
 
-<script lang="ts">
-	import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
-<Example name="sequential" showCode />
+:example{ name="sequential" showCode }
 
 <!-- ## Examples
 
 ### scaleSequential
 
-<Example name="sequential" />
+:example{ name="sequential" }
 
 ### scaleSequentialSqrt
 
-<Example name="sequential-sqrt" />
+:example{ name="sequential-sqrt" }
 
 ### scaleDiverging
 
-<Example name="diverging" />
+:example{ name="diverging" }
 
 ### scaleDivergingSqrt
 
-<Example name="diverging-sqrt" />
+:example{ name="diverging-sqrt" }
 
 ### scaleSequentialLog
 
-<Example name="sequential-log" />
+:example{ name="sequential-log" }
 
 ### scaleSequentialQuantile
 
-<Example name="sequential-quantile" />
+:example{ name="sequential-quantile" }
 
 ### scaleSqrt
 
-<Example name="sqrt" />
+:example{ name="sqrt" }
 
 ### scaleQuantize
 
-<Example name="quantize" />
+:example{ name="quantize" }
 
 ### scaleQuantile
 
-<Example name="quantile" />
+:example{ name="quantile" }
 
 ### scaleThreshold
 
-<Example name="threshold" />
+:example{ name="threshold" }
 
 ### scaleOrdinal
 
-<Example name="ordinal" />
+:example{ name="ordinal" }
 
 ### Chart integration
 
-<Example name="chart-integration" />
+:example{ name="chart-integration" }
 
 ### Chart placement
 
-<Example name="chart-placement" />
+:example{ name="chart-placement" }
 
 ### Square swatch
 
-<Example name="square-swatch" />
+:example{ name="square-swatch" }
 
 ### Vertical orientation
 
-<Example name="vertical-orientation" />
+:example{ name="vertical-orientation" }
 
 ### Styling
 
-<Example name="styling" />
+:example{ name="styling" }
 
 ### Responsive swatches
 
-<Example name="responsive-swatches" />
+:example{ name="responsive-swatches" }
 
 ### Click handler
 
-<Example name="click-handler" />
+:example{ name="click-handler" }
 
 ### Children override
 
-<Example name="children-override" /> -->
+:example{ name="children-override" } -->

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, Highlight, Tooltip } from 'layerchart';
+	import { Area, Axis, Chart, Layer, Highlight, Tooltip, defaultChartPadding } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	const data = createDateSeries({
@@ -19,7 +19,7 @@
 	y="value"
 	yDomain={[0, null]}
 	yNice
-	padding={{ top: 5, left: 28, bottom: 24 }}
+	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
 	tooltip={{ mode: 'quadtree-x' }}
 	height={300}
 >

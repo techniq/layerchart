@@ -226,35 +226,35 @@
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/example/Area/explicit-axis-ticks-min-max",
-      "lineNumber": 11,
+      "lineNumber": 10,
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 11,
+      "lineNumber": 10,
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 11,
+      "lineNumber": 10,
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
@@ -275,14 +275,14 @@
       "example": "multiple-series-using-overrides",
       "component": "Area",
       "path": "/example/Area/multiple-series-using-overrides",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
       "path": "/example/Area/multiple-series-with-labels",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<Chart"
     },
     {
@@ -296,56 +296,56 @@
       "example": "stack",
       "component": "Area",
       "path": "/example/Area/stack",
-      "lineNumber": 35,
+      "lineNumber": 43,
       "line": "<Chart"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 30,
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "with-labels",
       "component": "Area",
       "path": "/example/Area/with-labels",
-      "lineNumber": 11,
+      "lineNumber": 10,
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Area",
       "path": "/example/Area/with-tooltip-and-highlight",
-      "lineNumber": 11,
+      "lineNumber": 10,
       "line": "<Chart"
     },
     {
@@ -709,7 +709,7 @@
       "example": "horizontal-grouped-stacked-or-both-transition",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
-      "lineNumber": 58,
+      "lineNumber": 62,
       "line": "<Chart"
     },
     {
@@ -828,7 +828,7 @@
       "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 58,
+      "lineNumber": 61,
       "line": "<Chart"
     },
     {
@@ -1073,7 +1073,7 @@
       "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "component": "Bars",
       "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "lineNumber": 58,
+      "lineNumber": 61,
       "line": "<Chart"
     },
     {
@@ -1556,7 +1556,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/animated-globe",
-      "lineNumber": 124,
+      "lineNumber": 125,
       "line": "<Chart"
     },
     {
@@ -1584,7 +1584,7 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 42,
+      "lineNumber": 49,
       "line": "<Chart"
     },
     {
@@ -1598,7 +1598,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 56,
+      "lineNumber": 57,
       "line": "<Chart"
     },
     {
@@ -1633,7 +1633,7 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Chart"
     },
     {
@@ -1703,7 +1703,7 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 17,
+      "lineNumber": 26,
       "line": "<Chart"
     },
     {
@@ -1934,15 +1934,15 @@
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 5,
-      "line": "<Chart height={300}>"
+      "lineNumber": 6,
+      "line": "<Chart height={320} width={1065}>"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 5,
-      "line": "<Chart height={300}>"
+      "lineNumber": 6,
+      "line": "<Chart height={320} width={700}>"
     },
     {
       "example": "line",
@@ -1955,28 +1955,28 @@
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 37,
+      "lineNumber": 34,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 51,
+      "lineNumber": 48,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "orientation",
       "component": "Marker",
       "path": "/example/Marker/orientation",
-      "lineNumber": 65,
+      "lineNumber": 62,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
       "example": "spline",
       "component": "Marker",
       "path": "/example/Marker/spline",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
     },
     {
@@ -1990,7 +1990,7 @@
       "example": "styling",
       "component": "Marker",
       "path": "/example/Marker/styling",
-      "lineNumber": 35,
+      "lineNumber": 32,
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
@@ -3037,5 +3037,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.125Z"
+  "updatedAt": "2025-12-29T21:36:44.494Z"
 }

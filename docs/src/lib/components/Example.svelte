@@ -17,13 +17,14 @@
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 	import { movable } from '$lib/actions/movable';
-	import { resolveExamplePath } from '$lib/markdown/utils';
 
 	let {
 		component = page.params.name!,
 		name,
 		path,
 		showCode = false,
+		showLineNumbers = false,
+		highlight,
 		variant = 'default',
 		noResize = false,
 		clip = false,
@@ -33,20 +34,38 @@
 		name?: string;
 		path?: string;
 		showCode?: boolean;
+		showLineNumbers?: boolean;
+		highlight?: string;
 		variant?: 'default' | 'basic';
 		noResize?: boolean;
 		clip?: boolean;
 		class?: string;
 	} = $props();
 
+	/**
+	 * Resolve a relative or absolute path to a full path from /src
+	 */
+	function resolveExamplePath(examplePath: string, currentPath: string): string {
+		if (examplePath.startsWith('./')) {
+			return `/src/routes${currentPath}/${examplePath.slice(2)}`;
+		} else if (examplePath.startsWith('/')) {
+			return `/src${examplePath}`;
+		} else {
+			return `/src/routes${currentPath}/${examplePath}`;
+		}
+	}
+
+	// Get example from context (eagerly loaded by layout)
 	let example = $derived.by(() => {
 		if (path) {
-			// Resolve relative path and get from context (server-loaded)
+			// Path-based example
 			const resolvedPath = resolveExamplePath(path, page.url.pathname);
 			return examples.get()?.current['__path__']?.[resolvedPath];
 		} else if (component && name) {
+			// Component/name-based example
 			return examples.get()?.current[component]?.[name];
 		}
+		return undefined;
 	});
 
 	let containerEl = $state<HTMLElement | null>(null);
@@ -78,6 +97,15 @@
 
 	let ref = $state<SvelteComponent | null>(null);
 	let data = $derived(ref?.data);
+
+	// Ensure component name is always resolved consistently
+	const resolvedComponent = $derived(component ?? page.params.name ?? '');
+	// Only set view-transition-name on detail pages (when page.params.example matches)
+	// This prevents conflicts with ExampleScreenshot on listing pages
+	const isDetailPage = $derived(page.params.example === name);
+	const viewTransitionName = $derived(
+		isDetailPage && resolvedComponent && name ? `lc-${resolvedComponent}-${name}` : undefined
+	);
 
 	let canResize = $derived.by(() => {
 		// Prop
@@ -115,11 +143,13 @@
 				)}
 				bind:this={containerEl}
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
+				style:view-transition-name={viewTransitionName}
 			>
 				<example.component bind:this={ref} />
+
 				{#if canResize}
 					<div
-						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity"
+						class="absolute top-0 right-0 bottom-0 flex items-center w-3 cursor-ew-resize select-none hover:bg-surface-content/5 transition-opacity screenshot-hidden"
 						title="Drag to resize"
 						use:movable={{
 							axis: 'x',
@@ -139,7 +169,7 @@
 
 		{#if showCode}
 			<div transition:slide class={cls('border border-t-0', showCode && 'rounded-b-sm')}>
-				<Code source={example.source} class="outline-none" />
+				<Code source={example.source} {showLineNumbers} {highlight} class="outline-none" />
 			</div>
 		{/if}
 
@@ -213,8 +243,8 @@
 		{/if}
 	{:else}
 		<div class="border border-danger bg-danger/5 text-danger px-4 py-2 rounded-md">
-			Example <span class="font-bold">`{name ?? path}`</span>
-			{#if component}
+			Example <span class="font-bold">`{path ?? name}`</span>
+			{#if component && !path}
 				for <span class="font-bold">`{component}`</span>
 			{/if}
 			not found.

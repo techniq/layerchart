@@ -74,7 +74,7 @@
 		{@render navItem({ label: 'Showcase', path: '/docs/showcase', icon: LucideGalleryVertical })}
 		{@render navItem({
 			label: 'Releases',
-			path: 'https://github.com/techniq/layerchart/releases',
+			path: '/docs/releases',
 			icon: LucideNotebookPen
 		})}
 	</section>
@@ -132,7 +132,7 @@
 	<NavItem
 		text={label}
 		currentUrl={page.url}
-		target={path.startsWith('http') ? '_blank' : '_self'}
+		target={path.startsWith('http') ? '_blank' : undefined}
 		{path}
 		{icon}
 		classes={{

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AnnotationRange, LineChart } from 'layerchart';
+	import { AnnotationRange, LineChart, defaultChartPadding } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -7,7 +7,13 @@
 	export { data };
 </script>
 
-<LineChart {data} x="date" y="value" height={300} padding={{ left: 25, bottom: 5 }}>
+<LineChart
+	{data}
+	x="date"
+	y="value"
+	height={300}
+	padding={defaultChartPadding({ left: 25, bottom: 15 })}
+>
 	{#snippet belowMarks({ context })}
 		<AnnotationRange
 			y={[300, 500]}

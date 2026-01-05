@@ -1,9 +1,13 @@
 <script module>
-  import { createHighlighter } from 'shiki';
+  import { createHighlighter, type Highlighter } from 'shiki';
 
-  const highlighter = createHighlighter({
+  let highlighter = $state<Highlighter | null>(null);
+
+  createHighlighter({
     themes: ['github-light-default', 'github-dark-default'],
     langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh'],
+  }).then((h) => {
+    highlighter = h;
   });
 </script>
 
@@ -37,20 +41,17 @@
   {#if source}
     <pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
       <code class={cls('text-xs', classes.code)}>
-        {#await highlighter}
-          <div>Loading...</div>
-        {:then h}
-          {@html h.codeToHtml(source, {
+        {#if highlighter}
+          {@html highlighter.codeToHtml(source, {
             lang: language,
             themes: {
               light: 'github-light-default',
               dark: 'github-dark-default',
             },
           })}
-        {:catch error}
-          <div class="text-red-500">Error loading code highlighting: {error.message}</div>
-        {/await}
-
+        {:else}
+          <div>Loading...</div>
+        {/if}
       </code>
     </pre>
 

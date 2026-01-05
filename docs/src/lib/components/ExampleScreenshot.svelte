@@ -14,28 +14,43 @@
 		background?: boolean;
 		class?: string;
 	} = $props();
+
+	const basePath = $derived(`/screenshots/${component}/${example}`);
+	const viewTransitionName = $derived(`lc-${component}-${example}`);
+
+	const sizes = [
+		{ width: '240w', light: '@sm:hidden dark:hidden', dark: 'dark:block dark:@sm:hidden' },
+		{
+			width: '400w',
+			light: '@sm:block @lg:hidden dark:hidden',
+			dark: 'dark:@sm:block dark:@lg:hidden'
+		},
+		{ width: '800w', light: '@lg:block dark:hidden', dark: 'dark:@lg:block' }
+	];
 </script>
 
 <div
 	class={cls(
 		className,
-		'h-full',
+		'@container h-full',
 		aspect === 'video' && 'aspect-video',
 		aspect === 'square' && 'aspect-square',
 		aspect === 'screenshot' && 'aspect-8/3', // roughly 800x300 for many cartesian
 		background && 'bg-surface-100 dark:bg-surface-200'
 	)}
+	style:view-transition-name={viewTransitionName}
 >
-	<img
-		src="/screenshots/{component}/{example}-light.png"
-		alt="{component} - {example}"
-		class="w-full h-full object-scale-down object-center dark:hidden p-2"
-		loading="lazy"
-	/>
-	<img
-		src="/screenshots/{component}/{example}-dark.png"
-		alt="{component} - {example}"
-		class="w-full h-full object-scale-down object-center hidden dark:block p-2"
-		loading="lazy"
-	/>
+	{#each ['light', 'dark'] as mode}
+		{#each sizes as size}
+			<img
+				src="{basePath}-{mode}-{size.width}.webp"
+				alt="{component} - {example}"
+				class={cls(
+					'w-full h-full object-scale-down object-center p-2',
+					mode === 'light' ? size.light : 'hidden ' + size.dark
+				)}
+				loading="lazy"
+			/>
+		{/each}
+	{/each}
 </div>

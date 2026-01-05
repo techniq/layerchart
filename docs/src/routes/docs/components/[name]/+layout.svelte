@@ -5,6 +5,7 @@
 
 	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
+	import { loadExample } from '$lib/examples.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
@@ -20,12 +21,48 @@
 	const { metadata } = $derived(data);
 
 	// Add examples to context for Example component to use
+	// Merges layout examples with any page-specific examples
 	const examplesContext = {
 		get current() {
-			return data.examples;
+			const base = data.examples ?? {};
+
+			// If there's an example from page data (for individual example pages), merge it in
+			if (page.data.example && page.params.name && page.params.example) {
+				const componentName = page.params.name;
+				const exampleName = page.params.example;
+				return {
+					...base,
+					[componentName]: {
+						...base[componentName],
+						[exampleName]: page.data.example
+					}
+				};
+			}
+
+			// If there are examples from page data (for /examples page), merge them in
+			if (page.data.examples) {
+				const pageExamples = page.data.examples as typeof base;
+				// Deep merge the examples
+				const merged = { ...base };
+				for (const [comp, exs] of Object.entries(pageExamples)) {
+					merged[comp] = { ...merged[comp], ...exs };
+				}
+				return merged;
+			}
+
+			return base;
 		}
 	};
 	examples.set(examplesContext);
+
+	const example = $derived(
+		page.params.name && page.params.example
+			? await loadExample(page.params.name, page.params.example)
+			: null
+	);
+
+	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
+	let layers = $derived(example?.module.layers ?? metadata.layers ?? []);
 </script>
 
 <div class="mb-4">
@@ -57,7 +94,7 @@
 			{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
 		</h1>
 		<span class="flex items-center gap-1">
-			{#if metadata.layers}
+			{#if layers}
 				<ToggleGroup
 					bind:value={settings.layer}
 					variant="outline"
@@ -66,7 +103,7 @@
 					rounded="full"
 					size="sm"
 				>
-					{#each metadata.layers as layer}
+					{#each layers as layer}
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
 					{/each}
 				</ToggleGroup>

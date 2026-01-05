@@ -6,12 +6,10 @@ related: [Chart]
 order: 1
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
-> Geographic projections / state are integrated into `<Chart geo={...}>` but `GeoProjection` can be used to provide a secondary projection / context, such as for a translucent globe effect
+::tip
+Geographic projections / state are integrated into `<Chart geo={...}>` but `GeoProjection` can be used to provide a secondary projection / context, such as for a translucent globe effect
+::
 
 ## Playground
 
-<Example name="projection-playground" />
+:example{ name="projection-playground" }

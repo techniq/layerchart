@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import process from 'node:process';
@@ -24,7 +25,7 @@ export function remarkLiveCode() {
 	}
 
 	return (tree, vFile) => {
-		const liveCodeImports = [];
+		const liveCodeImports = new Map(); // Use Map to dedupe identical code blocks
 		let hasScript = false;
 
 		visit(tree, 'code', (node, index, parent) => {
@@ -35,11 +36,42 @@ export function remarkLiveCode() {
 			// Check if this is a live code block
 			if (lang !== 'svelte' || !metaArray.includes('live')) return;
 
+			// Parse all key=value props from meta string
+			/** @type {Record<string, string | boolean>} */
+			const props = {};
+			const propsRegex = /(\w+)=(?:"([^"]*)"|(\w+))/g;
+			let match;
+			while ((match = propsRegex.exec(meta || '')) !== null) {
+				const key = match[1];
+				const value = match[2] || match[3]; // quoted or unquoted value
+				// Convert boolean strings to actual booleans
+				if (value === 'true') {
+					props[key] = true;
+				} else if (value === 'false') {
+					props[key] = false;
+				} else {
+					props[key] = value;
+				}
+			}
+
+			// Convert props object to Svelte props string
+			const propsString = Object.entries(props)
+				.map(([key, value]) => {
+					if (typeof value === 'boolean') {
+						return `${key}={${value}}`;
+					} else {
+						return `${key}="${value}"`;
+					}
+				})
+				.join(' ');
+			const propsWithSpace = propsString ? ' ' + propsString : '';
+
 			// Use the raw code value
 			const rawCode = value || '';
 
-			// Generate unique ID for this code block
-			const blockId = `${vFile.path}-${index}`;
+			// Generate unique ID for this code block based on file path and content hash
+			const contentHash = createHash('md5').update(rawCode).digest('hex').substring(0, 8);
+			const blockId = `${vFile.path}-${contentHash}`;
 			const idMap = JSON.parse(readFileSync(LIVE_CODE_MAP, 'utf-8'));
 
 			let componentFileName = idMap[blockId];
@@ -58,11 +90,8 @@ export function remarkLiveCode() {
 			// Generate component name (remove .svelte extension)
 			const componentName = componentFileName.replace(/\.svelte$/, '');
 
-			// Track import for later injection
-			liveCodeImports.push({
-				componentName,
-				path: `/.live-code/${componentFileName}`
-			});
+			// Track import for later injection (Map dedupes identical code blocks)
+			liveCodeImports.set(componentName, `/.live-code/${componentFileName}`);
 
 			// Create the live code container structure wrapped in LiveCodeWrapper
 			const liveCodeContainer = {
@@ -74,7 +103,7 @@ export function remarkLiveCode() {
 				children: [
 					{
 						type: 'html',
-						value: `<LiveCode>{#snippet preview()}<${componentName} />{/snippet}<div class="live-code-source">`
+						value: `<LiveCode${propsWithSpace}>{#snippet preview()}<${componentName} />{/snippet}<div class="live-code-source">`
 					}
 				]
 			};
@@ -92,11 +121,11 @@ export function remarkLiveCode() {
 		});
 
 		// Inject imports at the beginning of the file
-		if (liveCodeImports.length > 0) {
+		if (liveCodeImports.size > 0) {
 			const importStatements = [
 				"import LiveCode from '$lib/markdown/components/LiveCode.svelte';",
-				...liveCodeImports.map(
-					({ componentName, path }) => `import ${componentName} from '${path}';`
+				...[...liveCodeImports.entries()].map(
+					([componentName, path]) => `import ${componentName} from '${path}';`
 				)
 			].join('\n');
 

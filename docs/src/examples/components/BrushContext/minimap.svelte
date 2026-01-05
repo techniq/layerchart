@@ -1,6 +1,15 @@
 <script lang="ts">
 	import { range } from 'd3-array';
-	import { Axis, Chart, ChartClipPath, Circle, Layer, Points, type DomainType } from 'layerchart';
+	import {
+		Axis,
+		Chart,
+		ChartClipPath,
+		Circle,
+		Layer,
+		Points,
+		defaultChartPadding,
+		type DomainType
+	} from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
 
 	const data = range(200).map((d) => {
@@ -20,7 +29,6 @@
 		y="y"
 		{yDomain}
 		yNice
-		padding={{ left: 16, bottom: 24 }}
 		brush={{
 			axis: 'both',
 			resetOnEnd: true,
@@ -29,6 +37,7 @@
 				yDomain = e.brush.y;
 			}
 		}}
+		padding={defaultChartPadding({ left: 20, bottom: 24 })}
 		height={400}
 	>
 		<Layer>

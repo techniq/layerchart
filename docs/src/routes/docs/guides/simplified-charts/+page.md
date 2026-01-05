@@ -13,7 +13,7 @@
 
 # Simplified charts
 
-The LayerChart project was written to offer options for both flexibility/complexity as well as  approachablilty/simplicity. This brings us to a decision as you start your first LayerChart.
+The LayerChart project was written to offer options for both flexibility/complexity as well as approachablilty/simplicity. This brings us to a decision as you start your first LayerChart.
 
 ## Use `<Chart>` or `Simple Chart`.
 
@@ -21,16 +21,15 @@ The LayerChart project was written to offer options for both flexibility/complex
    - The props details are fully up to you and fully customizable but the tradeoff is that you will need to implement more of the chart yourself.
    - This is a good choice if you are experienced with Layerchart or plan on a need extensive control of many of the chart components.
 
- 2. You can use a Simple Chart if you are making a chart of supported types [ArcChart](https://next.layerchart.com/docs/components/ArcChart), [AreaChart](https://next.layerchart.com/docs/components/AreaChart), [BarChart](https://next.layerchart.com/docs/components/BarChart), [PieChart](https://next.layerchart.com/docs/components/PieChart) or [ScatterChart](https://next.layerchart.com/docs/components/ScatterChart) (more to come).
-      - This is the recommended path for most users.
-      - Under the hood, a simple chart is just a `<Chart>` with a set of default subcomponents and predefined props. 
-      - Out of the box, Simple charts provide common functionality you need with exposed props which should cover most of the simple customizations.
-     - Lets use <[LineChart](https://next.layerchart.com/docs/components/LineChart)> as and example and look at how little code is need to make this complex chart including built in tooltips, rule, axes, highlights and a legend.
+2. You can use a Simple Chart if you are making a chart of supported types [ArcChart](https://next.layerchart.com/docs/components/ArcChart), [AreaChart](https://next.layerchart.com/docs/components/AreaChart), [BarChart](https://next.layerchart.com/docs/components/BarChart), [PieChart](https://next.layerchart.com/docs/components/PieChart) or [ScatterChart](https://next.layerchart.com/docs/components/ScatterChart) (more to come).
+   - This is the recommended path for most users.
+   - Under the hood, a simple chart is just a `<Chart>` with a set of default subcomponents and predefined props.
+   - Out of the box, Simple charts provide common functionality you need with exposed props which should cover most of the simple customizations.
+   - Lets use <[LineChart](https://next.layerchart.com/docs/components/LineChart)> as and example and look at how little code is need to make this complex chart including built in tooltips, rule, axes, highlights and a legend.
 
 > Hover over a line, hover over legend items, and click legend items to see all the functionality given to you.
 
 <Example name="legend" component="LineChart" showCode />
-
 
 ## Additional Simple Charts Customization
 
@@ -44,7 +43,7 @@ becomes
 
 <Code copyButton={false} source={legendsnippetsource} />
 
-Notice how we send getLegendProps to the snippet and then pass it to the `<Legend>` component. This is a common powerful pattern in `Simple charts` where you can use snippets to customize the rendering of components while still leveraging all of the the underlying simple chart's built in functionality. 
+Notice how we send getLegendProps to the snippet and then pass it to the `<Legend>` component. This is a common powerful pattern in `Simple charts` where you can use snippets to customize the rendering of components while still leveraging all of the the underlying simple chart's built in functionality.
 
 > It is a best practice to place the `{...getLegendProps()}` as the first prop. This allows you to overwrite any of its props by listing them to subsequently.
 

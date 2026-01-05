@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { Area, Axis, Chart, Layer, LinearGradient, type DomainType } from 'layerchart';
+	import {
+		Area,
+		Axis,
+		Chart,
+		Layer,
+		LinearGradient,
+		defaultChartPadding,
+		type DomainType
+	} from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
 	const data = await getAppleStock();
@@ -17,7 +25,7 @@
 	x="date"
 	y="value"
 	yDomain={[0, null]}
-	padding={{ left: 16, bottom: 24 }}
+	padding={defaultChartPadding({ left: 25, bottom: 24 })}
 	height={300}
 >
 	<Layer>

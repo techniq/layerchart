@@ -82,20 +82,6 @@
   ],
   "usage": [
     {
-      "example": "horizontal-highlight-individual-bar",
-      "component": "Bars",
-      "path": "/example/Bars/horizontal-highlight-individual-bar",
-      "lineNumber": 35,
-      "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
-    },
-    {
-      "example": "vertical-highlight-individual-bar",
-      "component": "Bars",
-      "path": "/example/Bars/vertical-highlight-individual-bar",
-      "lineNumber": 29,
-      "line": "<rect width={8} height={8} class=\"fill-secondary/10\" />"
-    },
-    {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/example/BrushContext/handle-arrows",
@@ -190,77 +176,77 @@
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 9,
+      "lineNumber": 10,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 15,
+      "lineNumber": 16,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 33,
+      "lineNumber": 34,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Rect x={120 * 6} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 51,
+      "lineNumber": 52,
       "line": "<Rect x={120 * 7} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 57,
+      "lineNumber": 58,
       "line": "<Rect x={120 * 8} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 18,
+      "lineNumber": 19,
       "line": "<Rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
@@ -726,5 +712,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.701Z"
+  "updatedAt": "2025-12-29T21:36:45.237Z"
 }

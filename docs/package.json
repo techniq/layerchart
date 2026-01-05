@@ -20,6 +20,7 @@
 		"generate:screenshots": "tsx scripts/generate-screenshots.ts",
 		"generate:catalog": "tsx scripts/generate-example-catalog.ts",
 		"generate:stackblitz": "tsx scripts/build-stackblitz-files.ts",
+		"generate:releases": "tsx scripts/generate-releases.ts",
 		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz"
 	},
 	"devDependencies": {
@@ -61,6 +62,7 @@
 		"@types/hast": "^3.0.4",
 		"@types/node": "^24.10.1",
 		"@types/shapefile": "^0.6.4",
+		"@types/sharp": "^0.32.0",
 		"@types/topojson-client": "^3.1.5",
 		"@types/topojson-simplify": "^3.0.3",
 		"@types/topojson-specification": "^1.0.5",
@@ -96,6 +98,7 @@
 		"remark-gfm": "^4.0.1",
 		"remark-mdc": "^3.10.0",
 		"runed": "^0.37.0",
+		"sharp": "^0.34.5",
 		"shiki": "^3.20.0",
 		"solar-calculator": "^0.3.0",
 		"svelte": "5.46.0",

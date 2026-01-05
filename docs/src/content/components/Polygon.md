@@ -5,100 +5,96 @@ layers: [svg, canvas]
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ### Usage
 
-<Example name="playground" showCode />
+:example{ name="playground" showCode }
 
 <!-- ## Examples
 
 ### Playground
 
-<Example name="playground" />
+:example{ name="playground" }
 
 ### Triangle
 
-<Example name="triangle" />
+:example{ name="triangle" }
 
 ### Square
 
-<Example name="square" />
+:example{ name="square" }
 
 ### Rectangle
 
-<Example name="rectangle" />
+:example{ name="rectangle" }
 
 ### Diamond
 
-<Example name="diamond" />
+:example{ name="diamond" }
 
 ### Rhombus
 
-<Example name="rhombus" />
+:example{ name="rhombus" }
 
 ### Parallelogram
 
-<Example name="parallelogram" />
+:example{ name="parallelogram" }
 
 ### Trapezoid
 
-<Example name="trapezoid" />
+:example{ name="trapezoid" }
 
 ### Pentagon
 
-<Example name="pentagon" />
+:example{ name="pentagon" }
 
 ### Hexagon
 
-<Example name="hexagon" />
+:example{ name="hexagon" }
 
 ### Octagon
 
-<Example name="octagon" />
+:example{ name="octagon" }
 
 ### Stars
 
 #### 6 point star
 
-<Example name="6-point-star" />
+:example{ name="6-point-star" }
 
 #### 8 point star
 
-<Example name="8-point-star" />
+:example{ name="8-point-star" }
 
 #### 10 point star
 
-<Example name="10-point-star" />
+:example{ name="10-point-star" }
 
 #### 12 point star
 
-<Example name="12-point-star" />
+:example{ name="12-point-star" }
 
 #### 14 point star
 
-<Example name="14-point-star" />
+:example{ name="14-point-star" }
 
 #### 16 point star
 
-<Example name="16-point-star" />
+:example{ name="16-point-star" }
 
 #### 18 point star
 
-<Example name="18-point-star" />
+:example{ name="18-point-star" }
 
 #### 20 point star
 
-<Example name="20-point-star" />
+:example{ name="20-point-star" }
 
 ### Custom Points
 
 #### Arrow
 
-<Example name="arrow" />
+:example{ name="arrow" }
 
 #### Cross
 
-<Example name="cross" /> -->
+:example{ name="cross" } -->

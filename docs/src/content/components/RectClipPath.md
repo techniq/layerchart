@@ -4,7 +4,3 @@ category: clipping
 layers: [svg]
 related: [ChartClipPath]
 ---
-
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>

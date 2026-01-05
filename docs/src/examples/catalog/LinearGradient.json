@@ -59,22 +59,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 5,
-          "line": "<Chart height={300}>"
+          "lineNumber": 6,
+          "line": "<Chart height={320} width={1065}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 6,
+          "lineNumber": 7,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 7,
+          "lineNumber": 8,
           "line": "<LinearGradient class=\"from-pink-500 to-yellow-500\" vertical>"
         },
         {
           "component": "Rect",
-          "lineNumber": 9,
+          "lineNumber": 10,
           "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
         }
       ]
@@ -85,22 +85,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 5,
-          "line": "<Chart height={300}>"
+          "lineNumber": 6,
+          "line": "<Chart height={320} width={700}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 6,
+          "lineNumber": 7,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 7,
+          "lineNumber": 8,
           "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 10,
+          "lineNumber": 11,
           "line": "<Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />"
         }
       ]
@@ -146,42 +146,42 @@
       "example": "gradient",
       "component": "Area",
       "path": "/example/Area/gradient",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<LinearGradient class=\"from-secondary/1 to-secondary\">"
     },
     {
       "example": "gradient-separate-stroke",
       "component": "Area",
       "path": "/example/Area/gradient-separate-stroke",
-      "lineNumber": 17,
+      "lineNumber": 16,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 53,
+      "lineNumber": 61,
       "line": "<LinearGradient stops={[primaryColor, secondaryColor]} vertical>"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<LinearGradient"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/example/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<LinearGradient"
     },
     {
@@ -349,77 +349,77 @@
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 7,
+      "lineNumber": 8,
       "line": "<LinearGradient class=\"from-pink-500 to-yellow-500\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 13,
+      "lineNumber": 14,
       "line": "<LinearGradient class=\"from-green-300 to-purple-600\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 19,
+      "lineNumber": 20,
       "line": "<LinearGradient class=\"from-gray-600 to-black\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 25,
+      "lineNumber": 26,
       "line": "<LinearGradient class=\"from-pink-300 to-indigo-400\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<LinearGradient class=\"from-yellow-100 to-yellow-500\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<LinearGradient class=\"from-blue-700 to-gray-900\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<LinearGradient class=\"from-sky-300 to-blue-500\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<LinearGradient class=\"from-red-500 to-red-800\" vertical>"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/tailwind-colors",
-      "lineNumber": 55,
+      "lineNumber": 56,
       "line": "<LinearGradient class=\"from-blue-400 to-emerald-400\" vertical>"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 7,
+      "lineNumber": 8,
       "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"objectBoundingBox\">"
     },
     {
       "example": "units",
       "component": "LinearGradient",
       "path": "/example/LinearGradient/units",
-      "lineNumber": 15,
+      "lineNumber": 16,
       "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
     },
     {
@@ -535,5 +535,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.739Z"
+  "updatedAt": "2025-12-29T21:36:45.001Z"
 }
