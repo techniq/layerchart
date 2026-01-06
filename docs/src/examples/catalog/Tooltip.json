@@ -331,37 +331,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 39,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 50,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 41,
+          "lineNumber": 51,
           "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 43,
+          "lineNumber": 53,
           "line": "<Rule />"
         },
         {
           "component": "Points",
-          "lineNumber": 44,
+          "lineNumber": 54,
           "line": "<Points class=\"fill-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 45,
+          "lineNumber": 55,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 52,
+          "lineNumber": 62,
           "line": "<Tooltip.Root"
         }
       ]
@@ -372,32 +372,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 30,
+          "lineNumber": 39,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 50,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 42,
+          "lineNumber": 51,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 44,
+          "lineNumber": 53,
           "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 45,
+          "lineNumber": 54,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 47,
+          "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -480,37 +480,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 29,
+          "lineNumber": 38,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 39,
+          "lineNumber": 49,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 40,
+          "lineNumber": 50,
           "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 42,
+          "lineNumber": 52,
           "line": "<Rule />"
         },
         {
           "component": "Points",
-          "lineNumber": 43,
+          "lineNumber": 53,
           "line": "<Points class=\"fill-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 44,
+          "lineNumber": 54,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 51,
+          "lineNumber": 61,
           "line": "<Tooltip.Root"
         }
       ]
@@ -598,27 +598,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 34,
+          "lineNumber": 36,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Points",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<Points class=\"fill-primary stroke-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 38,
+          "lineNumber": 40,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 45,
+          "lineNumber": 47,
           "line": "<Tooltip.Root"
         }
       ]
@@ -670,27 +670,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 38,
+          "lineNumber": 40,
           "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
         },
         {
           "component": "Points",
-          "lineNumber": 40,
+          "lineNumber": 42,
           "line": "<Points class=\"fill-primary\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 41,
+          "lineNumber": 43,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 48,
+          "lineNumber": 50,
           "line": "<Tooltip.Root"
         }
       ]
@@ -701,32 +701,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 32,
+          "lineNumber": 41,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 48,
+          "lineNumber": 57,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 49,
+          "lineNumber": 58,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 54,
+          "lineNumber": 63,
           "line": "<Area"
         },
         {
           "component": "Highlight",
-          "lineNumber": 62,
+          "lineNumber": 71,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 69,
+          "lineNumber": 78,
           "line": "<Tooltip.Root"
         }
       ]
@@ -737,28 +737,28 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 68,
+      "lineNumber": 80,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 77,
+      "lineNumber": 89,
       "line": "<Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 78,
+      "lineNumber": 90,
       "line": "<Tooltip.List>"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 79,
+      "lineNumber": 91,
       "line": "<Tooltip.Item label=\"value\" value={context.y(data)} />"
     },
     {
@@ -2319,84 +2319,84 @@
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 44,
+      "lineNumber": 53,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 46,
+      "lineNumber": 55,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 47,
+      "lineNumber": 56,
       "line": "<Tooltip.List>"
-    },
-    {
-      "example": "horizontal-grouped",
-      "component": "Bars",
-      "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 49,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
       "lineNumber": 58,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "horizontal-grouped",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-grouped",
+      "lineNumber": 67,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 60,
+      "lineNumber": 69,
       "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 49,
+      "lineNumber": 58,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 51,
+      "lineNumber": 60,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 52,
+      "lineNumber": 61,
       "line": "<Tooltip.List>"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 54,
+      "lineNumber": 63,
       "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 63,
+      "lineNumber": 72,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 65,
+      "lineNumber": 74,
       "line": "<Tooltip.Item"
     },
     {
@@ -2515,84 +2515,84 @@
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 41,
+      "lineNumber": 50,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 43,
+      "lineNumber": 52,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 44,
+      "lineNumber": 53,
       "line": "<Tooltip.List>"
-    },
-    {
-      "example": "horizontal-stacked",
-      "component": "Bars",
-      "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 46,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
       "lineNumber": 55,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "horizontal-stacked",
+      "component": "Bars",
+      "path": "/example/Bars/horizontal-stacked",
+      "lineNumber": 64,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 57,
+      "lineNumber": 66,
       "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 46,
+      "lineNumber": 55,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 48,
+      "lineNumber": 57,
       "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 49,
+      "lineNumber": 58,
       "line": "<Tooltip.List>"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 51,
+      "lineNumber": 60,
       "line": "<Tooltip.Item"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 60,
+      "lineNumber": 69,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 62,
+      "lineNumber": 71,
       "line": "<Tooltip.Item"
     },
     {
@@ -2872,35 +2872,35 @@
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 37,
+      "lineNumber": 46,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 39,
+      "lineNumber": 48,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 40,
+      "lineNumber": 49,
       "line": "<Tooltip.List>"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 41,
+      "lineNumber": 50,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 42,
+      "lineNumber": 51,
       "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} />"
     },
     {
@@ -3138,14 +3138,14 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 52,
+      "lineNumber": 53,
       "line": "<Tooltip.Root"
     },
     {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 64,
+      "lineNumber": 65,
       "line": "<Tooltip.Root"
     },
     {
@@ -5469,77 +5469,77 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 52,
+      "lineNumber": 62,
       "line": "<Tooltip.Root"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 57,
+      "lineNumber": 67,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 58,
+      "lineNumber": 68,
       "line": "<Tooltip.List>"
-    },
-    {
-      "example": "duration",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/duration",
-      "lineNumber": 59,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "duration",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/duration",
-      "lineNumber": 64,
-      "line": "<Tooltip.Item"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
       "lineNumber": 69,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 74,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "duration",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/duration",
+      "lineNumber": 79,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 70,
+      "lineNumber": 80,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 47,
+      "lineNumber": 56,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 49,
+      "lineNumber": 58,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 50,
+      "lineNumber": 59,
       "line": "<Tooltip.List>"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 51,
+      "lineNumber": 60,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
@@ -5609,49 +5609,49 @@
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 51,
+      "lineNumber": 61,
       "line": "<Tooltip.Root"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 56,
+      "lineNumber": 66,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 57,
+      "lineNumber": 67,
       "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 58,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "multiple-overlapping-durations",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 63,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "multiple-overlapping-durations",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-durations",
       "lineNumber": 68,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 73,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "multiple-overlapping-durations",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/multiple-overlapping-durations",
+      "lineNumber": 78,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 69,
+      "lineNumber": 79,
       "line": "<Tooltip.Item label=\"duration\" valueAlign=\"right\">"
     },
     {
@@ -5686,28 +5686,28 @@
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 45,
+      "lineNumber": 47,
       "line": "<Tooltip.Root"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 50,
+      "lineNumber": 52,
       "line": "<Tooltip.List>"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 51,
+      "lineNumber": 53,
       "line": "<Tooltip.Item label=\"x\" value={data.x} format=\"decimal\" />"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 52,
+      "lineNumber": 54,
       "line": "<Tooltip.Item label=\"y\" value={data.y} format=\"decimal\" />"
     },
     {
@@ -5742,56 +5742,56 @@
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 48,
+      "lineNumber": 50,
       "line": "<Tooltip.Root"
-    },
-    {
-      "example": "single-date-time",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 53,
-      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
-    },
-    {
-      "example": "single-date-time",
-      "component": "Tooltip",
-      "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 54,
-      "line": "<Tooltip.List>"
     },
     {
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
       "lineNumber": 55,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "single-date-time",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time",
+      "lineNumber": 56,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "single-date-time",
+      "component": "Tooltip",
+      "path": "/example/Tooltip/single-date-time",
+      "lineNumber": 57,
       "line": "<Tooltip.Item"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 69,
+      "lineNumber": 78,
       "line": "<Tooltip.Root"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 74,
+      "lineNumber": 83,
       "line": "<Tooltip.Header value={data.data.date} format=\"day\" />"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 75,
+      "lineNumber": 84,
       "line": "<Tooltip.List>"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 77,
+      "lineNumber": 86,
       "line": "<Tooltip.Item label={key} value={data.data[key]} />"
     },
     {
@@ -5879,5 +5879,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.401Z"
+  "updatedAt": "2026-01-06T13:02:22.107Z"
 }

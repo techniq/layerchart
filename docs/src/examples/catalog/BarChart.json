@@ -19,11 +19,11 @@
         {
           "component": "BarChart",
           "lineNumber": 15,
-          "line": "<BarChart {data} x=\"value\" y=\"date\" labels orientation=\"horizontal\" axis={false} height={500}>"
+          "line": "<BarChart"
         },
         {
           "component": "Labels",
-          "lineNumber": 17,
+          "lineNumber": 26,
           "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
         }
       ]
@@ -1164,7 +1164,7 @@
       "component": "BarChart",
       "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
       "lineNumber": 15,
-      "line": "<BarChart {data} x=\"value\" y=\"date\" labels orientation=\"horizontal\" axis={false} height={500}>"
+      "line": "<BarChart"
     },
     {
       "example": "both-axis-grid",
@@ -1762,5 +1762,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:08.988Z"
+  "updatedAt": "2026-01-06T13:02:20.795Z"
 }

@@ -736,7 +736,7 @@
       "example": "horizontal",
       "component": "AnnotationLine",
       "path": "/example/AnnotationLine/horizontal",
-      "lineNumber": 10,
+      "lineNumber": 14,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -785,7 +785,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 44,
+      "lineNumber": 56,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -821,70 +821,70 @@
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/hide-tooltip",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
       "lineNumber": 29,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "vertical-with-gradient-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-gradient-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-range",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
       "lineNumber": 10,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+      "line": "<LineChart"
     },
     {
       "example": "axis-labels-inside",
@@ -1300,5 +1300,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.985Z"
+  "updatedAt": "2026-01-06T13:02:21.616Z"
 }
