@@ -1,14 +1,14 @@
 /** Generator to create a new color on each call */
-export function* rgbColorGenerator(step = 500) {
+export function* rgbColorGenerator(step = 200) {
   let nextColor = 0;
 
-  while (nextColor < 16777216) {
-    const r = nextColor & 0xff;
-    const g = (nextColor & 0xff00) >> 8;
-    const b = (nextColor & 0xff0000) >> 16;
+  while (nextColor < 1 << 21) {
+    const r = nextColor & 0x7f;
+    const g = (nextColor >> 7) & 0x7f;
+    const b = (nextColor >> 14) & 0x7f;
 
     nextColor += step;
-    yield { r, g, b, a: 255 };
+    yield { r: r * 2, g: g * 2, b: b * 2, a: 255 };
   }
 
   return { r: 0, g: 0, b: 0, a: 255 };
@@ -17,9 +17,12 @@ export function* rgbColorGenerator(step = 500) {
 type RGBColor = { r: number; g: number; b: number; a?: number };
 
 export function getColorStr(color: RGBColor) {
+  const r = color.r & 0xfe;
+  const g = color.g & 0xfe;
+  const b = color.b & 0xfe;
   if (color.a !== undefined) {
-    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+    return `rgba(${r},${g},${b},${color.a})`;
   } else {
-    return `rgb(${color.r},${color.g},${color.b})`;
+    return `rgb(${r},${g},${b})`;
   }
 }
