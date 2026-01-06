@@ -1021,7 +1021,6 @@
 - breaking(Bar|Bars): Replaced `inset: number` prop with `insets: Insets | undefined`. ([#321](https://github.com/techniq/layerchart/pull/321))
 
   To migrate from `inset` to `insets` replace `inset = n` with:
-
   - `insets = { x: n / 2 }` if `orientation="vertical"`
   - `insets = { y: n / 2 }` if `orientation="horizontal"`
 
@@ -2117,7 +2116,6 @@
   ```
 
   **Additional**
-
   - Rename tooltipContext's `top`/`left` to `x`/`y`
   - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
   - Add more tooltip examples

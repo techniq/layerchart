@@ -227,11 +227,11 @@
     /* Could add a layer between "components" and "base" but would require more setup (and not alignw with TW layers) */
     :global(
       :where(
-          .lc-rule-x-line,
-          .lc-rule-y-line,
-          .lc-rule-x-radial-line,
-          .lc-rule-y-radial-circle
-        ):not([class*='lc-axis'], [class*='lc-grid'])
+        .lc-rule-x-line,
+        .lc-rule-y-line,
+        .lc-rule-x-radial-line,
+        .lc-rule-y-radial-circle
+      ):not([class*='lc-axis'], [class*='lc-grid'])
     ) {
       --stroke-color: color-mix(
         in oklab,
