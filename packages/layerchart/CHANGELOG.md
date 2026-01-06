@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.44
+
+### Patch Changes
+
+- fix(Canvas): Fix pointer events (hit canvas) when using Brave browser with fingerprinting protection enabled ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.43
 
 ### Patch Changes
@@ -447,6 +453,18 @@
 - fix: Resolves "Target div has zero or negative height" console warning (issue #291) ([#458](https://github.com/techniq/layerchart/pull/458))
 
 - fix(Text): Respect font weight when canvas rendered ([#458](https://github.com/techniq/layerchart/pull/458))
+
+## 1.0.13
+
+### Patch Changes
+
+- fix(Canvas): Fix pointer events (hit canvas) when using Brave browser with fingerprinting protection enabled ([#755](https://github.com/techniq/layerchart/pull/755))
+
+## 1.0.12
+
+### Patch Changes
+
+- fix(Axis): Fix reactivity issue with xRange/yRange in Svelte 5.34+. Fixes #641 ([#643](https://github.com/techniq/layerchart/pull/643))
 
 ## 1.0.11
 
