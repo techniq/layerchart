@@ -461,7 +461,7 @@
       "example": "rotate-labels",
       "component": "Axis",
       "path": "/example/Axis/rotate-labels",
-      "lineNumber": 10,
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
@@ -489,14 +489,14 @@
       "example": "time-scale-auto",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto",
-      "lineNumber": 116,
+      "lineNumber": 119,
       "line": "<Layer>"
     },
     {
       "example": "time-scale-auto-format-filtering",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-format-filtering",
-      "lineNumber": 116,
+      "lineNumber": 119,
       "line": "<Layer>"
     },
     {
@@ -615,14 +615,14 @@
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 37,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 42,
+      "lineNumber": 51,
       "line": "<Layer>"
     },
     {
@@ -699,14 +699,14 @@
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 34,
+      "lineNumber": 43,
       "line": "<Layer>"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 39,
+      "lineNumber": 48,
       "line": "<Layer>"
     },
     {
@@ -902,7 +902,7 @@
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 28,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -1070,14 +1070,14 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Layer>"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
@@ -1091,21 +1091,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 34,
+      "lineNumber": 43,
       "line": "<Layer>"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 61,
+      "lineNumber": 70,
       "line": "<Layer>"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 31,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1126,28 +1126,28 @@
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Layer>"
     },
     {
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 53,
+      "lineNumber": 54,
       "line": "<Layer>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 23,
+      "lineNumber": 31,
       "line": "<Layer>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 53,
+      "lineNumber": 61,
       "line": "<Layer>"
     },
     {
@@ -1182,7 +1182,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Layer>"
     },
     {
@@ -2582,7 +2582,7 @@
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 48,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
@@ -2883,14 +2883,14 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 40,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 41,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -2911,7 +2911,7 @@
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 39,
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
@@ -2932,7 +2932,7 @@
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 34,
+      "lineNumber": 36,
       "line": "<Layer>"
     },
     {
@@ -2946,14 +2946,14 @@
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 37,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 48,
+      "lineNumber": 57,
       "line": "<Layer>"
     },
     {
@@ -3048,5 +3048,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.933Z"
+  "updatedAt": "2026-01-06T13:02:21.554Z"
 }

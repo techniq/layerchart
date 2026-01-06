@@ -54,7 +54,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/example/AnnotationPoint/line-to-point",
-      "lineNumber": 46,
+      "lineNumber": 58,
       "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
     },
     {
@@ -639,5 +639,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.347Z"
+  "updatedAt": "2026-01-06T13:02:22.054Z"
 }

@@ -147,21 +147,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 39,
+      "lineNumber": 48,
       "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 62,
+      "lineNumber": 71,
       "line": "<Points>"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 35,
+      "lineNumber": 43,
       "line": "<Points>"
     },
     {
@@ -238,28 +238,28 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 44,
+      "lineNumber": 54,
       "line": "<Points class=\"fill-primary\" />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 43,
+      "lineNumber": 53,
       "line": "<Points class=\"fill-primary\" />"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 37,
+      "lineNumber": 39,
       "line": "<Points class=\"fill-primary stroke-primary\" />"
     },
     {
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 40,
+      "lineNumber": 42,
       "line": "<Points class=\"fill-primary\" />"
     },
     {
@@ -277,5 +277,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:10.048Z"
+  "updatedAt": "2026-01-06T13:02:21.867Z"
 }

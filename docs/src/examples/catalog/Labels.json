@@ -20,7 +20,7 @@
       "example": "axis-labels-inside-bars-using-labels",
       "component": "BarChart",
       "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
-      "lineNumber": 17,
+      "lineNumber": 26,
       "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
     },
     {
@@ -28,7 +28,7 @@
       "component": "Bars",
       "path": "/example/Bars/horizontal-inside-labels",
       "lineNumber": 25,
-      "line": "<Labels placement=\"inside\" format=\"integer\" />"
+      "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
     },
     {
       "example": "horizontal-outside-labels-default",
@@ -42,7 +42,7 @@
       "component": "Bars",
       "path": "/example/Bars/vertical-inside-labels",
       "lineNumber": 25,
-      "line": "<Labels placement=\"inside\" format=\"integer\" />"
+      "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
     },
     {
       "example": "vertical-outside-labels-default",
@@ -80,5 +80,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.915Z"
+  "updatedAt": "2026-01-06T13:02:21.538Z"
 }

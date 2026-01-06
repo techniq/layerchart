@@ -244,14 +244,14 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -272,14 +272,14 @@
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 26,
+      "lineNumber": 34,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -293,7 +293,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -535,5 +535,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.001Z"
+  "updatedAt": "2026-01-06T13:02:21.636Z"
 }

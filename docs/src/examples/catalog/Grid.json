@@ -154,7 +154,7 @@
         {
           "component": "Chart",
           "lineNumber": 5,
-          "line": "<Chart yDomain={[0, 2]} padding={{ left: 20 }} height={200}>"
+          "line": "<Chart yDomain={[0, 2]} padding={defaultChartPadding({ top: 10, bottom: 10 })} height={200}>"
         },
         {
           "component": "Layer",
@@ -471,5 +471,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.137Z"
+  "updatedAt": "2026-01-06T13:02:21.446Z"
 }
