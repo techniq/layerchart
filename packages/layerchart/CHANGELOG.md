@@ -448,6 +448,18 @@
 
 - fix(Text): Respect font weight when canvas rendered ([#458](https://github.com/techniq/layerchart/pull/458))
 
+## 1.0.13
+
+### Patch Changes
+
+- fix(Canvas): Fix pointer events (hit canvas) when using Brave browser with fingerprinting protection enabled ([#755](https://github.com/techniq/layerchart/pull/755))
+
+## 1.0.12
+
+### Patch Changes
+
+- fix(Axis): Fix reactivity issue with xRange/yRange in Svelte 5.34+. Fixes #641 ([#643](https://github.com/techniq/layerchart/pull/643))
+
 ## 1.0.11
 
 ### Patch Changes
@@ -1009,6 +1021,7 @@
 - breaking(Bar|Bars): Replaced `inset: number` prop with `insets: Insets | undefined`. ([#321](https://github.com/techniq/layerchart/pull/321))
 
   To migrate from `inset` to `insets` replace `inset = n` with:
+
   - `insets = { x: n / 2 }` if `orientation="vertical"`
   - `insets = { y: n / 2 }` if `orientation="horizontal"`
 
@@ -2104,6 +2117,7 @@
   ```
 
   **Additional**
+
   - Rename tooltipContext's `top`/`left` to `x`/`y`
   - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
   - Add more tooltip examples
