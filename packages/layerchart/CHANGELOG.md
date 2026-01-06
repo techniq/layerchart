@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.13
+
+### Patch Changes
+
+- fix(Canvas): Fix pointer events (hit canvas) when using Brave browser with fingerprinting protection enabled ([#755](https://github.com/techniq/layerchart/pull/755))
+
 ## 1.0.12
 
 ### Patch Changes
