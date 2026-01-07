@@ -1,21 +1,19 @@
 <script>
   import OpenLLMsButton from "$lib/components/OpenLLMs.svelte";
   import ViewSourceButton from "$lib/components/ViewSourceButton.svelte";
-  import LucideBot from '~icons/lucide/bot';
-  import LucideUser from '~icons/lucide/user';
 </script>
 
 # LLMs Documentation
 
 The Layerchart documentation pages are designed to be accessible for humans developers using LLMs and large language models (LLMs) for effective content ingestion and training.
 
-## For the Humans <LucideUser class="inline-block relative -top-0.5 left-0.5 w-7 h-7" />
+## For the Humans :icon{name="lucide:user" class="inline-block relative -top-0.5 left-0.5 w-7 h-7"}
 
 <OpenLLMsButton example />
 
 At the top of each documentation page, and demonstrated above, you'll find a button which copies the content of the page's documentation in Markdown to the clipboard. The convenient dropdown gives you addtional helpful options.
 
-## For the Bots <LucideBot class="inline-block relative -top-0.5 left-0.5" />
+## For the Bots :icon{name="lucide:bot" class="inline-block relative -top-0.5 left-0.5"}
 
 LayerChart adopts the [llms.txt](https://llmstxt.org/) proposal standard, which provides a structured, machine-readable format optimized for LLMs. This enables developers, researchers, and AI systems to efficiently parse and utilize our documentation.
 
