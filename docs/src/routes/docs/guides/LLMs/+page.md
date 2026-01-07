@@ -25,7 +25,7 @@ Not all pages may support the `/llms.txt` suffix (those deemed irrelevant to LLM
 
 ## Accessing LLM-friendly Documentation
 
-1. To access the LLM-friendly version of any supported Layerchart documentation page, simply append `/llms.txt` to the end of the page's URL. This will return the content in a plain-text, LLM-optimized format.
+1. To access the LLM-friendly version of supported Layerchart documentation pages, simply append `/llms.txt` to the end of the page's URL. This will return the content in a plain-text, LLM-optimized format.
 
     - **Standard Page**: The LineChart component documentation is available at [layerchart.com/docs/components/LineChart](/docs/components/LineChart).
     - **LLM-friendly Version**: Append `/llms.txt` to access it at [layerchart.com/docs/components/Linechart/llms.txt](/docs/components/LineChart/llms.txt).
