@@ -130,16 +130,7 @@
 		<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
 		<div class="flex gap-2 mt-3">
-			{#if 'source' in metadata}
-				<ViewSourceButton
-					label="Source"
-					source={metadata.source}
-					href={metadata.sourceUrl}
-					icon={LucideCode}
-				/>
-			{/if}
-
-			<OpenLLMsbutton />
+			<OpenLLMsbutton {metadata} />
 
 			<!-- <ViewSourceButton
         label="Page source"

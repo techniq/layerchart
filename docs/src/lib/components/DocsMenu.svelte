@@ -7,6 +7,7 @@
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 
+	import LucideBot from '~icons/lucide/bot';
 	import LucideCompass from '~icons/lucide/compass';
 	import LucideGalleryVertical from '~icons/lucide/gallery-vertical';
 	import LucideGalleryHorizontalEnd from '~icons/lucide/gallery-horizontal-end';
@@ -28,7 +29,8 @@
 		{ name: 'Simplified charts', path: 'simplified-charts' },
 		{ name: 'Scales', path: 'scales' },
 		{ name: 'State', path: 'state' },
-		{ name: 'Styles', path: 'styles' }
+		{ name: 'Styles', path: 'styles' },
+		{ name: 'LLMs', path: 'LLMs' }
 	];
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
