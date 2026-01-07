@@ -57,4 +57,7 @@
 	preparePageTransition();
 </script>
 
-{@render children()}
+<!-- Disable data preloading until Svelte async/fork is improved -->
+<div data-sveltekit-preload-data="off">
+	{@render children()}
+</div>
