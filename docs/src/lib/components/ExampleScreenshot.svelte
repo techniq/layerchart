@@ -18,6 +18,8 @@
 	const basePath = $derived(`/screenshots/${component}/${example}`);
 	const viewTransitionName = $derived(`lc-${component}-${example}`);
 
+	let isHovering = $state(false);
+
 	const sizes = [
 		{ width: '240w', light: '@sm:hidden dark:hidden', dark: 'dark:block dark:@sm:hidden' },
 		{
@@ -38,7 +40,9 @@
 		aspect === 'screenshot' && 'aspect-8/3', // roughly 800x300 for many cartesian
 		background && 'bg-surface-100 dark:bg-surface-200'
 	)}
-	style:view-transition-name={viewTransitionName}
+	style:view-transition-name={isHovering ? viewTransitionName : null}
+	onpointerenter={() => (isHovering = true)}
+	onpointerleave={() => (isHovering = false)}
 >
 	{#each ['light', 'dark'] as mode}
 		{#each sizes as size}
