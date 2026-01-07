@@ -106,14 +106,14 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 71,
+      "lineNumber": 80,
       "line": "<Circle"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 44,
+      "lineNumber": 52,
       "line": "<Circle"
     },
     {
@@ -600,5 +600,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.183Z"
+  "updatedAt": "2026-01-06T13:02:21.004Z"
 }

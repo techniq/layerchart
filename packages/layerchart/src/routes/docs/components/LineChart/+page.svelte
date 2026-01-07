@@ -1125,7 +1125,7 @@
           },
         };
       })}
-      padding={{ ...defaultChartPadding(), right: 60 }}
+      padding={defaultChartPadding({ right: 60 })}
     />
   </div>
 </Preview>

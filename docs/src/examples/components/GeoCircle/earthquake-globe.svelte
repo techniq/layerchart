@@ -8,7 +8,6 @@
 		Graticule,
 		Layer,
 		Tooltip,
-		defaultChartPadding,
 		type ChartContextValue
 	} from 'layerchart';
 	import { feature } from 'topojson-client';
@@ -64,7 +63,7 @@
 		applyTransform: ['rotate']
 	}}
 	ondragstart={timer.stop}
-	padding={{ ...defaultChartPadding, top: 10, left: 20, right: 20 }}
+	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 	height={600}
 >
 	{#snippet children({ context })}

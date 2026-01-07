@@ -13,14 +13,14 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<ChartClipPath>"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<ChartClipPath>"
     },
     {
@@ -34,7 +34,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 38,
+      "lineNumber": 47,
       "line": "<ChartClipPath>"
     },
     {
@@ -48,7 +48,7 @@
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 31,
+      "lineNumber": 32,
       "line": "<ChartClipPath>"
     },
     {
@@ -62,7 +62,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<ChartClipPath>"
     },
     {
@@ -115,5 +115,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.936Z"
+  "updatedAt": "2026-01-06T13:02:20.986Z"
 }

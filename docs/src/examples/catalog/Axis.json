@@ -611,16 +611,16 @@
         {
           "component": "Chart",
           "lineNumber": 9,
-          "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 10,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 11,
+          "lineNumber": 15,
           "line": "<Axis"
         }
       ]
@@ -695,16 +695,16 @@
         {
           "component": "Chart",
           "lineNumber": 115,
-          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 116,
+          "lineNumber": 119,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 117,
+          "lineNumber": 120,
           "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} />"
         }
       ]
@@ -716,16 +716,16 @@
         {
           "component": "Chart",
           "lineNumber": 115,
-          "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 116,
+          "lineNumber": 119,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 117,
+          "lineNumber": 120,
           "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} format={example.format} />"
         }
       ]
@@ -1513,7 +1513,7 @@
       "example": "rotate-labels",
       "component": "Axis",
       "path": "/example/Axis/rotate-labels",
-      "lineNumber": 11,
+      "lineNumber": 15,
       "line": "<Axis"
     },
     {
@@ -1541,14 +1541,14 @@
       "example": "time-scale-auto",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto",
-      "lineNumber": 117,
+      "lineNumber": 120,
       "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} />"
     },
     {
       "example": "time-scale-auto-format-filtering",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-format-filtering",
-      "lineNumber": 117,
+      "lineNumber": 120,
       "line": "<Axis placement=\"bottom\" rule grid {tickSpacing} format={example.format} />"
     },
     {
@@ -1758,28 +1758,28 @@
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 38,
+      "lineNumber": 47,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 39,
+      "lineNumber": 48,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 43,
+      "lineNumber": 52,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 44,
+      "lineNumber": 53,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -1926,28 +1926,28 @@
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 35,
+      "lineNumber": 44,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 36,
+      "lineNumber": 45,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 40,
+      "lineNumber": 49,
       "line": "<Axis placement=\"bottom\" grid rule format=\"percentRound\" />"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 41,
+      "lineNumber": 50,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -2332,14 +2332,14 @@
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 29,
+      "lineNumber": 38,
       "line": "<Axis placement=\"left\" grid rule format={(d) => format(Math.abs(d), 'integer')} />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 30,
+      "lineNumber": 39,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -2612,28 +2612,28 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2654,28 +2654,28 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 35,
+      "lineNumber": 44,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 36,
+      "lineNumber": 45,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 32,
+      "lineNumber": 40,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 33,
+      "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2696,28 +2696,28 @@
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 29,
+      "lineNumber": 30,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 30,
+      "lineNumber": 31,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 24,
+      "lineNumber": 32,
       "line": "<Axis placement=\"left\" grid rule motion={{ type: 'tween', duration: 200 }} />"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 25,
+      "lineNumber": 33,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2738,14 +2738,14 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3375,14 +3375,14 @@
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 49,
+      "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 50,
+      "lineNumber": 43,
       "line": "<Axis placement=\"left\" />"
     },
     {
@@ -3879,28 +3879,28 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 41,
+      "lineNumber": 51,
       "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
     },
     {
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 42,
+      "lineNumber": 52,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 42,
+      "lineNumber": 51,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 43,
+      "lineNumber": 52,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3935,14 +3935,14 @@
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 40,
+      "lineNumber": 50,
       "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 41,
+      "lineNumber": 51,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -3977,14 +3977,14 @@
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 35,
+      "lineNumber": 37,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/example/Tooltip/scatter-plot",
-      "lineNumber": 36,
+      "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" grid rule />"
     },
     {
@@ -4005,30 +4005,30 @@
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 38,
+      "lineNumber": 40,
       "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
     },
     {
       "example": "single-date-time",
       "component": "Tooltip",
       "path": "/example/Tooltip/single-date-time",
-      "lineNumber": 39,
+      "lineNumber": 41,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 49,
+      "lineNumber": 58,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 50,
+      "lineNumber": 59,
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.331Z"
+  "updatedAt": "2026-01-06T13:02:20.739Z"
 }

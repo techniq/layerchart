@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
 	import { createHighlighter, type Highlighter } from 'shiki';
 	import { transformerMetaHighlight } from '@shikijs/transformers';
 
