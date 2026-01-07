@@ -57,7 +57,7 @@
 		projection: config.projection,
 		fitGeojson: geojson
 	}}
-	padding={{ ...defaultChartPadding, left: 10, right: 10 }}
+	padding={defaultChartPadding({ left: 10, right: 10 })}
 	height={600}
 >
 	<Layer>

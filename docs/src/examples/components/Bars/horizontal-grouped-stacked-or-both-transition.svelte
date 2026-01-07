@@ -72,7 +72,7 @@
 	y1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
 	y1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	y1Range={({ yScale }) => [0, yScale.bandwidth()]}
-	padding={{ ...defaultChartPadding, left: 30, right: 15, bottom: 20 }}
+	padding={defaultChartPadding({ left: 30, right: 15, bottom: 20 })}
 	tooltip={{ mode: 'band' }}
 	height={400}
 >

@@ -37,6 +37,6 @@
 		grid: { motion: { type: 'tween', duration: 200 } },
 		points: { motion: { type: 'tween', duration: 200 } }
 	}}
-	padding={{ ...defaultChartPadding, top: 20, bottom: 48, left: 20, right: 20 }}
+	padding={defaultChartPadding({ top: 20, bottom: 48, left: 20, right: 20 })}
 	height={400}
 />
