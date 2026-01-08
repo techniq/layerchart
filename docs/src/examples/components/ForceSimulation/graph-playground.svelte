@@ -32,7 +32,7 @@
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
 
-	const data = await getMiserablesGraph();
+	const data = $derived(await getMiserablesGraph());
 
 	const nodes: MySimulationNodeDatum[] = data.nodes;
 	const links: MySimulationLinkDatum[] = data.links;

@@ -2,7 +2,7 @@
 	import { BarChart, Spline, Tooltip, defaultChartPadding } from 'layerchart';
 	import { getAppleTicker } from '$lib/data.remote.js';
 
-	const data = await getAppleTicker();
+	const data = $derived(await getAppleTicker());
 	export { data };
 </script>
 

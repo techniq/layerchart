@@ -2,7 +2,7 @@
 	import { getSimpleGraph } from '$lib/graph.remote';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text } from 'layerchart';
 
-	const data = await getSimpleGraph();
+	const data = $derived(await getSimpleGraph());
 </script>
 
 <Chart {data} flatData={[]} height={400}>

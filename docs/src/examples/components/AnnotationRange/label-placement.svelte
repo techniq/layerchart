@@ -4,7 +4,7 @@
 
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = await getAppleStock();
+	const data = $derived(await getAppleStock());
 
 	const placementOptions = [
 		'top-left',

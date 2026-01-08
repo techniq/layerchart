@@ -10,7 +10,7 @@
 	type NodeDatum = { name: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
-	const data = await getFlare();
+	const data = $derived(await getFlare());
 
 	const root: HierarchyNode<MySimulationNodeDatum> = hierarchy<MySimulationNodeDatum>(data);
 	const nodes: HierarchyNode<MySimulationNodeDatum>[] = root.descendants();

@@ -17,6 +17,7 @@
 	settings({
 		components: {},
 		// @ts-expect-error - shh
+		// svelte-ignore state_referenced_locally
 		themes: data.themes
 	});
 

@@ -7,7 +7,7 @@
 	import { getDimensionArrays } from '$lib/data.remote.js';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-	const data = await getDimensionArrays();
+	const data = $derived(await getDimensionArrays());
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

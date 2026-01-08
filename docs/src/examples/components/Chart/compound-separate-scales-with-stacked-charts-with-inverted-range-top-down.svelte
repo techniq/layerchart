@@ -5,7 +5,7 @@
 	import { extent } from 'd3-array';
 	import { getHydro } from '$lib/data.remote.js';
 
-	const data = await getHydro();
+	const data = $derived(await getHydro());
 	export { data };
 </script>
 

@@ -4,7 +4,7 @@
 	import { Area, Axis, Chart, Layer, Spline } from 'layerchart';
 	import { getSfoTemperatures } from '$lib/data.remote';
 
-	const data = await getSfoTemperatures();
+	const data = $derived(await getSfoTemperatures());
 
 	export { data };
 </script>

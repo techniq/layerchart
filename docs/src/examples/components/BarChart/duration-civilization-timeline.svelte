@@ -2,7 +2,7 @@
 	import { BarChart, Tooltip } from 'layerchart';
 	import { getCivilizationEvents } from '$lib/data.remote.js';
 
-	const data = await getCivilizationEvents();
+	const data = $derived(await getCivilizationEvents());
 
 	function formatYear(number: number): string {
 		return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
