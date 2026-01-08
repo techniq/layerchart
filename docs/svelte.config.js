@@ -21,6 +21,16 @@ const config = {
 	compilerOptions: {
 		experimental: {
 			async: true
+		},
+		warningFilter: (warning) => {
+			// Suppress state_referenced_locally warnings
+			if (
+				warning.code === 'state_referenced_locally' &&
+				warning.filename?.includes('/packages/layerchart')
+			) {
+				return false;
+			}
+			return true;
 		}
 	},
 	vitePlugin: {
