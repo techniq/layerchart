@@ -133,7 +133,7 @@
 		}}
 		tooltip={{ touchEvents: 'none' }}
 		bind:context
-		padding={{ ...defaultChartPadding, left: 5, right: 5 }}
+		padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 		height={600}
 	>
 		{#if debug}

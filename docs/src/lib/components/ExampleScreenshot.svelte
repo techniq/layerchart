@@ -6,17 +6,18 @@
 		example,
 		aspect = 'initial',
 		background = false,
+		viewTransitionName = null,
 		class: className
 	}: {
 		component: string;
 		example: string;
 		aspect?: 'initial' | 'video' | 'square' | 'screenshot';
 		background?: boolean;
+		viewTransitionName?: string | null;
 		class?: string;
 	} = $props();
 
 	const basePath = $derived(`/screenshots/${component}/${example}`);
-	const viewTransitionName = $derived(`lc-${component}-${example}`);
 
 	const sizes = [
 		{ width: '240w', light: '@sm:hidden dark:hidden', dark: 'dark:block dark:@sm:hidden' },

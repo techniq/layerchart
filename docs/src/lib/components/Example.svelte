@@ -56,16 +56,20 @@
 	}
 
 	// Get example from context (eagerly loaded by layout)
-	let example = $derived.by(() => {
+	// Use $state + $effect to break potential infinite reactivity loops during HMR
+	let example = $state<{ component: any; source: string } | undefined>(undefined);
+
+	$effect(() => {
 		if (path) {
 			// Path-based example
 			const resolvedPath = resolveExamplePath(path, page.url.pathname);
-			return examples.get()?.current['__path__']?.[resolvedPath];
+			example = examples.get()?.current['__path__']?.[resolvedPath];
 		} else if (component && name) {
 			// Component/name-based example
-			return examples.get()?.current[component]?.[name];
+			example = examples.get()?.current[component]?.[name];
+		} else {
+			example = undefined;
 		}
-		return undefined;
 	});
 
 	let containerEl = $state<HTMLElement | null>(null);

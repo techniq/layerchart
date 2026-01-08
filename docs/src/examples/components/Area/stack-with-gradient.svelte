@@ -9,7 +9,7 @@
 		chartDataArray,
 		defaultChartPadding
 	} from 'layerchart';
-	import { stack, type Series } from 'd3-shape';
+	import { stack } from 'd3-shape';
 	import flatten from '$lib/utils/flatten.js';
 	import { createDateSeries } from '$lib/utils/data.js';
 
@@ -23,14 +23,7 @@
 		keys
 	});
 
-	type B = Series<
-		{
-			date: number;
-		},
-		string
-	>[];
-
-	const stackData = stack().keys(keys)(multiSeriesData) as B;
+	const stackData = stack().keys(keys)(multiSeriesData);
 
 	export { stackData as data };
 </script>
@@ -41,7 +34,7 @@
 	x={(d) => asAny(d).data.date}
 	y={[0, 1]}
 	yNice
-	padding={{ ...defaultChartPadding, left: 25, bottom: 20 }}
+	padding={defaultChartPadding({ left: 25, bottom: 20 })}
 	height={300}
 >
 	<Layer>

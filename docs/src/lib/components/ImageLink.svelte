@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import type { HTMLAnchorAttributes } from 'svelte/elements';
 	import { cls } from '@layerstack/tailwind';
 
 	import LucideArrowRight from '~icons/lucide/arrow-right';
@@ -9,14 +10,13 @@
 		image,
 		label,
 		variant = 'default',
-		class: className
+		class: className,
+		...restProps
 	}: {
-		href: string;
 		image?: Snippet;
 		label?: Snippet;
 		variant?: 'default' | 'hover-label' | 'screenshot-only';
-		class?: string;
-	} = $props();
+	} & HTMLAnchorAttributes = $props();
 </script>
 
 <a
@@ -28,6 +28,7 @@
 		variant === 'hover-label' ? 'grid-stack' : 'grid-rows-[1fr_auto]',
 		className
 	)}
+	{...restProps}
 >
 	{#if image}
 		<div class="overflow-hidden rounded-lg outline outline-surface-content/10">

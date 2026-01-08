@@ -211,7 +211,7 @@
       data={data.appleStock}
       x="date"
       y="value"
-      padding={{ ...defaultChartPadding(), right: 40 }}
+      padding={defaultChartPadding({ right: 40 })}
     >
       {#snippet aboveMarks({ context })}
         {@const lastPoint = data.appleStock[data.appleStock.length - 1]}

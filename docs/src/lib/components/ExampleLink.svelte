@@ -21,11 +21,26 @@
 		variant?: ComponentProps<typeof ImageLink>['variant'];
 		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
 	} & Partial<ComponentProps<typeof ImageLink>> = $props();
+
+	let isHovering = $state(false);
+	const viewTransitionName = $derived(isHovering ? `lc-${component}-${example}` : null);
 </script>
 
-<ImageLink href="/docs/components/{component}/{example}" {variant} {...restProps}>
+<ImageLink
+	href="/docs/components/{component}/{example}"
+	{variant}
+	{...restProps}
+	onpointerenter={() => (isHovering = true)}
+	onpointerleave={() => (isHovering = false)}
+>
 	{#snippet image()}
-		<ExampleScreenshot {component} {example} {aspect} background={variant !== 'screenshot-only'} />
+		<ExampleScreenshot
+			{component}
+			{example}
+			{aspect}
+			background={variant !== 'screenshot-only'}
+			{viewTransitionName}
+		/>
 	{/snippet}
 
 	{#snippet label()}
