@@ -6,11 +6,13 @@ import contentCollections from '@content-collections/vite';
 import Icons from 'unplugin-icons/vite';
 // import devtoolsJson from 'vite-plugin-devtools-json';
 
+const isTest = process.env.VITEST === 'true';
+
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
-		contentCollections(),
+		!isTest && contentCollections(),
 		Icons({
 			compiler: 'svelte',
 			customCollections: {
