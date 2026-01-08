@@ -17,7 +17,8 @@ const components = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -71,7 +72,8 @@ const examples = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().default(true),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -116,7 +118,8 @@ const utils = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -163,7 +166,8 @@ const releases = defineCollection({
 		url: z.string(),
 		draft: z.boolean().default(false),
 		prerelease: z.boolean().default(false),
-		author: z.string()
+		author: z.string(),
+		content: z.string()
 	}),
 	transform: async (doc, context) => {
 		const { fileName } = doc._meta;
