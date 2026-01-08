@@ -4,7 +4,7 @@
 	import { Duration } from 'svelte-ux';
 	import { getUsEvents } from '$lib/data.remote';
 
-	const data = await getUsEvents();
+	const data = $derived(await getUsEvents());
 	export { data };
 </script>
 

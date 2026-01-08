@@ -4,7 +4,7 @@
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
 	import { getGreenhouseGraph } from '$lib/graph.remote';
 
-	const data = await getGreenhouseGraph();
+	const data = $derived(await getGreenhouseGraph());
 	export { data };
 </script>
 

@@ -6,7 +6,7 @@
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 
-	const data = await getDailyTemperature();
+	const data = $derived(await getDailyTemperature());
 
 	const temperatureColor = $derived(
 		scaleSequential(extent(data, (d) => d.value as number) as [number, number], interpolateTurbo)

@@ -4,7 +4,7 @@
 	import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip, type DomainType } from 'layerchart';
 	import { getAppleTicker } from '$lib/data.remote.js';
 
-	const data = await getAppleTicker();
+	const data = $derived(await getAppleTicker());
 
 	let xDomain = $state<DomainType>([null, null]);
 
