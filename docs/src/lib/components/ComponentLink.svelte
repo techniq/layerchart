@@ -1,11 +1,13 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
+	import { tick, type ComponentProps } from 'svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import LucideBlocks from '~icons/lucide/blocks';
 
 	import ExampleScreenshot from './ExampleScreenshot.svelte';
 	import ImageLink from './ImageLink.svelte';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { navigating } from '$app/state';
 
 	let {
 		component,
@@ -23,17 +25,25 @@
 		supportedLayers?: string[];
 	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 
-	let isHovering = $state(false);
-	const viewTransitionName = $derived(isHovering ? `lc-${component}-${example}` : null);
+	let href = $derived(`/docs/components/${component}/${example}`);
+
+	// Only enable view transition when navigating to or from this link and remove after navigation to fix stacking order
+	let enableViewTransition = $state(navigating.from?.url.pathname === href);
+	beforeNavigate((navigation) => {
+		if (navigation.to?.url.pathname === href) {
+			enableViewTransition = true;
+		}
+	});
+	afterNavigate(() => {
+		tick().then(() => {
+			enableViewTransition = false;
+		});
+	});
+
+	const viewTransitionName = $derived(enableViewTransition ? `lc-${component}-${example}` : null);
 </script>
 
-<ImageLink
-	href="/docs/components/{component}/{example}"
-	{variant}
-	{...restProps}
-	onpointerenter={() => (isHovering = true)}
-	onpointerleave={() => (isHovering = false)}
->
+<ImageLink {href} {variant} {...restProps}>
 	{#snippet image()}
 		<ExampleScreenshot {component} {example} {aspect} background {viewTransitionName} />
 	{/snippet}
