@@ -404,6 +404,7 @@
 <canvas
   bind:this={ref}
   style:z-index={zIndex}
+  data-testid="canvas-layer"
   class={['lc-layout-canvas', className]}
   class:disablePointerEvents={pointerEvents === false}
   onclick={(e) => {

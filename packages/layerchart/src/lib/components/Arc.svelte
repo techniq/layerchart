@@ -402,6 +402,7 @@
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
+    data-testid="arc-track"
     {...extractLayerProps(track, 'lc-arc-track')}
   />
 {/if}
@@ -415,6 +416,7 @@
   {stroke}
   stroke-width={strokeWidth}
   {opacity}
+  data-testid="arc-path"
   {...restProps}
   class={cls('lc-arc-line', className)}
   onpointerenter={onPointerEnter}

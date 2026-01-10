@@ -54,7 +54,10 @@
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-simplify": "^3.0.3",
     "@types/topojson-specification": "^1.0.5",
+    "@playwright/test": "^1.57.0",
+    "@vitest/browser-playwright": "^4.0.16",
     "mdsvex": "^0.12.3",
+    "playwright": "^1.57.0",
     "posthog-js": "^1.315.1",
     "prettier": "^3.7.4",
     "prettier-plugin-svelte": "^3.4.1",
@@ -78,7 +81,8 @@
     "us-atlas": "^3.0.1",
     "vite": "^7.3.1",
     "vite-plugin-devtools-json": "^1.0.0",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.16",
+    "vitest-browser-svelte": "^2.0.1"
   },
   "type": "module",
   "dependencies": {
