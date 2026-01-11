@@ -25,10 +25,15 @@
     height: 200,
     ...chartProps,
   });
+
+  const mergedComponentProps = $derived({
+    fill: 'blue',
+    ...componentProps,
+  });
 </script>
 
 <Chart {...mergedChartProps} data-testid="test-lc-chart">
-  <Layer type={layer} {...layerProps} data-testid="test-lc-layer">
-    <TestComponent {...componentProps} data-testid="test-lc-component" />
+  <Layer center type={layer} {...layerProps}>
+    <TestComponent {...mergedComponentProps} data-testid="test-lc-component" />
   </Layer>
 </Chart>

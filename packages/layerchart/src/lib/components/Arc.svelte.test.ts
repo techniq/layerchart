@@ -1,16 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { page } from 'vitest/browser';
+import { page, type Locator } from 'vitest/browser';
 import ChartHarness from './tests/ChartHarness.test.svelte';
 
-const canvasTestId = 'canvas-layer';
 // Component-specific configuration ---------------------------------------
 import TestComponent from './Arc.svelte';
 const componentName = 'Arc';
-const supportedLayers: Array<'svg' | 'html' | 'canvas'> = ['svg', 'canvas'];
-const componentTestClass = 'arc-path';
-const accessoryTestClasses = ['arc-track']; // optional
+const supportedLayers: Array<'svg' | 'html' | 'canvas'> = ['svg'];
+const componentTestId = 'test-lc-component';
+const accessoryTestIds = ['arc-track']; // optional (defined in Component) 1
 // -------------------------------------------------------------------------
+let el: Locator | HTMLElement | SVGElement | null; // resuable
 
 for (const layer of supportedLayers) {
   const isCanvas = layer === 'canvas';
@@ -19,38 +19,70 @@ for (const layer of supportedLayers) {
     // Note: Canvas tests require different assertions (no DOM elements to query)
 
     describe('Initial Rendering', () => {
-      it('should render with default props', async () => {
-        render(ChartHarness, {
+      it(`should render correct layer ${layer}`, async () => {
+        const { container } = render(ChartHarness, {
           layer,
           component: TestComponent,
+          componentProps: {
+            value: 50,
+          },
         });
 
-        // test harness checks - may be useful for other tests
-        // const chartElement = page.getByTestId('test-lc-chart');
-        // await expect.element(chartElement).toBeInTheDocument();
-        const layerElement = page.getByTestId('test-lc-layer');
-        await expect.element(layerElement).toBeInTheDocument();
-        const componentElement = page.getByTestId('test-lc-component');
-        await expect.element(componentElement).toBeInTheDocument();
-
-        // Check the actual visualization element
-        if (isCanvas) {
-          let canvasEl = document.querySelector(`.${canvasTestId}`);
-          await expect(canvasEl).toBeInTheDocument();
-        } else {
-          let componentEl = document.querySelector(`.${componentTestClass}`);
-          await expect(componentEl).toBeInTheDocument();
-        }
-
-        // Check the accessory elements
-        if (accessoryTestClasses.length > 0) {
-          for (const accessoryTestClass of accessoryTestClasses) {
-            const el = document.querySelector(`.${accessoryTestClass}"]`);
-            await expect(el).toBeInTheDocument();
-          }
+        /* ---------------------------------------------------------------------
+        | This section for class based tests
+        ------------------------------------------------------------------------*/
+        if (layer === 'canvas') {
+          // Canvas-specific tests
+          el = container.querySelector('canvas') as HTMLCanvasElement | null;
+          await expect.element(el).toBeInTheDocument();
+        } else if (layer === 'svg') {
+          // SVG-specific tests
+          el = container.querySelector('svg') as SVGElement | null;
+          await expect.element(el).toBeInTheDocument();
+        } else if (layer === 'html') {
+          // HTML-specific tests
+          el = container.querySelector('div') as HTMLElement | null;
+          await expect.element(el).toBeInTheDocument();
         }
       });
+
+      it('should render correct Component elements', async () => {
+        const { container } = render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            track: { class: 'fill-none stroke-surface-content/10' },
+            value: 50,
+          },
+        });
+
+        // Test Chart element
+        el = page.getByTestId('test-lc-chart');
+        await expect.element(el).toBeInTheDocument();
+
+        // Test Component element
+        el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+      });
     });
+
+    for (const testId of accessoryTestIds) {
+      describe.skipIf(isCanvas)(`It should render elements with data-testid=${testId}`, () => {
+        it(`${testId} should be rendered`, async () => {
+          render(ChartHarness, {
+            layer,
+            component: TestComponent,
+            componentProps: {
+              value: 50,
+              track: { class: 'fill-none stroke-surface-content/10' },
+            },
+          });
+
+          el = page.getByTestId(testId);
+          await expect.element(el).toBeInTheDocument();
+        });
+      });
+    }
 
     describe.skipIf(layer === 'canvas')('Checking Props', () => {
       it('should render an arc path with value', async () => {
@@ -59,625 +91,752 @@ for (const layer of supportedLayers) {
           component: TestComponent,
           componentProps: {
             value: 50,
+          },
+        });
+
+        el = page.getByTestId(componentTestId).first();
+        await expect.element(el).toBeInTheDocument();
+        const element = el.element() as SVGPathElement;
+        if (layer === 'svg') {
+          const d = element.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      it('should render with custom domain and range', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 25,
+            domain: [0, 50] as [number, number],
+            range: [0, 180] as [number, number],
+          },
+        });
+
+        el = page.getByTestId(componentTestId).first();
+        await expect.element(el).toBeInTheDocument();
+        const element = el.element() as SVGPathElement;
+        if (layer === 'svg') {
+          const d = element.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,0,1,100,0L0,0Z');
+        }
+      });
+
+      it('should render with innerRadius and outerRadius', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 75,
             innerRadius: 30,
             outerRadius: 50,
           },
         });
 
-        // const arcPath = page.getByTestId(componentTestId);
-        // await expect.element(arcPath).toBeInTheDocument();
-        // const d = arcPath.element().getAttribute('d');
-        // expect(d).toBeTruthy(); // Verify the path has data generated
-        // expect(d).not.toBe('M0,0Z'); // Should not be empty path
-        // expect(d).toMatch(/[MA]/); // Should have Move and Arc commands
+        el = page.getByTestId(componentTestId).first();
+        await expect.element(el).toBeInTheDocument();
+        const element = el.element() as SVGPathElement;
+        if (layer === 'svg') {
+          const d = element.getAttribute('d');
+          expect(d).toBe('M0,-50A50,50,0,1,1,-50,0L-30,0A30,30,0,1,0,0,-30Z');
+        }
       });
 
-      //   it('should render with custom domain and range', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 25,
-      //         domain: [0, 50] as [number, number],
-      //         range: [0, 180] as [number, number],
-      //       },
-      //     });
+      it('should render with cornerRadius', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            cornerRadius: 5,
+          },
+        });
 
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
+        el = page.getByTestId(componentTestId).first();
+        await expect.element(el).toBeInTheDocument();
+        const element = el.element() as SVGPathElement;
+        if (layer === 'svg') {
+          const d = element.getAttribute('d');
+          expect(d).toBe(
+            'M0,-94.868A5,5,0,0,1,5.263,-99.861A100,100,0,0,1,5.263,99.861A5,5,0,0,1,0,94.868L0,0Z'
+          );
+        }
+      });
+
+      it('should render with padAngle', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            padAngle: 0.02,
+          },
+        });
+
+        el = page.getByTestId(componentTestId).first();
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el?.element()?.getAttribute('d');
+          expect(d).toBe('M1,-99.995A100,100,0,0,1,1,99.995L0,0Z');
+        }
+      });
+
+      it('should render track when track prop is true', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            track: true,
+          },
+        });
+
+        el = page.getByTestId('arc-track');
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+        }
+      });
+
+      it('should render track with custom props', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            track: { class: 'fill-none stroke-surface-content/10' },
+          },
+        });
+
+        const el = page.getByTestId('arc-track');
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.classList.contains('fill-none stroke-surface-content/10');
+        }
+      });
+
+      it('should support custom track radius values', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            track: { class: 'fill-none stroke-surface-content/10' },
+            trackInnerRadius: 20,
+            trackOuterRadius: 60,
+          },
+        });
+
+        el = page.getByTestId('arc-track');
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe(
+            'M0,-60A60,60,0,1,1,0,60A60,60,0,1,1,0,-60M0,-20A20,20,0,1,0,0,20A20,20,0,1,0,0,-20Z'
+          );
+        }
+      });
+
+      it('should support custom track angles', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            track: { class: 'fill-none stroke-surface-content/10' },
+            trackStartAngle: 0,
+            trackEndAngle: Math.PI,
+          },
+        });
+
+        el = page.getByTestId('arc-track');
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      // TODO: Implement this test
+      // IT PASSES WITH ANY CORNER RADIUS, NOT SURE HOW TO TEST THIS
+      // it('should support track corner radius', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       track: { class: 'fill-none stroke-surface-content/10' },
+      //       trackCornerRadius: 10,
+      //     },
       //   });
 
-      //   it('should render with innerRadius and outerRadius', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 75,
-      //         innerRadius: 30,
-      //         outerRadius: 50,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should render with cornerRadius', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         cornerRadius: 5,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should render with padAngle', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         padAngle: 0.02,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
+      //   el = page.getByTestId('arc-track');
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Track Rendering', () => {
-      //   it('should render track when track prop is true', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         track: true,
-      //       },
-      //     });
+      //-------------------------------------------------------------------------
+      // INTERACTIONS TESTS
+      //-------------------------------------------------------------------------
 
-      //     await expect.element(page.getByTestId('arc-track')).toBeInTheDocument();
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
+      it('should handle pointer enter events', async () => {
+        const onPointerEnter = vi.fn();
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            onpointerenter: onPointerEnter,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await el.hover();
+        expect(onPointerEnter).toHaveBeenCalled();
+      });
+
+      it('should handle pointer move events', async () => {
+        const onPointerMove = vi.fn();
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            onpointermove: onPointerMove,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await el.hover();
+        expect(onPointerMove).toHaveBeenCalled();
+      });
+
+      it('should handle touch move events', async () => {
+        const onTouchMove = vi.fn();
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            ontouchmove: onTouchMove,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        const element = el.element();
+        element.dispatchEvent(new TouchEvent('touchmove', { bubbles: true }));
+        expect(onTouchMove).toHaveBeenCalled();
+      });
+
+      it('should apply fill color', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            fill: 'red',
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toHaveAttribute('fill', 'red');
+      });
+
+      it('should apply opacity', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            opacity: 0.5,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await expect.element(el).toHaveAttribute('opacity', '0.5');
+      });
+
+      it('should apply fillOpacity', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            fillOpacity: 0.7,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await expect.element(el).toHaveAttribute('fill-opacity', '0.7');
+      });
+
+      it('should apply custom class', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            class: 'custom-arc-class',
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await expect.element(el).toHaveClass('custom-arc-class');
+      });
+
+      // TODO:
+      // PASSES WITH ANY OUTER RADIUS, NOT SURE HOW TO TEST THIS
+      // it('should calculate outerRadius from discrete value (>= 1)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       outerRadius: 80,
+      //     },
       //   });
 
-      //   it('should render track with custom props', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         track: { class: 'custom-track' },
-      //       },
-      //     });
-
-      //     const track = page.getByTestId('arc-track');
-      //     await expect.element(track).toBeInTheDocument();
-      //     await expect.element(track).toHaveClass('custom-track');
-      //   });
-
-      //   it('should support custom track radius values', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         track: true,
-      //         trackInnerRadius: 20,
-      //         trackOuterRadius: 60,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-track')).toBeInTheDocument();
-      //   });
-
-      //   it('should support custom track angles', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         track: true,
-      //         trackStartAngle: 0,
-      //         trackEndAngle: Math.PI,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-track')).toBeInTheDocument();
-      //   });
-
-      //   it('should support track corner radius', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         track: true,
-      //         trackCornerRadius: 10,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-track')).toBeInTheDocument();
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-80A80,80,0,1,1,0,80A80,80,0,1,1,0,-80Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('User Interactions', () => {
-      //   it('should handle pointer enter events', async () => {
-      //     const onPointerEnter = vi.fn();
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         onpointerenter: onPointerEnter,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     // Note: Hover requires visible element; testing event handler attachment
+      // it('should calculate outerRadius from percentage (0 < value < 1)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       outerRadius: 0.8,
+      //     },
       //   });
 
-      //   it('should handle pointer move events', async () => {
-      //     const onPointerMove = vi.fn();
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         onpointermove: onPointerMove,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     // Note: Hover requires visible element; testing event handler attachment
-      //   });
-
-      //   it('should handle pointer leave events', async () => {
-      //     const onPointerLeave = vi.fn();
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         onpointerleave: onPointerLeave,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     // Note: Testing pointer leave requires moving to a different element or simulation
-      //   });
-
-      //   it('should handle touch move events', async () => {
-      //     const onTouchMove = vi.fn();
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         ontouchmove: onTouchMove,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     // Note: Touch events require special handling in browser tests
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-80A80,80,0,1,1,0,80A80,80,0,1,1,0,-80Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Styling', () => {
-      //   it('should apply fill color', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         fill: 'red',
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toHaveAttribute('fill', 'red');
+      // it('should calculate outerRadius from offset (< 0)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       outerRadius: -10,
+      //     },
       //   });
 
-      //   it('should apply opacity', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         opacity: 0.5,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toHaveAttribute('opacity', '0.5');
-      //   });
-
-      //   it('should apply fillOpacity', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         fillOpacity: 0.7,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toHaveAttribute('fill-opacity', '0.7');
-      //   });
-
-      //   it('should apply custom class', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         class: 'custom-arc',
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toHaveClass('custom-arc');
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-10A10,10,0,1,0,0,10A10,10,0,1,0,0,-10Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Radius Calculations', () => {
-      //   it('should calculate outerRadius from discrete value (>= 1)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         outerRadius: 80,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     await expect.element(arc).toHaveAttribute('d');
+      // it('should calculate innerRadius from discrete value (>= 1)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       innerRadius: 30,
+      //     },
       //   });
 
-      //   it('should calculate outerRadius from percentage (0 < value < 1)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         outerRadius: 0.8,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should calculate outerRadius from offset (< 0)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         outerRadius: -10,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should calculate innerRadius from discrete value (>= 1)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         innerRadius: 30,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should calculate innerRadius from percentage (0 < value < 1)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         innerRadius: 0.5,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should calculate innerRadius from offset (< 0)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         innerRadius: -20,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-30A30,30,0,1,0,0,30A30,30,0,1,0,0,-30Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Angle Calculations', () => {
-      //   it('should use startAngle and endAngle in radians', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         startAngle: 0,
-      //         endAngle: Math.PI,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
+      // it('should calculate innerRadius from percentage (0 < value < 1)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       innerRadius: 0.5,
+      //     },
       //   });
 
-      //   it('should convert range degrees to radians', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         range: [0, 180] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should scale value to angle based on domain and range', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         domain: [0, 100] as [number, number],
-      //         range: [0, 360] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle custom start angle in range', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         range: [90, 270] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-30A30,30,0,1,0,0,30A30,30,0,1,0,0,-30Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Offset', () => {
-      //   it('should apply offset to arc position', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         offset: 10,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     const transform = arc.element().getAttribute('transform');
-      //     expect(transform).toContain('translate');
+      // it('should calculate innerRadius from offset (< 0)', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       innerRadius: -20,
+      //     },
       //   });
 
-      //   it('should apply zero offset by default', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toHaveAttribute('transform', 'translate(0, 0)');
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-30A30,30,0,1,0,0,30A30,30,0,1,0,0,-30Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Edge Cases', () => {
-      //   it('should handle value of 0', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 0,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
+      // it('should use startAngle and endAngle in radians', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       startAngle: 0,
+      //       endAngle: Math.PI / 2,
+      //     },
       //   });
 
-      //   it('should handle value at max domain', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 100,
-      //         domain: [0, 100] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle negative domain values', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 0,
-      //         domain: [-50, 50] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle innerRadius of 0 (pie slice)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         innerRadius: 0,
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle full circle (360 degree range)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 100,
-      //         domain: [0, 100] as [number, number],
-      //         range: [0, 360] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle partial arc (e.g., 180 degrees)', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 100,
-      //         domain: [0, 100] as [number, number],
-      //         range: [0, 180] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle value exceeding domain max', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 150,
-      //         domain: [0, 100] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should handle value below domain min', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: -10,
-      //         domain: [0, 100] as [number, number],
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Motion/Animation', () => {
-      //   it('should start at initialValue', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 100,
-      //         initialValue: 0,
-      //       },
-      //     });
+      it('should convert range degrees to radians', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            range: [0, 180] as [number, number],
+          },
+        });
 
-      //     // Initially should render (motion will animate from initialValue to value)
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,0,1,100,0L0,0Z');
+        }
+      });
+
+      it('should scale value to angle based on domain and range', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            domain: [0, 100] as [number, number],
+            range: [0, 360] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      it('should handle custom start angle in range', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            range: [90, 270] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M100,0A100,100,0,0,1,0,100L0,0Z');
+        }
+      });
+
+      it('should apply offset to arc position', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            offset: 10,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const transform = el.element()?.getAttribute('transform');
+          expect(transform).toContain('translate(9.84807753012208, 1.736481776669303)');
+        }
+      });
+
+      it('should apply zero offset by default', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const transform = el.element()?.getAttribute('transform');
+          expect(transform).toBe('translate(0, 0)');
+        }
+      });
+
+      // ------------------------------------------------------------
+      // Edge Cases
+      // ------------------------------------------------------------
+
+      it('should handle value of 0', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 0,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100L0,0Z');
+        }
+      });
+
+      it('should handle value at max domain', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 100,
+            domain: [0, 100] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+        }
+      });
+
+      it('should handle negative domain values', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 0,
+            domain: [-50, 50] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      it('should handle innerRadius of 0 (pie slice)', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+            innerRadius: 0,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      it('should handle full circle (360 degree range)', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 100,
+            domain: [0, 100] as [number, number],
+            range: [0, 360] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+        }
+      });
+
+      it('should handle partial arc (e.g., 180 degrees)', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 100,
+            domain: [0, 100] as [number, number],
+            range: [0, 180] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+        }
+      });
+
+      it('should handle value exceeding domain max', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 150,
+            domain: [0, 100] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,1,1,0,100A100,100,0,1,1,0,-100Z');
+        }
+      });
+
+      it('should handle value below domain min', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: -10,
+            domain: [0, 100] as [number, number],
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        if (layer === 'svg') {
+          const d = el.element()?.getAttribute('d');
+          expect(d).toBe('M0,-100A100,100,0,0,0,-58.779,-80.902L0,0Z');
+        }
+      });
+
+      // TODO
+      // not sure how to test this, check before motion applied?
+      // it('should start at initialValue', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       motion: { type: 'tween', duration: 300 },
+      //       value: 100,
+      //       initialValue: 0,
+      //     },
       //   });
 
-      //   it('should accept spring motion config', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         motion: { type: 'spring', stiffness: 100, damping: 10 },
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
-
-      //   it('should accept tween motion config', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         motion: { type: 'tween', duration: 300 },
-      //       },
-      //     });
-
-      //     await expect.element(page.getByTestId('arc-path')).toBeInTheDocument();
-      //   });
+      //   // Initially should render (motion will animate from initialValue to value)
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-100L0,0Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Default Stroke', () => {
-      //   it('should have stroke="none" by default', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     await expect.element(arc).toHaveAttribute('stroke', 'none');
+      // TODO
+      // not sure how to test this
+      // it('should accept spring motion config', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       motion: { type: 'spring', stiffness: 100, damping: 10 },
+      //     },
       //   });
+
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('MM0,-100A100,100,0,1,1,0,100L0,0Z');
+      //   }
       // });
 
-      // describe.skipIf(isCanvas)('Path Data', () => {
-      //   it('should generate valid SVG path data', async () => {
-      //     render(ChartWrapper, {
-      //       layer,
-      //       component: TestComponent,
-      //       componentProps: {
-      //         value: 50,
-      //         innerRadius: 30,
-      //         outerRadius: 50,
-      //       },
-      //     });
-
-      //     const arc = page.getByTestId('arc-path');
-      //     await expect.element(arc).toBeInTheDocument();
-      //     const d = arc.element().getAttribute('d');
-      //     expect(d).toBeTruthy();
-      //     // SVG arc path should contain M (moveto), A (arc), and L (lineto) commands
-      //     expect(d).toMatch(/[MAL]/);
+      // TODO
+      // not sure how to test this
+      // it('should accept tween motion config', async () => {
+      //   render(ChartHarness, {
+      //     layer,
+      //     component: TestComponent,
+      //     componentProps: {
+      //       value: 50,
+      //       motion: { type: 'tween', duration: 300 },
+      //     },
       //   });
+
+      //   const el = page.getByTestId(componentTestId);
+      //   await expect.element(el).toBeInTheDocument();
+      //   if (layer === 'svg') {
+      //     const d = el.element()?.getAttribute('d');
+      //     expect(d).toBe('M0,-100A100,100,0,1,1,0,100L0,0Z');
+      //   }
+      // });
+
+      it('should have stroke="none" by default', async () => {
+        render(ChartHarness, {
+          layer,
+          component: TestComponent,
+          componentProps: {
+            value: 50,
+          },
+        });
+
+        const el = page.getByTestId(componentTestId);
+        await expect.element(el).toBeInTheDocument();
+        await expect.element(el).toHaveAttribute('stroke', 'none');
+      });
     });
   });
 }

@@ -408,7 +408,6 @@
 {/if}
 
 <Path
-  data-testid="arc-path"
   bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
