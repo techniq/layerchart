@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Component as ComponentType } from 'svelte';
-  import Chart from './Chart.svelte';
-  import Layer from './layers/Layer.svelte';
+  import Chart from '../Chart.svelte';
+  import Layer from '../layers/Layer.svelte';
 
   let {
     chartProps = {},
@@ -23,8 +23,6 @@
   const mergedChartProps = $derived({
     width: 200,
     height: 200,
-    xRange: [0, 200] as [number, number],
-    yRange: [0, 100] as [number, number],
     ...chartProps,
   });
 </script>
