@@ -692,8 +692,8 @@
     ondragstart,
     brush,
     class: className,
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
+    ...restProps
+  }: ChartProps<TData, XScale, YScale> = $props();
 
   let ref = $state<HTMLElement>();
 
@@ -1313,6 +1313,7 @@
     bind:clientWidth={_containerWidth}
     bind:clientHeight={_containerHeight}
     class={['lc-root-container', className]}
+    {...restProps}
   >
     {#key isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
