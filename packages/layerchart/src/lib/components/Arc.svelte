@@ -399,15 +399,16 @@
 
 {#if track}
   <Path
+    data-testid="arc-track"
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
-    data-testid="arc-track"
     {...extractLayerProps(track, 'lc-arc-track')}
   />
 {/if}
 
 <Path
+  data-testid="arc-path"
   bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
@@ -416,7 +417,6 @@
   {stroke}
   stroke-width={strokeWidth}
   {opacity}
-  data-testid="arc-path"
   {...restProps}
   class={cls('lc-arc-line', className)}
   onpointerenter={onPointerEnter}
