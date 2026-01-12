@@ -248,7 +248,7 @@
       {#if typeof highlight === 'function'}
         {@render highlight(snippetProps)}
       {:else if highlight}
-        <Highlight lines points />
+        <Highlight lines points {...props.highlight} />
       {/if}
 
       <!-- <ChartAnnotations {annotations} layer="above" /> -->

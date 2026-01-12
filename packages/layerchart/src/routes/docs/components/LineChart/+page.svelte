@@ -451,15 +451,9 @@
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
     >
-      {#snippet aboveMarks({ context, getLabelsProps })}
+      {#snippet aboveMarks({ context })}
         {#if context.series.highlightKey}
-          {@const activeSeriesIndex = context.series.series.findIndex(
-            (s) => s.key === context.series.highlightKey
-          )}
-          <Labels
-            {...getLabelsProps(context.series.series[activeSeriesIndex], activeSeriesIndex)}
-            offset={10}
-          />
+          <Labels seriesKey={context.series.highlightKey} offset={10} />
         {/if}
       {/snippet}
     </LineChart>
