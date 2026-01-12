@@ -26,8 +26,8 @@
     ...chartProps,
   });
 
+  // Merge future defaults with componentProps so componentProps can override defaults
   const mergedComponentProps = $derived({
-    fill: 'blue',
     ...componentProps,
   });
 </script>

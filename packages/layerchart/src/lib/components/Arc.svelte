@@ -399,7 +399,6 @@
 
 {#if track}
   <Path
-    data-testid="arc-track"
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}

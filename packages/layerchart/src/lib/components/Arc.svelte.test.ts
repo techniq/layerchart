@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page, type Locator } from 'vitest/browser';
-import ChartHarness from './tests/ChartHarness.test.svelte';
+import ChartHarness from './tests/ChartHarness.svelte';
 
 // Component-specific configuration ---------------------------------------
 import TestComponent from './Arc.svelte';
@@ -18,8 +18,8 @@ for (const layer of supportedLayers) {
   describe(`${componentName} Testing (${layer})`, () => {
     // Note: Canvas tests require different assertions (no DOM elements to query)
 
-    describe('Initial Rendering', () => {
-      it(`should render correct layer ${layer}`, async () => {
+    describe('Initial Layers Renderings', () => {
+      it(`should render correct in layer ${layer}`, async () => {
         const { container } = render(ChartHarness, {
           layer,
           component: TestComponent,
@@ -47,7 +47,7 @@ for (const layer of supportedLayers) {
       });
 
       it('should render correct Component elements', async () => {
-        const { container } = render(ChartHarness, {
+        render(ChartHarness, {
           layer,
           component: TestComponent,
           componentProps: {
@@ -66,23 +66,23 @@ for (const layer of supportedLayers) {
       });
     });
 
-    for (const testId of accessoryTestIds) {
-      describe.skipIf(isCanvas)(`It should render elements with data-testid=${testId}`, () => {
+    describe.skipIf(isCanvas)(`It should render accessory elements`, () => {
+      for (const testId of accessoryTestIds) {
         it(`${testId} should be rendered`, async () => {
           render(ChartHarness, {
             layer,
             component: TestComponent,
             componentProps: {
               value: 50,
-              track: { class: 'fill-none stroke-surface-content/10' },
+              track: { class: 'fill-none stroke-surface-content/10', 'data-testid': testId },
             },
           });
 
           el = page.getByTestId(testId);
           await expect.element(el).toBeInTheDocument();
         });
-      });
-    }
+      }
+    });
 
     describe.skipIf(layer === 'canvas')('Checking Props', () => {
       it('should render an arc path with value', async () => {
@@ -188,7 +188,7 @@ for (const layer of supportedLayers) {
           component: TestComponent,
           componentProps: {
             value: 50,
-            track: true,
+            track: { 'data-testid': 'arc-track' },
           },
         });
 
@@ -206,14 +206,15 @@ for (const layer of supportedLayers) {
           component: TestComponent,
           componentProps: {
             value: 50,
-            track: { class: 'fill-none stroke-surface-content/10' },
+            track: { class: 'fill-none stroke-surface-content/10', 'data-testid': 'arc-track' },
           },
         });
 
         const el = page.getByTestId('arc-track');
         await expect.element(el).toBeInTheDocument();
         if (layer === 'svg') {
-          const d = el.element()?.classList.contains('fill-none stroke-surface-content/10');
+          await expect.element(el).toHaveClass('fill-none');
+          await expect.element(el).toHaveClass('stroke-surface-content/10');
         }
       });
 
@@ -223,7 +224,7 @@ for (const layer of supportedLayers) {
           component: TestComponent,
           componentProps: {
             value: 50,
-            track: { class: 'fill-none stroke-surface-content/10' },
+            track: { class: 'fill-none stroke-surface-content/10', 'data-testid': 'arc-track' },
             trackInnerRadius: 20,
             trackOuterRadius: 60,
           },
@@ -245,7 +246,7 @@ for (const layer of supportedLayers) {
           component: TestComponent,
           componentProps: {
             value: 50,
-            track: { class: 'fill-none stroke-surface-content/10' },
+            track: { class: 'fill-none stroke-surface-content/10', 'data-testid': 'arc-track' },
             trackStartAngle: 0,
             trackEndAngle: Math.PI,
           },
@@ -267,7 +268,7 @@ for (const layer of supportedLayers) {
       //     component: TestComponent,
       //     componentProps: {
       //       value: 50,
-      //       track: { class: 'fill-none stroke-surface-content/10' },
+      //       track: { class: 'fill-none stroke-surface-content/10', dataTestId: 'arc-track' },
       //       trackCornerRadius: 10,
       //     },
       //   });
@@ -292,6 +293,7 @@ for (const layer of supportedLayers) {
           componentProps: {
             value: 50,
             onpointerenter: onPointerEnter,
+            fill: 'blue',
           },
         });
 
@@ -309,6 +311,7 @@ for (const layer of supportedLayers) {
           componentProps: {
             value: 50,
             onpointermove: onPointerMove,
+            fill: 'blue',
           },
         });
 
