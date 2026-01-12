@@ -39,7 +39,7 @@
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from '../Chart.svelte';
+  import Chart, { type ChartProps } from '../Chart.svelte';
   import { type HighlightPointData } from '../Highlight.svelte';
   import Spline from '../Spline.svelte';
 
@@ -148,7 +148,7 @@
   {radial}
   {orientation}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
-  {...restProps}
+  {...restProps as Partial<ChartProps<TData>>}
   tooltipContext={tooltipContext === false
     ? false
     : {
