@@ -180,3 +180,9 @@ code[data-line-numbers] > [data-line]::before {
 		animation: none;
 	}
 }
+
+::view-transition-old(*),
+::view-transition-new(*),
+html:active-view-transition {
+	scroll-behavior: auto;
+}
