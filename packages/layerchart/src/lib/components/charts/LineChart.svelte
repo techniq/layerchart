@@ -364,6 +364,8 @@
   rule={rule as any}
   legend={legend as any}
   highlight={highlight as any}
+  labels={labels as any}
+  points={points as any}
   {props}
   tooltip={tooltip as any}
 >

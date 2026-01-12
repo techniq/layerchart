@@ -21,6 +21,11 @@
     y?: Accessor;
 
     /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * Override `r` accessor from Chart context
      *
      * @default 5
@@ -59,6 +64,7 @@
     data,
     x,
     y,
+    seriesKey,
     r = 5,
     offsetX,
     offsetY,
@@ -70,6 +76,9 @@
     children,
     ...restProps
   }: PointsProps = $props();
+
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
 
   function getOffset(value: any, offset: Offset, scale: AnyScale) {
     if (typeof offset === 'function') {
@@ -83,9 +92,9 @@
     }
   }
 
-  const xAccessor = $derived(x ? accessor(x) : ctx.x);
-  const yAccessor = $derived(y ? accessor(y) : ctx.y);
-  const pointsData = $derived(data ?? ctx.data);
+  const xAccessor = $derived(accessor(x ?? (ctx.isVertical ? seriesAccessor : undefined) ?? ctx.x));
+  const yAccessor = $derived(accessor(y ?? (!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y));
+  const pointsData = $derived(data ?? series?.data ?? ctx.data);
 
   // Pre-calculate common values to avoid redundant calculations
   const getPointObject = (xVal: number, yVal: number, d: any): Point => {
@@ -136,11 +145,17 @@
       cx={point.x}
       cy={point.y}
       r={point.r}
-      fill={fill ?? (ctx.config.c ? ctx.cGet(point.data) : null)}
+      fill={fill ?? series?.color ?? (ctx.config.c ? ctx.cGet(point.data) : null)}
       {fillOpacity}
       {stroke}
       {strokeWidth}
-      {opacity}
+      opacity={opacity ??
+        (series?.key == null ||
+        ctx.series.visibleSeries.length <= 1 ||
+        ctx.series.isHighlighted(series.key, true)
+          ? 1
+          : 0.1)}
+      {...series?.props}
       {...extractLayerProps(restProps, 'lc-point')}
     />
   {/each}

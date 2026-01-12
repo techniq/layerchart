@@ -233,9 +233,7 @@
         {@render points(snippetProps)}
       {:else if points}
         {#each context.series.visibleSeries as s, i (s.key)}
-          <!-- <Points {...getPointsProps(s, i)} /> -->
-          <!-- TODO: getLabelsProps including series/state -->
-          <Points {...getObjectOrNull(points)} {...props.points} />
+          <Points seriesKey={s.key} {...getObjectOrNull(points)} {...props.points} />
         {/each}
       {/if}
 
@@ -243,9 +241,7 @@
         {@render labels(snippetProps)}
       {:else if labels}
         {#each context.series.visibleSeries as s, i (s.key)}
-          <!-- <Labels {...getLabelsProps(s, i)} /> -->
-          <!-- TODO: getLabelsProps including series/state -->
-          <Labels {...getObjectOrNull(labels)} {...props.labels} />
+          <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
         {/each}
       {/if}
 

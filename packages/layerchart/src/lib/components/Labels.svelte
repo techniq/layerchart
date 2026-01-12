@@ -36,6 +36,11 @@
     y?: Accessor<T>;
 
     /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * The placement of the label relative to the point
      * @default 'outside'
      */
@@ -83,6 +88,7 @@
     value,
     x,
     y,
+    seriesKey,
     placement = 'outside',
     offset = placement === 'center' ? 0 : 4,
     format,
@@ -90,8 +96,25 @@
     children: childrenProp,
     class: className,
     fill,
+    opacity,
     ...restProps
   }: LabelsProps<TData> = $props();
+
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
+
+  const xAccessor = $derived(x ?? (ctx.isVertical ? seriesAccessor : undefined));
+  const yAccessor = $derived(y ?? (!ctx.isVertical ? seriesAccessor : undefined));
+  const labelsData = $derived(data ?? series?.data);
+
+  const derivedOpacity = $derived(
+    opacity ??
+      (series?.key == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+        ? 1
+        : 0.1)
+  );
 
   function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
@@ -174,8 +197,8 @@
   }
 </script>
 
-<Group class="lc-labels-g">
-  <Points {data} {x} {y}>
+<Group class="lc-labels-g" opacity={derivedOpacity}>
+  <Points data={labelsData} x={xAccessor} y={yAccessor}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
         {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
