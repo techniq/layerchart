@@ -1,7 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import type { TooltipPayload } from './tooltipPayload.js';
   import type { Placement } from '../types.js';
 
   export type Align = 'start' | 'center' | 'end';
@@ -103,15 +102,6 @@
            * The chart data that triggered the tooltip.
            */
           data: T;
-
-          /**
-           * An array of tooltip payloads, each containing data for a specific series,
-           * along with their own `payload` property that contains the same data as `data`.
-           *
-           * This is useful when working with the simplified charts, such as `AreaChart`, `BarChart`,
-           * `PieChart`, etc., where series construction is handled internally.
-           */
-          payload: TooltipPayload[];
         },
       ]
     >;
@@ -378,7 +368,7 @@
     >
       {#if children}
         <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
-          {@render children({ data: ctx.tooltip.data, payload: ctx.tooltip.payload })}
+          {@render children({ data: ctx.tooltip.data })}
         </div>
       {/if}
     </div>

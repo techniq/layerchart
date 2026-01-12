@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
   import type { TooltipState as TooltipStateType } from '$lib/states/tooltip.svelte.js';
 
   export type TooltipMode =
@@ -111,8 +111,8 @@
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
-  import { buildTooltipPayload, type TooltipPayload } from './tooltipPayload.js';
   import { TooltipState } from '$lib/states/tooltip.svelte.js';
+  import { accessor, findRelatedData } from '$lib/utils/common.js';
 
   const ctx = getChartContext<any>();
   const geo = getGeoContext();
@@ -309,12 +309,36 @@
         raise(e.target as Element);
       }
 
-      const payloadData = buildTooltipPayload({ ctx, tooltipData });
+      const series = ctx.series.series.map((s) => {
+        // Find related data point for this series (if series has its own data)
+        const seriesTooltipData = s.data
+          ? findRelatedData(s.data, tooltipData, ctx.x)
+          : tooltipData;
+
+        // Determine value accessor: series.value > series.key (if no data) > ctx.y
+        const valueAcc = accessor(s.value ?? (s.data ? asAny(ctx.y) : s.key));
+
+        // Extract value from the data
+        const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
+
+        // Color from series or from color scale
+        const color = s.color ?? ctx.cScale?.(ctx.c(tooltipData));
+
+        return {
+          key: s.key,
+          label: s.label ?? (s.key !== 'default' ? s.key : 'value'),
+          value: value,
+          color,
+          visible: ctx.series.isVisible(s.key),
+          config: s,
+        };
+      });
 
       tooltipState.x = point.x;
       tooltipState.y = point.y;
       tooltipState.data = tooltipData;
-      tooltipState.payload = payloadData;
+      // Reverse series order for stacked charts to match visual stack order (bottom to top)
+      tooltipState.series = tooltipState.config.stackedSeries ? [...series].reverse() : series;
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -335,7 +359,6 @@
     hideTimeoutId = setTimeout(() => {
       if (!tooltipState.isHoveringTooltipArea && !tooltipState.isHoveringTooltipContent) {
         tooltipState.data = null;
-        tooltipState.payload = [];
       }
     }, hideDelay);
   }

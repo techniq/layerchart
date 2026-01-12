@@ -311,10 +311,10 @@
     });
   }
 
-  // Configure tooltip payload generation
+  // Configure tooltip behavior
   $effect(() => {
     if (context?.tooltipState) {
-      context.tooltipState.payloadConfig = {
+      context.tooltipState.config = {
         stackedSeries: false,
       };
     }

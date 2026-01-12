@@ -22,21 +22,14 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
-   * The series of data for the chart.
+   * Get all series for the chart.
    */
   get series() {
     return this.#series;
   }
 
   /**
-   * Check if the series is the default
-   */
-  get isDefaultSeries() {
-    return this.#series.length === 1 && this.#series[0].key === 'default';
-  }
-
-  /**
-   * The visible series of data for the chart.
+   * Get only visible series for the chart.
    */
   get visibleSeries() {
     return this.#series.filter((s) => this.isVisible(s.key));
@@ -47,6 +40,13 @@ export class SeriesState<TData, TComponent extends Component> {
    */
   isVisible(seriesKey: SeriesData<TData, TComponent>['key']) {
     return this.selectedKeys.isEmpty() || this.selectedKeys.isSelected(seriesKey);
+  }
+
+  /**
+   * Check if the series is the default
+   */
+  get isDefaultSeries() {
+    return this.#series.length === 1 && this.#series[0].key === 'default';
   }
 
   /**

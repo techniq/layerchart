@@ -5,7 +5,6 @@
   import * as Tooltip from '../tooltip/index.js';
   import type { SimplifiedChartPropsObject } from './types.js';
   import { format } from '@layerstack/utils';
-  import { accessor, findRelatedData } from '$lib/utils/common.js';
 
   let {
     tooltipProps,
@@ -16,37 +15,44 @@
   } = $props();
 
   const context = getChartContext();
+
+  // Get visible series (already in correct order from TooltipContext)
+  const visibleSeries = $derived(context.tooltip.series.filter((s) => s.visible));
+
+  // Header label comes from x-axis (or y-axis for horizontal/vertical charts)
+  const headerLabel = $derived(
+    context.tooltip.data
+      ? context.isVertical
+        ? context.y(context.tooltip.data)
+        : context.x(context.tooltip.data)
+      : undefined
+  );
 </script>
 
 <Tooltip.Root {context} {...tooltipProps?.root}>
-  {#snippet children({ data, payload })}
-    <Tooltip.Header value={payload[0].label} {format} {...tooltipProps?.header} />
+  {#snippet children({ data })}
+    <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
 
     <Tooltip.List {...tooltipProps?.list}>
-      <!-- Reverse series order so tooltip items match stacks -->
-      {#each payload as p, i (p.key ?? i)}
+      {#each visibleSeries as s, i (s.key ?? i)}
         <Tooltip.Item
-          label={p.name}
-          value={p.value}
-          color={p.color}
+          label={s.label}
+          value={s.value}
+          color={s.color}
           {format}
           valueAlign="right"
-          onpointerenter={() => (context.seriesState.highlightKey = p.key)}
+          onpointerenter={() => (context.seriesState.highlightKey = s.key)}
           onpointerleave={() => (context.seriesState.highlightKey = null)}
           {...tooltipProps?.item}
         />
       {/each}
 
-      {#if canHaveTotal && payload.length > 1 && !tooltipProps?.hideTotal}
+      {#if canHaveTotal && visibleSeries.length > 1 && !tooltipProps?.hideTotal}
         <Tooltip.Separator {...tooltipProps?.separator} children={undefined} />
 
         <Tooltip.Item
           label="total"
-          value={sum(context.seriesState.visibleSeries, (s) => {
-            const seriesTooltipData = s.data ? findRelatedData(s.data, data, context.x) : data;
-            const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
-            return seriesTooltipData ? valueAccessor(seriesTooltipData) : 0;
-          })}
+          value={sum(visibleSeries, (s) => s.value ?? 0)}
           format="integer"
           valueAlign="right"
           {...tooltipProps?.item}

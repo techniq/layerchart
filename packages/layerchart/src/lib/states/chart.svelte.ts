@@ -505,9 +505,35 @@ export class ChartState<
   get isVertical() {
     return this.props.orientation === 'vertical';
   }
+  // Fallback objects for when state hasn't been initialized yet
+  static readonly #fallbackTooltip = {
+    x: 0,
+    y: 0,
+    data: null,
+    series: [],
+    config: {},
+    isHoveringTooltipArea: false,
+    isHoveringTooltipContent: false,
+    mode: 'manual' as const,
+    show: () => {},
+    hide: () => {},
+  };
+
+  static readonly #fallbackSeries = {
+    series: [],
+    visibleSeries: [],
+    highlightKey: null,
+    isVisible: () => true,
+    isHighlighted: () => false,
+    isDefaultSeries: true,
+    allSeriesData: [],
+    allSeriesColors: [],
+    selectedKeys: { isEmpty: () => true, isSelected: () => false },
+  };
+
   // TODO: We also expose context states directly as well for `bind:` for each context (TooltipContext, GeoContext, etc).
   get tooltip() {
-    return this.tooltipState;
+    return this.tooltipState ?? (ChartState.#fallbackTooltip as unknown as TooltipState);
   }
   get geo() {
     return this.geoState;
@@ -519,7 +545,7 @@ export class ChartState<
     return this.transformState;
   }
   get series() {
-    return this.seriesState;
+    return this.seriesState ?? (ChartState.#fallbackSeries as unknown as SeriesState<TData, any>);
   }
 
   get config() {

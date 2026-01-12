@@ -252,16 +252,7 @@
       {#if typeof highlight === 'function'}
         {@render highlight(snippetProps)}
       {:else if highlight}
-        {#each context.series.visibleSeries as s, i (s.key)}
-          <!-- <Highlight {...getHighlightProps(s, i)} /> -->
-          <!--
-          TODO:
-            - see LineChart `getHighlightProps`  
-            - support `seriesKey`
-            - Add pointer events to Highight with seriesState.highlightKey
-        -->
-          <Highlight lines points />
-        {/each}
+        <Highlight lines points />
       {/if}
 
       <!-- <ChartAnnotations {annotations} layer="above" /> -->

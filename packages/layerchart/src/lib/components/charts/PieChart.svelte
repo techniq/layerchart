@@ -343,18 +343,6 @@
     });
   }
 
-  // Configure tooltip payload generation (single item for pie charts)
-  $effect(() => {
-    if (context?.tooltipState) {
-      context.tooltipState.payloadConfig = {
-        singleItemPayload: true,
-        keyAccessor: key,
-        labelAccessor: label,
-        valueAccessor: value,
-        colorAccessor: c,
-      };
-    }
-  });
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->

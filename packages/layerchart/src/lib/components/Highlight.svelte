@@ -7,7 +7,13 @@
   import { accessor, type Accessor } from '$lib/utils/common.js';
 
   export type HighlightPointData = { x: any; y: any };
-  export type HighlightPoint = { x: number; y: number; fill: string; data: HighlightPointData };
+  export type HighlightPoint = {
+    x: number;
+    y: number;
+    fill: string;
+    data: HighlightPointData;
+    seriesKey?: string;
+  };
 
   export type HighlightPropsWithoutHTML = {
     /**
@@ -318,10 +324,17 @@
     return tmpArea;
   });
 
-  const _points: { x: number; y: number; fill: string; data: HighlightPointData }[] = $derived.by(
-    () => {
-      let tmpPoints: { x: number; y: number; fill: string; data: HighlightPointData }[] = [];
-      if (!highlightData) return tmpPoints;
+  // Helper to find series info from tooltipState.series by key
+  function getTooltipSeries(key: string) {
+    return ctx.tooltip.series.find((s) => s.key === key);
+  }
+
+  const _points: HighlightPoint[] = $derived.by(() => {
+    let tmpPoints: HighlightPoint[] = [];
+    if (!highlightData) return tmpPoints;
+
+      const tooltipSeries = ctx.tooltip.series;
+
       if (Array.isArray(xCoord)) {
         // `x` accessor with multiple properties (ex. `x={['start', 'end']}` or `x={[0, 1]}`)
 
@@ -342,34 +355,58 @@
               })
               .filter((d) => d.point); // remove if no point found (ex. Histogram);
 
-            tmpPoints = seriesPointsData.map((seriesPoint, i) => {
-              return {
-                x: ctx.xScale(seriesPoint.point[1]) + xOffset,
-                y: yCoord + yOffset,
-                fill: ctx.config.c ? ctx.cGet(seriesPoint.series) : null,
-                data: {
-                  x: seriesPoint.point[1],
-                  y: yValue,
-                },
-              };
-            });
+            tmpPoints = seriesPointsData
+              .map((seriesPoint, i) => {
+                const seriesInfo = tooltipSeries[i];
+                // Skip if series is not visible
+                if (seriesInfo && !seriesInfo.visible) return null;
+
+                // Use tooltipState.series color if available, fallback to ctx.cGet
+                const fill =
+                  seriesInfo?.color ?? (ctx.config.c ? ctx.cGet(seriesPoint.series) : null);
+
+                return {
+                  x: ctx.xScale(seriesPoint.point[1]) + xOffset,
+                  y: yCoord + yOffset,
+                  fill,
+                  data: {
+                    x: seriesPoint.point[1],
+                    y: yValue,
+                  },
+                  seriesKey: seriesInfo?.key,
+                };
+              })
+              .filter(notNull);
           }
         } else {
           // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
-          tmpPoints = xCoord.filter(notNull).map((xItem, i) => {
-            // @ts-expect-error - TODO: fix type
-            const _key = ctx.config.x?.[i];
-            return {
-              x: xItem + xOffset,
-              y: yCoord + yOffset,
-              // TODO: is there a better way to expose the series key/value?
-              fill: ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null,
-              data: {
-                x: xValue, // TODO: use highlightData[$key]?
-                y: yValue,
-              },
-            };
-          });
+          tmpPoints = xCoord
+            .map((xItem, i) => {
+              if (xItem == null) return null;
+              // @ts-expect-error - TODO: fix type
+              const _key = ctx.config.x?.[i];
+              const seriesInfo = getTooltipSeries(_key);
+
+              // Skip if series is not visible
+              if (seriesInfo && !seriesInfo.visible) return null;
+
+              // Use tooltipState.series color if available
+              const fill =
+                seriesInfo?.color ??
+                (ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null);
+
+              return {
+                x: xItem + xOffset,
+                y: yCoord + yOffset,
+                fill,
+                data: {
+                  x: xValue, // TODO: use highlightData[$key]?
+                  y: yValue,
+                },
+                seriesKey: _key,
+              };
+            })
+            .filter(notNull);
         }
       } else if (Array.isArray(yCoord)) {
         // `y` accessor with multiple properties (ex. `y={['apples', 'bananas', 'oranges']}` or `y={[0, 1]})
@@ -391,43 +428,74 @@
               })
               .filter((d) => d.point); // remove if no point found (ex. Histogram)
 
-            tmpPoints = seriesPointsData.map((seriesPoint, i) => ({
-              x: xCoord + xOffset,
-              y: ctx.yScale(seriesPoint.point[1]) + yOffset,
-              fill: ctx.config.c ? ctx.cGet(seriesPoint.series) : null,
-              data: {
-                x: xValue,
-                y: seriesPoint.point[1],
-              },
-            }));
+            tmpPoints = seriesPointsData
+              .map((seriesPoint, i) => {
+                const seriesInfo = tooltipSeries[i];
+                // Skip if series is not visible
+                if (seriesInfo && !seriesInfo.visible) return null;
+
+                // Use tooltipState.series color if available, fallback to ctx.cGet
+                const fill =
+                  seriesInfo?.color ?? (ctx.config.c ? ctx.cGet(seriesPoint.series) : null);
+
+                return {
+                  x: xCoord + xOffset,
+                  y: ctx.yScale(seriesPoint.point[1]) + yOffset,
+                  fill,
+                  data: {
+                    x: xValue,
+                    y: seriesPoint.point[1],
+                  },
+                  seriesKey: seriesInfo?.key,
+                };
+              })
+              .filter(notNull);
           }
         } else {
           // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
-          tmpPoints = yCoord.filter(notNull).map((yItem, i) => {
-            // @ts-expect-error - TODO: fix type
-            const _key = ctx.config.y[i];
-            return {
-              x: xCoord + xOffset,
-              y: yItem + yOffset,
-              // TODO: is there a better way to expose the series key/value?
-              fill: ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null,
-              data: {
-                x: xValue,
-                y: yValue, // TODO: use highlightData[$key] ?
-              },
-            };
-          });
+          tmpPoints = yCoord
+            .map((yItem, i) => {
+              if (yItem == null) return null;
+              // @ts-expect-error - TODO: fix type
+              const _key = ctx.config.y[i];
+              const seriesInfo = getTooltipSeries(_key);
+
+              // Skip if series is not visible
+              if (seriesInfo && !seriesInfo.visible) return null;
+
+              // Use tooltipState.series color if available
+              const fill =
+                seriesInfo?.color ??
+                (ctx.config.c ? ctx.cGet({ ...highlightData, $key: _key }) : null);
+
+              return {
+                x: xCoord + xOffset,
+                y: yItem + yOffset,
+                fill,
+                data: {
+                  x: xValue,
+                  y: yValue, // TODO: use highlightData[$key] ?
+                },
+                seriesKey: _key,
+              };
+            })
+            .filter(notNull);
         }
       } else if (xCoord != null && yCoord != null) {
+        // Single point - use tooltipState.series if available (for single-series charts)
+        const seriesInfo = tooltipSeries.length === 1 ? tooltipSeries[0] : null;
+        const fill = seriesInfo?.color ?? (ctx.config.c ? ctx.cGet(highlightData) : null);
+
         tmpPoints = [
           {
             x: xCoord + xOffset,
             y: yCoord + yOffset,
-            fill: ctx.config.c ? ctx.cGet(highlightData) : null,
+            fill,
             data: {
               x: xValue,
               y: yValue,
             },
+            seriesKey: seriesInfo?.key,
           },
         ];
       } else {
@@ -514,6 +582,9 @@
       {@render points({ points: _points })}
     {:else}
       {#each _points as point}
+        {@const pointOpacity =
+          opacity ??
+          (point.seriesKey ? (ctx.series.isHighlighted(point.seriesKey, true) ? 1 : 0.1) : undefined)}
         <Circle
           motion={motion === 'spring' ? 'spring' : undefined}
           cx={point.x}
@@ -521,7 +592,7 @@
           fill={point.fill}
           r={4}
           strokeWidth={6}
-          {opacity}
+          opacity={pointOpacity}
           {...extractLayerProps(points, 'lc-highlight-point')}
           onpointerdown={onPointClick &&
             ((e) => {
@@ -529,20 +600,24 @@
               e.stopPropagation();
             })}
           onclick={onPointClick && ((e) => onPointClick(e, { point, data: highlightData }))}
-          onpointerenter={onPointEnter &&
-            ((e) => {
-              if (onPointClick) {
-                asAny(e.target).style.cursor = 'pointer';
-              }
-              onPointEnter(e, { point, data: highlightData });
-            })}
-          onpointerleave={onPointLeave &&
-            ((e) => {
-              if (onPointClick) {
-                asAny(e.target).style.cursor = 'default';
-              }
-              onPointLeave(e, { point, data: highlightData });
-            })}
+          onpointerenter={(e) => {
+            if (onPointClick) {
+              asAny(e.target).style.cursor = 'pointer';
+            }
+            if (point.seriesKey) {
+              ctx.series.highlightKey = point.seriesKey;
+            }
+            onPointEnter?.(e, { point, data: highlightData });
+          }}
+          onpointerleave={(e) => {
+            if (onPointClick) {
+              asAny(e.target).style.cursor = 'default';
+            }
+            if (point.seriesKey) {
+              ctx.series.highlightKey = null;
+            }
+            onPointLeave?.(e, { point, data: highlightData });
+          }}
         />
       {/each}
     {/if}
