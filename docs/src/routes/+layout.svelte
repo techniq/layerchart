@@ -59,6 +59,7 @@
 </script>
 
 <!-- Disable data preloading until Svelte async/fork is improved -->
+<!-- TODO: might be fixed in 2.49.4 - https://github.com/sveltejs/kit/releases/tag/%40sveltejs%2Fkit%402.49.4 -->
 <div data-sveltekit-preload-data="off">
 	{@render children()}
 </div>

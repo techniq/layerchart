@@ -94,7 +94,7 @@
 			{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
 		</h1>
 		<span class="flex items-center gap-1">
-			{#if layers}
+			{#if layers?.length}
 				<ToggleGroup
 					bind:value={settings.layer}
 					variant="outline"

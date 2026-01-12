@@ -609,8 +609,7 @@
     context: contextProp = $bindable(),
     seriesState = $bindable<SeriesState<TData, any>>(),
     ...props
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
+  }: ChartProps<TData, XScale, YScale> = $props();
 
   let {
     ssr = false,
@@ -696,6 +695,7 @@
     bind:clientWidth={chartState._containerWidth}
     bind:clientHeight={chartState._containerHeight}
     class={['lc-root-container', className]}
+    {...restProps}
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->

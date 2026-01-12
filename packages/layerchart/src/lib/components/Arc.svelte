@@ -412,7 +412,7 @@
   {fill}
   {fillOpacity}
   {stroke}
-  stroke-width={strokeWidth}
+  {strokeWidth}
   {opacity}
   {...restProps}
   class={cls('lc-arc-line', className)}
