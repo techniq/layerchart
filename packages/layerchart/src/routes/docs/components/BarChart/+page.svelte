@@ -222,11 +222,11 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value">
-      {#snippet marks({ context, getBarsProps })}
-        {#each context.series.series as s, i (s.key)}
+      {#snippet marks({ context })}
+        {#each context.series.visibleSeries as s (s.key)}
           <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
             {#snippet children({ gradient })}
-              <Bars {...getBarsProps(s, i)} fill={gradient} />
+              <Bars data={s.data} y={s.value ?? s.key} fill={gradient} />
             {/snippet}
           </LinearGradient>
         {/each}

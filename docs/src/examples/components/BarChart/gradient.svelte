@@ -13,11 +13,11 @@
 </script>
 
 <BarChart {data} x="date" y="value" height={300}>
-	{#snippet marks({ context, getBarsProps })}
-		{#each context.series.series as s, i (s.key)}
+	{#snippet marks({ context })}
+		{#each context.series.visibleSeries as s (s.key)}
 			<LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
 				{#snippet children({ gradient })}
-					<Bars {...getBarsProps(s, i)} fill={gradient} />
+					<Bars fill={gradient} radius={4} rounded="top" />
 				{/snippet}
 			</LinearGradient>
 		{/each}

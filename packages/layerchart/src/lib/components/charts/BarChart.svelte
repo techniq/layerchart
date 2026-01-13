@@ -1,16 +1,4 @@
 <script lang="ts" module>
-  export type BarChartExtraSnippetProps<TData> = {
-    getBarsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Bars>;
-    getLabelsProps: (
-      s: SeriesData<TData, typeof Bars>,
-      i: number
-    ) => ComponentProps<typeof Labels<TData>>;
-    getGridProps: () => ComponentProps<typeof Grid>;
-    getHighlightProps: () => ComponentProps<typeof Highlight>;
-    getAxisProps: (axisDirection: 'x' | 'y') => ComponentProps<typeof Axis>;
-    getRuleProps: () => ComponentProps<typeof Rule>;
-  };
-
   export type BarChartPropsObjProp<TData> = Pick<
     SimplifiedChartPropsObject<TData>,
     | 'bars'
@@ -28,7 +16,7 @@
   >;
 
   export type BarChartProps<TData> = Omit<
-    SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>,
+    SimplifiedChartProps<TData, typeof Bars>,
     'seriesLayout'
   > & {
     /**
@@ -76,27 +64,17 @@
      *
      * @default 'overlap'
      */
-    seriesLayout?:
-      | SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>['seriesLayout']
-      | 'group';
+    seriesLayout?: SimplifiedChartProps<TData, typeof Bars>['seriesLayout'] | 'group';
   };
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
+  import { onMount } from 'svelte';
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
-  import { cls } from '@layerstack/tailwind';
 
-  import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
-  import Chart from '../Chart.svelte';
-  import ChartClipPath from '../ChartClipPath.svelte';
-  import Grid from '../Grid.svelte';
-  import Highlight from '../Highlight.svelte';
+  import Chart, { type ChartProps } from '../Chart.svelte';
   import Labels from '../Labels.svelte';
-  import Layer from '../layers/Layer.svelte';
-  import Legend from '../Legend.svelte';
-  import Rule from '../Rule.svelte';
 
   import {
     accessor,
@@ -104,16 +82,12 @@
     defaultChartPadding,
     type Accessor,
   } from '$lib/utils/common.js';
-  import { asAny } from '$lib/utils/types.js';
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
-  import { createLegendProps } from './utils.svelte.js';
-  import DefaultTooltip from './DefaultTooltip.svelte';
-  import ChartAnnotations from './ChartAnnotations.svelte';
-  import { getSettings } from '$lib/contexts/settings.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
+  import { getSettings } from '$lib/contexts/settings.js';
 
   const settings = getSettings();
 
@@ -128,15 +102,19 @@
     seriesLayout = 'overlap',
     axis = true,
     brush = false,
+    /*
+      TODO: handled below, but can be simplify?
+        x: !isVertical || radial,
+        y: isVertical || radial,
+    */
     grid = true,
-    labels = false,
+    highlight = { area: true },
+    labels: labelsProp = false,
     legend = false,
-    points = false,
     rule = true,
     onTooltipClick = () => {},
     onBarClick = () => {},
     props = {},
-    layer: layerProp,
     profile = false,
     debug: debugProp,
     xScale: xScaleProp,
@@ -147,20 +125,11 @@
     xInterval,
     yInterval,
     tooltipContext = true,
-    children: childrenProp,
-    aboveContext,
-    belowContext,
-    belowMarks,
     marks,
-    aboveMarks,
-    tooltip,
-    highlight = true,
-    annotations = [],
     context = $bindable(),
     ...restProps
   }: BarChartProps<TData> = $props();
 
-  const layer = $derived(layerProp ?? settings.layer);
   const debug = $derived(debugProp ?? settings.debug);
 
   const isVertical = $derived(orientation === 'vertical');
@@ -202,7 +171,9 @@
 
   // Chart data uses series data if available, otherwise base data
   const chartData = $derived(
-    (seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)) as Array<TData>
+    (seriesState.allSeriesData.length
+      ? seriesState.allSeriesData
+      : chartDataArray(data)) as Array<TData>
   );
 
   const xScale = $derived(
@@ -258,122 +229,28 @@
       : undefined
   );
 
-  function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number): ComponentProps<typeof Bars> {
-    const isFirst = i == 0;
-    const isLast = i == seriesState.visibleSeries.length - 1;
+  // Helper function to calculate stack insets for bars
+  function getStackInsets(i: number): Insets | undefined {
+    if (!seriesState.isStacked || stackPadding === 0) return undefined;
 
-    let stackInsets: Insets | undefined = undefined;
+    const isFirst = i === 0;
+    const isLast = i === seriesState.visibleSeries.length - 1;
+    const stackInset = stackPadding / 2;
 
-    if (seriesState.isStacked) {
-      const stackInset = stackPadding / 2;
-      if (isVertical) {
-        stackInsets = {
-          bottom: isFirst ? undefined : stackInset,
-          top: isLast ? undefined : stackInset,
-        };
-      } else {
-        stackInsets = {
-          left: isFirst ? undefined : stackInset,
-          right: isLast ? undefined : stackInset,
-        };
-      }
+    if (isVertical) {
+      return {
+        bottom: isFirst ? undefined : stackInset,
+        top: isLast ? undefined : stackInset,
+      };
+    } else {
+      return {
+        left: isFirst ? undefined : stackInset,
+        right: isLast ? undefined : stackInset,
+      };
     }
-
-    // Use stack accessors from SeriesState when stacking is enabled
-    const stackAccessors = seriesState.isStacked ? seriesState.getStackAccessors(s.key) : null;
-    const valueAccessor = stackAccessors?.value ?? s.value ?? (s.data ? undefined : s.key);
-
-    return {
-      data: s.data,
-      x: !isVertical ? valueAccessor : undefined,
-      y: isVertical ? valueAccessor : undefined,
-      x1: isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
-      y1: !isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
-      rounded:
-        seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
-          ? 'none'
-          : Array.isArray(xProp) || Array.isArray(yProp)
-            ? 'all'
-            : 'edge',
-      radius: 4,
-      strokeWidth: 1,
-      insets: stackInsets,
-      fill: s.color,
-      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
-      onBarClick: (e, detail) => onBarClick(e, { ...detail, series: s }),
-      ...props.bars,
-      ...s.props,
-      class: cls(props.bars?.class, s.props?.class),
-    };
-  }
-
-  function getLabelsProps(
-    s: SeriesData<TData, typeof Bars>,
-    i: number
-  ): ComponentProps<typeof Labels<TData>> {
-    return {
-      // TODO: Improve placement when using `seriesLayout="group"`
-      // data: s.data,
-      // y: s.value ?? (s.data ? undefined : s.key),
-      opacity: seriesState.isHighlighted(s.key, true) ? 1 : 0.1,
-      ...props.labels,
-      ...(typeof labels === 'object' ? labels : null),
-      class: cls(props.labels?.class, typeof labels === 'object' && labels.class),
-    };
   }
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
-
-  function getLegendProps(): ComponentProps<typeof Legend> {
-    return createLegendProps({
-      props: {
-        ...props.legend,
-        ...(typeof legend === 'object' ? legend : null),
-      },
-    });
-  }
-  function getGridProps(): ComponentProps<typeof Grid> {
-    return {
-      x: !isVertical || radial,
-      y: isVertical || radial,
-      ...(typeof grid === 'object' ? grid : null),
-      ...props.grid,
-    };
-  }
-
-  function getHighlightProps(): ComponentProps<typeof Highlight> {
-    return {
-      area: true,
-      ...props.highlight,
-    };
-  }
-
-  function getAxisProps(axisDirection: 'x' | 'y'): ComponentProps<typeof Axis> {
-    if (axisDirection === 'y') {
-      return {
-        placement: radial ? 'radius' : 'left',
-
-        format: isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
-        ...(typeof axis === 'object' ? axis : null),
-        ...props.yAxis,
-      };
-    }
-    return {
-      placement: radial ? 'angle' : 'bottom',
-      format: !isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
-      ...(typeof axis === 'object' ? axis : null),
-      ...props.xAxis,
-    };
-  }
-
-  function getRuleProps(): ComponentProps<typeof Rule> {
-    return {
-      x: isVertical ? false : 0,
-      y: isVertical ? 0 : false,
-      ...(typeof rule === 'object' ? rule : null),
-      ...props.rule,
-    };
-  }
 
   if (profile) {
     console.time('BarChart render');
@@ -408,6 +285,14 @@
     }
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
+
+  // Axis format for stackExpand
+  const xAxisFormat = $derived(
+    !isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined
+  );
+  const yAxisFormat = $derived(
+    isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined
+  );
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -434,8 +319,9 @@
   c={isVertical ? yProp : xProp}
   cRange={['var(--color-primary, currentColor)']}
   {radial}
+  {orientation}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
-  {...restProps}
+  {...restProps as Partial<ChartProps<TData>>}
   tooltipContext={tooltipContext === false
     ? false
     : {
@@ -466,110 +352,72 @@
       }
     : false}
   {seriesState}
+  axis={axis as any}
+  grid={typeof grid === 'object'
+    ? { x: !isVertical || radial, y: isVertical || radial, ...grid }
+    : grid
+      ? { x: !isVertical || radial, y: isVertical || radial }
+      : (false as any)}
+  rule={typeof rule === 'object'
+    ? { x: isVertical ? false : 0, y: isVertical ? 0 : false, ...rule }
+    : rule
+      ? { x: isVertical ? false : 0, y: isVertical ? 0 : false }
+      : (false as any)}
+  legend={legend as any}
+  highlight={highlight as any}
+  props={{
+    ...props,
+    xAxis: { format: xAxisFormat, ...props.xAxis },
+    yAxis: { format: yAxisFormat, ...props.yAxis },
+  } as typeof props}
 >
-  {#snippet children({ context })}
-    {@const snippetProps = {
-      context,
-      getBarsProps,
-      getLabelsProps,
-      getLegendProps,
-      getGridProps,
-      getHighlightProps,
-      getAxisProps,
-      getRuleProps,
-    }}
-    {#if childrenProp}
-      {@render childrenProp(snippetProps)}
+  {#snippet marks(snippetProps)}
+    {#if typeof marks === 'function'}
+      {@render marks(snippetProps)}
     {:else}
-      {@render belowContext?.(snippetProps)}
-
-      <Layer
-        type={layer}
-        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
-        center={radial}
-        {debug}
-      >
-        {#if typeof grid === 'function'}
-          {@render grid(snippetProps)}
-        {:else if grid}
-          <Grid {...getGridProps()} />
-        {/if}
-
-        <ChartClipPath disabled={!brush}>
-          <ChartAnnotations {annotations} layer="below" />
-
-          {@render belowMarks?.(snippetProps)}
-
-          {#if typeof marks === 'function'}
-            {@render marks(snippetProps)}
-          {:else}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              <Bars {...getBarsProps(s, i)} />
-            {/each}
-          {/if}
-        </ChartClipPath>
-
-        {@render aboveMarks?.(snippetProps)}
-
-        {#if typeof axis === 'function'}
-          {@render axis(snippetProps)}
-          {#if typeof rule === 'function'}
-            {@render rule(snippetProps)}
-          {:else if rule}
-            <Rule {...getRuleProps()} />
-          {/if}
-        {:else if axis}
-          {#if axis !== 'x'}
-            <Axis {...getAxisProps('y')} />
-          {/if}
-
-          {#if axis !== 'y'}
-            <Axis {...getAxisProps('x')} />
-          {/if}
-
-          {#if typeof rule === 'function'}
-            {@render rule(snippetProps)}
-          {:else if rule}
-            <Rule {...getRuleProps()} />
-          {/if}
-        {/if}
-
-        <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-        <ChartClipPath disabled={!brush} full>
-          {#if typeof highlight === 'function'}
-            {@render highlight(snippetProps)}
-          {:else if highlight}
-            <Highlight {...getHighlightProps()} />
-          {/if}
-
-          {#if typeof labels === 'function'}
-            {@render labels(snippetProps)}
-          {:else if labels}
-            {#each seriesState.visibleSeries as s, i (s.key)}
-              <Labels {...getLabelsProps(s, i)} />
-            {/each}
-          {/if}
-
-          <ChartAnnotations {annotations} layer="above" />
-        </ChartClipPath>
-      </Layer>
-
-      {@render aboveContext?.(snippetProps)}
-
-      {#if typeof legend === 'function'}
-        {@render legend(snippetProps)}
-      {:else if legend}
-        <Legend {...getLegendProps()} />
-      {/if}
-
-      {#if typeof tooltip === 'function'}
-        {@render tooltip(snippetProps)}
-      {:else if tooltipContext}
-        <DefaultTooltip
-          tooltipProps={props.tooltip}
-          canHaveTotal={seriesState.isStacked || isGroupSeries}
+      <!-- TODO: Simplify and move most logic into Bars/Bar -->
+      {#each seriesState.visibleSeries as s, i (s.key)}
+        {@const stackAccessors = seriesState.isStacked
+          ? seriesState.getStackAccessors(s.key)
+          : null}
+        {@const valueAccessor = stackAccessors?.value ?? s.value ?? (s.data ? undefined : s.key)}
+        <Bars
+          data={s.data}
+          x={!isVertical ? valueAccessor : undefined}
+          y={isVertical ? valueAccessor : undefined}
+          x1={isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
+          y1={!isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
+          rounded={seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
+            ? 'none'
+            : Array.isArray(xProp) || Array.isArray(yProp)
+              ? 'all'
+              : 'edge'}
+          radius={4}
+          strokeWidth={1}
+          insets={getStackInsets(i)}
+          fill={s.color}
+          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
+          onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
+          {...props.bars}
+          {...s.props}
         />
-      {/if}
+      {/each}
+    {/if}
+  {/snippet}
+
+  <!-- TODO: Remove (use ChartChildren) -->
+  {#snippet labels(snippetProps)}
+    {#if typeof labelsProp === 'function'}
+      {@render labelsProp(snippetProps)}
+    {:else if labelsProp}
+      {#each seriesState.visibleSeries as s, i (s.key)}
+        <Labels
+          seriesKey={s.key}
+          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
+          {...props.labels}
+          {...typeof labelsProp === 'object' ? labelsProp : null}
+        />
+      {/each}
     {/if}
   {/snippet}
 </Chart>

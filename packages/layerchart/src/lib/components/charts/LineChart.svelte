@@ -64,7 +64,7 @@
     series: seriesProp,
     axis = true,
     brush = false,
-    highlight,
+    highlight = { lines: true, points: true },
     legend = false,
     onTooltipClick = () => {},
     onPointClick,

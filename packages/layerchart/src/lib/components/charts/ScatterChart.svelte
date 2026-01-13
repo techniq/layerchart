@@ -46,7 +46,7 @@
     axis = true,
     brush = false,
     grid = { x: true, y: true },
-    highlight = { lines: true, axis: 'both' },
+    highlight = { lines: true, points: true, axis: 'both' },
     legend = false,
     onTooltipClick = () => {},
     props = {},

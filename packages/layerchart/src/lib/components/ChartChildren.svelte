@@ -208,12 +208,11 @@
       {#if typeof rule === 'function'}
         {@render rule(snippetProps)}
       {:else if rule}
-        <!-- <Rule {...getRuleProps()} /> -->
         <Rule x={0} y={0} {...getObjectOrNull(rule)} {...props.rule} />
       {/if}
     {:else if axis}
       {#if axis !== 'x'}
-        <!-- <Axis {...getAxisProps('y')} /> -->
+        <!-- y-axis -->
         <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
         <Axis
           placement={context.radial ? 'radius' : 'left'}
@@ -223,7 +222,7 @@
       {/if}
 
       {#if axis !== 'y'}
-        <!-- <Axis {...getAxisProps('x')} /> -->
+        <!-- x-axis -->
         <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
         <Axis
           placement={context.radial ? 'angle' : 'bottom'}
@@ -235,7 +234,6 @@
       {#if typeof rule === 'function'}
         {@render rule(snippetProps)}
       {:else if rule}
-        <!-- <Rule {...getRuleProps()} /> -->
         <Rule x={0} y={0} {...getObjectOrNull(rule)} {...props.rule} />
       {/if}
     {/if}
@@ -261,12 +259,7 @@
       {#if typeof highlight === 'function'}
         {@render highlight(snippetProps)}
       {:else if highlight}
-        <Highlight
-          lines
-          points
-          {...typeof highlight === 'object' ? highlight : {}}
-          {...props.highlight}
-        />
+        <Highlight {...typeof highlight === 'object' ? highlight : {}} {...props.highlight} />
       {/if}
 
       <ChartAnnotations {annotations} layer="above" />
