@@ -80,6 +80,11 @@
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
   let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
 
+  // Get stack accessors if seriesKey is provided and stacking is enabled
+  let stackAccessors = $derived(
+    seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
+  );
+
   function getOffset(value: any, offset: Offset, scale: AnyScale) {
     if (typeof offset === 'function') {
       return offset(value, ctx);
@@ -93,7 +98,16 @@
   }
 
   const xAccessor = $derived(accessor(x ?? (ctx.isVertical ? seriesAccessor : undefined) ?? ctx.x));
-  const yAccessor = $derived(accessor(y ?? (!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y));
+  // Use stack y1 accessor when stacking is enabled, otherwise fall back to series accessor or context
+  const yAccessor = $derived(
+    y
+      ? accessor(y)
+      : stackAccessors
+        ? stackAccessors.y1
+        : Array.isArray(seriesAccessor)
+          ? accessor(seriesAccessor[1])
+          : accessor((!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y)
+  );
   const pointsData = $derived(data ?? series?.data ?? ctx.data);
 
   // Pre-calculate common values to avoid redundant calculations

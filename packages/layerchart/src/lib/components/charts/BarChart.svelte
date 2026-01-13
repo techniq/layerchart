@@ -85,7 +85,6 @@
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
-  import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
@@ -109,7 +108,7 @@
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import { SeriesState } from '$lib/states/series.svelte.js';
+  import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import { createLegendProps } from './utils.svelte.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
@@ -164,6 +163,9 @@
   const layer = $derived(layerProp ?? settings.layer);
   const debug = $derived(debugProp ?? settings.debug);
 
+  const isVertical = $derived(orientation === 'vertical');
+  const valueAccessorProp = $derived(isVertical ? yProp : xProp);
+
   const series = $derived(
     seriesProp === undefined
       ? [
@@ -177,47 +179,31 @@
                 : typeof xProp === 'string'
                   ? xProp
                   : 'value',
-            value: orientation === 'vertical' ? yProp : xProp,
+            value: valueAccessorProp,
           },
         ]
       : seriesProp
   );
 
-  const seriesState = new SeriesState(() => series);
-  const isVertical = $derived(orientation === 'vertical');
-  const isStackSeries = $derived(seriesLayout.startsWith('stack'));
+  // SeriesState now handles stack computation internally
+  const seriesState = new SeriesState(
+    () => series,
+    () =>
+      seriesLayout.startsWith('stack')
+        ? {
+            layout: seriesLayout as StackLayout,
+            data: chartDataArray(data),
+            valueAccessor: valueAccessorProp,
+          }
+        : null
+  );
+
   const isGroupSeries = $derived(seriesLayout === 'group');
 
-  const chartData: Array<TData & { stackData?: any }> = $derived.by(() => {
-    let _chartData = (
-      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
-    ) as Array<TData & { stackData?: any }>;
-    if (isStackSeries) {
-      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
-
-      const offset =
-        seriesLayout === 'stackExpand'
-          ? stackOffsetExpand
-          : seriesLayout === 'stackDiverging'
-            ? stackOffsetDiverging
-            : stackOffsetNone;
-      const stackData = stack()
-        .keys(seriesKeys)
-        .value((d, key) => {
-          const s = series.find((d) => d.key === key)!;
-          return accessor(s.value ?? s.key)(d as any);
-        })
-        .offset(offset)(chartDataArray(data)) as any[];
-
-      _chartData = _chartData.map((d, i) => {
-        return {
-          ...d,
-          stackData: stackData.map((sd) => sd[i]),
-        };
-      });
-    }
-    return _chartData;
-  });
+  // Chart data uses series data if available, otherwise base data
+  const chartData = $derived(
+    (seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)) as Array<TData>
+  );
 
   const xScale = $derived(
     xScaleProp ??
@@ -272,19 +258,13 @@
       : undefined
   );
 
-  function isStackData(d: TData): d is TData & { stackData: any[] } {
-    return d && typeof d === 'object' && 'stackData' in d;
-  }
-
   function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number): ComponentProps<typeof Bars> {
     const isFirst = i == 0;
     const isLast = i == seriesState.visibleSeries.length - 1;
 
-    const isStackLayout = seriesLayout.startsWith('stack');
-
     let stackInsets: Insets | undefined = undefined;
 
-    if (isStackLayout) {
+    if (seriesState.isStacked) {
       const stackInset = stackPadding / 2;
       if (isVertical) {
         stackInsets = {
@@ -299,9 +279,9 @@
       }
     }
 
-    const valueAccessor = isStackSeries
-      ? (d: any) => d.stackData[i]
-      : (s.value ?? (s.data ? undefined : s.key));
+    // Use stack accessors from SeriesState when stacking is enabled
+    const stackAccessors = seriesState.isStacked ? seriesState.getStackAccessors(s.key) : null;
+    const valueAccessor = stackAccessors?.value ?? s.value ?? (s.data ? undefined : s.key);
 
     return {
       data: s.data,
@@ -310,7 +290,7 @@
       x1: isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
       rounded:
-        isStackLayout && i !== seriesState.visibleSeries.length - 1
+        seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
           ? 'none'
           : Array.isArray(xProp) || Array.isArray(yProp)
             ? 'all'
@@ -406,16 +386,25 @@
   $effect(() => {
     if (context?.tooltipState) {
       context.tooltipState.config = {
-        stackedSeries: isStackSeries,
+        stackedSeries: seriesState.isStacked,
       };
     }
   });
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {
     if (acc) return acc;
-    if (isStackSeries) {
-      return (d: TData) =>
-        isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+    if (seriesState.isStacked) {
+      // For stacked series, collect all y0/y1 values for domain calculation
+      return (d: TData) => {
+        const values: number[] = [];
+        for (const s of seriesState.visibleSeries) {
+          const stackValue = seriesState.getStackValue(s.key, d);
+          if (stackValue) {
+            values.push(stackValue[0], stackValue[1]);
+          }
+        }
+        return values.length ? values : undefined;
+      };
     }
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
@@ -578,7 +567,7 @@
       {:else if tooltipContext}
         <DefaultTooltip
           tooltipProps={props.tooltip}
-          canHaveTotal={isStackSeries || isGroupSeries}
+          canHaveTotal={seriesState.isStacked || isGroupSeries}
         />
       {/if}
     {/if}

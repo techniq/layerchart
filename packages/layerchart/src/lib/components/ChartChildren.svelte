@@ -6,13 +6,21 @@
   import type TooltipList from './tooltip/TooltipList.svelte';
   import type TooltipItem from './tooltip/TooltipItem.svelte';
   import type TooltipSeparator from './tooltip/TooltipSeparator.svelte';
+  import type LegendComponent from './Legend.svelte';
 
   // BaseChartProps
   export type ChartChildrenProps<
     TData,
     XScale extends AnyScale = AnyScale,
     YScale extends AnyScale = AnyScale,
-    ChartSnippet = Snippet<[{ context: ChartState<TData, XScale, YScale> }]>,
+    ChartSnippet = Snippet<
+      [
+        {
+          context: ChartState<TData, XScale, YScale>;
+          getLegendProps: () => ComponentProps<typeof LegendComponent>;
+        },
+      ]
+    >,
   > = {
     /**
      * The axis to be used for the chart.
@@ -161,7 +169,11 @@
     annotations = [],
   }: ChartChildrenProps<TData, XScale, YScale> = $props();
 
-  let snippetProps = $derived({ context });
+  function getLegendProps() {
+    return { ...getObjectOrNull(legend), ...props.legend };
+  }
+
+  let snippetProps = $derived({ context, getLegendProps });
   let layer = $derived(settings.layer);
 </script>
 

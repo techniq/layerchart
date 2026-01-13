@@ -30,6 +30,11 @@
     y1?: Accessor;
 
     /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `y0`/`y1` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * Whether to tween the interpolated path data using d3-interpolate-path
      */
     motion?: MotionProp;
@@ -93,12 +98,43 @@
     x,
     y0,
     y1,
+    seriesKey,
     ...restProps
   }: AreaProps = $props();
 
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let seriesData = $derived(series?.data);
+  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
+
+  // Get stack accessors if seriesKey is provided and stacking is enabled
+  let stackAccessors = $derived(
+    seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
+  );
+
   const xAccessor = $derived(x ? accessor(x) : ctx.x);
-  const y0Accessor = $derived(y0 ? accessor(y0) : (d: any) => min(ctx.yDomain));
-  const y1Accessor = $derived(y1 ? accessor(y1) : ctx.y);
+  // Use stack accessors when available, otherwise fall back to explicit props or defaults
+  // Also handle array-form seriesAccessor like ['baseline', 'value']
+  const y0Accessor = $derived(
+    y0
+      ? accessor(y0)
+      : stackAccessors
+        ? stackAccessors.y0
+        : Array.isArray(seriesAccessor)
+          ? accessor(seriesAccessor[0])
+          : (d: any) => min(ctx.yDomain)
+  );
+  const y1Accessor = $derived(
+    y1
+      ? accessor(y1)
+      : stackAccessors
+        ? stackAccessors.y1
+        : Array.isArray(seriesAccessor)
+          ? accessor(seriesAccessor[1])
+          : seriesAccessor
+            ? accessor(seriesAccessor)
+            : ctx.y
+  );
+  const resolvedData = $derived(data ?? seriesData ?? ctx.data);
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
@@ -143,7 +179,7 @@
       if (curve) path.curve(curve);
 
       // TODO: type this appropriately otherwise we will have bugs in the future
-      return path(data ?? ctx.data);
+      return path(resolvedData);
     }
   }
 
@@ -160,7 +196,8 @@
           })
           .y0((d) => {
             let value = max<number>(ctx.yRange)!;
-            if (y0) {
+            if (y0 || stackAccessors || Array.isArray(seriesAccessor)) {
+              // Use explicit y0 prop, stack accessor, or array series accessor
               value = ctx.yScale(y0Accessor(d));
             } else if (Array.isArray(ctx.config.y) && ctx.config.y[0] === 0) {
               // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
@@ -172,7 +209,8 @@
           })
           .y1((d) => {
             let value = max<number>(ctx.yRange)!;
-            if (y1) {
+            if (y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor) {
+              // Use explicit y1 prop, stack accessor, array series accessor, or series accessor
               value = ctx.yScale(y1Accessor(d));
             } else if (Array.isArray(ctx.config.y) && ctx.config.y[1] === 1) {
               // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
@@ -190,10 +228,12 @@
 
     if (curve) _path.curve(curve);
 
-    return pathData ?? _path(data ?? ctx.data) ?? defaultPathData();
+    return pathData ?? _path(resolvedData) ?? defaultPathData();
   });
 
   const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
+
+  const resolvedFill = $derived(fill ?? series?.color);
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -205,7 +245,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
+            styles: { fill: resolvedFill, fillOpacity, stroke, strokeWidth, opacity },
             classes: restProps.class ?? '',
           }
     );
@@ -240,9 +280,10 @@
 
 {#if line}
   <Spline
-    {data}
+    data={data ?? seriesData}
     {x}
-    y={y1}
+    y={y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor ? y1Accessor : undefined}
+    {seriesKey}
     {curve}
     {defined}
     {motion}
@@ -254,7 +295,7 @@
   <path
     d={tweenState.current}
     clip-path={clipPath}
-    {fill}
+    fill={resolvedFill}
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
