@@ -338,6 +338,17 @@
       ]
     },
     {
+      "name": "dynamic-height",
+      "path": "/example/BarChart/dynamic-height",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 44,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "gradient",
       "path": "/example/BarChart/gradient",
       "components": [
@@ -1300,6 +1311,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "dynamic-height",
+      "component": "BarChart",
+      "path": "/example/BarChart/dynamic-height",
+      "lineNumber": 44,
+      "line": "<BarChart"
+    },
+    {
       "example": "gradient",
       "component": "BarChart",
       "path": "/example/BarChart/gradient",
@@ -1762,5 +1780,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.795Z"
+  "updatedAt": "2026-01-13T17:22:23.313Z"
 }

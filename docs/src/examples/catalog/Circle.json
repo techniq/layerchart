@@ -334,6 +334,27 @@
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
     },
     {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 7,
+      "line": "<Circle fill=\"#F2D707\" r={100} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 10,
+      "line": "<Circle fill=\"black\" r={15} cx={-30} cy={-30} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 21,
+      "line": "<Circle id=\"left-eye\" fill=\"black\" r={15} cx={30} cy={-30} />"
+    },
+    {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/example/MotionPath/sync-with-draw",
@@ -600,5 +621,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:21.004Z"
+  "updatedAt": "2026-01-13T17:22:23.474Z"
 }
