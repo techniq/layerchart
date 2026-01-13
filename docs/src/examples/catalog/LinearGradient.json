@@ -167,7 +167,7 @@
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 61,
+      "lineNumber": 54,
       "line": "<LinearGradient stops={[primaryColor, secondaryColor]} vertical>"
     },
     {
@@ -535,5 +535,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:21.636Z"
+  "updatedAt": "2026-01-13T17:22:23.945Z"
 }
