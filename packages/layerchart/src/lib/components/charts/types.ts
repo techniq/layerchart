@@ -200,7 +200,7 @@ export type BaseChartProps<
    */
   // tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
 
-  highlight?: boolean | ChartSnippet;
+  highlight?: ComponentProps<typeof Highlight> | boolean | ChartSnippet;
 
   /** Annotations to show on chart */
   annotations?: ChartAnnotations;

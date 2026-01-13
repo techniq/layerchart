@@ -69,7 +69,7 @@
     highlight?: boolean | ChartSnippet;
 
     /** Annotations to show on chart */
-    annotations?: ChartAnnotations;
+    annotations?: ChartAnnotationsType;
 
     // SimplifiedChartPropsObject
     // TODO: use `marks` instead of `area`, `spline`, etc?
@@ -136,6 +136,7 @@
   import Legend from './Legend.svelte';
   import Rule from './Rule.svelte';
   import type { Canvas, Svg } from './index.js';
+  import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
 
   const context = getChartContext<TData, XScale, YScale>();
   const settings = getSettings();
@@ -157,6 +158,7 @@
     legend,
     tooltip,
     tooltipContext,
+    annotations = [],
   }: ChartChildrenProps<TData, XScale, YScale> = $props();
 
   let snippetProps = $derived({ context });
@@ -177,12 +179,11 @@
     {#if typeof grid === 'function'}
       {@render grid(snippetProps)}
     {:else if grid}
-      <!-- <Grid {...getGridProps()} /> -->
-      <Grid x={context.radial} y />
+      <Grid x={context.radial} y {...getObjectOrNull(grid)} {...props.grid} />
     {/if}
 
     <ChartClipPath disabled={!context.props.brush}>
-      <!-- <ChartAnnotations {annotations} layer="below" /> -->
+      <ChartAnnotations {annotations} layer="below" />
 
       {@render belowMarks?.(snippetProps)}
       {@render marks?.(snippetProps)}
@@ -248,10 +249,15 @@
       {#if typeof highlight === 'function'}
         {@render highlight(snippetProps)}
       {:else if highlight}
-        <Highlight lines points {...props.highlight} />
+        <Highlight
+          lines
+          points
+          {...typeof highlight === 'object' ? highlight : {}}
+          {...props.highlight}
+        />
       {/if}
 
-      <!-- <ChartAnnotations {annotations} layer="above" /> -->
+      <ChartAnnotations {annotations} layer="above" />
     </ChartClipPath>
   </Layer>
 

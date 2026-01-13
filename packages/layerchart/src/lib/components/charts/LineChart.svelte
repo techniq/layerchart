@@ -43,7 +43,7 @@
   import { type HighlightPointData } from '../Highlight.svelte';
   import Spline from '../Spline.svelte';
 
-  import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
+  import { chartDataArray, defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
@@ -64,6 +64,7 @@
     series: seriesProp,
     axis = true,
     brush = false,
+    highlight,
     legend = false,
     onTooltipClick = () => {},
     onPointClick,
@@ -109,10 +110,13 @@
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
-  const highlightProps = $derived({
-    ...props.highlight,
-    ...(onPointClick && { onPointClick }),
-  });
+  const highlightWithPointClick = $derived(
+    typeof highlight === 'function'
+      ? highlight
+      : onPointClick
+        ? { ...getObjectOrNull(highlight), ...props.highlight, onPointClick }
+        : highlight
+  );
 
   if (profile) {
     console.time('LineChart render');
@@ -171,8 +175,9 @@
       }
     : false}
   {seriesState}
+  highlight={highlightWithPointClick as any}
   legend={legend as any}
-  props={{ ...props, highlight: highlightProps } as typeof props}
+  props={props as typeof props}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}
