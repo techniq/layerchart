@@ -82,7 +82,6 @@
     defaultChartPadding,
     type Accessor,
   } from '$lib/utils/common.js';
-  import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
@@ -229,27 +228,6 @@
       : undefined
   );
 
-  // Helper function to calculate stack insets for bars
-  function getStackInsets(i: number): Insets | undefined {
-    if (!seriesState.isStacked || stackPadding === 0) return undefined;
-
-    const isFirst = i === 0;
-    const isLast = i === seriesState.visibleSeries.length - 1;
-    const stackInset = stackPadding / 2;
-
-    if (isVertical) {
-      return {
-        bottom: isFirst ? undefined : stackInset,
-        top: isLast ? undefined : stackInset,
-      };
-    } else {
-      return {
-        left: isFirst ? undefined : stackInset,
-        right: isLast ? undefined : stackInset,
-      };
-    }
-  }
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   if (profile) {
@@ -375,16 +353,9 @@
     {#if typeof marks === 'function'}
       {@render marks(snippetProps)}
     {:else}
-      <!-- TODO: Simplify and move most logic into Bars/Bar -->
       {#each seriesState.visibleSeries as s, i (s.key)}
-        {@const stackAccessors = seriesState.isStacked
-          ? seriesState.getStackAccessors(s.key)
-          : null}
-        {@const valueAccessor = stackAccessors?.value ?? s.value ?? (s.data ? undefined : s.key)}
         <Bars
-          data={s.data}
-          x={!isVertical ? valueAccessor : undefined}
-          y={isVertical ? valueAccessor : undefined}
+          seriesKey={s.key}
           x1={isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           y1={!isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           rounded={seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
@@ -394,8 +365,7 @@
               : 'edge'}
           radius={4}
           strokeWidth={1}
-          insets={getStackInsets(i)}
-          fill={s.color}
+          stackPadding={stackPadding}
           opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
           onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}

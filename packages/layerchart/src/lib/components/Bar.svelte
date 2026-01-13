@@ -35,6 +35,16 @@
      */
     y1?: Accessor;
 
+    /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series`.
+     */
+    seriesKey?: string;
+
+    /**
+     * Padding between stacked bars.
+     */
+    stackPadding?: number;
+
     radius?: number;
 
     insets?: Insets;
@@ -94,10 +104,12 @@
 
   let {
     data,
-    x = ctx.x,
-    y = ctx.y,
-    x1,
-    y1,
+    x: xProp,
+    y: yProp,
+    x1: x1Prop,
+    y1: y1Prop,
+    seriesKey,
+    stackPadding = 0,
     fill,
     fillOpacity,
     stroke: strokeProp = 'black',
@@ -106,7 +118,7 @@
     radius = 0,
     rounded: roundedProp = 'all',
     motion,
-    insets,
+    insets: insetsProp,
     initialX,
     initialY,
     initialHeight,
@@ -115,6 +127,63 @@
   }: BarProps = $props();
 
   const stroke = $derived(strokeProp === null || strokeProp === undefined ? 'black' : strokeProp);
+
+  // Get series data if seriesKey is provided
+  const series = $derived(
+    seriesKey ? ctx.series.series.find((s) => s.key === seriesKey) : undefined
+  );
+  const seriesAccessor = $derived(
+    series ? (series.value ?? (series.data ? undefined : series.key)) : undefined
+  );
+
+  // Get stack accessors if seriesKey is provided and stacking is enabled
+  const stackAccessors = $derived(
+    seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
+  );
+
+  // Resolve accessors: use explicit props first, then stack accessors, then series accessor, then context
+  // stackAccessors and seriesAccessor are value accessors and should only be used for the value dimension:
+  // - For vertical charts (orientation='vertical'), use for y
+  // - For horizontal charts (orientation='horizontal'), use for x
+  const x = $derived(
+    xProp ?? (!ctx.isVertical ? stackAccessors?.value ?? seriesAccessor : undefined) ?? ctx.x
+  );
+  const y = $derived(
+    yProp ?? (ctx.isVertical ? stackAccessors?.value ?? seriesAccessor : undefined) ?? ctx.y
+  );
+  const x1 = $derived(x1Prop !== undefined ? x1Prop : ctx.x1);
+  const y1 = $derived(y1Prop !== undefined ? y1Prop : ctx.y1);
+
+  // Calculate series index and count from context when seriesKey is provided
+  const seriesIndex = $derived(
+    seriesKey ? ctx.series.visibleSeries.findIndex((s) => s.key === seriesKey) : undefined
+  );
+  const seriesCount = $derived(ctx.series.visibleSeries.length);
+
+  // Calculate stack insets if stacking is enabled
+  const stackInsets = $derived.by(() => {
+    if (!ctx.series.isStacked || stackPadding === 0 || seriesIndex === undefined) {
+      return undefined;
+    }
+
+    const isFirst = seriesIndex === 0;
+    const isLast = seriesIndex === seriesCount - 1;
+    const stackInset = stackPadding / 2;
+
+    if (ctx.isVertical) {
+      return {
+        bottom: isFirst ? undefined : stackInset,
+        top: isLast ? undefined : stackInset,
+      };
+    } else {
+      return {
+        left: isFirst ? undefined : stackInset,
+        right: isLast ? undefined : stackInset,
+      };
+    }
+  });
+
+  const insets = $derived(insetsProp ?? stackInsets);
 
   const getDimensions = $derived(
     createDimensionGetter(ctx, () => ({
@@ -128,15 +197,14 @@
 
   const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
 
-  const isVertical = $derived(isScaleBand(ctx.xScale) || isScaleTime(ctx.xScale));
-  const valueAccessor = $derived(accessor(isVertical ? y : x));
+  const valueAccessor = $derived(accessor(ctx.isVertical ? y : x));
   const value = $derived(valueAccessor(data));
   const resolvedValue = $derived(Array.isArray(value) ? greatestAbs(value) : value);
 
   // Resolved `rounded="edge"` based on orientation and value
   const rounded = $derived(
     roundedProp === 'edge'
-      ? isVertical
+      ? ctx.isVertical
         ? resolvedValue >= 0 && ctx.yRange[0] > ctx.yRange[1] // not inverted (bottom to top)
           ? 'top'
           : 'bottom'
