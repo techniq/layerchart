@@ -541,27 +541,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 38,
+          "lineNumber": 31,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 47,
+          "lineNumber": 40,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 48,
+          "lineNumber": 41,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 61,
+          "lineNumber": 54,
           "line": "<LinearGradient stops={[primaryColor, secondaryColor]} vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 63,
+          "lineNumber": 56,
           "line": "<Area"
         }
       ]
@@ -916,7 +916,7 @@
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 63,
+      "lineNumber": 56,
       "line": "<Area"
     },
     {
@@ -1312,5 +1312,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.693Z"
+  "updatedAt": "2026-01-13T17:22:23.229Z"
 }

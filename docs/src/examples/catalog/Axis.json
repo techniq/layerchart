@@ -1030,14 +1030,14 @@
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 48,
+      "lineNumber": 41,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 49,
+      "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4030,5 +4030,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.739Z"
+  "updatedAt": "2026-01-13T17:22:23.271Z"
 }

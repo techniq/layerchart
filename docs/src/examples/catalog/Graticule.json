@@ -38,7 +38,7 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 74,
+      "lineNumber": 73,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -73,35 +73,35 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 62,
+      "lineNumber": 55,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<Graticule class=\"stroke-surface-content/5\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 76,
+      "lineNumber": 75,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 37,
+      "lineNumber": 28,
       "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
@@ -119,5 +119,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.832Z"
+  "updatedAt": "2026-01-13T17:22:23.759Z"
 }

@@ -3656,42 +3656,42 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 90,
+      "lineNumber": 89,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 92,
+      "lineNumber": 91,
       "line": "<Tooltip.Header>{data.place}</Tooltip.Header>"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 93,
+      "lineNumber": 92,
       "line": "<Tooltip.List>"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 94,
+      "lineNumber": 93,
       "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 95,
+      "lineNumber": 94,
       "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 96,
+      "lineNumber": 95,
       "line": "<Tooltip.Item label=\"Magnitude\" value={data.magnitude} format=\"decimal\" />"
     },
     {
@@ -3887,7 +3887,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 104,
+      "lineNumber": 103,
       "line": "<Tooltip.Root>"
     },
     {
@@ -4041,7 +4041,7 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 86,
+      "lineNumber": 85,
       "line": "<Tooltip.Root>"
     },
     {
@@ -5879,5 +5879,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:22.107Z"
+  "updatedAt": "2026-01-13T17:22:24.408Z"
 }
