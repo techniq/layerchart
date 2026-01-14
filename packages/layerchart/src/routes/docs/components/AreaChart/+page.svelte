@@ -481,7 +481,7 @@
       ]}
       seriesLayout="stack"
     >
-      {#snippet marks({ context, getAreaProps })}
+      {#snippet marks({ context })}
         {#each context.series.series as s, i (s.key)}
           <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
           <LinearGradient
@@ -491,7 +491,12 @@
             vertical
           >
             {#snippet children({ gradient })}
-              <Area {...getAreaProps(s, i)} fill={gradient} />
+              <Area
+                seriesKey={s.key}
+                line={{ stroke: s.color }}
+                fill={gradient}
+                fillOpacity={0.3}
+              />
             {/snippet}
           </LinearGradient>
         {/each}
