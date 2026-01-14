@@ -197,7 +197,6 @@
     SimplifiedChartSnippet,
   } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
-  import { createLegendProps } from './utils.svelte.js';
   import { getSettings } from '$lib/contexts/settings.js';
 
   const settings = getSettings();
@@ -264,19 +263,11 @@
     })
   );
 
-  function getLegendProps(): ComponentProps<typeof Legend> {
-    return createLegendProps({
-      props: {
-        tickFormat: (tick) => {
-          // Use data label instead of series label
-          const item = chartData.find((d) => keyAccessor(d) === tick);
-          return item ? (labelAccessor(item) ?? tick) : tick;
-        },
-        ...props.legend,
-        ...getObjectOrNull(legend),
-      },
-    });
-  }
+  // Custom tickFormat for PieChart legends - uses data labels instead of series labels
+  const legendTickFormat = (tick: any) => {
+    const item = chartData.find((d) => keyAccessor(d) === tick);
+    return item ? (labelAccessor(item) ?? tick) : tick;
+  };
 
   function getGroupProps(): ComponentProps<typeof Group> {
     if (!context) return {};
@@ -342,7 +333,6 @@
       console.timeEnd('PieChart render');
     });
   }
-
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -384,7 +374,6 @@
       color: cAccessor,
       context,
       visibleData,
-      getLegendProps,
       getGroupProps,
     }}
     {#if childrenProp}
@@ -443,7 +432,13 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend {...getLegendProps()} />
+        <Legend
+          variant="swatches"
+          placement="bottom"
+          tickFormat={legendTickFormat}
+          {...getObjectOrNull(legend)}
+          {...props.legend}
+        />
       {/if}
 
       {#if typeof tooltip === 'function'}

@@ -13,14 +13,7 @@
     TData,
     XScale extends AnyScale = AnyScale,
     YScale extends AnyScale = AnyScale,
-    ChartSnippet = Snippet<
-      [
-        {
-          context: ChartState<TData, XScale, YScale>;
-          getLegendProps: () => ComponentProps<typeof LegendComponent>;
-        },
-      ]
-    >,
+    ChartSnippet = Snippet<[{ context: ChartState<TData, XScale, YScale> }]>,
   > = {
     /**
      * The axis to be used for the chart.
@@ -169,11 +162,7 @@
     annotations = [],
   }: ChartChildrenProps<TData, XScale, YScale> = $props();
 
-  function getLegendProps() {
-    return { ...getObjectOrNull(legend), ...props.legend };
-  }
-
-  let snippetProps = $derived({ context, getLegendProps });
+  let snippetProps = $derived({ context });
   let layer = $derived(settings.layer);
 </script>
 
@@ -271,8 +260,7 @@
   {#if typeof legend === 'function'}
     {@render legend(snippetProps)}
   {:else if legend}
-    <!-- <Legend {...getLegendProps()} /> -->
-    <Legend {...getObjectOrNull(legend)} {...props.legend} />
+    <Legend placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
   {/if}
 
   {#if typeof tooltip === 'function'}

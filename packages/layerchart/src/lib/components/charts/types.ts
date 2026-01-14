@@ -52,11 +52,6 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
    * The chart context
    */
   context: ChartState<TData>;
-
-  /**
-   * Get the default props for the legend component.
-   */
-  getLegendProps: () => ComponentProps<typeof Legend>;
 } & TSnippetProps;
 
 export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippetProps> = Snippet<
