@@ -10,7 +10,7 @@
 	export { data };
 </script>
 
-<label class="flex gap-2 screenshot-hidden">
+<label class="flex gap-2 pb-4 screenshot-hidden">
 	<Switch bind:checked={applyNice} />
 	{applyNice ? 'Applying Nice' : 'Not applying Nice'}
 </label>
