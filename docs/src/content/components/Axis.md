@@ -9,6 +9,20 @@ related: [Grid, Rule]
 
 :example{ name="placement-bottom-left" showCode }
 
+## xAxis timescale tickSpacing
+
+When the xAxis is a time scale it can get crowded very quickly.  You can use `tickSpacing={...}` to add more space between ticks.
+
+:example{ name="linechart-tickspacing" showCode }
+
+## BarCharts
+
+When creating time-series bar charts, it can be useful to use a time scale axis instead of a bar scale axis.  This helps show gaps in data (such as on [weekends](/docs/components/BarChart/time-scale-interval)) and provides improved axis ticks.
+
+To enable this, you must define the interval (daily, hourly, etc) of your data using [d3-time interval](https://d3js.org/d3-time), such as `xInterval={timeDay}`. Since band padding is not available when not using a band scale, you can leverage `xInset={...}` to add padding between bars.
+
+:example{ name="barchart-xinterval-xinset" showCode }
+
 <!-- ## Examples
 
 ### Placement (bottom / left)
