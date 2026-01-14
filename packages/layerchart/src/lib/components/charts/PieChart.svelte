@@ -11,28 +11,10 @@
     'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
   >;
 
-  export type PieChartProps<TData> = Pick<
+  export type PieChartProps<TData> = Omit<
     SimplifiedChartProps<TData, typeof Arc, PieChartExtraSnippetProps<TData>>,
-    | 'aboveContext'
-    | 'aboveMarks'
-    | 'belowContext'
-    | 'belowMarks'
-    | 'children'
-    | 'data'
-    | 'debug'
-    | 'legend'
-    | 'marks'
-    | 'onTooltipClick'
-    | 'profile'
-    | 'layer'
-    | 'series'
-    | 'tooltip'
-    | 'tooltipContext'
-    | 'cRange'
-    | 'padding'
-    | 'context'
-    | 'width'
-    | 'height'
+    // Props that don't apply to PieChart
+    'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule' | 'seriesLayout'
   > & {
     /**
      * Key accessor
@@ -178,18 +160,14 @@
   import { format } from '@layerstack/utils';
   import type { PieArcDatum } from 'd3-shape';
   import { schemeObservable10 } from 'd3-scale-chromatic';
-  import { getObjectOrNull } from '../../utils/common.js';
 
   import Arc from '../Arc.svelte';
-  import Chart from '../Chart.svelte';
+  import Chart, { type ChartProps } from '../Chart.svelte';
   import Group from '../Group.svelte';
-  import Layer from '../layers/Layer.svelte';
-  import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
-  import { asAny } from '../../utils/types.js';
+  import { accessor, chartDataArray, getObjectOrNull, type Accessor } from '../../utils/common.js';
   import type {
     SeriesData,
     SimplifiedChartProps,
@@ -222,24 +200,17 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    layer: layerProp,
     profile = false,
     debug: debugProp,
     tooltipContext = true,
-    children: childrenProp,
-    aboveContext,
-    belowContext,
-    belowMarks,
     marks,
-    aboveMarks,
-    tooltip,
+    tooltip: tooltipProp,
     pie,
     arc,
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
 
-  const layer = $derived(layerProp ?? settings.layer);
   const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
@@ -357,109 +328,99 @@
   padding={{
     bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
   }}
-  {...restProps}
+  axis={false}
+  {...restProps as Partial<ChartProps<TData>>}
   tooltipContext={tooltipContext === false
     ? false
     : {
+        onclick: onTooltipClick,
+        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   {seriesState}
+  legend={typeof legend === 'function'
+    ? (legend as any)
+    : legend
+      ? {
+          variant: 'swatches',
+          placement: 'bottom',
+          tickFormat: legendTickFormat,
+          ...(typeof legend === 'object' ? legend : null),
+        }
+      : false}
+  props={{
+    ...props,
+    svg: { center, ...props.svg },
+    canvas: { center, ...props.canvas },
+  }}
 >
-  {#snippet children({ context })}
-    {@const snippetProps = {
-      label: labelAccessor,
-      key: keyAccessor,
-      value: valueAccessor,
-      color: cAccessor,
-      context,
-      visibleData,
-      getGroupProps,
-    }}
-    {#if childrenProp}
-      {@render childrenProp(snippetProps)}
+  {#snippet marks(snippetProps)}
+    {#if typeof marks === 'function'}
+      {@render marks(snippetProps)}
     {:else}
-      {@render belowContext?.(snippetProps)}
+      <Group {...getGroupProps()}>
+        <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->
+        {#each series as s, seriesIdx (s.key)}
+          {#if typeof pie === 'function'}
+            {@render pie({
+              ...snippetProps,
+              label: labelAccessor,
+              key: keyAccessor,
+              value: valueAccessor,
+              visibleData,
+              getGroupProps,
+              props: getPieProps(s, seriesIdx),
+              index: seriesIdx,
+            })}
+          {:else}
+            <Pie {...getPieProps(s, seriesIdx)}>
+              {#snippet children({ arcs })}
+                {#each arcs as arcData, arcIdx (`${seriesIdx}-${arcIdx}`)}
+                  {@const arcProps = getArcProps(s, seriesIdx, arcData, arcIdx)}
+                  {#if typeof arc === 'function'}
+                    {@render arc({
+                      ...snippetProps,
+                      label: labelAccessor,
+                      key: keyAccessor,
+                      value: valueAccessor,
+                      visibleData,
+                      getGroupProps,
+                      props: arcProps,
+                      index: arcIdx,
+                      seriesIndex: seriesIdx,
+                    })}
+                  {:else}
+                    <Arc {...arcProps} />
+                  {/if}
+                {/each}
+              {/snippet}
+            </Pie>
+          {/if}
+        {/each}
+      </Group>
+    {/if}
+  {/snippet}
 
-      <Layer
-        type={layer}
-        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
-        {center}
-        {debug}
-      >
-        {@render belowMarks?.(snippetProps)}
-
-        {#if typeof marks === 'function'}
-          {@render marks(snippetProps)}
-        {:else}
-          <Group {...getGroupProps()}>
-            <!-- Use `series` instead of `visibleSeries` since data is filtered (legend) instead of series -->
-            {#each series as s, seriesIdx (s.key)}
-              {#if typeof pie === 'function'}
-                {@render pie({
-                  ...snippetProps,
-                  props: getPieProps(s, seriesIdx),
-                  index: seriesIdx,
-                })}
-              {:else}
-                <Pie {...getPieProps(s, seriesIdx)}>
-                  {#snippet children({ arcs })}
-                    {#each arcs as arcData, arcIdx (`${seriesIdx}-${arcIdx}`)}
-                      {@const arcProps = getArcProps(s, seriesIdx, arcData, arcIdx)}
-                      {#if typeof arc === 'function'}
-                        {@render arc({
-                          ...snippetProps,
-                          props: arcProps,
-                          index: arcIdx,
-                          seriesIndex: seriesIdx,
-                        })}
-                      {:else}
-                        <Arc {...arcProps} />
-                      {/if}
-                    {/each}
-                  {/snippet}
-                </Pie>
-              {/if}
-            {/each}
-          </Group>
-        {/if}
-
-        {@render aboveMarks?.(snippetProps)}
-      </Layer>
-
-      {@render aboveContext?.(snippetProps)}
-
-      {#if typeof legend === 'function'}
-        {@render legend(snippetProps)}
-      {:else if legend}
-        <Legend
-          variant="swatches"
-          placement="bottom"
-          tickFormat={legendTickFormat}
-          {...getObjectOrNull(legend)}
-          {...props.legend}
-        />
-      {/if}
-
-      {#if typeof tooltip === 'function'}
-        {@render tooltip(snippetProps)}
-      {:else if tooltipContext}
-        <Tooltip.Root {context} {...props.tooltip?.root}>
-          {#snippet children({ data })}
-            <Tooltip.List {...props.tooltip?.list}>
-              <Tooltip.Item
-                label={labelAccessor(data) || keyAccessor(data)}
-                value={valueAccessor(data)}
-                color={context.cScale?.(context.c(data))}
-                {format}
-                onpointerenter={() => (seriesState.highlightKey = keyAccessor(data))}
-                onpointerleave={() => (seriesState.highlightKey = null)}
-                {...props.tooltip?.item}
-              />
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
-      {/if}
+  {#snippet tooltip(snippetProps)}
+    {#if typeof tooltipProp === 'function'}
+      {@render tooltipProp(snippetProps as any)}
+    {:else if tooltipContext}
+      <Tooltip.Root context={snippetProps.context} {...props.tooltip?.root}>
+        {#snippet children({ data })}
+          <Tooltip.List {...props.tooltip?.list}>
+            <Tooltip.Item
+              label={labelAccessor(data) || keyAccessor(data)}
+              value={valueAccessor(data)}
+              color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
+              {format}
+              onpointerenter={() => (seriesState.highlightKey = keyAccessor(data))}
+              onpointerleave={() => (seriesState.highlightKey = null)}
+              {...props.tooltip?.item}
+            />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
     {/if}
   {/snippet}
 </Chart>

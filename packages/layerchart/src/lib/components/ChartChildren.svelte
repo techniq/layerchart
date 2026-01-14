@@ -173,8 +173,8 @@
 
   <Layer
     type={layer}
-    {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
     center={context.radial}
+    {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
     debug={settings.debug}
   >
     {#if typeof grid === 'function'}
