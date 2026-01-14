@@ -230,15 +230,15 @@
       }
     : false}
   {seriesState}
-  axis={axis as any}
-  grid={grid as any}
-  rule={rule as any}
-  legend={legend as any}
-  tooltip={tooltipProp as any}
+  {axis}
+  {grid}
+  {rule}
+  {legend}
+  tooltip={tooltipProp}
   props={{
     ...props,
     yAxis: { format: yAxisFormat, ...props.yAxis },
-  } as typeof props}
+  }}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}

@@ -119,11 +119,11 @@
       }
     : false}
   {seriesState}
-  axis={axis as any}
-  grid={grid as any}
+  {axis}
+  {grid}
   highlight={highlight as any}
-  legend={legend as any}
-  props={props as typeof props}
+  {legend}
+  {props}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}

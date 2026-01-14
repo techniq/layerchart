@@ -40,13 +40,6 @@
      */
     stackPadding?: number;
 
-    /**
-     * The orientation of the bar chart.
-     *
-     * @default 'vertical'
-     */
-    orientation?: 'vertical' | 'horizontal';
-
     props?: BarChartPropsObjProp<TData>;
 
     /**
@@ -330,18 +323,18 @@
       }
     : false}
   {seriesState}
-  axis={axis as any}
+  {axis}
   grid={typeof grid === 'object'
     ? { x: !isVertical || radial, y: isVertical || radial, ...grid }
     : grid
       ? { x: !isVertical || radial, y: isVertical || radial }
-      : (false as any)}
+      : false}
   rule={typeof rule === 'object'
     ? { x: isVertical ? false : 0, y: isVertical ? 0 : false, ...rule }
     : rule
       ? { x: isVertical ? false : 0, y: isVertical ? 0 : false }
-      : (false as any)}
-  legend={legend as any}
+      : false}
+  {legend}
   highlight={highlight as any}
   props={{
     ...props,
@@ -365,7 +358,7 @@
               : 'edge'}
           radius={4}
           strokeWidth={1}
-          stackPadding={stackPadding}
+          {stackPadding}
           opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
           onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
