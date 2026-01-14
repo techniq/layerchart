@@ -230,15 +230,6 @@
     });
   }
 
-  // Configure tooltip behavior
-  $effect(() => {
-    if (context?.tooltipState) {
-      context.tooltipState.config = {
-        stackedSeries: seriesState.isStacked,
-      };
-    }
-  });
-
   function resolveAccessor(acc: Accessor<TData> | undefined) {
     if (acc) return acc;
     if (seriesState.isStacked) {

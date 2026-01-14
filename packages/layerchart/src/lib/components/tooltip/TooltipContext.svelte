@@ -338,7 +338,7 @@
       tooltipState.y = point.y;
       tooltipState.data = tooltipData;
       // Reverse series order for stacked charts to match visual stack order (bottom to top)
-      tooltipState.series = tooltipState.config.stackedSeries ? [...series].reverse() : series;
+      tooltipState.series = ctx.series.isStacked ? [...series].reverse() : series;
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();

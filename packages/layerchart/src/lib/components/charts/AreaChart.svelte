@@ -44,7 +44,6 @@
   import Area from '../Area.svelte';
   import Chart, { type ChartProps } from '../Chart.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
-  import Labels from '../Labels.svelte';
   import Points from '../Points.svelte';
 
   import {
@@ -71,7 +70,6 @@
     axis = true,
     brush = false,
     grid = true,
-    labels: labelsProp = false,
     legend = false,
     points: pointsProp = false,
     tooltipContext = true,
@@ -162,15 +160,6 @@
       console.timeEnd('AreaChart render');
     });
   }
-
-  // Configure tooltip behavior
-  $effect(() => {
-    if (context?.tooltipState) {
-      context.tooltipState.config = {
-        stackedSeries: seriesState.isStacked,
-      };
-    }
-  });
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {
     if (seriesState.isStacked) {
@@ -290,22 +279,6 @@
     {:else if highlightProp}
       {#each seriesState.visibleSeries as s (s.key)}
         <Highlight {...getHighlightProps(s)} />
-      {/each}
-    {/if}
-  {/snippet}
-
-  {#snippet labels(snippetProps)}
-    {#if typeof labelsProp === 'function'}
-      {@render labelsProp(snippetProps)}
-    {:else if labelsProp}
-      {#each seriesState.visibleSeries as s (s.key)}
-        <Labels
-          seriesKey={s.key}
-          stroke="var(--color-surface-100, light-dark(white, black))"
-          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
-          {...props.labels}
-          {...typeof labelsProp === 'object' ? labelsProp : null}
-        />
       {/each}
     {/if}
   {/snippet}

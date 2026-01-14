@@ -1,18 +1,6 @@
 import type { TooltipMode } from '$lib/components/tooltip/TooltipContext.svelte';
 import type { SeriesData } from '$lib/components/charts/types.js';
 
-/**
- * Configuration for tooltip behavior.
- * Set by simplified charts to configure tooltip display.
- */
-export type TooltipConfig = {
-  /**
-   * Whether the series data is stacked (affects display order - stacked series are reversed).
-   * @default false
-   */
-  stackedSeries?: boolean;
-};
-
 export type TooltipSeries = {
   key: string;
   label: string;
@@ -29,12 +17,6 @@ export class TooltipState<T = any> {
   series = $state<TooltipSeries[]>([]);
   isHoveringTooltipArea = $state(false);
   isHoveringTooltipContent = $state(false);
-
-  /**
-   * Configuration for tooltip behavior.
-   * Set by simplified charts to provide chart-specific behavior.
-   */
-  config = $state<TooltipConfig>({});
 
   mode: TooltipMode;
   show: (e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) => void;

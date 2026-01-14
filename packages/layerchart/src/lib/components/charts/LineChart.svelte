@@ -125,14 +125,6 @@
     });
   }
 
-  // Configure tooltip behavior
-  $effect(() => {
-    if (context?.tooltipState) {
-      context.tooltipState.config = {
-        stackedSeries: false,
-      };
-    }
-  });
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
