@@ -23,8 +23,8 @@
   const headerLabel = $derived(
     context.tooltip.data
       ? context.isVertical
-        ? context.y(context.tooltip.data)
-        : context.x(context.tooltip.data)
+        ? context.x(context.tooltip.data)
+        : context.y(context.tooltip.data)
       : undefined
   );
 </script>
