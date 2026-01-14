@@ -148,7 +148,7 @@
     onpointerenter: onpointerenterProp,
     onpointerleave: onpointerleaveProp,
     variant: variantProp,
-    selected: selectedProp = [],
+    selected: selectedProp,
     classes = {},
     ref: refProp = $bindable(),
     class: className,
@@ -342,34 +342,43 @@
     }
   });
 
-  // Auto-determine variant based on data type:
-  // - Series-based legends (multiple series with colors): use swatches for interaction
-  // - All other cases (standalone, display-only, or scale-based): use ramp for display
-  // Note: PieChart/ArcChart manually pass handlers to enable interaction even with ramp variant
-  const effectiveVariant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
+  const variant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
+  const selected = $derived(selectedProp ?? ctx.series?.selectedKeys?.current ?? []);
 
-  // Auto-wire handlers for interactive legends when we have series state
-  // For series-based legends (hasSeriesWithColors), always auto-wire
-  // For scale-based legends (PieChart), only auto-wire if using swatches variant
-  const shouldAutoWireHandlers = $derived(
-    ctx.series != null && (hasSeriesWithColors || effectiveVariant === 'swatches')
-  );
-
-  const onclick = $derived(
-    onclickProp ?? (shouldAutoWireHandlers && ((e: MouseEvent, item: LegendItem) => ctx.series?.selectedKeys?.toggle(item.value)))
-  );
-
-  const onpointerenter = $derived(
-    onpointerenterProp ?? (shouldAutoWireHandlers && ((e: MouseEvent, item: LegendItem) => { ctx.series!.highlightKey = item.value; }))
-  );
-
-  const onpointerleave = $derived(
-    onpointerleaveProp ?? (shouldAutoWireHandlers && (() => { ctx.series!.highlightKey = null; }))
-  );
-
-  const selected = $derived(
-    selectedProp.length > 0 ? selectedProp : (shouldAutoWireHandlers ? (ctx.series?.selectedKeys?.current ?? []) : [])
-  );
+  const swatchItems = $derived.by(() => {
+    if (seriesItems) {
+      // Series-based legend items
+      return seriesItems.map((series) => ({
+        value: series.key,
+        label: series.label,
+        color: series.color,
+        onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(series.key),
+        onpointerenter: (e: MouseEvent) => {
+          ctx.series!.highlightKey = series.key;
+        },
+        onpointerleave: (e: MouseEvent) => {
+          ctx.series!.highlightKey = null;
+        },
+        selected: selected.length === 0 || selected.includes(series.key),
+      }));
+    } else {
+      // Scale-based legend items
+      const tickValues = scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [];
+      return tickValues.map((tick) => ({
+        value: tick,
+        label: tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick,
+        color: scale?.(tick) ?? '',
+        onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(tick),
+        onpointerenter: (e: MouseEvent) => {
+          ctx.series!.highlightKey = tick;
+        },
+        onpointerleave: (e: MouseEvent) => {
+          ctx.series!.highlightKey = null;
+        },
+        selected: selected.length === 0 || selected.includes(tick),
+      }));
+    }
+  });
 </script>
 
 <div
@@ -387,7 +396,7 @@
       scale,
       seriesItems,
     })}
-  {:else if effectiveVariant === 'ramp'}
+  {:else if variant === 'ramp'}
     <svg
       {width}
       height={height + tickLengthProp + tickFontSize}
@@ -434,50 +443,25 @@
         {/each}
       </g>
     </svg>
-  {:else if effectiveVariant === 'swatches'}
+  {:else if variant === 'swatches'}
     <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
-      {#if seriesItems}
-        <!-- Series-based legend -->
-        {#each seriesItems as series}
-          {@const item = { value: series.key, color: series.color }}
-          <button
-            class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
-            style:opacity={selected.length === 0 || selected.includes(series.key) ? 1 : 0.3}
-            onclick={(e) => onclick?.(e, item)}
-            onpointerenter={(e) => onpointerenter?.(e, item)}
-            onpointerleave={(e) => onpointerleave?.(e, item)}
-          >
-            <div
-              class={cls('lc-legend-swatch', classes.swatch)}
-              style:background-color={series.color}
-            ></div>
-            <div class={cls('lc-legend-swatch-label', classes.label)}>
-              {series.label}
-            </div>
-          </button>
-        {/each}
-      {:else}
-        <!-- Scale-based legend (ordinal/threshold scales) -->
-        {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
-          {@const color = scale?.(tick) ?? ''}
-          {@const item = { value: tick, color }}
-          <button
-            class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
-            style:opacity={selected.length === 0 || selected.includes(tick) ? 1 : 0.3}
-            onclick={(e) => onclick?.(e, item)}
-            onpointerenter={(e) => onpointerenter?.(e, item)}
-            onpointerleave={(e) => onpointerleave?.(e, item)}
-          >
-            <div
-              class={cls('lc-legend-swatch', classes.swatch)}
-              style:background-color={color}
-            ></div>
-            <div class={cls('lc-legend-swatch-label', classes.label)}>
-              {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
-            </div>
-          </button>
-        {/each}
-      {/if}
+      {#each swatchItems as item}
+        <button
+          class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
+          style:opacity={selected.length === 0 || selected.includes(item.value) ? 1 : 0.3}
+          onclick={(e) => onclickProp?.(e, item) ?? item.onclick?.(e)}
+          onpointerenter={(e) => onpointerenterProp?.(e, item) ?? item.onpointerenter?.(e)}
+          onpointerleave={(e) => onpointerleaveProp?.(e, item) ?? item.onpointerleave?.(e)}
+        >
+          <div
+            class={cls('lc-legend-swatch', classes.swatch)}
+            style:background-color={item.color}
+          ></div>
+          <div class={cls('lc-legend-swatch-label', classes.label)}>
+            {item.label}
+          </div>
+        </button>
+      {/each}
     </div>
   {/if}
 </div>
