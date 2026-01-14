@@ -348,7 +348,7 @@
   // Note: PieChart/ArcChart manually pass handlers to enable interaction even with ramp variant
   const effectiveVariant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
 
-  // Auto-wire handlers for interactive swatches if we have series state
+  // Auto-wire handlers for interactive legends when we have series state
   // For series-based legends (hasSeriesWithColors), always auto-wire
   // For scale-based legends (PieChart), only auto-wire if using swatches variant
   const shouldAutoWireHandlers = $derived(
@@ -356,34 +356,19 @@
   );
 
   const onclick = $derived(
-    onclickProp ??
-      (shouldAutoWireHandlers
-        ? (e: MouseEvent, item: LegendItem) => ctx.series?.selectedKeys?.toggle(item.value)
-        : undefined)
+    onclickProp ?? (shouldAutoWireHandlers && ((e: MouseEvent, item: LegendItem) => ctx.series?.selectedKeys?.toggle(item.value)))
   );
 
   const onpointerenter = $derived(
-    onpointerenterProp ??
-      (shouldAutoWireHandlers
-        ? (e: MouseEvent, item: LegendItem) => {
-            if (ctx.series) ctx.series.highlightKey = item.value;
-          }
-        : undefined)
+    onpointerenterProp ?? (shouldAutoWireHandlers && ((e: MouseEvent, item: LegendItem) => { ctx.series!.highlightKey = item.value; }))
   );
 
   const onpointerleave = $derived(
-    onpointerleaveProp ??
-      (shouldAutoWireHandlers
-        ? () => {
-            if (ctx.series) ctx.series.highlightKey = null;
-          }
-        : undefined)
+    onpointerleaveProp ?? (shouldAutoWireHandlers && (() => { ctx.series!.highlightKey = null; }))
   );
 
   const selected = $derived(
-    selectedProp.length > 0 || !shouldAutoWireHandlers
-      ? selectedProp
-      : (ctx.series?.selectedKeys?.current ?? [])
+    selectedProp.length > 0 ? selectedProp : (shouldAutoWireHandlers ? (ctx.series?.selectedKeys?.current ?? []) : [])
   );
 </script>
 
