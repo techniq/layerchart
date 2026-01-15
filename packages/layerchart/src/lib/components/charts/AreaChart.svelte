@@ -208,10 +208,6 @@
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
 
-  // Axis format for stackExpand
-  const yAxisFormat = $derived(
-    seriesState.stackLayout === 'stackExpand' ? 'percentRound' : undefined
-  );
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -253,10 +249,7 @@
   {rule}
   {legend}
   tooltip={tooltipProp}
-  props={{
-    ...props,
-    yAxis: { format: yAxisFormat, ...props.yAxis },
-  }}
+  {props}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}

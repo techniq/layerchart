@@ -143,7 +143,6 @@
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
-<!-- TODO: Pass rule, legend, etc (without triggering: "Expression produces a union type that is too complex to represent.") -->
 <Chart
   bind:context
   data={chartData}

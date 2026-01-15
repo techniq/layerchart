@@ -267,13 +267,6 @@
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
 
-  // Axis format for stackExpand
-  const xAxisFormat = $derived(
-    !isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined
-  );
-  const yAxisFormat = $derived(
-    isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined
-  );
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -346,11 +339,7 @@
       : false}
   {legend}
   highlight={highlight as any}
-  props={{
-    ...props,
-    xAxis: { format: xAxisFormat, ...props.xAxis },
-    yAxis: { format: yAxisFormat, ...props.yAxis },
-  } as typeof props}
+  {props}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}
