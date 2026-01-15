@@ -242,7 +242,6 @@
     }
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
-
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
