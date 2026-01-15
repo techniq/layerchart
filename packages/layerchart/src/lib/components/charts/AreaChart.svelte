@@ -31,42 +31,42 @@
      */
     data?: TData[] | readonly TData[];
   } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
-    /**
-     * The series data to be used for the chart.
-     * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-     */
-    series?: SeriesData<TData, typeof Area>[];
+      /**
+       * The series data to be used for the chart.
+       * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
+       */
+      series?: SeriesData<TData, typeof Area>[];
 
-    /**
-     * The layout of the series.
-     * @default 'overlap'
-     */
-    seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
+      /**
+       * The layout of the series.
+       * @default 'overlap'
+       */
+      seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
 
-    /**
-     * A callback function called when a point in the chart is clicked.
-     *
-     * @param e - the original event that triggered the `onPointClick`
-     * @param details - an object containing the highlighted point data and series data
-     */
-    onPointClick?: (
-      e: MouseEvent,
-      details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
-    ) => void;
+      /**
+       * A callback function called when a point in the chart is clicked.
+       *
+       * @param e - the original event that triggered the `onPointClick`
+       * @param details - an object containing the highlighted point data and series data
+       */
+      onPointClick?: (
+        e: MouseEvent,
+        details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
+      ) => void;
 
-    /**
-     * Additional props to be passed to the components rendered internally by the
-     * `AreaChart` component. This is useful for customizing the behavior of the individual
-     * components, without having to fully override them via a snippet.
-     */
-    props?: AreaChartPropsObjProp;
+      /**
+       * Additional props to be passed to the components rendered internally by the
+       * `AreaChart` component. This is useful for customizing the behavior of the individual
+       * components, without having to fully override them via a snippet.
+       */
+      props?: AreaChartPropsObjProp;
 
-    /**
-     * Enable profiling to measure render time.
-     * @default false
-     */
-    profile?: boolean;
-  };
+      /**
+       * Enable profiling to measure render time.
+       * @default false
+       */
+      profile?: boolean;
+    };
 </script>
 
 <script lang="ts" generics="TData">

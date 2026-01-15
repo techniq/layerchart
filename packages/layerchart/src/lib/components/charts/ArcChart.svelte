@@ -115,12 +115,12 @@
       arc?: Snippet<
         [
           { context: ChartState<TData> } & ArcChartExtraSnippetProps<TData> & {
-            props: ComponentProps<typeof Arc>;
-            /**
-             * The index of the series currently being iterated over.
-             */
-            seriesIndex: number;
-          },
+              props: ComponentProps<typeof Arc>;
+              /**
+               * The index of the series currently being iterated over.
+               */
+              seriesIndex: number;
+            },
         ]
       >;
 

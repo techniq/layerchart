@@ -28,19 +28,19 @@
      */
     data?: TData[] | readonly TData[];
   } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
-    /**
-     * The series data to be used for the chart.
-     */
-    series?: SeriesData<TData, typeof Points>[];
+      /**
+       * The series data to be used for the chart.
+       */
+      series?: SeriesData<TData, typeof Points>[];
 
-    props?: ScatterChartPropsObjProp;
+      props?: ScatterChartPropsObjProp;
 
-    /**
-     * Enable profiling to measure render time.
-     * @default false
-     */
-    profile?: boolean;
-  };
+      /**
+       * Enable profiling to measure render time.
+       * @default false
+       */
+      profile?: boolean;
+    };
 </script>
 
 <script lang="ts" generics="TData">

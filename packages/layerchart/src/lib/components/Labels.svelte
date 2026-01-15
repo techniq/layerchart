@@ -117,7 +117,9 @@
         ? stackAccessors.y1
         : Array.isArray(seriesAccessor)
           ? seriesAccessor[1]
-          : (!ctx.isVertical ? seriesAccessor : undefined)
+          : !ctx.isVertical
+            ? seriesAccessor
+            : undefined
   );
   const labelsData = $derived(data ?? series?.data);
 

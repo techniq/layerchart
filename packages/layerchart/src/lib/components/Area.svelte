@@ -282,7 +282,9 @@
   <Spline
     data={data ?? seriesData}
     {x}
-    y={y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor ? y1Accessor : undefined}
+    y={y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor
+      ? y1Accessor
+      : undefined}
     {seriesKey}
     {curve}
     {defined}

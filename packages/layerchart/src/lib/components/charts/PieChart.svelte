@@ -33,154 +33,154 @@
     // Props that don't apply to PieChart
     'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
   > & {
-    /**
-     * The series data to be used for the chart.
-     */
-    series?: SeriesData<TData, typeof Arc>[];
+      /**
+       * The series data to be used for the chart.
+       */
+      series?: SeriesData<TData, typeof Arc>[];
 
-    /**
-     * Key accessor
-     *
-     * @default 'key'
-     */
-    key?: Accessor<TData>;
+      /**
+       * Key accessor
+       *
+       * @default 'key'
+       */
+      key?: Accessor<TData>;
 
-    /**
-     * Label accessor
-     *
-     * @default 'label'
-     */
-    label?: Accessor<TData>;
+      /**
+       * Label accessor
+       *
+       * @default 'label'
+       */
+      label?: Accessor<TData>;
 
-    /**
-     * Value accessor
-     *
-     * @default 'value'
-     */
-    value?: Accessor<TData>;
+      /**
+       * Value accessor
+       *
+       * @default 'value'
+       */
+      value?: Accessor<TData>;
 
-    /**
-     * Color accessor
-     *
-     * @default key
-     */
-    c?: Accessor<TData>;
+      /**
+       * Color accessor
+       *
+       * @default key
+       */
+      c?: Accessor<TData>;
 
-    /**
-     * Maximum possible value, useful when `data` is single item
-     */
-    maxValue?: number;
+      /**
+       * Maximum possible value, useful when `data` is single item
+       */
+      maxValue?: number;
 
-    /**
-     * Range [min, max] in degrees.
-     *
-     * See also `startAngle`/`endAngle`
-     *
-     * @default [0, 360]
-     */
-    range?: [number, number];
+      /**
+       * Range [min, max] in degrees.
+       *
+       * See also `startAngle`/`endAngle`
+       *
+       * @default [0, 360]
+       */
+      range?: [number, number];
 
-    props?: PieChartPropsObjProp;
+      props?: PieChartPropsObjProp;
 
-    /**
-     * Inner radius of the arc.
-     *   value >= 1: discrete value
-     *   value >  0: percent of `outerRadius`
-     *   value <  0: offset of `outerRadius`
-     */
-    innerRadius?: number;
+      /**
+       * Inner radius of the arc.
+       *   value >= 1: discrete value
+       *   value >  0: percent of `outerRadius`
+       *   value <  0: offset of `outerRadius`
+       */
+      innerRadius?: number;
 
-    /**
-     * Outer radius of the arc.
-     */
-    outerRadius?: number;
+      /**
+       * Outer radius of the arc.
+       */
+      outerRadius?: number;
 
-    /**
-     * Corner radius of the arc
-     *
-     * @default 0
-     */
-    cornerRadius?: number;
+      /**
+       * Corner radius of the arc
+       *
+       * @default 0
+       */
+      cornerRadius?: number;
 
-    /**
-     * Angle between the arcs
-     *
-     * @default 0
-     */
-    padAngle?: number;
+      /**
+       * Angle between the arcs
+       *
+       * @default 0
+       */
+      padAngle?: number;
 
-    /**
-     * Placement of the PieChart
-     *
-     * @default 'center'
-     */
-    placement?: 'left' | 'center' | 'right';
+      /**
+       * Placement of the PieChart
+       *
+       * @default 'center'
+       */
+      placement?: 'left' | 'center' | 'right';
 
-    /**
-     * Center the chart.
-     *
-     * Override and use `props.group` for more control.
-     *
-     * @default placement === 'center'
-     */
-    center?: boolean;
+      /**
+       * Center the chart.
+       *
+       * Override and use `props.group` for more control.
+       *
+       * @default placement === 'center'
+       */
+      center?: boolean;
 
-    /**
-     * Replace the default rendering of the `<Pie>` component internally with your own.
-     *
-     * Use the `props` snippet prop to access the default props.
-     */
-    pie?: Snippet<
-      [
-        { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
-          /**
-           * Default props to apply to the Pie component.
-           */
-          props: ComponentProps<typeof Pie>;
-          /**
-           * The index of the pie series currently being iterated over.
-           */
-          index: number;
-        },
-      ]
-    >;
+      /**
+       * Replace the default rendering of the `<Pie>` component internally with your own.
+       *
+       * Use the `props` snippet prop to access the default props.
+       */
+      pie?: Snippet<
+        [
+          { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
+              /**
+               * Default props to apply to the Pie component.
+               */
+              props: ComponentProps<typeof Pie>;
+              /**
+               * The index of the pie series currently being iterated over.
+               */
+              index: number;
+            },
+        ]
+      >;
 
-    /**
-     * Replace the default rendering of the `<Arc>` component internally with your own.
-     *
-     * Use the `props` snippet prop to access the default props.
-     */
-    arc?: Snippet<
-      [
-        { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
-          props: ComponentProps<typeof Arc>;
-          /**
-           * The index of the arc currently being iterated over
-           */
-          index: number;
+      /**
+       * Replace the default rendering of the `<Arc>` component internally with your own.
+       *
+       * Use the `props` snippet prop to access the default props.
+       */
+      arc?: Snippet<
+        [
+          { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
+              props: ComponentProps<typeof Arc>;
+              /**
+               * The index of the arc currently being iterated over
+               */
+              index: number;
 
-          /**
-           * The index of the series currently being iterated over.
-           */
-          seriesIndex: number;
-        },
-      ]
-    >;
+              /**
+               * The index of the series currently being iterated over.
+               */
+              seriesIndex: number;
+            },
+        ]
+      >;
 
-    /**
-     * A callback function triggered when the arc is clicked.
-     */
-    onArcClick?: (
-      e: MouseEvent,
-      detail: { data: any; series: SeriesData<TData, typeof Arc> }
-    ) => void;
+      /**
+       * A callback function triggered when the arc is clicked.
+       */
+      onArcClick?: (
+        e: MouseEvent,
+        detail: { data: any; series: SeriesData<TData, typeof Arc> }
+      ) => void;
 
-    /**
-     * Enable profiling to measure render time.
-     * @default false
-     */
-    profile?: boolean;
-  };
+      /**
+       * Enable profiling to measure render time.
+       * @default false
+       */
+      profile?: boolean;
+    };
 </script>
 
 <script lang="ts" generics="TData">

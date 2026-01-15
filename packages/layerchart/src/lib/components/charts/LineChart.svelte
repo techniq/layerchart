@@ -30,29 +30,29 @@
      */
     data?: TData[] | readonly TData[];
   } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
-    /**
-     * The series data to be used for the chart.
-     * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-     */
-    series?: SeriesData<TData, typeof Spline>[];
+      /**
+       * The series data to be used for the chart.
+       * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
+       */
+      series?: SeriesData<TData, typeof Spline>[];
 
-    /** Override the default props object type */
-    props?: LineChartPropsObjProp;
+      /** Override the default props object type */
+      props?: LineChartPropsObjProp;
 
-    /**
-     * The event to be dispatched when the point is clicked.
-     */
-    onPointClick?: (
-      e: MouseEvent,
-      details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
-    ) => void;
+      /**
+       * The event to be dispatched when the point is clicked.
+       */
+      onPointClick?: (
+        e: MouseEvent,
+        details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
+      ) => void;
 
-    /**
-     * Enable profiling to measure render time.
-     * @default false
-     */
-    profile?: boolean;
-  };
+      /**
+       * Enable profiling to measure render time.
+       * @default false
+       */
+      profile?: boolean;
+    };
 </script>
 
 <script lang="ts" generics="TData">
@@ -140,7 +140,6 @@
       console.timeEnd('LineChart render');
     });
   }
-
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->

@@ -146,10 +146,10 @@
   // - For vertical charts (orientation='vertical'), use for y
   // - For horizontal charts (orientation='horizontal'), use for x
   const x = $derived(
-    xProp ?? (!ctx.isVertical ? stackAccessors?.value ?? seriesAccessor : undefined) ?? ctx.x
+    xProp ?? (!ctx.isVertical ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.x
   );
   const y = $derived(
-    yProp ?? (ctx.isVertical ? stackAccessors?.value ?? seriesAccessor : undefined) ?? ctx.y
+    yProp ?? (ctx.isVertical ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.y
   );
   const x1 = $derived(x1Prop !== undefined ? x1Prop : ctx.x1);
   const y1 = $derived(y1Prop !== undefined ? y1Prop : ctx.y1);
