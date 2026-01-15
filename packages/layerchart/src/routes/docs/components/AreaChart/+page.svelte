@@ -1282,9 +1282,9 @@
       xScale={scaleBand()}
       x="fruit"
       y="value"
+      debug={settings.debug}
       tooltipContext={{
         mode: 'band',
-        debug: settings.debug,
       }}
     />
   </div>

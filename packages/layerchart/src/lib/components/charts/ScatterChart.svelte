@@ -53,9 +53,6 @@
   import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -72,15 +69,12 @@
     onTooltipClick = () => {},
     props = {},
     profile = false,
-    debug: debugProp,
     tooltipContext = true,
     marks,
     tooltip: tooltipProp,
     context = $bindable(),
     ...restProps
   }: ScatterChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
@@ -121,7 +115,6 @@
     : {
         mode: 'quadtree',
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

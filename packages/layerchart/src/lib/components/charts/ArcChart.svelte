@@ -144,9 +144,6 @@
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -170,7 +167,6 @@
     onTooltipClick = () => {},
     props = {},
     profile = false,
-    debug: debugProp,
     tooltipContext = true,
     marks,
     tooltip: tooltipProp,
@@ -184,8 +180,6 @@
     trackOuterRadius,
     ...restProps
   }: ArcChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const center = $derived(centerProp ?? placement === 'center');
 
@@ -327,7 +321,6 @@
     ? false
     : {
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

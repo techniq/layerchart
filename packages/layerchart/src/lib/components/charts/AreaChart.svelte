@@ -84,9 +84,6 @@
   } from '$lib/utils/common.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -108,14 +105,11 @@
     onPointClick,
     props = {},
     profile = false,
-    debug: debugProp,
     marks,
     tooltip: tooltipProp,
     context = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined
@@ -227,7 +221,6 @@
     : {
         mode: 'quadtree-x',
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

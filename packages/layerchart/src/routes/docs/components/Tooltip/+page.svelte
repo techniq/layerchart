@@ -628,9 +628,9 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
+      debug={charts.area.debug}
       tooltipContext={{
         mode: charts.area.mode,
-        debug: charts.area.debug,
       }}
     >
       <Layer>
@@ -677,9 +677,9 @@
       cDomain={keys}
       cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
       padding={{ left: 16, bottom: 24 }}
+      debug={charts.areaStack.debug}
       tooltipContext={{
         mode: charts.areaStack.mode,
-        debug: charts.areaStack.debug,
       }}
     >
       {#snippet children({ context })}
@@ -735,9 +735,9 @@
       x="startDate"
       y="name"
       padding={{ left: 36, bottom: 36 }}
+      debug={charts.dateTime.debug}
       tooltipContext={{
         mode: charts.dateTime.mode,
-        debug: charts.dateTime.debug,
       }}
     >
       <Layer>
@@ -785,9 +785,9 @@
       x={['startDate', 'endDate']}
       y="name"
       padding={{ left: 36, bottom: 36 }}
+      debug={charts.duration.debug}
       tooltipContext={{
         mode: charts.duration.mode,
-        debug: charts.duration.debug,
       }}
     >
       <Layer>
@@ -844,9 +844,9 @@
       x={['startDate', 'endDate']}
       y="name"
       padding={{ left: 36, bottom: 36 }}
+      debug={charts.multiDuration.debug}
       tooltipContext={{
         mode: charts.multiDuration.mode,
-        debug: charts.multiDuration.debug,
       }}
     >
       <Layer>
@@ -907,9 +907,9 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
+      debug={charts.bars.debug}
       tooltipContext={{
         mode: charts.bars.mode,
-        debug: charts.bars.debug,
       }}
     >
       <Layer>
@@ -958,9 +958,9 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
+      debug={charts.multiBars.debug}
       tooltipContext={{
         mode: charts.multiBars.mode,
-        debug: charts.multiBars.debug,
       }}
     >
       <Layer>
@@ -1012,9 +1012,9 @@
       x="x"
       y="y"
       padding={{ left: 30, bottom: 30 }}
+      debug={charts.scatter.debug}
       tooltipContext={{
         mode: charts.scatter.mode,
-        debug: charts.scatter.debug,
       }}
     >
       <Layer>

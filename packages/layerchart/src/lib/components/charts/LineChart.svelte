@@ -64,9 +64,6 @@
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -86,14 +83,11 @@
     onPointClick,
     props = {},
     profile = false,
-    debug: debugProp,
     tooltipContext = true,
     marks,
     context = $bindable(),
     ...restProps
   }: LineChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const isVertical = $derived(orientation === 'vertical');
 
@@ -164,7 +158,6 @@
     : {
         mode: isVertical ? 'quadtree-y' : 'quadtree-x',
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

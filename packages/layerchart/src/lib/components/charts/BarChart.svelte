@@ -98,9 +98,6 @@
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -127,7 +124,6 @@
     onBarClick = () => {},
     props = {},
     profile = false,
-    debug: debugProp,
     xScale: xScaleProp,
     yScale: yScaleProp,
     bandPadding = radial ? 0 : 0.4,
@@ -140,8 +136,6 @@
     context = $bindable(),
     ...restProps
   }: BarChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const isVertical = $derived(orientation === 'vertical');
   const valueAccessorProp = $derived(isVertical ? yProp : xProp);
@@ -301,7 +295,6 @@
     : {
         mode: 'band',
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

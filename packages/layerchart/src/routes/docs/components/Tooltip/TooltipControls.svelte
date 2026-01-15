@@ -17,7 +17,7 @@
       axis: HighlightProps['axis'];
       snapToDataX: boolean;
       snapToDataY: boolean;
-      debug: TooltipContextProps['debug'];
+      debug: boolean;
     };
   } = $props();
 </script>

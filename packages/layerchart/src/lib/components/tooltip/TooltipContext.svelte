@@ -113,13 +113,15 @@
   import { raise } from '$lib/utils/chart.js';
   import { TooltipState } from '$lib/states/tooltip.svelte.js';
   import { accessor, findRelatedData } from '$lib/utils/common.js';
+  import { getSettings } from '$lib/contexts/settings.js';
 
   const ctx = getChartContext<any>();
   const geo = getGeoContext();
+  const settings = getSettings();
 
   let {
     ref: refProp = $bindable(),
-    debug = false,
+    debug: debugProp,
     findTooltipData = 'closest',
     hideDelay = 0,
     locked = false,
@@ -139,6 +141,8 @@
 
   const tooltipState = new TooltipState<TData>(mode, showTooltip, hideTooltip);
   stateProp = tooltipState;
+
+  const debug = $derived(debugProp ?? settings.debug);
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)

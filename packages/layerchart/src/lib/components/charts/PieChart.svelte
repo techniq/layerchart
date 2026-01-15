@@ -194,9 +194,6 @@
 
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
-  import { getSettings } from '$lib/contexts/settings.js';
-
-  const settings = getSettings();
 
   let {
     data = [],
@@ -220,7 +217,6 @@
     onTooltipClick = () => {},
     props = {},
     profile = false,
-    debug: debugProp,
     tooltipContext = true,
     marks,
     tooltip: tooltipProp,
@@ -229,8 +225,6 @@
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
-
-  const debug = $derived(debugProp ?? settings.debug);
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
@@ -353,7 +347,6 @@
     ? false
     : {
         onclick: onTooltipClick,
-        debug,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}

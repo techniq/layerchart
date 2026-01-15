@@ -602,6 +602,7 @@
   generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
 >
   import { setGeoContext } from '$lib/contexts/geo.js';
+  import { getSettings } from '$lib/contexts/settings.js';
   import ChartChildren from './ChartChildren.svelte';
 
   let {
@@ -625,6 +626,7 @@
     ondragend,
     ondragstart,
     brush,
+    debug = false,
     class: className,
     ...restProps
   } = $derived(props);
@@ -648,6 +650,11 @@
 
   setChartContext(chartState);
   setGeoContext(chartState.geoState);
+
+  const settings = getSettings();
+  $effect(() => {
+    settings.debug = debug;
+  });
 
   const initialTransform = $derived(
     geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
