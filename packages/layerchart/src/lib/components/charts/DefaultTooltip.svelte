@@ -3,14 +3,14 @@
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
   import * as Tooltip from '../tooltip/index.js';
-  import type { SimplifiedChartPropsObject } from './types.js';
   import { format } from '@layerstack/utils';
+  import type { ChartChildrenProps } from '../ChartChildren.svelte';
 
   let {
     tooltipProps,
     canHaveTotal = false,
   }: {
-    tooltipProps?: SimplifiedChartPropsObject['tooltip'];
+    tooltipProps?: NonNullable<ChartChildrenProps<any>['props']>['tooltip'];
     canHaveTotal?: boolean;
   } = $props();
 

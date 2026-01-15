@@ -1,27 +1,10 @@
 <script lang="ts" module>
   import type { ChartPropsWithoutHTML } from '../Chart.svelte';
   import type { HighlightPointData } from '../Highlight.svelte';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import component for use in type definitions (typeof Spline)
   import Spline from '../Spline.svelte';
-
-  export type LineChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
-    | 'brush'
-    | 'canvas'
-    | 'grid'
-    | 'highlight'
-    | 'labels'
-    | 'legend'
-    | 'points'
-    | 'rule'
-    | 'spline'
-    | 'svg'
-    | 'tooltip'
-    | 'xAxis'
-    | 'yAxis'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type LineChartProps<TData> = {
@@ -35,9 +18,6 @@
        * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
        */
       series?: SeriesData<TData, typeof Spline>[];
-
-      /** Override the default props object type */
-      props?: LineChartPropsObjProp;
 
       /**
        * The event to be dispatched when the point is clicked.

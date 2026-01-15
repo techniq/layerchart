@@ -4,7 +4,7 @@
   import type { ChartState } from '$lib/contexts/chart.js';
   import type { ArcPropsWithoutHTML } from '../Arc.svelte';
   import type { Accessor } from '$lib/utils/common.js';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import components for use in type definitions (typeof Arc, typeof Group)
   import Arc from '../Arc.svelte';
@@ -18,10 +18,6 @@
     getGroupProps: () => ComponentProps<typeof Group>;
     getArcProps: (s: SeriesData<TData, typeof Arc>, i: number) => ComponentProps<typeof Arc>;
   };
-  export type ArcChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
-    'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type ArcChartProps<TData> = {
@@ -85,8 +81,6 @@
        * Maximum possible value, useful when `data` is single item
        */
       maxValue?: number;
-
-      props?: ArcChartPropsObjProp;
 
       /**
        * Placement of the ArcChart

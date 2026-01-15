@@ -1,25 +1,9 @@
 <script lang="ts" module>
   import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import component for use in type definitions (typeof Bars)
   import Bars from '../Bars.svelte';
-
-  export type BarChartPropsObjProp<TData> = Pick<
-    SimplifiedChartPropsObject<TData>,
-    | 'bars'
-    | 'brush'
-    | 'canvas'
-    | 'grid'
-    | 'highlight'
-    | 'labels'
-    | 'legend'
-    | 'rule'
-    | 'svg'
-    | 'tooltip'
-    | 'xAxis'
-    | 'yAxis'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type BarChartProps<TData> = {
@@ -61,8 +45,6 @@
        * @default 0
        */
       stackPadding?: number;
-
-      props?: BarChartPropsObjProp<TData>;
 
       /**
        * A callback function that is called when a bar is clicked.

@@ -1,25 +1,9 @@
 <script lang="ts" module>
   import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import component for use in type definitions (typeof Points)
   import Points from '../Points.svelte';
-
-  export type ScatterChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
-    | 'brush'
-    | 'canvas'
-    | 'grid'
-    | 'highlight'
-    | 'labels'
-    | 'legend'
-    | 'points'
-    | 'rule'
-    | 'svg'
-    | 'tooltip'
-    | 'xAxis'
-    | 'yAxis'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type ScatterChartProps<TData> = {
@@ -32,8 +16,6 @@
        * The series data to be used for the chart.
        */
       series?: SeriesData<TData, typeof Points>[];
-
-      props?: ScatterChartPropsObjProp;
 
       /**
        * Enable profiling to measure render time.

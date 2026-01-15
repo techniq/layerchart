@@ -6,7 +6,6 @@
   import type TooltipList from './tooltip/TooltipList.svelte';
   import type TooltipItem from './tooltip/TooltipItem.svelte';
   import type TooltipSeparator from './tooltip/TooltipSeparator.svelte';
-  import type LegendComponent from './Legend.svelte';
 
   // BaseChartProps
   export type ChartChildrenProps<
@@ -77,26 +76,29 @@
      */
     onTooltipClick?: (e: MouseEvent, details: { data: any }) => void;
 
-    // SimplifiedChartPropsObject
-    // TODO: use `marks` instead of `area`, `spline`, etc?
-    props?: {
-      // area?: Partial<ComponentProps<typeof Area>>;
-      // arc?: Partial<ComponentProps<typeof Arc>>;
-      // bars?: Partial<ComponentProps<typeof Bars>>;
-      // brush?: Partial<ComponentProps<typeof BrushContext>>;
-      canvas?: Partial<ComponentProps<typeof Canvas>>;
-      grid?: Partial<ComponentProps<typeof Grid>>;
-      // group?: Partial<ComponentProps<typeof Group>>;
-      highlight?: Partial<ComponentProps<typeof Highlight>>;
-      labels?: Partial<ComponentProps<typeof Labels<TData>>>;
-      legend?: Partial<ComponentProps<typeof Legend>>;
-      // line?: Partial<ComponentProps<typeof Line>>;
-      // pie?: Partial<ComponentProps<typeof Pie>>;
-      // spline?: Partial<ComponentProps<typeof Spline>>;
-      points?: Partial<ComponentProps<typeof Points>>;
-      rule?: Partial<ComponentProps<typeof Rule>>;
-      svg?: Partial<ComponentProps<typeof Svg>>;
-      tooltip?: {
+    /**
+     * Additional props to be passed to the components rendered internally by Chart components.
+     * This is useful for customizing the behavior of individual components, without having
+     * to fully override them via snippets.
+     */
+    props?: Partial<{
+      area: Partial<ComponentProps<typeof Area>>;
+      arc: Partial<ComponentProps<typeof Arc>>;
+      bars: Partial<ComponentProps<typeof Bars>>;
+      brush: Partial<ComponentProps<typeof BrushContext>>;
+      canvas: Partial<ComponentProps<typeof Canvas>>;
+      grid: Partial<ComponentProps<typeof Grid>>;
+      group: Partial<ComponentProps<typeof Group>>;
+      highlight: Partial<ComponentProps<typeof Highlight>>;
+      labels: Partial<ComponentProps<Labels<TData>>>;
+      legend: Partial<ComponentProps<typeof Legend>>;
+      line: Partial<ComponentProps<typeof Line>>;
+      pie: Partial<ComponentProps<typeof Pie>>;
+      spline: Partial<ComponentProps<typeof Spline>>;
+      points: Partial<ComponentProps<typeof Points>>;
+      rule: Partial<ComponentProps<typeof Rule>>;
+      svg: Partial<ComponentProps<typeof Svg>>;
+      tooltip: {
         context?: Partial<ComponentProps<typeof TooltipContext>>;
         root?: Omit<Partial<ComponentProps<typeof Tooltip>>, 'context'>;
         header?: Partial<ComponentProps<typeof TooltipHeader>>;
@@ -105,9 +107,9 @@
         separator?: Partial<ComponentProps<typeof TooltipSeparator>>;
         hideTotal?: boolean;
       };
-      xAxis?: Partial<ComponentProps<typeof Axis>>;
-      yAxis?: Partial<ComponentProps<typeof Axis>>;
-    };
+      xAxis: Partial<ComponentProps<typeof Axis>>;
+      yAxis: Partial<ComponentProps<typeof Axis>>;
+    }>;
 
     // Snippets
     children?: ChartSnippet;
@@ -131,16 +133,24 @@
   import { asAny } from '../utils/types.js';
   import { getObjectOrNull } from '../utils/common.js';
 
+  import Area from './Area.svelte';
+  import Arc from './Arc.svelte';
   import Axis from './Axis.svelte';
+  import Bars from './Bars.svelte';
+  import BrushContext from './BrushContext.svelte';
   import ChartAnnotations from './charts/ChartAnnotations.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
+  import Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
   import Points from './Points.svelte';
   import Labels from './Labels.svelte';
   import Legend from './Legend.svelte';
+  import Line from './Line.svelte';
+  import Pie from './Pie.svelte';
   import Rule from './Rule.svelte';
+  import Spline from './Spline.svelte';
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
 

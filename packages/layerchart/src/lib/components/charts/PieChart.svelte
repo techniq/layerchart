@@ -3,7 +3,7 @@
   import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
   import type { ChartState } from '$lib/contexts/chart.js';
   import type { Accessor } from '$lib/utils/common.js';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import components for use in type definitions (typeof Arc, typeof Group, typeof Pie)
   import Arc from '../Arc.svelte';
@@ -17,10 +17,6 @@
     visibleData: TData[];
     getGroupProps: () => ComponentProps<typeof Group>;
   };
-  export type PieChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
-    'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type PieChartProps<TData> = {
@@ -79,8 +75,6 @@
        * @default [0, 360]
        */
       range?: [number, number];
-
-      props?: PieChartPropsObjProp;
 
       /**
        * Inner radius of the arc.

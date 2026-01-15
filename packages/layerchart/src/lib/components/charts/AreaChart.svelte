@@ -1,28 +1,10 @@
 <script lang="ts" module>
   import type { ChartPropsWithoutHTML } from '../Chart.svelte';
   import type { HighlightPointData } from '../Highlight.svelte';
-  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+  import type { SeriesData } from './types.js';
 
   // Import component for use in type definitions (typeof Area)
   import Area from '../Area.svelte';
-
-  export type AreaChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
-    | 'area'
-    | 'brush'
-    | 'canvas'
-    | 'grid'
-    | 'highlight'
-    | 'labels'
-    | 'legend'
-    | 'line'
-    | 'points'
-    | 'rule'
-    | 'svg'
-    | 'tooltip'
-    | 'xAxis'
-    | 'yAxis'
-  >;
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type AreaChartProps<TData> = {
@@ -53,13 +35,6 @@
         e: MouseEvent,
         details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
       ) => void;
-
-      /**
-       * Additional props to be passed to the components rendered internally by the
-       * `AreaChart` component. This is useful for customizing the behavior of the individual
-       * components, without having to fully override them via a snippet.
-       */
-      props?: AreaChartPropsObjProp;
 
       /**
        * Enable profiling to measure render time.
