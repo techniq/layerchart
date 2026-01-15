@@ -1,4 +1,11 @@
 <script lang="ts" module>
+  import type { ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { HighlightPointData } from '../Highlight.svelte';
+  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+
+  // Import component for use in type definitions (typeof Spline)
+  import Spline from '../Spline.svelte';
+
   export type LineChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
     | 'brush'
@@ -16,14 +23,20 @@
     | 'yAxis'
   >;
 
-  export type LineChartProps<TData> = SimplifiedChartProps<TData, typeof Spline> & {
+  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
+  export type LineChartProps<TData> = {
     /**
-     * The orientation of the line chart.
-     *
-     * @default 'horizontal'
+     * The data for the chart
      */
-    orientation?: 'vertical' | 'horizontal';
+    data?: TData[] | readonly TData[];
+  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+    /**
+     * The series data to be used for the chart.
+     * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
+     */
+    series?: SeriesData<TData, typeof Spline>[];
 
+    /** Override the default props object type */
     props?: LineChartPropsObjProp;
 
     /**
@@ -33,6 +46,12 @@
       e: MouseEvent,
       details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
     ) => void;
+
+    /**
+     * Enable profiling to measure render time.
+     * @default false
+     */
+    profile?: boolean;
   };
 </script>
 
@@ -40,11 +59,8 @@
   import { onMount } from 'svelte';
 
   import Chart, { type ChartProps } from '../Chart.svelte';
-  import { type HighlightPointData } from '../Highlight.svelte';
-  import Spline from '../Spline.svelte';
 
   import { chartDataArray, defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';

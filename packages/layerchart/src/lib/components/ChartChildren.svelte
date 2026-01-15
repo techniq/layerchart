@@ -67,10 +67,15 @@
      */
     tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
-    highlight?: boolean | ChartSnippet;
+    highlight?: boolean | Partial<ComponentProps<typeof Highlight>> | ChartSnippet;
 
     /** Annotations to show on chart */
     annotations?: ChartAnnotationsType;
+
+    /**
+     * Callback when tooltip data is clicked.
+     */
+    onTooltipClick?: (e: MouseEvent, details: { data: any }) => void;
 
     // SimplifiedChartPropsObject
     // TODO: use `marks` instead of `area`, `spline`, etc?

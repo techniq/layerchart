@@ -1,4 +1,10 @@
 <script lang="ts" module>
+  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+
+  // Import component for use in type definitions (typeof Bars)
+  import Bars from '../Bars.svelte';
+
   export type BarChartPropsObjProp<TData> = Pick<
     SimplifiedChartPropsObject<TData>,
     | 'bars'
@@ -15,10 +21,26 @@
     | 'yAxis'
   >;
 
-  export type BarChartProps<TData> = Omit<
-    SimplifiedChartProps<TData, typeof Bars>,
-    'seriesLayout'
-  > & {
+  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
+  export type BarChartProps<TData> = {
+    /**
+     * The data for the chart
+     */
+    data?: TData[] | readonly TData[];
+  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+    /**
+     * The series data to be used for the chart.
+     * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
+     */
+    series?: SeriesData<TData, typeof Bars>[];
+
+    /**
+     * The layout of the series.
+     *
+     * @default 'overlap'
+     */
+    seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' | 'group';
+
     /**
      * Padding between primary x or y bands/bars, applied to scaleBand().padding()
      *
@@ -53,11 +75,10 @@
     ) => void;
 
     /**
-     * The layout of the series.
-     *
-     * @default 'overlap'
+     * Enable profiling to measure render time.
+     * @default false
      */
-    seriesLayout?: SimplifiedChartProps<TData, typeof Bars>['seriesLayout'] | 'group';
+    profile?: boolean;
   };
 </script>
 
@@ -65,8 +86,7 @@
   import { onMount } from 'svelte';
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
 
-  import Bars from '../Bars.svelte';
-  import Chart, { type ChartProps } from '../Chart.svelte';
+  import Chart from '../Chart.svelte';
   import Labels from '../Labels.svelte';
 
   import {
@@ -75,7 +95,6 @@
     defaultChartPadding,
     type Accessor,
   } from '$lib/utils/common.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';

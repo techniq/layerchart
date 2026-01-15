@@ -1,4 +1,15 @@
 <script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
+  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartState } from '$lib/contexts/chart.js';
+  import type { ArcPropsWithoutHTML } from '../Arc.svelte';
+  import type { Accessor } from '$lib/utils/common.js';
+  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+
+  // Import components for use in type definitions (typeof Arc, typeof Group)
+  import Arc from '../Arc.svelte';
+  import Group from '../Group.svelte';
+
   export type ArcChartExtraSnippetProps<TData> = {
     key: Accessor<TData>;
     label: Accessor<TData>;
@@ -12,10 +23,16 @@
     'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
   >;
 
-  export type ArcChartProps<TData> = Omit<
-    SimplifiedChartProps<TData, typeof Arc, ArcChartExtraSnippetProps<TData>>,
+  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
+  export type ArcChartProps<TData> = {
+    /**
+     * The data for the chart
+     */
+    data?: TData[] | readonly TData[];
+  } & Omit<
+    ChartPropsWithoutHTML<any>,
     // Props that don't apply to ArcChart
-    'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule' | 'seriesLayout'
+    'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
   > &
     Pick<
       ArcPropsWithoutHTML,
@@ -31,6 +48,11 @@
       | 'outerRadius'
       | 'range'
     > & {
+      /**
+       * The series data to be used for the chart.
+       */
+      series?: SeriesData<TData, typeof Arc>[];
+
       /**
        * Key accessor
        *
@@ -90,38 +112,36 @@
         detail: { data: any; series: SeriesData<TData, typeof Arc> }
       ) => void;
 
-      arc?: SimplifiedChartSnippet<
-        TData,
-        typeof Arc,
-        ArcChartExtraSnippetProps<TData> & {
-          props: ComponentProps<typeof Arc>;
-          /**
-           * The index of the series currently being iterated over.
-           */
-          seriesIndex: number;
-        }
+      arc?: Snippet<
+        [
+          { context: ChartState<TData> } & ArcChartExtraSnippetProps<TData> & {
+            props: ComponentProps<typeof Arc>;
+            /**
+             * The index of the series currently being iterated over.
+             */
+            seriesIndex: number;
+          },
+        ]
       >;
+
+      /**
+       * Enable profiling to measure render time.
+       * @default false
+       */
+      profile?: boolean;
     };
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
+  import { onMount } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Arc, { type ArcPropsWithoutHTML } from '../Arc.svelte';
-  import Chart, { type ChartProps } from '../Chart.svelte';
-  import Group from '../Group.svelte';
+  import Chart from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, getObjectOrNull, type Accessor } from '../../utils/common.js';
-  import type {
-    SeriesData,
-    SimplifiedChartProps,
-    SimplifiedChartPropsObject,
-    SimplifiedChartSnippet,
-  } from './types.js';
+  import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
   import { getSettings } from '$lib/contexts/settings.js';
@@ -191,7 +211,7 @@
   const series: SeriesData<TData, typeof Arc>[] = $derived.by(() => {
     if (!isDefaultSeries) return _series;
     // build series from data
-    return data.map((d) => {
+    return chartDataArray(data).map((d) => {
       return {
         key: keyAccessor(d),
         value: valueAccessor(d),
@@ -239,7 +259,7 @@
   function getArcProps(s: SeriesData<TData, typeof Arc>, i: number): ComponentProps<typeof Arc> {
     if (!context) return {};
     const d = s.data?.[0] || chartData[0];
-    const multiSeries = data.length > 1 || series.length > 1;
+    const multiSeries = chartDataArray(data).length > 1 || series.length > 1;
     return {
       value: valueAccessor(d),
       domain: [0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)],

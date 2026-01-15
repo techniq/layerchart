@@ -1,4 +1,15 @@
 <script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
+  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartState } from '$lib/contexts/chart.js';
+  import type { Accessor } from '$lib/utils/common.js';
+  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+
+  // Import components for use in type definitions (typeof Arc, typeof Group, typeof Pie)
+  import Arc from '../Arc.svelte';
+  import Group from '../Group.svelte';
+  import Pie from '../Pie.svelte';
+
   export type PieChartExtraSnippetProps<TData> = {
     key: Accessor<TData>;
     label: Accessor<TData>;
@@ -11,11 +22,22 @@
     'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
   >;
 
-  export type PieChartProps<TData> = Omit<
-    SimplifiedChartProps<TData, typeof Arc, PieChartExtraSnippetProps<TData>>,
+  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
+  export type PieChartProps<TData> = {
+    /**
+     * The data for the chart
+     */
+    data?: TData[] | readonly TData[];
+  } & Omit<
+    ChartPropsWithoutHTML<any>,
     // Props that don't apply to PieChart
-    'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule' | 'seriesLayout'
+    'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
   > & {
+    /**
+     * The series data to be used for the chart.
+     */
+    series?: SeriesData<TData, typeof Arc>[];
+
     /**
      * Key accessor
      *
@@ -108,19 +130,19 @@
      *
      * Use the `props` snippet prop to access the default props.
      */
-    pie?: SimplifiedChartSnippet<
-      TData,
-      typeof Arc,
-      PieChartExtraSnippetProps<TData> & {
-        /**
-         * Default props to apply to the Pie component.
-         */
-        props: ComponentProps<typeof Pie>;
-        /**
-         * The index of the pie series currently being iterated over.
-         */
-        index: number;
-      }
+    pie?: Snippet<
+      [
+        { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
+          /**
+           * Default props to apply to the Pie component.
+           */
+          props: ComponentProps<typeof Pie>;
+          /**
+           * The index of the pie series currently being iterated over.
+           */
+          index: number;
+        },
+      ]
     >;
 
     /**
@@ -128,21 +150,21 @@
      *
      * Use the `props` snippet prop to access the default props.
      */
-    arc?: SimplifiedChartSnippet<
-      TData,
-      typeof Arc,
-      PieChartExtraSnippetProps<TData> & {
-        props: ComponentProps<typeof Arc>;
-        /**
-         * The index of the arc currently being iterated over
-         */
-        index: number;
+    arc?: Snippet<
+      [
+        { context: ChartState<TData> } & PieChartExtraSnippetProps<TData> & {
+          props: ComponentProps<typeof Arc>;
+          /**
+           * The index of the arc currently being iterated over
+           */
+          index: number;
 
-        /**
-         * The index of the series currently being iterated over.
-         */
-        seriesIndex: number;
-      }
+          /**
+           * The index of the series currently being iterated over.
+           */
+          seriesIndex: number;
+        },
+      ]
     >;
 
     /**
@@ -152,28 +174,25 @@
       e: MouseEvent,
       detail: { data: any; series: SeriesData<TData, typeof Arc> }
     ) => void;
+
+    /**
+     * Enable profiling to measure render time.
+     * @default false
+     */
+    profile?: boolean;
   };
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
+  import { onMount } from 'svelte';
   import { format } from '@layerstack/utils';
   import type { PieArcDatum } from 'd3-shape';
   import { schemeObservable10 } from 'd3-scale-chromatic';
 
-  import Arc from '../Arc.svelte';
-  import Chart, { type ChartProps } from '../Chart.svelte';
-  import Group from '../Group.svelte';
-  import Pie from '../Pie.svelte';
+  import Chart from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, getObjectOrNull, type Accessor } from '../../utils/common.js';
-  import type {
-    SeriesData,
-    SimplifiedChartProps,
-    SimplifiedChartPropsObject,
-    SimplifiedChartSnippet,
-  } from './types.js';
+  import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { getSettings } from '$lib/contexts/settings.js';
 

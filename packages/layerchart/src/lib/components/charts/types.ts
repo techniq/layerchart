@@ -1,7 +1,6 @@
 import type { Accessor } from '$lib/utils/common.js';
-import type { Component, ComponentProps, Snippet } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 import type BrushContext from '../BrushContext.svelte';
-import type { AnyScale } from '$lib/utils/scales.svelte.js';
 import type {
   AnnotationPoint,
   AnnotationLine,
@@ -16,7 +15,6 @@ import type {
   Spline,
 } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
-import type { TooltipState } from '$lib/states/tooltip.svelte.js';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
 import type Svg from '../layers/Svg.svelte';
@@ -25,14 +23,11 @@ import type TooltipHeader from '../tooltip/TooltipHeader.svelte';
 import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
-import type { ChartProps } from '../Chart.svelte';
-import type { ChartState } from '$lib/states/chart.svelte.js';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
 import type Arc from '../Arc.svelte';
 import type Canvas from '../layers/Canvas.svelte';
-import type { Without } from '$lib/utils/types.js';
 
 export type SeriesData<TData, TComponent extends Component> = {
   key: string;
@@ -47,17 +42,10 @@ export type SeriesData<TData, TComponent extends Component> = {
   props?: Partial<ComponentProps<TComponent>>;
 };
 
-export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSnippetProps> = {
-  /**
-   * The chart context
-   */
-  context: ChartState<TData>;
-} & TSnippetProps;
-
-export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippetProps> = Snippet<
-  [SimplifiedChartSnippetProps<TData, TComponent, TSnippetProps>]
->;
-
+/**
+ * Props object for configuring sub-components in simplified charts.
+ * Each simplified chart picks the relevant props for its `props` bag.
+ */
 export type SimplifiedChartPropsObject<TData = any> = {
   area?: Partial<ComponentProps<typeof Area>>;
   arc?: Partial<ComponentProps<typeof Arc>>;
@@ -87,172 +75,6 @@ export type SimplifiedChartPropsObject<TData = any> = {
   xAxis?: Partial<ComponentProps<typeof Axis>>;
   yAxis?: Partial<ComponentProps<typeof Axis>>;
 };
-
-export type BaseChartProps<
-  TData,
-  TComponent extends Component,
-  TSnippetProps = {},
-  ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
-> = {
-  /**
-   * The data to be rendered in the chart.
-   *
-   * @default []
-   */
-  data?: TData[];
-
-  /**
-   * The x accessor function to be used for the chart.
-   *
-   */
-  x?: Accessor<TData>;
-
-  /**
-   * The y accessor function to be used for the chart.
-   *
-   */
-  y?: Accessor<TData>;
-
-  /**
-   * Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to
-   * radial.  Radial lines are positioned relative to the origin, use transform
-   * (ex. `<Group center>`) to change the origin
-   *
-   * @default false
-   */
-  radial?: boolean;
-
-  /**
-   * The series data to be used for the chart.
-   *
-   * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-   */
-  series?: SeriesData<TData, TComponent>[];
-
-  /**
-   * The layout of the series.
-   *
-   * @default 'overlap'
-   */
-  seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
-
-  /**
-   * The axis to be used for the chart.
-   *
-   * @default true
-   */
-  axis?:
-    | ComponentProps<typeof Axis>
-    | 'x'
-    | 'y'
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
-
-  /**
-   * The brush to be used for the chart.
-   *
-   * @default false
-   */
-  brush?: ComponentProps<typeof BrushContext> | boolean;
-
-  /**
-   * The grid to be used for the chart.
-   *
-   * @default true
-   */
-  grid?: ComponentProps<typeof Grid> | boolean | ChartSnippet;
-
-  /**
-   * The labels to be used for the chart.
-   *
-   * @default false
-   */
-  labels?: ComponentProps<typeof Labels<TData>> | boolean | ChartSnippet;
-
-  /**
-   * The legend to be used for the chart.
-   *
-   * @default false
-   */
-  legend?: ComponentProps<typeof Legend> | boolean | ChartSnippet;
-
-  /**
-   * The points to be used for the chart.
-   *
-   * @default false
-   */
-  points?: ComponentProps<typeof Points> | boolean | ChartSnippet;
-
-  /**
-   * The rule to be used for the chart.
-   *
-   * @default true
-   */
-  rule?: ComponentProps<typeof Rule> | boolean | ChartSnippet;
-
-  /**
-   * The tooltip to be used for the chart.
-   */
-  // tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
-
-  highlight?: ComponentProps<typeof Highlight> | boolean | ChartSnippet;
-
-  /** Annotations to show on chart */
-  annotations?: ChartAnnotations;
-
-  /**
-   * The tooltip context to be used for the chart.
-   */
-  // tooltipContext?: TooltipState;
-
-  /**
-   * The event to be dispatched when the tooltip is clicked.
-   *
-   */
-  onTooltipClick?: (e: MouseEvent, details: { data: any }) => void;
-
-  /**
-   * The render context to be used for the chart.
-   *
-   * @default 'svg'
-   */
-  layer?: 'svg' | 'canvas';
-
-  /**
-   * Whether to log the initial render performance using `console.time`.
-   *
-   * @default false
-   */
-  profile?: boolean;
-
-  /**
-   * Whether to enable debug mode.
-   *
-   * @default false
-   */
-  debug?: boolean;
-
-  /**
-   * A bindable reference to the chart context.
-   */
-  context?: ChartState<TData>;
-
-  children?: ChartSnippet;
-  aboveContext?: ChartSnippet;
-  belowContext?: ChartSnippet;
-  belowMarks?: ChartSnippet;
-  aboveMarks?: ChartSnippet;
-  marks?: ChartSnippet;
-  tooltip?: ChartSnippet;
-};
-
-export type SimplifiedChartProps<
-  TData,
-  TComponent extends Component,
-  TSnippetProps = {},
-  ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
-> = BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet> &
-  Without<ChartProps<TData>, BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>>;
 
 export type ChartAnnotations = Array<
   | ({

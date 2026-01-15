@@ -1,4 +1,10 @@
 <script lang="ts" module>
+  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { SeriesData, SimplifiedChartPropsObject } from './types.js';
+
+  // Import component for use in type definitions (typeof Points)
+  import Points from '../Points.svelte';
+
   export type ScatterChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
     | 'brush'
@@ -15,8 +21,25 @@
     | 'yAxis'
   >;
 
-  export type ScatterChartProps<TData> = SimplifiedChartProps<TData, typeof Points> & {
+  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
+  export type ScatterChartProps<TData> = {
+    /**
+     * The data for the chart
+     */
+    data?: TData[] | readonly TData[];
+  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+    /**
+     * The series data to be used for the chart.
+     */
+    series?: SeriesData<TData, typeof Points>[];
+
     props?: ScatterChartPropsObjProp;
+
+    /**
+     * Enable profiling to measure render time.
+     * @default false
+     */
+    profile?: boolean;
   };
 </script>
 
@@ -24,12 +47,10 @@
   import { onMount } from 'svelte';
   import { format } from '@layerstack/utils';
 
-  import Chart, { type ChartProps } from '../Chart.svelte';
-  import Points from '../Points.svelte';
+  import Chart from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
   import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
   import { getSettings } from '$lib/contexts/settings.js';
