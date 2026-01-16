@@ -318,7 +318,8 @@
 <style>
   @layer base {
     :global(:where(.lc-path)) {
-      --fill-color: none;
+      /* Use transparent to enable pointer events */
+      --fill-color: transparent;
       --stroke-color: var(--color-surface-content, currentColor);
     }
 
