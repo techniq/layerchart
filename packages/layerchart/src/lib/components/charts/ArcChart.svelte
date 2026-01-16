@@ -215,9 +215,9 @@
 
   // ArcChart needs local chartData for visibleData filtering and cDomain calculation
   const chartData = $derived(
-    (seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)) as Array<
-      TData
-    >
+    (seriesState.allSeriesData.length
+      ? seriesState.allSeriesData
+      : chartDataArray(data)) as Array<TData>
   );
 
   const visibleData = $derived(
