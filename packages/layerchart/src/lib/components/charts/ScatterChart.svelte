@@ -115,28 +115,23 @@
   {legend}
   {props}
 >
-  {#snippet marks(snippetProps)}
+  {#snippet marks({ context })}
     {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+      {@render marks({ context })}
     {:else}
-      {#each seriesState.visibleSeries as s, i (s.key)}
+      {#each context.series.visibleSeries as s, i (s.key)}
         <Points seriesKey={s.key} {...props.points} />
       {/each}
     {/if}
   {/snippet}
 
-  {#snippet tooltip(snippetProps)}
-    {@const tooltipSnippetProps = {
-      context: snippetProps.context,
-      getLegendProps: () => ({ ...props.legend }),
-    }}
+  {#snippet tooltip({ context })}
     {#if typeof tooltipProp === 'function'}
-      {@render tooltipProp(tooltipSnippetProps)}
+      {@render tooltipProp({ context })}
     {:else if tooltipContext}
-      <Tooltip.Root context={snippetProps.context} {...props.tooltip?.root}>
+      <Tooltip.Root {context} {...props.tooltip?.root}>
         {#snippet children({ data })}
-          {@const ctx = snippetProps.context}
-          {@const activeSeries = ctx.tooltip.series[0]}
+          {@const activeSeries = context.tooltip.series[0]}
           {#if activeSeries?.key !== 'default'}
             <Tooltip.Header
               value={activeSeries.label ?? activeSeries.key}
@@ -146,28 +141,28 @@
           {/if}
           <Tooltip.List {...props.tooltip?.list}>
             <Tooltip.Item
-              label={typeof ctx.config.x === 'string' ? ctx.config.x : 'x'}
-              value={ctx.x(data)}
+              label={typeof context.config.x === 'string' ? context.config.x : 'x'}
+              value={context.x(data)}
               {format}
-              onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
-              onpointerleave={() => (seriesState.highlightKey = null)}
+              onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+              onpointerleave={() => (context.series.highlightKey = null)}
               {...props.tooltip?.item}
             />
             <Tooltip.Item
-              label={typeof ctx.config.y === 'string' ? ctx.config.y : 'y'}
-              value={ctx.y(data)}
+              label={typeof context.config.y === 'string' ? context.config.y : 'y'}
+              value={context.y(data)}
               {format}
-              onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
-              onpointerleave={() => (seriesState.highlightKey = null)}
+              onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+              onpointerleave={() => (context.series.highlightKey = null)}
               {...props.tooltip?.item}
             />
-            {#if ctx.config.r}
+            {#if context.config.r}
               <Tooltip.Item
-                label={typeof ctx.config.r === 'string' ? ctx.config.r : 'r'}
-                value={ctx.r(data)}
+                label={typeof context.config.r === 'string' ? context.config.r : 'r'}
+                value={context.r(data)}
                 {format}
-                onpointerenter={() => (seriesState.highlightKey = activeSeries?.key ?? null)}
-                onpointerleave={() => (seriesState.highlightKey = null)}
+                onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+                onpointerleave={() => (context.series.highlightKey = null)}
                 {...props.tooltip?.item}
               />
             {/if}
