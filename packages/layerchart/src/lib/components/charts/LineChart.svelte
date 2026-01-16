@@ -110,7 +110,6 @@
   }
 </script>
 
-<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
   {data}
