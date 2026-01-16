@@ -168,6 +168,16 @@ export class SeriesState<TData, TComponent extends Component> {
       .filter((d) => d) as Array<TData & { seriesKey: string }>;
   }
 
+  /**
+   * Get data from only visible series (filtered by selectedKeys).
+   * Use this for domain calculations when series can be shown/hidden.
+   */
+  get visibleSeriesData() {
+    return this.visibleSeries
+      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+      .filter((d) => d) as Array<TData & { seriesKey: string }>;
+  }
+
   get allSeriesColors() {
     return this.#series.map((s) => s.color).filter((c) => c != null) as Array<
       NonNullable<SeriesData<TData, TComponent>['color']>

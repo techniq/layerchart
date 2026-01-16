@@ -136,31 +136,29 @@ export class ChartState<
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
 
-  // If seriesState has series-specific data, use that; otherwise use props.data
-  // This allows simplified charts to pass raw data and let Chart derive chartData from seriesState
+  // If seriesState has series-specific data, use visible series data (for domain calculations).
+  // This allows simplified charts to pass raw data and let Chart derive chartData from seriesState.
+  // Using visibleSeriesData ensures domain recalculates when series are shown/hidden via legend.
   data = $derived.by(() => {
-    if (this.seriesState?.allSeriesData?.length) {
-      return this.seriesState.allSeriesData;
+    if (this.seriesState?.visibleSeriesData?.length) {
+      return this.seriesState.visibleSeriesData;
     }
     return this.props.data ?? [];
   });
 
   flatData = $derived((this.props.flatData ?? this.data) as TData[]);
 
-  // Cached scale props - use props directly to avoid accessing this.flatData
+  // Cached scale props - use this.flatData which derives from seriesState.visibleSeriesData when available
   _xScaleProp = $derived.by(() => {
-    const flatData = (this.props.flatData ?? this.props.data ?? []) as TData[];
-    return this.props.xScale ?? autoScale(this.props.xDomain, flatData, this.props.x);
+    return this.props.xScale ?? autoScale(this.props.xDomain, this.flatData, this.props.x);
   });
 
   _yScaleProp = $derived.by(() => {
-    const flatData = (this.props.flatData ?? this.props.data ?? []) as TData[];
-    return this.props.yScale ?? autoScale(this.props.yDomain, flatData, this.props.y);
+    return this.props.yScale ?? autoScale(this.props.yDomain, this.flatData, this.props.y);
   });
 
   _zScaleProp = $derived.by(() => {
-    const flatData = (this.props.flatData ?? this.props.data ?? []) as TData[];
-    return this.props.zScale ?? autoScale(this.props.zDomain, flatData, this.props.z);
+    return this.props.zScale ?? autoScale(this.props.zDomain, this.flatData, this.props.z);
   });
 
   _rScaleProp = $derived(this.props.rScale ?? scaleSqrt());
