@@ -109,13 +109,6 @@
         : null
   );
 
-  // Chart data uses series data if available, otherwise base data
-  const chartData = $derived(
-    (seriesState.allSeriesData.length
-      ? seriesState.allSeriesData
-      : chartDataArray(data)) as Array<TData>
-  );
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   // Highlight needs per-series props for stacked data
@@ -181,7 +174,7 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  data={chartData}
+  {data}
   {x}
   {xDomain}
   y={resolveAccessor(y)}

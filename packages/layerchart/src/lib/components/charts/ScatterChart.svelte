@@ -63,12 +63,6 @@
   );
   const seriesState = new SeriesState(() => series);
 
-  const chartData = $derived(
-    seriesState.visibleSeries
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData>
-  );
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   if (profile) {
@@ -82,7 +76,7 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  data={chartData}
+  {data}
   x={xProp}
   {xDomain}
   y={yProp}

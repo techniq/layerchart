@@ -135,7 +135,16 @@ export class ChartState<
   // Use $derived fields instead of getters for caching
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
-  data = $derived(this.props.data ?? []);
+
+  // If seriesState has series-specific data, use that; otherwise use props.data
+  // This allows simplified charts to pass raw data and let Chart derive chartData from seriesState
+  data = $derived.by(() => {
+    if (this.seriesState?.allSeriesData?.length) {
+      return this.seriesState.allSeriesData;
+    }
+    return this.props.data ?? [];
+  });
+
   flatData = $derived((this.props.flatData ?? this.data) as TData[]);
 
   // Cached scale props - use props directly to avoid accessing this.flatData

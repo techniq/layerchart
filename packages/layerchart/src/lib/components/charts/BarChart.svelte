@@ -156,12 +156,8 @@
 
   const isGroupSeries = $derived(seriesLayout === 'group');
 
-  // Chart data uses series data if available, otherwise base data
-  const chartData = $derived(
-    (seriesState.allSeriesData.length
-      ? seriesState.allSeriesData
-      : chartDataArray(data)) as Array<TData>
-  );
+  // Use first data item for scale type detection
+  const firstDataItem = $derived(data[0]);
 
   const xScale = $derived(
     xScaleProp ??
@@ -169,7 +165,7 @@
         ? scaleTime()
         : isVertical
           ? scaleBand().padding(bandPadding)
-          : accessor(xProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
+          : firstDataItem && accessor(xProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
             ? scaleTime()
             : scaleLinear())
   );
@@ -180,7 +176,7 @@
       (yInterval
         ? scaleTime()
         : isVertical
-          ? accessor(yProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
+          ? firstDataItem && accessor(yProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
             ? scaleTime()
             : scaleLinear()
           : scaleBand().padding(bandPadding))
@@ -247,7 +243,7 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  data={chartData}
+  {data}
   x={resolveAccessor(xProp)}
   {xDomain}
   {xScale}

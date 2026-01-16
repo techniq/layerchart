@@ -40,7 +40,7 @@
 
   import Chart, { type ChartProps } from '../Chart.svelte';
 
-  import { chartDataArray, defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
+  import { defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
@@ -92,12 +92,6 @@
   );
   const seriesState = new SeriesState(() => series);
 
-  const chartData = $derived(
-    (seriesState.allSeriesData.length
-      ? seriesState.allSeriesData
-      : chartDataArray(data)) as Array<TData>
-  );
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   const highlightWithPointClick = $derived(
@@ -119,7 +113,7 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  data={chartData}
+  {data}
   {xScale}
   x={xProp ?? (isVertical ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
