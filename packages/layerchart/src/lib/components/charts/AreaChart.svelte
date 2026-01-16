@@ -49,7 +49,6 @@
 
   import Chart, { type ChartProps } from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
-  import Points from '../Points.svelte';
 
   import {
     chartDataArray,
@@ -72,7 +71,6 @@
     brush = false,
     grid = true,
     legend = false,
-    points: pointsProp = false,
     tooltipContext = true,
     highlight: highlightProp = true,
     rule = true,
@@ -233,22 +231,6 @@
           }}
           {...props.area}
           {...s.props}
-        />
-      {/each}
-    {/if}
-  {/snippet}
-
-  {#snippet points(snippetProps)}
-    {#if typeof pointsProp === 'function'}
-      {@render pointsProp(snippetProps)}
-    {:else if pointsProp}
-      {#each seriesState.visibleSeries as s (s.key)}
-        <Points
-          seriesKey={s.key}
-          stroke="var(--color-surface-100, light-dark(white, black))"
-          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
-          {...props.points}
-          {...typeof pointsProp === 'object' ? pointsProp : null}
         />
       {/each}
     {/if}

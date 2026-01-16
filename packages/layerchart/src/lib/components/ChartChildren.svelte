@@ -248,7 +248,12 @@
         {@render points(snippetProps)}
       {:else if points}
         {#each context.series.visibleSeries as s, i (s.key)}
-          <Points seriesKey={s.key} {...getObjectOrNull(points)} {...props.points} />
+          <Points
+            seriesKey={s.key}
+            stroke="var(--color-surface-100, light-dark(white, black))"
+            {...getObjectOrNull(points)}
+            {...props.points}
+          />
         {/each}
       {/if}
 
