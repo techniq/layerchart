@@ -28,7 +28,7 @@ export async function loadExample(
 			default: Component;
 			layers?: string[];
 		};
-		const source = (rawSource.default as string).replace(/^.*export .*;.*$/gm, '');
+		const source = (rawSource.default as string).replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '');
 
 		return { component: comp, source, module };
 	} catch (e) {
@@ -84,7 +84,7 @@ export async function loadExampleByPath(resolvedPath: string): Promise<LoadedExa
 		}
 
 		const comp = componentModule.default as Component;
-		const source = (rawSource as string).replace(/^.*export .*;.*$/gm, '');
+		const source = (rawSource as string).replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '');
 
 		return { component: comp, source };
 	} catch (e) {
