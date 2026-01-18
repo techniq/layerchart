@@ -76,7 +76,6 @@
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
 
   import Chart from '../Chart.svelte';
-  import Labels from '../Labels.svelte';
 
   import {
     accessor,
@@ -106,7 +105,6 @@
     */
     grid = true,
     highlight = { area: true },
-    labels: labelsProp = false,
     legend = false,
     rule = true,
     onTooltipClick = () => {},
@@ -338,22 +336,6 @@
           onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
           {...s.props}
-        />
-      {/each}
-    {/if}
-  {/snippet}
-
-  <!-- TODO: Remove (use ChartChildren) -->
-  {#snippet labels(snippetProps)}
-    {#if typeof labelsProp === 'function'}
-      {@render labelsProp(snippetProps)}
-    {:else if labelsProp}
-      {#each seriesState.visibleSeries as s, i (s.key)}
-        <Labels
-          seriesKey={s.key}
-          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
-          {...props.labels}
-          {...typeof labelsProp === 'object' ? labelsProp : null}
         />
       {/each}
     {/if}
