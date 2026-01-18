@@ -100,30 +100,9 @@
     ...restProps
   }: LabelsProps<TData> = $props();
 
+  // TODO: Should we let `Points` handle opacity for children snippet as well?
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
-  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
-
-  // Get stack accessors if seriesKey is provided and stacking is enabled
-  let stackAccessors = $derived(
-    seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
-  );
-
-  const xAccessor = $derived(x ?? (ctx.isVertical ? seriesAccessor : undefined));
-  // Use stack y1 accessor when stacking is enabled, otherwise fall back to series accessor
-  const yAccessor = $derived(
-    y != null
-      ? y
-      : stackAccessors
-        ? stackAccessors.y1
-        : Array.isArray(seriesAccessor)
-          ? seriesAccessor[1]
-          : !ctx.isVertical
-            ? seriesAccessor
-            : undefined
-  );
-  const labelsData = $derived(data ?? series?.data);
-
-  const derivedOpacity = $derived(
+  let derivedOpacity = $derived(
     opacity ??
       (series?.key == null ||
       ctx.series.visibleSeries.length <= 1 ||
@@ -214,7 +193,7 @@
 </script>
 
 <Group class="lc-labels-g" opacity={derivedOpacity}>
-  <Points data={labelsData} x={xAccessor} y={yAccessor}>
+  <Points {data} {x} {y} {seriesKey}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
         {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}

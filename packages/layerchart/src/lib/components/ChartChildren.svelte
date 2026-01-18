@@ -217,7 +217,6 @@
     {:else if axis}
       {#if axis !== 'x'}
         <!-- y-axis -->
-        <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
         <Axis
           placement={context.radial ? 'radius' : 'left'}
           {...getObjectOrNull(axis)}
@@ -227,7 +226,6 @@
 
       {#if axis !== 'y'}
         <!-- x-axis -->
-        <!-- TODO: set `format` based on `seriesLayout="stackExpand"` and `isVertical` -->
         <Axis
           placement={context.radial ? 'angle' : 'bottom'}
           {...getObjectOrNull(axis)}

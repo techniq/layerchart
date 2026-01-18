@@ -53,7 +53,7 @@
     y: yProp,
     yScale,
     radial = false,
-    orientation = 'horizontal',
+    valueAxis = 'y',
     series: seriesProp,
     axis = true,
     brush = false,
@@ -69,22 +69,21 @@
     ...restProps
   }: LineChartProps<TData> = $props();
 
-  const isVertical = $derived(orientation === 'vertical');
-
   const series = $derived(
     seriesProp === undefined
       ? [
           {
             key: 'default',
 
-            label: isVertical
-              ? typeof xProp === 'string'
-                ? xProp
-                : 'value'
-              : typeof yProp === 'string'
-                ? yProp
-                : 'value',
-            value: isVertical ? xProp : yProp,
+            label:
+              valueAxis == 'x'
+                ? typeof xProp === 'string'
+                  ? xProp
+                  : 'value'
+                : typeof yProp === 'string'
+                  ? yProp
+                  : 'value',
+            value: valueAxis == 'x' ? xProp : yProp,
             color: 'var(--color-primary, currentColor)',
           },
         ]
@@ -114,22 +113,22 @@
   bind:context
   {data}
   {xScale}
-  x={xProp ?? (isVertical ? series.map((s) => s.value ?? s.key) : undefined)}
+  x={xProp ?? (valueAxis === 'x' ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
-  xBaseline={!isVertical || (xScale && isScaleTime(xScale)) ? undefined : 0}
-  xNice={orientation === 'vertical'}
+  xBaseline={valueAxis === 'y' || (xScale && isScaleTime(xScale)) ? undefined : 0}
+  xNice={valueAxis === 'x'}
   {yScale}
-  y={yProp ?? (isVertical ? undefined : series.map((s) => s.value ?? s.key))}
-  yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
-  yNice={orientation === 'horizontal'}
+  y={yProp ?? (valueAxis === 'y' ? series.map((s) => s.value ?? s.key) : undefined)}
+  yBaseline={valueAxis === 'x' || (yScale && isScaleTime(yScale)) ? undefined : 0}
+  yNice={valueAxis === 'y'}
   {radial}
-  {orientation}
+  {valueAxis}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps as Partial<ChartProps<TData>>}
   tooltipContext={tooltipContext === false
     ? false
     : {
-        mode: isVertical ? 'quadtree-y' : 'quadtree-x',
+        mode: valueAxis === 'x' ? 'quadtree-y' : 'quadtree-x',
         onclick: onTooltipClick,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),

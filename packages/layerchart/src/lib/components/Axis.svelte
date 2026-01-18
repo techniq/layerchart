@@ -192,12 +192,10 @@
   const resolvedFormat = $derived.by(() => {
     if (format !== undefined) return format;
 
-    // Check if we're using stackExpand layout
     if (ctx.series.stackLayout === 'stackExpand') {
       const isValueAxis =
-        (!ctx.isVertical && orientation === 'vertical') ||
-        (ctx.isVertical && orientation === 'horizontal');
-
+        (ctx.valueAxis === 'x' && ['horizontal', 'angle'].includes(orientation)) ||
+        (ctx.valueAxis === 'y' && ['vertical', 'radius'].includes(orientation));
       if (isValueAxis) {
         return 'percentRound';
       }

@@ -506,12 +506,10 @@ export class ChartState<
   get radial() {
     return this.props.radial ?? false;
   }
-  get orientation() {
-    return this.props.orientation ?? 'horizontal';
+  get valueAxis() {
+    return this.props.valueAxis ?? 'y';
   }
-  get isVertical() {
-    return this.props.orientation === 'vertical';
-  }
+
   // Fallback objects for when state hasn't been initialized yet
   static readonly #fallbackTooltip = {
     x: 0,

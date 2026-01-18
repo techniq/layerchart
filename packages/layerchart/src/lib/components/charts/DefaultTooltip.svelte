@@ -22,7 +22,7 @@
   // Header label comes from x-axis (or y-axis for horizontal/vertical charts)
   const headerLabel = $derived(
     context.tooltip.data
-      ? context.isVertical
+      ? context.valueAxis === 'y'
         ? context.x(context.tooltip.data)
         : context.y(context.tooltip.data)
       : undefined

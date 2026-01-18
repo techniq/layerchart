@@ -529,11 +529,11 @@
     yInterval?: TimeInterval | null;
 
     /**
-     * The orientation of the chart.
+     * The axis that represents the value dimension, typically based on the type and orientation of the chart
      *
-     * @default 'horizontal'
+     * @default 'y'
      */
-    orientation?: 'horizontal' | 'vertical';
+    valueAxis?: 'x' | 'y';
 
     /**
      * Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.

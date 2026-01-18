@@ -97,7 +97,10 @@
     }
   }
 
-  const xAccessor = $derived(accessor(x ?? (ctx.isVertical ? seriesAccessor : undefined) ?? ctx.x));
+  const xAccessor = $derived(
+    accessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined) ?? ctx.x)
+  );
+
   // Use stack y1 accessor when stacking is enabled, otherwise fall back to series accessor or context
   const yAccessor = $derived(
     y
@@ -106,7 +109,7 @@
         ? stackAccessors.y1
         : Array.isArray(seriesAccessor)
           ? accessor(seriesAccessor[1])
-          : accessor((!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y)
+          : accessor((ctx.valueAxis === 'y' ? seriesAccessor : undefined) ?? ctx.y)
   );
   const pointsData = $derived(data ?? series?.data ?? ctx.data);
 

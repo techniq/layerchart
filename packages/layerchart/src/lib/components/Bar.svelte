@@ -142,14 +142,12 @@
   );
 
   // Resolve accessors: use explicit props first, then stack accessors, then series accessor, then context
-  // stackAccessors and seriesAccessor are value accessors and should only be used for the value dimension:
-  // - For vertical charts (orientation='vertical'), use for y
-  // - For horizontal charts (orientation='horizontal'), use for x
+  // stackAccessors and seriesAccessor are value accessors and should only be used for the value dimension
   const x = $derived(
-    xProp ?? (!ctx.isVertical ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.x
+    xProp ?? (ctx.valueAxis == 'x' ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.x
   );
   const y = $derived(
-    yProp ?? (ctx.isVertical ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.y
+    yProp ?? (ctx.valueAxis == 'y' ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.y
   );
   const x1 = $derived(x1Prop !== undefined ? x1Prop : ctx.x1);
   const y1 = $derived(y1Prop !== undefined ? y1Prop : ctx.y1);
@@ -170,7 +168,7 @@
     const isLast = seriesIndex === seriesCount - 1;
     const stackInset = stackPadding / 2;
 
-    if (ctx.isVertical) {
+    if (ctx.valueAxis === 'y') {
       return {
         bottom: isFirst ? undefined : stackInset,
         top: isLast ? undefined : stackInset,
@@ -197,14 +195,14 @@
 
   const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
 
-  const valueAccessor = $derived(accessor(ctx.isVertical ? y : x));
+  const valueAccessor = $derived(accessor(ctx.valueAxis === 'y' ? y : x));
   const value = $derived(valueAccessor(data));
   const resolvedValue = $derived(Array.isArray(value) ? greatestAbs(value) : value);
 
   // Resolved `rounded="edge"` based on orientation and value
   const rounded = $derived(
     roundedProp === 'edge'
-      ? ctx.isVertical
+      ? ctx.valueAxis === 'y'
         ? resolvedValue >= 0 && ctx.yRange[0] > ctx.yRange[1] // not inverted (bottom to top)
           ? 'top'
           : 'bottom'

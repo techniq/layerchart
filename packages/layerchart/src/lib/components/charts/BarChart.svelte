@@ -13,6 +13,13 @@
     data?: TData[] | readonly TData[];
   } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
       /**
+       * The orientation of the chart.  Sets which axis is the value axis.
+       *
+       * @default 'vertical'
+       */
+      orientation?: 'horizontal' | 'vertical';
+
+      /**
        * The series data to be used for the chart.
        * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
        */
@@ -94,8 +101,8 @@
     brush = false,
     /*
       TODO: handled below, but can be simplify?
-        x: !isVertical || radial,
-        y: isVertical || radial,
+        x: valueAxis === 'x' || radial,
+        y: valueAxis === 'y' || radial,
     */
     grid = true,
     highlight = { area: true },
@@ -119,8 +126,8 @@
     ...restProps
   }: BarChartProps<TData> = $props();
 
-  const isVertical = $derived(orientation === 'vertical');
-  const valueAccessorProp = $derived(isVertical ? yProp : xProp);
+  const valueAxis = $derived(orientation === 'vertical' ? 'y' : 'x');
+  const valueAccessorProp = $derived(valueAxis === 'y' ? yProp : xProp);
 
   const series = $derived(
     seriesProp === undefined
@@ -128,7 +135,7 @@
           {
             key: 'default',
             label:
-              orientation === 'vertical'
+              valueAxis === 'y'
                 ? typeof yProp === 'string'
                   ? yProp
                   : 'value'
@@ -163,35 +170,35 @@
     xScaleProp ??
       (xInterval
         ? scaleTime()
-        : isVertical
+        : valueAxis === 'y'
           ? scaleBand().padding(bandPadding)
           : firstDataItem && accessor(xProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
             ? scaleTime()
             : scaleLinear())
   );
-  const xBaseline = $derived(isVertical || isScaleTime(xScale) ? undefined : 0);
+  const xBaseline = $derived(valueAxis === 'y' || isScaleTime(xScale) ? undefined : 0);
 
   const yScale = $derived(
     yScaleProp ??
       (yInterval
         ? scaleTime()
-        : isVertical
+        : valueAxis === 'y'
           ? firstDataItem && accessor(yProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
             ? scaleTime()
             : scaleLinear()
           : scaleBand().padding(bandPadding))
   );
-  const yBaseline = $derived(isVertical || isScaleTime(yScale) ? 0 : undefined);
+  const yBaseline = $derived(valueAxis === 'y' || isScaleTime(yScale) ? 0 : undefined);
 
   const x1Scale = $derived(
-    isGroupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
+    isGroupSeries && valueAxis === 'y' ? scaleBand().padding(groupPadding) : undefined
   );
   const x1Domain = $derived(
-    isGroupSeries && isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && valueAxis === 'y' ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
 
   const x1Range = $derived(
-    isGroupSeries && isVertical
+    isGroupSeries && valueAxis === 'y'
       ? // TODO: can we do something better here where we don't need to cast this
         // feels fragile!
         ({ xScale }: { xScale: AnyScale }) => [0, xScale.bandwidth!()]
@@ -199,13 +206,13 @@
   );
 
   const y1Scale = $derived(
-    isGroupSeries && !isVertical ? scaleBand().padding(groupPadding) : undefined
+    isGroupSeries && valueAxis === 'x' ? scaleBand().padding(groupPadding) : undefined
   );
   const y1Domain = $derived(
-    isGroupSeries && !isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && valueAxis === 'x' ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
   const y1Range = $derived(
-    isGroupSeries && !isVertical
+    isGroupSeries && valueAxis === 'x'
       ? // TODO: can we do something better here where we don't need to cast this
         // feels fragile!
         ({ yScale }: { yScale: AnyScale }) => [0, yScale.bandwidth!()]
@@ -247,7 +254,7 @@
   {xDomain}
   {xScale}
   {xBaseline}
-  xNice={orientation === 'horizontal'}
+  xNice={valueAxis === 'x'}
   {x1Scale}
   {x1Domain}
   {x1Range}
@@ -255,15 +262,15 @@
   y={resolveAccessor(yProp)}
   {yScale}
   {yBaseline}
-  yNice={orientation === 'vertical'}
+  yNice={valueAxis === 'y'}
   {y1Scale}
   {y1Domain}
   {y1Range}
   {yInterval}
-  c={isVertical ? yProp : xProp}
+  c={valueAxis === 'y' ? yProp : xProp}
   cRange={['var(--color-primary, currentColor)']}
   {radial}
-  {orientation}
+  {valueAxis}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps as Partial<ChartProps<TData>>}
   tooltipContext={tooltipContext === false
@@ -297,14 +304,14 @@
   {seriesState}
   {axis}
   grid={typeof grid === 'object'
-    ? { x: !isVertical || radial, y: isVertical || radial, ...grid }
+    ? { x: valueAxis === 'x' || radial, y: valueAxis === 'y' || radial, ...grid }
     : grid
-      ? { x: !isVertical || radial, y: isVertical || radial }
+      ? { x: valueAxis === 'x' || radial, y: valueAxis === 'y' || radial }
       : false}
   rule={typeof rule === 'object'
-    ? { x: isVertical ? false : 0, y: isVertical ? 0 : false, ...rule }
+    ? { x: valueAxis === 'y' ? false : 0, y: valueAxis === 'y' ? 0 : false, ...rule }
     : rule
-      ? { x: isVertical ? false : 0, y: isVertical ? 0 : false }
+      ? { x: valueAxis === 'y' ? false : 0, y: valueAxis === 'y' ? 0 : false }
       : false}
   {legend}
   highlight={highlight as any}
@@ -317,8 +324,8 @@
       {#each seriesState.visibleSeries as s, i (s.key)}
         <Bars
           seriesKey={s.key}
-          x1={isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
-          y1={!isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined}
+          x1={valueAxis === 'y' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
+          y1={valueAxis === 'x' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           rounded={seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
             ? 'none'
             : Array.isArray(xProp) || Array.isArray(yProp)

@@ -87,9 +87,11 @@
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
   let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
 
-  const xAccessor = $derived(accessor(x ?? (ctx.isVertical ? seriesAccessor : undefined) ?? ctx.x));
+  const xAccessor = $derived(
+    accessor(x ?? (ctx.valueAxis === 'x' ? seriesAccessor : undefined) ?? ctx.x)
+  );
   const yAccessor = $derived(
-    accessor(y ?? (!ctx.isVertical ? seriesAccessor : undefined) ?? ctx.y)
+    accessor(y ?? (ctx.valueAxis === 'y' ? seriesAccessor : undefined) ?? ctx.y)
   );
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
