@@ -31,6 +31,7 @@ const config = defineConfig({
       'd3-shape',
       'd3-quadtree',
       'memoize',
+      'runed',
       'svelte-ux',
     ],
   },
