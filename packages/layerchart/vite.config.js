@@ -11,6 +11,19 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 /** @type {import('vite').UserConfig} */
 const config = defineConfig({
+  // Pre-bundle these dependencies to prevent Vite reload during tests
+  // which causes "Failed to fetch dynamically imported module" errors
+  // Ref: https://github.com/vitest-dev/vitest/issues/5477
+  optimizeDeps: {
+    include: [
+      'svelte-ux',
+      '@layerstack/tailwind',
+      '@layerstack/utils',
+      'd3-shape',
+      'd3-scale',
+      'd3-array',
+    ],
+  },
   plugins: [
     tailwindcss(),
     sveltekit(),
@@ -42,19 +55,6 @@ const config = defineConfig({
       {
         // Client-side tests (Svelte components)
         extends: true,
-        // Pre-bundle these dependencies to prevent Vite reload during tests
-        // which causes "Failed to fetch dynamically imported module" errors
-        // Ref: https://github.com/vitest-dev/vitest/issues/5477
-        optimizeDeps: {
-          include: [
-            'svelte-ux',
-            '@layerstack/tailwind',
-            '@layerstack/utils',
-            'd3-shape',
-            'd3-scale',
-            'd3-array',
-          ],
-        },
         test: {
           name: 'client',
           testTimeout: 10000,
