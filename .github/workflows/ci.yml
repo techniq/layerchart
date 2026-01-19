@@ -35,12 +35,12 @@ jobs:
       - run: pnpm lint:packages
 
       - name: Run unit tests (server + ssr)
-        run: pnpm --filter layerchart test --project server --project ssr
+        run: pnpm --filter layerchart test:unit --project server --project ssr
         env:
           CI: true
 
       - name: Run browser tests (client)
-        run: pnpm --filter layerchart test --project client
+        run: pnpm --filter layerchart test:unit --project client
         env:
           CI: true
 
