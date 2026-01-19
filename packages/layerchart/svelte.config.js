@@ -9,6 +9,15 @@ import mdsvexConfig from './mdsvex.config.js';
 const config = {
   extensions: ['.svelte', ...mdsvexConfig.extensions],
   preprocess: [mdsvex(mdsvexConfig), vitePreprocess(), codePreview()],
+  compilerOptions: {
+    warningFilter: (warning) => {
+      // Ignore "state_referenced_locally" warnings
+      // These occur when capturing initial prop values which is intentional
+      // TODO: re-enable and handle each case properly
+      if (warning.code === 'state_referenced_locally') return false;
+      return true;
+    },
+  },
 
   kit: {
     adapter: adapter(),
