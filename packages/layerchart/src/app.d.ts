@@ -1,5 +1,12 @@
 import 'unplugin-icons/types/svelte';
 
+// Markdown files compiled by mdsvex are Svelte components
+declare module '*.md' {
+  import type { Component } from 'svelte';
+  const component: Component;
+  export default component;
+}
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types

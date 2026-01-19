@@ -9,7 +9,7 @@ import { arc as d3arc } from 'd3-shape';
 import type { Getter, GetterValues } from './types.js';
 import { radiansToDegrees } from './math.js';
 import type { ComponentProps } from 'svelte';
-import type { Text } from '$lib/components/index.js';
+import type Text from '$lib/components/Text.svelte';
 
 function extractOutsideArc(arcPath: string) {
   // Extract first arc until straight line to innerRadius (L) or close path (Z)

@@ -1,6 +1,7 @@
+import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-// import { sveld } from 'svelte-ux/plugins/vite.js';
+import { playwright } from '@vitest/browser-playwright';
 import dsv from '@rollup/plugin-dsv';
 import { autoType } from 'd3-dsv';
 import Icons from 'unplugin-icons/vite';
@@ -8,11 +9,34 @@ import devtoolsJson from 'vite-plugin-devtools-json';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 /** @type {import('vite').UserConfig} */
-const config = {
+const config = defineConfig({
+  // Pre-bundle these dependencies to prevent Vite reload during tests
+  // which causes "Failed to fetch dynamically imported module" errors
+  // Ref: https://github.com/vitest-dev/vitest/issues/5477
+  optimizeDeps: {
+    include: [
+      '@layerstack/tailwind',
+      '@layerstack/utils',
+      '@layerstack/svelte-state',
+      '@layerstack/utils/object',
+      'd3-array',
+      'd3-color',
+      'd3-delaunay',
+      'd3-geo',
+      'd3-geo-voronoi',
+      'd3-interpolate-path',
+      'd3-path',
+      'd3-scale',
+      'd3-shape',
+      'd3-quadtree',
+      'memoize',
+      'runed',
+      'svelte-ux',
+    ],
+  },
   plugins: [
     tailwindcss(),
     sveltekit(),
-    // /*sveld(),*/
     // @ts-expect-error
     dsv({ processRow: autoType }),
     Icons({
@@ -32,9 +56,60 @@ const config = {
       gzipSize: true,
     }),
   ],
-  resolve: {
+  ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
   },
-};
+  test: {
+    projects: [
+      {
+        // Client-side tests (Svelte components)
+        extends: true,
+        test: {
+          name: 'client',
+          testTimeout: 5000,
+          retry: 3,
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            // Multiple browser instances for better performance
+            // Uses single Vite server with shared caching
+            instances: [
+              { browser: 'chromium' },
+              // { browser: 'firefox' },
+              // { browser: 'webkit' },
+            ],
+          },
+          include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+          exclude: ['src/lib/server/**', 'src/**/*.ssr.{test,spec}.{js,ts}'],
+          setupFiles: ['./src/vitest-setup-client.ts'],
+        },
+      },
+      {
+        // SSR tests (Server-side rendering)
+        extends: true,
+        test: {
+          name: 'ssr',
+          environment: 'node',
+          include: ['src/**/*.ssr.{test,spec}.{js,ts}'],
+        },
+      },
+      {
+        // Server-side tests (Node.js utilities)
+        extends: true,
+        test: {
+          name: 'server',
+          environment: 'node',
+          include: ['src/**/*.{test,spec}.{js,ts}'],
+          exclude: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.ssr.{test,spec}.{js,ts}'],
+        },
+      },
+    ],
+    coverage: {
+      include: ['src'],
+      // Improved performance: Vitest only checks files in src/
+      // instead of scanning the entire project
+    },
+  },
+});
 
 export default config;
