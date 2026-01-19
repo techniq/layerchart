@@ -37,6 +37,11 @@ const config = defineConfig({
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
   },
+  optimizeDeps: {
+    // Pre-bundle these dependencies to prevent Vite reload during tests
+    // which causes "Failed to fetch dynamically imported module" errors
+    include: ['svelte-ux'],
+  },
   test: {
     projects: [
       {
@@ -45,7 +50,10 @@ const config = defineConfig({
         test: {
           name: 'client',
           testTimeout: 5000,
+          hookTimeout: 30000,
           retry: 2,
+          // Disable file parallelism to prevent race conditions during module loading
+          fileParallelism: false,
           browser: {
             enabled: true,
             provider: playwright(),
