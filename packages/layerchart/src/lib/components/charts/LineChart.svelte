@@ -3,7 +3,6 @@
   import type { HighlightPointData } from '../Highlight.svelte';
   import type { SeriesData } from './types.js';
 
-  // Import component for use in type definitions (typeof Spline)
   import Spline from '../Spline.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
@@ -13,6 +12,13 @@
      */
     data?: TData[] | readonly TData[];
   } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+      /**
+       * The orientation of the chart.  Sets which axis is the value axis.
+       *
+       * @default 'horizontal'
+       */
+      orientation?: 'horizontal' | 'vertical';
+
       /**
        * The series data to be used for the chart.
        * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
@@ -53,7 +59,8 @@
     y: yProp,
     yScale,
     radial = false,
-    valueAxis = 'y',
+    orientation = 'horizontal',
+    valueAxis: valueAxisProp,
     series: seriesProp,
     axis = true,
     brush = false,
@@ -68,6 +75,8 @@
     context = $bindable(),
     ...restProps
   }: LineChartProps<TData> = $props();
+
+  const valueAxis = $derived(valueAxisProp ?? (orientation === 'horizontal' ? 'y' : 'x'));
 
   const series = $derived(
     seriesProp === undefined

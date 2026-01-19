@@ -2,7 +2,6 @@
   import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
   import type { SeriesData } from './types.js';
 
-  // Import component for use in type definitions (typeof Bars)
   import Bars from '../Bars.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
@@ -124,7 +123,7 @@
     ...restProps
   }: BarChartProps<TData> = $props();
 
-  const valueAxis = $derived(orientation === 'vertical' ? 'y' : 'x');
+  const valueAxis = $derived(orientation === 'horizontal' ? 'x' : 'y');
   const valueAccessorProp = $derived(valueAxis === 'y' ? yProp : xProp);
 
   const series = $derived(
