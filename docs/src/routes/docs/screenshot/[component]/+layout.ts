@@ -18,7 +18,7 @@ export const load = async ({ params }) => {
 			const source = (await componentSources[path]()) as string;
 
 			// Remove `export { data };`
-			const cleanupSource = source.replace(/^.*export .*;.*$/gm, '');
+			const cleanupSource = source.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
 
 			if (!examples[comp]) {
 				examples[comp] = {};
