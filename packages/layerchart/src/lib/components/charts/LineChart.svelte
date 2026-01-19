@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartProps } from '../Chart.svelte';
   import type { HighlightPointData } from '../Highlight.svelte';
   import type { SeriesData } from './types.js';
 
@@ -11,7 +11,7 @@
      * The data for the chart
      */
     data?: TData[] | readonly TData[];
-  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+  } & Omit<ChartProps<any>, 'data'> & {
       /**
        * The orientation of the chart.  Sets which axis is the value axis.
        *
@@ -44,7 +44,7 @@
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart, { type ChartProps } from '../Chart.svelte';
+  import Chart from '../Chart.svelte';
 
   import { defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
   import { SeriesState } from '$lib/states/series.svelte.js';
@@ -133,7 +133,7 @@
   {radial}
   {valueAxis}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
-  {...restProps as Partial<ChartProps<TData>>}
+  {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {

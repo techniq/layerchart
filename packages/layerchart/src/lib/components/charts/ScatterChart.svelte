@@ -1,8 +1,7 @@
 <script lang="ts" module>
-  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartProps } from '../Chart.svelte';
   import type { SeriesData } from './types.js';
 
-  // Import component for use in type definitions (typeof Points)
   import Points from '../Points.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
@@ -11,7 +10,7 @@
      * The data for the chart
      */
     data?: TData[] | readonly TData[];
-  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+  } & Omit<ChartProps<any>, 'data'> & {
       /**
        * The series data to be used for the chart.
        */
@@ -84,7 +83,7 @@
   c={yProp}
   cRange={['var(--color-primary, currentColor)']}
   padding={defaultChartPadding({ axis, legend })}
-  {...restProps as Partial<ChartProps<TData>>}
+  {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
@@ -110,7 +109,7 @@
   {seriesState}
   {axis}
   {grid}
-  highlight={highlight as any}
+  {highlight}
   {legend}
   {props}
 >

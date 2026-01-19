@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartProps } from '../Chart.svelte';
   import type { SeriesData } from './types.js';
 
   import Bars from '../Bars.svelte';
@@ -10,7 +10,7 @@
      * The data for the chart
      */
     data?: TData[] | readonly TData[];
-  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+  } & Omit<ChartProps<any>, 'data'> & {
       /**
        * The orientation of the chart.  Sets which axis is the value axis.
        *
@@ -269,7 +269,7 @@
   {radial}
   {valueAxis}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
-  {...restProps as Partial<ChartProps<TData>>}
+  {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {

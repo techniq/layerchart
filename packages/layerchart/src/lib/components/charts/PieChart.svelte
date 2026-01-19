@@ -1,11 +1,10 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import type { ChartProps, ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartProps } from '../Chart.svelte';
   import type { ChartState } from '$lib/contexts/chart.js';
   import type { Accessor } from '$lib/utils/common.js';
   import type { SeriesData } from './types.js';
 
-  // Import components for use in type definitions (typeof Arc, typeof Group, typeof Pie)
   import Arc from '../Arc.svelte';
   import Group from '../Group.svelte';
   import Pie from '../Pie.svelte';
@@ -25,7 +24,7 @@
      */
     data?: TData[] | readonly TData[];
   } & Omit<
-    ChartPropsWithoutHTML<any>,
+    ChartProps<any>,
     // Props that don't apply to PieChart
     'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
   > & {
@@ -338,7 +337,7 @@
     bottom: legend === true || getObjectOrNull(legend)?.placement?.includes('bottom') ? 32 : 0,
   }}
   axis={false}
-  {...restProps as Partial<ChartProps<TData>>}
+  {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
@@ -348,7 +347,7 @@
       }}
   {seriesState}
   legend={typeof legend === 'function'
-    ? (legend as any)
+    ? legend
     : legend
       ? {
           variant: 'swatches',
@@ -412,7 +411,7 @@
 
   {#snippet tooltip(snippetProps)}
     {#if typeof tooltipProp === 'function'}
-      {@render tooltipProp(snippetProps as any)}
+      {@render tooltipProp(snippetProps)}
     {:else if tooltipContext}
       <Tooltip.Root context={snippetProps.context} {...props.tooltip?.root}>
         {#snippet children({ data })}

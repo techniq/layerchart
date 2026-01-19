@@ -1,9 +1,8 @@
 <script lang="ts" module>
-  import type { ChartPropsWithoutHTML } from '../Chart.svelte';
+  import type { ChartProps } from '../Chart.svelte';
   import type { HighlightPointData } from '../Highlight.svelte';
   import type { SeriesData } from './types.js';
 
-  // Import component for use in type definitions (typeof Area)
   import Area from '../Area.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
@@ -12,7 +11,7 @@
      * The data for the chart
      */
     data?: TData[] | readonly TData[];
-  } & Omit<ChartPropsWithoutHTML<any>, 'data'> & {
+  } & Omit<ChartProps<any>, 'data'> & {
       /**
        * The series data to be used for the chart.
        * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
@@ -47,7 +46,7 @@
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
 
-  import Chart, { type ChartProps } from '../Chart.svelte';
+  import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
 
   import {
@@ -179,7 +178,7 @@
   yNice
   {radial}
   padding={radial ? undefined : defaultChartPadding({ axis, legend })}
-  {...restProps as Partial<ChartProps<TData>>}
+  {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
