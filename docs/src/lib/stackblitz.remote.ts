@@ -177,7 +177,7 @@ export const getExample = query(
 		}
 
 		// Remove `export { data };` from the code
-		const cleanCode = code.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '');
+		const cleanCode = code.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
 
 		// Prepare additional files to include
 		const additionalFiles: Record<string, string> = {};
