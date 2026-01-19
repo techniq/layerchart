@@ -55,6 +55,7 @@
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-simplify": "^3.0.3",
     "@types/topojson-specification": "^1.0.5",
+    "@vitest/browser": "^4.0.16",
     "@vitest/browser-playwright": "^4.0.16",
     "@vitest/ui": "^4.0.16",
     "mdsvex": "^0.12.3",

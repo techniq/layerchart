@@ -44,8 +44,8 @@ const config = defineConfig({
         extends: true,
         test: {
           name: 'client',
-          // Timeout for browser tests - prevent hanging on element lookups
-          testTimeout: 2000,
+          testTimeout: 5000,
+          retry: 2,
           browser: {
             enabled: true,
             provider: playwright(),

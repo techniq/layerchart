@@ -69,6 +69,7 @@
 		"@types/unist": "^3.0.3",
 		"@vitest/browser": "^4.0.16",
 		"@vitest/browser-playwright": "^4.0.16",
+		"@vitest/ui": "^4.0.16",
 		"d3-array": "^3.2.4",
 		"d3-color": "^3.1.0",
 		"d3-dsv": "^3.0.1",
