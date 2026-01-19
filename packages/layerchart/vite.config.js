@@ -1,8 +1,7 @@
+import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
-// import { sveld } from 'svelte-ux/plugins/vite.js';
 import dsv from '@rollup/plugin-dsv';
 import { autoType } from 'd3-dsv';
 import Icons from 'unplugin-icons/vite';
@@ -38,7 +37,6 @@ const config = defineConfig({
   plugins: [
     tailwindcss(),
     sveltekit(),
-    // /*sveld(),*/
     // @ts-expect-error
     dsv({ processRow: autoType }),
     Icons({
@@ -68,11 +66,8 @@ const config = defineConfig({
         extends: true,
         test: {
           name: 'client',
-          testTimeout: 10000,
-          hookTimeout: 30000,
+          testTimeout: 5000,
           retry: 3,
-          // Disable file parallelism to prevent race conditions during module loading
-          fileParallelism: false,
           browser: {
             enabled: true,
             provider: playwright(),
