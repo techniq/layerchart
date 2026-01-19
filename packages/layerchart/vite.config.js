@@ -37,21 +37,29 @@ const config = defineConfig({
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
   },
-  optimizeDeps: {
-    // Pre-bundle these dependencies to prevent Vite reload during tests
-    // which causes "Failed to fetch dynamically imported module" errors
-    include: ['svelte-ux'],
-  },
   test: {
     projects: [
       {
         // Client-side tests (Svelte components)
         extends: true,
+        // Pre-bundle these dependencies to prevent Vite reload during tests
+        // which causes "Failed to fetch dynamically imported module" errors
+        // Ref: https://github.com/vitest-dev/vitest/issues/5477
+        optimizeDeps: {
+          include: [
+            'svelte-ux',
+            '@layerstack/tailwind',
+            '@layerstack/utils',
+            'd3-shape',
+            'd3-scale',
+            'd3-array',
+          ],
+        },
         test: {
           name: 'client',
-          testTimeout: 5000,
+          testTimeout: 10000,
           hookTimeout: 30000,
-          retry: 2,
+          retry: 3,
           // Disable file parallelism to prevent race conditions during module loading
           fileParallelism: false,
           browser: {
