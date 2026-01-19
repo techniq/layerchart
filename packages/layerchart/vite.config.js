@@ -16,12 +16,22 @@ const config = defineConfig({
   // Ref: https://github.com/vitest-dev/vitest/issues/5477
   optimizeDeps: {
     include: [
-      'svelte-ux',
       '@layerstack/tailwind',
       '@layerstack/utils',
-      'd3-shape',
-      'd3-scale',
+      '@layerstack/svelte-state',
+      '@layerstack/utils/object',
       'd3-array',
+      'd3-color',
+      'd3-delaunay',
+      'd3-geo',
+      'd3-geo-voronoi',
+      'd3-interpolate-path',
+      'd3-path',
+      'd3-scale',
+      'd3-shape',
+      'd3-quadtree',
+      'memoize',
+      'svelte-ux',
     ],
   },
   plugins: [
