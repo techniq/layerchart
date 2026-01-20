@@ -45,7 +45,12 @@
 
   import Chart from '../Chart.svelte';
 
-  import { chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
+  import {
+    chartDataArray,
+    defaultChartPadding,
+    getObjectOrNull,
+    type Accessor,
+  } from '$lib/utils/common.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
@@ -179,18 +184,10 @@
         <Area
           seriesKey={s.key}
           fillOpacity={0.3}
-          opacity={seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true)
-            ? 1
-            : 0.1}
           line={{
-            stroke: s.color,
-            opacity:
-              seriesState.visibleSeries.length <= 1 || seriesState.isHighlighted(s.key, true)
-                ? 1
-                : 0.1,
             ...props.line,
-            ...(typeof props.area?.line === 'object' ? props.area.line : null),
-            ...(typeof s.props?.line === 'object' ? s.props.line : null),
+            ...getObjectOrNull(props.area?.line),
+            ...getObjectOrNull(s.props?.line),
           }}
           {...props.area}
           {...s.props}

@@ -51,7 +51,7 @@
      * @default false
      */
     line?: boolean | Partial<ComponentProps<typeof Spline>>;
-  } & CommonStyleProps;
+  } & Omit<PathProps, 'x' | 'y'>;
 
   export type AreaProps = AreaPropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
@@ -63,7 +63,7 @@
   import { interpolatePath } from 'd3-interpolate-path';
 
   import Spline from './Spline.svelte';
-  import Path from './Path.svelte';
+  import Path, { type PathProps } from './Path.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -227,8 +227,6 @@
   });
 
   const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
-
-  const resolvedFill = $derived(fill ?? series?.color);
 </script>
 
 {#if line}
@@ -249,10 +247,15 @@
 <Path
   pathData={tweenState.current}
   clip-path={clipPath}
-  fill={resolvedFill}
+  fill={fill ?? series?.color}
   {fillOpacity}
   {stroke}
   {strokeWidth}
-  {opacity}
+  opacity={series?.key == null ||
+  // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+  ctx.series.visibleSeries.length <= 1 ||
+  ctx.series.isHighlighted(series.key, true)
+    ? 1
+    : 0.1}
   {...extractLayerProps(restProps, 'lc-area-path')}
 />
