@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ChartProps } from '../Chart.svelte';
-  import type { HighlightPointData } from '../Highlight.svelte';
+  import type { HighlightPoint } from '../Highlight.svelte';
   import type { SeriesData } from './types.js';
 
   import Area from '../Area.svelte';
@@ -28,12 +28,9 @@
        * A callback function called when a point in the chart is clicked.
        *
        * @param e - the original event that triggered the `onPointClick`
-       * @param details - an object containing the highlighted point data and series data
+       * @param details - an object containing the highlighted point and data
        */
-      onPointClick?: (
-        e: MouseEvent,
-        details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
-      ) => void;
+      onPointClick?: (e: MouseEvent, details: { point: HighlightPoint; data: any }) => void;
 
       /**
        * Enable profiling to measure render time.
@@ -44,17 +41,11 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
+  import { onMount } from 'svelte';
 
   import Chart from '../Chart.svelte';
-  import Highlight from '../Highlight.svelte';
 
-  import {
-    chartDataArray,
-    defaultChartPadding,
-    findRelatedData,
-    type Accessor,
-  } from '$lib/utils/common.js';
+  import { chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
@@ -71,7 +62,7 @@
     grid = true,
     legend = false,
     tooltipContext = true,
-    highlight: highlightProp = true,
+    highlight = { lines: true, points: true },
     rule = true,
     onTooltipClick = () => {},
     onPointClick,
@@ -107,40 +98,6 @@
   );
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
-
-  // Highlight needs per-series props for stacked data
-  function getHighlightProps(s: SeriesData<TData, typeof Area>): ComponentProps<typeof Highlight> {
-    if (!context) return {};
-    const seriesTooltipData =
-      s.data && context.tooltip.data
-        ? (findRelatedData(s.data, context.tooltip.data, context.x) ?? {})
-        : null;
-    const highlightPointsProps =
-      typeof props.highlight?.points === 'object' ? props.highlight.points : null;
-
-    const stackAccessors = seriesState.isStacked ? seriesState.getStackAccessors(s.key) : null;
-
-    return {
-      data: seriesTooltipData,
-      y: stackAccessors?.y1 ?? s.value ?? (s.data ? undefined : s.key),
-      lines: seriesState.visibleSeries[0]?.key === s.key,
-      onPointClick: onPointClick
-        ? (e, detail) => onPointClick(e, { ...detail, series: s })
-        : undefined,
-      onPointEnter: () => (seriesState.highlightKey = s.key),
-      onPointLeave: () => (seriesState.highlightKey = null),
-      ...props.highlight,
-      ...(typeof highlightProp === 'object' ? highlightProp : null),
-      opacity: seriesState.highlightKey && seriesState.highlightKey !== s.key ? 0.1 : 1,
-      points:
-        props.highlight?.points == false
-          ? false
-          : {
-              ...highlightPointsProps,
-              fill: s.color,
-            },
-    };
-  }
 
   if (profile) {
     console.time('AreaChart render');
@@ -204,8 +161,15 @@
   {grid}
   {rule}
   {legend}
+  {highlight}
   tooltip={tooltipProp}
-  {props}
+  props={{
+    ...props,
+    highlight: {
+      ...props.highlight,
+      onPointClick,
+    },
+  }}
 >
   {#snippet marks(snippetProps)}
     {#if typeof marks === 'function'}
@@ -231,16 +195,6 @@
           {...props.area}
           {...s.props}
         />
-      {/each}
-    {/if}
-  {/snippet}
-
-  {#snippet highlight(snippetProps)}
-    {#if typeof highlightProp === 'function'}
-      {@render highlightProp(snippetProps)}
-    {:else if highlightProp}
-      {#each seriesState.visibleSeries as s (s.key)}
-        <Highlight {...getHighlightProps(s)} />
       {/each}
     {/if}
   {/snippet}
