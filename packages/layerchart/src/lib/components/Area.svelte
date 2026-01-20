@@ -61,14 +61,11 @@
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { merge } from '@layerstack/utils';
 
-  import { getLayerContext } from '$lib/contexts/layer.js';
   import Spline from './Spline.svelte';
+  import Path from './Path.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
@@ -76,11 +73,9 @@
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
-  import { createKey } from '$lib/utils/key.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
-  const layerCtx = getLayerContext();
 
   let {
     clipPath,
@@ -92,7 +87,7 @@
     line = false,
     opacity,
     pathData,
-    stroke,
+    stroke = 'none',
     strokeWidth,
     motion,
     x,
@@ -234,48 +229,6 @@
   const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
 
   const resolvedFill = $derived(fill ?? series?.color);
-
-  function render(
-    ctx: CanvasRenderingContext2D,
-    styleOverrides: ComputedStylesOptions | undefined
-  ) {
-    renderPathData(
-      ctx,
-      tweenState.current,
-      styleOverrides
-        ? merge({ styles: { strokeWidth } }, styleOverrides)
-        : {
-            styles: { fill: resolvedFill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: restProps.class ?? '',
-          }
-    );
-  }
-
-  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
-
-  if (layerCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'Area',
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        fillKey.current,
-        fillOpacity,
-        strokeKey.current,
-        strokeWidth,
-        opacity,
-        restProps.class,
-        tweenState.current,
-      ],
-    });
-  }
 </script>
 
 {#if line}
@@ -293,15 +246,13 @@
   />
 {/if}
 
-{#if layerCtx === 'svg'}
-  <path
-    d={tweenState.current}
-    clip-path={clipPath}
-    fill={resolvedFill}
-    fill-opacity={fillOpacity}
-    {stroke}
-    stroke-width={strokeWidth}
-    {opacity}
-    {...extractLayerProps(restProps, 'lc-area-path')}
-  />
-{/if}
+<Path
+  pathData={tweenState.current}
+  clip-path={clipPath}
+  fill={resolvedFill}
+  {fillOpacity}
+  {stroke}
+  {strokeWidth}
+  {opacity}
+  {...extractLayerProps(restProps, 'lc-area-path')}
+/>
