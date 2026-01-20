@@ -51,7 +51,7 @@
      * @default false
      */
     line?: boolean | Partial<ComponentProps<typeof Spline>>;
-  } & Omit<PathProps, 'x' | 'y'>;
+  } & Omit<PathProps, 'x' | 'y' | 'y0' | 'y1'>;
 
   export type AreaProps = AreaPropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
