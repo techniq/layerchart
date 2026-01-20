@@ -5,7 +5,7 @@ layers: [svg, canvas]
 related: []
 ---
 
-::info
+::tip
 See also: [AreaChart](/docs/components/AreaChart) for simplified examples
 ::
 
