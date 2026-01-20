@@ -39,8 +39,6 @@
      */
     motion?: MotionProp;
 
-    clipPath?: string;
-
     curve?: CurveFactory;
 
     defined?: Parameters<D3Area<any>['defined']>[0];
@@ -78,17 +76,13 @@
   const ctx = getChartContext();
 
   let {
-    clipPath,
     curve,
     data,
     defined,
     fill,
-    fillOpacity,
-    line = false,
-    opacity,
-    pathData,
     stroke = 'none',
-    strokeWidth,
+    line = false,
+    pathData,
     motion,
     x,
     y0,
@@ -246,11 +240,8 @@
 
 <Path
   pathData={tweenState.current}
-  clip-path={clipPath}
   fill={fill ?? series?.color}
-  {fillOpacity}
   {stroke}
-  {strokeWidth}
   opacity={series?.key == null ||
   // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
   ctx.series.visibleSeries.length <= 1 ||
