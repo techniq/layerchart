@@ -373,6 +373,10 @@
             // Non-stacked charts - use tooltip.series value directly
             const seriesValue = seriesInfo.value;
 
+            if (seriesValue == null) {
+              return null;
+            }
+
             if (ctx.valueAxis === 'x') {
               // Horizontal chart - value is on x-axis
               pointX = ctx.xScale(seriesValue) + xOffset;
