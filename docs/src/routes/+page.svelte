@@ -248,7 +248,7 @@
 
 <div class="grid grid-cols-xs gap-4 px-4 mb-4">
 	{#each examples as { component, example }}
-		<ExampleLink {component} {example} variant="hover-label" aspect="square" />
+		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
 	{/each}
 </div>
 
