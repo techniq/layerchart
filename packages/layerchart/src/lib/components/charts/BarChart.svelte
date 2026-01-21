@@ -80,7 +80,6 @@
     accessor,
     chartDataArray,
     defaultChartPadding,
-    type Accessor,
   } from '$lib/utils/common.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
@@ -224,30 +223,12 @@
       console.timeEnd('BarChart render');
     });
   }
-
-  function resolveAccessor(acc: Accessor<TData> | undefined) {
-    if (acc) return acc;
-    if (seriesState.isStacked) {
-      // For stacked series, collect all y0/y1 values for domain calculation
-      return (d: TData) => {
-        const values: number[] = [];
-        for (const s of seriesState.visibleSeries) {
-          const stackValue = seriesState.getStackValue(s.key, d);
-          if (stackValue) {
-            values.push(stackValue[0], stackValue[1]);
-          }
-        }
-        return values.length ? values : undefined;
-      };
-    }
-    return seriesState.visibleSeries.map((s) => s.value ?? s.key);
-  }
 </script>
 
 <Chart
   bind:context
   {data}
-  x={resolveAccessor(xProp)}
+  x={valueAxis === 'x' ? seriesState.getValueDomainAccessor(xProp) : xProp}
   {xDomain}
   {xScale}
   {xBaseline}
@@ -256,7 +237,7 @@
   {x1Domain}
   {x1Range}
   {xInterval}
-  y={resolveAccessor(yProp)}
+  y={valueAxis === 'y' ? seriesState.getValueDomainAccessor(yProp) : yProp}
   {yScale}
   {yBaseline}
   yNice={valueAxis === 'y'}

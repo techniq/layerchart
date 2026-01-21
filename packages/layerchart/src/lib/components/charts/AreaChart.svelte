@@ -49,7 +49,6 @@
     chartDataArray,
     defaultChartPadding,
     getObjectOrNull,
-    type Accessor,
   } from '$lib/utils/common.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
@@ -110,24 +109,6 @@
       console.timeEnd('AreaChart render');
     });
   }
-
-  function resolveAccessor(acc: Accessor<TData> | undefined) {
-    if (seriesState.isStacked) {
-      // For stacked series, collect all y0/y1 values for domain calculation
-      return (d: TData) => {
-        const values: number[] = [];
-        for (const s of seriesState.visibleSeries) {
-          const stackValue = seriesState.getStackValue(s.key, d);
-          if (stackValue) {
-            values.push(stackValue[0], stackValue[1]);
-          }
-        }
-        return values.length ? values : undefined;
-      };
-    }
-    if (acc) return acc;
-    return seriesState.visibleSeries.map((s) => s.value ?? s.key);
-  }
 </script>
 
 <Chart
@@ -135,7 +116,7 @@
   {data}
   {x}
   {xDomain}
-  y={resolveAccessor(y)}
+  y={seriesState.getValueDomainAccessor(y)}
   yBaseline={0}
   yNice
   {radial}
