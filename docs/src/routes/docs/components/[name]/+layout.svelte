@@ -4,7 +4,6 @@
 	import { toTitleCase } from '@layerstack/utils';
 	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
 
-	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
 	import { loadExample } from '$lib/examples.js';
 	import { page } from '$app/state';

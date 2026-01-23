@@ -12,7 +12,7 @@
 	import LucideGithub from '~icons/lucide/github';
 	import Code from './Code.svelte';
 
-	let { metadata, example = false } = $props();
+	let { metadata = {}, example = false } = $props();
 	// svelte-ignore state_referenced_locally
 	let isOpen = $state(example);
 	let openSourceModal = $state(false);
@@ -46,7 +46,7 @@
 		}
 	]);
 
-	// Add source button if sent (ie component page)
+	// Add source button if component page
 	// svelte-ignore state_referenced_locally
 	if (metadata?.source || example) {
 		llms.unshift({
@@ -72,7 +72,7 @@
 	}
 </script>
 
-<ButtonGroup variant="fill-light" size="sm" color="primary" class={example ? 'mb-40' : ''}>
+<ButtonGroup variant="fill-light" size="sm" color="primary" class={example ? 'mb-40 mt-4' : ''}>
 	<Button
 		icon={LucideCopyIcon}
 		variant="fill-light"
@@ -100,7 +100,7 @@
 			<span style="transition: transform 300ms ease; transform: rotate({open ? -180 : 0}deg);">
 				<ChevronDownIcon />
 			</span>
-			<Menu {open} on:close={toggleOff} placement="bottom-start">
+			<Menu {open} on:close={toggleOff} placement="bottom-start" class="z-25">
 				{#each llms as llm (llm.label)}
 					{#if llm.lineBreakBefore}
 						<hr class="my-1" />

@@ -1,3 +1,7 @@
+---
+title: Scales
+---
+
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
   import { format } from '@layerstack/utils';
@@ -21,8 +25,6 @@
   let [minDomain, maxDomain] = $derived(domain);
   let [minRange, maxRange] = $derived(range);
 </script>
-
-# Scales
 
 ## What is a scale?
 

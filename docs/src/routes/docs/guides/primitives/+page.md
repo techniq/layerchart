@@ -1,11 +1,13 @@
+---
+title: Primitives
+---
+
 <script lang="ts">
   import { allComponents } from 'content-collections';
   import ComponentLink from '$lib/components/ComponentLink.svelte';
 
   let primitiveComponents = allComponents.filter(c => c.category === 'primitives');
 </script>
-
-# Primitives
 
 A collection of components which support rendering within different layer types including `Svg`, `Canvas`, or `Html`.
 

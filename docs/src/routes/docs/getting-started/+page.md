@@ -1,4 +1,6 @@
-# Getting Started
+---
+title: Getting Started
+---
 
 LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
 

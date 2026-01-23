@@ -1,4 +1,6 @@
-# Styling
+---
+title: Styling
+---
 
 ## Colors
 

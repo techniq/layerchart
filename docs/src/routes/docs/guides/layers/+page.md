@@ -1,10 +1,12 @@
+---
+title: Layers
+---
+
 <script lang="ts">
 	import FeatureTable from './FeatureTable.svelte';
 
 	import { graphics, styles, gradient, text, other } from './features';
 </script>
-
-# Layers
 
 LayerChart provides first-class support for different types of layers including [Svg](/docs/components/Svg), [Html](/docs/components/Html), and [Canvas](/docs/components/Canvas) via [Layer](/docs/components/Layer) and [Primitive](/docs/guides/primitives) components.
 

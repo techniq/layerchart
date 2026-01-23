@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from 'svelte-ux';
 
-	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
+	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
 	import { examples } from '$lib/context.js';
 	import { page } from '$app/state';
 
@@ -56,14 +56,7 @@
 		<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
 		<div class="flex gap-2 mt-3">
-			{#if 'source' in metadata && metadata.source}
-				<ViewSourceButton
-					label="Source"
-					source={metadata.source}
-					href={metadata.sourceUrl}
-					icon={LucideCode}
-				/>
-			{/if}
+			<OpenLLMsbutton {metadata} />
 		</div>
 	{/if}
 </div>

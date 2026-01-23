@@ -153,3 +153,111 @@ export async function loadExamplesFromMarkdown(
 
 	return examples;
 }
+
+/**
+ * Process content only outside of code blocks (``` ... ```)
+ * Preserves code block content unchanged while applying transformations elsewhere
+ */
+function processOutsideCodeBlocks(content: string, processor: (text: string) => string): string {
+	// Split by code blocks, preserving the delimiters
+	const parts = content.split(/(```[\s\S]*?```)/g);
+
+	return parts
+		.map((part, index) => {
+			// Odd indices are code blocks (matched by the capture group)
+			if (index % 2 === 1) {
+				return part; // Keep code blocks unchanged
+			}
+			return processor(part); // Process non-code-block content
+		})
+		.join('');
+}
+
+// Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
+export function processMarkdownContent(content: string): string {
+	// Remove frontmatter (YAML between --- markers at start of file)
+	content = content.replace(/^---\n[\s\S]*?\n---\n*/, '');
+
+	// Remove Svelte script blocks and components ONLY outside of code blocks
+	content = processOutsideCodeBlocks(content, (text) => {
+		// Remove Svelte script blocks
+		text = text.replace(/<script[^>]*>[\s\S]*?<\/script>\n*/g, '');
+		// Remove Svelte components (self-closing and with content)
+		text = text.replace(/<[A-Z][a-zA-Z]*[^>]*\/>\n*/g, '');
+		text = text.replace(/<[A-Z][a-zA-Z]*[^>]*>[\s\S]*?<\/[A-Z][a-zA-Z]*>\n*/g, '');
+		return text;
+	});
+
+	// Extract title from code blocks and add as "File:" line before (must run before tabs processing)
+	content = content.replace(/(```\w*)\s+([^\n]*title="[^"]+")[^\n]*$/gm, (_, lang, meta) => {
+		const titleMatch = meta.match(/title="([^"]+)"/);
+		if (titleMatch) {
+			return `File: ${titleMatch[1]} ${lang}`;
+		}
+		return lang;
+	});
+
+	// Process tabs - convert to table
+	content = content.replace(
+		/:::tabs\{key="([^"]+)"\}\s*([\s\S]*?)(?=\n:::(?:\s*$|\s*\n))\n:::/gm,
+		(_, key, tabsContent) => {
+			const tabs: { label: string; content: string }[] = [];
+			const tabRegex = /::tab\{label="([^"]+)"[^}]*\}\s*([\s\S]*?)\s*(?=\n\s*::(?:\s*$|\s+))\n\s*::/gm;
+			let match;
+			while ((match = tabRegex.exec(tabsContent)) !== null) {
+				tabs.push({ label: match[1], content: match[2].trim() });
+			}
+
+			if (tabs.length === 0) return '';
+
+			// Build table with capitalized key as header
+			const header = key.charAt(0).toUpperCase() + key.slice(1);
+			let table = `| ${header} | Details |\n|-----------|---------|`;
+			for (const tab of tabs) {
+				// Clean up content: remove :button syntax, convert to links, unwrap code blocks
+				const cleanContent = tab.content
+					.replace(/:button\{label="([^"]+)"\s+href="([^"]+)"[^}]*\}/g, '[$1]($2)')
+					.replace(/```\w*\n([\s\S]*?)```/g, '$1') // Remove code block fences, keep content
+					.replace(/\n/g, ' ')
+					.trim();
+				table += `\n| ${tab.label} | ${cleanContent} |`;
+			}
+			return table;
+		}
+	);
+
+	// Convert ::note/:::note, ::tip/:::tip, etc. to blockquote (2 or 3 colons)
+	content = content.replace(
+		/:{2,3}(note|tip|warning|caution)\s*([\s\S]*?)(?=\n:{2,3}(?:\s*$|\s*\n))\n:{2,3}/gm,
+		(_, variant, noteContent) => {
+			return `> ${variant}: ${noteContent.trim()}\n`;
+		}
+	);
+
+	// Convert ::steps to numbered list (convert ## headings to numbered items)
+	content = content.replace(/::steps\s*([\s\S]*?)(?=\n::(?:\s*$|\s*\n))\n::/gm, (_, stepsContent: string) => {
+		let stepNum = 0;
+		return stepsContent.replace(/^## (.+)$/gm, (_match: string, heading: string) => {
+			stepNum++;
+			return `**${stepNum}. ${heading}**`;
+		});
+	});
+
+	// Remove any remaining standalone ::
+	content = content.replace(/^::\s*$/gm, '');
+
+	// Remove :icon syntax, keep text if in brackets, otherwise just remove icon
+	content = content.replace(/\[:icon\{[^}]+\}\s*([^\]]+)\]/g, '$1');
+	content = content.replace(/:icon\{[^}]+\}\s*/g, '');
+
+	// Convert :example to reference link
+	content = content.replace(
+		/:example\{component="([^"]+)"\s+name="([^"]+)"[^}]*\}/g,
+		'See example: [$1/$2](https://layerchart.com/docs/components/$1/$2)'
+	);
+
+	// Clean up multiple blank lines
+	content = content.replace(/\n{3,}/g, '\n\n');
+
+	return content.trim();
+}

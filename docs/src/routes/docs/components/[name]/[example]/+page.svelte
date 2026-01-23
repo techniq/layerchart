@@ -7,6 +7,7 @@
 
 	import LucideLink from '~icons/lucide/link';
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
+	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
 
 	let { data } = $props();
 
@@ -16,6 +17,10 @@
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
 	// console.log({ exampleInfo, data });
 </script>
+
+<div class="mb-4">
+	<OpenLLMsbutton />
+</div>
 
 <Example name={example} {component} showCode />
 

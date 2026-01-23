@@ -1,3 +1,7 @@
+---
+title: Simplified Charts
+---
+
 <script lang="ts">
   import Code from '$lib/components/Code.svelte';
   import Example from '$lib/components/Example.svelte';
@@ -10,8 +14,6 @@
 </LineChart>
 `)
 </script>
-
-# Simplified charts
 
 The LayerChart project was written to offer options for both flexibility/complexity as well as approachablilty/simplicity. This brings us to a decision as you start your first LayerChart.
 
