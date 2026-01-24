@@ -7,7 +7,7 @@ title: LLMs
   import ViewSourceButton from "$lib/components/ViewSourceButton.svelte";
 </script>
 
-The Layerchart documentation pages are designed to be accessible for humans developers using LLMs as well as  large language models (LLMs) ingestesting training data.
+The Layerchart documentation pages are designed to be accessible for humans developers using LLMs as well as  large language models (LLMs) ingesting training data.
 
 ## :icon{name="lucide:user" class="relative -top-1"} For the Humans
 
