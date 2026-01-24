@@ -100,7 +100,7 @@
 		"sharp": "^0.34.5",
 		"shiki": "^3.21.0",
 		"solar-calculator": "^0.3.0",
-		"svelte": "5.48.0",
+		"svelte": "5.48.1",
 		"svelte-check": "^4.3.5",
 		"svelte-ux": "2.0.0-next.20",
 		"tailwindcss": "^4.1.18",
