@@ -13,7 +13,7 @@ The Layerchart documentation pages are designed to be accessible for humans deve
 
 <OpenLLMsButton example/>
 
-At the top of each documentation page, and demonstrated above, you'll find a button which copies the content of the page's documentation in Markdown to the clipboard. The convenient dropdown gives you addtional helpful options.
+At the top of each documentation page, and demonstrated above, you'll find a button which copies the content of the page's documentation in Markdown to the clipboard. The convenient dropdown gives you additional helpful options.
 
 ::note
 The option for `View Component Source` is only shown for component pages.
