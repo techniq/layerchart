@@ -97,6 +97,8 @@ export { default as Pack } from './Pack.svelte';
 export * from './Pack.svelte';
 export { default as Partition } from './Partition.svelte';
 export * from './Partition.svelte';
+export { default as Path } from './Path.svelte';
+export * from './Path.svelte';
 export { default as Pattern } from './Pattern.svelte';
 export * from './Pattern.svelte';
 export { default as Pie } from './Pie.svelte';

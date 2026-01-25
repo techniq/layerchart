@@ -28,8 +28,8 @@
       ]
     },
     {
-      "name": "word-wrap-with-explicit-n",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "name": "word-wrap-with-explicit-newline",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "components": [
         {
           "component": "Chart",
@@ -548,9 +548,9 @@
       "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 10,
       "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
     },
@@ -639,5 +639,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:22.054Z"
+  "updatedAt": "2026-01-25T18:09:22.616Z"
 }

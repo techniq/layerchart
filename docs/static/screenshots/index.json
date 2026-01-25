@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-13T17:22:22.681Z",
+  "generatedAt": "2026-01-25T18:09:20.616Z",
   "totalComponents": 58,
   "totalExamples": 705,
   "components": [
@@ -1919,7 +1919,7 @@
         {
           "name": "earthquake-globe",
           "path": "/example/GeoCircle/earthquake-globe",
-          "checksum": "5bbdabf1f6b0afa9ddc0a5de4b9f725d"
+          "checksum": "9daf1cdf05089468c4791eb1d8cf0e36"
         },
         {
           "name": "playground",
@@ -1959,7 +1959,7 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "0b97dfd30018b2c66d13e7a87f7b909a"
+          "checksum": "f8f2dad35e73fade61aae5132f276e92"
         },
         {
           "name": "bubble-map",
@@ -1979,7 +1979,7 @@
         {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
-          "checksum": "6a317fb664ae830b9a4c62e15f7d404f"
+          "checksum": "4f8b17ea1e16fad3f106a498794f4f4d"
         },
         {
           "name": "spike-map",
@@ -1989,7 +1989,7 @@
         {
           "name": "submarine-cables-globe",
           "path": "/example/GeoPath/submarine-cables-globe",
-          "checksum": "32375803031ee612527b29e16ef54b2e"
+          "checksum": "f9e9ca8f7b11b8e03b501a54839c1eab"
         },
         {
           "name": "timezones",
@@ -3607,8 +3607,8 @@
           "checksum": "ba696d636f46d4a4a26898ae7fc3ff30"
         },
         {
-          "name": "word-wrap-with-explicit-n",
-          "path": "/example/Text/word-wrap-with-explicit-n",
+          "name": "word-wrap-with-explicit-newline",
+          "path": "/example/Text/word-wrap-with-explicit-newline",
           "checksum": "b293fcde4f70c9d1dd4018001d2dff23"
         }
       ]

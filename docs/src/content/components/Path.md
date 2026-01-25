@@ -7,6 +7,4 @@ related: [Arc, Area, Bar, Connector, GeoPath, MotionPath, Spline]
 
 ## Usage
 
-<!-- :example{ name="basic" showCode } -->
-
-> TODO
+:example{name="basic"}
