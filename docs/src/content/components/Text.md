@@ -9,7 +9,7 @@ related: []
 
 ### Usage
 
-:example{ name="playground" showCode }
+:example{ name="playground" }
 
 ## Along path
 
