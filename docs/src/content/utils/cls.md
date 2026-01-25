@@ -11,15 +11,12 @@ related:
   ]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-  import { cls } from '@layerstack/tailwind';
-</script>
-
 ## Usage
 
-### cls()
+### [clsx()](https://github.com/lukeed/clsx)
 
-<div class={cls('grid place-items-center rounded p-2 bg-error-500', true && 'bg-success-500')}>clsx allows for conditional class additions<br />tailwind-merge dedups overlapping classes</div>
-<br />
-<Example name="cls" resize={false} showcode />
+:example{name="clsx" showCode variant="basic"}
+
+### [twMerge()](https://github.com/dcastil/tailwind-merge)
+
+:example{name="tw-merge" showCode variant="basic"}

@@ -9,14 +9,17 @@ related:
   ]
 ---
 
-<script lang="ts">
+<!-- <script lang="ts">
   import Example from '$lib/components/Example.svelte';
-</script>
+</script> -->
 
 ## Usage
 
 ### format()
 
-> <a href="https://www.layerstack.dev/docs/utils/format" target="_blank">Full API</a>
+:::note
+[Full Layerstack API](https://www.layerstack.dev/docs/utils/format)
+:::
 
-<Example name="format" resize={false} showcode />
+<!-- <Example name="format" noResize showCode /> -->
+:example{name="format" showCode}
