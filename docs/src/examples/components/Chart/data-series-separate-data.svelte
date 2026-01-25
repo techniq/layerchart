@@ -29,9 +29,8 @@
 	]}
 	height={300}
 >
-	<!-- TODO: support `key` -->
-	<!-- {#snippet marks()}
-		<Spline key="apples" stroke="var(--color-apples)" />
-		<Spline key="oranges" stroke="var(--color-oranges)" />
-	{/snippet} -->
+	{#snippet marks()}
+		<Spline seriesKey="apples" stroke="var(--color-apples)" />
+		<Spline seriesKey="oranges" stroke="var(--color-oranges)" />
+	{/snippet}
 </LineChart>
