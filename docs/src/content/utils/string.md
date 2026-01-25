@@ -20,8 +20,22 @@ related:
 [Full Layerstack API](https://www.layerstack.dev/docs/utils/string)
 :::
 
-:example{component="string" name="truncate" showCode}
+```svelte live
+<script lang="ts">
+	import { truncate } from '@layerstack/utils';
+
+	const str = 'This is a really long string of text.';
+</script>
+
+{truncate(str, 21)}
+```
 
 ### toTitleCase()
 
-:example{component="string" name="toTitleCase" showCode}
+```svelte live
+<script lang="ts">
+	import { toTitleCase } from '@layerstack/utils';
+</script>
+
+{toTitleCase('string of text')}
+```
