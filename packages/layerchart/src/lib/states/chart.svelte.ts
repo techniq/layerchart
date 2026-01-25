@@ -176,36 +176,21 @@ export class ChartState<
     this.props.yScale ? !isScaleBand(this.props.yScale) && !isScaleTime(this.props.yScale) : true
   );
 
-  _xDomain = $derived.by((): DomainType | undefined => {
-    if (this.props.xDomain !== undefined) return this.props.xDomain;
-
-    if (this.props.xInterval != null && Array.isArray(this.data) && this.data.length > 0) {
-      const lastXValue = accessor(this.props.x)(this.data[this.data.length - 1]);
-      return [null, this.props.xInterval.offset(lastXValue)];
+  private resolveAccessor(axis: 'x' | 'y') {
+    const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
+    if (axisAccessor) {
+      return makeAccessor(axisAccessor);
+    } else if (this.valueAxis === axis && this.seriesState && !this.seriesState.isDefaultSeries) {
+      // TODO: should this only apply if !this.seriesState.isDefaultSeries?
+      return accessor(this.seriesState.series.map((s) => s.value ?? s.key));
     }
 
-    if (this.props.xBaseline != null && Array.isArray(this.data)) {
-      const xValues = this.data.flatMap(accessor(this.props.x));
-      return [min([this.props.xBaseline, ...xValues]), max([this.props.xBaseline, ...xValues])];
-    }
-  });
+    // TODO: what should the fallback be?
+    return makeAccessor(axisAccessor);
+  }
 
-  _yDomain = $derived.by((): DomainType | undefined => {
-    if (this.props.yDomain !== undefined) return this.props.yDomain;
-
-    if (this.props.yInterval != null && Array.isArray(this.data) && this.data.length > 0) {
-      const lastYValue = accessor(this.props.y)(this.data[this.data.length - 1]);
-      return [null, this.props.yInterval.offset(lastYValue)];
-    }
-
-    if (this.props.yBaseline != null && Array.isArray(this.data)) {
-      const yValues = this.data.flatMap(accessor(this.props.y));
-      return [min([this.props.yBaseline, ...yValues]), max([this.props.yBaseline, ...yValues])];
-    }
-  });
-
-  x = $derived(makeAccessor(this.props.x));
-  y = $derived(makeAccessor(this.props.y));
+  x = $derived(this.resolveAccessor('x'));
+  y = $derived(this.resolveAccessor('y'));
   z = $derived(makeAccessor(this.props.z));
   r = $derived(makeAccessor(this.props.r));
   c = $derived(accessor(this.props.c));
@@ -301,6 +286,65 @@ export class ChartState<
       return {};
     }
   });
+
+  /**
+   * Resolves the domain for a given axis based on props, series state, and data.
+   * Handles explicit domains, intervals, baselines, and series-specific calculations.
+   */
+  private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
+    const domain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
+    const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
+    const baseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
+    const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
+
+    // If explicit domain is provided, use it
+    if (domain !== undefined) return domain;
+
+    // Series-specific domain calculation (only applies if the value axis)
+    if (this.valueAxis === axis && this.seriesState) {
+      // For stacked series, collect all y0/y1 values for domain calculation
+      if (this.seriesState.isStacked) {
+        const stackAccessor = (d: TData) => {
+          const values: number[] = [];
+          for (const s of this.seriesState.visibleSeries) {
+            const stackValue = this.seriesState.getStackValue(s.key, d);
+            if (stackValue) {
+              values.push(stackValue[0], stackValue[1]);
+            }
+          }
+          return values.length ? values : undefined;
+        };
+
+        // @ts-ignore - fix type
+        return extent(chartDataArray(this.data).flatMap(stackAccessor));
+      }
+
+      // For non-default series, calculate domain from all visible series values
+      if (!this.seriesState.isDefaultSeries) {
+        const seriesDomain = this.series.visibleSeries.flatMap((s) => {
+          const acc = accessor(s.value ?? axisAccessor ?? s.key);
+          const data = s.data ?? chartDataArray(this.data);
+          return data.flatMap(acc);
+        });
+        return extent(seriesDomain);
+      }
+    }
+
+    // Interval-based domain: extend to the next interval offset
+    if (interval != null && Array.isArray(this.data) && this.data.length > 0) {
+      const lastValue = accessor(axisAccessor)(this.data[this.data.length - 1]);
+      return [null, interval.offset(lastValue)];
+    }
+
+    // Baseline-based domain: include the baseline value in the extent
+    if (baseline != null && Array.isArray(this.data)) {
+      const values = this.data.flatMap(accessor(axisAccessor));
+      return [min([baseline, ...values]), max([baseline, ...values])];
+    }
+  }
+
+  _xDomain = $derived.by((): DomainType | undefined => this.resolveDomain('x'));
+  _yDomain = $derived.by((): DomainType | undefined => this.resolveDomain('y'));
 
   xDomain = $derived(calcDomain('x', this.extents, this._xDomain));
   yDomain = $derived(calcDomain('y', this.extents, this._yDomain));

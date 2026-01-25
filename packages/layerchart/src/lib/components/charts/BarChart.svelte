@@ -76,11 +76,7 @@
 
   import Chart from '../Chart.svelte';
 
-  import {
-    accessor,
-    chartDataArray,
-    defaultChartPadding,
-  } from '$lib/utils/common.js';
+  import { accessor, chartDataArray, defaultChartPadding } from '$lib/utils/common.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
@@ -228,7 +224,7 @@
 <Chart
   bind:context
   {data}
-  x={valueAxis === 'x' ? seriesState.getValueDomainAccessor(xProp) : xProp}
+  x={xProp}
   {xDomain}
   {xScale}
   {xBaseline}
@@ -237,7 +233,7 @@
   {x1Domain}
   {x1Range}
   {xInterval}
-  y={valueAxis === 'y' ? seriesState.getValueDomainAccessor(yProp) : yProp}
+  y={yProp}
   {yScale}
   {yBaseline}
   yNice={valueAxis === 'y'}

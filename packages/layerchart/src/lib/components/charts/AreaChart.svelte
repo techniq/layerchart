@@ -45,17 +45,12 @@
 
   import Chart from '../Chart.svelte';
 
-  import {
-    chartDataArray,
-    defaultChartPadding,
-    getObjectOrNull,
-  } from '$lib/utils/common.js';
+  import { chartDataArray, defaultChartPadding, getObjectOrNull } from '$lib/utils/common.js';
   import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
-    x,
     y,
     xDomain,
     radial = false,
@@ -114,9 +109,8 @@
 <Chart
   bind:context
   {data}
-  {x}
   {xDomain}
-  y={seriesState.getValueDomainAccessor(y)}
+  {y}
   yBaseline={0}
   yNice
   {radial}

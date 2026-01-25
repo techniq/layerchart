@@ -123,35 +123,6 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
-   * Resolve accessor for domain calculation, handling stacked and multi-series cases.
-   * For stacked series, returns a function that collects all y0/y1 values.
-   * For multi-series without explicit accessor, returns array of series value accessors.
-   * @param acc - The explicit accessor provided by the user, if any
-   * @returns The resolved accessor for domain calculation
-   */
-  getValueDomainAccessor<T extends Accessor<TData>>(acc: T | undefined): T | Accessor<TData> {
-    // If explicit accessor provided, use it
-    if (acc) return acc;
-
-    // For stacked series, collect all y0/y1 values for domain calculation
-    if (this.isStacked) {
-      return ((d: TData) => {
-        const values: number[] = [];
-        for (const s of this.visibleSeries) {
-          const stackValue = this.getStackValue(s.key, d);
-          if (stackValue) {
-            values.push(stackValue[0], stackValue[1]);
-          }
-        }
-        return values.length ? values : undefined;
-      }) as Accessor<TData>;
-    }
-
-    // Multi-series: use all visible series accessors
-    return this.visibleSeries.map((s) => s.value ?? s.key) as Accessor<TData>;
-  }
-
-  /**
    * Get all series for the chart.
    */
   get series() {
