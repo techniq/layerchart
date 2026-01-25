@@ -2813,9 +2813,9 @@
       "line": "<Chart height={224}>"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 8,
       "line": "<Chart height={100}>"
     },
@@ -3044,5 +3044,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.432Z"
+  "updatedAt": "2026-01-25T18:09:21.455Z"
 }
