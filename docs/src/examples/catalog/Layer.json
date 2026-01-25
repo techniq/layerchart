@@ -2858,9 +2858,9 @@
       "line": "<Layer {type}>"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 9,
       "line": "<Layer>"
     },
@@ -3096,5 +3096,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.865Z"
+  "updatedAt": "2026-01-25T18:09:22.016Z"
 }
