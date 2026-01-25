@@ -10,9 +10,13 @@ LayerChart supports passing data in a variety of ways including:
   ```svelte
   <Chart data={...}>
   ```
+- Unified data, per-series values
+  ```svelte
+  <Chart data={...} series={[{ key: 'one' }, ...]}>
+  ```
 - Per-series
   ```svelte
-  <Chart series={[...]}>
+  <Chart series={[{ key: 'one', data: [...] }, ...]}>
   ```
 - Per-mark
   ```svelte
