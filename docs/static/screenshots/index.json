@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-01-25T18:09:20.616Z",
-  "totalComponents": 58,
-  "totalExamples": 705,
+  "generatedAt": "2026-01-25T22:34:25.883Z",
+  "totalComponents": 59,
+  "totalExamples": 708,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2744,6 +2744,16 @@
       ]
     },
     {
+      "component": "Path",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Path/basic",
+          "checksum": "fe973b72c451728ad5b7e295a74156e0"
+        }
+      ]
+    },
+    {
       "component": "Pattern",
       "examples": [
         {
@@ -3604,7 +3614,17 @@
         {
           "name": "playground",
           "path": "/example/Text/playground",
-          "checksum": "ba696d636f46d4a4a26898ae7fc3ff30"
+          "checksum": "b406e9b6f5f2017daa94c1d94b44be90"
+        },
+        {
+          "name": "truncate-axis-labels",
+          "path": "/example/Text/truncate-axis-labels",
+          "checksum": "f3af19adb3e43b73eddca8a14dc2e716"
+        },
+        {
+          "name": "word-wrap-axis-labels",
+          "path": "/example/Text/word-wrap-axis-labels",
+          "checksum": "b31905e3276c19111dc43bf40ecc7ef5"
         },
         {
           "name": "word-wrap-with-explicit-newline",
