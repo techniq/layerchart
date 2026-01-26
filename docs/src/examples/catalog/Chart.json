@@ -2057,6 +2057,13 @@
       "line": "<Chart height={600}>"
     },
     {
+      "example": "basic",
+      "component": "Path",
+      "path": "/example/Path/basic",
+      "lineNumber": 5,
+      "line": "<Chart height={300}>"
+    },
+    {
       "example": "circles",
       "component": "Pattern",
       "path": "/example/Pattern/circles",
@@ -2809,7 +2816,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Chart height={224}>"
     },
     {
@@ -3044,5 +3051,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-01-25T18:09:21.455Z"
+  "updatedAt": "2026-01-25T21:44:17.657Z"
 }
