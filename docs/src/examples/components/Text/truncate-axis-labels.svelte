@@ -5,21 +5,15 @@
 
 	const data = [
 		{
-			date: new Date('2026-01-22T05:00:00.000Z'),
 			value: 47,
-			baseline: 100,
 			label: 'This is 1st really long text'
 		},
 		{
-			date: new Date('2026-01-23T05:00:00.000Z'),
 			value: 27,
-			baseline: 20,
 			label: 'This is 2nd really long text'
 		},
 		{
-			date: new Date('2026-01-24T05:00:00.000Z'),
 			value: 82,
-			baseline: 26,
 			label: 'This is 3rd really long text'
 		}
 	];
