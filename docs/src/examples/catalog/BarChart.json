@@ -1778,7 +1778,21 @@
       "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "lineNumber": 31,
       "line": "<BarChart"
+    },
+    {
+      "example": "truncate-axis-labels",
+      "component": "Text",
+      "path": "/example/Text/truncate-axis-labels",
+      "lineNumber": 34,
+      "line": "<BarChart"
+    },
+    {
+      "example": "word-wrap-axis-labels",
+      "component": "Text",
+      "path": "/example/Text/word-wrap-axis-labels",
+      "lineNumber": 29,
+      "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.313Z"
+  "updatedAt": "2026-01-25T22:34:26.556Z"
 }

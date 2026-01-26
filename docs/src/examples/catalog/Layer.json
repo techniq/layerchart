@@ -2095,6 +2095,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "Path",
+      "path": "/example/Path/basic",
+      "lineNumber": 6,
+      "line": "<Layer>"
+    },
+    {
       "example": "circles",
       "component": "Pattern",
       "path": "/example/Pattern/circles",
@@ -2854,13 +2861,13 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Layer {type}>"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 9,
       "line": "<Layer>"
     },
@@ -3096,5 +3103,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.865Z"
+  "updatedAt": "2026-01-25T21:44:18.232Z"
 }

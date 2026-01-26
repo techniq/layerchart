@@ -603,7 +603,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
     },
     {
@@ -621,5 +621,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.474Z"
+  "updatedAt": "2026-01-25T20:58:11.921Z"
 }
