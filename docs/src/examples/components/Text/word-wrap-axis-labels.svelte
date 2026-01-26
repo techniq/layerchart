@@ -33,6 +33,6 @@
 	labels={{ placement: 'inside' }}
 	cRange={schemeCategory10}
 	orientation="horizontal"
-	padding={defaultChartPadding({ top: 20, left: 40 })}
+	padding={defaultChartPadding({ top: 20, left: 60 })}
 	height={300}
 />

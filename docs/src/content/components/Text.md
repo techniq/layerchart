@@ -38,7 +38,3 @@ The text will smartly orientate based on the direction (clockwise / counter-cloc
 :::note
 Only supported in `Svg` layers.
 :::
-
-<!-- ### Word wrap with explicit `\n`
-
-:example{ name="word-wrap-with-explicit-n" } -->
