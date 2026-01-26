@@ -51,6 +51,7 @@
 			initialScrollMode: 'scale'
 		}}
 		height={600}
+		clip
 	>
 		{#snippet children({ context })}
 			{#if settings.debug}

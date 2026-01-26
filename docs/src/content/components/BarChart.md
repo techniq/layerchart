@@ -9,6 +9,10 @@ related: [Chart, Bars]
 
 :example{ name="vertical-default" showCode }
 
+:::tip
+See also: [Axis](/docs/components/Axis) for examples of using time scale axes with bar charts
+:::
+
 <!-- ## Examples
 
 ### Vertical (default)

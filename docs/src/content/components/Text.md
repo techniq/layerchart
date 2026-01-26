@@ -34,3 +34,7 @@ Note you can change the rendering layer with the toggle at the top of the page.
 The text will smartly orientate based on the direction (clockwise / counter-clockwise) and location (top, bottom, left, right) of the arc
 
 :example{ component="Arc" name="label-direction" }
+
+:::note
+Only supported in `Svg` layers.
+:::

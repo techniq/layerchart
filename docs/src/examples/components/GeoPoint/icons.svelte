@@ -4,7 +4,6 @@
 
 	import { Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
 	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
-	import GeoPointControls from '$lib/components/controls/GeoPointControls.svelte';
 
 	import LucideStar from '~icons/lucide/star';
 
@@ -15,13 +14,8 @@
 
 	const states = feature(data.us.geojson, data.us.geojson.objects.states);
 
-	let tooltipMode = $state<'quadtree' | 'voronoi'>('quadtree');
-	let tooltipRadius = $state(30);
-
 	export { data };
 </script>
-
-<GeoPointControls bind:tooltipMode bind:tooltipRadius />
 
 <Chart
 	geo={{

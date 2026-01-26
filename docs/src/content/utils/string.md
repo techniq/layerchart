@@ -12,23 +12,35 @@ related:
   ]
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
- 	import { truncate, toTitleCase } from '@layerstack/utils';
-</script>
-
 ## Usage
+
+:::note
+See [LayerStack](https://www.layerstack.dev/docs/utils/string) for full API documentation.
+:::
 
 ### truncate()
 
-> <a href="https://www.layerstack.dev/docs/utils/string" target="_blank">Full API</a>
+```svelte live
+<script lang="ts">
+	import { truncate } from '@layerstack/utils';
 
-{truncate("This is a really long string of text.", 21)}
+	const str = 'This is a really long string of text.';
+</script>
 
-<Example component="string" name="truncate" resize={false} showcode />
+{truncate(str, 21)}
+```
+
+:::note
+Truncation is also built into the [Text](/docs/components/Text) component via the `truncate` prop.
+
+:::
 
 ### toTitleCase()
 
-{toTitleCase("string of text")}
+```svelte live
+<script lang="ts">
+	import { toTitleCase } from '@layerstack/utils';
+</script>
 
-<Example component="string" name="toTitleCase" resize={false} showcode />
+{toTitleCase('string of text')}
+```

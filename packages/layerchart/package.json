@@ -17,6 +17,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "TZ=UTC-5 vitest",
+    "test:ui": "TZ=UTC-5 vitest --ui",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "svelte-kit sync"

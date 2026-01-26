@@ -1,3 +1,8 @@
+<script lang="ts" module>
+  export const componentTestId = 'test-lc-component';
+  export const chartTestId = 'test-lc-chart';
+</script>
+
 <script lang="ts">
   import type { Component as ComponentType } from 'svelte';
   import Chart from '../Chart.svelte';
@@ -51,7 +56,7 @@
 </script>
 
 {#snippet Component()}
-  <TestComponent {...mergedComponentProps} data-testid="test-lc-component">
+  <TestComponent {...mergedComponentProps} data-testid={componentTestId}>
     {#snippet children(snippetProps: any)}
       {#each childComponents as child}
         <child.component {...resolveProps(child.props, snippetProps)} />
@@ -61,7 +66,7 @@
 {/snippet}
 
 {#if useChart}
-  <Chart {...mergedChartProps} data-testid="test-lc-chart">
+  <Chart {...mergedChartProps} data-testid={chartTestId}>
     <Layer center type={layer} {...layerProps}>
       {@render Component()}
     </Layer>
