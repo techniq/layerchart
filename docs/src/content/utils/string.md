@@ -14,11 +14,11 @@ related:
 
 ## Usage
 
-### truncate()
-
 :::note
-[Full Layerstack API](https://www.layerstack.dev/docs/utils/string)
+See [LayerStack](https://www.layerstack.dev/docs/utils/string) for full API documentation.
 :::
+
+### truncate()
 
 ```svelte live
 <script lang="ts">
@@ -29,6 +29,11 @@ related:
 
 {truncate(str, 21)}
 ```
+
+:::note
+Truncation is also built into the [Text](/docs/components/Text) component via the `truncate` prop.
+
+:::
 
 ### toTitleCase()
 

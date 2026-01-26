@@ -19,6 +19,11 @@ The text will smartly orientate based on the direction (clockwise / counter-cloc
 
 :example{ component="Arc" name="label-direction" }
 
+
+:::note
+Only supported in `Svg` layers.
+:::
+
 <!-- ### Word wrap with explicit `\n`
 
 :example{ name="word-wrap-with-explicit-n" } -->

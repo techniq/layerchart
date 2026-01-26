@@ -9,8 +9,8 @@ related: []
 
 ### pivotLonger (columns to rows)
 
-:example{name="pivot-longer" variant="basic"}
+:example{name="pivot-longer" noResize }
 
 ### pivotWider (rows to columns)
 
-:example{name="pivot-wider" variant="basic"}
+:example{name="pivot-wider" noResize }
