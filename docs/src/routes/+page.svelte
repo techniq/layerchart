@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
+	import Stats from '../routes/stats/+page.svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
@@ -10,6 +11,8 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
+
+	let { data } = $props();
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -252,7 +255,9 @@
 	{/each}
 </div>
 
-<footer class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm">
+<footer
+	class="flex justify-between items-center px-4 py-8 border-t text-surface-content/50 text-sm"
+>
 	<div>
 		Made by <a href="https://github.com/techniq" target="_blank" class="text-surface-content">
 			Sean Lynch
@@ -266,6 +271,8 @@
 			contributors
 		</a>
 	</div>
+
+	<Stats {...data} />
 
 	<div class="flex gap-5">
 		<a href="https://github.com/techniq/layerchart" target="_blank"> Github </a>
