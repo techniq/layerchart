@@ -256,7 +256,7 @@
 </div>
 
 <footer
-	class="flex justify-between items-center px-4 py-8 border-t text-surface-content/50 text-sm"
+	class="flex flex-col sm:flex-row justify-between items-center px-4 py-2 border-t text-surface-content/50 text-sm"
 >
 	<div>
 		Made by <a href="https://github.com/techniq" target="_blank" class="text-surface-content">
