@@ -1,14 +1,14 @@
 <script lang="ts">
-	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data, children } = $props();
 </script>
 
 <h1 class="text-3xl font-bold mb-2">{data.metadata.title}</h1>
-<!-- OpenLLMsbutton is shown as example on LLMs page, do not show again -->
+<!-- OpenWithButton is shown as example on LLMs page, do not show again -->
 {#if data.metadata.title !== 'LLMs'}
 	<div class="mb-4">
-		<OpenLLMsbutton example={data.metadata.title === 'L L Ms'} />
+		<OpenWithButton example={data.metadata.title === 'LLMs'} />
 	</div>
 {/if}
 

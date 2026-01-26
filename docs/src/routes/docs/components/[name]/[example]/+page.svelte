@@ -7,7 +7,7 @@
 
 	import LucideLink from '~icons/lucide/link';
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
-	import OpenLLMsbutton from '$lib/components/OpenLLMs.svelte';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data } = $props();
 
@@ -19,7 +19,7 @@
 </script>
 
 <div class="mb-4">
-	<OpenLLMsbutton />
+	<OpenWithButton />
 </div>
 
 <Example name={example} {component} showCode />

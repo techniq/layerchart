@@ -3,15 +3,14 @@ title: LLMs
 ---
 
 <script>
-  import OpenLLMsButton from "$lib/components/OpenLLMs.svelte";
-  import ViewSourceButton from "$lib/components/ViewSourceButton.svelte";
+  import OpenWithButton from "$lib/components/OpenWithButton.svelte";
 </script>
 
 The Layerchart documentation pages are designed to be accessible for humans developers using LLMs as well as  large language models (LLMs) ingesting training data.
 
 ## :icon{name="lucide:user" class="relative -top-1"} For the Humans
 
-<OpenLLMsButton example/>
+<OpenWithButton example/>
 
 At the top of each documentation page, and demonstrated above, you'll find a button which copies the content of the page's documentation in Markdown to the clipboard. The convenient dropdown gives you additional helpful options.
 

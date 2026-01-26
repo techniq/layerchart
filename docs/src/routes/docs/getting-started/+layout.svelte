@@ -1,12 +1,12 @@
 <script lang="ts">
-	import OpenLLMsButton from '$lib/components/OpenLLMs.svelte';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data, children } = $props();
 </script>
 
 <h1 class="text-3xl font-bold mb-2">{data.metadata.title}</h1>
 <div class="mb-4">
-	<OpenLLMsButton />
+	<OpenWithButton />
 </div>
 
 <svelte:boundary>
