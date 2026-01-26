@@ -67,17 +67,16 @@ const config = defineConfig({
         test: {
           name: 'client',
           testTimeout: 5000,
-          retry: 3,
+          retry: 1,
           browser: {
             enabled: true,
             provider: playwright(),
-            // Multiple browser instances for better performance
-            // Uses single Vite server with shared caching
             instances: [
               { browser: 'chromium' },
               // { browser: 'firefox' },
               // { browser: 'webkit' },
             ],
+            headless: true,
           },
           include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
           exclude: ['src/lib/server/**', 'src/**/*.ssr.{test,spec}.{js,ts}'],
