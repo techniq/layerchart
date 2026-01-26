@@ -9,6 +9,30 @@ related: [Grid, Rule]
 
 :example{ name="placement-bottom-left" showCode }
 
+## tickSpacing
+
+If using a continuous scales (ex. linear, time) and ticks become too crowded, you can use `tickSpacing` to control the number of pixels alloted for each tick (higher => fewer ticks).
+
+::note
+Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes (left/right/radius).
+::
+
+:example{ name="linechart-tickspacing" showCode }
+
+::tip
+See also: time scale [auto](/docs/components/Axis/time-scale-auto), [multiline](/docs/components/Axis/time-scale-auto-multiline), and [brush](/docs/components/Axis/time-scale-brush-multiline) examples
+::
+
+## band scales
+
+When creating time-series bar charts, it can be useful to use a time scale axis instead of a bar scale axis. This helps show gaps in data (such as on [weekends](/docs/components/BarChart/time-scale-interval)) and provides improved axis ticks.
+
+To enable this, you must define the interval (daily, hourly, etc) of your data using [d3-time interval](https://d3js.org/d3-time#timeMillisecond), such as `xInterval={timeDay}`.
+
+Since band padding is not available when not using a band scale, you can leverage `xInset={...}` to add padding between bars.
+
+:example{ name="barchart-xinterval-xinset" showCode }
+
 <!-- ## Examples
 
 ### Placement (bottom / left)
