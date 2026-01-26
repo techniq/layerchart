@@ -70,7 +70,7 @@
 		{@const strokeWidth = 1 / context.transform.scale}
 		<TransformContextControls />
 
-		<Layer>
+		<Layer clip>
 			<GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" {strokeWidth} />
 
 			{#each enrichedCountiesFeatures as feature}

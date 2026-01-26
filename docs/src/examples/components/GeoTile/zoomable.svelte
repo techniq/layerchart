@@ -50,8 +50,8 @@
 		transform={{
 			initialScrollMode: 'scale'
 		}}
-		height={600}
 		clip
+		height={600}
 	>
 		{#snippet children({ context })}
 			{#if settings.debug}

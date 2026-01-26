@@ -96,6 +96,7 @@
 					initialScrollMode: 'scale'
 				}}
 				padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
+				height={600}
 			>
 				{#snippet children({ context })}
 					{#if projection === geoMercator && serviceUrl}

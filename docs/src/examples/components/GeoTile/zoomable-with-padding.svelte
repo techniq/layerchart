@@ -41,7 +41,6 @@
 <GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
 
 {#if serviceUrl}
-	<div class="h-[600px] relative overflow-hidden">
 		<Chart
 			geo={{
 				projection: geoMercator,
@@ -57,6 +56,7 @@
 				left: 100,
 				right: 100
 			}}
+			clip
 			height={600}
 		>
 			{#snippet children({ context })}
@@ -106,5 +106,4 @@
 				</Tooltip.Root>
 			{/snippet}
 		</Chart>
-	</div>
 {/if}

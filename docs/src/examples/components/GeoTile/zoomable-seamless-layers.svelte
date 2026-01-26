@@ -50,6 +50,7 @@
 		transform={{
 			initialScrollMode: 'scale'
 		}}
+		clip
 		height={600}
 	>
 		{#snippet children({ context })}
