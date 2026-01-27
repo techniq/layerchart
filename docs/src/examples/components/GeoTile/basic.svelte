@@ -3,15 +3,7 @@
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoPath,
-		GeoTile,
-		Layer,
-		Tooltip,
-		defaultChartPadding,
-		getSettings
-	} from 'layerchart';
+	import { Chart, GeoPath, GeoTile, Layer, Tooltip, getSettings } from 'layerchart';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 	import { getUsStatesTopology } from '$lib/geo.remote';
 
@@ -37,14 +29,14 @@
 	let settings = getSettings();
 </script>
 
-<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 <Chart
 	geo={{
 		projection: geoMercator,
 		fitGeojson: selectedFeature
 	}}
 	clip
-	padding={defaultChartPadding({ top: 40 })}
+	padding={{ left: 20, right: 10 }}
 	height={600}
 >
 	{#snippet children({ context })}

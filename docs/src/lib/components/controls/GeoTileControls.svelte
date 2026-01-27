@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { SelectField, Switch } from 'svelte-ux';
 
-	let { doubleScale = $bindable(devicePixelRatio > 1), serviceUrl = $bindable() } = $props();
+	let {
+		doubleScale = $bindable(devicePixelRatio > 1),
+		serviceUrl = $bindable(),
+		...restProps
+	} = $props();
 
 	// <TilesetField bind:doubleScale bind:serviceUrl />
 
@@ -123,7 +127,7 @@
 	});
 </script>
 
-<div class="screenshot-hidden">
+<div class="screenshot-hidden" {...restProps}>
 	<SelectField
 		label="Tileset"
 		options={serviceOptions}

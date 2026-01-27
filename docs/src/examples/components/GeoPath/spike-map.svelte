@@ -65,12 +65,13 @@
 		initialScrollMode: 'scale'
 	}}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
 		<TransformContextControls />
 
-		<Layer clip>
+		<Layer>
 			<GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" {strokeWidth} />
 
 			{#each enrichedCountiesFeatures as feature}

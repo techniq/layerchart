@@ -38,7 +38,7 @@
 	export { data };
 </script>
 
-<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 
 {#if serviceUrl}
 	<Chart
