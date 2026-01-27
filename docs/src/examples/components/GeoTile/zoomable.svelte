@@ -38,7 +38,7 @@
 	export { data };
 </script>
 
-<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 
 {#if serviceUrl}
 	<Chart
@@ -50,8 +50,8 @@
 		transform={{
 			initialScrollMode: 'scale'
 		}}
-		height={600}
 		clip
+		height={600}
 	>
 		{#snippet children({ context })}
 			{#if settings.debug}

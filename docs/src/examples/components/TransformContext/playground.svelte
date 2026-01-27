@@ -41,12 +41,13 @@
 			motion: config.tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
 			initialScrollMode: 'scale'
 		}}
+		clip
 		padding={50}
 		width={500}
 		height={500}
 	>
 		<TransformContextControls />
-		<Layer class="overflow-hidden">
+		<Layer>
 			{#if config.showPath}
 				<Spline curve={config.curve} motion="tween" />
 			{/if}

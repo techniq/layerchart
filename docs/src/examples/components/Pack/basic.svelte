@@ -101,7 +101,7 @@
 	}}
 	bind:context
 	height={600}
-	class="overflow-hidden"
+	clip
 >
 	<Layer onclick={() => (selected = complexHierarchy)}>
 		<Pack {padding} hierarchy={complexHierarchy} bind:nodes>
