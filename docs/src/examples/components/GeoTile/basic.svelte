@@ -29,13 +29,14 @@
 	let settings = getSettings();
 </script>
 
-<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
-
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 <Chart
 	geo={{
 		projection: geoMercator,
 		fitGeojson: selectedFeature
 	}}
+	clip
+	padding={{ left: 20, right: 10 }}
 	height={600}
 >
 	{#snippet children({ context })}

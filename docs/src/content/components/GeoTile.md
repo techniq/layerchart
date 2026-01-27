@@ -7,4 +7,4 @@ related: []
 
 ## Usage
 
-:example{ name="basic" showCode }
+:example{ name="basic" }
