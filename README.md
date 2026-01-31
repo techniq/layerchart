@@ -5,7 +5,7 @@
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/techniq/layerchart?style=flat&logo=github&color=gray&label=Stars)](https://github.com/techniq/layerchart)
 [![Discord](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2F697JhMPD3t%3Fwith_counts%3Dtrue&query=approximate_member_count&label=Discord&suffix=%20members&color=5865F2&logo=discord)](https://discord.gg/697JhMPD3t) [![Discord](https://img.shields.io/discord/920755200552226868?&label=%20&style=flat&color=5865F2)](https://discord.gg/697JhMPD3t)
-[![Bluesky followers](https://img.shields.io/bluesky/followers/techniq.dev?style=flat&logo=bluesky&color=blue&label=Bluesky)](https://bsky.app/profile/techniq.dev)\*\*\*\*
+[![Bluesky followers](https://img.shields.io/bluesky/followers/techniq.dev?style=flat&logo=bluesky&color=blue&label=Bluesky)](https://bsky.app/profile/techniq.dev)
 
 A large collection of composable Svelte chart components to build a wide range of visualizations
 
