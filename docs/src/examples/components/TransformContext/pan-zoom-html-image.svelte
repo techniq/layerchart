@@ -10,6 +10,7 @@
 		motion: { type: 'tween', duration: 800, easing: cubicOut },
 		initialScrollMode: 'scale'
 	}}
+	clip
 	height={500}
 >
 	<TransformContextControls />
