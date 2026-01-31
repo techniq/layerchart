@@ -1,12 +1,13 @@
 ---
 title: Styling
+order: 7
 ---
 
 ## Colors
 
 Colors represent the main style requirement for Layerchart.
 
-Instead of requiring explicit color props for each element, LayerChart leverages CSS’s [CSS currentColor](https://www.digitalocean.com/community/tutorials/css-currentcolor) under the hood. This allows developers to style charts using familiar, standard CSS color utilities, rather than targeting different attributes for each rendering layer (svg, canvas, or html).
+Instead of requiring explicit color props for each element, LayerChart leverages CSS's [CSS currentColor](https://www.digitalocean.com/community/tutorials/css-currentcolor) under the hood. This allows developers to style charts using familiar, standard CSS color utilities, rather than targeting different attributes for each rendering layer (svg, canvas, or html).
 
 Color is simply inherited and propagated through the component tree, and LayerChart automatically applies it appropriately for each display layer—using `fill` or `stroke` for SVG, `fillStyle`, `fillRect` for canvas, and `color` or `background-color` for HTML.
 
@@ -214,7 +215,7 @@ Picking a color isn't easy. Picking many colors that appear cohesive is even tou
 more info [Color Schemes](/docs/components/ColorRamp#schemes)
 ::
 
-:example{ path="./color-schemes.svelte" noResize showCode highight="40" }
+:example{ path="./styles/color-schemes.svelte" noResize showCode highight="40" }
 
 #### Data Driven Colors (choropleth, color prop on data for pie chart, etc)
 
@@ -255,4 +256,4 @@ more info [Color Schemes](/docs/components/ColorRamp#schemes)
 Chart padding is the only other commonly styled element.
 `Can xPadding and yPadding be added to example below?`
 
-:example{ path="./padding.svelte" noResize }
+:example{ path="./styles/padding.svelte" noResize }

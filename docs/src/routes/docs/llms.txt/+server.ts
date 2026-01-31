@@ -2,19 +2,21 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { RequestHandler } from './$types';
 import type { ComponentAPI } from '$lib/api-types.js';
-import { allComponents, allUtils } from 'content-collections';
+import { allComponents, allUtils, allGuides } from 'content-collections';
 
 const BASE_URL = 'https://layerchart.com';
 
 const guides = [
 	{ slug: 'getting-started', name: 'Getting Started', description: 'Installation and setup guide for LayerChart' },
-	{ slug: 'guides/scales', name: 'Scales', description: 'Understanding scales, domains, and ranges' },
-	{ slug: 'guides/layers', name: 'Layers', description: 'Working with SVG, Canvas, and HTML layers' },
-	{ slug: 'guides/state', name: 'State', description: 'Managing chart state and reactivity' },
-	{ slug: 'guides/styles', name: 'Styles', description: 'Styling and theming your charts' },
-	{ slug: 'guides/primitives', name: 'Primitives', description: 'Low-level building blocks for custom charts' },
-	{ slug: 'guides/simplified-charts', name: 'Simplified Charts', description: 'Quick chart components for common use cases' },
-	{ slug: 'guides/features', name: 'Features', description: 'Overview of LayerChart features and capabilities' }
+	...allGuides
+		.filter((g) => !g.draft)
+		.sort((a, b) => {
+			if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+			if (a.order !== undefined) return -1;
+			if (b.order !== undefined) return 1;
+			return a.name.localeCompare(b.name);
+		})
+		.map((g) => ({ slug: `guides/${g.slug}`, name: g.name, description: g.description ?? '' }))
 ];
 
 export const GET: RequestHandler = async () => {

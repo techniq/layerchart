@@ -1,5 +1,6 @@
 ---
 title: Features
+order: 1
 ---
 
 > WIP

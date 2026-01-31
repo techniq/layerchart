@@ -69,11 +69,17 @@ export async function loadExampleByPath(resolvedPath: string): Promise<LoadedExa
 	try {
 		// Use import.meta.glob to load path-based examples
 		// This is necessary because dynamic imports with fully dynamic paths don't work in Vite
-		const modules = import.meta.glob<{ default: Component }>('/src/routes/**/*.svelte');
-		const rawModules = import.meta.glob<{ default: string }>('/src/routes/**/*.svelte', {
-			query: '?raw',
-			import: 'default'
-		});
+		const modules = import.meta.glob<{ default: Component }>([
+			'/src/routes/**/*.svelte',
+			'/src/content/**/*.svelte'
+		]);
+		const rawModules = import.meta.glob<{ default: string }>(
+			['/src/routes/**/*.svelte', '/src/content/**/*.svelte'],
+			{
+				query: '?raw',
+				import: 'default'
+			}
+		);
 
 		const componentModule = await modules[resolvedPath]?.();
 		const rawSource = await rawModules[resolvedPath]?.();

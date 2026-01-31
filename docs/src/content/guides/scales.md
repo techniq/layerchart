@@ -1,5 +1,6 @@
 ---
 title: Scales
+order: 5
 ---
 
 <script lang="ts">
@@ -7,7 +8,7 @@ title: Scales
   import { format } from '@layerstack/utils';
 
   import Code from '$lib/components/Code.svelte';
-	import DomainRangeChart from './DomainRangeChart.svelte';
+	import DomainRangeChart from './scales/DomainRangeChart.svelte';
 
   let domain = $state([100, 400]);
   let range = $state([0, 500]);

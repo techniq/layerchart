@@ -2,7 +2,7 @@
 	import { NavItem, type IconProp } from 'svelte-ux';
 	import { flatGroup } from 'd3-array';
 
-	import { allComponents, allUtils } from 'content-collections';
+	import { allComponents, allUtils, allGuides } from 'content-collections';
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
@@ -22,16 +22,16 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const guides = [
-		{ name: 'Features', path: 'features' },
-		{ name: 'Layers', path: 'layers' },
-		{ name: 'Primitives', path: 'primitives' },
-		{ name: 'Simplified charts', path: 'simplified-charts' },
-		{ name: 'Scales', path: 'scales' },
-		{ name: 'State', path: 'state' },
-		{ name: 'Styles', path: 'styles' },
-		{ name: 'LLMs', path: 'LLMs' }
-	];
+	const guides = allGuides
+		.filter((g) => !g.draft)
+		.sort((a, b) => {
+			if (a.order !== undefined && b.order !== undefined) {
+				return a.order - b.order;
+			}
+			if (a.order !== undefined) return -1;
+			if (b.order !== undefined) return 1;
+			return a.name.localeCompare(b.name);
+		});
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
@@ -86,7 +86,7 @@
 		</h2>
 		<div class="border-l border-surface-content/10">
 			{#each guides as guide}
-				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
+				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
 			{/each}
 		</div>
 	</section>

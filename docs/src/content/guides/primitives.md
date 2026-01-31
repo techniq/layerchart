@@ -1,5 +1,6 @@
 ---
 title: Primitives
+order: 3
 ---
 
 <script lang="ts">

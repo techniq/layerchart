@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	let content = '';
 	try {
-		const mdPath = join(process.cwd(), `src/routes/docs/guides/${name}/+page.md`);
+		const mdPath = join(process.cwd(), `src/content/guides/${name}.md`);
 		content = readFileSync(mdPath, 'utf-8');
 	} catch (e) {
 		error(404, `Guide "${name}" not found`);

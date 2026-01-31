@@ -1,5 +1,6 @@
 ---
 title: Simplified Charts
+order: 4
 ---
 
 <script lang="ts">
