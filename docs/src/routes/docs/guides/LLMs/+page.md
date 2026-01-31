@@ -6,7 +6,7 @@ title: LLMs
   import OpenWithButton from "$lib/components/OpenWithButton.svelte";
 </script>
 
-The Layerchart documentation pages are designed to be accessible for humans developers using LLMs as well as  large language models (LLMs) ingesting training data.
+The Layerchart documentation pages are designed to be accessible for humans developers using LLMs as well as large language models (LLMs) ingesting training data.
 
 ## :icon{name="lucide:user" class="relative -top-1"} For the Humans
 
@@ -28,12 +28,12 @@ Not all pages may support the `/llms.txt` suffix (ie those deemed irrelevant to 
 
 ## LLM-friendly Documentation 3 Ways
 
-1. To access the LLM-friendly version of supported Layerchart documentation pages, simply append `/llms.txt` to the end of the page's URL. This will return the content in a plain-text, LLM-optimized format. This is the same text which is copied to the clipboard when you click the `View Page Markdown` button.
+1. To access the LLM-friendly version of supported Layerchart documentation pages, simply append `/llms.txt` to the end of the page's URL. This will return the content in a plain-text, LLM-optimized format. This is the same text which is copied to the clipboard when you click the `Copy Page` button.
 
 :::tip
-- **Standard Page**: The LineChart component documentation is available at [layerchart.com/docs/components/LineChart](/docs/components/LineChart).
-  
-- **LLM-friendly Version**: is available at [layerchart.com/docs/components/Linechart/llms.txt](/docs/components/LineChart/llms.txt).
+**Standard Page**: The LineChart component documentation is available at [/docs/components/LineChart](/docs/components/LineChart)
+
+**LLM-friendly Version**: is available at [/docs/components/Linechart/llms.txt](/docs/components/LineChart/llms.txt)
 :::
 
 1. To explore all supported pages in LLM-friendly format, visit the root index at [layerchart.com/llms.txt](/llms.txt). This page provides a comprehensive list of available documentation endpoints compatible with the `llms.txt` standard.
