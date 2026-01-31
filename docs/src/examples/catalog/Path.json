@@ -1,6 +1,36 @@
 {
   "component": "Path",
-  "examples": [],
-  "usage": [],
-  "updatedAt": "2025-12-29T21:36:45.113Z"
+  "examples": [
+    {
+      "name": "basic",
+      "path": "/example/Path/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Path",
+          "lineNumber": 7,
+          "line": "<Path pathData=\"M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80\" strokeWidth={2} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Path",
+      "path": "/example/Path/basic",
+      "lineNumber": 7,
+      "line": "<Path pathData=\"M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80\" strokeWidth={2} />"
+    }
+  ],
+  "updatedAt": "2026-01-25T20:58:12.648Z"
 }

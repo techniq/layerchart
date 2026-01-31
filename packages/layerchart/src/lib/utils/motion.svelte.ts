@@ -1,5 +1,4 @@
 import { Spring, Tween } from 'svelte/motion';
-import { afterTick } from './afterTick.js';
 
 /**
  * Spring motion configuration options

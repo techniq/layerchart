@@ -46,88 +46,87 @@
 
 <GeoPathProjectionControls {projections} bind:projection />
 
-<div class="h-[600px] relative overflow-hidden">
-	<Chart
-		geo={{
-			projection,
-			fitGeojson: projection === geoMercator ? contiguousStates : states,
-			applyTransform: ['translate', 'scale']
-		}}
-		transform={{
-			initialScrollMode: 'none',
-			motion: { type: 'tween', duration: 800, easing: cubicOut }
-		}}
-		height={600}
-	>
-		{#snippet children({ context })}
-			<TransformContextControls />
+<Chart
+	geo={{
+		projection,
+		fitGeojson: projection === geoMercator ? contiguousStates : states,
+		applyTransform: ['translate', 'scale']
+	}}
+	transform={{
+		initialScrollMode: 'none',
+		motion: { type: 'tween', duration: 800, easing: cubicOut }
+	}}
+	clip
+	height={600}
+>
+	{#snippet children({ context })}
+		<TransformContextControls />
 
-			<Layer>
-				{#each states.features as feature}
+		<Layer>
+			{#each states.features as feature}
+				<GeoPath
+					geojson={feature}
+					class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
+					tooltip
+					onclick={() => {
+						context.tooltip.hide();
+						if (selectedStateId === feature.id) {
+							selectedStateId = null;
+							context.transform.reset();
+						} else {
+							selectedStateId = feature.id;
+							if (context.geo.projection) {
+								const featureTransform = geoFitObjectTransform(
+									context.geo.projection,
+									[context.width, context.height],
+									feature
+								);
+								context.transform.setTranslate(featureTransform.translate);
+								context.transform.setScale(featureTransform.scale);
+							}
+						}
+					}}
+				/>
+			{/each}
+
+			{#each selectedCountiesFeatures as feature (feature.id)}
+				<!-- Fade does not work for Canvas -->
+				<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
 					<GeoPath
 						geojson={feature}
-						class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
 						tooltip
+						class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
 						onclick={() => {
+							selectedStateId = null;
 							context.tooltip.hide();
-							if (selectedStateId === feature.id) {
-								selectedStateId = null;
-								context.transform.reset();
-							} else {
-								selectedStateId = feature.id;
-								if (context.geo.projection) {
-									const featureTransform = geoFitObjectTransform(
-										context.geo.projection,
-										[context.width, context.height],
-										feature
-									);
-									context.transform.setTranslate(featureTransform.translate);
-									context.transform.setScale(featureTransform.scale);
-								}
-							}
+							context.transform.reset();
 						}}
 					/>
-				{/each}
+				</g>
+			{/each}
+		</Layer>
 
-				{#each selectedCountiesFeatures as feature (feature.id)}
-					<!-- Fade does not work for Canvas -->
-					<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
-						<GeoPath
-							geojson={feature}
-							tooltip
-							class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
-							onclick={() => {
-								selectedStateId = null;
-								context.tooltip.hide();
-								context.transform.reset();
-							}}
-						/>
-					</g>
-				{/each}
-			</Layer>
+		<!-- Provides better performance by rendering tooltip path on separate Canvas layer -->
+		<Layer pointerEvents={false}>
+			{#if context.tooltip.data && settings.layer === 'canvas'}
+				<GeoPath
+					geojson={context.tooltip.data}
+					strokeWidth={1 / context.transform.scale}
+					class="stroke-surface-content/50 fill-surface-content/20"
+				/>
+			{/if}
+		</Layer>
 
-			<!-- Provides better performance by rendering tooltip path on separate Canvas layer -->
-			<Layer pointerEvents={false}>
-				{#if context.tooltip.data && settings.layer === 'canvas'}
-					<GeoPath
-						geojson={context.tooltip.data}
-						strokeWidth={1 / context.transform.scale}
-						class="stroke-surface-content/50 fill-surface-content/20"
-					/>
-				{/if}
-			</Layer>
-
-			<Tooltip.Root>
-				{#snippet children({ data })}
-					{@const [longitude, latitude] =
-						context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
-					<Tooltip.Header>{data.properties.name}</Tooltip.Header>
-					<Tooltip.List>
-						<Tooltip.Item label="longitude" value={longitude} format="decimal" />
-						<Tooltip.Item label="latitude" value={latitude} format="decimal" />
-					</Tooltip.List>
-				{/snippet}
-			</Tooltip.Root>
-		{/snippet}
-	</Chart>
-</div>
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				{@const [longitude, latitude] =
+					context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
+				<Tooltip.Header>{data.properties.name}</Tooltip.Header>
+				<Tooltip.List>
+					<Tooltip.Item label="longitude" value={longitude} format="decimal" />
+					<Tooltip.Item label="latitude" value={latitude} format="decimal" />
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</Chart>

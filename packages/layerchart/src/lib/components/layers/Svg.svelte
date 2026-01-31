@@ -55,6 +55,14 @@
      */
     ignoreTransform?: boolean;
 
+    /**
+     * Whether to clip overflow content.
+     * When true, sets `overflow: hidden` on the SVG.
+     *
+     * @default false
+     */
+    clip?: boolean;
+
     children?: Snippet<[{ ref: SVGElement }]>;
   };
 
@@ -74,6 +82,7 @@
     viewBox,
     ignoreTransform = false,
     center = false,
+    clip = false,
     class: className,
     title,
     defs,
@@ -112,6 +121,7 @@
   style:z-index={zIndex}
   class={['lc-layout-svg', className]}
   class:disablePointerEvents={pointerEvents === false}
+  class:clip
   role="figure"
   {...restProps}
 >
@@ -149,6 +159,10 @@
 
       &.disablePointerEvents {
         pointer-events: none;
+      }
+
+      &.clip {
+        overflow: hidden;
       }
     }
   }

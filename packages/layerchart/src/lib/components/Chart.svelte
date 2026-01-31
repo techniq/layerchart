@@ -577,6 +577,14 @@
      */
     onResize?: (e: ChartResizeDetail) => void;
 
+    /**
+     * Whether to clip overflow content.
+     * When true, sets `overflow: hidden` on the container.
+     *
+     * @default false
+     */
+    clip?: boolean;
+
     // TransformContext callback events
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
@@ -627,6 +635,7 @@
     ondragstart,
     brush,
     debug = false,
+    clip = false,
     class: className,
     ...restProps
   } = $derived(props);
@@ -697,6 +706,7 @@
     style:bottom={position === 'absolute' ? 0 : null}
     style:left={position === 'absolute' ? 0 : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
+    style:overflow={clip ? 'hidden' : null}
     style:width={width ? `${width}px` : '100%'}
     style:height={height ? `${height}px` : '100%'}
     bind:clientWidth={chartState._containerWidth}

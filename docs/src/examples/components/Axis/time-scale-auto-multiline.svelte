@@ -111,10 +111,11 @@
 	{#each examples as example}
 		<div>
 			<div class="text-sm mb-1">{example.label}</div>
-			<div class="h-[100px] p-4 border rounded-sm">
+			<div class="border rounded-sm">
 				<Chart
 					xDomain={example.domain}
-					padding={defaultChartPadding({ top: 30, bottom: 30, left: 25, right: 25 })}
+					padding={defaultChartPadding({ top: 40, bottom: 40, left: 25, right: 25 })}
+					height={100}
 				>
 					<Layer>
 						<Axis placement="top" rule grid tickMultiline {tickSpacing} />

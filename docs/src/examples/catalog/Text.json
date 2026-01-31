@@ -7,29 +7,51 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<Chart height={224}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 46,
+          "lineNumber": 45,
           "line": "<Layer {type}>"
         },
         {
           "component": "Text",
-          "lineNumber": 47,
-          "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
+          "lineNumber": 46,
+          "line": "<Text {...config} truncate={config.truncate ? config.truncateOptions : false} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
         }
       ]
     },
     {
-      "name": "word-wrap-with-explicit-n",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "name": "truncate-axis-labels",
+      "path": "/example/Text/truncate-axis-labels",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 34,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "word-wrap-axis-labels",
+      "path": "/example/Text/word-wrap-axis-labels",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 29,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "word-wrap-with-explicit-newline",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "components": [
         {
           "component": "Chart",
@@ -544,13 +566,13 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 47,
-      "line": "<Text {...config} truncate={truncate ? truncateOptions : false} />"
+      "lineNumber": 46,
+      "line": "<Text {...config} truncate={config.truncate ? config.truncateOptions : false} />"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 10,
       "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
     },
@@ -639,5 +661,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:22.054Z"
+  "updatedAt": "2026-01-25T22:34:27.876Z"
 }

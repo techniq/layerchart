@@ -65,6 +65,7 @@
 		initialScrollMode: 'scale'
 	}}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}

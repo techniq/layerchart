@@ -5,16 +5,12 @@ layers: []
 related: []
 ---
 
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
-
 ## Usage
 
 ### pivotLonger (columns to rows)
 
-<Example name="pivot-longer" noResize />
+:example{name="pivot-longer" noResize }
 
 ### pivotWider (rows to columns)
 
-<Example name="pivot-wider" noResize />
+:example{name="pivot-wider" noResize }
