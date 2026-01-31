@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { fly } from 'svelte/transition';
 	import { Button, Dialog, Toggle, ButtonGroup, Icon, MenuItem, Menu } from 'svelte-ux';
+	import { page } from '$app/state';
 
 	import ChevronDownIcon from '~icons/lucide/chevron-down';
 	import SimpleIconsOpenai from '~icons/simple-icons/openai';
@@ -19,6 +19,7 @@
 	let openMarkdownModal = $state(false);
 	let markdownContent = $state('');
 	let showButtonCopied = $state(false);
+
 	const pkg = {
 		name: 'LayerChart',
 		url: 'https://layerchart.com/docs',
@@ -27,7 +28,20 @@
 	const pageName = page.url.href.split('/').pop();
 	const llmBaseContext = `The following is a documentation page from ${pkg.name} (${pkg.description}). The page URL for "${pageName}" is ${page.url.href}. Be ready to help answer questions about this page.`;
 
-	const llms = $state([
+	const llms = $derived([
+		// Add source button if component page
+		...(metadata?.source || example
+			? [
+					{
+						label: 'View Component Source',
+						icon: LucideCodeIcon,
+						fn: () => {
+							// show menu item, but do not open source modal when it's an example page
+							if (!example) openSourceModal = true;
+						}
+					}
+				]
+			: []),
 		{
 			label: 'View Page Markdown',
 			icon: SimpleIconsMarkdown,
@@ -50,19 +64,6 @@
 			}
 		}
 	]);
-
-	// Add source button if component page
-	// svelte-ignore state_referenced_locally
-	if (metadata?.source || example) {
-		llms.unshift({
-			label: 'View Component Source',
-			icon: LucideCodeIcon,
-			fn: () => {
-				// show menu item, but do not open source modal when it's an example page
-				if (!example) openSourceModal = true;
-			}
-		});
-	}
 
 	function copy(text: string) {
 		navigator.clipboard.writeText(text);
