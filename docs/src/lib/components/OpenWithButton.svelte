@@ -16,6 +16,8 @@
 	// svelte-ignore state_referenced_locally
 	let isOpen = $state(example);
 	let openSourceModal = $state(false);
+	let openMarkdownModal = $state(false);
+	let markdownContent = $state('');
 	let showButtonCopied = $state(false);
 	const pkg = {
 		name: 'LayerChart',
@@ -29,7 +31,10 @@
 		{
 			label: 'View Page Markdown',
 			icon: SimpleIconsMarkdown,
-			fn: () => window.open(`${page.url.href}/llms.txt`, '_self')
+			fn: async () => {
+				markdownContent = await fetch(`${page.url.href}/llms.txt`).then((res) => res.text());
+				openMarkdownModal = true;
+			}
 		},
 		{
 			lineBreakBefore: true,
@@ -119,6 +124,7 @@
 		</Button>
 	</Toggle>
 </ButtonGroup>
+
 <Dialog
 	bind:open={openSourceModal}
 	on:close={() => (openSourceModal = false)}
@@ -148,6 +154,37 @@
 			source={metadata?.source}
 			language={metadata?.source?.startsWith('<script') ? 'svelte' : 'js'}
 		/>
+	</div>
+
+	<div slot="actions">
+		<Button variant="fill" color="primary">Close</Button>
+	</div>
+</Dialog>
+
+<Dialog
+	bind:open={openMarkdownModal}
+	on:close={() => (openMarkdownModal = false)}
+	class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
+>
+	<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
+		<div class="overflow-auto">
+			<div class="text-lg font-semibold">Page Markdown</div>
+			<div class="text-xs text-surface-content/50 truncate">{page.url.href}/llms.txt</div>
+		</div>
+
+		<Button
+			icon={SimpleIconsMarkdown}
+			variant="fill-light"
+			color="primary"
+			href="{page.url.href}/llms.txt"
+			target="_blank"
+		>
+			Open Raw
+		</Button>
+	</div>
+
+	<div class="overflow-auto border-t">
+		<Code source={markdownContent} language="md" />
 	</div>
 
 	<div slot="actions">
