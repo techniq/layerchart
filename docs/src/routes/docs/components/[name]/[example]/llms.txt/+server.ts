@@ -31,7 +31,6 @@ export const GET: RequestHandler = async ({ params }) => {
 		.filter((c) => c != null);
 
 	const markdown = generateMarkdown(name, example, component, exampleSource, usedComponents);
-
 	return markdownResponse(markdown, `${name}-${example}.md`);
 };
 
@@ -54,7 +53,7 @@ function generateMarkdown(
 	sections.push('```svelte\n' + exampleSource + '\n```');
 
 	if (usedComponents.length > 0) {
-		sections.push('## Component Docs');
+		sections.push('## Components');
 		const links = usedComponents
 			.map((comp) => `- [${comp.name}](${llmsUrl('components', comp.slug)})`)
 			.join('\n');

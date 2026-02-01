@@ -23,7 +23,7 @@
 
 <Example name={example} {component} showCode />
 
-<H2>Component Docs</H2>
+<H2>Components</H2>
 <div class="flex flex-wrap gap-2 mt-1">
 	{#each exampleInfo?.components as componentUsage}
 		<Button
