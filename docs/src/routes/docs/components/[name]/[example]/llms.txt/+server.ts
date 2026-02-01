@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { processMarkdownContent } from '$lib/markdown/utils.js';
-import { BASE_URL, trimCode, markdownResponse } from '$lib/llms/utils.js';
+import { llmsUrl, trimCode, markdownResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name, example } = params;
@@ -63,7 +63,7 @@ function generateMarkdown(
 	if (usedComponents.length > 0) {
 		sections.push('## Component Docs');
 		const links = usedComponents
-			.map((comp) => `- [${comp.name}](${BASE_URL}/docs/components/${comp.slug}/llms.txt)`)
+			.map((comp) => `- [${comp.name}](${llmsUrl('components', comp.slug)})`)
 			.join('\n');
 		sections.push(links);
 	}

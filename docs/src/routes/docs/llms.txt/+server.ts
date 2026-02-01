@@ -1,8 +1,7 @@
 import type { RequestHandler } from './$types';
 import { allComponents, allUtils } from 'content-collections';
 import {
-	BASE_URL,
-	getSortedGuides,
+	generateGuidesSection,
 	generateComponentMarkdown,
 	generateUtilMarkdown,
 	textResponse
@@ -14,7 +13,6 @@ export const GET: RequestHandler = async () => {
 };
 
 function generateFullLlmsTxt(): string {
-	const guides = getSortedGuides();
 	const sections: string[] = [];
 
 	// Header
@@ -24,10 +22,7 @@ function generateFullLlmsTxt(): string {
 
 This file contains the complete LLM-optimized documentation for all components and utilities.`);
 
-	// General section (links only, as these are markdown pages)
-	sections.push(`## General
-
-${guides.map((g) => `- [${g.name}](${BASE_URL}/docs/${g.slug}): ${g.description}`).join('\n')}`);
+	sections.push(generateGuidesSection());
 
 	// Components section - full content
 	sections.push('---\n\n# Components');

@@ -3,8 +3,22 @@ import { join } from 'path';
 import type { ComponentAPI } from '$lib/api-types.js';
 import { allComponents, allUtils, allGuides } from 'content-collections';
 import { sortCollection } from '$lib/collections.js';
+import { processMarkdownContent } from '$lib/markdown/utils.js';
 
 export const BASE_URL = 'https://layerchart.com';
+
+/** Generate URL for a docs page */
+export function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
+	if (type === 'guides') {
+		return `${BASE_URL}/docs/${slug}`;
+	}
+	return `${BASE_URL}/docs/${type}/${slug}`;
+}
+
+/** Generate URL for an llms.txt endpoint */
+export function llmsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
+	return `${docsUrl(type, slug)}/llms.txt`;
+}
 
 export interface GenerateMarkdownOptions {
 	/** Heading level for the title. 1 = "#", 2 = "##", etc. Default: 1 */
@@ -31,11 +45,7 @@ export function trimCode(code: string): string {
  * Escape special markdown characters in table cells
  */
 function escapeMarkdown(text: string): string {
-	return text
-		.replace(/\|/g, '\\|')
-		.replace(/\n/g, ' ')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;');
+	return text.replace(/\|/g, '\\|').replace(/\n/g, ' ').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /**
@@ -87,7 +97,7 @@ export function generateComponentMarkdown(
 
 	// Documentation link
 	sections.push(
-		`**Full Documentation:** [${component.name}](${BASE_URL}/docs/components/${component.slug})`
+		`**Full Documentation:** [${component.name}](${docsUrl('components', component.slug)})`
 	);
 
 	// Load example
@@ -137,7 +147,7 @@ export function generateComponentMarkdown(
 	if (component.related && component.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);
 		const relatedLinks = component.related
-			.map((r) => `- [${r}](${BASE_URL}/docs/components/${r})`)
+			.map((r) => `- [${r}](${docsUrl('components', r)})`)
 			.join('\n');
 		sections.push(relatedLinks);
 	}
@@ -164,9 +174,7 @@ export function generateUtilMarkdown(
 	}
 
 	// Documentation link
-	sections.push(
-		`**Full Documentation:** [${util.name}](${BASE_URL}/docs/utils/${util.slug})`
-	);
+	sections.push(`**Full Documentation:** [${util.name}](${docsUrl('utils', util.slug)})`);
 
 	// Load example
 	let exampleSource = '';
@@ -191,9 +199,7 @@ export function generateUtilMarkdown(
 	// Related
 	if (util.related && util.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);
-		const relatedLinks = util.related
-			.map((r) => `- [${r}](${BASE_URL}/docs/utils/${r})`)
-			.join('\n');
+		const relatedLinks = util.related.map((r) => `- [${r}](${docsUrl('utils', r)})`).join('\n');
 		sections.push(relatedLinks);
 	}
 
@@ -210,9 +216,86 @@ export function getSortedGuides(): GuideEntry[] {
 			name: 'Getting Started',
 			description: 'Installation and setup guide for LayerChart'
 		},
-		...sortCollection(allGuides.filter((g) => !g.draft))
-			.map((g) => ({ slug: `guides/${g.slug}`, name: g.name, description: g.description ?? '' }))
+		...sortCollection(allGuides.filter((g) => !g.draft)).map((g) => ({
+			slug: `guides/${g.slug}`,
+			name: g.name,
+			description: g.description ?? ''
+		}))
 	];
+}
+
+/**
+ * Generate the "General" section listing all guides as links.
+ */
+export function generateGuidesSection(): string {
+	const guides = getSortedGuides();
+	return `## General\n\n${guides.map((g) => `- [${g.name}](${docsUrl('guides', g.slug)}): ${g.description}`).join('\n')}`;
+}
+
+export interface GenerateGuideMarkdownOptions {
+	/** The name/slug of the guide (e.g., 'getting-started', 'styles') */
+	name: string;
+	/** The filesystem path to the markdown file */
+	filePath: string;
+	/** Optional explicit title. If not provided, title is extracted from frontmatter,
+	 *  falling back to title-casing the name. */
+	title?: string;
+}
+
+/**
+ * Read a guide markdown file, extract its title, process the content,
+ * and return the final markdown string.
+ */
+export function generateGuideMarkdown(options: GenerateGuideMarkdownOptions): string {
+	const { name, filePath, title: explicitTitle } = options;
+
+	const raw = readFileSync(filePath, 'utf-8');
+
+	// Extract title from frontmatter if not explicitly provided
+	let title = explicitTitle;
+	if (!title) {
+		const frontmatterMatch = raw.match(/^---\n([\s\S]*?)\n---\n*/);
+		if (frontmatterMatch) {
+			const titleMatch = frontmatterMatch[1].match(/^title:\s*(.+)$/m);
+			if (titleMatch) {
+				title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
+			}
+		}
+	}
+	if (!title) {
+		title = name
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ');
+	}
+
+	const content = processMarkdownContent(raw);
+	return `# ${title}\n\n${content}`;
+}
+
+export interface CollectionListOptions {
+	title: string;
+	items: Array<{ slug: string; name: string; description?: string }>;
+	type: 'components' | 'utils';
+}
+
+/**
+ * Generate a markdown section listing collection items as links to their llms.txt endpoints.
+ */
+export function generateCollectionListSection(options: CollectionListOptions): string {
+	const { title, items, type } = options;
+
+	const lines = items
+		.filter((item) => item.slug && item.name)
+		.sort((a, b) => a.name.localeCompare(b.name))
+		.map((item) => {
+			const description =
+				item.description ||
+				`Documentation for ${item.name} ${type === 'components' ? 'component' : 'utility'}`;
+			return `- [${item.name}](${llmsUrl(type, item.slug)}): ${description}`;
+		});
+
+	return `## ${title}\n\n${lines.join('\n')}`;
 }
 
 /**
@@ -225,7 +308,7 @@ export function textResponse(content: string): Response {
 }
 
 /**
- * Create a markdown response with Content-Disposition header
+ * Create a markdown response
  */
 export function markdownResponse(content: string, filename: string): Response {
 	return new Response(content, {

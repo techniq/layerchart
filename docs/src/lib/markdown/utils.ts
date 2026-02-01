@@ -138,7 +138,11 @@ export async function loadExamplesFromMarkdown(
 	// Load component-based examples in parallel
 	await Promise.all(
 		componentExamples.map(async (ex) => {
-			const loaded = await loadExample(ex.component, ex.name, type === 'guides' ? 'components' : type);
+			const loaded = await loadExample(
+				ex.component,
+				ex.name,
+				type === 'guides' ? 'components' : type
+			);
 			if (loaded) {
 				if (!examples[ex.component]) {
 					examples[ex.component] = {};
@@ -183,7 +187,9 @@ function processOutsideCodeBlocks(content: string, processor: (text: string) => 
 		.join('');
 }
 
-// Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
+/**
+ * Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
+ */
 export function processMarkdownContent(content: string): string {
 	// Remove frontmatter (YAML between --- markers at start of file)
 	content = content.replace(/^---\n[\s\S]*?\n---\n*/, '');
@@ -212,7 +218,8 @@ export function processMarkdownContent(content: string): string {
 		/:::tabs\{key="([^"]+)"\}\s*([\s\S]*?)(?=\n:::(?:\s*$|\s*\n))\n:::/gm,
 		(_, key, tabsContent) => {
 			const tabs: { label: string; content: string }[] = [];
-			const tabRegex = /::tab\{label="([^"]+)"[^}]*\}\s*([\s\S]*?)\s*(?=\n\s*::(?:\s*$|\s+))\n\s*::/gm;
+			const tabRegex =
+				/::tab\{label="([^"]+)"[^}]*\}\s*([\s\S]*?)\s*(?=\n\s*::(?:\s*$|\s+))\n\s*::/gm;
 			let match;
 			while ((match = tabRegex.exec(tabsContent)) !== null) {
 				tabs.push({ label: match[1], content: match[2].trim() });
@@ -245,13 +252,16 @@ export function processMarkdownContent(content: string): string {
 	);
 
 	// Convert ::steps to numbered list (convert ## headings to numbered items)
-	content = content.replace(/::steps\s*([\s\S]*?)(?=\n::(?:\s*$|\s*\n))\n::/gm, (_, stepsContent: string) => {
-		let stepNum = 0;
-		return stepsContent.replace(/^## (.+)$/gm, (_match: string, heading: string) => {
-			stepNum++;
-			return `**${stepNum}. ${heading}**`;
-		});
-	});
+	content = content.replace(
+		/::steps\s*([\s\S]*?)(?=\n::(?:\s*$|\s*\n))\n::/gm,
+		(_, stepsContent: string) => {
+			let stepNum = 0;
+			return stepsContent.replace(/^## (.+)$/gm, (_match: string, heading: string) => {
+				stepNum++;
+				return `**${stepNum}. ${heading}**`;
+			});
+		}
+	);
 
 	// Remove any remaining standalone ::
 	content = content.replace(/^::\s*$/gm, '');

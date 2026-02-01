@@ -3,7 +3,12 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 
 import type { RequestHandler } from './$types';
-import { BASE_URL, getSortedGuides, textResponse } from '$lib/llms/utils.js';
+import {
+	generateGuidesSection,
+	generateCollectionListSection,
+	llmsUrl,
+	textResponse
+} from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async () => {
 	const content = generateLlmsTxt();
@@ -11,7 +16,6 @@ export const GET: RequestHandler = async () => {
 };
 
 function generateLlmsTxt(): string {
-	const guides = getSortedGuides();
 	const sections: string[] = [];
 
 	// Header
@@ -21,44 +25,13 @@ function generateLlmsTxt(): string {
 
 This file contains links to LLM-optimized documentation in markdown format.`);
 
-	// General section
-	sections.push(`## General
-
-${guides.map((g) => `- [${g.name}](${BASE_URL}/docs/${g.slug}): ${g.description}`).join('\n')}`);
-
-	// Components section
-	const componentsList = allComponents
-		.filter((c) => c.slug && c.name)
-		.sort((a, b) => a.name.localeCompare(b.name))
-		.map((c) => {
-			const description = c.description || `Documentation for ${c.name} component`;
-			return `- [${c.name}](${BASE_URL}/docs/components/${c.slug}/llms.txt): ${description}`;
-		})
-		.join('\n');
-
-	sections.push(`## Components
-
-${componentsList}`);
-
-	// Utilities section
-	const utilsList = allUtils
-		.filter((u) => u.slug && u.name)
-		.sort((a, b) => a.name.localeCompare(b.name))
-		.map((u) => {
-			const description = u.description || `Documentation for ${u.name} utility`;
-			return `- [${u.name}](${BASE_URL}/docs/utils/${u.slug}/llms.txt): ${description}`;
-		})
-		.join('\n');
-
-	sections.push(`## Utilities
-
-${utilsList}`);
+	sections.push(generateGuidesSection());
+	sections.push(generateCollectionListSection({ title: 'Components', items: allComponents, type: 'components' }));
+	sections.push(generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' }));
 
 	// Examples section
 	const examplesList = getExamplesList();
-	sections.push(`## Examples
-
-${examplesList}`);
+	sections.push(`## Examples\n\n${examplesList}`);
 
 	return sections.join('\n\n');
 }
@@ -87,7 +60,7 @@ function getExamplesList(): string {
 				for (const exampleFile of exampleFiles) {
 					const exampleName = exampleFile.replace('.svelte', '');
 					examples.push(
-						`- [${componentName}/${exampleName}](${BASE_URL}/docs/components/${componentName}/${exampleName}/llms.txt): Example code for ${componentName}`
+						`- [${componentName}/${exampleName}](${llmsUrl('components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
 					);
 				}
 			} catch (e) {
