@@ -5,7 +5,7 @@ layers: [svg, canvas, html]
 related: [Bars, Highlight, RectClipPath]
 ---
 
-### Usage
+## Usage
 
 :example{ name="styling-using-classes" showCode }
 
