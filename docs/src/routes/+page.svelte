@@ -271,7 +271,7 @@
 	</div>
 
 	<div class="flex gap-5">
-		<a href="/llms.txt" target="_blank">LLMs</a>
+		<a href="/docs/guides/LLMs" target="_blank">LLMs</a>
 		<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
 		<a href="/docs/releases">Releases</a>
 	</div>
