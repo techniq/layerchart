@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		error(404, `Utility "${name}" not found`);
 	}
 
-	const markdown = generateUtilMarkdown(util);
+	const markdown = generateUtilMarkdown(util, { inlineExamples: true });
 
 	return markdownResponse(markdown, `${name}.md`);
 };

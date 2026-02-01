@@ -50,6 +50,8 @@ export function llmsUrl(type: 'components' | 'utils' | 'guides', slug: string): 
 export interface GenerateMarkdownOptions {
 	/** Heading level for the title. 1 = "#", 2 = "##", etc. Default: 1 */
 	headingLevel?: number;
+	/** Whether to inline all example code blocks. Default: false */
+	inlineExamples?: boolean;
 }
 
 export interface GuideEntry {
@@ -59,11 +61,54 @@ export interface GuideEntry {
 }
 
 /**
+ * Replace :example{...} directives with inlined code blocks.
+ * Must be called BEFORE processMarkdownContent.
+ */
+function inlineExampleDirectives(
+	content: string,
+	slug: string,
+	type: 'components' | 'utils'
+): string {
+	// Remove HTML comments first to avoid inlining commented-out examples
+	content = content.replace(/<!--[\s\S]*?-->/g, '');
+
+	// Cross-component examples: :example{ component="X" name="Y" ... }
+	// Must run before same-component regex to avoid greedy matching
+	content = content.replace(
+		/:example\{\s*component="([^"]+)"\s+name="([^"]+)"[^}]*\}/g,
+		(_match, component: string, name: string) => {
+			const raw = getExampleSource('components', component, name);
+			if (raw) {
+				return '```svelte\n' + trimCode(raw) + '\n```';
+			}
+			return `See example: [${component}/${name}](${BASE_URL}/docs/components/${component}/${name})`;
+		}
+	);
+
+	// Same-component examples: :example{ name="Y" ... }
+	content = content.replace(
+		/:example\{\s*name="([^"]+)"[^}]*\}/g,
+		(_match, name: string) => {
+			const raw = getExampleSource(type, slug, name);
+			if (raw) {
+				return '```svelte\n' + trimCode(raw) + '\n```';
+			}
+			return `See example: ${name}`;
+		}
+	);
+
+	return content;
+}
+
+/**
  * Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
  */
 export function processMarkdownContent(content: string): string {
 	// Remove frontmatter (YAML between --- markers at start of file)
 	content = content.replace(/^---\n[\s\S]*?\n---\n*/, '');
+
+	// Remove HTML comments
+	content = content.replace(/<!--[\s\S]*?-->/g, '');
 
 	// Remove Svelte script blocks and components ONLY outside of code blocks
 	// Split by code blocks, process only non-code-block parts, then rejoin
@@ -147,11 +192,14 @@ export function processMarkdownContent(content: string): string {
 	content = content.replace(/\[:icon\{[^}]+\}\s*([^\]]+)\]/g, '$1');
 	content = content.replace(/:icon\{[^}]+\}\s*/g, '');
 
-	// Convert :example to reference link
+	// Convert :example with component to reference link
 	content = content.replace(
 		/:example\{component="([^"]+)"\s+name="([^"]+)"[^}]*\}/g,
 		'See example: [$1/$2](https://layerchart.com/docs/components/$1/$2)'
 	);
+
+	// Convert remaining :example directives (same-component, not inlined) to plain text
+	content = content.replace(/:example\{\s*name="([^"]+)"[^}]*\}/g, 'See example: $1');
 
 	// Clean up multiple blank lines
 	content = content.replace(/\n{3,}/g, '\n\n');
@@ -204,7 +252,7 @@ export function generateComponentMarkdown(
 	component: (typeof allComponents)[number],
 	options: GenerateMarkdownOptions = {}
 ): string {
-	const { headingLevel = 1 } = options;
+	const { headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
 	const h = (level: number) => '#'.repeat(level);
 
 	const sections: string[] = [];
@@ -225,25 +273,14 @@ export function generateComponentMarkdown(
 
 	// Documentation content from markdown
 	if (component.content) {
-		const processed = processMarkdownContent(component.content);
+		let rawContent = component.content;
+		if (shouldInlineExamples) {
+			rawContent = inlineExampleDirectives(rawContent, component.slug, 'components');
+		}
+		const processed = processMarkdownContent(rawContent);
 		if (processed) {
 			sections.push(processed);
 		}
-	}
-
-	// Load example
-	let exampleSource = '';
-	if (component.usageExample) {
-		const key = `/src/examples/components/${component.slug}/${component.usageExample}.svelte`;
-		const raw = exampleSources[key];
-		if (raw) {
-			exampleSource = trimCode(raw);
-		}
-	}
-
-	if (exampleSource) {
-		sections.push(`${h(headingLevel + 1)} Example`);
-		sections.push('```svelte\n' + exampleSource + '\n```');
 	}
 
 	// Load API
@@ -286,7 +323,7 @@ export function generateUtilMarkdown(
 	util: (typeof allUtils)[number],
 	options: GenerateMarkdownOptions = {}
 ): string {
-	const { headingLevel = 1 } = options;
+	const { headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
 	const h = (level: number) => '#'.repeat(level);
 
 	const sections: string[] = [];
@@ -299,7 +336,11 @@ export function generateUtilMarkdown(
 
 	// Documentation content from markdown
 	if (util.content) {
-		const processed = processMarkdownContent(util.content);
+		let rawContent = util.content;
+		if (shouldInlineExamples) {
+			rawContent = inlineExampleDirectives(rawContent, util.slug, 'utils');
+		}
+		const processed = processMarkdownContent(rawContent);
 		if (processed) {
 			sections.push(processed);
 		}
