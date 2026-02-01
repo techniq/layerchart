@@ -583,6 +583,50 @@ export function generateExampleMarkdown(componentSlug: string, exampleName: stri
 }
 
 /**
+ * Generate the llms.txt index with links to all documentation
+ */
+export function generateLlmsTxt(): string {
+	const sections: string[] = [];
+
+	// Header
+	sections.push(`# LayerChart Documentation for LLMs
+
+> LayerChart is a powerful, composable charting library for Svelte built on top of D3.
+
+This file contains links to LLM-optimized documentation in markdown format.`);
+
+	sections.push(generateGuidesSection());
+	sections.push(
+		generateCollectionListSection({
+			title: 'Components',
+			items: allComponents,
+			type: 'components'
+		})
+	);
+	sections.push(
+		generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' })
+	);
+
+	// Examples section
+	const paths = getAllExamplePaths();
+	const examples: string[] = [];
+	for (const path of paths) {
+		const match = path.match(/\/src\/examples\/components\/([^/]+)\/([^/]+)\.svelte$/);
+		if (match) {
+			const [, componentName, exampleName] = match;
+			examples.push(
+				`- [${componentName}/${exampleName}](${llmsUrl('components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
+			);
+		}
+	}
+	if (examples.length > 0) {
+		sections.push(`## Examples\n\n${examples.join('\n')}`);
+	}
+
+	return sections.join('\n\n');
+}
+
+/**
  * Generate the full llms.txt with all components and utilities
  */
 export function generateFullLlmsTxt(): string {
