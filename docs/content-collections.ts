@@ -20,8 +20,10 @@ function extractTocFromMarkdown(content: string) {
 
 	while ((match = headingRegex.exec(stripped)) !== null) {
 		const level = match[1].length;
-		const text = match[2].trim();
-		// Use github-slugger to match `rehype-slug`
+		// Strip inline MDC directives (e.g. `:icon{name="lucide:user" class="..."}`)
+		const text = match[2].replace(/:[a-zA-Z][\w-]*\{[^}]*\}/g, '').trim();
+		if (!text) continue;
+		// Use github-slugger then strip leading/trailing dashes (matching rehypeCleanSlugIds)
 		const id = githubSlug(text);
 
 		toc.push({ id, text, level });

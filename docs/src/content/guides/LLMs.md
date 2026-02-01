@@ -27,11 +27,11 @@ LayerChart adopts the [llms.txt](https://llmstxt.org/) proposal standard, which 
 Most but not all pages support the `/llms.txt` suffix (i.e. those deemed irrelevant to LLMs).
 ::
 
-## LLM-friendly Documentation 3 Ways
+## LLM-friendly documentation
 
 ::steps
 
-## Per page / component
+### Per page / component
 
 To access the LLM-friendly version of supported documentation pages, simply append `/llms.txt` to the end of the page's URL. This will return the content in a plain-text, LLM-optimized format. This is the same text which is copied to the clipboard when you click the `Copy Page` button.
 
@@ -41,11 +41,11 @@ To access the LLM-friendly version of supported documentation pages, simply appe
 **LLM-friendly Version**: is available at [/docs/components/LineChart/llms.txt](/docs/components/LineChart/llms.txt)
 :::
 
-## Root Index
+### Root index
 
 To explore all supported pages in LLM-friendly format, visit the root index at [llms.txt](/llms.txt). This page provides a comprehensive list of available documentation endpoints compatible with the `llms.txt` standard.
 
-## Complete Documentation
+### Complete documentation
 
 For a complete, consolidated view of the all the documentation in an LLM-friendly format, navigate to [/docs/llms.txt](/docs/llms.txt). This single endpoint aggregates all documentation content into a machine-readable structure, ideal for bulk processing or ingestion into AI systems.
 
