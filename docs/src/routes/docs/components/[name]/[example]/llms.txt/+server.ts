@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
+import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { processMarkdownContent } from '$lib/markdown/utils.js';
 import { BASE_URL, trimCode, markdownResponse } from '$lib/llms/utils.js';
 
@@ -20,7 +21,22 @@ export const GET: RequestHandler = async ({ params }) => {
 		error(404, `Example "${example}" not found for component "${name}"`);
 	}
 
-	let markdown = generateMarkdown(name, example, component, exampleSource);
+	// Load catalog to find components used in this example
+	let catalog: ComponentCatalog | null = null;
+	try {
+		const catalogPath = join(process.cwd(), `src/examples/catalog/${name}.json`);
+		catalog = JSON.parse(readFileSync(catalogPath, 'utf-8'));
+	} catch (e) {
+		// Catalog may not exist
+	}
+
+	const exampleInfo = catalog?.examples.find((e) => e.name === example);
+	const usedComponentNames = [...new Set(exampleInfo?.components.map((c) => c.component) ?? [])];
+	const usedComponents = usedComponentNames
+		.map((c) => allComponents.find((ac) => ac.name === c))
+		.filter((c) => c != null);
+
+	let markdown = generateMarkdown(name, example, component, exampleSource, usedComponents);
 	markdown = processMarkdownContent(markdown);
 
 	return markdownResponse(markdown, `${name}-${example}.md`);
@@ -30,7 +46,8 @@ function generateMarkdown(
 	componentName: string,
 	exampleName: string,
 	component: (typeof allComponents)[number] | undefined,
-	exampleSource: string
+	exampleSource: string,
+	usedComponents: (typeof allComponents)[number][]
 ): string {
 	const sections: string[] = [];
 
@@ -40,12 +57,16 @@ function generateMarkdown(
 		sections.push(component.description);
 	}
 
-	sections.push(
-		`**Component Documentation:** [${componentName}](${BASE_URL}/docs/components/${componentName})`
-	);
-
 	sections.push('## Code');
 	sections.push('```svelte\n' + exampleSource + '\n```');
+
+	if (usedComponents.length > 0) {
+		sections.push('## Component Docs');
+		const links = usedComponents
+			.map((comp) => `- [${comp.name}](${BASE_URL}/docs/components/${comp.slug}/llms.txt)`)
+			.join('\n');
+		sections.push(links);
+	}
 
 	return sections.join('\n\n');
 }
