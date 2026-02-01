@@ -1,6 +1,33 @@
 {
   "component": "Layer",
-  "examples": [],
+  "examples": [
+    {
+      "name": "all-3-layers",
+      "path": "/example/Layer/all-3-layers",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={200}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer center type=\"canvas\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 7,
+          "line": "<Circle fill=\"#F2D707\" r={100} />"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 11,
+          "line": "<Arc"
+        }
+      ]
+    }
+  ],
   "usage": [
     {
       "example": "band-scale-on-axis",
@@ -202,7 +229,7 @@
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 47,
+      "lineNumber": 40,
       "line": "<Layer>"
     },
     {
@@ -1434,7 +1461,7 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 71,
+      "lineNumber": 70,
       "line": "<Layer disableHitCanvas={timer.running}>"
     },
     {
@@ -1539,7 +1566,7 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 60,
+      "lineNumber": 53,
       "line": "<Layer>"
     },
     {
@@ -1560,7 +1587,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<Layer disableHitCanvas={timer.running}>"
     },
     {
@@ -1616,7 +1643,7 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 59,
+      "lineNumber": 58,
       "line": "<Layer>"
     },
     {
@@ -1707,7 +1734,7 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 35,
+      "lineNumber": 26,
       "line": "<Layer>"
     },
     {
@@ -1886,6 +1913,27 @@
       "line": "<Layer>"
     },
     {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 6,
+      "line": "<Layer center type=\"canvas\">"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 9,
+      "line": "<Layer center type=\"svg\">"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 20,
+      "line": "<Layer center type=\"html\">"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Line",
       "path": "/example/Line/styling-using-attributes",
@@ -2044,6 +2092,13 @@
       "component": "Partition",
       "path": "/example/Partition/vertical",
       "lineNumber": 87,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Path",
+      "path": "/example/Path/basic",
+      "lineNumber": 6,
       "line": "<Layer>"
     },
     {
@@ -2806,13 +2861,13 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Layer {type}>"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 9,
       "line": "<Layer>"
     },
@@ -3048,5 +3103,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:21.554Z"
+  "updatedAt": "2026-01-25T21:44:18.232Z"
 }

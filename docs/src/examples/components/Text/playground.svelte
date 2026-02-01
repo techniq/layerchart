@@ -4,6 +4,7 @@
 	import TextPlaygroundControls from '$lib/components/controls/TextPlaygroundControls.svelte';
 	import { toTitleCase } from '@layerstack/utils';
 
+	type TruncateOptions = Exclude<ComponentProps<typeof Text>['truncate'], undefined | boolean>;
 	let config = $state({
 		x: 0,
 		y: 0,
@@ -15,16 +16,14 @@
 		rotate: 0,
 		scaleToFit: false,
 		showAnchor: true,
-		resizeSvg: true
-	});
-
-	let truncate = $state(false);
-
-	type TruncateOptions = Exclude<ComponentProps<typeof Text>['truncate'], undefined | boolean>;
-	const truncateOptions = $state<TruncateOptions>({
-		maxChars: 22,
-		ellipsis: '…',
-		position: 'end'
+		resizeSvg: true,
+		truncate: false,
+		truncateOptions: {
+			maxChars: 22,
+			minChars: 0,
+			ellipsis: '…',
+			position: 'end'
+		} as TruncateOptions
 	});
 
 	const data = undefined;
@@ -44,7 +43,7 @@
 				>
 					<Chart height={224}>
 						<Layer {type}>
-							<Text {...config} truncate={truncate ? truncateOptions : false} />
+							<Text {...config} truncate={config.truncate ? config.truncateOptions : false} />
 							{#if config.showAnchor}
 								<Circle cx={config.x} cy={config.y} r={2} fill="red" />
 							{/if}

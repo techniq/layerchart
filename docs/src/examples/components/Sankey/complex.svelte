@@ -34,7 +34,7 @@
 				}
 	);
 
-	const data = await getComplexGraph();
+	const data = $derived(await getComplexGraph());
 	export { data };
 </script>
 

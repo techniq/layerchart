@@ -3,7 +3,7 @@
 	import AnnotationLineControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = await getAppleStock();
+	const data = $derived(await getAppleStock());
 
 	let placement: Placement = $state('top-right');
 	let xOffset = $state(0);

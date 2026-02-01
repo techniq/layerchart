@@ -3,7 +3,7 @@
 	import { scaleLinear } from 'd3-scale';
 	import { getNewPassengerCars } from '$lib/data.remote.js';
 
-	const data = await getNewPassengerCars();
+	const data = $derived(await getNewPassengerCars());
 	export { data };
 </script>
 

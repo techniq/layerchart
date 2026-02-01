@@ -43,7 +43,7 @@
 				}
 	);
 
-	const data = await getFlare();
+	const data = $derived(await getFlare());
 	const hierarchy = $derived(
 		d3Hierarchy(data)
 			.sum((d) => d.value)

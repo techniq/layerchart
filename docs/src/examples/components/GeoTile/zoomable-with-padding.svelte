@@ -38,73 +38,72 @@
 	export { data };
 </script>
 
-<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} />
+<GeoTileControls bind:serviceUrl bind:doubleScale={zoomDelta} class="mb-4" />
 
 {#if serviceUrl}
-	<div class="h-[600px] relative overflow-hidden">
-		<Chart
-			geo={{
-				projection: geoMercator,
-				fitGeojson: filteredStates,
-				applyTransform: ['translate', 'scale']
-			}}
-			transform={{
-				initialScrollMode: 'scale'
-			}}
-			padding={{
-				top: 100,
-				bottom: 100,
-				left: 100,
-				right: 100
-			}}
-			height={600}
-		>
-			{#snippet children({ context })}
-				{#if settings.debug}
-					<div class="absolute top-0 left-0 z-10 grid gap-1">
-						<!-- Debug component removed for simplified example -->
-					</div>
-				{/if}
+	<Chart
+		geo={{
+			projection: geoMercator,
+			fitGeojson: filteredStates,
+			applyTransform: ['translate', 'scale']
+		}}
+		transform={{
+			initialScrollMode: 'scale'
+		}}
+		padding={{
+			top: 100,
+			bottom: 100,
+			left: 100,
+			right: 100
+		}}
+		clip
+		height={600}
+	>
+		{#snippet children({ context })}
+			{#if settings.debug}
+				<div class="absolute top-0 left-0 z-10 grid gap-1">
+					<!-- Debug component removed for simplified example -->
+				</div>
+			{/if}
 
-				<TransformControls />
+			<TransformControls />
 
-				<Layer>
-					<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
+			<Layer>
+				<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />
 
-					{#each filteredStates.features as feature}
-						<GeoPath
-							geojson={feature}
-							class="stroke-none"
-							tooltipContext={context.tooltip}
-							onclick={() => {
-								if (!context.geo.projection) return;
-								const featureTransform = geoFitObjectTransform(
-									context.geo.projection,
-									[context.width, context.height],
-									feature
-								);
-								context.transform.setTranslate(featureTransform.translate);
-								context.transform.setScale(featureTransform.scale);
-							}}
-						/>
-					{/each}
-				</Layer>
+				{#each filteredStates.features as feature}
+					<GeoPath
+						geojson={feature}
+						class="stroke-none"
+						tooltipContext={context.tooltip}
+						onclick={() => {
+							if (!context.geo.projection) return;
+							const featureTransform = geoFitObjectTransform(
+								context.geo.projection,
+								[context.width, context.height],
+								feature
+							);
+							context.transform.setTranslate(featureTransform.translate);
+							context.transform.setScale(featureTransform.scale);
+						}}
+					/>
+				{/each}
+			</Layer>
 
-				<Tooltip.Root>
-					{#snippet children({ data })}
-						{@const [longitude, latitude] =
-							context.geo.projection?.invert?.([
-								context.tooltip.x - context.padding.left,
-								context.tooltip.y - context.padding.top
-							]) ?? []}
-						<Tooltip.Header>{data.properties.name}</Tooltip.Header>
-						<Tooltip.List>
-							<Tooltip.Item label="longitude" value={longitude} format="decimal" />
-							<Tooltip.Item label="latitude" value={latitude} format="decimal" />
-						</Tooltip.List>
-					{/snippet}
-				</Tooltip.Root>
-			{/snippet}
-		</Chart>
-	</div>
+			<Tooltip.Root>
+				{#snippet children({ data })}
+					{@const [longitude, latitude] =
+						context.geo.projection?.invert?.([
+							context.tooltip.x - context.padding.left,
+							context.tooltip.y - context.padding.top
+						]) ?? []}
+					<Tooltip.Header>{data.properties.name}</Tooltip.Header>
+					<Tooltip.List>
+						<Tooltip.Item label="longitude" value={longitude} format="decimal" />
+						<Tooltip.Item label="latitude" value={latitude} format="decimal" />
+					</Tooltip.List>
+				{/snippet}
+			</Tooltip.Root>
+		{/snippet}
+	</Chart>
 {/if}

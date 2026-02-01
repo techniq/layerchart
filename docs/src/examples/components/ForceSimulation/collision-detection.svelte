@@ -33,7 +33,7 @@
 	export { data };
 </script>
 
-<Chart height={600}>
+<Chart height={600} clip>
 	{#snippet children({ context })}
 		<ForceSimulation
 			forces={{

@@ -547,6 +547,8 @@
         ? 'bottom'
         : 'top'}
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
+    style:white-space="pre-wrap"
+    style:line-height={lineHeight}
     class={['lc-text', className]}
   >
     {textValue}

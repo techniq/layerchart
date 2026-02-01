@@ -3,7 +3,7 @@
 	import { format } from '@layerstack/utils';
 	import { getAppleStock } from '$lib/data.remote';
 
-	const data = await getAppleStock();
+	const data = $derived(await getAppleStock());
 	export { data };
 </script>
 

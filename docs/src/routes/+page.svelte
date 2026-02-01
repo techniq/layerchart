@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
+	import Stats from '$lib/components/Stats.svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
@@ -10,6 +11,7 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
+
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -248,9 +250,11 @@
 
 <div class="grid grid-cols-xs gap-4 px-4 mb-4">
 	{#each examples as { component, example }}
-		<ExampleLink {component} {example} variant="hover-label" aspect="square" />
+		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
 	{/each}
 </div>
+
+<Stats />
 
 <footer class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm">
 	<div>

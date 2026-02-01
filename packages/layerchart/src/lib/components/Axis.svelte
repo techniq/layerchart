@@ -45,6 +45,7 @@
 
     /**
      * Width or height of each tick in pixels (enabling responsive count)
+     * @default 80 (top|bottom|angle) or 50 (left|right|radius)
      */
     tickSpacing?: number;
 

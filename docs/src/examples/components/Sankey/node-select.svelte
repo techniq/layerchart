@@ -3,7 +3,7 @@
 	import type { SankeyNode } from 'd3-sankey';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, sankeyGraphFromNode } from 'layerchart';
 
-	const data = await getGreenhouseGraph();
+	const data = $derived(await getGreenhouseGraph());
 	let selectedNode: SankeyNode<any, any> | null = $state.raw(null);
 
 	export { data };
