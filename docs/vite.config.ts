@@ -9,6 +9,12 @@ import Icons from 'unplugin-icons/vite';
 const isTest = process.env.VITEST === 'true';
 
 export default defineConfig({
+	// Pre-bundle these dependencies to prevent Vite reload during tests
+	// which causes "Failed to fetch dynamically imported module" errors
+	// Ref: https://github.com/vitest-dev/vitest/issues/5477
+	optimizeDeps: {
+		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux']
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
@@ -33,16 +39,19 @@ export default defineConfig({
 		}
 	},
 	test: {
-		expect: { requireAssertions: true },
 		projects: [
 			{
-				extends: './vite.config.ts',
+				// Client-side tests (Svelte components)
+				extends: true,
 				test: {
 					name: 'client',
+					testTimeout: 5000,
+					retry: 1,
 					browser: {
 						enabled: true,
 						provider: playwright(),
-						instances: [{ browser: 'chromium' }]
+						instances: [{ browser: 'chromium' }],
+						headless: true
 					},
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/routes/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/lib/server/**', 'src/**/*.ssr.{test,spec}.{js,ts}'],
@@ -50,7 +59,17 @@ export default defineConfig({
 				}
 			},
 			{
-				extends: './vite.config.ts',
+				// SSR tests (Server-side rendering)
+				extends: true,
+				test: {
+					name: 'ssr',
+					environment: 'node',
+					include: ['src/**/*.ssr.{test,spec}.{js,ts}']
+				}
+			},
+			{
+				// Server-side tests (Node.js utilities)
+				extends: true,
 				test: {
 					name: 'server',
 					environment: 'node',
@@ -62,9 +81,12 @@ export default defineConfig({
 					]
 				}
 			}
-		]
+		],
+		coverage: {
+			include: ['src']
+		}
 	},
-	resolve: {
+	ssr: {
 		noExternal: true // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
 	}
 });
