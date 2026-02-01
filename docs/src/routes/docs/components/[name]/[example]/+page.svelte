@@ -15,7 +15,6 @@
 	let component = page.url.searchParams.get('component') ?? page.params.name!;
 
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
-	// console.log({ exampleInfo, data });
 </script>
 
 <div class="mb-4">

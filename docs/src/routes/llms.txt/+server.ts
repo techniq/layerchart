@@ -1,34 +1,16 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import type { RequestHandler } from './$types';
-import { allComponents, allUtils, allGuides } from 'content-collections';
-
-const BASE_URL = 'https://layerchart.com';
-
-const guides = [
-	{ slug: 'getting-started', name: 'Getting Started', description: 'Installation and setup guide for LayerChart' },
-	...allGuides
-		.filter((g) => !g.draft)
-		.sort((a, b) => {
-			if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
-			if (a.order !== undefined) return -1;
-			if (b.order !== undefined) return 1;
-			return a.name.localeCompare(b.name);
-		})
-		.map((g) => ({ slug: `guides/${g.slug}`, name: g.name, description: g.description ?? '' }))
-];
+import { allComponents, allUtils } from 'content-collections';
+import { BASE_URL, getSortedGuides, textResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async () => {
 	const content = generateLlmsTxt();
-
-	return new Response(content, {
-		headers: {
-			'Content-Type': 'text/plain; charset=utf-8'
-		}
-	});
+	return textResponse(content);
 };
 
 function generateLlmsTxt(): string {
+	const guides = getSortedGuides();
 	const sections: string[] = [];
 
 	// Header

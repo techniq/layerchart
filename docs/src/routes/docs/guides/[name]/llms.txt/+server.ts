@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { RequestHandler } from './$types';
 import { processMarkdownContent } from '$lib/markdown/utils.js';
+import { markdownResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name } = params;
@@ -22,7 +23,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		const frontmatter = frontmatterMatch[1];
 		const titleMatch = frontmatter.match(/^title:\s*(.+)$/m);
 		if (titleMatch) {
-			title = titleMatch[1].trim().replace(/^["']|["']$/g, ''); // Remove quotes if present
+			title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
 		}
 	}
 
@@ -39,10 +40,5 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	const markdown = `# ${title}\n\n${content}`;
 
-	return new Response(markdown, {
-		headers: {
-			'Content-Type': 'text/markdown; charset=utf-8',
-			'Content-Disposition': `inline; filename="${name}.md"`
-		}
-	});
+	return markdownResponse(markdown, `${name}.md`);
 };
