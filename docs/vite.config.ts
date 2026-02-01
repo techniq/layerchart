@@ -13,7 +13,7 @@ export default defineConfig({
 	// which causes "Failed to fetch dynamically imported module" errors
 	// Ref: https://github.com/vitest-dev/vitest/issues/5477
 	optimizeDeps: {
-		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux']
+		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux', '@dagrejs/dagre']
 	},
 	plugins: [
 		tailwindcss(),
@@ -90,6 +90,9 @@ export default defineConfig({
 		// https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
 		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
 		// Ref: https://github.com/vitest-dev/vitest/issues/6806
-		noExternal: isTest ? undefined : true
+		noExternal: isTest ? undefined : true,
+		// @dagrejs/dagre is CJS-only; let Node.js handle it natively during SSR
+		// instead of bundling it (which fails with "module is not defined")
+		external: ['@dagrejs/dagre']
 	}
 });

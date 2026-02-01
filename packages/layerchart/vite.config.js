@@ -32,6 +32,7 @@ const config = defineConfig({
       'memoize',
       'runed',
       'svelte-ux',
+      '@dagrejs/dagre',
     ],
   },
   plugins: [
