@@ -150,15 +150,6 @@
 	{/if}
 {/if}
 
-{#if metadata.related.length}
-	<H2>Related</H2>
-	<div class="flex flex-wrap gap-2 mt-1">
-		{#each metadata.related as related}
-			<RelatedLink value={related} />
-		{/each}
-	</div>
-{/if}
-
 {#if api?.properties.length}
 	<H2>API Reference</H2>
 
@@ -230,4 +221,13 @@
 			</div>
 		</div>
 	{/if}
+{/if}
+
+{#if metadata.related.length}
+	<H2>Related</H2>
+	<div class="flex flex-wrap gap-2 mt-1">
+		{#each metadata.related as related}
+			<RelatedLink value={related} />
+		{/each}
+	</div>
 {/if}
