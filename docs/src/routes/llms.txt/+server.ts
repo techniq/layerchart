@@ -1,7 +1,8 @@
+import { allComponents, allUtils } from 'content-collections';
 import { readdirSync } from 'fs';
 import { join } from 'path';
+
 import type { RequestHandler } from './$types';
-import { allComponents, allUtils } from 'content-collections';
 import { BASE_URL, getSortedGuides, textResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async () => {

@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { ComponentAPI } from '$lib/api-types.js';
 import { allComponents, allUtils, allGuides } from 'content-collections';
+import { sortCollection } from '$lib/collections.js';
 
 export const BASE_URL = 'https://layerchart.com';
 
@@ -209,14 +210,7 @@ export function getSortedGuides(): GuideEntry[] {
 			name: 'Getting Started',
 			description: 'Installation and setup guide for LayerChart'
 		},
-		...allGuides
-			.filter((g) => !g.draft)
-			.sort((a, b) => {
-				if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
-				if (a.order !== undefined) return -1;
-				if (b.order !== undefined) return 1;
-				return a.name.localeCompare(b.name);
-			})
+		...sortCollection(allGuides.filter((g) => !g.draft))
 			.map((g) => ({ slug: `guides/${g.slug}`, name: g.name, description: g.description ?? '' }))
 	];
 }

@@ -3,6 +3,7 @@
 	import { flatGroup } from 'd3-array';
 
 	import { allComponents, allUtils, allGuides } from 'content-collections';
+	import { sortCollection } from '$lib/collections';
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
@@ -22,16 +23,7 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const guides = allGuides
-		.filter((g) => !g.draft)
-		.sort((a, b) => {
-			if (a.order !== undefined && b.order !== undefined) {
-				return a.order - b.order;
-			}
-			if (a.order !== undefined) return -1;
-			if (b.order !== undefined) return 1;
-			return a.name.localeCompare(b.name);
-		});
+	const guides = sortCollection(allGuides.filter((g) => !g.draft));
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
@@ -99,17 +91,7 @@
 			<div class="mb-6 last:mb-0">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
-					{#each components.sort((a, b) => {
-						// If both have order, sort by order
-						if (a.order !== undefined && b.order !== undefined) {
-							return a.order - b.order;
-						}
-						// Items with order come first
-						if (a.order !== undefined) return -1;
-						if (b.order !== undefined) return 1;
-						// Both without order, sort alphabetically by name
-						return a.name.localeCompare(b.name);
-					}) as component}
+					{#each sortCollection(components) as component}
 						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 					{/each}
 				</div>
