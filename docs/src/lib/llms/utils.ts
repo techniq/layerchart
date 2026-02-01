@@ -542,6 +542,47 @@ export function generateCollectionListSection(options: CollectionListOptions): s
 }
 
 /**
+ * Generate markdown for a single component example
+ */
+export function generateExampleMarkdown(componentSlug: string, exampleName: string): string | null {
+	const raw = getExampleSource('components', componentSlug, exampleName);
+	if (!raw) return null;
+
+	const exampleSource = trimCode(raw);
+	const component = allComponents.find((c) => c.slug === componentSlug);
+
+	// Find components used in this example from the catalog
+	const catalog = getCatalog(componentSlug);
+	const exampleInfo = (catalog?.examples as Array<{ name: string; components: Array<{ component: string }> }> | undefined)
+		?.find((e) => e.name === exampleName);
+	const usedComponentNames = [...new Set(exampleInfo?.components.map((c) => c.component) ?? [])];
+	const usedComponents = usedComponentNames
+		.map((c) => allComponents.find((ac) => ac.name === c))
+		.filter((c) => c != null);
+
+	const sections: string[] = [];
+
+	sections.push(`# ${componentSlug} - ${exampleName}`);
+
+	if (component?.description) {
+		sections.push(component.description);
+	}
+
+	sections.push('## Code');
+	sections.push('```svelte\n' + exampleSource + '\n```');
+
+	if (usedComponents.length > 0) {
+		sections.push('## Components');
+		const links = usedComponents
+			.map((comp) => `- [${comp.name}](${llmsUrl('components', comp.slug)})`)
+			.join('\n');
+		sections.push(links);
+	}
+
+	return sections.join('\n\n');
+}
+
+/**
  * Create a plain text response
  */
 export function textResponse(content: string): Response {
