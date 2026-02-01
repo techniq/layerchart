@@ -6,12 +6,12 @@ import {
 	generateCollectionListSection,
 	getAllExamplePaths,
 	llmsUrl,
-	textResponse
+	markdownResponse
 } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async () => {
 	const content = generateLlmsTxt();
-	return textResponse(content);
+	return markdownResponse(content, 'llms.md');
 };
 
 function generateLlmsTxt(): string {
