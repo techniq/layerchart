@@ -54,12 +54,6 @@ interface GenerateMarkdownOptions {
 	inlineExamples?: boolean;
 }
 
-interface GuideEntry {
-	slug: string;
-	name: string;
-	description: string;
-}
-
 /**
  * Replace :example{...} directives with inlined code blocks.
  * Must be called BEFORE processMarkdownContent.
@@ -414,7 +408,7 @@ export function generateUtilMarkdown(
 /**
  * Get sorted guides list with the getting-started entry prepended
  */
-function getSortedGuides(): GuideEntry[] {
+function getSortedGuides(): Array<{ slug: string; name: string; description: string }> {
 	return [
 		{
 			slug: 'getting-started',
@@ -429,19 +423,16 @@ function getSortedGuides(): GuideEntry[] {
 	];
 }
 
-interface GenerateGuideMarkdownOptions {
+/**
+ * Load and generate markdown for a guide.
+ */
+export function generateGuideMarkdown(options: {
 	/** The name/slug of the guide (e.g., 'getting-started', 'styles') */
 	name: string;
 	/** Optional explicit title. If not provided, title is extracted from frontmatter,
 	 *  falling back to title-casing the name. */
 	title?: string;
-}
-
-/**
- * Load and generate markdown for a guide.
- * Uses import.meta.glob to read files (Cloudflare Workers compatible).
- */
-export function generateGuideMarkdown(options: GenerateGuideMarkdownOptions): string {
+}): string {
 	const { name, title: explicitTitle } = options;
 
 	// Look up from the pre-loaded glob maps
