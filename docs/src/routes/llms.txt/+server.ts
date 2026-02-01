@@ -1,11 +1,10 @@
 import { allComponents, allUtils } from 'content-collections';
-import { readdirSync } from 'fs';
-import { join } from 'path';
 
 import type { RequestHandler } from './$types';
 import {
 	generateGuidesSection,
 	generateCollectionListSection,
+	getAllExamplePaths,
 	llmsUrl,
 	textResponse
 } from '$lib/llms/utils.js';
@@ -26,8 +25,16 @@ function generateLlmsTxt(): string {
 This file contains links to LLM-optimized documentation in markdown format.`);
 
 	sections.push(generateGuidesSection());
-	sections.push(generateCollectionListSection({ title: 'Components', items: allComponents, type: 'components' }));
-	sections.push(generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' }));
+	sections.push(
+		generateCollectionListSection({
+			title: 'Components',
+			items: allComponents,
+			type: 'components'
+		})
+	);
+	sections.push(
+		generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' })
+	);
 
 	// Examples section
 	const examplesList = getExamplesList();
@@ -37,38 +44,21 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 }
 
 /**
- * Get list of all examples from the filesystem
+ * Get list of all examples from import.meta.glob keys
  */
 function getExamplesList(): string {
-	const examplesDir = join(process.cwd(), 'src/examples/components');
+	const paths = getAllExamplePaths();
 	const examples: string[] = [];
 
-	try {
-		const componentDirs = readdirSync(examplesDir, { withFileTypes: true })
-			.filter((dirent) => dirent.isDirectory())
-			.map((dirent) => dirent.name)
-			.sort();
-
-		for (const componentName of componentDirs) {
-			const componentDir = join(examplesDir, componentName);
-
-			try {
-				const exampleFiles = readdirSync(componentDir)
-					.filter((file) => file.endsWith('.svelte'))
-					.sort();
-
-				for (const exampleFile of exampleFiles) {
-					const exampleName = exampleFile.replace('.svelte', '');
-					examples.push(
-						`- [${componentName}/${exampleName}](${llmsUrl('components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
-					);
-				}
-			} catch (e) {
-				// Skip directories that can't be read
-			}
+	for (const path of paths) {
+		// path is like "/src/examples/components/Arc/Basic.svelte"
+		const match = path.match(/\/src\/examples\/components\/([^/]+)\/([^/]+)\.svelte$/);
+		if (match) {
+			const [, componentName, exampleName] = match;
+			examples.push(
+				`- [${componentName}/${exampleName}](${llmsUrl('components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
+			);
 		}
-	} catch (e) {
-		return 'Could not read examples directory.';
 	}
 
 	return examples.join('\n');

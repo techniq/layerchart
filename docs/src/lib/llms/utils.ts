@@ -1,9 +1,41 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import type { ComponentAPI } from '$lib/api-types.js';
 import { allComponents, allUtils, allGuides } from 'content-collections';
 import { sortCollection } from '$lib/collections.js';
 import { processMarkdownContent } from '$lib/markdown/utils.js';
+
+// Use import.meta.glob to load files at build time (Cloudflare Workers compatible)
+const exampleSources = import.meta.glob<string>('/src/examples/**/*.svelte', {
+	eager: true,
+	query: '?raw',
+	import: 'default'
+});
+
+const apiFiles = import.meta.glob<string>('/src/generated/api/*.json', {
+	eager: true,
+	query: '?raw',
+	import: 'default'
+});
+
+const guideSources = import.meta.glob<string>('/src/content/guides/*.md', {
+	eager: true,
+	query: '?raw',
+	import: 'default'
+});
+
+const gettingStartedSource = import.meta.glob<string>(
+	'/src/routes/docs/getting-started/+page.md',
+	{
+		eager: true,
+		query: '?raw',
+		import: 'default'
+	}
+);
+
+const catalogFiles = import.meta.glob<string>('/src/examples/catalog/*.json', {
+	eager: true,
+	query: '?raw',
+	import: 'default'
+});
 
 export const BASE_URL = 'https://layerchart.com';
 
@@ -103,15 +135,10 @@ export function generateComponentMarkdown(
 	// Load example
 	let exampleSource = '';
 	if (component.usageExample) {
-		try {
-			const examplePath = join(
-				process.cwd(),
-				`src/examples/components/${component.slug}/${component.usageExample}.svelte`
-			);
-			exampleSource = readFileSync(examplePath, 'utf-8');
-			exampleSource = trimCode(exampleSource);
-		} catch (e) {
-			// Example file may not exist
+		const key = `/src/examples/components/${component.slug}/${component.usageExample}.svelte`;
+		const raw = exampleSources[key];
+		if (raw) {
+			exampleSource = trimCode(raw);
 		}
 	}
 
@@ -122,12 +149,10 @@ export function generateComponentMarkdown(
 
 	// Load API
 	let api: ComponentAPI | null = null;
-	try {
-		const apiPath = join(process.cwd(), `src/generated/api/${component.slug}.json`);
-		const apiContent = readFileSync(apiPath, 'utf-8');
+	const apiKey = `/src/generated/api/${component.slug}.json`;
+	const apiContent = apiFiles[apiKey];
+	if (apiContent) {
 		api = JSON.parse(apiContent);
-	} catch (e) {
-		// API file may not exist
 	}
 
 	if (api) {
@@ -179,15 +204,10 @@ export function generateUtilMarkdown(
 	// Load example
 	let exampleSource = '';
 	if (util.usageExample) {
-		try {
-			const examplePath = join(
-				process.cwd(),
-				`src/examples/utils/${util.slug}/${util.usageExample}.svelte`
-			);
-			exampleSource = readFileSync(examplePath, 'utf-8');
-			exampleSource = trimCode(exampleSource);
-		} catch (e) {
-			// Example file may not exist
+		const key = `/src/examples/utils/${util.slug}/${util.usageExample}.svelte`;
+		const raw = exampleSources[key];
+		if (raw) {
+			exampleSource = trimCode(raw);
 		}
 	}
 
@@ -235,21 +255,29 @@ export function generateGuidesSection(): string {
 export interface GenerateGuideMarkdownOptions {
 	/** The name/slug of the guide (e.g., 'getting-started', 'styles') */
 	name: string;
-	/** The filesystem path to the markdown file */
-	filePath: string;
 	/** Optional explicit title. If not provided, title is extracted from frontmatter,
 	 *  falling back to title-casing the name. */
 	title?: string;
 }
 
 /**
- * Read a guide markdown file, extract its title, process the content,
- * and return the final markdown string.
+ * Load and generate markdown for a guide.
+ * Uses import.meta.glob to read files (Cloudflare Workers compatible).
  */
 export function generateGuideMarkdown(options: GenerateGuideMarkdownOptions): string {
-	const { name, filePath, title: explicitTitle } = options;
+	const { name, title: explicitTitle } = options;
 
-	const raw = readFileSync(filePath, 'utf-8');
+	// Look up from the pre-loaded glob maps
+	let raw: string | undefined;
+	if (name === 'getting-started') {
+		raw = gettingStartedSource['/src/routes/docs/getting-started/+page.md'];
+	} else {
+		raw = guideSources[`/src/content/guides/${name}.md`];
+	}
+
+	if (!raw) {
+		throw new Error(`Guide "${name}" not found`);
+	}
 
 	// Extract title from frontmatter if not explicitly provided
 	let title = explicitTitle;
@@ -271,6 +299,37 @@ export function generateGuideMarkdown(options: GenerateGuideMarkdownOptions): st
 
 	const content = processMarkdownContent(raw);
 	return `# ${title}\n\n${content}`;
+}
+
+/**
+ * Get the raw source for an example svelte file.
+ */
+export function getExampleSource(
+	type: 'components' | 'utils',
+	componentSlug: string,
+	exampleName: string
+): string | undefined {
+	const key = `/src/examples/${type}/${componentSlug}/${exampleName}.svelte`;
+	return exampleSources[key];
+}
+
+/**
+ * Get the parsed catalog JSON for a component.
+ */
+export function getCatalog(componentSlug: string): Record<string, unknown> | null {
+	const key = `/src/examples/catalog/${componentSlug}.json`;
+	const raw = catalogFiles[key];
+	if (!raw) return null;
+	return JSON.parse(raw);
+}
+
+/**
+ * Get all example file paths from the glob map (for listing).
+ */
+export function getAllExamplePaths(): string[] {
+	return Object.keys(exampleSources)
+		.filter((key) => key.startsWith('/src/examples/components/'))
+		.sort();
 }
 
 export interface CollectionListOptions {

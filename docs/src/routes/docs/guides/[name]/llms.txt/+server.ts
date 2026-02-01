@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import { join } from 'path';
 import type { RequestHandler } from './$types';
 import { generateGuideMarkdown, markdownResponse } from '$lib/llms/utils.js';
 
@@ -8,8 +7,7 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	let markdown: string;
 	try {
-		const filePath = join(process.cwd(), `src/content/guides/${name}.md`);
-		markdown = generateGuideMarkdown({ name, filePath });
+		markdown = generateGuideMarkdown({ name });
 	} catch (e) {
 		error(404, `Guide "${name}" not found`);
 	}

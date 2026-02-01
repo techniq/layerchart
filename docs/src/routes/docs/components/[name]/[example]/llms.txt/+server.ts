@@ -1,34 +1,29 @@
 import { error } from '@sveltejs/kit';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { processMarkdownContent } from '$lib/markdown/utils.js';
-import { llmsUrl, trimCode, markdownResponse } from '$lib/llms/utils.js';
+import {
+	llmsUrl,
+	trimCode,
+	markdownResponse,
+	getExampleSource,
+	getCatalog
+} from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name, example } = params;
 
 	const component = allComponents.find((c) => c.slug === name);
 
-	let exampleSource = '';
-	try {
-		const examplePath = join(process.cwd(), `src/examples/components/${name}/${example}.svelte`);
-		exampleSource = readFileSync(examplePath, 'utf-8');
-		exampleSource = trimCode(exampleSource);
-	} catch (e) {
+	const raw = getExampleSource('components', name, example);
+	if (!raw) {
 		error(404, `Example "${example}" not found for component "${name}"`);
 	}
+	const exampleSource = trimCode(raw);
 
 	// Load catalog to find components used in this example
-	let catalog: ComponentCatalog | null = null;
-	try {
-		const catalogPath = join(process.cwd(), `src/examples/catalog/${name}.json`);
-		catalog = JSON.parse(readFileSync(catalogPath, 'utf-8'));
-	} catch (e) {
-		// Catalog may not exist
-	}
+	const catalog = getCatalog(name) as ComponentCatalog | null;
 
 	const exampleInfo = catalog?.examples.find((e) => e.name === example);
 	const usedComponentNames = [...new Set(exampleInfo?.components.map((c) => c.component) ?? [])];
