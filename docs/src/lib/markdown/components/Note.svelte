@@ -25,14 +25,15 @@
 
 <div
 	class={cls(
-		'border border-l-[6px] px-4 py-2 my-4 rounded-sm flex items-center gap-2 text-sm',
+		'border border-l-[6px] px-4 py-2 my-4 rounded-sm flex items-center gap-4 text-sm',
 		'bg-(--color)/10 border-(--color)/50',
-		'[*&>p]:my-2',
 		className
 	)}
 	style:--color={color}
 	{...restProps}
 >
 	<Icon class="shrink-0 text-(--color)" />
-	{@render children?.()}
+	<div>
+		{@render children?.()}
+	</div>
 </div>

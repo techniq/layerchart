@@ -1,9 +1,14 @@
+---
+title: Scales
+order: 5
+---
+
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
   import { format } from '@layerstack/utils';
 
   import Code from '$lib/components/Code.svelte';
-	import DomainRangeChart from './DomainRangeChart.svelte';
+	import DomainRangeChart from './scales/DomainRangeChart.svelte';
 
   let domain = $state([100, 400]);
   let range = $state([0, 500]);
@@ -21,8 +26,6 @@
   let [minDomain, maxDomain] = $derived(domain);
   let [minRange, maxRange] = $derived(range);
 </script>
-
-# Scales
 
 ## What is a scale?
 

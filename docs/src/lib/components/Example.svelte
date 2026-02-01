@@ -46,6 +46,11 @@
 	 * Resolve a relative or absolute path to a full path from /src
 	 */
 	function resolveExamplePath(examplePath: string, currentPath: string): string {
+		const isGuide = currentPath.startsWith('/docs/guides/');
+		if (isGuide && (examplePath.startsWith('./') || !examplePath.startsWith('/'))) {
+			const relativePath = examplePath.startsWith('./') ? examplePath.slice(2) : examplePath;
+			return `/src/content/guides/${relativePath}`;
+		}
 		if (examplePath.startsWith('./')) {
 			return `/src/routes${currentPath}/${examplePath.slice(2)}`;
 		} else if (examplePath.startsWith('/')) {

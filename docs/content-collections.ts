@@ -155,6 +155,26 @@ const utils = defineCollection({
 	}
 });
 
+const guides = defineCollection({
+	name: 'guides',
+	directory: 'src/content/guides',
+	include: '**/*.md',
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional(),
+		order: z.number().optional(),
+		draft: z.boolean().default(false)
+	}),
+	transform: async (doc) => {
+		const { path } = doc._meta;
+		return {
+			...doc,
+			name: doc.title,
+			slug: path
+		};
+	}
+});
+
 const releases = defineCollection({
 	name: 'releases',
 	directory: 'src/content/releases',
@@ -181,5 +201,5 @@ const releases = defineCollection({
 });
 
 export default defineConfig({
-	collections: [components, examples, utils, releases]
+	collections: [components, examples, utils, guides, releases]
 });

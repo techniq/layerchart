@@ -6,7 +6,7 @@
 
 	createHighlighter({
 		themes: ['github-light-default', 'github-dark-default'],
-		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh']
+		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
 	}).then((h) => {
 		highlighter = h;
 	});
