@@ -316,7 +316,7 @@
 	</main>
 
 	<!-- Table of Contents -->
-	{#if page.data.meta?.tableOfContents && page.data.metadata?.toc?.length}
+	{#if page.data.metadata?.toc?.length}
 		<div
 			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-70 overflow-auto py-5 pr-6 xl:block"
 		>

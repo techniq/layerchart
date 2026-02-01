@@ -5,9 +5,6 @@ export async function load({ params }) {
 	const example = await loadExample(params.name, params.example);
 
 	return {
-		example,
-		meta: {
-			tableOfContents: false
-		}
+		example
 	};
 }

@@ -18,9 +18,6 @@ export const load = async ({ params, parent, url }) => {
 	return {
 		PageComponent,
 		metadata,
-		examples,
-		meta: {
-			tableOfContents: true
-		}
+		examples
 	};
 };
