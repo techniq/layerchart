@@ -12,7 +12,6 @@
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
 
-
 	const links = [
 		{ label: 'Home', href: '/' },
 		{ label: 'Docs', href: '/docs' }
@@ -272,8 +271,9 @@
 	</div>
 
 	<div class="flex gap-5">
-		<a href="https://github.com/techniq/layerchart" target="_blank"> Github </a>
-		<a href="https://github.com/techniq/layerchart/releases" target="_blank"> Releases </a>
+		<a href="/llms.txt" target="_blank">LLMs</a>
+		<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
+		<a href="/docs/releases">Releases</a>
 	</div>
 </footer>
 
