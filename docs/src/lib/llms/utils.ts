@@ -32,7 +32,7 @@ const catalogFiles = import.meta.glob<string>('/src/examples/catalog/*.json', {
 	import: 'default'
 });
 
-export const BASE_URL = 'https://layerchart.com';
+const BASE_URL = 'https://layerchart.com';
 
 /** Generate URL for a docs page */
 export function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
@@ -81,7 +81,7 @@ function inlineExampleDirectives(
 			if (raw) {
 				return '```svelte\n' + trimCode(raw) + '\n```';
 			}
-			return `See example: [${component}/${name}](${BASE_URL}/docs/components/${component}/${name})`;
+			return `See example: [${component}/${name}](${docsUrl('components', component)}/${name})`;
 		}
 	);
 
@@ -192,7 +192,8 @@ export function processMarkdownContent(content: string): string {
 	// Convert :example with component to reference link
 	content = content.replace(
 		/:example\{component="([^"]+)"\s+name="([^"]+)"[^}]*\}/g,
-		'See example: [$1/$2](https://layerchart.com/docs/components/$1/$2)'
+		(_match, comp: string, name: string) =>
+			`See example: [${comp}/${name}](${docsUrl('components', comp)}/${name})`
 	);
 
 	// Convert remaining :example directives (same-component, not inlined) to plain text
@@ -308,7 +309,7 @@ export function generateComponentMarkdown(
 		if (examples && examples.length > 0) {
 			sections.push(`${h(headingLevel + 1)} Examples`);
 			const exampleLinks = examples
-				.map((ex) => `- [${ex.name}](${BASE_URL}/docs/components/${component.slug}/${ex.name})`)
+				.map((ex) => `- [${ex.name}](${docsUrl('components', component.slug)}/${ex.name})`)
 				.join('\n');
 			sections.push(exampleLinks);
 		}
