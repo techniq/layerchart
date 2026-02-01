@@ -35,7 +35,7 @@ const catalogFiles = import.meta.glob<string>('/src/examples/catalog/*.json', {
 const BASE_URL = 'https://layerchart.com';
 
 /** Generate URL for a docs page */
-export function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
+function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
 	if (type === 'guides') {
 		return `${BASE_URL}/docs/${slug}`;
 	}
@@ -43,18 +43,18 @@ export function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): 
 }
 
 /** Generate URL for an llms.txt endpoint */
-export function llmsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
+function llmsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
 	return `${docsUrl(type, slug)}/llms.txt`;
 }
 
-export interface GenerateMarkdownOptions {
+interface GenerateMarkdownOptions {
 	/** Heading level for the title. 1 = "#", 2 = "##", etc. Default: 1 */
 	headingLevel?: number;
 	/** Whether to inline all example code blocks. Default: false */
 	inlineExamples?: boolean;
 }
 
-export interface GuideEntry {
+interface GuideEntry {
 	slug: string;
 	name: string;
 	description: string;
@@ -100,7 +100,7 @@ function inlineExampleDirectives(
 /**
  * Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
  */
-export function processMarkdownContent(content: string): string {
+function processMarkdownContent(content: string): string {
 	// Remove frontmatter (YAML between --- markers at start of file)
 	content = content.replace(/^---\n[\s\S]*?\n---\n*/, '');
 
@@ -208,7 +208,7 @@ export function processMarkdownContent(content: string): string {
 /**
  * Trim code to remove module exports and data export statement
  */
-export function trimCode(code: string): string {
+function trimCode(code: string): string {
 	return code
 		.replace(/<script\s+module>[\s\S]*?<\/script>\n*/g, '')
 		.replace(/\n*\s*export \{ data \};\s*\n*\s*<\/script>/gm, '\n</script>')
@@ -225,7 +225,7 @@ function escapeMarkdown(text: string): string {
 /**
  * Generate markdown API table from component properties
  */
-export function generateApiTable(api: ComponentAPI): string {
+function generateApiTable(api: ComponentAPI): string {
 	if (!api.properties || api.properties.length === 0) {
 		return '';
 	}
@@ -414,7 +414,7 @@ export function generateUtilMarkdown(
 /**
  * Get sorted guides list with the getting-started entry prepended
  */
-export function getSortedGuides(): GuideEntry[] {
+function getSortedGuides(): GuideEntry[] {
 	return [
 		{
 			slug: 'getting-started',
@@ -429,7 +429,7 @@ export function getSortedGuides(): GuideEntry[] {
 	];
 }
 
-export interface GenerateGuideMarkdownOptions {
+interface GenerateGuideMarkdownOptions {
 	/** The name/slug of the guide (e.g., 'getting-started', 'styles') */
 	name: string;
 	/** Optional explicit title. If not provided, title is extracted from frontmatter,
@@ -481,7 +481,7 @@ export function generateGuideMarkdown(options: GenerateGuideMarkdownOptions): st
 /**
  * Get the raw source for an example svelte file.
  */
-export function getExampleSource(
+function getExampleSource(
 	type: 'components' | 'utils',
 	componentSlug: string,
 	exampleName: string
@@ -493,7 +493,7 @@ export function getExampleSource(
 /**
  * Get the parsed catalog JSON for a component.
  */
-export function getCatalog(componentSlug: string): Record<string, unknown> | null {
+function getCatalog(componentSlug: string): Record<string, unknown> | null {
 	const key = `/src/examples/catalog/${componentSlug}.json`;
 	const raw = catalogFiles[key];
 	if (!raw) return null;
@@ -503,13 +503,13 @@ export function getCatalog(componentSlug: string): Record<string, unknown> | nul
 /**
  * Get all example file paths from the glob map (for listing).
  */
-export function getAllExamplePaths(): string[] {
+function getAllExamplePaths(): string[] {
 	return Object.keys(exampleSources)
 		.filter((key) => key.startsWith('/src/examples/components/'))
 		.sort();
 }
 
-export interface CollectionListOptions {
+interface CollectionListOptions {
 	title: string;
 	items: Array<{ slug: string; name: string; description?: string }>;
 	type: 'components' | 'utils' | 'guides';
@@ -518,7 +518,7 @@ export interface CollectionListOptions {
 /**
  * Generate a markdown section listing collection items as links to their llms.txt endpoints.
  */
-export function generateCollectionListSection(options: CollectionListOptions): string {
+function generateCollectionListSection(options: CollectionListOptions): string {
 	const { title, items, type } = options;
 
 	const fallbackLabel =
