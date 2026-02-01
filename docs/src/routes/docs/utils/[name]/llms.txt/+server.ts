@@ -12,6 +12,5 @@ export const GET: RequestHandler = async ({ params }) => {
 	}
 
 	const markdown = generateUtilMarkdown(util, { inlineExamples: true });
-
 	return markdownResponse(markdown, `${name}.md`);
 };
