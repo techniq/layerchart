@@ -1,7 +1,7 @@
 import type { ComponentAPI } from '$lib/api-types.js';
 import { allComponents, allUtils, allGuides } from 'content-collections';
 import { sortCollection } from '$lib/collections.js';
-// Use import.meta.glob to load files at build time (Cloudflare Workers compatible)
+
 const exampleSources = import.meta.glob<string>('/src/examples/**/*.svelte', {
 	eager: true,
 	query: '?raw',
@@ -428,14 +428,6 @@ export function getSortedGuides(): GuideEntry[] {
 	];
 }
 
-/**
- * Generate the "General" section listing all guides as links.
- */
-export function generateGuidesSection(): string {
-	const guides = getSortedGuides();
-	return `## General\n\n${guides.map((g) => `- [${g.name}](${docsUrl('guides', g.slug)}): ${g.description}`).join('\n')}`;
-}
-
 export interface GenerateGuideMarkdownOptions {
 	/** The name/slug of the guide (e.g., 'getting-started', 'styles') */
 	name: string;
@@ -519,7 +511,7 @@ export function getAllExamplePaths(): string[] {
 export interface CollectionListOptions {
 	title: string;
 	items: Array<{ slug: string; name: string; description?: string }>;
-	type: 'components' | 'utils';
+	type: 'components' | 'utils' | 'guides';
 }
 
 /**
@@ -528,13 +520,14 @@ export interface CollectionListOptions {
 export function generateCollectionListSection(options: CollectionListOptions): string {
 	const { title, items, type } = options;
 
+	const fallbackLabel =
+		type === 'components' ? 'component' : type === 'utils' ? 'utility' : 'guide';
+
 	const lines = items
 		.filter((item) => item.slug && item.name)
 		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((item) => {
-			const description =
-				item.description ||
-				`Documentation for ${item.name} ${type === 'components' ? 'component' : 'utility'}`;
+			const description = item.description || `Documentation for ${item.name} ${fallbackLabel}`;
 			return `- [${item.name}](${llmsUrl(type, item.slug)}): ${description}`;
 		});
 
@@ -553,8 +546,11 @@ export function generateExampleMarkdown(componentSlug: string, exampleName: stri
 
 	// Find components used in this example from the catalog
 	const catalog = getCatalog(componentSlug);
-	const exampleInfo = (catalog?.examples as Array<{ name: string; components: Array<{ component: string }> }> | undefined)
-		?.find((e) => e.name === exampleName);
+	const exampleInfo = (
+		catalog?.examples as
+			| Array<{ name: string; components: Array<{ component: string }> }>
+			| undefined
+	)?.find((e) => e.name === exampleName);
 	const usedComponentNames = [...new Set(exampleInfo?.components.map((c) => c.component) ?? [])];
 	const usedComponents = usedComponentNames
 		.map((c) => allComponents.find((ac) => ac.name === c))
@@ -595,7 +591,12 @@ export function generateLlmsTxt(): string {
 
 This file contains links to LLM-optimized documentation in markdown format.`);
 
-	sections.push(generateGuidesSection());
+	// Guides
+	sections.push(
+		generateCollectionListSection({ title: 'Guides', items: getSortedGuides(), type: 'guides' })
+	);
+
+	// Components
 	sections.push(
 		generateCollectionListSection({
 			title: 'Components',
@@ -603,11 +604,13 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 			type: 'components'
 		})
 	);
+
+	// Utilities
 	sections.push(
 		generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' })
 	);
 
-	// Examples section
+	// Examples
 	const paths = getAllExamplePaths();
 	const examples: string[] = [];
 	for (const path of paths) {
@@ -639,7 +642,9 @@ export function generateFullLlmsTxt(): string {
 
 This file contains the complete LLM-optimized documentation for all components and utilities.`);
 
-	sections.push(generateGuidesSection());
+	sections.push(
+		generateCollectionListSection({ title: 'Guides', items: getSortedGuides(), type: 'guides' })
+	);
 
 	// Components section - full content
 	sections.push('---\n\n# Components');
