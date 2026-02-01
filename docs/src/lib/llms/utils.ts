@@ -86,16 +86,13 @@ function inlineExampleDirectives(
 	);
 
 	// Same-component examples: :example{ name="Y" ... }
-	content = content.replace(
-		/:example\{\s*name="([^"]+)"[^}]*\}/g,
-		(_match, name: string) => {
-			const raw = getExampleSource(type, slug, name);
-			if (raw) {
-				return '```svelte\n' + trimCode(raw) + '\n```';
-			}
-			return `See example: ${name}`;
+	content = content.replace(/:example\{\s*name="([^"]+)"[^}]*\}/g, (_match, name: string) => {
+		const raw = getExampleSource(type, slug, name);
+		if (raw) {
+			return '```svelte\n' + trimCode(raw) + '\n```';
 		}
-	);
+		return `See example: ${name}`;
+	});
 
 	return content;
 }
@@ -302,6 +299,48 @@ export function generateComponentMarkdown(
 			const extendsList = api.extends.map((e) => `\`${e.fullType}\``).join(', ');
 			sections.push(`**Extends:** ${extendsList}`);
 		}
+	}
+
+	// Examples from catalog
+	const catalog = getCatalog(component.slug);
+	if (catalog) {
+		const examples = catalog.examples as Array<{ name: string; path: string }>;
+		if (examples && examples.length > 0) {
+			sections.push(`${h(headingLevel + 1)} Examples`);
+			const exampleLinks = examples
+				.map((ex) => `- [${ex.name}](${BASE_URL}/docs/components/${component.slug}/${ex.name})`)
+				.join('\n');
+			sections.push(exampleLinks);
+		}
+
+		// TODO: should we include usage examples?
+		// Additional usage in other component examples (deduplicated)
+		// const usage = catalog.usage as Array<{ example: string; component: string; path: string }>;
+		// if (usage && usage.length > 0) {
+		// 	const exampleNames = new Set(examples?.map((ex) => ex.name) ?? []);
+		// 	const seen = new Set<string>();
+		// 	const uniqueUsage = usage.filter((item) => {
+		// 		// Exclude if already shown in main examples
+		// 		if (item.component === catalog.component && exampleNames.has(item.example)) {
+		// 			return false;
+		// 		}
+		// 		const key = `${item.component}::${item.example}`;
+		// 		if (seen.has(key)) return false;
+		// 		seen.add(key);
+		// 		return true;
+		// 	});
+
+		// 	if (uniqueUsage.length > 0) {
+		// 		sections.push(`${h(headingLevel + 1)} Additional Usage`);
+		// 		const usageLinks = uniqueUsage
+		// 			.map(
+		// 				(u) =>
+		// 					`- [${u.component}/${u.example}](${BASE_URL}/docs/components/${u.component}/${u.example})`
+		// 			)
+		// 			.join('\n');
+		// 		sections.push(usageLinks);
+		// 	}
+		// }
 	}
 
 	// Related
