@@ -2,8 +2,8 @@ import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
-import { processMarkdownContent } from '$lib/markdown/utils.js';
 import {
+	processMarkdownContent,
 	llmsUrl,
 	trimCode,
 	markdownResponse,

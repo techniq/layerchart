@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { allUtils } from 'content-collections';
-import { processMarkdownContent } from '$lib/markdown/utils.js';
-import { generateUtilMarkdown, markdownResponse } from '$lib/llms/utils.js';
+import { processMarkdownContent, generateUtilMarkdown, markdownResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name } = params;
