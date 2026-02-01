@@ -2,11 +2,13 @@
 	import { NavItem, type IconProp } from 'svelte-ux';
 	import { flatGroup } from 'd3-array';
 
-	import { allComponents, allUtils } from 'content-collections';
+	import { allComponents, allUtils, allGuides } from 'content-collections';
+	import { sortCollection } from '$lib/collections';
 	import { page } from '$app/state';
 	import { sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 
+	import LucideBot from '~icons/lucide/bot';
 	import LucideCompass from '~icons/lucide/compass';
 	import LucideGalleryVertical from '~icons/lucide/gallery-vertical';
 	import LucideGalleryHorizontalEnd from '~icons/lucide/gallery-horizontal-end';
@@ -21,15 +23,7 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const guides = [
-		{ name: 'Features', path: 'features' },
-		{ name: 'Layers', path: 'layers' },
-		{ name: 'Primitives', path: 'primitives' },
-		{ name: 'Simplified charts', path: 'simplified-charts' },
-		{ name: 'Scales', path: 'scales' },
-		{ name: 'State', path: 'state' },
-		{ name: 'Styles', path: 'styles' }
-	];
+	const guides = sortCollection(allGuides.filter((g) => !g.draft));
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
@@ -84,7 +78,7 @@
 		</h2>
 		<div class="border-l border-surface-content/10">
 			{#each guides as guide}
-				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.path}` })}
+				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
 			{/each}
 		</div>
 	</section>
@@ -97,17 +91,7 @@
 			<div class="mb-6 last:mb-0">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
-					{#each components.sort((a, b) => {
-						// If both have order, sort by order
-						if (a.order !== undefined && b.order !== undefined) {
-							return a.order - b.order;
-						}
-						// Items with order come first
-						if (a.order !== undefined) return -1;
-						if (b.order !== undefined) return 1;
-						// Both without order, sort alphabetically by name
-						return a.name.localeCompare(b.name);
-					}) as component}
+					{#each sortCollection(components) as component}
 						{@render navItem({ label: component.name, path: `/docs/components/${component.slug}` })}
 					{/each}
 				</div>

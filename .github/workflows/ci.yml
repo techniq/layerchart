@@ -55,6 +55,37 @@ jobs:
         env:
           CI: true
 
+  # test-docs-server-ssr:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v4.0.0
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #         cache: pnpm
+  #     - run: pnpm install --frozen-lockfile
+  #     - name: Run docs unit tests (server + ssr)
+  #       run: pnpm --filter docs test:unit --project server --project ssr
+  #       env:
+  #         CI: true
+
+  # test-docs-browser:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v4.0.0
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #         cache: pnpm
+  #     - run: pnpm install --frozen-lockfile
+  #     - run: pnpm --filter docs exec playwright install chromium
+  #     - name: Run docs browser tests (client)
+  #       run: pnpm --filter docs test:unit --project client
+  #       env:
+  #         CI: true
+
   build:
     runs-on: ubuntu-latest
     steps:
