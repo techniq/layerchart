@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
-import { processMarkdownContent, generateComponentMarkdown, markdownResponse } from '$lib/llms/utils.js';
+import { generateComponentMarkdown, markdownResponse } from '$lib/llms/utils.js';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name } = params;
@@ -11,8 +11,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		error(404, `Component "${name}" not found`);
 	}
 
-	let markdown = generateComponentMarkdown(component);
-	markdown = processMarkdownContent(markdown);
+	const markdown = generateComponentMarkdown(component);
 
 	return markdownResponse(markdown, `${name}.md`);
 };

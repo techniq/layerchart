@@ -3,7 +3,6 @@ import type { RequestHandler } from './$types';
 import { allComponents } from 'content-collections';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 import {
-	processMarkdownContent,
 	llmsUrl,
 	trimCode,
 	markdownResponse,
@@ -31,8 +30,7 @@ export const GET: RequestHandler = async ({ params }) => {
 		.map((c) => allComponents.find((ac) => ac.name === c))
 		.filter((c) => c != null);
 
-	let markdown = generateMarkdown(name, example, component, exampleSource, usedComponents);
-	markdown = processMarkdownContent(markdown);
+	const markdown = generateMarkdown(name, example, component, exampleSource, usedComponents);
 
 	return markdownResponse(markdown, `${name}-${example}.md`);
 };

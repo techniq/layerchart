@@ -20,14 +20,11 @@ const guideSources = import.meta.glob<string>('/src/content/guides/*.md', {
 	import: 'default'
 });
 
-const gettingStartedSource = import.meta.glob<string>(
-	'/src/routes/docs/getting-started/+page.md',
-	{
-		eager: true,
-		query: '?raw',
-		import: 'default'
-	}
-);
+const gettingStartedSource = import.meta.glob<string>('/src/routes/docs/getting-started/+page.md', {
+	eager: true,
+	query: '?raw',
+	import: 'default'
+});
 
 const catalogFiles = import.meta.glob<string>('/src/examples/catalog/*.json', {
 	eager: true,
@@ -226,10 +223,13 @@ export function generateComponentMarkdown(
 		sections.push(`**Supported Layers:** ${component.layers.join(', ')}`);
 	}
 
-	// Documentation link
-	sections.push(
-		`**Full Documentation:** [${component.name}](${docsUrl('components', component.slug)})`
-	);
+	// Documentation content from markdown
+	if (component.content) {
+		const processed = processMarkdownContent(component.content);
+		if (processed) {
+			sections.push(processed);
+		}
+	}
 
 	// Load example
 	let exampleSource = '';
@@ -297,8 +297,13 @@ export function generateUtilMarkdown(
 		sections.push(util.description);
 	}
 
-	// Documentation link
-	sections.push(`**Full Documentation:** [${util.name}](${docsUrl('utils', util.slug)})`);
+	// Documentation content from markdown
+	if (util.content) {
+		const processed = processMarkdownContent(util.content);
+		if (processed) {
+			sections.push(processed);
+		}
+	}
 
 	// Load example
 	let exampleSource = '';
