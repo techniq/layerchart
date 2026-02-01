@@ -87,6 +87,9 @@ export default defineConfig({
 		}
 	},
 	ssr: {
-		noExternal: true // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
+		// https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
+		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
+		// Ref: https://github.com/vitest-dev/vitest/issues/6806
+		noExternal: isTest ? undefined : true
 	}
 });

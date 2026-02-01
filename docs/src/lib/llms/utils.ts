@@ -639,7 +639,8 @@ This file contains the complete LLM-optimized documentation for all components a
 	);
 
 	// Components section - full content
-	sections.push('---\n\n# Components');
+	sections.push('---');
+	sections.push('# Components');
 
 	const sortedComponents = allComponents
 		.filter((c) => c.slug && c.name)
@@ -650,7 +651,8 @@ This file contains the complete LLM-optimized documentation for all components a
 	}
 
 	// Utilities section - full content
-	sections.push('---\n\n# Utilities');
+	sections.push('---');
+	sections.push('# Utilities');
 
 	const sortedUtils = allUtils
 		.filter((u) => u.slug && u.name)
