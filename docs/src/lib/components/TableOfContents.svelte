@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { scrollY } from 'svelte/reactivity/window';
 	import { cls } from '@layerstack/tailwind';
 
 	interface TocItem {
@@ -14,48 +13,45 @@
 		scrollOffset = 80
 	}: {
 		items: TocItem[];
-		/** Additional offset from top of the viewport to consider when determining active heading (sticky headers, etc) */
+		/** Offset from top of the viewport to account for sticky headers, etc */
 		scrollOffset?: number;
 	} = $props();
 
 	let activeId = $state('');
-	let headingElements: HTMLElement[] = [];
-
-	function updateActiveHeading() {
-		if (headingElements.length === 0) return;
-
-		const currentScroll = scrollY.current ?? 0;
-		const scrollPosition = currentScroll + scrollOffset;
-
-		let foundActive = false;
-		for (let i = headingElements.length - 1; i >= 0; i--) {
-			const heading = headingElements[i];
-			const rect = heading.getBoundingClientRect();
-			const absoluteTop = rect.top + currentScroll;
-
-			if (absoluteTop <= scrollPosition) {
-				activeId = heading.id;
-				foundActive = true;
-				break;
-			}
-		}
-
-		if (!foundActive && headingElements.length > 0) {
-			activeId = headingElements[0].id;
-		}
-	}
 
 	onMount(() => {
-		headingElements = items
+		const headingElements = items
 			.map((item) => document.getElementById(item.id))
 			.filter((el): el is HTMLElement => el !== null);
 
-		updateActiveHeading();
-	});
+		if (headingElements.length === 0) return;
 
-	$effect(() => {
-		scrollY.current;
-		updateActiveHeading();
+		const visibleHeadings = new Set<Element>();
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						visibleHeadings.add(entry.target);
+					} else {
+						visibleHeadings.delete(entry.target);
+					}
+				}
+
+				// Pick the first visible heading in document order
+				const firstVisible = headingElements.find((el) => visibleHeadings.has(el));
+				if (firstVisible) {
+					activeId = firstVisible.id;
+				}
+			},
+			{ rootMargin: `-${scrollOffset}px 0px 0px 0px` }
+		);
+
+		for (const el of headingElements) {
+			observer.observe(el);
+		}
+
+		return () => observer.disconnect();
 	});
 </script>
 
