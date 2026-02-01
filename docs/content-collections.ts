@@ -2,8 +2,33 @@ import { defineCollection, defineConfig } from '@content-collections/core';
 import { compileMarkdown } from '@content-collections/markdown';
 import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { slug as githubSlug } from 'github-slugger';
+
+/**
+ * Extract table of contents from markdown content
+ */
+function extractTocFromMarkdown(content: string) {
+	const toc: { id: string; text: string; level: number }[] = [];
+
+	// Strip HTML comments so commented-out headings are ignored
+	const stripped = content.replace(/<!--[\s\S]*?-->/g, '');
+
+	const headingRegex = /^(#{1,6})\s+(.+)$/gm;
+	let match;
+
+	while ((match = headingRegex.exec(stripped)) !== null) {
+		const level = match[1].length;
+		const text = match[2].trim();
+		// Use github-slugger to match `rehype-slug`
+		const id = githubSlug(text);
+
+		toc.push({ id, text, level });
+	}
+
+	return toc;
+}
 
 const components = defineCollection({
 	name: 'components',
@@ -48,13 +73,38 @@ const components = defineCollection({
 			doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1] ||
 			doc.content.match(/:example\{[^}]*name=["']([^"']+)["'][^}]*\}/)?.[1];
 
+		// Build TOC from markdown headings + template-rendered sections
+		const toc = extractTocFromMarkdown(doc.content);
+
+		const catalogPath = join(process.cwd(), `src/examples/catalog/${path}.json`);
+		if (existsSync(catalogPath)) {
+			toc.push({ id: 'examples', text: 'Examples', level: 2 });
+		}
+
+		const apiPath = join(process.cwd(), `src/generated/api/${path}.json`);
+		if (existsSync(apiPath)) {
+			try {
+				const api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+				if (api.properties?.length) {
+					toc.push({ id: 'api-reference', text: 'API Reference', level: 2 });
+				}
+			} catch {
+				// ignore
+			}
+		}
+
+		if (doc.related.length) {
+			toc.push({ id: 'related', text: 'Related', level: 2 });
+		}
+
 		return {
 			...doc,
 			name,
 			slug: path,
 			source,
 			sourceUrl,
-			usageExample
+			usageExample,
+			toc
 			// html: await compileMarkdown(context, doc)
 		};
 	}
@@ -150,7 +200,8 @@ const utils = defineCollection({
 			slug: fileName.replace('.md', '').toLowerCase(), // Use lowercase for utils slugs
 			source,
 			sourceUrl,
-			usageExample
+			usageExample,
+			toc: extractTocFromMarkdown(doc.content)
 		};
 	}
 });
@@ -163,14 +214,16 @@ const guides = defineCollection({
 		title: z.string(),
 		description: z.string().optional(),
 		order: z.number().optional(),
-		draft: z.boolean().default(false)
+		draft: z.boolean().default(false),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { path } = doc._meta;
 		return {
 			...doc,
 			name: doc.title,
-			slug: path
+			slug: path,
+			toc: extractTocFromMarkdown(doc.content)
 		};
 	}
 });

@@ -67,7 +67,7 @@
 
 {#if catalog && (catalog.examples?.length || catalog.usage?.length)}
 	<div class="grid grid-cols-[1fr_auto] items-center gap-2 mt-12">
-		<H2>Examples</H2>
+		<H2 id="examples">Examples</H2>
 		<div class="flex items-center gap-2 mb-2">
 			{#if catalog.examples?.length}
 				<Button
@@ -151,7 +151,7 @@
 {/if}
 
 {#if api?.properties.length}
-	<H2>API Reference</H2>
+	<H2 id="api-reference">API Reference</H2>
 
 	<Table
 		data={api?.properties}
@@ -224,7 +224,7 @@
 {/if}
 
 {#if metadata.related.length}
-	<H2>Related</H2>
+	<H2 id="related">Related</H2>
 	<div class="flex flex-wrap gap-2 mt-1">
 		{#each metadata.related as related}
 			<RelatedLink value={related} />

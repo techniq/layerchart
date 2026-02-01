@@ -84,6 +84,7 @@
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.14.0",
+		"github-slugger": "^2.0.0",
 		"globals": "^17.3.0",
 		"layerchart": "workspace:*",
 		"mdsx": "^0.0.7",

@@ -6,7 +6,6 @@
 		Kbd,
 		MenuButton,
 		settings,
-		TableOfContents,
 		TextField,
 		ThemeSelect,
 		Tooltip
@@ -19,6 +18,7 @@
 	import { page } from '$app/state';
 	import { examples } from '$lib/context.js';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
+	import TableOfContents from '$lib/components/TableOfContents.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 
 	import LucideAlignLeft from '~icons/lucide/align-left';
@@ -316,9 +316,9 @@
 	</main>
 
 	<!-- Table of Contents -->
-	{#if page.data.meta?.tableOfContents && page.data.metadata?.tableOfContents}
+	{#if page.data.meta?.tableOfContents && page.data.metadata?.toc?.length}
 		<div
-			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
+			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-70 overflow-auto py-5 pr-6 xl:block"
 		>
 			<div
 				class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
@@ -327,34 +327,7 @@
 				On this page
 			</div>
 			{#key page.url}
-				<TableOfContents
-					classes={{
-						li: 'leading-none overflow-x-hidden'
-					}}
-				>
-					{#snippet children({
-						node,
-						activeHeadingId
-					}: {
-						node: { id: string; name: string; level: number; element: HTMLElement };
-						activeHeadingId: string;
-					})}
-						<a
-							href="#{node.id}"
-							style:padding-left="{node.level * 12}px"
-							class={cls(
-								'hover:text-surface-content block w-full overflow-hidden text-ellipsis whitespace-nowrap border-l py-1 text-sm',
-								node.level <= 2 ? 'text-surface-content/70 font-medium' : 'text-surface-content/50',
-								node.id &&
-									node.id === activeHeadingId &&
-									'border-surface-content text-surface-content'
-							)}
-						>
-							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-							{@html node.name}
-						</a>
-					{/snippet}
-				</TableOfContents>
+				<TableOfContents items={page.data.metadata.toc} />
 			{/key}
 		</div>
 	{/if}
