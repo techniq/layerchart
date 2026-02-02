@@ -60,6 +60,7 @@
       'AnimatedGlobe',
       'TranslucentGlobe',
       'SketchyGlobe',
+      'GeoGrid',
       'EarthquakeGlobe',
       'SubmarineCablesGlobe',
       'EclipsesGlobe',
