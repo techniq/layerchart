@@ -243,7 +243,7 @@
 	<!-- 3D Moving grid background - covers hero and examples -->
 	<div
 		class="pointer-events-none fixed inset-0 top-0 overflow-hidden opacity-30 dark:opacity-20 perspective-[1000px] perspective-origin-top z-0"
-		style="mask-image: linear-gradient(transparent 0%, black 25%, black 70%, transparent 85%);"
+		style="mask-image: linear-gradient(transparent 0%, black 25%, black 70%, transparent 85%); -webkit-mask-image: linear-gradient(transparent 0%, black 25%, black 70%, transparent 85%);"
 	>
 		<div class="absolute inset-0 transform-3d">
 			<div
