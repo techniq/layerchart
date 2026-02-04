@@ -132,154 +132,216 @@
 	];
 </script>
 
-<header class="flex h-16 items-center px-4 py-2">
-	<a href="/" class="text-xl font-bold w-60">LayerChart</a>
+<div class="h-screen flex flex-col overflow-hidden">
+	<!-- Fixed Header -->
+	<header class="flex-none flex h-16 items-center px-4 py-2 z-20">
+		<a href="/" class="text-xl font-bold w-60">LayerChart</a>
 
-	<div class="flex gap-2 grow justify-center">
-		{#each links as { label, href }}
-			<a
-				{href}
-				class={cls(
-					'text-sm px-3 py-1 rounded-full text-surface-content hover:bg-primary/10 ',
-					href === '/' && 'bg-primary-500/10 text-initial'
-				)}
-				target={href.startsWith('http') ? '_blank' : '_self'}
+		<div class="flex grow justify-center">
+			<nav class="nav-bubble-container relative flex">
+				{#each links as { label, href }}
+					<a
+						{href}
+						class="nav-link text-sm px-3 py-1 rounded-full text-surface-content relative z-10"
+						target={href.startsWith('http') ? '_blank' : '_self'}
+					>
+						{label}
+					</a>
+				{/each}
+				<span class="nav-bubble"></span>
+			</nav>
+		</div>
+
+		<div class="flex items-center justify-end gap-2 w-60">
+			<div class="flex items-center border-r pr-2">
+				<ThemeSelect keyboardShortcuts />
+			</div>
+
+			<div class="hidden md:flex">
+				<Tooltip title="Discord" placement="left" offset={2}>
+					<Button
+						icon={CustomDiscord}
+						href="https://discord.gg/697JhMPD3t"
+						class="p-2"
+						target="_blank"
+					/>
+				</Tooltip>
+
+				<Tooltip title="Bluesky" placement="left" offset={2}>
+					<Button
+						icon={CustomBluesky}
+						href="https://bsky.app/profile/techniq.dev"
+						class="p-2"
+						target="_blank"
+					/>
+				</Tooltip>
+
+				<Tooltip title="View repository" placement="left" offset={2}>
+					<Button
+						icon={LucideGithub}
+						href="https://github.com/techniq/layerchart"
+						class="p-2"
+						target="_blank"
+					/>
+				</Tooltip>
+			</div>
+			<MenuButton
+				icon={LucideEllipsisVertical}
+				menuIcon={null}
+				iconOnly={true}
+				options={[
+					{
+						label: 'Svelte UX',
+						value: 'https://svelte-ux.techniq.dev',
+						icon: LucideArrowUpRight
+					},
+					{
+						label: 'Github',
+						value: 'https://github.com/techniq/layerchart',
+						icon: LucideGithub
+					},
+					{
+						label: 'Discord',
+						value: 'https://discord.gg/697JhMPD3t',
+						icon: CustomDiscord
+					},
+					{
+						label: 'Bluesky',
+						value: 'https://bsky.app/profile/techniq.dev',
+						icon: CustomBluesky
+					}
+				]}
+				on:change={(e) => {
+					window.open(e.detail.value, '_blank');
+				}}
+				class="inline-block md:hidden"
 			>
-				{label}
-			</a>
-		{/each}
-	</div>
-
-	<div class="flex items-center justify-end gap-2 w-60">
-		<div class="flex items-center border-r pr-2">
-			<ThemeSelect keyboardShortcuts />
+				<span slot="selection" class="hidden"></span>
+			</MenuButton>
 		</div>
+	</header>
 
-		<div class="hidden md:flex">
-			<Tooltip title="Discord" placement="left" offset={2}>
-				<Button
-					icon={CustomDiscord}
-					href="https://discord.gg/697JhMPD3t"
-					class="p-2"
-					target="_blank"
-				/>
-			</Tooltip>
+	<!-- Fixed Hero -->
+	<div class="flex-none relative h-56 z-10">
+		<div class="absolute inset-0 pointer-events-none"></div>
 
-			<Tooltip title="Bluesky" placement="left" offset={2}>
-				<Button
-					icon={CustomBluesky}
-					href="https://bsky.app/profile/techniq.dev"
-					class="p-2"
-					target="_blank"
-				/>
-			</Tooltip>
-
-			<Tooltip title="View repository" placement="left" offset={2}>
-				<Button
-					icon={LucideGithub}
-					href="https://github.com/techniq/layerchart"
-					class="p-2"
-					target="_blank"
-				/>
-			</Tooltip>
-		</div>
-		<MenuButton
-			icon={LucideEllipsisVertical}
-			menuIcon={null}
-			iconOnly={true}
-			options={[
-				{
-					label: 'Svelte UX',
-					value: 'https://svelte-ux.techniq.dev',
-					icon: LucideArrowUpRight
-				},
-				{
-					label: 'Github',
-					value: 'https://github.com/techniq/layerchart',
-					icon: LucideGithub
-				},
-				{
-					label: 'Discord',
-					value: 'https://discord.gg/697JhMPD3t',
-					icon: CustomDiscord
-				},
-				{
-					label: 'Bluesky',
-					value: 'https://bsky.app/profile/techniq.dev',
-					icon: CustomBluesky
-				}
-			]}
-			on:change={(e) => {
-				window.open(e.detail.value, '_blank');
-			}}
-			class="inline-block md:hidden"
+		<h1
+			class="text-6xl lg:text-8xl text-center mt-6 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
 		>
-			<span slot="selection" class="hidden"></span>
-		</MenuButton>
-	</div>
-</header>
+			LayerChart
+		</h1>
+		<div class="lg:text-lg text-center font-light max-w-100 px-4 mx-auto">
+			Composable Svelte chart components to build a large variety of visualizations
+		</div>
 
-<div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
-
-<div class="relative h-140 perspective-[1000px] overflow-clip">
-	<h1
-		class="text-6xl lg:text-8xl text-center mt-8 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
-	>
-		LayerChart
-	</h1>
-	<div class="lg:text-lg text-center font-light max-w-100 px-4 mx-auto">
-		Composable Svelte chart components to build a large variety of visualizations
+		<div class="flex justify-center gap-3 mt-6">
+			<Button href="/docs/getting-started" variant="fill" rounded="full">Get Started</Button>
+			<Button href="/docs/examples" variant="fill-outline" rounded="full">Examples</Button>
+		</div>
 	</div>
 
-	<div class="flex justify-center gap-3 mt-8">
-		<Button href="/docs/getting-started" variant="fill" rounded="full">Get Started</Button>
-		<Button href="/docs/examples" variant="fill-outline" rounded="full">Examples</Button>
-	</div>
-
+	<!-- 3D Moving grid background - covers hero and examples -->
 	<div
-		class="pointer-events-none absolute inset-0 overflow-hidden opacity-30 dark:opacity-20 perspective-[1000px] perspective-origin-bottom mask-y-from-50%"
+		class="pointer-events-none fixed inset-0 top-0 overflow-hidden opacity-30 dark:opacity-20 perspective-[1000px] perspective-origin-top z-0"
+		style="mask-image: linear-gradient(transparent 0%, black 25%, black 70%, transparent 85%);"
 	>
 		<div class="absolute inset-0 transform-3d">
 			<div
-				class="background-grid absolute left-[-200%] bottom-0 h-[300vh] w-[600vw] origin-bottom"
+				class="background-grid absolute left-[-200%] bottom-0 h-[140vh] w-[600vw] origin-bottom"
 			></div>
 		</div>
 	</div>
-</div>
 
-<div class="grid grid-cols-xs gap-4 px-4 mb-4">
-	{#each examples as { component, example }}
-		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
-	{/each}
-</div>
+	<!-- Scrollable Examples -->
+	<div class="flex-1 overflow-y-auto relative">
+		<div class="relative z-10 grid grid-cols-xs gap-4 px-4 py-4">
+			{#each examples as { component, example }}
+				<div class="example-card rounded-lg">
+					<ExampleLink {component} {example} variant="hover-label" aspect="video" />
+				</div>
+			{/each}
+		</div>
+	</div>
 
-<Stats />
-
-<footer class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm">
-	<div>
-		Made by <a href="https://github.com/techniq" target="_blank" class="text-surface-content">
-			Sean Lynch
-		</a>
-		and
-		<a
-			href="https://github.com/techniq/layerchart/graphs/contributors"
-			target="_blank"
-			class="text-surface-content"
+	<!-- Fixed Footer -->
+	<footer class="flex-none z-2">
+		<Stats />
+		<div
+			class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm bg-surface-300"
 		>
-			contributors
-		</a>
-	</div>
+			<div>
+				Made by <a href="https://github.com/techniq" target="_blank" class="text-surface-content">
+					Sean Lynch
+				</a>
+				and
+				<a
+					href="https://github.com/techniq/layerchart/graphs/contributors"
+					target="_blank"
+					class="text-surface-content"
+				>
+					contributors
+				</a>
+			</div>
 
-	<div class="flex gap-5">
-		<a href="/docs/guides/LLMs" target="_blank">LLMs</a>
-		<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
-		<a href="/docs/releases">Releases</a>
-	</div>
-</footer>
+			<div class="flex gap-5">
+				<a href="/docs/guides/LLMs" target="_blank">LLMs</a>
+				<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
+				<a href="/docs/releases">Releases</a>
+			</div>
+		</div>
+	</footer>
+</div>
 
 <style>
+	/* Navigation bubble slider */
+	.nav-bubble-container {
+		position: relative;
+		--link-width: 80px;
+		--link-height: 28px;
+		--bubble-bg: color-mix(in srgb, var(--color-primary-500) 10%, transparent);
+	}
+
+	.nav-bubble {
+		position: absolute;
+		height: var(--link-height);
+		width: var(--link-width);
+		background: var(--bubble-bg);
+		border-radius: 9999px;
+		pointer-events: none;
+		top: 50%;
+		left: 0;
+		border: 1px solid var(--color-surface-content/10);
+		transform: translateY(-50%) translateX(0);
+		transition:
+			transform 0.3s ease,
+			border-color 0.3s ease;
+	}
+
+	.nav-link {
+		position: relative;
+		z-index: 10;
+		width: var(--link-width);
+		text-align: center;
+	}
+
+	/* Move bubble to second link on hover */
+	.nav-link:nth-child(2):hover ~ .nav-bubble {
+		transform: translateY(-50%) translateX(100%);
+	}
+
+	/* Highlight active link text */
+	.nav-bubble-container:not(:hover) .nav-link:nth-child(1),
+	.nav-link:hover {
+		color: var(--color-primary-600);
+	}
+
+	:global(.dark) .nav-bubble-container:not(:hover) .nav-link:nth-child(1),
+	:global(.dark) .nav-link:hover {
+		color: var(--color-content-100);
+	}
+
 	.background-grid {
-		--size: 100px;
+		--size: 125px;
 		--line: color-mix(in srgb, var(--color-surface-content) 30%, transparent);
 		--line-major: color-mix(in srgb, var(--color-surface-content) 40%, transparent);
 
@@ -316,7 +378,7 @@
 					transparent 0.5px,
 					transparent calc(var(--size) / 5)
 				);
-		animation: grid-scroll 2s linear infinite;
+		animation: grid-scroll 6s linear infinite;
 	}
 
 	@keyframes grid-scroll {
