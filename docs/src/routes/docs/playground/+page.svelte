@@ -176,14 +176,84 @@
 		await loadFileContent(filepath);
 	}
 
-	// Save Project Locally
-	async function saveProject() {
-		// This needs wired up
+	// Recursively collect all files from the WebContainer as a flat map
+	async function collectFiles(dir: string = ''): Promise<Record<string, string>> {
+		if (!webcontainerInstance) return {};
+
+		const files: Record<string, string> = {};
+		const entries = await webcontainerInstance.fs.readdir(dir || '/', { withFileTypes: true });
+
+		for (const entry of entries) {
+			const fullPath = dir ? `${dir}/${entry.name}` : entry.name;
+
+			// Skip node_modules, .git, and lock files
+			if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === 'pnpm-lock.yaml')
+				continue;
+
+			if (entry.isDirectory()) {
+				Object.assign(files, await collectFiles(fullPath));
+			} else {
+				try {
+					files[fullPath] = await webcontainerInstance.fs.readFile(fullPath, 'utf-8');
+				} catch {
+					// Skip binary/unreadable files
+				}
+			}
+		}
+
+		return files;
 	}
 
-	// Open Project in StackBlitz
+	// Save Project Locally (downloads ZIP to Downloads folder)
+	async function saveProject() {
+		if (!webcontainerInstance) return;
+
+		try {
+			const JSZip = (await import('jszip')).default;
+			const zip = new JSZip();
+
+			const now = new Date();
+			const timestamp = now.toISOString().replace(/[:.]/g, '-');
+			const folderName = `layerchart-${timestamp}`;
+			const filename = `${folderName}.zip`;
+
+			const rootFolder = zip.folder(folderName)!;
+			const files = await collectFiles();
+
+			for (const [path, content] of Object.entries(files)) {
+				rootFolder.file(path, content);
+			}
+
+			const { saveAs } = await import('file-saver');
+			const blob = await zip.generateAsync({ type: 'blob' });
+			saveAs(blob, filename);
+		} catch (err) {
+			console.error('Failed to save project:', err);
+			alert('Failed to save project. Check console for details.');
+		}
+	}
+
 	async function openInStackBlitz() {
-		// This needs wired up
+		if (!webcontainerInstance) return;
+
+		try {
+			const sdk = (await import('@stackblitz/sdk')).default;
+			const files = await collectFiles();
+
+			sdk.openProject(
+				{
+					title: 'LayerChart Playground',
+					files,
+					template: 'node'
+				},
+				{
+					newWindow: true,
+					openFile: 'src/routes/+page.svelte'
+				}
+			);
+		} catch (err) {
+			console.error('Failed to open in StackBlitz:', err);
+		}
 	}
 
 	// Open Project in REPL
@@ -400,12 +470,10 @@
 					</div>
 					<Tooltip title="Open in StackBlitz" placement="top" offset={6}>
 						<Button
-							href="https://stackblitz.com"
 							icon={SimpleIconsStackblitz}
 							size="sm"
 							variant="fill-light"
-							target="_blank"
-							onclick={openInStackBlitz()}
+							onclick={openInStackBlitz}
 						/>
 					</Tooltip>
 					<Tooltip title="Open in REPL" placement="top" offset={6}>

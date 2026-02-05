@@ -57,7 +57,9 @@
 		"@types/d3-scale-chromatic": "^3.1.0",
 		"@types/d3-shape": "^3.1.8",
 		"@types/d3-time": "^3.0.4",
+		"@types/file-saver": "^2.0.7",
 		"@types/hast": "^3.0.4",
+		"@types/jszip": "^3.4.1",
 		"@types/node": "^25.2.0",
 		"@types/shapefile": "^0.6.4",
 		"@types/sharp": "^0.32.0",
@@ -84,6 +86,7 @@
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.14.0",
+		"file-saver": "^2.0.5",
 		"github-slugger": "^2.0.0",
 		"globals": "^17.3.0",
 		"layerchart": "workspace:*",
@@ -128,6 +131,7 @@
 		"@uiw/codemirror-theme-github": "^4.25.4",
 		"@webcontainer/api": "^1.6.1",
 		"ansi_up": "^6.0.6",
-		"codemirror": "^6.0.2"
+		"codemirror": "^6.0.2",
+		"jszip": "^3.10.1"
 	}
 }
