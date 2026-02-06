@@ -2,6 +2,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+	import EditWithButton from './EditWithButton.svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import { examples } from '$lib/context';
@@ -11,11 +12,9 @@
 	import LucideCode from '~icons/lucide/code';
 	import LucideFullscreen from '~icons/lucide/fullscreen';
 	import LucideTable from '~icons/lucide/table';
-	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 
 	import { page } from '$app/state';
-	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 	import { movable } from '$lib/actions/movable';
 
 	let {
@@ -240,13 +239,7 @@
 				{/if}
 
 				{#if component && name}
-					<Button
-						icon={LucideFilePen}
-						class="text-surface-content/70 py-1"
-						on:click={() => openInStackBlitz(component, name)}
-					>
-						Edit
-					</Button>
+					<EditWithButton {component} source={example.source} {name} />
 				{/if}
 			</div>
 		{/if}
