@@ -343,13 +343,10 @@
 		if (!webcontainerInstance) return;
 
 		try {
-			const content = await webcontainerInstance.fs.readFile(
-				'src/routes/+page.svelte',
-				'utf-8'
-			);
+			const content = await webcontainerInstance.fs.readFile('src/routes/+page.svelte', 'utf-8');
 
 			const handle = await window.showSaveFilePicker({
-				suggestedName: '+page.svelte',
+				suggestedName: 'new-example.svelte',
 				types: [
 					{
 						description: 'Svelte files',
