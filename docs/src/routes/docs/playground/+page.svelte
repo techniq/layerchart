@@ -338,6 +338,43 @@
 	}
 
 	// Handle click outside of file tree to close it
+	// Save current +page.svelte to local filesystem via system save dialog
+	async function saveNewExample() {
+		if (!webcontainerInstance) return;
+
+		try {
+			const content = await webcontainerInstance.fs.readFile(
+				'src/routes/+page.svelte',
+				'utf-8'
+			);
+
+			const handle = await window.showSaveFilePicker({
+				suggestedName: '+page.svelte',
+				types: [
+					{
+						description: 'Svelte files',
+						accept: { 'text/plain': ['.svelte'] }
+					}
+				]
+			});
+
+			const writable = await handle.createWritable();
+			await writable.write(content);
+			await writable.close();
+		} catch (err: any) {
+			// User cancelled the dialog
+			if (err.name === 'AbortError') return;
+			console.error('Failed to save example:', err);
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.metaKey && event.shiftKey && event.key === 's') {
+			event.preventDefault();
+			saveNewExample();
+		}
+	}
+
 	function handleClickOutside(event: MouseEvent) {
 		// Don't close if clicking on SVG icons (folder toggles)
 		const target = event.target as Element;
@@ -349,7 +386,7 @@
 	}
 </script>
 
-<svelte:window onclick={handleClickOutside} />
+<svelte:window onclick={handleClickOutside} onkeydown={handleKeydown} />
 
 <div class="h-[calc(100vh-64px)] flex bg-surface-100">
 	<!-- Editor Panel -->
