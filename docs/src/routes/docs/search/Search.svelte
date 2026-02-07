@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { env } from '@layerstack/utils';
-	import { PersistedState } from 'runed';
-	import { searchIndex } from './searchIndex';
-	import { createPostsIndex, searchPostsIndex, type Result } from './search';
+	import { Debounced, PersistedState } from 'runed';
+	import { search } from './search.remote';
 	import { Kbd, TextField, Tooltip } from 'svelte-ux';
 	import LucideSearch from '~icons/lucide/search';
 	import LucideX from '~icons/lucide/x';
@@ -14,8 +13,14 @@
 	let isSearching = $state(false);
 	let searchInput = $state<HTMLInputElement>();
 	let searchModal = $state<HTMLDivElement>();
-	// Initialize search index
-	createPostsIndex(searchIndex);
+
+	// Debounced query string for searching
+	const debouncedQuery = new Debounced(() => searchQuery, 300);
+
+	// Use the remote query directly - it has .loading, .current, .error properties
+	const searchResults = $derived(
+		debouncedQuery.current ? search({ query: debouncedQuery.current }) : null
+	);
 
 	function addPriorQuery(query: string, count: number) {
 		// Remove duplicate if exists
@@ -25,8 +30,6 @@
 		// Keep only the first 5 items
 		priorQueries.current = priorQueries.current.slice(0, MAX_PRIOR_QUERIES);
 	}
-
-	let results = $derived(searchQuery ? searchPostsIndex(searchQuery) : []);
 
 	function endSearch() {
 		isSearching = false;
@@ -119,13 +122,17 @@
 					{/each}
 				</ul>
 			{/if}
-			{#if priorQueries.current.length > 0 && searchQuery}
+			{#if priorQueries.current.length > 0 && searchResults}
 				<div class="flex-1 h-1 bg-white/20 my-4"></div>
 			{/if}
-			{#if searchQuery}
-				{#if results.length > 0}
+			{#if searchResults}
+				{#if searchResults.loading}
+					<div class="text-center py-8">
+						<p class="text-surface-content/60 text-lg">Searching...</p>
+					</div>
+				{:else if searchResults.current.length > 0}
 					<ul class="grid gap-3 p-0 m-0 list-none">
-						{#each results as result}
+						{#each searchResults.current as result}
 							<li
 								class="not-last:py-0.5 hover:border-primary-500/50 rounded-md p-2 border-transparent border transition-border duration-200"
 							>
@@ -133,7 +140,7 @@
 									href="/{result.slug}"
 									class="block text-xl text-surface-content/80 no-underline"
 									onclick={() => {
-										addPriorQuery(searchQuery, results.length);
+										addPriorQuery(searchQuery, searchResults.current.length);
 										searchInput?.focus();
 									}}
 								>
