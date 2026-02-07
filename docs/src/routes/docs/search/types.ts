@@ -1,10 +1,12 @@
-export type Post = {
-	content: string;
-	slug: string;
+export type SearchEntry = {
 	title: string;
+	slug: string;
+	content: string;
+	type: 'component' | 'example' | 'guide' | 'util';
+	category?: string;
 };
 
-export type Result = {
+export type SearchResult = {
 	content: string[];
 	slug: string;
 	title: string;

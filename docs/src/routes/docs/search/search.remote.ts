@@ -1,23 +1,21 @@
 import { query } from '$app/server';
 import { z } from 'zod';
 import FlexSearch from 'flexsearch';
-import { searchIndex } from './searchIndex';
-import type { Post, Result } from './types';
+import { searchContent } from './searchContent';
+import type { SearchEntry, SearchResult } from './types';
 
-export type { Post, Result };
+export type { SearchEntry, SearchResult };
 
 // Initialize index once on server
-let postsIndex: InstanceType<typeof FlexSearch.Index>;
-let posts: Post[];
+let searchIndex: InstanceType<typeof FlexSearch.Index>;
 
 function ensureIndex() {
-	if (!postsIndex) {
-		postsIndex = new FlexSearch.Index({ tokenize: 'forward' });
-		searchIndex.forEach((post, i) => {
-			const item = `${post.title} ${post.content}`;
-			postsIndex.add(i, item);
+	if (!searchIndex) {
+		searchIndex = new FlexSearch.Index({ tokenize: 'forward' });
+		searchContent.forEach((item, i) => {
+			const text = `${item.title} ${item.content}`;
+			searchIndex.add(i, text);
 		});
-		posts = searchIndex;
 	}
 }
 
@@ -47,13 +45,13 @@ function getMatches(text: string, searchTerm: string, limit = 1) {
 
 export const search = query(
 	z.object({ query: z.string() }),
-	async ({ query: searchQuery }): Promise<Result[]> => {
+	async ({ query: searchQuery }): Promise<SearchResult[]> => {
 		if (!searchQuery) return [];
 
 		ensureIndex();
 
 		const match = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		const results = postsIndex.search(match) as number[];
+		const results = searchIndex.search(match) as number[];
 
 		const testMatch = (text: string) => {
 			const regex = new RegExp(match, 'gi');
@@ -61,7 +59,7 @@ export const search = query(
 		};
 
 		return results
-			.map((index: number) => posts[index])
+			.map((index: number) => searchContent[index])
 			.filter(({ title, content }: { title: string; content: string }) => {
 				return testMatch(title) || testMatch(content);
 			})

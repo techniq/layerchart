@@ -6,16 +6,8 @@ import {
 	type Guide,
 	type Util
 } from 'content-collections';
-import type { Post } from './types';
+import type { SearchEntry } from './types';
 import type { ComponentCatalog } from '$lib/../examples/catalog/types';
-
-type SearchEntry = {
-	title: string;
-	slug: string;
-	content: string;
-	type: 'component' | 'example' | 'guide' | 'util';
-	category?: string;
-};
 
 function componentToEntry(doc: Component): SearchEntry {
 	return {
@@ -69,7 +61,7 @@ function catalogToEntries(): SearchEntry[] {
 	return entries;
 }
 
-export const searchIndex: Post[] = [
+export const searchContent: SearchEntry[] = [
 	...allComponents.map(componentToEntry),
 	...catalogToEntries(),
 	...allGuides.map(guideToEntry),
