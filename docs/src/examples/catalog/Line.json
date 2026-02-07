@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "styling-using-attributes",
+      "title": "styling using attributes",
       "path": "/docs/components/Line/styling-using-attributes",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "styling-using-classes",
+      "title": "styling using classes",
       "path": "/docs/components/Line/styling-using-classes",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "styling-using-css-variables",
+      "title": "styling using css variables",
       "path": "/docs/components/Line/styling-using-css-variables",
       "components": [
         {
@@ -215,5 +218,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.025Z"
+  "updatedAt": "2026-02-07T20:21:31.956Z"
 }

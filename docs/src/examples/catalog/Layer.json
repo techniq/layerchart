@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "all-3-layers",
+      "title": "all 3 layers",
       "path": "/docs/components/Layer/all-3-layers",
       "components": [
         {
@@ -3103,5 +3104,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.971Z"
+  "updatedAt": "2026-02-07T20:21:31.918Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Tree/basic",
       "components": [
         {
@@ -44,6 +45,7 @@
     },
     {
       "name": "html-nodes",
+      "title": "html nodes",
       "path": "/docs/components/Tree/html-nodes",
       "components": [
         {
@@ -90,5 +92,5 @@
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.911Z"
+  "updatedAt": "2026-02-07T20:21:32.511Z"
 }

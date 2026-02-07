@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "chart-integration",
+      "title": "chart integration",
       "path": "/docs/components/Legend/chart-integration",
       "components": [
         {
@@ -19,6 +20,7 @@
     },
     {
       "name": "chart-placement",
+      "title": "chart placement",
       "path": "/docs/components/Legend/chart-placement",
       "components": [
         {
@@ -35,6 +37,7 @@
     },
     {
       "name": "children-override",
+      "title": "children override",
       "path": "/docs/components/Legend/children-override",
       "components": [
         {
@@ -46,6 +49,7 @@
     },
     {
       "name": "click-handler",
+      "title": "click handler",
       "path": "/docs/components/Legend/click-handler",
       "components": [
         {
@@ -57,6 +61,7 @@
     },
     {
       "name": "diverging",
+      "title": "diverging",
       "path": "/docs/components/Legend/diverging",
       "components": [
         {
@@ -68,6 +73,7 @@
     },
     {
       "name": "diverging-sqrt",
+      "title": "diverging sqrt",
       "path": "/docs/components/Legend/diverging-sqrt",
       "components": [
         {
@@ -79,6 +85,7 @@
     },
     {
       "name": "ordinal",
+      "title": "ordinal",
       "path": "/docs/components/Legend/ordinal",
       "components": [
         {
@@ -90,6 +97,7 @@
     },
     {
       "name": "quantile",
+      "title": "quantile",
       "path": "/docs/components/Legend/quantile",
       "components": [
         {
@@ -101,6 +109,7 @@
     },
     {
       "name": "quantize",
+      "title": "quantize",
       "path": "/docs/components/Legend/quantize",
       "components": [
         {
@@ -112,6 +121,7 @@
     },
     {
       "name": "responsive-swatches",
+      "title": "responsive swatches",
       "path": "/docs/components/Legend/responsive-swatches",
       "components": [
         {
@@ -123,6 +133,7 @@
     },
     {
       "name": "sequential",
+      "title": "sequential",
       "path": "/docs/components/Legend/sequential",
       "components": [
         {
@@ -134,6 +145,7 @@
     },
     {
       "name": "sequential-log",
+      "title": "sequential log",
       "path": "/docs/components/Legend/sequential-log",
       "components": [
         {
@@ -145,6 +157,7 @@
     },
     {
       "name": "sequential-quantile",
+      "title": "sequential quantile",
       "path": "/docs/components/Legend/sequential-quantile",
       "components": [
         {
@@ -156,6 +169,7 @@
     },
     {
       "name": "sequential-sqrt",
+      "title": "sequential sqrt",
       "path": "/docs/components/Legend/sequential-sqrt",
       "components": [
         {
@@ -167,6 +181,7 @@
     },
     {
       "name": "sqrt",
+      "title": "sqrt",
       "path": "/docs/components/Legend/sqrt",
       "components": [
         {
@@ -178,6 +193,7 @@
     },
     {
       "name": "square-swatch",
+      "title": "square swatch",
       "path": "/docs/components/Legend/square-swatch",
       "components": [
         {
@@ -189,6 +205,7 @@
     },
     {
       "name": "styling",
+      "title": "styling",
       "path": "/docs/components/Legend/styling",
       "components": [
         {
@@ -200,6 +217,7 @@
     },
     {
       "name": "threshold",
+      "title": "threshold",
       "path": "/docs/components/Legend/threshold",
       "components": [
         {
@@ -211,6 +229,7 @@
     },
     {
       "name": "vertical-orientation",
+      "title": "vertical orientation",
       "path": "/docs/components/Legend/vertical-orientation",
       "components": [
         {
@@ -517,5 +536,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.993Z"
+  "updatedAt": "2026-02-07T20:21:31.935Z"
 }

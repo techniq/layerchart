@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "arrow-markers",
+      "title": "arrow markers",
       "path": "/docs/components/Axis/arrow-markers",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "axis-label-placement-left-right",
+      "title": "axis label placement left right",
       "path": "/docs/components/Axis/axis-label-placement-left-right",
       "components": [
         {
@@ -45,6 +47,7 @@
     },
     {
       "name": "axis-label-placement-top-bottom",
+      "title": "axis label placement top bottom",
       "path": "/docs/components/Axis/axis-label-placement-top-bottom",
       "components": [
         {
@@ -66,6 +69,7 @@
     },
     {
       "name": "barchart-xinterval-xinset",
+      "title": "barchart xinterval xinset",
       "path": "/docs/components/Axis/barchart-xinterval-xinset",
       "components": [
         {
@@ -77,6 +81,7 @@
     },
     {
       "name": "explicit-ticks",
+      "title": "explicit ticks",
       "path": "/docs/components/Axis/explicit-ticks",
       "components": [
         {
@@ -98,6 +103,7 @@
     },
     {
       "name": "extent-ticks-only",
+      "title": "extent ticks only",
       "path": "/docs/components/Axis/extent-ticks-only",
       "components": [
         {
@@ -124,6 +130,7 @@
     },
     {
       "name": "grid",
+      "title": "grid",
       "path": "/docs/components/Axis/grid",
       "components": [
         {
@@ -145,6 +152,7 @@
     },
     {
       "name": "grid-dashed",
+      "title": "grid dashed",
       "path": "/docs/components/Axis/grid-dashed",
       "components": [
         {
@@ -166,6 +174,7 @@
     },
     {
       "name": "hide-zero-filter",
+      "title": "hide zero filter",
       "path": "/docs/components/Axis/hide-zero-filter",
       "components": [
         {
@@ -187,6 +196,7 @@
     },
     {
       "name": "hide-zero-format",
+      "title": "hide zero format",
       "path": "/docs/components/Axis/hide-zero-format",
       "components": [
         {
@@ -208,6 +218,7 @@
     },
     {
       "name": "inject-ticks",
+      "title": "inject ticks",
       "path": "/docs/components/Axis/inject-ticks",
       "components": [
         {
@@ -229,6 +240,7 @@
     },
     {
       "name": "integer-only-filter",
+      "title": "integer only filter",
       "path": "/docs/components/Axis/integer-only-filter",
       "components": [
         {
@@ -250,6 +262,7 @@
     },
     {
       "name": "integer-only-format",
+      "title": "integer only format",
       "path": "/docs/components/Axis/integer-only-format",
       "components": [
         {
@@ -271,6 +284,7 @@
     },
     {
       "name": "labels-next-hash",
+      "title": "labels next hash",
       "path": "/docs/components/Axis/labels-next-hash",
       "components": [
         {
@@ -292,6 +306,7 @@
     },
     {
       "name": "linechart-tickspacing",
+      "title": "linechart tickspacing",
       "path": "/docs/components/Axis/linechart-tickspacing",
       "components": [
         {
@@ -303,6 +318,7 @@
     },
     {
       "name": "log-scale",
+      "title": "log scale",
       "path": "/docs/components/Axis/log-scale",
       "components": [
         {
@@ -324,6 +340,7 @@
     },
     {
       "name": "multiline-tick-labels",
+      "title": "multiline tick labels",
       "path": "/docs/components/Axis/multiline-tick-labels",
       "components": [
         {
@@ -345,6 +362,7 @@
     },
     {
       "name": "multiple-axis-grid-and-rules",
+      "title": "multiple axis grid and rules",
       "path": "/docs/components/Axis/multiple-axis-grid-and-rules",
       "components": [
         {
@@ -371,6 +389,7 @@
     },
     {
       "name": "multiple-axis-grid-and-rules-separate-grid",
+      "title": "multiple axis grid and rules separate grid",
       "path": "/docs/components/Axis/multiple-axis-grid-and-rules-separate-grid",
       "components": [
         {
@@ -397,6 +416,7 @@
     },
     {
       "name": "multiple-axis-grid-with-single-rule",
+      "title": "multiple axis grid with single rule",
       "path": "/docs/components/Axis/multiple-axis-grid-with-single-rule",
       "components": [
         {
@@ -418,6 +438,7 @@
     },
     {
       "name": "multiple-axis-same-placement-bottom",
+      "title": "multiple axis same placement bottom",
       "path": "/docs/components/Axis/multiple-axis-same-placement-bottom",
       "components": [
         {
@@ -439,6 +460,7 @@
     },
     {
       "name": "multiple-axis-same-placement-right",
+      "title": "multiple axis same placement right",
       "path": "/docs/components/Axis/multiple-axis-same-placement-right",
       "components": [
         {
@@ -460,6 +482,7 @@
     },
     {
       "name": "override-axis-ticks-scale",
+      "title": "override axis ticks scale",
       "path": "/docs/components/Axis/override-axis-ticks-scale",
       "components": [
         {
@@ -481,6 +504,7 @@
     },
     {
       "name": "placement-bottom-left",
+      "title": "placement bottom left",
       "path": "/docs/components/Axis/placement-bottom-left",
       "components": [
         {
@@ -502,6 +526,7 @@
     },
     {
       "name": "placement-bottom-left-rule",
+      "title": "placement bottom left rule",
       "path": "/docs/components/Axis/placement-bottom-left-rule",
       "components": [
         {
@@ -523,6 +548,7 @@
     },
     {
       "name": "placement-top-right",
+      "title": "placement top right",
       "path": "/docs/components/Axis/placement-top-right",
       "components": [
         {
@@ -544,6 +570,7 @@
     },
     {
       "name": "placement-top-right-rule",
+      "title": "placement top right rule",
       "path": "/docs/components/Axis/placement-top-right-rule",
       "components": [
         {
@@ -565,6 +592,7 @@
     },
     {
       "name": "radial-grid",
+      "title": "radial grid",
       "path": "/docs/components/Axis/radial-grid",
       "components": [
         {
@@ -586,6 +614,7 @@
     },
     {
       "name": "radial-rule",
+      "title": "radial rule",
       "path": "/docs/components/Axis/radial-rule",
       "components": [
         {
@@ -607,6 +636,7 @@
     },
     {
       "name": "remove-tick-marks",
+      "title": "remove tick marks",
       "path": "/docs/components/Axis/remove-tick-marks",
       "components": [
         {
@@ -628,6 +658,7 @@
     },
     {
       "name": "rotate-labels",
+      "title": "rotate labels",
       "path": "/docs/components/Axis/rotate-labels",
       "components": [
         {
@@ -649,6 +680,7 @@
     },
     {
       "name": "tick-count",
+      "title": "tick count",
       "path": "/docs/components/Axis/tick-count",
       "components": [
         {
@@ -670,6 +702,7 @@
     },
     {
       "name": "tick-label-styling",
+      "title": "tick label styling",
       "path": "/docs/components/Axis/tick-label-styling",
       "components": [
         {
@@ -691,6 +724,7 @@
     },
     {
       "name": "tick-spacing",
+      "title": "tick spacing",
       "path": "/docs/components/Axis/tick-spacing",
       "components": [
         {
@@ -712,6 +746,7 @@
     },
     {
       "name": "time-scale-auto",
+      "title": "time scale auto",
       "path": "/docs/components/Axis/time-scale-auto",
       "components": [
         {
@@ -733,6 +768,7 @@
     },
     {
       "name": "time-scale-auto-format-filtering",
+      "title": "time scale auto format filtering",
       "path": "/docs/components/Axis/time-scale-auto-format-filtering",
       "components": [
         {
@@ -754,6 +790,7 @@
     },
     {
       "name": "time-scale-auto-multiline",
+      "title": "time scale auto multiline",
       "path": "/docs/components/Axis/time-scale-auto-multiline",
       "components": [
         {
@@ -775,6 +812,7 @@
     },
     {
       "name": "time-scale-brush",
+      "title": "time scale brush",
       "path": "/docs/components/Axis/time-scale-brush",
       "components": [
         {
@@ -796,6 +834,7 @@
     },
     {
       "name": "time-scale-brush-multiline",
+      "title": "time scale brush multiline",
       "path": "/docs/components/Axis/time-scale-brush-multiline",
       "components": [
         {
@@ -817,6 +856,7 @@
     },
     {
       "name": "time-scale-explicit",
+      "title": "time scale explicit",
       "path": "/docs/components/Axis/time-scale-explicit",
       "components": [
         {
@@ -838,6 +878,7 @@
     },
     {
       "name": "time-scale-explicit-multiline",
+      "title": "time scale explicit multiline",
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "components": [
         {
@@ -4052,5 +4093,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.715Z"
+  "updatedAt": "2026-02-07T20:21:31.307Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/ColorRamp/basic",
       "components": [
         {
@@ -19,6 +20,7 @@
     },
     {
       "name": "pixelated",
+      "title": "pixelated",
       "path": "/docs/components/ColorRamp/pixelated",
       "components": [
         {
@@ -35,6 +37,7 @@
     },
     {
       "name": "schemes",
+      "title": "schemes",
       "path": "/docs/components/ColorRamp/schemes",
       "components": [
         {
@@ -80,5 +83,5 @@
       "line": "<ColorRamp"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.448Z"
+  "updatedAt": "2026-02-07T20:21:31.564Z"
 }

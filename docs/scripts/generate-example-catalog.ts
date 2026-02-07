@@ -121,6 +121,7 @@ function getComponentExamples(componentName: string, allComponents: string[]): E
 
 			examples.push({
 				name: exampleName,
+				title: exampleName.replaceAll('-', ' '),
 				path: `/docs/components/${componentName}/${exampleName}`,
 				components: componentsInExample
 			});

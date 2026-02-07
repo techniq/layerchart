@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "filterable",
+      "title": "filterable",
       "path": "/docs/components/Partition/filterable",
       "components": [
         {
@@ -54,6 +55,7 @@
     },
     {
       "name": "horizontal",
+      "title": "horizontal",
       "path": "/docs/components/Partition/horizontal",
       "components": [
         {
@@ -105,6 +107,7 @@
     },
     {
       "name": "sunburst",
+      "title": "sunburst",
       "path": "/docs/components/Partition/sunburst",
       "components": [
         {
@@ -141,6 +144,7 @@
     },
     {
       "name": "vertical",
+      "title": "vertical",
       "path": "/docs/components/Partition/vertical",
       "components": [
         {
@@ -221,5 +225,5 @@
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.282Z"
+  "updatedAt": "2026-02-07T20:21:32.100Z"
 }

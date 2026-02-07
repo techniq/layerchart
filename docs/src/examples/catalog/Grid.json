@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "band-scale-between",
+      "title": "band scale between",
       "path": "/docs/components/Grid/band-scale-between",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "band-scale-default",
+      "title": "band scale default",
       "path": "/docs/components/Grid/band-scale-default",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Grid/basic",
       "components": [
         {
@@ -76,6 +79,7 @@
     },
     {
       "name": "dashed-lines",
+      "title": "dashed lines",
       "path": "/docs/components/Grid/dashed-lines",
       "components": [
         {
@@ -97,6 +101,7 @@
     },
     {
       "name": "explicit-ticks",
+      "title": "explicit ticks",
       "path": "/docs/components/Grid/explicit-ticks",
       "components": [
         {
@@ -123,6 +128,7 @@
     },
     {
       "name": "inject-tick-value",
+      "title": "inject tick value",
       "path": "/docs/components/Grid/inject-tick-value",
       "components": [
         {
@@ -149,6 +155,7 @@
     },
     {
       "name": "integer-only",
+      "title": "integer only",
       "path": "/docs/components/Grid/integer-only",
       "components": [
         {
@@ -175,6 +182,7 @@
     },
     {
       "name": "padding",
+      "title": "padding",
       "path": "/docs/components/Grid/padding",
       "components": [
         {
@@ -196,6 +204,7 @@
     },
     {
       "name": "radial",
+      "title": "radial",
       "path": "/docs/components/Grid/radial",
       "components": [
         {
@@ -217,6 +226,7 @@
     },
     {
       "name": "radial-linear",
+      "title": "radial linear",
       "path": "/docs/components/Grid/radial-linear",
       "components": [
         {
@@ -238,6 +248,7 @@
     },
     {
       "name": "tick-count",
+      "title": "tick count",
       "path": "/docs/components/Grid/tick-count",
       "components": [
         {
@@ -264,6 +275,7 @@
     },
     {
       "name": "tick-count-null",
+      "title": "tick count null",
       "path": "/docs/components/Grid/tick-count-null",
       "components": [
         {
@@ -290,6 +302,7 @@
     },
     {
       "name": "tick-count-responsive",
+      "title": "tick count responsive",
       "path": "/docs/components/Grid/tick-count-responsive",
       "components": [
         {
@@ -316,6 +329,7 @@
     },
     {
       "name": "x-only",
+      "title": "x only",
       "path": "/docs/components/Grid/x-only",
       "components": [
         {
@@ -337,6 +351,7 @@
     },
     {
       "name": "y-only",
+      "title": "y only",
       "path": "/docs/components/Grid/y-only",
       "components": [
         {
@@ -471,5 +486,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.814Z"
+  "updatedAt": "2026-02-07T20:21:31.830Z"
 }

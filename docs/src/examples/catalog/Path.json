@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Path/basic",
       "components": [
         {
@@ -32,5 +33,5 @@
       "line": "<Path pathData=\"M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80\" strokeWidth={2} />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.303Z"
+  "updatedAt": "2026-02-07T20:21:32.112Z"
 }

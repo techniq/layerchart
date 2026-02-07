@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "radius",
+      "title": "radius",
       "path": "/docs/components/Voronoi/radius",
       "components": [
         {
@@ -47,5 +48,5 @@
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.963Z"
+  "updatedAt": "2026-02-07T20:21:32.545Z"
 }

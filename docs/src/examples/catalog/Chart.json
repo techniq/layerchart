@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "compound-common-scale-with-extra-marks",
+      "title": "compound common scale with extra marks",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "compound-dual-axis-with-single-chart-using-remapped-scale",
+      "title": "compound dual axis with single chart using remapped scale",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
       "components": [
         {
@@ -60,6 +62,7 @@
     },
     {
       "name": "compound-dual-axis-with-stacked-charts",
+      "title": "compound dual axis with stacked charts",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "components": [
         {
@@ -96,6 +99,7 @@
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "title": "compound separate scales with stacked charts and overridden marks",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "components": [
         {
@@ -117,6 +121,7 @@
     },
     {
       "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "title": "compound separate scales with stacked charts with inverted range top down",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "components": [
         {
@@ -3051,5 +3056,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.118Z"
+  "updatedAt": "2026-02-07T20:21:31.474Z"
 }

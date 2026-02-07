@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "horizontal-average-annotation-rule",
+      "title": "horizontal average annotation rule",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
       "components": [
         {
@@ -39,6 +40,7 @@
     },
     {
       "name": "horizontal-basic",
+      "title": "horizontal basic",
       "path": "/docs/components/Bars/horizontal-basic",
       "components": [
         {
@@ -65,6 +67,7 @@
     },
     {
       "name": "horizontal-calculated-value-domain-negative",
+      "title": "horizontal calculated value domain negative",
       "path": "/docs/components/Bars/horizontal-calculated-value-domain-negative",
       "components": [
         {
@@ -91,6 +94,7 @@
     },
     {
       "name": "horizontal-calculated-value-domain-positive",
+      "title": "horizontal calculated value domain positive",
       "path": "/docs/components/Bars/horizontal-calculated-value-domain-positive",
       "components": [
         {
@@ -117,6 +121,7 @@
     },
     {
       "name": "horizontal-candlestick-bars",
+      "title": "horizontal candlestick bars",
       "path": "/docs/components/Bars/horizontal-candlestick-bars",
       "components": [
         {
@@ -153,6 +158,7 @@
     },
     {
       "name": "horizontal-click-handler",
+      "title": "horizontal click handler",
       "path": "/docs/components/Bars/horizontal-click-handler",
       "components": [
         {
@@ -184,6 +190,7 @@
     },
     {
       "name": "horizontal-customize-individual-styles",
+      "title": "horizontal customize individual styles",
       "path": "/docs/components/Bars/horizontal-customize-individual-styles",
       "components": [
         {
@@ -215,6 +222,7 @@
     },
     {
       "name": "horizontal-gradient",
+      "title": "horizontal gradient",
       "path": "/docs/components/Bars/horizontal-gradient",
       "components": [
         {
@@ -246,6 +254,7 @@
     },
     {
       "name": "horizontal-grouped",
+      "title": "horizontal grouped",
       "path": "/docs/components/Bars/horizontal-grouped",
       "components": [
         {
@@ -282,6 +291,7 @@
     },
     {
       "name": "horizontal-grouped-and-stacked",
+      "title": "horizontal grouped and stacked",
       "path": "/docs/components/Bars/horizontal-grouped-and-stacked",
       "components": [
         {
@@ -318,6 +328,7 @@
     },
     {
       "name": "horizontal-grouped-stacked-or-both-transition",
+      "title": "horizontal grouped stacked or both transition",
       "path": "/docs/components/Bars/horizontal-grouped-stacked-or-both-transition",
       "components": [
         {
@@ -354,6 +365,7 @@
     },
     {
       "name": "horizontal-highlight-individual-bar",
+      "title": "horizontal highlight individual bar",
       "path": "/docs/components/Bars/horizontal-highlight-individual-bar",
       "components": [
         {
@@ -390,6 +402,7 @@
     },
     {
       "name": "horizontal-highlight-individual-bar-line",
+      "title": "horizontal highlight individual bar line",
       "path": "/docs/components/Bars/horizontal-highlight-individual-bar-line",
       "components": [
         {
@@ -421,6 +434,7 @@
     },
     {
       "name": "horizontal-inside-labels",
+      "title": "horizontal inside labels",
       "path": "/docs/components/Bars/horizontal-inside-labels",
       "components": [
         {
@@ -457,6 +471,7 @@
     },
     {
       "name": "horizontal-limit-ticks-count",
+      "title": "horizontal limit ticks count",
       "path": "/docs/components/Bars/horizontal-limit-ticks-count",
       "components": [
         {
@@ -483,6 +498,7 @@
     },
     {
       "name": "horizontal-limit-ticks-second-scale",
+      "title": "horizontal limit ticks second scale",
       "path": "/docs/components/Bars/horizontal-limit-ticks-second-scale",
       "components": [
         {
@@ -509,6 +525,7 @@
     },
     {
       "name": "horizontal-multiple-diverging",
+      "title": "horizontal multiple diverging",
       "path": "/docs/components/Bars/horizontal-multiple-diverging",
       "components": [
         {
@@ -550,6 +567,7 @@
     },
     {
       "name": "horizontal-multiple-overlapping",
+      "title": "horizontal multiple overlapping",
       "path": "/docs/components/Bars/horizontal-multiple-overlapping",
       "components": [
         {
@@ -586,6 +604,7 @@
     },
     {
       "name": "horizontal-outside-labels-default",
+      "title": "horizontal outside labels default",
       "path": "/docs/components/Bars/horizontal-outside-labels-default",
       "components": [
         {
@@ -622,6 +641,7 @@
     },
     {
       "name": "horizontal-rounded-right-only",
+      "title": "horizontal rounded right only",
       "path": "/docs/components/Bars/horizontal-rounded-right-only",
       "components": [
         {
@@ -648,6 +668,7 @@
     },
     {
       "name": "horizontal-stacked",
+      "title": "horizontal stacked",
       "path": "/docs/components/Bars/horizontal-stacked",
       "components": [
         {
@@ -684,6 +705,7 @@
     },
     {
       "name": "horizontal-stacked-percent",
+      "title": "horizontal stacked percent",
       "path": "/docs/components/Bars/horizontal-stacked-percent",
       "components": [
         {
@@ -720,6 +742,7 @@
     },
     {
       "name": "horizontal-stagger-tween-on-mount",
+      "title": "horizontal stagger tween on mount",
       "path": "/docs/components/Bars/horizontal-stagger-tween-on-mount",
       "components": [
         {
@@ -746,6 +769,7 @@
     },
     {
       "name": "horizontal-time-scale-with-inset",
+      "title": "horizontal time scale with inset",
       "path": "/docs/components/Bars/horizontal-time-scale-with-inset",
       "components": [
         {
@@ -772,6 +796,7 @@
     },
     {
       "name": "horizontal-time-scale-with-interval",
+      "title": "horizontal time scale with interval",
       "path": "/docs/components/Bars/horizontal-time-scale-with-interval",
       "components": [
         {
@@ -798,6 +823,7 @@
     },
     {
       "name": "horizontal-time-scale-with-missing-data",
+      "title": "horizontal time scale with missing data",
       "path": "/docs/components/Bars/horizontal-time-scale-with-missing-data",
       "components": [
         {
@@ -824,6 +850,7 @@
     },
     {
       "name": "horizontal-tooltip-and-bar-highlight",
+      "title": "horizontal tooltip and bar highlight",
       "path": "/docs/components/Bars/horizontal-tooltip-and-bar-highlight",
       "components": [
         {
@@ -860,6 +887,7 @@
     },
     {
       "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "title": "horizontal tooltip and click handlers for individual stack grouped bar",
       "path": "/docs/components/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "components": [
         {
@@ -891,6 +919,7 @@
     },
     {
       "name": "horizontal-tooltip-and-clipped-highlight",
+      "title": "horizontal tooltip and clipped highlight",
       "path": "/docs/components/Bars/horizontal-tooltip-and-clipped-highlight",
       "components": [
         {
@@ -932,6 +961,7 @@
     },
     {
       "name": "horizontal-tooltip-and-highlight",
+      "title": "horizontal tooltip and highlight",
       "path": "/docs/components/Bars/horizontal-tooltip-and-highlight",
       "components": [
         {
@@ -968,6 +998,7 @@
     },
     {
       "name": "horizontal-tween-on-mount",
+      "title": "horizontal tween on mount",
       "path": "/docs/components/Bars/horizontal-tween-on-mount",
       "components": [
         {
@@ -994,6 +1025,7 @@
     },
     {
       "name": "horizontal-with-grid-on-top",
+      "title": "horizontal with grid on top",
       "path": "/docs/components/Bars/horizontal-with-grid-on-top",
       "components": [
         {
@@ -1020,6 +1052,7 @@
     },
     {
       "name": "horizontal-with-grid-on-top-mix-blend",
+      "title": "horizontal with grid on top mix blend",
       "path": "/docs/components/Bars/horizontal-with-grid-on-top-mix-blend",
       "components": [
         {
@@ -1046,6 +1079,7 @@
     },
     {
       "name": "vertical-average-annotation-rule",
+      "title": "vertical average annotation rule",
       "path": "/docs/components/Bars/vertical-average-annotation-rule",
       "components": [
         {
@@ -1082,6 +1116,7 @@
     },
     {
       "name": "vertical-basic",
+      "title": "vertical basic",
       "path": "/docs/components/Bars/vertical-basic",
       "components": [
         {
@@ -1108,6 +1143,7 @@
     },
     {
       "name": "vertical-calculated-value-domain-negative",
+      "title": "vertical calculated value domain negative",
       "path": "/docs/components/Bars/vertical-calculated-value-domain-negative",
       "components": [
         {
@@ -1134,6 +1170,7 @@
     },
     {
       "name": "vertical-calculated-value-domain-positive",
+      "title": "vertical calculated value domain positive",
       "path": "/docs/components/Bars/vertical-calculated-value-domain-positive",
       "components": [
         {
@@ -1160,6 +1197,7 @@
     },
     {
       "name": "vertical-click-handler",
+      "title": "vertical click handler",
       "path": "/docs/components/Bars/vertical-click-handler",
       "components": [
         {
@@ -1191,6 +1229,7 @@
     },
     {
       "name": "vertical-customize-individual-styles",
+      "title": "vertical customize individual styles",
       "path": "/docs/components/Bars/vertical-customize-individual-styles",
       "components": [
         {
@@ -1222,6 +1261,7 @@
     },
     {
       "name": "vertical-gradient",
+      "title": "vertical gradient",
       "path": "/docs/components/Bars/vertical-gradient",
       "components": [
         {
@@ -1253,6 +1293,7 @@
     },
     {
       "name": "vertical-grouped",
+      "title": "vertical grouped",
       "path": "/docs/components/Bars/vertical-grouped",
       "components": [
         {
@@ -1289,6 +1330,7 @@
     },
     {
       "name": "vertical-grouped-and-stacked",
+      "title": "vertical grouped and stacked",
       "path": "/docs/components/Bars/vertical-grouped-and-stacked",
       "components": [
         {
@@ -1325,6 +1367,7 @@
     },
     {
       "name": "vertical-grouped-stacked-or-both-transition",
+      "title": "vertical grouped stacked or both transition",
       "path": "/docs/components/Bars/vertical-grouped-stacked-or-both-transition",
       "components": [
         {
@@ -1361,6 +1404,7 @@
     },
     {
       "name": "vertical-highlight-individual-bar",
+      "title": "vertical highlight individual bar",
       "path": "/docs/components/Bars/vertical-highlight-individual-bar",
       "components": [
         {
@@ -1397,6 +1441,7 @@
     },
     {
       "name": "vertical-highlight-individual-bar-line",
+      "title": "vertical highlight individual bar line",
       "path": "/docs/components/Bars/vertical-highlight-individual-bar-line",
       "components": [
         {
@@ -1428,6 +1473,7 @@
     },
     {
       "name": "vertical-inside-labels",
+      "title": "vertical inside labels",
       "path": "/docs/components/Bars/vertical-inside-labels",
       "components": [
         {
@@ -1464,6 +1510,7 @@
     },
     {
       "name": "vertical-limit-ticks-count",
+      "title": "vertical limit ticks count",
       "path": "/docs/components/Bars/vertical-limit-ticks-count",
       "components": [
         {
@@ -1490,6 +1537,7 @@
     },
     {
       "name": "vertical-limit-ticks-second-scale",
+      "title": "vertical limit ticks second scale",
       "path": "/docs/components/Bars/vertical-limit-ticks-second-scale",
       "components": [
         {
@@ -1516,6 +1564,7 @@
     },
     {
       "name": "vertical-multiple-diverging",
+      "title": "vertical multiple diverging",
       "path": "/docs/components/Bars/vertical-multiple-diverging",
       "components": [
         {
@@ -1557,6 +1606,7 @@
     },
     {
       "name": "vertical-multiple-diverging-rounded-specific",
+      "title": "vertical multiple diverging rounded specific",
       "path": "/docs/components/Bars/vertical-multiple-diverging-rounded-specific",
       "components": [
         {
@@ -1598,6 +1648,7 @@
     },
     {
       "name": "vertical-multiple-overlapping",
+      "title": "vertical multiple overlapping",
       "path": "/docs/components/Bars/vertical-multiple-overlapping",
       "components": [
         {
@@ -1634,6 +1685,7 @@
     },
     {
       "name": "vertical-outside-labels-default",
+      "title": "vertical outside labels default",
       "path": "/docs/components/Bars/vertical-outside-labels-default",
       "components": [
         {
@@ -1670,6 +1722,7 @@
     },
     {
       "name": "vertical-rounded-top-only",
+      "title": "vertical rounded top only",
       "path": "/docs/components/Bars/vertical-rounded-top-only",
       "components": [
         {
@@ -1696,6 +1749,7 @@
     },
     {
       "name": "vertical-stacked",
+      "title": "vertical stacked",
       "path": "/docs/components/Bars/vertical-stacked",
       "components": [
         {
@@ -1732,6 +1786,7 @@
     },
     {
       "name": "vertical-stacked-percent",
+      "title": "vertical stacked percent",
       "path": "/docs/components/Bars/vertical-stacked-percent",
       "components": [
         {
@@ -1768,6 +1823,7 @@
     },
     {
       "name": "vertical-stagger-tween-on-mount",
+      "title": "vertical stagger tween on mount",
       "path": "/docs/components/Bars/vertical-stagger-tween-on-mount",
       "components": [
         {
@@ -1794,6 +1850,7 @@
     },
     {
       "name": "vertical-stagger-tween-on-mount-rounded-edge",
+      "title": "vertical stagger tween on mount rounded edge",
       "path": "/docs/components/Bars/vertical-stagger-tween-on-mount-rounded-edge",
       "components": [
         {
@@ -1820,6 +1877,7 @@
     },
     {
       "name": "vertical-time-scale-with-inset",
+      "title": "vertical time scale with inset",
       "path": "/docs/components/Bars/vertical-time-scale-with-inset",
       "components": [
         {
@@ -1846,6 +1904,7 @@
     },
     {
       "name": "vertical-time-scale-with-interval",
+      "title": "vertical time scale with interval",
       "path": "/docs/components/Bars/vertical-time-scale-with-interval",
       "components": [
         {
@@ -1872,6 +1931,7 @@
     },
     {
       "name": "vertical-time-scale-with-interval-months",
+      "title": "vertical time scale with interval months",
       "path": "/docs/components/Bars/vertical-time-scale-with-interval-months",
       "components": [
         {
@@ -1898,6 +1958,7 @@
     },
     {
       "name": "vertical-time-scale-with-missing-data",
+      "title": "vertical time scale with missing data",
       "path": "/docs/components/Bars/vertical-time-scale-with-missing-data",
       "components": [
         {
@@ -1924,6 +1985,7 @@
     },
     {
       "name": "vertical-tooltip-and-bar-highlight",
+      "title": "vertical tooltip and bar highlight",
       "path": "/docs/components/Bars/vertical-tooltip-and-bar-highlight",
       "components": [
         {
@@ -1960,6 +2022,7 @@
     },
     {
       "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "title": "vertical tooltip and click handlers for individual stack grouped bar",
       "path": "/docs/components/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "components": [
         {
@@ -1991,6 +2054,7 @@
     },
     {
       "name": "vertical-tooltip-and-clipped-highlight",
+      "title": "vertical tooltip and clipped highlight",
       "path": "/docs/components/Bars/vertical-tooltip-and-clipped-highlight",
       "components": [
         {
@@ -2032,6 +2096,7 @@
     },
     {
       "name": "vertical-tooltip-and-highlight",
+      "title": "vertical tooltip and highlight",
       "path": "/docs/components/Bars/vertical-tooltip-and-highlight",
       "components": [
         {
@@ -2068,6 +2133,7 @@
     },
     {
       "name": "vertical-tween-on-mount",
+      "title": "vertical tween on mount",
       "path": "/docs/components/Bars/vertical-tween-on-mount",
       "components": [
         {
@@ -2094,6 +2160,7 @@
     },
     {
       "name": "vertical-tween-on-mount-rounded-edge",
+      "title": "vertical tween on mount rounded edge",
       "path": "/docs/components/Bars/vertical-tween-on-mount-rounded-edge",
       "components": [
         {
@@ -2120,6 +2187,7 @@
     },
     {
       "name": "vertical-with-grid-on-top",
+      "title": "vertical with grid on top",
       "path": "/docs/components/Bars/vertical-with-grid-on-top",
       "components": [
         {
@@ -2146,6 +2214,7 @@
     },
     {
       "name": "vertical-with-grid-on-top-mix-blend",
+      "title": "vertical with grid on top mix blend",
       "path": "/docs/components/Bars/vertical-with-grid-on-top-mix-blend",
       "components": [
         {
@@ -2719,5 +2788,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.804Z"
+  "updatedAt": "2026-02-07T20:21:31.376Z"
 }

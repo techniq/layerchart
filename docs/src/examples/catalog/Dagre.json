@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Dagre/basic",
       "components": [
         {
@@ -44,6 +45,7 @@
     },
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Dagre/playground",
       "components": [
         {
@@ -85,6 +87,7 @@
     },
     {
       "name": "software-user-flow",
+      "title": "software user flow",
       "path": "/docs/components/Dagre/software-user-flow",
       "components": [
         {
@@ -126,6 +129,7 @@
     },
     {
       "name": "tcp-state-diagram",
+      "title": "tcp state diagram",
       "path": "/docs/components/Dagre/tcp-state-diagram",
       "components": [
         {
@@ -196,5 +200,5 @@
       "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.504Z"
+  "updatedAt": "2026-02-07T20:21:31.611Z"
 }

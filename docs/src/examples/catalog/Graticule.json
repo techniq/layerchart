@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Graticule/basic",
       "components": [
         {
@@ -119,5 +120,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.785Z"
+  "updatedAt": "2026-02-07T20:21:31.815Z"
 }

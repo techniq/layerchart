@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "anchor-location",
+      "title": "anchor location",
       "path": "/docs/components/Tooltip/anchor-location",
       "components": [
         {
@@ -39,6 +40,7 @@
     },
     {
       "name": "area",
+      "title": "area",
       "path": "/docs/components/Tooltip/area",
       "components": [
         {
@@ -75,6 +77,7 @@
     },
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Tooltip/basic",
       "components": [
         {
@@ -111,6 +114,7 @@
     },
     {
       "name": "color-swatch",
+      "title": "color swatch",
       "path": "/docs/components/Tooltip/color-swatch",
       "components": [
         {
@@ -147,6 +151,7 @@
     },
     {
       "name": "color-swatch-using-theme",
+      "title": "color swatch using theme",
       "path": "/docs/components/Tooltip/color-swatch-using-theme",
       "components": [
         {
@@ -183,6 +188,7 @@
     },
     {
       "name": "custom-content",
+      "title": "custom content",
       "path": "/docs/components/Tooltip/custom-content",
       "components": [
         {
@@ -219,6 +225,7 @@
     },
     {
       "name": "data-snapping",
+      "title": "data snapping",
       "path": "/docs/components/Tooltip/data-snapping",
       "components": [
         {
@@ -255,6 +262,7 @@
     },
     {
       "name": "default-mouse-position-with-offset",
+      "title": "default mouse position with offset",
       "path": "/docs/components/Tooltip/default-mouse-position-with-offset",
       "components": [
         {
@@ -291,6 +299,7 @@
     },
     {
       "name": "disable-motion",
+      "title": "disable motion",
       "path": "/docs/components/Tooltip/disable-motion",
       "components": [
         {
@@ -327,6 +336,7 @@
     },
     {
       "name": "duration",
+      "title": "duration",
       "path": "/docs/components/Tooltip/duration",
       "components": [
         {
@@ -368,6 +378,7 @@
     },
     {
       "name": "externally-access-tooltip-data",
+      "title": "externally access tooltip data",
       "path": "/docs/components/Tooltip/externally-access-tooltip-data",
       "components": [
         {
@@ -404,6 +415,7 @@
     },
     {
       "name": "invert-variant",
+      "title": "invert variant",
       "path": "/docs/components/Tooltip/invert-variant",
       "components": [
         {
@@ -440,6 +452,7 @@
     },
     {
       "name": "multiple-overlapping-bars",
+      "title": "multiple overlapping bars",
       "path": "/docs/components/Tooltip/multiple-overlapping-bars",
       "components": [
         {
@@ -476,6 +489,7 @@
     },
     {
       "name": "multiple-overlapping-durations",
+      "title": "multiple overlapping durations",
       "path": "/docs/components/Tooltip/multiple-overlapping-durations",
       "components": [
         {
@@ -517,6 +531,7 @@
     },
     {
       "name": "multiple-tooltips-with-fixed-single-axis",
+      "title": "multiple tooltips with fixed single axis",
       "path": "/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis",
       "components": [
         {
@@ -553,6 +568,7 @@
     },
     {
       "name": "multiple-tooltips-with-fixed-single-axis-scaleband",
+      "title": "multiple tooltips with fixed single axis scaleband",
       "path": "/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
       "components": [
         {
@@ -589,6 +605,7 @@
     },
     {
       "name": "scatter-plot",
+      "title": "scatter plot",
       "path": "/docs/components/Tooltip/scatter-plot",
       "components": [
         {
@@ -625,6 +642,7 @@
     },
     {
       "name": "simple-bars",
+      "title": "simple bars",
       "path": "/docs/components/Tooltip/simple-bars",
       "components": [
         {
@@ -661,6 +679,7 @@
     },
     {
       "name": "single-date-time",
+      "title": "single date time",
       "path": "/docs/components/Tooltip/single-date-time",
       "components": [
         {
@@ -697,6 +716,7 @@
     },
     {
       "name": "stacked-area",
+      "title": "stacked area",
       "path": "/docs/components/Tooltip/stacked-area",
       "components": [
         {
@@ -5879,5 +5899,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.716Z"
+  "updatedAt": "2026-02-07T20:21:32.401Z"
 }

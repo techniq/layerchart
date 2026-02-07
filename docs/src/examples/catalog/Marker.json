@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "line",
+      "title": "line",
       "path": "/docs/components/Marker/line",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "orientation",
+      "title": "orientation",
       "path": "/docs/components/Marker/orientation",
       "components": [
         {
@@ -45,6 +47,7 @@
     },
     {
       "name": "spline",
+      "title": "spline",
       "path": "/docs/components/Marker/spline",
       "components": [
         {
@@ -66,6 +69,7 @@
     },
     {
       "name": "spline-w-thicker-stroke",
+      "title": "spline w thicker stroke",
       "path": "/docs/components/Marker/spline-w-thicker-stroke",
       "components": [
         {
@@ -87,6 +91,7 @@
     },
     {
       "name": "styling",
+      "title": "styling",
       "path": "/docs/components/Marker/styling",
       "components": [
         {
@@ -108,5 +113,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-02-07T17:00:32.127Z"
+  "updatedAt": "2026-02-07T20:21:32.026Z"
 }

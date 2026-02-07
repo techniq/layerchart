@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Threshold/basic",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "with-labels",
+      "title": "with labels",
       "path": "/docs/components/Threshold/with-labels",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "with-tooltip-and-highlight",
+      "title": "with tooltip and highlight",
       "path": "/docs/components/Threshold/with-tooltip-and-highlight",
       "components": [
         {
@@ -115,5 +118,5 @@
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.669Z"
+  "updatedAt": "2026-02-07T20:21:32.369Z"
 }

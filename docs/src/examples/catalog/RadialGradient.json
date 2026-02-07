@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "focal-location-and-radius-with-custom-colors",
+      "title": "focal location and radius with custom colors",
       "path": "/docs/components/RadialGradient/focal-location-and-radius-with-custom-colors",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "spreadmethod",
+      "title": "spreadmethod",
       "path": "/docs/components/RadialGradient/spreadmethod",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "tailwind-colors",
+      "title": "tailwind colors",
       "path": "/docs/components/RadialGradient/tailwind-colors",
       "components": [
         {
@@ -81,6 +84,7 @@
     },
     {
       "name": "units",
+      "title": "units",
       "path": "/docs/components/RadialGradient/units",
       "components": [
         {
@@ -227,5 +231,5 @@
       "line": "<RadialGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.453Z"
+  "updatedAt": "2026-02-07T20:21:32.217Z"
 }

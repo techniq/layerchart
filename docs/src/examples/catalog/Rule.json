@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "annotation-x",
+      "title": "annotation x",
       "path": "/docs/components/Rule/annotation-x",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "annotation-y",
+      "title": "annotation y",
       "path": "/docs/components/Rule/annotation-y",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "baseline-top-right",
+      "title": "baseline top right",
       "path": "/docs/components/Rule/baseline-top-right",
       "components": [
         {
@@ -81,6 +84,7 @@
     },
     {
       "name": "baseline-x-negative",
+      "title": "baseline x negative",
       "path": "/docs/components/Rule/baseline-x-negative",
       "components": [
         {
@@ -107,6 +111,7 @@
     },
     {
       "name": "baseline-x-y",
+      "title": "baseline x y",
       "path": "/docs/components/Rule/baseline-x-y",
       "components": [
         {
@@ -133,6 +138,7 @@
     },
     {
       "name": "baseline-y-negative",
+      "title": "baseline y negative",
       "path": "/docs/components/Rule/baseline-y-negative",
       "components": [
         {
@@ -159,6 +165,7 @@
     },
     {
       "name": "candlestick",
+      "title": "candlestick",
       "path": "/docs/components/Rule/candlestick",
       "components": [
         {
@@ -195,6 +202,7 @@
     },
     {
       "name": "candlestick-open-close-line-color",
+      "title": "candlestick open close line color",
       "path": "/docs/components/Rule/candlestick-open-close-line-color",
       "components": [
         {
@@ -231,6 +239,7 @@
     },
     {
       "name": "candlestick-with-brushing",
+      "title": "candlestick with brushing",
       "path": "/docs/components/Rule/candlestick-with-brushing",
       "components": [
         {
@@ -272,6 +281,7 @@
     },
     {
       "name": "data-x-band",
+      "title": "data x band",
       "path": "/docs/components/Rule/data-x-band",
       "components": [
         {
@@ -298,6 +308,7 @@
     },
     {
       "name": "data-x-date",
+      "title": "data x date",
       "path": "/docs/components/Rule/data-x-date",
       "components": [
         {
@@ -324,6 +335,7 @@
     },
     {
       "name": "data-x-range",
+      "title": "data x range",
       "path": "/docs/components/Rule/data-x-range",
       "components": [
         {
@@ -350,6 +362,7 @@
     },
     {
       "name": "data-y-range",
+      "title": "data y range",
       "path": "/docs/components/Rule/data-y-range",
       "components": [
         {
@@ -376,6 +389,7 @@
     },
     {
       "name": "lollipop",
+      "title": "lollipop",
       "path": "/docs/components/Rule/lollipop",
       "components": [
         {
@@ -684,5 +698,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.505Z"
+  "updatedAt": "2026-02-07T20:21:32.259Z"
 }

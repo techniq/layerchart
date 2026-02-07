@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "icons",
+      "title": "icons",
       "path": "/docs/components/GeoPoint/icons",
       "components": [
         {
@@ -44,6 +45,7 @@
     },
     {
       "name": "us-airports",
+      "title": "us airports",
       "path": "/docs/components/GeoPoint/us-airports",
       "components": [
         {
@@ -75,6 +77,7 @@
     },
     {
       "name": "us-state-capitals",
+      "title": "us state capitals",
       "path": "/docs/components/GeoPoint/us-state-capitals",
       "components": [
         {
@@ -111,6 +114,7 @@
     },
     {
       "name": "world-airports",
+      "title": "world airports",
       "path": "/docs/components/GeoPoint/world-airports",
       "components": [
         {
@@ -142,6 +146,7 @@
     },
     {
       "name": "world-capitals",
+      "title": "world capitals",
       "path": "/docs/components/GeoPoint/world-capitals",
       "components": [
         {
@@ -291,5 +296,5 @@
       "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.688Z"
+  "updatedAt": "2026-02-07T20:21:31.756Z"
 }

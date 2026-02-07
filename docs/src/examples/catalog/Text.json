@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Text/playground",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "truncate-axis-labels",
+      "title": "truncate axis labels",
       "path": "/docs/components/Text/truncate-axis-labels",
       "components": [
         {
@@ -40,6 +42,7 @@
     },
     {
       "name": "word-wrap-axis-labels",
+      "title": "word wrap axis labels",
       "path": "/docs/components/Text/word-wrap-axis-labels",
       "components": [
         {
@@ -51,6 +54,7 @@
     },
     {
       "name": "word-wrap-with-explicit-newline",
+      "title": "word wrap with explicit newline",
       "path": "/docs/components/Text/word-wrap-with-explicit-newline",
       "components": [
         {
@@ -661,5 +665,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.647Z"
+  "updatedAt": "2026-02-07T20:21:32.355Z"
 }

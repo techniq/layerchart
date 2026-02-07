@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "direction-with-custom-colors",
+      "title": "direction with custom colors",
       "path": "/docs/components/LinearGradient/direction-with-custom-colors",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "explicit-offsets",
+      "title": "explicit offsets",
       "path": "/docs/components/LinearGradient/explicit-offsets",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "tailwind-colors",
+      "title": "tailwind colors",
       "path": "/docs/components/LinearGradient/tailwind-colors",
       "components": [
         {
@@ -81,6 +84,7 @@
     },
     {
       "name": "units",
+      "title": "units",
       "path": "/docs/components/LinearGradient/units",
       "components": [
         {
@@ -535,5 +539,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.081Z"
+  "updatedAt": "2026-02-07T20:21:31.997Z"
 }

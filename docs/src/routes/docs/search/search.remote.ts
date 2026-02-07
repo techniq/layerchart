@@ -66,8 +66,8 @@ export const search = query(
 				const matches = getMatches(entry.content, match);
 				return {
 					slug: entry.slug,
-					title: replaceTextWithMarker(entry.title, match),
-					content: matches.length ? matches[0] : entry.content.substring(0, 100) + '...',
+					title: entry.title,
+					content: matches.length ? matches[0] : entry.content.substring(0, 100),
 					type: entry.type,
 					category: entry.category,
 					component: entry.component,

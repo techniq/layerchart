@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "axis-labels-inside-bars",
+      "title": "axis labels inside bars",
       "path": "/docs/components/BarChart/axis-labels-inside-bars",
       "components": [
         {
@@ -14,6 +15,7 @@
     },
     {
       "name": "axis-labels-inside-bars-using-labels",
+      "title": "axis labels inside bars using labels",
       "path": "/docs/components/BarChart/axis-labels-inside-bars-using-labels",
       "components": [
         {
@@ -30,6 +32,7 @@
     },
     {
       "name": "both-axis-grid",
+      "title": "both axis grid",
       "path": "/docs/components/BarChart/both-axis-grid",
       "components": [
         {
@@ -41,6 +44,7 @@
     },
     {
       "name": "both-axis-grid-align-between",
+      "title": "both axis grid align between",
       "path": "/docs/components/BarChart/both-axis-grid-align-between",
       "components": [
         {
@@ -52,6 +56,7 @@
     },
     {
       "name": "brushing",
+      "title": "brushing",
       "path": "/docs/components/BarChart/brushing",
       "components": [
         {
@@ -63,6 +68,7 @@
     },
     {
       "name": "color-bars-class",
+      "title": "color bars class",
       "path": "/docs/components/BarChart/color-bars-class",
       "components": [
         {
@@ -74,6 +80,7 @@
     },
     {
       "name": "color-per-value",
+      "title": "color per value",
       "path": "/docs/components/BarChart/color-per-value",
       "components": [
         {
@@ -85,6 +92,7 @@
     },
     {
       "name": "color-threshold",
+      "title": "color threshold",
       "path": "/docs/components/BarChart/color-threshold",
       "components": [
         {
@@ -96,6 +104,7 @@
     },
     {
       "name": "color-using-scale",
+      "title": "color using scale",
       "path": "/docs/components/BarChart/color-using-scale",
       "components": [
         {
@@ -107,6 +116,7 @@
     },
     {
       "name": "custom-chart",
+      "title": "custom chart",
       "path": "/docs/components/BarChart/custom-chart",
       "components": [
         {
@@ -143,6 +153,7 @@
     },
     {
       "name": "custom-tooltip",
+      "title": "custom tooltip",
       "path": "/docs/components/BarChart/custom-tooltip",
       "components": [
         {
@@ -159,6 +170,7 @@
     },
     {
       "name": "duration",
+      "title": "duration",
       "path": "/docs/components/BarChart/duration",
       "components": [
         {
@@ -175,6 +187,7 @@
     },
     {
       "name": "duration-bars",
+      "title": "duration bars",
       "path": "/docs/components/BarChart/duration-bars",
       "components": [
         {
@@ -191,6 +204,7 @@
     },
     {
       "name": "duration-bars-color",
+      "title": "duration bars color",
       "path": "/docs/components/BarChart/duration-bars-color",
       "components": [
         {
@@ -207,6 +221,7 @@
     },
     {
       "name": "duration-bars-dense",
+      "title": "duration bars dense",
       "path": "/docs/components/BarChart/duration-bars-dense",
       "components": [
         {
@@ -223,6 +238,7 @@
     },
     {
       "name": "duration-bars-dense-lanes",
+      "title": "duration bars dense lanes",
       "path": "/docs/components/BarChart/duration-bars-dense-lanes",
       "components": [
         {
@@ -239,6 +255,7 @@
     },
     {
       "name": "duration-bars-lanes",
+      "title": "duration bars lanes",
       "path": "/docs/components/BarChart/duration-bars-lanes",
       "components": [
         {
@@ -255,6 +272,7 @@
     },
     {
       "name": "duration-civilization-timeline",
+      "title": "duration civilization timeline",
       "path": "/docs/components/BarChart/duration-civilization-timeline",
       "components": [
         {
@@ -271,6 +289,7 @@
     },
     {
       "name": "duration-civilization-timeline-dense",
+      "title": "duration civilization timeline dense",
       "path": "/docs/components/BarChart/duration-civilization-timeline-dense",
       "components": [
         {
@@ -287,6 +306,7 @@
     },
     {
       "name": "duration-points",
+      "title": "duration points",
       "path": "/docs/components/BarChart/duration-points",
       "components": [
         {
@@ -313,6 +333,7 @@
     },
     {
       "name": "duration-points-color",
+      "title": "duration points color",
       "path": "/docs/components/BarChart/duration-points-color",
       "components": [
         {
@@ -339,6 +360,7 @@
     },
     {
       "name": "dynamic-height",
+      "title": "dynamic height",
       "path": "/docs/components/BarChart/dynamic-height",
       "components": [
         {
@@ -350,6 +372,7 @@
     },
     {
       "name": "gradient",
+      "title": "gradient",
       "path": "/docs/components/BarChart/gradient",
       "components": [
         {
@@ -371,6 +394,7 @@
     },
     {
       "name": "group-series",
+      "title": "group series",
       "path": "/docs/components/BarChart/group-series",
       "components": [
         {
@@ -382,6 +406,7 @@
     },
     {
       "name": "group-series-bar-click",
+      "title": "group series bar click",
       "path": "/docs/components/BarChart/group-series-bar-click",
       "components": [
         {
@@ -393,6 +418,7 @@
     },
     {
       "name": "group-series-horizontal",
+      "title": "group series horizontal",
       "path": "/docs/components/BarChart/group-series-horizontal",
       "components": [
         {
@@ -404,6 +430,7 @@
     },
     {
       "name": "group-series-labels",
+      "title": "group series labels",
       "path": "/docs/components/BarChart/group-series-labels",
       "components": [
         {
@@ -420,6 +447,7 @@
     },
     {
       "name": "group-series-series-long-data",
+      "title": "group series series long data",
       "path": "/docs/components/BarChart/group-series-series-long-data",
       "components": [
         {
@@ -431,6 +459,7 @@
     },
     {
       "name": "highlight-below-marks",
+      "title": "highlight below marks",
       "path": "/docs/components/BarChart/highlight-below-marks",
       "components": [
         {
@@ -447,6 +476,7 @@
     },
     {
       "name": "histogram-date-time-count",
+      "title": "histogram date time count",
       "path": "/docs/components/BarChart/histogram-date-time-count",
       "components": [
         {
@@ -463,6 +493,7 @@
     },
     {
       "name": "histogram-date-time-interval",
+      "title": "histogram date time interval",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
       "components": [
         {
@@ -479,6 +510,7 @@
     },
     {
       "name": "histogram-horizontal",
+      "title": "histogram horizontal",
       "path": "/docs/components/BarChart/histogram-horizontal",
       "components": [
         {
@@ -495,6 +527,7 @@
     },
     {
       "name": "histogram-random-distribution",
+      "title": "histogram random distribution",
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "components": [
         {
@@ -511,6 +544,7 @@
     },
     {
       "name": "histogram-vertical",
+      "title": "histogram vertical",
       "path": "/docs/components/BarChart/histogram-vertical",
       "components": [
         {
@@ -527,6 +561,7 @@
     },
     {
       "name": "horizontal",
+      "title": "horizontal",
       "path": "/docs/components/BarChart/horizontal",
       "components": [
         {
@@ -538,6 +573,7 @@
     },
     {
       "name": "labels",
+      "title": "labels",
       "path": "/docs/components/BarChart/labels",
       "components": [
         {
@@ -549,6 +585,7 @@
     },
     {
       "name": "labels-inside-placement",
+      "title": "labels inside placement",
       "path": "/docs/components/BarChart/labels-inside-placement",
       "components": [
         {
@@ -560,6 +597,7 @@
     },
     {
       "name": "legend-custom-labels",
+      "title": "legend custom labels",
       "path": "/docs/components/BarChart/legend-custom-labels",
       "components": [
         {
@@ -571,6 +609,7 @@
     },
     {
       "name": "legend-group-series",
+      "title": "legend group series",
       "path": "/docs/components/BarChart/legend-group-series",
       "components": [
         {
@@ -582,6 +621,7 @@
     },
     {
       "name": "legend-placement",
+      "title": "legend placement",
       "path": "/docs/components/BarChart/legend-placement",
       "components": [
         {
@@ -593,6 +633,7 @@
     },
     {
       "name": "legend-stack-series",
+      "title": "legend stack series",
       "path": "/docs/components/BarChart/legend-stack-series",
       "components": [
         {
@@ -604,6 +645,7 @@
     },
     {
       "name": "line-annotation",
+      "title": "line annotation",
       "path": "/docs/components/BarChart/line-annotation",
       "components": [
         {
@@ -615,6 +657,7 @@
     },
     {
       "name": "oscilloscope-frequency",
+      "title": "oscilloscope frequency",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
       "components": [
         {
@@ -636,6 +679,7 @@
     },
     {
       "name": "override-axis-ticks-with-custom-scale",
+      "title": "override axis ticks with custom scale",
       "path": "/docs/components/BarChart/override-axis-ticks-with-custom-scale",
       "components": [
         {
@@ -647,6 +691,7 @@
     },
     {
       "name": "point-annotation",
+      "title": "point annotation",
       "path": "/docs/components/BarChart/point-annotation",
       "components": [
         {
@@ -658,6 +703,7 @@
     },
     {
       "name": "radial-horizontal",
+      "title": "radial horizontal",
       "path": "/docs/components/BarChart/radial-horizontal",
       "components": [
         {
@@ -669,6 +715,7 @@
     },
     {
       "name": "radial-horizontal-color-per-value",
+      "title": "radial horizontal color per value",
       "path": "/docs/components/BarChart/radial-horizontal-color-per-value",
       "components": [
         {
@@ -680,6 +727,7 @@
     },
     {
       "name": "radial-horizontal-duration",
+      "title": "radial horizontal duration",
       "path": "/docs/components/BarChart/radial-horizontal-duration",
       "components": [
         {
@@ -691,6 +739,7 @@
     },
     {
       "name": "radial-horizontal-grid-between",
+      "title": "radial horizontal grid between",
       "path": "/docs/components/BarChart/radial-horizontal-grid-between",
       "components": [
         {
@@ -702,6 +751,7 @@
     },
     {
       "name": "radial-vertical",
+      "title": "radial vertical",
       "path": "/docs/components/BarChart/radial-vertical",
       "components": [
         {
@@ -713,6 +763,7 @@
     },
     {
       "name": "radial-vertical-arcpadding",
+      "title": "radial vertical arcpadding",
       "path": "/docs/components/BarChart/radial-vertical-arcpadding",
       "components": [
         {
@@ -724,6 +775,7 @@
     },
     {
       "name": "radial-vertical-yrange",
+      "title": "radial vertical yrange",
       "path": "/docs/components/BarChart/radial-vertical-yrange",
       "components": [
         {
@@ -735,6 +787,7 @@
     },
     {
       "name": "radial-weather",
+      "title": "radial weather",
       "path": "/docs/components/BarChart/radial-weather",
       "components": [
         {
@@ -746,6 +799,7 @@
     },
     {
       "name": "range-annotation-multiple",
+      "title": "range annotation multiple",
       "path": "/docs/components/BarChart/range-annotation-multiple",
       "components": [
         {
@@ -757,6 +811,7 @@
     },
     {
       "name": "range-annotation-single",
+      "title": "range annotation single",
       "path": "/docs/components/BarChart/range-annotation-single",
       "components": [
         {
@@ -768,6 +823,7 @@
     },
     {
       "name": "range-annotation-value",
+      "title": "range annotation value",
       "path": "/docs/components/BarChart/range-annotation-value",
       "components": [
         {
@@ -779,6 +835,7 @@
     },
     {
       "name": "remove-rounding",
+      "title": "remove rounding",
       "path": "/docs/components/BarChart/remove-rounding",
       "components": [
         {
@@ -790,6 +847,7 @@
     },
     {
       "name": "scale-override",
+      "title": "scale override",
       "path": "/docs/components/BarChart/scale-override",
       "components": [
         {
@@ -801,6 +859,7 @@
     },
     {
       "name": "series",
+      "title": "series",
       "path": "/docs/components/BarChart/series",
       "components": [
         {
@@ -812,6 +871,7 @@
     },
     {
       "name": "series-data",
+      "title": "series data",
       "path": "/docs/components/BarChart/series-data",
       "components": [
         {
@@ -823,6 +883,7 @@
     },
     {
       "name": "series-diverging",
+      "title": "series diverging",
       "path": "/docs/components/BarChart/series-diverging",
       "components": [
         {
@@ -834,6 +895,7 @@
     },
     {
       "name": "series-horizontal",
+      "title": "series horizontal",
       "path": "/docs/components/BarChart/series-horizontal",
       "components": [
         {
@@ -845,6 +907,7 @@
     },
     {
       "name": "series-horizontal-diverging",
+      "title": "series horizontal diverging",
       "path": "/docs/components/BarChart/series-horizontal-diverging",
       "components": [
         {
@@ -861,6 +924,7 @@
     },
     {
       "name": "series-horizontal-diverging-as-percent",
+      "title": "series horizontal diverging as percent",
       "path": "/docs/components/BarChart/series-horizontal-diverging-as-percent",
       "components": [
         {
@@ -877,6 +941,7 @@
     },
     {
       "name": "single-axis-x",
+      "title": "single axis x",
       "path": "/docs/components/BarChart/single-axis-x",
       "components": [
         {
@@ -888,6 +953,7 @@
     },
     {
       "name": "single-axis-y",
+      "title": "single axis y",
       "path": "/docs/components/BarChart/single-axis-y",
       "components": [
         {
@@ -899,6 +965,7 @@
     },
     {
       "name": "single-dimension",
+      "title": "single dimension",
       "path": "/docs/components/BarChart/single-dimension",
       "components": [
         {
@@ -915,6 +982,7 @@
     },
     {
       "name": "single-stack-with-indicator",
+      "title": "single stack with indicator",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
       "components": [
         {
@@ -946,6 +1014,7 @@
     },
     {
       "name": "sparkbar",
+      "title": "sparkbar",
       "path": "/docs/components/BarChart/sparkbar",
       "components": [
         {
@@ -957,6 +1026,7 @@
     },
     {
       "name": "sparkbar-fixed-position-tooltip",
+      "title": "sparkbar fixed position tooltip",
       "path": "/docs/components/BarChart/sparkbar-fixed-position-tooltip",
       "components": [
         {
@@ -973,6 +1043,7 @@
     },
     {
       "name": "sparkbar-negative-data",
+      "title": "sparkbar negative data",
       "path": "/docs/components/BarChart/sparkbar-negative-data",
       "components": [
         {
@@ -984,6 +1055,7 @@
     },
     {
       "name": "sparkbar-within-a-paragraph",
+      "title": "sparkbar within a paragraph",
       "path": "/docs/components/BarChart/sparkbar-within-a-paragraph",
       "components": [
         {
@@ -995,6 +1067,7 @@
     },
     {
       "name": "sparkbar-within-a-paragraph-with-tooltip-and-highlight",
+      "title": "sparkbar within a paragraph with tooltip and highlight",
       "path": "/docs/components/BarChart/sparkbar-within-a-paragraph-with-tooltip-and-highlight",
       "components": [
         {
@@ -1011,6 +1084,7 @@
     },
     {
       "name": "stack-series",
+      "title": "stack series",
       "path": "/docs/components/BarChart/stack-series",
       "components": [
         {
@@ -1022,6 +1096,7 @@
     },
     {
       "name": "stack-series-diverging",
+      "title": "stack series diverging",
       "path": "/docs/components/BarChart/stack-series-diverging",
       "components": [
         {
@@ -1033,6 +1108,7 @@
     },
     {
       "name": "stack-series-expand",
+      "title": "stack series expand",
       "path": "/docs/components/BarChart/stack-series-expand",
       "components": [
         {
@@ -1044,6 +1120,7 @@
     },
     {
       "name": "stack-series-horizontal",
+      "title": "stack series horizontal",
       "path": "/docs/components/BarChart/stack-series-horizontal",
       "components": [
         {
@@ -1055,6 +1132,7 @@
     },
     {
       "name": "stack-series-padded",
+      "title": "stack series padded",
       "path": "/docs/components/BarChart/stack-series-padded",
       "components": [
         {
@@ -1066,6 +1144,7 @@
     },
     {
       "name": "time-scale-interval",
+      "title": "time scale interval",
       "path": "/docs/components/BarChart/time-scale-interval",
       "components": [
         {
@@ -1077,6 +1156,7 @@
     },
     {
       "name": "time-scale-interval-horizontal",
+      "title": "time scale interval horizontal",
       "path": "/docs/components/BarChart/time-scale-interval-horizontal",
       "components": [
         {
@@ -1088,6 +1168,7 @@
     },
     {
       "name": "time-scale-interval-with-inset",
+      "title": "time scale interval with inset",
       "path": "/docs/components/BarChart/time-scale-interval-with-inset",
       "components": [
         {
@@ -1099,6 +1180,7 @@
     },
     {
       "name": "tooltip-click",
+      "title": "tooltip click",
       "path": "/docs/components/BarChart/tooltip-click",
       "components": [
         {
@@ -1110,6 +1192,7 @@
     },
     {
       "name": "vertical-default",
+      "title": "vertical default",
       "path": "/docs/components/BarChart/vertical-default",
       "components": [
         {
@@ -1801,5 +1884,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.768Z"
+  "updatedAt": "2026-02-07T20:21:31.350Z"
 }

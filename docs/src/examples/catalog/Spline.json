@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Spline/basic",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "basic-start-and-end-snippets",
+      "title": "basic start and end snippets",
       "path": "/docs/components/Spline/basic-start-and-end-snippets",
       "components": [
         {
@@ -60,6 +62,7 @@
     },
     {
       "name": "draw",
+      "title": "draw",
       "path": "/docs/components/Spline/draw",
       "components": [
         {
@@ -86,6 +89,7 @@
     },
     {
       "name": "end-slot-with-draw-with-value",
+      "title": "end slot with draw with value",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
       "components": [
         {
@@ -122,6 +126,7 @@
     },
     {
       "name": "end-snippet-with-draw",
+      "title": "end snippet with draw",
       "path": "/docs/components/Spline/end-snippet-with-draw",
       "components": [
         {
@@ -153,6 +158,7 @@
     },
     {
       "name": "gradient-encoding",
+      "title": "gradient encoding",
       "path": "/docs/components/Spline/gradient-encoding",
       "components": [
         {
@@ -189,6 +195,7 @@
     },
     {
       "name": "gradient-threshold",
+      "title": "gradient threshold",
       "path": "/docs/components/Spline/gradient-threshold",
       "components": [
         {
@@ -220,6 +227,7 @@
     },
     {
       "name": "label-using-start-end-snippets",
+      "title": "label using start end snippets",
       "path": "/docs/components/Spline/label-using-start-end-snippets",
       "components": [
         {
@@ -256,6 +264,7 @@
     },
     {
       "name": "markers-arrows",
+      "title": "markers arrows",
       "path": "/docs/components/Spline/markers-arrows",
       "components": [
         {
@@ -282,6 +291,7 @@
     },
     {
       "name": "multiple-series",
+      "title": "multiple series",
       "path": "/docs/components/Spline/multiple-series",
       "components": [
         {
@@ -328,6 +338,7 @@
     },
     {
       "name": "multiple-series-highlight-on-hover",
+      "title": "multiple series highlight on hover",
       "path": "/docs/components/Spline/multiple-series-highlight-on-hover",
       "components": [
         {
@@ -374,6 +385,7 @@
     },
     {
       "name": "multiple-series-using-overrides",
+      "title": "multiple series using overrides",
       "path": "/docs/components/Spline/multiple-series-using-overrides",
       "components": [
         {
@@ -410,6 +422,7 @@
     },
     {
       "name": "multiple-series-with-labels",
+      "title": "multiple series with labels",
       "path": "/docs/components/Spline/multiple-series-with-labels",
       "components": [
         {
@@ -451,6 +464,7 @@
     },
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Spline/playground",
       "components": [
         {
@@ -482,6 +496,7 @@
     },
     {
       "name": "radial-line-with-areas",
+      "title": "radial line with areas",
       "path": "/docs/components/Spline/radial-line-with-areas",
       "components": [
         {
@@ -513,6 +528,7 @@
     },
     {
       "name": "radial-multi-year-lines",
+      "title": "radial multi year lines",
       "path": "/docs/components/Spline/radial-multi-year-lines",
       "components": [
         {
@@ -539,6 +555,7 @@
     },
     {
       "name": "radial-radar",
+      "title": "radial radar",
       "path": "/docs/components/Spline/radial-radar",
       "components": [
         {
@@ -570,6 +587,7 @@
     },
     {
       "name": "tweened",
+      "title": "tweened",
       "path": "/docs/components/Spline/tweened",
       "components": [
         {
@@ -596,6 +614,7 @@
     },
     {
       "name": "vertical",
+      "title": "vertical",
       "path": "/docs/components/Spline/vertical",
       "components": [
         {
@@ -632,6 +651,7 @@
     },
     {
       "name": "with-labels",
+      "title": "with labels",
       "path": "/docs/components/Spline/with-labels",
       "components": [
         {
@@ -663,6 +683,7 @@
     },
     {
       "name": "with-tooltip-and-highlight",
+      "title": "with tooltip and highlight",
       "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "components": [
         {
@@ -1113,5 +1134,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.573Z"
+  "updatedAt": "2026-02-07T20:21:32.313Z"
 }

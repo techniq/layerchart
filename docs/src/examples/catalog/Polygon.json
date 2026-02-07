@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "10-point-star",
+      "title": "10 point star",
       "path": "/docs/components/Polygon/10-point-star",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "12-point-star",
+      "title": "12 point star",
       "path": "/docs/components/Polygon/12-point-star",
       "components": [
         {
@@ -45,6 +47,7 @@
     },
     {
       "name": "14-point-star",
+      "title": "14 point star",
       "path": "/docs/components/Polygon/14-point-star",
       "components": [
         {
@@ -66,6 +69,7 @@
     },
     {
       "name": "16-point-star",
+      "title": "16 point star",
       "path": "/docs/components/Polygon/16-point-star",
       "components": [
         {
@@ -87,6 +91,7 @@
     },
     {
       "name": "18-point-star",
+      "title": "18 point star",
       "path": "/docs/components/Polygon/18-point-star",
       "components": [
         {
@@ -108,6 +113,7 @@
     },
     {
       "name": "20-point-star",
+      "title": "20 point star",
       "path": "/docs/components/Polygon/20-point-star",
       "components": [
         {
@@ -129,6 +135,7 @@
     },
     {
       "name": "6-point-star",
+      "title": "6 point star",
       "path": "/docs/components/Polygon/6-point-star",
       "components": [
         {
@@ -150,6 +157,7 @@
     },
     {
       "name": "8-point-star",
+      "title": "8 point star",
       "path": "/docs/components/Polygon/8-point-star",
       "components": [
         {
@@ -171,6 +179,7 @@
     },
     {
       "name": "arrow",
+      "title": "arrow",
       "path": "/docs/components/Polygon/arrow",
       "components": [
         {
@@ -197,6 +206,7 @@
     },
     {
       "name": "cross",
+      "title": "cross",
       "path": "/docs/components/Polygon/cross",
       "components": [
         {
@@ -223,6 +233,7 @@
     },
     {
       "name": "diamond",
+      "title": "diamond",
       "path": "/docs/components/Polygon/diamond",
       "components": [
         {
@@ -244,6 +255,7 @@
     },
     {
       "name": "hexagon",
+      "title": "hexagon",
       "path": "/docs/components/Polygon/hexagon",
       "components": [
         {
@@ -265,6 +277,7 @@
     },
     {
       "name": "octagon",
+      "title": "octagon",
       "path": "/docs/components/Polygon/octagon",
       "components": [
         {
@@ -286,6 +299,7 @@
     },
     {
       "name": "parallelogram",
+      "title": "parallelogram",
       "path": "/docs/components/Polygon/parallelogram",
       "components": [
         {
@@ -307,6 +321,7 @@
     },
     {
       "name": "pentagon",
+      "title": "pentagon",
       "path": "/docs/components/Polygon/pentagon",
       "components": [
         {
@@ -328,6 +343,7 @@
     },
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Polygon/playground",
       "components": [
         {
@@ -349,6 +365,7 @@
     },
     {
       "name": "rectangle",
+      "title": "rectangle",
       "path": "/docs/components/Polygon/rectangle",
       "components": [
         {
@@ -370,6 +387,7 @@
     },
     {
       "name": "rhombus",
+      "title": "rhombus",
       "path": "/docs/components/Polygon/rhombus",
       "components": [
         {
@@ -391,6 +409,7 @@
     },
     {
       "name": "square",
+      "title": "square",
       "path": "/docs/components/Polygon/square",
       "components": [
         {
@@ -412,6 +431,7 @@
     },
     {
       "name": "trapezoid",
+      "title": "trapezoid",
       "path": "/docs/components/Polygon/trapezoid",
       "components": [
         {
@@ -433,6 +453,7 @@
     },
     {
       "name": "triangle",
+      "title": "triangle",
       "path": "/docs/components/Polygon/triangle",
       "components": [
         {
@@ -623,5 +644,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.432Z"
+  "updatedAt": "2026-02-07T20:21:32.203Z"
 }

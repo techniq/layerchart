@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "styling-using-attributes",
+      "title": "styling using attributes",
       "path": "/docs/components/Circle/styling-using-attributes",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "styling-using-classes",
+      "title": "styling using classes",
       "path": "/docs/components/Circle/styling-using-classes",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "styling-using-css-variables",
+      "title": "styling using css variables",
       "path": "/docs/components/Circle/styling-using-css-variables",
       "components": [
         {
@@ -621,5 +624,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.384Z"
+  "updatedAt": "2026-02-07T20:21:31.518Z"
 }

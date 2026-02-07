@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "styling-using-attributes",
+      "title": "styling using attributes",
       "path": "/docs/components/Ellipse/styling-using-attributes",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "styling-using-classes",
+      "title": "styling using classes",
       "path": "/docs/components/Ellipse/styling-using-classes",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "styling-using-css-variables",
+      "title": "styling using css variables",
       "path": "/docs/components/Ellipse/styling-using-css-variables",
       "components": [
         {
@@ -166,5 +169,5 @@
       "line": "<Ellipse"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.546Z"
+  "updatedAt": "2026-02-07T20:21:31.640Z"
 }

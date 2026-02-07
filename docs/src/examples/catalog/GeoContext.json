@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "geojson-preview",
+      "title": "geojson preview",
       "path": "/docs/components/GeoContext/geojson-preview",
       "components": [
         {
@@ -39,6 +40,7 @@
     },
     {
       "name": "projection-playground",
+      "title": "projection playground",
       "path": "/docs/components/GeoContext/projection-playground",
       "components": [
         {
@@ -70,6 +72,7 @@
     },
     {
       "name": "shapefile-preview",
+      "title": "shapefile preview",
       "path": "/docs/components/GeoContext/shapefile-preview",
       "components": [
         {
@@ -91,6 +94,7 @@
     },
     {
       "name": "topojson-preview",
+      "title": "topojson preview",
       "path": "/docs/components/GeoContext/topojson-preview",
       "components": [
         {
@@ -135,5 +139,5 @@
       "line": "<GeoContext"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.616Z"
+  "updatedAt": "2026-02-07T20:21:31.706Z"
 }

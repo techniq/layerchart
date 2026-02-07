@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Frame/basic",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "border",
+      "title": "border",
       "path": "/docs/components/Frame/border",
       "components": [
         {
@@ -55,6 +57,7 @@
     },
     {
       "name": "full",
+      "title": "full",
       "path": "/docs/components/Frame/full",
       "components": [
         {
@@ -81,6 +84,7 @@
     },
     {
       "name": "gradient",
+      "title": "gradient",
       "path": "/docs/components/Frame/gradient",
       "components": [
         {
@@ -141,5 +145,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.583Z"
+  "updatedAt": "2026-02-07T20:21:31.674Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "circles",
+      "title": "circles",
       "path": "/docs/components/Pattern/circles",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "circles-custom-pattern-svg-only",
+      "title": "circles custom pattern svg only",
       "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
       "components": [
         {
@@ -60,6 +62,7 @@
     },
     {
       "name": "lineargradient-as-pattern",
+      "title": "lineargradient as pattern",
       "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "components": [
         {
@@ -91,6 +94,7 @@
     },
     {
       "name": "lines",
+      "title": "lines",
       "path": "/docs/components/Pattern/lines",
       "components": [
         {
@@ -117,6 +121,7 @@
     },
     {
       "name": "lines-custom-pattern-svg-only",
+      "title": "lines custom pattern svg only",
       "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "components": [
         {
@@ -148,6 +153,7 @@
     },
     {
       "name": "with-fill-color",
+      "title": "with fill color",
       "path": "/docs/components/Pattern/with-fill-color",
       "components": [
         {
@@ -174,6 +180,7 @@
     },
     {
       "name": "with-lineargradient",
+      "title": "with lineargradient",
       "path": "/docs/components/Pattern/with-lineargradient",
       "components": [
         {
@@ -507,5 +514,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.322Z"
+  "updatedAt": "2026-02-07T20:21:32.127Z"
 }

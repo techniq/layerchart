@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "animated-globe",
+      "title": "animated globe",
       "path": "/docs/components/GeoPath/animated-globe",
       "components": [
         {
@@ -39,6 +40,7 @@
     },
     {
       "name": "bubble-map",
+      "title": "bubble map",
       "path": "/docs/components/GeoPath/bubble-map",
       "components": [
         {
@@ -75,6 +77,7 @@
     },
     {
       "name": "choropleth",
+      "title": "choropleth",
       "path": "/docs/components/GeoPath/choropleth",
       "components": [
         {
@@ -106,6 +109,7 @@
     },
     {
       "name": "eclipses-globe",
+      "title": "eclipses globe",
       "path": "/docs/components/GeoPath/eclipses-globe",
       "components": [
         {
@@ -142,6 +146,7 @@
     },
     {
       "name": "sketchy-globe",
+      "title": "sketchy globe",
       "path": "/docs/components/GeoPath/sketchy-globe",
       "components": [
         {
@@ -168,6 +173,7 @@
     },
     {
       "name": "spike-map",
+      "title": "spike map",
       "path": "/docs/components/GeoPath/spike-map",
       "components": [
         {
@@ -199,6 +205,7 @@
     },
     {
       "name": "submarine-cables-globe",
+      "title": "submarine cables globe",
       "path": "/docs/components/GeoPath/submarine-cables-globe",
       "components": [
         {
@@ -240,6 +247,7 @@
     },
     {
       "name": "timezones",
+      "title": "timezones",
       "path": "/docs/components/GeoPath/timezones",
       "components": [
         {
@@ -281,6 +289,7 @@
     },
     {
       "name": "tooltip",
+      "title": "tooltip",
       "path": "/docs/components/GeoPath/tooltip",
       "components": [
         {
@@ -312,6 +321,7 @@
     },
     {
       "name": "transform-canvas",
+      "title": "transform canvas",
       "path": "/docs/components/GeoPath/transform-canvas",
       "components": [
         {
@@ -338,6 +348,7 @@
     },
     {
       "name": "transform-projection",
+      "title": "transform projection",
       "path": "/docs/components/GeoPath/transform-projection",
       "components": [
         {
@@ -364,6 +375,7 @@
     },
     {
       "name": "translucent-globe",
+      "title": "translucent globe",
       "path": "/docs/components/GeoPath/translucent-globe",
       "components": [
         {
@@ -400,6 +412,7 @@
     },
     {
       "name": "us-country-map",
+      "title": "us country map",
       "path": "/docs/components/GeoPath/us-country-map",
       "components": [
         {
@@ -426,6 +439,7 @@
     },
     {
       "name": "us-state",
+      "title": "us state",
       "path": "/docs/components/GeoPath/us-state",
       "components": [
         {
@@ -447,6 +461,7 @@
     },
     {
       "name": "us-state-with-counties",
+      "title": "us state with counties",
       "path": "/docs/components/GeoPath/us-state-with-counties",
       "components": [
         {
@@ -473,6 +488,7 @@
     },
     {
       "name": "us-state-with-surrounding-states",
+      "title": "us state with surrounding states",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
       "components": [
         {
@@ -1023,5 +1039,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.664Z"
+  "updatedAt": "2026-02-07T20:21:31.741Z"
 }

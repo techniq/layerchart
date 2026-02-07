@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/ArcChart/basic",
       "components": [
         {
@@ -14,6 +15,7 @@
     },
     {
       "name": "color",
+      "title": "color",
       "path": "/docs/components/ArcChart/color",
       "components": [
         {
@@ -25,6 +27,7 @@
     },
     {
       "name": "gradient-with-text",
+      "title": "gradient with text",
       "path": "/docs/components/ArcChart/gradient-with-text",
       "components": [
         {
@@ -56,6 +59,7 @@
     },
     {
       "name": "radius-fixed",
+      "title": "radius fixed",
       "path": "/docs/components/ArcChart/radius-fixed",
       "components": [
         {
@@ -67,6 +71,7 @@
     },
     {
       "name": "radius-offset",
+      "title": "radius offset",
       "path": "/docs/components/ArcChart/radius-offset",
       "components": [
         {
@@ -78,6 +83,7 @@
     },
     {
       "name": "radius-percent",
+      "title": "radius percent",
       "path": "/docs/components/ArcChart/radius-percent",
       "components": [
         {
@@ -89,6 +95,7 @@
     },
     {
       "name": "series",
+      "title": "series",
       "path": "/docs/components/ArcChart/series",
       "components": [
         {
@@ -100,6 +107,7 @@
     },
     {
       "name": "series-arc",
+      "title": "series arc",
       "path": "/docs/components/ArcChart/series-arc",
       "components": [
         {
@@ -111,6 +119,7 @@
     },
     {
       "name": "series-individual",
+      "title": "series individual",
       "path": "/docs/components/ArcChart/series-individual",
       "components": [
         {
@@ -122,6 +131,7 @@
     },
     {
       "name": "series-labels",
+      "title": "series labels",
       "path": "/docs/components/ArcChart/series-labels",
       "components": [
         {
@@ -143,6 +153,7 @@
     },
     {
       "name": "series-motion-spring",
+      "title": "series motion spring",
       "path": "/docs/components/ArcChart/series-motion-spring",
       "components": [
         {
@@ -154,6 +165,7 @@
     },
     {
       "name": "series-motion-tween",
+      "title": "series motion tween",
       "path": "/docs/components/ArcChart/series-motion-tween",
       "components": [
         {
@@ -165,6 +177,7 @@
     },
     {
       "name": "series-start-180",
+      "title": "series start 180",
       "path": "/docs/components/ArcChart/series-start-180",
       "components": [
         {
@@ -176,6 +189,7 @@
     },
     {
       "name": "series-start-90",
+      "title": "series start 90",
       "path": "/docs/components/ArcChart/series-start-90",
       "components": [
         {
@@ -187,6 +201,7 @@
     },
     {
       "name": "series-track-color",
+      "title": "series track color",
       "path": "/docs/components/ArcChart/series-track-color",
       "components": [
         {
@@ -198,6 +213,7 @@
     },
     {
       "name": "track-size",
+      "title": "track size",
       "path": "/docs/components/ArcChart/track-size",
       "components": [
         {
@@ -322,5 +338,5 @@
       "line": "<ArcChart"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.643Z"
+  "updatedAt": "2026-02-07T20:21:31.242Z"
 }

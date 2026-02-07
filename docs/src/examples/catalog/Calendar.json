@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "90-days",
+      "title": "90 days",
       "path": "/docs/components/Calendar/90-days",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Calendar/basic",
       "components": [
         {
@@ -50,6 +52,7 @@
     },
     {
       "name": "fixed-cell-size",
+      "title": "fixed cell size",
       "path": "/docs/components/Calendar/fixed-cell-size",
       "components": [
         {
@@ -76,6 +79,7 @@
     },
     {
       "name": "html-with-padding",
+      "title": "html with padding",
       "path": "/docs/components/Calendar/html-with-padding",
       "components": [
         {
@@ -102,6 +106,7 @@
     },
     {
       "name": "last-month",
+      "title": "last month",
       "path": "/docs/components/Calendar/last-month",
       "components": [
         {
@@ -128,6 +133,7 @@
     },
     {
       "name": "multiple-years",
+      "title": "multiple years",
       "path": "/docs/components/Calendar/multiple-years",
       "components": [
         {
@@ -164,6 +170,7 @@
     },
     {
       "name": "responsive-cell-size-default",
+      "title": "responsive cell size default",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
       "components": [
         {
@@ -190,6 +197,7 @@
     },
     {
       "name": "rounded-cells",
+      "title": "rounded cells",
       "path": "/docs/components/Calendar/rounded-cells",
       "components": [
         {
@@ -278,5 +286,5 @@
       "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.068Z"
+  "updatedAt": "2026-02-07T20:21:31.441Z"
 }

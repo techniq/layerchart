@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "band-scale",
+      "title": "band scale",
       "path": "/docs/components/AreaChart/band-scale",
       "components": [
         {
@@ -14,6 +15,7 @@
     },
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/AreaChart/basic",
       "components": [
         {
@@ -25,6 +27,7 @@
     },
     {
       "name": "brush",
+      "title": "brush",
       "path": "/docs/components/AreaChart/brush",
       "components": [
         {
@@ -36,6 +39,7 @@
     },
     {
       "name": "brush-sync",
+      "title": "brush sync",
       "path": "/docs/components/AreaChart/brush-sync",
       "components": [
         {
@@ -47,6 +51,7 @@
     },
     {
       "name": "curve",
+      "title": "curve",
       "path": "/docs/components/AreaChart/curve",
       "components": [
         {
@@ -58,6 +63,7 @@
     },
     {
       "name": "custom",
+      "title": "custom",
       "path": "/docs/components/AreaChart/custom",
       "components": [
         {
@@ -94,6 +100,7 @@
     },
     {
       "name": "custom-tooltip",
+      "title": "custom tooltip",
       "path": "/docs/components/AreaChart/custom-tooltip",
       "components": [
         {
@@ -110,6 +117,7 @@
     },
     {
       "name": "default-series-label",
+      "title": "default series label",
       "path": "/docs/components/AreaChart/default-series-label",
       "components": [
         {
@@ -121,6 +129,7 @@
     },
     {
       "name": "funnel",
+      "title": "funnel",
       "path": "/docs/components/AreaChart/funnel",
       "components": [
         {
@@ -147,6 +156,7 @@
     },
     {
       "name": "gradient",
+      "title": "gradient",
       "path": "/docs/components/AreaChart/gradient",
       "components": [
         {
@@ -168,6 +178,7 @@
     },
     {
       "name": "labels",
+      "title": "labels",
       "path": "/docs/components/AreaChart/labels",
       "components": [
         {
@@ -179,6 +190,7 @@
     },
     {
       "name": "line-annotation",
+      "title": "line annotation",
       "path": "/docs/components/AreaChart/line-annotation",
       "components": [
         {
@@ -190,6 +202,7 @@
     },
     {
       "name": "markers",
+      "title": "markers",
       "path": "/docs/components/AreaChart/markers",
       "components": [
         {
@@ -216,6 +229,7 @@
     },
     {
       "name": "null-gaps",
+      "title": "null gaps",
       "path": "/docs/components/AreaChart/null-gaps",
       "components": [
         {
@@ -227,6 +241,7 @@
     },
     {
       "name": "point-annotations",
+      "title": "point annotations",
       "path": "/docs/components/AreaChart/point-annotations",
       "components": [
         {
@@ -243,6 +258,7 @@
     },
     {
       "name": "point-scale",
+      "title": "point scale",
       "path": "/docs/components/AreaChart/point-scale",
       "components": [
         {
@@ -254,6 +270,7 @@
     },
     {
       "name": "points",
+      "title": "points",
       "path": "/docs/components/AreaChart/points",
       "components": [
         {
@@ -265,6 +282,7 @@
     },
     {
       "name": "radial",
+      "title": "radial",
       "path": "/docs/components/AreaChart/radial",
       "components": [
         {
@@ -281,6 +299,7 @@
     },
     {
       "name": "range-annotation",
+      "title": "range annotation",
       "path": "/docs/components/AreaChart/range-annotation",
       "components": [
         {
@@ -292,6 +311,7 @@
     },
     {
       "name": "series",
+      "title": "series",
       "path": "/docs/components/AreaChart/series",
       "components": [
         {
@@ -303,6 +323,7 @@
     },
     {
       "name": "series-individual-tooltip",
+      "title": "series individual tooltip",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
       "components": [
         {
@@ -329,6 +350,7 @@
     },
     {
       "name": "series-point-annotations",
+      "title": "series point annotations",
       "path": "/docs/components/AreaChart/series-point-annotations",
       "components": [
         {
@@ -340,6 +362,7 @@
     },
     {
       "name": "series-point-click",
+      "title": "series point click",
       "path": "/docs/components/AreaChart/series-point-click",
       "components": [
         {
@@ -351,6 +374,7 @@
     },
     {
       "name": "series-separate-data",
+      "title": "series separate data",
       "path": "/docs/components/AreaChart/series-separate-data",
       "components": [
         {
@@ -362,6 +386,7 @@
     },
     {
       "name": "series-stack",
+      "title": "series stack",
       "path": "/docs/components/AreaChart/series-stack",
       "components": [
         {
@@ -373,6 +398,7 @@
     },
     {
       "name": "series-stack-diverging",
+      "title": "series stack diverging",
       "path": "/docs/components/AreaChart/series-stack-diverging",
       "components": [
         {
@@ -384,6 +410,7 @@
     },
     {
       "name": "series-stack-expand",
+      "title": "series stack expand",
       "path": "/docs/components/AreaChart/series-stack-expand",
       "components": [
         {
@@ -395,6 +422,7 @@
     },
     {
       "name": "series-stack-gradient",
+      "title": "series stack gradient",
       "path": "/docs/components/AreaChart/series-stack-gradient",
       "components": [
         {
@@ -416,6 +444,7 @@
     },
     {
       "name": "series-stack-legend",
+      "title": "series stack legend",
       "path": "/docs/components/AreaChart/series-stack-legend",
       "components": [
         {
@@ -427,6 +456,7 @@
     },
     {
       "name": "series-stack-legend-labels",
+      "title": "series stack legend labels",
       "path": "/docs/components/AreaChart/series-stack-legend-labels",
       "components": [
         {
@@ -438,6 +468,7 @@
     },
     {
       "name": "series-stack-legend-placement",
+      "title": "series stack legend placement",
       "path": "/docs/components/AreaChart/series-stack-legend-placement",
       "components": [
         {
@@ -449,6 +480,7 @@
     },
     {
       "name": "series-stack-separate-data",
+      "title": "series stack separate data",
       "path": "/docs/components/AreaChart/series-stack-separate-data",
       "components": [
         {
@@ -460,6 +492,7 @@
     },
     {
       "name": "series-tooltip-click",
+      "title": "series tooltip click",
       "path": "/docs/components/AreaChart/series-tooltip-click",
       "components": [
         {
@@ -471,6 +504,7 @@
     },
     {
       "name": "single-axis-x",
+      "title": "single axis x",
       "path": "/docs/components/AreaChart/single-axis-x",
       "components": [
         {
@@ -482,6 +516,7 @@
     },
     {
       "name": "single-axis-y",
+      "title": "single axis y",
       "path": "/docs/components/AreaChart/single-axis-y",
       "components": [
         {
@@ -493,6 +528,7 @@
     },
     {
       "name": "sparkline",
+      "title": "sparkline",
       "path": "/docs/components/AreaChart/sparkline",
       "components": [
         {
@@ -504,6 +540,7 @@
     },
     {
       "name": "threshold",
+      "title": "threshold",
       "path": "/docs/components/AreaChart/threshold",
       "components": [
         {
@@ -535,6 +572,7 @@
     },
     {
       "name": "threshold-gradient",
+      "title": "threshold gradient",
       "path": "/docs/components/AreaChart/threshold-gradient",
       "components": [
         {
@@ -566,6 +604,7 @@
     },
     {
       "name": "tooltip-external",
+      "title": "tooltip external",
       "path": "/docs/components/AreaChart/tooltip-external",
       "components": [
         {
@@ -577,6 +616,7 @@
     },
     {
       "name": "tooltip-fixed-with-hide-delay",
+      "title": "tooltip fixed with hide delay",
       "path": "/docs/components/AreaChart/tooltip-fixed-with-hide-delay",
       "components": [
         {
@@ -593,6 +633,7 @@
     },
     {
       "name": "tooltip-locking",
+      "title": "tooltip locking",
       "path": "/docs/components/AreaChart/tooltip-locking",
       "components": [
         {
@@ -925,5 +966,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.689Z"
+  "updatedAt": "2026-02-07T20:21:31.285Z"
 }

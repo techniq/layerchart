@@ -166,7 +166,9 @@
 						</div>
 					{/if}
 					<div class="flex-1 min-w-0">
-						<p class="text-base font-semibold text-surface-content/90 m-0 truncate">
+						<p
+							class="text-base font-semibold text-surface-content/90 m-0 truncate first-letter:capitalize"
+						>
 							{@html result.title}
 						</p>
 						<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-1">

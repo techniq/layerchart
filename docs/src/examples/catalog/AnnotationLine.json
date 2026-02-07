@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "bar-chart",
+      "title": "bar chart",
       "path": "/docs/components/AnnotationLine/bar-chart",
       "components": [
         {
@@ -19,6 +20,7 @@
     },
     {
       "name": "horizontal",
+      "title": "horizontal",
       "path": "/docs/components/AnnotationLine/horizontal",
       "components": [
         {
@@ -35,6 +37,7 @@
     },
     {
       "name": "horizontal-placement",
+      "title": "horizontal placement",
       "path": "/docs/components/AnnotationLine/horizontal-placement",
       "components": [
         {
@@ -51,6 +54,7 @@
     },
     {
       "name": "horizontal-with-range",
+      "title": "horizontal with range",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
       "components": [
         {
@@ -72,6 +76,7 @@
     },
     {
       "name": "vertical",
+      "title": "vertical",
       "path": "/docs/components/AnnotationLine/vertical",
       "components": [
         {
@@ -88,6 +93,7 @@
     },
     {
       "name": "vertical-placement",
+      "title": "vertical placement",
       "path": "/docs/components/AnnotationLine/vertical-placement",
       "components": [
         {
@@ -104,6 +110,7 @@
     },
     {
       "name": "vertical-with-rotation",
+      "title": "vertical with rotation",
       "path": "/docs/components/AnnotationLine/vertical-with-rotation",
       "components": [
         {
@@ -191,5 +198,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.573Z"
+  "updatedAt": "2026-02-07T20:21:31.167Z"
 }

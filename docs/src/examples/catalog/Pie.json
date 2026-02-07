@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Pie/basic",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "default-slot-render-each-arc",
+      "title": "default slot render each arc",
       "path": "/docs/components/Pie/default-slot-render-each-arc",
       "components": [
         {
@@ -50,6 +52,7 @@
     },
     {
       "name": "disable-sorting",
+      "title": "disable sorting",
       "path": "/docs/components/Pie/disable-sorting",
       "components": [
         {
@@ -71,6 +74,7 @@
     },
     {
       "name": "inner-radius-negative",
+      "title": "inner radius negative",
       "path": "/docs/components/Pie/inner-radius-negative",
       "components": [
         {
@@ -92,6 +96,7 @@
     },
     {
       "name": "inner-radius-positive",
+      "title": "inner radius positive",
       "path": "/docs/components/Pie/inner-radius-positive",
       "components": [
         {
@@ -113,6 +118,7 @@
     },
     {
       "name": "inner-radius-zero-one",
+      "title": "inner radius zero one",
       "path": "/docs/components/Pie/inner-radius-zero-one",
       "components": [
         {
@@ -134,6 +140,7 @@
     },
     {
       "name": "labels",
+      "title": "labels",
       "path": "/docs/components/Pie/labels",
       "components": [
         {
@@ -165,6 +172,7 @@
     },
     {
       "name": "labels-centroid",
+      "title": "labels centroid",
       "path": "/docs/components/Pie/labels-centroid",
       "components": [
         {
@@ -196,6 +204,7 @@
     },
     {
       "name": "labels-centroid-multiple",
+      "title": "labels centroid multiple",
       "path": "/docs/components/Pie/labels-centroid-multiple",
       "components": [
         {
@@ -227,6 +236,7 @@
     },
     {
       "name": "labels-outer",
+      "title": "labels outer",
       "path": "/docs/components/Pie/labels-outer",
       "components": [
         {
@@ -258,6 +268,7 @@
     },
     {
       "name": "labels-outer-radial",
+      "title": "labels outer radial",
       "path": "/docs/components/Pie/labels-outer-radial",
       "components": [
         {
@@ -289,6 +300,7 @@
     },
     {
       "name": "labels-outer-with-padding",
+      "title": "labels outer with padding",
       "path": "/docs/components/Pie/labels-outer-with-padding",
       "components": [
         {
@@ -320,6 +332,7 @@
     },
     {
       "name": "multiple-data-prop",
+      "title": "multiple data prop",
       "path": "/docs/components/Pie/multiple-data-prop",
       "components": [
         {
@@ -341,6 +354,7 @@
     },
     {
       "name": "offset",
+      "title": "offset",
       "path": "/docs/components/Pie/offset",
       "components": [
         {
@@ -362,6 +376,7 @@
     },
     {
       "name": "outer-radius",
+      "title": "outer radius",
       "path": "/docs/components/Pie/outer-radius",
       "components": [
         {
@@ -383,6 +398,7 @@
     },
     {
       "name": "pad-angle",
+      "title": "pad angle",
       "path": "/docs/components/Pie/pad-angle",
       "components": [
         {
@@ -404,6 +420,7 @@
     },
     {
       "name": "pad-angle-with-inner-radius",
+      "title": "pad angle with inner radius",
       "path": "/docs/components/Pie/pad-angle-with-inner-radius",
       "components": [
         {
@@ -425,6 +442,7 @@
     },
     {
       "name": "partial-range-chart-xrange",
+      "title": "partial range chart xrange",
       "path": "/docs/components/Pie/partial-range-chart-xrange",
       "components": [
         {
@@ -446,6 +464,7 @@
     },
     {
       "name": "partial-range-range-prop",
+      "title": "partial range range prop",
       "path": "/docs/components/Pie/partial-range-range-prop",
       "components": [
         {
@@ -467,6 +486,7 @@
     },
     {
       "name": "placement",
+      "title": "placement",
       "path": "/docs/components/Pie/placement",
       "components": [
         {
@@ -488,6 +508,7 @@
     },
     {
       "name": "placement-center",
+      "title": "placement center",
       "path": "/docs/components/Pie/placement-center",
       "components": [
         {
@@ -509,6 +530,7 @@
     },
     {
       "name": "placement-left",
+      "title": "placement left",
       "path": "/docs/components/Pie/placement-left",
       "components": [
         {
@@ -535,6 +557,7 @@
     },
     {
       "name": "placement-right",
+      "title": "placement right",
       "path": "/docs/components/Pie/placement-right",
       "components": [
         {
@@ -561,6 +584,7 @@
     },
     {
       "name": "tooltip",
+      "title": "tooltip",
       "path": "/docs/components/Pie/tooltip",
       "components": [
         {
@@ -587,6 +611,7 @@
     },
     {
       "name": "tooltip-with-arcs-slot",
+      "title": "tooltip with arcs slot",
       "path": "/docs/components/Pie/tooltip-with-arcs-slot",
       "components": [
         {
@@ -628,6 +653,7 @@
     },
     {
       "name": "tweened",
+      "title": "tweened",
       "path": "/docs/components/Pie/tweened",
       "components": [
         {
@@ -839,5 +865,5 @@
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.347Z"
+  "updatedAt": "2026-02-07T20:21:32.144Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/ScatterChart/basic",
       "components": [
         {
@@ -14,6 +15,7 @@
     },
     {
       "name": "brush",
+      "title": "brush",
       "path": "/docs/components/ScatterChart/brush",
       "components": [
         {
@@ -25,6 +27,7 @@
     },
     {
       "name": "custom",
+      "title": "custom",
       "path": "/docs/components/ScatterChart/custom",
       "components": [
         {
@@ -61,6 +64,7 @@
     },
     {
       "name": "custom-tooltip",
+      "title": "custom tooltip",
       "path": "/docs/components/ScatterChart/custom-tooltip",
       "components": [
         {
@@ -77,6 +81,7 @@
     },
     {
       "name": "date-series-color-scale",
+      "title": "date series color scale",
       "path": "/docs/components/ScatterChart/date-series-color-scale",
       "components": [
         {
@@ -88,6 +93,7 @@
     },
     {
       "name": "domain-baseline",
+      "title": "domain baseline",
       "path": "/docs/components/ScatterChart/domain-baseline",
       "components": [
         {
@@ -99,6 +105,7 @@
     },
     {
       "name": "domain-nice",
+      "title": "domain nice",
       "path": "/docs/components/ScatterChart/domain-nice",
       "components": [
         {
@@ -110,6 +117,7 @@
     },
     {
       "name": "domain-padding",
+      "title": "domain padding",
       "path": "/docs/components/ScatterChart/domain-padding",
       "components": [
         {
@@ -121,6 +129,7 @@
     },
     {
       "name": "labels",
+      "title": "labels",
       "path": "/docs/components/ScatterChart/labels",
       "components": [
         {
@@ -132,6 +141,7 @@
     },
     {
       "name": "line-annotation",
+      "title": "line annotation",
       "path": "/docs/components/ScatterChart/line-annotation",
       "components": [
         {
@@ -143,6 +153,7 @@
     },
     {
       "name": "point-annotations",
+      "title": "point annotations",
       "path": "/docs/components/ScatterChart/point-annotations",
       "components": [
         {
@@ -154,6 +165,7 @@
     },
     {
       "name": "punchcard",
+      "title": "punchcard",
       "path": "/docs/components/ScatterChart/punchcard",
       "components": [
         {
@@ -175,6 +187,7 @@
     },
     {
       "name": "radius-scale",
+      "title": "radius scale",
       "path": "/docs/components/ScatterChart/radius-scale",
       "components": [
         {
@@ -186,6 +199,7 @@
     },
     {
       "name": "range-annotation-both",
+      "title": "range annotation both",
       "path": "/docs/components/ScatterChart/range-annotation-both",
       "components": [
         {
@@ -197,6 +211,7 @@
     },
     {
       "name": "range-annotation-horizontal",
+      "title": "range annotation horizontal",
       "path": "/docs/components/ScatterChart/range-annotation-horizontal",
       "components": [
         {
@@ -208,6 +223,7 @@
     },
     {
       "name": "range-annotation-vertical",
+      "title": "range annotation vertical",
       "path": "/docs/components/ScatterChart/range-annotation-vertical",
       "components": [
         {
@@ -219,6 +235,7 @@
     },
     {
       "name": "series",
+      "title": "series",
       "path": "/docs/components/ScatterChart/series",
       "components": [
         {
@@ -230,6 +247,7 @@
     },
     {
       "name": "series-custom-labels",
+      "title": "series custom labels",
       "path": "/docs/components/ScatterChart/series-custom-labels",
       "components": [
         {
@@ -241,6 +259,7 @@
     },
     {
       "name": "series-legend",
+      "title": "series legend",
       "path": "/docs/components/ScatterChart/series-legend",
       "components": [
         {
@@ -252,6 +271,7 @@
     },
     {
       "name": "series-tween",
+      "title": "series tween",
       "path": "/docs/components/ScatterChart/series-tween",
       "components": [
         {
@@ -263,6 +283,7 @@
     },
     {
       "name": "series-with-radius",
+      "title": "series with radius",
       "path": "/docs/components/ScatterChart/series-with-radius",
       "components": [
         {
@@ -274,6 +295,7 @@
     },
     {
       "name": "single-axis-x",
+      "title": "single axis x",
       "path": "/docs/components/ScatterChart/single-axis-x",
       "components": [
         {
@@ -285,6 +307,7 @@
     },
     {
       "name": "single-axis-y",
+      "title": "single axis y",
       "path": "/docs/components/ScatterChart/single-axis-y",
       "components": [
         {
@@ -296,6 +319,7 @@
     },
     {
       "name": "single-dimension",
+      "title": "single dimension",
       "path": "/docs/components/ScatterChart/single-dimension",
       "components": [
         {
@@ -312,6 +336,7 @@
     },
     {
       "name": "tooltip-click",
+      "title": "tooltip click",
       "path": "/docs/components/ScatterChart/tooltip-click",
       "components": [
         {
@@ -499,5 +524,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.552Z"
+  "updatedAt": "2026-02-07T20:21:32.291Z"
 }

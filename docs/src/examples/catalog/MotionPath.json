@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "repeat-indefinitely",
+      "title": "repeat indefinitely",
       "path": "/docs/components/MotionPath/repeat-indefinitely",
       "components": [
         {
@@ -39,6 +40,7 @@
     },
     {
       "name": "rotate-object-with-path",
+      "title": "rotate object with path",
       "path": "/docs/components/MotionPath/rotate-object-with-path",
       "components": [
         {
@@ -75,6 +77,7 @@
     },
     {
       "name": "sync-with-draw",
+      "title": "sync with draw",
       "path": "/docs/components/MotionPath/sync-with-draw",
       "components": [
         {
@@ -133,5 +136,5 @@
       "line": "<MotionPath"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.220Z"
+  "updatedAt": "2026-02-07T20:21:32.070Z"
 }

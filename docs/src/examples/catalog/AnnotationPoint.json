@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "band-scale-on-axis",
+      "title": "band scale on axis",
       "path": "/docs/components/AnnotationPoint/band-scale-on-axis",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "band-scale-on-value",
+      "title": "band scale on value",
       "path": "/docs/components/AnnotationPoint/band-scale-on-value",
       "components": [
         {
@@ -45,6 +47,7 @@
     },
     {
       "name": "label-placement",
+      "title": "label placement",
       "path": "/docs/components/AnnotationPoint/label-placement",
       "components": [
         {
@@ -61,6 +64,7 @@
     },
     {
       "name": "line-to-point",
+      "title": "line to point",
       "path": "/docs/components/AnnotationPoint/line-to-point",
       "components": [
         {
@@ -92,6 +96,7 @@
     },
     {
       "name": "on-axis-with-tooltip",
+      "title": "on axis with tooltip",
       "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
       "components": [
         {
@@ -118,6 +123,7 @@
     },
     {
       "name": "on-series-with-line-and-tooltip",
+      "title": "on series with line and tooltip",
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
       "components": [
         {
@@ -149,6 +155,7 @@
     },
     {
       "name": "on-series-with-tooltip",
+      "title": "on series with tooltip",
       "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
       "components": [
         {
@@ -175,6 +182,7 @@
     },
     {
       "name": "series-annotation",
+      "title": "series annotation",
       "path": "/docs/components/AnnotationPoint/series-annotation",
       "components": [
         {
@@ -248,5 +256,5 @@
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.591Z"
+  "updatedAt": "2026-02-07T20:21:31.186Z"
 }

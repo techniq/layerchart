@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "arc",
+      "title": "arc",
       "path": "/docs/components/PieChart/arc",
       "components": [
         {
@@ -14,6 +15,7 @@
     },
     {
       "name": "arc-props",
+      "title": "arc props",
       "path": "/docs/components/PieChart/arc-props",
       "components": [
         {
@@ -25,6 +27,7 @@
     },
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/PieChart/basic",
       "components": [
         {
@@ -36,6 +39,7 @@
     },
     {
       "name": "colors-data-prop",
+      "title": "colors data prop",
       "path": "/docs/components/PieChart/colors-data-prop",
       "components": [
         {
@@ -47,6 +51,7 @@
     },
     {
       "name": "colors-interpolator",
+      "title": "colors interpolator",
       "path": "/docs/components/PieChart/colors-interpolator",
       "components": [
         {
@@ -58,6 +63,7 @@
     },
     {
       "name": "colors-scheme",
+      "title": "colors scheme",
       "path": "/docs/components/PieChart/colors-scheme",
       "components": [
         {
@@ -69,6 +75,7 @@
     },
     {
       "name": "colors-variables",
+      "title": "colors variables",
       "path": "/docs/components/PieChart/colors-variables",
       "components": [
         {
@@ -80,6 +87,7 @@
     },
     {
       "name": "donut",
+      "title": "donut",
       "path": "/docs/components/PieChart/donut",
       "components": [
         {
@@ -91,6 +99,7 @@
     },
     {
       "name": "donut-with-text",
+      "title": "donut with text",
       "path": "/docs/components/PieChart/donut-with-text",
       "components": [
         {
@@ -107,6 +116,7 @@
     },
     {
       "name": "legend",
+      "title": "legend",
       "path": "/docs/components/PieChart/legend",
       "components": [
         {
@@ -118,6 +128,7 @@
     },
     {
       "name": "legend-custom-label",
+      "title": "legend custom label",
       "path": "/docs/components/PieChart/legend-custom-label",
       "components": [
         {
@@ -129,6 +140,7 @@
     },
     {
       "name": "legend-placement",
+      "title": "legend placement",
       "path": "/docs/components/PieChart/legend-placement",
       "components": [
         {
@@ -140,6 +152,7 @@
     },
     {
       "name": "legend-responsive",
+      "title": "legend responsive",
       "path": "/docs/components/PieChart/legend-responsive",
       "components": [
         {
@@ -151,6 +164,7 @@
     },
     {
       "name": "legend-with-padding",
+      "title": "legend with padding",
       "path": "/docs/components/PieChart/legend-with-padding",
       "components": [
         {
@@ -162,6 +176,7 @@
     },
     {
       "name": "motion-spring",
+      "title": "motion spring",
       "path": "/docs/components/PieChart/motion-spring",
       "components": [
         {
@@ -173,6 +188,7 @@
     },
     {
       "name": "motion-tween",
+      "title": "motion tween",
       "path": "/docs/components/PieChart/motion-tween",
       "components": [
         {
@@ -184,6 +200,7 @@
     },
     {
       "name": "offset-slice",
+      "title": "offset slice",
       "path": "/docs/components/PieChart/offset-slice",
       "components": [
         {
@@ -200,6 +217,7 @@
     },
     {
       "name": "placement-custom",
+      "title": "placement custom",
       "path": "/docs/components/PieChart/placement-custom",
       "components": [
         {
@@ -211,6 +229,7 @@
     },
     {
       "name": "placement-left",
+      "title": "placement left",
       "path": "/docs/components/PieChart/placement-left",
       "components": [
         {
@@ -222,6 +241,7 @@
     },
     {
       "name": "placement-right",
+      "title": "placement right",
       "path": "/docs/components/PieChart/placement-right",
       "components": [
         {
@@ -233,6 +253,7 @@
     },
     {
       "name": "radius-fixed",
+      "title": "radius fixed",
       "path": "/docs/components/PieChart/radius-fixed",
       "components": [
         {
@@ -244,6 +265,7 @@
     },
     {
       "name": "radius-offset",
+      "title": "radius offset",
       "path": "/docs/components/PieChart/radius-offset",
       "components": [
         {
@@ -255,6 +277,7 @@
     },
     {
       "name": "radius-percent",
+      "title": "radius percent",
       "path": "/docs/components/PieChart/radius-percent",
       "components": [
         {
@@ -266,6 +289,7 @@
     },
     {
       "name": "segments",
+      "title": "segments",
       "path": "/docs/components/PieChart/segments",
       "components": [
         {
@@ -282,6 +306,7 @@
     },
     {
       "name": "series",
+      "title": "series",
       "path": "/docs/components/PieChart/series",
       "components": [
         {
@@ -293,6 +318,7 @@
     },
     {
       "name": "series-click",
+      "title": "series click",
       "path": "/docs/components/PieChart/series-click",
       "components": [
         {
@@ -304,6 +330,7 @@
     },
     {
       "name": "series-props",
+      "title": "series props",
       "path": "/docs/components/PieChart/series-props",
       "components": [
         {
@@ -315,6 +342,7 @@
     },
     {
       "name": "tooltip-click",
+      "title": "tooltip click",
       "path": "/docs/components/PieChart/tooltip-click",
       "components": [
         {
@@ -523,5 +551,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.364Z"
+  "updatedAt": "2026-02-07T20:21:32.160Z"
 }

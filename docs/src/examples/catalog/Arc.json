@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "color-wheel",
+      "title": "color wheel",
       "path": "/docs/components/Arc/color-wheel",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "concentric",
+      "title": "concentric",
       "path": "/docs/components/Arc/concentric",
       "components": [
         {
@@ -50,6 +52,7 @@
     },
     {
       "name": "draggable-arc",
+      "title": "draggable arc",
       "path": "/docs/components/Arc/draggable-arc",
       "components": [
         {
@@ -76,6 +79,7 @@
     },
     {
       "name": "label-direction",
+      "title": "label direction",
       "path": "/docs/components/Arc/label-direction",
       "components": [
         {
@@ -107,6 +111,7 @@
     },
     {
       "name": "partial-arc",
+      "title": "partial arc",
       "path": "/docs/components/Arc/partial-arc",
       "components": [
         {
@@ -143,6 +148,7 @@
     },
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Arc/playground",
       "components": [
         {
@@ -174,6 +180,7 @@
     },
     {
       "name": "segmented-arc",
+      "title": "segmented arc",
       "path": "/docs/components/Arc/segmented-arc",
       "components": [
         {
@@ -200,6 +207,7 @@
     },
     {
       "name": "segmented-arc-clip-mask",
+      "title": "segmented arc clip mask",
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
       "components": [
         {
@@ -231,6 +239,7 @@
     },
     {
       "name": "tween-value-on-mount",
+      "title": "tween value on mount",
       "path": "/docs/components/Arc/tween-value-on-mount",
       "components": [
         {
@@ -442,5 +451,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.625Z"
+  "updatedAt": "2026-02-07T20:21:31.223Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "geo",
+      "title": "geo",
       "path": "/docs/components/Hull/geo",
       "components": [
         {
@@ -44,6 +45,7 @@
     },
     {
       "name": "scatter",
+      "title": "scatter",
       "path": "/docs/components/Hull/scatter",
       "components": [
         {
@@ -90,5 +92,5 @@
       "line": "<Hull"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.897Z"
+  "updatedAt": "2026-02-07T20:21:31.887Z"
 }

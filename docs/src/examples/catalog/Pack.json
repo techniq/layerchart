@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Pack/basic",
       "components": [
         {
@@ -47,5 +48,5 @@
       "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.257Z"
+  "updatedAt": "2026-02-07T20:21:32.084Z"
 }

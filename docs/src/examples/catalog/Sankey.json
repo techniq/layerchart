@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "complex",
+      "title": "complex",
       "path": "/docs/components/Sankey/complex",
       "components": [
         {
@@ -49,6 +50,7 @@
     },
     {
       "name": "hierarchy",
+      "title": "hierarchy",
       "path": "/docs/components/Sankey/hierarchy",
       "components": [
         {
@@ -90,6 +92,7 @@
     },
     {
       "name": "node-select",
+      "title": "node select",
       "path": "/docs/components/Sankey/node-select",
       "components": [
         {
@@ -131,6 +134,7 @@
     },
     {
       "name": "simple",
+      "title": "simple",
       "path": "/docs/components/Sankey/simple",
       "components": [
         {
@@ -172,6 +176,7 @@
     },
     {
       "name": "tooltip",
+      "title": "tooltip",
       "path": "/docs/components/Sankey/tooltip",
       "components": [
         {
@@ -254,5 +259,5 @@
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.524Z"
+  "updatedAt": "2026-02-07T20:21:32.275Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "bar-chart-(multiple)",
+      "title": "bar chart (multiple)",
       "path": "/docs/components/AnnotationRange/bar-chart-(multiple)",
       "components": [
         {
@@ -19,6 +20,7 @@
     },
     {
       "name": "bar-chart-(single)",
+      "title": "bar chart (single)",
       "path": "/docs/components/AnnotationRange/bar-chart-(single)",
       "components": [
         {
@@ -35,6 +37,7 @@
     },
     {
       "name": "bar-chart-(value)",
+      "title": "bar chart (value)",
       "path": "/docs/components/AnnotationRange/bar-chart-(value)",
       "components": [
         {
@@ -51,6 +54,7 @@
     },
     {
       "name": "hide-tooltip",
+      "title": "hide tooltip",
       "path": "/docs/components/AnnotationRange/hide-tooltip",
       "components": [
         {
@@ -67,6 +71,7 @@
     },
     {
       "name": "horizontal-with-fill-multiple",
+      "title": "horizontal with fill multiple",
       "path": "/docs/components/AnnotationRange/horizontal-with-fill-multiple",
       "components": [
         {
@@ -83,6 +88,7 @@
     },
     {
       "name": "horizontal-with-pattern-lower-bound",
+      "title": "horizontal with pattern lower bound",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-lower-bound",
       "components": [
         {
@@ -99,6 +105,7 @@
     },
     {
       "name": "horizontal-with-pattern-range",
+      "title": "horizontal with pattern range",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-range",
       "components": [
         {
@@ -115,6 +122,7 @@
     },
     {
       "name": "horizontal-with-pattern-upper-bound",
+      "title": "horizontal with pattern upper bound",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-upper-bound",
       "components": [
         {
@@ -131,6 +139,7 @@
     },
     {
       "name": "label-placement",
+      "title": "label placement",
       "path": "/docs/components/AnnotationRange/label-placement",
       "components": [
         {
@@ -147,6 +156,7 @@
     },
     {
       "name": "vertical-with-gradient-range",
+      "title": "vertical with gradient range",
       "path": "/docs/components/AnnotationRange/vertical-with-gradient-range",
       "components": [
         {
@@ -163,6 +173,7 @@
     },
     {
       "name": "vertical-with-pattern-lower-bound",
+      "title": "vertical with pattern lower bound",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-lower-bound",
       "components": [
         {
@@ -179,6 +190,7 @@
     },
     {
       "name": "vertical-with-pattern-range",
+      "title": "vertical with pattern range",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-range",
       "components": [
         {
@@ -195,6 +207,7 @@
     },
     {
       "name": "vertical-with-pattern-upper-bound",
+      "title": "vertical with pattern upper bound",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-upper-bound",
       "components": [
         {
@@ -324,5 +337,5 @@
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.608Z"
+  "updatedAt": "2026-02-07T20:21:31.203Z"
 }

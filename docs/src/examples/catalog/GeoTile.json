@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/GeoTile/basic",
       "components": [
         {
@@ -34,6 +35,7 @@
     },
     {
       "name": "clipped",
+      "title": "clipped",
       "path": "/docs/components/GeoTile/clipped",
       "components": [
         {
@@ -70,6 +72,7 @@
     },
     {
       "name": "zoomable",
+      "title": "zoomable",
       "path": "/docs/components/GeoTile/zoomable",
       "components": [
         {
@@ -106,6 +109,7 @@
     },
     {
       "name": "zoomable-seamless-layers",
+      "title": "zoomable seamless layers",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
       "components": [
         {
@@ -137,6 +141,7 @@
     },
     {
       "name": "zoomable-with-padding",
+      "title": "zoomable with padding",
       "path": "/docs/components/GeoTile/zoomable-with-padding",
       "components": [
         {
@@ -286,5 +291,5 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.733Z"
+  "updatedAt": "2026-02-07T20:21:31.787Z"
 }

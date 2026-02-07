@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Group/basic",
       "components": [
         {
@@ -264,5 +265,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.829Z"
+  "updatedAt": "2026-02-07T20:21:31.844Z"
 }

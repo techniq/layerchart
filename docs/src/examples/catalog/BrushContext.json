@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/BrushContext/basic",
       "components": [
         {
@@ -24,6 +25,7 @@
     },
     {
       "name": "constant-labels",
+      "title": "constant labels",
       "path": "/docs/components/BrushContext/constant-labels",
       "components": [
         {
@@ -50,6 +52,7 @@
     },
     {
       "name": "handle-arrows",
+      "title": "handle arrows",
       "path": "/docs/components/BrushContext/handle-arrows",
       "components": [
         {
@@ -76,6 +79,7 @@
     },
     {
       "name": "handle-labels",
+      "title": "handle labels",
       "path": "/docs/components/BrushContext/handle-labels",
       "components": [
         {
@@ -102,6 +106,7 @@
     },
     {
       "name": "integrated-brush-(both-axis-area)",
+      "title": "integrated brush (both axis area)",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
       "components": [
         {
@@ -138,6 +143,7 @@
     },
     {
       "name": "integrated-brush-(x-axis)",
+      "title": "integrated brush (x axis)",
       "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
       "components": [
         {
@@ -174,6 +180,7 @@
     },
     {
       "name": "integrated-brush-(y-axis)",
+      "title": "integrated brush (y axis)",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
       "components": [
         {
@@ -210,6 +217,7 @@
     },
     {
       "name": "minimap",
+      "title": "minimap",
       "path": "/docs/components/BrushContext/minimap",
       "components": [
         {
@@ -246,6 +254,7 @@
     },
     {
       "name": "selection",
+      "title": "selection",
       "path": "/docs/components/BrushContext/selection",
       "components": [
         {
@@ -277,6 +286,7 @@
     },
     {
       "name": "separate-chart-(clip-data-y-axis)",
+      "title": "separate chart (clip data y axis)",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
       "components": [
         {
@@ -313,6 +323,7 @@
     },
     {
       "name": "separate-chart-(clip-data)",
+      "title": "separate chart (clip data)",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
       "components": [
         {
@@ -349,6 +360,7 @@
     },
     {
       "name": "separate-chart-(filter-data)",
+      "title": "separate chart (filter data)",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
       "components": [
         {
@@ -380,6 +392,7 @@
     },
     {
       "name": "simple-styling",
+      "title": "simple styling",
       "path": "/docs/components/BrushContext/simple-styling",
       "components": [
         {
@@ -401,6 +414,7 @@
     },
     {
       "name": "striped-background",
+      "title": "striped background",
       "path": "/docs/components/BrushContext/striped-background",
       "components": [
         {
@@ -422,6 +436,7 @@
     },
     {
       "name": "sync-brushes-with-bind-xdomain",
+      "title": "sync brushes with bind xdomain",
       "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
       "components": [
         {
@@ -463,6 +478,7 @@
     },
     {
       "name": "tooltip-interop",
+      "title": "tooltip interop",
       "path": "/docs/components/BrushContext/tooltip-interop",
       "components": [
         {
@@ -509,5 +525,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-02-07T17:00:30.980Z"
+  "updatedAt": "2026-02-07T20:21:31.423Z"
 }

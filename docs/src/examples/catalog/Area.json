@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Area/basic",
       "components": [
         {
@@ -29,6 +30,7 @@
     },
     {
       "name": "clip-tween-on-mount",
+      "title": "clip tween on mount",
       "path": "/docs/components/Area/clip-tween-on-mount",
       "components": [
         {
@@ -60,6 +62,7 @@
     },
     {
       "name": "clipped-area-on-tooltip",
+      "title": "clipped area on tooltip",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
       "components": [
         {
@@ -106,6 +109,7 @@
     },
     {
       "name": "explicit-axis-ticks-min-max",
+      "title": "explicit axis ticks min max",
       "path": "/docs/components/Area/explicit-axis-ticks-min-max",
       "components": [
         {
@@ -137,6 +141,7 @@
     },
     {
       "name": "gradient",
+      "title": "gradient",
       "path": "/docs/components/Area/gradient",
       "components": [
         {
@@ -168,6 +173,7 @@
     },
     {
       "name": "gradient-separate-stroke",
+      "title": "gradient separate stroke",
       "path": "/docs/components/Area/gradient-separate-stroke",
       "components": [
         {
@@ -199,6 +205,7 @@
     },
     {
       "name": "highlight-color-based-on-value-using-color-scale",
+      "title": "highlight color based on value using color scale",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
       "components": [
         {
@@ -245,6 +252,7 @@
     },
     {
       "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
+      "title": "highlight color based on value using tooltip slot prop",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "components": [
         {
@@ -291,6 +299,7 @@
     },
     {
       "name": "multiple-series",
+      "title": "multiple series",
       "path": "/docs/components/Area/multiple-series",
       "components": [
         {
@@ -342,6 +351,7 @@
     },
     {
       "name": "multiple-series-highlight-on-hover",
+      "title": "multiple series highlight on hover",
       "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "components": [
         {
@@ -393,6 +403,7 @@
     },
     {
       "name": "multiple-series-using-overrides",
+      "title": "multiple series using overrides",
       "path": "/docs/components/Area/multiple-series-using-overrides",
       "components": [
         {
@@ -429,6 +440,7 @@
     },
     {
       "name": "multiple-series-with-labels",
+      "title": "multiple series with labels",
       "path": "/docs/components/Area/multiple-series-with-labels",
       "components": [
         {
@@ -470,6 +482,7 @@
     },
     {
       "name": "playground",
+      "title": "playground",
       "path": "/docs/components/Area/playground",
       "components": [
         {
@@ -501,6 +514,7 @@
     },
     {
       "name": "stack",
+      "title": "stack",
       "path": "/docs/components/Area/stack",
       "components": [
         {
@@ -537,6 +551,7 @@
     },
     {
       "name": "stack-with-gradient",
+      "title": "stack with gradient",
       "path": "/docs/components/Area/stack-with-gradient",
       "components": [
         {
@@ -568,6 +583,7 @@
     },
     {
       "name": "threshold-with-lineargradient",
+      "title": "threshold with lineargradient",
       "path": "/docs/components/Area/threshold-with-lineargradient",
       "components": [
         {
@@ -604,6 +620,7 @@
     },
     {
       "name": "threshold-with-lineargradient-over-under",
+      "title": "threshold with lineargradient over under",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
       "components": [
         {
@@ -640,6 +657,7 @@
     },
     {
       "name": "threshold-with-rectclippath",
+      "title": "threshold with rectclippath",
       "path": "/docs/components/Area/threshold-with-rectclippath",
       "components": [
         {
@@ -676,6 +694,7 @@
     },
     {
       "name": "threshold-with-rectclippath-over-under",
+      "title": "threshold with rectclippath over under",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "components": [
         {
@@ -712,6 +731,7 @@
     },
     {
       "name": "with-labels",
+      "title": "with labels",
       "path": "/docs/components/Area/with-labels",
       "components": [
         {
@@ -743,6 +763,7 @@
     },
     {
       "name": "with-tooltip-and-highlight",
+      "title": "with tooltip and highlight",
       "path": "/docs/components/Area/with-tooltip-and-highlight",
       "components": [
         {
@@ -1312,5 +1333,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.663Z"
+  "updatedAt": "2026-02-07T20:21:31.262Z"
 }

@@ -3,6 +3,7 @@
   "examples": [
     {
       "name": "basic",
+      "title": "basic",
       "path": "/docs/components/Point/basic",
       "components": [
         {
@@ -63,5 +64,5 @@
       "line": "<Point d={{ x: 20, y: 20 }}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:32.379Z"
+  "updatedAt": "2026-02-07T20:21:32.174Z"
 }
