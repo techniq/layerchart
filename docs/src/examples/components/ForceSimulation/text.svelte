@@ -75,6 +75,7 @@
 	yRange={[0, 1]}
 	{onResize}
 	height={500}
+	clip
 >
 	{#snippet children({ context })}
 		<ForceSimulation
