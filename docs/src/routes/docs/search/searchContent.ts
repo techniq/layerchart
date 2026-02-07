@@ -6,8 +6,19 @@ import {
 	type Guide,
 	type Util
 } from 'content-collections';
-import type { SearchEntry } from './types';
 import type { ComponentCatalog } from '$lib/../examples/catalog/types';
+
+export type SearchEntry = {
+	title: string;
+	slug: string;
+	content: string;
+	type: 'component' | 'example' | 'guide' | 'util';
+	category?: string;
+	/** For examples, the component name (e.g., 'AreaChart') */
+	component?: string;
+	/** For examples, the example name (e.g., 'basic') */
+	example?: string;
+};
 
 /**
  * Strip markdown syntax to get plain text for searching

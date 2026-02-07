@@ -1,10 +1,9 @@
 import { query } from '$app/server';
 import { z } from 'zod';
 import FlexSearch from 'flexsearch';
-import { searchContent } from './searchContent';
-import type { SearchEntry, SearchResult } from './types';
+import { searchContent, type SearchEntry } from './searchContent';
 
-export type { SearchEntry, SearchResult };
+export type { SearchEntry };
 
 // Initialize index once on server
 let searchIndex: InstanceType<typeof FlexSearch.Index>;
@@ -45,7 +44,7 @@ function getMatches(text: string, searchTerm: string, limit = 1) {
 
 export const search = query(
 	z.object({ query: z.string() }),
-	async ({ query: searchQuery }): Promise<SearchResult[]> => {
+	async ({ query: searchQuery }): Promise<SearchEntry[]> => {
 		if (!searchQuery) return [];
 
 		ensureIndex();
@@ -64,11 +63,13 @@ export const search = query(
 				return testMatch(title) || testMatch(content);
 			})
 			.map((entry) => {
+				const matches = getMatches(entry.content, match);
 				return {
 					slug: entry.slug,
 					title: replaceTextWithMarker(entry.title, match),
-					content: getMatches(entry.content, match),
+					content: matches.length ? matches[0] : entry.content.substring(0, 100) + '...',
 					type: entry.type,
+					category: entry.category,
 					component: entry.component,
 					example: entry.example
 				};

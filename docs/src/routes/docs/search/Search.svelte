@@ -3,7 +3,7 @@
 	import { smScreen } from '@layerstack/svelte-stores';
 	import { Debounced } from 'runed';
 	import { goto } from '$app/navigation';
-	import { search, type SearchResult } from './search.remote';
+	import { search, type SearchEntry } from './search.remote';
 	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
 	import LucideSearch from '~icons/lucide/search';
 	import LucideGlobe from '~icons/lucide/globe';
@@ -19,7 +19,7 @@
 		util: LucideParentheses
 	};
 
-	type SearchOption = MenuOption<string> & { result: SearchResult };
+	type SearchOption = MenuOption<string> & { result: SearchEntry };
 
 	let open = $state(false);
 	let searchQuery = $state('');
@@ -34,7 +34,7 @@
 	);
 
 	// Group order for sorting
-	const groupOrder: Record<SearchResult['type'], number> = {
+	const groupOrder: Record<SearchEntry['type'], number> = {
 		guide: 0,
 		component: 1,
 		example: 2,
@@ -42,7 +42,7 @@
 	};
 
 	// Capitalize group names
-	const groupLabels: Record<SearchResult['type'], string> = {
+	const groupLabels: Record<SearchEntry['type'], string> = {
 		guide: 'Guides',
 		component: 'Components',
 		example: 'Examples',
@@ -130,63 +130,63 @@
 			options: 'overflow-auto max-h-[min(70dvh,400px)] [scrollbar-width:thin]'
 		}}
 	>
-			{#snippet prepend()}
-				<LucideSearch class="text-surface-content/50 mr-2" />
-			{/snippet}
+		{#snippet prepend()}
+			<LucideSearch class="text-surface-content/50 mr-2" />
+		{/snippet}
 
-			{#snippet option({
-				option,
-				index,
-				highlightIndex
-			}: {
-				option: SearchOption;
-				index: number;
-				highlightIndex: number;
-			})}
-				{@const result = option.result}
-				{@const isHighlighted = highlightIndex === index}
-				<MenuItem
-					scrollIntoView={{ condition: isHighlighted, onlyIfNeeded: true }}
-					class={cls('p-3 rounded-md', isHighlighted && 'bg-surface-content/10')}
-				>
-					<div class="grid grid-cols-[80px_1fr] gap-4">
-						{#if result.type === 'example' && result.component && result.example}
-							<ExampleScreenshot
-								component={result.component}
-								example={result.example}
-								aspect="video"
-								class="rounded border border-surface-content/10 bg-surface-100"
-							/>
-						{:else}
-							{@const Icon = typeIcons[result.type]}
-							<div
-								class="aspect-video rounded border border-surface-content/10 bg-surface-100 flex items-center justify-center"
-							>
-								<Icon class="size-6 text-surface-content/30" />
-							</div>
-						{/if}
-						<div class="flex-1 min-w-0">
-							<p class="text-base font-semibold text-surface-content/90 m-0 truncate">
-								{@html result.title}
-							</p>
-							<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-1">
-								{@html result.content[0] ?? ''}
-							</p>
+		{#snippet option({
+			option,
+			index,
+			highlightIndex
+		}: {
+			option: SearchOption;
+			index: number;
+			highlightIndex: number;
+		})}
+			{@const result = option.result}
+			{@const isHighlighted = highlightIndex === index}
+			<MenuItem
+				scrollIntoView={{ condition: isHighlighted, onlyIfNeeded: true }}
+				class={cls('p-3 rounded-md', isHighlighted && 'bg-surface-content/10')}
+			>
+				<div class="grid grid-cols-[80px_1fr] gap-4">
+					{#if result.type === 'example' && result.component && result.example}
+						<ExampleScreenshot
+							component={result.component}
+							example={result.example}
+							aspect="video"
+							class="rounded border border-surface-content/10 bg-surface-100"
+						/>
+					{:else}
+						{@const Icon = typeIcons[result.type]}
+						<div
+							class="aspect-video rounded border border-surface-content/10 bg-surface-100 flex items-center justify-center"
+						>
+							<Icon class="size-6 text-surface-content/30" />
 						</div>
+					{/if}
+					<div class="flex-1 min-w-0">
+						<p class="text-base font-semibold text-surface-content/90 m-0 truncate">
+							{@html result.title}
+						</p>
+						<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-1">
+							{@html result.content ?? ''}
+						</p>
 					</div>
-				</MenuItem>
-			{/snippet}
+				</div>
+			</MenuItem>
+		{/snippet}
 
-			{#snippet empty({ loading }: { loading: boolean })}
-				{#if loading}
-					<div class="text-center py-8">
-						<p class="text-surface-content/60 text-lg">Searching...</p>
-					</div>
-				{:else if debouncedQuery.current}
-					<div class="text-center py-8">
-						<p class="text-surface-content/60 text-lg">No results found.</p>
-					</div>
-				{/if}
-			{/snippet}
-		</SelectField>
+		{#snippet empty({ loading }: { loading: boolean })}
+			{#if loading}
+				<div class="text-center py-8">
+					<p class="text-surface-content/60 text-lg">Searching...</p>
+				</div>
+			{:else if debouncedQuery.current}
+				<div class="text-center py-8">
+					<p class="text-surface-content/60 text-lg">No results found.</p>
+				</div>
+			{/if}
+		{/snippet}
+	</SelectField>
 </Dialog>
