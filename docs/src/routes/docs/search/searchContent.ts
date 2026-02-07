@@ -7,6 +7,7 @@ import {
 	type Util
 } from 'content-collections';
 import type { ComponentCatalog } from '$lib/../examples/catalog/types';
+import { stripMarkdown } from '$lib/markdown/utils.js';
 
 export type SearchEntry = {
 	title: string;
@@ -19,42 +20,6 @@ export type SearchEntry = {
 	/** For examples, the example name (e.g., 'basic') */
 	example?: string;
 };
-
-/**
- * Strip markdown syntax to get plain text for searching
- */
-function stripMarkdown(content: string): string {
-	return (
-		content
-			// Remove code blocks
-			.replace(/```[\s\S]*?```/g, '')
-			// Remove inline code
-			.replace(/`[^`]+`/g, '')
-			// Remove links but keep text
-			.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-			// Remove images
-			.replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
-			// Remove HTML tags
-			.replace(/<[^>]+>/g, '')
-			// Remove headings markup
-			.replace(/^#{1,6}\s+/gm, '')
-			// Remove bold/italic
-			.replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1')
-			.replace(/_{1,2}([^_]+)_{1,2}/g, '$1')
-			// Remove blockquotes
-			.replace(/^>\s+/gm, '')
-			// Remove horizontal rules
-			.replace(/^[-*_]{3,}\s*$/gm, '')
-			// Remove list markers
-			.replace(/^[\s]*[-*+]\s+/gm, '')
-			.replace(/^[\s]*\d+\.\s+/gm, '')
-			// Remove MDX/directives like :example{...} or ::directive
-			.replace(/:{1,2}\w+(\{[^}]*\})?/g, '')
-			// Collapse multiple whitespace/newlines
-			.replace(/\s+/g, ' ')
-			.trim()
-	);
-}
 
 function componentToEntry(doc: Component): SearchEntry {
 	const description = doc.description ?? '';
