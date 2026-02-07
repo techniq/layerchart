@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "beeswarm",
-      "path": "/example/ForceSimulation/beeswarm",
+      "path": "/docs/components/ForceSimulation/beeswarm",
       "components": [
         {
           "component": "Chart",
@@ -39,12 +39,12 @@
     },
     {
       "name": "collision-detection",
-      "path": "/example/ForceSimulation/collision-detection",
+      "path": "/docs/components/ForceSimulation/collision-detection",
       "components": [
         {
           "component": "Chart",
           "lineNumber": 36,
-          "line": "<Chart height={600}>"
+          "line": "<Chart height={600} clip>"
         },
         {
           "component": "ForceSimulation",
@@ -70,7 +70,7 @@
     },
     {
       "name": "disjoint-graph",
-      "path": "/example/ForceSimulation/disjoint-graph",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
       "components": [
         {
           "component": "Chart",
@@ -101,7 +101,7 @@
     },
     {
       "name": "graph-drag",
-      "path": "/example/ForceSimulation/graph-drag",
+      "path": "/docs/components/ForceSimulation/graph-drag",
       "components": [
         {
           "component": "Chart",
@@ -137,7 +137,7 @@
     },
     {
       "name": "graph-playground",
-      "path": "/example/ForceSimulation/graph-playground",
+      "path": "/docs/components/ForceSimulation/graph-playground",
       "components": [
         {
           "component": "Chart",
@@ -173,7 +173,7 @@
     },
     {
       "name": "group",
-      "path": "/example/ForceSimulation/group",
+      "path": "/docs/components/ForceSimulation/group",
       "components": [
         {
           "component": "Chart",
@@ -199,7 +199,7 @@
     },
     {
       "name": "lattice",
-      "path": "/example/ForceSimulation/lattice",
+      "path": "/docs/components/ForceSimulation/lattice",
       "components": [
         {
           "component": "Chart",
@@ -230,7 +230,7 @@
     },
     {
       "name": "text",
-      "path": "/example/ForceSimulation/text",
+      "path": "/docs/components/ForceSimulation/text",
       "components": [
         {
           "component": "Chart",
@@ -239,24 +239,24 @@
         },
         {
           "component": "ForceSimulation",
-          "lineNumber": 80,
+          "lineNumber": 81,
           "line": "<ForceSimulation"
         },
         {
           "component": "Layer",
-          "lineNumber": 96,
+          "lineNumber": 97,
           "line": "<Layer"
         },
         {
           "component": "Points",
-          "lineNumber": 102,
+          "lineNumber": 103,
           "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
         }
       ]
     },
     {
       "name": "tree",
-      "path": "/example/ForceSimulation/tree",
+      "path": "/docs/components/ForceSimulation/tree",
       "components": [
         {
           "component": "Chart",
@@ -295,66 +295,66 @@
     {
       "example": "beeswarm",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/beeswarm",
+      "path": "/docs/components/ForceSimulation/beeswarm",
       "lineNumber": 33,
       "line": "<ForceSimulation"
     },
     {
       "example": "collision-detection",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/collision-detection",
+      "path": "/docs/components/ForceSimulation/collision-detection",
       "lineNumber": 38,
       "line": "<ForceSimulation"
     },
     {
       "example": "disjoint-graph",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/disjoint-graph",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
       "lineNumber": 55,
       "line": "<ForceSimulation"
     },
     {
       "example": "graph-drag",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/graph-drag",
+      "path": "/docs/components/ForceSimulation/graph-drag",
       "lineNumber": 71,
       "line": "<ForceSimulation"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/graph-playground",
+      "path": "/docs/components/ForceSimulation/graph-playground",
       "lineNumber": 148,
       "line": "<ForceSimulation"
     },
     {
       "example": "group",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/group",
+      "path": "/docs/components/ForceSimulation/group",
       "lineNumber": 54,
       "line": "<ForceSimulation"
     },
     {
       "example": "lattice",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/lattice",
+      "path": "/docs/components/ForceSimulation/lattice",
       "lineNumber": 27,
       "line": "<ForceSimulation"
     },
     {
       "example": "text",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/text",
-      "lineNumber": 80,
+      "path": "/docs/components/ForceSimulation/text",
+      "lineNumber": 81,
       "line": "<ForceSimulation"
     },
     {
       "example": "tree",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/tree",
+      "path": "/docs/components/ForceSimulation/tree",
       "lineNumber": 34,
       "line": "<ForceSimulation"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.089Z"
+  "updatedAt": "2026-02-07T17:00:31.566Z"
 }

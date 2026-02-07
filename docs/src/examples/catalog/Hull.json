@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "geo",
-      "path": "/example/Hull/geo",
+      "path": "/docs/components/Hull/geo",
       "components": [
         {
           "component": "Chart",
@@ -44,7 +44,7 @@
     },
     {
       "name": "scatter",
-      "path": "/example/Hull/scatter",
+      "path": "/docs/components/Hull/scatter",
       "components": [
         {
           "component": "Chart",
@@ -78,17 +78,17 @@
     {
       "example": "geo",
       "component": "Hull",
-      "path": "/example/Hull/geo",
+      "path": "/docs/components/Hull/geo",
       "lineNumber": 34,
       "line": "<Hull"
     },
     {
       "example": "scatter",
       "component": "Hull",
-      "path": "/example/Hull/scatter",
+      "path": "/docs/components/Hull/scatter",
       "lineNumber": 42,
       "line": "<Hull"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.338Z"
+  "updatedAt": "2026-02-07T17:00:31.897Z"
 }

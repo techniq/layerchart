@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "complex",
-      "path": "/example/Sankey/complex",
+      "path": "/docs/components/Sankey/complex",
       "components": [
         {
           "component": "Chart",
@@ -49,7 +49,7 @@
     },
     {
       "name": "hierarchy",
-      "path": "/example/Sankey/hierarchy",
+      "path": "/docs/components/Sankey/hierarchy",
       "components": [
         {
           "component": "Chart",
@@ -90,7 +90,7 @@
     },
     {
       "name": "node-select",
-      "path": "/example/Sankey/node-select",
+      "path": "/docs/components/Sankey/node-select",
       "components": [
         {
           "component": "Chart",
@@ -131,7 +131,7 @@
     },
     {
       "name": "simple",
-      "path": "/example/Sankey/simple",
+      "path": "/docs/components/Sankey/simple",
       "components": [
         {
           "component": "Chart",
@@ -172,7 +172,7 @@
     },
     {
       "name": "tooltip",
-      "path": "/example/Sankey/tooltip",
+      "path": "/docs/components/Sankey/tooltip",
       "components": [
         {
           "component": "Chart",
@@ -221,38 +221,38 @@
     {
       "example": "complex",
       "component": "Sankey",
-      "path": "/example/Sankey/complex",
+      "path": "/docs/components/Sankey/complex",
       "lineNumber": 46,
       "line": "<Sankey"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
-      "path": "/example/Sankey/hierarchy",
+      "path": "/docs/components/Sankey/hierarchy",
       "lineNumber": 61,
       "line": "<Sankey"
     },
     {
       "example": "node-select",
       "component": "Sankey",
-      "path": "/example/Sankey/node-select",
+      "path": "/docs/components/Sankey/node-select",
       "lineNumber": 14,
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     },
     {
       "example": "simple",
       "component": "Sankey",
-      "path": "/example/Sankey/simple",
+      "path": "/docs/components/Sankey/simple",
       "lineNumber": 10,
       "line": "<Sankey nodeId={(d) => d.id}>"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
-      "path": "/example/Sankey/tooltip",
+      "path": "/docs/components/Sankey/tooltip",
       "lineNumber": 14,
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.761Z"
+  "updatedAt": "2026-02-07T17:00:32.524Z"
 }

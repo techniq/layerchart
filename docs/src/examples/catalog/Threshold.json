@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Threshold/basic",
+      "path": "/docs/components/Threshold/basic",
       "components": [
         {
           "component": "AreaChart",
@@ -29,7 +29,7 @@
     },
     {
       "name": "with-labels",
-      "path": "/example/Threshold/with-labels",
+      "path": "/docs/components/Threshold/with-labels",
       "components": [
         {
           "component": "AreaChart",
@@ -55,7 +55,7 @@
     },
     {
       "name": "with-tooltip-and-highlight",
-      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
       "components": [
         {
           "component": "AreaChart",
@@ -89,31 +89,31 @@
     {
       "example": "threshold",
       "component": "AreaChart",
-      "path": "/example/AreaChart/threshold",
+      "path": "/docs/components/AreaChart/threshold",
       "lineNumber": 34,
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
       "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic",
+      "path": "/docs/components/Threshold/basic",
       "lineNumber": 31,
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
-      "path": "/example/Threshold/with-labels",
+      "path": "/docs/components/Threshold/with-labels",
       "lineNumber": 32,
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
-      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
       "lineNumber": 34,
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.851Z"
+  "updatedAt": "2026-02-07T17:00:32.669Z"
 }

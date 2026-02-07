@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "styling-using-attributes",
-      "path": "/example/Rect/styling-using-attributes",
+      "path": "/docs/components/Rect/styling-using-attributes",
       "components": [
         {
           "component": "Chart",
@@ -29,7 +29,7 @@
     },
     {
       "name": "styling-using-classes",
-      "path": "/example/Rect/styling-using-classes",
+      "path": "/docs/components/Rect/styling-using-classes",
       "components": [
         {
           "component": "Chart",
@@ -55,7 +55,7 @@
     },
     {
       "name": "styling-using-css-variables",
-      "path": "/example/Rect/styling-using-css-variables",
+      "path": "/docs/components/Rect/styling-using-css-variables",
       "components": [
         {
           "component": "Chart",
@@ -84,633 +84,633 @@
     {
       "example": "handle-arrows",
       "component": "BrushContext",
-      "path": "/example/BrushContext/handle-arrows",
+      "path": "/docs/components/BrushContext/handle-arrows",
       "lineNumber": 25,
       "line": "<rect"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
-      "path": "/example/BrushContext/handle-arrows",
+      "path": "/docs/components/BrushContext/handle-arrows",
       "lineNumber": 37,
       "line": "<rect"
     },
     {
       "example": "rounded-cells",
       "component": "Calendar",
-      "path": "/example/Calendar/rounded-cells",
+      "path": "/docs/components/Calendar/rounded-cells",
       "lineNumber": 45,
       "line": "<Rect"
     },
     {
       "example": "basic",
       "component": "Dagre",
-      "path": "/example/Dagre/basic",
+      "path": "/docs/components/Dagre/basic",
       "lineNumber": 66,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Dagre",
-      "path": "/example/Dagre/playground",
+      "path": "/docs/components/Dagre/playground",
       "lineNumber": 67,
       "line": "<Rect"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
-      "path": "/example/Dagre/software-user-flow",
+      "path": "/docs/components/Dagre/software-user-flow",
       "lineNumber": 78,
       "line": "<Rect"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
-      "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 76,
+      "path": "/docs/components/Dagre/tcp-state-diagram",
+      "lineNumber": 77,
       "line": "<Rect"
     },
     {
       "example": "direction-with-custom-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "path": "/docs/components/LinearGradient/direction-with-custom-colors",
       "lineNumber": 9,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "direction-with-custom-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "path": "/docs/components/LinearGradient/direction-with-custom-colors",
       "lineNumber": 15,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "direction-with-custom-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/direction-with-custom-colors",
+      "path": "/docs/components/LinearGradient/direction-with-custom-colors",
       "lineNumber": 21,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "explicit-offsets",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/explicit-offsets",
+      "path": "/docs/components/LinearGradient/explicit-offsets",
       "lineNumber": 14,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "explicit-offsets",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/explicit-offsets",
+      "path": "/docs/components/LinearGradient/explicit-offsets",
       "lineNumber": 26,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "explicit-offsets",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/explicit-offsets",
+      "path": "/docs/components/LinearGradient/explicit-offsets",
       "lineNumber": 38,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 10,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 16,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 22,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 28,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 34,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 40,
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 46,
       "line": "<Rect x={120 * 6} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 52,
       "line": "<Rect x={120 * 7} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "tailwind-colors",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/tailwind-colors",
+      "path": "/docs/components/LinearGradient/tailwind-colors",
       "lineNumber": 58,
       "line": "<Rect x={120 * 8} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "units",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/units",
+      "path": "/docs/components/LinearGradient/units",
       "lineNumber": 11,
       "line": "<Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
       "example": "units",
       "component": "LinearGradient",
-      "path": "/example/LinearGradient/units",
+      "path": "/docs/components/LinearGradient/units",
       "lineNumber": 19,
       "line": "<Rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
       "example": "filterable",
       "component": "Partition",
-      "path": "/example/Partition/filterable",
+      "path": "/docs/components/Partition/filterable",
       "lineNumber": 126,
       "line": "<Rect"
     },
     {
       "example": "horizontal",
       "component": "Partition",
-      "path": "/example/Partition/horizontal",
+      "path": "/docs/components/Partition/horizontal",
       "lineNumber": 109,
       "line": "<Rect"
     },
     {
       "example": "vertical",
       "component": "Partition",
-      "path": "/example/Partition/vertical",
+      "path": "/docs/components/Partition/vertical",
       "lineNumber": 110,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 9,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 23,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 37,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 51,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 65,
       "line": "<Rect"
     },
     {
       "example": "circles",
       "component": "Pattern",
-      "path": "/example/Pattern/circles",
+      "path": "/docs/components/Pattern/circles",
       "lineNumber": 79,
       "line": "<Rect"
     },
     {
       "example": "circles-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/circles-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/circles-custom-pattern-svg-only",
       "lineNumber": 52,
       "line": "<rect"
     },
     {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern",
+      "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "lineNumber": 11,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern",
+      "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "lineNumber": 21,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern",
+      "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "lineNumber": 31,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern",
+      "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "lineNumber": 41,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "lineargradient-as-pattern",
       "component": "Pattern",
-      "path": "/example/Pattern/lineargradient-as-pattern",
+      "path": "/docs/components/Pattern/lineargradient-as-pattern",
       "lineNumber": 51,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 9,
       "line": "<Rect"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 23,
       "line": "<Rect"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 37,
       "line": "<Rect"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 51,
       "line": "<Rect"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 65,
       "line": "<Rect"
     },
     {
       "example": "lines",
       "component": "Pattern",
-      "path": "/example/Pattern/lines",
+      "path": "/docs/components/Pattern/lines",
       "lineNumber": 79,
       "line": "<Rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 13,
       "line": "<rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 31,
       "line": "<rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 50,
       "line": "<rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 68,
       "line": "<rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 86,
       "line": "<rect"
     },
     {
       "example": "lines-custom-pattern-svg-only",
       "component": "Pattern",
-      "path": "/example/Pattern/lines-custom-pattern-svg-only",
+      "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 105,
       "line": "<rect"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 9,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 15,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 25,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 35,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 41,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-fill-color",
       "component": "Pattern",
-      "path": "/example/Pattern/with-fill-color",
+      "path": "/docs/components/Pattern/with-fill-color",
       "lineNumber": 54,
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 9,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 13,
       "line": "<Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 21,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 25,
       "line": "<Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 33,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 37,
       "line": "<Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 45,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 49,
       "line": "<Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 57,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 61,
       "line": "<Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 69,
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />"
     },
     {
       "example": "with-lineargradient",
       "component": "Pattern",
-      "path": "/example/Pattern/with-lineargradient",
+      "path": "/docs/components/Pattern/with-lineargradient",
       "lineNumber": 79,
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
       "example": "styling-using-attributes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-attributes",
+      "path": "/docs/components/Rect/styling-using-attributes",
       "lineNumber": 14,
       "line": "<Rect x={50} y={50} width={100} height={150} />"
     },
     {
       "example": "styling-using-attributes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-attributes",
+      "path": "/docs/components/Rect/styling-using-attributes",
       "lineNumber": 15,
       "line": "<Rect x={90} y={80} width={200} height={100} fill=\"var(--color-primary)\" />"
     },
     {
       "example": "styling-using-attributes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-attributes",
+      "path": "/docs/components/Rect/styling-using-attributes",
       "lineNumber": 16,
       "line": "<Rect"
     },
     {
       "example": "styling-using-classes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-classes",
+      "path": "/docs/components/Rect/styling-using-classes",
       "lineNumber": 14,
       "line": "<Rect x={50} y={50} width={100} height={150} />"
     },
     {
       "example": "styling-using-classes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-classes",
+      "path": "/docs/components/Rect/styling-using-classes",
       "lineNumber": 15,
       "line": "<Rect x={90} y={80} width={200} height={100} class=\"fill-primary bg-primary\" />"
     },
     {
       "example": "styling-using-classes",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-classes",
+      "path": "/docs/components/Rect/styling-using-classes",
       "lineNumber": 16,
       "line": "<Rect"
     },
     {
       "example": "styling-using-css-variables",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-css-variables",
+      "path": "/docs/components/Rect/styling-using-css-variables",
       "lineNumber": 14,
       "line": "<Rect x={50} y={50} width={100} height={150} />"
     },
     {
       "example": "styling-using-css-variables",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-css-variables",
+      "path": "/docs/components/Rect/styling-using-css-variables",
       "lineNumber": 15,
       "line": "<Rect x={90} y={80} width={200} height={100} style=\"--fill-color: var(--color-primary);\" />"
     },
     {
       "example": "styling-using-css-variables",
       "component": "Rect",
-      "path": "/example/Rect/styling-using-css-variables",
+      "path": "/docs/components/Rect/styling-using-css-variables",
       "lineNumber": 16,
       "line": "<Rect"
     },
     {
       "example": "complex",
       "component": "Sankey",
-      "path": "/example/Sankey/complex",
+      "path": "/docs/components/Sankey/complex",
       "lineNumber": 90,
       "line": "<Rect"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
-      "path": "/example/Sankey/hierarchy",
+      "path": "/docs/components/Sankey/hierarchy",
       "lineNumber": 101,
       "line": "<Rect"
     },
     {
       "example": "node-select",
       "component": "Sankey",
-      "path": "/example/Sankey/node-select",
+      "path": "/docs/components/Sankey/node-select",
       "lineNumber": 43,
       "line": "<Rect"
     },
     {
       "example": "simple",
       "component": "Sankey",
-      "path": "/example/Sankey/simple",
+      "path": "/docs/components/Sankey/simple",
       "lineNumber": 19,
       "line": "<Rect width={nodeWidth} height={nodeHeight} class=\"fill-primary\" />"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
-      "path": "/example/Sankey/tooltip",
+      "path": "/docs/components/Sankey/tooltip",
       "lineNumber": 31,
       "line": "<Rect"
     },
     {
       "example": "basic",
       "component": "Tree",
-      "path": "/example/Tree/basic",
-      "lineNumber": 103,
+      "path": "/docs/components/Tree/basic",
+      "lineNumber": 104,
       "line": "<Rect"
     },
     {
       "example": "basic",
       "component": "Treemap",
-      "path": "/example/Treemap/basic",
+      "path": "/docs/components/Treemap/basic",
       "lineNumber": 42,
       "line": "<Rect"
     },
     {
       "example": "complex",
       "component": "Treemap",
-      "path": "/example/Treemap/complex",
+      "path": "/docs/components/Treemap/complex",
       "lineNumber": 96,
       "line": "<Rect"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
-      "path": "/example/Treemap/nested-filter",
+      "path": "/docs/components/Treemap/nested-filter",
       "lineNumber": 143,
       "line": "<Rect"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
-      "path": "/example/Treemap/nested-zoom",
+      "path": "/docs/components/Treemap/nested-zoom",
       "lineNumber": 114,
       "line": "<Rect"
     },
     {
       "example": "playground",
       "component": "Treemap",
-      "path": "/example/Treemap/playground",
+      "path": "/docs/components/Treemap/playground",
       "lineNumber": 142,
       "line": "<Rect"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
-      "path": "/example/Treemap/stacked-zoom",
+      "path": "/docs/components/Treemap/stacked-zoom",
       "lineNumber": 102,
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.237Z"
+  "updatedAt": "2026-02-07T17:00:32.473Z"
 }

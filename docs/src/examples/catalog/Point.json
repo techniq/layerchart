@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Point/basic",
+      "path": "/docs/components/Point/basic",
       "components": [
         {
           "component": "Chart",
@@ -37,31 +37,31 @@
     {
       "example": "multiple-series",
       "component": "Area",
-      "path": "/example/Area/multiple-series",
+      "path": "/docs/components/Area/multiple-series",
       "lineNumber": 59,
       "line": "<Point d={data[data.length - 1]}>"
     },
     {
       "example": "multiple-series-highlight-on-hover",
       "component": "Area",
-      "path": "/example/Area/multiple-series-highlight-on-hover",
+      "path": "/docs/components/Area/multiple-series-highlight-on-hover",
       "lineNumber": 62,
       "line": "<Point d={data[data.length - 1]}>"
     },
     {
       "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic",
+      "path": "/docs/components/Point/basic",
       "lineNumber": 22,
       "line": "<Point d={{ x: 50, y: 50 }}>"
     },
     {
       "example": "basic",
       "component": "Point",
-      "path": "/example/Point/basic",
+      "path": "/docs/components/Point/basic",
       "lineNumber": 28,
       "line": "<Point d={{ x: 20, y: 20 }}>"
     }
   ],
-  "updatedAt": "2025-11-13T18:10:50.286Z"
+  "updatedAt": "2026-02-07T17:00:32.379Z"
 }

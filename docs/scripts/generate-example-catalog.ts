@@ -121,7 +121,7 @@ function getComponentExamples(componentName: string, allComponents: string[]): E
 
 			examples.push({
 				name: exampleName,
-				path: `/example/${componentName}/${exampleName}`,
+				path: `/docs/components/${componentName}/${exampleName}`,
 				components: componentsInExample
 			});
 		}
@@ -161,7 +161,7 @@ function findComponentUsage(componentName: string): UsageInfo[] {
 							usage.push({
 								example: exampleName,
 								component: entry.name,
-								path: `/example/${entry.name}/${exampleName}`,
+								path: `/docs/components/${entry.name}/${exampleName}`,
 								lineNumber: index + 1,
 								line: line.trim()
 							});

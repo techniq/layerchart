@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/ColorRamp/basic",
+      "path": "/docs/components/ColorRamp/basic",
       "components": [
         {
           "component": "Svg",
@@ -19,7 +19,7 @@
     },
     {
       "name": "pixelated",
-      "path": "/example/ColorRamp/pixelated",
+      "path": "/docs/components/ColorRamp/pixelated",
       "components": [
         {
           "component": "Svg",
@@ -35,7 +35,7 @@
     },
     {
       "name": "schemes",
-      "path": "/example/ColorRamp/schemes",
+      "path": "/docs/components/ColorRamp/schemes",
       "components": [
         {
           "component": "Svg",
@@ -54,31 +54,31 @@
     {
       "example": "basic",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/basic",
+      "path": "/docs/components/ColorRamp/basic",
       "lineNumber": 24,
       "line": "<ColorRamp {interpolator} {width} {height} />"
     },
     {
       "example": "pixelated",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/pixelated",
+      "path": "/docs/components/ColorRamp/pixelated",
       "lineNumber": 28,
       "line": "<ColorRamp {interpolator} {width} {height} {steps} class=\"[image-rendering:pixelated]\" />"
     },
     {
       "example": "schemes",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/schemes",
+      "path": "/docs/components/ColorRamp/schemes",
       "lineNumber": 21,
       "line": "<ColorRamp"
     },
     {
       "example": "schemes",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/schemes",
+      "path": "/docs/components/ColorRamp/schemes",
       "lineNumber": 35,
       "line": "<ColorRamp"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.675Z"
+  "updatedAt": "2026-02-07T17:00:31.448Z"
 }

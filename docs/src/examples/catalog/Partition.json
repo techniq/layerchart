@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "filterable",
-      "path": "/example/Partition/filterable",
+      "path": "/docs/components/Partition/filterable",
       "components": [
         {
           "component": "Chart",
@@ -54,7 +54,7 @@
     },
     {
       "name": "horizontal",
-      "path": "/example/Partition/horizontal",
+      "path": "/docs/components/Partition/horizontal",
       "components": [
         {
           "component": "Chart",
@@ -105,7 +105,7 @@
     },
     {
       "name": "sunburst",
-      "path": "/example/Partition/sunburst",
+      "path": "/docs/components/Partition/sunburst",
       "components": [
         {
           "component": "Chart",
@@ -141,7 +141,7 @@
     },
     {
       "name": "vertical",
-      "path": "/example/Partition/vertical",
+      "path": "/docs/components/Partition/vertical",
       "components": [
         {
           "component": "Chart",
@@ -195,31 +195,31 @@
     {
       "example": "filterable",
       "component": "Partition",
-      "path": "/example/Partition/filterable",
+      "path": "/docs/components/Partition/filterable",
       "lineNumber": 110,
       "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
-      "path": "/example/Partition/horizontal",
+      "path": "/docs/components/Partition/horizontal",
       "lineNumber": 97,
       "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
     },
     {
       "example": "sunburst",
       "component": "Partition",
-      "path": "/example/Partition/sunburst",
+      "path": "/docs/components/Partition/sunburst",
       "lineNumber": 76,
       "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
     },
     {
       "example": "vertical",
       "component": "Partition",
-      "path": "/example/Partition/vertical",
+      "path": "/docs/components/Partition/vertical",
       "lineNumber": 98,
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.548Z"
+  "updatedAt": "2026-02-07T17:00:32.282Z"
 }

@@ -5,87 +5,87 @@
     {
       "example": "disjoint-graph",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/disjoint-graph",
+      "path": "/docs/components/ForceSimulation/disjoint-graph",
       "lineNumber": 66,
       "line": "<Link"
     },
     {
       "example": "graph-drag",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/graph-drag",
+      "path": "/docs/components/ForceSimulation/graph-drag",
       "lineNumber": 81,
       "line": "<Link"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/graph-playground",
+      "path": "/docs/components/ForceSimulation/graph-playground",
       "lineNumber": 168,
       "line": "<Link"
     },
     {
       "example": "lattice",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/lattice",
+      "path": "/docs/components/ForceSimulation/lattice",
       "lineNumber": 37,
       "line": "<Link"
     },
     {
       "example": "tree",
       "component": "ForceSimulation",
-      "path": "/example/ForceSimulation/tree",
+      "path": "/docs/components/ForceSimulation/tree",
       "lineNumber": 47,
       "line": "<Link data={link} explicitCoords={linkPositions[i]} class=\"stroke-surface-content/20\" />"
     },
     {
       "example": "complex",
       "component": "Sankey",
-      "path": "/example/Sankey/complex",
+      "path": "/docs/components/Sankey/complex",
       "lineNumber": 61,
       "line": "<Link"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
-      "path": "/example/Sankey/hierarchy",
+      "path": "/docs/components/Sankey/hierarchy",
       "lineNumber": 76,
       "line": "<Link"
     },
     {
       "example": "node-select",
       "component": "Sankey",
-      "path": "/example/Sankey/node-select",
+      "path": "/docs/components/Sankey/node-select",
       "lineNumber": 17,
       "line": "<Link"
     },
     {
       "example": "simple",
       "component": "Sankey",
-      "path": "/example/Sankey/simple",
+      "path": "/docs/components/Sankey/simple",
       "lineNumber": 13,
       "line": "<Link sankey data={link} strokeWidth={link.width} class=\"stroke-surface-content/10\" />"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
-      "path": "/example/Sankey/tooltip",
+      "path": "/docs/components/Sankey/tooltip",
       "lineNumber": 17,
       "line": "<Link"
     },
     {
       "example": "basic",
       "component": "Tree",
-      "path": "/example/Tree/basic",
-      "lineNumber": 71,
+      "path": "/docs/components/Tree/basic",
+      "lineNumber": 72,
       "line": "<Link"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
-      "path": "/example/Tree/html-nodes",
-      "lineNumber": 71,
+      "path": "/docs/components/Tree/html-nodes",
+      "lineNumber": 72,
       "line": "<Link"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.453Z"
+  "updatedAt": "2026-02-07T17:00:32.106Z"
 }

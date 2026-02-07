@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "repeat-indefinitely",
-      "path": "/example/MotionPath/repeat-indefinitely",
+      "path": "/docs/components/MotionPath/repeat-indefinitely",
       "components": [
         {
           "component": "Chart",
@@ -39,7 +39,7 @@
     },
     {
       "name": "rotate-object-with-path",
-      "path": "/example/MotionPath/rotate-object-with-path",
+      "path": "/docs/components/MotionPath/rotate-object-with-path",
       "components": [
         {
           "component": "Chart",
@@ -75,7 +75,7 @@
     },
     {
       "name": "sync-with-draw",
-      "path": "/example/MotionPath/sync-with-draw",
+      "path": "/docs/components/MotionPath/sync-with-draw",
       "components": [
         {
           "component": "Chart",
@@ -114,24 +114,24 @@
     {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
-      "path": "/example/MotionPath/repeat-indefinitely",
+      "path": "/docs/components/MotionPath/repeat-indefinitely",
       "lineNumber": 41,
       "line": "<MotionPath"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
-      "path": "/example/MotionPath/rotate-object-with-path",
+      "path": "/docs/components/MotionPath/rotate-object-with-path",
       "lineNumber": 42,
       "line": "<MotionPath"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
-      "path": "/example/MotionPath/sync-with-draw",
+      "path": "/docs/components/MotionPath/sync-with-draw",
       "lineNumber": 43,
       "line": "<MotionPath"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.516Z"
+  "updatedAt": "2026-02-07T17:00:32.220Z"
 }

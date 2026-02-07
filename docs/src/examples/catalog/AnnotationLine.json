@@ -3,7 +3,7 @@
   "examples": [
     {
       "name": "bar-chart",
-      "path": "/example/AnnotationLine/bar-chart",
+      "path": "/docs/components/AnnotationLine/bar-chart",
       "components": [
         {
           "component": "BarChart",
@@ -19,7 +19,7 @@
     },
     {
       "name": "horizontal",
-      "path": "/example/AnnotationLine/horizontal",
+      "path": "/docs/components/AnnotationLine/horizontal",
       "components": [
         {
           "component": "LineChart",
@@ -35,7 +35,7 @@
     },
     {
       "name": "horizontal-placement",
-      "path": "/example/AnnotationLine/horizontal-placement",
+      "path": "/docs/components/AnnotationLine/horizontal-placement",
       "components": [
         {
           "component": "LineChart",
@@ -51,7 +51,7 @@
     },
     {
       "name": "horizontal-with-range",
-      "path": "/example/AnnotationLine/horizontal-with-range",
+      "path": "/docs/components/AnnotationLine/horizontal-with-range",
       "components": [
         {
           "component": "LineChart",
@@ -72,7 +72,7 @@
     },
     {
       "name": "vertical",
-      "path": "/example/AnnotationLine/vertical",
+      "path": "/docs/components/AnnotationLine/vertical",
       "components": [
         {
           "component": "LineChart",
@@ -88,7 +88,7 @@
     },
     {
       "name": "vertical-placement",
-      "path": "/example/AnnotationLine/vertical-placement",
+      "path": "/docs/components/AnnotationLine/vertical-placement",
       "components": [
         {
           "component": "LineChart",
@@ -104,7 +104,7 @@
     },
     {
       "name": "vertical-with-rotation",
-      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
       "components": [
         {
           "component": "LineChart",
@@ -123,73 +123,73 @@
     {
       "example": "bar-chart",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/bar-chart",
+      "path": "/docs/components/AnnotationLine/bar-chart",
       "lineNumber": 18,
       "line": "<AnnotationLine"
     },
     {
       "example": "horizontal",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/horizontal",
+      "path": "/docs/components/AnnotationLine/horizontal",
       "lineNumber": 16,
       "line": "<AnnotationLine"
     },
     {
       "example": "horizontal-placement",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/horizontal-placement",
+      "path": "/docs/components/AnnotationLine/horizontal-placement",
       "lineNumber": 19,
       "line": "<AnnotationLine"
     },
     {
       "example": "horizontal-with-range",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/horizontal-with-range",
+      "path": "/docs/components/AnnotationLine/horizontal-with-range",
       "lineNumber": 23,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical",
+      "path": "/docs/components/AnnotationLine/vertical",
       "lineNumber": 12,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-placement",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical-placement",
+      "path": "/docs/components/AnnotationLine/vertical-placement",
       "lineNumber": 19,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
       "lineNumber": 12,
       "line": "<AnnotationLine"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
-      "path": "/example/AnnotationLine/vertical-with-rotation",
+      "path": "/docs/components/AnnotationLine/vertical-with-rotation",
       "lineNumber": 29,
       "line": "<AnnotationLine"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/line-to-point",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
       "lineNumber": 60,
       "line": "<AnnotationLine"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
       "lineNumber": 29,
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.587Z"
+  "updatedAt": "2026-02-07T17:00:30.573Z"
 }

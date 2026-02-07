@@ -5,31 +5,31 @@
     {
       "example": "basic",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/basic",
+      "path": "/docs/components/ColorRamp/basic",
       "lineNumber": 23,
       "line": "<svg {width} {height}>"
     },
     {
       "example": "pixelated",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/pixelated",
+      "path": "/docs/components/ColorRamp/pixelated",
       "lineNumber": 27,
       "line": "<svg {width} {height}>"
     },
     {
       "example": "schemes",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/schemes",
+      "path": "/docs/components/ColorRamp/schemes",
       "lineNumber": 20,
       "line": "<svg {width} {height}>"
     },
     {
       "example": "schemes",
       "component": "ColorRamp",
-      "path": "/example/ColorRamp/schemes",
+      "path": "/docs/components/ColorRamp/schemes",
       "lineNumber": 34,
       "line": "<svg {width} {height}>"
     }
   ],
-  "updatedAt": "2025-11-09T02:04:07.640Z"
+  "updatedAt": "2026-02-07T17:00:32.593Z"
 }

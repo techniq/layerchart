@@ -5,80 +5,80 @@
     {
       "example": "multiple-series-with-labels",
       "component": "Area",
-      "path": "/example/Area/multiple-series-with-labels",
+      "path": "/docs/components/Area/multiple-series-with-labels",
       "lineNumber": 48,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "with-labels",
       "component": "Area",
-      "path": "/example/Area/with-labels",
+      "path": "/docs/components/Area/with-labels",
       "lineNumber": 15,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "axis-labels-inside-bars-using-labels",
       "component": "BarChart",
-      "path": "/example/BarChart/axis-labels-inside-bars-using-labels",
+      "path": "/docs/components/BarChart/axis-labels-inside-bars-using-labels",
       "lineNumber": 26,
       "line": "<Labels x={(d) => 0} value=\"date\" class=\"text-sm fill-surface-300 stroke-none\" />"
     },
     {
       "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-inside-labels",
+      "path": "/docs/components/Bars/horizontal-inside-labels",
       "lineNumber": 25,
       "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
     },
     {
       "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-outside-labels-default",
+      "path": "/docs/components/Bars/horizontal-outside-labels-default",
       "lineNumber": 26,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "vertical-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/vertical-inside-labels",
+      "path": "/docs/components/Bars/vertical-inside-labels",
       "lineNumber": 25,
       "line": "<Labels placement=\"inside\" format=\"integer\" class=\"fill-black\" />"
     },
     {
       "example": "vertical-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/vertical-outside-labels-default",
+      "path": "/docs/components/Bars/vertical-outside-labels-default",
       "lineNumber": 26,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "series-labels-hover",
       "component": "LineChart",
-      "path": "/example/LineChart/series-labels-hover",
+      "path": "/docs/components/LineChart/series-labels-hover",
       "lineNumber": 35,
       "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
     },
     {
       "example": "with-labels",
       "component": "Points",
-      "path": "/example/Points/with-labels",
+      "path": "/docs/components/Points/with-labels",
       "lineNumber": 15,
       "line": "<Labels format=\"integer\" offset={10} />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series-with-labels",
+      "path": "/docs/components/Spline/multiple-series-with-labels",
       "lineNumber": 47,
       "line": "<Labels format=\"integer\" />"
     },
     {
       "example": "with-labels",
       "component": "Spline",
-      "path": "/example/Spline/with-labels",
+      "path": "/docs/components/Spline/with-labels",
       "lineNumber": 15,
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:21.538Z"
+  "updatedAt": "2026-02-07T17:00:31.937Z"
 }
