@@ -4,6 +4,7 @@
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import Search from './docs/search/Search.svelte';
 
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -135,7 +136,7 @@
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="text-xl font-bold w-60">LayerChart</a>
 
-	<div class="flex gap-2 grow justify-center">
+	<div class="flex gap-2 grow justify-center items-center">
 		{#each links as { label, href }}
 			<a
 				{href}
@@ -148,6 +149,7 @@
 				{label}
 			</a>
 		{/each}
+		<Search hideInput />
 	</div>
 
 	<div class="flex items-center justify-end gap-2 w-60">

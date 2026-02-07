@@ -11,6 +11,8 @@
 	import LucideParentheses from '~icons/lucide/parentheses';
 	import ExampleScreenshot from '$lib/components/ExampleScreenshot.svelte';
 
+	let { hideInput = false }: { hideInput?: boolean } = $props();
+
 	// Icons for each result type (matching DocsMenu)
 	const typeIcons = {
 		guide: LucideGlobe,
@@ -95,15 +97,17 @@
 
 <svelte:window onkeydown={onKeyDown} />
 
-<Button
-	icon={LucideSearch}
-	iconOnly={!$smScreen}
-	onclick={() => (open = true)}
-	class="sm:border sm:bg-black/10 sm:hover:bg-black/20 rounded-full sm:w-56 justify-start"
->
-	<span class="flex-1 text-left max-sm:hidden">Search</span>
-	<Kbd variant="none" class="opacity-50 max-sm:hidden" command>K</Kbd>
-</Button>
+{#if !hideInput}
+	<Button
+		icon={LucideSearch}
+		iconOnly={!$smScreen}
+		onclick={() => (open = true)}
+		class="sm:border sm:bg-black/10 sm:hover:bg-black/20 rounded-full sm:w-56 justify-start"
+	>
+		<span class="flex-1 text-left max-sm:hidden">Search</span>
+		<Kbd variant="none" class="opacity-50 max-sm:hidden" command>K</Kbd>
+	</Button>
+{/if}
 
 <Dialog
 	bind:open
