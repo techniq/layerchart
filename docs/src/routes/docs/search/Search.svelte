@@ -117,17 +117,17 @@
 		bind:value={selected}
 		on:change={handleChange}
 		on:inputChange={handleInputChange}
-		placeholder="Search..."
+		placeholder="Search for anything..."
 		inlineOptions
 		autofocus
 		loading={searchResults?.loading}
 		clearSearchOnOpen={false}
 		classes={{
-			root: 'w-150 max-w-[95vw] py-1',
+			root: 'w-150 max-w-[95vw] _py-10',
 			field: {
 				container: 'border-none hover:shadow-none group-focus-within:shadow-none'
 			},
-			options: 'overflow-auto max-h-[min(70dvh,400px)] [scrollbar-width:thin]'
+			options: 'overflow-auto max-h-[min(70dvh,400px)] [scrollbar-width:thin] p-2!'
 		}}
 	>
 		{#snippet prepend()}
@@ -167,11 +167,16 @@
 					{/if}
 					<div class="flex-1 min-w-0">
 						<p
-							class="text-base font-semibold text-surface-content/90 m-0 truncate first-letter:capitalize"
+							class="text-base font-medium text-surface-content/90 m-0 truncate first-letter:capitalize"
 						>
 							{@html result.title}
 						</p>
-						<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-1">
+						<p
+							class={cls(
+								'text-sm text-surface-content/60 m-0 mt-1 line-clamp-1',
+								'[&_mark]:bg-transparent [&_mark]:text-surface-content [&_mark]:font-medium'
+							)}
+						>
 							{@html result.content ?? ''}
 						</p>
 					</div>
