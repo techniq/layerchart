@@ -46,6 +46,11 @@
 	 * Resolve a relative or absolute path to a full path from /src
 	 */
 	function resolveExamplePath(examplePath: string, currentPath: string): string {
+		const isGuide = currentPath.startsWith('/docs/guides/');
+		if (isGuide && (examplePath.startsWith('./') || !examplePath.startsWith('/'))) {
+			const relativePath = examplePath.startsWith('./') ? examplePath.slice(2) : examplePath;
+			return `/src/content/guides/${relativePath}`;
+		}
 		if (examplePath.startsWith('./')) {
 			return `/src/routes${currentPath}/${examplePath.slice(2)}`;
 		} else if (examplePath.startsWith('/')) {
@@ -56,16 +61,20 @@
 	}
 
 	// Get example from context (eagerly loaded by layout)
-	let example = $derived.by(() => {
+	// Use $state + $effect to break potential infinite reactivity loops during HMR
+	let example = $state<{ component: any; source: string } | undefined>(undefined);
+
+	$effect(() => {
 		if (path) {
 			// Path-based example
 			const resolvedPath = resolveExamplePath(path, page.url.pathname);
-			return examples.get()?.current['__path__']?.[resolvedPath];
+			example = examples.get()?.current['__path__']?.[resolvedPath];
 		} else if (component && name) {
 			// Component/name-based example
-			return examples.get()?.current[component]?.[name];
+			example = examples.get()?.current[component]?.[name];
+		} else {
+			example = undefined;
 		}
-		return undefined;
 	});
 
 	let containerEl = $state<HTMLElement | null>(null);

@@ -25,7 +25,7 @@
 	type TreemapTileMethod = TreemapProps<any>['tile'];
 	type TreemapColorBy = 'children' | 'depth' | 'parent';
 
-	const data = await getFlare();
+	const data = $derived(await getFlare());
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)

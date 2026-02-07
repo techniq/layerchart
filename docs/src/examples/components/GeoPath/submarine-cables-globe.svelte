@@ -13,8 +13,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
-		type ChartContextValue,
-		defaultChartPadding
+		type ChartContextValue
 	} from 'layerchart';
 	import GeoPathSubmarineControls from '$lib/components/controls/GeoPathSubmarineControls.svelte';
 
@@ -62,7 +61,7 @@
 	}}
 	ondragstart={timer.stop}
 	bind:context
-	padding={{ ...defaultChartPadding, top: 5 }}
+	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 	height={600}
 >
 	{#snippet children({ context })}

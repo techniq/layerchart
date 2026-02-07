@@ -49,21 +49,23 @@ Supported props: `title`, `live`, `diff`, `showLineNumbers`, Line highlighting `
 ````md
 ```svelte diff
 <script lang="ts">
-  let { data } = $props();
+	let { data } = $props();
 </script>
 
 - <div>Before</div>
-+ <div>After</div>
++
+<div>After</div>
 ```
 ````
 
 ```svelte diff
 <script lang="ts">
-  let { data } = $props();
+	let { data } = $props();
 </script>
 
 - <div>Before</div>
-+ <div>After</div>
++
+<div>After</div>
 ```
 
 ### Line highlighting
@@ -74,9 +76,7 @@ Supported props: `title`, `live`, `diff`, `showLineNumbers`, Line highlighting `
 	let { data } = $props();
 </script>
 
-<div>Line 5</div>
-<div>Line 6</div>
-<div>Line 7</div>
+<div>Line 5</div><div>Line 6</div><div>Line 7</div>
 ```
 ````
 
@@ -85,9 +85,7 @@ Supported props: `title`, `live`, `diff`, `showLineNumbers`, Line highlighting `
 	let { data } = $props();
 </script>
 
-<div>Line 5</div>
-<div>Line 6</div>
-<div>Line 7</div>
+<div>Line 5</div><div>Line 6</div><div>Line 7</div>
 ```
 
 ### Title (file)
@@ -113,14 +111,14 @@ Supported props: `title`, `live`, `diff`, `showLineNumbers`, Line highlighting `
 ### Live Code
 
 ````md
-```svelte live title="Counter.svelte" 
+```svelte live title="Counter.svelte"
 <script>
 	let count = $state(0);
 </script>
 
 <button onclick={() => count++}>
-Clicked {count}
-{count === 1 ? 'time' : 'times'}
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
 </button>
 ```
 ````
@@ -151,15 +149,15 @@ Clicked {count}
 
 :::note
 Supported props w/defaults
-	path:string,
-	component:string,
-	name:string,
-	showCode=false,
-	noResize=false,
-	clip=false,
-	variant:'default' | 'basic',
-	highlight:string (ie "7", "7-9")
-	class:string
+path:string,
+component:string,
+name:string,
+showCode=false,
+noResize=false,
+clip=false,
+variant:'default' | 'basic',
+highlight:string (ie "7", "7-9")
+class:string
 :::
 
 ```md
@@ -171,7 +169,7 @@ Supported props w/defaults
 ## Table
 
 :::note
-`:---` makes a column left-aligned, 
+`:---` makes a column left-aligned,
 ​`---:` makes it right-aligned,
 ​`:---:` makes it center-aligned.
 :::
@@ -192,16 +190,17 @@ Supported props w/defaults
 
 ### Note
 
-````md
+```md
 > Basic
-````
+```
+
 > Basic
 
-````md
+```md
 :::note
 Here's some additional information. This uses the new `:::note` directive syntax!
 :::
-````
+```
 
 :::note
 Here's some additional information. This uses the new `:::note` directive syntax!
@@ -209,11 +208,11 @@ Here's some additional information. This uses the new `:::note` directive syntax
 
 ### Tip
 
-````md
+```md
 :::tip
 Here's a helpful suggestion using the `:::tip` directive.
 :::
-````
+```
 
 :::tip
 Here's a helpful suggestion using the `:::tip` directive.
@@ -221,11 +220,11 @@ Here's a helpful suggestion using the `:::tip` directive.
 
 ### Warning
 
-````md
+```md
 :::warning
 Be careful with this action as it might have unexpected results. This uses `:::warning`.
 :::
-````
+```
 
 :::warning
 Be careful with this action as it might have unexpected results. This uses `:::warning`.
@@ -233,11 +232,11 @@ Be careful with this action as it might have unexpected results. This uses `:::w
 
 ### Caution
 
-````md
+```md
 :::caution
 This action cannot be undone. This uses `:::caution`.
 :::
-````
+```
 
 :::caution
 This action cannot be undone. This uses `:::caution`.
@@ -288,7 +287,7 @@ Start using `::component` and `:::component` syntax in your markdown files!
 ### Tabs
 
 :::tip
-`:::tabs{key="package-manager"}` allow for 2 separate tabs implementations to keep inidvidual tabs linked (ie user picks `pnpm` tab, and others with same key stay linked.) 
+`:::tabs{key="package-manager"}` allow for 2 separate tabs implementations to keep inidvidual tabs linked (ie user picks `pnpm` tab, and others with same key stay linked.)
 :::
 
 ````md
@@ -352,6 +351,7 @@ print('Hello from Python')
 :::
 
 ## Tabs with live code
+
 ````md
 ::tabs
 
@@ -419,8 +419,8 @@ Icons support both formats: `collection:name` (like `lucide:code`) or `i-collect
 :::
 
 ```md
-Here's a :icon{name="lucide:code" class="text-primary"} code icon, 
-a :icon{name="i-lucide-rocket" class="text-green-500"} rocket, and 
+Here's a :icon{name="lucide:code" class="text-primary"} code icon,
+a :icon{name="i-lucide-rocket" class="text-green-500"} rocket, and
 a :icon{name="simple-icons:github"} GitHub logo.
 ```
 
@@ -434,9 +434,9 @@ Here's a :icon{name="lucide:code" class="text-primary"} code icon,a :icon{name="
 opens same tab, no arrow icon
 :::
 
-````md
+```md
 [Getting Started](/docs/getting-started)
-````
+```
 
 [Getting Started](/docs/getting-started)
 
@@ -446,9 +446,9 @@ opens same tab, no arrow icon
 opens new tab, note arrow icon
 :::
 
-````md
+```md
 [LayerStack](https://www.layerstack.com)
-````
+```
 
 [LayerStack](https://www.layerstack.com)
 
@@ -458,18 +458,19 @@ opens new tab, note arrow icon
 Hash-links in `md` files are auto-created from headers. Reference via lowercase and kebab-case
 :::
 
-````md
+```md
 # Docs Features
+
 ...
 [Top](#docs-features)
-````
+```
 
 [Top](#docs-features)
 
 also can manually add hash icon
 
-````md
+```md
 [:icon{name="lucide:hash"}Top](#docs-features)
-````
+```
 
 [:icon{name="lucide:hash"}Top](#docs-features)

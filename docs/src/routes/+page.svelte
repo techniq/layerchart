@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
+	import Stats from '$lib/components/Stats.svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
@@ -248,9 +249,11 @@
 
 <div class="grid grid-cols-xs gap-4 px-4 mb-4">
 	{#each examples as { component, example }}
-		<ExampleLink {component} {example} variant="hover-label" aspect="square" />
+		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
 	{/each}
 </div>
+
+<Stats />
 
 <footer class="flex justify-between px-4 py-8 border-t text-surface-content/50 text-sm">
 	<div>
@@ -268,8 +271,9 @@
 	</div>
 
 	<div class="flex gap-5">
-		<a href="https://github.com/techniq/layerchart" target="_blank"> Github </a>
-		<a href="https://github.com/techniq/layerchart/releases" target="_blank"> Releases </a>
+		<a href="/docs/guides/LLMs" target="_blank">LLMs</a>
+		<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
+		<a href="/docs/releases">Releases</a>
 	</div>
 </footer>
 

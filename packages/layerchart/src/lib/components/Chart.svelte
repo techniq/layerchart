@@ -591,6 +591,14 @@
      */
     onResize?: (e: ChartResizeDetail) => void;
 
+    /**
+     * Whether to clip overflow content.
+     * When true, sets `overflow: hidden` on the container.
+     *
+     * @default false
+     */
+    clip?: boolean;
+
     // TransformContext callback events
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
@@ -691,9 +699,10 @@
     ondragend,
     ondragstart,
     brush,
+    clip = false,
     class: className,
-  }: ChartPropsWithoutHTML<TData, XScale, YScale> &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'> = $props();
+    ...restProps
+  }: ChartProps<TData, XScale, YScale> = $props();
 
   let ref = $state<HTMLElement>();
 
@@ -1308,11 +1317,13 @@
     style:bottom={position === 'absolute' ? 0 : null}
     style:left={position === 'absolute' ? 0 : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
+    style:overflow={clip ? 'hidden' : null}
     style:width={widthProp ? `${widthProp}px` : '100%'}
     style:height={heightProp ? `${heightProp}px` : '100%'}
     bind:clientWidth={_containerWidth}
     bind:clientHeight={_containerHeight}
     class={['lc-root-container', className]}
+    {...restProps}
   >
     {#key isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->

@@ -7,6 +7,7 @@
 
 	import LucideLink from '~icons/lucide/link';
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data } = $props();
 
@@ -14,12 +15,15 @@
 	let component = page.url.searchParams.get('component') ?? page.params.name!;
 
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
-	// console.log({ exampleInfo, data });
 </script>
+
+<div class="mb-4">
+	<OpenWithButton />
+</div>
 
 <Example name={example} {component} showCode />
 
-<H2>Component Docs</H2>
+<H2>Components</H2>
 <div class="flex flex-wrap gap-2 mt-1">
 	{#each exampleInfo?.components as componentUsage}
 		<Button

@@ -303,7 +303,7 @@
       "example": "stack-with-gradient",
       "component": "Area",
       "path": "/example/Area/stack-with-gradient",
-      "lineNumber": 38,
+      "lineNumber": 31,
       "line": "<Chart"
     },
     {
@@ -549,7 +549,7 @@
       "component": "Axis",
       "path": "/example/Axis/rotate-labels",
       "lineNumber": 9,
-      "line": "<Chart xDomain={[timeDay.offset(today, -10), today]} padding={24} height={48}>"
+      "line": "<Chart"
     },
     {
       "example": "tick-count",
@@ -577,14 +577,14 @@
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto",
       "lineNumber": 115,
-      "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+      "line": "<Chart"
     },
     {
       "example": "time-scale-auto-format-filtering",
       "component": "Axis",
       "path": "/example/Axis/time-scale-auto-format-filtering",
       "lineNumber": 115,
-      "line": "<Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>"
+      "line": "<Chart"
     },
     {
       "example": "time-scale-auto-multiline",
@@ -695,14 +695,14 @@
       "example": "horizontal-grouped",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped",
-      "lineNumber": 20,
+      "lineNumber": 29,
       "line": "<Chart"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-grouped-and-stacked",
-      "lineNumber": 24,
+      "lineNumber": 33,
       "line": "<Chart"
     },
     {
@@ -779,14 +779,14 @@
       "example": "horizontal-stacked",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked",
-      "lineNumber": 20,
+      "lineNumber": 29,
       "line": "<Chart"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
       "path": "/example/Bars/horizontal-stacked-percent",
-      "lineNumber": 25,
+      "lineNumber": 34,
       "line": "<Chart"
     },
     {
@@ -982,7 +982,7 @@
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 18,
+      "lineNumber": 27,
       "line": "<Chart"
     },
     {
@@ -1150,14 +1150,14 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 20,
+      "lineNumber": 21,
       "line": "<Chart"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/example/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 19,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
@@ -1171,21 +1171,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 16,
+      "lineNumber": 25,
       "line": "<Chart"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 45,
+      "lineNumber": 54,
       "line": "<Chart"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 15,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -1206,28 +1206,28 @@
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 19,
+      "lineNumber": 20,
       "line": "<Chart"
     },
     {
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<Chart"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 11,
+      "lineNumber": 19,
       "line": "<Chart"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/example/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 41,
+      "lineNumber": 49,
       "line": "<Chart"
     },
     {
@@ -1262,7 +1262,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/example/BrushContext/tooltip-interop",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Chart"
     },
     {
@@ -1514,7 +1514,7 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/example/GeoCircle/earthquake-globe",
-      "lineNumber": 52,
+      "lineNumber": 51,
       "line": "<Chart"
     },
     {
@@ -1584,7 +1584,7 @@
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/sketchy-globe",
-      "lineNumber": 49,
+      "lineNumber": 42,
       "line": "<Chart"
     },
     {
@@ -1598,7 +1598,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/submarine-cables-globe",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Chart"
     },
     {
@@ -1633,7 +1633,7 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/example/GeoPath/translucent-globe",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
@@ -1703,7 +1703,7 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/example/GeoSpline/draggable-globe",
-      "lineNumber": 26,
+      "lineNumber": 17,
       "line": "<Chart"
     },
     {
@@ -1802,7 +1802,7 @@
       "component": "Grid",
       "path": "/example/Grid/integer-only",
       "lineNumber": 5,
-      "line": "<Chart yDomain={[0, 2]} padding={{ left: 20 }} height={200}>"
+      "line": "<Chart yDomain={[0, 2]} padding={defaultChartPadding({ top: 10, bottom: 10 })} height={200}>"
     },
     {
       "example": "padding",
@@ -1880,6 +1880,13 @@
       "path": "/example/Hull/scatter",
       "lineNumber": 23,
       "line": "<Chart"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 5,
+      "line": "<Chart height={200}>"
     },
     {
       "example": "chart-integration",
@@ -2048,6 +2055,13 @@
       "path": "/example/Partition/vertical",
       "lineNumber": 85,
       "line": "<Chart height={600}>"
+    },
+    {
+      "example": "basic",
+      "component": "Path",
+      "path": "/example/Path/basic",
+      "lineNumber": 5,
+      "line": "<Chart height={300}>"
     },
     {
       "example": "circles",
@@ -2586,7 +2600,7 @@
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
       "lineNumber": 40,
-      "line": "<Chart"
+      "line": "<Chart {data} x=\"letter\" y=\"frequency\" yNice padding={{ left: 25, bottom: 20 }} height={300}>"
     },
     {
       "example": "data-x-date",
@@ -2802,13 +2816,13 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Chart height={224}>"
     },
     {
-      "example": "word-wrap-with-explicit-n",
+      "example": "word-wrap-with-explicit-newline",
       "component": "Text",
-      "path": "/example/Text/word-wrap-with-explicit-n",
+      "path": "/example/Text/word-wrap-with-explicit-newline",
       "lineNumber": 8,
       "line": "<Chart height={100}>"
     },
@@ -2879,14 +2893,14 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 30,
+      "lineNumber": 39,
       "line": "<Chart"
     },
     {
       "example": "externally-access-tooltip-data",
       "component": "Tooltip",
       "path": "/example/Tooltip/externally-access-tooltip-data",
-      "lineNumber": 30,
+      "lineNumber": 39,
       "line": "<Chart"
     },
     {
@@ -2907,7 +2921,7 @@
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 29,
+      "lineNumber": 38,
       "line": "<Chart"
     },
     {
@@ -2949,7 +2963,7 @@
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/example/Tooltip/stacked-area",
-      "lineNumber": 32,
+      "lineNumber": 41,
       "line": "<Chart"
     },
     {
@@ -3037,5 +3051,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:44.494Z"
+  "updatedAt": "2026-01-25T21:44:17.657Z"
 }

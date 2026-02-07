@@ -106,14 +106,14 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/example/BrushContext/minimap",
-      "lineNumber": 71,
+      "lineNumber": 80,
       "line": "<Circle"
     },
     {
       "example": "selection",
       "component": "BrushContext",
       "path": "/example/BrushContext/selection",
-      "lineNumber": 44,
+      "lineNumber": 52,
       "line": "<Circle"
     },
     {
@@ -332,6 +332,27 @@
       "path": "/example/Hull/geo",
       "lineNumber": 47,
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 7,
+      "line": "<Circle fill=\"#F2D707\" r={100} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 10,
+      "line": "<Circle fill=\"black\" r={15} cx={-30} cy={-30} />"
+    },
+    {
+      "example": "all-3-layers",
+      "component": "Layer",
+      "path": "/example/Layer/all-3-layers",
+      "lineNumber": 21,
+      "line": "<Circle id=\"left-eye\" fill=\"black\" r={15} cx={30} cy={-30} />"
     },
     {
       "example": "sync-with-draw",
@@ -582,7 +603,7 @@
       "example": "playground",
       "component": "Text",
       "path": "/example/Text/playground",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Circle cx={config.x} cy={config.y} r={2} fill=\"red\" />"
     },
     {
@@ -600,5 +621,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:09.183Z"
+  "updatedAt": "2026-01-25T20:58:11.921Z"
 }

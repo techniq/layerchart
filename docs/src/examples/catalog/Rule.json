@@ -277,21 +277,21 @@
         {
           "component": "Chart",
           "lineNumber": 40,
-          "line": "<Chart"
+          "line": "<Chart {data} x=\"letter\" y=\"frequency\" yNice padding={{ left: 25, bottom: 20 }} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 48,
+          "lineNumber": 41,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 49,
+          "lineNumber": 42,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 51,
+          "lineNumber": 44,
           "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
         }
       ]
@@ -533,7 +533,7 @@
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
       "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
-      "lineNumber": 33,
+      "lineNumber": 42,
       "line": "<Rule y={0} />"
     },
     {
@@ -638,7 +638,7 @@
       "example": "data-x-band",
       "component": "Rule",
       "path": "/example/Rule/data-x-band",
-      "lineNumber": 51,
+      "lineNumber": 44,
       "line": "<Rule class=\"stroke-2 stroke-primary stroke-4\" />"
     },
     {
@@ -673,16 +673,16 @@
       "example": "duration",
       "component": "Tooltip",
       "path": "/example/Tooltip/duration",
-      "lineNumber": 43,
+      "lineNumber": 53,
       "line": "<Rule />"
     },
     {
       "example": "multiple-overlapping-durations",
       "component": "Tooltip",
       "path": "/example/Tooltip/multiple-overlapping-durations",
-      "lineNumber": 42,
+      "lineNumber": 52,
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.270Z"
+  "updatedAt": "2026-01-06T13:02:21.967Z"
 }

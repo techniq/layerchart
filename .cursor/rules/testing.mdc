@@ -1,0 +1,257 @@
+---
+description: Comprehensive Testing Best Practices for Svelte 5 + vitest-browser-svelte
+globs: **/*.test.ts,**/*.svelte.test.ts,**/*.ssr.test.ts
+alwaysApply: false
+---
+
+# Testing Rules & Best Practices
+
+You are an expert in Svelte 5, SvelteKit, TypeScript, and modern testing with vitest-browser-svelte.
+
+## Core Testing Principles
+
+### Foundation First Approach
+- **Aim for 100% test coverage** using complete test structure planning
+- Start with all describe blocks and test stubs using `.skip`
+- Implement tests incrementally - remove `.skip` as you write each test
+- Test all code paths - every branch, condition, and edge case
+
+### Test File Organization
+- **Component Tests**: `*.svelte.test.ts` - Real browser testing
+- **SSR Tests**: `*.ssr.test.ts` - Server-side rendering validation
+- **Server Tests**: `*.test.ts` - API routes, utilities, business logic
+
+## CRITICAL: vitest-browser-svelte Patterns
+
+### Always Use Locators, Never Containers
+
+```typescript
+// ❌ NEVER use containers
+const { container } = render(MyComponent);
+
+// ✅ ALWAYS use locators with auto-retry
+render(MyComponent);
+const button = page.getByTestId('submit');
+await button.click();
+```
+
+### Handle Strict Mode Violations
+
+```typescript
+// ❌ FAILS: Multiple elements match
+page.getByRole('link', { name: 'Home' });
+
+// ✅ CORRECT: Use .first(), .nth(), .last()
+page.getByRole('link', { name: 'Home' }).first();
+```
+
+### Svelte 5 Runes Testing
+
+```typescript
+// ✅ Always use untrack() for $derived
+expect(untrack(() => derived_value)).toBe(expected);
+
+// ✅ For getters: get function first, then untrack
+const derived_fn = state_object.derived_value;
+expect(untrack(() => derived_fn())).toBe(expected);
+```
+
+### Form Validation Lifecycle
+
+```typescript
+// ✅ Test the full lifecycle: valid → validate → invalid → fix
+const form = create_form_state({
+	email: { value: '', validation_rules: { required: true } },
+});
+expect(untrack(() => form.is_form_valid())).toBe(true); // Initially valid
+form.validate_all_fields();
+expect(untrack(() => form.is_form_valid())).toBe(false); // Now invalid
+```
+
+## Client-Server Alignment Strategy
+
+### The Problem
+
+Server unit tests with heavy mocking can pass while production breaks due to client-server mismatches.
+
+### Solution: Real FormData/Request Objects
+
+```typescript
+// ❌ BRITTLE: Heavy mocking hides mismatches
+const mock_request = {
+	formData: vi.fn().mockResolvedValue({
+		get: vi.fn().mockReturnValue('test@example.com'),
+	}),
+};
+
+// ✅ ROBUST: Real FormData objects catch mismatches
+const form_data = new FormData();
+form_data.append('email', 'test@example.com');
+const request = new Request('http://localhost/register', {
+	method: 'POST',
+	body: form_data,
+});
+
+// Only mock external services (database), not data structures
+vi.mocked(database.create_user).mockResolvedValue({
+	id: '123',
+	email: 'test@example.com',
+});
+```
+
+## Foundation First Test Structure
+
+```typescript
+describe('ComponentName', () => {
+	describe('Initial Rendering', () => {
+		test('should render with default props', async () => {
+			// Implemented test
+		});
+
+		test.skip('should render with all prop variants', async () => {
+			// TODO: Test all type combinations
+		});
+	});
+
+	describe('User Interactions', () => {
+		test.skip('should handle click events', async () => {
+			// TODO: Real browser click events
+		});
+	});
+
+	describe('Edge Cases', () => {
+		test.skip('should handle empty data gracefully', async () => {
+			// TODO: Test with null/undefined/empty arrays
+		});
+	});
+
+	describe('Accessibility', () => {
+		test.skip('should have proper ARIA roles', async () => {
+			// TODO: Test accessibility features
+		});
+	});
+});
+```
+
+## SSR Testing Essentials
+
+```typescript
+import { render } from 'svelte/server';
+
+test('should render without errors', () => {
+	expect(() => render(ComponentName)).not.toThrow();
+});
+
+test('should render essential content', () => {
+	const { body } = render(ComponentName);
+	expect(body).toContain('expected-content');
+});
+```
+
+## CRITICAL: Avoid Testing Implementation Details
+
+Don't test exact implementation details that provide no user value.
+
+```typescript
+// ❌ BRITTLE - Tests exact SVG path data
+expect(body).toContain('M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z');
+
+// ✅ ROBUST - Tests semantic styling and structure
+expect(body).toContain('text-success');
+expect(body).toContain('<svg');
+
+// ✅ BEST - Tests user-visible behavior
+await expect.element(page.getByRole('img', { name: /success/i })).toBeInTheDocument();
+```
+
+**Why**: SVG paths change when icon libraries update. Test CSS classes, semantic structure, and user experience instead.
+
+## Common Error Solutions
+
+### "strict mode violation: getByRole() resolved to X elements"
+
+- **Cause**: Multiple elements match (common with responsive navigation)
+- **Solution**: Use `.first()`, `.nth()`, `.last()` to target specific elements
+
+### "Expected 2 arguments, but got 0"
+
+- **Cause**: Mock function signature doesn't match actual function
+- **Solution**: Update mock to accept correct number of arguments
+
+### "lifecycle_outside_component"
+
+- **Cause**: Trying to call `getContext` in test
+- **Solution**: Skip the test and add TODO comment for Svelte 5
+
+### Role and Accessibility Confusion
+
+```typescript
+// ❌ WRONG: Looking for link when element has role="button"
+page.getByRole('link', { name: 'Submit' }); // <a role="button">Submit</a>
+
+// ✅ CORRECT: Use the actual role
+page.getByRole('button', { name: 'Submit' });
+
+// ❌ WRONG: Input role doesn't exist
+page.getByRole('input', { name: 'Email' });
+
+// ✅ CORRECT: Use textbox for input elements
+page.getByRole('textbox', { name: 'Email' });
+```
+
+## Quick Reference
+
+### ✅ DO:
+
+- Use locators (`page.getBy*()`) - never containers
+- Always await locator assertions: `await expect.element()`
+- Use `.first()`, `.nth()`, `.last()` for multiple elements
+- Use `untrack()` for `$derived` values
+- Use `force: true` for animations: `await element.click({ force: true })`
+- Test form validation lifecycle: initial (valid) → validate → fix
+- Use smoke tests for complex reactive components
+- Test CSS classes that control appearance (`text-success`, `h-4 w-4`)
+- Test semantic HTML structure and user experience
+- Use real FormData/Request objects in server tests
+
+### ❌ DON'T:
+
+- Never click SvelteKit form submits - test state directly
+- Don't ignore strict mode violations - use `.first()` instead
+- Don't expect forms to be invalid initially
+- Don't assume element roles - verify with browser dev tools
+- Don't test implementation details (SVG paths, internal markup)
+- Don't write brittle tests that break when libraries update
+- Don't mock browser APIs - real APIs work in vitest-browser-svelte
+- Avoid children props in vitest-browser-svelte
+
+## Essential Patterns
+
+### Semantic Queries (Preferred)
+
+```typescript
+page.getByRole('button', { name: 'Submit' });
+page.getByRole('textbox', { name: 'Email' });
+page.getByLabel('Email address');
+page.getByText('Welcome');
+```
+
+### Multiple Element Handling
+
+```typescript
+// Handle desktop + mobile nav components
+page.getByRole('link', { name: 'Home' }).first();
+page.getByRole('link', { name: 'Home' }).nth(1);
+page.getByRole('link', { name: 'Home' }).last();
+```
+
+### Avoid Test Hangs
+
+```typescript
+// ❌ Can cause infinite hangs
+await submit_button.click();
+
+// ✅ Test form state directly
+render(MyForm, { props: { errors: { email: 'Required' } } });
+await expect.element(page.getByText('Required')).toBeInTheDocument();
+```

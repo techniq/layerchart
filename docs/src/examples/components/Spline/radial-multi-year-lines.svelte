@@ -6,7 +6,7 @@
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
 	import { getDailyTemperatures } from '$lib/data.remote';
 
-	const data = await getDailyTemperatures();
+	const data = $derived(await getDailyTemperatures());
 
 	export { data };
 </script>

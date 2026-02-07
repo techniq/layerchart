@@ -6,7 +6,7 @@
 	import { getSeriesArrays } from '$lib/data.remote.js';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-	const data = await getSeriesArrays();
+	const data = $derived(await getSeriesArrays());
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

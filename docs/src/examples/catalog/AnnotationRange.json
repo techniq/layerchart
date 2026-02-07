@@ -56,11 +56,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -72,11 +72,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
         }
       ]
@@ -88,11 +88,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -104,11 +104,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -120,11 +120,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -136,11 +136,11 @@
         {
           "component": "LineChart",
           "lineNumber": 29,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 31,
+          "lineNumber": 37,
           "line": "<AnnotationRange"
         }
       ]
@@ -152,11 +152,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -168,11 +168,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -184,11 +184,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -200,11 +200,11 @@
         {
           "component": "LineChart",
           "lineNumber": 10,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 5 }}>"
+          "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 12,
+          "lineNumber": 18,
           "line": "<AnnotationRange"
         }
       ]
@@ -243,86 +243,86 @@
       "example": "hide-tooltip",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/hide-tooltip",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 13,
+      "lineNumber": 19,
       "line": "<AnnotationRange y={[400, 600]} class=\"fill-warning/10\" />"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 14,
+      "lineNumber": 20,
       "line": "<AnnotationRange y={[600, null]} class=\"fill-danger/10\" />"
     },
     {
       "example": "horizontal-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-range",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/label-placement",
-      "lineNumber": 31,
+      "lineNumber": 37,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-gradient-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-gradient-range",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-range",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
-      "lineNumber": 12,
+      "lineNumber": 18,
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:01.649Z"
+  "updatedAt": "2026-01-06T13:02:20.626Z"
 }

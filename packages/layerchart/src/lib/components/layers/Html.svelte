@@ -38,6 +38,14 @@
      */
     ignoreTransform?: boolean;
 
+    /**
+     * Whether to clip overflow content.
+     * When true, sets `overflow: hidden` on the layer.
+     *
+     * @default false
+     */
+    clip?: boolean;
+
     children?: Snippet<[{ ref: HTMLElement }]>;
   };
 
@@ -61,6 +69,7 @@
     'aria-describedby': describedBy,
     center = false,
     ignoreTransform = false,
+    clip = false,
     class: className,
     children,
     ...restProps
@@ -91,6 +100,7 @@
   bind:this={ref}
   class={['lc-layout-html', className]}
   class:disablePointerEvents={pointerEvents === false}
+  class:clip
   style:transform
   style:transform-origin="top left"
   style:z-index={zIndex}
@@ -115,6 +125,10 @@
 
       &.disablePointerEvents {
         pointer-events: none;
+      }
+
+      &.clip {
+        overflow: hidden;
       }
     }
   }

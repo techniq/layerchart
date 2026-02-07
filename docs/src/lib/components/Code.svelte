@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
 	import { createHighlighter, type Highlighter } from 'shiki';
 	import { transformerMetaHighlight } from '@shikijs/transformers';
 
@@ -6,7 +6,7 @@
 
 	createHighlighter({
 		themes: ['github-light-default', 'github-dark-default'],
-		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh']
+		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
 	}).then((h) => {
 		highlighter = h;
 	});

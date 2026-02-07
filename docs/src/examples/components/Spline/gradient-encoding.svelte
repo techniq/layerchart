@@ -5,7 +5,7 @@
 	import { Axis, Chart, Layer, Legend, LinearGradient, Spline } from 'layerchart';
 	import { getDailyTemperature } from '$lib/data.remote';
 
-	const data = await getDailyTemperature();
+	const data = $derived(await getDailyTemperature());
 
 	const temperatureColor = scaleSequential(
 		extent(data, (d) => d.value) as [number, number],

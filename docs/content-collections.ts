@@ -1,9 +1,10 @@
 import { defineCollection, defineConfig } from '@content-collections/core';
-// import { compileMarkdown } from '@content-collections/markdown';
+import { compileMarkdown } from '@content-collections/markdown';
 import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { extractTocFromMarkdown } from './src/lib/markdown/toc.js';
 
 const components = defineCollection({
 	name: 'components',
@@ -17,7 +18,8 @@ const components = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -47,13 +49,38 @@ const components = defineCollection({
 			doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1] ||
 			doc.content.match(/:example\{[^}]*name=["']([^"']+)["'][^}]*\}/)?.[1];
 
+		// Build TOC from markdown headings + template-rendered sections
+		const toc = extractTocFromMarkdown(doc.content);
+
+		const catalogPath = join(process.cwd(), `src/examples/catalog/${path}.json`);
+		if (existsSync(catalogPath)) {
+			toc.push({ id: 'examples', text: 'Examples', level: 2 });
+		}
+
+		const apiPath = join(process.cwd(), `src/generated/api/${path}.json`);
+		if (existsSync(apiPath)) {
+			try {
+				const api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+				if (api.properties?.length) {
+					toc.push({ id: 'api-reference', text: 'API Reference', level: 2 });
+				}
+			} catch {
+				// ignore
+			}
+		}
+
+		if (doc.related.length) {
+			toc.push({ id: 'related', text: 'Related', level: 2 });
+		}
+
 		return {
 			...doc,
 			name,
 			slug: path,
 			source,
 			sourceUrl,
-			usageExample
+			usageExample,
+			toc
 			// html: await compileMarkdown(context, doc)
 		};
 	}
@@ -71,7 +98,8 @@ const examples = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().default(true),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -116,7 +144,8 @@ const utils = defineCollection({
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),
-		order: z.number().optional()
+		order: z.number().optional(),
+		content: z.string()
 	}),
 	transform: async (doc) => {
 		const { filePath, fileName, directory, path } = doc._meta;
@@ -147,11 +176,59 @@ const utils = defineCollection({
 			slug: fileName.replace('.md', '').toLowerCase(), // Use lowercase for utils slugs
 			source,
 			sourceUrl,
-			usageExample
+			usageExample,
+			toc: extractTocFromMarkdown(doc.content)
+		};
+	}
+});
+
+const guides = defineCollection({
+	name: 'guides',
+	directory: 'src/content/guides',
+	include: '**/*.md',
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional(),
+		order: z.number().optional(),
+		draft: z.boolean().default(false),
+		content: z.string()
+	}),
+	transform: async (doc) => {
+		const { path } = doc._meta;
+		return {
+			...doc,
+			name: doc.title,
+			slug: path,
+			toc: extractTocFromMarkdown(doc.content)
+		};
+	}
+});
+
+const releases = defineCollection({
+	name: 'releases',
+	directory: 'src/content/releases',
+	include: '**/*.md',
+	schema: z.object({
+		title: z.string(),
+		tag: z.string(),
+		date: z.coerce.date(),
+		url: z.string(),
+		draft: z.boolean().default(false),
+		prerelease: z.boolean().default(false),
+		author: z.string(),
+		content: z.string()
+	}),
+	transform: async (doc, context) => {
+		const { fileName } = doc._meta;
+
+		return {
+			...doc,
+			slug: fileName.replace('.md', ''),
+			html: await compileMarkdown(context, doc)
 		};
 	}
 });
 
 export default defineConfig({
-	collections: [components, examples, utils]
+	collections: [components, examples, utils, guides, releases]
 });

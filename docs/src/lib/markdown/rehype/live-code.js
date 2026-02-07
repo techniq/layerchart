@@ -36,6 +36,36 @@ export function remarkLiveCode() {
 			// Check if this is a live code block
 			if (lang !== 'svelte' || !metaArray.includes('live')) return;
 
+			// Parse all key=value props from meta string
+			/** @type {Record<string, string | boolean>} */
+			const props = {};
+			const propsRegex = /(\w+)=(?:"([^"]*)"|(\w+))/g;
+			let match;
+			while ((match = propsRegex.exec(meta || '')) !== null) {
+				const key = match[1];
+				const value = match[2] || match[3]; // quoted or unquoted value
+				// Convert boolean strings to actual booleans
+				if (value === 'true') {
+					props[key] = true;
+				} else if (value === 'false') {
+					props[key] = false;
+				} else {
+					props[key] = value;
+				}
+			}
+
+			// Convert props object to Svelte props string
+			const propsString = Object.entries(props)
+				.map(([key, value]) => {
+					if (typeof value === 'boolean') {
+						return `${key}={${value}}`;
+					} else {
+						return `${key}="${value}"`;
+					}
+				})
+				.join(' ');
+			const propsWithSpace = propsString ? ' ' + propsString : '';
+
 			// Use the raw code value
 			const rawCode = value || '';
 
@@ -73,7 +103,7 @@ export function remarkLiveCode() {
 				children: [
 					{
 						type: 'html',
-						value: `<LiveCode>{#snippet preview()}<${componentName} />{/snippet}<div class="live-code-source">`
+						value: `<LiveCode${propsWithSpace}>{#snippet preview()}<${componentName} />{/snippet}<div class="live-code-source">`
 					}
 				]
 			};

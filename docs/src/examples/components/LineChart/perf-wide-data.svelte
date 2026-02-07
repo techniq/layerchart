@@ -6,7 +6,7 @@
 	import { getWideData } from '$lib/data.remote.js';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-	const data = await getWideData();
+	const data = $derived(await getWideData());
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

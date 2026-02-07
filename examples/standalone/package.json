@@ -15,16 +15,16 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.49.2",
-		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@sveltejs/kit": "^2.50.2",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"layerchart": "next",
 		"mode-watcher": "^1.1.0",
-		"prettier": "^3.7.4",
-		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "5.46.0",
-		"svelte-check": "^4.3.4",
+		"prettier": "^3.8.1",
+		"prettier-plugin-svelte": "^3.4.1",
+		"svelte": "5.50.0",
+		"svelte-check": "^4.3.6",
 		"typescript": "^5.9.3",
-		"vite": "^7.2.7",
+		"vite": "^7.3.1",
 		"vite-plugin-devtools-json": "^1.0.0"
 	}
 }

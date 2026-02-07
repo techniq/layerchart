@@ -3,7 +3,7 @@
 	import { getDailyTemperature } from '$lib/data.remote';
 	import { format } from '@layerstack/utils';
 
-	const data = await getDailyTemperature();
+	const data = $derived(await getDailyTemperature());
 	export { data };
 </script>
 

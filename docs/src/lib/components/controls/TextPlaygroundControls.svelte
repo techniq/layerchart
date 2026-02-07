@@ -16,13 +16,13 @@
 			scaleToFit: boolean;
 			showAnchor: boolean;
 			resizeSvg: boolean;
-		};
-		truncate?: boolean;
-		truncateOptions?: {
-			maxChars?: number;
-			minChars?: number;
-			ellipsis?: string;
-			position?: 'start' | 'middle' | 'end';
+			truncate: boolean;
+			truncateOptions: {
+				maxChars?: number;
+				minChars?: number;
+				ellipsis?: string;
+				position?: 'start' | 'middle' | 'end';
+			};
 		};
 	}
 
@@ -38,14 +38,14 @@
 			rotate: 0,
 			scaleToFit: false,
 			showAnchor: true,
-			resizeSvg: true
-		}),
-		truncate = $bindable(false),
-		truncateOptions = $bindable({
-			maxChars: 22,
-			minChars: 0,
-			ellipsis: '…',
-			position: 'end'
+			resizeSvg: true,
+			truncate: false,
+			truncateOptions: {
+				maxChars: 22,
+				minChars: 0,
+				ellipsis: '…',
+				position: 'end'
+			}
 		})
 	}: Props = $props();
 </script>
@@ -95,20 +95,20 @@
 			<Switch bind:checked={config.resizeSvg} {id} />
 		</Field>
 		<Field label="truncate text" let:id>
-			<Switch bind:checked={truncate} {id} />
+			<Switch bind:checked={config.truncate} {id} />
 		</Field>
-		{#if truncate}
+		{#if config.truncate}
 			<RangeField
 				label="maxChars"
-				bind:value={truncateOptions.maxChars}
+				bind:value={config.truncateOptions.maxChars}
 				min={0}
 				max={config.value.length}
 			/>
 
-			<TextField label="ellipsis" bind:value={truncateOptions.ellipsis} />
+			<TextField label="ellipsis" bind:value={config.truncateOptions.ellipsis} />
 			<Field label="position" classes={{ input: 'mt-[6px] mb-1' }}>
 				<ToggleGroup
-					bind:value={truncateOptions.position}
+					bind:value={config.truncateOptions.position}
 					variant="outline"
 					size="sm"
 					inset
