@@ -113,7 +113,9 @@
 
 	<a href="/" class="text-xl font-bold lg:w-60">LayerChart</a>
 
-	<Search />
+	<div class="grow text-end max-lg:ml-10 sm:text-start">
+		<Search />
+	</div>
 
 	<div class="flex items-center gap-2">
 		<div class="flex items-center border-r pr-2">

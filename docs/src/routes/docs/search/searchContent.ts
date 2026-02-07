@@ -53,7 +53,9 @@ function catalogToEntries(): SearchEntry[] {
 				title: `${catalog.component}: ${example.name}`,
 				slug: example.path.slice(1), // Remove leading slash
 				content: `${catalog.component} example`,
-				type: 'example'
+				type: 'example',
+				component: catalog.component,
+				example: example.name
 			});
 		}
 	}

@@ -60,14 +60,17 @@ export const search = query(
 
 		return results
 			.map((index: number) => searchContent[index])
-			.filter(({ title, content }: { title: string; content: string }) => {
+			.filter(({ title, content }) => {
 				return testMatch(title) || testMatch(content);
 			})
-			.map(({ slug, title, content }: { slug: string; title: string; content: string }) => {
+			.map((entry) => {
 				return {
-					slug,
-					title: replaceTextWithMarker(title, match),
-					content: getMatches(content, match)
+					slug: entry.slug,
+					title: replaceTextWithMarker(entry.title, match),
+					content: getMatches(entry.content, match),
+					type: entry.type,
+					component: entry.component,
+					example: entry.example
 				};
 			});
 	}

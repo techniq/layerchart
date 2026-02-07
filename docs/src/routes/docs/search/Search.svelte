@@ -1,18 +1,17 @@
 <script lang="ts">
-	import { env } from '@layerstack/utils';
-	import { Debounced, PersistedState } from 'runed';
-	import { search } from './search.remote';
-	import { Kbd, TextField, Tooltip } from 'svelte-ux';
+	import { cls } from '@layerstack/tailwind';
+	import { smScreen } from '@layerstack/svelte-stores';
+	import { Debounced } from 'runed';
+	import { goto } from '$app/navigation';
+	import { search, type SearchResult } from './search.remote';
+	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
 	import LucideSearch from '~icons/lucide/search';
-	import LucideX from '~icons/lucide/x';
 
-	const MAX_PRIOR_QUERIES = 5;
+	type SearchOption = MenuOption<string> & { result: SearchResult };
 
-	let priorQueries = new PersistedState<{ query: string; count: number }[]>('prior-queries', []);
+	let open = $state(false);
 	let searchQuery = $state('');
-	let isSearching = $state(false);
-	let searchInput = $state<HTMLInputElement>();
-	let searchModal = $state<HTMLDivElement>();
+	let selected = $state<string | null>(null);
 
 	// Debounced query string for searching
 	const debouncedQuery = new Debounced(() => searchQuery, 300);
@@ -22,159 +21,160 @@
 		debouncedQuery.current ? search({ query: debouncedQuery.current }) : null
 	);
 
-	function addPriorQuery(query: string, count: number) {
-		// Remove duplicate if exists
-		priorQueries.current = priorQueries.current.filter((q) => q.query !== query);
-		// Add to the beginning
-		priorQueries.current.unshift({ query, count });
-		// Keep only the first 5 items
-		priorQueries.current = priorQueries.current.slice(0, MAX_PRIOR_QUERIES);
-	}
+	// Group order for sorting
+	const groupOrder: Record<SearchResult['type'], number> = {
+		component: 0,
+		guide: 1,
+		example: 2,
+		util: 3
+	};
 
-	function endSearch() {
-		isSearching = false;
+	// Capitalize group names
+	const groupLabels: Record<SearchResult['type'], string> = {
+		component: 'Components',
+		guide: 'Guides',
+		example: 'Examples',
+		util: 'Utils'
+	};
+
+	// Convert search results to MenuOption format with grouping
+	const options = $derived.by((): SearchOption[] => {
+		if (!searchResults?.current) return [];
+
+		const results = searchResults.current;
+
+		// Sort by group order
+		const sorted = [...results].sort((a, b) => groupOrder[a.type] - groupOrder[b.type]);
+
+		// Convert to MenuOption format
+		return sorted.map((result) => ({
+			label: result.title,
+			value: result.slug,
+			group: groupLabels[result.type],
+			result
+		}));
+	});
+
+	function closeSearch() {
+		open = false;
 		searchQuery = '';
-		searchInput?.blur();
+		selected = null;
 	}
 
-	function handleBackdropClick(e: MouseEvent | KeyboardEvent) {
-		// Only close if clicking directly on the backdrop, not on child elements
-		if (e.target === searchModal) {
-			endSearch();
+	function handleChange(e: CustomEvent<{ value: string | null | undefined }>) {
+		const slug = e.detail.value;
+		if (slug) {
+			goto(`/${slug}`);
+			closeSearch();
+		}
+	}
+
+	function handleInputChange(e: CustomEvent<string>) {
+		searchQuery = e.detail;
+	}
+
+	function onKeyDown(e: KeyboardEvent) {
+		if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+			e.preventDefault();
+			open = !open;
 		}
 	}
 </script>
 
-<div class="flex grow justify-end sm:justify-center lg:justify-start">
-	<TextField
-		bind:inputEl={searchInput}
-		bind:value={searchQuery}
-		placeholder="Search"
-		onfocus={() => (isSearching = true)}
-		onclick={() => (isSearching = true)}
-		classes={{
-			root: 'hidden sm:block px-2',
-			container: 'hover:border-surface-content/20'
-		}}
-	>
-		{#snippet prepend()}
-			<LucideSearch class="text-surface-content/50 mr-4" />
-		{/snippet}
-		{#snippet append()}
-			<div class="flex items-center gap-1">
-				<Kbd
-					command={env.isMac()}
-					control={!env.isMac()}
-					class="size-4 items-center justify-center text-xs"
-				/>
-				<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
-			</div>
-		{/snippet}
-	</TextField>
-</div>
-{#if isSearching && (priorQueries.current.length > 0 || searchQuery !== '')}
-	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		bind:this={searchModal}
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-		onclick={handleBackdropClick}
-		class="fixed z-9999 p-4 inset-0 flex items-center justify-center min-h-dvh rounder-xl shadow-xl"
-	>
-		<div
-			class="max-h-[48vh] w-full max-w-2xl p-6 bg-[hsl(220_10%_14%)] overflow-y-auto [scrollbar-width:thin] rounded-lg shadow-lg"
+<svelte:window onkeydown={onKeyDown} />
+
+<Button
+	icon={LucideSearch}
+	iconOnly={!$smScreen}
+	onclick={() => (open = true)}
+	class="sm:border sm:bg-black/10 sm:hover:bg-black/20 rounded-full sm:w-56 justify-start"
+>
+	<span class="flex-1 text-left max-sm:hidden">Search</span>
+	<Kbd variant="none" class="opacity-50 max-sm:hidden" command>K</Kbd>
+</Button>
+
+<Dialog
+	bind:open
+	classes={{
+		root: 'items-start mt-8 sm:mt-24',
+		backdrop: 'backdrop-blur-xs'
+	}}
+>
+	<div class="w-150 max-w-[95vw]">
+		<SelectField
+			{options}
+			bind:value={selected}
+			on:change={handleChange}
+			on:inputChange={handleInputChange}
+			placeholder="Search..."
+			inlineOptions
+			autofocus
+			loading={searchResults?.loading}
+			clearSearchOnOpen={false}
+			classes={{
+				field: {
+					container: 'border-none hover:shadow-none group-focus-within:shadow-none'
+				},
+				options: 'max-h-[min(70dvh,400px)] [scrollbar-width:thin]'
+			}}
 		>
-			{#if priorQueries.current.length > 0}
-				<div class="relative flex items-center">
-					<LucideSearch class="text-surface-content/50 mr-2" />
-					<h2 class="text-lg font-bold">Recent Searches</h2>
-					<Tooltip title="Clear recent searches" placement="top" offset={8}>
-						<LucideX
-							class="text-surface-content/50 ml-2 hover:text-primary-500"
-							onclick={() => (priorQueries.current = [])}
-						/>
-					</Tooltip>
-				</div>
-				<ul>
-					{#each priorQueries.current as priorQuery}
-						<li class="not-last:py-1/2">
-							<button
-								type="button"
-								class="w-full text-left cursor-pointer hover:border-primary-500/50 rounded-md border border-transparent p-2 transition-colors duration-200"
-								onclick={() => {
-									searchQuery = priorQuery.query;
-									searchInput?.focus();
-								}}
-							>
-								<div class="flex items-center justify-between">
-									<span>{priorQuery.query}</span>
-									<span
-										class="inline-flex items-center justify-center bg-primary-500 text-sm font-semibold px-2.5 py-0.5 rounded-full w-10"
-									>
-										{priorQuery.count}
-									</span>
-								</div>
-							</button>
-						</li>
-					{/each}
-				</ul>
-			{/if}
-			{#if priorQueries.current.length > 0 && searchResults}
-				<div class="flex-1 h-1 bg-white/20 my-4"></div>
-			{/if}
-			{#if searchResults}
-				{#if searchResults.loading}
+			{#snippet prepend()}
+				<LucideSearch class="text-surface-content/50 mr-2" />
+			{/snippet}
+
+			{#snippet option({
+				option,
+				index,
+				highlightIndex
+			}: {
+				option: SearchOption;
+				index: number;
+				highlightIndex: number;
+			})}
+				{@const result = option.result}
+				{@const isHighlighted = highlightIndex === index}
+				<MenuItem
+					scrollIntoView={{ condition: isHighlighted, onlyIfNeeded: true }}
+					class={cls('p-3 rounded-md', isHighlighted && 'bg-surface-content/10')}
+				>
+					{#if result.type === 'example' && result.component && result.example}
+						<div class="flex gap-3">
+							<img
+								src="/screenshots/{result.component}/{result.example}-light-240w.webp"
+								alt="{result.component} {result.example} example"
+								class="w-20 h-12 object-cover rounded border border-surface-content/10"
+							/>
+							<div class="flex-1 min-w-0">
+								<p class="text-base font-semibold text-surface-content/90 m-0 truncate">
+									{@html result.title}
+								</p>
+								<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-1">
+									{@html result.content[0] ?? ''}
+								</p>
+							</div>
+						</div>
+					{:else}
+						<p class="text-base font-semibold text-surface-content/90 m-0">
+							{@html result.title}
+						</p>
+						<p class="text-sm text-surface-content/60 m-0 mt-1 line-clamp-2">
+							{@html result.content[0] ?? ''}
+						</p>
+					{/if}
+				</MenuItem>
+			{/snippet}
+
+			{#snippet empty({ loading }: { loading: boolean })}
+				{#if loading}
 					<div class="text-center py-8">
 						<p class="text-surface-content/60 text-lg">Searching...</p>
 					</div>
-				{:else if searchResults.current.length > 0}
-					<ul class="grid gap-3 p-0 m-0 list-none">
-						{#each searchResults.current as result}
-							<li
-								class="not-last:py-0.5 hover:border-primary-500/50 rounded-md p-2 border-transparent border transition-border duration-200"
-							>
-								<a
-									href="/{result.slug}"
-									class="block text-xl text-surface-content/80 no-underline"
-									onclick={() => {
-										addPriorQuery(searchQuery, searchResults.current.length);
-										searchInput?.focus();
-									}}
-								>
-									<p class="text-lg font-bold">
-										{@html result.title}
-									</p>
-									<p>{@html result.content}</p>
-								</a>
-							</li>
-						{/each}
-					</ul>
-				{:else}
+				{:else if debouncedQuery.current}
 					<div class="text-center py-8">
 						<p class="text-surface-content/60 text-lg">No results found.</p>
 					</div>
 				{/if}
-			{/if}
-		</div>
+			{/snippet}
+		</SelectField>
 	</div>
-{/if}
-
-<svelte:window
-	onkeydown={(e) => {
-		if (e[env.getModifierKey()] && e.key === 'k') {
-			if (isSearching) {
-				endSearch();
-			} else {
-				e.preventDefault();
-				searchInput?.focus();
-				searchInput?.select();
-				isSearching = true;
-			}
-		} else if (e.key === 'Escape' && isSearching) {
-			endSearch();
-		}
-	}}
-/>
+</Dialog>
