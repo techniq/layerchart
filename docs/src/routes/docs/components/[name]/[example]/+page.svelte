@@ -11,8 +11,8 @@
 
 	let { data } = $props();
 
-	let example = page.params.example!;
-	let component = page.url.searchParams.get('component') ?? page.params.name!;
+	const example = $derived(page.params.example!);
+	const component = $derived(page.url.searchParams.get('component') ?? page.params.name!);
 
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
 </script>
