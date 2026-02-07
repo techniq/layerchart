@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.50.1",
+		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@unocss/preset-wind4": "^66.6.0",
 		"@unocss/svelte-scoped": "^66.6.0",
@@ -23,7 +23,7 @@
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
-		"svelte": "5.49.1",
+		"svelte": "5.50.0",
 		"svelte-check": "^4.3.6",
 		"typescript": "^5.9.3",
 		"unocss": "^66.6.0",

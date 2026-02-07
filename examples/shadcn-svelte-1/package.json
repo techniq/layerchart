@@ -14,10 +14,10 @@
 		"lint": "prettier --check ."
 	},
 	"devDependencies": {
-		"@internationalized/date": "^3.10.1",
+		"@internationalized/date": "^3.11.0",
 		"@lucide/svelte": "^0.563.1",
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.50.1",
+		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.1.18",
 		"bits-ui": "^2.15.5",
@@ -27,7 +27,7 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"svelte": "5.49.1",
+		"svelte": "5.50.0",
 		"svelte-check": "^4.3.6",
 		"tailwind-merge": "^3.4.0",
 		"tailwind-variants": "^3.2.2",
