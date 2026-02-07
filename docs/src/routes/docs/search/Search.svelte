@@ -112,24 +112,24 @@
 		backdrop: 'backdrop-blur-xs'
 	}}
 >
-	<div class="w-150 max-w-[95vw]">
-		<SelectField
-			{options}
-			bind:value={selected}
-			on:change={handleChange}
-			on:inputChange={handleInputChange}
-			placeholder="Search..."
-			inlineOptions
-			autofocus
-			loading={searchResults?.loading}
-			clearSearchOnOpen={false}
-			classes={{
-				field: {
-					container: 'border-none hover:shadow-none group-focus-within:shadow-none'
-				},
-				options: 'max-h-[min(70dvh,400px)] [scrollbar-width:thin]'
-			}}
-		>
+	<SelectField
+		{options}
+		bind:value={selected}
+		on:change={handleChange}
+		on:inputChange={handleInputChange}
+		placeholder="Search..."
+		inlineOptions
+		autofocus
+		loading={searchResults?.loading}
+		clearSearchOnOpen={false}
+		classes={{
+			root: 'w-150 max-w-[95vw] py-1',
+			field: {
+				container: 'border-none hover:shadow-none group-focus-within:shadow-none'
+			},
+			options: 'overflow-auto max-h-[min(70dvh,400px)] [scrollbar-width:thin]'
+		}}
+	>
 			{#snippet prepend()}
 				<LucideSearch class="text-surface-content/50 mr-2" />
 			{/snippet}
@@ -189,5 +189,4 @@
 				{/if}
 			{/snippet}
 		</SelectField>
-	</div>
 </Dialog>
