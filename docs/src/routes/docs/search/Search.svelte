@@ -66,8 +66,33 @@
 		util: 'Utils'
 	};
 
+	// Default options when no search query
+	const defaultOptions: SearchOption[] = [
+		{
+			label: 'Getting Started',
+			value: 'docs/getting-started',
+			group: 'Quick Links',
+			result: { title: 'Getting Started', slug: 'docs/getting-started', type: 'guide', content: 'Installation and setup guide' }
+		},
+		{
+			label: 'Examples',
+			value: 'docs/examples',
+			group: 'Quick Links',
+			result: { title: 'Examples', slug: 'docs/examples', type: 'guide', content: 'Browse example charts and visualizations' }
+		},
+		{
+			label: 'Releases',
+			value: 'docs/releases',
+			group: 'Quick Links',
+			result: { title: 'Releases', slug: 'docs/releases', type: 'guide', content: 'View changelog and release notes' }
+		}
+	];
+
 	// Convert search results to MenuOption format with grouping
 	const options = $derived.by((): SearchOption[] => {
+		// Show default options when no search query
+		if (!searchQuery) return defaultOptions;
+
 		if (!searchResults.length) return [];
 
 		// Sort by group order
@@ -204,11 +229,7 @@
 		{/snippet}
 
 		{#snippet empty()}
-			{#if !searchIndexReady}
-				<div class="text-center py-8">
-					<p class="text-surface-content/60 text-lg">Loading search...</p>
-				</div>
-			{:else if searchQuery}
+			{#if searchQuery && !searchResults.length}
 				<div class="text-center py-8">
 					<p class="text-surface-content/60 text-lg">No results found.</p>
 				</div>
