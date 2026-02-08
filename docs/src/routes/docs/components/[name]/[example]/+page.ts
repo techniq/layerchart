@@ -5,6 +5,10 @@ export async function load({ params }) {
 	const example = await loadExample(params.name, params.example);
 
 	return {
-		example
+		example,
+		// Override parent's metadata to hide the table of contents on example pages
+		metadata: {
+			toc: []
+		}
 	};
 }
