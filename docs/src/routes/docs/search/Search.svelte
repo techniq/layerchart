@@ -66,12 +66,13 @@
 		const sorted = [...searchResults].sort((a, b) => groupOrder[a.type] - groupOrder[b.type]);
 
 		// Convert to MenuOption format
-		return sorted.map((result) => ({
+		const opts = sorted.map((result) => ({
 			label: result.title,
 			value: result.slug,
 			group: groupLabels[result.type],
 			result
 		}));
+		return opts;
 	});
 
 	function closeSearch() {
@@ -107,7 +108,7 @@
 		icon={LucideSearch}
 		iconOnly={!smScreen.current}
 		onclick={() => (open = true)}
-		class="sm:border sm:bg-black/10 sm:hover:bg-black/20 rounded-full sm:w-56 justify-start"
+		class="sm:border sm:bg-surface-content/5 sm:hover:bg-surface-content/10 rounded-full sm:w-56 justify-start"
 	>
 		<span class="flex-1 text-left max-sm:hidden">Search</span>
 		<Kbd variant="none" class="opacity-50 max-sm:hidden" command>K</Kbd>
@@ -131,6 +132,7 @@
 		autofocus
 		loading={!searchIndexReady && open}
 		clearSearchOnOpen={false}
+		search={async (_text, options) => options}
 		classes={{
 			root: 'w-150 max-w-[95vw] _py-10',
 			field: {
@@ -156,7 +158,7 @@
 			{@const isHighlighted = highlightIndex === index}
 			<MenuItem
 				scrollIntoView={{ condition: isHighlighted, onlyIfNeeded: true }}
-				class={cls('p-3 rounded-md', isHighlighted && 'bg-surface-content/10')}
+				class={cls('p-3 rounded-md', isHighlighted && 'bg-surface-content/5')}
 			>
 				<div class="grid grid-cols-[80px_1fr] gap-4">
 					{#if result.type === 'example' && result.component && result.example}
