@@ -1,5 +1,5 @@
 import FlexSearch, { type Index as FlexSearchIndex } from 'flexsearch';
-import type { SearchEntry } from './searchContent';
+import { getSearchContent, type SearchEntry } from './search.remote';
 
 export type { SearchEntry };
 
@@ -8,13 +8,12 @@ let searchData: SearchEntry[] = [];
 let initialized = false;
 
 /**
- * Initialize the search index with data fetched from the API.
+ * Initialize the search index with data from the prerendered remote function.
  */
 export async function initSearch(): Promise<void> {
 	if (initialized) return;
 
-	const response = await fetch('/api/search.json');
-	searchData = await response.json();
+	searchData = await getSearchContent();
 
 	searchIndex = new FlexSearch.Index({
 		tokenize: 'forward'
