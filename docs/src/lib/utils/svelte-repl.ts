@@ -22,7 +22,8 @@ async function readFile(path: string): Promise<string> {
  */
 export async function accumulateReplFiles(source: string): Promise<File[]> {
 	// Parse relative, $lib, and absolute path imports
-	const importPattern = /import\s+(?:\{[^}]+\}|\w+)\s+from\s+['"]((?:\.|\.\.|\$lib|\/)\/[^'"]+)['"]/g;
+	const importPattern =
+		/import\s+(?:\{[^}]+\}|\w+)\s+from\s+['"]((?:\.|\.\.|\$lib|\/)\/[^'"]+)['"]/g;
 	const localImports: { importPath: string; fileName: string; resolvedPath: string }[] = [];
 	let match;
 	while ((match = importPattern.exec(source)) !== null) {
@@ -55,10 +56,23 @@ export async function accumulateReplFiles(source: string): Promise<File[]> {
 			try {
 				fileSource = await readFile(resolvedPath);
 			} catch {
-				// Try .ts extension if .js failed
-				if (resolvedPath.endsWith('.js')) {
+				const hasExtension = /\.\w+$/.test(resolvedPath);
+				if (hasExtension && resolvedPath.endsWith('.js')) {
 					actualPath = resolvedPath.replace(/\.js$/, '.ts');
 					fileSource = await readFile(actualPath);
+				} else if (!hasExtension) {
+					// Try common extensions for extensionless imports
+					let resolved: string | undefined;
+					for (const ext of ['.ts', '.js', '.svelte']) {
+						try {
+							actualPath = resolvedPath + ext;
+							fileSource = await readFile(actualPath);
+							break;
+						} catch {
+							/* try next extension */
+						}
+					}
+					if (!fileSource!) throw new Error(`File not found: ${resolvedPath}`);
 				} else {
 					throw new Error(`File not found: ${resolvedPath}`);
 				}
@@ -81,9 +95,6 @@ export async function accumulateReplFiles(source: string): Promise<File[]> {
 	return files;
 }
 
-// Temporary: use layerchart@next until layerchart is published as latest
-const useNext = true;
-
 export async function openInSvelteREPL(source: string) {
 	const files = await accumulateReplFiles(source);
 	const url = await createSvelteReplUrl(files);
@@ -91,42 +102,79 @@ export async function openInSvelteREPL(source: string) {
 }
 
 export async function createSvelteReplUrl(files: File[]) {
-	const tailwindNotice = `<p class="!hidden" style="display:flex;justify-content:space-between;background:red;padding:4px;font-size:16px;text-align:center;"><span>↖</span><span>Please toggle on Tailwind setting to see the LayerChart (<a href="https://github.com/sveltejs/svelte.dev/issues/1220" target="_blank" rel="noopener noreferrer">Issue #1220</a>)</span><span></span></p>`;
-
-	const themeCSS = `<style>
-:root {
-  color-scheme: light;
-  --color-primary: hsl(217, 91%, 60%);
-  --color-primary-content: hsl(0, 0%, 100%);
-  --color-secondary: hsl(25, 95%, 53%);
-  --color-surface-100: hsl(0, 0%, 100%);
-  --color-surface-200: hsl(220, 14%, 96%);
-  --color-surface-300: hsl(216, 12%, 84%);
-  --color-surface-content: hsl(221, 39%, 11%);
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --color-primary: hsl(217, 91%, 60%);
-    --color-primary-content: hsl(0, 0%, 100%);
-    --color-secondary: hsl(25, 95%, 53%);
-    --color-surface-100: hsl(240, 4%, 16%);
-    --color-surface-200: hsl(240, 6%, 10%);
-    --color-surface-300: hsl(240, 10%, 4%);
-    --color-surface-content: hsl(240, 5%, 96%);
-  }
-}
-</style>`;
+	const useTailWind = false;
+	// Temporary: use layerchart@next until layerchart is published as latest
+	const useNext = true;
+	// Temporary: use container until layerchart-docs2 is published to latest
+	const useContainer = true;
+	// Temporary add tailwind notice to the beginning of markup
+	const addTailwindNotice = false;
 
 	const playgroundFiles = files.map((f) => {
-		let contents =
-			f.name === 'App.svelte'
-				? f.source.replace(/<\/script>(\s*)(?!.*<\/script>)/s, `</script>\n\n${tailwindNotice}\n`) +
-					`\n${themeCSS}\n`
-				: f.source;
-		if (useNext) {
-			contents = contents.replace(/from\s+['"]layerchart['"]/g, "from 'layerchart@next'");
+		let contents = f.source;
+		if (f.name === 'App.svelte') {
+			const scriptsection = contents.match(/<script[^>]*>[\s\S]*?<\/script>/)?.[0];
+			if (scriptsection) contents = contents.replace(scriptsection, '');
+			if (useContainer) {
+				// add container div with possible height and width attributes
+				const componentOne = contents.match(/<[A-Z]\w*\b[\s\S]*?>/)?.[0];
+				const height = componentOne?.match(/height=\{(\d+)\}/)?.[1];
+				const width = componentOne?.match(/width=\{(\d+)\}/)?.[1];
+				const attrs = [height && `style:height="${height}px"`, width && `style:width="${width}px"`]
+					.filter(Boolean)
+					.join(' ');
+				const markup = contents.trim().split('\n').join('\n\t');
+				contents = `${scriptsection ?? ''}\n<div${attrs ? ` ${attrs}` : ''}>\n\t${markup}\n</div>\n`;
+			}
+
+			if (useNext) {
+				contents = contents.replace(/from\s+['"]layerchart['"]/g, "from 'layerchart@next'");
+			}
+
+			if (useTailWind && addTailwindNotice) {
+				// Add conditionally shown tailwind notice to the beginning of markup
+				contents = contents.replace(
+					/(<\/script>)/,
+					`$1\n\n<p class="!hidden" style="display:flex;justify-content:space-between;background:red;padding:4px;font-size:16px;text-align:center;"><span>↖</span><span>Please toggle on Tailwind setting to see the LayerChart (<a href="https://github.com/sveltejs/svelte.dev/issues/1220" target="_blank" rel="noopener noreferrer">Issue #1220</a>)</span><span></span></p>`
+				);
+			}
+
+			// Add theme CSS
+			contents += `\n<style>
+	:global(.lc-root-container) {
+		color-scheme: light;
+		--color-primary: hsl(217, 91%, 60%);
+		--color-primary-content: hsl(0, 0%, 100%);
+		--color-secondary: hsl(25, 95%, 53%);
+		--color-surface-100: hsl(0, 0%, 100%);
+		--color-surface-200: hsl(220, 14%, 96%);
+		--color-surface-300: hsl(216, 12%, 84%);
+		--color-surface-content: hsl(221, 39%, 11%);
+	}
+	@media (prefers-color-scheme: dark) {
+		:global(.lc-root-container) {
+			color-scheme: dark;
+			--color-primary: hsl(217, 91%, 60%);
+			--color-primary-content: hsl(0, 0%, 100%);
+			--color-secondary: hsl(25, 95%, 53%);
+			--color-surface-100: hsl(240, 4%, 16%);
+			--color-surface-200: hsl(240, 6%, 10%);
+			--color-surface-300: hsl(240, 10%, 4%);
+			--color-surface-content: hsl(240, 5%, 96%);
 		}
+	}
+	:global(.lc-root-container) {
+		--color-apples: hsl(142, 71%, 45%);
+		--color-bananas: hsl(48, 96%, 53%);
+		--color-cherries: hsl(0, 84%, 60%);
+		--color-grapes: hsl(271, 91%, 65%);
+		--color-oranges: hsl(25, 95%, 53%);	
+	}
+</style>
+`;
+			contents = contents.trim();
+		}
+
 		return {
 			type: 'file',
 			name: f.name,
@@ -135,7 +183,7 @@ export async function createSvelteReplUrl(files: File[]) {
 			text: true
 		};
 	});
-	const data = { tailwind: true, files: playgroundFiles };
+	const data = { tailwind: useTailWind, files: playgroundFiles };
 	const json = JSON.stringify(data);
 
 	// Convert string to Uint8Array
