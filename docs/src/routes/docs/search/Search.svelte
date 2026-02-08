@@ -2,7 +2,7 @@
 	import { cls } from '@layerstack/tailwind';
 	import { MediaQueryPresets } from '@layerstack/svelte-state';
 	import { goto } from '$app/navigation';
-	import { initSearch, search, type SearchEntry } from './search';
+	import type { SearchEntry } from './searchContent';
 	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
 	import ExampleScreenshot from '$lib/components/ExampleScreenshot.svelte';
 
@@ -30,17 +30,25 @@
 	let selected = $state<string | null>(null);
 	let searchIndexReady = $state(false);
 
+	// Dynamically imported search function (to avoid bundling FlexSearch in server build)
+	let searchFn: ((query: string) => SearchEntry[]) | null = $state(null);
+
 	// Initialize search index when dialog opens
 	$effect(() => {
 		if (open && !searchIndexReady) {
-			initSearch().then(() => {
+			import('./search').then(async (mod) => {
+				await mod.initSearch();
+				searchFn = mod.search;
 				searchIndexReady = true;
 			});
 		}
 	});
 
 	// Search results from client-side index (instant, no debounce needed)
-	const searchResults = $derived(searchIndexReady && searchQuery ? search(searchQuery) : []);
+	const searchResults = $derived.by((): SearchEntry[] => {
+		if (!searchIndexReady || !searchQuery || !searchFn) return [];
+		return searchFn(searchQuery);
+	});
 
 	// Group order for sorting
 	const groupOrder: Record<SearchEntry['type'], number> = {

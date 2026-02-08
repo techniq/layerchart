@@ -3,13 +3,12 @@ import type { SearchEntry } from './searchContent';
 
 export type { SearchEntry };
 
-// Single index combining title and content (matching original behavior)
 let searchIndex: FlexSearchIndex;
 let searchData: SearchEntry[] = [];
 let initialized = false;
 
 /**
- * Initialize the search index with data fetched from the API
+ * Initialize the search index with data fetched from the API.
  */
 export async function initSearch(): Promise<void> {
 	if (initialized) return;
