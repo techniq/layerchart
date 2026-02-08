@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { cls } from '@layerstack/tailwind';
 	import { MediaQueryPresets } from '@layerstack/svelte-state';
-	import { Debounced } from 'runed';
 	import { goto } from '$app/navigation';
-	import { search, type SearchEntry } from './search.remote';
+	import { initSearch, search, type SearchEntry } from './search';
 	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
+	import ExampleScreenshot from '$lib/components/ExampleScreenshot.svelte';
+
 	import LucideSearch from '~icons/lucide/search';
 	import LucideGlobe from '~icons/lucide/globe';
 	import LucideBlocks from '~icons/lucide/blocks';
 	import LucideParentheses from '~icons/lucide/parentheses';
-	import ExampleScreenshot from '$lib/components/ExampleScreenshot.svelte';
 
 	let { hideInput = false }: { hideInput?: boolean } = $props();
 
@@ -28,14 +28,19 @@
 	let open = $state(false);
 	let searchQuery = $state('');
 	let selected = $state<string | null>(null);
+	let searchIndexReady = $state(false);
 
-	// Debounced query string for searching
-	const debouncedQuery = new Debounced(() => searchQuery, 300);
+	// Initialize search index when dialog opens
+	$effect(() => {
+		if (open && !searchIndexReady) {
+			initSearch().then(() => {
+				searchIndexReady = true;
+			});
+		}
+	});
 
-	// Use the remote query directly - it has .loading, .current, .error properties
-	const searchResults = $derived(
-		debouncedQuery.current ? search({ query: debouncedQuery.current }) : null
-	);
+	// Search results from client-side index (instant, no debounce needed)
+	const searchResults = $derived(searchIndexReady && searchQuery ? search(searchQuery) : []);
 
 	// Group order for sorting
 	const groupOrder: Record<SearchEntry['type'], number> = {
@@ -55,12 +60,10 @@
 
 	// Convert search results to MenuOption format with grouping
 	const options = $derived.by((): SearchOption[] => {
-		if (!searchResults?.current) return [];
-
-		const results = searchResults.current;
+		if (!searchResults.length) return [];
 
 		// Sort by group order
-		const sorted = [...results].sort((a, b) => groupOrder[a.type] - groupOrder[b.type]);
+		const sorted = [...searchResults].sort((a, b) => groupOrder[a.type] - groupOrder[b.type]);
 
 		// Convert to MenuOption format
 		return sorted.map((result) => ({
@@ -126,7 +129,7 @@
 		placeholder="Search for anything..."
 		inlineOptions
 		autofocus
-		loading={searchResults?.loading}
+		loading={!searchIndexReady && open}
 		clearSearchOnOpen={false}
 		classes={{
 			root: 'w-150 max-w-[95vw] _py-10',
@@ -190,12 +193,12 @@
 			</MenuItem>
 		{/snippet}
 
-		{#snippet empty({ loading }: { loading: boolean })}
-			{#if loading}
+		{#snippet empty()}
+			{#if !searchIndexReady}
 				<div class="text-center py-8">
-					<p class="text-surface-content/60 text-lg">Searching...</p>
+					<p class="text-surface-content/60 text-lg">Loading search...</p>
 				</div>
-			{:else if debouncedQuery.current}
+			{:else if searchQuery}
 				<div class="text-center py-8">
 					<p class="text-surface-content/60 text-lg">No results found.</p>
 				</div>
