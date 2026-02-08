@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "horizontal-average-annotation-rule",
-      "path": "/example/Bars/horizontal-average-annotation-rule",
+      "title": "horizontal average annotation rule",
+      "path": "/docs/components/Bars/horizontal-average-annotation-rule",
       "components": [
         {
           "component": "Chart",
@@ -39,7 +40,8 @@
     },
     {
       "name": "horizontal-basic",
-      "path": "/example/Bars/horizontal-basic",
+      "title": "horizontal basic",
+      "path": "/docs/components/Bars/horizontal-basic",
       "components": [
         {
           "component": "Chart",
@@ -65,7 +67,8 @@
     },
     {
       "name": "horizontal-calculated-value-domain-negative",
-      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
+      "title": "horizontal calculated value domain negative",
+      "path": "/docs/components/Bars/horizontal-calculated-value-domain-negative",
       "components": [
         {
           "component": "Chart",
@@ -91,7 +94,8 @@
     },
     {
       "name": "horizontal-calculated-value-domain-positive",
-      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
+      "title": "horizontal calculated value domain positive",
+      "path": "/docs/components/Bars/horizontal-calculated-value-domain-positive",
       "components": [
         {
           "component": "Chart",
@@ -117,7 +121,8 @@
     },
     {
       "name": "horizontal-candlestick-bars",
-      "path": "/example/Bars/horizontal-candlestick-bars",
+      "title": "horizontal candlestick bars",
+      "path": "/docs/components/Bars/horizontal-candlestick-bars",
       "components": [
         {
           "component": "Chart",
@@ -153,7 +158,8 @@
     },
     {
       "name": "horizontal-click-handler",
-      "path": "/example/Bars/horizontal-click-handler",
+      "title": "horizontal click handler",
+      "path": "/docs/components/Bars/horizontal-click-handler",
       "components": [
         {
           "component": "Chart",
@@ -184,7 +190,8 @@
     },
     {
       "name": "horizontal-customize-individual-styles",
-      "path": "/example/Bars/horizontal-customize-individual-styles",
+      "title": "horizontal customize individual styles",
+      "path": "/docs/components/Bars/horizontal-customize-individual-styles",
       "components": [
         {
           "component": "Chart",
@@ -215,7 +222,8 @@
     },
     {
       "name": "horizontal-gradient",
-      "path": "/example/Bars/horizontal-gradient",
+      "title": "horizontal gradient",
+      "path": "/docs/components/Bars/horizontal-gradient",
       "components": [
         {
           "component": "Chart",
@@ -246,7 +254,8 @@
     },
     {
       "name": "horizontal-grouped",
-      "path": "/example/Bars/horizontal-grouped",
+      "title": "horizontal grouped",
+      "path": "/docs/components/Bars/horizontal-grouped",
       "components": [
         {
           "component": "Chart",
@@ -282,7 +291,8 @@
     },
     {
       "name": "horizontal-grouped-and-stacked",
-      "path": "/example/Bars/horizontal-grouped-and-stacked",
+      "title": "horizontal grouped and stacked",
+      "path": "/docs/components/Bars/horizontal-grouped-and-stacked",
       "components": [
         {
           "component": "Chart",
@@ -318,7 +328,8 @@
     },
     {
       "name": "horizontal-grouped-stacked-or-both-transition",
-      "path": "/example/Bars/horizontal-grouped-stacked-or-both-transition",
+      "title": "horizontal grouped stacked or both transition",
+      "path": "/docs/components/Bars/horizontal-grouped-stacked-or-both-transition",
       "components": [
         {
           "component": "Chart",
@@ -354,7 +365,8 @@
     },
     {
       "name": "horizontal-highlight-individual-bar",
-      "path": "/example/Bars/horizontal-highlight-individual-bar",
+      "title": "horizontal highlight individual bar",
+      "path": "/docs/components/Bars/horizontal-highlight-individual-bar",
       "components": [
         {
           "component": "Chart",
@@ -390,7 +402,8 @@
     },
     {
       "name": "horizontal-highlight-individual-bar-line",
-      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
+      "title": "horizontal highlight individual bar line",
+      "path": "/docs/components/Bars/horizontal-highlight-individual-bar-line",
       "components": [
         {
           "component": "Chart",
@@ -421,7 +434,8 @@
     },
     {
       "name": "horizontal-inside-labels",
-      "path": "/example/Bars/horizontal-inside-labels",
+      "title": "horizontal inside labels",
+      "path": "/docs/components/Bars/horizontal-inside-labels",
       "components": [
         {
           "component": "Chart",
@@ -457,7 +471,8 @@
     },
     {
       "name": "horizontal-limit-ticks-count",
-      "path": "/example/Bars/horizontal-limit-ticks-count",
+      "title": "horizontal limit ticks count",
+      "path": "/docs/components/Bars/horizontal-limit-ticks-count",
       "components": [
         {
           "component": "Chart",
@@ -483,7 +498,8 @@
     },
     {
       "name": "horizontal-limit-ticks-second-scale",
-      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
+      "title": "horizontal limit ticks second scale",
+      "path": "/docs/components/Bars/horizontal-limit-ticks-second-scale",
       "components": [
         {
           "component": "Chart",
@@ -509,7 +525,8 @@
     },
     {
       "name": "horizontal-multiple-diverging",
-      "path": "/example/Bars/horizontal-multiple-diverging",
+      "title": "horizontal multiple diverging",
+      "path": "/docs/components/Bars/horizontal-multiple-diverging",
       "components": [
         {
           "component": "Chart",
@@ -550,7 +567,8 @@
     },
     {
       "name": "horizontal-multiple-overlapping",
-      "path": "/example/Bars/horizontal-multiple-overlapping",
+      "title": "horizontal multiple overlapping",
+      "path": "/docs/components/Bars/horizontal-multiple-overlapping",
       "components": [
         {
           "component": "Chart",
@@ -586,7 +604,8 @@
     },
     {
       "name": "horizontal-outside-labels-default",
-      "path": "/example/Bars/horizontal-outside-labels-default",
+      "title": "horizontal outside labels default",
+      "path": "/docs/components/Bars/horizontal-outside-labels-default",
       "components": [
         {
           "component": "Chart",
@@ -622,7 +641,8 @@
     },
     {
       "name": "horizontal-rounded-right-only",
-      "path": "/example/Bars/horizontal-rounded-right-only",
+      "title": "horizontal rounded right only",
+      "path": "/docs/components/Bars/horizontal-rounded-right-only",
       "components": [
         {
           "component": "Chart",
@@ -648,7 +668,8 @@
     },
     {
       "name": "horizontal-stacked",
-      "path": "/example/Bars/horizontal-stacked",
+      "title": "horizontal stacked",
+      "path": "/docs/components/Bars/horizontal-stacked",
       "components": [
         {
           "component": "Chart",
@@ -684,7 +705,8 @@
     },
     {
       "name": "horizontal-stacked-percent",
-      "path": "/example/Bars/horizontal-stacked-percent",
+      "title": "horizontal stacked percent",
+      "path": "/docs/components/Bars/horizontal-stacked-percent",
       "components": [
         {
           "component": "Chart",
@@ -720,7 +742,8 @@
     },
     {
       "name": "horizontal-stagger-tween-on-mount",
-      "path": "/example/Bars/horizontal-stagger-tween-on-mount",
+      "title": "horizontal stagger tween on mount",
+      "path": "/docs/components/Bars/horizontal-stagger-tween-on-mount",
       "components": [
         {
           "component": "Chart",
@@ -746,7 +769,8 @@
     },
     {
       "name": "horizontal-time-scale-with-inset",
-      "path": "/example/Bars/horizontal-time-scale-with-inset",
+      "title": "horizontal time scale with inset",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-inset",
       "components": [
         {
           "component": "Chart",
@@ -772,7 +796,8 @@
     },
     {
       "name": "horizontal-time-scale-with-interval",
-      "path": "/example/Bars/horizontal-time-scale-with-interval",
+      "title": "horizontal time scale with interval",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-interval",
       "components": [
         {
           "component": "Chart",
@@ -798,7 +823,8 @@
     },
     {
       "name": "horizontal-time-scale-with-missing-data",
-      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
+      "title": "horizontal time scale with missing data",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-missing-data",
       "components": [
         {
           "component": "Chart",
@@ -824,7 +850,8 @@
     },
     {
       "name": "horizontal-tooltip-and-bar-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
+      "title": "horizontal tooltip and bar highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-bar-highlight",
       "components": [
         {
           "component": "Chart",
@@ -860,7 +887,8 @@
     },
     {
       "name": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "path": "/example/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "title": "horizontal tooltip and click handlers for individual stack grouped bar",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "components": [
         {
           "component": "Chart",
@@ -891,7 +919,8 @@
     },
     {
       "name": "horizontal-tooltip-and-clipped-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "title": "horizontal tooltip and clipped highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-clipped-highlight",
       "components": [
         {
           "component": "Chart",
@@ -932,7 +961,8 @@
     },
     {
       "name": "horizontal-tooltip-and-highlight",
-      "path": "/example/Bars/horizontal-tooltip-and-highlight",
+      "title": "horizontal tooltip and highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-highlight",
       "components": [
         {
           "component": "Chart",
@@ -968,7 +998,8 @@
     },
     {
       "name": "horizontal-tween-on-mount",
-      "path": "/example/Bars/horizontal-tween-on-mount",
+      "title": "horizontal tween on mount",
+      "path": "/docs/components/Bars/horizontal-tween-on-mount",
       "components": [
         {
           "component": "Chart",
@@ -994,7 +1025,8 @@
     },
     {
       "name": "horizontal-with-grid-on-top",
-      "path": "/example/Bars/horizontal-with-grid-on-top",
+      "title": "horizontal with grid on top",
+      "path": "/docs/components/Bars/horizontal-with-grid-on-top",
       "components": [
         {
           "component": "Chart",
@@ -1020,7 +1052,8 @@
     },
     {
       "name": "horizontal-with-grid-on-top-mix-blend",
-      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
+      "title": "horizontal with grid on top mix blend",
+      "path": "/docs/components/Bars/horizontal-with-grid-on-top-mix-blend",
       "components": [
         {
           "component": "Chart",
@@ -1046,7 +1079,8 @@
     },
     {
       "name": "vertical-average-annotation-rule",
-      "path": "/example/Bars/vertical-average-annotation-rule",
+      "title": "vertical average annotation rule",
+      "path": "/docs/components/Bars/vertical-average-annotation-rule",
       "components": [
         {
           "component": "Chart",
@@ -1082,7 +1116,8 @@
     },
     {
       "name": "vertical-basic",
-      "path": "/example/Bars/vertical-basic",
+      "title": "vertical basic",
+      "path": "/docs/components/Bars/vertical-basic",
       "components": [
         {
           "component": "Chart",
@@ -1108,7 +1143,8 @@
     },
     {
       "name": "vertical-calculated-value-domain-negative",
-      "path": "/example/Bars/vertical-calculated-value-domain-negative",
+      "title": "vertical calculated value domain negative",
+      "path": "/docs/components/Bars/vertical-calculated-value-domain-negative",
       "components": [
         {
           "component": "Chart",
@@ -1134,7 +1170,8 @@
     },
     {
       "name": "vertical-calculated-value-domain-positive",
-      "path": "/example/Bars/vertical-calculated-value-domain-positive",
+      "title": "vertical calculated value domain positive",
+      "path": "/docs/components/Bars/vertical-calculated-value-domain-positive",
       "components": [
         {
           "component": "Chart",
@@ -1160,7 +1197,8 @@
     },
     {
       "name": "vertical-click-handler",
-      "path": "/example/Bars/vertical-click-handler",
+      "title": "vertical click handler",
+      "path": "/docs/components/Bars/vertical-click-handler",
       "components": [
         {
           "component": "Chart",
@@ -1191,7 +1229,8 @@
     },
     {
       "name": "vertical-customize-individual-styles",
-      "path": "/example/Bars/vertical-customize-individual-styles",
+      "title": "vertical customize individual styles",
+      "path": "/docs/components/Bars/vertical-customize-individual-styles",
       "components": [
         {
           "component": "Chart",
@@ -1222,7 +1261,8 @@
     },
     {
       "name": "vertical-gradient",
-      "path": "/example/Bars/vertical-gradient",
+      "title": "vertical gradient",
+      "path": "/docs/components/Bars/vertical-gradient",
       "components": [
         {
           "component": "Chart",
@@ -1253,7 +1293,8 @@
     },
     {
       "name": "vertical-grouped",
-      "path": "/example/Bars/vertical-grouped",
+      "title": "vertical grouped",
+      "path": "/docs/components/Bars/vertical-grouped",
       "components": [
         {
           "component": "Chart",
@@ -1289,7 +1330,8 @@
     },
     {
       "name": "vertical-grouped-and-stacked",
-      "path": "/example/Bars/vertical-grouped-and-stacked",
+      "title": "vertical grouped and stacked",
+      "path": "/docs/components/Bars/vertical-grouped-and-stacked",
       "components": [
         {
           "component": "Chart",
@@ -1325,7 +1367,8 @@
     },
     {
       "name": "vertical-grouped-stacked-or-both-transition",
-      "path": "/example/Bars/vertical-grouped-stacked-or-both-transition",
+      "title": "vertical grouped stacked or both transition",
+      "path": "/docs/components/Bars/vertical-grouped-stacked-or-both-transition",
       "components": [
         {
           "component": "Chart",
@@ -1361,7 +1404,8 @@
     },
     {
       "name": "vertical-highlight-individual-bar",
-      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "title": "vertical highlight individual bar",
+      "path": "/docs/components/Bars/vertical-highlight-individual-bar",
       "components": [
         {
           "component": "Chart",
@@ -1397,7 +1441,8 @@
     },
     {
       "name": "vertical-highlight-individual-bar-line",
-      "path": "/example/Bars/vertical-highlight-individual-bar-line",
+      "title": "vertical highlight individual bar line",
+      "path": "/docs/components/Bars/vertical-highlight-individual-bar-line",
       "components": [
         {
           "component": "Chart",
@@ -1428,7 +1473,8 @@
     },
     {
       "name": "vertical-inside-labels",
-      "path": "/example/Bars/vertical-inside-labels",
+      "title": "vertical inside labels",
+      "path": "/docs/components/Bars/vertical-inside-labels",
       "components": [
         {
           "component": "Chart",
@@ -1464,7 +1510,8 @@
     },
     {
       "name": "vertical-limit-ticks-count",
-      "path": "/example/Bars/vertical-limit-ticks-count",
+      "title": "vertical limit ticks count",
+      "path": "/docs/components/Bars/vertical-limit-ticks-count",
       "components": [
         {
           "component": "Chart",
@@ -1490,7 +1537,8 @@
     },
     {
       "name": "vertical-limit-ticks-second-scale",
-      "path": "/example/Bars/vertical-limit-ticks-second-scale",
+      "title": "vertical limit ticks second scale",
+      "path": "/docs/components/Bars/vertical-limit-ticks-second-scale",
       "components": [
         {
           "component": "Chart",
@@ -1516,7 +1564,8 @@
     },
     {
       "name": "vertical-multiple-diverging",
-      "path": "/example/Bars/vertical-multiple-diverging",
+      "title": "vertical multiple diverging",
+      "path": "/docs/components/Bars/vertical-multiple-diverging",
       "components": [
         {
           "component": "Chart",
@@ -1557,7 +1606,8 @@
     },
     {
       "name": "vertical-multiple-diverging-rounded-specific",
-      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "title": "vertical multiple diverging rounded specific",
+      "path": "/docs/components/Bars/vertical-multiple-diverging-rounded-specific",
       "components": [
         {
           "component": "Chart",
@@ -1598,7 +1648,8 @@
     },
     {
       "name": "vertical-multiple-overlapping",
-      "path": "/example/Bars/vertical-multiple-overlapping",
+      "title": "vertical multiple overlapping",
+      "path": "/docs/components/Bars/vertical-multiple-overlapping",
       "components": [
         {
           "component": "Chart",
@@ -1634,7 +1685,8 @@
     },
     {
       "name": "vertical-outside-labels-default",
-      "path": "/example/Bars/vertical-outside-labels-default",
+      "title": "vertical outside labels default",
+      "path": "/docs/components/Bars/vertical-outside-labels-default",
       "components": [
         {
           "component": "Chart",
@@ -1670,7 +1722,8 @@
     },
     {
       "name": "vertical-rounded-top-only",
-      "path": "/example/Bars/vertical-rounded-top-only",
+      "title": "vertical rounded top only",
+      "path": "/docs/components/Bars/vertical-rounded-top-only",
       "components": [
         {
           "component": "Chart",
@@ -1696,7 +1749,8 @@
     },
     {
       "name": "vertical-stacked",
-      "path": "/example/Bars/vertical-stacked",
+      "title": "vertical stacked",
+      "path": "/docs/components/Bars/vertical-stacked",
       "components": [
         {
           "component": "Chart",
@@ -1732,7 +1786,8 @@
     },
     {
       "name": "vertical-stacked-percent",
-      "path": "/example/Bars/vertical-stacked-percent",
+      "title": "vertical stacked percent",
+      "path": "/docs/components/Bars/vertical-stacked-percent",
       "components": [
         {
           "component": "Chart",
@@ -1768,7 +1823,8 @@
     },
     {
       "name": "vertical-stagger-tween-on-mount",
-      "path": "/example/Bars/vertical-stagger-tween-on-mount",
+      "title": "vertical stagger tween on mount",
+      "path": "/docs/components/Bars/vertical-stagger-tween-on-mount",
       "components": [
         {
           "component": "Chart",
@@ -1794,7 +1850,8 @@
     },
     {
       "name": "vertical-stagger-tween-on-mount-rounded-edge",
-      "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+      "title": "vertical stagger tween on mount rounded edge",
+      "path": "/docs/components/Bars/vertical-stagger-tween-on-mount-rounded-edge",
       "components": [
         {
           "component": "Chart",
@@ -1820,7 +1877,8 @@
     },
     {
       "name": "vertical-time-scale-with-inset",
-      "path": "/example/Bars/vertical-time-scale-with-inset",
+      "title": "vertical time scale with inset",
+      "path": "/docs/components/Bars/vertical-time-scale-with-inset",
       "components": [
         {
           "component": "Chart",
@@ -1846,7 +1904,8 @@
     },
     {
       "name": "vertical-time-scale-with-interval",
-      "path": "/example/Bars/vertical-time-scale-with-interval",
+      "title": "vertical time scale with interval",
+      "path": "/docs/components/Bars/vertical-time-scale-with-interval",
       "components": [
         {
           "component": "Chart",
@@ -1872,7 +1931,8 @@
     },
     {
       "name": "vertical-time-scale-with-interval-months",
-      "path": "/example/Bars/vertical-time-scale-with-interval-months",
+      "title": "vertical time scale with interval months",
+      "path": "/docs/components/Bars/vertical-time-scale-with-interval-months",
       "components": [
         {
           "component": "Chart",
@@ -1898,7 +1958,8 @@
     },
     {
       "name": "vertical-time-scale-with-missing-data",
-      "path": "/example/Bars/vertical-time-scale-with-missing-data",
+      "title": "vertical time scale with missing data",
+      "path": "/docs/components/Bars/vertical-time-scale-with-missing-data",
       "components": [
         {
           "component": "Chart",
@@ -1924,7 +1985,8 @@
     },
     {
       "name": "vertical-tooltip-and-bar-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+      "title": "vertical tooltip and bar highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-bar-highlight",
       "components": [
         {
           "component": "Chart",
@@ -1960,7 +2022,8 @@
     },
     {
       "name": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
-      "path": "/example/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "title": "vertical tooltip and click handlers for individual stack grouped bar",
+      "path": "/docs/components/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
       "components": [
         {
           "component": "Chart",
@@ -1991,7 +2054,8 @@
     },
     {
       "name": "vertical-tooltip-and-clipped-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "title": "vertical tooltip and clipped highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-clipped-highlight",
       "components": [
         {
           "component": "Chart",
@@ -2032,7 +2096,8 @@
     },
     {
       "name": "vertical-tooltip-and-highlight",
-      "path": "/example/Bars/vertical-tooltip-and-highlight",
+      "title": "vertical tooltip and highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-highlight",
       "components": [
         {
           "component": "Chart",
@@ -2068,7 +2133,8 @@
     },
     {
       "name": "vertical-tween-on-mount",
-      "path": "/example/Bars/vertical-tween-on-mount",
+      "title": "vertical tween on mount",
+      "path": "/docs/components/Bars/vertical-tween-on-mount",
       "components": [
         {
           "component": "Chart",
@@ -2094,7 +2160,8 @@
     },
     {
       "name": "vertical-tween-on-mount-rounded-edge",
-      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+      "title": "vertical tween on mount rounded edge",
+      "path": "/docs/components/Bars/vertical-tween-on-mount-rounded-edge",
       "components": [
         {
           "component": "Chart",
@@ -2120,7 +2187,8 @@
     },
     {
       "name": "vertical-with-grid-on-top",
-      "path": "/example/Bars/vertical-with-grid-on-top",
+      "title": "vertical with grid on top",
+      "path": "/docs/components/Bars/vertical-with-grid-on-top",
       "components": [
         {
           "component": "Chart",
@@ -2146,7 +2214,8 @@
     },
     {
       "name": "vertical-with-grid-on-top-mix-blend",
-      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+      "title": "vertical with grid on top mix blend",
+      "path": "/docs/components/Bars/vertical-with-grid-on-top-mix-blend",
       "components": [
         {
           "component": "Chart",
@@ -2175,549 +2244,549 @@
     {
       "example": "custom-chart",
       "component": "BarChart",
-      "path": "/example/BarChart/custom-chart",
+      "path": "/docs/components/BarChart/custom-chart",
       "lineNumber": 21,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "gradient",
       "component": "BarChart",
-      "path": "/example/BarChart/gradient",
+      "path": "/docs/components/BarChart/gradient",
       "lineNumber": 20,
       "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
     },
     {
       "example": "oscilloscope-frequency",
       "component": "BarChart",
-      "path": "/example/BarChart/oscilloscope-frequency",
+      "path": "/docs/components/BarChart/oscilloscope-frequency",
       "lineNumber": 119,
       "line": "<Bars radius={1} fill={gradient} />"
     },
     {
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-average-annotation-rule",
+      "path": "/docs/components/Bars/horizontal-average-annotation-rule",
       "lineNumber": 33,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-basic",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-basic",
+      "path": "/docs/components/Bars/horizontal-basic",
       "lineNumber": 30,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-calculated-value-domain-negative",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-calculated-value-domain-negative",
+      "path": "/docs/components/Bars/horizontal-calculated-value-domain-negative",
       "lineNumber": 23,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-calculated-value-domain-positive",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-calculated-value-domain-positive",
+      "path": "/docs/components/Bars/horizontal-calculated-value-domain-positive",
       "lineNumber": 23,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-candlestick-bars",
+      "path": "/docs/components/Bars/horizontal-candlestick-bars",
       "lineNumber": 28,
       "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
     },
     {
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-candlestick-bars",
+      "path": "/docs/components/Bars/horizontal-candlestick-bars",
       "lineNumber": 29,
       "line": "<Bars y={['open', 'close']} insets={{ x: 0.5 }} />"
     },
     {
       "example": "horizontal-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-click-handler",
+      "path": "/docs/components/Bars/horizontal-click-handler",
       "lineNumber": 36,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-customize-individual-styles",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-customize-individual-styles",
+      "path": "/docs/components/Bars/horizontal-customize-individual-styles",
       "lineNumber": 30,
       "line": "<Bars>"
     },
     {
       "example": "horizontal-gradient",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-gradient",
+      "path": "/docs/components/Bars/horizontal-gradient",
       "lineNumber": 32,
       "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
     },
     {
       "example": "horizontal-grouped",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-grouped",
+      "path": "/docs/components/Bars/horizontal-grouped",
       "lineNumber": 49,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "horizontal-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-grouped-and-stacked",
+      "path": "/docs/components/Bars/horizontal-grouped-and-stacked",
       "lineNumber": 54,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "horizontal-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-highlight-individual-bar",
+      "path": "/docs/components/Bars/horizontal-highlight-individual-bar",
       "lineNumber": 39,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-highlight-individual-bar-line",
+      "path": "/docs/components/Bars/horizontal-highlight-individual-bar-line",
       "lineNumber": 30,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-inside-labels",
+      "path": "/docs/components/Bars/horizontal-inside-labels",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-limit-ticks-count",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-limit-ticks-count",
+      "path": "/docs/components/Bars/horizontal-limit-ticks-count",
       "lineNumber": 30,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-limit-ticks-second-scale",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-limit-ticks-second-scale",
+      "path": "/docs/components/Bars/horizontal-limit-ticks-second-scale",
       "lineNumber": 34,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-multiple-diverging",
+      "path": "/docs/components/Bars/horizontal-multiple-diverging",
       "lineNumber": 30,
       "line": "<Bars x=\"value\" rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-multiple-diverging",
+      "path": "/docs/components/Bars/horizontal-multiple-diverging",
       "lineNumber": 31,
       "line": "<Bars x={(d) => -d.baseline} rounded=\"left\" strokeWidth={1} class=\"fill-secondary\" />"
     },
     {
       "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-multiple-overlapping",
+      "path": "/docs/components/Bars/horizontal-multiple-overlapping",
       "lineNumber": 31,
       "line": "<Bars x=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
     },
     {
       "example": "horizontal-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-multiple-overlapping",
+      "path": "/docs/components/Bars/horizontal-multiple-overlapping",
       "lineNumber": 32,
       "line": "<Bars x=\"value\" strokeWidth={1} insets={{ y: 8 }} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-outside-labels-default",
+      "path": "/docs/components/Bars/horizontal-outside-labels-default",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-rounded-right-only",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-rounded-right-only",
+      "path": "/docs/components/Bars/horizontal-rounded-right-only",
       "lineNumber": 30,
       "line": "<Bars radius={4} rounded=\"right\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-stacked",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-stacked",
+      "path": "/docs/components/Bars/horizontal-stacked",
       "lineNumber": 46,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "horizontal-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-stacked-percent",
+      "path": "/docs/components/Bars/horizontal-stacked-percent",
       "lineNumber": 51,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "horizontal-time-scale-with-inset",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-time-scale-with-inset",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-inset",
       "lineNumber": 30,
       "line": "<Bars class=\"fill-primary\" insets={{ y: 2 }} />"
     },
     {
       "example": "horizontal-time-scale-with-interval",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-time-scale-with-interval",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-interval",
       "lineNumber": 30,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-time-scale-with-missing-data",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-time-scale-with-missing-data",
+      "path": "/docs/components/Bars/horizontal-time-scale-with-missing-data",
       "lineNumber": 30,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tooltip-and-bar-highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-bar-highlight",
       "lineNumber": 32,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 32,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 36,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tooltip-and-highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-highlight",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tween-on-mount",
+      "path": "/docs/components/Bars/horizontal-tween-on-mount",
       "lineNumber": 37,
       "line": "<Bars"
     },
     {
       "example": "horizontal-with-grid-on-top",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-with-grid-on-top",
+      "path": "/docs/components/Bars/horizontal-with-grid-on-top",
       "lineNumber": 28,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "horizontal-with-grid-on-top-mix-blend",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-with-grid-on-top-mix-blend",
+      "path": "/docs/components/Bars/horizontal-with-grid-on-top-mix-blend",
       "lineNumber": 28,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-average-annotation-rule",
       "component": "Bars",
-      "path": "/example/Bars/vertical-average-annotation-rule",
+      "path": "/docs/components/Bars/vertical-average-annotation-rule",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-basic",
       "component": "Bars",
-      "path": "/example/Bars/vertical-basic",
+      "path": "/docs/components/Bars/vertical-basic",
       "lineNumber": 27,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-calculated-value-domain-negative",
       "component": "Bars",
-      "path": "/example/Bars/vertical-calculated-value-domain-negative",
+      "path": "/docs/components/Bars/vertical-calculated-value-domain-negative",
       "lineNumber": 26,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-calculated-value-domain-positive",
       "component": "Bars",
-      "path": "/example/Bars/vertical-calculated-value-domain-positive",
+      "path": "/docs/components/Bars/vertical-calculated-value-domain-positive",
       "lineNumber": 26,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-click-handler",
       "component": "Bars",
-      "path": "/example/Bars/vertical-click-handler",
+      "path": "/docs/components/Bars/vertical-click-handler",
       "lineNumber": 33,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-customize-individual-styles",
       "component": "Bars",
-      "path": "/example/Bars/vertical-customize-individual-styles",
+      "path": "/docs/components/Bars/vertical-customize-individual-styles",
       "lineNumber": 27,
       "line": "<Bars>"
     },
     {
       "example": "vertical-gradient",
       "component": "Bars",
-      "path": "/example/Bars/vertical-gradient",
+      "path": "/docs/components/Bars/vertical-gradient",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} fill={gradient} class=\"stroke-blue-900\" />"
     },
     {
       "example": "vertical-grouped",
       "component": "Bars",
-      "path": "/example/Bars/vertical-grouped",
+      "path": "/docs/components/Bars/vertical-grouped",
       "lineNumber": 40,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-grouped-and-stacked",
       "component": "Bars",
-      "path": "/example/Bars/vertical-grouped-and-stacked",
+      "path": "/docs/components/Bars/vertical-grouped-and-stacked",
       "lineNumber": 45,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-highlight-individual-bar",
       "component": "Bars",
-      "path": "/example/Bars/vertical-highlight-individual-bar",
+      "path": "/docs/components/Bars/vertical-highlight-individual-bar",
       "lineNumber": 36,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-highlight-individual-bar-line",
       "component": "Bars",
-      "path": "/example/Bars/vertical-highlight-individual-bar-line",
+      "path": "/docs/components/Bars/vertical-highlight-individual-bar-line",
       "lineNumber": 23,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-inside-labels",
       "component": "Bars",
-      "path": "/example/Bars/vertical-inside-labels",
+      "path": "/docs/components/Bars/vertical-inside-labels",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-limit-ticks-count",
       "component": "Bars",
-      "path": "/example/Bars/vertical-limit-ticks-count",
+      "path": "/docs/components/Bars/vertical-limit-ticks-count",
       "lineNumber": 27,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-limit-ticks-second-scale",
       "component": "Bars",
-      "path": "/example/Bars/vertical-limit-ticks-second-scale",
+      "path": "/docs/components/Bars/vertical-limit-ticks-second-scale",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-diverging",
+      "path": "/docs/components/Bars/vertical-multiple-diverging",
       "lineNumber": 29,
       "line": "<Bars y=\"value\" rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-diverging",
+      "path": "/docs/components/Bars/vertical-multiple-diverging",
       "lineNumber": 30,
       "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "path": "/docs/components/Bars/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 40,
       "line": "<Bars y=\"value\" rounded-sm=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-multiple-diverging-rounded-specific",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-diverging-rounded-specific",
+      "path": "/docs/components/Bars/vertical-multiple-diverging-rounded-specific",
       "lineNumber": 41,
       "line": "<Bars y={(d) => -d.baseline} rounded=\"bottom\" strokeWidth={1} class=\"fill-secondary\" />"
     },
     {
       "example": "vertical-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-overlapping",
+      "path": "/docs/components/Bars/vertical-multiple-overlapping",
       "lineNumber": 29,
       "line": "<Bars y=\"baseline\" strokeWidth={1} class=\"fill-surface-content/20\" />"
     },
     {
       "example": "vertical-multiple-overlapping",
       "component": "Bars",
-      "path": "/example/Bars/vertical-multiple-overlapping",
+      "path": "/docs/components/Bars/vertical-multiple-overlapping",
       "lineNumber": 30,
       "line": "<Bars y=\"value\" strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-outside-labels-default",
       "component": "Bars",
-      "path": "/example/Bars/vertical-outside-labels-default",
+      "path": "/docs/components/Bars/vertical-outside-labels-default",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-rounded-top-only",
       "component": "Bars",
-      "path": "/example/Bars/vertical-rounded-top-only",
+      "path": "/docs/components/Bars/vertical-rounded-top-only",
       "lineNumber": 28,
       "line": "<Bars radius={4} rounded=\"top\" strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-stacked",
       "component": "Bars",
-      "path": "/example/Bars/vertical-stacked",
+      "path": "/docs/components/Bars/vertical-stacked",
       "lineNumber": 37,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-stacked-percent",
       "component": "Bars",
-      "path": "/example/Bars/vertical-stacked-percent",
+      "path": "/docs/components/Bars/vertical-stacked-percent",
       "lineNumber": 41,
       "line": "<Bars strokeWidth={1} />"
     },
     {
       "example": "vertical-time-scale-with-inset",
       "component": "Bars",
-      "path": "/example/Bars/vertical-time-scale-with-inset",
+      "path": "/docs/components/Bars/vertical-time-scale-with-inset",
       "lineNumber": 25,
       "line": "<Bars class=\"fill-primary\" insets={{ x: 2 }} />"
     },
     {
       "example": "vertical-time-scale-with-interval",
       "component": "Bars",
-      "path": "/example/Bars/vertical-time-scale-with-interval",
+      "path": "/docs/components/Bars/vertical-time-scale-with-interval",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-time-scale-with-interval-months",
       "component": "Bars",
-      "path": "/example/Bars/vertical-time-scale-with-interval-months",
+      "path": "/docs/components/Bars/vertical-time-scale-with-interval-months",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-time-scale-with-missing-data",
       "component": "Bars",
-      "path": "/example/Bars/vertical-time-scale-with-missing-data",
+      "path": "/docs/components/Bars/vertical-time-scale-with-missing-data",
       "lineNumber": 25,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tooltip-and-bar-highlight",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tooltip-and-bar-highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-bar-highlight",
       "lineNumber": 29,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 31,
       "line": "<Bars strokeWidth={1} class=\"fill-primary group-hover:fill-gray-300 transition-colors\" />"
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 35,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tooltip-and-highlight",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tooltip-and-highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-highlight",
       "lineNumber": 29,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-tween-on-mount",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tween-on-mount",
+      "path": "/docs/components/Bars/vertical-tween-on-mount",
       "lineNumber": 34,
       "line": "<Bars"
     },
     {
       "example": "vertical-tween-on-mount-rounded-edge",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
+      "path": "/docs/components/Bars/vertical-tween-on-mount-rounded-edge",
       "lineNumber": 34,
       "line": "<Bars"
     },
     {
       "example": "vertical-with-grid-on-top",
       "component": "Bars",
-      "path": "/example/Bars/vertical-with-grid-on-top",
+      "path": "/docs/components/Bars/vertical-with-grid-on-top",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "vertical-with-grid-on-top-mix-blend",
       "component": "Bars",
-      "path": "/example/Bars/vertical-with-grid-on-top-mix-blend",
+      "path": "/docs/components/Bars/vertical-with-grid-on-top-mix-blend",
       "lineNumber": 24,
       "line": "<Bars strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
-      "path": "/example/Rule/candlestick-with-brushing",
+      "path": "/docs/components/Rule/candlestick-with-brushing",
       "lineNumber": 68,
       "line": "<Bars insets={{ x: 0.5 }} />"
     },
     {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "path": "/docs/components/Tooltip/multiple-overlapping-bars",
       "lineNumber": 50,
       "line": "<Bars y=\"baseline\" radius={4} strokeWidth={1} class=\"fill-surface-content/10\" />"
     },
     {
       "example": "multiple-overlapping-bars",
       "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-overlapping-bars",
+      "path": "/docs/components/Tooltip/multiple-overlapping-bars",
       "lineNumber": 51,
       "line": "<Bars y=\"value\" radius={4} strokeWidth={1} insets={{ x: 4 }} class=\"fill-primary\" />"
     },
     {
       "example": "multiple-tooltips-with-fixed-single-axis-scaleband",
       "component": "Tooltip",
-      "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
+      "path": "/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
       "lineNumber": 34,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     },
     {
       "example": "simple-bars",
       "component": "Tooltip",
-      "path": "/example/Tooltip/simple-bars",
+      "path": "/docs/components/Tooltip/simple-bars",
       "lineNumber": 47,
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.824Z"
+  "updatedAt": "2026-02-07T20:21:31.376Z"
 }

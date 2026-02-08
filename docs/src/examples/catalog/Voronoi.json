@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "radius",
-      "path": "/example/Voronoi/radius",
+      "title": "radius",
+      "path": "/docs/components/Voronoi/radius",
       "components": [
         {
           "component": "Chart",
@@ -42,10 +43,10 @@
     {
       "example": "radius",
       "component": "Voronoi",
-      "path": "/example/Voronoi/radius",
+      "path": "/docs/components/Voronoi/radius",
       "lineNumber": 27,
       "line": "<Voronoi"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:03.071Z"
+  "updatedAt": "2026-02-07T20:21:32.545Z"
 }

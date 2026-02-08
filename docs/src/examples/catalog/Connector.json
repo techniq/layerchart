@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "playground",
-      "path": "/example/Connector/playground",
+      "title": "playground",
+      "path": "/docs/components/Connector/playground",
       "components": [
         {
           "component": "Chart",
@@ -32,10 +33,10 @@
     {
       "example": "playground",
       "component": "Connector",
-      "path": "/example/Connector/playground",
+      "path": "/docs/components/Connector/playground",
       "lineNumber": 23,
       "line": "<Connector {source} {target} {sweep} {type} {radius} {curve} class=\"stroke-primary stroke-4\" />"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.025Z"
+  "updatedAt": "2026-02-07T20:21:31.596Z"
 }

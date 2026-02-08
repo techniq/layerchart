@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "band-scale-between",
-      "path": "/example/Grid/band-scale-between",
+      "title": "band scale between",
+      "path": "/docs/components/Grid/band-scale-between",
       "components": [
         {
           "component": "Chart",
@@ -29,7 +30,8 @@
     },
     {
       "name": "band-scale-default",
-      "path": "/example/Grid/band-scale-default",
+      "title": "band scale default",
+      "path": "/docs/components/Grid/band-scale-default",
       "components": [
         {
           "component": "Chart",
@@ -55,7 +57,8 @@
     },
     {
       "name": "basic",
-      "path": "/example/Grid/basic",
+      "title": "basic",
+      "path": "/docs/components/Grid/basic",
       "components": [
         {
           "component": "Chart",
@@ -76,7 +79,8 @@
     },
     {
       "name": "dashed-lines",
-      "path": "/example/Grid/dashed-lines",
+      "title": "dashed lines",
+      "path": "/docs/components/Grid/dashed-lines",
       "components": [
         {
           "component": "Chart",
@@ -97,7 +101,8 @@
     },
     {
       "name": "explicit-ticks",
-      "path": "/example/Grid/explicit-ticks",
+      "title": "explicit ticks",
+      "path": "/docs/components/Grid/explicit-ticks",
       "components": [
         {
           "component": "Chart",
@@ -123,7 +128,8 @@
     },
     {
       "name": "inject-tick-value",
-      "path": "/example/Grid/inject-tick-value",
+      "title": "inject tick value",
+      "path": "/docs/components/Grid/inject-tick-value",
       "components": [
         {
           "component": "Chart",
@@ -149,7 +155,8 @@
     },
     {
       "name": "integer-only",
-      "path": "/example/Grid/integer-only",
+      "title": "integer only",
+      "path": "/docs/components/Grid/integer-only",
       "components": [
         {
           "component": "Chart",
@@ -175,7 +182,8 @@
     },
     {
       "name": "padding",
-      "path": "/example/Grid/padding",
+      "title": "padding",
+      "path": "/docs/components/Grid/padding",
       "components": [
         {
           "component": "Chart",
@@ -196,7 +204,8 @@
     },
     {
       "name": "radial",
-      "path": "/example/Grid/radial",
+      "title": "radial",
+      "path": "/docs/components/Grid/radial",
       "components": [
         {
           "component": "Chart",
@@ -217,7 +226,8 @@
     },
     {
       "name": "radial-linear",
-      "path": "/example/Grid/radial-linear",
+      "title": "radial linear",
+      "path": "/docs/components/Grid/radial-linear",
       "components": [
         {
           "component": "Chart",
@@ -238,7 +248,8 @@
     },
     {
       "name": "tick-count",
-      "path": "/example/Grid/tick-count",
+      "title": "tick count",
+      "path": "/docs/components/Grid/tick-count",
       "components": [
         {
           "component": "Chart",
@@ -264,7 +275,8 @@
     },
     {
       "name": "tick-count-null",
-      "path": "/example/Grid/tick-count-null",
+      "title": "tick count null",
+      "path": "/docs/components/Grid/tick-count-null",
       "components": [
         {
           "component": "Chart",
@@ -290,7 +302,8 @@
     },
     {
       "name": "tick-count-responsive",
-      "path": "/example/Grid/tick-count-responsive",
+      "title": "tick count responsive",
+      "path": "/docs/components/Grid/tick-count-responsive",
       "components": [
         {
           "component": "Chart",
@@ -316,7 +329,8 @@
     },
     {
       "name": "x-only",
-      "path": "/example/Grid/x-only",
+      "title": "x only",
+      "path": "/docs/components/Grid/x-only",
       "components": [
         {
           "component": "Chart",
@@ -337,7 +351,8 @@
     },
     {
       "name": "y-only",
-      "path": "/example/Grid/y-only",
+      "title": "y only",
+      "path": "/docs/components/Grid/y-only",
       "components": [
         {
           "component": "Chart",
@@ -361,115 +376,115 @@
     {
       "example": "multiple-axis-grid-and-rules-separate-grid",
       "component": "Axis",
-      "path": "/example/Axis/multiple-axis-grid-and-rules-separate-grid",
+      "path": "/docs/components/Axis/multiple-axis-grid-and-rules-separate-grid",
       "lineNumber": 17,
       "line": "<Grid x y />"
     },
     {
       "example": "band-scale-between",
       "component": "Grid",
-      "path": "/example/Grid/band-scale-between",
+      "path": "/docs/components/Grid/band-scale-between",
       "lineNumber": 11,
       "line": "<Grid x bandAlign=\"between\" />"
     },
     {
       "example": "band-scale-default",
       "component": "Grid",
-      "path": "/example/Grid/band-scale-default",
+      "path": "/docs/components/Grid/band-scale-default",
       "lineNumber": 11,
       "line": "<Grid x />"
     },
     {
       "example": "basic",
       "component": "Grid",
-      "path": "/example/Grid/basic",
+      "path": "/docs/components/Grid/basic",
       "lineNumber": 7,
       "line": "<Grid x y />"
     },
     {
       "example": "dashed-lines",
       "component": "Grid",
-      "path": "/example/Grid/dashed-lines",
+      "path": "/docs/components/Grid/dashed-lines",
       "lineNumber": 7,
       "line": "<Grid y={{ style: 'stroke-dasharray: 6 4' }} />"
     },
     {
       "example": "explicit-ticks",
       "component": "Grid",
-      "path": "/example/Grid/explicit-ticks",
+      "path": "/docs/components/Grid/explicit-ticks",
       "lineNumber": 7,
       "line": "<Grid y yTicks={[0, 25, 50, 75, 100]} />"
     },
     {
       "example": "inject-tick-value",
       "component": "Grid",
-      "path": "/example/Grid/inject-tick-value",
+      "path": "/docs/components/Grid/inject-tick-value",
       "lineNumber": 7,
       "line": "<Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />"
     },
     {
       "example": "integer-only",
       "component": "Grid",
-      "path": "/example/Grid/integer-only",
+      "path": "/docs/components/Grid/integer-only",
       "lineNumber": 7,
       "line": "<Grid y yTicks={(scale) => scale.ticks?.().filter(Number.isInteger)} />"
     },
     {
       "example": "padding",
       "component": "Grid",
-      "path": "/example/Grid/padding",
+      "path": "/docs/components/Grid/padding",
       "lineNumber": 12,
       "line": "<Grid x y />"
     },
     {
       "example": "radial",
       "component": "Grid",
-      "path": "/example/Grid/radial",
+      "path": "/docs/components/Grid/radial",
       "lineNumber": 7,
       "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />"
     },
     {
       "example": "radial-linear",
       "component": "Grid",
-      "path": "/example/Grid/radial-linear",
+      "path": "/docs/components/Grid/radial-linear",
       "lineNumber": 7,
       "line": "<Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY=\"linear\" />"
     },
     {
       "example": "tick-count",
       "component": "Grid",
-      "path": "/example/Grid/tick-count",
+      "path": "/docs/components/Grid/tick-count",
       "lineNumber": 7,
       "line": "<Grid y yTicks={20} />"
     },
     {
       "example": "tick-count-null",
       "component": "Grid",
-      "path": "/example/Grid/tick-count-null",
+      "path": "/docs/components/Grid/tick-count-null",
       "lineNumber": 7,
       "line": "<Grid y yTicks={null} />"
     },
     {
       "example": "tick-count-responsive",
       "component": "Grid",
-      "path": "/example/Grid/tick-count-responsive",
+      "path": "/docs/components/Grid/tick-count-responsive",
       "lineNumber": 16,
       "line": "<Grid x xTicks={mdScreen.current ? 10 : 5} />"
     },
     {
       "example": "x-only",
       "component": "Grid",
-      "path": "/example/Grid/x-only",
+      "path": "/docs/components/Grid/x-only",
       "lineNumber": 7,
       "line": "<Grid x />"
     },
     {
       "example": "y-only",
       "component": "Grid",
-      "path": "/example/Grid/y-only",
+      "path": "/docs/components/Grid/y-only",
       "lineNumber": 7,
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:21.446Z"
+  "updatedAt": "2026-02-07T20:21:31.830Z"
 }

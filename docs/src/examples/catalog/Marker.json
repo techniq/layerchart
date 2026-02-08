@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "line",
-      "path": "/example/Marker/line",
+      "title": "line",
+      "path": "/docs/components/Marker/line",
       "components": [
         {
           "component": "Chart",
@@ -24,7 +25,8 @@
     },
     {
       "name": "orientation",
-      "path": "/example/Marker/orientation",
+      "title": "orientation",
+      "path": "/docs/components/Marker/orientation",
       "components": [
         {
           "component": "Chart",
@@ -45,7 +47,8 @@
     },
     {
       "name": "spline",
-      "path": "/example/Marker/spline",
+      "title": "spline",
+      "path": "/docs/components/Marker/spline",
       "components": [
         {
           "component": "Chart",
@@ -66,7 +69,8 @@
     },
     {
       "name": "spline-w-thicker-stroke",
-      "path": "/example/Marker/spline-w-thicker-stroke",
+      "title": "spline w thicker stroke",
+      "path": "/docs/components/Marker/spline-w-thicker-stroke",
       "components": [
         {
           "component": "Chart",
@@ -87,7 +91,8 @@
     },
     {
       "name": "styling",
-      "path": "/example/Marker/styling",
+      "title": "styling",
+      "path": "/docs/components/Marker/styling",
       "components": [
         {
           "component": "Chart",
@@ -108,5 +113,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2025-12-29T21:36:45.031Z"
+  "updatedAt": "2026-02-07T20:21:32.026Z"
 }

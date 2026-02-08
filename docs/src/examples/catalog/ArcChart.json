@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/ArcChart/basic",
+      "title": "basic",
+      "path": "/docs/components/ArcChart/basic",
       "components": [
         {
           "component": "ArcChart",
@@ -14,7 +15,8 @@
     },
     {
       "name": "color",
-      "path": "/example/ArcChart/color",
+      "title": "color",
+      "path": "/docs/components/ArcChart/color",
       "components": [
         {
           "component": "ArcChart",
@@ -25,7 +27,8 @@
     },
     {
       "name": "gradient-with-text",
-      "path": "/example/ArcChart/gradient-with-text",
+      "title": "gradient with text",
+      "path": "/docs/components/ArcChart/gradient-with-text",
       "components": [
         {
           "component": "ArcChart",
@@ -56,7 +59,8 @@
     },
     {
       "name": "radius-fixed",
-      "path": "/example/ArcChart/radius-fixed",
+      "title": "radius fixed",
+      "path": "/docs/components/ArcChart/radius-fixed",
       "components": [
         {
           "component": "ArcChart",
@@ -67,7 +71,8 @@
     },
     {
       "name": "radius-offset",
-      "path": "/example/ArcChart/radius-offset",
+      "title": "radius offset",
+      "path": "/docs/components/ArcChart/radius-offset",
       "components": [
         {
           "component": "ArcChart",
@@ -78,7 +83,8 @@
     },
     {
       "name": "radius-percent",
-      "path": "/example/ArcChart/radius-percent",
+      "title": "radius percent",
+      "path": "/docs/components/ArcChart/radius-percent",
       "components": [
         {
           "component": "ArcChart",
@@ -89,7 +95,8 @@
     },
     {
       "name": "series",
-      "path": "/example/ArcChart/series",
+      "title": "series",
+      "path": "/docs/components/ArcChart/series",
       "components": [
         {
           "component": "ArcChart",
@@ -100,7 +107,8 @@
     },
     {
       "name": "series-arc",
-      "path": "/example/ArcChart/series-arc",
+      "title": "series arc",
+      "path": "/docs/components/ArcChart/series-arc",
       "components": [
         {
           "component": "ArcChart",
@@ -111,7 +119,8 @@
     },
     {
       "name": "series-individual",
-      "path": "/example/ArcChart/series-individual",
+      "title": "series individual",
+      "path": "/docs/components/ArcChart/series-individual",
       "components": [
         {
           "component": "ArcChart",
@@ -122,7 +131,8 @@
     },
     {
       "name": "series-labels",
-      "path": "/example/ArcChart/series-labels",
+      "title": "series labels",
+      "path": "/docs/components/ArcChart/series-labels",
       "components": [
         {
           "component": "ArcChart",
@@ -143,7 +153,8 @@
     },
     {
       "name": "series-motion-spring",
-      "path": "/example/ArcChart/series-motion-spring",
+      "title": "series motion spring",
+      "path": "/docs/components/ArcChart/series-motion-spring",
       "components": [
         {
           "component": "ArcChart",
@@ -154,7 +165,8 @@
     },
     {
       "name": "series-motion-tween",
-      "path": "/example/ArcChart/series-motion-tween",
+      "title": "series motion tween",
+      "path": "/docs/components/ArcChart/series-motion-tween",
       "components": [
         {
           "component": "ArcChart",
@@ -165,7 +177,8 @@
     },
     {
       "name": "series-start-180",
-      "path": "/example/ArcChart/series-start-180",
+      "title": "series start 180",
+      "path": "/docs/components/ArcChart/series-start-180",
       "components": [
         {
           "component": "ArcChart",
@@ -176,7 +189,8 @@
     },
     {
       "name": "series-start-90",
-      "path": "/example/ArcChart/series-start-90",
+      "title": "series start 90",
+      "path": "/docs/components/ArcChart/series-start-90",
       "components": [
         {
           "component": "ArcChart",
@@ -187,7 +201,8 @@
     },
     {
       "name": "series-track-color",
-      "path": "/example/ArcChart/series-track-color",
+      "title": "series track color",
+      "path": "/docs/components/ArcChart/series-track-color",
       "components": [
         {
           "component": "ArcChart",
@@ -198,7 +213,8 @@
     },
     {
       "name": "track-size",
-      "path": "/example/ArcChart/track-size",
+      "title": "track size",
+      "path": "/docs/components/ArcChart/track-size",
       "components": [
         {
           "component": "ArcChart",
@@ -212,115 +228,115 @@
     {
       "example": "basic",
       "component": "ArcChart",
-      "path": "/example/ArcChart/basic",
+      "path": "/docs/components/ArcChart/basic",
       "lineNumber": 8,
       "line": "<ArcChart"
     },
     {
       "example": "color",
       "component": "ArcChart",
-      "path": "/example/ArcChart/color",
+      "path": "/docs/components/ArcChart/color",
       "lineNumber": 8,
       "line": "<ArcChart"
     },
     {
       "example": "gradient-with-text",
       "component": "ArcChart",
-      "path": "/example/ArcChart/gradient-with-text",
+      "path": "/docs/components/ArcChart/gradient-with-text",
       "lineNumber": 5,
       "line": "<ArcChart height={140}>"
     },
     {
       "example": "radius-fixed",
       "component": "ArcChart",
-      "path": "/example/ArcChart/radius-fixed",
+      "path": "/docs/components/ArcChart/radius-fixed",
       "lineNumber": 8,
       "line": "<ArcChart"
     },
     {
       "example": "radius-offset",
       "component": "ArcChart",
-      "path": "/example/ArcChart/radius-offset",
+      "path": "/docs/components/ArcChart/radius-offset",
       "lineNumber": 8,
       "line": "<ArcChart"
     },
     {
       "example": "radius-percent",
       "component": "ArcChart",
-      "path": "/example/ArcChart/radius-percent",
+      "path": "/docs/components/ArcChart/radius-percent",
       "lineNumber": 8,
       "line": "<ArcChart"
     },
     {
       "example": "series",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series",
+      "path": "/docs/components/ArcChart/series",
       "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-arc",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-arc",
+      "path": "/docs/components/ArcChart/series-arc",
       "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-individual",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-individual",
+      "path": "/docs/components/ArcChart/series-individual",
       "lineNumber": 12,
       "line": "<ArcChart"
     },
     {
       "example": "series-labels",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-labels",
+      "path": "/docs/components/ArcChart/series-labels",
       "lineNumber": 12,
       "line": "<ArcChart"
     },
     {
       "example": "series-motion-spring",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-motion-spring",
+      "path": "/docs/components/ArcChart/series-motion-spring",
       "lineNumber": 19,
       "line": "<ArcChart"
     },
     {
       "example": "series-motion-tween",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-motion-tween",
+      "path": "/docs/components/ArcChart/series-motion-tween",
       "lineNumber": 19,
       "line": "<ArcChart"
     },
     {
       "example": "series-start-180",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-start-180",
+      "path": "/docs/components/ArcChart/series-start-180",
       "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-start-90",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-start-90",
+      "path": "/docs/components/ArcChart/series-start-90",
       "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "series-track-color",
       "component": "ArcChart",
-      "path": "/example/ArcChart/series-track-color",
+      "path": "/docs/components/ArcChart/series-track-color",
       "lineNumber": 10,
       "line": "<ArcChart"
     },
     {
       "example": "track-size",
       "component": "ArcChart",
-      "path": "/example/ArcChart/track-size",
+      "path": "/docs/components/ArcChart/track-size",
       "lineNumber": 8,
       "line": "<ArcChart"
     }
   ],
-  "updatedAt": "2025-12-07T04:39:08.863Z"
+  "updatedAt": "2026-02-07T20:21:31.242Z"
 }

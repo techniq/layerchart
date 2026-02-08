@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Frame/basic",
+      "title": "basic",
+      "path": "/docs/components/Frame/basic",
       "components": [
         {
           "component": "Chart",
@@ -29,7 +30,8 @@
     },
     {
       "name": "border",
-      "path": "/example/Frame/border",
+      "title": "border",
+      "path": "/docs/components/Frame/border",
       "components": [
         {
           "component": "Chart",
@@ -55,7 +57,8 @@
     },
     {
       "name": "full",
-      "path": "/example/Frame/full",
+      "title": "full",
+      "path": "/docs/components/Frame/full",
       "components": [
         {
           "component": "Chart",
@@ -81,7 +84,8 @@
     },
     {
       "name": "gradient",
-      "path": "/example/Frame/gradient",
+      "title": "gradient",
+      "path": "/docs/components/Frame/gradient",
       "components": [
         {
           "component": "Chart",
@@ -115,31 +119,31 @@
     {
       "example": "basic",
       "component": "Frame",
-      "path": "/example/Frame/basic",
+      "path": "/docs/components/Frame/basic",
       "lineNumber": 12,
       "line": "<Frame class=\"fill-danger/5\" />"
     },
     {
       "example": "border",
       "component": "Frame",
-      "path": "/example/Frame/border",
+      "path": "/docs/components/Frame/border",
       "lineNumber": 12,
       "line": "<Frame class=\"stroke-surface-content/50 fill-none\" />"
     },
     {
       "example": "full",
       "component": "Frame",
-      "path": "/example/Frame/full",
+      "path": "/docs/components/Frame/full",
       "lineNumber": 12,
       "line": "<Frame class=\"fill-danger/5\" full />"
     },
     {
       "example": "gradient",
       "component": "Frame",
-      "path": "/example/Frame/gradient",
+      "path": "/docs/components/Frame/gradient",
       "lineNumber": 14,
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:09.826Z"
+  "updatedAt": "2026-02-07T20:21:31.674Z"
 }
