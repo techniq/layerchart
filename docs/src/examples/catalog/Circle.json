@@ -347,14 +347,14 @@
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
-      "lineNumber": 10,
+      "lineNumber": 11,
       "line": "<Circle fill=\"black\" r={15} cx={-30} cy={-30} />"
     },
     {
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
-      "lineNumber": 21,
+      "lineNumber": 23,
       "line": "<Circle id=\"left-eye\" fill=\"black\" r={15} cx={30} cy={-30} />"
     },
     {
@@ -624,5 +624,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.518Z"
+  "updatedAt": "2026-02-08T17:35:30.203Z"
 }

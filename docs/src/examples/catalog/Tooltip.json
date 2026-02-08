@@ -3739,7 +3739,7 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 87,
+      "lineNumber": 85,
       "line": "<Tooltip.Root>"
     },
     {
@@ -4334,7 +4334,7 @@
       "example": "basic",
       "component": "Graticule",
       "path": "/docs/components/Graticule/basic",
-      "lineNumber": 70,
+      "lineNumber": 68,
       "line": "<Tooltip.Root>"
     },
     {
@@ -5899,5 +5899,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.401Z"
+  "updatedAt": "2026-02-08T17:35:31.427Z"
 }

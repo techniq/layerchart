@@ -377,7 +377,7 @@
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
-      "lineNumber": 11,
+      "lineNumber": 12,
       "line": "<Arc"
     },
     {
@@ -451,5 +451,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.223Z"
+  "updatedAt": "2026-02-08T17:35:29.774Z"
 }
