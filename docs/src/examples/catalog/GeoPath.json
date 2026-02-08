@@ -566,14 +566,14 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 76,
+      "lineNumber": 74,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
     },
     {
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 79,
+      "lineNumber": 77,
       "line": "<GeoPath"
     },
     {
@@ -1028,7 +1028,7 @@
       "example": "basic",
       "component": "Graticule",
       "path": "/docs/components/Graticule/basic",
-      "lineNumber": 62,
+      "lineNumber": 60,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content\" />"
     },
     {
@@ -1039,5 +1039,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.741Z"
+  "updatedAt": "2026-02-08T17:35:30.493Z"
 }

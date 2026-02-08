@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-01-25T22:34:25.883Z",
+  "generatedAt": "2026-02-08T17:35:29.253Z",
   "totalComponents": 59,
-  "totalExamples": 708,
+  "totalExamples": 710,
   "components": [
     {
       "component": "AnnotationLine",
@@ -632,6 +632,11 @@
           "checksum": "21ab207c64e335d90f31ff9939bc12b2"
         },
         {
+          "name": "barchart-xinterval-xinset",
+          "path": "/example/Axis/barchart-xinterval-xinset",
+          "checksum": "b27288c0a347cece85007f81740ab1dd"
+        },
+        {
           "name": "explicit-ticks",
           "path": "/example/Axis/explicit-ticks",
           "checksum": "4d6ffd57366c086f5051d307166cad41"
@@ -680,6 +685,11 @@
           "name": "labels-next-hash",
           "path": "/example/Axis/labels-next-hash",
           "checksum": "8954583323c7bb23eddee95da407aecb"
+        },
+        {
+          "name": "linechart-tickspacing",
+          "path": "/example/Axis/linechart-tickspacing",
+          "checksum": "b6942a3a773b12fa00d4ff20f15d9ed2"
         },
         {
           "name": "log-scale",
@@ -789,7 +799,7 @@
         {
           "name": "time-scale-auto-multiline",
           "path": "/example/Axis/time-scale-auto-multiline",
-          "checksum": "e131633e9574845582330358af8d4aba"
+          "checksum": "6298d56b020cf24821482a780191bde3"
         },
         {
           "name": "time-scale-brush",
@@ -1799,22 +1809,22 @@
         {
           "name": "basic",
           "path": "/example/Dagre/basic",
-          "checksum": "72c7a3a039c03cb51c738924d5682843"
+          "checksum": "95488c08ba75a0f9cae4b861e2e4ed05"
         },
         {
           "name": "playground",
           "path": "/example/Dagre/playground",
-          "checksum": "abb0bb25b27a4b2b9a3ce28a6df222b9"
+          "checksum": "208a6a099774586e220eeaf04b62d8fb"
         },
         {
           "name": "software-user-flow",
           "path": "/example/Dagre/software-user-flow",
-          "checksum": "913e6f188cc749a9625ba46de5ddd113"
+          "checksum": "fed68a784a20e01c5a0f6532dbeda6b5"
         },
         {
           "name": "tcp-state-diagram",
           "path": "/example/Dagre/tcp-state-diagram",
-          "checksum": "8e749549a6cabab19c6c36a0d04ac8fb"
+          "checksum": "17c2500c1697e3b0b10172f989dcbbb6"
         }
       ]
     },
@@ -1849,7 +1859,7 @@
         {
           "name": "collision-detection",
           "path": "/example/ForceSimulation/collision-detection",
-          "checksum": "f07bffa8a61cf70db2747eeea4b471af"
+          "checksum": "f332ae1881b82d3cc71974c477f38948"
         },
         {
           "name": "disjoint-graph",
@@ -1879,7 +1889,7 @@
         {
           "name": "text",
           "path": "/example/ForceSimulation/text",
-          "checksum": "3fb99e7720e402016023636366028a5e"
+          "checksum": "507483c0cf9df0d026a8ec904692df4c"
         },
         {
           "name": "tree",
@@ -1934,12 +1944,12 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoContext/geojson-preview",
-          "checksum": "222942f2f97d0eadc2876c4d9e55592d"
+          "checksum": "11681529f1b81cabdec1e914c3a8c2e1"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoContext/projection-playground",
-          "checksum": "f387eb382ddb6f1be5d396f3162a3c87"
+          "checksum": "ea8002f3356cfa55691a85529177710e"
         },
         {
           "name": "shapefile-preview",
@@ -1984,7 +1994,7 @@
         {
           "name": "spike-map",
           "path": "/example/GeoPath/spike-map",
-          "checksum": "2ddd005d453b4ed99d26062287aa3311"
+          "checksum": "3c8d62cd02e22b5a2cbe619fcc0dac5c"
         },
         {
           "name": "submarine-cables-globe",
@@ -2009,7 +2019,7 @@
         {
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
-          "checksum": "e0ee6746fd691ff8bf33f080b37edab7"
+          "checksum": "631a46312724c7263a68f36d4f19f441"
         },
         {
           "name": "translucent-globe",
@@ -2044,7 +2054,7 @@
         {
           "name": "icons",
           "path": "/example/GeoPoint/icons",
-          "checksum": "e464491ead257b38620c08bfcc7c215f"
+          "checksum": "9e1bcd4ce82ac1fa3e865e5b44cd2d0c"
         },
         {
           "name": "us-airports",
@@ -2089,7 +2099,7 @@
         {
           "name": "basic",
           "path": "/example/GeoTile/basic",
-          "checksum": "f7c381b1242c620b21a344f110c4d0fe"
+          "checksum": "2e202be8f970fdbc30f30ce28a92c760"
         },
         {
           "name": "clipped",
@@ -2099,17 +2109,17 @@
         {
           "name": "zoomable",
           "path": "/example/GeoTile/zoomable",
-          "checksum": "992d508313e45104b8ada694d0308ade"
+          "checksum": "251c87a6cee75246f5a6d3347d697a2a"
         },
         {
           "name": "zoomable-seamless-layers",
           "path": "/example/GeoTile/zoomable-seamless-layers",
-          "checksum": "ef058c59976442afd1336e34c3c207b8"
+          "checksum": "c13b39dc817a5dcfdd756ae0a80510fc"
         },
         {
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
-          "checksum": "3ca3e18a8e1b333cd06f35328050faaf"
+          "checksum": "2ec3eead5e4f39b6951b238273b707f6"
         }
       ]
     },
@@ -2119,7 +2129,7 @@
         {
           "name": "basic",
           "path": "/example/Graticule/basic",
-          "checksum": "074c5af6eeb99ca56cbac9346d00dbad"
+          "checksum": "a37e1fe4722c451fed3850697fd6c316"
         }
       ]
     },
@@ -2234,7 +2244,7 @@
         {
           "name": "all-3-layers",
           "path": "/example/Layer/all-3-layers",
-          "checksum": "a8850917ecfc2166ad448e038041e6de"
+          "checksum": "a5fa41e9c0b0adaaa3714cbd118ce7f6"
         }
       ]
     },
@@ -2714,7 +2724,7 @@
         {
           "name": "basic",
           "path": "/example/Pack/basic",
-          "checksum": "7a3d463d196d892035bd887e3bf0ed04"
+          "checksum": "29fc12fa57a274d740657c5f7c898a4c"
         }
       ]
     },
@@ -3404,7 +3414,7 @@
         {
           "name": "domain-nice",
           "path": "/example/ScatterChart/domain-nice",
-          "checksum": "d24250a01887e2d0d60344fdc1a07208"
+          "checksum": "46d9dcf19850a9cef05feef98eb4d7ae"
         },
         {
           "name": "domain-padding",
@@ -3619,12 +3629,12 @@
         {
           "name": "truncate-axis-labels",
           "path": "/example/Text/truncate-axis-labels",
-          "checksum": "f3af19adb3e43b73eddca8a14dc2e716"
+          "checksum": "38d821b89a56c3556fa6a1b6d8706fea"
         },
         {
           "name": "word-wrap-axis-labels",
           "path": "/example/Text/word-wrap-axis-labels",
-          "checksum": "b31905e3276c19111dc43bf40ecc7ef5"
+          "checksum": "9259a8aeee3efae56730a51af152e072"
         },
         {
           "name": "word-wrap-with-explicit-newline",
@@ -3764,17 +3774,17 @@
         {
           "name": "pan-zoom-html-image",
           "path": "/example/TransformContext/pan-zoom-html-image",
-          "checksum": "5fef2ad8fdacf320cd7abcdeb2dab38f"
+          "checksum": "209c56c44be01e5ea2415f24435c8363"
         },
         {
           "name": "pan-zoom-svg-image",
           "path": "/example/TransformContext/pan-zoom-svg-image",
-          "checksum": "7f6b5f7042804b2e41454d80f4d4041f"
+          "checksum": "db446ce78323bfbf9506a612de870225"
         },
         {
           "name": "playground",
           "path": "/example/TransformContext/playground",
-          "checksum": "5b5d9812a6508da9d71c30c06de5d62d"
+          "checksum": "aa99cc0eb293457519cffee07fb67f94"
         }
       ]
     },
@@ -3784,12 +3794,12 @@
         {
           "name": "basic",
           "path": "/example/Tree/basic",
-          "checksum": "af2364828c633bf98838bd004df5aaac"
+          "checksum": "572a72587cf8a9c8779ef5c46e28d63d"
         },
         {
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
-          "checksum": "20a16678f607ebd31bacce0dceb7d4de"
+          "checksum": "06a158faed708c1778846acce4d73f25"
         }
       ]
     },

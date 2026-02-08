@@ -1540,7 +1540,7 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 63,
+      "lineNumber": 61,
       "line": "<Chart"
     },
     {
@@ -1757,7 +1757,7 @@
       "example": "basic",
       "component": "Graticule",
       "path": "/docs/components/Graticule/basic",
-      "lineNumber": 51,
+      "lineNumber": 49,
       "line": "<Chart"
     },
     {
@@ -3056,5 +3056,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.474Z"
+  "updatedAt": "2026-02-08T17:35:30.129Z"
 }
