@@ -15,10 +15,7 @@ type TocEntry = { id: string; text: string; level: number };
  * Extract content under each heading from markdown.
  * Returns a map of heading text -> content under that heading.
  */
-function extractHeadingContents(
-	markdown: string,
-	toc: TocEntry[]
-): Map<string, string> {
+function extractHeadingContents(markdown: string, toc: TocEntry[]): Map<string, string> {
 	const result = new Map<string, string>();
 
 	// Find positions of each heading in the markdown
@@ -46,12 +43,9 @@ function extractHeadingContents(
 	for (let i = 0; i < headingPositions.length; i++) {
 		if (i < headingPositions.length - 1) {
 			// Find where the next heading of same or higher level starts
-			const nextHeadingMatch = markdown
-				.slice(headingPositions[i].start)
-				.match(/^#{1,6}\s+/m);
+			const nextHeadingMatch = markdown.slice(headingPositions[i].start).match(/^#{1,6}\s+/m);
 			if (nextHeadingMatch) {
-				headingPositions[i].end =
-					headingPositions[i].start + (nextHeadingMatch.index ?? 0);
+				headingPositions[i].end = headingPositions[i].start + (nextHeadingMatch.index ?? 0);
 			}
 		}
 	}
@@ -74,7 +68,7 @@ export type SearchEntry = {
 	title: string;
 	slug: string;
 	content: string;
-	type: 'component' | 'example' | 'guide' | 'util' | 'heading';
+	type: 'component' | 'example' | 'guide' | 'util' | 'heading' | 'page';
 	category?: string;
 	/** For examples, the component name (e.g., 'AreaChart') */
 	component?: string;
@@ -219,7 +213,45 @@ function catalogToEntries(): SearchEntry[] {
 	return entries;
 }
 
+// Top-level documentation pages
+const topLevelPages: SearchEntry[] = [
+	{
+		title: 'Getting Started',
+		slug: 'docs/getting-started',
+		content:
+			'Install LayerChart and create your first chart. Setup guide for SvelteKit with Tailwind CSS, shadcn-svelte, Skeleton, Svelte UX, daisyUI, and UnoCSS.',
+		type: 'page'
+	},
+	{
+		title: 'Examples',
+		slug: 'docs/examples',
+		content: 'Browse example charts and visualizations',
+		type: 'page'
+	},
+	{
+		title: 'Playground',
+		slug: 'docs/playground',
+		content:
+			'Interactive playground to experiment with LayerChart components. Try code examples in StackBlitz.',
+		type: 'page'
+	},
+	{
+		title: 'Showcase',
+		slug: 'docs/showcase',
+		content:
+			'Real-world projects and websites built with LayerChart. Community examples and inspiration.',
+		type: 'page'
+	},
+	{
+		title: 'Releases',
+		slug: 'docs/releases',
+		content: 'Release notes and changelog for LayerChart. Version history and updates.',
+		type: 'page'
+	}
+];
+
 export const searchContent: SearchEntry[] = [
+	...topLevelPages,
 	...allComponents.map(componentToEntry),
 	...allComponents.flatMap(componentHeadingsToEntries),
 	...catalogToEntries(),

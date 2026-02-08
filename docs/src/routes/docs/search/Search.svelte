@@ -11,11 +11,13 @@
 	import LucideBlocks from '~icons/lucide/blocks';
 	import LucideParentheses from '~icons/lucide/parentheses';
 	import LucideHash from '~icons/lucide/hash';
+	import LucideFileText from '~icons/lucide/file-text';
 
 	let { hideInput = false }: { hideInput?: boolean } = $props();
 
 	// Icons for each result type (matching DocsMenu)
 	const typeIcons = {
+		page: LucideFileText,
 		guide: LucideGlobe,
 		component: LucideBlocks,
 		example: LucideBlocks,
@@ -54,14 +56,16 @@
 
 	// Group order for sorting (headings use their parentType for grouping)
 	const groupOrder: Record<Exclude<SearchEntry['type'], 'heading'>, number> = {
-		guide: 0,
-		component: 1,
-		example: 2,
-		util: 3
+		page: 0,
+		guide: 1,
+		component: 2,
+		example: 3,
+		util: 4
 	};
 
 	// Capitalize group names
 	const groupLabels: Record<Exclude<SearchEntry['type'], 'heading'>, string> = {
+		page: 'Pages',
 		guide: 'Guides',
 		component: 'Components',
 		example: 'Examples',
@@ -85,7 +89,7 @@
 			result: {
 				title: 'Getting Started',
 				slug: 'docs/getting-started',
-				type: 'guide',
+				type: 'page',
 				content: 'Installation and setup guide'
 			}
 		},
@@ -96,7 +100,7 @@
 			result: {
 				title: 'Examples',
 				slug: 'docs/examples',
-				type: 'guide',
+				type: 'page',
 				content: 'Browse example charts and visualizations'
 			}
 		},
@@ -107,7 +111,7 @@
 			result: {
 				title: 'Releases',
 				slug: 'docs/releases',
-				type: 'guide',
+				type: 'page',
 				content: 'View changelog and release notes'
 			}
 		}
