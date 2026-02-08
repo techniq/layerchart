@@ -13,7 +13,7 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 
 :example{ name="basic" showCode }
 
-## Playground
+### Playground
 
 :example{ name="playground" }
 

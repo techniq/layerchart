@@ -6,6 +6,7 @@
 	<Layer center type="canvas">
 		<Circle fill="#F2D707" r={100} />
 	</Layer>
+
 	<Layer center type="svg">
 		<Circle fill="black" r={15} cx={-30} cy={-30} />
 		<Arc
@@ -17,6 +18,7 @@
 			fill="black"
 		/>
 	</Layer>
+
 	<Layer center type="html">
 		<Circle id="left-eye" fill="black" r={15} cx={30} cy={-30} />
 	</Layer>

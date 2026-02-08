@@ -9,7 +9,7 @@ related: []
 
 :example{ component="Bars" name="vertical-outside-labels-default" showCode }
 
-## Bar charts
+### Bar charts
 
 By default labels will be on the outside of bars, above for positive values and below for negative values
 
@@ -19,15 +19,15 @@ You can also use `placement="inside"` to place within the bars (near the value)
 
 :example{ component="Bars" name="vertical-inside-labels" }
 
-## Line charts
+### Line charts
 
 :example{ component="Spline" name="with-labels" }
 
-## Scatter charts
+### Scatter charts
 
 :example{ component="Points" name="with-labels" }
 
-## Simplified charts
+### Simplified charts
 
 Labels are also integrated in simplified charts via the `labels` prop
 

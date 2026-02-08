@@ -9,7 +9,7 @@ related: [Grid, Rule]
 
 :example{ name="placement-bottom-left" showCode }
 
-## tickSpacing
+### tickSpacing
 
 If using a continuous scales (ex. linear, time) and ticks become too crowded, you can use `tickSpacing` to control the number of pixels alloted for each tick (higher => fewer ticks).
 
@@ -23,7 +23,7 @@ Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes 
 See also: time scale [auto](/docs/components/Axis/time-scale-auto), [multiline](/docs/components/Axis/time-scale-auto-multiline), and [brush](/docs/components/Axis/time-scale-brush-multiline) examples
 ::
 
-## band scales
+### band scales
 
 When creating time-series bar charts, it can be useful to use a time scale axis instead of a bar scale axis. This helps show gaps in data (such as on [weekends](/docs/components/BarChart/time-scale-interval)) and provides improved axis ticks.
 

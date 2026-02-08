@@ -18,10 +18,10 @@ related:
 
 :example{ name="playground" }
 
-## Pan/Zoom SVG image
+### Pan/Zoom SVG image
 
 :example{ name="pan-zoom-svg-image" }
 
-## Pan/Zoom HTML image
+### Pan/Zoom HTML image
 
 :example{ name="pan-zoom-html-image" }

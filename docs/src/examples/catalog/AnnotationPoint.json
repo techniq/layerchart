@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "band-scale-on-axis",
-      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "title": "band scale on axis",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-axis",
       "components": [
         {
           "component": "BarChart",
@@ -24,7 +25,8 @@
     },
     {
       "name": "band-scale-on-value",
-      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "title": "band scale on value",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-value",
       "components": [
         {
           "component": "BarChart",
@@ -45,7 +47,8 @@
     },
     {
       "name": "label-placement",
-      "path": "/example/AnnotationPoint/label-placement",
+      "title": "label placement",
+      "path": "/docs/components/AnnotationPoint/label-placement",
       "components": [
         {
           "component": "LineChart",
@@ -61,7 +64,8 @@
     },
     {
       "name": "line-to-point",
-      "path": "/example/AnnotationPoint/line-to-point",
+      "title": "line to point",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
       "components": [
         {
           "component": "LineChart",
@@ -92,7 +96,8 @@
     },
     {
       "name": "on-axis-with-tooltip",
-      "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+      "title": "on axis with tooltip",
+      "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
       "components": [
         {
           "component": "LineChart",
@@ -118,7 +123,8 @@
     },
     {
       "name": "on-series-with-line-and-tooltip",
-      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "title": "on series with line and tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
       "components": [
         {
           "component": "LineChart",
@@ -149,7 +155,8 @@
     },
     {
       "name": "on-series-with-tooltip",
-      "path": "/example/AnnotationPoint/on-series-with-tooltip",
+      "title": "on series with tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
       "components": [
         {
           "component": "LineChart",
@@ -175,7 +182,8 @@
     },
     {
       "name": "series-annotation",
-      "path": "/example/AnnotationPoint/series-annotation",
+      "title": "series annotation",
+      "path": "/docs/components/AnnotationPoint/series-annotation",
       "components": [
         {
           "component": "LineChart",
@@ -194,59 +202,59 @@
     {
       "example": "band-scale-on-axis",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/band-scale-on-axis",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-axis",
       "lineNumber": 19,
       "line": "<AnnotationPoint"
     },
     {
       "example": "band-scale-on-value",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/band-scale-on-value",
+      "path": "/docs/components/AnnotationPoint/band-scale-on-value",
       "lineNumber": 19,
       "line": "<AnnotationPoint"
     },
     {
       "example": "label-placement",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/label-placement",
+      "path": "/docs/components/AnnotationPoint/label-placement",
       "lineNumber": 33,
       "line": "<AnnotationPoint"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/line-to-point",
+      "path": "/docs/components/AnnotationPoint/line-to-point",
       "lineNumber": 66,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/on-axis-with-tooltip",
+      "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
       "lineNumber": 30,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
       "lineNumber": 38,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-tooltip",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/on-series-with-tooltip",
+      "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
       "lineNumber": 29,
       "line": "<AnnotationPoint"
     },
     {
       "example": "series-annotation",
       "component": "AnnotationPoint",
-      "path": "/example/AnnotationPoint/series-annotation",
+      "path": "/docs/components/AnnotationPoint/series-annotation",
       "lineNumber": 19,
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-01-06T13:02:20.606Z"
+  "updatedAt": "2026-02-07T20:21:31.186Z"
 }

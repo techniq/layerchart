@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Pie/basic",
+      "title": "basic",
+      "path": "/docs/components/Pie/basic",
       "components": [
         {
           "component": "Chart",
@@ -24,7 +25,8 @@
     },
     {
       "name": "default-slot-render-each-arc",
-      "path": "/example/Pie/default-slot-render-each-arc",
+      "title": "default slot render each arc",
+      "path": "/docs/components/Pie/default-slot-render-each-arc",
       "components": [
         {
           "component": "Chart",
@@ -50,7 +52,8 @@
     },
     {
       "name": "disable-sorting",
-      "path": "/example/Pie/disable-sorting",
+      "title": "disable sorting",
+      "path": "/docs/components/Pie/disable-sorting",
       "components": [
         {
           "component": "Chart",
@@ -71,7 +74,8 @@
     },
     {
       "name": "inner-radius-negative",
-      "path": "/example/Pie/inner-radius-negative",
+      "title": "inner radius negative",
+      "path": "/docs/components/Pie/inner-radius-negative",
       "components": [
         {
           "component": "Chart",
@@ -92,7 +96,8 @@
     },
     {
       "name": "inner-radius-positive",
-      "path": "/example/Pie/inner-radius-positive",
+      "title": "inner radius positive",
+      "path": "/docs/components/Pie/inner-radius-positive",
       "components": [
         {
           "component": "Chart",
@@ -113,7 +118,8 @@
     },
     {
       "name": "inner-radius-zero-one",
-      "path": "/example/Pie/inner-radius-zero-one",
+      "title": "inner radius zero one",
+      "path": "/docs/components/Pie/inner-radius-zero-one",
       "components": [
         {
           "component": "Chart",
@@ -134,7 +140,8 @@
     },
     {
       "name": "labels",
-      "path": "/example/Pie/labels",
+      "title": "labels",
+      "path": "/docs/components/Pie/labels",
       "components": [
         {
           "component": "Chart",
@@ -165,7 +172,8 @@
     },
     {
       "name": "labels-centroid",
-      "path": "/example/Pie/labels-centroid",
+      "title": "labels centroid",
+      "path": "/docs/components/Pie/labels-centroid",
       "components": [
         {
           "component": "Chart",
@@ -196,7 +204,8 @@
     },
     {
       "name": "labels-centroid-multiple",
-      "path": "/example/Pie/labels-centroid-multiple",
+      "title": "labels centroid multiple",
+      "path": "/docs/components/Pie/labels-centroid-multiple",
       "components": [
         {
           "component": "Chart",
@@ -227,7 +236,8 @@
     },
     {
       "name": "labels-outer",
-      "path": "/example/Pie/labels-outer",
+      "title": "labels outer",
+      "path": "/docs/components/Pie/labels-outer",
       "components": [
         {
           "component": "Chart",
@@ -258,7 +268,8 @@
     },
     {
       "name": "labels-outer-radial",
-      "path": "/example/Pie/labels-outer-radial",
+      "title": "labels outer radial",
+      "path": "/docs/components/Pie/labels-outer-radial",
       "components": [
         {
           "component": "Chart",
@@ -289,7 +300,8 @@
     },
     {
       "name": "labels-outer-with-padding",
-      "path": "/example/Pie/labels-outer-with-padding",
+      "title": "labels outer with padding",
+      "path": "/docs/components/Pie/labels-outer-with-padding",
       "components": [
         {
           "component": "Chart",
@@ -320,7 +332,8 @@
     },
     {
       "name": "multiple-data-prop",
-      "path": "/example/Pie/multiple-data-prop",
+      "title": "multiple data prop",
+      "path": "/docs/components/Pie/multiple-data-prop",
       "components": [
         {
           "component": "Chart",
@@ -341,7 +354,8 @@
     },
     {
       "name": "offset",
-      "path": "/example/Pie/offset",
+      "title": "offset",
+      "path": "/docs/components/Pie/offset",
       "components": [
         {
           "component": "Chart",
@@ -362,7 +376,8 @@
     },
     {
       "name": "outer-radius",
-      "path": "/example/Pie/outer-radius",
+      "title": "outer radius",
+      "path": "/docs/components/Pie/outer-radius",
       "components": [
         {
           "component": "Chart",
@@ -383,7 +398,8 @@
     },
     {
       "name": "pad-angle",
-      "path": "/example/Pie/pad-angle",
+      "title": "pad angle",
+      "path": "/docs/components/Pie/pad-angle",
       "components": [
         {
           "component": "Chart",
@@ -404,7 +420,8 @@
     },
     {
       "name": "pad-angle-with-inner-radius",
-      "path": "/example/Pie/pad-angle-with-inner-radius",
+      "title": "pad angle with inner radius",
+      "path": "/docs/components/Pie/pad-angle-with-inner-radius",
       "components": [
         {
           "component": "Chart",
@@ -425,7 +442,8 @@
     },
     {
       "name": "partial-range-chart-xrange",
-      "path": "/example/Pie/partial-range-chart-xrange",
+      "title": "partial range chart xrange",
+      "path": "/docs/components/Pie/partial-range-chart-xrange",
       "components": [
         {
           "component": "Chart",
@@ -446,7 +464,8 @@
     },
     {
       "name": "partial-range-range-prop",
-      "path": "/example/Pie/partial-range-range-prop",
+      "title": "partial range range prop",
+      "path": "/docs/components/Pie/partial-range-range-prop",
       "components": [
         {
           "component": "Chart",
@@ -467,7 +486,8 @@
     },
     {
       "name": "placement",
-      "path": "/example/Pie/placement",
+      "title": "placement",
+      "path": "/docs/components/Pie/placement",
       "components": [
         {
           "component": "Chart",
@@ -488,7 +508,8 @@
     },
     {
       "name": "placement-center",
-      "path": "/example/Pie/placement-center",
+      "title": "placement center",
+      "path": "/docs/components/Pie/placement-center",
       "components": [
         {
           "component": "Chart",
@@ -509,7 +530,8 @@
     },
     {
       "name": "placement-left",
-      "path": "/example/Pie/placement-left",
+      "title": "placement left",
+      "path": "/docs/components/Pie/placement-left",
       "components": [
         {
           "component": "Chart",
@@ -535,7 +557,8 @@
     },
     {
       "name": "placement-right",
-      "path": "/example/Pie/placement-right",
+      "title": "placement right",
+      "path": "/docs/components/Pie/placement-right",
       "components": [
         {
           "component": "Chart",
@@ -561,7 +584,8 @@
     },
     {
       "name": "tooltip",
-      "path": "/example/Pie/tooltip",
+      "title": "tooltip",
+      "path": "/docs/components/Pie/tooltip",
       "components": [
         {
           "component": "Chart",
@@ -587,7 +611,8 @@
     },
     {
       "name": "tooltip-with-arcs-slot",
-      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "title": "tooltip with arcs slot",
+      "path": "/docs/components/Pie/tooltip-with-arcs-slot",
       "components": [
         {
           "component": "Chart",
@@ -628,7 +653,8 @@
     },
     {
       "name": "tweened",
-      "path": "/example/Pie/tweened",
+      "title": "tweened",
+      "path": "/docs/components/Pie/tweened",
       "components": [
         {
           "component": "Chart",
@@ -652,192 +678,192 @@
     {
       "example": "basic",
       "component": "Pie",
-      "path": "/example/Pie/basic",
+      "path": "/docs/components/Pie/basic",
       "lineNumber": 36,
       "line": "<Pie />"
     },
     {
       "example": "default-slot-render-each-arc",
       "component": "Pie",
-      "path": "/example/Pie/default-slot-render-each-arc",
+      "path": "/docs/components/Pie/default-slot-render-each-arc",
       "lineNumber": 37,
       "line": "<Pie>"
     },
     {
       "example": "disable-sorting",
       "component": "Pie",
-      "path": "/example/Pie/disable-sorting",
+      "path": "/docs/components/Pie/disable-sorting",
       "lineNumber": 36,
       "line": "<Pie sort={null} />"
     },
     {
       "example": "inner-radius-negative",
       "component": "Pie",
-      "path": "/example/Pie/inner-radius-negative",
+      "path": "/docs/components/Pie/inner-radius-negative",
       "lineNumber": 19,
       "line": "<Pie innerRadius={0.9} />"
     },
     {
       "example": "inner-radius-positive",
       "component": "Pie",
-      "path": "/example/Pie/inner-radius-positive",
+      "path": "/docs/components/Pie/inner-radius-positive",
       "lineNumber": 19,
       "line": "<Pie innerRadius={100} />"
     },
     {
       "example": "inner-radius-zero-one",
       "component": "Pie",
-      "path": "/example/Pie/inner-radius-zero-one",
+      "path": "/docs/components/Pie/inner-radius-zero-one",
       "lineNumber": 19,
       "line": "<Pie innerRadius={100} />"
     },
     {
       "example": "labels",
       "component": "Pie",
-      "path": "/example/Pie/labels",
+      "path": "/docs/components/Pie/labels",
       "lineNumber": 20,
       "line": "<Pie>"
     },
     {
       "example": "labels-centroid",
       "component": "Pie",
-      "path": "/example/Pie/labels-centroid",
+      "path": "/docs/components/Pie/labels-centroid",
       "lineNumber": 20,
       "line": "<Pie>"
     },
     {
       "example": "labels-centroid-multiple",
       "component": "Pie",
-      "path": "/example/Pie/labels-centroid-multiple",
+      "path": "/docs/components/Pie/labels-centroid-multiple",
       "lineNumber": 23,
       "line": "<Pie>"
     },
     {
       "example": "labels-outer",
       "component": "Pie",
-      "path": "/example/Pie/labels-outer",
+      "path": "/docs/components/Pie/labels-outer",
       "lineNumber": 20,
       "line": "<Pie>"
     },
     {
       "example": "labels-outer-radial",
       "component": "Pie",
-      "path": "/example/Pie/labels-outer-radial",
+      "path": "/docs/components/Pie/labels-outer-radial",
       "lineNumber": 20,
       "line": "<Pie>"
     },
     {
       "example": "labels-outer-with-padding",
       "component": "Pie",
-      "path": "/example/Pie/labels-outer-with-padding",
+      "path": "/docs/components/Pie/labels-outer-with-padding",
       "lineNumber": 20,
       "line": "<Pie>"
     },
     {
       "example": "multiple-data-prop",
       "component": "Pie",
-      "path": "/example/Pie/multiple-data-prop",
+      "path": "/docs/components/Pie/multiple-data-prop",
       "lineNumber": 20,
       "line": "<Pie innerRadius={100} {data} />"
     },
     {
       "example": "multiple-data-prop",
       "component": "Pie",
-      "path": "/example/Pie/multiple-data-prop",
+      "path": "/docs/components/Pie/multiple-data-prop",
       "lineNumber": 21,
       "line": "<Pie outerRadius={90} data={data2} />"
     },
     {
       "example": "offset",
       "component": "Pie",
-      "path": "/example/Pie/offset",
+      "path": "/docs/components/Pie/offset",
       "lineNumber": 19,
       "line": "<Pie offset={4} />"
     },
     {
       "example": "outer-radius",
       "component": "Pie",
-      "path": "/example/Pie/outer-radius",
+      "path": "/docs/components/Pie/outer-radius",
       "lineNumber": 19,
       "line": "<Pie outerRadius={100} />"
     },
     {
       "example": "pad-angle",
       "component": "Pie",
-      "path": "/example/Pie/pad-angle",
+      "path": "/docs/components/Pie/pad-angle",
       "lineNumber": 19,
       "line": "<Pie padAngle={0.05} />"
     },
     {
       "example": "pad-angle-with-inner-radius",
       "component": "Pie",
-      "path": "/example/Pie/pad-angle-with-inner-radius",
+      "path": "/docs/components/Pie/pad-angle-with-inner-radius",
       "lineNumber": 19,
       "line": "<Pie innerRadius={100} padAngle={0.03} />"
     },
     {
       "example": "partial-range-chart-xrange",
       "component": "Pie",
-      "path": "/example/Pie/partial-range-chart-xrange",
+      "path": "/docs/components/Pie/partial-range-chart-xrange",
       "lineNumber": 19,
       "line": "<Pie />"
     },
     {
       "example": "partial-range-range-prop",
       "component": "Pie",
-      "path": "/example/Pie/partial-range-range-prop",
+      "path": "/docs/components/Pie/partial-range-range-prop",
       "lineNumber": 19,
       "line": "<Pie range={[-90, 90]} />"
     },
     {
       "example": "placement",
       "component": "Pie",
-      "path": "/example/Pie/placement",
+      "path": "/docs/components/Pie/placement",
       "lineNumber": 19,
       "line": "<Pie />"
     },
     {
       "example": "placement-center",
       "component": "Pie",
-      "path": "/example/Pie/placement-center",
+      "path": "/docs/components/Pie/placement-center",
       "lineNumber": 19,
       "line": "<Pie />"
     },
     {
       "example": "placement-left",
       "component": "Pie",
-      "path": "/example/Pie/placement-left",
+      "path": "/docs/components/Pie/placement-left",
       "lineNumber": 21,
       "line": "<Pie />"
     },
     {
       "example": "placement-right",
       "component": "Pie",
-      "path": "/example/Pie/placement-right",
+      "path": "/docs/components/Pie/placement-right",
       "lineNumber": 21,
       "line": "<Pie />"
     },
     {
       "example": "tooltip",
       "component": "Pie",
-      "path": "/example/Pie/tooltip",
+      "path": "/docs/components/Pie/tooltip",
       "lineNumber": 22,
       "line": "<Pie tooltipContext={context.tooltip} />"
     },
     {
       "example": "tooltip-with-arcs-slot",
       "component": "Pie",
-      "path": "/example/Pie/tooltip-with-arcs-slot",
+      "path": "/docs/components/Pie/tooltip-with-arcs-slot",
       "lineNumber": 31,
       "line": "<Pie>"
     },
     {
       "example": "tweened",
       "component": "Pie",
-      "path": "/example/Pie/tweened",
+      "path": "/docs/components/Pie/tweened",
       "lineNumber": 25,
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-11-23T01:49:02.586Z"
+  "updatedAt": "2026-02-07T20:21:32.144Z"
 }

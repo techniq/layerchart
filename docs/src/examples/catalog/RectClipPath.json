@@ -5,136 +5,136 @@
     {
       "example": "clipped-area-on-tooltip",
       "component": "Area",
-      "path": "/example/Area/clipped-area-on-tooltip",
+      "path": "/docs/components/Area/clipped-area-on-tooltip",
       "lineNumber": 35,
       "line": "<RectClipPath"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
-      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
       "lineNumber": 32,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "highlight-color-based-on-value-using-color-scale",
       "component": "Area",
-      "path": "/example/Area/highlight-color-based-on-value-using-color-scale",
+      "path": "/docs/components/Area/highlight-color-based-on-value-using-color-scale",
       "lineNumber": 35,
       "line": "<RectClipPath"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
-      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "lineNumber": 21,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
-      "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
+      "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "lineNumber": 24,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
-      "path": "/example/Area/threshold-with-rectclippath",
+      "path": "/docs/components/Area/threshold-with-rectclippath",
       "lineNumber": 21,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
-      "path": "/example/Area/threshold-with-rectclippath",
+      "path": "/docs/components/Area/threshold-with-rectclippath",
       "lineNumber": 24,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
-      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 21,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
-      "path": "/example/Area/threshold-with-rectclippath-over-under",
+      "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 24,
       "line": "<RectClipPath"
     },
     {
       "example": "horizontal-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/horizontal-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-clipped-highlight",
       "lineNumber": 35,
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
     {
       "example": "vertical-tooltip-and-clipped-highlight",
       "component": "Bars",
-      "path": "/example/Bars/vertical-tooltip-and-clipped-highlight",
+      "path": "/docs/components/Bars/vertical-tooltip-and-clipped-highlight",
       "lineNumber": 34,
       "line": "<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} motion=\"spring\">"
     },
     {
       "example": "filterable",
       "component": "Partition",
-      "path": "/example/Partition/filterable",
+      "path": "/docs/components/Partition/filterable",
       "lineNumber": 137,
       "line": "<RectClipPath"
     },
     {
       "example": "horizontal",
       "component": "Partition",
-      "path": "/example/Partition/horizontal",
+      "path": "/docs/components/Partition/horizontal",
       "lineNumber": 106,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
       "example": "vertical",
       "component": "Partition",
-      "path": "/example/Partition/vertical",
+      "path": "/docs/components/Partition/vertical",
       "lineNumber": 107,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
       "example": "complex",
       "component": "Treemap",
-      "path": "/example/Treemap/complex",
+      "path": "/docs/components/Treemap/complex",
       "lineNumber": 107,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
-      "path": "/example/Treemap/nested-filter",
+      "path": "/docs/components/Treemap/nested-filter",
       "lineNumber": 155,
       "line": "<RectClipPath"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
-      "path": "/example/Treemap/nested-zoom",
+      "path": "/docs/components/Treemap/nested-zoom",
       "lineNumber": 125,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
       "example": "playground",
       "component": "Treemap",
-      "path": "/example/Treemap/playground",
+      "path": "/docs/components/Treemap/playground",
       "lineNumber": 153,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
-      "path": "/example/Treemap/stacked-zoom",
+      "path": "/docs/components/Treemap/stacked-zoom",
       "lineNumber": 98,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.254Z"
+  "updatedAt": "2026-02-07T17:00:32.487Z"
 }
