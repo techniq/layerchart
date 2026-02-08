@@ -48,8 +48,6 @@
 			? geojson.features.filter((f) => f.properties.name === 'United States of America')
 			: geojson.features
 	);
-
-	export { data };
 </script>
 
 <GeoContextPlaygroundControls

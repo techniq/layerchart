@@ -9,7 +9,7 @@ related: []
 
 :example{ name="scatter" showCode }
 
-## Geo context
+### Geo context
 
 Hull can also be used within a geo context (i.e. `<Chart geo={{ projection: ... }}>`)
 

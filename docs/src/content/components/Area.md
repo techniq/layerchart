@@ -13,6 +13,6 @@ See also: [AreaChart](/docs/components/AreaChart) for simplified examples
 
 :example{ name="basic" showCode }
 
-## Playground
+### Playground
 
 :example{ name="playground" }

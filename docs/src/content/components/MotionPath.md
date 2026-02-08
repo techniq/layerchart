@@ -5,7 +5,7 @@ layers: [svg]
 related: [Spline]
 ---
 
-## Examples
+## Usage
 
 ### Repeat indefinitely
 

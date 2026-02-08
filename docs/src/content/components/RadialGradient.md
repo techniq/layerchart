@@ -5,18 +5,20 @@ layers: [svg]
 related: [LinearGradient, Pattern]
 ---
 
-## Focal location and radius with custom colors
+## Usage
+
+### Focal location and radius with custom colors
 
 :example{ name="focal-location-and-radius-with-custom-colors" noResize clip }
 
-## Tailwind colors
+### Tailwind colors
 
 :example{ name="tailwind-colors" noResize clip }
 
-## spreadMethod
+### spreadMethod
 
 :example{ name="spreadmethod" noResize clip }
 
-## units
+### units
 
 :example{ name="units" noResize clip }

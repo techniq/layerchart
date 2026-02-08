@@ -13,7 +13,7 @@ See also: [ArcChart](/docs/components/ArcChart) and [PieChart](/docs/components/
 
 :example{ name="partial-arc" showCode }
 
-## Text along path
+### Text along path
 
 `Arc` can be used with the `children` snippet, `getArcTextProps`, and `Text` to write text along the `inner`, `outer`, or `middle` of the arc path.
 
@@ -21,6 +21,6 @@ The text will smartly orientate based on the direction (clockwise / counter-cloc
 
 :example{ name="label-direction" }
 
-## Playground
+### Playground
 
 :example{ name="playground" }

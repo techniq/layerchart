@@ -5,18 +5,20 @@ layers: [svg, canvas, html]
 related: [RadialGradient, Pattern]
 ---
 
-## Direction with custom colors
+## Usage
+
+### Direction with custom colors
 
 :example{ name="direction-with-custom-colors" noResize}
 
-## Explicit offsets
+### Explicit offsets
 
 :example{ name="explicit-offsets" noResize}
 
-## Tailwind colors
+### Tailwind colors
 
 :example{ name="tailwind-colors" noResize clip}
 
-## Units
+### Units
 
 :example{ name="units" noResize clip}

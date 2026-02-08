@@ -21,6 +21,6 @@ Examples broken due to `Group` not positioning [correctly](https://github.com/te
 
 :example{ name="basic" showCode }
 
-## Playground
+### Playground
 
 :example{ name="playground" }

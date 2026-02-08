@@ -5,6 +5,8 @@ layers: [svg, canvas, html]
 related: [Canvas, Html, Svg]
 ---
 
-## Usage with all 3 layer types
+## Usage
+
+### All 3 layer types
 
 :example{name="all-3-layers" showCode }
