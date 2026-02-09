@@ -380,21 +380,6 @@ export function generateUtilMarkdown(
 		}
 	}
 
-	// Load example
-	let exampleSource = '';
-	if (util.usageExample) {
-		const key = `/src/examples/utils/${util.slug}/${util.usageExample}.svelte`;
-		const raw = exampleSources[key];
-		if (raw) {
-			exampleSource = trimCode(raw);
-		}
-	}
-
-	if (exampleSource) {
-		sections.push(`${h(headingLevel + 1)} Example`);
-		sections.push('```svelte\n' + exampleSource + '\n```');
-	}
-
 	// Related
 	if (util.related && util.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);

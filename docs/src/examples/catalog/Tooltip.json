@@ -4534,6 +4534,55 @@
       "line": "<Tooltip.Root {context} class=\"text-xs\" contained={false} y={context.height + 4} xOffset={0}>"
     },
     {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 50,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 52,
+      "line": "<Tooltip.Header>{format(data.date)}</Tooltip.Header>"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 53,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 54,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} />"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 55,
+      "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} />"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 56,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 57,
+      "line": "<Tooltip.Item label=\"variance\" value={data.value - data.baseline} />"
+    },
+    {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
@@ -5899,5 +5948,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:31.427Z"
+  "updatedAt": "2026-02-09T15:38:07.070Z"
 }

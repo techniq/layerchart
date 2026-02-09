@@ -225,7 +225,7 @@
 
 {#if metadata.related.length}
 	<H2 id="related">Related</H2>
-	<div class="flex flex-wrap gap-2 mt-1">
+	<div class="grid grid-cols-xs gap-2 mt-2">
 		{#each metadata.related as related}
 			<RelatedLink value={related} />
 		{/each}

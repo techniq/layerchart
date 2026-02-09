@@ -1,20 +1,7 @@
 <script lang="ts">
-	import {
-		Breadcrumb,
-		Button,
-		Drawer,
-		Kbd,
-		MenuButton,
-		settings,
-		TextField,
-		ThemeSelect,
-		Tooltip
-	} from 'svelte-ux';
+	import { Button, Drawer, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
-	import { env } from '@layerstack/utils';
-	import { watch } from 'runed';
 
-	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { examples } from '$lib/context.js';
 	import Search from './search/Search.svelte';
@@ -23,12 +10,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 
 	import LucideAlignLeft from '~icons/lucide/align-left';
-	import LucideAlignJustify from '~icons/lucide/align-justify';
-	import LucideSearch from '~icons/lucide/search';
-	import LucideArrowLeft from '~icons/lucide/arrow-left';
-	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import LucideFilePen from '~icons/lucide/file-pen';
-	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucidePanelLeftOpen from '~icons/lucide/panel-left-open';
@@ -48,15 +30,6 @@
 		}
 	};
 	examples.set(examplesContext);
-
-	let searchQuery = $state('');
-
-	function handleSearch() {
-		goto(`/docs/search?q=${searchQuery}`);
-		searchQuery = '';
-	}
-
-	let searchInput = $state<HTMLInputElement>();
 
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);

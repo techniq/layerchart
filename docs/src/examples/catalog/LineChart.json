@@ -761,6 +761,33 @@
       ]
     },
     {
+      "name": "threshold",
+      "title": "threshold",
+      "path": "/docs/components/LineChart/threshold",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 23,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Threshold",
+          "lineNumber": 34,
+          "line": "<Threshold curve={selectedCurve}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 36,
+          "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 50,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
       "name": "tooltip-click",
       "title": "tooltip click",
       "path": "/docs/components/LineChart/tooltip-click",
@@ -1347,6 +1374,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 23,
+      "line": "<LineChart"
+    },
+    {
       "example": "tooltip-click",
       "component": "LineChart",
       "path": "/docs/components/LineChart/tooltip-click",
@@ -1361,5 +1395,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.979Z"
+  "updatedAt": "2026-02-09T17:02:21.129Z"
 }

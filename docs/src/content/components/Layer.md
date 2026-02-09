@@ -7,6 +7,6 @@ related: [Canvas, Html, Svg]
 
 ## Usage
 
-### All 3 layer types
+### All 3 types
 
 :example{name="all-3-layers" showCode }

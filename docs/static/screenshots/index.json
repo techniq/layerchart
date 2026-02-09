@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-08T17:35:29.253Z",
+  "generatedAt": "2026-02-09T17:02:18.477Z",
   "totalComponents": 59,
-  "totalExamples": 710,
+  "totalExamples": 711,
   "components": [
     {
       "component": "AnnotationLine",
@@ -374,12 +374,12 @@
         {
           "name": "threshold-with-lineargradient",
           "path": "/example/Area/threshold-with-lineargradient",
-          "checksum": "292157bd46656bc0791de002faf6bacf"
+          "checksum": "a7a64159dd610d4c03e661117bb3acd6"
         },
         {
           "name": "threshold-with-lineargradient-over-under",
           "path": "/example/Area/threshold-with-lineargradient-over-under",
-          "checksum": "bd44be943d8b86ffedc4de32460e2757"
+          "checksum": "d5af201352e440e065e719f5cd93dfc9"
         },
         {
           "name": "threshold-with-rectclippath",
@@ -589,7 +589,7 @@
         {
           "name": "threshold",
           "path": "/example/AreaChart/threshold",
-          "checksum": "74e2860f30bd452b5b617e3882b7c9a3"
+          "checksum": "24550668d0018307934d31b8dde78e01"
         },
         {
           "name": "threshold-gradient",
@@ -2655,6 +2655,11 @@
           "name": "sparkline-zero-axis",
           "path": "/example/LineChart/sparkline-zero-axis",
           "checksum": "f770dd27b4a2a168dc559e100277d805"
+        },
+        {
+          "name": "threshold",
+          "path": "/example/LineChart/threshold",
+          "checksum": "f6895bb646569b8f13d47e0101dd66c1"
         },
         {
           "name": "tooltip-click",

@@ -1107,28 +1107,28 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -4093,5 +4093,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.307Z"
+  "updatedAt": "2026-02-09T15:50:50.340Z"
 }

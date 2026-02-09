@@ -593,27 +593,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 20,
+          "lineNumber": 19,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 23,
+          "lineNumber": 22,
           "line": "<Rule y={0} />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 33,
+          "lineNumber": 32,
           "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
         }
       ]
@@ -630,27 +630,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 20,
+          "lineNumber": 19,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 23,
+          "lineNumber": 22,
           "line": "<Rule y={0} />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 33,
+          "lineNumber": 32,
           "line": "<Area"
         }
       ]
@@ -944,14 +944,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Area"
     },
     {
@@ -1333,5 +1333,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.262Z"
+  "updatedAt": "2026-02-09T15:50:50.030Z"
 }

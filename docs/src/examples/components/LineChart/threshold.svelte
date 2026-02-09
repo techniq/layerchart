@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Area, AreaChart, defaultChartPadding, Spline, Threshold, Tooltip } from 'layerchart';
-	import { createDateSeries } from '$lib/utils/data.js';
+	import { LineChart, defaultChartPadding, Spline, Threshold, Tooltip } from 'layerchart';
+	import { curveBumpX } from 'd3-shape';
 	import { format } from '@layerstack/utils';
-	import { curveStepAfter } from 'd3-shape';
+
+	import { createDateSeries } from '$lib/utils/data.js';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	const data = createDateSeries({
@@ -14,18 +15,17 @@
 	});
 	export { data };
 
-	let selectedCurve = $state(curveStepAfter);
+	let selectedCurve = $state(curveBumpX);
 </script>
 
 <CurveMenuField bind:value={selectedCurve} dense class="mb-10" />
 
-<AreaChart
+<LineChart
 	{data}
 	x="date"
 	y={['value', 'baseline']}
 	props={{
-		highlight: { area: true, lines: false, points: false },
-		tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } }
+		highlight: { lines: true, points: false }
 	}}
 	padding={defaultChartPadding({ top: 10, right: 10 })}
 	height={300}
@@ -33,16 +33,15 @@
 	{#snippet marks()}
 		<Threshold curve={selectedCurve}>
 			{#snippet above({ curve })}
-				<Area y0="value" y1="baseline" {curve} class="fill-success/30" />
+				<Spline y="value" {curve} class="stroke-success stroke-2" />
 			{/snippet}
 
 			{#snippet below({ curve })}
-				<Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
+				<Spline y="value" {curve} class="stroke-danger stroke-2" />
 			{/snippet}
 
 			{#snippet children({ curve })}
-				<Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
-				<Spline y="value" {curve} class="stroke-[1.5]" />
+				<Spline y="baseline" {curve} class="[stroke-dasharray:4] opacity-20" />
 			{/snippet}
 		</Threshold>
 	{/snippet}
@@ -60,4 +59,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</AreaChart>
+</LineChart>

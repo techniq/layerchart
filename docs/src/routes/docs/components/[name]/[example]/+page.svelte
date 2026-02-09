@@ -24,16 +24,8 @@
 <Example name={example} {component} showCode />
 
 <H2>Components</H2>
-<div class="flex flex-wrap gap-2 mt-1">
+<div class="grid grid-cols-xs gap-2 mt-2">
 	{#each exampleInfo?.components as componentUsage}
-		<Button
-			icon={LucideLink}
-			variant="fill-light"
-			href="/docs/components/{componentUsage.component}"
-			size="sm"
-		>
-			{componentUsage.component}
-		</Button>
-		<!-- <ComponentLink component={componentUsage.component} example="basic" /> -->
+		<ComponentLink component={componentUsage.component} />
 	{/each}
 </div>
