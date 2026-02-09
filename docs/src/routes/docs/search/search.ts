@@ -69,6 +69,6 @@ export function search(query: string): SearchEntry[] {
 		.map((idx) => searchData[idx])
 		.map((entry) => ({
 			...entry,
-			content: getSnippet(entry.content, searchTerm)
+			content: entry.type === 'example' ? entry.content : getSnippet(entry.content, searchTerm)
 		}));
 }
