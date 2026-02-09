@@ -12,7 +12,7 @@
 		value: 'integer',
 		keys: ['value', 'baseline']
 	});
-	export { data, actions };
+	export { data };
 
 	let selectedCurve = $state(curveStepAfter);
 </script>
