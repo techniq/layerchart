@@ -33,11 +33,11 @@
 	{#snippet marks()}
 		<Threshold curve={selectedCurve}>
 			{#snippet above({ curve })}
-				<Spline y="value" {curve} class="stroke-success" />
+				<Spline y="value" {curve} class="stroke-success stroke-2" />
 			{/snippet}
 
 			{#snippet below({ curve })}
-				<Spline y="value" {curve} class="stroke-danger" />
+				<Spline y="value" {curve} class="stroke-danger stroke-2" />
 			{/snippet}
 
 			{#snippet children({ curve })}
