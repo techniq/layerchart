@@ -20,7 +20,6 @@ Primitives are also motion-enabled, providing tween or spring based transitions 
 {#each primitiveComponents as component}
   <ComponentLink
     component={component.name}
-    example={component.usageExample}
     aspect="screenshot"
     supportedLayers={component.layers}
   />

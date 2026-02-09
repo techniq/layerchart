@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tick, type ComponentProps } from 'svelte';
 	import { cls } from '@layerstack/tailwind';
+	import { allComponents } from 'content-collections';
 
 	import LucideBlocks from '~icons/lucide/blocks';
 
@@ -11,21 +12,24 @@
 
 	let {
 		component,
-		example,
+		example: exampleProp,
 		variant = 'default',
 		aspect = undefined,
 		supportedLayers,
 		...restProps
 	}: {
 		component: string;
-		example: string;
+		example?: string;
 		showComponent?: boolean;
 		variant?: ComponentProps<typeof ImageLink>['variant'];
 		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
 		supportedLayers?: string[];
 	} & Partial<ComponentProps<typeof ImageLink>> = $props();
 
-	let href = $derived(`/docs/components/${component}/${example}`);
+	const componentData = $derived(allComponents.find((c) => c.name === component));
+	const example = $derived(exampleProp ?? componentData?.defaultExample ?? 'basic');
+
+	let href = $derived(`/docs/components/${component}`);
 
 	// Only enable view transition when navigating to or from this link and remove after navigation to fix stacking order
 	let enableViewTransition = $state(navigating.from?.url.pathname === href);

@@ -3,10 +3,11 @@
 	import { toTitleCase } from '@layerstack/utils';
 
 	import LucideLink from '~icons/lucide/link';
-	import LucideBlocks from '~icons/lucide/blocks';
 	import LucideGithub from '~icons/lucide/github';
 	import LucideCode from '~icons/lucide/code';
 	import LucideGlobe from '~icons/lucide/globe';
+
+	import ComponentLink from './ComponentLink.svelte';
 
 	let { value }: { value: string } = $props();
 
@@ -25,7 +26,7 @@
 				type: 'component',
 				name: value,
 				url: `/docs/components/${value}`,
-				icon: LucideBlocks
+				icon: undefined
 			};
 		} else {
 			const [type, name] = value.split('/');
@@ -34,12 +35,16 @@
 	});
 </script>
 
-<Button
-	{icon}
-	variant="fill-light"
-	href={url.toString()}
-	target={value.startsWith('http') ? '_blank' : undefined}
-	size="sm"
->
-	{name}
-</Button>
+{#if type === 'component'}
+	<ComponentLink component={name as string} />
+{:else}
+	<Button
+		{icon}
+		variant="fill-light"
+		href={url.toString()}
+		target={value.startsWith('http') ? '_blank' : undefined}
+		size="sm"
+	>
+		{name}
+	</Button>
+{/if}

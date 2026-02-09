@@ -53,9 +53,19 @@ const components = defineCollection({
 		const toc = extractTocFromMarkdown(doc.content);
 
 		const catalogPath = join(process.cwd(), `src/examples/catalog/${path}.json`);
+		let catalogFirstExample: string | undefined;
 		if (existsSync(catalogPath)) {
 			toc.push({ id: 'examples', text: 'Examples', level: 2 });
+			try {
+				const catalog = JSON.parse(readFileSync(catalogPath, 'utf-8'));
+				catalogFirstExample = catalog.examples?.[0]?.name;
+			} catch {
+				// ignore
+			}
 		}
+
+		// Best example to use: first from docs markdown, fallback to first in catalog
+		const defaultExample = usageExample ?? catalogFirstExample;
 
 		const apiPath = join(process.cwd(), `src/generated/api/${path}.json`);
 		if (existsSync(apiPath)) {
@@ -79,7 +89,7 @@ const components = defineCollection({
 			slug: path,
 			source,
 			sourceUrl,
-			usageExample,
+			defaultExample,
 			toc
 			// html: await compileMarkdown(context, doc)
 		};
@@ -118,19 +128,12 @@ const utils = defineCollection({
 			// );
 		}
 
-		// Extract the first Example component's name from the markdown content
-		// Support both <Example name="..."> and :example{name="..."} syntax
-		const usageExample =
-			doc.content.match(/<Example\s+[^>]*name=["']([^"']+)["'][^>]*>/)?.[1] ||
-			doc.content.match(/:example\{[^}]*name=["']([^"']+)["'][^}]*\}/)?.[1];
-
 		return {
 			...doc,
 			name: doc.name ?? fileName.replace('.md', ''),
 			slug: fileName.replace('.md', '').toLowerCase(), // Use lowercase for utils slugs
 			source,
 			sourceUrl,
-			usageExample,
 			toc: extractTocFromMarkdown(doc.content)
 		};
 	}
