@@ -25,8 +25,12 @@
 		url: 'https://layerchart.com/docs',
 		description: 'A charting/visualization library for Svelte 5'
 	};
-	const pageName = page.url.href.split('/').pop();
-	const llmBaseContext = `The following is a documentation page from ${pkg.name} (${pkg.description}). The page URL for "${pageName}" is ${page.url.href}. Be ready to help answer questions about this page.`;
+	// Use origin + pathname to exclude hash/anchor from URLs
+	const pageUrl = $derived(`${page.url.origin}${page.url.pathname}`);
+	const pageName = $derived(page.url.pathname.split('/').pop());
+	const llmBaseContext = $derived(
+		`The following is a documentation page from ${pkg.name} (${pkg.description}). The page URL for "${pageName}" is ${pageUrl}. Be ready to help answer questions about this page.`
+	);
 
 	const llms = $derived([
 		// Add source button if component page
@@ -46,7 +50,7 @@
 			label: 'View Page Markdown',
 			icon: SimpleIconsMarkdown,
 			fn: async () => {
-				markdownContent = await fetch(`${page.url.href}/llms.txt`).then((res) => res.text());
+				markdownContent = await fetch(`${pageUrl}/llms.txt`).then((res) => res.text());
 				openMarkdownModal = true;
 			}
 		},
@@ -85,7 +89,7 @@
 		size="sm"
 		color="primary"
 		onclick={async () => {
-			const md = await fetch(`${page.url.href}/llms.txt`).then((res) => res.text());
+			const md = await fetch(`${pageUrl}/llms.txt`).then((res) => res.text());
 			copy(md);
 		}}
 	>
@@ -170,14 +174,14 @@
 	<div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
 		<div class="overflow-auto">
 			<div class="text-lg font-semibold">Page Markdown</div>
-			<div class="text-xs text-surface-content/50 truncate">{page.url.href}/llms.txt</div>
+			<div class="text-xs text-surface-content/50 truncate">{pageUrl}/llms.txt</div>
 		</div>
 
 		<Button
 			icon={SimpleIconsMarkdown}
 			variant="fill-light"
 			color="primary"
-			href="{page.url.href}/llms.txt"
+			href="{pageUrl}/llms.txt"
 			target="_blank"
 		>
 			Open Raw
