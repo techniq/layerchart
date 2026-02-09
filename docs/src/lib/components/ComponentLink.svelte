@@ -49,7 +49,14 @@
 
 <ImageLink {href} {variant} {...restProps}>
 	{#snippet image()}
-		<ExampleScreenshot {component} {example} {aspect} background {viewTransitionName} />
+		<ExampleScreenshot
+			{component}
+			{example}
+			{aspect}
+			background
+			{viewTransitionName}
+			fallbackIcon={LucideBlocks}
+		/>
 	{/snippet}
 
 	{#snippet label()}
