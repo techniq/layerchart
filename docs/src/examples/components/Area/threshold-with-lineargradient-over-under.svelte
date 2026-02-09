@@ -15,8 +15,7 @@
 <Chart {data} x="date" y="value" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>
 	{#snippet children({ context })}
 		{@const thresholdValue = 0}
-		{@const thresholdOffset =
-			context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
+		{@const thresholdOffset = context.yScale(thresholdValue) / context.containerHeight}
 		<Layer>
 			<Axis placement="left" grid rule />
 			<Axis placement="bottom" />

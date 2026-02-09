@@ -178,14 +178,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<LinearGradient"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<LinearGradient"
     },
     {
@@ -539,5 +539,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.997Z"
+  "updatedAt": "2026-02-09T15:50:52.902Z"
 }

@@ -872,14 +872,14 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
       "lineNumber": 36,
-      "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
+      "line": "<Spline y=\"value\" {curve} class=\"stroke-success\" />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
       "lineNumber": 40,
-      "line": "<Spline y=\"value\" {curve} class=\"stroke-danger stroke-2\" />"
+      "line": "<Spline y=\"value\" {curve} class=\"stroke-danger\" />"
     },
     {
       "example": "threshold",
@@ -1155,5 +1155,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-09T15:38:06.925Z"
+  "updatedAt": "2026-02-09T15:50:53.621Z"
 }

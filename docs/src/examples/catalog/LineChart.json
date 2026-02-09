@@ -778,7 +778,7 @@
         {
           "component": "Spline",
           "lineNumber": 36,
-          "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
+          "line": "<Spline y=\"value\" {curve} class=\"stroke-success\" />"
         },
         {
           "component": "Tooltip",
@@ -1395,5 +1395,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-09T15:39:49.211Z"
+  "updatedAt": "2026-02-09T15:50:52.726Z"
 }

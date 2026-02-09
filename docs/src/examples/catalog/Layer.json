@@ -237,14 +237,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Layer>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Layer>"
     },
     {
@@ -3104,5 +3104,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:30.772Z"
+  "updatedAt": "2026-02-09T15:50:52.556Z"
 }

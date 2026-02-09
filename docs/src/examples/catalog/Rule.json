@@ -449,14 +449,14 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Rule y={0} />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Rule y={0} />"
     },
     {
@@ -698,5 +698,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.259Z"
+  "updatedAt": "2026-02-09T15:50:53.516Z"
 }
