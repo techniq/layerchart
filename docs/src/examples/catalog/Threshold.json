@@ -97,6 +97,13 @@
       "line": "<Threshold curve={selectedCurve}>"
     },
     {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 34,
+      "line": "<Threshold curve={selectedCurve}>"
+    },
+    {
       "example": "basic",
       "component": "Threshold",
       "path": "/docs/components/Threshold/basic",
@@ -118,5 +125,5 @@
       "line": "<Threshold curve={selectedCurve}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.369Z"
+  "updatedAt": "2026-02-09T15:38:07.006Z"
 }
