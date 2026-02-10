@@ -4537,49 +4537,49 @@
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 50,
+      "lineNumber": 55,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 52,
+      "lineNumber": 57,
       "line": "<Tooltip.Header>{format(data.date)}</Tooltip.Header>"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 53,
+      "lineNumber": 58,
       "line": "<Tooltip.List>"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 54,
+      "lineNumber": 59,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 55,
+      "lineNumber": 60,
       "line": "<Tooltip.Item label=\"baseline\" value={data.baseline} />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 56,
+      "lineNumber": 61,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 57,
+      "lineNumber": 62,
       "line": "<Tooltip.Item label=\"variance\" value={data.value - data.baseline} />"
     },
     {
@@ -5948,5 +5948,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-02-09T15:38:07.070Z"
+  "updatedAt": "2026-02-10T16:19:23.109Z"
 }

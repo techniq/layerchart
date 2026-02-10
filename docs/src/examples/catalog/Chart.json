@@ -2314,9 +2314,30 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
-      "example": "color-via-scale",
+      "example": "color-via-class",
       "component": "Points",
-      "path": "/docs/components/Points/color-via-scale",
+      "path": "/docs/components/Points/color-via-class",
+      "lineNumber": 11,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
+      "example": "color-via-fill",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-fill",
+      "lineNumber": 11,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
       "lineNumber": 11,
       "line": "<Chart"
     },
@@ -3056,5 +3077,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:30.129Z"
+  "updatedAt": "2026-02-10T16:19:21.848Z"
 }

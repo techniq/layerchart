@@ -3225,17 +3225,59 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "color-via-scale",
+      "example": "color-via-class",
       "component": "Points",
-      "path": "/docs/components/Points/color-via-scale",
-      "lineNumber": 25,
+      "path": "/docs/components/Points/color-via-class",
+      "lineNumber": 13,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "color-via-scale",
+      "example": "color-via-class",
       "component": "Points",
-      "path": "/docs/components/Points/color-via-scale",
-      "lineNumber": 26,
+      "path": "/docs/components/Points/color-via-class",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-fill",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-fill",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "color-via-fill",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-fill",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4093,5 +4135,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:50.340Z"
+  "updatedAt": "2026-02-10T16:19:21.595Z"
 }

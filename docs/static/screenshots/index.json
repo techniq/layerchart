@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-09T17:02:18.477Z",
+  "generatedAt": "2026-02-10T16:19:20.323Z",
   "totalComponents": 59,
-  "totalExamples": 711,
+  "totalExamples": 714,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2659,7 +2659,7 @@
         {
           "name": "threshold",
           "path": "/example/LineChart/threshold",
-          "checksum": "f6895bb646569b8f13d47e0101dd66c1"
+          "checksum": "ee7d7491fad94c7377b224b55f473bd7"
         },
         {
           "name": "tooltip-click",
@@ -3107,9 +3107,24 @@
           "checksum": "d865689d359b7ec26116bdcefc870a46"
         },
         {
-          "name": "color-via-scale",
-          "path": "/example/Points/color-via-scale",
-          "checksum": "986577558442fd8d7a916eb968f58799"
+          "name": "color-via-class",
+          "path": "/example/Points/color-via-class",
+          "checksum": "e6562dcc70a0cb99b6cb0a5b808f051c"
+        },
+        {
+          "name": "color-via-fill",
+          "path": "/example/Points/color-via-fill",
+          "checksum": "a15a53c54e67c5f9aef6a0dccf37481c"
+        },
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Points/color-via-ordinal-scale",
+          "checksum": "9272510bad7a7be6801acfeb972c8808"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Points/color-via-threshold-scale",
+          "checksum": "4197928e3ace04df5e2a62f2bf16a457"
         },
         {
           "name": "with-labels",

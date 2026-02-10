@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart, defaultChartPadding, Spline, Threshold, Tooltip } from 'layerchart';
+	import { LineChart, defaultChartPadding, Spline, Threshold, Tooltip, Points } from 'layerchart';
 	import { curveBumpX } from 'd3-shape';
 	import { format } from '@layerstack/utils';
 
@@ -24,6 +24,9 @@
 	{data}
 	x="date"
 	y={['value', 'baseline']}
+	c={(d) => (d.value >= d.baseline ? 'above' : 'below')}
+	cDomain={['above', 'below']}
+	cRange={['var(--color-success)', 'var(--color-danger)']}
 	props={{
 		highlight: { lines: true, points: false }
 	}}
@@ -44,6 +47,8 @@
 				<Spline y="baseline" {curve} class="[stroke-dasharray:4] opacity-20" />
 			{/snippet}
 		</Threshold>
+
+		<Points y="value" r={4} class="stroke-surface-100" />
 	{/snippet}
 
 	{#snippet tooltip({ context })}

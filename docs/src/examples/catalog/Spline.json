@@ -871,21 +871,21 @@
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 36,
+      "lineNumber": 39,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 40,
+      "lineNumber": 43,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-danger stroke-2\" />"
     },
     {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
-      "lineNumber": 44,
+      "lineNumber": 47,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4] opacity-20\" />"
     },
     {
@@ -950,6 +950,13 @@
       "path": "/docs/components/MotionPath/sync-with-draw",
       "lineNumber": 50,
       "line": "<Spline id={pathId} curve={config.curve} draw={{ duration: 3000, easing: linear }} />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 30,
+      "line": "<Spline y=\"baseline\" curve={curveMonotoneX} class=\"[stroke-dasharray:4] opacity-20\" />"
     },
     {
       "example": "basic",
@@ -1155,5 +1162,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-09T17:02:21.751Z"
+  "updatedAt": "2026-02-10T16:19:22.963Z"
 }
