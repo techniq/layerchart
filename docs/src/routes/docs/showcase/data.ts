@@ -131,5 +131,10 @@ export const sites = [
 		name: 'GEO audit',
 		description: 'GEO / AI audit that tracks your visibility impact',
 		url: 'https://www.geoaud.it/'
+	},
+	{
+		name: 'Nocturne',
+		description: 'A next-generation platform for diabetes management',
+		source: 'https://github.com/nightscout/nocturne'
 	}
 ];
