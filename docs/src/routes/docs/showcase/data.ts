@@ -14,7 +14,8 @@ export const sites = [
 	{
 		name: 'Zipline AI',
 		description: 'Features, context and embeddings for real-time AI/ML',
-		url: 'https://zipline.ai/'
+		url: 'https://zipline.ai/',
+		source: 'https://github.com/zipline-ai'
 	},
 	{
 		name: 'Tenzir',
