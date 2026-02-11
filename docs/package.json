@@ -124,11 +124,14 @@
 		"@codemirror/lang-html": "^6.4.11",
 		"@codemirror/lang-javascript": "^6.2.4",
 		"@codemirror/state": "^6.5.4",
+		"@resvg/resvg-js": "^2.6.2",
 		"@stackblitz/sdk": "^1.11.0",
 		"@uiw/codemirror-theme-github": "^4.25.4",
 		"@webcontainer/api": "^1.6.1",
 		"ansi_up": "^6.0.6",
 		"codemirror": "^6.0.2",
-		"flexsearch": "^0.8.212"
+		"flexsearch": "^0.8.212",
+		"satori": "^0.19.2",
+		"satori-html": "^0.3.2"
 	}
 }
