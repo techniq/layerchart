@@ -38,6 +38,9 @@ importers:
       '@codemirror/state':
         specifier: ^6.5.4
         version: 6.5.4
+      '@fontsource/inter':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
@@ -1741,6 +1744,9 @@ packages:
 
   '@fontsource-variable/inter@5.2.8':
     resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
+
+  '@fontsource/inter@5.2.8':
+    resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -6470,6 +6476,8 @@ snapshots:
   '@floating-ui/utils@0.2.10': {}
 
   '@fontsource-variable/inter@5.2.8': {}
+
+  '@fontsource/inter@5.2.8': {}
 
   '@humanfs/core@0.19.1': {}
 

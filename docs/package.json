@@ -124,6 +124,7 @@
 		"@codemirror/lang-html": "^6.4.11",
 		"@codemirror/lang-javascript": "^6.2.4",
 		"@codemirror/state": "^6.5.4",
+		"@fontsource/inter": "^5.2.8",
 		"@resvg/resvg-js": "^2.6.2",
 		"@stackblitz/sdk": "^1.11.0",
 		"@uiw/codemirror-theme-github": "^4.25.4",

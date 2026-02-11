@@ -34,6 +34,7 @@ export default defineConfig({
 		}) /*, devtoolsJson()*/
 	],
 	server: {
+		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
 		}

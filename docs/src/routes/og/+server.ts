@@ -1,47 +1,32 @@
-import { Resvg } from '@resvg/resvg-js';
+import { render } from 'svelte/server';
 import satori from 'satori';
 import { html } from 'satori-html';
+import { Resvg } from '@resvg/resvg-js';
+
+import InterRegular from '@fontsource/inter/files/inter-latin-400-normal.woff';
+import InterSemibold from '@fontsource/inter/files/inter-latin-600-normal.woff';
+import InterBold from '@fontsource/inter/files/inter-latin-700-normal.woff';
+
+import { dev } from '$app/environment';
+import { read } from '$app/server';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url, fetch }) => {
-	const title = url.searchParams.get('title') ?? 'LayerChart';
-	const description = url.searchParams.get('description') ?? '';
-	const component = url.searchParams.get('component') ?? '';
+import Thumbnail from './Thumbnail.svelte';
 
-	// Load font
-	const interFont = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.woff'
-	).then((res) => res.arrayBuffer());
+const interRegular = read(InterRegular).arrayBuffer();
+const interSemibold = read(InterSemibold).arrayBuffer();
+const interBold = read(InterBold).arrayBuffer();
 
-	// Build component badge HTML
-	const componentBadge = component
-		? `<div style="display: flex; margin-left: 16px; padding: 6px 16px; background: rgba(255,255,255,0.15); border-radius: 20px; font-size: 18px; color: rgba(255,255,255,0.9);">${component}</div>`
-		: '';
+export const GET: RequestHandler = async ({ url }) => {
+	const renderedComponent = render(Thumbnail, {
+		props: {
+			title: url.searchParams.get('title') ?? '',
+			description: url.searchParams.get('description') ?? undefined,
+			component: url.searchParams.get('component') ?? undefined
+		}
+	});
 
-	// Build description HTML
-	const descriptionHtml = description
-		? `<div style="display: flex; font-size: 28px; color: rgba(255,255,255,0.8); line-height: 1.4; max-width: 900px;">${description}</div>`
-		: '';
-
-	const htmlString = `
-		<div style="display: flex; flex-direction: column; width: 100%; height: 100%; background: linear-gradient(135deg, #1e1b4b, #312e81, #4338ca); padding: 60px;">
-			<div style="display: flex; flex-direction: column; flex: 1;">
-				<div style="display: flex; align-items: center; margin-bottom: 40px;">
-					<div style="display: flex; font-size: 32px; font-weight: 700; color: white;">LayerChart</div>
-					${componentBadge}
-				</div>
-				<div style="display: flex; font-size: 72px; font-weight: 700; color: white; margin-bottom: 24px;">${title}</div>
-				${descriptionHtml}
-				<div style="display: flex; flex: 1;"></div>
-				<div style="display: flex; justify-content: space-between;">
-					<div style="display: flex; font-size: 22px; color: rgba(255,255,255,0.6);">Composable Svelte visualization library</div>
-					<div style="display: flex; font-size: 22px; color: rgba(255,255,255,0.6);">layerchart.com</div>
-				</div>
-			</div>
-		</div>
-	`;
-
-	const markup = html(htmlString);
+	const markup = html(`<style>${renderedComponent.head}</style>${renderedComponent.body}`);
 
 	const svg = await satori(markup, {
 		width: 1200,
@@ -49,26 +34,38 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 		fonts: [
 			{
 				name: 'Inter',
-				data: interFont,
+				data: await interRegular,
+				weight: 400,
+				style: 'normal'
+			},
+			{
+				name: 'Inter',
+				data: await interSemibold,
+				weight: 600,
+				style: 'normal'
+			},
+			{
+				name: 'Inter',
+				data: await interBold,
 				weight: 700,
 				style: 'normal'
 			}
 		]
 	});
 
-	const resvg = new Resvg(svg, {
+	const png = new Resvg(svg, {
 		fitTo: {
-			mode: 'width',
-			value: 1200
+			mode: 'original'
 		}
-	});
+	})
+		.render()
+		.asPng();
 
-	const png = resvg.render().asPng();
-
-	return new Response(png, {
+	const response = new Response(new Uint8Array(png), {
 		headers: {
-			'Content-Type': 'image/png',
-			'Cache-Control': 'public, max-age=31536000, immutable'
+			'Content-Type': 'image/png'
 		}
 	});
+	if (!dev) response.headers.append('Cache-Control', `max-age=${60 * 60 * 24 * 30}, immutable`);
+	return response;
 };
