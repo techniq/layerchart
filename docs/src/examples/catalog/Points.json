@@ -29,9 +29,95 @@
       ]
     },
     {
-      "name": "color-via-scale",
-      "title": "color via scale",
-      "path": "/docs/components/Points/color-via-scale",
+      "name": "color-via-class",
+      "title": "color via class",
+      "path": "/docs/components/Points/color-via-class",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 15,
+          "line": "<Points class=\"fill-red-500\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-fill",
+      "title": "color via fill",
+      "path": "/docs/components/Points/color-via-fill",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 15,
+          "line": "<Points fill=\"red\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 30,
+          "line": "<Spline y=\"baseline\" curve={curveMonotoneX} class=\"[stroke-dasharray:4] opacity-20\" />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 31,
+          "line": "<Points />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Points/color-via-threshold-scale",
       "components": [
         {
           "component": "Chart",
@@ -40,18 +126,23 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 25,
+          "lineNumber": 24,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
+          "component": "AnnotationLine",
+          "lineNumber": 26,
+          "line": "<AnnotationLine"
+        },
+        {
           "component": "Points",
-          "lineNumber": 27,
-          "line": "<Points class=\"stroke-surface-content/50\" />"
+          "lineNumber": 39,
+          "line": "<Points />"
         }
       ]
     },
@@ -183,6 +274,13 @@
       "line": "<Points r={3} {data} fill={color} />"
     },
     {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 51,
+      "line": "<Points y=\"value\" r={4} class=\"stroke-surface-100\" />"
+    },
+    {
       "example": "basic",
       "component": "Points",
       "path": "/docs/components/Points/basic",
@@ -190,11 +288,32 @@
       "line": "<Points class=\"fill-primary/10 stroke-primary\" />"
     },
     {
-      "example": "color-via-scale",
+      "example": "color-via-class",
       "component": "Points",
-      "path": "/docs/components/Points/color-via-scale",
-      "lineNumber": 27,
-      "line": "<Points class=\"stroke-surface-content/50\" />"
+      "path": "/docs/components/Points/color-via-class",
+      "lineNumber": 15,
+      "line": "<Points class=\"fill-red-500\" />"
+    },
+    {
+      "example": "color-via-fill",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-fill",
+      "lineNumber": 15,
+      "line": "<Points fill=\"red\" />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 31,
+      "line": "<Points />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 39,
+      "line": "<Points />"
     },
     {
       "example": "with-labels",
@@ -281,5 +400,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.188Z"
+  "updatedAt": "2026-02-10T16:19:22.780Z"
 }

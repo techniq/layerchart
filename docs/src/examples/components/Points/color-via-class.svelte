@@ -8,22 +8,10 @@
 	export { data };
 </script>
 
-<Chart
-	{data}
-	x="date"
-	y="value"
-	yDomain={[0, null]}
-	yNice
-	c="value"
-	cScale={scaleThreshold()}
-	cDomain={[50, 90]}
-	cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
-	padding={20}
-	height={300}
->
+<Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={20} height={300}>
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		<Points class="stroke-surface-content/50" />
+		<Points class="fill-red-500" />
 	</Layer>
 </Chart>

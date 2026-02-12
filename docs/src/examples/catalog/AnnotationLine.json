@@ -196,7 +196,21 @@
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
       "lineNumber": 29,
       "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 26,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 32,
+      "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.167Z"
+  "updatedAt": "2026-02-10T16:19:20.815Z"
 }

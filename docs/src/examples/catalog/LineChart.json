@@ -772,17 +772,22 @@
         },
         {
           "component": "Threshold",
-          "lineNumber": 34,
+          "lineNumber": 37,
           "line": "<Threshold curve={selectedCurve}>"
         },
         {
           "component": "Spline",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
         },
         {
+          "component": "Points",
+          "lineNumber": 51,
+          "line": "<Points y=\"value\" r={4} class=\"stroke-surface-100\" />"
+        },
+        {
           "component": "Tooltip",
-          "lineNumber": 50,
+          "lineNumber": 55,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -1395,5 +1400,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-09T17:02:21.129Z"
+  "updatedAt": "2026-02-10T16:19:22.531Z"
 }

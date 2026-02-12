@@ -12,7 +12,7 @@
 <div class="grid grid-cols-sm gap-3">
   {#each sites as site}
     <div class="flex flex-col border border-primary/20 rounded-lg px-3 py-2 bg-linear-to-b from-primary/8 to-primary/2 backdrop-blur">
-      <a href={site.url} target="_blank" class="text-lg font-medium">
+      <a href={site.url ?? site.source} target="_blank" class="text-lg font-medium">
         {site.name}
       </a>
       {#if site.description}
@@ -22,7 +22,9 @@
         {#if site.source}
           <Button href={site.source} target="_blank" icon={LucideGithub} class="size-7 text-surface-content/50 hover:text-surface-content" />
         {/if}
-        <Button href={site.url} target="_blank" icon={LucideSquareArrowOutUpRight} class="size-7 text-surface-content/50 hover:text-surface-content" />
+        {#if site.url}
+          <Button href={site.url} target="_blank" icon={LucideSquareArrowOutUpRight} class="size-7 text-surface-content/50 hover:text-surface-content" />
+        {/if}
       </div>
     </div>
   {/each}

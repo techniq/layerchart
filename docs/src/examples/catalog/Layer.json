@@ -2348,10 +2348,31 @@
       "line": "<Layer>"
     },
     {
-      "example": "color-via-scale",
+      "example": "color-via-class",
       "component": "Points",
-      "path": "/docs/components/Points/color-via-scale",
-      "lineNumber": 24,
+      "path": "/docs/components/Points/color-via-class",
+      "lineNumber": 12,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-fill",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-fill",
+      "lineNumber": 12,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-threshold-scale",
+      "lineNumber": 23,
       "line": "<Layer>"
     },
     {
@@ -3104,5 +3125,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:52.556Z"
+  "updatedAt": "2026-02-10T16:19:22.461Z"
 }
