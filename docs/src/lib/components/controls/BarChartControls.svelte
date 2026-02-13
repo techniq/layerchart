@@ -12,7 +12,7 @@
 	let {
 		dateRange = $bindable(),
 		thresholds = $bindable(),
-		interval = $bindable(timeWeek.range)
+		interval = $bindable()
 	}: Props = $props();
 </script>
 
@@ -21,7 +21,7 @@
 		<NumberStepper label="Date range" bind:value={dateRange} min={1} class="w-40" />
 	{/if}
 	{#if thresholds !== undefined}
-		<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} class="w-full" />
+		<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} class="grow" />
 	{/if}
 	{#if interval !== undefined}
 		<MenuField
@@ -31,10 +31,7 @@
 				{ label: 'Weeks', value: timeWeek.range },
 				{ label: 'Months', value: timeMonth.range }
 			]}
-			value={interval}
-			on:change={(e) => {
-				interval = e.detail.value;
-			}}
+			bind:value={interval}
 			stepper
 			classes={{ menuIcon: 'hidden' }}
 		/>
