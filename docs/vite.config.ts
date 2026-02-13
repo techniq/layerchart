@@ -36,6 +36,10 @@ export default defineConfig({
 	server: {
 		fs: {
 			allow: ['.live-code']
+		},
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'require-corp',
+			'Cross-Origin-Opener-Policy': 'same-origin'
 		}
 	},
 	test: {
