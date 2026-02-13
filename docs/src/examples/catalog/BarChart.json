@@ -480,13 +480,18 @@
       "path": "/docs/components/BarChart/histogram-date-time-count",
       "components": [
         {
-          "component": "BarChart",
+          "component": "LineChart",
           "lineNumber": 35,
-          "line": "<BarChart"
+          "line": "<LineChart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 48,
+          "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 49,
+          "lineNumber": 59,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -497,13 +502,18 @@
       "path": "/docs/components/BarChart/histogram-date-time-interval",
       "components": [
         {
-          "component": "BarChart",
-          "lineNumber": 41,
-          "line": "<BarChart"
+          "component": "LineChart",
+          "lineNumber": 39,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 55,
+          "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 59,
+          "lineNumber": 66,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -514,13 +524,18 @@
       "path": "/docs/components/BarChart/histogram-horizontal",
       "components": [
         {
-          "component": "BarChart",
+          "component": "LineChart",
           "lineNumber": 22,
-          "line": "<BarChart"
+          "line": "<LineChart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 36,
+          "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 37,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -531,13 +546,18 @@
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "components": [
         {
-          "component": "BarChart",
+          "component": "LineChart",
           "lineNumber": 18,
-          "line": "<BarChart"
+          "line": "<LineChart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 31,
+          "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 32,
+          "lineNumber": 42,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -548,13 +568,18 @@
       "path": "/docs/components/BarChart/histogram-vertical",
       "components": [
         {
-          "component": "BarChart",
+          "component": "LineChart",
           "lineNumber": 22,
-          "line": "<BarChart"
+          "line": "<LineChart"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 35,
+          "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 36,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1457,41 +1482,6 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" props={{ highlight: { area: false } }} height={300}>"
     },
     {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 35,
-      "line": "<BarChart"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 41,
-      "line": "<BarChart"
-    },
-    {
-      "example": "histogram-horizontal",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 22,
-      "line": "<BarChart"
-    },
-    {
-      "example": "histogram-random-distribution",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 18,
-      "line": "<BarChart"
-    },
-    {
-      "example": "histogram-vertical",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 22,
-      "line": "<BarChart"
-    },
-    {
       "example": "horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/horizontal",
@@ -1884,5 +1874,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.350Z"
+  "updatedAt": "2026-02-13T15:08:00.685Z"
 }

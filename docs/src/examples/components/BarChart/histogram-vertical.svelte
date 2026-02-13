@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
+	import { LineChart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { getOlympians } from '$lib/data.remote';
 	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
@@ -19,19 +19,30 @@
 
 <BarChartControls bind:thresholds />
 
-<BarChart
+<LineChart
 	{data}
-	x="x0"
+	x={['x0', 'x1']}
 	y="length"
-	bandPadding={0.2}
 	padding={defaultChartPadding({ left: 30, top: 20 })}
 	props={{
 		xAxis: { motion: 'tween' },
-		yAxis: { format: 'metric', motion: 'tween' },
-		bars: { motion: 'tween' }
+		yAxis: { format: 'metric', motion: 'tween' }
 	}}
 	height={300}
 >
+	{#snippet marks({ context })}
+		{#each data as d}
+			<Rect
+				x={context.xScale(d.x0) + 1}
+				y={context.yScale(d.length)}
+				width={context.xScale(d.x1) - context.xScale(d.x0) - 2}
+				height={context.yScale(0) - context.yScale(d.length)}
+				class="fill-primary"
+				motion="tween"
+			/>
+		{/each}
+	{/snippet}
+
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
@@ -50,4 +61,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</BarChart>
+</LineChart>

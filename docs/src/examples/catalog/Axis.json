@@ -19,7 +19,7 @@
         {
           "component": "Axis",
           "lineNumber": 17,
-          "line": "<Axis"
+          "line": "<Axis placement=\"left\" grid rule={{ markerEnd: { type: 'arrow' } }} />"
         }
       ]
     },
@@ -1206,14 +1206,14 @@
       "component": "Axis",
       "path": "/docs/components/Axis/arrow-markers",
       "lineNumber": 17,
-      "line": "<Axis"
+      "line": "<Axis placement=\"left\" grid rule={{ markerEnd: { type: 'arrow' } }} />"
     },
     {
       "example": "arrow-markers",
       "component": "Axis",
       "path": "/docs/components/Axis/arrow-markers",
-      "lineNumber": 22,
-      "line": "<Axis"
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" grid rule={{ markerEnd: { type: 'arrow' } }} />"
     },
     {
       "example": "axis-label-placement-left-right",
@@ -4135,5 +4135,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:21.595Z"
+  "updatedAt": "2026-02-13T15:08:00.588Z"
 }

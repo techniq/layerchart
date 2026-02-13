@@ -14,15 +14,7 @@
 	height={300}
 >
 	<Layer>
-		<Axis
-			placement="left"
-			grid
-			rule={{ markerEnd: { type: 'arrow', class: 'stroke-secondary' } }}
-		/>
-		<Axis
-			placement="bottom"
-			grid
-			rule={{ markerEnd: { type: 'arrow', class: 'stroke-secondary' } }}
-		/>
+		<Axis placement="left" grid rule={{ markerEnd: { type: 'arrow' } }} />
+		<Axis placement="bottom" grid rule={{ markerEnd: { type: 'arrow' } }} />
 	</Layer>
 </Chart>

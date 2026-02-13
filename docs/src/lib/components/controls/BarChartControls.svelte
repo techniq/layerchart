@@ -6,38 +6,32 @@
 	interface Props {
 		dateRange?: number;
 		thresholds?: number;
-		intervalValue?: string;
+		interval?: typeof timeDay.range;
 	}
 
 	let {
 		dateRange = $bindable(),
 		thresholds = $bindable(),
-		intervalValue = $bindable()
+		interval = $bindable()
 	}: Props = $props();
-
-	let intervalFunc = $state(timeWeek.range);
 </script>
 
-<div class={cls('grid gap-2 mb-4 screenshot-hidden grid-flow-col')}>
+<div class={cls('flex gap-2 mb-4 screenshot-hidden')}>
 	{#if dateRange !== undefined}
-		<NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
+		<NumberStepper label="Date range" bind:value={dateRange} min={1} class="w-40" />
 	{/if}
 	{#if thresholds !== undefined}
-		<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} />
+		<RangeField label="Thresholds" bind:value={thresholds} min={0} max={100} class="grow" />
 	{/if}
-	{#if intervalValue !== undefined}
+	{#if interval !== undefined}
 		<MenuField
 			label="Interval"
 			options={[
-				{ label: 'Days', value: 'days', interval: timeDay.range },
-				{ label: 'Weeks', value: 'weeks', interval: timeWeek.range },
-				{ label: 'Months', value: 'months', interval: timeMonth.range }
+				{ label: 'Days', value: timeDay.range },
+				{ label: 'Weeks', value: timeWeek.range },
+				{ label: 'Months', value: timeMonth.range }
 			]}
-			value={intervalValue}
-			on:change={(e) => {
-				intervalValue = e.detail.value;
-				intervalFunc = e.detail.option.interval;
-			}}
+			bind:value={interval}
 			stepper
 			classes={{ menuIcon: 'hidden' }}
 		/>

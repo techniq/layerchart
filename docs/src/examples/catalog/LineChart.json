@@ -980,6 +980,41 @@
       "line": "<LineChart"
     },
     {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 35,
+      "line": "<LineChart"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 39,
+      "line": "<LineChart"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-horizontal",
+      "lineNumber": 22,
+      "line": "<LineChart"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-random-distribution",
+      "lineNumber": 18,
+      "line": "<LineChart"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-vertical",
+      "lineNumber": 22,
+      "line": "<LineChart"
+    },
+    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1400,5 +1435,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.531Z"
+  "updatedAt": "2026-02-13T15:08:02.287Z"
 }

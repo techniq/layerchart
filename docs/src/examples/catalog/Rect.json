@@ -85,6 +85,41 @@
   ],
   "usage": [
     {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 48,
+      "line": "<Rect"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 55,
+      "line": "<Rect"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-horizontal",
+      "lineNumber": 36,
+      "line": "<Rect"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-random-distribution",
+      "lineNumber": 31,
+      "line": "<Rect"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-vertical",
+      "lineNumber": 35,
+      "line": "<Rect"
+    },
+    {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
@@ -715,5 +750,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.231Z"
+  "updatedAt": "2026-02-13T15:08:02.704Z"
 }

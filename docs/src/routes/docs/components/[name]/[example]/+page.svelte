@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { Button } from 'svelte-ux';
-
 	import Example from '$lib/components/Example.svelte';
 	import { page } from '$app/state';
 	import H2 from '$lib/markdown/components/h2.svelte';
 
-	import LucideLink from '~icons/lucide/link';
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
+	import ExampleListing from '$lib/components/ExampleListing.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data } = $props();
@@ -29,3 +27,9 @@
 		<ComponentLink component={componentUsage.component} />
 	{/each}
 </div>
+
+{#if data.catalog}
+	<div class="mt-12">
+		<ExampleListing catalog={data.catalog} title="More examples" exclude={example} />
+	</div>
+{/if}
