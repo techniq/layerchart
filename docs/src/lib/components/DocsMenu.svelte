@@ -59,11 +59,11 @@
 			path: '/docs/examples',
 			icon: LucideFileCode2
 		})}
-		{@render navItem({
+		<!-- {@render navItem({
 			label: 'Playground',
 			path: '/docs/playground',
 			icon: SimpleIconsStackblitz
-		})}
+		})} -->
 		{@render navItem({ label: 'Showcase', path: '/docs/showcase', icon: LucideGalleryVertical })}
 		{@render navItem({
 			label: 'Releases',
