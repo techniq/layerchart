@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
+	import { LineChart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
-	import { scaleTime } from 'd3-scale';
 	import { timeDay, timeWeek } from 'd3-time';
 	import { format } from '@layerstack/utils';
 	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
@@ -24,37 +23,45 @@
 		) as any[]
 	); // TODO: Make typescript happy
 
-	let intervalValue = $state('weeks');
-	let intervalFunc = $state(timeWeek.range);
+	let interval = $state(timeWeek.range);
 
 	let binByTime = $derived(
 		bin().thresholds(
-			(_data, min, max) => intervalFunc(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
+			(_data, min, max) => interval(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
 		)
 	);
 	let data = $derived(binByTime(randomData));
 	export { data };
 </script>
 
-<BarChartControls bind:dateRange bind:intervalValue />
+<BarChartControls bind:dateRange bind:interval />
 
-<BarChart
+<LineChart
 	{data}
-	x="x0"
+	x={['x0', 'x1']}
 	y="length"
-	bandPadding={0.2}
 	padding={defaultChartPadding({ left: 30, bottom: 30 })}
 	props={{
 		xAxis: {
-			ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
 			tickLabelProps: { rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 },
 			motion: 'tween'
 		},
-		yAxis: { format: 'metric', motion: 'tween' },
-		bars: { motion: 'tween' }
+		yAxis: { format: 'metric', motion: 'tween' }
 	}}
 	height={300}
 >
+	{#snippet marks({ context })}
+		{#each data as d}
+			<Rect
+				x={context.xScale(d.x0) + 1}
+				y={context.yScale(d.length)}
+				width={context.xScale(d.x1) - context.xScale(d.x0) - 2}
+				height={context.yScale(0) - context.yScale(d.length)}
+				class="fill-primary"
+				motion="tween"
+			/>
+		{/each}
+	{/snippet}
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
@@ -75,4 +82,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</BarChart>
+</LineChart>
