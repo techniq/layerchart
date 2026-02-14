@@ -177,6 +177,28 @@
 		searchQuery = e.detail;
 	}
 
+	// Lock body scroll and forward wheel events to search dialog options list
+	$effect(() => {
+		if (open) {
+			document.body.style.overflow = 'hidden';
+
+			function handleWheel(e: WheelEvent) {
+				const optionsEl = document.querySelector('.Dialog .options');
+				if (optionsEl && !optionsEl.contains(e.target as Node)) {
+					optionsEl.scrollTop += e.deltaY;
+					e.preventDefault();
+				}
+			}
+
+			window.addEventListener('wheel', handleWheel, { passive: false });
+
+			return () => {
+				document.body.style.overflow = '';
+				window.removeEventListener('wheel', handleWheel);
+			};
+		}
+	});
+
 	function onKeyDown(e: KeyboardEvent) {
 		if (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) {
 			e.preventDefault();
@@ -202,7 +224,7 @@
 <Dialog
 	bind:open
 	classes={{
-		root: 'items-start mt-8 sm:mt-24',
+		root: 'items-start mt-8 sm:mt-24 overflow-y-auto [overscroll-behavior:contain]',
 		backdrop: 'backdrop-blur-xs'
 	}}
 >
