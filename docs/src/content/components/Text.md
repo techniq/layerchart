@@ -5,9 +5,7 @@ layers: [svg, canvas, html]
 related: []
 ---
 
-## Examples
-
-### Usage
+## Usage
 
 :example{ name="playground" }
 

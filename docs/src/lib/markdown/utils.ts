@@ -4,13 +4,51 @@ import { error } from '@sveltejs/kit';
 import {
 	allComponents,
 	type Component as ComponentMetadata,
-	type Example as ExampleMetadata,
 	allUtils,
-	type Util as UtilMetadata
+	type Util as UtilMetadata,
+	allGuides,
+	type Guide as GuideMetadata
 } from 'content-collections';
 
 import type { Examples } from '$lib/types.js';
 import { loadExample, loadExampleByPath } from '$lib/examples.js';
+
+/**
+ * Strip markdown syntax to get plain text.
+ * Useful for search indexing or generating plain text excerpts.
+ */
+export function stripMarkdown(content: string): string {
+	return (
+		content
+			// Remove code blocks
+			.replace(/```[\s\S]*?```/g, '')
+			// Remove inline code
+			.replace(/`[^`]+`/g, '')
+			// Remove links but keep text
+			.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+			// Remove images
+			.replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
+			// Remove HTML tags
+			.replace(/<[^>]+>/g, '')
+			// Remove headings markup
+			.replace(/^#{1,6}\s+/gm, '')
+			// Remove bold/italic
+			.replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1')
+			.replace(/_{1,2}([^_]+)_{1,2}/g, '$1')
+			// Remove blockquotes
+			.replace(/^>\s+/gm, '')
+			// Remove horizontal rules
+			.replace(/^[-*_]{3,}\s*$/gm, '')
+			// Remove list markers
+			.replace(/^[\s]*[-*+]\s+/gm, '')
+			.replace(/^[\s]*\d+\.\s+/gm, '')
+			// Remove MDX/directives like :example{...} or ::directive
+			.replace(/:{1,2}\w+(\{[^}]*\})?/g, '')
+			// Collapse multiple whitespace/newlines
+			.replace(/\s+/g, ' ')
+			.trim()
+	);
+}
 
 /**
  * Get markdown document component and metadata (frontmatter)
@@ -20,11 +58,11 @@ import { loadExample, loadExampleByPath } from '$lib/examples.js';
  */
 export async function getMarkdownComponent(
 	slug: string = 'index',
-	type: 'components' | 'utils' = 'components'
+	type: 'components' | 'utils' | 'guides' = 'components'
 ) {
 	const modules = import.meta.glob<{
 		default: Component;
-		metadata: ComponentMetadata | ExampleMetadata | UtilMetadata;
+		metadata: ComponentMetadata | UtilMetadata | GuideMetadata;
 	}>('/src/content/**/*.md');
 
 	let doc: Awaited<ReturnType<(typeof modules)[string]>> | null = null;
@@ -52,8 +90,11 @@ export async function getMarkdownComponent(
  */
 function getMetadata(
 	slug: string,
-	type: 'components' | 'utils' = 'components'
-): ComponentMetadata | UtilMetadata {
+	type: 'components' | 'utils' | 'guides' = 'components'
+): ComponentMetadata | UtilMetadata | GuideMetadata {
+	if (type === 'guides') {
+		return allGuides.find((g) => g.slug === slug) as any;
+	}
 	if (type === 'utils') {
 		return allUtils.find((u) => u.slug === slug) as any;
 	}
@@ -66,7 +107,12 @@ function getMetadata(
  * @param currentPath - The current page URL pathname (e.g., "/docs/guides/styles")
  * @returns The resolved path (e.g., "/src/routes/docs/guides/styles/color-schemes.svelte")
  */
-export function resolveExamplePath(path: string, currentPath: string): string {
+export function resolveExamplePath(path: string, currentPath: string, type?: string): string {
+	if (type === 'guides' && (path.startsWith('./') || !path.startsWith('/'))) {
+		// For guides, resolve relative to src/content/guides/
+		const relativePath = path.startsWith('./') ? path.slice(2) : path;
+		return `/src/content/guides/${relativePath}`;
+	}
 	if (path.startsWith('./')) {
 		return `/src/routes${currentPath}/${path.slice(2)}`;
 	} else if (path.startsWith('/')) {
@@ -91,7 +137,7 @@ export function resolveExamplePath(path: string, currentPath: string): string {
 export async function loadExamplesFromMarkdown(
 	markdownContent: string,
 	defaultComponent?: string,
-	type: 'components' | 'utils' = 'components',
+	type: 'components' | 'utils' | 'guides' = 'components',
 	currentPath?: string
 ): Promise<Examples> {
 	// Extract all <Example component="..." name="..."> from markdown content
@@ -111,7 +157,7 @@ export async function loadExamplesFromMarkdown(
 
 		if (path && currentPath) {
 			// Path-based example
-			const resolvedPath = resolveExamplePath(path, currentPath);
+			const resolvedPath = resolveExamplePath(path, currentPath, type);
 			pathExamples.push({ path, resolvedPath });
 		} else {
 			// Component/name-based example
@@ -128,7 +174,11 @@ export async function loadExamplesFromMarkdown(
 	// Load component-based examples in parallel
 	await Promise.all(
 		componentExamples.map(async (ex) => {
-			const loaded = await loadExample(ex.component, ex.name, type);
+			const loaded = await loadExample(
+				ex.component,
+				ex.name,
+				type === 'guides' ? 'components' : type
+			);
 			if (loaded) {
 				if (!examples[ex.component]) {
 					examples[ex.component] = {};

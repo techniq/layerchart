@@ -5,38 +5,38 @@
     {
       "example": "geojson-preview",
       "component": "GeoContext",
-      "path": "/example/GeoContext/geojson-preview",
-      "lineNumber": 111,
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 112,
       "line": "<TransformControls />"
     },
     {
       "example": "topojson-preview",
       "component": "GeoContext",
-      "path": "/example/GeoContext/topojson-preview",
+      "path": "/docs/components/GeoContext/topojson-preview",
       "lineNumber": 119,
       "line": "<TransformControls />"
     },
     {
       "example": "zoomable",
       "component": "GeoTile",
-      "path": "/example/GeoTile/zoomable",
-      "lineNumber": 62,
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 63,
       "line": "<TransformControls />"
     },
     {
       "example": "zoomable-with-padding",
       "component": "GeoTile",
-      "path": "/example/GeoTile/zoomable-with-padding",
+      "path": "/docs/components/GeoTile/zoomable-with-padding",
       "lineNumber": 69,
       "line": "<TransformControls />"
     },
     {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
-      "path": "/example/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 15,
+      "path": "/docs/components/TransformContext/pan-zoom-svg-image",
+      "lineNumber": 16,
       "line": "<TransformControls />"
     }
   ],
-  "updatedAt": "2025-11-24T01:39:38.757Z"
+  "updatedAt": "2026-02-07T17:00:32.859Z"
 }

@@ -1,166 +1,28 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-	import { Button, Table, TextField, ToggleButton } from 'svelte-ux';
+	import { Table } from 'svelte-ux';
 
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
-	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import ExampleListing from '$lib/components/ExampleListing.svelte';
 	import { page } from '$app/state';
 
-	import LucideSearch from '~icons/lucide/search';
-	import LucideZoomIn from '~icons/lucide/zoom-in';
-	import LucideZoomOut from '~icons/lucide/zoom-out';
 	import RelatedLink from '$lib/components/RelatedLink.svelte';
 
 	let { data } = $props();
 	const { PageComponent, metadata, api, catalog } = $derived(data);
-
-	let columnCount = $state(3);
-	let filterQuery = $state<string | null>(null);
-
-	const examples = $derived.by(() => {
-		const exampleList = catalog?.examples ?? [];
-
-		if (!filterQuery) {
-			return exampleList;
-		}
-
-		const query = filterQuery.toLowerCase().trim();
-		return exampleList.filter((example) => example.name.toLowerCase().includes(query));
-	});
-
-	const uniqueUsage = $derived.by(() => {
-		if (!catalog) return [];
-
-		const seen = new Set();
-		const query = filterQuery?.toLowerCase().trim();
-
-		// Filter out if additional usage in same example or already shown in examples
-		return catalog.usage.filter((item) => {
-			const key = `${item.component}::${item.example}`;
-			// Check if already shown in main examples
-			if (
-				catalog.examples.find(
-					(ex) => ex.name === item.example && catalog.component === item.component
-				)
-			) {
-				return false;
-			}
-			// Check if already seen as additional usage in same example
-			if (seen.has(key)) return false;
-			seen.add(key);
-
-			// Filter by query if provided
-			if (query) {
-				return (
-					item.example.toLowerCase().includes(query) || item.component.toLowerCase().includes(query)
-				);
-			}
-
-			return true;
-		});
-	});
 </script>
 
 <!-- Markdown page -->
 <PageComponent />
 
 {#if catalog && (catalog.examples?.length || catalog.usage?.length)}
-	<div class="grid grid-cols-[1fr_auto] items-center gap-2 mt-12">
-		<H2>Examples</H2>
-		<div class="flex items-center gap-2 mb-2">
-			{#if catalog.examples?.length}
-				<Button
-					href="/docs/components/{page.params.name}/examples{filterQuery
-						? `?filter=${filterQuery}`
-						: ''}"
-				>
-					View all
-				</Button>
-			{/if}
-
-			<TextField placeholder="Filter" bind:value={filterQuery} dense>
-				{#snippet prepend()}
-					<LucideSearch class="text-surface-content/50 mr-4" />
-				{/snippet}
-			</TextField>
-
-			<div>
-				<Button
-					icon={LucideZoomOut}
-					on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-					variant="fill-outline"
-					class="size-8 border-surface-content/30 pt-1"
-					disabled={columnCount >= 5}
-				/>
-				<Button
-					icon={LucideZoomIn}
-					on:click={() => (columnCount = Math.max(1, columnCount - 1))}
-					variant="fill-outline"
-					class="size-8 border-surface-content/30 pt-1"
-					disabled={columnCount <= 1}
-				/>
-			</div>
-		</div>
-	</div>
-
-	{#if examples.length}
-		<div
-			style:--column-count="repeat({columnCount}, 1fr)"
-			class="grid grid-cols-(--column-count) gap-4"
-		>
-			{#each examples as example}
-				<ExampleLink component={catalog.component} example={example.name} />
-			{/each}
-		</div>
-	{:else if catalog.examples?.length}
-		<p class="text-surface-content/50 text-sm">No examples match your filter.</p>
-	{/if}
-
-	{#if uniqueUsage.length}
-		{#if examples.length}
-			<ToggleButton transition={slide} let:on={showDetails} class="mt-4" buttonPlacement="after">
-				{showDetails ? 'show less' : 'show more'}...
-				<div slot="toggle" class="mt-2">
-					<div
-						style:--column-count="repeat({columnCount}, 1fr)"
-						class="grid grid-cols-(--column-count) gap-4 border-t pt-4 mt-4"
-					>
-						{#each uniqueUsage as usage}
-							<ExampleLink component={usage.component} example={usage.example} showComponent />
-						{/each}
-					</div>
-				</div>
-			</ToggleButton>
-		{:else if catalog.examples?.length === 0}
-			<!-- No direct examples, show immediately -->
-			<div
-				style:--column-count="repeat({columnCount}, 1fr)"
-				class="grid grid-cols-(--column-count) gap-4"
-			>
-				{#each uniqueUsage as usage}
-					<ExampleLink component={usage.component} example={usage.example} showComponent />
-				{/each}
-			</div>
-		{:else if catalog.usage?.length}
-			<p class="text-surface-content/50 text-sm mt-2">
-				No additional usage examples match your filter.
-			</p>
-		{/if}
-	{/if}
-{/if}
-
-{#if metadata.related.length}
-	<H2>Related</H2>
-	<div class="flex flex-wrap gap-2 mt-1">
-		{#each metadata.related as related}
-			<RelatedLink value={related} />
-		{/each}
+	<div class="mt-12">
+		<ExampleListing {catalog} viewAllHref="/docs/components/{page.params.name}/examples" />
 	</div>
 {/if}
 
 {#if api?.properties.length}
-	<H2>API Reference</H2>
+	<H2 id="api-reference">API Reference</H2>
 
 	<Table
 		data={api?.properties}
@@ -230,4 +92,13 @@
 			</div>
 		</div>
 	{/if}
+{/if}
+
+{#if metadata.related.length}
+	<H2 id="related">Related</H2>
+	<div class="grid grid-cols-xs gap-2 mt-2">
+		{#each metadata.related as related}
+			<RelatedLink value={related} />
+		{/each}
+	</div>
 {/if}

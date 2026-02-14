@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "earthquake-globe",
-      "path": "/example/GeoCircle/earthquake-globe",
+      "title": "earthquake globe",
+      "path": "/docs/components/GeoCircle/earthquake-globe",
       "components": [
         {
           "component": "Chart",
@@ -39,7 +40,8 @@
     },
     {
       "name": "playground",
-      "path": "/example/GeoCircle/playground",
+      "title": "playground",
+      "path": "/docs/components/GeoCircle/playground",
       "components": [
         {
           "component": "Chart",
@@ -73,31 +75,31 @@
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
-      "path": "/example/GeoCircle/earthquake-globe",
+      "path": "/docs/components/GeoCircle/earthquake-globe",
       "lineNumber": 79,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
-      "path": "/example/GeoCircle/playground",
+      "path": "/docs/components/GeoCircle/playground",
       "lineNumber": 75,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
-      "path": "/example/GeoCircle/playground",
+      "path": "/docs/components/GeoCircle/playground",
       "lineNumber": 83,
       "line": "<GeoCircle"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
-      "path": "/example/GeoPath/timezones",
+      "path": "/docs/components/GeoPath/timezones",
       "lineNumber": 131,
       "line": "<GeoCircle"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.641Z"
+  "updatedAt": "2026-02-07T20:21:31.688Z"
 }

@@ -42,8 +42,6 @@
 
 	const topology = await getCountriesTopology();
 	const geojson = $derived(feature(topology, topology.objects.countries));
-
-	export { data };
 </script>
 
 <GraticuleControls bind:config {projections} />

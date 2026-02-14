@@ -9,31 +9,31 @@ related: [Axis, Line, AnnotationLine]
 
 :example{ name="baseline-x-y" showCode }
 
-## Use cases
+### Use cases
 
-A `Rule` component can be used for various use cases include:
+A `Rule` component can be used for various use cases including:
 
-### Axis baseline
+#### Axis baseline
 
-with `x={true}` / `y={true}`
+with boolean value: `x={true}` and `y={true}`
 
 :example{ name="baseline-x-y" showCode }
 
-### Annotation
+#### Annotation
 
-with `x={Number}` / `y={Number}`
+with number value: `x={Number}` and `y={Number}`
 
 :example{ name="annotation-y" showCode }
 
-### Data mark
+#### Data mark
 
 using `<Chart data>` and either:
 
-- implicit `x` / `y` (using `<Chart x={..} y={...}>`)
+- implicit `x` / `y` accessors (using `<Chart x={..} y={...}>`)
 
 :example{ name="data-x-range" showCode }
 
-- explicit `x="property"` / `y="property"`
+- explicit `x="property"` / `y="property"` accessors
 
 :example{ name="candlestick" showCode }
 

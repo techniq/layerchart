@@ -9,7 +9,7 @@ related: [Arc, PieChart]
 See also: [PieChart](/docs/components/PieChart) for simplified examples
 ::
 
-### Usage
+## Usage
 
 :example{ name="basic" showCode }
 

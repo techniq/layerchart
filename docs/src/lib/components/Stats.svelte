@@ -41,7 +41,7 @@
 	].filter((s) => s.value != null)}
 
 	<div
-		class="block sm:flex items-center justify-evenly px-1 py-2 rounded-xl outline m-4 outline-surface-100"
+		class="block sm:flex items-center justify-evenly px-1 py-2 rounded-xl outline m-4 outline-surface-content/10"
 	>
 		{#each stats as { label, value, link, intervals }, index (value)}
 			<a
@@ -81,7 +81,7 @@
 			</a>
 
 			{#if index < stats.length - 1}
-				<div class="sm:w-0.5 sm:h-12 bg-surface-100"></div>
+				<div class="sm:w-0.5 sm:h-12 bg-surface-content/5"></div>
 			{/if}
 		{/each}
 	</div>

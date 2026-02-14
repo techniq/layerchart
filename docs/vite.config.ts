@@ -9,6 +9,12 @@ import Icons from 'unplugin-icons/vite';
 const isTest = process.env.VITEST === 'true';
 
 export default defineConfig({
+	// Pre-bundle these dependencies to prevent Vite reload during tests
+	// which causes "Failed to fetch dynamically imported module" errors
+	// Ref: https://github.com/vitest-dev/vitest/issues/5477
+	optimizeDeps: {
+		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux', '@dagrejs/dagre']
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
@@ -30,19 +36,26 @@ export default defineConfig({
 	server: {
 		fs: {
 			allow: ['.live-code']
+		},
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'require-corp',
+			'Cross-Origin-Opener-Policy': 'same-origin'
 		}
 	},
 	test: {
-		expect: { requireAssertions: true },
 		projects: [
 			{
-				extends: './vite.config.ts',
+				// Client-side tests (Svelte components)
+				extends: true,
 				test: {
 					name: 'client',
+					testTimeout: 5000,
+					retry: 1,
 					browser: {
 						enabled: true,
 						provider: playwright(),
-						instances: [{ browser: 'chromium' }]
+						instances: [{ browser: 'chromium' }],
+						headless: true
 					},
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/routes/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/lib/server/**', 'src/**/*.ssr.{test,spec}.{js,ts}'],
@@ -50,7 +63,17 @@ export default defineConfig({
 				}
 			},
 			{
-				extends: './vite.config.ts',
+				// SSR tests (Server-side rendering)
+				extends: true,
+				test: {
+					name: 'ssr',
+					environment: 'node',
+					include: ['src/**/*.ssr.{test,spec}.{js,ts}']
+				}
+			},
+			{
+				// Server-side tests (Node.js utilities)
+				extends: true,
 				test: {
 					name: 'server',
 					environment: 'node',
@@ -62,9 +85,21 @@ export default defineConfig({
 					]
 				}
 			}
-		]
+		],
+		coverage: {
+			include: ['src']
+		}
 	},
-	resolve: {
-		noExternal: true // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
+	ssr: {
+		// https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
+		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
+		// Ref: https://github.com/vitest-dev/vitest/issues/6806
+		noExternal: isTest ? undefined : true,
+		// @dagrejs/dagre is CJS-only and fails with "module is not defined" when
+		// bundled for SSR. Pre-bundling converts it to ESM so it works both in
+		// dev and in the production build (where node_modules aren't available).
+		optimizeDeps: {
+			include: ['@dagrejs/dagre']
+		}
 	}
 });

@@ -5,10 +5,10 @@
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
-      "path": "/example/GeoPath/submarine-cables-globe",
+      "path": "/docs/components/GeoPath/submarine-cables-globe",
       "lineNumber": 90,
       "line": "<GeoVisible {lat} {long}>"
     }
   ],
-  "updatedAt": "2026-01-13T17:22:23.745Z"
+  "updatedAt": "2026-02-07T17:00:31.751Z"
 }

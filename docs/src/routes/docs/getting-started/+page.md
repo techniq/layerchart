@@ -1,8 +1,10 @@
-# Getting Started
+---
+title: Getting Started
+---
 
 LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
 
-Provides built-in first class support for [:icon{name="logos:tailwindcss-icon" class="text-xs"} tailwindcss 4](https://tailwindcss.com/),
+Provides built-in first class support for [:icon{name="logos:tailwindcss-icon" class="text-xs"} Tailwind 4](https://tailwindcss.com/),
 but is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and [:icon{name="logos:unocss"} unoCSS](https://unocss.dev/).
 
 ::steps
@@ -51,7 +53,7 @@ Use the Svelte CLI to generate a new SvelteKit project, or continue with an exis
 :::
 
 ::note
-To add tailwind to an existing project you can `npm sv add tailwindcss`
+To add Tailwind to an existing project you can `npm sv add tailwindcss`
 ::
 
 ## Import `layerchart` with your package manager of choice.

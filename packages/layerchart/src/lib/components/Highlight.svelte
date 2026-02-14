@@ -268,26 +268,27 @@
       // x area
       if (Array.isArray(xCoord)) {
         // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+        tmpArea.x = min(xCoord);
         tmpArea.width = max(xCoord) - min(xCoord); // Use first/last values for width
       } else if (isScaleBand(ctx.xScale)) {
+        tmpArea.x = xCoord - (ctx.xScale.padding() * ctx.xScale.step()) / 2;
         tmpArea.width = ctx.xScale.step();
       } else if (ctx.xInterval) {
         // x-axis time scale with interval
         const start = ctx.xInterval.floor(xValue);
         const end = ctx.xInterval.offset(start);
-        tmpArea.width = ctx.xScale(end) - ctx.xScale(start);
+        const xStart = ctx.xScale(start);
+        const xEnd = ctx.xScale(end);
+        tmpArea.x = Math.min(xStart, xEnd);
+        tmpArea.width = Math.abs(xEnd - xStart);
       } else {
         // Find width to next data point
         const index = ctx.flatData.findIndex((d) => Number(x(d)) === Number(x(highlightData)));
         const isLastPoint = index + 1 === ctx.flatData.length;
         const nextDataPoint = isLastPoint ? max(ctx.xDomain) : x(ctx.flatData[index + 1]);
+        tmpArea.x = xCoord;
         tmpArea.width = (ctx.xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
       }
-
-      // If array, use left-most value for top left of rect
-      tmpArea.x =
-        (Array.isArray(xCoord) ? min(xCoord) : xCoord) -
-        (isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0);
 
       if (axis === 'x') {
         tmpArea.y = min(ctx.yRange) as unknown as number;
@@ -299,26 +300,27 @@
       // y area
       if (Array.isArray(yCoord)) {
         // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
-        tmpArea.height = max(yCoord) - min(yCoord); // Use first/last values for width
+        tmpArea.y = min(yCoord);
+        tmpArea.height = max(yCoord) - min(yCoord); // Use first/last values for height
       } else if (isScaleBand(ctx.yScale)) {
+        tmpArea.y = yCoord - (ctx.yScale.padding() * ctx.yScale.step()) / 2;
         tmpArea.height = ctx.yScale.step();
       } else if (ctx.yInterval) {
         // y-axis time scale with interval
         const start = ctx.yInterval.floor(yValue);
         const end = ctx.yInterval.offset(start);
-        tmpArea.height = ctx.yScale(end) - ctx.yScale(start);
+        const yStart = ctx.yScale(start);
+        const yEnd = ctx.yScale(end);
+        tmpArea.y = Math.min(yStart, yEnd);
+        tmpArea.height = Math.abs(yEnd - yStart);
       } else {
-        // Find width to next data point
+        // Find height to next data point
         const index = ctx.flatData.findIndex((d) => Number(y(d)) === Number(y(highlightData)));
         const isLastPoint = index + 1 === ctx.flatData.length;
         const nextDataPoint = isLastPoint ? max(ctx.yDomain) : y(ctx.flatData[index + 1]);
+        tmpArea.y = yCoord;
         tmpArea.height = (ctx.yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
       }
-
-      // If array, use left-most value for top left of rect
-      tmpArea.y =
-        (Array.isArray(yCoord) ? min(yCoord) : yCoord) -
-        (isScaleBand(ctx.yScale) ? (ctx.yScale.padding() * ctx.yScale.step()) / 2 : 0);
 
       if (axis === 'y') {
         tmpArea.width = max(ctx.xRange) as unknown as number;

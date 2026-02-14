@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { cls } from '@layerstack/tailwind';
+	import type { Component } from 'svelte';
 
 	let {
 		component,
@@ -7,6 +8,7 @@
 		aspect = 'initial',
 		background = false,
 		viewTransitionName = null,
+		fallbackIcon,
 		class: className
 	}: {
 		component: string;
@@ -14,8 +16,11 @@
 		aspect?: 'initial' | 'video' | 'square' | 'screenshot';
 		background?: boolean;
 		viewTransitionName?: string | null;
+		fallbackIcon?: Component;
 		class?: string;
 	} = $props();
+
+	let hasError = $state(false);
 
 	const basePath = $derived(`/screenshots/${component}/${example}`);
 
@@ -41,17 +46,25 @@
 	)}
 	style:view-transition-name={viewTransitionName}
 >
-	{#each ['light', 'dark'] as mode}
-		{#each sizes as size}
-			<img
-				src="{basePath}-{mode}-{size.width}.webp"
-				alt="{component} - {example}"
-				class={cls(
-					'w-full h-full object-scale-down object-center p-2',
-					mode === 'light' ? size.light : 'hidden ' + size.dark
-				)}
-				loading="lazy"
-			/>
+	{#if hasError && fallbackIcon}
+		{@const FallbackIcon = fallbackIcon}
+		<div class="w-full h-full flex items-center justify-center text-surface-content/30">
+			<FallbackIcon class="size-12" />
+		</div>
+	{:else if !hasError}
+		{#each ['light', 'dark'] as mode (mode)}
+			{#each sizes as size (size.width)}
+				<img
+					src="{basePath}-{mode}-{size.width}.webp"
+					alt="{component} - {example}"
+					class={cls(
+						'w-full h-full object-scale-down object-center p-2',
+						mode === 'light' ? size.light : 'hidden ' + size.dark
+					)}
+					loading="lazy"
+					onerror={() => (hasError = true)}
+				/>
+			{/each}
 		{/each}
-	{/each}
+	{/if}
 </div>

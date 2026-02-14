@@ -49,9 +49,6 @@ export const load = async ({ params, parent }) => {
 		metadata,
 		catalog,
 		examples,
-		api,
-		meta: {
-			tableOfContents: true
-		}
+		api
 	};
 };

@@ -5,7 +5,7 @@ layers: [svg]
 related: []
 ---
 
-## Examples
+## Usage
 
 ### Basic
 

@@ -8,7 +8,7 @@ related: [TooltipContext, Highlight]
 Tooltips have 2 parts, the `TooltipContext` (which is integrated into `<Chart tooltip={...})>`
 and used for data selection and state management, `Tooltip` components (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, and `Tooltip.Item`) which are used for visual display.
 
-# Features
+## Features
 
 - HTML first
 - Can be interactive (clickable / hover)
@@ -16,29 +16,31 @@ and used for data selection and state management, `Tooltip` components (`Tooltip
 - Multiple instances supported
 - Different modes (bisect, band, voronoi, path/shape, quadtree, hit canvas)
 
-## Modes
+## Usage
+
+### Modes
 
 There are multiple tooltip modes for different situations, which can be controlled by passing `<Chart tooltip={{ mode: '...' }}>`.
 
-## `bisect-x` | `bisect-y`
+#### `bisect-x` | `bisect-y`
 
 Finds the closest data point along a give axis based on your pointer position.
 
-### `band`
+#### `band`
 
 Uses transparent `<path>` to enable full-bandwidth hit targets (i.e not just the bar itself). This is especially useful for very small values (short bars) and consistent scrubbing across the data.
 
-### `voronoi`
+#### `voronoi`
 
 Path based, easier to reason about than quadtree. Supports max `radius`
 
-### `quadtree`
+#### `quadtree`
 
 In memory and typically faster than `voronoi`. Supports max `radius`
 
 Useful for point-based visualizations such as geographic points and scatter plots
 
-### `manual`
+#### `manual`
 
 Useful for shape based triggering such as on geo boundaries and radial charts with arc slices (ex. pie chart).
 
@@ -46,7 +48,7 @@ You can call `tooltip.show(e, DATA)` and `tooltip.hide()` recommended within `on
 
 Canvas layers leverage an integrated "hit canvas" which enables the same shape-based triggering as you are accustomed with Svg.
 
-## Location
+### Location
 
 Tooltips can be positions based on
 

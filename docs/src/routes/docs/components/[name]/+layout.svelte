@@ -2,14 +2,13 @@
 	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
+	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
-	import ViewSourceButton from '$lib/components/ViewSourceButton.svelte';
 	import { examples } from '$lib/context.js';
 	import { loadExample } from '$lib/examples.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
-	import LucideCode from '~icons/lucide/code';
 	import LucideChevronLeft from '~icons/lucide/chevron-left';
 	import LucideChevronRight from '~icons/lucide/chevron-right';
 
@@ -20,37 +19,42 @@
 
 	const { metadata } = $derived(data);
 
+	// Derive examples reactively so changes propagate to child components
+	const currentExamples = $derived.by(() => {
+		const base = data.examples ?? {};
+
+		// If there's an example from page data (for individual example pages), merge it in
+		if (page.data.example && page.params.name && page.params.example) {
+			const componentName = page.params.name;
+			const exampleName = page.params.example;
+			return {
+				...base,
+				[componentName]: {
+					...base[componentName],
+					[exampleName]: page.data.example
+				}
+			};
+		}
+
+		// If there are examples from page data (for /examples page), merge them in
+		if (page.data.examples) {
+			const pageExamples = page.data.examples as typeof base;
+			// Deep merge the examples
+			const merged = { ...base };
+			for (const [comp, exs] of Object.entries(pageExamples)) {
+				merged[comp] = { ...merged[comp], ...exs };
+			}
+			return merged;
+		}
+
+		return base;
+	});
+
 	// Add examples to context for Example component to use
-	// Merges layout examples with any page-specific examples
+	// Use getter to ensure child components get reactive access
 	const examplesContext = {
 		get current() {
-			const base = data.examples ?? {};
-
-			// If there's an example from page data (for individual example pages), merge it in
-			if (page.data.example && page.params.name && page.params.example) {
-				const componentName = page.params.name;
-				const exampleName = page.params.example;
-				return {
-					...base,
-					[componentName]: {
-						...base[componentName],
-						[exampleName]: page.data.example
-					}
-				};
-			}
-
-			// If there are examples from page data (for /examples page), merge them in
-			if (page.data.examples) {
-				const pageExamples = page.data.examples as typeof base;
-				// Deep merge the examples
-				const merged = { ...base };
-				for (const [comp, exs] of Object.entries(pageExamples)) {
-					merged[comp] = { ...merged[comp], ...exs };
-				}
-				return merged;
-			}
-
-			return base;
+			return currentExamples;
 		}
 	};
 	examples.set(examplesContext);
@@ -129,14 +133,7 @@
 		<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
 		<div class="flex gap-2 mt-3">
-			{#if 'source' in metadata}
-				<ViewSourceButton
-					label="Source"
-					source={metadata.source}
-					href={metadata.sourceUrl}
-					icon={LucideCode}
-				/>
-			{/if}
+			<OpenWithButton {metadata} />
 
 			<!-- <ViewSourceButton
         label="Page source"

@@ -5,7 +5,10 @@ import { api } from './api';
 export const getStats = query(async () => {
 	const { fetch } = getRequestEvent();
 
-	const githubHeaders: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
+	const githubHeaders: Record<string, string> = {
+		Accept: 'application/vnd.github.v3+json',
+		'User-Agent': 'LayerChart docs'
+	};
 	if (env.GITHUB_API_TOKEN) {
 		const prefix = env.GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
 		githubHeaders['Authorization'] = `${prefix} ${env.GITHUB_API_TOKEN}`;

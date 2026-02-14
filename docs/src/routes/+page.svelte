@@ -4,6 +4,7 @@
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
+	import Search from './docs/search/Search.svelte';
 
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -11,7 +12,6 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
-
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -136,7 +136,7 @@
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="text-xl font-bold w-60">LayerChart</a>
 
-	<div class="flex gap-2 grow justify-center">
+	<div class="flex gap-2 grow justify-center items-center">
 		{#each links as { label, href }}
 			<a
 				{href}
@@ -149,6 +149,7 @@
 				{label}
 			</a>
 		{/each}
+		<Search hideInput />
 	</div>
 
 	<div class="flex items-center justify-end gap-2 w-60">
@@ -224,7 +225,7 @@
 
 <div class="relative h-140 perspective-[1000px] overflow-clip">
 	<h1
-		class="text-6xl lg:text-8xl text-center mt-8 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
+		class="text-6xl lg:text-8xl text-center mt-8 mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
 	>
 		LayerChart
 	</h1>
@@ -272,8 +273,9 @@
 	</div>
 
 	<div class="flex gap-5">
-		<a href="https://github.com/techniq/layerchart" target="_blank"> Github </a>
-		<a href="https://github.com/techniq/layerchart/releases" target="_blank"> Releases </a>
+		<a href="/docs/guides/LLMs" target="_blank">LLMs</a>
+		<a href="https://github.com/techniq/layerchart" target="_blank">Github</a>
+		<a href="/docs/releases">Releases</a>
 	</div>
 </footer>
 

@@ -6,8 +6,9 @@ export async function load({ params }) {
 
 	return {
 		example,
-		meta: {
-			tableOfContents: false
+		// Override parent's metadata to hide the table of contents on example pages
+		metadata: {
+			toc: []
 		}
 	};
 }

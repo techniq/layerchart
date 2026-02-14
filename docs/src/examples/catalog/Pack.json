@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Pack/basic",
+      "title": "basic",
+      "path": "/docs/components/Pack/basic",
       "components": [
         {
           "component": "Chart",
@@ -42,10 +43,10 @@
     {
       "example": "basic",
       "component": "Pack",
-      "path": "/example/Pack/basic",
+      "path": "/docs/components/Pack/basic",
       "lineNumber": 107,
       "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
     }
   ],
-  "updatedAt": "2025-11-12T16:58:10.529Z"
+  "updatedAt": "2026-02-07T20:21:32.084Z"
 }

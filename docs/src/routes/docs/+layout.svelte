@@ -1,33 +1,16 @@
 <script lang="ts">
-	import {
-		Breadcrumb,
-		Button,
-		Drawer,
-		Kbd,
-		MenuButton,
-		settings,
-		TableOfContents,
-		TextField,
-		ThemeSelect,
-		Tooltip
-	} from 'svelte-ux';
+	import { Button, Drawer, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
-	import { env } from '@layerstack/utils';
-	import { watch } from 'runed';
 
-	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { examples } from '$lib/context.js';
+	import Search from './search/Search.svelte';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
+	import TableOfContents from '$lib/components/TableOfContents.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 
 	import LucideAlignLeft from '~icons/lucide/align-left';
-	import LucideAlignJustify from '~icons/lucide/align-justify';
-	import LucideSearch from '~icons/lucide/search';
-	import LucideArrowLeft from '~icons/lucide/arrow-left';
-	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import LucideFilePen from '~icons/lucide/file-pen';
-	import LucideChevronRight from '~icons/lucide/chevron-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucidePanelLeftOpen from '~icons/lucide/panel-left-open';
@@ -47,15 +30,6 @@
 		}
 	};
 	examples.set(examplesContext);
-
-	let searchQuery = $state('');
-
-	function handleSearch() {
-		goto(`/docs/search?q=${searchQuery}`);
-		searchQuery = '';
-	}
-
-	let searchInput = $state<HTMLInputElement>();
 
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
@@ -112,37 +86,8 @@
 
 	<a href="/" class="text-xl font-bold lg:w-60">LayerChart</a>
 
-	<div class="flex grow justify-end sm:justify-center lg:justify-start">
-		<!-- TODO: Add search functionality -->
-		<Button icon={LucideSearch} class="inline-block sm:hidden" />
-		<TextField
-			placeholder="Search"
-			bind:value={searchQuery}
-			on:keydown={(e) => {
-				if (e.key === 'Enter') {
-					handleSearch();
-				}
-			}}
-			bind:inputEl={searchInput}
-			classes={{
-				root: 'hidden sm:block px-2',
-				container: 'hover:border-surface-content/20'
-			}}
-		>
-			{#snippet prepend()}
-				<LucideSearch class="text-surface-content/50 mr-4" />
-			{/snippet}
-			{#snippet append()}
-				<div class="flex items-center gap-1">
-					<Kbd
-						command={env.isMac()}
-						control={!env.isMac()}
-						class="size-4 items-center justify-center text-xs"
-					/>
-					<Kbd class="size-4 items-center justify-center text-xs">K</Kbd>
-				</div>
-			{/snippet}
-		</TextField>
+	<div class="grow text-end max-lg:ml-10 sm:text-start">
+		<Search />
 	</div>
 
 	<div class="flex items-center gap-2">
@@ -316,9 +261,9 @@
 	</main>
 
 	<!-- Table of Contents -->
-	{#if page.data.meta?.tableOfContents && page.data.metadata?.tableOfContents}
+	{#if page.data.metadata?.toc?.length}
 		<div
-			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-[280px] overflow-auto py-5 pr-6 xl:block"
+			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-70 overflow-auto py-5 pr-6 xl:block"
 		>
 			<div
 				class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
@@ -327,43 +272,8 @@
 				On this page
 			</div>
 			{#key page.url}
-				<TableOfContents
-					classes={{
-						li: 'leading-none overflow-x-hidden'
-					}}
-				>
-					{#snippet children({
-						node,
-						activeHeadingId
-					}: {
-						node: { id: string; name: string; level: number; element: HTMLElement };
-						activeHeadingId: string;
-					})}
-						<a
-							href="#{node.id}"
-							style:padding-left="{node.level * 12}px"
-							class={cls(
-								'hover:text-surface-content block w-full overflow-hidden text-ellipsis whitespace-nowrap border-l py-1 text-sm',
-								node.level <= 2 ? 'text-surface-content/70 font-medium' : 'text-surface-content/50',
-								node.id &&
-									node.id === activeHeadingId &&
-									'border-surface-content text-surface-content'
-							)}
-						>
-							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-							{@html node.name}
-						</a>
-					{/snippet}
-				</TableOfContents>
+				<TableOfContents items={page.data.metadata.toc} />
 			{/key}
 		</div>
 	{/if}
 </div>
-
-<svelte:window
-	onkeydown={(e) => {
-		if (e[env.getModifierKey()] && e.key === 'k') {
-			searchInput?.focus();
-		}
-	}}
-/>

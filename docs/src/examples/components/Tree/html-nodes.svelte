@@ -55,6 +55,7 @@
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
 	}}
+	clip
 	height={800}
 >
 	{#snippet children()}

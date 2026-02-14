@@ -3,7 +3,8 @@
   "examples": [
     {
       "name": "basic",
-      "path": "/example/Spline/basic",
+      "title": "basic",
+      "path": "/docs/components/Spline/basic",
       "components": [
         {
           "component": "Chart",
@@ -29,7 +30,8 @@
     },
     {
       "name": "basic-start-and-end-snippets",
-      "path": "/example/Spline/basic-start-and-end-snippets",
+      "title": "basic start and end snippets",
+      "path": "/docs/components/Spline/basic-start-and-end-snippets",
       "components": [
         {
           "component": "Chart",
@@ -60,7 +62,8 @@
     },
     {
       "name": "draw",
-      "path": "/example/Spline/draw",
+      "title": "draw",
+      "path": "/docs/components/Spline/draw",
       "components": [
         {
           "component": "Chart",
@@ -86,7 +89,8 @@
     },
     {
       "name": "end-slot-with-draw-with-value",
-      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "title": "end slot with draw with value",
+      "path": "/docs/components/Spline/end-slot-with-draw-with-value",
       "components": [
         {
           "component": "Chart",
@@ -122,7 +126,8 @@
     },
     {
       "name": "end-snippet-with-draw",
-      "path": "/example/Spline/end-snippet-with-draw",
+      "title": "end snippet with draw",
+      "path": "/docs/components/Spline/end-snippet-with-draw",
       "components": [
         {
           "component": "Chart",
@@ -153,7 +158,8 @@
     },
     {
       "name": "gradient-encoding",
-      "path": "/example/Spline/gradient-encoding",
+      "title": "gradient encoding",
+      "path": "/docs/components/Spline/gradient-encoding",
       "components": [
         {
           "component": "Chart",
@@ -189,7 +195,8 @@
     },
     {
       "name": "gradient-threshold",
-      "path": "/example/Spline/gradient-threshold",
+      "title": "gradient threshold",
+      "path": "/docs/components/Spline/gradient-threshold",
       "components": [
         {
           "component": "Chart",
@@ -220,7 +227,8 @@
     },
     {
       "name": "label-using-start-end-snippets",
-      "path": "/example/Spline/label-using-start-end-snippets",
+      "title": "label using start end snippets",
+      "path": "/docs/components/Spline/label-using-start-end-snippets",
       "components": [
         {
           "component": "Chart",
@@ -256,7 +264,8 @@
     },
     {
       "name": "markers-arrows",
-      "path": "/example/Spline/markers-arrows",
+      "title": "markers arrows",
+      "path": "/docs/components/Spline/markers-arrows",
       "components": [
         {
           "component": "Chart",
@@ -282,7 +291,8 @@
     },
     {
       "name": "multiple-series",
-      "path": "/example/Spline/multiple-series",
+      "title": "multiple series",
+      "path": "/docs/components/Spline/multiple-series",
       "components": [
         {
           "component": "Chart",
@@ -328,7 +338,8 @@
     },
     {
       "name": "multiple-series-highlight-on-hover",
-      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "title": "multiple series highlight on hover",
+      "path": "/docs/components/Spline/multiple-series-highlight-on-hover",
       "components": [
         {
           "component": "Chart",
@@ -374,7 +385,8 @@
     },
     {
       "name": "multiple-series-using-overrides",
-      "path": "/example/Spline/multiple-series-using-overrides",
+      "title": "multiple series using overrides",
+      "path": "/docs/components/Spline/multiple-series-using-overrides",
       "components": [
         {
           "component": "Chart",
@@ -410,7 +422,8 @@
     },
     {
       "name": "multiple-series-with-labels",
-      "path": "/example/Spline/multiple-series-with-labels",
+      "title": "multiple series with labels",
+      "path": "/docs/components/Spline/multiple-series-with-labels",
       "components": [
         {
           "component": "Chart",
@@ -451,7 +464,8 @@
     },
     {
       "name": "playground",
-      "path": "/example/Spline/playground",
+      "title": "playground",
+      "path": "/docs/components/Spline/playground",
       "components": [
         {
           "component": "Chart",
@@ -482,7 +496,8 @@
     },
     {
       "name": "radial-line-with-areas",
-      "path": "/example/Spline/radial-line-with-areas",
+      "title": "radial line with areas",
+      "path": "/docs/components/Spline/radial-line-with-areas",
       "components": [
         {
           "component": "Chart",
@@ -513,7 +528,8 @@
     },
     {
       "name": "radial-multi-year-lines",
-      "path": "/example/Spline/radial-multi-year-lines",
+      "title": "radial multi year lines",
+      "path": "/docs/components/Spline/radial-multi-year-lines",
       "components": [
         {
           "component": "Chart",
@@ -539,7 +555,8 @@
     },
     {
       "name": "radial-radar",
-      "path": "/example/Spline/radial-radar",
+      "title": "radial radar",
+      "path": "/docs/components/Spline/radial-radar",
       "components": [
         {
           "component": "Chart",
@@ -570,7 +587,8 @@
     },
     {
       "name": "tweened",
-      "path": "/example/Spline/tweened",
+      "title": "tweened",
+      "path": "/docs/components/Spline/tweened",
       "components": [
         {
           "component": "Chart",
@@ -596,7 +614,8 @@
     },
     {
       "name": "vertical",
-      "path": "/example/Spline/vertical",
+      "title": "vertical",
+      "path": "/docs/components/Spline/vertical",
       "components": [
         {
           "component": "Chart",
@@ -632,7 +651,8 @@
     },
     {
       "name": "with-labels",
-      "path": "/example/Spline/with-labels",
+      "title": "with labels",
+      "path": "/docs/components/Spline/with-labels",
       "components": [
         {
           "component": "Chart",
@@ -663,7 +683,8 @@
     },
     {
       "name": "with-tooltip-and-highlight",
-      "path": "/example/Spline/with-tooltip-and-highlight",
+      "title": "with tooltip and highlight",
+      "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "components": [
         {
           "component": "Chart",
@@ -702,416 +723,444 @@
     {
       "example": "radial",
       "component": "AreaChart",
-      "path": "/example/AreaChart/radial",
+      "path": "/docs/components/AreaChart/radial",
       "lineNumber": 45,
       "line": "<Spline y=\"avg\" curve={curveCatmullRom} class=\"stroke-primary\" />"
     },
     {
       "example": "threshold",
       "component": "AreaChart",
-      "path": "/example/AreaChart/threshold",
+      "path": "/docs/components/AreaChart/threshold",
       "lineNumber": 44,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "threshold",
       "component": "AreaChart",
-      "path": "/example/AreaChart/threshold",
+      "path": "/docs/components/AreaChart/threshold",
       "lineNumber": 45,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
-      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
       "lineNumber": 43,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
-      "path": "/example/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
+      "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
       "lineNumber": 44,
       "line": "<Spline y={(d) => context.y1Scale?.(d.efficiency)} class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
-      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 30,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
-      "path": "/example/Chart/compound-dual-axis-with-stacked-charts",
+      "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 51,
       "line": "<Spline class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
-      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 40,
       "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
-      "path": "/example/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "lineNumber": 41,
       "line": "<Spline y=\"close\" class=\"stroke-secondary\" />"
     },
     {
       "example": "basic",
       "component": "Dagre",
-      "path": "/example/Dagre/basic",
+      "path": "/docs/components/Dagre/basic",
       "lineNumber": 51,
       "line": "<Spline"
     },
     {
       "example": "playground",
       "component": "Dagre",
-      "path": "/example/Dagre/playground",
+      "path": "/docs/components/Dagre/playground",
       "lineNumber": 52,
       "line": "<Spline"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
-      "path": "/example/Dagre/software-user-flow",
+      "path": "/docs/components/Dagre/software-user-flow",
       "lineNumber": 53,
       "line": "<Spline"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
-      "path": "/example/Dagre/tcp-state-diagram",
-      "lineNumber": 51,
+      "path": "/docs/components/Dagre/tcp-state-diagram",
+      "lineNumber": 52,
       "line": "<Spline"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
-      "path": "/example/GeoPath/spike-map",
-      "lineNumber": 82,
+      "path": "/docs/components/GeoPath/spike-map",
+      "lineNumber": 83,
       "line": "<Spline"
     },
     {
       "example": "custom",
       "component": "LineChart",
-      "path": "/example/LineChart/custom",
+      "path": "/docs/components/LineChart/custom",
       "lineNumber": 23,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "gradient-encoding",
       "component": "LineChart",
-      "path": "/example/LineChart/gradient-encoding",
+      "path": "/docs/components/LineChart/gradient-encoding",
       "lineNumber": 21,
       "line": "<Spline stroke={gradient} />"
     },
     {
       "example": "gradient-threshold",
       "component": "LineChart",
-      "path": "/example/LineChart/gradient-threshold",
+      "path": "/docs/components/LineChart/gradient-threshold",
       "lineNumber": 23,
       "line": "<Spline stroke={gradient} />"
     },
     {
       "example": "null-dashed-gaps",
       "component": "LineChart",
-      "path": "/example/LineChart/null-dashed-gaps",
+      "path": "/docs/components/LineChart/null-dashed-gaps",
       "lineNumber": 17,
       "line": "<Spline"
     },
     {
       "example": "oscilloscope-time",
       "component": "LineChart",
-      "path": "/example/LineChart/oscilloscope-time",
+      "path": "/docs/components/LineChart/oscilloscope-time",
       "lineNumber": 106,
       "line": "<Spline stroke={gradient} />"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
-      "path": "/example/LineChart/series-individual-tooltip",
+      "path": "/docs/components/LineChart/series-individual-tooltip",
       "lineNumber": 49,
       "line": "<Spline {data} y={s.key} stroke={s.color} class={cls(!active && 'opacity-20 saturate-0')} />"
     },
     {
       "example": "series-with-nulls",
       "component": "LineChart",
-      "path": "/example/LineChart/series-with-nulls",
+      "path": "/docs/components/LineChart/series-with-nulls",
+      "lineNumber": 37,
+      "line": "<Spline"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 39,
+      "line": "<Spline y=\"value\" {curve} class=\"stroke-success stroke-2\" />"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 43,
+      "line": "<Spline y=\"value\" {curve} class=\"stroke-danger stroke-2\" />"
+    },
+    {
+      "example": "threshold",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/threshold",
+      "lineNumber": 47,
+      "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4] opacity-20\" />"
+    },
+    {
+      "example": "orientation",
+      "component": "Marker",
+      "path": "/docs/components/Marker/orientation",
       "lineNumber": 37,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
-      "path": "/example/Marker/orientation",
-      "lineNumber": 37,
-      "line": "<Spline"
-    },
-    {
-      "example": "orientation",
-      "component": "Marker",
-      "path": "/example/Marker/orientation",
+      "path": "/docs/components/Marker/orientation",
       "lineNumber": 51,
       "line": "<Spline"
     },
     {
       "example": "orientation",
       "component": "Marker",
-      "path": "/example/Marker/orientation",
+      "path": "/docs/components/Marker/orientation",
       "lineNumber": 65,
       "line": "<Spline"
     },
     {
       "example": "spline",
       "component": "Marker",
-      "path": "/example/Marker/spline",
+      "path": "/docs/components/Marker/spline",
       "lineNumber": 43,
       "line": "<Spline"
     },
     {
       "example": "spline-w-thicker-stroke",
       "component": "Marker",
-      "path": "/example/Marker/spline-w-thicker-stroke",
+      "path": "/docs/components/Marker/spline-w-thicker-stroke",
       "lineNumber": 44,
       "line": "<Spline"
     },
     {
       "example": "styling",
       "component": "Marker",
-      "path": "/example/Marker/styling",
+      "path": "/docs/components/Marker/styling",
       "lineNumber": 35,
       "line": "<Spline"
     },
     {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
-      "path": "/example/MotionPath/repeat-indefinitely",
+      "path": "/docs/components/MotionPath/repeat-indefinitely",
       "lineNumber": 47,
       "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "rotate-object-with-path",
       "component": "MotionPath",
-      "path": "/example/MotionPath/rotate-object-with-path",
+      "path": "/docs/components/MotionPath/rotate-object-with-path",
       "lineNumber": 49,
       "line": "<Spline id={pathId} curve={config.curve} />"
     },
     {
       "example": "sync-with-draw",
       "component": "MotionPath",
-      "path": "/example/MotionPath/sync-with-draw",
+      "path": "/docs/components/MotionPath/sync-with-draw",
       "lineNumber": 50,
       "line": "<Spline id={pathId} curve={config.curve} draw={{ duration: 3000, easing: linear }} />"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Points",
+      "path": "/docs/components/Points/color-via-ordinal-scale",
+      "lineNumber": 30,
+      "line": "<Spline y=\"baseline\" curve={curveMonotoneX} class=\"[stroke-dasharray:4] opacity-20\" />"
+    },
+    {
       "example": "basic",
       "component": "Spline",
-      "path": "/example/Spline/basic",
+      "path": "/docs/components/Spline/basic",
       "lineNumber": 14,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "basic-start-and-end-snippets",
       "component": "Spline",
-      "path": "/example/Spline/basic-start-and-end-snippets",
+      "path": "/docs/components/Spline/basic-start-and-end-snippets",
       "lineNumber": 36,
       "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "draw",
       "component": "Spline",
-      "path": "/example/Spline/draw",
+      "path": "/docs/components/Spline/draw",
       "lineNumber": 36,
       "line": "<Spline curve={config.curve} draw class=\"stroke-primary stroke-2\" />"
     },
     {
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
-      "path": "/example/Spline/end-slot-with-draw-with-value",
+      "path": "/docs/components/Spline/end-slot-with-draw-with-value",
       "lineNumber": 37,
       "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "end-snippet-with-draw",
       "component": "Spline",
-      "path": "/example/Spline/end-snippet-with-draw",
+      "path": "/docs/components/Spline/end-snippet-with-draw",
       "lineNumber": 36,
       "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "gradient-encoding",
       "component": "Spline",
-      "path": "/example/Spline/gradient-encoding",
+      "path": "/docs/components/Spline/gradient-encoding",
       "lineNumber": 24,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
-      "path": "/example/Spline/gradient-threshold",
+      "path": "/docs/components/Spline/gradient-threshold",
       "lineNumber": 26,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
       "example": "label-using-start-end-snippets",
       "component": "Spline",
-      "path": "/example/Spline/label-using-start-end-snippets",
+      "path": "/docs/components/Spline/label-using-start-end-snippets",
       "lineNumber": 36,
       "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
     },
     {
       "example": "markers-arrows",
       "component": "Spline",
-      "path": "/example/Spline/markers-arrows",
+      "path": "/docs/components/Spline/markers-arrows",
       "lineNumber": 36,
       "line": "<Spline"
     },
     {
       "example": "multiple-series",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series",
+      "path": "/docs/components/Spline/multiple-series",
       "lineNumber": 55,
       "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
     },
     {
       "example": "multiple-series-highlight-on-hover",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series-highlight-on-hover",
+      "path": "/docs/components/Spline/multiple-series-highlight-on-hover",
       "lineNumber": 58,
       "line": "<Spline {data} class=\"stroke-2\" stroke={color}>"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series-using-overrides",
+      "path": "/docs/components/Spline/multiple-series-using-overrides",
       "lineNumber": 31,
       "line": "<Spline y={(d) => d.y} class=\"stroke-2\" stroke={fruitColors.bananas} />"
     },
     {
       "example": "multiple-series-using-overrides",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series-using-overrides",
+      "path": "/docs/components/Spline/multiple-series-using-overrides",
       "lineNumber": 32,
       "line": "<Spline y={(d) => d.y1} class=\"stroke-2\" stroke={fruitColors.oranges} />"
     },
     {
       "example": "multiple-series-with-labels",
       "component": "Spline",
-      "path": "/example/Spline/multiple-series-with-labels",
+      "path": "/docs/components/Spline/multiple-series-with-labels",
       "lineNumber": 45,
       "line": "<Spline {data} class=\"stroke-2\" stroke={color} />"
     },
     {
       "example": "playground",
       "component": "Spline",
-      "path": "/example/Spline/playground",
+      "path": "/docs/components/Spline/playground",
       "lineNumber": 38,
       "line": "<Spline"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
-      "path": "/example/Spline/radial-line-with-areas",
+      "path": "/docs/components/Spline/radial-line-with-areas",
       "lineNumber": 23,
       "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
     },
     {
       "example": "radial-multi-year-lines",
       "component": "Spline",
-      "path": "/example/Spline/radial-multi-year-lines",
+      "path": "/docs/components/Spline/radial-multi-year-lines",
       "lineNumber": 30,
       "line": "<Spline"
     },
     {
       "example": "radial-radar",
       "component": "Spline",
-      "path": "/example/Spline/radial-radar",
+      "path": "/docs/components/Spline/radial-radar",
       "lineNumber": 38,
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
       "example": "tweened",
       "component": "Spline",
-      "path": "/example/Spline/tweened",
+      "path": "/docs/components/Spline/tweened",
       "lineNumber": 36,
       "line": "<Spline curve={config.curve} motion=\"tween\" class=\"stroke-primary stroke-2\" />"
     },
     {
       "example": "vertical",
       "component": "Spline",
-      "path": "/example/Spline/vertical",
+      "path": "/docs/components/Spline/vertical",
       "lineNumber": 24,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "with-labels",
       "component": "Spline",
-      "path": "/example/Spline/with-labels",
+      "path": "/docs/components/Spline/with-labels",
       "lineNumber": 14,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Spline",
-      "path": "/example/Spline/with-tooltip-and-highlight",
+      "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "lineNumber": 23,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic",
+      "path": "/docs/components/Threshold/basic",
       "lineNumber": 37,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "basic",
       "component": "Threshold",
-      "path": "/example/Threshold/basic",
+      "path": "/docs/components/Threshold/basic",
       "lineNumber": 38,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
-      "path": "/example/Threshold/with-labels",
+      "path": "/docs/components/Threshold/with-labels",
       "lineNumber": 42,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "with-labels",
       "component": "Threshold",
-      "path": "/example/Threshold/with-labels",
+      "path": "/docs/components/Threshold/with-labels",
       "lineNumber": 43,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
-      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
       "lineNumber": 44,
       "line": "<Spline y=\"baseline\" {curve} class=\"[stroke-dasharray:4]\" />"
     },
     {
       "example": "with-tooltip-and-highlight",
       "component": "Threshold",
-      "path": "/example/Threshold/with-tooltip-and-highlight",
+      "path": "/docs/components/Threshold/with-tooltip-and-highlight",
       "lineNumber": 45,
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
       "example": "playground",
       "component": "TransformContext",
-      "path": "/example/TransformContext/playground",
-      "lineNumber": 51,
+      "path": "/docs/components/TransformContext/playground",
+      "lineNumber": 52,
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2025-12-29T21:36:45.318Z"
+  "updatedAt": "2026-02-10T16:19:22.963Z"
 }
