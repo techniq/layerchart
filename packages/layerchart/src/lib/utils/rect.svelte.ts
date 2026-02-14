@@ -171,8 +171,10 @@ export function createDimensionGetter<TData>(
       const xValue = _x(item);
       const start = ctx.xInterval.floor(xValue);
       const end = ctx.xInterval.offset(start);
-      const x = ctx.xScale(start) + insets.left;
-      const width = ctx.xScale(end) - x - insets.right;
+      const xStart = ctx.xScale(start);
+      const xEnd = ctx.xScale(end);
+      const x = Math.min(xStart, xEnd) + insets.left;
+      const width = Math.abs(xEnd - xStart) - insets.left - insets.right;
 
       const yValue = _y(item);
 
@@ -205,8 +207,10 @@ export function createDimensionGetter<TData>(
       const yValue = _y(item);
       const start = ctx.yInterval.floor(yValue);
       const end = ctx.yInterval.offset(start);
-      const y = ctx.yScale(start) + insets.top;
-      const height = ctx.yScale(end) - y - insets.bottom;
+      const yStart = ctx.yScale(start);
+      const yEnd = ctx.yScale(end);
+      const y = Math.min(yStart, yEnd) + insets.top;
+      const height = Math.abs(yEnd - yStart) - insets.top - insets.bottom;
 
       const xValue = _x(item);
 
