@@ -177,7 +177,7 @@
 		searchQuery = e.detail;
 	}
 
-	// Lock body scroll and forward wheel events to dialog options list
+	// Lock body scroll and forward wheel events to search dialog options list
 	$effect(() => {
 		if (open) {
 			document.body.style.overflow = 'hidden';
