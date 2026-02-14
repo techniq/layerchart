@@ -1,6 +1,7 @@
-<script lang="ts">
-  import Example from '$lib/components/Example.svelte';
-</script>
+---
+title: Data
+order: 6
+---
 
 # Data
 
@@ -29,11 +30,11 @@ all supporting single and multiple marks per Chart.
 
 ### Single mark
 
-<Example component="Chart" name="data-chart-single" showCode />
+:example{ component="Chart" name="data-chart-single" showCode }
 
 ### Multiple marks
 
-<Example component="Chart" name="data-chart-multi" showCode />
+:example{ component="Chart" name="data-chart-multi" showCode }
 
 > TODO: improve tooltip, legend support without requiring series
 
@@ -79,10 +80,10 @@ Similar to SveltePlot
 
 A single data array with per-series values as separate properties
 
-<Example component="Chart" name="data-series-chart-data" showCode />
+:example{ component="Chart" name="data-series-chart-data" showCode }
 
 ### Per-series data
 
 Each series has it's own data
 
-<Example component="Chart" name="data-series-separate-data" showCode />
+:example{ component="Chart" name="data-series-separate-data" showCode }
