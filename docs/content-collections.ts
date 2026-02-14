@@ -27,16 +27,23 @@ const components = defineCollection({
 		const name = doc.name ?? toPascalCase(fileName.replace('.md', ''));
 
 		// Read the source file from the layerchart package
+		// Determine the subfolder based on category and component name
+		let subfolder = '';
+		if (doc.category === 'charts' && name !== 'Chart') {
+			subfolder = 'charts/';
+		} else if (doc.category === 'layers' || name === 'Layer') {
+			subfolder = 'layers/';
+		}
 		const sourcePath = join(
 			process.cwd(),
-			`../packages/layerchart/src/lib/components/${doc.category === 'charts' && name != 'Chart' ? 'charts/' : ''}${path}.svelte`
+			`../packages/layerchart/src/lib/components/${subfolder}${path}.svelte`
 		);
 
 		let source = '';
 		let sourceUrl = '';
 		try {
 			source = readFileSync(sourcePath, 'utf-8');
-			sourceUrl = `https://github.com/techniq/layerchart/blob/next/packages/layerchart/src/lib/components/${path}.svelte`;
+			sourceUrl = `https://github.com/techniq/layerchart/blob/next/packages/layerchart/src/lib/components/${subfolder}${path}.svelte`;
 		} catch (error) {
 			// console.warn(
 			// 	`Could not read source file for ${filePath}: ${error instanceof Error ? error.message : String(error)}`
