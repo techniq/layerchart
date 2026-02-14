@@ -225,7 +225,7 @@
 
 <div class="relative h-140 perspective-[1000px] overflow-clip">
 	<h1
-		class="text-6xl lg:text-8xl text-center mt-8 mb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
+		class="text-6xl lg:text-8xl text-center mt-8 mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
 	>
 		LayerChart
 	</h1>
