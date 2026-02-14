@@ -487,11 +487,13 @@
                 const xVal = ctx.x(d);
                 const start = ctx.xInterval.floor(xVal);
                 const end = ctx.xInterval.offset(start);
+                const xStart = ctx.xScale(start);
+                const xEnd = ctx.xScale(end);
 
                 return {
-                  x: ctx.xScale(start),
+                  x: Math.min(xStart, xEnd),
                   y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                  width: ctx.xScale(end) - ctx.xScale(start),
+                  width: Math.abs(xEnd - xStart),
                   height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
@@ -500,12 +502,14 @@
                 const yVal = ctx.y(d);
                 const start = ctx.yInterval.floor(yVal);
                 const end = ctx.yInterval.offset(start);
+                const yStart = ctx.yScale(start);
+                const yEnd = ctx.yScale(end);
 
                 return {
                   x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                  y: ctx.yScale(start),
+                  y: Math.min(yStart, yEnd),
                   width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                  height: ctx.yScale(end) - ctx.yScale(start),
+                  height: Math.abs(yEnd - yStart),
                   data: d,
                 };
               } else if (isScaleTime(ctx.xScale)) {
