@@ -69,6 +69,8 @@
     initialWidth = width,
     strokeWidth,
     opacity,
+    rx: rxProp,
+    ry: ryProp,
     ref: refProp = $bindable(),
     motion,
     class: className,
@@ -82,6 +84,11 @@
     children,
     ...restProps
   }: RectProps = $props();
+
+  // Normalize rx/ry - if only one is provided, use it for both (SVG behavior)
+  // Coerce to number for canvas rendering (SVG allows string like "50%")
+  const rx = $derived(Number(rxProp ?? ryProp) || 0);
+  const ry = $derived(Number(ryProp ?? rxProp) || 0);
 
   let ref = $state<SVGRectElement>();
 
@@ -107,6 +114,8 @@
         y: motionY.current,
         width: motionWidth.current,
         height: motionHeight.current,
+        rx,
+        ry,
       },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
@@ -146,6 +155,8 @@
         opacity,
         className,
         restProps.style,
+        rx,
+        ry,
       ],
     });
   }
@@ -162,6 +173,8 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
+    {rx}
+    {ry}
     class={cls('lc-rect', className)}
     {...restProps}
     {onclick}
@@ -187,7 +200,7 @@
     style:border-width="{strokeWidth}px"
     style:border-style="solid"
     style:border-color={stroke}
-    style:border-radius="{restProps.rx}px"
+    style:border-radius="{rx}px"
     class={cls('lc-rect', className)}
     {...restProps as any}
     {onclick}

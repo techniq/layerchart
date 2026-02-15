@@ -312,17 +312,62 @@ export function renderText(
 
 export function renderRect(
   ctx: CanvasRenderingContext2D,
-  coords: { x: number; y: number; width: number; height: number },
+  coords: { x: number; y: number; width: number; height: number; rx?: number; ry?: number },
   styleOptions: ComputedStylesOptions = {}
 ) {
-  render(
-    ctx,
-    {
-      fill: (ctx) => ctx.fillRect(coords.x, coords.y, coords.width, coords.height),
-      stroke: (ctx) => ctx.strokeRect(coords.x, coords.y, coords.width, coords.height),
-    },
-    styleOptions
-  );
+  const { x, y, width, height } = coords;
+  const rx = coords.rx ?? 0;
+  const ry = coords.ry ?? rx; // Default ry to rx if not provided (SVG behavior)
+
+  // No rounding - use simple rect methods
+  if (rx === 0 && ry === 0) {
+    render(
+      ctx,
+      {
+        fill: (ctx) => ctx.fillRect(x, y, width, height),
+        stroke: (ctx) => ctx.strokeRect(x, y, width, height),
+      },
+      styleOptions
+    );
+    return;
+  }
+
+  // Try native roundRect if available (modern browsers)
+  if (typeof ctx.roundRect === 'function') {
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, [rx, ry]);
+    render(
+      ctx,
+      {
+        fill: (ctx) => ctx.fill(),
+        stroke: (ctx) => ctx.stroke(),
+      },
+      styleOptions
+    );
+    ctx.closePath();
+    return;
+  }
+
+  // Fallback: use path rendering for rounded corners
+  // Clamp radii to half the width/height
+  const clampedRx = Math.min(rx, width / 2);
+  const clampedRy = Math.min(ry, height / 2);
+
+  // Build rounded rect path: start at top-left (after corner), go clockwise
+  const pathData = [
+    `M${x + clampedRx},${y}`, // Move to top-left (after corner)
+    `h${width - 2 * clampedRx}`, // Top edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${clampedRx},${clampedRy}`, // Top-right corner
+    `v${height - 2 * clampedRy}`, // Right edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${-clampedRx},${clampedRy}`, // Bottom-right corner
+    `h${2 * clampedRx - width}`, // Bottom edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${-clampedRx},${-clampedRy}`, // Bottom-left corner
+    `v${2 * clampedRy - height}`, // Left edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${clampedRx},${-clampedRy}`, // Top-left corner
+    'z', // Close path
+  ].join(' ');
+
+  renderPathData(ctx, pathData, styleOptions);
 }
 
 export function renderCircle(
