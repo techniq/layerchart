@@ -120,6 +120,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-circle', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -149,6 +150,7 @@
         strokeWidth,
         opacity,
         className,
+        restProps.style,
       ],
     });
   }

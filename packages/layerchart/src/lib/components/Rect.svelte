@@ -113,6 +113,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-rect', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -144,6 +145,7 @@
         strokeWidth,
         opacity,
         className,
+        restProps.style,
       ],
     });
   }
