@@ -135,7 +135,7 @@
 </script>
 
 <header class="flex h-16 items-center px-4 py-2">
-	<a href="/" class="flex items-center gap-3 text-xl font-bold w-60">
+	<a href="/" class="hidden xs:flex invisible md:visible items-center gap-3 w-60 text-xl font-bold">
 		<Logo class="w-7" />
 		LayerChart
 	</a>
@@ -228,7 +228,7 @@
 <div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
 
 <div
-	class="flex flex-col gap-2 items-center pt-8 relative h-140 perspective-[1000px] overflow-clip"
+	class="flex flex-col gap-2 items-center pt-8 relative h-120 lg:h-140 perspective-[1000px] overflow-clip"
 >
 	<Logo class="w-14 lg:w-20" />
 
@@ -257,7 +257,7 @@
 	</div>
 </div>
 
-<div class="grid grid-cols-xs gap-4 px-4 mb-4">
+<div class="grid grid-cols-3 sm:grid-cols-xs gap-2 sm:gap-4 px-4 mb-4">
 	{#each examples as { component, example }}
 		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
 	{/each}

@@ -7,6 +7,8 @@
 @source '../node_modules/svelte-ux/dist';
 
 @theme {
+	--breakpoint-xs: 30rem; /* 480px */
+
 	--font-sans: 'Inter Variable', sans-serif;
 	/* --font-mono: 'Departure Mono', 'monospace'; */
 	--font-pixel: 'Departure Mono', 'monospace';
