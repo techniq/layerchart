@@ -8,10 +8,11 @@
 
 	import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
-
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
+
+	import Logo from '$lib/components/Logo.svelte';
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -134,7 +135,10 @@
 </script>
 
 <header class="flex h-16 items-center px-4 py-2">
-	<a href="/" class="text-xl font-bold w-60">LayerChart</a>
+	<a href="/" class="flex items-center gap-3 text-xl font-bold w-60">
+		<Logo class="w-7" />
+		LayerChart
+	</a>
 
 	<div class="flex gap-2 grow justify-center items-center">
 		{#each links as { label, href }}
@@ -223,9 +227,11 @@
 
 <div class="absolute top-0 w-full h-256 background-gradient pointer-events-none"></div>
 
-<div class="relative h-140 perspective-[1000px] overflow-clip">
+<div class="flex flex-col items-center pt-8 relative h-140 perspective-[1000px] overflow-clip">
+	<Logo class="w-20" />
+
 	<h1
-		class="text-6xl lg:text-8xl text-center mt-8 mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
+		class="text-6xl lg:text-8xl text-center mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
 	>
 		LayerChart
 	</h1>

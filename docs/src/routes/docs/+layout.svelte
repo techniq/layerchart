@@ -19,6 +19,7 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
+	import Logo from '$lib/components/Logo.svelte';
 
 	let { data, children } = $props();
 
@@ -84,7 +85,10 @@
 	{/if} -->
 	</Button>
 
-	<a href="/" class="text-xl font-bold lg:w-60">LayerChart</a>
+	<a href="/" class="flex items-center gap-3 text-xl font-bold lg:w-60">
+		<Logo class="w-7" />
+		LayerChart
+	</a>
 
 	<div class="grow text-end max-lg:ml-10 sm:text-start">
 		<Search />
