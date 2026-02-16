@@ -233,7 +233,7 @@
 	<Logo class="w-14 lg:w-20" />
 
 	<h1
-		class="text-6xl lg:text-8xl text-center mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-blue-500 to-purple-800 tracking-wide"
+		class="text-6xl lg:text-8xl text-center mb-2 pb-2 font-extrabold text-transparent bg-clip-text bg-linear-to-br from-primary to-secondary tracking-wide"
 	>
 		LayerChart
 	</h1>
