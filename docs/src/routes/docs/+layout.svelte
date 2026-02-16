@@ -86,7 +86,7 @@
 	</Button>
 
 	<a href="/" class="flex items-center gap-3 text-xl font-bold lg:w-60">
-		<Logo class="w-7" />
+		<Logo class="w-7 max-lg:hidden" />
 		LayerChart
 	</a>
 
