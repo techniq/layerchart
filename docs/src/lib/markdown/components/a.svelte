@@ -20,8 +20,7 @@
 	)}
 	{...restProps}
 >
-	{@render children?.()}
-	{#if !internal}
-		<LucideArrowUpRight class="inline-block text-xs -ml-1 mb-2 opacity-70" />
+	{@render children?.()}{#if !internal}
+		<LucideArrowUpRight class="inline-block text-xs mb-2 opacity-70" />
 	{/if}
 </a>
