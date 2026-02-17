@@ -1,17 +1,18 @@
 ---
 title: Features
 order: 1
+draft: true
 ---
 
 ## Layers
 
-LayerChart provides first-class support for Svg, Canvas, and Html via [layers](/docs/guides/layers) and [primitives](/docs/guides/primitives).
+LayerChart provides first-class support for Svg, Canvas, and Html visualizations via [layers](/docs/guides/layers) and [primitives](/docs/guides/primitives).
 
 Each chart can use multiple layers which can be of different types, allowing you to leverage a layer's strengths (or workaround a weakness)
 
-### Example use cases
+### Use cases
 
-- hierarchy visualization with nodes rendered as `Html` and links rendred with `Svg`/`Canvas`
+- Hierarchy with nodes rendered as `Html` to utlize flexbox/grid layouts and link paths rendred with `Svg` or `Canvas`
 - `Svg` for text along an arc
 - `Html` for word wrapping
 - `Canvas` for performance of high density data, complex geo paths, or when overall rendering performance is crucial.
@@ -30,8 +31,12 @@ Each chart can use multiple layers which can be of different types, allowing you
 ## Interactivity
 
 - Robust [Tooltips](/docs/components/Tooltip) with various modes
-- Pan/zoom transforms
-  - Imperative access (`transform.zoomTo()`, `<Chart bind:transformContext>`)
+- Pan/zoom [transforms](http://localhost:3002/docs/components/TransformContext)
+  - Imperative access (`transform.zoomTo()`, `<Chart bind:context>`)
+  - Use cases
+    - Geo ([Projections](/docs/components/GeoPath/transform-projection), [Canvas](/docs/components/GeoPath/transform-canvas), and [Zoomable seamless tiles](/docs/components/GeoTile/zoomable-seamless-layers))
+    - Hierarchial ([Circle pack](/docs/components/Pack/basic), [Treemap stacked zoom](/docs/components/Treemap/stacked-zoom) and [Treemap nested zoom](/docs/components/Treemap/nested-zoom))
+    - General pan/zoom canvas ([Html](/docs/components/TransformContext/pan-zoom-html-image) / [Svg](/docs/components/TransformContext/pan-zoom-svg-image))
 - [Brushing](/docs/components/Brush)
 - Motion-enabled [primatives](/docs/guides/primitives) including tween and spring trannsitions
 
