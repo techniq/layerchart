@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
+	import { LineChart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { randomNormal } from 'd3-random';
 	import BarChartControls2 from '$lib/components/controls/BarChartControls2.svelte';
@@ -15,19 +15,29 @@
 
 <BarChartControls2 bind:random bind:selectedGenerator bind:randomCount />
 
-<BarChart
+<LineChart
 	data={randomBins}
-	x="x0"
+	x={['x0', 'x1']}
 	y="length"
-	bandPadding={0.2}
 	props={{
 		xAxis: { motion: 'tween' },
-		yAxis: { format: 'metric', motion: 'tween' },
-		bars: { motion: 'tween' }
+		yAxis: { format: 'metric', motion: 'tween' }
 	}}
 	padding={defaultChartPadding({ left: 30 })}
 	height={300}
 >
+	{#snippet marks({ context })}
+		{#each randomBins as d}
+			<Rect
+				x={context.xScale(d.x0) + 1}
+				y={context.yScale(d.length)}
+				width={context.xScale(d.x1) - context.xScale(d.x0) - 2}
+				height={context.yScale(0) - context.yScale(d.length)}
+				class="fill-primary"
+				motion="tween"
+			/>
+		{/each}
+	{/snippet}
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
@@ -46,4 +56,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</BarChart>
+</LineChart>

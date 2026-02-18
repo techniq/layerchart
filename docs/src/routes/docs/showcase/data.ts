@@ -14,7 +14,8 @@ export const sites = [
 	{
 		name: 'Zipline AI',
 		description: 'Features, context and embeddings for real-time AI/ML',
-		url: 'https://zipline.ai/'
+		url: 'https://zipline.ai/',
+		source: 'https://github.com/zipline-ai'
 	},
 	{
 		name: 'Tenzir',
@@ -131,5 +132,10 @@ export const sites = [
 		name: 'GEO audit',
 		description: 'GEO / AI audit that tracks your visibility impact',
 		url: 'https://www.geoaud.it/'
+	},
+	{
+		name: 'Nocturne',
+		description: 'A next-generation platform for diabetes management',
+		source: 'https://github.com/nightscout/nocturne'
 	}
 ];

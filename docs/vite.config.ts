@@ -37,6 +37,10 @@ export default defineConfig({
 		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
+		},
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'require-corp',
+			'Cross-Origin-Opener-Policy': 'same-origin'
 		}
 	},
 	test: {

@@ -5,7 +5,7 @@ import { browser, dev } from '$app/environment';
 // Disable server-side rendering until AppLayout shift is fixed (issue #22)
 export const ssr = false;
 
-export const load = async () => {
+export const load = async ({ data }) => {
 	// Setup Posthog
 	if (browser && !dev) {
 		posthog.init('phc_EjObiSURIW3vFLwJYNXQ1DumcnVPI28mO5nbTRVPjs0', {
@@ -15,7 +15,5 @@ export const load = async () => {
 		});
 	}
 
-	// Note: Example globs are now imported directly where needed from $lib/examples.ts
-	// This avoids serializing glob manifests through the load data chain
-	return {};
+	return { ...data };
 };

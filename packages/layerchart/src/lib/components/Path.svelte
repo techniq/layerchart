@@ -179,6 +179,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-path', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -209,6 +210,7 @@
         opacity,
         className,
         tweenedState.current,
+        restProps.style,
       ],
     });
   }

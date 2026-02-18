@@ -207,6 +207,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: restProps.class ?? '',
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -232,6 +233,7 @@
         strokeWidth,
         opacity,
         restProps.class,
+        restProps.style,
         tweenState.current,
       ],
     });
