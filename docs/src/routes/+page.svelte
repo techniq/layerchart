@@ -3,7 +3,6 @@
 	import Stats from '$lib/components/Stats.svelte';
 	import { cls } from '@layerstack/tailwind';
 
-	import { page } from '$app/state';
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
 	import Search from './docs/search/Search.svelte';
 
@@ -13,10 +12,6 @@
 	import LucideGithub from '~icons/lucide/github';
 	import CustomBluesky from '~icons/custom-brands/bluesky';
 	import CustomDiscord from '~icons/custom-brands/discord';
-
-	const title = 'LayerChart';
-	const description = 'Composable Svelte chart components to build a large variety of visualizations';
-	const ogImageUrl = $derived(`${page.url.origin}/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`);
 
 	const links = [
 		{ label: 'Home', href: '/' },
@@ -138,26 +133,6 @@
 	];
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-
-	<!-- Open Graph -->
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:image" content={ogImageUrl} />
-	<meta property="og:image:width" content="1200" />
-	<meta property="og:image:height" content="630" />
-	<meta property="og:url" content={page.url.href} />
-	<meta property="og:site_name" content="LayerChart" />
-
-	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content={ogImageUrl} />
-</svelte:head>
 
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="text-xl font-bold w-60">LayerChart</a>

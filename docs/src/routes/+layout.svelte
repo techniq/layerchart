@@ -7,6 +7,7 @@
 	import { dev } from '$app/environment';
 	import { page } from '$app/state';
 	import { preparePageTransition } from '$lib/page-transitions';
+	import favicon from '$lib/assets/favicon.svg';
 
 	import '@fontsource-variable/inter';
 	import '../app.css';
@@ -56,7 +57,42 @@
 
 	// View transition for navigation
 	preparePageTransition();
+
+	const defaultDescription =
+		'Composable Svelte chart components to build a large variety of visualizations';
+
+	let pageTitle = $derived(
+		page.data.metadata?.name ? `${page.data.metadata.name} | LayerChart` : 'LayerChart'
+	);
+	let pageDescription = $derived(page.data.metadata?.description ?? defaultDescription);
+	let ogImageUrl = $derived(
+		`${page.url.origin}/og?title=${encodeURIComponent(page.data.metadata?.name ?? 'LayerChart')}${page.data.metadata?.description ? `&description=${encodeURIComponent(page.data.metadata.description)}` : `&description=${encodeURIComponent(defaultDescription)}`}${page.data.metadata?.category ? `&component=${encodeURIComponent(page.data.metadata.category)}` : ''}`
+	);
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+	<meta name="description" content={pageDescription} />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={pageDescription} />
+	<meta property="og:image" content={ogImageUrl} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:url" content={page.url.href} />
+	<meta property="og:site_name" content="LayerChart" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@techniq35" />
+	<meta name="twitter:title" content={pageTitle} />
+	<meta name="twitter:description" content={pageDescription} />
+	<meta name="twitter:image" content={ogImageUrl} />
+
+	<link rel="icon" href={favicon} />
+</svelte:head>
 
 <!-- Disable data preloading until Svelte async/fork is improved -->
 <!-- TODO: might be fixed in 2.49.4 - https://github.com/sveltejs/kit/releases/tag/%40sveltejs%2Fkit%402.49.4 -->

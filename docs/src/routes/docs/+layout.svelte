@@ -7,8 +7,6 @@
 	import Search from './search/Search.svelte';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
 	import TableOfContents from '$lib/components/TableOfContents.svelte';
-	import favicon from '$lib/assets/favicon.svg';
-
 	import LucideAlignLeft from '~icons/lucide/align-left';
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -35,38 +33,9 @@
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
 
-	let pageTitle = $derived(page.data.metadata?.name ?? 'Documentation');
-	let pageDescription = $derived(
-		page.data.metadata?.description ??
-			'Composable Svelte visualization library built on D3 primitives'
-	);
-	let ogImageUrl = $derived(
-		`${page.url.origin}/og?title=${encodeURIComponent(pageTitle)}${page.data.metadata?.description ? `&description=${encodeURIComponent(page.data.metadata.description)}` : ''}${page.data.metadata?.category ? `&component=${encodeURIComponent(page.data.metadata.category)}` : ''}`
-	);
 </script>
 
 <svelte:head>
-	<title>{pageTitle} | LayerChart</title>
-	<meta name="description" content={pageDescription} />
-
-	<!-- Open Graph -->
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="{pageTitle} | LayerChart" />
-	<meta property="og:description" content={pageDescription} />
-	<meta property="og:image" content={ogImageUrl} />
-	<meta property="og:image:width" content="1200" />
-	<meta property="og:image:height" content="630" />
-	<meta property="og:url" content={page.url.href} />
-	<meta property="og:site_name" content="LayerChart" />
-
-	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="{pageTitle} | LayerChart" />
-	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content={ogImageUrl} />
-
-	<link rel="icon" href={favicon} />
-
 	{#if page.url.origin.includes('https')}
 		<script
 			defer
