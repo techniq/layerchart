@@ -7,8 +7,6 @@
 	import { dev } from '$app/environment';
 	import { page } from '$app/state';
 	import { preparePageTransition } from '$lib/page-transitions';
-	import favicon from '$lib/assets/favicon.svg';
-
 	import '@fontsource-variable/inter';
 	import '../app.css';
 
@@ -92,7 +90,7 @@
 	<meta name="twitter:description" content={pageDescription} />
 	<meta name="twitter:image" content={ogImageUrl} />
 
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </svelte:head>
 
 <!-- Disable data preloading until Svelte async/fork is improved -->
