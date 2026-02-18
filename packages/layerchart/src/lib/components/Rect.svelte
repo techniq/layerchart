@@ -1,6 +1,7 @@
 <script lang="ts" module>
-  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
+  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
@@ -36,6 +37,9 @@
     ref?: SVGRectElement;
 
     motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+
+    /** Children content to render.  Note: Only works for Html layers */
+    children?: Snippet;
   } & CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
@@ -45,10 +49,10 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
 
   let {
@@ -65,6 +69,8 @@
     initialWidth = width,
     strokeWidth,
     opacity,
+    rx: rxProp,
+    ry: ryProp,
     ref: refProp = $bindable(),
     motion,
     class: className,
@@ -75,8 +81,14 @@
     onpointerleave,
     onpointerover,
     onpointerout,
+    children,
     ...restProps
   }: RectProps = $props();
+
+  // Normalize rx/ry - if only one is provided, use it for both (SVG behavior)
+  // Coerce to number for canvas rendering (SVG allows string like "50%")
+  const rx = $derived(Number(rxProp ?? ryProp) || 0);
+  const ry = $derived(Number(ryProp ?? rxProp) || 0);
 
   let ref = $state<SVGRectElement>();
 
@@ -89,7 +101,7 @@
   const motionWidth = createMotion(initialWidth, () => width, parseMotionProp(motion, 'width'));
   const motionHeight = createMotion(initialHeight, () => height, parseMotionProp(motion, 'height'));
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -102,12 +114,15 @@
         y: motionY.current,
         width: motionWidth.current,
         height: motionHeight.current,
+        rx,
+        ry,
       },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-rect', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -116,7 +131,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Rect',
       render,
@@ -139,12 +154,15 @@
         strokeWidth,
         opacity,
         className,
+        restProps.style,
+        rx,
+        ry,
       ],
     });
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <rect
     x={motionX.current}
     y={motionY.current}
@@ -155,6 +173,8 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
+    {rx}
+    {ry}
     class={cls('lc-rect', className)}
     {...restProps}
     {onclick}
@@ -166,7 +186,7 @@
     {onpointerout}
     bind:this={ref}
   />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
@@ -180,7 +200,7 @@
     style:border-width="{strokeWidth}px"
     style:border-style="solid"
     style:border-color={stroke}
-    style:border-radius="{restProps.rx}px"
+    style:border-radius="{rx}px"
     class={cls('lc-rect', className)}
     {...restProps as any}
     {onclick}
@@ -190,7 +210,9 @@
     {onpointerleave}
     {onpointerover}
     {onpointerout}
-  ></div>
+  >
+    {@render children?.()}
+  </div>
 {/if}
 
 <style>

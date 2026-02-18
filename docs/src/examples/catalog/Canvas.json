@@ -1,0 +1,21 @@
+{
+  "component": "Canvas",
+  "examples": [],
+  "usage": [
+    {
+      "example": "animated-globe",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/animated-globe",
+      "lineNumber": 166,
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
+    },
+    {
+      "example": "tooltip",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/tooltip",
+      "lineNumber": 35,
+      "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> layer -->"
+    }
+  ],
+  "updatedAt": "2026-02-07T17:00:31.100Z"
+}

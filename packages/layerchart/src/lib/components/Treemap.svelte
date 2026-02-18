@@ -1,5 +1,8 @@
 <script lang="ts" module>
   export type TreemapProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The tile function to use for the treemap layout.
      *
@@ -66,8 +69,6 @@
      */
     maintainAspectRatio?: boolean;
 
-    hierarchy?: HierarchyNode<T>;
-
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
@@ -86,7 +87,7 @@
   } from 'd3-hierarchy';
 
   import { aspectTile } from '../utils/treemap.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 
   let {

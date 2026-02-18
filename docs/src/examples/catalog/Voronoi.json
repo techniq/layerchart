@@ -1,0 +1,52 @@
+{
+  "component": "Voronoi",
+  "examples": [
+    {
+      "name": "radius",
+      "title": "radius",
+      "path": "/docs/components/Voronoi/radius",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer onpointermove={onPointerMove}>"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 25,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 26,
+          "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
+        },
+        {
+          "component": "Voronoi",
+          "lineNumber": 27,
+          "line": "<Voronoi"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/docs/components/Voronoi/radius",
+      "lineNumber": 27,
+      "line": "<Voronoi"
+    }
+  ],
+  "updatedAt": "2026-02-07T20:21:32.545Z"
+}

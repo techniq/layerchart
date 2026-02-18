@@ -1,0 +1,143 @@
+{
+  "component": "GeoContext",
+  "examples": [
+    {
+      "name": "geojson-preview",
+      "title": "geojson preview",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 89,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 103,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 105,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 112,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 117,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 127,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "projection-playground",
+      "title": "projection playground",
+      "path": "/docs/components/GeoContext/projection-playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 61,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 73,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 74,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 75,
+          "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 85,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "shapefile-preview",
+      "title": "shapefile preview",
+      "path": "/docs/components/GeoContext/shapefile-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 103,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 109,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 110,
+          "line": "<GeoPath {geojson} fill=\"white\" />"
+        }
+      ]
+    },
+    {
+      "name": "topojson-preview",
+      "title": "topojson preview",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 97,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 110,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoTile",
+          "lineNumber": 112,
+          "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+        },
+        {
+          "component": "TransformControls",
+          "lineNumber": 119,
+          "line": "<TransformControls />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 124,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 134,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "translucent-globe",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/translucent-globe",
+      "lineNumber": 62,
+      "line": "<GeoContext"
+    }
+  ],
+  "updatedAt": "2026-02-08T17:35:30.441Z"
+}

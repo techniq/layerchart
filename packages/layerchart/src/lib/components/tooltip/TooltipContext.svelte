@@ -1,11 +1,9 @@
 <script lang="ts" module>
-  import { Context } from 'runed';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
+  import { setTooltipContext, type TooltipContextValue } from '$lib/contexts/tooltip.js';
 
-  const _TooltipContext = new Context<TooltipContextValue>('TooltipContext');
-
-  type TooltipMode =
+  export type TooltipMode =
     | 'bisect-x' // requires values to be sorted
     | 'bisect-y' // requires values to be sorted
     | 'band'
@@ -16,40 +14,6 @@
     | 'quadtree-x' // ignores y values (constant 0)
     | 'quadtree-y' // ignores x values (constant 0)
     | 'manual';
-
-  export type TooltipContextValue<T = any> = {
-    x: number;
-    y: number;
-    data: T | null;
-    payload: TooltipPayload[];
-    show(
-      e: PointerEvent | MouseEvent | TouchEvent,
-      tooltipData?: any,
-      payload?: TooltipPayload
-    ): void;
-    hide(e?: PointerEvent): void;
-    mode: TooltipMode;
-    isHoveringTooltipArea: boolean;
-    isHoveringTooltipContent: boolean;
-  };
-
-  //   const defaultContext = {
-  //     x: 0,
-  //     y: 0,
-  //     data: null as any,
-  //     payload: [],
-  //     show: () => {},
-  //     hide: () => {},
-  //     mode: 'manual',
-  //   } as TooltipContextValue;
-
-  export function getTooltipContext<T = any>() {
-    return _TooltipContext.get() as TooltipContextValue<T>;
-  }
-
-  function setTooltipContext<T = any>(tooltip: TooltipContextValue<T>) {
-    return _TooltipContext.set(tooltip) as TooltipContextValue<T>;
-  }
 
   type TooltipContextPropsWithoutHTML<T = any> = {
     /**
@@ -136,9 +100,9 @@
   import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import { getChartContext } from '../Chart.svelte';
-  import { getGeoContext } from '../GeoContext.svelte';
-  import Svg from './../layout/Svg.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
+  import Svg from './../layers/Svg.svelte';
   import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';
@@ -523,11 +487,13 @@
                 const xVal = ctx.x(d);
                 const start = ctx.xInterval.floor(xVal);
                 const end = ctx.xInterval.offset(start);
+                const xStart = ctx.xScale(start);
+                const xEnd = ctx.xScale(end);
 
                 return {
-                  x: ctx.xScale(start),
+                  x: Math.min(xStart, xEnd),
                   y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                  width: ctx.xScale(end) - ctx.xScale(start),
+                  width: Math.abs(xEnd - xStart),
                   height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
                   data: d,
                 };
@@ -536,12 +502,14 @@
                 const yVal = ctx.y(d);
                 const start = ctx.yInterval.floor(yVal);
                 const end = ctx.yInterval.offset(start);
+                const yStart = ctx.yScale(start);
+                const yEnd = ctx.yScale(end);
 
                 return {
                   x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                  y: ctx.yScale(start),
+                  y: Math.min(yStart, yEnd),
                   width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                  height: ctx.yScale(end) - ctx.yScale(start),
+                  height: Math.abs(yEnd - yStart),
                   data: d,
                 };
               } else if (isScaleTime(ctx.xScale)) {

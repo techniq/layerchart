@@ -1,0 +1,96 @@
+{
+  "component": "Tree",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Tree/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 64,
+          "line": "<Tree"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 70,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 72,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 85,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 104,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 115,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "html-nodes",
+      "title": "html nodes",
+      "path": "/docs/components/Tree/html-nodes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 64,
+          "line": "<Tree"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 70,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 72,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 89,
+          "line": "<Group"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Tree",
+      "path": "/docs/components/Tree/basic",
+      "lineNumber": 64,
+      "line": "<Tree"
+    },
+    {
+      "example": "html-nodes",
+      "component": "Tree",
+      "path": "/docs/components/Tree/html-nodes",
+      "lineNumber": 64,
+      "line": "<Tree"
+    }
+  ],
+  "updatedAt": "2026-02-07T20:21:32.511Z"
+}

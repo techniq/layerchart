@@ -125,8 +125,8 @@
 </script>
 
 <script lang="ts">
-  import { getRenderContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { createPattern } from '$lib/utils/canvas.js';
 
   const uid = $props.id();
@@ -144,7 +144,7 @@
     ...restProps
   }: PatternProps = $props();
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   let canvasPattern = $state<CanvasPattern | null>(null);
 
@@ -247,7 +247,7 @@
     canvasPattern = pattern;
   }
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Pattern',
       render,
@@ -256,9 +256,9 @@
   }
 </script>
 
-{#if renderCtx === 'canvas'}
+{#if layerCtx === 'canvas'}
   {@render children?.({ id, pattern: asAny(canvasPattern) })}
-{:else if renderCtx === 'svg'}
+{:else if layerCtx === 'svg'}
   <defs>
     <pattern
       {id}

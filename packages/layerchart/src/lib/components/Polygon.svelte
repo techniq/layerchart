@@ -131,17 +131,17 @@
 <script lang="ts">
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import {
     createMotion,
     extractTweenConfig,
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { polygon } from '$lib/utils/shape.js';
@@ -220,7 +220,7 @@
 
   const tweenedState = createMotion(null, () => d, tweenedOptions);
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -234,6 +234,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-polygon', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -242,7 +243,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Polygon',
       render,
@@ -264,12 +265,13 @@
         opacity,
         className,
         tweenedState.current,
+        restProps.style,
       ],
     });
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <path
     d={tweenedState.current}
     {fill}

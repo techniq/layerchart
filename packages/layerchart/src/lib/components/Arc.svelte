@@ -2,8 +2,8 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
+  import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -128,7 +128,7 @@
      * Pass true to enable the track with default props, or pass an object
      * of props to enable the track.
      */
-    track?: boolean | Partial<ComponentProps<typeof Spline>>;
+    track?: boolean | Partial<ComponentProps<typeof Path>>;
 
     /**
      * A reference to the track element
@@ -160,9 +160,9 @@
   } & CommonStyleProps;
 
   export type ArcProps = ArcPropsWithoutHTML &
-    // we omit the spline props to avoid conflicts with attribute names since we are
-    // passing them through to `<Spline />`
-    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & SplinePropsWithoutHTML>;
+    // we omit the path props to avoid conflicts with attribute names since we are
+    // passing them through to `<Path />`
+    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & PathPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -188,7 +188,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
@@ -398,7 +398,7 @@
 </script>
 
 {#if track}
-  <Spline
+  <Path
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
@@ -406,14 +406,14 @@
   />
 {/if}
 
-<Spline
+<Path
   bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
   {fillOpacity}
   {stroke}
-  stroke-width={strokeWidth}
+  {strokeWidth}
   {opacity}
   {...restProps}
   class={cls('lc-arc-line', className)}

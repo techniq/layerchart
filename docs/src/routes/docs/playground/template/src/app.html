@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+		<script>
+			// Intercept console methods and send to parent window
+			(function () {
+				const originalConsole = {
+					log: console.log,
+					warn: console.warn,
+					error: console.error,
+					info: console.info
+				};
+
+				['log', 'warn', 'error', 'info'].forEach((level) => {
+					console[level] = function (...args) {
+						// Call original console method
+						originalConsole[level].apply(console, args);
+
+						// Send to parent window if in iframe
+						if (window.parent !== window) {
+							try {
+								window.parent.postMessage(
+									{
+										type: 'console',
+										level: level,
+										args: args.map((arg) => {
+											// Handle objects/arrays
+											if (typeof arg === 'object' && arg !== null) {
+												try {
+													return JSON.parse(JSON.stringify(arg));
+												} catch (e) {
+													return String(arg);
+												}
+											}
+											return arg;
+										})
+									},
+									'*'
+								);
+							} catch (e) {
+								// Ignore errors posting message
+							}
+						}
+					};
+				});
+			})();
+		</script>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

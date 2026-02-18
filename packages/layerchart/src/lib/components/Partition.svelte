@@ -7,6 +7,9 @@
   import type { Snippet } from 'svelte';
 
   export type PartitionProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The orientation of the partition layout.
      *
@@ -31,8 +34,6 @@
      */
     round?: boolean;
 
-    hierarchy: HierarchyNode<T>;
-
     /**
      * A bindable reference to the descendants of the partition layout.
      *
@@ -45,7 +46,7 @@
 </script>
 
 <script lang="ts" generics="T">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
     size,

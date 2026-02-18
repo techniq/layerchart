@@ -1,0 +1,70 @@
+{
+  "component": "Bar",
+  "examples": [],
+  "usage": [
+    {
+      "example": "horizontal-customize-individual-styles",
+      "component": "Bars",
+      "path": "/docs/components/Bars/horizontal-customize-individual-styles",
+      "lineNumber": 32,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/docs/components/Bars/horizontal-grouped-stacked-or-both-transition",
+      "lineNumber": 86,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/docs/components/Bars/horizontal-stagger-tween-on-mount",
+      "lineNumber": 38,
+      "line": "<Bar"
+    },
+    {
+      "example": "horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/docs/components/Bars/horizontal-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 83,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-customize-individual-styles",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-customize-individual-styles",
+      "lineNumber": 29,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-grouped-stacked-or-both-transition",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-grouped-stacked-or-both-transition",
+      "lineNumber": 81,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-stagger-tween-on-mount",
+      "lineNumber": 35,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-stagger-tween-on-mount-rounded-edge",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-stagger-tween-on-mount-rounded-edge",
+      "lineNumber": 35,
+      "line": "<Bar"
+    },
+    {
+      "example": "vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-tooltip-and-click-handlers-for-individual-stack-grouped-bar",
+      "lineNumber": 83,
+      "line": "<Bar"
+    }
+  ],
+  "updatedAt": "2026-02-07T17:00:30.734Z"
+}

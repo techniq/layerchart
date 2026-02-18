@@ -7,6 +7,36 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
+/**
+ * Parse an inline CSS style string into a StyleOptions object.
+ * Converts kebab-case properties to camelCase (e.g., 'stroke-dasharray' -> 'strokeDasharray')
+ */
+function parseStyleString(styleString: string | null | undefined): StyleOptions {
+  if (!styleString) return {};
+
+  const styles: Record<string, string> = {};
+
+  // Split by semicolons and process each declaration
+  const declarations = styleString.split(';').filter((s) => s.trim());
+
+  for (const declaration of declarations) {
+    const colonIndex = declaration.indexOf(':');
+    if (colonIndex === -1) continue;
+
+    const property = declaration.slice(0, colonIndex).trim();
+    const value = declaration.slice(colonIndex + 1).trim();
+
+    if (!property || !value) continue;
+
+    // Convert kebab-case to camelCase (e.g., 'stroke-dasharray' -> 'strokeDasharray')
+    const camelProperty = property.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+
+    styles[camelProperty] = value;
+  }
+
+  return styles as StyleOptions;
+}
+
 type StyleOptions = Partial<
   Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
     fillOpacity?: number | string;
@@ -18,6 +48,8 @@ type StyleOptions = Partial<
 export type ComputedStylesOptions = {
   styles?: StyleOptions;
   classes?: ClassValue | null;
+  /** Inline style string (e.g., 'stroke-dasharray: 6 4') - will be parsed and merged with styles */
+  style?: string | null;
 };
 
 const supportedStyles = [
@@ -25,6 +57,7 @@ const supportedStyles = [
   'fillOpacity',
   'stroke',
   'strokeWidth',
+  'strokeDasharray',
   'opacity',
   'fontWeight',
   'fontSize',
@@ -118,19 +151,21 @@ function render(
 ) {
   // console.count('render');
 
+  // Parse inline style string and merge with styles object
+  const parsedInlineStyles = parseStyleString(styleOptions.style);
+  const mergedStyles = { ...styleOptions.styles, ...parsedInlineStyles };
+
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   let resolvedStyles: StyleOptions;
   if (
     styleOptions.classes == null &&
-    !Object.values(styleOptions.styles ?? {}).some(
-      (v) => typeof v === 'string' && v.includes('var(')
-    )
+    !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var('))
   ) {
     // Skip resolving styles if no classes are provided and no styles are using CSS variables
-    resolvedStyles = styleOptions.styles ?? {};
+    resolvedStyles = mergedStyles;
   } else {
     // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
-    const { constantStyles, variableStyles } = Object.entries(styleOptions.styles ?? {}).reduce<{
+    const { constantStyles, variableStyles } = Object.entries(mergedStyles).reduce<{
       constantStyles: StyleOptions;
       variableStyles: StyleOptions;
     }>(
@@ -183,12 +218,15 @@ function render(
     // ctx.textBaseline = 'ideographic';
   }
 
-  // Dashed lines
-  if (resolvedStyles.strokeDasharray?.includes(',')) {
+  // Dashed lines (supports both comma and space separators, e.g., "2,2" or "2 2")
+  if (resolvedStyles.strokeDasharray && resolvedStyles.strokeDasharray !== 'none') {
     const dashArray = resolvedStyles.strokeDasharray
-      .split(',')
+      .split(/[\s,]+/)
+      .filter((s) => s.length > 0)
       .map((s) => Number(s.replace('px', '')));
-    ctx.setLineDash(dashArray);
+    if (dashArray.length > 0 && dashArray.every((n) => !isNaN(n))) {
+      ctx.setLineDash(dashArray);
+    }
   }
 
   for (const attr of paintOrder) {
@@ -274,17 +312,62 @@ export function renderText(
 
 export function renderRect(
   ctx: CanvasRenderingContext2D,
-  coords: { x: number; y: number; width: number; height: number },
+  coords: { x: number; y: number; width: number; height: number; rx?: number; ry?: number },
   styleOptions: ComputedStylesOptions = {}
 ) {
-  render(
-    ctx,
-    {
-      fill: (ctx) => ctx.fillRect(coords.x, coords.y, coords.width, coords.height),
-      stroke: (ctx) => ctx.strokeRect(coords.x, coords.y, coords.width, coords.height),
-    },
-    styleOptions
-  );
+  const { x, y, width, height } = coords;
+  const rx = coords.rx ?? 0;
+  const ry = coords.ry ?? rx; // Default ry to rx if not provided (SVG behavior)
+
+  // No rounding - use simple rect methods
+  if (rx === 0 && ry === 0) {
+    render(
+      ctx,
+      {
+        fill: (ctx) => ctx.fillRect(x, y, width, height),
+        stroke: (ctx) => ctx.strokeRect(x, y, width, height),
+      },
+      styleOptions
+    );
+    return;
+  }
+
+  // Try native roundRect if available (modern browsers)
+  if (typeof ctx.roundRect === 'function') {
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, [rx, ry]);
+    render(
+      ctx,
+      {
+        fill: (ctx) => ctx.fill(),
+        stroke: (ctx) => ctx.stroke(),
+      },
+      styleOptions
+    );
+    ctx.closePath();
+    return;
+  }
+
+  // Fallback: use path rendering for rounded corners
+  // Clamp radii to half the width/height
+  const clampedRx = Math.min(rx, width / 2);
+  const clampedRy = Math.min(ry, height / 2);
+
+  // Build rounded rect path: start at top-left (after corner), go clockwise
+  const pathData = [
+    `M${x + clampedRx},${y}`, // Move to top-left (after corner)
+    `h${width - 2 * clampedRx}`, // Top edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${clampedRx},${clampedRy}`, // Top-right corner
+    `v${height - 2 * clampedRy}`, // Right edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${-clampedRx},${clampedRy}`, // Bottom-right corner
+    `h${2 * clampedRx - width}`, // Bottom edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${-clampedRx},${-clampedRy}`, // Bottom-left corner
+    `v${2 * clampedRy - height}`, // Left edge
+    `a${clampedRx},${clampedRy} 0 0 1 ${clampedRx},${-clampedRy}`, // Top-left corner
+    'z', // Close path
+  ].join(' ');
+
+  renderPathData(ctx, pathData, styleOptions);
 }
 
 export function renderCircle(

@@ -14,6 +14,9 @@ test-*
 # Content Collections
 .content-collections
 
+# mdsx live code
+.live-code/
+
 # Generated API documentation
 **/generated/api/*.json
 

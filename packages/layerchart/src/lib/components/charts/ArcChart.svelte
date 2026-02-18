@@ -25,12 +25,14 @@
     | 'marks'
     | 'onTooltipClick'
     | 'profile'
-    | 'renderContext'
+    | 'layer'
     | 'series'
     | 'tooltip'
     | 'cRange'
     | 'padding'
     | 'context'
+    | 'width'
+    | 'height'
   > &
     Pick<
       ArcPropsWithoutHTML,
@@ -128,7 +130,7 @@
   import Arc, { type ArcPropsWithoutHTML } from '../Arc.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
-  import Layer from '../layout/Layer.svelte';
+  import Layer from '../layers/Layer.svelte';
   import Legend from '../Legend.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -150,6 +152,9 @@
   import { createLegendProps } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
+  import { getSettings } from '$lib/contexts/settings.js';
+
+  const settings = getSettings();
 
   let {
     data = [],
@@ -172,9 +177,9 @@
     /** Event dispatched with current tooltip data */
     onTooltipClick = () => {},
     props = {},
-    renderContext = 'svg',
+    layer: layerProp,
     profile = false,
-    debug = false,
+    debug: debugProp,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -192,6 +197,9 @@
     trackOuterRadius,
     ...restProps
   }: ArcChartProps<TData> = $props();
+
+  const layer = $derived(layerProp ?? settings.layer);
+  const debug = $derived(debugProp ?? settings.debug);
 
   const center = $derived(centerProp ?? placement === 'center');
 
@@ -380,8 +388,8 @@
       {@render belowContext?.(snippetProps)}
 
       <Layer
-        type={renderContext}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        type={layer}
+        {...asAny(layer === 'canvas' ? props.canvas : props.svg)}
         {center}
         {debug}
       >

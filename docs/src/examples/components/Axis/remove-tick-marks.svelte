@@ -1,0 +1,17 @@
+<script lang="ts">
+	import { Axis, Chart, Layer, defaultChartPadding } from 'layerchart';
+	import { timeDay } from 'd3-time';
+	import { startOfInterval } from '@layerstack/utils';
+
+	const today = startOfInterval('day', new Date());
+</script>
+
+<Chart
+	xDomain={[timeDay.offset(today, -10), today]}
+	padding={defaultChartPadding({ bottom: 40 })}
+	height={48}
+>
+	<Layer>
+		<Axis placement="bottom" rule tickMarks={false} />
+	</Layer>
+</Chart>

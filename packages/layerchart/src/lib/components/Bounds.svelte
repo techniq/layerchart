@@ -19,7 +19,7 @@
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
 
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { createMotionScale, type AnyScale } from '$lib/utils/scales.svelte.js';
 
   let { domain, range, motion, children }: BoundsProps = $props();

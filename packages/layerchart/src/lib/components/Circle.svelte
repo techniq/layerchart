@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type CirclePropsWithoutHTML = {
@@ -52,6 +53,9 @@
     ref?: SVGCircleElement;
 
     motion?: MotionProp;
+
+    /** Children content to render.  Note: Only works for Html layers */
+    children?: Snippet;
   } & CommonStyleProps;
 
   export type CircleProps = CirclePropsWithoutHTML &
@@ -60,11 +64,11 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -84,6 +88,7 @@
     opacity,
     class: className,
     ref: refProp = $bindable(),
+    children,
     ...restProps
   }: CircleProps = $props();
 
@@ -97,7 +102,7 @@
   const initialCy = initialCyProp ?? cy;
   const initialR = initialRProp ?? r;
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   const motionCx = createMotion(initialCx, () => cx, motion);
   const motionCy = createMotion(initialCy, () => cy, motion);
@@ -115,6 +120,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls('lc-circle', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -123,7 +129,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Circle',
       render,
@@ -144,12 +150,13 @@
         strokeWidth,
         opacity,
         className,
+        restProps.style,
       ],
     });
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <circle
     bind:this={ref}
     cx={motionCx.current}
@@ -163,7 +170,7 @@
     class={cls('lc-circle', className)}
     {...restProps}
   />
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   <div
     style:position="absolute"
     style:left="{motionCx.current}px"
@@ -179,7 +186,9 @@
     style:transform="translate(-50%, -50%)"
     class={cls('lc-circle', className)}
     {...restProps}
-  ></div>
+  >
+    {@render children?.()}
+  </div>
 {/if}
 
 <style>

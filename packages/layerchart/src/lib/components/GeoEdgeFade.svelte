@@ -22,7 +22,7 @@
   import { scaleLinear } from 'd3-scale';
   import { geoDistance } from 'd3-geo';
 
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Group, { type GroupProps } from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 

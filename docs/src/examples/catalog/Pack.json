@@ -1,0 +1,52 @@
+{
+  "component": "Pack",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Pack/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 96,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 106,
+          "line": "<Layer onclick={() => (selected = complexHierarchy)}>"
+        },
+        {
+          "component": "Pack",
+          "lineNumber": 107,
+          "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 109,
+          "line": "<Group"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 119,
+          "line": "<Circle"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 140,
+          "line": "<Text"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Pack",
+      "path": "/docs/components/Pack/basic",
+      "lineNumber": 107,
+      "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
+    }
+  ],
+  "updatedAt": "2026-02-07T20:21:32.084Z"
+}

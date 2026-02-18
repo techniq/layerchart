@@ -16,21 +16,22 @@ import type {
   Spline,
 } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
-import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
+import type { TooltipContextValue } from '$lib/contexts/tooltip.js';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
-import type Svg from '../layout/Svg.svelte';
+import type Svg from '../layers/Svg.svelte';
 import type Tooltip from '../tooltip/Tooltip.svelte';
 import type TooltipHeader from '../tooltip/TooltipHeader.svelte';
 import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
-import type { ChartContextValue, ChartPropsWithoutHTML } from '../Chart.svelte';
+import type { ChartProps } from '../Chart.svelte';
+import type { ChartContextValue } from '$lib/contexts/chart.js';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
 import type Arc from '../Arc.svelte';
-import type Canvas from '../layout/Canvas.svelte';
+import type Canvas from '../layers/Canvas.svelte';
 import type { Without } from '$lib/utils/types.js';
 
 export type SeriesData<TData, TComponent extends Component> = {
@@ -241,7 +242,7 @@ export type BaseChartProps<
    *
    * @default 'svg'
    */
-  renderContext?: 'svg' | 'canvas';
+  layer?: 'svg' | 'canvas';
 
   /**
    * Whether to log the initial render performance using `console.time`.
@@ -276,10 +277,7 @@ export type SimplifiedChartProps<
   TSnippetProps = {},
   ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
 > = BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet> &
-  Without<
-    ChartPropsWithoutHTML<TData>,
-    BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>
-  >;
+  Without<ChartProps<TData>, BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>>;
 
 export type ChartAnnotations = Array<
   | ({

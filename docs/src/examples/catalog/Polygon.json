@@ -1,0 +1,648 @@
+{
+  "component": "Polygon",
+  "examples": [
+    {
+      "name": "10-point-star",
+      "title": "10 point star",
+      "path": "/docs/components/Polygon/10-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "12-point-star",
+      "title": "12 point star",
+      "path": "/docs/components/Polygon/12-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "14-point-star",
+      "title": "14 point star",
+      "path": "/docs/components/Polygon/14-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "16-point-star",
+      "title": "16 point star",
+      "path": "/docs/components/Polygon/16-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "18-point-star",
+      "title": "18 point star",
+      "path": "/docs/components/Polygon/18-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "20-point-star",
+      "title": "20 point star",
+      "path": "/docs/components/Polygon/20-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "6-point-star",
+      "title": "6 point star",
+      "path": "/docs/components/Polygon/6-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "8-point-star",
+      "title": "8 point star",
+      "path": "/docs/components/Polygon/8-point-star",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "arrow",
+      "title": "arrow",
+      "path": "/docs/components/Polygon/arrow",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 16,
+          "line": "<Group x={context.width / 2} y={context.height / 2}>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "cross",
+      "title": "cross",
+      "path": "/docs/components/Polygon/cross",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 16,
+          "line": "<Group x={context.width / 2} y={context.height / 2}>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 18,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "diamond",
+      "title": "diamond",
+      "path": "/docs/components/Polygon/diamond",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "hexagon",
+      "title": "hexagon",
+      "path": "/docs/components/Polygon/hexagon",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "octagon",
+      "title": "octagon",
+      "path": "/docs/components/Polygon/octagon",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "parallelogram",
+      "title": "parallelogram",
+      "path": "/docs/components/Polygon/parallelogram",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "pentagon",
+      "title": "pentagon",
+      "path": "/docs/components/Polygon/pentagon",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/Polygon/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 24,
+          "line": "<Polygon cx={context.width / 2} cy={context.height / 2} r={100} {...config} />"
+        }
+      ]
+    },
+    {
+      "name": "rectangle",
+      "title": "rectangle",
+      "path": "/docs/components/Polygon/rectangle",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "rhombus",
+      "title": "rhombus",
+      "path": "/docs/components/Polygon/rhombus",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "square",
+      "title": "square",
+      "path": "/docs/components/Polygon/square",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "trapezoid",
+      "title": "trapezoid",
+      "path": "/docs/components/Polygon/trapezoid",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    },
+    {
+      "name": "triangle",
+      "title": "triangle",
+      "path": "/docs/components/Polygon/triangle",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart height={150}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 13,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 14,
+          "line": "<Polygon"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "single-stack-with-indicator",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/single-stack-with-indicator",
+      "lineNumber": 73,
+      "line": "<Polygon"
+    },
+    {
+      "example": "repeat-indefinitely",
+      "component": "MotionPath",
+      "path": "/docs/components/MotionPath/repeat-indefinitely",
+      "lineNumber": 48,
+      "line": "<Polygon"
+    },
+    {
+      "example": "rotate-object-with-path",
+      "component": "MotionPath",
+      "path": "/docs/components/MotionPath/rotate-object-with-path",
+      "lineNumber": 50,
+      "line": "<Polygon"
+    },
+    {
+      "example": "10-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/10-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "12-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/12-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "14-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/14-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "16-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/16-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "18-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/18-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "20-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/20-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "6-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/6-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "8-point-star",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/8-point-star",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "arrow",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/arrow",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "cross",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/cross",
+      "lineNumber": 18,
+      "line": "<Polygon"
+    },
+    {
+      "example": "diamond",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/diamond",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "hexagon",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/hexagon",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "octagon",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/octagon",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "parallelogram",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/parallelogram",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "pentagon",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/pentagon",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "playground",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/playground",
+      "lineNumber": 24,
+      "line": "<Polygon cx={context.width / 2} cy={context.height / 2} r={100} {...config} />"
+    },
+    {
+      "example": "rectangle",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/rectangle",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "rhombus",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/rhombus",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "square",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/square",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "trapezoid",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/trapezoid",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    },
+    {
+      "example": "triangle",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/triangle",
+      "lineNumber": 14,
+      "line": "<Polygon"
+    }
+  ],
+  "updatedAt": "2026-02-07T20:21:32.203Z"
+}

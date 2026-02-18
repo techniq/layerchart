@@ -180,10 +180,10 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { merge } from 'lodash-es';
+  import { merge } from '@layerstack/utils';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
+  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
@@ -227,7 +227,7 @@
     ...restProps
   }: TextProps = $props();
 
-  const renderCtx = getRenderContext();
+  const layerCtx = getLayerContext();
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
@@ -446,7 +446,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (renderCtx === 'canvas') {
+  if (layerCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Text',
       render,
@@ -469,7 +469,7 @@
   }
 </script>
 
-{#if renderCtx === 'svg'}
+{#if layerCtx === 'svg'}
   <!-- `overflow: visible` allow contents to be shown outside element -->
   <!-- `paint-order: stroke` supports stroke outlining text  -->
   <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]} bind:this={svgRef}>
@@ -529,7 +529,7 @@
       </text>
     {/if}
   </svg>
-{:else if renderCtx === 'html'}
+{:else if layerCtx === 'html'}
   {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
   {@const translateY =
     verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
@@ -547,6 +547,8 @@
         ? 'bottom'
         : 'top'}
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
+    style:white-space="pre-wrap"
+    style:line-height={lineHeight}
     class={['lc-text', className]}
   >
     {textValue}

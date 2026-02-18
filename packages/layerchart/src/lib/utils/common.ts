@@ -1,5 +1,5 @@
 import type { Component, ComponentProps } from 'svelte';
-import { get } from 'lodash-es';
+import { get } from '@layerstack/utils';
 
 import type Chart from '../components/Chart.svelte';
 import type { SimplifiedChartProps } from '$lib/components/charts/types.js';
@@ -42,19 +42,29 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
 }
 
 export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
-  axis: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'] = true,
-  legend: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend'] = false
+  options:
+    | {
+        axis?: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'];
+        legend?: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend'];
+        top?: number;
+        left?: number;
+        bottom?: number;
+        right?: number;
+      }
+    | undefined = {}
 ) {
+  const { axis = true, legend = false, top, left, bottom, right } = options;
+
   if (axis === false) {
     return undefined;
-  } else {
-    return {
-      top: axis === true || axis === 'y' ? 4 : 0,
-      left: axis === true || axis === 'y' ? 20 : 0,
-      bottom: (axis === true || axis === 'x' ? 20 : 0) + (legend ? 32 : 0),
-      right: axis === true || axis === 'x' ? 4 : 0,
-    };
   }
+
+  return {
+    top: top ?? (axis === true || axis === 'y' ? 4 : 0),
+    left: left ?? (axis === true || axis === 'y' ? 20 : 0),
+    bottom: (bottom ?? (axis === true || axis === 'x' ? 20 : 0)) + (legend ? 32 : 0),
+    right: right ?? (axis === true || axis === 'x' ? 4 : 0),
+  };
 }
 
 /**

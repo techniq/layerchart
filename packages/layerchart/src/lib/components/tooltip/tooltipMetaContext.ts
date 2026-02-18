@@ -1,12 +1,13 @@
 // Additional meta data that can be set by the various simplified chart components
 // to provide additional payload data to the tooltip for ease of composition.
 
+import { Context } from 'runed';
+import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
+
 import { accessor, findRelatedData, type Accessor } from '$lib/utils/common.js';
 import type { SeriesData } from '../charts/index.js';
-import type { ChartContextValue } from '../Chart.svelte';
+import type { ChartContextValue } from '$lib/contexts/chart.js';
 import { asAny } from '$lib/utils/types.js';
-import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
-import { Context } from 'runed';
 
 export type SimplifiedChartType = 'bar' | 'area' | 'line' | 'pie' | 'scatter';
 
