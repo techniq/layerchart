@@ -7,8 +7,6 @@
 	import Search from './search/Search.svelte';
 	import DocsMenu from '$lib/components/DocsMenu.svelte';
 	import TableOfContents from '$lib/components/TableOfContents.svelte';
-	import favicon from '$lib/assets/favicon.svg';
-
 	import LucideAlignLeft from '~icons/lucide/align-left';
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
@@ -35,26 +33,8 @@
 	// let pageContent = $derived(page.data.content.docs[page.params.slug] ?? {});
 	let showDrawer = $state(false);
 	let showSidebar = $state(true);
+
 </script>
-
-<svelte:head>
-	<link rel="icon" href={favicon} />
-
-	{#if page.url.origin.includes('https')}
-		<script
-			defer
-			src="https://static.cloudflareinsights.com/beacon.min.js"
-			data-cf-beacon={JSON.stringify({ token: 'aff39463882545fd8cca0adba6afa86e' })}
-		></script>
-
-		<script
-			async
-			defer
-			src="https://us.umami.is/script.js"
-			data-website-id="98141640-7328-4228-ba7b-2287da133ee9"
-		></script>
-	{/if}
-</svelte:head>
 
 <div class="absolute top-0 w-screen h-screen background-gradient pointer-events-none"></div>
 <div

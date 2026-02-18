@@ -34,6 +34,7 @@ export default defineConfig({
 		}) /*, devtoolsJson()*/
 	],
 	server: {
+		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
 		},
@@ -95,6 +96,8 @@ export default defineConfig({
 		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
 		// Ref: https://github.com/vitest-dev/vitest/issues/6806
 		noExternal: isTest ? undefined : true,
+		// satori and @resvg/resvg-js have CJS dependencies that need to be loaded as external
+		external: ['satori', '@resvg/resvg-js'],
 		// @dagrejs/dagre is CJS-only and fails with "module is not defined" when
 		// bundled for SSR. Pre-bundling converts it to ESM so it works both in
 		// dev and in the production build (where node_modules aren't available).
