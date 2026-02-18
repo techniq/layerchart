@@ -1,12 +1,3 @@
-import 'unplugin-icons/types/svelte';
-
-// Markdown files compiled by mdsvex are Svelte components
-declare module '*.md' {
-  import type { Component } from 'svelte';
-  const component: Component;
-  export default component;
-}
-
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types
@@ -14,23 +5,7 @@ declare global {
   namespace App {
     // interface Error {}
     // interface Locals {}
-
-    interface PageData {
-      meta: {
-        title?: string;
-        description?: string;
-        source?: string;
-        pageSource?: string;
-        api?: SveldJson;
-        features?: string[];
-        related?: string[];
-        hideUsage?: boolean;
-        hideTableOfContents?: boolean;
-        status?: string;
-        supportedContexts?: Array<'svg' | 'canvas' | 'html'>;
-      };
-    }
-
+    // interface PageData {}
     // interface PageState {}
     // interface Platform {}
   }
