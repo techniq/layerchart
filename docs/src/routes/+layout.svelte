@@ -65,9 +65,11 @@
 		page.data.metadata?.name ? `${page.data.metadata.name} | LayerChart` : 'LayerChart'
 	);
 	let pageDescription = $derived(page.data.metadata?.description ?? defaultDescription);
-	let ogImageUrl = $derived(
-		`${page.url.origin}/og?title=${encodeURIComponent(page.data.metadata?.name ?? 'LayerChart')}${page.data.metadata?.description ? `&description=${encodeURIComponent(page.data.metadata.description)}` : `&description=${encodeURIComponent(defaultDescription)}`}${page.data.metadata?.category ? `&component=${encodeURIComponent(page.data.metadata.category)}` : ''}`
-	);
+	// TODO: Switch back to dynamic satori-based OG image once Cloudflare compatibility is resolved
+	// let ogImageUrl = $derived(
+	// 	`${page.url.origin}/og?title=${encodeURIComponent(page.data.metadata?.name ?? 'LayerChart')}${page.data.metadata?.description ? `&description=${encodeURIComponent(page.data.metadata.description)}` : `&description=${encodeURIComponent(defaultDescription)}`}${page.data.metadata?.category ? `&component=${encodeURIComponent(page.data.metadata.category)}` : ''}`
+	// );
+	let ogImageUrl = $derived(`${page.url.origin}/images/og-image.png`);
 </script>
 
 <svelte:head>
