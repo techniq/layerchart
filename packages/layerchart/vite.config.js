@@ -25,16 +25,11 @@ const config = defineConfig({
       'd3-quadtree',
       'memoize',
       'runed',
-      '@dagrejs/dagre',
     ],
   },
   plugins: [sveltekit()],
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
-    // @dagrejs/dagre is CJS-only; pre-bundle for SSR to convert to ESM
-    optimizeDeps: {
-      include: ['@dagrejs/dagre'],
-    },
   },
   test: {
     projects: [

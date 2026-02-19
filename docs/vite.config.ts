@@ -13,7 +13,7 @@ export default defineConfig({
 	// which causes "Failed to fetch dynamically imported module" errors
 	// Ref: https://github.com/vitest-dev/vitest/issues/5477
 	optimizeDeps: {
-		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux', '@dagrejs/dagre']
+		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux']
 	},
 	plugins: [
 		tailwindcss(),
@@ -98,6 +98,6 @@ export default defineConfig({
 		noExternal: isTest ? undefined : true,
 		// CJS-only packages that fail with "module is not defined" in Vite's ESM
 		// module runner. Externalizing lets Node.js load them natively as CJS.
-		external: ['satori', '@resvg/resvg-js', '@dagrejs/dagre']
+		external: ['satori', '@resvg/resvg-js']
 	}
 });
