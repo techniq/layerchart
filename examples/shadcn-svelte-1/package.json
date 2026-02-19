@@ -27,7 +27,7 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.0",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"svelte": "5.50.0",
+		"svelte": "5.51.5",
 		"svelte-check": "^4.4.1",
 		"tailwind-merge": "^3.5.0",
 		"tailwind-variants": "^3.2.2",
