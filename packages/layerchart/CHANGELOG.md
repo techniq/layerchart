@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.0-next.46
+
+### Patch Changes
+
+- fix: Workaround Svelte 5.52+ regression (Parse failure: Expected '{', got '(') ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- chore: Update deps (including dagre from 1.x to 2.x) ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.45
 
 ### Major Changes
