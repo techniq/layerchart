@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { cls } from '@layerstack/tailwind';
-	import { MediaQueryPresets } from '@layerstack/svelte-state';
 	import { goto } from '$app/navigation';
 	import type { SearchEntry } from './searchContent';
 	import { Button, Dialog, Kbd, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
@@ -24,8 +23,6 @@
 		util: LucideParentheses,
 		heading: LucideHash
 	};
-
-	const { smScreen } = new MediaQueryPresets();
 
 	type SearchOption = MenuOption<string> & { result: SearchEntry };
 
@@ -190,7 +187,6 @@
 {#if !hideInput}
 	<Button
 		icon={LucideSearch}
-		iconOnly={!smScreen.current}
 		onclick={() => (open = true)}
 		class="sm:border sm:bg-surface-content/5 sm:hover:bg-surface-content/10 rounded-full sm:w-56 justify-start"
 	>
