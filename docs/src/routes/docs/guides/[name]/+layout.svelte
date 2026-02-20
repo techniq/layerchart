@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 	import { examples } from '$lib/context.js';
 
@@ -23,7 +24,7 @@
 
 <svelte:boundary>
 	{#snippet pending()}
-		loading...
+		<LoadingPlaceholder />
 	{/snippet}
 
 	{@render children()}

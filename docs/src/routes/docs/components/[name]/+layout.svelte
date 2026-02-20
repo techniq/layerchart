@@ -2,6 +2,7 @@
 	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
+	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	import { examples } from '$lib/context.js';
@@ -160,7 +161,7 @@
 
 <svelte:boundary>
 	{#snippet pending()}
-		loading...
+		<LoadingPlaceholder />
 	{/snippet}
 
 	{@render children()}
