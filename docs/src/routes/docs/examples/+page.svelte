@@ -129,11 +129,11 @@
 </svelte:head>
 
 <H1>Examples</H1>
-<p class="text-sm text-surface-content/50 mb-10">
+<div class="text-sm text-surface-content/50 mb-10">
 	Browse {@render scrollingValue(totalVisibleExamples)} examples across {@render scrollingValue(
 		visibleExamples.length
 	)} components
-</p>
+</div>
 
 <div class="sticky top-29 h-0">
 	<div
