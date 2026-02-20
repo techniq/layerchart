@@ -23,7 +23,7 @@ export const load = async ({ params }) => {
 			if (!examples[comp]) {
 				examples[comp] = {};
 			}
-			examples[comp][exampleName] = { component, source: cleanupSource };
+			examples[comp][exampleName] = { component, source: cleanupSource, module: {} };
 		}
 	}
 
