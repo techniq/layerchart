@@ -1,6 +1,7 @@
 ---
 title: Simplified Charts
 order: 4
+draft: true
 ---
 
 <script lang="ts">

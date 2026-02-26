@@ -21,7 +21,7 @@
 
 {#await statsPromise}
 	<div
-		class="block sm:flex items-center justify-evenly px-1 py-2 rounded outline m-4 outline-surface-100 h-18 animate-pulse"
+		class="grid grid-cols-2 md:grid-cols-4 items-center justify-items-center px-1 py-2 rounded-xl outline m-4 outline-surface-100 h-36 md:h-18 animate-pulse"
 	></div>
 {:then { npmDownloads, githubStars, discordMembers, bskyFollowers }}
 	{@const stats = [
@@ -41,13 +41,13 @@
 	].filter((s) => s.value != null)}
 
 	<div
-		class="block sm:flex items-center justify-evenly px-1 py-2 rounded-xl outline m-4 outline-surface-content/10"
+		class="flex flex-wrap items-center justify-evenly px-1 py-2 rounded-xl outline m-4 outline-surface-content/10"
 	>
 		{#each stats as { label, value, link, intervals }, index (value)}
 			<a
 				href={link}
 				target="_blank"
-				class="flex flex-col justify-center items-center rounded-xl border border-transparent hover:bg-surface-100/50 hover:border-primary/20 whitespace-nowrap"
+				class="flex flex-col justify-center items-center rounded-xl border border-transparent hover:bg-surface-100/50 hover:border-primary/20 whitespace-nowrap w-1/2 md:w-auto"
 			>
 				{#if intervals}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -81,7 +81,7 @@
 			</a>
 
 			{#if index < stats.length - 1}
-				<div class="sm:w-0.5 sm:h-12 bg-surface-content/5"></div>
+				<div class="w-0.5 h-12 bg-surface-content/5 hidden md:block"></div>
 			{/if}
 		{/each}
 	</div>

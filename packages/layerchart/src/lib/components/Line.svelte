@@ -149,6 +149,7 @@
         : {
             styles: { fill, stroke, strokeWidth, opacity },
             classes: cls('lc-line', className),
+            style: restProps.style as string | undefined,
           }
     );
   }
@@ -176,6 +177,7 @@
         strokeWidth,
         opacity,
         className,
+        restProps.style,
       ],
     });
   }

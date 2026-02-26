@@ -9,26 +9,12 @@
 
 A large collection of composable Svelte chart components to build a wide range of visualizations
 
-- Cartesian (Bar, Area, Stack, Scatter)
-- Radial (Pie, Arc, Sunburst)
-- Hierarchy (Pack, Tree, Treemap, Sunburst)
-- Graph (Sankey)
+- Cartesian (Area, Bar, Line, Scatter)
+- Radial/polar charts (Arc, Area, Bar, Line, Radar, Pie)
+- Hierarchical (Pack, Partition, Tree, Treemap)
+- Graph (Dagre, Force, Sankey)
 - Geo (Choropleth, Spike, Bubble, Point, Globe)
-
-Interactions
-
-- Tooltip, Highlights, Pan/Zoom
-
-SVG
-
-- Basic (Arc, Circle, Group, Line, Spline, Text)
-- Gradients and Patterns
-- ClipPath
-- Multi-line text
-
-Others
-
-- Legends including ColorRamps
+- Calendar
 
 See also the companion library [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
 

@@ -234,7 +234,7 @@ export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenOpt
   const tweenedDomain = new Tween<Domain>(undefined as Domain, tweenedOptions);
   const tweenedRange = new Tween<Range>(undefined as Range, tweenedOptions);
 
-  const tweenedScale = $derived.by(() => {
+  const _tweenedScale = $derived.by(() => {
     const scaledInstance = scale.domain ? scale : scale();
     if (tweenedDomain.current) {
       scaledInstance.domain(tweenedDomain.current);
@@ -247,7 +247,7 @@ export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenOpt
 
   return {
     get current() {
-      return tweenedScale;
+      return _tweenedScale;
     },
     domain: (values: Domain) => tweenedDomain.set(values),
     range: (values: Range) => tweenedRange.set(values),

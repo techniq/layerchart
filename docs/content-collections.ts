@@ -194,5 +194,5 @@ const releases = defineCollection({
 });
 
 export default defineConfig({
-	collections: [components, utils, guides, releases]
+	content: [components, utils, guides, releases]
 });

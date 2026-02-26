@@ -2,10 +2,10 @@
 	import { getSettings } from 'layerchart';
 	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
+	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	import { examples } from '$lib/context.js';
-	import { loadExample } from '$lib/examples.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
@@ -59,14 +59,12 @@
 	};
 	examples.set(examplesContext);
 
-	const example = $derived(
-		page.params.name && page.params.example
-			? await loadExample(page.params.name, page.params.example)
-			: null
-	);
-
 	// Determine available layers from per-example (<script module>) or component metadata (markdown frontmatter)
-	let layers = $derived(example?.module.layers ?? metadata.layers ?? []);
+	const pageExample = $derived.by(() => {
+		const { name, example } = page.params;
+		return name && example ? currentExamples[name]?.[example] : null;
+	});
+	let layers = $derived(pageExample?.module?.layers ?? metadata.layers ?? []);
 </script>
 
 <div class="mb-4">
@@ -163,7 +161,7 @@
 
 <svelte:boundary>
 	{#snippet pending()}
-		loading...
+		<LoadingPlaceholder />
 	{/snippet}
 
 	{@render children()}

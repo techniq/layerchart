@@ -13,7 +13,7 @@ export default defineConfig({
 	// which causes "Failed to fetch dynamically imported module" errors
 	// Ref: https://github.com/vitest-dev/vitest/issues/5477
 	optimizeDeps: {
-		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux', '@dagrejs/dagre']
+		include: ['@layerstack/tailwind', '@layerstack/utils', 'svelte-ux']
 	},
 	plugins: [
 		tailwindcss(),
@@ -34,6 +34,7 @@ export default defineConfig({
 		}) /*, devtoolsJson()*/
 	],
 	server: {
+		// allowedHosts: ['.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
 		},
@@ -95,11 +96,8 @@ export default defineConfig({
 		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
 		// Ref: https://github.com/vitest-dev/vitest/issues/6806
 		noExternal: isTest ? undefined : true,
-		// @dagrejs/dagre is CJS-only and fails with "module is not defined" when
-		// bundled for SSR. Pre-bundling converts it to ESM so it works both in
-		// dev and in the production build (where node_modules aren't available).
-		optimizeDeps: {
-			include: ['@dagrejs/dagre']
-		}
+		// CJS-only packages that fail with "module is not defined" in Vite's ESM
+		// module runner. Externalizing lets Node.js load them natively as CJS.
+		external: ['satori', '@resvg/resvg-js']
 	}
 });

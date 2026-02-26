@@ -1,15 +1,18 @@
 ---
 title: Features
 order: 1
+draft: true
 ---
 
 ## Layers
 
-Provides first-class support for Svg, Canvas, Html via [layers](/docs/guides/layers) and [primitives](/docs/guides/primitives) with ability to mix layers to leverage each's strength (or workaround a weakness)
+LayerChart provides first-class support for Svg, Canvas, and Html visualizations via [layers](/docs/guides/layers) and [primitives](/docs/guides/primitives).
 
-### Example use cases
+Each chart can use multiple layers which can be of different types, allowing you to leverage a layer's strengths (or workaround a weakness)
 
-- hierarchy visualization with nodes rendered as `Html` and links rendred with `Svg`/`Canvas`
+### Use cases
+
+- Hierarchy with nodes rendered as `Html` to utlize flexbox/grid layouts and link paths rendred with `Svg` or `Canvas`
 - `Svg` for text along an arc
 - `Html` for word wrapping
 - `Canvas` for performance of high density data, complex geo paths, or when overall rendering performance is crucial.
@@ -19,7 +22,7 @@ Provides first-class support for Svg, Canvas, Html via [layers](/docs/guides/lay
 
 - Cartesian ([Area](/docs/components/AreaChart), [Bar](/docs/components/BarChart), [Line](/docs/components/LineChart), [Scatter](/docs/components/ScatterChart))
 - Radial/polar charts ([Arc](/docs/components/ArcChart), [Area](/docs/components/AreaChart/radial), [Bar](/docs/examples?filter=radial&category=BarChart), [Line](/docs/components/LineChart/large-radial-series), [Radar](/docs/examples?filter=radar), [Pie](/docs/components/PieChart))
-- Hierarchy ([Pack](/docs/components/Pack), [Partition](/docs/components/Partition), [Tree](/docs/components/Tree), [Treemap](/docs/components/Treemap))
+- Hierarchical ([Pack](/docs/components/Pack), [Partition](/docs/components/Partition), [Tree](/docs/components/Tree), [Treemap](/docs/components/Treemap))
 - Graph ([Dagre](/docs/components/Dagre), [Force](/docs/components/ForceSimulation), [Sankey](/docs/components/Sankey))
 - Geo ([Choropleth](/docs/components/GeoPath/choropleth), [Spike](/docs/components/GeoPath/spike-map), [Bubble](/docs/components/GeoPath/bubble-map), [Point](/docs/components/GeoPoint), [Globe](/docs/examples?filter=globe))
 - [Calendar](/docs/components/Calendar)
@@ -28,8 +31,12 @@ Provides first-class support for Svg, Canvas, Html via [layers](/docs/guides/lay
 ## Interactivity
 
 - Robust [Tooltips](/docs/components/Tooltip) with various modes
-- Pan/zoom transforms
-  - Imperative access (`transform.zoomTo()`, `<Chart bind:transformContext>`)
+- Pan/zoom [transforms](http://localhost:3002/docs/components/TransformContext)
+  - Imperative access (`transform.zoomTo()`, `<Chart bind:context>`)
+  - Use cases
+    - Geo ([Projections](/docs/components/GeoPath/transform-projection), [Canvas](/docs/components/GeoPath/transform-canvas), and [Zoomable seamless tiles](/docs/components/GeoTile/zoomable-seamless-layers))
+    - Hierarchial ([Circle pack](/docs/components/Pack/basic), [Treemap stacked zoom](/docs/components/Treemap/stacked-zoom) and [Treemap nested zoom](/docs/components/Treemap/nested-zoom))
+    - General pan/zoom canvas ([Html](/docs/components/TransformContext/pan-zoom-html-image) / [Svg](/docs/components/TransformContext/pan-zoom-svg-image))
 - [Brushing](/docs/components/Brush)
 - Motion-enabled [primatives](/docs/guides/primitives) including tween and spring trannsitions
 
