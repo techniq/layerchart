@@ -1,5 +1,3 @@
-import { memoize } from 'lodash-es';
-
 const MEASUREMENT_ELEMENT_ID = '__text_measurement_id';
 
 function _getStringWidth(str: string, style?: CSSStyleDeclaration) {
@@ -29,10 +27,16 @@ function _getStringWidth(str: string, style?: CSSStyleDeclaration) {
   }
 }
 
-export const getStringWidth = memoize(
-  _getStringWidth,
-  (str, style) => `${str}_${JSON.stringify(style)}`
-);
+export const getStringWidth = (() => {
+  const cache = new Map<string, ReturnType<typeof _getStringWidth>>();
+  return (str: string, style?: CSSStyleDeclaration) => {
+    const key = `${str}_${JSON.stringify(style)}`;
+    if (cache.has(key)) return cache.get(key)!;
+    const result = _getStringWidth(str, style);
+    cache.set(key, result);
+    return result;
+  };
+})();
 
 export type RasterizeTextOptions = {
   fontSize?: string;

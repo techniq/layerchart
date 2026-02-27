@@ -1,8 +1,20 @@
 import type { ComponentProps } from 'svelte';
-import { get } from 'lodash-es';
 
 import type Chart from '../components/Chart.svelte';
 import type LineChart from '../components/charts/LineChart.svelte';
+
+/** Resolve a dot/bracket path (e.g. `'a.b'`, `'arr[0]'`) on an object. */
+function getByPath(obj: any, path: string | number): any {
+  if (obj == null) return undefined;
+  if (typeof path === 'number') return obj[path];
+
+  const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.');
+  let result: any = obj;
+  for (const key of keys) {
+    result = result?.[key];
+  }
+  return result;
+}
 
 export type Accessor<TData = any> =
   | number
@@ -20,7 +32,7 @@ export function accessor<TData = any>(prop: Accessor<TData>): (d: TData) => any 
     return prop;
   } else if (typeof prop === 'string' || typeof prop === 'number') {
     // path string or number (array index)
-    return (d: TData) => get(d, prop);
+    return (d: TData) => getByPath(d, prop);
   } else {
     // return full object
     return (d: TData) => d;

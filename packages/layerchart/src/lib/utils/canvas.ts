@@ -1,5 +1,4 @@
 import { cls } from '@layerstack/tailwind';
-import { memoize } from 'lodash-es';
 import type { ClassValue } from 'svelte/elements';
 
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
@@ -289,9 +288,9 @@ export function _createLinearGradient(
 }
 
 /** Create linear gradient and memoize result to fix reactivity */
-export const createLinearGradient = memoize(
-  _createLinearGradient,
-  (
+export const createLinearGradient = (() => {
+  const cache = new Map<string, CanvasGradient>();
+  return (
     ctx: CanvasRenderingContext2D,
     x0: number,
     y0: number,
@@ -300,9 +299,12 @@ export const createLinearGradient = memoize(
     stops: { offset: number; color: string }[]
   ) => {
     const key = JSON.stringify({ x0, y0, x1, y1, stops });
-    return key;
-  }
-);
+    if (cache.has(key)) return cache.get(key)!;
+    const result = _createLinearGradient(ctx, x0, y0, x1, y1, stops);
+    cache.set(key, result);
+    return result;
+  };
+})();
 
 export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
   const dpr = window.devicePixelRatio ?? 1;
