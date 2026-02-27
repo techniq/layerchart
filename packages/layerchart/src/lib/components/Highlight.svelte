@@ -163,12 +163,19 @@
     Array.isArray(xValue) ? xValue.map((v) => ctx.xScale(v)) : ctx.xScale(xValue)
   );
   const xOffset = $derived(isScaleBand(ctx.xScale) && !ctx.radial ? ctx.xScale.bandwidth() / 2 : 0);
+  // Scalar version for when a single number is needed (midpoint of array coords)
+  const xCoordScalar = $derived(
+    Array.isArray(xCoord) ? (xCoord[0] + xCoord[xCoord.length - 1]) / 2 : xCoord
+  );
 
   const yValue = $derived(y(highlightData));
   const yCoord = $derived(
     Array.isArray(yValue) ? yValue.map((v) => ctx.yScale(v)) : ctx.yScale(yValue)
   );
   const yOffset = $derived(isScaleBand(ctx.yScale) && !ctx.radial ? ctx.yScale.bandwidth() / 2 : 0);
+  const yCoordScalar = $derived(
+    Array.isArray(yCoord) ? (yCoord[0] + yCoord[yCoord.length - 1]) / 2 : yCoord
+  );
 
   const axis = $derived(
     axisProp == null ? (isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) ? 'y' : 'x') : axisProp
@@ -339,9 +346,9 @@
     // This handles multi-series charts where a single Highlight renders all series points
     if (data === undefined && ctx.tooltip.series.length > 0) {
       tmpPoints = ctx.tooltip.series
-        .map((seriesInfo) => {
+        .flatMap((seriesInfo) => {
           // Skip if series is not visible
-          if (!seriesInfo.visible) return null;
+          if (!seriesInfo.visible) return [];
 
           let pointX: number;
           let pointY: number;
@@ -361,12 +368,12 @@
             if (ctx.valueAxis === 'x') {
               // Horizontal stacked chart
               pointX = ctx.xScale(stackedY1) + xOffset;
-              pointY = (yCoord as number) + yOffset;
+              pointY = (yCoordScalar as number) + yOffset;
               dataX = stackedY1;
               dataY = yValue;
             } else {
               // Vertical stacked chart (default)
-              pointX = (xCoord as number) + xOffset;
+              pointX = (xCoordScalar as number) + xOffset;
               pointY = ctx.yScale(stackedY1) + yOffset;
               dataX = xValue;
               dataY = stackedY1;
@@ -376,18 +383,39 @@
             const seriesValue = seriesInfo.value;
 
             if (seriesValue == null) {
-              return null;
+              return [];
+            }
+
+            // Multi-value accessor (e.g. x={['startDate', 'endDate']}) — expand into multiple points
+            if (Array.isArray(seriesValue)) {
+              if (ctx.valueAxis === 'x') {
+                return seriesValue.map((sv) => ({
+                  x: ctx.xScale(sv) + xOffset,
+                  y: (yCoordScalar as number) + yOffset,
+                  fill: seriesInfo.color ?? '',
+                  data: { x: sv, y: yValue },
+                  seriesKey: seriesInfo.key,
+                }));
+              } else {
+                return seriesValue.map((sv) => ({
+                  x: (xCoordScalar as number) + xOffset,
+                  y: ctx.yScale(sv) + yOffset,
+                  fill: seriesInfo.color ?? '',
+                  data: { x: xValue, y: sv },
+                  seriesKey: seriesInfo.key,
+                }));
+              }
             }
 
             if (ctx.valueAxis === 'x') {
               // Horizontal chart - value is on x-axis
               pointX = ctx.xScale(seriesValue) + xOffset;
-              pointY = (yCoord as number) + yOffset;
+              pointY = (yCoordScalar as number) + yOffset;
               dataX = seriesValue;
               dataY = yValue;
             } else {
               // Vertical chart (default) - value is on y-axis
-              pointX = (xCoord as number) + xOffset;
+              pointX = (xCoordScalar as number) + xOffset;
               pointY = ctx.yScale(seriesValue) + yOffset;
               dataX = xValue;
               dataY = seriesValue;
@@ -433,7 +461,7 @@
 
               return {
                 x: ctx.xScale(seriesPoint.point[1]) + xOffset,
-                y: yCoord + yOffset,
+                y: (yCoordScalar as number) + yOffset,
                 fill,
                 data: {
                   x: seriesPoint.point[1],
@@ -456,7 +484,7 @@
 
             return {
               x: xItem + xOffset,
-              y: yCoord + yOffset,
+              y: (yCoordScalar as number) + yOffset,
               fill,
               data: {
                 x: xValue, // TODO: use highlightData[$key]?

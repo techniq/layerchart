@@ -23,9 +23,12 @@ import { GeoState } from './geo.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushState } from './brush.svelte.js';
-import { SeriesState } from './series.svelte.js';
+import { SeriesState, type StackLayout } from './series.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
+
+/** Stable empty array to avoid creating new [] references on each reactive update */
+const EMPTY_SERIES: any[] = [];
 
 interface ScaleEntry {
   scale: AnyScale;
@@ -49,7 +52,7 @@ export class ChartState<
   tooltipState = $state<TooltipState>(null!);
   brushState = $state<BrushState>(null!);
   // TODO: handle TComponent
-  seriesState = $state<SeriesState<TData, any>>(new SeriesState(() => []));
+  seriesState: SeriesState<TData, any>;
 
   // Container dimensions
   _containerWidth = $state(100);
@@ -69,6 +72,26 @@ export class ChartState<
 
     // Create GeoState instance
     this.geoState = new GeoState(() => this.props.geo ?? {});
+
+    // Create SeriesState internally from series/seriesLayout props
+    this.seriesState = new SeriesState(
+      () => this.props.series ?? EMPTY_SERIES,
+      () => {
+        const layout = this.props.seriesLayout;
+        if (!layout || !layout.startsWith('stack')) return null;
+
+        const series = this.props.series ?? [];
+        const keyBy = this.valueAxis === 'y' ? this.props.x : this.props.y;
+        const hasSeparateData = series.some((s) => s.data != null);
+
+        return {
+          layout: layout as StackLayout,
+          data: hasSeparateData ? undefined : chartDataArray(this.props.data),
+          keyBy: keyBy!,
+          valueAccessor: this.valueAxis === 'y' ? this.props.y : this.props.x,
+        };
+      }
+    );
 
     const logDebug = useDebounce(printDebug, 200);
 
@@ -194,8 +217,8 @@ export class ChartState<
   z = $derived(makeAccessor(this.props.z));
   r = $derived(makeAccessor(this.props.r));
   c = $derived(accessor(this.props.c));
-  x1 = $derived(accessor(this.props.x1));
-  y1 = $derived(accessor(this.props.y1));
+  x1 = $derived(makeAccessor(this.props.x1));
+  y1 = $derived(makeAccessor(this.props.y1));
 
   filteredExtents = $derived(filterObject($state.snapshot(this.props.extents ?? {})));
 
@@ -351,8 +374,12 @@ export class ChartState<
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
-  x1Domain = $derived(this.props.x1Domain ?? extent(chartDataArray(this.data), this.x1));
-  y1Domain = $derived(this.props.y1Domain ?? extent(chartDataArray(this.data), this.y1));
+  x1Domain = $derived(
+    this.props.x1Domain ?? (this.x1 ? extent(chartDataArray(this.data), this.x1) : undefined)
+  );
+  y1Domain = $derived(
+    this.props.y1Domain ?? (this.y1 ? extent(chartDataArray(this.data), this.y1) : undefined)
+  );
   cDomain = $derived(this.props.cDomain ?? unique(chartDataArray(this.data).map(this.c)));
 
   snappedPadding = $derived($state.snapshot(this.props.xPadding));
@@ -441,7 +468,7 @@ export class ChartState<
       : null
   );
 
-  x1Get = $derived(createGetter(this.x1, this.x1Scale));
+  x1Get = $derived(this.x1 ? createGetter(this.x1, this.x1Scale) : null);
 
   y1Scale = $derived(
     this.props.y1Range
@@ -458,7 +485,7 @@ export class ChartState<
       : null
   );
 
-  y1Get = $derived(createGetter(this.y1, this.y1Scale));
+  y1Get = $derived(this.y1 ? createGetter(this.y1, this.y1Scale) : null);
 
   cScale = $derived(
     this.props.cRange

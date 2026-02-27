@@ -135,7 +135,6 @@
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
-  import { SeriesState } from '$lib/states/series.svelte.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
 
   let {
@@ -210,20 +209,26 @@
     });
   });
 
-  const seriesState = new SeriesState(() => series);
-
-  // ArcChart needs local chartData for visibleData filtering and cDomain calculation
-  const chartData = $derived(
-    (seriesState.allSeriesData.length
-      ? seriesState.allSeriesData
-      : chartDataArray(data)) as Array<TData>
-  );
+  // ArcChart needs local chartData for visibleData filtering and cDomain calculation.
+  // IMPORTANT: Compute locally from `series` and `data` — NOT from `context.series.allSeriesData`.
+  // Reading context.series.allSeriesData here would create a derived_references_self cycle:
+  //   SeriesState.#series → ChartState.props → data={visibleData} → chartData → context.series.allSeriesData → #series
+  const chartData = $derived.by(() => {
+    const seriesData = series.flatMap((s) => s.data ?? []);
+    return (seriesData.length > 0 ? seriesData : chartDataArray(data)) as Array<TData>;
+  });
 
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
-      return seriesState.selectedKeys.isEmpty() || seriesState.selectedKeys.isSelected(dataKey);
+      const selectedKeys = context?.series.selectedKeys;
+      return !selectedKeys || selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
     })
+  );
+
+  // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
+  const allSeriesColors = $derived(
+    series.map((s) => s.color).filter((c) => c != null) as string[]
   );
 
   // Custom tickFormat for ArcChart legends - uses data labels instead of series labels
@@ -267,7 +272,7 @@
         multiSeries && (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
       fill: s.color ?? context.cScale?.(context.c(d)),
       track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
-      opacity: seriesState.isHighlighted(keyAccessor(d), true) ? 1 : 0.1,
+      opacity: (context?.series.isHighlighted(keyAccessor(d), true) ?? true) ? 1 : 0.1,
       tooltip: true,
       data: d,
       onclick: (e) => {
@@ -295,8 +300,8 @@
   x={value}
   {c}
   cDomain={chartData.map(keyAccessor)}
-  cRange={seriesState.allSeriesColors.length
-    ? seriesState.allSeriesColors
+  cRange={allSeriesColors.length > 0
+    ? allSeriesColors
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
@@ -319,7 +324,7 @@
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
-  {seriesState}
+  {series}
   legend={typeof legend === 'function'
     ? (legend as any)
     : legend
@@ -374,8 +379,8 @@
               value={valueAccessor(data)}
               color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
               {format}
-              onpointerenter={() => (seriesState.highlightKey = keyAccessor(data))}
-              onpointerleave={() => (seriesState.highlightKey = null)}
+              onpointerenter={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = keyAccessor(data); }}
+              onpointerleave={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = null; }}
               {...props.tooltip?.item}
             />
           </Tooltip.List>

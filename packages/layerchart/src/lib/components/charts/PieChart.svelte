@@ -186,7 +186,6 @@
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
-  import { SeriesState } from '$lib/states/series.svelte.js';
 
   let {
     data = [],
@@ -222,25 +221,31 @@
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
   );
-  const seriesState = new SeriesState(() => series);
-
   const keyAccessor = $derived(accessor(key));
   const labelAccessor = $derived(accessor(label));
   const valueAccessor = $derived(accessor(value));
   const cAccessor = $derived(accessor(c));
 
-  // PieChart needs local chartData for visibleData filtering and cDomain calculation
-  const chartData = $derived(
-    (seriesState.allSeriesData.length
-      ? seriesState.allSeriesData
-      : chartDataArray(data)) as Array<TData>
-  );
+  // PieChart needs local chartData for visibleData filtering and cDomain calculation.
+  // IMPORTANT: Compute locally from `series` and `data` — NOT from `context.series.allSeriesData`.
+  // Reading context.series.allSeriesData here would create a derived_references_self cycle:
+  //   SeriesState.#series → ChartState.props → data={visibleData} → chartData → context.series.allSeriesData → #series
+  const chartData = $derived.by(() => {
+    const seriesData = series.flatMap((s) => s.data ?? []);
+    return (seriesData.length > 0 ? seriesData : chartDataArray(data)) as Array<TData>;
+  });
 
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
-      return seriesState.selectedKeys.isEmpty() || seriesState.selectedKeys.isSelected(dataKey);
+      const selectedKeys = context?.series.selectedKeys;
+      return !selectedKeys || selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
     })
+  );
+
+  // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
+  const allSeriesColors = $derived(
+    series.map((s) => s.color).filter((c) => c != null) as string[]
   );
 
   // Custom tickFormat for PieChart legends - uses data labels instead of series labels
@@ -288,7 +293,7 @@
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
       outerRadius:
-        seriesState.visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+        (context?.series.visibleSeries.length ?? 0) > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
       innerRadius,
       cornerRadius,
       padAngle,
@@ -300,7 +305,7 @@
         // Workaround for `tooltip={{ mode: 'manual' }}
         onTooltipClick(e, { data: arc.data });
       },
-      opacity: seriesState.isHighlighted(keyAccessor(arc.data), true) ? 1 : 0.5,
+      opacity: (context?.series.isHighlighted(keyAccessor(arc.data), true) ?? true) ? 1 : 0.5,
       ...props.arc,
       ...s.props,
       ...arcDataProps,
@@ -321,8 +326,8 @@
   x={value}
   c={key}
   cDomain={chartData.map(keyAccessor)}
-  cRange={seriesState.allSeriesColors.length
-    ? seriesState.allSeriesColors
+  cRange={allSeriesColors.length > 0
+    ? allSeriesColors
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
@@ -345,7 +350,7 @@
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
-  {seriesState}
+  {series}
   legend={typeof legend === 'function'
     ? legend
     : legend
@@ -421,8 +426,8 @@
               value={valueAccessor(data)}
               color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
               {format}
-              onpointerenter={() => (seriesState.highlightKey = keyAccessor(data))}
-              onpointerleave={() => (seriesState.highlightKey = null)}
+              onpointerenter={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = keyAccessor(data); }}
+              onpointerleave={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = null; }}
               {...props.tooltip?.item}
             />
           </Tooltip.List>

@@ -45,8 +45,7 @@
 
   import Chart from '../Chart.svelte';
 
-  import { chartDataArray, defaultChartPadding, getObjectOrNull } from '$lib/utils/common.js';
-  import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
+  import { defaultChartPadding, getObjectOrNull } from '$lib/utils/common.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
@@ -84,16 +83,6 @@
           },
         ]
       : seriesProp
-  );
-
-  // SeriesState now handles stack computation internally
-  // Note: For stacking, we use baseData (raw data array) since stack computes across all series
-  const seriesState = new SeriesState(
-    () => series,
-    () =>
-      seriesLayout.startsWith('stack')
-        ? { layout: seriesLayout as StackLayout, data: chartDataArray(data), valueAccessor: y }
-        : null
   );
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
@@ -136,7 +125,8 @@
         },
       }
     : false}
-  {seriesState}
+  {series}
+  {seriesLayout}
   {axis}
   {grid}
   {rule}
@@ -151,11 +141,11 @@
     },
   }}
 >
-  {#snippet marks(snippetProps)}
+  {#snippet marks({ context })}
     {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+      {@render marks({ context })}
     {:else}
-      {#each seriesState.visibleSeries as s (s.key)}
+      {#each context.series.visibleSeries as s (s.key)}
         <Area
           seriesKey={s.key}
           fillOpacity={0.3}

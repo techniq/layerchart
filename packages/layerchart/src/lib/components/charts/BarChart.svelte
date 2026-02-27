@@ -76,9 +76,8 @@
 
   import Chart from '../Chart.svelte';
 
-  import { accessor, chartDataArray, defaultChartPadding } from '$lib/utils/common.js';
+  import { accessor, defaultChartPadding } from '$lib/utils/common.js';
   import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import { SeriesState, type StackLayout } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
@@ -140,19 +139,6 @@
       : seriesProp
   );
 
-  // SeriesState now handles stack computation internally
-  const seriesState = new SeriesState(
-    () => series,
-    () =>
-      seriesLayout.startsWith('stack')
-        ? {
-            layout: seriesLayout as StackLayout,
-            data: chartDataArray(data),
-            valueAccessor: valueAccessorProp,
-          }
-        : null
-  );
-
   const isGroupSeries = $derived(seriesLayout === 'group');
 
   // Use first data item for scale type detection
@@ -186,7 +172,7 @@
     isGroupSeries && valueAxis === 'y' ? scaleBand().padding(groupPadding) : undefined
   );
   const x1Domain = $derived(
-    isGroupSeries && valueAxis === 'y' ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && valueAxis === 'y' ? series.map((s) => s.key) : undefined
   );
 
   const x1Range = $derived(
@@ -201,7 +187,7 @@
     isGroupSeries && valueAxis === 'x' ? scaleBand().padding(groupPadding) : undefined
   );
   const y1Domain = $derived(
-    isGroupSeries && valueAxis === 'x' ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && valueAxis === 'x' ? series.map((s) => s.key) : undefined
   );
   const y1Range = $derived(
     isGroupSeries && valueAxis === 'x'
@@ -275,7 +261,8 @@
         },
       }
     : false}
-  {seriesState}
+  {series}
+  {seriesLayout}
   {axis}
   grid={typeof grid === 'object'
     ? { x: valueAxis === 'x' || radial, y: valueAxis === 'y' || radial, ...grid }
@@ -291,16 +278,16 @@
   highlight={highlight as any}
   {props}
 >
-  {#snippet marks(snippetProps)}
+  {#snippet marks({ context })}
     {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+      {@render marks({ context })}
     {:else}
-      {#each seriesState.visibleSeries as s, i (s.key)}
+      {#each context.series.visibleSeries as s, i (s.key)}
         <Bars
           seriesKey={s.key}
           x1={valueAxis === 'y' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           y1={valueAxis === 'x' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
-          rounded={seriesState.isStacked && i !== seriesState.visibleSeries.length - 1
+          rounded={context.series.isStacked && i !== context.series.visibleSeries.length - 1
             ? 'none'
             : Array.isArray(xProp) || Array.isArray(yProp)
               ? 'all'
@@ -308,7 +295,7 @@
           radius={4}
           strokeWidth={1}
           {stackPadding}
-          opacity={seriesState.isHighlighted(s.key, true) ? 1 : 0.1}
+          opacity={context.series.isHighlighted(s.key, true) ? 1 : 0.1}
           onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
           {...s.props}

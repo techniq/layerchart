@@ -199,11 +199,16 @@
       ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
 
+    const rawXGet = x === 'data' ? ctx.xGet(ctx.tooltip.data) : undefined;
+    const xFromData = Array.isArray(rawXGet)
+      ? (rawXGet[0] + rawXGet[rawXGet.length - 1]) / 2
+      : rawXGet;
+
     const xValue: number =
       typeof x === 'number'
         ? x
         : x === 'data'
-          ? ctx.xGet(ctx.tooltip.data) + ctx.padding.left + xBandOffset
+          ? xFromData + ctx.padding.left + xBandOffset
           : ctx.tooltip.x;
 
     let xAlign: Align = 'start';
@@ -230,11 +235,16 @@
     const yBandOffset = isScaleBand(ctx.yScale)
       ? ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2
       : 0;
+    const rawYGet = y === 'data' ? ctx.yGet(ctx.tooltip.data) : undefined;
+    const yFromData = Array.isArray(rawYGet)
+      ? (rawYGet[0] + rawYGet[rawYGet.length - 1]) / 2
+      : rawYGet;
+
     const yValue: number =
       typeof y === 'number'
         ? y
         : y === 'data'
-          ? ctx.yGet(ctx.tooltip.data) + ctx.padding.top + yBandOffset
+          ? yFromData + ctx.padding.top + yBandOffset
           : ctx.tooltip.y;
 
     let yAlign: Align = 'start';

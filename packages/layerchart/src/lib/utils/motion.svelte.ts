@@ -1,3 +1,4 @@
+import { untrack } from 'svelte';
 import { Spring, Tween } from 'svelte/motion';
 
 /**
@@ -161,7 +162,13 @@ function setupTracking<T>(
   if (options.controlled) return;
 
   $effect(() => {
-    motion.set(getValue(), { instant: motion.target == null });
+    const value = getValue();
+    if (value == null) return;
+    // Use untrack to prevent reactive reads inside motion.set() and motion.target
+    // from being tracked as dependencies of this effect (which would cause infinite loops)
+    untrack(() => {
+      motion.set(value, { instant: motion.target == null });
+    });
   });
 }
 

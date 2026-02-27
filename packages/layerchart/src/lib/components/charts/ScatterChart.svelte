@@ -32,7 +32,6 @@
   import * as Tooltip from '../tooltip/index.js';
 
   import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
-  import { SeriesState } from '$lib/states/series.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
@@ -60,8 +59,6 @@
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
   );
-  const seriesState = new SeriesState(() => series);
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   if (profile) {
@@ -106,7 +103,7 @@
         },
       }
     : false}
-  {seriesState}
+  {series}
   {axis}
   {grid}
   {highlight}

@@ -149,8 +149,8 @@
   const y = $derived(
     yProp ?? (ctx.valueAxis == 'y' ? (stackAccessors?.value ?? seriesAccessor) : undefined) ?? ctx.y
   );
-  const x1 = $derived(x1Prop !== undefined ? x1Prop : ctx.x1);
-  const y1 = $derived(y1Prop !== undefined ? y1Prop : ctx.y1);
+  const x1 = $derived(x1Prop);
+  const y1 = $derived(y1Prop);
 
   // Calculate series index and count from context when seriesKey is provided
   const seriesIndex = $derived(

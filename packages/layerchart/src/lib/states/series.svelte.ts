@@ -1,5 +1,6 @@
 import type { Component } from 'svelte';
 import type { SeriesData } from '../components/charts/types.js';
+import { InternMap } from 'd3-array';
 import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
 import { accessor, type Accessor } from '../utils/common.js';
 import { SelectionState } from '@layerstack/svelte-state';
@@ -8,13 +9,19 @@ export type StackLayout = 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging'
 
 export type StackConfig<TData> = {
   layout: StackLayout;
-  data: TData[];
+  data?: TData[];
+  keyBy: Accessor<TData>;
   valueAccessor?: Accessor<TData>;
 };
 
 export class SeriesState<TData, TComponent extends Component> {
-  #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
-  #stackConfig = $state.raw<StackConfig<TData> | null>(null);
+  // Getter functions — set once in constructor, called lazily by $derived
+  private _getSeries!: () => SeriesData<TData, TComponent>[];
+  private _getStackConfig!: () => StackConfig<TData> | null;
+
+  #series = $derived(this._getSeries());
+  #stackConfig = $derived(this._getStackConfig());
+
   selectedKeys = new SelectionState<string>();
 
   /**
@@ -26,18 +33,8 @@ export class SeriesState<TData, TComponent extends Component> {
     getSeries: () => SeriesData<TData, TComponent>[],
     getStackConfig?: () => StackConfig<TData> | null
   ) {
-    this.#series = getSeries();
-    if (getStackConfig) {
-      this.#stackConfig = getStackConfig();
-    }
-
-    $effect.pre(() => {
-      // keep series state in sync with the prop
-      this.#series = getSeries();
-      if (getStackConfig) {
-        this.#stackConfig = getStackConfig();
-      }
-    });
+    this._getSeries = getSeries;
+    this._getStackConfig = getStackConfig ?? (() => null);
   }
 
   /**
@@ -55,17 +52,58 @@ export class SeriesState<TData, TComponent extends Component> {
   }
 
   /**
-   * Computed stack data using WeakMap for O(1) lookup by data object.
-   * Maps each data object to an array of [y0, y1] tuples, one per visible series.
+   * Build wide-format data from per-series data arrays for d3 stack().
+   * Each row has a category key and one property per series key with that series' value.
+   */
+  #alignSeriesData(): Record<string, any>[] {
+    const config = this.#stackConfig;
+    if (!config) return [];
+
+    const keyByAcc = accessor(config.keyBy);
+    const visibleSeries = this.visibleSeries;
+
+    // Collect all unique category values across visible series
+    const categoryMap = new InternMap<any, Record<string, any>>();
+
+    for (const s of visibleSeries) {
+      if (!s.data) continue;
+      const valueAcc = accessor(s.value ?? config.valueAccessor ?? s.key);
+      for (const d of s.data) {
+        const catKey = keyByAcc(d);
+        if (!categoryMap.has(catKey)) {
+          categoryMap.set(catKey, { __key: catKey });
+        }
+        categoryMap.get(catKey)![s.key] = valueAcc(d) ?? 0;
+      }
+    }
+
+    // Ensure all series keys exist on every row (default to 0)
+    for (const row of categoryMap.values()) {
+      for (const s of visibleSeries) {
+        if (!(s.key in row)) {
+          row[s.key] = 0;
+        }
+      }
+    }
+
+    return Array.from(categoryMap.values());
+  }
+
+  /**
+   * Computed stack data using InternMap for value-based lookup.
+   * Outer map: categoryValue -> InternMap<seriesKey, [y0, y1]>
    */
   #stackMap = $derived.by(() => {
     const config = this.#stackConfig;
     if (!config || !config.layout.startsWith('stack')) return null;
 
-    const map = new WeakMap<object, Array<[number, number]>>();
     const visibleKeys = this.visibleSeries.map((s) => s.key);
+    const hasSeparateData = this.visibleSeries.some((s) => s.data != null);
+    const data = hasSeparateData ? this.#alignSeriesData() : (config.data ?? []);
 
-    if (visibleKeys.length === 0 || config.data.length === 0) return map;
+    if (visibleKeys.length === 0 || data.length === 0) return null;
+
+    const keyByAcc = accessor(config.keyBy);
 
     const offset =
       config.layout === 'stackExpand'
@@ -77,19 +115,30 @@ export class SeriesState<TData, TComponent extends Component> {
     const stackResult = stack()
       .keys(visibleKeys)
       .value((d, key) => {
+        if (hasSeparateData) {
+          // Wide-format aligned data — value is directly on the row
+          return (d as any)[key] ?? 0;
+        }
         const s = this.#series.find((s) => s.key === key)!;
         const acc = s.value ?? config.valueAccessor ?? s.key;
         return accessor(acc)(d as any) ?? 0;
       })
-      .offset(offset)(config.data as any[]);
+      .offset(offset)(data as any[]);
 
-    // Build WeakMap: data object -> stack values for each visible series
-    for (let i = 0; i < config.data.length; i++) {
-      const d = config.data[i] as object;
-      const values: Array<[number, number]> = visibleKeys.map(
-        (_, seriesIdx) => stackResult[seriesIdx][i] as unknown as [number, number]
-      );
-      map.set(d, values);
+    // Build InternMap: categoryValue -> Map<seriesKey, [y0, y1]>
+    const map = new InternMap<any, Map<string, [number, number]>>();
+
+    for (let i = 0; i < data.length; i++) {
+      const d = data[i];
+      const catKey = hasSeparateData ? (d as any).__key : keyByAcc(d as TData);
+      const seriesMap = new Map<string, [number, number]>();
+      for (let seriesIdx = 0; seriesIdx < visibleKeys.length; seriesIdx++) {
+        seriesMap.set(
+          visibleKeys[seriesIdx],
+          stackResult[seriesIdx][i] as unknown as [number, number]
+        );
+      }
+      map.set(catKey, seriesMap);
     }
 
     return map;
@@ -100,13 +149,11 @@ export class SeriesState<TData, TComponent extends Component> {
    * Returns null if stacking is not enabled or series/data not found.
    */
   getStackValue(seriesKey: string, d: TData): [number, number] | null {
-    if (!this.#stackMap) return null;
+    if (!this.#stackMap || !this.#stackConfig) return null;
 
-    const seriesIdx = this.visibleSeries.findIndex((s) => s.key === seriesKey);
-    if (seriesIdx === -1) return null;
-
-    const values = this.#stackMap.get(d as object);
-    return values?.[seriesIdx] ?? null;
+    const keyByAcc = accessor(this.#stackConfig.keyBy);
+    const catKey = keyByAcc(d);
+    return this.#stackMap.get(catKey)?.get(seriesKey) ?? null;
   }
 
   /**
@@ -147,7 +194,7 @@ export class SeriesState<TData, TComponent extends Component> {
    * Check if the series is the default
    */
   get isDefaultSeries() {
-    return this.#series.length === 1 && this.#series[0].key === 'default';
+    return this.#series.length === 0 || (this.#series.length === 1 && this.#series[0].key === 'default');
   }
 
   /**

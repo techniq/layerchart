@@ -47,7 +47,6 @@
   import Chart from '../Chart.svelte';
 
   import { defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
-  import { SeriesState } from '$lib/states/series.svelte.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
   import type { BrushDomainType } from '../../states/brush.svelte.js';
 
@@ -98,8 +97,6 @@
         ]
       : seriesProp
   );
-  const seriesState = new SeriesState(() => series);
-
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   const highlightWithPointClick = $derived(
@@ -154,16 +151,16 @@
         },
       }
     : false}
-  {seriesState}
+  {series}
   highlight={highlightWithPointClick as any}
   {legend}
   {props}
 >
-  {#snippet marks(snippetProps)}
+  {#snippet marks({ context })}
     {#if typeof marks === 'function'}
-      {@render marks(snippetProps)}
+      {@render marks({ context })}
     {:else}
-      {#each seriesState.visibleSeries as s, i (s.key)}
+      {#each context.series.visibleSeries as s, i (s.key)}
         <Spline seriesKey={s.key} {...props.spline} />
       {/each}
     {/if}

@@ -41,8 +41,8 @@
           color={s.color}
           {format}
           valueAlign="right"
-          onpointerenter={() => (context.seriesState.highlightKey = s.key)}
-          onpointerleave={() => (context.seriesState.highlightKey = null)}
+          onpointerenter={() => (context.series.highlightKey = s.key)}
+          onpointerleave={() => (context.series.highlightKey = null)}
           {...tooltipProps?.item}
         />
       {/each}
