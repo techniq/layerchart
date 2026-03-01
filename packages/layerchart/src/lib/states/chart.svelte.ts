@@ -314,6 +314,38 @@ export class ChartState<
    * Resolves the domain for a given axis based on props, series state, and data.
    * Handles explicit domains, intervals, baselines, and series-specific calculations.
    */
+  private _computeTransformDomain(
+    baseDomain: number[],
+    translate: number,
+    scale: number,
+    dimension: number
+  ): number[] {
+    if (baseDomain.length < 2 || dimension <= 0) {
+      return baseDomain;
+    }
+
+    // d3 scales treat Date as numeric, so runtime values may be Date despite number[] type
+    const d0 = baseDomain[0] as unknown;
+    const d1 = baseDomain[1] as unknown;
+
+    const isDate = d0 instanceof Date;
+    if (!isDate && typeof d0 !== 'number') return baseDomain;
+
+    const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
+    const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
+    const range = numMax - numMin;
+
+    if (!isFinite(range) || range === 0) return baseDomain;
+
+    const f0 = (-translate / scale) / dimension;
+    const f1 = (dimension - translate) / scale / dimension;
+
+    const newMin = numMin + f0 * range;
+    const newMax = numMin + f1 * range;
+
+    return (isDate ? [new Date(newMin), new Date(newMax)] : [newMin, newMax]) as number[];
+  }
+
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
     const domain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
@@ -369,8 +401,42 @@ export class ChartState<
   _xDomain = $derived.by((): DomainType | undefined => this.resolveDomain('x'));
   _yDomain = $derived.by((): DomainType | undefined => this.resolveDomain('y'));
 
-  xDomain = $derived(calcDomain('x', this.extents, this._xDomain));
-  yDomain = $derived(calcDomain('y', this.extents, this._yDomain));
+  /** Full domain from data/props before any transform override */
+  _baseXDomain = $derived(calcDomain('x', this.extents, this._xDomain));
+  _baseYDomain = $derived(calcDomain('y', this.extents, this._yDomain));
+
+  /** Effective domain — narrowed by transform when mode is 'domain' */
+  xDomain = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      this.width > 0
+    ) {
+      return this._computeTransformDomain(
+        this._baseXDomain,
+        this.transformState.translate.x,
+        this.transformState.scale,
+        this.width
+      );
+    }
+    return this._baseXDomain;
+  });
+
+  yDomain = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      this.height > 0
+    ) {
+      return this._computeTransformDomain(
+        this._baseYDomain,
+        this.transformState.translate.y,
+        this.transformState.scale,
+        this.height
+      );
+    }
+    return this._baseYDomain;
+  });
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 

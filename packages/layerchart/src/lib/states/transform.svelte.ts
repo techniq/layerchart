@@ -8,14 +8,17 @@ import { localPoint } from '@layerstack/utils';
 import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
-export type TransformMode = 'canvas' | 'manual' | 'none';
+export type TransformMode = 'canvas' | 'domain' | 'manual' | 'none';
 export type TransformScrollMode = 'scale' | 'translate' | 'none';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
 export const DEFAULT_SCALE = 1;
 
+export type TransformAxis = 'x' | 'y' | 'both';
+
 export type TransformStateOptions = {
   mode?: TransformMode;
+  axis?: TransformAxis;
   motion?: MotionProp;
   processTranslate?: (
     x: number,
@@ -39,6 +42,7 @@ export class TransformState {
 
   // Options
   mode: TransformMode;
+  axis: TransformAxis;
   processTranslate: (
     x: number,
     y: number,
@@ -74,12 +78,15 @@ export class TransformState {
 
     // Initialize options with defaults
     this.mode = options.mode ?? 'none';
+    this.axis = options.axis ?? 'both';
     this.processTranslate =
       options.processTranslate ??
-      ((x: number, y: number, deltaX: number, deltaY: number) => ({
-        x: x + deltaX,
-        y: y + deltaY,
-      }));
+      (this.mode === 'domain'
+        ? this._createAxisConstrainedProcessTranslate()
+        : (x: number, y: number, deltaX: number, deltaY: number) => ({
+            x: x + deltaX,
+            y: y + deltaY,
+          }));
     this.disablePointer = options.disablePointer ?? false;
     this.clickDistance = options.clickDistance ?? 10;
     this.initialTranslate = options.initialTranslate ?? DEFAULT_TRANSLATE;
@@ -87,7 +94,7 @@ export class TransformState {
     this.onTransform = options.onTransform ?? (() => {});
     this.ondragstart = options.ondragstart ?? (() => {});
     this.ondragend = options.ondragend ?? (() => {});
-    this.scrollMode = options.initialScrollMode ?? 'none';
+    this.scrollMode = options.initialScrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
 
     // Initialize motion controllers
     const resolvedMotion = parseMotionProp(options.motion);
@@ -103,6 +110,14 @@ export class TransformState {
         translate: this._translate.current,
       });
     });
+  }
+
+  private _createAxisConstrainedProcessTranslate() {
+    return (x: number, y: number, deltaX: number, deltaY: number) => {
+      if (this.axis === 'x') return { x: x + deltaX, y: 0 };
+      if (this.axis === 'y') return { x: 0, y: y + deltaY };
+      return { x: x + deltaX, y: y + deltaY };
+    };
   }
 
   // Derived state
@@ -206,6 +221,13 @@ export class TransformState {
       x: point.x - this.ctx.padding.left - invertTransformPoint.x * newScale,
       y: point.y - this.ctx.padding.top - invertTransformPoint.y * newScale,
     };
+
+    // Constrain translate to active axis in domain mode
+    if (this.mode === 'domain') {
+      if (this.axis === 'x') newTranslate.y = 0;
+      if (this.axis === 'y') newTranslate.x = 0;
+    }
+
     this.setTranslate(newTranslate, options);
   }
 
@@ -273,30 +295,34 @@ export class TransformState {
     // Pinch to zoom is registered as a wheel event with control key
     const pinchToZoom = e.ctrlKey;
 
+    const instantMotionOptions =
+      this._scale.type === 'spring'
+        ? { instant: true }
+        : this._scale.type === 'tween'
+          ? { duration: 0 }
+          : undefined;
+
     if (this.scrollMode === 'scale' || pinchToZoom) {
       // https://github.com/d3/d3-zoom#zoom_wheelDelta
       const scaleBy =
         -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
 
-      this.scaleTo(
-        Math.pow(2, scaleBy),
-        point,
-        this._scale.type === 'spring'
-          ? { instant: true }
-          : this._scale.type === 'tween'
-            ? { duration: 0 }
-            : undefined
-      );
+      this.scaleTo(Math.pow(2, scaleBy), point, instantMotionOptions);
+
+      // In domain mode, also handle deltaX as pan (for trackpad horizontal scroll)
+      if (this.mode === 'domain' && e.deltaX !== 0) {
+        const startTranslate = this._translate.current;
+        this.setTranslate(
+          this.processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, 0),
+          instantMotionOptions
+        );
+      }
     } else if (this.scrollMode === 'translate') {
       const startTranslate = this._translate.current;
       this._translate
         .set(
           this.processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
-          this._translate.type === 'spring'
-            ? { instant: true }
-            : this._translate.type === 'tween'
-              ? { duration: 0 }
-              : undefined
+          instantMotionOptions
         )
         .then(() => {})
         .catch(() => {});

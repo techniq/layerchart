@@ -39,6 +39,7 @@
     children,
     class: className,
     mode,
+    axis,
     motion,
     processTranslate,
     disablePointer,
@@ -54,6 +55,7 @@
 
   const options: TransformStateOptions = {
     mode,
+    axis,
     motion,
     processTranslate,
     disablePointer,
