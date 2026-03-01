@@ -280,13 +280,13 @@ export class TransformState {
   }
 
   onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
-    if (this.mode === 'none' || this.disablePointer) return;
+    if (this.mode === 'none') return;
     const point = localPoint(e);
     this.scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
 
   onWheel(e: WheelEvent & { currentTarget: HTMLElement }) {
-    if (this.mode === 'none' || this.disablePointer || this.scrollMode === 'none') return;
+    if (this.mode === 'none' || this.scrollMode === 'none') return;
 
     e.preventDefault();
 

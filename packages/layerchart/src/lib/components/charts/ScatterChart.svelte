@@ -97,8 +97,31 @@
         y: yDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.brush.x;
-          yDomain = e.brush.y;
+          if (restProps.transform?.mode === 'domain' && context) {
+            const brushX = e.brush.x;
+            const brushY = e.brush.y;
+            if (brushX[0] != null && brushX[1] != null) {
+              const baseDomainX = context._baseXDomain;
+              const baseMinX = +baseDomainX[0];
+              const baseRangeX = +baseDomainX[1] - baseMinX;
+              const brushMinX = +brushX[0];
+              const brushRangeX = +brushX[1] - brushMinX;
+              if (brushRangeX > 0 && baseRangeX > 0) {
+                const newScale = baseRangeX / brushRangeX;
+                const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * context.width * newScale;
+                const baseDomainY = context._baseYDomain;
+                const baseMinY = +baseDomainY[0];
+                const baseRangeY = +baseDomainY[1] - baseMinY;
+                const brushMinY = +brushY[0];
+                const newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * context.height * newScale;
+                context.transform.setScale(newScale);
+                context.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+              }
+            }
+          } else {
+            xDomain = e.brush.x;
+            yDomain = e.brush.y;
+          }
           brushProps.onBrushEnd?.(e);
         },
       }

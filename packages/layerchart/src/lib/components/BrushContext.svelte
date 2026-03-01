@@ -166,15 +166,9 @@
   // const originalXDomain = ctx.config.xDomain;
   // const originalYDomain = ctx.config.yDomain;
 
-  // const xDomainMinMax = $derived(extent<number>(ctx.xScale.domain()) as [number, number]);
-  // const xDomainMin = $derived(xDomainMinMax[0]);
-  // const xDomainMax = $derived(xDomainMinMax[1]);
-  const [xDomainMin, xDomainMax] = $derived(ctx.xScale.domain());
-
-  // const yDomainMinMax = $derived(extent<number>(ctx.yScale.domain()) as [number, number]);
-  // const yDomainMin = $derived(yDomainMinMax[0]);
-  // const yDomainMax = $derived(yDomainMinMax[1]);
-  const [yDomainMin, yDomainMax] = $derived(ctx.yScale.domain());
+  // Use base (full) domain for clamping so brush works correctly during transform zoom
+  const [xDomainMin, xDomainMax] = $derived(ctx.baseXScale.domain());
+  const [yDomainMin, yDomainMax] = $derived(ctx.baseYScale.domain());
 
   $effect(() => {
     brushState.handleSize = handleSize;
@@ -217,12 +211,12 @@
 
       const start = {
         x: [
-          brushState.x[0] ?? ctx.xScale.domain()[0],
-          brushState.x[1] ?? ctx.xScale.domain()[1],
+          brushState.x[0] ?? ctx.baseXScale.domain()[0],
+          brushState.x[1] ?? ctx.baseXScale.domain()[1],
         ] as Parameters<typeof fn>[0]['x'],
         y: [
-          brushState.y[0] ?? ctx.yScale.domain()[0],
-          brushState.y[1] ?? ctx.yScale.domain()[1],
+          brushState.y[0] ?? ctx.baseYScale.domain()[0],
+          brushState.y[1] ?? ctx.baseYScale.domain()[1],
         ] as Parameters<typeof fn>[0]['y'],
         value: {
           x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
@@ -401,7 +395,7 @@
     style:height="{ctx.height}px"
     class={cls('lc-brush-context')}
     onpointerdown={createRange}
-    ondblclick={() => selectAll()}
+    ondblclick={(e) => { selectAll(); e.stopPropagation(); }}
   >
     <div
       class={cls('lc-brush-container')}
@@ -438,7 +432,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (brushState.y[0]) {
-              brushState.y[0] = ctx.yScale.domain()[0];
+              brushState.y[0] = ctx.baseYScale.domain()[0];
               onChange({ brush: brushState });
             }
           }}
@@ -456,7 +450,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (brushState.y[1]) {
-              brushState.y[1] = ctx.yScale.domain()[1];
+              brushState.y[1] = ctx.baseYScale.domain()[1];
               onChange({ brush: brushState });
             }
           }}
@@ -476,7 +470,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (brushState.x[0]) {
-              brushState.x[0] = ctx.xScale.domain()[0];
+              brushState.x[0] = ctx.baseXScale.domain()[0];
               onChange({ brush: brushState });
             }
           }}
@@ -494,7 +488,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (brushState.x[1]) {
-              brushState.x[1] = ctx.xScale.domain()[1];
+              brushState.x[1] = ctx.baseXScale.domain()[1];
               onChange({ brush: brushState });
             }
           }}

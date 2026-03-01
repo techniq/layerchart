@@ -248,15 +248,25 @@
         x: xDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
-          // TOOD: This should set xRange instead of xDomain, and/or xDomain should be all values, not just bounds of brush range
-          // const values = context?.xScale.domain() ?? [];
-          // console.log('domain', values, e.xDomain);
-          // const i0 = values?.indexOf(e.xDomain[0]);
-          // const i1 = values?.indexOf(e.xDomain[1]);
-          // xDomain = values.slice(i0, i1);
-
-          xDomain = e.brush.x;
-
+          if (restProps.transform?.mode === 'domain' && context) {
+            const brushX = e.brush.x;
+            if (brushX[0] != null && brushX[1] != null) {
+              const baseDomain = context._baseXDomain;
+              const baseMin = +baseDomain[0];
+              const baseRange = +baseDomain[1] - baseMin;
+              const brushMin = +brushX[0];
+              const brushRange = +brushX[1] - brushMin;
+              if (brushRange > 0 && baseRange > 0) {
+                const newScale = baseRange / brushRange;
+                const newTranslateX = -((brushMin - baseMin) / baseRange) * context.width * newScale;
+                context.transform.setScale(newScale);
+                context.transform.setTranslate({ x: newTranslateX, y: 0 });
+              }
+            }
+          } else {
+            // TOOD: This should set xRange instead of xDomain, and/or xDomain should be all values, not just bounds of brush range
+            xDomain = e.brush.x;
+          }
           brushProps.onBrushEnd?.(e);
         },
       }

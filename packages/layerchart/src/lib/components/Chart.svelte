@@ -696,6 +696,7 @@
   });
 
   const brushProps = $derived(typeof brush === 'object' ? brush : { disabled: !brush });
+  const brushEnabled = $derived(brush === true || (typeof brush === 'object' && !brush.disabled));
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -724,6 +725,7 @@
         initialScale={initialTransform?.scale}
         {processTranslate}
         {...transform}
+        disablePointer={brushEnabled || transform?.disablePointer}
         {ondragstart}
         {onTransform}
         {ondragend}

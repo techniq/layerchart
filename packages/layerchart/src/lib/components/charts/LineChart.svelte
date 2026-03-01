@@ -146,7 +146,25 @@
         x: xDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.brush.x;
+          if (restProps.transform?.mode === 'domain' && context) {
+            // Convert brush selection to transform scale/translate
+            const brushX = e.brush.x;
+            if (brushX[0] != null && brushX[1] != null) {
+              const baseDomain = context._baseXDomain;
+              const baseMin = +baseDomain[0];
+              const baseRange = +baseDomain[1] - baseMin;
+              const brushMin = +brushX[0];
+              const brushRange = +brushX[1] - brushMin;
+              if (brushRange > 0 && baseRange > 0) {
+                const newScale = baseRange / brushRange;
+                const newTranslateX = -((brushMin - baseMin) / baseRange) * context.width * newScale;
+                context.transform.setScale(newScale);
+                context.transform.setTranslate({ x: newTranslateX, y: 0 });
+              }
+            }
+          } else {
+            xDomain = e.brush.x;
+          }
           brushProps.onBrushEnd?.(e);
         },
       }

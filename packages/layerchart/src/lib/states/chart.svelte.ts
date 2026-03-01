@@ -485,6 +485,37 @@ export class ChartState<
 
   yGet = $derived(createGetter(this.y, this.yScale));
 
+  /** Scale using the full (pre-transform) domain — used by BrushState for positioning */
+  baseXScale = $derived(
+    createChartScale('x', {
+      scale: this._xScaleProp,
+      domain: this._baseXDomain,
+      padding: this.snappedPadding,
+      nice: this.props.xNice ?? false,
+      reverse: this.props.xReverse ?? false,
+      percentRange: this.props.percentRange ?? false,
+      range: this.xRangeProp,
+      height: this.height,
+      width: this.width,
+      extents: this.snappedExtents,
+    })
+  );
+
+  baseYScale = $derived(
+    createChartScale('y', {
+      scale: this._yScaleProp,
+      domain: this._baseYDomain,
+      padding: this.props.yPadding,
+      nice: this.props.yNice ?? false,
+      reverse: this.yReverse,
+      percentRange: this.props.percentRange ?? false,
+      range: this.yRangeProp,
+      height: this.height,
+      width: this.width,
+      extents: this.filteredExtents,
+    })
+  );
+
   zScale = $derived(
     createChartScale('z', {
       scale: this._zScaleProp,

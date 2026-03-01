@@ -10,6 +10,7 @@
 	{data}
 	x="date"
 	y="value"
+	brush
 	transform={{ mode: 'domain', axis: 'x' }}
 	clip
 	padding={defaultChartPadding({ left: 25 })}
