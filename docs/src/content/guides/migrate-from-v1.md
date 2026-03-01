@@ -2,6 +2,8 @@
 title: Migrate from v1
 ---
 
+## Chart Sizing
+
 In version 1 of Layerchart, it required that you add a wrapping div to define the size of the chart. This is now optional, and the height and width can be set directly on the root LayerChart component.
 
 ```svelte diff
