@@ -135,7 +135,7 @@
 	)} components
 </div>
 
-<div class="sticky top-29 h-0">
+<div class="sticky top-42 sm:top-29 h-0">
 	<div
 		class={cls(
 			// 'relative bg-linear-to-b from-surface-200 via-surface-200 via-65% to-surface-200/0 h-16 _outline',
@@ -148,7 +148,7 @@
 
 <div
 	class={cls(
-		'sticky top-16 grid grid-cols-[1fr_200px_auto] items-center gap-3 py-2 z-1',
+		'sticky top-16 grid grid-cols-1 sm:grid-cols-[1fr_200px_auto] items-center gap-3 py-2 z-1',
 		// dot background
 		'bg-radial from-black/0 from-[1px] to-surface-200/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
@@ -159,11 +159,10 @@
 		{/snippet}
 	</TextField>
 
-	<div>
-		<MenuField options={categoryOptions} bind:value={params.category} />
-	</div>
+	<div class="flex gap-3 sm:contents">
+		<MenuField options={categoryOptions} bind:value={params.category} class="flex-1" />
 
-	<div class="flex gap-2">
+		<div class="flex gap-2">
 		<Button
 			icon={LucideZoomIn}
 			on:click={() => (columnCount = Math.max(1, columnCount - 1))}
@@ -178,13 +177,14 @@
 			class="size-9 border-surface-content/30 pt-1"
 			disabled={columnCount >= 5}
 		/>
+		</div>
 	</div>
 </div>
 
 <div class="grid gap-10">
 	{#each visibleExamples as { component, examples } (component)}
 		<div>
-			<H2 id={component} class="sticky top-29 pt-2 pb-1">{component}</H2>
+			<H2 id={component} class="sticky top-42 sm:top-29 pt-2 pb-1">{component}</H2>
 			<div
 				style:--column-count="repeat({columnCount}, 1fr)"
 				class="grid grid-cols-(--column-count) gap-4"
