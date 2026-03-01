@@ -11,13 +11,6 @@
 	x="date"
 	y="value"
 	transform={{ mode: 'domain', axis: 'x' }}
-	clip
 	padding={defaultChartPadding({ left: 25 })}
 	height={300}
->
-	{#snippet marks()}
-		<ChartClipPath>
-			<Spline class="stroke-primary" />
-		</ChartClipPath>
-	{/snippet}
-</LineChart>
+/>

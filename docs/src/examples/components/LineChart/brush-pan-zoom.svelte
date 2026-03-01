@@ -15,10 +15,4 @@
 	clip
 	padding={defaultChartPadding({ left: 25 })}
 	height={300}
->
-	{#snippet marks()}
-		<ChartClipPath>
-			<Spline class="stroke-primary" />
-		</ChartClipPath>
-	{/snippet}
-</LineChart>
+/>

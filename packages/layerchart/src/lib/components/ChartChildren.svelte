@@ -198,7 +198,7 @@
       <Grid x={context.radial} y {...getObjectOrNull(grid)} {...props.grid} />
     {/if}
 
-    <ChartClipPath disabled={!context.props.brush}>
+    <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
       <ChartAnnotations {annotations} layer="below" />
 
       {@render belowMarks?.(snippetProps)}
