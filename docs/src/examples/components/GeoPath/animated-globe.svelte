@@ -104,23 +104,8 @@
 	export { data };
 </script>
 
-<div class="h-[600px] grid grid-cols-[224px_1fr] relative">
+<div class="grid sm:h-[600px] sm:grid-cols-[1fr_224px] gap-3 relative">
 	<AnimatedGlobeControls {isPlaying} {selectedFeature} {play} {stop} />
-	<div class="overflow-auto scrollbar-none">
-		{#each countries.features.sort(sortFunc('properties.name')) as country (country)}
-			{@const isSelected = selectedFeature?.properties.name === country.properties.name}
-			<div use:scrollIntoView={{ condition: isSelected }}>
-				<Button
-					variant={isSelected ? 'fill-light' : 'default'}
-					color={isSelected ? 'primary' : 'default'}
-					fullWidth
-					on:click={() => (selectedFeature = country)}
-				>
-					{country.properties.name}
-				</Button>
-			</div>
-		{/each}
-	</div>
 
 	<Chart
 		geo={{
@@ -174,4 +159,20 @@
 			{context.tooltip.data.properties.name}
 		</Tooltip.Root>
 	</Chart>
+
+	<div class="h-75 sm:h-full overflow-auto scrollbar-none">
+		{#each countries.features.sort(sortFunc('properties.name')) as country (country)}
+			{@const isSelected = selectedFeature?.properties.name === country.properties.name}
+			<div use:scrollIntoView={{ condition: isSelected }}>
+				<Button
+					variant={isSelected ? 'fill-light' : 'default'}
+					color={isSelected ? 'primary' : 'default'}
+					fullWidth
+					on:click={() => (selectedFeature = country)}
+				>
+					{country.properties.name}
+				</Button>
+			</div>
+		{/each}
+	</div>
 </div>

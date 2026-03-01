@@ -13,7 +13,7 @@
 	let { isPlaying, selectedFeature, play, stop }: Props = $props();
 </script>
 
-<div class="absolute top-0 right-0 z-10 flex items-center gap-3 screenshot-hidden">
+<div class="absolute top-0 left-0 z-10 flex items-center gap-3 screenshot-hidden">
 	{#if isPlaying && selectedFeature}
 		<span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">
 			{selectedFeature?.properties.name ?? ''}
