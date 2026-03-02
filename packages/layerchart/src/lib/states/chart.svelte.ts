@@ -775,6 +775,16 @@ export class ChartState<
     hide: () => {},
   };
 
+  static readonly #fallbackTransform = {
+    mode: 'none' as const,
+    scale: 1,
+    translate: { x: 0, y: 0 },
+    moving: false,
+    dragging: false,
+    setScale: () => {},
+    setTranslate: () => {},
+  };
+
   static readonly #fallbackSeries = {
     series: [],
     visibleSeries: [],
@@ -798,7 +808,7 @@ export class ChartState<
     return this.brushState;
   }
   get transform() {
-    return this.transformState;
+    return this.transformState ?? (ChartState.#fallbackTransform as unknown as TransformState);
   }
   get series() {
     return this.seriesState ?? (ChartState.#fallbackSeries as unknown as SeriesState<TData, any>);
