@@ -25,9 +25,9 @@
 	y="length"
 	padding={defaultChartPadding({ left: 30, top: 20 })}
 	props={{
-		xAxis: { motion: 'tween' },
-		yAxis: { format: 'metric', motion: 'tween' }
+		yAxis: { format: 'metric' }
 	}}
+	motion={{ type: 'spring' }}
 	height={300}
 >
 	{#snippet marks({ context })}

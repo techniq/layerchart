@@ -12,6 +12,7 @@
 	y="value"
 	brush
 	transform={{ mode: 'domain', axis: 'x' }}
+	motion={{ type: 'spring' }}
 	clip
 	padding={defaultChartPadding({ left: 25 })}
 	height={300}

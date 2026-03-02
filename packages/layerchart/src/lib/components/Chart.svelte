@@ -6,6 +6,7 @@
   import type { SankeyGraph } from 'd3-sankey';
 
   import { getObjectOrNull, type Accessor } from '$lib/utils/common.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
@@ -589,6 +590,12 @@
      */
     clip?: boolean;
 
+    /**
+     * Animate scale domain transitions with spring or tween motion.
+     * Applies to all domain changes (data updates, brush zoom, transform, etc.)
+     */
+    motion?: MotionProp;
+
     // TransformContext callback events
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
@@ -637,6 +644,7 @@
     ondragend,
     ondragstart,
     brush,
+    motion,
     debug = false,
     clip = false,
     class: className,

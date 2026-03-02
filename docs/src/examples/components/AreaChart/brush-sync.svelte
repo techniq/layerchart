@@ -26,10 +26,9 @@
 			y="value"
 			{xDomain}
 			brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+			motion={{ type: 'spring' }}
 			props={{
-				area: { motion: { type: 'tween', duration: 200 } },
 				xAxis: {
-					motion: { type: 'tween', duration: 200 },
 					tickMultiline: true
 				}
 			}}
@@ -45,10 +44,9 @@
 			y="value"
 			{xDomain}
 			brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+			motion={{ type: 'spring' }}
 			props={{
-				area: { motion: { type: 'tween', duration: 200 } },
 				xAxis: {
-					motion: { type: 'tween', duration: 200 },
 					tickMultiline: true
 				}
 			}}

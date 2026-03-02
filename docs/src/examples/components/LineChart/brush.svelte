@@ -11,10 +11,7 @@
 	x="date"
 	y="value"
 	brush
-	props={{
-		spline: { motion: { type: 'tween', duration: 200 } },
-		xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true }
-	}}
+	motion={{ type: 'spring' }}
 	padding={defaultChartPadding({ left: 25 })}
 	height={300}
 />

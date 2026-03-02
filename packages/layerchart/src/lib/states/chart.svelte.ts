@@ -24,6 +24,7 @@ import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushState } from './brush.svelte.js';
 import { SeriesState, type StackLayout } from './series.svelte.js';
+import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -63,6 +64,12 @@ export class ChartState<
 
   // Container ref (set from Chart.svelte)
   containerRef = $state<HTMLElement | undefined>();
+
+  // Domain motion (animates base domain changes for smooth scale transitions)
+  private _xDomainMotion: ReturnType<typeof createControlledMotion<number[]>> | null = null;
+  private _yDomainMotion: ReturnType<typeof createControlledMotion<number[]>> | null = null;
+  private _xDomainIsDate = false;
+  private _yDomainIsDate = false;
 
   // Meta data - reactive to props.meta changes
   meta = $derived(this.props.meta ?? {});
@@ -153,6 +160,58 @@ export class ChartState<
         });
       }
     });
+
+    // Set up domain motion if motion prop is configured
+    const motionProp = propsGetter().motion;
+    if (motionProp) {
+      const resolved = parseMotionProp(motionProp);
+      this._xDomainMotion = createControlledMotion<number[]>([], resolved);
+      this._yDomainMotion = createControlledMotion<number[]>([], resolved);
+
+      let xInit = false;
+      let yInit = false;
+
+      $effect(() => {
+        const domain = this._rawXDomain;
+        if (!domain || domain.length < 2) return;
+        const isDate = (domain[0] as unknown) instanceof Date;
+        this._xDomainIsDate = isDate;
+        const numeric = isDate ? domain.map((d) => (d as unknown as Date).getTime()) : [...domain];
+        // Skip animation on first value to avoid mount transition
+        if (!xInit) {
+          xInit = true;
+          const instant =
+            this._xDomainMotion!.type === 'spring'
+              ? { instant: true }
+              : this._xDomainMotion!.type === 'tween'
+                ? { duration: 0 }
+                : undefined;
+          this._xDomainMotion!.set(numeric, instant);
+        } else {
+          this._xDomainMotion!.set(numeric);
+        }
+      });
+
+      $effect(() => {
+        const domain = this._rawYDomain;
+        if (!domain || domain.length < 2) return;
+        const isDate = (domain[0] as unknown) instanceof Date;
+        this._yDomainIsDate = isDate;
+        const numeric = isDate ? domain.map((d) => (d as unknown as Date).getTime()) : [...domain];
+        if (!yInit) {
+          yInit = true;
+          const instant =
+            this._yDomainMotion!.type === 'spring'
+              ? { instant: true }
+              : this._yDomainMotion!.type === 'tween'
+                ? { duration: 0 }
+                : undefined;
+          this._yDomainMotion!.set(numeric, instant);
+        } else {
+          this._yDomainMotion!.set(numeric);
+        }
+      });
+    }
   }
 
   // Use $derived fields instead of getters for caching
@@ -337,7 +396,7 @@ export class ChartState<
 
     if (!isFinite(range) || range === 0) return baseDomain;
 
-    const f0 = (-translate / scale) / dimension;
+    const f0 = -translate / scale / dimension;
     const f1 = (dimension - translate) / scale / dimension;
 
     const newMin = numMin + f0 * range;
@@ -405,8 +464,8 @@ export class ChartState<
   _baseXDomain = $derived(calcDomain('x', this.extents, this._xDomain));
   _baseYDomain = $derived(calcDomain('y', this.extents, this._yDomain));
 
-  /** Effective domain — narrowed by transform when mode is 'domain' */
-  xDomain = $derived.by(() => {
+  /** Target domain — narrowed by transform when mode is 'domain', but not yet animated */
+  _rawXDomain = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
       (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
@@ -422,7 +481,7 @@ export class ChartState<
     return this._baseXDomain;
   });
 
-  yDomain = $derived.by(() => {
+  _rawYDomain = $derived.by(() => {
     if (
       this.transformState?.mode === 'domain' &&
       (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
@@ -437,6 +496,30 @@ export class ChartState<
     }
     return this._baseYDomain;
   });
+
+  /** Effective domain — animated via motion if configured */
+  xDomain = $derived.by(() => {
+    if (this._xDomainMotion) {
+      const animated = this._xDomainMotion.current;
+      if (this._xDomainIsDate) {
+        return animated.map((v: number) => new Date(v)) as number[];
+      }
+      return animated;
+    }
+    return this._rawXDomain;
+  });
+
+  yDomain = $derived.by(() => {
+    if (this._yDomainMotion) {
+      const animated = this._yDomainMotion.current;
+      if (this._yDomainIsDate) {
+        return animated.map((v: number) => new Date(v)) as number[];
+      }
+      return animated;
+    }
+    return this._rawYDomain;
+  });
+
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 

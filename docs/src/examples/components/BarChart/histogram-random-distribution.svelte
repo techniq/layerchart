@@ -20,9 +20,9 @@
 	x={['x0', 'x1']}
 	y="length"
 	props={{
-		xAxis: { motion: 'tween' },
-		yAxis: { format: 'metric', motion: 'tween' }
+		yAxis: { format: 'metric' }
 	}}
+	motion={{ type: 'spring' }}
 	padding={defaultChartPadding({ left: 30 })}
 	height={300}
 >

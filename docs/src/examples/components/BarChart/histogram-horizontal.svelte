@@ -25,10 +25,7 @@
 	y={['x0', 'x1']}
 	height={400}
 	padding={defaultChartPadding({ right: 20 })}
-	props={{
-		xAxis: { motion: 'tween' },
-		yAxis: { motion: 'tween' }
-	}}
+	motion={{ type: 'spring' }}
 	orientation="horizontal"
 >
 	{#snippet marks({ context })}
