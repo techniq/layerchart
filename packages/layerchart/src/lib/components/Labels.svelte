@@ -36,10 +36,11 @@
     y?: Accessor<T>;
 
     /**
-     * The placement of the label relative to the point
+     * The placement of the label relative to the point.
+     * `smart` dynamically positions labels based on neighboring point values (peak, trough, rising, falling).
      * @default 'outside'
      */
-    placement?: 'inside' | 'outside' | 'center';
+    placement?: 'inside' | 'outside' | 'center' | 'smart';
 
     /**
      * The offset of the label from the point
@@ -172,13 +173,61 @@
       }
     }
   }
+
+  function getDynamicTextProps(
+    point: Point,
+    points: Point[],
+    i: number
+  ): ComponentProps<typeof Text> {
+    const baseProps = getTextProps(point);
+
+    const getValue = (p: Point): number => (isScaleBand(ctx.yScale) ? p.xValue : p.yValue);
+    const curr = getValue(point);
+    const prev = i > 0 ? getValue(points[i - 1]) : curr;
+    const next = i < points.length - 1 ? getValue(points[i + 1]) : curr;
+
+    const xPrevTight = Math.abs(prev - curr) < offset;
+    const xNextTight = Math.abs(curr - next) < offset;
+    const isPeak = (prev <= curr && curr >= next) || (xPrevTight && xNextTight);
+    const isTrough = (prev >= curr && curr <= next) || (xPrevTight && xNextTight);
+    const isRising = !isPeak && !isTrough && prev < curr;
+    const isFalling = !isPeak && !isTrough && prev >= curr;
+
+    return {
+      ...baseProps,
+      x: point.x,
+      y: point.y,
+      dx: isRising
+        ? xPrevTight
+          ? offset
+          : -offset
+        : isFalling
+          ? xNextTight
+            ? -offset
+            : offset
+          : 0,
+      dy: isPeak ? -offset : isTrough ? offset : 0,
+      textAnchor: isRising
+        ? xPrevTight
+          ? 'start'
+          : 'end'
+        : isFalling
+          ? xNextTight
+            ? 'end'
+            : 'start'
+          : 'middle',
+      verticalAnchor: isPeak ? 'end' : isTrough ? 'start' : 'middle',
+    };
+  }
 </script>
 
 <Group class="lc-labels-g">
   <Points {data} {x} {y}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
-        {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
+        {@const baseProps =
+          placement === 'smart' ? getDynamicTextProps(point, points, i) : getTextProps(point)}
+        {@const textProps = extractLayerProps(baseProps, 'lc-labels-text')}
         {#if childrenProp}
           {@render childrenProp({ data: point, textProps })}
         {:else}
@@ -186,7 +235,7 @@
             data-placement={placement}
             {...textProps}
             {...restProps}
-            {...extractLayerProps(getTextProps(point), 'lc-labels-text', className ?? '')}
+            {...extractLayerProps(baseProps, 'lc-labels-text', className ?? '')}
           />
         {/if}
       {/each}

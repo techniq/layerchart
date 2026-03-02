@@ -452,7 +452,7 @@
             {@render labels(snippetProps)}
           {:else if labels}
             {#each seriesState.visibleSeries as s, i (s.key)}
-              <Labels {...getLabelsProps(s, i)} />
+              <Labels {...getLabelsProps(s, i)} placement="smart" />
             {/each}
           {/if}
 
