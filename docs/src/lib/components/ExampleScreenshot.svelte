@@ -25,13 +25,13 @@
 	const basePath = $derived(`/screenshots/${component}/${example}`);
 
 	const sizes = [
-		{ width: '240w', light: '@sm:hidden dark:hidden', dark: 'dark:block dark:@sm:hidden' },
+		{ width: '240w', light: 'dark:hidden @sm:hidden', dark: 'hidden dark:block dark:@sm:hidden' },
 		{
 			width: '400w',
-			light: '@sm:block @lg:hidden dark:hidden',
-			dark: 'dark:@sm:block dark:@lg:hidden'
+			light: 'hidden @sm:block @lg:hidden dark:hidden',
+			dark: 'hidden dark:@sm:block dark:@lg:hidden'
 		},
-		{ width: '800w', light: '@lg:block dark:hidden', dark: 'dark:@lg:block' }
+		{ width: '800w', light: 'hidden @lg:block dark:hidden', dark: 'hidden dark:@lg:block' }
 	];
 </script>
 
@@ -59,7 +59,7 @@
 					alt="{component} - {example}"
 					class={cls(
 						'w-full h-full object-scale-down object-center p-2',
-						mode === 'light' ? size.light : 'hidden ' + size.dark
+						mode === 'light' ? size.light : size.dark
 					)}
 					loading="lazy"
 					onerror={() => (hasError = true)}
