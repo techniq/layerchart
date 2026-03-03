@@ -18,7 +18,7 @@
 	cDomain={['desc', 'asc']}
 	cRange={['var(--color-danger)', 'var(--color-success)']}
 	padding={{ left: 20, bottom: 32, top: 20 }}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	height={300}
 >
 	<Layer>

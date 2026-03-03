@@ -19,7 +19,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ left: 24, bottom: 20, top: 8 }}
-	tooltip={{
+	tooltipContext={{
 		mode: 'band',
 		onclick(e, { data }) {
 			alert('You clicked on:\n' + JSON.stringify(data, null, 2));

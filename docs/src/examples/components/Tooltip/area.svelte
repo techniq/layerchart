@@ -31,7 +31,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
-	tooltip={{
+	tooltipContext={{
 		mode: settings.mode
 	}}
 	height={300}

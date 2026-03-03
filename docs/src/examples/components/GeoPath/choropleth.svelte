@@ -65,7 +65,7 @@
 		initialScrollMode: 'scale'
 	}}
 	padding={{ top: 60 }}
-	tooltip={{ raiseTarget: getSettings().layer === 'svg' }}
+	tooltipContext={{ raiseTarget: getSettings().layer === 'svg' }}
 	height={600}
 >
 	{#snippet children({ context })}

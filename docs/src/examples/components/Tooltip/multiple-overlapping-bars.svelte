@@ -38,7 +38,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ top: 5, left: 28, bottom: 24 }}
-	tooltip={{
+	tooltipContext={{
 		mode: charts.multiBars.mode,
 		debug: false
 	}}

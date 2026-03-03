@@ -27,7 +27,7 @@
 	y="value"
 	yDomain={[0, null]}
 	padding={defaultChartPadding({ left: 25, bottom: 24 })}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	brush={{
 		resetOnEnd: true,
 		onBrushEnd: (e) => {

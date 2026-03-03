@@ -39,7 +39,7 @@
 	y1Domain={colorKeys}
 	y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
 	padding={defaultChartPadding({ left: 32, bottom: 20, right: 15 })}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={400}
 >
 	{#snippet children({ context })}

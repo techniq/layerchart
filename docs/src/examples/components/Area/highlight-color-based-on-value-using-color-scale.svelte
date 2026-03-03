@@ -18,7 +18,7 @@
 	y="value"
 	yNice
 	padding={20}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	c={(d) => (d.value < 0 ? 'under' : 'over')}
 	cDomain={['over', 'under']}
 	cRange={['var(--color-success)', 'var(--color-danger)']}

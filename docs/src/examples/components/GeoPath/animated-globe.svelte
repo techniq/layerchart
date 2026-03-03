@@ -116,7 +116,7 @@
 		transform={{
 			motion: { type: 'spring', stiffness: 0.04 }
 		}}
-		tooltip={{ touchEvents: 'none' }}
+		tooltipContext={{ touchEvents: 'none' }}
 		bind:context
 		padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 		height={600}

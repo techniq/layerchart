@@ -31,7 +31,7 @@
 		projection: geoNaturalEarth1,
 		fitGeojson: countries
 	}}
-	tooltip={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
+	tooltipContext={{ mode: tooltipMode, debug: settings.debug, radius: tooltipRadius }}
 	height={600}
 >
 	{#snippet children({ context })}

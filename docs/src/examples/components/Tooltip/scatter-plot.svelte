@@ -28,7 +28,7 @@
 	xNice
 	yNice
 	padding={{ left: 30, bottom: 30 }}
-	tooltip={{
+	tooltipContext={{
 		mode: settings.mode
 	}}
 	height={300}

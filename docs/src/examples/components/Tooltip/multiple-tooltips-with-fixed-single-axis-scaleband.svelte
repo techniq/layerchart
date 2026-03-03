@@ -24,7 +24,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ left: 16, bottom: 24, top: 16, right: 16 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={300}
 >
 	{#snippet children({ context })}

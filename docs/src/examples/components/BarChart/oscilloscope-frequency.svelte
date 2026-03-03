@@ -102,7 +102,7 @@
 	bandPadding={0.2}
 	rule={false}
 	axis="y"
-	tooltip={{ mode: 'manual' }}
+	tooltipContext={{ mode: 'manual' }}
 	props={{
 		yAxis: { format: (d) => decibels(d)?.toFixed(1) }
 	}}
