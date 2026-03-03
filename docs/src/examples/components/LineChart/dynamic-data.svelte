@@ -19,7 +19,7 @@
 		x="x"
 		y="y"
 		yBaseline={undefined}
-		tooltip={false}
+		tooltipContext={false}
 		motion={{ type: 'spring' }}
 		props={{
 			// spline: {

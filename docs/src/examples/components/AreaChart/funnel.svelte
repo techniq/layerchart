@@ -54,7 +54,7 @@
 			xTicks: funnelSegments.map((d) => d.index)
 		}
 	}}
-	tooltip={false}
+	tooltipContext={false}
 	height={400}
 >
 	{#snippet marks({ context })}
