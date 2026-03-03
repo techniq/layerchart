@@ -218,6 +218,7 @@
     const containerNode = (e.target as Element).closest('.lc-root-container')!;
     const point = localPoint(e, containerNode);
 
+    // If pointer is outside of the chart area (ex. within padding), hide tooltip.  This prevents showing tooltip when interacting with axes, legends, etc.  For voronoi/quadtreemodes, this is handled by quadtree finding no point, but for bisect modes we need to check manually.
     if (
       ref !== undefined &&
       tooltipData == null && // mode !== 'manual' but support annotations

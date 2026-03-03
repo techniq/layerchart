@@ -24,6 +24,7 @@
 	cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
 	axis="x"
 	bandPadding={0.1}
+	grid={false}
 	props={{
 		bars: { radius: 4, strokeWidth: 0, rounded: 'all' },
 		highlight: { bar: { radius: 4, class: 'stroke-current stroke-2 fill-none' } },
