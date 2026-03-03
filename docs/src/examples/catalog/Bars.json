@@ -2253,7 +2253,7 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/gradient",
       "lineNumber": 20,
-      "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
+      "line": "<Bars fill={gradient} radius={4} rounded=\"top\" />"
     },
     {
       "example": "oscilloscope-frequency",
@@ -2788,5 +2788,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.376Z"
+  "updatedAt": "2026-03-02T17:24:36.490Z"
 }

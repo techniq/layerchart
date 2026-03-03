@@ -784,6 +784,55 @@
       "line": "<Spline y=\"close\" class=\"stroke-secondary\" />"
     },
     {
+      "example": "data-chart-multi",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "lineNumber": 16,
+      "line": "<Spline y=\"apples\" stroke=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-chart-multi",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "lineNumber": 17,
+      "line": "<Spline y=\"oranges\" stroke=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "data-chart-single",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-single",
+      "lineNumber": 16,
+      "line": "<Spline />"
+    },
+    {
+      "example": "data-series-chart-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "lineNumber": 24,
+      "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-series-chart-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "lineNumber": 25,
+      "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "data-series-separate-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "lineNumber": 33,
+      "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-series-separate-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "lineNumber": 34,
+      "line": "<Spline seriesKey=\"oranges\" stroke=\"var(--color-oranges)\" />"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1162,5 +1211,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.963Z"
+  "updatedAt": "2026-03-02T17:24:38.400Z"
 }

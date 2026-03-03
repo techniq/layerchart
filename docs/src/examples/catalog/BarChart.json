@@ -55,14 +55,26 @@
       ]
     },
     {
-      "name": "brushing",
-      "title": "brushing",
-      "path": "/docs/components/BarChart/brushing",
+      "name": "brush",
+      "title": "brush",
+      "path": "/docs/components/BarChart/brush",
       "components": [
         {
           "component": "BarChart",
           "lineNumber": 16,
           "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} brush height={300} />"
+        }
+      ]
+    },
+    {
+      "name": "brush-pan-zoom",
+      "title": "brush pan zoom",
+      "path": "/docs/components/BarChart/brush-pan-zoom",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart"
         }
       ]
     },
@@ -388,7 +400,7 @@
         {
           "component": "Bars",
           "lineNumber": 20,
-          "line": "<Bars {...getBarsProps(s, i)} fill={gradient} />"
+          "line": "<Bars fill={gradient} radius={4} rounded=\"top\" />"
         }
       ]
     },
@@ -530,12 +542,12 @@
         },
         {
           "component": "Rect",
-          "lineNumber": 36,
+          "lineNumber": 33,
           "line": "<Rect"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 47,
+          "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -706,6 +718,18 @@
       "name": "override-axis-ticks-with-custom-scale",
       "title": "override axis ticks with custom scale",
       "path": "/docs/components/BarChart/override-axis-ticks-with-custom-scale",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom",
+      "title": "pan zoom",
+      "path": "/docs/components/BarChart/pan-zoom",
       "components": [
         {
           "component": "BarChart",
@@ -1307,11 +1331,18 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" grid={{ x: true, bandAlign: 'between' }} height={300} />"
     },
     {
-      "example": "brushing",
+      "example": "brush",
       "component": "BarChart",
-      "path": "/docs/components/BarChart/brushing",
+      "path": "/docs/components/BarChart/brush",
       "lineNumber": 16,
       "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} brush height={300} />"
+    },
+    {
+      "example": "brush-pan-zoom",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/brush-pan-zoom",
+      "lineNumber": 16,
+      "line": "<BarChart"
     },
     {
       "example": "color-bars-class",
@@ -1548,6 +1579,13 @@
       "example": "override-axis-ticks-with-custom-scale",
       "component": "BarChart",
       "path": "/docs/components/BarChart/override-axis-ticks-with-custom-scale",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "pan-zoom",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/pan-zoom",
       "lineNumber": 16,
       "line": "<BarChart"
     },
@@ -1874,5 +1912,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:00.685Z"
+  "updatedAt": "2026-03-02T17:24:36.460Z"
 }

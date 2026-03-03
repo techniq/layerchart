@@ -338,12 +338,12 @@
         },
         {
           "component": "Highlight",
-          "lineNumber": 66,
+          "lineNumber": 68,
           "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 71,
+          "lineNumber": 75,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -438,7 +438,7 @@
         {
           "component": "Area",
           "lineNumber": 43,
-          "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
+          "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
         }
       ]
     },
@@ -682,7 +682,7 @@
       "example": "brush-sync",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/brush-sync",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<AreaChart"
     },
     {
@@ -966,5 +966,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-02-09T15:39:47.304Z"
+  "updatedAt": "2026-03-02T17:24:36.389Z"
 }

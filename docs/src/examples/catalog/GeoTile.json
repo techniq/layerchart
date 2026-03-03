@@ -81,11 +81,6 @@
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 63,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
           "lineNumber": 65,
           "line": "<Layer>"
@@ -148,11 +143,6 @@
           "component": "Chart",
           "lineNumber": 44,
           "line": "<Chart"
-        },
-        {
-          "component": "TransformControls",
-          "lineNumber": 69,
-          "line": "<TransformControls />"
         },
         {
           "component": "Layer",
@@ -235,6 +225,62 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
     },
     {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 104,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 105,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 106,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 107,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 111,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 112,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 113,
+      "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 114,
+      "line": "<GeoTile url={serviceUrl} {zoomDelta} />"
+    },
+    {
       "example": "basic",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/basic",
@@ -291,5 +337,5 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.787Z"
+  "updatedAt": "2026-03-02T17:24:37.401Z"
 }

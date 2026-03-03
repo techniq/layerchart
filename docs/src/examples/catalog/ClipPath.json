@@ -13,14 +13,14 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 106,
+      "lineNumber": 105,
       "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 129,
+      "lineNumber": 125,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
@@ -31,5 +31,5 @@
       "line": "<ClipPath useId=\"clip\">"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.433Z"
+  "updatedAt": "2026-03-02T17:24:36.682Z"
 }

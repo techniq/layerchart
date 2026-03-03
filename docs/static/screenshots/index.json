@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-13T15:07:58.992Z",
-  "totalComponents": 59,
-  "totalExamples": 714,
+  "generatedAt": "2026-03-02T17:24:35.702Z",
+  "totalComponents": 60,
+  "totalExamples": 726,
   "components": [
     {
       "component": "AnnotationLine",
@@ -259,7 +259,7 @@
         {
           "name": "series-labels",
           "path": "/example/ArcChart/series-labels",
-          "checksum": "5bf842f5ba7d7822a3d2eeff96b74594"
+          "checksum": "4d83eea18270efbb0069ac8d1caa1f9d"
         },
         {
           "name": "series-motion-spring",
@@ -419,12 +419,12 @@
         {
           "name": "brush",
           "path": "/example/AreaChart/brush",
-          "checksum": "18efee10f5a4353300b90eeb4f0e7719"
+          "checksum": "8de84247d2d6b1fa9898688042c90f61"
         },
         {
           "name": "brush-sync",
           "path": "/example/AreaChart/brush-sync",
-          "checksum": "5acb621463d6d7ad8d09443b308993b5"
+          "checksum": "249db2b9d265128482edd968b6c97fa1"
         },
         {
           "name": "curve",
@@ -509,7 +509,7 @@
         {
           "name": "series-individual-tooltip",
           "path": "/example/AreaChart/series-individual-tooltip",
-          "checksum": "7afb33fc2557b32ccdb5cfbd71b5d93d"
+          "checksum": "a84b2bd70f44988a3651b45d0fa64e55"
         },
         {
           "name": "series-point-annotations",
@@ -544,7 +544,7 @@
         {
           "name": "series-stack-gradient",
           "path": "/example/AreaChart/series-stack-gradient",
-          "checksum": "9ea02f26aa401fd82492a5779c95d0ca"
+          "checksum": "028eeb209a7b3f66864eaec106fa0a50"
         },
         {
           "name": "series-stack-legend",
@@ -847,9 +847,14 @@
           "checksum": "6ec5fe2dfecbae311aa4df46344c5729"
         },
         {
-          "name": "brushing",
-          "path": "/example/BarChart/brushing",
+          "name": "brush",
+          "path": "/example/BarChart/brush",
           "checksum": "4b39996c958561578c7d85b6d6fb9682"
+        },
+        {
+          "name": "brush-pan-zoom",
+          "path": "/example/BarChart/brush-pan-zoom",
+          "checksum": "9296a53f9fc964f5e39f5e6513f0640e"
         },
         {
           "name": "color-bars-class",
@@ -939,7 +944,7 @@
         {
           "name": "gradient",
           "path": "/example/BarChart/gradient",
-          "checksum": "24478da8d18f4000e87c8978a09ab2b9"
+          "checksum": "4ffa0f07e3ba14490969c3be8c822ac6"
         },
         {
           "name": "group-series",
@@ -959,7 +964,7 @@
         {
           "name": "group-series-labels",
           "path": "/example/BarChart/group-series-labels",
-          "checksum": "b8a89e03c567b4c55d06a39f957fc5ca"
+          "checksum": "7aada8ead9c66f29f3a922c6370733ab"
         },
         {
           "name": "group-series-series-long-data",
@@ -974,7 +979,7 @@
         {
           "name": "histogram-date-time-count",
           "path": "/example/BarChart/histogram-date-time-count",
-          "checksum": "0b73c64b28cc2d20037505ebdae1d793"
+          "checksum": "322bdcb9da35bcd4fbcf5e7cdd5f50ec"
         },
         {
           "name": "histogram-date-time-interval",
@@ -984,17 +989,17 @@
         {
           "name": "histogram-horizontal",
           "path": "/example/BarChart/histogram-horizontal",
-          "checksum": "c8a85eda454144c5c2835a1b4375cb3a"
+          "checksum": "edc2de424471794de471177f8328eaad"
         },
         {
           "name": "histogram-random-distribution",
           "path": "/example/BarChart/histogram-random-distribution",
-          "checksum": "58dd73dedd95abad306296a43f04be8a"
+          "checksum": "6e548e57921165121c80d7082f19f9dc"
         },
         {
           "name": "histogram-vertical",
           "path": "/example/BarChart/histogram-vertical",
-          "checksum": "938f6a4898bfaa674cc8cc785f2e6a74"
+          "checksum": "364c6785645976baa4f8ef264a908261"
         },
         {
           "name": "horizontal",
@@ -1045,6 +1050,11 @@
           "name": "override-axis-ticks-with-custom-scale",
           "path": "/example/BarChart/override-axis-ticks-with-custom-scale",
           "checksum": "026168606f6ad4a127e27e3a5eb3b36c"
+        },
+        {
+          "name": "pan-zoom",
+          "path": "/example/BarChart/pan-zoom",
+          "checksum": "1471b5b3042e9c7b45a7a8f540abd32b"
         },
         {
           "name": "point-annotation",
@@ -1144,7 +1154,7 @@
         {
           "name": "series-horizontal-diverging-as-percent",
           "path": "/example/BarChart/series-horizontal-diverging-as-percent",
-          "checksum": "352ddec01239b510963bedb871ae7253"
+          "checksum": "a45af53ba921d1867507ff7ba433b9b8"
         },
         {
           "name": "single-axis-x",
@@ -1604,57 +1614,57 @@
         {
           "name": "constant-labels",
           "path": "/example/BrushContext/constant-labels",
-          "checksum": "7e2f1f4669bde3060e8d0e5413ce6a6a"
+          "checksum": "454e16de21a48399ca49e047a242c3e4"
         },
         {
           "name": "handle-arrows",
           "path": "/example/BrushContext/handle-arrows",
-          "checksum": "6dbad5a030b05ff6ea263e5d7d4f4b31"
+          "checksum": "53e35984c7b9a5e9b6716eb688dc4367"
         },
         {
           "name": "handle-labels",
           "path": "/example/BrushContext/handle-labels",
-          "checksum": "e20bf1b5875ea3aa8649194284c43d03"
+          "checksum": "f069b4d1af4e27829b091c918e614602"
         },
         {
           "name": "integrated-brush-(both-axis-area)",
           "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-          "checksum": "ec398f3e974b390fdf28a39d9e0c220c"
+          "checksum": "2ed2484010aa62b500ba5b864d014e7a"
         },
         {
           "name": "integrated-brush-(x-axis)",
           "path": "/example/BrushContext/integrated-brush-(x-axis)",
-          "checksum": "7e415afc58d6ce67c71bae2305220ecd"
+          "checksum": "2ba8db1a6223a68da38c6cd0907cfd3d"
         },
         {
           "name": "integrated-brush-(y-axis)",
           "path": "/example/BrushContext/integrated-brush-(y-axis)",
-          "checksum": "49863fefdfb13942d2de5da5307b5462"
+          "checksum": "435d3f7fe49c596276de691a35fb4209"
         },
         {
           "name": "minimap",
           "path": "/example/BrushContext/minimap",
-          "checksum": "435f8f13b274433ccdaa4bcfb147bd47"
+          "checksum": "a73ccede521dc321553b8f278ae5f2fd"
         },
         {
           "name": "selection",
           "path": "/example/BrushContext/selection",
-          "checksum": "d0d8bcda1913bfbc91835229af67fea0"
+          "checksum": "f18294ca6628abade024b202cdddda5d"
         },
         {
           "name": "separate-chart-(clip-data-y-axis)",
           "path": "/example/BrushContext/separate-chart-(clip-data-y-axis)",
-          "checksum": "3986631ecbeb21c15910cfe97170d598"
+          "checksum": "01a71309adfb73bdcc4b3014bbc58e04"
         },
         {
           "name": "separate-chart-(clip-data)",
           "path": "/example/BrushContext/separate-chart-(clip-data)",
-          "checksum": "19696d60ce8e01a98282dfdfa47cad06"
+          "checksum": "b0373e20c676a82d68d206d0ad6997a7"
         },
         {
           "name": "separate-chart-(filter-data)",
           "path": "/example/BrushContext/separate-chart-(filter-data)",
-          "checksum": "386d8ac8ebb812a3eab849bb86b4fde9"
+          "checksum": "9231db14bf189002cc173d4b9c4e95e5"
         },
         {
           "name": "simple-styling",
@@ -1669,12 +1679,12 @@
         {
           "name": "sync-brushes-with-bind-xdomain",
           "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
-          "checksum": "8d9075f2ecbdb5e27db9c1d2f106656f"
+          "checksum": "d9a16068be8a50220b9b74e9dc0d29aa"
         },
         {
           "name": "tooltip-interop",
           "path": "/example/BrushContext/tooltip-interop",
-          "checksum": "fe711ae57fb4a2c17a96cef2268ae865"
+          "checksum": "f4110137cccf85ea1d49b3e5bf6e805c"
         }
       ]
     },
@@ -1684,7 +1694,7 @@
         {
           "name": "90-days",
           "path": "/example/Calendar/90-days",
-          "checksum": "9f31891353c3cc4a3bd561de54242650"
+          "checksum": "7d6100b903ba0e1538552a58ef89ac1f"
         },
         {
           "name": "basic",
@@ -1694,27 +1704,27 @@
         {
           "name": "fixed-cell-size",
           "path": "/example/Calendar/fixed-cell-size",
-          "checksum": "7bda4d776cab0b794a21c943fad73a2f"
+          "checksum": "f185643c6a8124494a68a23a3d4aa52b"
         },
         {
           "name": "html-with-padding",
           "path": "/example/Calendar/html-with-padding",
-          "checksum": "7ed4ee8a533a7e9d11aa87370a1ff544"
+          "checksum": "922ec05786b18e547280b38b2c4fd0e3"
         },
         {
           "name": "last-month",
           "path": "/example/Calendar/last-month",
-          "checksum": "c4bf2fae7fa54fd141f16377f3077a4a"
+          "checksum": "0354c813a0b8719724105f1038497a2e"
         },
         {
           "name": "multiple-years",
           "path": "/example/Calendar/multiple-years",
-          "checksum": "91026d84f5381817e269487ffbfc7294"
+          "checksum": "46bff8039c34213e5bc51ea8a66dfc59"
         },
         {
           "name": "responsive-cell-size-default",
           "path": "/example/Calendar/responsive-cell-size-default",
-          "checksum": "bd85f680bbd4500ab8aeb02879aade67"
+          "checksum": "a030233392eb93f6acee73cdb089d388"
         },
         {
           "name": "rounded-cells",
@@ -1750,6 +1760,26 @@
           "name": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
           "path": "/example/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
           "checksum": "15ef9059d61eb72a22d5ca990148849b"
+        },
+        {
+          "name": "data-chart-multi",
+          "path": "/example/Chart/data-chart-multi",
+          "checksum": "92a95fa7f5ecaf4e4e5c6bb3e683ef75"
+        },
+        {
+          "name": "data-chart-single",
+          "path": "/example/Chart/data-chart-single",
+          "checksum": "529b265346f3bac20bc58a826e3564b1"
+        },
+        {
+          "name": "data-series-chart-data",
+          "path": "/example/Chart/data-series-chart-data",
+          "checksum": "4076dab4f953f896b79bc01535561512"
+        },
+        {
+          "name": "data-series-separate-data",
+          "path": "/example/Chart/data-series-separate-data",
+          "checksum": "226930cccd59096c60824420d52a799d"
         }
       ]
     },
@@ -1969,17 +1999,17 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "f8f2dad35e73fade61aae5132f276e92"
+          "checksum": "c19393d7d90b6eb54712e201f5ba0262"
         },
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "e25d1e66d0ccb6bf716d9a26f0695bdd"
+          "checksum": "2240f97582be81b2ce1900d9304ec6ff"
         },
         {
           "name": "choropleth",
           "path": "/example/GeoPath/choropleth",
-          "checksum": "b009e30c257b4a5862d6df9b055f2a77"
+          "checksum": "0d9732374ba6b68b6228973e616882bb"
         },
         {
           "name": "eclipses-globe",
@@ -1994,7 +2024,7 @@
         {
           "name": "spike-map",
           "path": "/example/GeoPath/spike-map",
-          "checksum": "3c8d62cd02e22b5a2cbe619fcc0dac5c"
+          "checksum": "b43033203fa83b7362c303bab1289fb8"
         },
         {
           "name": "submarine-cables-globe",
@@ -2004,27 +2034,27 @@
         {
           "name": "timezones",
           "path": "/example/GeoPath/timezones",
-          "checksum": "0ad99642250faafaadb9f005a1c5c93e"
+          "checksum": "763b807501d11de667f8d4f29b510f29"
         },
         {
           "name": "tooltip",
           "path": "/example/GeoPath/tooltip",
-          "checksum": "5d0b421d74e55f4d6b042965b0878149"
+          "checksum": "680ebb5b6dc858a4c010c3cfcf31718c"
         },
         {
           "name": "transform-canvas",
           "path": "/example/GeoPath/transform-canvas",
-          "checksum": "5807f576ab67c8d545ce8be4ad59b301"
+          "checksum": "d82183ce4d36b529f6160cf62302c473"
         },
         {
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
-          "checksum": "631a46312724c7263a68f36d4f19f441"
+          "checksum": "dc0ae71ba0f68e4e1a8a7b5c01ecdf53"
         },
         {
           "name": "translucent-globe",
           "path": "/example/GeoPath/translucent-globe",
-          "checksum": "61f24d14e4888075fe6ff0dadff619da"
+          "checksum": "687b8f6e30e982f8d3b86ab5408203e7"
         },
         {
           "name": "us-country-map",
@@ -2039,12 +2069,12 @@
         {
           "name": "us-state-with-counties",
           "path": "/example/GeoPath/us-state-with-counties",
-          "checksum": "c25702ab7876b003f260aee202120ac4"
+          "checksum": "58b346cce86946f47fa84713b0b50b97"
         },
         {
           "name": "us-state-with-surrounding-states",
           "path": "/example/GeoPath/us-state-with-surrounding-states",
-          "checksum": "7ab72d6c112271459965278ee59265d4"
+          "checksum": "bb2abfbd5ccab0c35f529fee61c53cb5"
         }
       ]
     },
@@ -2079,6 +2109,31 @@
       ]
     },
     {
+      "component": "GeoProjection",
+      "examples": [
+        {
+          "name": "geojson-preview",
+          "path": "/example/GeoProjection/geojson-preview",
+          "checksum": "2ca5083949d6343269865eb00315735c"
+        },
+        {
+          "name": "projection-playground",
+          "path": "/example/GeoProjection/projection-playground",
+          "checksum": "e0f9e863547b839e23cdb6112fe526ed"
+        },
+        {
+          "name": "shapefile-preview",
+          "path": "/example/GeoProjection/shapefile-preview",
+          "checksum": "a7f6c927a97c46c58c128f61806864d3"
+        },
+        {
+          "name": "topojson-preview",
+          "path": "/example/GeoProjection/topojson-preview",
+          "checksum": "415205c8260092f7297bb99e54fb4881"
+        }
+      ]
+    },
+    {
       "component": "GeoSpline",
       "examples": [
         {
@@ -2099,27 +2154,27 @@
         {
           "name": "basic",
           "path": "/example/GeoTile/basic",
-          "checksum": "2e202be8f970fdbc30f30ce28a92c760"
+          "checksum": "239c65bd14e27bad435bb128972ee052"
         },
         {
           "name": "clipped",
           "path": "/example/GeoTile/clipped",
-          "checksum": "2f22def05261e70df82ccb039c947036"
+          "checksum": "54cc434a4a1ac3ae8cde4a0bd8e1336d"
         },
         {
           "name": "zoomable",
           "path": "/example/GeoTile/zoomable",
-          "checksum": "251c87a6cee75246f5a6d3347d697a2a"
+          "checksum": "51c4cce8e707dccec68b388bcb73a341"
         },
         {
           "name": "zoomable-seamless-layers",
           "path": "/example/GeoTile/zoomable-seamless-layers",
-          "checksum": "c13b39dc817a5dcfdd756ae0a80510fc"
+          "checksum": "b1534cdf6a5eff6c07ba07a175f81fc3"
         },
         {
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
-          "checksum": "2ec3eead5e4f39b6951b238273b707f6"
+          "checksum": "aa95ed858315b8db79d9864480293044"
         }
       ]
     },
@@ -2409,7 +2464,12 @@
         {
           "name": "brush",
           "path": "/example/LineChart/brush",
-          "checksum": "400c5224ea58eca41c763b01086c2807"
+          "checksum": "4419ef8dc27fdfefb032f5173491504a"
+        },
+        {
+          "name": "brush-pan-zoom",
+          "path": "/example/LineChart/brush-pan-zoom",
+          "checksum": "c389c53707e23e369a4e2d41dedbd443"
         },
         {
           "name": "curve",
@@ -2439,7 +2499,7 @@
         {
           "name": "dynamic-data",
           "path": "/example/LineChart/dynamic-data",
-          "checksum": "1e44fbd4a794db274b368f97fb544b86"
+          "checksum": "b1ebc4a4f186214baed2b611590dcd61"
         },
         {
           "name": "gradient-encoding",
@@ -2505,6 +2565,11 @@
           "name": "override-color",
           "path": "/example/LineChart/override-color",
           "checksum": "1037246fe1be98c11509ba855af7024c"
+        },
+        {
+          "name": "pan-zoom",
+          "path": "/example/LineChart/pan-zoom",
+          "checksum": "356a46871dfdabc42ae4900c9c204552"
         },
         {
           "name": "perf-dimension-arrays",
@@ -2584,12 +2649,12 @@
         {
           "name": "series-individual-tooltip",
           "path": "/example/LineChart/series-individual-tooltip",
-          "checksum": "0674b2e621440ac7adcf9a33e74ac256"
+          "checksum": "151366832c1dec6ccaf965f74f2e11e8"
         },
         {
           "name": "series-labels-hover",
           "path": "/example/LineChart/series-labels-hover",
-          "checksum": "eed8118d5b1fb7344a2b27ed9d4c6f77"
+          "checksum": "49f560fe1412f6d45d07afe768b1e2b9"
         },
         {
           "name": "series-point-annotations",
@@ -2619,7 +2684,7 @@
         {
           "name": "series-with-nulls",
           "path": "/example/LineChart/series-with-nulls",
-          "checksum": "2638e2c95618c2d620c2e860cff76d1a"
+          "checksum": "e99f077ffa9ff318663140fbacaec578"
         },
         {
           "name": "single-axis-x",
@@ -2929,7 +2994,7 @@
         {
           "name": "tooltip",
           "path": "/example/Pie/tooltip",
-          "checksum": "eeef9318dd488da9ca9037a4bcfae60c"
+          "checksum": "2fdf4d36ac8b7f2dba6ffefcc2a4c837"
         },
         {
           "name": "tooltip-with-arcs-slot",

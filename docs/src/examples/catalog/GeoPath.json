@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 125,
+          "lineNumber": 110,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 146,
+          "lineNumber": 130,
           "line": "<Layer {debug}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 147,
+          "lineNumber": 131,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 148,
+          "lineNumber": 132,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Canvas",
-          "lineNumber": 166,
+          "lineNumber": 150,
           "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 174,
+          "lineNumber": 158,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -257,32 +257,32 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 102,
+          "lineNumber": 101,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 103,
+          "lineNumber": 102,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "ClipPath",
-          "lineNumber": 106,
+          "lineNumber": 105,
           "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
         },
         {
           "component": "Blur",
-          "lineNumber": 130,
+          "lineNumber": 126,
           "line": "<Blur>"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 131,
-          "line": "<GeoCircle"
+          "lineNumber": 127,
+          "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 140,
+          "lineNumber": 133,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -394,9 +394,9 @@
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
-          "component": "GeoContext",
+          "component": "GeoProjection",
           "lineNumber": 62,
-          "line": "<GeoContext"
+          "line": "<GeoProjection"
         },
         {
           "component": "Graticule",
@@ -594,21 +594,21 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 147,
+      "lineNumber": 131,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 151,
+      "lineNumber": 135,
       "line": "<GeoPath"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 169,
+      "lineNumber": 153,
       "line": "<GeoPath geojson={context.tooltip.data} class=\"fill-surface-content/20\" />"
     },
     {
@@ -748,35 +748,35 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 103,
+      "lineNumber": 102,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 105,
+      "lineNumber": 104,
       "line": "<GeoPath geojson={countriesGeojson} id=\"clip\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 108,
+      "lineNumber": 107,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 118,
-      "line": "<GeoPath"
+      "lineNumber": 117,
+      "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 fill-gray-900/20 pointer-events-none\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 125,
+      "lineNumber": 121,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
     },
     {
@@ -955,6 +955,41 @@
       "line": "<GeoPath"
     },
     {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 116,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 74,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 77,
+      "line": "<GeoPath"
+    },
+    {
+      "example": "shapefile-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/shapefile-preview",
+      "lineNumber": 110,
+      "line": "<GeoPath {geojson} fill=\"white\" />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 123,
+      "line": "<GeoPath"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -1039,5 +1074,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:30.493Z"
+  "updatedAt": "2026-03-02T17:24:37.311Z"
 }

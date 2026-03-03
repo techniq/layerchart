@@ -1217,7 +1217,7 @@
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -1231,7 +1231,7 @@
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1245,21 +1245,21 @@
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1518,14 +1518,14 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 146,
+      "lineNumber": 130,
       "line": "<Layer {debug}>"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 167,
+      "lineNumber": 151,
       "line": "<Layer type=\"canvas\" pointerEvents={false}>"
     },
     {
@@ -1595,7 +1595,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 102,
+      "lineNumber": 101,
       "line": "<Layer>"
     },
     {
@@ -1729,6 +1729,48 @@
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
       "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 102,
+      "line": "<Layer>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 113,
+      "line": "<Layer>"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 73,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shapefile-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/shapefile-preview",
+      "lineNumber": 109,
+      "line": "<Layer>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 109,
+      "line": "<Layer>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 120,
       "line": "<Layer>"
     },
     {
@@ -2316,7 +2358,7 @@
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Layer center>"
     },
     {
@@ -3125,5 +3167,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.461Z"
+  "updatedAt": "2026-03-02T17:24:37.602Z"
 }

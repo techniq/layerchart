@@ -38,6 +38,18 @@
       ]
     },
     {
+      "name": "brush-pan-zoom",
+      "title": "brush pan zoom",
+      "path": "/docs/components/LineChart/brush-pan-zoom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "curve",
       "title": "curve",
       "path": "/docs/components/LineChart/curve",
@@ -361,6 +373,18 @@
       ]
     },
     {
+      "name": "pan-zoom",
+      "title": "pan zoom",
+      "path": "/docs/components/LineChart/pan-zoom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "perf-dimension-arrays",
       "title": "perf dimension arrays",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -562,12 +586,12 @@
         },
         {
           "component": "Highlight",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 60,
+          "lineNumber": 64,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -584,8 +608,8 @@
         },
         {
           "component": "Labels",
-          "lineNumber": 35,
-          "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
+          "lineNumber": 34,
+          "line": "<Labels seriesKey={context.series.highlightKey} offset={10} />"
         }
       ]
     },
@@ -1015,6 +1039,34 @@
       "line": "<LineChart"
     },
     {
+      "example": "data-chart-multi",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "lineNumber": 14,
+      "line": "<LineChart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
+    },
+    {
+      "example": "data-chart-single",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-single",
+      "lineNumber": 14,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "data-series-chart-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
+      "example": "data-series-separate-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "lineNumber": 23,
+      "line": "<LineChart"
+    },
+    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1032,6 +1084,13 @@
       "example": "brush",
       "component": "LineChart",
       "path": "/docs/components/LineChart/brush",
+      "lineNumber": 9,
+      "line": "<LineChart"
+    },
+    {
+      "example": "brush-pan-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/brush-pan-zoom",
       "lineNumber": 9,
       "line": "<LineChart"
     },
@@ -1166,6 +1225,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/override-color",
       "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom",
+      "lineNumber": 9,
       "line": "<LineChart"
     },
     {
@@ -1435,5 +1501,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:02.287Z"
+  "updatedAt": "2026-03-02T17:24:37.708Z"
 }

@@ -60,7 +60,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 148,
+      "lineNumber": 132,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -99,6 +99,13 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 75,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -120,5 +127,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:30.583Z"
+  "updatedAt": "2026-03-02T17:24:37.438Z"
 }

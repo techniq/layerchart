@@ -29,11 +29,6 @@
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 16,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
           "lineNumber": 18,
           "line": "<Layer type=\"svg\">"
@@ -74,5 +69,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-02-07T20:21:32.483Z"
+  "updatedAt": "2026-03-02T17:24:38.693Z"
 }

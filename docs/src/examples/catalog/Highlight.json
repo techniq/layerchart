@@ -97,7 +97,7 @@
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 66,
+      "lineNumber": 68,
       "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
     },
     {
@@ -384,7 +384,7 @@
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
     },
     {
@@ -640,5 +640,5 @@
       "line": "<Highlight"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.844Z"
+  "updatedAt": "2026-03-02T17:24:37.519Z"
 }

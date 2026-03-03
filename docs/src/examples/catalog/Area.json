@@ -1029,7 +1029,7 @@
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
       "lineNumber": 43,
-      "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
+      "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
     },
     {
       "example": "threshold",
@@ -1333,5 +1333,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:50.030Z"
+  "updatedAt": "2026-03-02T17:24:36.361Z"
 }

@@ -102,7 +102,7 @@
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 36,
+      "lineNumber": 33,
       "line": "<Rect"
     },
     {
@@ -750,5 +750,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:02.704Z"
+  "updatedAt": "2026-03-02T17:24:38.294Z"
 }
