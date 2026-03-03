@@ -315,8 +315,15 @@
 
       const series = ctx.series.series.map((s) => {
         // Find related data point for this series (if series has its own data)
+        // When tooltipData has a seriesKey (from visibleSeriesData), only match the owning series.
+        // This prevents scatter charts from showing highlight points for other series
+        // that happen to share the same x value.
         const seriesTooltipData = s.data
-          ? findRelatedData(s.data, tooltipData, ctx.x)
+          ? tooltipData?.seriesKey != null
+            ? s.key === tooltipData.seriesKey
+              ? tooltipData
+              : undefined
+            : findRelatedData(s.data, tooltipData, ctx.x)
           : tooltipData;
 
         // Determine value accessor: series.value > series.key (if no data) > ctx.y
