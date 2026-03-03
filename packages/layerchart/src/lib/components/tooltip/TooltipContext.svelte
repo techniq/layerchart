@@ -313,13 +313,13 @@
         raise(e.target as Element);
       }
 
+      // For quadtree mode, the tooltip finds a single specific point (by x+y proximity),
+      // so only the owning series should be matched. For bisect and quadtree-x/y modes,
+      // the tooltip finds by a single axis position and all series at that position should show values.
       const series = ctx.series.series.map((s) => {
         // Find related data point for this series (if series has its own data)
-        // When tooltipData has a seriesKey (from visibleSeriesData), only match the owning series.
-        // This prevents scatter charts from showing highlight points for other series
-        // that happen to share the same x value.
         const seriesTooltipData = s.data
-          ? tooltipData?.seriesKey != null
+          ? mode === 'quadtree' && tooltipData?.seriesKey != null
             ? s.key === tooltipData.seriesKey
               ? tooltipData
               : undefined
