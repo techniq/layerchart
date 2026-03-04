@@ -70,7 +70,7 @@ export const getDependents = query(async () => {
 		{
 			name: 'RetireNumber',
 			description: 'Get a second opinion on your retirement number.',
-			homepageurl: 'https://returenumber.com/'
+			homepageurl: 'https://retirenumber.com/'
 		},
 		{
 			name: 'PowerOutage.com',
@@ -104,6 +104,7 @@ export const getDependents = query(async () => {
 		Accept: 'application/vnd.github.v3+json',
 		'User-Agent': 'LayerChart docs'
 	};
+
 	if (env.GITHUB_API_TOKEN) {
 		const prefix = env.GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
 		githubHeaders['Authorization'] = `${prefix} ${env.GITHUB_API_TOKEN}`;
