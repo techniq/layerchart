@@ -2199,28 +2199,28 @@
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Tooltip.List>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Tooltip.Item"
     },
     {
@@ -5132,7 +5132,7 @@
       "example": "single-dimension",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/single-dimension",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
     },
     {
@@ -5997,5 +5997,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:38.536Z"
+  "updatedAt": "2026-03-04T05:41:27.214Z"
 }

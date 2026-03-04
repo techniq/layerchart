@@ -328,7 +328,7 @@
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "multiple-series",
@@ -384,28 +384,28 @@
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "with-labels",
@@ -3173,5 +3173,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:36.590Z"
+  "updatedAt": "2026-03-04T05:41:25.909Z"
 }

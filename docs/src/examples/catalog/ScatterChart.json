@@ -329,7 +329,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 25,
+          "lineNumber": 24,
           "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
         }
       ]
@@ -524,5 +524,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.291Z"
+  "updatedAt": "2026-03-04T05:41:27.068Z"
 }

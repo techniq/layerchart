@@ -423,7 +423,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 9,
+          "lineNumber": 11,
           "line": "<BarChart"
         }
       ]
@@ -1024,7 +1024,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 36,
+          "lineNumber": 37,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1481,7 +1481,7 @@
       "example": "group-series-bar-click",
       "component": "BarChart",
       "path": "/docs/components/BarChart/group-series-bar-click",
-      "lineNumber": 9,
+      "lineNumber": 11,
       "line": "<BarChart"
     },
     {
@@ -1912,5 +1912,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:36.460Z"
+  "updatedAt": "2026-03-04T05:41:25.723Z"
 }
