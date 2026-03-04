@@ -46,9 +46,8 @@
 
   import Chart from '../Chart.svelte';
 
-  import { defaultChartPadding, getObjectOrNull } from '../../utils/common.js';
+  import { getObjectOrNull } from '../../utils/common.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';
-  import type { BrushDomainType } from '../../states/brush.svelte.js';
 
   let {
     data = [],
@@ -65,7 +64,6 @@
     brush = false,
     highlight = { lines: true, points: true },
     legend = false,
-    onTooltipClick = () => {},
     onPointClick,
     props = {},
     profile = false,
@@ -97,8 +95,6 @@
         ]
       : seriesProp
   );
-  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
-
   const highlightWithPointClick = $derived(
     typeof highlight === 'function'
       ? highlight
@@ -129,45 +125,16 @@
   yNice={valueAxis === 'y'}
   {radial}
   {valueAxis}
-  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
         mode: valueAxis === 'x' ? 'quadtree-y' : 'quadtree-x',
-        onclick: onTooltipClick,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
-  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
-    ? {
-        axis: 'x',
-        resetOnEnd: true,
-        x: xDomain as BrushDomainType,
-        ...brushProps,
-        onBrushEnd: (e) => {
-          if (restProps.transform?.mode === 'domain' && context) {
-            // Convert brush selection to transform scale/translate
-            const brushX = e.brush.x;
-            if (brushX[0] != null && brushX[1] != null) {
-              const baseDomain = context._baseXDomain;
-              const baseMin = +baseDomain[0];
-              const baseRange = +baseDomain[1] - baseMin;
-              const brushMin = +brushX[0];
-              const brushRange = +brushX[1] - brushMin;
-              if (brushRange > 0 && baseRange > 0) {
-                const newScale = baseRange / brushRange;
-                const newTranslateX = -((brushMin - baseMin) / baseRange) * context.width * newScale;
-                context.transform.setScale(newScale);
-                context.transform.setTranslate({ x: newTranslateX, y: 0 });
-              }
-            }
-          } else {
-            xDomain = e.brush.x;
-          }
-          brushProps.onBrushEnd?.(e);
-        },
-      }
+  brush={brush
+    ? { axis: 'x', resetOnEnd: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
     : false}
   {series}
   highlight={highlightWithPointClick as any}

@@ -14,7 +14,7 @@ import {
 } from '$lib/utils/scales.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
-import { accessor, chartDataArray } from '$lib/utils/common.js';
+import { accessor, chartDataArray, defaultChartPadding } from '$lib/utils/common.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
@@ -22,7 +22,7 @@ import { printDebug } from '$lib/utils/debug.js';
 import { GeoState } from './geo.svelte.js';
 import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
-import type { BrushState } from './brush.svelte.js';
+import type { BrushDomainType, BrushState } from './brush.svelte.js';
 import { SeriesState, type StackLayout } from './series.svelte.js';
 import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
@@ -289,7 +289,15 @@ export class ChartState<
   });
 
   padding = $derived.by(() => {
-    const paddingProp = this.props.padding ?? {};
+    let paddingProp = this.props.padding;
+    // When no explicit padding, compute default from axis/legend (unless radial)
+    if (paddingProp == null && !this.props.radial && this.props.axis) {
+      paddingProp = defaultChartPadding({
+        axis: this.props.axis as any,
+        legend: this.props.legend as any,
+      });
+    }
+    paddingProp = paddingProp ?? {};
     if (typeof paddingProp === 'number') {
       return {
         ...defaultPadding,
@@ -812,6 +820,41 @@ export class ChartState<
   }
   get series() {
     return this.seriesState ?? (ChartState.#fallbackSeries as unknown as SeriesState<TData, any>);
+  }
+
+  /**
+   * Convert a brush selection to transform scale/translate, zooming the chart to the brushed region.
+   * Used by integrated brush mode when `transform.mode === 'domain'`.
+   */
+  zoomToBrush(
+    brush: { x: BrushDomainType; y: BrushDomainType },
+    axis: 'x' | 'y' | 'both' = 'x'
+  ) {
+    const brushX = brush.x;
+    const brushY = brush.y;
+
+    if ((axis === 'x' || axis === 'both') && brushX[0] != null && brushX[1] != null) {
+      const baseMinX = +this._baseXDomain[0];
+      const baseRangeX = +this._baseXDomain[1] - baseMinX;
+      const brushMinX = +brushX[0];
+      const brushRangeX = +brushX[1] - brushMinX;
+
+      if (brushRangeX > 0 && baseRangeX > 0) {
+        const newScale = baseRangeX / brushRangeX;
+        const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
+
+        let newTranslateY = 0;
+        if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
+          const baseMinY = +this._baseYDomain[0];
+          const baseRangeY = +this._baseYDomain[1] - baseMinY;
+          const brushMinY = +brushY[0];
+          newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
+        }
+
+        this.transform.setScale(newScale);
+        this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+      }
+    }
   }
 
   get config() {

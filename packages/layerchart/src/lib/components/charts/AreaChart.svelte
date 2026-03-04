@@ -45,8 +45,7 @@
 
   import Chart from '../Chart.svelte';
 
-  import { defaultChartPadding, getObjectOrNull } from '$lib/utils/common.js';
-  import type { BrushDomainType } from '../../states/brush.svelte.js';
+  import { getObjectOrNull } from '$lib/utils/common.js';
 
   let {
     data = [],
@@ -62,7 +61,6 @@
     tooltipContext = true,
     highlight = { lines: true, points: true },
     rule = true,
-    onTooltipClick = () => {},
     onPointClick,
     props = {},
     profile = false,
@@ -85,8 +83,6 @@
       : seriesProp
   );
 
-  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
-
   if (profile) {
     console.time('AreaChart render');
     onMount(() => {
@@ -103,44 +99,16 @@
   yBaseline={0}
   yNice
   {radial}
-  padding={radial ? undefined : defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
         mode: 'quadtree-x',
-        onclick: onTooltipClick,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
-  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
-    ? {
-        axis: 'x',
-        resetOnEnd: true,
-        x: xDomain as BrushDomainType,
-        ...brushProps,
-        onBrushEnd: (e) => {
-          if (restProps.transform?.mode === 'domain' && context) {
-            const brushX = e.brush.x;
-            if (brushX[0] != null && brushX[1] != null) {
-              const baseDomain = context._baseXDomain;
-              const baseMin = +baseDomain[0];
-              const baseRange = +baseDomain[1] - baseMin;
-              const brushMin = +brushX[0];
-              const brushRange = +brushX[1] - brushMin;
-              if (brushRange > 0 && baseRange > 0) {
-                const newScale = baseRange / brushRange;
-                const newTranslateX = -((brushMin - baseMin) / baseRange) * context.width * newScale;
-                context.transform.setScale(newScale);
-                context.transform.setTranslate({ x: newTranslateX, y: 0 });
-              }
-            }
-          } else {
-            xDomain = e.brush.x;
-          }
-          brushProps.onBrushEnd?.(e);
-        },
-      }
+  brush={brush
+    ? { axis: 'x', resetOnEnd: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
     : false}
   {series}
   {seriesLayout}

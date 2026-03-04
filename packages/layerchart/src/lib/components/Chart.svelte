@@ -22,7 +22,7 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
-  import { type BrushState } from '$lib/states/brush.svelte.js';
+  import { type BrushDomainType, type BrushState } from '$lib/states/brush.svelte.js';
 
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
@@ -647,14 +647,20 @@
     motion,
     debug = false,
     clip = false,
+    onTooltipClick,
     class: className,
     ...restProps
   } = $derived(props);
+
+  let brushXDomain = $state<BrushDomainType>();
+  let brushYDomain = $state<BrushDomainType>();
 
   const chartState = new ChartState<TData, XScale, YScale>(() => ({
     ref: refProp,
     context: contextProp,
     ...props,
+    xDomain: brushXDomain ?? props.xDomain,
+    yDomain: brushYDomain ?? props.yDomain,
   }));
 
   let ref = $state<HTMLElement>();
@@ -703,8 +709,31 @@
     };
   });
 
-  const brushProps = $derived(typeof brush === 'object' ? brush : { disabled: !brush });
   const brushEnabled = $derived(brush === true || (typeof brush === 'object' && !brush.disabled));
+  const isIntegratedBrush = $derived(
+    brushEnabled && (brush === true || (typeof brush === 'object' && brush.mode !== 'separated'))
+  );
+
+  const enhancedBrushProps = $derived.by(() => {
+    if (!brush) return { disabled: true };
+    const userProps = typeof brush === 'object' ? brush : {};
+    if (!isIntegratedBrush) return userProps;
+
+    const userOnBrushEnd = userProps.onBrushEnd;
+    return {
+      ...userProps,
+      onBrushEnd: (e: { brush: BrushState }) => {
+        if (transform?.mode === 'domain') {
+          chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
+        } else {
+          const axis = userProps.axis ?? 'x';
+          if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
+          if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
+        }
+        userOnBrushEnd?.(e);
+      },
+    };
+  });
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -739,9 +768,9 @@
         {ondragend}
       >
         <!-- svelte-ignore ownership_invalid_binding -->
-        <BrushContext {...brushProps} bind:state={chartState.brushState}>
+        <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <TooltipContext {...getObjectOrNull(tooltipContext)} bind:state={chartState.tooltipState}>
+          <TooltipContext onclick={onTooltipClick} {...getObjectOrNull(tooltipContext)} bind:state={chartState.tooltipState}>
             <ChartChildren {children} {tooltipContext} {...restProps} />
           </TooltipContext>
         </BrushContext>

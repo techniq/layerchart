@@ -31,8 +31,7 @@
   import Chart from '../Chart.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { chartDataArray, defaultChartPadding } from '../../utils/common.js';
-  import type { BrushDomainType } from '../../states/brush.svelte.js';
+  import { chartDataArray } from '../../utils/common.js';
 
   let {
     data = [],
@@ -46,7 +45,6 @@
     grid = { x: true, y: true },
     highlight = { lines: true, points: true, axis: 'both' },
     legend = false,
-    onTooltipClick = () => {},
     props = {},
     profile = false,
     tooltipContext = true,
@@ -59,8 +57,6 @@
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
   );
-  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
-
   if (profile) {
     console.time('ScatterChart render');
     onMount(() => {
@@ -79,52 +75,16 @@
   yNice
   c={yProp}
   cRange={['var(--color-primary, currentColor)']}
-  padding={defaultChartPadding({ axis, legend })}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
     : {
         mode: 'quadtree',
-        onclick: onTooltipClick,
         ...props.tooltip?.context,
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
-  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
-    ? {
-        axis: 'both',
-        resetOnEnd: true,
-        x: xDomain as BrushDomainType,
-        y: yDomain as BrushDomainType,
-        ...brushProps,
-        onBrushEnd: (e) => {
-          if (restProps.transform?.mode === 'domain' && context) {
-            const brushX = e.brush.x;
-            const brushY = e.brush.y;
-            if (brushX[0] != null && brushX[1] != null) {
-              const baseDomainX = context._baseXDomain;
-              const baseMinX = +baseDomainX[0];
-              const baseRangeX = +baseDomainX[1] - baseMinX;
-              const brushMinX = +brushX[0];
-              const brushRangeX = +brushX[1] - brushMinX;
-              if (brushRangeX > 0 && baseRangeX > 0) {
-                const newScale = baseRangeX / brushRangeX;
-                const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * context.width * newScale;
-                const baseDomainY = context._baseYDomain;
-                const baseMinY = +baseDomainY[0];
-                const baseRangeY = +baseDomainY[1] - baseMinY;
-                const brushMinY = +brushY[0];
-                const newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * context.height * newScale;
-                context.transform.setScale(newScale);
-                context.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
-              }
-            }
-          } else {
-            xDomain = e.brush.x;
-            yDomain = e.brush.y;
-          }
-          brushProps.onBrushEnd?.(e);
-        },
-      }
+  brush={brush
+    ? { axis: 'both', resetOnEnd: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
     : false}
   {series}
   {axis}
