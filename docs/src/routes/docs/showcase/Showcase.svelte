@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from 'svelte-ux';
 	import LucideGithub from '~icons/lucide/github';
+	import LucideStar from '~icons/lucide/star';
 	import LucideSquareArrowOutUpRight from '~icons/lucide/square-arrow-out-up-right';
 	import type { Dependent } from './dependency.remote';
 
@@ -19,6 +20,12 @@
 				<p class="text-sm text-surface-content/50">{site.description}</p>
 			{/if}
 			<div class="grow flex items-end justify-end gap-1">
+				{#if site.stars}
+					<span class="flex items-center gap-1 text-sm text-surface-content/50 mr-auto">
+						<LucideStar class="size-4" />
+						{site.stars.toLocaleString()}
+					</span>
+				{/if}
 				{#if site.repourl}
 					<Button
 						href={site.repourl}
