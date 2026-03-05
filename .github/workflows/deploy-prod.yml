@@ -30,6 +30,8 @@ jobs:
 
       - name: Build site
         run: pnpm --filter docs build
+        env:
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Cloudflare Pages
         uses: AdrianGonz97/refined-cf-pages-action@v1

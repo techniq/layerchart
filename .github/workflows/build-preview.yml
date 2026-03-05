@@ -28,6 +28,8 @@ jobs:
 
       - name: Build site
         run: pnpm --filter docs build
+        env:
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
