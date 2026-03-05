@@ -1,5 +1,5 @@
-import { query, getRequestEvent } from '$app/server';
-import { env } from '$env/dynamic/private';
+import { prerender } from '$app/server';
+import { GITHUB_API_TOKEN } from '$env/static/private';
 
 const POPULAR_STAR_THRESHOLD = 100;
 const OTHER_STAR_THRESHOLD = 10;
@@ -14,8 +14,7 @@ export type Dependent = {
 	stars?: number;
 };
 
-export const getDependents = query(async () => {
-	const { fetch } = getRequestEvent();
+export const getDependents = prerender(async () => {
 
 	const featuredSites: Dependent[] = [
 		{
@@ -105,16 +104,20 @@ export const getDependents = query(async () => {
 		'User-Agent': 'LayerChart docs'
 	};
 
-	if (env.GITHUB_API_TOKEN) {
-		const prefix = env.GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
-		githubHeaders['Authorization'] = `${prefix} ${env.GITHUB_API_TOKEN}`;
+	if (GITHUB_API_TOKEN) {
+		const prefix = GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
+		githubHeaders['Authorization'] = `${prefix} ${GITHUB_API_TOKEN}`;
 	}
 
+	const totalStart = performance.now();
+
 	// Step 1: Find repos with "layerchart" in package.json via code search
+	// NOTE: Code search API has a strict rate limit, so pages are fetched sequentially
 	const repoSet = new Set<string>();
 	let page = 1;
 	const perPage = 100;
 
+	const step1Start = performance.now();
 	while (true) {
 		const searchUrl = `https://api.github.com/search/code?q=${encodeURIComponent('"layerchart" filename:package.json')}&per_page=${perPage}&page=${page}`;
 		const res = await fetch(searchUrl, { headers: githubHeaders });
@@ -137,49 +140,55 @@ export const getDependents = query(async () => {
 		if (items.length < perPage || repoSet.size >= data.total_count) break;
 		page++;
 	}
+	console.log(
+		`[getDependents] Step 1 - Code search: ${((performance.now() - step1Start) / 1000).toFixed(2)}s (${repoSet.size} repos found, ${page} pages)`
+	);
 
-	// Step 2: Batch-fetch repo details via GraphQL
+	// Step 2: Batch-fetch repo details via GitHub GraphQL (parallel)
+	const step2Start = performance.now();
 	const repos = [...repoSet];
-	const dependents: Dependent[] = [];
 	const batchSize = 50;
 
+	const batchPromises = [];
 	for (let i = 0; i < repos.length; i += batchSize) {
 		const batch = repos.slice(i, i + batchSize);
 		const fragments = batch
 			.map((fullName, idx) => {
 				const [owner, name] = fullName.split('/');
-				return `repo${idx}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { stargazerCount forkCount description homepageUrl url owner { login } name }`;
+				return `repo${idx}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { stargazerCount description homepageUrl url owner { login } name }`;
 			})
 			.join('\n');
 
-		const res = await fetch('https://api.github.com/graphql', {
-			method: 'POST',
-			headers: githubHeaders,
-			body: JSON.stringify({ query: `{ ${fragments} }` })
-		});
-
-		if (!res.ok) {
-			console.error(`GitHub GraphQL failed: ${res.status} ${res.statusText}`);
-			continue;
-		}
-
-		const { data } = await res.json();
-		if (!data) continue;
-
-		for (const key of Object.keys(data)) {
-			const repo = data[key];
-			if (!repo) continue;
-
-			dependents.push({
-				owner: repo.owner.login,
-				reponame: repo.name,
-				description: repo.description || null,
-				repourl: repo.url,
-				homepageurl: repo.homepageUrl || null,
-				stars: repo.stargazerCount
-			});
-		}
+		batchPromises.push(
+			fetch('https://api.github.com/graphql', {
+				method: 'POST',
+				headers: githubHeaders,
+				body: JSON.stringify({ query: `{ ${fragments} }` })
+			}).then(async (res) => {
+				if (!res.ok) return [];
+				const { data } = await res.json();
+				if (!data) return [];
+				return Object.values(data)
+					.filter(Boolean)
+					.map((repo: any) => ({
+						owner: repo.owner.login,
+						reponame: repo.name,
+						description: repo.description || null,
+						repourl: repo.url,
+						homepageurl: repo.homepageUrl || null,
+						stars: repo.stargazerCount
+					}));
+			})
+		);
 	}
+
+	const batchResults = await Promise.all(batchPromises);
+	const dependents: Dependent[] = batchResults.flat();
+
+	console.log(
+		`[getDependents] Step 2 - GraphQL details: ${((performance.now() - step2Start) / 1000).toFixed(2)}s (${dependents.length} repos, ${batchPromises.length} batches)`
+	);
+	console.log(`[getDependents] Total: ${((performance.now() - totalStart) / 1000).toFixed(2)}s`);
 
 	dependents
 		.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0)) // Sort by stars descending
