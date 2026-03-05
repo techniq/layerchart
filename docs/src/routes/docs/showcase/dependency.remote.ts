@@ -1,5 +1,5 @@
 import { prerender } from '$app/server';
-import { GITHUB_API_TOKEN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 const POPULAR_STAR_THRESHOLD = 100;
 const OTHER_STAR_THRESHOLD = 10;
@@ -104,9 +104,9 @@ export const getDependents = prerender(async () => {
 		'User-Agent': 'LayerChart docs'
 	};
 
-	if (GITHUB_API_TOKEN) {
-		const prefix = GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
-		githubHeaders['Authorization'] = `${prefix} ${GITHUB_API_TOKEN}`;
+	if (env.GITHUB_API_TOKEN) {
+		const prefix = env.GITHUB_API_TOKEN.startsWith('ghp_') ? 'token' : 'Bearer';
+		githubHeaders['Authorization'] = `${prefix} ${env.GITHUB_API_TOKEN}`;
 	}
 
 	const totalStart = performance.now();
