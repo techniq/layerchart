@@ -221,15 +221,28 @@
   });
 
   const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
+
+  const lineYAccessor = $derived.by(() => {
+    // For diverging stacks, use the outer edge (y0 for below-baseline series, y1 for above)
+    if (stackAccessors && ctx.series.stackLayout === 'stackDiverging') {
+      const firstPoint = resolvedData?.[0];
+      if (firstPoint) {
+        const val = stackAccessors.value(firstPoint);
+        if (val && val[1] <= 0) return y0Accessor;
+      }
+    }
+
+    return y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor
+      ? y1Accessor
+      : undefined;
+  });
 </script>
 
 {#if line}
   <Spline
     data={data ?? seriesData}
     {x}
-    y={y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor
-      ? y1Accessor
-      : undefined}
+    y={lineYAccessor}
     {seriesKey}
     {curve}
     {defined}
