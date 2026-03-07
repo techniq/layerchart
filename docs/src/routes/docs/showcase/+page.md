@@ -11,9 +11,11 @@
 
 <Showcase sites={featuredSites} />
 
-## [Supporters](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
+## Supporters
 
 <Showcase sites={supporterSites} />
+
+[Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
 
 ## Popular
 
@@ -23,4 +25,4 @@
 
 <Showcase sites={otherSites} />
 
-## [More](https://github.com/techniq/layerchart/network/dependents)
+[View all dependents on GitHub](https://github.com/techniq/layerchart/network/dependents)
