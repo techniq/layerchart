@@ -239,11 +239,11 @@ For `mode: 'domain'` charts, `domainExtent` lets you express constraints in data
 
 Each axis (`x` or `y`) supports:
 
-| Property   | Type                           | Description                                                                         |
-| ---------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-| `min`      | `number \| Date \| 'data'` | Minimum domain value (pan boundary). `'data'` = initial data min.               |
-| `max`      | `number \| Date \| 'data'` | Maximum domain value (pan boundary). `'data'` = initial data max.               |
-| `minRange` | `number`                       | Minimum visible range in data units (max zoom in). For dates, this is milliseconds. |
+| Property   | Type                       | Description                                                                         |
+| ---------- | -------------------------- | ----------------------------------------------------------------------------------- |
+| `min`      | `number \| Date \| 'data'` | Minimum domain value (pan boundary). `'data'` = initial data min.                   |
+| `max`      | `number \| Date \| 'data'` | Maximum domain value (pan boundary). `'data'` = initial data max.                   |
+| `minRange` | `number`                   | Minimum visible range in data units (max zoom in). For dates, this is milliseconds. |
 
 Using `'data'` for `min`/`max` is the most common pattern — it prevents panning past the data boundaries without hardcoding values.
 
@@ -283,7 +283,6 @@ For globe projections using `mode: 'rotate'`, the translate values represent rot
 	geo={{ projection: geoOrthographic, fitGeojson: countries }}
 	transform={{
 		mode: 'rotate',
-		scaleExtent: [0.5, 4],
 		constrain: ({ scale, translate }) => ({
 			scale,
 			translate: {
@@ -367,17 +366,17 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 
 ## Quick reference
 
-| Use case               | Configuration                                                    | Example                                                              |
-| ---------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                      | [pan-zoom](/docs/components/BarChart/pan-zoom)                        |
-| Limit zoom depth       | `scaleExtent: [1, 10]`                                           | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent) |
-| Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`      | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent) |
-| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent) |
-| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)         |
-| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection) |
-| Globe rotation         | `transform={{ mode: 'rotate' }}`                                 | [translucent-globe](/docs/components/GeoPath/translucent-globe)       |
+| Use case               | Configuration                                                    | Example                                                                                 |
+| ---------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                      | [pan-zoom](/docs/components/BarChart/pan-zoom)                                          |
+| Limit zoom depth       | `scaleExtent: [1, 10]`                                           | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
+| Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`              | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
+| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
+| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
+| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
+| Globe rotation         | `transform={{ mode: 'rotate' }}`                                 | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                            | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
-| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain) |
-| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)           |
-| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     | [basic](/docs/components/Pack/basic)                                   |
-| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                   |
+| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
+| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
+| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     | [basic](/docs/components/Pack/basic)                                                    |
+| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                                    |
