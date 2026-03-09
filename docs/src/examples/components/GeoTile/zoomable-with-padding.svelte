@@ -44,10 +44,10 @@
 	<Chart
 		geo={{
 			projection: geoMercator,
-			fitGeojson: filteredStates,
-			applyTransform: ['translate', 'scale']
+			fitGeojson: filteredStates
 		}}
 		transform={{
+			mode: 'projection',
 			initialScrollMode: 'scale'
 		}}
 		padding={{

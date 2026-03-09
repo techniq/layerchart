@@ -1,4 +1,5 @@
 import type { GeoProjection, GeoPermissibleObjects } from 'd3-geo';
+import type { TransformState } from './transform.svelte.js';
 
 export type GeoStateProps = {
   /**
@@ -25,11 +26,6 @@ export type GeoStateProps = {
   scale?: number;
   translate?: [number, number];
   center?: [number, number];
-  /**
-   * Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are
-   * mutually selected
-   */
-  applyTransform?: ('scale' | 'translate' | 'rotate')[];
   reflectX?: boolean;
   reflectY?: boolean;
 };
@@ -44,9 +40,7 @@ export class GeoState {
   // Context references
   chartWidth = $state(100);
   chartHeight = $state(100);
-  transformScale = $state(1);
-  transformTranslateX = $state(0);
-  transformTranslateY = $state(0);
+  transformState = $state<TransformState | null>(null);
 
   // The actual projection instance
   projection = $state<GeoProjection | undefined>(undefined);
@@ -71,8 +65,8 @@ export class GeoState {
           _projection.scale(this.props.scale);
         }
 
-        if (this.props.applyTransform?.includes('scale')) {
-          _projection.scale(this.transformScale);
+        if (this.transformState?.mode === 'projection') {
+          _projection.scale(this.transformState.scale);
         }
       }
 
@@ -86,10 +80,10 @@ export class GeoState {
           ]);
         }
 
-        if (this.props.applyTransform?.includes('rotate')) {
+        if (this.transformState?.mode === 'rotate') {
           _projection.rotate([
-            this.transformTranslateX, // yaw
-            this.transformTranslateY, // pitch
+            this.transformState.translate.x, // yaw
+            this.transformState.translate.y, // pitch
             // TODO: `roll` from `transformContext`?
           ]);
         }
@@ -101,8 +95,11 @@ export class GeoState {
           _projection.translate(this.props.translate);
         }
 
-        if (this.props.applyTransform?.includes('translate')) {
-          _projection.translate([this.transformTranslateX, this.transformTranslateY]);
+        if (this.transformState?.mode === 'projection') {
+          _projection.translate([
+            this.transformState.translate.x,
+            this.transformState.translate.y,
+          ]);
         }
       }
 

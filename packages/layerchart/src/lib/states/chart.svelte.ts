@@ -113,12 +113,10 @@ export class ChartState<
       this.geoState.chartHeight = this.height;
     });
 
-    // Sync transform context to geo state
+    // Sync transform state to geo state
     $effect(() => {
       if (this.transformState) {
-        this.geoState.transformScale = this.transformState.scale;
-        this.geoState.transformTranslateX = this.transformState.translate.x;
-        this.geoState.transformTranslateY = this.transformState.translate.y;
+        this.geoState.transformState = this.transformState;
       }
     });
 

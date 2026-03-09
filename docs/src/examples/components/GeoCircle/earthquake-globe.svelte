@@ -59,9 +59,9 @@
 	rRange={[0, 1]}
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'rotate' }}
 	ondragstart={timer.stop}
 	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 	height={600}

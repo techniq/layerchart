@@ -110,10 +110,10 @@
 	<Chart
 		geo={{
 			projection: geoOrthographic,
-			fitGeojson: countries,
-			applyTransform: ['rotate']
+			fitGeojson: countries
 		}}
 		transform={{
+			mode: 'rotate',
 			motion: { type: 'spring', stiffness: 0.04 }
 		}}
 		tooltipContext={{ touchEvents: 'none' }}

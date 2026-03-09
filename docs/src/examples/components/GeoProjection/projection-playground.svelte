@@ -64,7 +64,6 @@
 		fitGeojson: geojson,
 		rotate: config.rotate,
 		scale: config.scale
-		// applyTransform: ['rotate'],
 	}}
 	padding={{ left: 100, right: 100 }}
 	height={600}

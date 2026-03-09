@@ -17,9 +17,9 @@
 <Chart
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'rotate' }}
 	padding={{ top: 80, bottom: 80, left: 80, right: 80 }}
 	height={800}
 >

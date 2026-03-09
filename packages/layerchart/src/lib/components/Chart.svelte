@@ -702,7 +702,7 @@
   });
 
   const initialTransform = $derived(
-    geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
+    transform?.mode === 'projection' && geo?.fitGeojson && geo?.projection
       ? geoFitObjectTransform(
           geo.projection(),
           [chartState.width, chartState.height],
@@ -712,22 +712,19 @@
   );
 
   const processTranslate = $derived.by(() => {
-    if (!geo) return undefined;
-    return (x: number, y: number, deltaX: number, deltaY: number) => {
-      if (geo.applyTransform?.includes('rotate') && chartState.geoState?.projection) {
+    if (transform?.mode === 'rotate' && chartState.geoState?.projection) {
+      return (x: number, y: number, deltaX: number, deltaY: number) => {
         // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
         // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-        const projectionScale = chartState.geoState.projection.scale() ?? 0;
+        const projectionScale = chartState.geoState.projection!.scale() ?? 0;
         const sensitivity = 75;
         return {
           x: x + deltaX * (sensitivity / projectionScale),
           y: y + deltaY * (sensitivity / projectionScale) * -1,
         };
-      } else {
-        // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
-        return { x: x + deltaX, y: y + deltaY };
-      }
-    };
+      };
+    }
+    return undefined;
   });
 
   // Convert domainExtent to a constrain function on TransformState
@@ -911,7 +908,7 @@
       {@const { domainExtent: _de, constrain: _uc, ...transformProps } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
-        mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
+        mode={transform?.mode ?? 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}
         {processTranslate}

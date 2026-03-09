@@ -49,10 +49,10 @@
 <Chart
 	geo={{
 		projection,
-		fitGeojson: projection === geoMercator ? contiguousStates : states,
-		applyTransform: ['translate', 'scale']
+		fitGeojson: projection === geoMercator ? contiguousStates : states
 	}}
 	transform={{
+		mode: 'projection',
 		initialScrollMode: 'none',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
 	}}

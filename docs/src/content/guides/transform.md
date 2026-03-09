@@ -9,12 +9,13 @@ LayerChart provides a transform system for panning and zooming charts, maps, and
 
 The `transform` prop's `mode` controls how zoom and pan are applied:
 
-| Mode     | What changes                           | Best for                                    |
-| -------- | -------------------------------------- | ------------------------------------------- |
-| `domain` | The visible data domain narrows/shifts | Cartesian charts (line, bar, area, scatter) |
-| `canvas` | SVG/Canvas/CSS visual transform        | Maps, images, pack/tree layouts             |
-| `manual` | State tracked but not auto-applied     | Custom handling, geo projection transforms  |
-| `none`   | Disabled (default)                     | No zoom/pan needed                          |
+| Mode         | What changes                             | Best for                                    |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| `domain`     | The visible data domain narrows/shifts   | Cartesian charts (line, bar, area, scatter) |
+| `canvas`     | SVG/Canvas/CSS visual transform          | Maps, images, pack/tree layouts             |
+| `projection` | Geo projection translate + scale updated | Maps with projection-based pan/zoom         |
+| `rotate`     | Geo projection rotation updated          | Globe rotation (orthographic projections)   |
+| `none`       | Disabled (default)                       | No zoom/pan needed                          |
 
 ### `domain` mode
 
@@ -53,36 +54,29 @@ When using canvas mode with maps, compensate for zoom in visual properties like 
 
 :::
 
-### `manual` mode
+### `projection` mode
 
-The transform state is tracked (scale, translate, dragging) but not automatically applied to any layer. Use this when you want to drive something custom from the transform values — for example, applying transforms to a geographic projection.
+Applies transform values directly to the geo projection's `translate()` and `scale()` methods. The projection is re-evaluated on every transform change, keeping geographic coordinates synchronized with the view. This is the standard mode for interactive maps.
 
-When `<Chart>` has a `geo.applyTransform` array, mode is automatically set to `'manual'` and the transform values are forwarded to the projection:
+When `fitGeojson` is provided, the initial translate and scale are computed automatically to fit the data in the viewport.
 
 ```svelte
-<!-- Projection translate + scale -->
 <Chart
-	geo={{
-		projection: geoMercator,
-		fitGeojson: states,
-		applyTransform: ['translate', 'scale']
-	}}
+	geo={{ projection: geoMercator, fitGeojson: states }}
+	transform={{ mode: 'projection', initialScrollMode: 'scale' }}
 />
 ```
 
 :example{ component="GeoPath" name="transform-projection" }
 
-#### Globe rotation
+### `rotate` mode
 
-For globe projections, `applyTransform: ['rotate']` maps the translate values to `projection.rotate()` — `translate.x` becomes yaw (longitude rotation) and `translate.y` becomes pitch (latitude tilt):
+Maps transform translate values to the projection's `rotate()` method — `translate.x` becomes yaw (longitude rotation) and `translate.y` becomes pitch (latitude tilt). Drag sensitivity is automatically scaled based on the projection's zoom level.
 
 ```svelte
 <Chart
-	geo={{
-		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
-	}}
+	geo={{ projection: geoOrthographic, fitGeojson: countries }}
+	transform={{ mode: 'rotate' }}
 />
 ```
 
@@ -304,16 +298,13 @@ For full control, provide a `constrain` function that receives the proposed `{ s
 
 #### Globe rotation constraints
 
-For globe projections using `applyTransform: ['rotate']`, the translate values represent rotation angles (yaw/pitch in degrees). A custom `constrain` function can clamp the pitch to prevent flipping the globe:
+For globe projections using `mode: 'rotate'`, the translate values represent rotation angles (yaw/pitch in degrees). A custom `constrain` function can clamp the pitch to prevent flipping the globe:
 
 ```svelte
 <Chart
-	geo={{
-		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
-	}}
+	geo={{ projection: geoOrthographic, fitGeojson: countries }}
 	transform={{
+		mode: 'rotate',
 		scaleExtent: [0.5, 4],
 		constrain: ({ scale, translate }) => ({
 			scale,
@@ -359,15 +350,17 @@ A user-provided `constrain` function runs after all other constraints, giving it
 
 ## Quick reference
 
-| Use case               | Configuration                                                |
-| ---------------------- | ------------------------------------------------------------ |
-| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                  |
-| Limit zoom depth       | `scaleExtent: [1, 10]`                                       |
-| Keep data in view      | `domainExtent: { x: { min: 'original', max: 'original' } }`  |
-| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`            |
-| Pan/zoom a map         | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}` |
-| Geo map zoom limits    | `scaleExtent: [1, 8]`                                        |
-| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                        |
-| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                   |
-| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                 |
-| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                   |
+| Use case               | Configuration                                                     |
+| ---------------------- | ----------------------------------------------------------------- |
+| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                       |
+| Limit zoom depth       | `scaleExtent: [1, 10]`                                            |
+| Keep data in view      | `domainExtent: { x: { min: 'original', max: 'original' } }`       |
+| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                 |
+| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`      |
+| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}`  |
+| Globe rotation         | `transform={{ mode: 'rotate' }}`                                  |
+| Geo map zoom limits    | `scaleExtent: [1, 8]`                                             |
+| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                             |
+| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                        |
+| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                      |
+| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                        |

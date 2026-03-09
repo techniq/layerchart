@@ -66,9 +66,9 @@
 <Chart
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'rotate' }}
 	ondragstart={timer.stop}
 	bind:context
 	padding={{ top: 60 }}

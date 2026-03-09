@@ -89,10 +89,10 @@
 			<Chart
 				geo={{
 					projection,
-					fitGeojson: geojson,
-					applyTransform: ['translate', 'scale']
+					fitGeojson: geojson
 				}}
 				transform={{
+					mode: 'projection',
 					initialScrollMode: 'scale'
 				}}
 				padding={{ top: 8, bottom: 8, left: 8, right: 8 }}

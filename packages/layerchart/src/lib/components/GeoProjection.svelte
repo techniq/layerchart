@@ -24,11 +24,9 @@
     geoState.chartHeight = ctx.height;
   });
 
-  // Sync transform context to geo state
+  // Sync transform state to geo state
   $effect(() => {
-    geoState.transformScale = ctx.transform.scale;
-    geoState.transformTranslateX = ctx.transform.translate.x;
-    geoState.transformTranslateY = ctx.transform.translate.y;
+    geoState.transformState = ctx.transform;
   });
 
   setGeoContext(geoState);

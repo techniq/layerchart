@@ -8,7 +8,7 @@ import { localPoint } from '@layerstack/utils';
 import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
-export type TransformMode = 'canvas' | 'domain' | 'manual' | 'none';
+export type TransformMode = 'canvas' | 'domain' | 'projection' | 'rotate' | 'none';
 export type TransformScrollMode = 'scale' | 'translate' | 'none';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
