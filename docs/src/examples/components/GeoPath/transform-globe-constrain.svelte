@@ -20,7 +20,6 @@
 	}}
 	transform={{
 		mode: 'rotate',
-		scaleExtent: [0.5, 4],
 		constrain: ({ scale, translate }) => ({
 			scale,
 			translate: {
