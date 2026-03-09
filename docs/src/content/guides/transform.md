@@ -172,6 +172,22 @@ A common pattern for maps and hierarchical layouts is to zoom to a specific feat
 />
 ```
 
+Click a state to zoom into it using projection-based `setScale` and `setTranslate`:
+
+:example{ component="GeoPath" name="transform-projection" }
+
+The same click-to-zoom pattern using canvas mode, where the visual transform is applied without re-projecting:
+
+:example{ component="GeoPath" name="transform-canvas" }
+
+Click a state to zoom with seamless tile layers that load progressively at each zoom level:
+
+:example{ component="GeoTile" name="zoomable-seamless-layers" }
+
+For hierarchical layouts, click a circle to zoom into it using `zoomTo` with `disablePointer` and animated motion:
+
+:example{ component="Pack" name="basic" }
+
 ## Constraints
 
 Constraints limit how far users can zoom and pan. They work across all modes.
