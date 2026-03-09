@@ -153,6 +153,7 @@ const guides = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string().optional(),
+		category: z.string().optional(),
 		order: z.number().optional(),
 		draft: z.boolean().default(false),
 		content: z.string()

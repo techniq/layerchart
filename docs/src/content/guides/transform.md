@@ -1,6 +1,7 @@
 ---
 title: Transform (Pan & Zoom)
-order: 9
+category: state
+order: 2
 ---
 
 LayerChart provides a transform system for panning and zooming charts, maps, and other visualizations. It supports multiple modes depending on the type of visualization: narrowing the data domain for cartesian charts, applying visual transforms for images and maps, or modifying geographic projections for globes.
@@ -350,17 +351,17 @@ A user-provided `constrain` function runs after all other constraints, giving it
 
 ## Quick reference
 
-| Use case               | Configuration                                                     |
-| ---------------------- | ----------------------------------------------------------------- |
-| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                       |
-| Limit zoom depth       | `scaleExtent: [1, 10]`                                            |
-| Keep data in view      | `domainExtent: { x: { min: 'original', max: 'original' } }`       |
-| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                 |
-| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`      |
-| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}`  |
-| Globe rotation         | `transform={{ mode: 'rotate' }}`                                  |
-| Geo map zoom limits    | `scaleExtent: [1, 8]`                                             |
-| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                             |
-| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                        |
-| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                      |
-| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                        |
+| Use case               | Configuration                                                    |
+| ---------------------- | ---------------------------------------------------------------- |
+| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                      |
+| Limit zoom depth       | `scaleExtent: [1, 10]`                                           |
+| Keep data in view      | `domainExtent: { x: { min: 'original', max: 'original' } }`      |
+| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                |
+| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     |
+| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` |
+| Globe rotation         | `transform={{ mode: 'rotate' }}`                                 |
+| Geo map zoom limits    | `scaleExtent: [1, 8]`                                            |
+| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            |
+| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       |
+| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     |
+| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       |

@@ -1,6 +1,7 @@
 ---
-title: State / Context
-order: 6
+title: State & Context
+category: state
+order: 1
 ---
 
 ## Settings state / context
