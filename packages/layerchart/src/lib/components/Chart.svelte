@@ -564,9 +564,30 @@
     tooltipContext?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
     /**
-     * Props passed to TransformContext
+     * Props passed to TransformContext, with optional domain-space constraints.
      */
-    transform?: Partial<ComponentProps<typeof TransformContext>>;
+    transform?: Partial<ComponentProps<typeof TransformContext>> & {
+      /**
+       * Domain-space constraints for pan/zoom in `mode: 'domain'`.
+       * Expressed in data units (numbers, Dates) rather than pixel-space.
+       * Converted internally to a `constrain` function on TransformState.
+       */
+      domainExtent?: {
+        x?: {
+          /** Minimum domain value. `'original'` = initial data bounds. */
+          min?: number | Date | 'original';
+          /** Maximum domain value. `'original'` = initial data bounds. */
+          max?: number | Date | 'original';
+          /** Minimum visible range (max zoom in). In data units (e.g., ms for dates). */
+          minRange?: number;
+        };
+        y?: {
+          min?: number | Date | 'original';
+          max?: number | Date | 'original';
+          minRange?: number;
+        };
+      };
+    };
 
     /** Props passed to BrushContext */
     brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
@@ -709,6 +730,138 @@
     };
   });
 
+  // Convert domainExtent to a constrain function on TransformState
+  const domainExtentConstrain = $derived.by(() => {
+    const de = transform?.domainExtent;
+    if (!de) return undefined;
+
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      let { scale, translate } = t;
+
+      // Helper to resolve 'original' to base domain values
+      const resolveValue = (
+        val: number | Date | 'original' | undefined,
+        baseDomainValue: unknown
+      ): number | undefined => {
+        if (val === undefined) return undefined;
+        if (val === 'original') {
+          if (baseDomainValue instanceof Date) return baseDomainValue.getTime();
+          return baseDomainValue as number;
+        }
+        if (val instanceof Date) return val.getTime();
+        return val;
+      };
+
+      // Constrain a single axis
+      const constrainAxis = (
+        axisTranslate: number,
+        axisScale: number,
+        dimension: number,
+        baseDomain: number[],
+        extent: { min?: number | Date | 'original'; max?: number | Date | 'original'; minRange?: number } | undefined
+      ): number => {
+        if (!extent || baseDomain.length < 2 || dimension <= 0) return axisTranslate;
+
+        const d0 = baseDomain[0] as unknown;
+        const d1 = baseDomain[1] as unknown;
+        const isDate = d0 instanceof Date;
+        const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
+        const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
+        const range = numMax - numMin;
+        if (!isFinite(range) || range === 0) return axisTranslate;
+
+        const minVal = resolveValue(extent.min, baseDomain[0]);
+        const maxVal = resolveValue(extent.max, baseDomain[1]);
+
+        // Current visible domain from translate/scale
+        const f0 = -axisTranslate / axisScale / dimension;
+        const f1 = (dimension - axisTranslate) / axisScale / dimension;
+        let visMin = numMin + f0 * range;
+        let visMax = numMin + f1 * range;
+        const visRange = visMax - visMin;
+
+        // Enforce minRange (max zoom in limit)
+        if (extent.minRange != null && visRange < extent.minRange) {
+          // Widen around center of current view
+          const center = (visMin + visMax) / 2;
+          visMin = center - extent.minRange / 2;
+          visMax = center + extent.minRange / 2;
+        }
+
+        // Enforce domain min/max (pan boundaries)
+        if (minVal != null && visMin < minVal) {
+          visMin = minVal;
+          visMax = visMin + (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
+        }
+        if (maxVal != null && visMax > maxVal) {
+          visMax = maxVal;
+          visMin = visMax - (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
+          // Re-check min after adjusting
+          if (minVal != null && visMin < minVal) visMin = minVal;
+        }
+
+        // Back-compute translate from corrected visible domain
+        const newF0 = (visMin - numMin) / range;
+        return -newF0 * axisScale * dimension;
+      };
+
+      const transformAxis = transform?.axis ?? 'both';
+
+      if (de.x && (transformAxis === 'x' || transformAxis === 'both') && chartState.width > 0) {
+        // Also enforce minRange via scale clamping
+        if (de.x.minRange != null && chartState._baseXDomain.length >= 2) {
+          const d0 = chartState._baseXDomain[0] as unknown;
+          const d1 = chartState._baseXDomain[1] as unknown;
+          const isDate = d0 instanceof Date;
+          const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
+          const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
+          const fullRange = numMax - numMin;
+          if (fullRange > 0) {
+            const maxScale = fullRange / de.x.minRange;
+            scale = Math.min(scale, maxScale);
+          }
+        }
+        translate = {
+          ...translate,
+          x: constrainAxis(translate.x, scale, chartState.width, chartState._baseXDomain, de.x),
+        };
+      }
+
+      if (de.y && (transformAxis === 'y' || transformAxis === 'both') && chartState.height > 0) {
+        if (de.y.minRange != null && chartState._baseYDomain.length >= 2) {
+          const d0 = chartState._baseYDomain[0] as unknown;
+          const d1 = chartState._baseYDomain[1] as unknown;
+          const isDate = d0 instanceof Date;
+          const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
+          const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
+          const fullRange = numMax - numMin;
+          if (fullRange > 0) {
+            const maxScale = fullRange / de.y.minRange;
+            scale = Math.min(scale, maxScale);
+          }
+        }
+        translate = {
+          ...translate,
+          y: constrainAxis(translate.y, scale, chartState.height, chartState._baseYDomain, de.y),
+        };
+      }
+
+      return { scale, translate };
+    };
+  });
+
+  // Compose user-provided constrain with domainExtent constrain
+  const composedConstrain = $derived.by(() => {
+    const userConstrain = transform?.constrain;
+    if (!domainExtentConstrain && !userConstrain) return undefined;
+    if (!domainExtentConstrain) return userConstrain;
+    if (!userConstrain) return domainExtentConstrain;
+    // Domain extent first, then user constrain
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      return userConstrain(domainExtentConstrain(t));
+    };
+  });
+
   const brushEnabled = $derived(brush === true || (typeof brush === 'object' && !brush.disabled));
   const isIntegratedBrush = $derived(
     brushEnabled && (brush === true || (typeof brush === 'object' && brush.mode !== 'separated'))
@@ -755,13 +908,15 @@
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
+      {@const { domainExtent: _de, constrain: _uc, ...transformProps } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
         mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}
         {processTranslate}
-        {...transform}
+        {...transformProps}
+        constrain={composedConstrain}
         disablePointer={brushEnabled || transform?.disablePointer}
         {ondragstart}
         {onTransform}

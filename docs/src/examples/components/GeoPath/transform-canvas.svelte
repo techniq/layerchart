@@ -57,6 +57,7 @@
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
 	}}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		<TransformContextControls />

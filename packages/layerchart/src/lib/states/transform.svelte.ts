@@ -16,6 +16,11 @@ export const DEFAULT_SCALE = 1;
 
 export type TransformAxis = 'x' | 'y' | 'both';
 
+export type TransformConstraint = {
+  scale: number;
+  translate: { x: number; y: number };
+};
+
 export type TransformStateOptions = {
   mode?: TransformMode;
   axis?: TransformAxis;
@@ -34,6 +39,19 @@ export type TransformStateOptions = {
   onTransform?: (details: { scale: number; translate: { x: number; y: number } }) => void;
   ondragstart?: () => void;
   ondragend?: () => void;
+
+  /** Min/max scale factor [minScale, maxScale]. Default: no limit. */
+  scaleExtent?: [number, number];
+
+  /** Translate bounds [[minX, minY], [maxX, maxY]]. Default: no limit. */
+  translateExtent?: [[number, number], [number, number]];
+
+  /**
+   * Custom constraint function called after every transform update.
+   * Return corrected scale/translate values.
+   * Called after scaleExtent and translateExtent are applied.
+   */
+  constrain?: (transform: TransformConstraint) => TransformConstraint;
 };
 
 export class TransformState {
@@ -59,6 +77,9 @@ export class TransformState {
   onTransform: (details: { scale: number; translate: { x: number; y: number } }) => void;
   ondragstart: () => void;
   ondragend: () => void;
+  scaleExtent: [number, number] | undefined;
+  translateExtent: [[number, number], [number, number]] | undefined;
+  constrain: ((transform: TransformConstraint) => TransformConstraint) | undefined;
 
   // State
   pointerDown = $state(false);
@@ -94,6 +115,9 @@ export class TransformState {
     this.onTransform = options.onTransform ?? (() => {});
     this.ondragstart = options.ondragstart ?? (() => {});
     this.ondragend = options.ondragend ?? (() => {});
+    this.scaleExtent = options.scaleExtent;
+    this.translateExtent = options.translateExtent;
+    this.constrain = options.constrain;
     this.scrollMode = options.initialScrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
 
     // Initialize motion controllers
@@ -118,6 +142,38 @@ export class TransformState {
       if (this.axis === 'y') return { x: 0, y: y + deltaY };
       return { x: x + deltaX, y: y + deltaY };
     };
+  }
+
+  /** Clamp scale and translate using scaleExtent, translateExtent, and custom constrain. */
+  private _clampScale(value: number): number {
+    if (this.scaleExtent) {
+      value = Math.max(this.scaleExtent[0], Math.min(this.scaleExtent[1], value));
+    }
+    return value;
+  }
+
+  private _clampTranslate(point: { x: number; y: number }): { x: number; y: number } {
+    let { x, y } = point;
+    if (this.translateExtent) {
+      const [[minX, minY], [maxX, maxY]] = this.translateExtent;
+      x = Math.max(minX, Math.min(maxX, x));
+      y = Math.max(minY, Math.min(maxY, y));
+    }
+    return { x, y };
+  }
+
+  private _applyConstraints(
+    scale: number,
+    translate: { x: number; y: number }
+  ): { scale: number; translate: { x: number; y: number } } {
+    scale = this._clampScale(scale);
+    translate = this._clampTranslate(translate);
+    if (this.constrain) {
+      const constrained = this.constrain({ scale, translate });
+      scale = constrained.scale;
+      translate = constrained.translate;
+    }
+    return { scale, translate };
   }
 
   // Derived state
@@ -174,19 +230,25 @@ export class TransformState {
   zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }) {
     if (!this.ctx) return;
 
-    const newScale = rect
+    let newScale = rect
       ? this.ctx.width < this.ctx.height
         ? this.ctx.width / rect.width
         : this.ctx.height / rect.height
       : 1;
 
-    this._translate.target = {
+    newScale = this._clampScale(newScale);
+
+    const newTranslate = {
       x: this.ctx.width / 2 - center.x * newScale,
       y: this.ctx.height / 2 - center.y * newScale,
     };
 
+    const constrained = this._applyConstraints(newScale, newTranslate);
+
+    this._translate.target = constrained.translate;
+
     if (rect) {
-      this._scale.target = newScale;
+      this._scale.target = constrained.scale;
     }
   }
 
@@ -194,11 +256,13 @@ export class TransformState {
     point: { x: number; y: number },
     options?: Parameters<typeof this._translate.set>[1]
   ) {
-    this._translating.handle(this._translate.set(point, options));
+    const constrained = this._applyConstraints(this._scale.current, point);
+    this._translating.handle(this._translate.set(constrained.translate, options));
   }
 
   setScale(value: number, options?: Parameters<typeof this._scale.set>[1]) {
-    this._scaling.handle(this._scale.set(value, options));
+    const clamped = this._clampScale(value);
+    this._scaling.handle(this._scale.set(clamped, options));
   }
 
   scaleTo(
@@ -209,7 +273,7 @@ export class TransformState {
     if (!this.ctx) return;
 
     const currentScale = this._scale.current;
-    const newScale = this._scale.current * value;
+    const newScale = this._clampScale(this._scale.current * value);
     this.setScale(newScale, options);
 
     // Translate towards point (ex. mouse cursor/center) while zooming in/out

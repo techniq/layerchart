@@ -50,6 +50,9 @@
     onTransform,
     ondragstart,
     ondragend,
+    scaleExtent,
+    translateExtent,
+    constrain,
     ...restProps
   }: TransformContextProps = $props();
 
@@ -66,6 +69,9 @@
     onTransform,
     ondragstart,
     ondragend,
+    scaleExtent,
+    translateExtent,
+    constrain,
   };
 
   let ref = $state<HTMLElement>();
@@ -77,6 +83,34 @@
 
   // Create TransformState instance
   const transformState = new TransformState(ctx, options);
+
+  // Sync initial transform values when they change (e.g., when projection changes for geo transforms)
+  $effect.pre(() => {
+    const newTranslate = initialTranslate ?? { x: 0, y: 0 };
+    const newScale = initialScale ?? 1;
+    // Only reset if values actually changed from current initial values
+    if (
+      newTranslate.x !== transformState.initialTranslate.x ||
+      newTranslate.y !== transformState.initialTranslate.y ||
+      newScale !== transformState.initialScale
+    ) {
+      transformState.initialTranslate = newTranslate;
+      transformState.initialScale = newScale;
+      transformState.reset();
+    }
+  });
+
+  $effect.pre(() => {
+    transformState.constrain = constrain;
+  });
+
+  $effect.pre(() => {
+    transformState.scaleExtent = scaleExtent;
+  });
+
+  $effect.pre(() => {
+    transformState.translateExtent = translateExtent;
+  });
 
   // Bind `state` prop
   stateProp = transformState;
