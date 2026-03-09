@@ -574,16 +574,16 @@
        */
       domainExtent?: {
         x?: {
-          /** Minimum domain value. `'original'` = initial data bounds. */
-          min?: number | Date | 'original';
-          /** Maximum domain value. `'original'` = initial data bounds. */
-          max?: number | Date | 'original';
+          /** Minimum domain value. `'data'` = initial data bounds. */
+          min?: number | Date | 'data';
+          /** Maximum domain value. `'data'` = initial data bounds. */
+          max?: number | Date | 'data';
           /** Minimum visible range (max zoom in). In data units (e.g., ms for dates). */
           minRange?: number;
         };
         y?: {
-          min?: number | Date | 'original';
-          max?: number | Date | 'original';
+          min?: number | Date | 'data';
+          max?: number | Date | 'data';
           minRange?: number;
         };
       };
@@ -735,13 +735,13 @@
     return (t: { scale: number; translate: { x: number; y: number } }) => {
       let { scale, translate } = t;
 
-      // Helper to resolve 'original' to base domain values
+      // Helper to resolve 'data' to base domain values
       const resolveValue = (
-        val: number | Date | 'original' | undefined,
+        val: number | Date | 'data' | undefined,
         baseDomainValue: unknown
       ): number | undefined => {
         if (val === undefined) return undefined;
-        if (val === 'original') {
+        if (val === 'data') {
           if (baseDomainValue instanceof Date) return baseDomainValue.getTime();
           return baseDomainValue as number;
         }
@@ -755,7 +755,7 @@
         axisScale: number,
         dimension: number,
         baseDomain: number[],
-        extent: { min?: number | Date | 'original'; max?: number | Date | 'original'; minRange?: number } | undefined
+        extent: { min?: number | Date | 'data'; max?: number | Date | 'data'; minRange?: number } | undefined
       ): number => {
         if (!extent || baseDomain.length < 2 || dimension <= 0) return axisTranslate;
 

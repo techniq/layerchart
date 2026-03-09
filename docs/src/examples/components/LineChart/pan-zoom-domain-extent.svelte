@@ -22,8 +22,8 @@
 		scaleExtent: [1, 50],
 		domainExtent: {
 			x: {
-				min: 'original',
-				max: 'original',
+				min: 'data',
+				max: 'data',
 				minRange: 7 * 24 * 60 * 60 * 1000
 			}
 		}

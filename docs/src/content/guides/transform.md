@@ -212,8 +212,8 @@ For `mode: 'domain'` charts, `domainExtent` lets you express constraints in data
 		scaleExtent: [1, 50],
 		domainExtent: {
 			x: {
-				min: 'original',
-				max: 'original',
+				min: 'data',
+				max: 'data',
 				minRange: 7 * 24 * 60 * 60 * 1000
 			}
 		}
@@ -225,11 +225,11 @@ Each axis (`x` or `y`) supports:
 
 | Property   | Type                           | Description                                                                         |
 | ---------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-| `min`      | `number \| Date \| 'original'` | Minimum domain value (pan boundary). `'original'` = initial data min.               |
-| `max`      | `number \| Date \| 'original'` | Maximum domain value (pan boundary). `'original'` = initial data max.               |
+| `min`      | `number \| Date \| 'data'` | Minimum domain value (pan boundary). `'data'` = initial data min.               |
+| `max`      | `number \| Date \| 'data'` | Maximum domain value (pan boundary). `'data'` = initial data max.               |
 | `minRange` | `number`                       | Minimum visible range in data units (max zoom in). For dates, this is milliseconds. |
 
-Using `'original'` for `min`/`max` is the most common pattern — it prevents panning past the data boundaries without hardcoding values.
+Using `'data'` for `min`/`max` is the most common pattern — it prevents panning past the data boundaries without hardcoding values.
 
 :example{ component="LineChart" name="pan-zoom-domain-extent" }
 
@@ -355,7 +355,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | ---------------------- | ---------------------------------------------------------------- |
 | Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                      |
 | Limit zoom depth       | `scaleExtent: [1, 10]`                                           |
-| Keep data in view      | `domainExtent: { x: { min: 'original', max: 'original' } }`      |
+| Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`      |
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                |
 | Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     |
 | Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` |
