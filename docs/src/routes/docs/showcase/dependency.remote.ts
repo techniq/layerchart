@@ -15,8 +15,13 @@ export type Dependent = {
 };
 
 export const getDependents = prerender(async () => {
-
 	const featuredSites: Dependent[] = [
+		{
+			name: 'Zipline AI',
+			description: 'Features, context and embeddings for real-time AI/ML',
+			repourl: 'https://zipline.ai/',
+			homepageurl: 'https://github.com/zipline-ai'
+		},
 		{
 			name: 'Github Analysis',
 			description: 'Analyze your GitHub repositories and NPM packages',
@@ -28,12 +33,6 @@ export const getDependents = prerender(async () => {
 			description: 'Analyze your Strava activities',
 			repourl: 'https://github.com/techniq/strava-analysis',
 			homepageurl: 'https://strava.techniq.dev'
-		},
-		{
-			name: 'Zipline AI',
-			description: 'Features, context and embeddings for real-time AI/ML',
-			repourl: 'https://zipline.ai/',
-			homepageurl: 'https://github.com/zipline-ai'
 		}
 	];
 
@@ -188,19 +187,71 @@ export const getDependents = prerender(async () => {
 	console.log(
 		`[getDependents] Step 2 - GraphQL details: ${((performance.now() - step2Start) / 1000).toFixed(2)}s (${dependents.length} repos, ${batchPromises.length} batches)`
 	);
+
+	// Step 3: Fetch stars for manually-listed sites (featured, supporters, highlighted)
+	const step3Start = performance.now();
+	const manualSites = [...featuredSites, ...supporterSites, ...highlightedSites];
+	const githubRepoPattern = /github\.com\/([^/]+)\/([^/]+)/;
+	const manualSitesWithRepos = manualSites
+		.map((site) => {
+			const match = site.repourl?.match(githubRepoPattern);
+			return match ? { site, owner: match[1], name: match[2] } : null;
+		})
+		.filter(Boolean) as { site: Dependent; owner: string; name: string }[];
+
+	if (manualSitesWithRepos.length > 0) {
+		const fragments = manualSitesWithRepos
+			.map(
+				({ owner, name }, idx) =>
+					`manual${idx}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { stargazerCount }`
+			)
+			.join('\n');
+
+		try {
+			const res = await fetch('https://api.github.com/graphql', {
+				method: 'POST',
+				headers: githubHeaders,
+				body: JSON.stringify({ query: `{ ${fragments} }` })
+			});
+			if (res.ok) {
+				const { data } = await res.json();
+				if (data) {
+					manualSitesWithRepos.forEach(({ site }, idx) => {
+						const repo = data[`manual${idx}`];
+						if (repo) {
+							site.stars = repo.stargazerCount;
+						}
+					});
+				}
+			}
+		} catch (e) {
+			console.error('[getDependents] Failed to fetch stars for manual sites:', e);
+		}
+	}
+	console.log(
+		`[getDependents] Step 3 - Manual site stars: ${((performance.now() - step3Start) / 1000).toFixed(2)}s (${manualSitesWithRepos.length} repos)`
+	);
+
 	console.log(`[getDependents] Total: ${((performance.now() - totalStart) / 1000).toFixed(2)}s`);
 
-	dependents
-		.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0)) // Sort by stars descending
-		.filter((d) => featuredSites.some((f) => f.reponame === d.reponame)) // Filter out any featured sites
-		.filter((d) => supporterSites.some((s) => s.reponame === d.reponame)); // Filter out any supporter sites
-	const popularSites = [
-		...highlightedSites,
-		...dependents.filter((d) => (d.stars ?? 0) >= POPULAR_STAR_THRESHOLD)
-	];
-	const otherSites = dependents.filter(
-		(d) => (d.stars ?? 0) >= OTHER_STAR_THRESHOLD && (d.stars ?? 0) < POPULAR_STAR_THRESHOLD
+	// Build a set of repo URLs and homepage URLs from manually-listed sites for deduplication
+	const manualUrls = new Set(
+		manualSites.flatMap((s) => [s.repourl, s.homepageurl].filter(Boolean))
 	);
+
+	const filteredDependents = dependents
+		.filter((d) => !manualUrls.has(d.repourl) && !manualUrls.has(d.homepageurl))
+		.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0));
+
+	const popularSites = filteredDependents.filter(
+		(d) => (d.stars ?? 0) >= POPULAR_STAR_THRESHOLD
+	);
+	const otherSites = [
+		...filteredDependents.filter(
+			(d) => (d.stars ?? 0) >= OTHER_STAR_THRESHOLD && (d.stars ?? 0) < POPULAR_STAR_THRESHOLD
+		),
+		...highlightedSites
+	];
 
 	return { featuredSites, supporterSites, popularSites, otherSites };
 });
