@@ -172,45 +172,6 @@ A common pattern for maps and hierarchical layouts is to zoom to a specific feat
 />
 ```
 
-## Motion / animation
-
-Transform changes can be animated using the `motion` prop:
-
-```svelte
-<!-- Tween animation -->
-<Chart
-	transform={{
-		mode: 'canvas',
-		motion: { type: 'tween', duration: 800, easing: cubicOut }
-	}}
-/>
-
-<!-- Spring animation -->
-<Chart
-	transform={{
-		mode: 'domain',
-		motion: { type: 'spring' }
-	}}
-/>
-```
-
-During drag and wheel interactions, motion is automatically set to instant so the view follows the pointer without lag.
-
-## Controls
-
-The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
-
-```svelte
-<Chart transform={{ mode: 'canvas', initialScrollMode: 'scale' }}>
-	{#snippet children()}
-		<TransformContextControls />
-		<!-- chart content -->
-	{/snippet}
-</Chart>
-```
-
-It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
-
 ## Constraints
 
 Constraints limit how far users can zoom and pan. They work across all modes.
@@ -348,6 +309,45 @@ When multiple constraint options are provided, they are applied in order:
 4. `constrain` — final custom adjustment
 
 A user-provided `constrain` function runs after all other constraints, giving it the final say.
+
+## Motion / animation
+
+Transform changes can be animated using the `motion` prop:
+
+```svelte
+<!-- Tween animation -->
+<Chart
+	transform={{
+		mode: 'canvas',
+		motion: { type: 'tween', duration: 800, easing: cubicOut }
+	}}
+/>
+
+<!-- Spring animation -->
+<Chart
+	transform={{
+		mode: 'domain',
+		motion: { type: 'spring' }
+	}}
+/>
+```
+
+During drag and wheel interactions, motion is automatically set to instant so the view follows the pointer without lag.
+
+## Controls
+
+The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
+
+```svelte
+<Chart transform={{ mode: 'canvas', initialScrollMode: 'scale' }}>
+	{#snippet children()}
+		<TransformContextControls />
+		<!-- chart content -->
+	{/snippet}
+</Chart>
+```
+
+It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
 
 ## Quick reference
 
