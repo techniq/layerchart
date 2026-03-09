@@ -1696,6 +1696,20 @@
       "line": "<Chart"
     },
     {
+      "example": "transform-canvas-scale-extent",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-canvas-scale-extent",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
@@ -3173,5 +3187,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-04T05:41:25.909Z"
+  "updatedAt": "2026-03-09T01:37:36.768Z"
 }

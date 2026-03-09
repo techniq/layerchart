@@ -385,6 +385,30 @@
       ]
     },
     {
+      "name": "pan-zoom-custom-constrain",
+      "title": "pan zoom custom constrain",
+      "path": "/docs/components/LineChart/pan-zoom-custom-constrain",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-domain-extent",
+      "title": "pan zoom domain extent",
+      "path": "/docs/components/LineChart/pan-zoom-domain-extent",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "perf-dimension-arrays",
       "title": "perf dimension arrays",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -1235,6 +1259,20 @@
       "line": "<LineChart"
     },
     {
+      "example": "pan-zoom-custom-constrain",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-custom-constrain",
+      "lineNumber": 15,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-domain-extent",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-domain-extent",
+      "lineNumber": 15,
+      "line": "<LineChart"
+    },
+    {
       "example": "perf-dimension-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -1501,5 +1539,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.708Z"
+  "updatedAt": "2026-03-09T01:37:37.705Z"
 }

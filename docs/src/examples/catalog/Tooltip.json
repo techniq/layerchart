@@ -3991,35 +3991,35 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 122,
+      "lineNumber": 123,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 127,
+      "lineNumber": 128,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 128,
+      "lineNumber": 129,
       "line": "<Tooltip.List>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 129,
+      "lineNumber": 130,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 130,
+      "lineNumber": 131,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
@@ -5997,5 +5997,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-04T05:41:27.214Z"
+  "updatedAt": "2026-03-09T01:37:38.570Z"
 }

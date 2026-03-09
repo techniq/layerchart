@@ -1616,15 +1616,29 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 64,
+      "lineNumber": 65,
       "line": "<Layer>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 112,
+      "lineNumber": 113,
       "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "transform-canvas-scale-extent",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-canvas-scale-extent",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 36,
+      "line": "<Layer>"
     },
     {
       "example": "transform-projection",
@@ -3167,5 +3181,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.602Z"
+  "updatedAt": "2026-03-09T01:37:37.624Z"
 }

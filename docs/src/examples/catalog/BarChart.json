@@ -739,6 +739,18 @@
       ]
     },
     {
+      "name": "pan-zoom-scale-extent",
+      "title": "pan zoom scale extent",
+      "path": "/docs/components/BarChart/pan-zoom-scale-extent",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "point-annotation",
       "title": "point annotation",
       "path": "/docs/components/BarChart/point-annotation",
@@ -1590,6 +1602,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "pan-zoom-scale-extent",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/pan-zoom-scale-extent",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
       "example": "point-annotation",
       "component": "BarChart",
       "path": "/docs/components/BarChart/point-annotation",
@@ -1912,5 +1931,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-04T05:41:25.723Z"
+  "updatedAt": "2026-03-09T01:37:36.555Z"
 }

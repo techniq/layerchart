@@ -85,6 +85,13 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 38,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
@@ -127,5 +134,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.438Z"
+  "updatedAt": "2026-03-09T01:37:37.496Z"
 }
