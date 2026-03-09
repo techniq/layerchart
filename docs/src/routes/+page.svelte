@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, MenuButton, ThemeSelect, Tooltip } from 'svelte-ux';
 	import Stats from '$lib/components/Stats.svelte';
+	import ContribSponsors from '$lib/components/ContribSponsors.svelte';
 	import { cls } from '@layerstack/tailwind';
 
 	import ExampleLink from '$lib/components/ExampleLink.svelte';
@@ -134,7 +135,6 @@
 	];
 </script>
 
-
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="hidden xs:flex invisible md:visible items-center gap-3 w-60 text-xl font-bold">
 		<Logo class="w-7" />
@@ -263,6 +263,8 @@
 		<ExampleLink {component} {example} variant="hover-label" aspect="video" />
 	{/each}
 </div>
+
+<ContribSponsors />
 
 <Stats />
 

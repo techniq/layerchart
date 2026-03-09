@@ -188,3 +188,11 @@ code[data-line-numbers] > [data-line]::before {
 html:active-view-transition {
 	scroll-behavior: auto;
 }
+
+/* Grid stack alternative to postion absolute */
+@utility stack {
+	display: grid;
+	> * {
+		grid-area: 1/1;
+	}
+}
