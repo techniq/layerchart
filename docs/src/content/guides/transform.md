@@ -188,6 +188,10 @@ For hierarchical layouts, click a circle to zoom into it using `zoomTo` with `di
 
 :example{ component="Pack" name="basic" }
 
+Load progressively more detailed data as the user zooms in, using the visible domain to sample the appropriate level of detail:
+
+:example{ component="LineChart" name="pan-zoom-dynamic-data" }
+
 ## Constraints
 
 Constraints limit how far users can zoom and pan. They work across all modes.
@@ -380,3 +384,4 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
 | Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     | [basic](/docs/components/Pack/basic)                                                    |
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                                    |
+| Dynamic data loading   | Derive data from `context.xDomain` visible range                 | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |

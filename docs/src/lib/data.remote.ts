@@ -32,6 +32,35 @@ export const getAppleStock = prerender(async () => {
 	return data;
 });
 
+export const getAppleStockRange = query(
+	z.object({
+		start: z.string().optional(),
+		end: z.string().optional(),
+		maxPoints: z.number().optional().default(300)
+	}),
+	async ({ start, end, maxPoints }) => {
+		const { fetch } = getRequestEvent();
+		let data = await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
+			parse<AppleStockData>(await r.text())
+		);
+
+		if (start || end) {
+			const startDate = start ? new Date(start) : undefined;
+			const endDate = end ? new Date(end) : undefined;
+			data = data.filter(
+				(d) => (!startDate || d.date >= startDate) && (!endDate || d.date <= endDate)
+			);
+		}
+
+		if (data.length > maxPoints) {
+			const step = (data.length - 1) / (maxPoints - 1);
+			data = Array.from({ length: maxPoints }, (_, i) => data![Math.round(i * step)]);
+		}
+
+		return data;
+	}
+);
+
 export const getDailyTemperature = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/daily-temperature.json').then(async (r) =>
