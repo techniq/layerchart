@@ -54,7 +54,8 @@
 	transform={{
 		mode: 'projection',
 		initialScrollMode: 'none',
-		motion: { type: 'tween', duration: 800, easing: cubicOut }
+		motion: { type: 'tween', duration: 800, easing: cubicOut },
+		inertia: true
 	}}
 	clip
 	height={600}

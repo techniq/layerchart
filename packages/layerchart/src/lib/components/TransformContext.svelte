@@ -53,6 +53,7 @@
     scaleExtent,
     translateExtent,
     constrain,
+    inertia,
     ...restProps
   }: TransformContextProps = $props();
 
@@ -72,6 +73,7 @@
     scaleExtent,
     translateExtent,
     constrain,
+    inertia,
   };
 
   let ref = $state<HTMLElement>();
@@ -110,6 +112,34 @@
 
   $effect.pre(() => {
     transformState.translateExtent = translateExtent;
+  });
+
+  $effect.pre(() => {
+    if (inertia === true) {
+      transformState.inertia = {
+        enabled: true,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    } else if (typeof inertia === 'object') {
+      transformState.inertia = {
+        enabled: true,
+        decay: inertia.decay ?? 0.99,
+        minVelocity: inertia.minVelocity ?? 0.1,
+        maxVelocity: inertia.maxVelocity ?? Infinity,
+        velocityWindow: inertia.velocityWindow ?? 160,
+      };
+    } else {
+      transformState.inertia = {
+        enabled: false,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    }
   });
 
   // Bind `state` prop

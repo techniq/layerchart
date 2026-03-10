@@ -21,6 +21,17 @@ export type TransformConstraint = {
   translate: { x: number; y: number };
 };
 
+export type InertiaOptions = {
+  /** Decay factor controlling how far inertia carries. Higher = further. Default: 0.99 */
+  decay?: number;
+  /** Minimum velocity (px/ms) to trigger inertia. Default: 0.1 */
+  minVelocity?: number;
+  /** Maximum velocity (px/ms) to cap inertia. Prevents wild throws. Default: Infinity (no cap) */
+  maxVelocity?: number;
+  /** Time window (ms) to measure velocity from recent pointer movement. Default: 160 */
+  velocityWindow?: number;
+};
+
 export type TransformStateOptions = {
   mode?: TransformMode;
   axis?: TransformAxis;
@@ -39,6 +50,9 @@ export type TransformStateOptions = {
   onTransform?: (details: { scale: number; translate: { x: number; y: number } }) => void;
   ondragstart?: () => void;
   ondragend?: () => void;
+
+  /** Enable inertia (momentum) after drag release. Pass `true` for defaults or an options object. */
+  inertia?: boolean | InertiaOptions;
 
   /** Min/max scale factor [minScale, maxScale]. Default: no limit. */
   scaleExtent?: [number, number];
@@ -80,6 +94,13 @@ export class TransformState {
   scaleExtent: [number, number] | undefined;
   translateExtent: [[number, number], [number, number]] | undefined;
   constrain: ((transform: TransformConstraint) => TransformConstraint) | undefined;
+  inertia: {
+    enabled: boolean;
+    decay: number;
+    minVelocity: number;
+    maxVelocity: number;
+    velocityWindow: number;
+  };
 
   // State
   pointerDown = $state(false);
@@ -87,6 +108,9 @@ export class TransformState {
   scrollMode = $state<TransformScrollMode>('none');
   startPoint = $state({ x: 0, y: 0 });
   startTranslate = $state({ x: 0, y: 0 });
+
+  // Velocity tracking for inertia
+  private _pointerSamples: { x: number; y: number; t: number }[] = [];
 
   // Motion controllers (internal)
   private _translate: ReturnType<typeof createControlledMotion<{ x: number; y: number }>>;
@@ -118,6 +142,34 @@ export class TransformState {
     this.scaleExtent = options.scaleExtent;
     this.translateExtent = options.translateExtent;
     this.constrain = options.constrain;
+
+    // Inertia
+    const inertiaOpt = options.inertia;
+    if (inertiaOpt === true) {
+      this.inertia = {
+        enabled: true,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    } else if (typeof inertiaOpt === 'object') {
+      this.inertia = {
+        enabled: true,
+        decay: inertiaOpt.decay ?? 0.99,
+        minVelocity: inertiaOpt.minVelocity ?? 0.1,
+        maxVelocity: inertiaOpt.maxVelocity ?? Infinity,
+        velocityWindow: inertiaOpt.velocityWindow ?? 160,
+      };
+    } else {
+      this.inertia = {
+        enabled: false,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    }
     this.scrollMode = options.initialScrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
 
     // Initialize motion controllers
@@ -304,6 +356,7 @@ export class TransformState {
     this.dragging = false;
     this.startPoint = localPoint(e);
     this.startTranslate = this._translate.current;
+    this._pointerSamples = [];
 
     this.ondragstart?.();
   }
@@ -326,6 +379,17 @@ export class TransformState {
       e.stopPropagation(); // Stop tooltip from triggering (along with `capture: true`)
       e.currentTarget?.setPointerCapture(e.pointerId);
 
+      // Track pointer samples for inertia velocity calculation
+      if (this.inertia.enabled) {
+        const now = performance.now();
+        this._pointerSamples.push({ x: endPoint.x, y: endPoint.y, t: now });
+        // Trim to keep only samples within the velocity window (plus some buffer)
+        const windowStart = now - this.inertia.velocityWindow * 2;
+        while (this._pointerSamples.length > 2 && this._pointerSamples[0].t < windowStart) {
+          this._pointerSamples.shift();
+        }
+      }
+
       this.setTranslate(
         this.processTranslate(this.startTranslate.x, this.startTranslate.y, deltaX, deltaY),
         this._translate.type === 'spring'
@@ -338,8 +402,86 @@ export class TransformState {
   }
 
   onPointerUp(_e: PointerEvent & { currentTarget: HTMLElement }) {
+    const wasDragging = this.dragging;
     this.pointerDown = false;
     this.dragging = false;
+
+    // Apply inertia if enabled and was dragging with enough velocity
+    if (this.inertia.enabled && wasDragging && this._pointerSamples.length >= 2) {
+      const now = performance.now();
+      // Filter samples to the velocity measurement window
+      const windowStart = now - this.inertia.velocityWindow;
+      const recentSamples = this._pointerSamples.filter((s) => s.t >= windowStart);
+
+      if (recentSamples.length >= 2) {
+        // Compute velocity using recency-weighted per-segment approach.
+        // More recent segments get higher weight, so the final gesture
+        // direction/speed dominates over earlier movement in the window.
+        let weightedVx = 0;
+        let weightedVy = 0;
+        let totalWeight = 0;
+
+        for (let i = 1; i < recentSamples.length; i++) {
+          const prev = recentSamples[i - 1];
+          const curr = recentSamples[i];
+          const segDt = curr.t - prev.t;
+          if (segDt <= 0) continue;
+
+          const segVx = (curr.x - prev.x) / segDt;
+          const segVy = (curr.y - prev.y) / segDt;
+
+          // Quadratic recency weight: recent segments contribute more
+          const recency = (curr.t - windowStart) / this.inertia.velocityWindow;
+          const weight = recency * recency;
+
+          weightedVx += segVx * weight;
+          weightedVy += segVy * weight;
+          totalWeight += weight;
+        }
+
+        if (totalWeight > 0) {
+          let vx = weightedVx / totalWeight;
+          let vy = weightedVy / totalWeight;
+          let speed = Math.sqrt(vx * vx + vy * vy);
+
+          // Cap velocity to prevent wild throws
+          if (speed > this.inertia.maxVelocity) {
+            const ratio = this.inertia.maxVelocity / speed;
+            vx *= ratio;
+            vy *= ratio;
+            speed = this.inertia.maxVelocity;
+          }
+
+          if (speed > this.inertia.minVelocity) {
+            // Project target: velocity * decay multiplier (converts decay 0-1 to a distance factor)
+            // With decay=0.99, factor = 100, giving a natural coast distance
+            const factor = 1 / (1 - this.inertia.decay);
+            const current = this._translate.current;
+            const projectedX = current.x + vx * factor;
+            const projectedY = current.y + vy * factor;
+
+            // For tween motion, compute coast duration proportional to velocity.
+            // Faster flings coast longer (similar to MapLibre/Google Maps behavior).
+            const motionOptions =
+              this._translate.type === 'tween'
+                ? { duration: Math.min(speed * 500, 1200) }
+                : undefined;
+
+            this.setTranslate(
+              this.processTranslate(
+                current.x,
+                current.y,
+                projectedX - current.x,
+                projectedY - current.y
+              ),
+              motionOptions
+            );
+          }
+        }
+      }
+      this._pointerSamples = [];
+    }
+
     this.ondragend?.();
   }
 

@@ -353,6 +353,55 @@ Transform changes can be animated using the `motion` prop:
 
 During drag and wheel interactions, motion is automatically set to instant so the view follows the pointer without lag.
 
+### Inertia (momentum)
+
+Enable `inertia` to let the view coast after a drag release, based on the velocity of the gesture. The existing motion system (spring or tween) handles the deceleration animation.
+
+```svelte
+<Chart
+	transform={{
+		mode: 'rotate',
+		motion: 'spring',
+		inertia: true
+	}}
+/>
+```
+
+Pass `true` for sensible defaults, or an options object for fine-tuning:
+
+| Option           | Type     | Default    | Description                                                  |
+| ---------------- | -------- | ---------- | ------------------------------------------------------------ |
+| `decay`          | `number` | `0.99`     | Decay factor (0–1). Higher = further coast distance.         |
+| `minVelocity`    | `number` | `0.1`      | Minimum velocity (px/ms) to trigger inertia.                 |
+| `maxVelocity`       | `number` | `Infinity` | Maximum velocity (px/ms) cap. Prevents wild throws.          |
+| `velocityWindow` | `number` | `160`      | Time window (ms) to measure velocity from pointer movement.  |
+
+```svelte
+<Chart
+	transform={{
+		mode: 'canvas',
+		motion: 'spring',
+		inertia: { decay: 0.92, minVelocity: 0.05 }
+	}}
+/>
+```
+
+For a map-like feel with capped velocity:
+
+```svelte
+<Chart
+	transform={{
+		mode: 'projection',
+		motion: { type: 'tween', duration: 800, easing: cubicOut },
+		inertia: { decay: 0.99, maxVelocity: 1.4 }
+	}}
+/>
+```
+
+Inertia works with all transform modes and respects `translateExtent`, `constrain`, and other constraints.
+
+:example{ component="GeoPath" name="transform-globe-inertia" }
+
 ## Controls
 
 The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
@@ -385,3 +434,4 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     | [basic](/docs/components/Pack/basic)                                                    |
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                                    |
 | Dynamic data loading   | Derive data from `context.xDomain` visible range                 | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
+| Drag inertia           | `inertia: true` with `motion: 'spring'`                          | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |

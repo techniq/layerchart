@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
@@ -48,7 +49,9 @@
 		}}
 		transform={{
 			mode: 'projection',
-			initialScrollMode: 'scale'
+			initialScrollMode: 'scale',
+			motion: { type: 'tween', duration: 800, easing: cubicOut },
+			inertia: { decay: 0.99, _maxVelocity: 1.4 }
 		}}
 		clip
 		height={600}

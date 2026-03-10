@@ -116,7 +116,7 @@
     return geoCurvePath(projection, curve);
   });
 
-  const pathData = $derived(geojson ? geoPath?.(geojson) : '');
+  const pathData = $derived(geojson ? (geoPath?.(geojson) ?? '') : '');
 
   // Hide `geoPath` reactivity from onclick handler
   function _onClick(e: MouseEvent) {
