@@ -241,7 +241,7 @@
     {/if}
 
     <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-    <ChartClipPath disabled={!context.props.brush} full>
+    <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'} full>
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
       {:else if points}
