@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LineChart, Spline } from 'layerchart';
+	import { Chart, Spline } from 'layerchart';
 
 	let data = [
 		{ date: new Date(2020, 0, 1), apples: 20, oranges: 15 },
@@ -11,9 +11,9 @@
 	];
 </script>
 
-<LineChart {data} x="date" y={['apples', 'oranges']} height={300}>
+<Chart {data} x="date" y={['apples', 'oranges']} height={300}>
 	{#snippet marks()}
 		<Spline y="apples" stroke="var(--color-apples)" />
 		<Spline y="oranges" stroke="var(--color-oranges)" />
 	{/snippet}
-</LineChart>
+</Chart>
