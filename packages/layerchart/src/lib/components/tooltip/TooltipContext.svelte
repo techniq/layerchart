@@ -533,6 +533,22 @@
                   height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
                   data: d,
                 };
+              } else if (Array.isArray(xValue)) {
+                return {
+                  x: x - xOffset,
+                  y: Array.isArray(yValue) ? y - yOffset : min(ctx.yRange),
+                  width: xValue[1] - xValue[0],
+                  height: Array.isArray(yValue) ? yValue[1] - yValue[0] : fullHeight,
+                  data: d,
+                };
+              } else if (Array.isArray(yValue)) {
+                return {
+                  x: min(ctx.xRange),
+                  y: y - yOffset,
+                  width: fullWidth,
+                  height: yValue[1] - yValue[0],
+                  data: d,
+                };
               } else {
                 console.warn(
                   '[layerchart] TooltipContext band mode requires at least one scale to be band or time.'
