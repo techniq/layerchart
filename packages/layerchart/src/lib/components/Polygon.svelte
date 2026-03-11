@@ -1,16 +1,20 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
+  import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
 
   export type PolygonPropsWithoutHTML = {
     /**
      * The center x position of the polygon.
+     * - `number`: pixel value (direct)
+     * - `string`: data property name, resolved via xScale
+     * - `function(d)`: accessor called per data item, result passed through xScale
      *
      * @default 0
      */
-    cx?: number;
+    cx?: DataProp;
 
     /**
-     * The initial center x position of the polygon.
+     * The initial center x position of the polygon (pixel mode only).
      *
      * @default cx
      */
@@ -18,13 +22,16 @@
 
     /**
      * The center y position of the polygon.
+     * - `number`: pixel value (direct)
+     * - `string`: data property name, resolved via yScale
+     * - `function(d)`: accessor called per data item, result passed through yScale
      *
      * @default 0
      */
-    cy?: number;
+    cy?: DataProp;
 
     /**
-     * The initial center y position of the polygon.
+     * The initial center y position of the polygon (pixel mode only).
      *
      * @default cy
      */
@@ -32,17 +39,33 @@
 
     /**
      * The radius of the polygon.
+     * - `number`: pixel value (direct)
+     * - `string`: data property name, resolved via rScale
+     * - `function(d)`: accessor called per data item, result passed through rScale
      *
      * @default 1
      */
-    r?: number;
+    r?: DataProp;
 
     /**
-     * The initial radius of the polygon.
+     * The initial radius of the polygon (pixel mode only).
      *
      * @default r
      */
     initialR?: number;
+
+    /**
+     * Data array to iterate over in data mode.
+     * Falls back to chart context data when not provided.
+     */
+    data?: any[];
+
+    /**
+     * Key function for keyed {#each} rendering in data mode.
+     *
+     * @default (d, i) => i
+     */
+    key?: (d: any, index: number) => any;
 
     /**
      * The number of points or explicit points to create the polygon.
@@ -122,7 +145,7 @@
     ref?: SVGPathElement;
 
     motion?: MotionProp;
-  } & CommonStyleProps;
+  } & DataDrivenStyleProps;
 
   export type PolygonProps = PolygonPropsWithoutHTML &
     Without<SVGAttributes<Element>, PolygonPropsWithoutHTML>;
@@ -135,6 +158,7 @@
   import { interpolatePath } from 'd3-interpolate-path';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
     extractTweenConfig,
@@ -143,6 +167,8 @@
   } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { chartDataArray } from '$lib/utils/common.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { polygon } from '$lib/utils/shape.js';
   import { roundedPolygonPath } from '$lib/utils/path.js';
@@ -154,6 +180,8 @@
     initialCy: initialCyProp,
     r = 1,
     initialR: initialRProp,
+    data: dataProp,
+    key: keyFn = (_: any, i: number) => i,
     points = 4,
     cornerRadius = 0,
     rotate = 0,
@@ -181,13 +209,51 @@
     refProp = ref;
   });
 
-  const initialCx = initialCxProp ?? cx;
-  const initialCy = initialCyProp ?? cy;
-  const initialR = initialRProp ?? r;
+  // Chart context (safe to call outside Chart — returns fallback)
+  const chartCtx = getChartContext();
 
-  const motionCx = createMotion(initialCx, () => cx, motion);
-  const motionCy = createMotion(initialCy, () => cy, motion);
-  const motionR = createMotion(initialR, () => r, motion);
+  // Data mode detection: if any positional prop is a string or function
+  const dataMode = $derived(hasAnyDataProp(cx, cy, r));
+
+  // Data to iterate over in data mode
+  const resolvedData: any[] = $derived(
+    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
+  );
+
+  // Resolve a single data item to a polygon path string
+  function resolvePolygon(d: any) {
+    const resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+    const resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+    const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
+
+    const pts = typeof points === 'number'
+      ? polygon({
+          cx: resolvedCx,
+          cy: resolvedCy,
+          count: points,
+          radius: resolvedR,
+          rotate,
+          inset,
+          scaleX,
+          scaleY,
+          skewX,
+          skewY,
+          tiltX,
+          tiltY,
+        })
+      : points;
+
+    return roundedPolygonPath(pts, cornerRadius);
+  }
+
+  // --- Pixel mode (motion only applies here) ---
+  const initialCx = initialCxProp ?? (typeof cx === 'number' ? cx : 0);
+  const initialCy = initialCyProp ?? (typeof cy === 'number' ? cy : 0);
+  const initialR = initialRProp ?? (typeof r === 'number' ? r : 1);
+
+  const motionCx = createMotion(initialCx, () => (typeof cx === 'number' ? cx : 0), motion);
+  const motionCy = createMotion(initialCy, () => (typeof cy === 'number' ? cy : 0), motion);
+  const motionR = createMotion(initialR, () => (typeof r === 'number' ? r : 1), motion);
 
   let polygonPoints = $derived(
     typeof points === 'number'
@@ -222,21 +288,36 @@
 
   const layerCtx = getLayerContext();
 
+  function getStyleOptions(
+    styleOverrides: ComputedStylesOptions | undefined,
+    itemFill?: string | undefined,
+    itemStroke?: string | undefined
+  ) {
+    return styleOverrides
+      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      : {
+          styles: { fill: itemFill ?? fill, fillOpacity, stroke: itemStroke ?? stroke, strokeWidth, opacity },
+          classes: cls('lc-polygon', className),
+          style: restProps.style as string | undefined,
+        };
+  }
+
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    renderPathData(
-      ctx,
-      tweenedState.current,
-      styleOverrides
-        ? merge({ styles: { strokeWidth } }, styleOverrides)
-        : {
-            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls('lc-polygon', className),
-            style: restProps.style as string | undefined,
-          }
-    );
+    if (dataMode) {
+      for (const d of resolvedData) {
+        const pathData = resolvePolygon(d);
+        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
+        renderPathData(ctx, pathData, styleOpts);
+      }
+    } else {
+      const styleOpts = getStyleOptions(styleOverrides);
+      renderPathData(ctx, tweenedState.current, styleOpts);
+    }
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -258,6 +339,8 @@
         touchmove: restProps.ontouchmove,
       },
       deps: () => [
+        dataMode,
+        dataMode ? resolvedData : null,
         fillKey.current,
         fillOpacity,
         strokeKey.current,
@@ -272,17 +355,35 @@
 </script>
 
 {#if layerCtx === 'svg'}
-  <path
-    d={tweenedState.current}
-    {fill}
-    fill-opacity={fillOpacity}
-    {stroke}
-    stroke-width={strokeWidth}
-    {opacity}
-    class={cls('lc-polygon', className)}
-    {...restProps}
-    bind:this={ref}
-  />
+  {#if dataMode}
+    {#each resolvedData as d, i (keyFn(d, i))}
+      {@const pathData = resolvePolygon(d)}
+      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+      <path
+        d={pathData}
+        fill={resolvedFill}
+        fill-opacity={fillOpacity}
+        stroke={resolvedStroke}
+        stroke-width={strokeWidth}
+        {opacity}
+        class={cls('lc-polygon', className)}
+        {...restProps}
+      />
+    {/each}
+  {:else}
+    <path
+      d={tweenedState.current}
+      fill={fill as string}
+      fill-opacity={fillOpacity}
+      stroke={stroke as string}
+      stroke-width={strokeWidth}
+      {opacity}
+      class={cls('lc-polygon', className)}
+      {...restProps}
+      bind:this={ref}
+    />
+  {/if}
 {/if}
 
 <style>

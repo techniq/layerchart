@@ -7,18 +7,26 @@ related: [Points]
 
 ## Usage
 
+### Pixel mode
+
+Pass numeric pixel values for `cx`, `cy`, and `r` to position and size circles directly.
+
 :example{ name="styling-using-classes" showCode }
 
-<!-- ## Examples
+### Data mode
 
-### Styling using classes
+Pass string property names or accessor functions to `cx` and `cy` to have values resolved from data and scaled automatically. The component renders one circle per data item.
 
-:example{ name="styling-using-classes" }
+:example{ name="data-mode" showCode }
 
-### Styling using attributes
+### Color via ordinal scale
 
-:example{ name="styling-using-attributes" }
+Use `fill` or `stroke` with a data property name to color each item through the chart's color scale.
 
-### Styling using CSS variables
+:example{ name="color-via-ordinal-scale" showCode }
 
-:example{ name="styling-using-css-variables" } -->
+### Color via threshold scale
+
+Use a threshold scale to color items based on value ranges.
+
+:example{ name="color-via-threshold-scale" showCode }

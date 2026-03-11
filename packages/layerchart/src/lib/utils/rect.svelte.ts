@@ -36,14 +36,14 @@ type DimensionGetterOptions = {
   insets?: Insets;
 };
 
-type ResolvedInsets = {
+export type ResolvedInsets = {
   left: number;
   right: number;
   top: number;
   bottom: number;
 };
 
-function resolveInsets(insets?: Insets): ResolvedInsets {
+export function resolveInsets(insets?: Insets): ResolvedInsets {
   const all = insets?.all ?? 0;
 
   const x = insets?.x ?? all;

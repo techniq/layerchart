@@ -1,19 +1,39 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
+  import type { DataDrivenStyleProps } from '$lib/utils/dataProp.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
 
+  /**
+   * Check if a string looks like a CSS/SVG value (percentage, em, px, etc.)
+   * rather than a data property accessor.
+   */
+  function isCSSValue(value: string): boolean {
+    return /^[\d.]+(%|em|rem|px|pt|cm|mm|in)?$/.test(value);
+  }
+
+  /**
+   * Check if a Text prop value is a data-space prop.
+   * Functions are always data props.
+   * Strings are data props unless they look like CSS values (e.g. "50%", "1em").
+   */
+  export function isTextDataProp(value: any): boolean {
+    if (typeof value === 'function') return true;
+    if (typeof value === 'string' && !isCSSValue(value)) return true;
+    return false;
+  }
+
   export type TextPropsWithoutHTML = {
     /**
-     * text value
+     * Text value to render.
+     * - `number`: direct value
+     * - `string`: in data mode, treated as a data property name (e.g. `"label"` → `d.label`);
+     *   in pixel mode, used as literal text
+     * - `function(d)`: accessor called per data item to get the text value
+     *
      * @default 0
      */
-    value?: string | number;
-
-    /**
-     * The fill color of the text
-     */
-    fill?: string;
+    value?: string | number | ((d: any) => string | number);
 
     /**
      * Maximum width to occupy (approximate as words are not split)
@@ -21,28 +41,36 @@
     width?: number;
 
     /**
-     * x position of the text
+     * x position of the text.
+     * - `number`: pixel value (direct)
+     * - `string` (CSS value like "50%"): SVG position value
+     * - `string` (property name like "date"): data property, resolved via xScale
+     * - `function(d)`: accessor called per data item, result passed through xScale
      *
      * @default 0
      */
-    x?: string | number;
+    x?: string | number | ((d: any) => any);
 
     /**
-     * Initial x position of the text
+     * Initial x position of the text (pixel mode only).
      *
      * @default x
      */
     initialX?: string | number;
 
     /**
-     * y position of the text
+     * y position of the text.
+     * - `number`: pixel value (direct)
+     * - `string` (CSS value like "50%"): SVG position value
+     * - `string` (property name like "value"): data property, resolved via yScale
+     * - `function(d)`: accessor called per data item, result passed through yScale
      *
      * @default 0
      */
-    y?: string | number;
+    y?: string | number | ((d: any) => any);
 
     /**
-     * Initial y position of the text
+     * Initial y position of the text (pixel mode only).
      *
      * @default y
      */
@@ -134,6 +162,8 @@
      * @bindable
      */
     ref?: SVGTextElement;
+
+    /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
 
     /**
@@ -160,7 +190,20 @@
      * @default '0%'
      */
     startOffset?: string | number;
-  } & CommonStyleProps;
+
+    /**
+     * Data array to iterate over in data mode.
+     * Falls back to chart context data when not provided.
+     */
+    data?: any[];
+
+    /**
+     * Key function for keyed {#each} rendering in data mode.
+     *
+     * @default (d, i) => i
+     */
+    key?: (d: any, index: number) => any;
+  } & DataDrivenStyleProps;
 
   export type TextProps = TextPropsWithoutHTML &
     Without<SVGAttributes<SVGTextElement>, TextPropsWithoutHTML>;
@@ -183,9 +226,13 @@
   import { merge } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
+  import { resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { get } from '@layerstack/utils';
+  import { chartDataArray } from '$lib/utils/common.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { degreesToRadians } from '$lib/utils/math.js';
@@ -196,9 +243,9 @@
   let {
     value,
     x = 0,
-    initialX = x,
+    initialX,
     y = 0,
-    initialY = y,
+    initialY,
     dx = 0,
     dy = 0,
     lineHeight = '1em',
@@ -224,11 +271,46 @@
     pathId = createId('text-path', uid),
     startOffset = '0%',
     transform: transformProp,
+    data: dataProp,
+    key: keyFn = (_: any, i: number) => i,
     ...restProps
   }: TextProps = $props();
 
+  // Data mode detection
+  const dataMode = $derived(isTextDataProp(x) || isTextDataProp(y));
+
+  // Chart context
+  const chartCtx = getChartContext();
+
+  // Data to iterate over in data mode
+  const resolvedData: any[] = $derived(
+    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
+  );
+
+  // Resolve position for a data item
+  function resolveTextPosition(d: any) {
+    return {
+      x: resolveDataProp(x as any, d, chartCtx.xScale, 0),
+      y: resolveDataProp(y as any, d, chartCtx.yScale, 0),
+    };
+  }
+
+  // Resolve text value for a data item
+  function resolveTextValue(d: any): string {
+    if (typeof value === 'function') {
+      const v = value(d);
+      return v != null ? String(v) : '';
+    }
+    if (typeof value === 'string') {
+      const v = get(d, value);
+      return v != null ? String(v) : '';
+    }
+    return value != null ? String(value) : '';
+  }
+
   const layerCtx = getLayerContext();
 
+  // --- Pixel mode ---
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
   let pathRef = $state<SVGPathElement>();
@@ -242,6 +324,10 @@
   });
 
   let style = $state<CSSStyleDeclaration>(); // TODO: read from DOM?
+
+  // Use defaults that work for both pixel and data modes
+  const _initialX: string | number = initialX ?? (typeof x === 'function' ? 0 : x);
+  const _initialY: string | number = initialY ?? (typeof y === 'function' ? 0 : y);
 
   const resolvedWidth = $derived(path ? getPathLength(pathRef) : width);
 
@@ -263,7 +349,9 @@
   });
 
   // Handle null and convert `\n` strings back to newline characters
-  const rawText = $derived(value != null ? value.toString().replace(/\\n/g, '\n') : '');
+  const rawText = $derived(
+    typeof value !== 'function' && value != null ? value.toString().replace(/\\n/g, '\n') : ''
+  );
 
   const textValue = $derived.by(() => {
     if (!truncateConfig) return rawText;
@@ -344,6 +432,17 @@
     }
   });
 
+  // startDy for data mode (single line per item)
+  const dataModeStartDy = $derived.by(() => {
+    if (verticalAnchor === 'start') {
+      return getPixelValue(lineHeight);
+    } else if (verticalAnchor === 'middle') {
+      return getPixelValue(capHeight) / 2;
+    } else {
+      return -getPixelValue(capHeight) / 2;
+    }
+  });
+
   const scaleTransform = $derived.by(() => {
     if (
       scaleToFit &&
@@ -375,71 +474,108 @@
     );
   }
 
-  const motionX = createMotion(initialX, () => x, motion);
-  const motionY = createMotion(initialY, () => y, motion);
+  const motionX = createMotion(
+    _initialX,
+    () => (typeof x === 'number' || typeof x === 'string' ? x : 0),
+    motion
+  );
+  const motionY = createMotion(
+    _initialY,
+    () => (typeof y === 'number' || typeof y === 'string' ? y : 0),
+    motion
+  );
 
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    const effectiveLineHeight = getPixelValue(lineHeight);
-    const baseY = getPixelValue(motionY.current) + getPixelValue(dy) + getPixelValue(startDy);
-    const baseX = getPixelValue(motionX.current) + getPixelValue(dx);
-
-    ctx.save();
-
-    if (rotate !== undefined) {
-      const centerX = getPixelValue(x);
-      const centerY = getPixelValue(y);
-      const radians = degreesToRadians(rotate);
-
-      ctx.translate(centerX, centerY);
-      ctx.rotate(radians);
-      ctx.translate(-centerX, -centerY);
+    function getTextStyles(
+      itemFill?: string | undefined,
+      itemStroke?: string | undefined
+    ) {
+      return styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: {
+              fill: itemFill ?? fill,
+              fillOpacity,
+              stroke: itemStroke ?? stroke,
+              strokeWidth,
+              opacity,
+              paintOrder: 'stroke',
+              textAnchor,
+            },
+            classes: cls('lc-text', className),
+          };
     }
 
-    const styles = styleOverrides
-      ? merge({ styles: { strokeWidth } }, styleOverrides)
-      : {
-          styles: {
-            fill,
-            fillOpacity,
-            stroke,
-            strokeWidth,
-            opacity,
-            paintOrder: 'stroke',
-            textAnchor,
-          },
-          classes: cls('lc-text', className),
-        };
+    if (dataMode) {
+      const baseStyles = getTextStyles();
+      const computedStyles = getComputedStyles(ctx.canvas, baseStyles);
+      ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
+      const textAlign =
+        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      ctx.textAlign = textAlign;
 
-    const computedStyles = getComputedStyles(ctx.canvas, styles);
+      for (const d of resolvedData) {
+        const pos = resolveTextPosition(d);
+        const text = resolveTextValue(d);
+        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+        const itemStyles = getTextStyles(resolvedFill, resolvedStroke);
+        ctx.save();
+        if (rotate !== undefined) {
+          const radians = degreesToRadians(rotate);
+          ctx.translate(pos.x, pos.y);
+          ctx.rotate(radians);
+          ctx.translate(-pos.x, -pos.y);
+        }
+        renderText(
+          ctx,
+          text,
+          { x: pos.x + getPixelValue(dx), y: pos.y + getPixelValue(dy) + dataModeStartDy },
+          itemStyles
+        );
+        ctx.restore();
+      }
+    } else {
+      const styles = getTextStyles();
+      const effectiveLineHeight = getPixelValue(lineHeight);
+      const baseY = getPixelValue(motionY.current) + getPixelValue(dy) + getPixelValue(startDy);
+      const baseX = getPixelValue(motionX.current) + getPixelValue(dx);
 
-    ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
+      ctx.save();
 
-    const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
-    ctx.textAlign = textAlign;
+      if (rotate !== undefined) {
+        const centerX = getPixelValue(typeof x === 'function' ? 0 : x);
+        const centerY = getPixelValue(typeof y === 'function' ? 0 : y);
+        const radians = degreesToRadians(rotate);
 
-    for (let index = 0; index < wordsByLines.length; index++) {
-      const line = wordsByLines[index];
-      const text = line.words.join(' ');
+        ctx.translate(centerX, centerY);
+        ctx.rotate(radians);
+        ctx.translate(-centerX, -centerY);
+      }
 
-      // no need to manually adjust x for textAnchor since ctx.textAlign handles it
-      const xPos = baseX;
-      const yPos = baseY + index * effectiveLineHeight;
+      const computedStyles = getComputedStyles(ctx.canvas, styles);
 
-      renderText(
-        ctx,
-        text,
-        {
-          x: xPos,
-          y: yPos,
-        },
-        styles
-      );
+      ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
+
+      const textAlign =
+        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      ctx.textAlign = textAlign;
+
+      for (let index = 0; index < wordsByLines.length; index++) {
+        const line = wordsByLines[index];
+        const text = line.words.join(' ');
+
+        const xPos = baseX;
+        const yPos = baseY + index * effectiveLineHeight;
+
+        renderText(ctx, text, { x: xPos, y: yPos }, styles);
+      }
+
+      ctx.restore();
     }
-
-    ctx.restore();
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -451,6 +587,8 @@
       name: 'Text',
       render,
       deps: () => [
+        dataMode,
+        dataMode ? resolvedData : null,
         value,
         motionX.current,
         motionY.current,
@@ -470,89 +608,147 @@
 </script>
 
 {#if layerCtx === 'svg'}
-  <!-- `overflow: visible` allow contents to be shown outside element -->
-  <!-- `paint-order: stroke` supports stroke outlining text  -->
-  <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]} bind:this={svgRef}>
-    {#if path}
-      <defs>
-        {#key path}
-          <path bind:this={pathRef} id={pathId} d={path} />
-        {/key}
-      </defs>
-      <text
-        bind:this={ref}
-        {dy}
-        {...restProps}
-        {fill}
-        fill-opacity={fillOpacity}
-        {stroke}
-        stroke-width={strokeWidth}
-        {opacity}
-        transform={transformProp}
-        class={['lc-text', className]}
-      >
-        <textPath
-          style="text-anchor: {textAnchor};"
+  {#if dataMode}
+    {#each resolvedData as d, i (keyFn(d, i))}
+      {@const pos = resolveTextPosition(d)}
+      {@const text = resolveTextValue(d)}
+      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+      {@const dataRotateTransform = rotate ? `rotate(${rotate}, ${pos.x}, ${pos.y})` : ''}
+      <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]}>
+        <text
+          x={pos.x}
+          y={pos.y}
+          transform={transformProp ?? dataRotateTransform}
+          text-anchor={textAnchor}
           dominant-baseline={dominantBaseline}
-          href="#{pathId}"
-          {startOffset}
-          class="lc-text-path"
+          {...restProps}
+          fill={resolvedFill}
+          fill-opacity={fillOpacity}
+          stroke={resolvedStroke}
+          stroke-width={strokeWidth}
+          {opacity}
+          class={['lc-text', className]}
         >
-          {wordsByLines.map((line) => line.words.join(' ')).join()}
-        </textPath>
-      </text>
-    {:else if isValidXOrY(x) && isValidXOrY(y)}
-      <text
-        bind:this={ref}
-        x={motionX.current}
-        y={motionY.current}
-        {transform}
-        text-anchor={textAnchor}
-        dominant-baseline={dominantBaseline}
-        {...restProps}
-        {fill}
-        fill-opacity={fillOpacity}
-        {stroke}
-        stroke-width={strokeWidth}
-        {opacity}
-        class={['lc-text', className]}
-      >
-        {#each wordsByLines as line, index}
           <tspan
-            x={motionX.current}
-            dy={index === 0 ? startDy : getPixelValue(lineHeight)}
+            x={pos.x}
+            dy={dataModeStartDy}
             class="lc-text-tspan"
           >
-            {line.words.join(' ')}
+            {text}
           </tspan>
-        {/each}
-      </text>
-    {/if}
-  </svg>
+        </text>
+      </svg>
+    {/each}
+  {:else}
+    <!-- `overflow: visible` allow contents to be shown outside element -->
+    <!-- `paint-order: stroke` supports stroke outlining text  -->
+    <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]} bind:this={svgRef}>
+      {#if path}
+        <defs>
+          {#key path}
+            <path bind:this={pathRef} id={pathId} d={path} />
+          {/key}
+        </defs>
+        <text
+          bind:this={ref}
+          {dy}
+          {...restProps}
+          fill={fill as string}
+          fill-opacity={fillOpacity}
+          stroke={stroke as string}
+          stroke-width={strokeWidth}
+          {opacity}
+          transform={transformProp}
+          class={['lc-text', className]}
+        >
+          <textPath
+            style="text-anchor: {textAnchor};"
+            dominant-baseline={dominantBaseline}
+            href="#{pathId}"
+            {startOffset}
+            class="lc-text-path"
+          >
+            {wordsByLines.map((line) => line.words.join(' ')).join()}
+          </textPath>
+        </text>
+      {:else if isValidXOrY(typeof x === 'function' ? undefined : x) && isValidXOrY(typeof y === 'function' ? undefined : y)}
+        <text
+          bind:this={ref}
+          x={motionX.current}
+          y={motionY.current}
+          {transform}
+          text-anchor={textAnchor}
+          dominant-baseline={dominantBaseline}
+          {...restProps}
+          fill={fill as string}
+          fill-opacity={fillOpacity}
+          stroke={stroke as string}
+          stroke-width={strokeWidth}
+          {opacity}
+          class={['lc-text', className]}
+        >
+          {#each wordsByLines as line, index}
+            <tspan
+              x={motionX.current}
+              dy={index === 0 ? startDy : getPixelValue(lineHeight)}
+              class="lc-text-tspan"
+            >
+              {line.words.join(' ')}
+            </tspan>
+          {/each}
+        </text>
+      {/if}
+    </svg>
+  {/if}
 {:else if layerCtx === 'html'}
-  {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
-  {@const translateY =
-    verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
-  <!-- TODO: How best to handle dx/dy when adjusted for svg style issues? -->
-  <!-- style:line-height={lineHeight} -->
-  <!-- TODO: How to handle fill-/stroke- vs bg-/text-/border- colors? -->
-  <div
-    style:position="absolute"
-    style:left="{dx + motionX.current}px"
-    style:top="{dy + motionY.current}px"
-    style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
-    style:transform-origin="{verticalAnchor === 'middle'
-      ? 'center'
-      : verticalAnchor === 'end'
-        ? 'bottom'
-        : 'top'}
-    {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
-    style:white-space="pre-wrap"
-    style:line-height={lineHeight}
-    class={['lc-text', className]}
-  >
-    {textValue}
-  </div>
+  {#if dataMode}
+    {#each resolvedData as d, i (keyFn(d, i))}
+      {@const pos = resolveTextPosition(d)}
+      {@const text = resolveTextValue(d)}
+      {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
+      {@const translateY =
+        verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
+      <div
+        style:position="absolute"
+        style:left="{getPixelValue(dx) + pos.x}px"
+        style:top="{getPixelValue(dy) + pos.y}px"
+        style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
+        style:transform-origin="{verticalAnchor === 'middle'
+          ? 'center'
+          : verticalAnchor === 'end'
+            ? 'bottom'
+            : 'top'}
+        {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
+        style:white-space="pre-wrap"
+        style:line-height={lineHeight}
+        class={['lc-text', className]}
+      >
+        {text}
+      </div>
+    {/each}
+  {:else}
+    {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
+    {@const translateY =
+      verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
+    <div
+      style:position="absolute"
+      style:left="{dx + motionX.current}px"
+      style:top="{dy + motionY.current}px"
+      style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
+      style:transform-origin="{verticalAnchor === 'middle'
+        ? 'center'
+        : verticalAnchor === 'end'
+          ? 'bottom'
+          : 'top'}
+      {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
+      style:white-space="pre-wrap"
+      style:line-height={lineHeight}
+      class={['lc-text', className]}
+    >
+      {textValue}
+    </div>
+  {/if}
 {/if}
 
 <style>

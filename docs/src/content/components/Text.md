@@ -7,7 +7,31 @@ related: []
 
 ## Usage
 
+### Pixel mode
+
+Pass numeric or CSS string values for `x` and `y` to position text at exact locations.
+
 :example{ name="playground" }
+
+### Data mode
+
+Pass string property names or accessor functions to `x` and `y` to position text from data. The `value` prop can be a string property name, function, or literal. The component renders one text element per data item.
+
+:example{ name="data-mode" showCode }
+
+### Color via ordinal scale
+
+Use `fill` with a data property name to color each text through the chart's color scale.
+
+:example{ name="color-via-ordinal-scale" showCode }
+
+### Color via threshold scale
+
+Use a threshold scale to color text based on value ranges.
+
+:example{ name="color-via-threshold-scale" showCode }
+
+## Examples
 
 ### Truncate text of axis labels
 
