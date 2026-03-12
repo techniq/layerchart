@@ -114,7 +114,8 @@
 		}}
 		transform={{
 			mode: 'rotate',
-			motion: { type: 'spring', stiffness: 0.04 }
+			motion: { type: 'spring', stiffness: 0.04 },
+			inertia: true
 		}}
 		tooltipContext={{ touchEvents: 'none' }}
 		bind:context
