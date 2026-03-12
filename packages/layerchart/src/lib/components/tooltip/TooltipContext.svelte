@@ -499,6 +499,26 @@
                   height: Math.abs(yEnd - yStart),
                   data: d,
                 };
+              } else if (Array.isArray(xValue)) {
+                return {
+                  x: Math.min(xValue[0], xValue[1]) - xOffset,
+                  y: Array.isArray(yValue)
+                    ? Math.min(yValue[0], yValue[1]) - yOffset
+                    : min(ctx.yRange),
+                  width: Math.abs(xValue[1] - xValue[0]),
+                  height: Array.isArray(yValue)
+                    ? Math.abs(yValue[1] - yValue[0])
+                    : fullHeight,
+                  data: d,
+                };
+              } else if (Array.isArray(yValue)) {
+                return {
+                  x: min(ctx.xRange),
+                  y: Math.min(yValue[0], yValue[1]) - yOffset,
+                  width: fullWidth,
+                  height: Math.abs(yValue[1] - yValue[0]),
+                  data: d,
+                };
               } else if (isScaleTime(ctx.xScale)) {
                 // Find width to next data point
                 const index = ctx.flatData.findIndex(
@@ -531,22 +551,6 @@
                   y: y - yOffset,
                   width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
                   height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
-                  data: d,
-                };
-              } else if (Array.isArray(xValue)) {
-                return {
-                  x: x - xOffset,
-                  y: Array.isArray(yValue) ? y - yOffset : min(ctx.yRange),
-                  width: xValue[1] - xValue[0],
-                  height: Array.isArray(yValue) ? yValue[1] - yValue[0] : fullHeight,
-                  data: d,
-                };
-              } else if (Array.isArray(yValue)) {
-                return {
-                  x: min(ctx.xRange),
-                  y: y - yOffset,
-                  width: fullWidth,
-                  height: yValue[1] - yValue[0],
                   data: d,
                 };
               } else {

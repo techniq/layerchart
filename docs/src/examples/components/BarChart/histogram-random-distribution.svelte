@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { LineChart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
+	import { Chart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { randomNormal } from 'd3-random';
-	import BarChartControls2 from '$lib/components/controls/BarChartControls2.svelte';
+	import HistogramControls from '$lib/components/controls/HistogramControls.svelte';
 
 	let selectedGenerator = $state('normal');
 	let randomCount = $state(1000);
@@ -13,9 +13,9 @@
 	export { randomBins as data };
 </script>
 
-<BarChartControls2 bind:random bind:selectedGenerator bind:randomCount />
+<HistogramControls bind:random bind:selectedGenerator bind:randomCount />
 
-<LineChart
+<Chart
 	data={randomBins}
 	x={['x0', 'x1']}
 	y="length"
@@ -25,18 +25,11 @@
 	motion={{ type: 'spring' }}
 	padding={defaultChartPadding({ left: 30 })}
 	height={300}
+	tooltipContext={{ mode: 'band' }}
+	highlight={{ area: true }}
 >
-	{#snippet marks({ context })}
-		{#each randomBins as d}
-			<Rect
-				x={context.xScale(d.x0) + 1}
-				y={context.yScale(d.length)}
-				width={context.xScale(d.x1) - context.xScale(d.x0) - 2}
-				height={context.yScale(0) - context.yScale(d.length)}
-				class="fill-primary"
-				motion="tween"
-			/>
-		{/each}
+	{#snippet marks()}
+		<Rect x0="x0" y0={(d) => 0} x1="x1" y1="length" insets={{ x: 1 }} class="fill-primary" />
 	{/snippet}
 	{#snippet tooltip()}
 		<Tooltip.Root>
@@ -56,4 +49,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</LineChart>
+</Chart>

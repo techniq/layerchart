@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { LineChart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
+	import { Chart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
 	import { getOlympians } from '$lib/data.remote';
-	import BarChartControls from '$lib/components/controls/BarChartControls.svelte';
+	import HistogramControls from '$lib/components/controls/HistogramControls.svelte';
 
 	const olympians = await getOlympians();
 	let thresholds = $state(10);
@@ -17,9 +17,9 @@
 	export { data };
 </script>
 
-<BarChartControls bind:thresholds />
+<HistogramControls bind:thresholds />
 
-<LineChart
+<Chart
 	{data}
 	x={['x0', 'x1']}
 	y="length"
@@ -29,18 +29,11 @@
 	}}
 	motion={{ type: 'spring' }}
 	height={300}
+	tooltipContext={{ mode: 'band' }}
+	highlight={{ area: true }}
 >
-	{#snippet marks({ context })}
-		{#each data as d}
-			<Rect
-				x={context.xScale(d.x0) + 1}
-				y={context.yScale(d.length)}
-				width={context.xScale(d.x1) - context.xScale(d.x0) - 2}
-				height={context.yScale(0) - context.yScale(d.length)}
-				class="fill-primary"
-				motion="tween"
-			/>
-		{/each}
+	{#snippet marks()}
+		<Rect x0="x0" y0={(d) => 0} x1="x1" y1="length" insets={{ x: 1 }} class="fill-primary" />
 	{/snippet}
 
 	{#snippet tooltip()}
@@ -61,4 +54,4 @@
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
-</LineChart>
+</Chart>

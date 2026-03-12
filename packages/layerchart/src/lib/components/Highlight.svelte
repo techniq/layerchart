@@ -178,7 +178,11 @@
   );
 
   const axis = $derived(
-    axisProp == null ? (isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) ? 'y' : 'x') : axisProp
+    axisProp == null
+      ? isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) || Array.isArray(yValue)
+        ? 'y'
+        : 'x'
+      : axisProp
   );
 
   const _lines: { x1: number; y1: number; x2: number; y2: number }[] = $derived.by(() => {
