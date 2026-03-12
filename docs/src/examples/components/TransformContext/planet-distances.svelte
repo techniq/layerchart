@@ -150,45 +150,57 @@
 <div class="flex items-center gap-2 mb-2 text-sm">
 	<button
 		class="px-3 py-1 rounded border border-surface-content/20 hover:bg-surface-content/5"
-		onclick={() => { stopPlaying(); zoomToDistance(planets.find((p) => p.name === 'Mars')!.distance); }}
+		onclick={() => {
+			stopPlaying();
+			zoomToDistance(planets.find((p) => p.name === 'Mars')!.distance);
+		}}
 	>
 		Inner Planets
 	</button>
 	<button
 		class="px-3 py-1 rounded border border-surface-content/20 hover:bg-surface-content/5"
-		onclick={() => { stopPlaying(); zoomToDistance(planets.find((p) => p.name === 'Saturn')!.distance); }}
+		onclick={() => {
+			stopPlaying();
+			zoomToDistance(planets.find((p) => p.name === 'Saturn')!.distance);
+		}}
 	>
 		Mid System
 	</button>
 	<button
 		class="px-3 py-1 rounded border border-surface-content/20 hover:bg-surface-content/5"
-		onclick={() => { stopPlaying(); context?.transform.reset(); }}
+		onclick={() => {
+			stopPlaying();
+			context?.transform.reset();
+		}}
 	>
 		Show All
 	</button>
 	<div class="ml-auto flex items-center gap-2">
-	<button
-		class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
-		onclick={() => play(scaleSteps())}
-	>
-		<LucidePlay class="size-3" />
-		Scale
-	</button>
-	<button
-		class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
-		onclick={() => play(translateSteps())}
-	>
-		<LucidePlay class="size-3" />
-		Translate
-	</button>
-	<button
-		class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1 disabled:opacity-30 disabled:pointer-events-none"
-		onclick={() => { stopPlaying(); context?.transform.reset(); }}
-		disabled={!isPlaying}
-	>
-		<LucideSquare class="size-3" />
-		Stop
-	</button>
+		<button
+			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
+			onclick={() => play(scaleSteps())}
+		>
+			<LucidePlay class="size-3" />
+			Scale
+		</button>
+		<button
+			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
+			onclick={() => play(translateSteps())}
+		>
+			<LucidePlay class="size-3" />
+			Translate
+		</button>
+		<button
+			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1 disabled:opacity-30 disabled:pointer-events-none"
+			onclick={() => {
+				stopPlaying();
+				context?.transform.reset();
+			}}
+			disabled={!isPlaying}
+		>
+			<LucideSquare class="size-3" />
+			Stop
+		</button>
 	</div>
 </div>
 

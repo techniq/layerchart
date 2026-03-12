@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-12T03:09:19.984Z",
-  "totalComponents": 60,
-  "totalExamples": 752,
+  "generatedAt": "2026-03-12T05:41:42.078Z",
+  "totalComponents": 61,
+  "totalExamples": 758,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2349,6 +2349,36 @@
       ]
     },
     {
+      "component": "Image",
+      "examples": [
+        {
+          "name": "country-flags",
+          "path": "/example/Image/country-flags",
+          "checksum": "af31ff6fcd8e95895cbb8f742ae2ce6c"
+        },
+        {
+          "name": "pixel-mode",
+          "path": "/example/Image/pixel-mode",
+          "checksum": "f0a6bd043403c2dc02ed7418a76b36c2"
+        },
+        {
+          "name": "planets",
+          "path": "/example/Image/planets",
+          "checksum": "a98c833cc5221db2816f1d16a20b4949"
+        },
+        {
+          "name": "sports-logos",
+          "path": "/example/Image/sports-logos",
+          "checksum": "698a39a1033b6a7752b108fb8f295ff4"
+        },
+        {
+          "name": "us-presidents",
+          "path": "/example/Image/us-presidents",
+          "checksum": "0887064b06ad96a1d299cf210a3486f2"
+        }
+      ]
+    },
+    {
       "component": "Layer",
       "examples": [
         {
@@ -3995,6 +4025,11 @@
           "name": "pan-zoom-svg-image",
           "path": "/example/TransformContext/pan-zoom-svg-image",
           "checksum": "db446ce78323bfbf9506a612de870225"
+        },
+        {
+          "name": "planet-distances",
+          "path": "/example/TransformContext/planet-distances",
+          "checksum": "99422bd79e852850e2427e72395df8f4"
         },
         {
           "name": "playground",

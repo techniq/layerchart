@@ -3197,6 +3197,55 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" label=\"GDP per capita (USD)\" rule />"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" label=\"Life expectancy (years)\" rule />"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 65,
+      "line": "<Axis placement=\"bottom\" label=\"Distance from Sun (million km)\" rule />"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 78,
+      "line": "<Axis placement=\"bottom\" label=\"Wins\" rule />"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 79,
+      "line": "<Axis placement=\"left\" label=\"Points scored\" rule />"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 73,
+      "line": "<Axis placement=\"bottom\" label=\"Inauguration\" rule />"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 74,
+      "line": "<Axis placement=\"left\" label=\"Historical rating\" rule />"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Line",
       "path": "/docs/components/Line/color-via-ordinal-scale",
@@ -4399,7 +4448,14 @@
       "path": "/docs/components/Tooltip/stacked-area",
       "lineNumber": 59,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 255,
+      "line": "<Axis placement=\"bottom\" format={formatDistance} />"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:21.466Z"
+  "updatedAt": "2026-03-12T05:41:43.125Z"
 }

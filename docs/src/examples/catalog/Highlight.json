@@ -638,7 +638,14 @@
       "path": "/docs/components/Tooltip/stacked-area",
       "lineNumber": 71,
       "line": "<Highlight"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 256,
+      "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.519Z"
+  "updatedAt": "2026-03-12T05:41:46.112Z"
 }

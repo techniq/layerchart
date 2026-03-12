@@ -338,7 +338,14 @@
       "path": "/docs/components/Pattern/lines-custom-pattern-svg-only",
       "lineNumber": 101,
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 234,
+      "line": "<line"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.694Z"
+  "updatedAt": "2026-03-12T05:41:46.420Z"
 }

@@ -2026,6 +2026,41 @@
       "line": "<Layer>"
     },
     {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "pixel-mode",
+      "component": "Image",
+      "path": "/docs/components/Image/pixel-mode",
+      "lineNumber": 6,
+      "line": "<Layer>"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 77,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 72,
+      "line": "<Layer>"
+    },
+    {
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
@@ -3244,6 +3279,13 @@
       "line": "<Layer type=\"svg\">"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 228,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
@@ -3321,5 +3363,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.622Z"
+  "updatedAt": "2026-03-12T05:41:46.373Z"
 }

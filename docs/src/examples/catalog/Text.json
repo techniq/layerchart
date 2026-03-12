@@ -710,6 +710,13 @@
       "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 245,
+      "line": "<Text"
+    },
+    {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
@@ -794,5 +801,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:24.075Z"
+  "updatedAt": "2026-03-12T05:41:47.718Z"
 }

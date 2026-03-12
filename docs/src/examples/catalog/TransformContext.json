@@ -32,6 +32,58 @@
           "component": "Layer",
           "lineNumber": 18,
           "line": "<Layer type=\"svg\">"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 19,
+          "line": "<image"
+        }
+      ]
+    },
+    {
+      "name": "planet-distances",
+      "title": "planet distances",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 207,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 228,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 234,
+          "line": "<line"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 244,
+          "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 245,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 255,
+          "line": "<Axis placement=\"bottom\" format={formatDistance} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 256,
+          "line": "<Highlight lines axis=\"x\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 259,
+          "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
         }
       ]
     },
@@ -69,5 +121,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-03-02T17:24:38.693Z"
+  "updatedAt": "2026-03-12T05:41:48.449Z"
 }

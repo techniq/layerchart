@@ -2116,6 +2116,41 @@
       "line": "<Chart"
     },
     {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "pixel-mode",
+      "component": "Image",
+      "path": "/docs/components/Image/pixel-mode",
+      "lineNumber": 5,
+      "line": "<Chart padding={{ top: 10, bottom: 10, left: 10, right: 10 }} height={300}>"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 57,
+      "line": "<Chart"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 68,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 64,
+      "line": "<Chart"
+    },
+    {
       "example": "all-3-layers",
       "component": "Layer",
       "path": "/docs/components/Layer/all-3-layers",
@@ -3320,6 +3355,13 @@
       "line": "<Chart"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 207,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
@@ -3390,5 +3432,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:21.812Z"
+  "updatedAt": "2026-03-12T05:41:43.441Z"
 }

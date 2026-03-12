@@ -5913,6 +5913,41 @@
       "line": "<Tooltip.Item label={key} value={data.data[key]} />"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 259,
+      "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 261,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 262,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 263,
+      "line": "<Tooltip.Item label=\"Distance\" value={formatDistance(data.distance)} />"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 264,
+      "line": "<Tooltip.Item label=\"Radius\" value={`${data.radius.toLocaleString()} km`} />"
+    },
+    {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
@@ -5997,5 +6032,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:24.177Z"
+  "updatedAt": "2026-03-12T05:41:47.972Z"
 }
