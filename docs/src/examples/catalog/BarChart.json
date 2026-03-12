@@ -492,18 +492,18 @@
       "path": "/docs/components/BarChart/histogram-date-time-count",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 35,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 48,
-          "line": "<Rect"
+          "lineNumber": 49,
+          "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 59,
+          "lineNumber": 52,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -514,18 +514,18 @@
       "path": "/docs/components/BarChart/histogram-date-time-interval",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 39,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 55,
-          "line": "<Rect"
+          "lineNumber": 56,
+          "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 66,
+          "lineNumber": 59,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -536,18 +536,18 @@
       "path": "/docs/components/BarChart/histogram-horizontal",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 22,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 33,
-          "line": "<Rect"
+          "lineNumber": 34,
+          "line": "<Rect x0={(d) => 0} y0=\"x0\" x1=\"length\" y1=\"x1\" insets={{ y: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 37,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -558,18 +558,18 @@
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 18,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 31,
-          "line": "<Rect"
+          "lineNumber": 32,
+          "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 42,
+          "lineNumber": 35,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -580,18 +580,18 @@
       "path": "/docs/components/BarChart/histogram-vertical",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 22,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 35,
-          "line": "<Rect"
+          "lineNumber": 36,
+          "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 47,
+          "lineNumber": 40,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1931,5 +1931,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-09T01:37:36.555Z"
+  "updatedAt": "2026-03-12T03:09:21.556Z"
 }

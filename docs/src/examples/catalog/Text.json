@@ -2,6 +2,107 @@
   "component": "Text",
   "examples": [
     {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 27,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 28,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 30,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 42,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 43,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Text/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 25,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 26,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Text/playground",
@@ -378,6 +479,13 @@
       "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 20,
+      "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -567,6 +675,27 @@
       "line": "<Text"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Text"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 43,
+      "line": "<Text"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 26,
+      "line": "<Text"
+    },
+    {
       "example": "playground",
       "component": "Text",
       "path": "/docs/components/Text/playground",
@@ -665,5 +794,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:38.456Z"
+  "updatedAt": "2026-03-12T03:09:24.075Z"
 }

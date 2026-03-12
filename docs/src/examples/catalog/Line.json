@@ -2,6 +2,107 @@
   "component": "Line",
   "examples": [
     {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 30,
+          "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" stroke=\"category\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 31,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 17,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 32,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 44,
+          "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" stroke=\"value\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 45,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Line/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 17,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 18,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 20,
+          "line": "<Line x1=\"date\" y1={d => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 21,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
       "name": "styling-using-attributes",
       "title": "styling using attributes",
       "path": "/docs/components/Line/styling-using-attributes",
@@ -90,6 +191,27 @@
       "path": "/docs/components/AreaChart/markers",
       "lineNumber": 29,
       "line": "<Line"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 30,
+      "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" stroke=\"category\" />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 44,
+      "line": "<Line x1=\"date\" y1={(d) => 0} x2=\"date\" y2=\"value\" stroke=\"value\" />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 20,
+      "line": "<Line x1=\"date\" y1={d => 0} x2=\"date\" y2=\"value\" class=\"stroke-primary\" />"
     },
     {
       "example": "styling-using-attributes",
@@ -218,5 +340,5 @@
       "line": "<line x2={8} y2={8} class=\"stroke-surface-content\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.956Z"
+  "updatedAt": "2026-03-12T03:09:22.694Z"
 }

@@ -2,6 +2,92 @@
   "component": "Rect",
   "examples": [
     {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 30,
+          "line": "<Rect"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 30,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 32,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 44,
+          "line": "<Rect"
+        }
+      ]
+    },
+    {
+      "name": "data-mode-edge",
+      "title": "data mode edge",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart {data} x={['x0', 'x1']} y=\"count\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 19,
+          "line": "<Rect"
+        }
+      ]
+    },
+    {
       "name": "styling-using-attributes",
       "title": "styling using attributes",
       "path": "/docs/components/Rect/styling-using-attributes",
@@ -88,36 +174,36 @@
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 48,
-      "line": "<Rect"
+      "lineNumber": 49,
+      "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 55,
-      "line": "<Rect"
+      "lineNumber": 56,
+      "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 33,
-      "line": "<Rect"
+      "lineNumber": 34,
+      "line": "<Rect x0={(d) => 0} y0=\"x0\" x1=\"length\" y1=\"x1\" insets={{ y: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 31,
-      "line": "<Rect"
+      "lineNumber": 32,
+      "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 35,
-      "line": "<Rect"
+      "lineNumber": 36,
+      "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "handle-arrows",
@@ -603,6 +689,27 @@
       "line": "<Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 30,
+      "line": "<Rect"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 44,
+      "line": "<Rect"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 19,
+      "line": "<Rect"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Rect",
       "path": "/docs/components/Rect/styling-using-attributes",
@@ -750,5 +857,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:38.294Z"
+  "updatedAt": "2026-03-12T03:09:23.633Z"
 }

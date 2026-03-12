@@ -409,6 +409,18 @@
       ]
     },
     {
+      "name": "pan-zoom-dynamic-data",
+      "title": "pan zoom dynamic data",
+      "path": "/docs/components/LineChart/pan-zoom-dynamic-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 53,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "perf-dimension-arrays",
       "title": "perf dimension arrays",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -1028,69 +1040,6 @@
       "line": "<LineChart"
     },
     {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 35,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 39,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-horizontal",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 22,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-random-distribution",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 18,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-vertical",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 22,
-      "line": "<LineChart"
-    },
-    {
-      "example": "data-chart-multi",
-      "component": "Chart",
-      "path": "/docs/components/Chart/data-chart-multi",
-      "lineNumber": 14,
-      "line": "<LineChart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
-    },
-    {
-      "example": "data-chart-single",
-      "component": "Chart",
-      "path": "/docs/components/Chart/data-chart-single",
-      "lineNumber": 14,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
-    },
-    {
-      "example": "data-series-chart-data",
-      "component": "Chart",
-      "path": "/docs/components/Chart/data-series-chart-data",
-      "lineNumber": 14,
-      "line": "<LineChart"
-    },
-    {
-      "example": "data-series-separate-data",
-      "component": "Chart",
-      "path": "/docs/components/Chart/data-series-separate-data",
-      "lineNumber": 23,
-      "line": "<LineChart"
-    },
-    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1270,6 +1219,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/pan-zoom-domain-extent",
       "lineNumber": 15,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-dynamic-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-dynamic-data",
+      "lineNumber": 53,
       "line": "<LineChart"
     },
     {
@@ -1539,5 +1495,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-03-09T01:37:37.705Z"
+  "updatedAt": "2026-03-12T03:09:22.882Z"
 }

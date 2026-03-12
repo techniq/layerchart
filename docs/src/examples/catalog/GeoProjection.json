@@ -45,22 +45,22 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 73,
+          "lineNumber": 72,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 74,
+          "lineNumber": 73,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 75,
+          "lineNumber": 74,
           "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 85,
+          "lineNumber": 84,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -129,5 +129,5 @@
       "line": "<GeoProjection"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.351Z"
+  "updatedAt": "2026-03-12T03:09:22.317Z"
 }

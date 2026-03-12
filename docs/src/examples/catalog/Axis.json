@@ -2868,6 +2868,48 @@
       "line": "<Axis"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/docs/components/Circle/styling-using-attributes",
@@ -2907,6 +2949,48 @@
       "component": "Circle",
       "path": "/docs/components/Circle/styling-using-css-variables",
       "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 19,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3085,6 +3169,20 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "scatter",
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
@@ -3097,6 +3195,48 @@
       "path": "/docs/components/Hull/scatter",
       "lineNumber": 37,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "styling-using-attributes",
@@ -3307,6 +3447,90 @@
       "path": "/docs/components/Points/with-tooltip-and-highlight",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "styling-using-attributes",
@@ -3855,6 +4079,48 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
@@ -4135,5 +4401,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:00.588Z"
+  "updatedAt": "2026-03-12T03:09:21.466Z"
 }

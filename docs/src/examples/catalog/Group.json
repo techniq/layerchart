@@ -37,6 +37,43 @@
           "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
         }
       ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Group/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 30, bottom: 20, left: 24, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 16,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 18,
+          "line": "<Group x=\"date\" y=\"value\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 19,
+          "line": "<Circle r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 20,
+          "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -109,6 +146,13 @@
       "path": "/docs/components/Group/basic",
       "lineNumber": 12,
       "line": "<Group x={100} y={100}>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 18,
+      "line": "<Group x=\"date\" y=\"value\">"
     },
     {
       "example": "basic",
@@ -265,5 +309,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.498Z"
+  "updatedAt": "2026-03-12T03:09:22.467Z"
 }

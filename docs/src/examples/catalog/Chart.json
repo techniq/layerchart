@@ -147,9 +147,9 @@
       "path": "/docs/components/Chart/data-chart-multi",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 14,
-          "line": "<LineChart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
+          "line": "<Chart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
         },
         {
           "component": "Spline",
@@ -164,9 +164,9 @@
       "path": "/docs/components/Chart/data-chart-single",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 14,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" height={300}>"
         },
         {
           "component": "Spline",
@@ -181,9 +181,9 @@
       "path": "/docs/components/Chart/data-series-chart-data",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 14,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Spline",
@@ -198,9 +198,9 @@
       "path": "/docs/components/Chart/data-series-separate-data",
       "components": [
         {
-          "component": "LineChart",
+          "component": "Chart",
           "lineNumber": 23,
-          "line": "<LineChart"
+          "line": "<Chart"
         },
         {
           "component": "Spline",
@@ -706,6 +706,41 @@
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-explicit-multiline",
       "lineNumber": 110,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 35,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-horizontal",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-random-distribution",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-vertical",
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -1416,6 +1451,55 @@
       "line": "<Chart"
     },
     {
+      "example": "data-chart-multi",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
+    },
+    {
+      "example": "data-chart-single",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-single",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "data-series-chart-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-series-separate-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/docs/components/Circle/styling-using-attributes",
@@ -1470,6 +1554,27 @@
       "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 34,
       "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -1710,6 +1815,13 @@
       "line": "<Chart"
     },
     {
+      "example": "transform-globe-inertia",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-inertia",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
@@ -1853,7 +1965,7 @@
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
@@ -1983,6 +2095,13 @@
       "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }} height={300}>"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 30, bottom: 20, left: 24, right: 10 }} height={300}>"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -2016,6 +2135,27 @@
       "path": "/docs/components/Legend/chart-placement",
       "lineNumber": 6,
       "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -2529,11 +2669,32 @@
       "line": "<Chart height={150}>"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
       "example": "cross",
       "component": "Polygon",
       "path": "/docs/components/Polygon/cross",
       "lineNumber": 13,
       "line": "<Chart height={150}>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "diamond",
@@ -2639,6 +2800,27 @@
       "path": "/docs/components/RadialGradient/units",
       "lineNumber": 7,
       "line": "<Chart height={220}>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 15,
+      "line": "<Chart {data} x={['x0', 'x1']} y=\"count\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -2949,6 +3131,27 @@
       "line": "<Chart"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Text",
       "path": "/docs/components/Text/playground",
@@ -3187,5 +3390,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-09T01:37:36.768Z"
+  "updatedAt": "2026-03-12T03:09:21.812Z"
 }

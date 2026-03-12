@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-09T01:37:35.173Z",
+  "generatedAt": "2026-03-12T03:09:19.984Z",
   "totalComponents": 60,
-  "totalExamples": 731,
+  "totalExamples": 752,
   "components": [
     {
       "component": "AnnotationLine",
@@ -979,27 +979,27 @@
         {
           "name": "histogram-date-time-count",
           "path": "/example/BarChart/histogram-date-time-count",
-          "checksum": "322bdcb9da35bcd4fbcf5e7cdd5f50ec"
+          "checksum": "b34d08dabf465edabe2f1f36e0ba255d"
         },
         {
           "name": "histogram-date-time-interval",
           "path": "/example/BarChart/histogram-date-time-interval",
-          "checksum": "f0d824a1512f28aaa832abb0383ed8d1"
+          "checksum": "5cabb554dc52296053c59bc62e5ab2c8"
         },
         {
           "name": "histogram-horizontal",
           "path": "/example/BarChart/histogram-horizontal",
-          "checksum": "edc2de424471794de471177f8328eaad"
+          "checksum": "b0177ce752bcd38d69437594b79622ab"
         },
         {
           "name": "histogram-random-distribution",
           "path": "/example/BarChart/histogram-random-distribution",
-          "checksum": "6e548e57921165121c80d7082f19f9dc"
+          "checksum": "2981f5ea1ab5cf58fc66c2050c1ccc6a"
         },
         {
           "name": "histogram-vertical",
           "path": "/example/BarChart/histogram-vertical",
-          "checksum": "364c6785645976baa4f8ef264a908261"
+          "checksum": "85e6ae12e826546b6fc6ab5ab8ea1d03"
         },
         {
           "name": "horizontal",
@@ -1769,28 +1769,43 @@
         {
           "name": "data-chart-multi",
           "path": "/example/Chart/data-chart-multi",
-          "checksum": "92a95fa7f5ecaf4e4e5c6bb3e683ef75"
+          "checksum": "13bd9d79c2299c124496db27149c0ac9"
         },
         {
           "name": "data-chart-single",
           "path": "/example/Chart/data-chart-single",
-          "checksum": "529b265346f3bac20bc58a826e3564b1"
+          "checksum": "0c6d2e571568980c6fbbfc35f7447989"
         },
         {
           "name": "data-series-chart-data",
           "path": "/example/Chart/data-series-chart-data",
-          "checksum": "4076dab4f953f896b79bc01535561512"
+          "checksum": "88167b58fbe8d1c9cb0b03ffeb2d1ae8"
         },
         {
           "name": "data-series-separate-data",
           "path": "/example/Chart/data-series-separate-data",
-          "checksum": "226930cccd59096c60824420d52a799d"
+          "checksum": "52fb678001b7f600236b138391ab8459"
         }
       ]
     },
     {
       "component": "Circle",
       "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Circle/color-via-ordinal-scale",
+          "checksum": "437aaf6da33ee4f4d5cff47f4ac57ae1"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Circle/color-via-threshold-scale",
+          "checksum": "60a45621abd8cd95d0b71a85d3ff9daf"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Circle/data-mode",
+          "checksum": "ebb6d93a6579ae3c2617c9f8bee9d93e"
+        },
         {
           "name": "styling-using-attributes",
           "path": "/example/Circle/styling-using-attributes",
@@ -1866,6 +1881,21 @@
     {
       "component": "Ellipse",
       "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Ellipse/color-via-ordinal-scale",
+          "checksum": "4ade95218a7a1e59750c6925dfbccd48"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Ellipse/color-via-threshold-scale",
+          "checksum": "441ac8bec2623980d34bb84c0a8fc90c"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Ellipse/data-mode",
+          "checksum": "23bf51b0b2ae1ebdc9d0af18718b8633"
+        },
         {
           "name": "styling-using-attributes",
           "path": "/example/Ellipse/styling-using-attributes",
@@ -1964,7 +1994,7 @@
         {
           "name": "earthquake-globe",
           "path": "/example/GeoCircle/earthquake-globe",
-          "checksum": "9daf1cdf05089468c4791eb1d8cf0e36"
+          "checksum": "1ab52744feafbd3e4ef7c486373288dc"
         },
         {
           "name": "playground",
@@ -1979,12 +2009,12 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoContext/geojson-preview",
-          "checksum": "11681529f1b81cabdec1e914c3a8c2e1"
+          "checksum": "a08e9b87a2ff983b2493edf5c30bf57d"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoContext/projection-playground",
-          "checksum": "ea8002f3356cfa55691a85529177710e"
+          "checksum": "6d4f84c2827368c417d818004250888a"
         },
         {
           "name": "shapefile-preview",
@@ -1994,7 +2024,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoContext/topojson-preview",
-          "checksum": "132920e70f1d1d24f3d0d180849bdead"
+          "checksum": "6f2360e16037f740c61791ff3d3b671c"
         }
       ]
     },
@@ -2004,7 +2034,7 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "3fba3f24a593cffc620a6a1e43987abd"
+          "checksum": "ced3d183a450a8b6249a3b7f514340e4"
         },
         {
           "name": "bubble-map",
@@ -2019,12 +2049,12 @@
         {
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
-          "checksum": "9fdb5e7a18a806eb08c737bfc39d1ead"
+          "checksum": "4a6cf34c0e277b7b8873af3fbef306d3"
         },
         {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
-          "checksum": "4f8b17ea1e16fad3f106a498794f4f4d"
+          "checksum": "97b674a01e09a76c47186e2d664b8d66"
         },
         {
           "name": "spike-map",
@@ -2034,7 +2064,7 @@
         {
           "name": "submarine-cables-globe",
           "path": "/example/GeoPath/submarine-cables-globe",
-          "checksum": "f9e9ca8f7b11b8e03b501a54839c1eab"
+          "checksum": "80bcdaecb56f1c7ad3e72ee7a00f9723"
         },
         {
           "name": "timezones",
@@ -2059,17 +2089,22 @@
         {
           "name": "transform-globe-constrain",
           "path": "/example/GeoPath/transform-globe-constrain",
-          "checksum": "cf7ae209194da8bc82a0f520803c0a86"
+          "checksum": "f4522d2e8a222f0a308af9e3f293d91a"
+        },
+        {
+          "name": "transform-globe-inertia",
+          "path": "/example/GeoPath/transform-globe-inertia",
+          "checksum": "4e476e6c26bd47133d2fcfded9a81677"
         },
         {
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
-          "checksum": "dc0ae71ba0f68e4e1a8a7b5c01ecdf53"
+          "checksum": "46ef162c809d0d20eac4d60e57d9dede"
         },
         {
           "name": "translucent-globe",
           "path": "/example/GeoPath/translucent-globe",
-          "checksum": "687b8f6e30e982f8d3b86ab5408203e7"
+          "checksum": "3fd190647831820e19ed9df78b1a119f"
         },
         {
           "name": "us-country-map",
@@ -2129,12 +2164,12 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoProjection/geojson-preview",
-          "checksum": "2ca5083949d6343269865eb00315735c"
+          "checksum": "596cf6c2e3190a7d45a627f1c23e8280"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoProjection/projection-playground",
-          "checksum": "e0f9e863547b839e23cdb6112fe526ed"
+          "checksum": "98b9b55909b2b4f2827291ed7b624f0d"
         },
         {
           "name": "shapefile-preview",
@@ -2144,7 +2179,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoProjection/topojson-preview",
-          "checksum": "415205c8260092f7297bb99e54fb4881"
+          "checksum": "408140ccb0beeca4caae4a11fb7a8ed1"
         }
       ]
     },
@@ -2154,7 +2189,7 @@
         {
           "name": "draggable-globe",
           "path": "/example/GeoSpline/draggable-globe",
-          "checksum": "50db8f9f40b37bb84e90cbd8cee9bbd0"
+          "checksum": "586ea1a31128bcac603f38c0d597072c"
         },
         {
           "name": "world-map",
@@ -2179,17 +2214,17 @@
         {
           "name": "zoomable",
           "path": "/example/GeoTile/zoomable",
-          "checksum": "51c4cce8e707dccec68b388bcb73a341"
+          "checksum": "e5224918095692ff760cb4dd4f51b10d"
         },
         {
           "name": "zoomable-seamless-layers",
           "path": "/example/GeoTile/zoomable-seamless-layers",
-          "checksum": "b1534cdf6a5eff6c07ba07a175f81fc3"
+          "checksum": "bd52383cd1cfcf6ee9ead5a22eddce17"
         },
         {
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
-          "checksum": "aa95ed858315b8db79d9864480293044"
+          "checksum": "6f64e7129b213eb63bd42c00d8198f82"
         }
       ]
     },
@@ -2290,6 +2325,11 @@
           "name": "basic",
           "path": "/example/Group/basic",
           "checksum": "8d44df5e448f13a164aefea1b14dbfa6"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Group/data-mode",
+          "checksum": "68a8d0335edab9870c24bd5286046837"
         }
       ]
     },
@@ -2421,6 +2461,21 @@
     {
       "component": "Line",
       "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Line/color-via-ordinal-scale",
+          "checksum": "64762a9750ac3201ba4257034564fcd3"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Line/color-via-threshold-scale",
+          "checksum": "bc754729f628305832ec205435caba3d"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Line/data-mode",
+          "checksum": "aec840f88aa571601dba1f146bf9d7e2"
+        },
         {
           "name": "styling-using-attributes",
           "path": "/example/Line/styling-using-attributes",
@@ -2594,7 +2649,12 @@
         {
           "name": "pan-zoom-domain-extent",
           "path": "/example/LineChart/pan-zoom-domain-extent",
-          "checksum": "a49ff296dde3137b27f900652559e214"
+          "checksum": "ac9148079a5e6735d3d8612b49805b2f"
+        },
+        {
+          "name": "pan-zoom-dynamic-data",
+          "path": "/example/LineChart/pan-zoom-dynamic-data",
+          "checksum": "5adf6c0b714a200eb9664b3a550b90ac"
         },
         {
           "name": "perf-dimension-arrays",
@@ -3277,9 +3337,24 @@
           "checksum": "b5fb42529cdfe9ca4e12d9653b834f0f"
         },
         {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Polygon/color-via-ordinal-scale",
+          "checksum": "4ba2504dc9179cc46f5466a2be9aeaf8"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Polygon/color-via-threshold-scale",
+          "checksum": "6c695946f8956f7d03d47e8bb24c146b"
+        },
+        {
           "name": "cross",
           "path": "/example/Polygon/cross",
           "checksum": "3396a48a7b57a9cb2b2c1b508a8d185e"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Polygon/data-mode",
+          "checksum": "f3458ee6e6028a07e13af38e6a97e864"
         },
         {
           "name": "diamond",
@@ -3366,6 +3441,21 @@
     {
       "component": "Rect",
       "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Rect/color-via-ordinal-scale",
+          "checksum": "da5d3b6a497047798adf40e19799ad46"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Rect/color-via-threshold-scale",
+          "checksum": "13bcb8ef24f0a59310f2b6c12a691a9d"
+        },
+        {
+          "name": "data-mode-edge",
+          "path": "/example/Rect/data-mode-edge",
+          "checksum": "fb927960e82b59536da8b07c755d1561"
+        },
         {
           "name": "styling-using-attributes",
           "path": "/example/Rect/styling-using-attributes",
@@ -3731,6 +3821,21 @@
     {
       "component": "Text",
       "examples": [
+        {
+          "name": "color-via-ordinal-scale",
+          "path": "/example/Text/color-via-ordinal-scale",
+          "checksum": "4b2f701400b514bdb5ca314dab1c10ea"
+        },
+        {
+          "name": "color-via-threshold-scale",
+          "path": "/example/Text/color-via-threshold-scale",
+          "checksum": "2acf809d7eace9946d932370f03db589"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Text/data-mode",
+          "checksum": "f9ca8c6d677069f305e7e577062b6ba3"
+        },
         {
           "name": "playground",
           "path": "/example/Text/playground",

@@ -109,27 +109,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 44,
+          "lineNumber": 45,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 65,
+          "lineNumber": 68,
           "line": "<Layer>"
         },
         {
           "component": "GeoTile",
-          "lineNumber": 67,
+          "lineNumber": 70,
           "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 73,
+          "lineNumber": 76,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 91,
+          "lineNumber": 94,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -305,28 +305,28 @@
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 67,
+      "lineNumber": 70,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-100} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 68,
+      "lineNumber": 71,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-4} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 69,
+      "lineNumber": 72,
       "line": "<GeoTile url={serviceUrl} zoomDelta={-1} />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 70,
+      "lineNumber": 73,
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     },
     {
@@ -337,5 +337,5 @@
       "line": "<GeoTile url={serviceUrl} {zoomDelta} debug={settings.debug} />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.401Z"
+  "updatedAt": "2026-03-12T03:09:22.372Z"
 }
