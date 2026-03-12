@@ -90,11 +90,6 @@
     seriesLayout = 'overlap',
     axis = true,
     brush = false,
-    /*
-      TODO: handled below, but can be simplify?
-        x: valueAxis === 'x' || radial,
-        y: valueAxis === 'y' || radial,
-    */
     grid = true,
     highlight = { area: true },
     legend = false,
@@ -116,7 +111,6 @@
   }: BarChartProps<TData> = $props();
 
   const valueAxis = $derived(orientation === 'horizontal' ? 'x' : 'y');
-  const valueAccessorProp = $derived(valueAxis === 'y' ? yProp : xProp);
 
   const series = $derived(
     seriesProp === undefined
@@ -131,7 +125,7 @@
                 : typeof xProp === 'string'
                   ? xProp
                   : 'value',
-            value: valueAccessorProp,
+            value: valueAxis === 'y' ? yProp : xProp,
           },
         ]
       : seriesProp
@@ -241,16 +235,8 @@
   {series}
   {seriesLayout}
   {axis}
-  grid={typeof grid === 'object'
-    ? { x: valueAxis === 'x' || radial, y: valueAxis === 'y' || radial, ...grid }
-    : grid
-      ? { x: valueAxis === 'x' || radial, y: valueAxis === 'y' || radial }
-      : false}
-  rule={typeof rule === 'object'
-    ? { x: valueAxis === 'y' ? false : 0, y: valueAxis === 'y' ? 0 : false, ...rule }
-    : rule
-      ? { x: valueAxis === 'y' ? false : 0, y: valueAxis === 'y' ? 0 : false }
-      : false}
+  {grid}
+  {rule}
   {legend}
   highlight={highlight as any}
   {props}

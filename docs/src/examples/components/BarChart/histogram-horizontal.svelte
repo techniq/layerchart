@@ -23,6 +23,7 @@
 	{data}
 	x="length"
 	y={['x0', 'x1']}
+	valueAxis="x"
 	height={400}
 	padding={defaultChartPadding({ right: 20 })}
 	motion={{ type: 'spring' }}

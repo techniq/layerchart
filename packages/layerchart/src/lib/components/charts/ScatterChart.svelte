@@ -43,6 +43,7 @@
     axis = true,
     brush = false,
     grid = { x: true, y: true },
+    rule = { x: 0, y: 0 },
     highlight = { lines: true, points: true, axis: 'both' },
     legend = false,
     props = {},
@@ -89,6 +90,7 @@
   {series}
   {axis}
   {grid}
+  {rule}
   {highlight}
   {legend}
   {props}
