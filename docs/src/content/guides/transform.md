@@ -133,6 +133,10 @@ Access the transform state via the chart context to control zoom/pan from code:
 </Chart>
 ```
 
+Use `setScale()` and `reset()` to build animated zoom controls, like this solar system visualization that lets you explore planet distances:
+
+:example{ component="TransformContext" name="planet-distances" }
+
 ### Methods
 
 | Method                          | Description                               |
