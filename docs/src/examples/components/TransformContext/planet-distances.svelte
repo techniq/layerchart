@@ -3,7 +3,7 @@
 	import { scaleSqrt } from 'd3-scale';
 	import {
 		Chart,
-		Circle,
+		Image,
 		Text,
 		Axis,
 		Highlight,
@@ -14,16 +14,16 @@
 	import { delay } from '@layerstack/utils';
 
 	const planets = [
-		{ name: 'Sun', distance: 0, radius: 695_000 },
-		{ name: 'Mercury', distance: 58_000_000, radius: 2_440 },
-		{ name: 'Venus', distance: 108_000_000, radius: 6_052 },
-		{ name: 'Earth', distance: 150_000_000, radius: 6_378 },
-		{ name: 'Mars', distance: 228_000_000, radius: 3_397 },
-		{ name: 'Jupiter', distance: 778_000_000, radius: 71_492 },
-		{ name: 'Saturn', distance: 1_429_000_000, radius: 60_268 },
-		{ name: 'Uranus', distance: 2_871_000_000, radius: 25_559 },
-		{ name: 'Neptune', distance: 4_504_000_000, radius: 24_766 },
-		{ name: 'Pluto', distance: 5_913_000_000, radius: 1_150 }
+		{ name: 'Sun', distance: 0, radius: 695_000, image: 'https://space-facts.com/wp-content/uploads/sun-transparent.png' },
+		{ name: 'Mercury', distance: 58_000_000, radius: 2_440, image: 'https://space-facts.com/wp-content/uploads/mercury-transparent.png' },
+		{ name: 'Venus', distance: 108_000_000, radius: 6_052, image: 'https://space-facts.com/wp-content/uploads/venus-transparent.png' },
+		{ name: 'Earth', distance: 150_000_000, radius: 6_378, image: 'https://space-facts.com/wp-content/uploads/earth-transparent.png' },
+		{ name: 'Mars', distance: 228_000_000, radius: 3_397, image: 'https://space-facts.com/wp-content/uploads/mars-transparent.png' },
+		{ name: 'Jupiter', distance: 778_000_000, radius: 71_492, image: 'https://space-facts.com/wp-content/uploads/jupiter-transparent.png' },
+		{ name: 'Saturn', distance: 1_429_000_000, radius: 60_268, image: 'https://space-facts.com/wp-content/uploads/saturn-transparent.png' },
+		{ name: 'Uranus', distance: 2_871_000_000, radius: 25_559, image: 'https://space-facts.com/wp-content/uploads/uranus-transparent.png' },
+		{ name: 'Neptune', distance: 4_504_000_000, radius: 24_766, image: 'https://space-facts.com/wp-content/uploads/neptune-transparent.png' },
+		{ name: 'Pluto', distance: 5_913_000_000, radius: 1_150, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Pluto_in_True_Color_-_High-Res.png/250px-Pluto_in_True_Color_-_High-Res.png' }
 	];
 
 	// Local sqrt scale for planet radii (not on Chart, to avoid bind:context cycle)
@@ -127,7 +127,7 @@
 					stroke-dasharray="4 3"
 					stroke-width="0.5"
 				/>
-				<Circle {cx} {cy} {r} fill="white" stroke="deeppink" strokeWidth={2} />
+				<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />
 				<Text
 					value={planet.name}
 					x={cx}

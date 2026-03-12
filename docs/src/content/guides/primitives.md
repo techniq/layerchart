@@ -40,7 +40,7 @@ LayerChart does provide extended support than what is natively possible in some 
 
 ## Data Mode
 
-Primitive components (`Circle`, `Ellipse`, `Group`, `Line`, `Polygon`, `Rect`, `Text`) can operate in two modes:
+Primitive components (`Circle`, `Ellipse`, `Group`, `Image`, `Line`, `Polygon`, `Rect`, `Text`) can operate in two modes:
 
 - **Pixel mode** — pass numbers for direct pixel positioning
 - **Data mode** — pass strings or functions to automatically resolve values through chart scales and iterate over data
@@ -173,6 +173,14 @@ Each group is translated to the data point's position. Children like `Circle` an
 
 ---
 
+### Image
+
+Image renders one image per data item, with positions resolved through chart scales. The `href` prop resolves per item (as a data property name or function accessor). Use `r` for circular clipping.
+
+:example{ component="Image" name="country-flags" showCode }
+
+---
+
 ### Polygon
 
 Polygon supports data mode for `cx`, `cy`, and `r`, rendering one polygon per data item.
@@ -215,6 +223,7 @@ Each circle's fill is determined by its `category` value, resolved through the c
 | `cy`, `y`, `y0`, `y1`, `y2` | `yScale`                           |
 | `r`, `rx`, `ry`             | `rScale` (falls back to raw value) |
 | `fill`, `stroke`            | `cScale` (falls back to raw value) |
+| `href` (Image)              | Data property or literal URL       |
 
 ### Notes
 

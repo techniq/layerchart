@@ -77,6 +77,8 @@ export { default as Html } from './layers/Html.svelte';
 export * from './layers/Html.svelte';
 export { default as Hull } from './Hull.svelte';
 export * from './Hull.svelte';
+export { default as Image } from './Image.svelte';
+export * from './Image.svelte';
 export { default as Labels } from './Labels.svelte';
 export * from './Labels.svelte';
 export { default as Layer } from './layers/Layer.svelte';
