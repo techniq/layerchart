@@ -41,6 +41,7 @@ export class GeoState {
   chartWidth = $state(100);
   chartHeight = $state(100);
   transformState = $state<TransformState | null>(null);
+  transformApply = $state({ rotation: false, scale: true, translate: true });
 
   // The actual projection instance
   projection = $state<GeoProjection | undefined>(undefined);
@@ -65,7 +66,7 @@ export class GeoState {
           _projection.scale(this.props.scale);
         }
 
-        if (this.transformState?.mode === 'projection') {
+        if (this.transformState?.mode === 'projection' && this.transformApply.scale) {
           _projection.scale(this.transformState.scale);
         }
       }
@@ -80,11 +81,10 @@ export class GeoState {
           ]);
         }
 
-        if (this.transformState?.mode === 'rotate') {
+        if (this.transformState?.mode === 'projection' && this.transformApply.rotation) {
           _projection.rotate([
             this.transformState.translate.x, // yaw
             this.transformState.translate.y, // pitch
-            // TODO: `roll` from `transformContext`?
           ]);
         }
       }
@@ -95,7 +95,7 @@ export class GeoState {
           _projection.translate(this.props.translate);
         }
 
-        if (this.transformState?.mode === 'projection') {
+        if (this.transformState?.mode === 'projection' && this.transformApply.translate) {
           _projection.translate([
             this.transformState.translate.x,
             this.transformState.translate.y,

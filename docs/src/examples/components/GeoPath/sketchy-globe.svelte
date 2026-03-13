@@ -44,7 +44,7 @@
 		projection: geoOrthographic,
 		fitGeojson: land
 	}}
-	transform={{ mode: 'rotate' }}
+	transform={{ mode: 'projection' }}
 	ondragstart={timer.stop}
 	bind:context
 	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}

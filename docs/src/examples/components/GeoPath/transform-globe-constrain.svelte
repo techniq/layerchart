@@ -19,7 +19,7 @@
 		fitGeojson: countries
 	}}
 	transform={{
-		mode: 'rotate',
+		mode: 'projection',
 		constrain: ({ scale, translate }) => ({
 			scale,
 			translate: {

@@ -8,7 +8,7 @@ import { localPoint } from '@layerstack/utils';
 import { watch } from 'runed';
 import type { ChartState } from './chart.svelte.js';
 
-export type TransformMode = 'canvas' | 'domain' | 'projection' | 'rotate' | 'none';
+export type TransformMode = 'canvas' | 'domain' | 'projection' | 'none';
 export type TransformScrollMode = 'scale' | 'translate' | 'none';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
@@ -75,7 +75,7 @@ export class TransformState {
   // Options
   mode: TransformMode;
   axis: TransformAxis;
-  processTranslate: (
+  processTranslate?: (
     x: number,
     y: number,
     deltaX: number,
@@ -124,14 +124,7 @@ export class TransformState {
     // Initialize options with defaults
     this.mode = options.mode ?? 'none';
     this.axis = options.axis ?? 'both';
-    this.processTranslate =
-      options.processTranslate ??
-      (this.mode === 'domain'
-        ? this._createAxisConstrainedProcessTranslate()
-        : (x: number, y: number, deltaX: number, deltaY: number) => ({
-            x: x + deltaX,
-            y: y + deltaY,
-          }));
+    this.processTranslate = options.processTranslate;
     this.disablePointer = options.disablePointer ?? false;
     this.clickDistance = options.clickDistance ?? 10;
     this.initialTranslate = options.initialTranslate ?? DEFAULT_TRANSLATE;
@@ -188,12 +181,13 @@ export class TransformState {
     });
   }
 
-  private _createAxisConstrainedProcessTranslate() {
-    return (x: number, y: number, deltaX: number, deltaY: number) => {
+  private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
+    if (this.processTranslate) return this.processTranslate(x, y, deltaX, deltaY);
+    if (this.mode === 'domain') {
       if (this.axis === 'x') return { x: x + deltaX, y: 0 };
       if (this.axis === 'y') return { x: 0, y: y + deltaY };
-      return { x: x + deltaX, y: y + deltaY };
-    };
+    }
+    return { x: x + deltaX, y: y + deltaY };
   }
 
   /** Clamp scale and translate using scaleExtent, translateExtent, and custom constrain. */
@@ -329,22 +323,24 @@ export class TransformState {
     this.setScale(newScale, options);
 
     // Translate towards point (ex. mouse cursor/center) while zooming in/out
-    const invertTransformPoint = {
-      x: (point.x - this.ctx.padding.left - this._translate.current.x) / currentScale,
-      y: (point.y - this.ctx.padding.top - this._translate.current.y) / currentScale,
-    };
-    const newTranslate = {
-      x: point.x - this.ctx.padding.left - invertTransformPoint.x * newScale,
-      y: point.y - this.ctx.padding.top - invertTransformPoint.y * newScale,
-    };
+    if (!this.processTranslate) {
+      const invertTransformPoint = {
+        x: (point.x - this.ctx.padding.left - this._translate.current.x) / currentScale,
+        y: (point.y - this.ctx.padding.top - this._translate.current.y) / currentScale,
+      };
+      const newTranslate = {
+        x: point.x - this.ctx.padding.left - invertTransformPoint.x * newScale,
+        y: point.y - this.ctx.padding.top - invertTransformPoint.y * newScale,
+      };
 
-    // Constrain translate to active axis in domain mode
-    if (this.mode === 'domain') {
-      if (this.axis === 'x') newTranslate.y = 0;
-      if (this.axis === 'y') newTranslate.x = 0;
+      // Constrain translate to active axis in domain mode
+      if (this.mode === 'domain') {
+        if (this.axis === 'x') newTranslate.y = 0;
+        if (this.axis === 'y') newTranslate.x = 0;
+      }
+
+      this.setTranslate(newTranslate, options);
     }
-
-    this.setTranslate(newTranslate, options);
   }
 
   onPointerDown(e: PointerEvent & { currentTarget: HTMLElement }) {
@@ -391,7 +387,7 @@ export class TransformState {
       }
 
       this.setTranslate(
-        this.processTranslate(this.startTranslate.x, this.startTranslate.y, deltaX, deltaY),
+        this._applyTranslate(this.startTranslate.x, this.startTranslate.y, deltaX, deltaY),
         this._translate.type === 'spring'
           ? { instant: true }
           : this._translate.type === 'tween'
@@ -468,7 +464,7 @@ export class TransformState {
                 : undefined;
 
             this.setTranslate(
-              this.processTranslate(
+              this._applyTranslate(
                 current.x,
                 current.y,
                 projectedX - current.x,
@@ -519,7 +515,7 @@ export class TransformState {
       if (this.mode === 'domain' && e.deltaX !== 0) {
         const startTranslate = this._translate.current;
         this.setTranslate(
-          this.processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, 0),
+          this._applyTranslate(startTranslate.x, startTranslate.y, -e.deltaX, 0),
           instantMotionOptions
         );
       }
@@ -527,7 +523,7 @@ export class TransformState {
       const startTranslate = this._translate.current;
       this._translate
         .set(
-          this.processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
+          this._applyTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
           instantMotionOptions
         )
         .then(() => {})

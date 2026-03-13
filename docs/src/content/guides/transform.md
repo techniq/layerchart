@@ -10,13 +10,12 @@ LayerChart provides a transform system for panning and zooming charts, maps, and
 
 The `transform` prop's `mode` controls how zoom and pan are applied:
 
-| Mode         | What changes                             | Best for                                    |
-| ------------ | ---------------------------------------- | ------------------------------------------- |
-| `domain`     | The visible data domain narrows/shifts   | Cartesian charts (line, bar, area, scatter) |
-| `canvas`     | SVG/Canvas/CSS visual transform          | Maps, images, pack/tree layouts             |
-| `projection` | Geo projection translate + scale updated | Maps with projection-based pan/zoom         |
-| `rotate`     | Geo projection rotation updated          | Globe rotation (orthographic projections)   |
-| `none`       | Disabled (default)                       | No zoom/pan needed                          |
+| Mode         | What changes                           | Best for                                          |
+| ------------ | -------------------------------------- | ------------------------------------------------- |
+| `domain`     | The visible data domain narrows/shifts | Cartesian charts (line, bar, area, scatter)       |
+| `canvas`     | SVG/Canvas/CSS visual transform        | Maps, images, pack/tree layouts                   |
+| `projection` | Geo projection                         | Maps and globes with projection-based interaction |
+| `none`       | Disabled (default)                     | No zoom/pan needed                                |
 
 ### `domain` mode
 
@@ -57,11 +56,21 @@ When using canvas mode with maps, compensate for zoom in visual properties like 
 
 ### `projection` mode
 
-Applies transform values directly to the geo projection's `translate()` and `scale()` methods. The projection is re-evaluated on every transform change, keeping geographic coordinates synchronized with the view. This is the standard mode for interactive maps.
+Updates the geo projection based on transform interactions. The projection is re-evaluated on every transform change, keeping geographic coordinates synchronized with the view.
 
-When `fitGeojson` is provided, the initial translate and scale are computed automatically to fit the data in the viewport.
+Which projection properties are updated is controlled by the `apply` option and auto-detected from the projection type:
+
+| Projection type                                 | Default `apply`                                      | Behavior                |
+| ----------------------------------------------- | ---------------------------------------------------- | ----------------------- |
+| Flat maps (`geoMercator`, `geoAlbersUsa`, etc.) | `{ translate: true, scale: true, rotation: false }`  | Drag pans, scroll zooms |
+| Globe projections (`geoOrthographic`, etc.)     | `{ rotation: true, scale: false, translate: false }` | Drag rotates the globe  |
+
+Auto-detection uses the projection's `clipAngle` — projections with a default clip angle (like orthographic) are treated as globes. Override with explicit `apply` values when needed.
+
+When `fitGeojson` is provided and translate mode is active, the initial translate and scale are computed automatically to fit the data in the viewport.
 
 ```svelte
+<!-- Flat map: pan/zoom (auto-detected) -->
 <Chart
 	geo={{ projection: geoMercator, fitGeojson: states }}
 	transform={{ mode: 'projection', initialScrollMode: 'scale' }}
@@ -70,18 +79,24 @@ When `fitGeojson` is provided, the initial translate and scale are computed auto
 
 :example{ component="GeoPath" name="transform-projection" }
 
-### `rotate` mode
-
-Maps transform translate values to the projection's `rotate()` method — `translate.x` becomes yaw (longitude rotation) and `translate.y` becomes pitch (latitude tilt). Drag sensitivity is automatically scaled based on the projection's zoom level.
-
 ```svelte
+<!-- Globe: rotation (auto-detected from geoOrthographic) -->
 <Chart
 	geo={{ projection: geoOrthographic, fitGeojson: countries }}
-	transform={{ mode: 'rotate' }}
+	transform={{ mode: 'projection' }}
 />
 ```
 
 :example{ component="GeoPath" name="translucent-globe" }
+
+To enable zoom on a globe alongside rotation:
+
+```svelte
+<Chart
+	geo={{ projection: geoOrthographic, fitGeojson: countries }}
+	transform={{ mode: 'projection', apply: { rotation: true, scale: true } }}
+/>
+```
 
 ## Interactions
 
@@ -284,13 +299,13 @@ For full control, provide a `constrain` function that receives the proposed `{ s
 
 #### Globe rotation constraints
 
-For globe projections using `mode: 'rotate'`, the translate values represent rotation angles (yaw/pitch in degrees). A custom `constrain` function can clamp the pitch to prevent flipping the globe:
+For globe projections using rotation, the translate values represent rotation angles (yaw/pitch in degrees). A custom `constrain` function can clamp the pitch to prevent flipping the globe:
 
 ```svelte
 <Chart
 	geo={{ projection: geoOrthographic, fitGeojson: countries }}
 	transform={{
-		mode: 'rotate',
+		mode: 'projection',
 		constrain: ({ scale, translate }) => ({
 			scale,
 			translate: {
@@ -364,7 +379,7 @@ Enable `inertia` to let the view coast after a drag release, based on the veloci
 ```svelte
 <Chart
 	transform={{
-		mode: 'rotate',
+		mode: 'projection',
 		motion: 'spring',
 		inertia: true
 	}}
@@ -373,12 +388,12 @@ Enable `inertia` to let the view coast after a drag release, based on the veloci
 
 Pass `true` for sensible defaults, or an options object for fine-tuning:
 
-| Option           | Type     | Default    | Description                                                  |
-| ---------------- | -------- | ---------- | ------------------------------------------------------------ |
-| `decay`          | `number` | `0.99`     | Decay factor (0–1). Higher = further coast distance.         |
-| `minVelocity`    | `number` | `0.1`      | Minimum velocity (px/ms) to trigger inertia.                 |
-| `maxVelocity`       | `number` | `Infinity` | Maximum velocity (px/ms) cap. Prevents wild throws.          |
-| `velocityWindow` | `number` | `160`      | Time window (ms) to measure velocity from pointer movement.  |
+| Option           | Type     | Default    | Description                                                 |
+| ---------------- | -------- | ---------- | ----------------------------------------------------------- |
+| `decay`          | `number` | `0.99`     | Decay factor (0–1). Higher = further coast distance.        |
+| `minVelocity`    | `number` | `0.1`      | Minimum velocity (px/ms) to trigger inertia.                |
+| `maxVelocity`    | `number` | `Infinity` | Maximum velocity (px/ms) cap. Prevents wild throws.         |
+| `velocityWindow` | `number` | `160`      | Time window (ms) to measure velocity from pointer movement. |
 
 ```svelte
 <Chart
@@ -431,7 +446,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
 | Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
-| Globe rotation         | `transform={{ mode: 'rotate' }}`                                 | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
+| Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)             | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                            | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |

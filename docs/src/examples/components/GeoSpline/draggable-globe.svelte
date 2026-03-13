@@ -19,7 +19,7 @@
 		projection: geoOrthographic,
 		fitGeojson: countries
 	}}
-	transform={{ mode: 'rotate' }}
+	transform={{ mode: 'projection' }}
 	padding={{ top: 80, bottom: 80, left: 80, right: 80 }}
 	height={800}
 >

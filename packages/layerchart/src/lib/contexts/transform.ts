@@ -13,7 +13,8 @@ export type TransformContextValue = {
    * The current transform mode.
    *
    * - `canvas`: The transform is applied to the canvas element.
-   * - `manual`: The transform is applied manually.
+   * - `domain`: The transform narrows/shifts the visible data domain.
+   * - `projection`: The transform updates the geo projection.
    * - `none`: No transform is applied.
    */
   mode: TransformMode;

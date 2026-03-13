@@ -568,6 +568,23 @@
      */
     transform?: Partial<ComponentProps<typeof TransformContext>> & {
       /**
+       * Controls which projection properties are updated by transform state in `mode: 'projection'`.
+       * Auto-detected from the projection type when not specified:
+       * - Globe projections (e.g. `geoOrthographic`): `{ rotation: true, scale: false, translate: false }`
+       * - Flat maps (e.g. `geoMercator`): `{ rotation: false, scale: true, translate: true }`
+       *
+       * `rotation` and `translate` are mutually exclusive.
+       */
+      apply?: {
+        /** Apply transform translate as projection rotation (yaw/pitch). */
+        rotation?: boolean;
+        /** Apply transform scale to projection scale. */
+        scale?: boolean;
+        /** Apply transform translate to projection translate. */
+        translate?: boolean;
+      };
+
+      /**
        * Domain-space constraints for pan/zoom in `mode: 'domain'`.
        * Expressed in data units (numbers, Dates) rather than pixel-space.
        * Converted internally to a `constrain` function on TransformState.
@@ -701,8 +718,41 @@
     settings.debug = debug;
   });
 
+  // Resolve which projection properties the transform state applies to
+  const resolvedApply = $derived.by(() => {
+    if (transform?.mode !== 'projection') return { rotation: false, scale: false, translate: false };
+
+    // Auto-detect globe projections from clipAngle (flat projections return 0, globes return > 0)
+    let isGlobe = false;
+    if (geo?.projection) {
+      const proj = geo.projection();
+      isGlobe = (proj.clipAngle?.() ?? 0) > 0;
+    }
+
+    const defaults = isGlobe
+      ? { rotation: true, scale: false, translate: false }
+      : { rotation: false, scale: true, translate: true };
+
+    // User overrides win; enforce mutual exclusion
+    const result = { ...defaults, ...transform?.apply };
+    if (transform?.apply?.rotation === true && transform?.apply?.translate == null) {
+      result.translate = false;
+    }
+    if (transform?.apply?.translate === true && transform?.apply?.rotation == null) {
+      result.rotation = false;
+    }
+
+    return result;
+  });
+
+  $effect.pre(() => {
+    if (chartState.geoState) {
+      chartState.geoState.transformApply = resolvedApply;
+    }
+  });
+
   const initialTransform = $derived(
-    transform?.mode === 'projection' && geo?.fitGeojson && geo?.projection
+    transform?.mode === 'projection' && (resolvedApply.translate || resolvedApply.scale) && geo?.fitGeojson && geo?.projection
       ? geoFitObjectTransform(
           geo.projection(),
           [chartState.width, chartState.height],
@@ -712,9 +762,9 @@
   );
 
   const processTranslate = $derived.by(() => {
-    if (transform?.mode === 'rotate' && chartState.geoState?.projection) {
+    if (resolvedApply.rotation && chartState.geoState?.projection) {
       return (x: number, y: number, deltaX: number, deltaY: number) => {
-        // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+        // When applying transform as rotation, invert `y` values and reduce sensitivity based on projection scale
         // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
         const projectionScale = chartState.geoState.projection!.scale() ?? 0;
         const sensitivity = 75;
@@ -905,12 +955,12 @@
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
-      {@const { domainExtent: _de, constrain: _uc, ...transformProps } = transform ?? {}}
+      {@const { domainExtent: _de, constrain: _uc, apply: _apply, ...transformProps } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
         mode={transform?.mode ?? 'none'}
-        initialTranslate={initialTransform?.translate}
-        initialScale={initialTransform?.scale}
+        initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
+        initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
         {processTranslate}
         {...transformProps}
         constrain={composedConstrain}

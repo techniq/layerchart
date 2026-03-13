@@ -61,7 +61,7 @@
 		projection: geoOrthographic,
 		fitGeojson: countries
 	}}
-	transform={{ mode: 'rotate' }}
+	transform={{ mode: 'projection' }}
 	ondragstart={timer.stop}
 	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 	height={600}

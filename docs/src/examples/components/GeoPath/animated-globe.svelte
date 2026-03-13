@@ -113,7 +113,7 @@
 			fitGeojson: countries
 		}}
 		transform={{
-			mode: 'rotate',
+			mode: 'projection',
 			motion: { type: 'spring', stiffness: 0.04 },
 			inertia: true
 		}}
