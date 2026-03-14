@@ -7,15 +7,15 @@
 
 # Showcase
 
-## Supporters
+## Sponsors
 
-<Showcase sites={supporterSites} />
+<Showcase sites={supporterSites} hero />
+
+[Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
 
 ## Featured
 
-<Showcase sites={featuredSites} />
-
-[Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
+<Showcase sites={featuredSites} hero />
 
 ## Popular
 

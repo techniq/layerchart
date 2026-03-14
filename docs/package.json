@@ -20,7 +20,8 @@
 		"generate:catalog": "tsx scripts/generate-example-catalog.ts",
 		"generate:stackblitz": "tsx scripts/build-stackblitz-files.ts",
 		"generate:releases": "tsx scripts/generate-releases.ts",
-		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz"
+		"generate:showcase": "tsx scripts/generate-showcase-screenshots.ts",
+		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz && pnpm generate:showcase"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.14.0",
