@@ -2,14 +2,14 @@
   import Showcase from './Showcase.svelte';
   import { getDependents } from './dependency.remote';
 
-  const { featuredSites, supporterSites, popularSites, otherSites } = await getDependents();
+  const { featuredSites, sponsorSites, popularSites, otherSites } = await getDependents();
 </script>
 
 # Showcase
 
 ## Sponsors
 
-<Showcase sites={supporterSites} hero />
+<Showcase sites={sponsorSites} hero />
 
 [Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
 

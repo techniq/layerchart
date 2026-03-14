@@ -15,7 +15,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { chromium } from 'playwright';
 import sharp from 'sharp';
-import { featuredSites, supporterSites } from '../src/routes/docs/showcase/showcase.js';
+import { featuredSites, sponsorSites } from '../src/routes/docs/showcase/showcase.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,7 +36,7 @@ async function main() {
 		fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 	}
 
-	const sites = [...featuredSites, ...supporterSites];
+	const sites = [...featuredSites, ...sponsorSites];
 
 	const browser = await chromium.launch();
 	const context = await browser.newContext({ viewport: VIEWPORT });
@@ -59,7 +59,7 @@ async function main() {
 		}
 
 		try {
-			const captureUrl = site.homepageurl;
+			const captureUrl = site.showcaseurl ?? site.homepageurl;
 			if (!captureUrl) {
 				console.log(`⊘ Skipped (no homepage): ${slug}.webp`);
 				skipped++;
