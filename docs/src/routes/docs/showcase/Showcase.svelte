@@ -18,7 +18,7 @@
 		<a
 			{href}
 			target="_blank"
-			class="flex flex-col border border-primary/20 hover:border-primary/40 transition-colors duration-500 rounded-lg overflow-hidden no-underline text-inherit"
+			class="flex flex-col border border-primary/20 hover:border-primary/40 bg-linear-to-b from-primary/8 to-primary/2 backdrop-blur transition-colors duration-500 rounded-lg overflow-hidden no-underline text-inherit"
 		>
 			{#if hero}
 				{@const slug = toSlug(site.name ?? site.reponame ?? '')}
