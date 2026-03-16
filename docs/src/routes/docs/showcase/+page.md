@@ -11,11 +11,11 @@
 
 <Showcase sites={supporterSites} />
 
+[Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
+
 ## Featured
 
 <Showcase sites={featuredSites} />
-
-[Become a sponsor](https://github.com/techniq/layerchart?tab=readme-ov-file#sponsors)
 
 ## Popular
 
