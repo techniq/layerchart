@@ -1,7 +1,7 @@
 # **LayerChart**
 
 ![](https://img.shields.io/github/license/techniq/layerchart?style=flat&logo=license)
-![](https://img.shields.io/npm/v/layerchart?style=flat&logo=npm&logoColor=red&color=red) ![](https://img.shields.io/npm/dy/layerchart?style=flat&color=red&label=%20) [![](https://img.shields.io/npm/dm/layerchart?style=flat&color=red&label=%20) ![](https://img.shields.io/npm/dw/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart)
+![](https://img.shields.io/npm/v/layerchart?style=flat&logo=npm&logoColor=red&color=red) ![](https://img.shields.io/npm/dy/layerchart?style=flat&color=red&label=%20) [![](https://img.shields.io/npm/dm/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart) [![](https://img.shields.io/npm/dw/layerchart?style=flat&color=red&label=%20)](https://www.npmjs.com/package/layerchart)
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/techniq/layerchart?style=flat&logo=github&color=gray&label=Stars)](https://github.com/techniq/layerchart)
 [![Discord](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2F697JhMPD3t%3Fwith_counts%3Dtrue&query=approximate_member_count&label=Discord&suffix=%20members&color=5865F2&logo=discord)](https://discord.gg/697JhMPD3t) [![Discord](https://img.shields.io/discord/920755200552226868?&label=%20&style=flat&color=5865F2)](https://discord.gg/697JhMPD3t)
