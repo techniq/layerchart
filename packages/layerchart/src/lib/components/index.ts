@@ -25,6 +25,8 @@ export { default as BrushContext } from './BrushContext.svelte';
 export * from './BrushContext.svelte';
 export { default as Calendar } from './Calendar.svelte';
 export * from './Calendar.svelte';
+export { default as Cell } from './Cell.svelte';
+export * from './Cell.svelte';
 export { default as Canvas } from './layers/Canvas.svelte';
 export * from './layers/Canvas.svelte';
 export { default as Chart } from './Chart.svelte';
