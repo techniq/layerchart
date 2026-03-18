@@ -18,7 +18,7 @@
 	<Layer type="html">
 		<div class="h-full flex justify-center">
 			<img
-				src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/512px-Ghostscript_Tiger.svg.png?20091116194118"
+				src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/500px-Ghostscript_Tiger.svg.png"
 				alt="Ghostscript Tiger"
 				class="h-full"
 			/>
