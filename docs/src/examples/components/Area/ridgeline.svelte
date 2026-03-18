@@ -3,11 +3,12 @@
 	import { scaleLinear } from 'd3-scale';
 	import { curveBasis } from 'd3-shape';
 	import { max } from 'd3-array';
-	import { RangeField } from 'svelte-ux';
+	import { Field, RangeField, Switch } from 'svelte-ux';
 	import { createDateSeries } from '$lib/utils/data.js';
 
 	let overlap = $state(1);
 	let height = $state(400);
+	let opaque = $state(false);
 
 	const N = 10; // number of categories
 	const basePadding = { top: 20, bottom: 30, left: 80, right: 10 };
@@ -60,6 +61,9 @@
 <div class="flex gap-4 mb-4">
 	<RangeField label="Overlap" bind:value={overlap} min={1} max={12} step={0.5} />
 	<RangeField label="Height" bind:value={height} min={200} max={600} step={50} />
+	<Field label="Opaque" let:id>
+		<Switch {id} bind:checked={opaque} size="md" />
+	</Field>
 </div>
 
 <Chart
@@ -72,15 +76,15 @@
 	{height}
 >
 	<Layer>
-		{#each [...seriesData].reverse() as series (series.name)}
-			{@const rowY = step + categories.indexOf(series.name) * step}
+		{#each seriesData as series, i (series.name)}
+			{@const rowY = step + i * step}
 			<Group y={rowY}>
 				<Area
 					data={series.values}
 					y0={() => 0}
 					y1={(d) => zScale(d.value)}
 					curve={curveBasis}
-					class="fill-primary/20"
+					class={opaque ? 'fill-primary-200 dark:fill-primary-900' : 'fill-primary/20'}
 					line={{ class: 'stroke-primary stroke-1' }}
 				/>
 			</Group>
