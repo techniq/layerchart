@@ -15,6 +15,12 @@ Use `variant="directed"` with directed `Ribbon` to show flow direction with arro
 
 :example{ name="directed" showCode }
 
+## Gradient
+
+Ribbons with per-chord gradients blending source to target colors, with hover interaction.
+
+:example{ name="gradient" showCode }
+
 ## Hover interaction
 
 Hover over groups or ribbons to highlight connections.
