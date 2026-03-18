@@ -21,6 +21,12 @@ Ribbons with per-chord gradients blending source to target colors, with hover in
 
 :example{ name="gradient" showCode }
 
+## Radial ticks
+
+Chord diagram with radial tick marks and labels around the outer ring, based on the [Observable D3 chord diagram](https://observablehq.com/@d3/chord-diagram).
+
+:example{ name="ticks" showCode }
+
 ## Hover interaction
 
 Hover over groups or ribbons to highlight connections.
