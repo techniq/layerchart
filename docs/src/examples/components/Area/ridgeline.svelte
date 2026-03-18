@@ -6,7 +6,7 @@
 	import { Field, RangeField, Switch } from 'svelte-ux';
 	import { createDateSeries } from '$lib/utils/data.js';
 
-	let overlap = $state(1);
+	let overlap = $state(2);
 	let height = $state(400);
 	let opaque = $state(false);
 

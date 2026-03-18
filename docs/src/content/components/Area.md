@@ -17,6 +17,10 @@ See also: [AreaChart](/docs/components/AreaChart) for simplified examples
 
 :example{ name="ridgeline" showCode }
 
+### Ridgeline (KDE)
+
+:example{ name="ridgeline-kde" showCode }
+
 ### Playground
 
 :example{ name="playground" }
