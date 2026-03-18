@@ -30,6 +30,7 @@
 		{ component: 'AreaChart', example: 'funnel' },
 		{ component: 'AreaChart', example: 'range-annotation' },
 		{ component: 'AreaChart', example: 'radial' },
+		{ component: 'Area', example: 'ridgeline-kde' },
 		{ component: 'AreaChart', example: 'series-stack-gradient' },
 		{ component: 'AreaChart', example: 'sparkline' },
 		{ component: 'AreaChart', example: 'threshold' },
@@ -77,6 +78,7 @@
 		{ component: 'Connector', example: 'playground' },
 		{ component: 'Marker', example: 'styling' },
 		{ component: 'Polygon', example: 'hexagon' },
+		{ component: 'Image', example: 'us-presidents' },
 		// Marks
 		{ component: 'Calendar', example: 'rounded-cells' },
 		{ component: 'Hull', example: 'geo' },
@@ -110,6 +112,7 @@
 		{ component: 'GeoTile', example: 'zoomable-seamless-layers' },
 		{ component: 'Graticule', example: 'basic' },
 		// Layout
+		{ component: 'Chord', example: 'gradient' },
 		{ component: 'Dagre', example: 'playground' },
 		{ component: 'Dagre', example: 'tcp-state-diagram' },
 		{ component: 'ForceSimulation', example: 'beeswarm' },
@@ -133,7 +136,6 @@
 		{ component: 'MotionPath', example: 'sync-with-draw' }
 	];
 </script>
-
 
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="hidden xs:flex invisible md:visible items-center gap-3 w-60 text-xl font-bold">
