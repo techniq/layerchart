@@ -3575,6 +3575,62 @@
       "line": "<Tooltip.Item"
     },
     {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 152,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 154,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 157,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 158,
+      "line": "<Tooltip.Item label=\"Value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 123,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 125,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 128,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 129,
+      "line": "<Tooltip.Item label=\"Value\" value={data.value} format=\"integer\" />"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -3767,7 +3823,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 158,
+      "lineNumber": 159,
       "line": "<Tooltip.Root>"
     },
     {
@@ -6032,5 +6088,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:47.972Z"
+  "updatedAt": "2026-03-18T04:40:49.833Z"
 }

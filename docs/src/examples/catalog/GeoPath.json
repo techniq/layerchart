@@ -13,27 +13,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 130,
+          "lineNumber": 131,
           "line": "<Layer {debug}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 131,
+          "lineNumber": 132,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 132,
+          "lineNumber": 133,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Canvas",
-          "lineNumber": 150,
+          "lineNumber": 151,
           "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 158,
+          "lineNumber": 159,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -670,21 +670,21 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 131,
+      "lineNumber": 132,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 135,
+      "lineNumber": 136,
       "line": "<GeoPath"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 153,
+      "lineNumber": 154,
       "line": "<GeoPath geojson={context.tooltip.data} class=\"fill-surface-content/20\" />"
     },
     {
@@ -1185,5 +1185,5 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.252Z"
+  "updatedAt": "2026-03-18T04:40:48.224Z"
 }

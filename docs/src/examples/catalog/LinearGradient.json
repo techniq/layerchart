@@ -302,6 +302,13 @@
     },
     {
       "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 76,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "gradient",
       "component": "Frame",
       "path": "/docs/components/Frame/gradient",
       "lineNumber": 12,
@@ -539,5 +546,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:52.902Z"
+  "updatedAt": "2026-03-18T04:40:48.846Z"
 }

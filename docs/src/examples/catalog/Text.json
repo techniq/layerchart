@@ -311,6 +311,20 @@
       "line": "<Text"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 95,
+      "line": "<Text"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 185,
+      "line": "<Text"
+    },
+    {
       "example": "funnel",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/funnel",
@@ -386,6 +400,48 @@
       "path": "/docs/components/Calendar/multiple-years",
       "lineNumber": 40,
       "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 49,
+      "line": "<Text"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 50,
+      "line": "<Text"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 134,
+      "line": "<Text"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 105,
+      "line": "<Text"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 68,
+      "line": "<text"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 78,
+      "line": "<text"
     },
     {
       "example": "basic",
@@ -801,5 +857,5 @@
       "line": "<Text"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:47.718Z"
+  "updatedAt": "2026-03-18T04:40:49.734Z"
 }

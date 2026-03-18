@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-12T05:41:42.078Z",
-  "totalComponents": 61,
-  "totalExamples": 758,
+  "generatedAt": "2026-03-18T04:40:45.719Z",
+  "totalComponents": 63,
+  "totalExamples": 771,
   "components": [
     {
       "component": "AnnotationLine",
@@ -360,6 +360,16 @@
           "name": "playground",
           "path": "/example/Area/playground",
           "checksum": "a0db0cb6375420c152d1580367b0d333"
+        },
+        {
+          "name": "ridgeline",
+          "path": "/example/Area/ridgeline",
+          "checksum": "1c468205a2c0c93aac1ebd136e35186f"
+        },
+        {
+          "name": "ridgeline-kde",
+          "path": "/example/Area/ridgeline-kde",
+          "checksum": "3c73d2eb03ce8444a1774aba013cd5e9"
         },
         {
           "name": "stack",
@@ -1057,6 +1067,11 @@
           "checksum": "1471b5b3042e9c7b45a7a8f540abd32b"
         },
         {
+          "name": "pan-zoom-domain-extent",
+          "path": "/example/BarChart/pan-zoom-domain-extent",
+          "checksum": "8a76dfd3385254f49ee0d41b10ef79a0"
+        },
+        {
           "name": "pan-zoom-scale-extent",
           "path": "/example/BarChart/pan-zoom-scale-extent",
           "checksum": "39d02259a2b205cb17e2128a721aca1b"
@@ -1739,6 +1754,36 @@
       ]
     },
     {
+      "component": "Cell",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Cell/basic",
+          "checksum": "bdf48842e17461fcd4afe352a0b65d1e"
+        },
+        {
+          "name": "circle",
+          "path": "/example/Cell/circle",
+          "checksum": "bea3a454b393b5bac0e061bf88a3f761"
+        },
+        {
+          "name": "color-scale",
+          "path": "/example/Cell/color-scale",
+          "checksum": "0be53455996b66a04f5ce891ad207ea2"
+        },
+        {
+          "name": "punchcard",
+          "path": "/example/Cell/punchcard",
+          "checksum": "710b1266e7548dd5447b586e93cbff4f"
+        },
+        {
+          "name": "rounded-insets",
+          "path": "/example/Cell/rounded-insets",
+          "checksum": "571bf3b2ff3a525a91dd4bb48be8f5e9"
+        }
+      ]
+    },
+    {
       "component": "Chart",
       "examples": [
         {
@@ -1785,6 +1830,36 @@
           "name": "data-series-separate-data",
           "path": "/example/Chart/data-series-separate-data",
           "checksum": "52fb678001b7f600236b138391ab8459"
+        }
+      ]
+    },
+    {
+      "component": "Chord",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Chord/basic",
+          "checksum": "70a5efffda6bb0891da3a3c76be1a18e"
+        },
+        {
+          "name": "directed",
+          "path": "/example/Chord/directed",
+          "checksum": "440608905064c0b78a850f99fe8b6512"
+        },
+        {
+          "name": "gradient",
+          "path": "/example/Chord/gradient",
+          "checksum": "f4aa01952338e77c8ad582e8c49143ab"
+        },
+        {
+          "name": "hover",
+          "path": "/example/Chord/hover",
+          "checksum": "fa2e446f49f3f1f167126e9ec0fe7e99"
+        },
+        {
+          "name": "ticks",
+          "path": "/example/Chord/ticks",
+          "checksum": "4a157b53a91273ae5be78f514db11b65"
         }
       ]
     },
@@ -1994,7 +2069,7 @@
         {
           "name": "earthquake-globe",
           "path": "/example/GeoCircle/earthquake-globe",
-          "checksum": "1ab52744feafbd3e4ef7c486373288dc"
+          "checksum": "80f3a03313fc2dd82e2b87f1ad96fefc"
         },
         {
           "name": "playground",
@@ -2034,7 +2109,7 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "ced3d183a450a8b6249a3b7f514340e4"
+          "checksum": "5cdc62e798d059f9528c0b8128d6cd56"
         },
         {
           "name": "bubble-map",
@@ -2049,12 +2124,12 @@
         {
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
-          "checksum": "4a6cf34c0e277b7b8873af3fbef306d3"
+          "checksum": "23aed1f3b1bcf7aecfb623b42b9d5902"
         },
         {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
-          "checksum": "97b674a01e09a76c47186e2d664b8d66"
+          "checksum": "ca4295b161744efba73967c102a81f37"
         },
         {
           "name": "spike-map",
@@ -2064,7 +2139,7 @@
         {
           "name": "submarine-cables-globe",
           "path": "/example/GeoPath/submarine-cables-globe",
-          "checksum": "80bcdaecb56f1c7ad3e72ee7a00f9723"
+          "checksum": "27df027201e3f09e9ca538e1f7e7dd68"
         },
         {
           "name": "timezones",
@@ -2089,12 +2164,12 @@
         {
           "name": "transform-globe-constrain",
           "path": "/example/GeoPath/transform-globe-constrain",
-          "checksum": "f4522d2e8a222f0a308af9e3f293d91a"
+          "checksum": "ee126b9c53c9ae049e9dcbcda57a008c"
         },
         {
           "name": "transform-globe-inertia",
           "path": "/example/GeoPath/transform-globe-inertia",
-          "checksum": "4e476e6c26bd47133d2fcfded9a81677"
+          "checksum": "c2b40357296c963191150903d285a324"
         },
         {
           "name": "transform-projection",
@@ -2104,7 +2179,7 @@
         {
           "name": "translucent-globe",
           "path": "/example/GeoPath/translucent-globe",
-          "checksum": "3fd190647831820e19ed9df78b1a119f"
+          "checksum": "e4e2ea4711602d26987628219f9059a1"
         },
         {
           "name": "us-country-map",
@@ -2189,7 +2264,7 @@
         {
           "name": "draggable-globe",
           "path": "/example/GeoSpline/draggable-globe",
-          "checksum": "586ea1a31128bcac603f38c0d597072c"
+          "checksum": "50e4304a503c1356321d43333665dec6"
         },
         {
           "name": "world-map",
@@ -4019,7 +4094,7 @@
         {
           "name": "pan-zoom-html-image",
           "path": "/example/TransformContext/pan-zoom-html-image",
-          "checksum": "209c56c44be01e5ea2415f24435c8363"
+          "checksum": "c32c31af57f00bc40db3c80aef972afb"
         },
         {
           "name": "pan-zoom-svg-image",

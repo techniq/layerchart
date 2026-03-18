@@ -193,6 +193,13 @@
       "line": "<Line"
     },
     {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 66,
+      "line": "<line x2=\"6\" stroke=\"currentColor\" />"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Line",
       "path": "/docs/components/Line/color-via-ordinal-scale",
@@ -347,5 +354,5 @@
       "line": "<line"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:46.420Z"
+  "updatedAt": "2026-03-18T04:40:48.774Z"
 }

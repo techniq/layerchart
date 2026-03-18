@@ -739,6 +739,18 @@
       ]
     },
     {
+      "name": "pan-zoom-domain-extent",
+      "title": "pan zoom domain extent",
+      "path": "/docs/components/BarChart/pan-zoom-domain-extent",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 16,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "pan-zoom-scale-extent",
       "title": "pan zoom scale extent",
       "path": "/docs/components/BarChart/pan-zoom-scale-extent",
@@ -1602,6 +1614,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "pan-zoom-domain-extent",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/pan-zoom-domain-extent",
+      "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
       "example": "pan-zoom-scale-extent",
       "component": "BarChart",
       "path": "/docs/components/BarChart/pan-zoom-scale-extent",
@@ -1931,5 +1950,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:21.556Z"
+  "updatedAt": "2026-03-18T04:40:47.099Z"
 }

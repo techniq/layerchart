@@ -92,11 +92,53 @@
       "line": "<Group y={20}>"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 81,
+      "line": "<Group y={rowY}>"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 171,
+      "line": "<Group y={rowY}>"
+    },
+    {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
       "lineNumber": 39,
       "line": "<Group y={140 * i}>"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 45,
+      "line": "<Group"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 46,
+      "line": "<Group"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 128,
+      "line": "<Group"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 99,
+      "line": "<Group"
     },
     {
       "example": "basic",
@@ -309,5 +351,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.467Z"
+  "updatedAt": "2026-03-18T04:40:48.506Z"
 }

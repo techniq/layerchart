@@ -381,6 +381,13 @@
       "line": "<Grid x y />"
     },
     {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 29,
+      "line": "<Grid x={false} y bandAlign=\"between\" />"
+    },
+    {
       "example": "band-scale-between",
       "component": "Grid",
       "path": "/docs/components/Grid/band-scale-between",
@@ -486,5 +493,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.830Z"
+  "updatedAt": "2026-03-18T04:40:48.471Z"
 }

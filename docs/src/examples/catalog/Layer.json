@@ -220,6 +220,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 78,
+      "line": "<Layer>"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 168,
+      "line": "<Layer>"
+    },
+    {
       "example": "stack",
       "component": "Area",
       "path": "/docs/components/Area/stack",
@@ -1270,6 +1284,41 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 41,
+      "line": "<Layer>"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -1289,6 +1338,41 @@
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 43,
       "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 23,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 22,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 72,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 53,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 37,
+      "line": "<Layer center>"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -1560,14 +1644,14 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 130,
+      "lineNumber": 131,
       "line": "<Layer {debug}>"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 151,
+      "lineNumber": 152,
       "line": "<Layer type=\"canvas\" pointerEvents={false}>"
     },
     {
@@ -3363,5 +3447,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:46.373Z"
+  "updatedAt": "2026-03-18T04:40:48.708Z"
 }

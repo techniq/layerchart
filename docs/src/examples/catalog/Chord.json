@@ -1,0 +1,268 @@
+{
+  "component": "Chord",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Chord/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Chord",
+          "lineNumber": 24,
+          "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+        },
+        {
+          "component": "Ribbon",
+          "lineNumber": 27,
+          "line": "<Ribbon"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 37,
+          "line": "<Arc"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 45,
+          "line": "<Group"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 49,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "directed",
+      "title": "directed",
+      "path": "/docs/components/Chord/directed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Chord",
+          "lineNumber": 23,
+          "line": "<Chord {matrix} padAngle={0.05} variant=\"directed\" sortSubgroups={(a, b) => b - a}>"
+        },
+        {
+          "component": "Ribbon",
+          "lineNumber": 26,
+          "line": "<Ribbon"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 38,
+          "line": "<Arc"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 46,
+          "line": "<Group"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 50,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "gradient",
+      "title": "gradient",
+      "path": "/docs/components/Chord/gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 70,
+          "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 72,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Chord",
+          "lineNumber": 73,
+          "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 76,
+          "line": "<LinearGradient"
+        },
+        {
+          "component": "Ribbon",
+          "lineNumber": 84,
+          "line": "<Ribbon"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 116,
+          "line": "<Arc"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 128,
+          "line": "<Group"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 134,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 152,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "hover",
+      "title": "hover",
+      "path": "/docs/components/Chord/hover",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 51,
+          "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 53,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Chord",
+          "lineNumber": 54,
+          "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+        },
+        {
+          "component": "Ribbon",
+          "lineNumber": 57,
+          "line": "<Ribbon"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 87,
+          "line": "<Arc"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 99,
+          "line": "<Group"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 105,
+          "line": "<Text"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 123,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "ticks",
+      "title": "ticks",
+      "path": "/docs/components/Chord/ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart height={800} padding={{ top: 40, bottom: 40 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Chord",
+          "lineNumber": 38,
+          "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={descending} sortChords={descending}>"
+        },
+        {
+          "component": "Ribbon",
+          "lineNumber": 41,
+          "line": "<Ribbon"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 52,
+          "line": "<Arc"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 66,
+          "line": "<line x2=\"6\" stroke=\"currentColor\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 68,
+          "line": "<text"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 24,
+      "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 23,
+      "line": "<Chord {matrix} padAngle={0.05} variant=\"directed\" sortSubgroups={(a, b) => b - a}>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 73,
+      "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 54,
+      "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 38,
+      "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={descending} sortChords={descending}>"
+    }
+  ],
+  "updatedAt": "2026-03-18T04:40:47.719Z"
+}

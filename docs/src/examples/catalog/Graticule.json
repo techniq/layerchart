@@ -60,7 +60,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 132,
+      "lineNumber": 133,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -141,5 +141,5 @@
       "line": "<Graticule"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.416Z"
+  "updatedAt": "2026-03-18T04:40:48.442Z"
 }

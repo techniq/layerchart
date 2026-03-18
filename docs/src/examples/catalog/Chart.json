@@ -366,6 +366,20 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 69,
+      "line": "<Chart"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 159,
+      "line": "<Chart"
+    },
+    {
       "example": "stack",
       "component": "Area",
       "path": "/docs/components/Area/stack",
@@ -1430,6 +1444,41 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -1477,6 +1526,41 @@
       "path": "/docs/components/Chart/data-series-separate-data",
       "lineNumber": 23,
       "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 22,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 21,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 70,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 51,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 36,
+      "line": "<Chart height={800} padding={{ top: 40, bottom: 40 }}>"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -3432,5 +3516,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:43.441Z"
+  "updatedAt": "2026-03-18T04:40:47.553Z"
 }

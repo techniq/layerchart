@@ -513,6 +513,80 @@
       ]
     },
     {
+      "name": "ridgeline",
+      "title": "ridgeline",
+      "path": "/docs/components/Area/ridgeline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 69,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 78,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 81,
+          "line": "<Group y={rowY}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 82,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 95,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 105,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
+    },
+    {
+      "name": "ridgeline-kde",
+      "title": "ridgeline kde",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 159,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 168,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 171,
+          "line": "<Group y={rowY}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 172,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 185,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 195,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
+    },
+    {
       "name": "stack",
       "title": "stack",
       "path": "/docs/components/Area/stack",
@@ -927,6 +1001,20 @@
       "line": "<Area"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 82,
+      "line": "<Area"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 172,
+      "line": "<Area"
+    },
+    {
       "example": "stack",
       "component": "Area",
       "path": "/docs/components/Area/stack",
@@ -1333,5 +1421,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-03-04T05:41:25.606Z"
+  "updatedAt": "2026-03-18T04:40:46.930Z"
 }

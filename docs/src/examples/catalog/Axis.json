@@ -1076,6 +1076,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 105,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 195,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "stack",
       "component": "Area",
       "path": "/docs/components/Area/stack",
@@ -2812,6 +2826,76 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'Week ' + d} rule />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} rule />"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -4457,5 +4541,5 @@
       "line": "<Axis placement=\"bottom\" format={formatDistance} />"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:43.125Z"
+  "updatedAt": "2026-03-18T04:40:47.013Z"
 }
