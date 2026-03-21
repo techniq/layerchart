@@ -213,6 +213,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 147,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
@@ -3447,5 +3454,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.708Z"
+  "updatedAt": "2026-03-21T15:42:47.656Z"
 }

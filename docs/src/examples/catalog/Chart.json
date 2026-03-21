@@ -359,6 +359,13 @@
       "line": "<Chart"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 136,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
@@ -3516,5 +3523,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:47.553Z"
+  "updatedAt": "2026-03-21T15:42:45.189Z"
 }

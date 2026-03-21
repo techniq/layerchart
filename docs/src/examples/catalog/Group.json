@@ -92,6 +92,13 @@
       "line": "<Group y={20}>"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 150,
+      "line": "<Group y={rowY}>"
+    },
+    {
       "example": "ridgeline",
       "component": "Area",
       "path": "/docs/components/Area/ridgeline",
@@ -351,5 +358,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.506Z"
+  "updatedAt": "2026-03-21T15:42:47.221Z"
 }

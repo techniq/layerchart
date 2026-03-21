@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-18T04:40:45.719Z",
+  "generatedAt": "2026-03-21T15:42:43.922Z",
   "totalComponents": 63,
-  "totalExamples": 771,
+  "totalExamples": 772,
   "components": [
     {
       "component": "AnnotationLine",
@@ -355,6 +355,11 @@
           "name": "multiple-series-with-labels",
           "path": "/example/Area/multiple-series-with-labels",
           "checksum": "e4e4292f9ef256830909fbda0dc24b90"
+        },
+        {
+          "name": "oscilloscope-ridgeline",
+          "path": "/example/Area/oscilloscope-ridgeline",
+          "checksum": "df9688f2ca25fa1070f54d55024024d5"
         },
         {
           "name": "playground",
