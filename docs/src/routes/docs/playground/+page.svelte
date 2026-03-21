@@ -556,10 +556,3 @@
 		</Pane>
 	</PaneGroup>
 </div>
-
-<style>
-	/* Hide "Edit this page" */
-	:global(div:has(> a[href*='/github'])) {
-		display: none;
-	}
-</style>
