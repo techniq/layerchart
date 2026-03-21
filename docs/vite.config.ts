@@ -104,13 +104,6 @@ export default defineConfig({
 			'shiki',
 			'@shikijs/langs',
 			'@shikijs/themes',
-			'codemirror',
-			'@codemirror/lang-css',
-			'@codemirror/lang-html',
-			'@codemirror/lang-javascript',
-			'@codemirror/state',
-			'@codemirror/view',
-			'@uiw/codemirror-theme-github',
 		]
 	}
 });
