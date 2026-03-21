@@ -96,8 +96,21 @@ export default defineConfig({
 		// Disabled during tests to avoid "Failed to load source map" warnings (e.g. typescript.js.map)
 		// Ref: https://github.com/vitest-dev/vitest/issues/6806
 		noExternal: isTest ? undefined : true,
-		// CJS-only packages that fail with "module is not defined" in Vite's ESM
-		// module runner. Externalizing lets Node.js load them natively as CJS.
-		external: ['satori', '@resvg/resvg-js']
+		// Externalize packages not needed server-side to stay under
+		// Cloudflare Workers' 25 MiB uncompressed size limit.
+		external: [
+			'satori',
+			'@resvg/resvg-js',
+			'shiki',
+			'@shikijs/langs',
+			'@shikijs/themes',
+			'codemirror',
+			'@codemirror/lang-css',
+			'@codemirror/lang-html',
+			'@codemirror/lang-javascript',
+			'@codemirror/state',
+			'@codemirror/view',
+			'@uiw/codemirror-theme-github',
+		]
 	}
 });
