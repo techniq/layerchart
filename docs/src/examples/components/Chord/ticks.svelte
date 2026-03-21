@@ -33,7 +33,7 @@
 	export { matrix };
 </script>
 
-<Chart height={800} padding={{ top: 40, bottom: 40 }}>
+<Chart height={800} padding={{ top: 60, bottom: 60, left: 60, right: 60 }}>
 	<Layer center>
 		<Chord {matrix} padAngle={0.05} sortSubgroups={descending} sortChords={descending}>
 			{#snippet children({ groups, chords, innerRadius, outerRadius })}

@@ -79,7 +79,7 @@
 
   const ctx = getChartContext();
 
-  const outerRadius = $derived(Math.min(ctx.width, ctx.height) / 2);
+  const outerRadius = $derived(Math.max(0, Math.min(ctx.width, ctx.height) / 2));
   const innerRadius = $derived(outerRadius * innerRadiusRatio);
 
   const chordLayout = $derived.by(() => {
