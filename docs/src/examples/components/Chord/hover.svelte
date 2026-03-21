@@ -66,14 +66,16 @@
 								context.tooltip.show(e, {
 									source: names[chord.source.index],
 									target: names[chord.target.index],
-									value: chord.source.value
+									sourceValue: chord.source.value,
+									targetValue: chord.target.value
 								});
 							}}
 							onpointermove={(e) => {
 								context.tooltip.show(e, {
 									source: names[chord.source.index],
 									target: names[chord.target.index],
-									value: chord.source.value
+									sourceValue: chord.source.value,
+									targetValue: chord.target.value
 								});
 							}}
 							onpointerleave={() => {
@@ -93,8 +95,33 @@
 							fillOpacity={hasHover ? (isGroupActive(group.index) ? 1 : 0.3) : 1}
 							stroke="none"
 							class="transition-[fill-opacity] duration-200 cursor-pointer"
-							onpointerenter={() => (hoveredGroupIndex = group.index)}
-							onpointerleave={() => (hoveredGroupIndex = null)}
+							onpointerenter={(e) => {
+								hoveredGroupIndex = group.index;
+								const row = matrix[group.index];
+								const total = row.reduce((sum, v) => sum + v, 0);
+								const breakdown = names.map((name, i) => ({ name, value: row[i] }));
+								context.tooltip.show(e, {
+									isGroup: true,
+									name: names[group.index],
+									total,
+									breakdown
+								});
+							}}
+							onpointermove={(e) => {
+								const row = matrix[group.index];
+								const total = row.reduce((sum, v) => sum + v, 0);
+								const breakdown = names.map((name, i) => ({ name, value: row[i] }));
+								context.tooltip.show(e, {
+									isGroup: true,
+									name: names[group.index],
+									total,
+									breakdown
+								});
+							}}
+							onpointerleave={() => {
+								hoveredGroupIndex = null;
+								context.tooltip.hide();
+							}}
 						/>
 						<Group
 							x={(outerRadius + 6) *
@@ -122,12 +149,34 @@
 
 		<Tooltip.Root>
 			{#snippet children({ data })}
-				<Tooltip.Header>
-					{data.source} → {data.target}
-				</Tooltip.Header>
-				<Tooltip.List>
-					<Tooltip.Item label="Value" value={data.value} format="integer" />
-				</Tooltip.List>
+				{#if data.isGroup}
+					<Tooltip.Header>{data.name}</Tooltip.Header>
+					<Tooltip.List>
+						{#each data.breakdown as item}
+							<Tooltip.Item
+								label="{data.name} → {item.name}"
+								value={item.value}
+								format="integer"
+							/>
+						{/each}
+						<Tooltip.Separator />
+						<Tooltip.Item label="Total" value={data.total} format="integer" />
+					</Tooltip.List>
+				{:else}
+					<Tooltip.Header>{data.source} ↔ {data.target}</Tooltip.Header>
+					<Tooltip.List>
+						<Tooltip.Item
+							label="{data.source} → {data.target}"
+							value={data.sourceValue}
+							format="integer"
+						/>
+						<Tooltip.Item
+							label="{data.target} → {data.source}"
+							value={data.targetValue}
+							format="integer"
+						/>
+					</Tooltip.List>
+				{/if}
 			{/snippet}
 		</Tooltip.Root>
 	{/snippet}
