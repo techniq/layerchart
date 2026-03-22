@@ -160,6 +160,59 @@ export function vectorSpikePath({
 }
 
 /**
+ * Create filled arrow vector path data (pointing up by default).
+ * The path is centered on the anchor point at origin — use SVG `transform` to position and rotate.
+ *
+ * The shape has a tapered tail that widens into a triangular arrowhead at the tip.
+ */
+export function vectorArrowFilledPath({
+  length,
+  anchor = 'middle',
+  width = length * 0.3,
+}: {
+  length: number;
+  anchor?: VectorAnchor;
+  /** Total width of the arrowhead. Defaults to 30% of length. */
+  width?: number;
+}) {
+  let baseY: number, tipY: number;
+  switch (anchor) {
+    case 'start':
+      baseY = 0;
+      tipY = -length;
+      break;
+    case 'end':
+      baseY = length;
+      tipY = 0;
+      break;
+    case 'middle':
+    default:
+      baseY = length / 2;
+      tipY = -length / 2;
+      break;
+  }
+
+  const headLength = Math.max(3, length * 0.3);
+  const headSpike = headLength * 0.2;
+  const headWidth = Math.max(2, width);
+  const tailWidth = headWidth * 0.3;
+
+  // Path points (relative to base→tip axis)
+  const headStart = tipY + headLength;
+  const spikeY = headStart - headSpike;
+
+  return [
+    `M0,${baseY}`,
+    `L${tailWidth / 2},${spikeY}`,
+    `L${headWidth / 2},${headStart}`,
+    `L0,${tipY}`,
+    `L${-headWidth / 2},${headStart}`,
+    `L${-tailWidth / 2},${spikeY}`,
+    'Z',
+  ].join('');
+}
+
+/**
  * Apply rotation (degrees) and translation to a path string containing only M and L commands
  * with absolute coordinates. Converts local vector path data to absolute positioned coordinates.
  */

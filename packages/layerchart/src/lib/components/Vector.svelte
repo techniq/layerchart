@@ -5,7 +5,7 @@
   import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
   import type { VectorAnchor } from '$lib/utils/path.js';
 
-  export type VectorShape = 'arrow' | 'spike';
+  export type VectorShape = 'arrow' | 'arrow-filled' | 'spike';
 
   export type VectorPropsWithoutHTML = {
     /**
@@ -69,6 +69,7 @@
     /**
      * The shape of the vector.
      * - `"arrow"`: a line with a V-shaped arrowhead at the tip (stroke-based)
+     * - `"arrow-filled"`: a solid arrow with a tapered tail and triangular arrowhead (fill-based)
      * - `"spike"`: a thin filled triangle
      *
      * @default 'arrow'
@@ -129,7 +130,7 @@
   import { hasAnyDataProp, resolveDataProp, extractRawDataValue, resolveGeoDataPair, resolveStyleProp, resolveColorProp } from '$lib/utils/dataProp.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { cls } from '@layerstack/tailwind';
-  import { vectorArrowPath, vectorSpikePath, transformVectorPath } from '$lib/utils/path.js';
+  import { vectorArrowPath, vectorArrowFilledPath, vectorSpikePath, transformVectorPath } from '$lib/utils/path.js';
   import Path from './Path.svelte';
 
   let {
@@ -156,8 +157,11 @@
     ...restProps
   }: VectorProps = $props();
 
+  // Filled shapes use fill instead of stroke for their default styling
+  const isFilled = $derived(shape === 'spike' || shape === 'arrow-filled');
+
   // Resolve anchor default based on shape
-  const resolvedAnchor = $derived(anchor ?? (shape === 'spike' ? 'start' : 'middle'));
+  const resolvedAnchor = $derived(anchor ?? (isFilled ? 'start' : 'middle'));
 
   // Data mode detection
   const dataMode = $derived(hasAnyDataProp(x, y, lengthProp, rotateProp));
@@ -255,6 +259,9 @@
     if (shape === 'spike') {
       return vectorSpikePath({ length: len, anchor: resolvedAnchor, width: w });
     }
+    if (shape === 'arrow-filled') {
+      return vectorArrowFilledPath({ length: len, anchor: resolvedAnchor, width: w });
+    }
     return vectorArrowPath({ length: len, anchor: resolvedAnchor, width: w });
   }
 
@@ -325,7 +332,7 @@
       stroke={resolvedStroke}
       strokeWidth={resolvedStrokeWidth}
       opacity={resolvedOpacity}
-      class={cls('lc-vector', resolvedClass)}
+      class={cls('lc-vector', isFilled ? 'lc-vector-filled' : 'lc-vector-stroked', resolvedClass)}
     />
   {/each}
 {:else}
@@ -337,24 +344,31 @@
     stroke={stroke as string}
     strokeWidth={strokeWidth as number}
     opacity={opacity as number}
-    class="lc-vector {typeof className === 'string' ? className : ''}"
+    class="lc-vector {isFilled ? 'lc-vector-filled' : 'lc-vector-stroked'} {typeof className === 'string' ? className : ''}"
   />
 {/if}
 
 <style>
   @layer base {
     :global(:where(.lc-vector)) {
-      --stroke-color: var(--color-surface-content, currentColor);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    /* Svg | Canvas layers */
-    :global(:where(.lc-layout-svg .lc-vector, svg.lc-vector):not([stroke])) {
-      stroke: var(--stroke-color);
+    /* Stroked shapes (arrow): stroke defaults to currentColor, fill to none */
+    :global(:where(.lc-layout-svg .lc-vector-stroked, svg.lc-vector-stroked):not([stroke])) {
+      stroke: var(--color-surface-content, currentColor);
     }
-    :global(:where(.lc-layout-svg .lc-vector, svg.lc-vector):not([fill])) {
+    :global(:where(.lc-layout-svg .lc-vector-stroked, svg.lc-vector-stroked):not([fill])) {
       fill: none;
+    }
+
+    /* Filled shapes (spike, arrow-filled): fill defaults to currentColor, stroke to none */
+    :global(:where(.lc-layout-svg .lc-vector-filled, svg.lc-vector-filled):not([fill])) {
+      fill: var(--color-surface-content, currentColor);
+    }
+    :global(:where(.lc-layout-svg .lc-vector-filled, svg.lc-vector-filled):not([stroke])) {
+      stroke: none;
     }
   }
 </style>
