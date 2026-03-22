@@ -170,6 +170,25 @@ export const getUsCountyPopulation = prerender(async () => {
 	return data;
 });
 
+export const getUsPresidentialElection2020 = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-presidential-election-2020.csv').then(
+		async (r) => csvParse(await r.text(), autoType)
+	)) as Array<{
+		state_name: string;
+		county_fips: number;
+		county_name: string;
+		votes_gop: number;
+		votes_dem: number;
+		total_votes: number;
+		diff: number;
+		per_gop: number;
+		per_dem: number;
+		per_point_diff: number;
+	}>;
+	return data;
+});
+
 export const getWorldCapitals = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>

@@ -33,7 +33,10 @@ export function circlePath(dimensions: {
   `;
 }
 
-/** Create spike (triangle) using path data  */
+/**
+ * @deprecated Use `vectorSpikePath` or the `Vector` component with `shape="spike"` instead.
+ * Create spike (triangle) using path data
+ */
 export function spikePath({
   x,
   y,
@@ -45,17 +48,7 @@ export function spikePath({
   width: number;
   height: number;
 }) {
-  const startPoint = { x: x - width / 2, y };
-  const midPoint = { x, y: y - height };
-  const endPoint = { x: x + width / 2, y };
-
-  const pathData = `
-    M ${startPoint.x},${startPoint.y}
-    L ${midPoint.x},${midPoint.y}
-    L ${endPoint.x},${endPoint.y}
-  `;
-
-  return pathData;
+  return transformVectorPath(vectorSpikePath({ length: height, anchor: 'start', width }), x, y, 0);
 }
 
 /** Create rounded polygon path
@@ -86,6 +79,110 @@ export function roundedPolygonPath(coords: { x: number; y: number }[], radius: n
   }
   path += 'Z';
   return path;
+}
+
+/** Vector anchor position */
+export type VectorAnchor = 'start' | 'middle' | 'end';
+
+/**
+ * Create arrow vector path data (pointing up by default).
+ * The path is centered on the anchor point at origin — use SVG `transform` to position and rotate.
+ *
+ * The arrow consists of a stem line with a V-shaped arrowhead at the tip.
+ */
+export function vectorArrowPath({
+  length,
+  anchor = 'middle',
+  width = 5,
+}: {
+  length: number;
+  anchor?: VectorAnchor;
+  /** Total width of the arrowhead (wing tip to wing tip). */
+  width?: number;
+}) {
+  const halfWidth = width / 2;
+
+  // Compute y-offsets for base and tip relative to anchor point at origin
+  let baseY: number, tipY: number;
+  switch (anchor) {
+    case 'start':
+      baseY = 0;
+      tipY = -length;
+      break;
+    case 'end':
+      baseY = length;
+      tipY = 0;
+      break;
+    case 'middle':
+    default:
+      baseY = length / 2;
+      tipY = -length / 2;
+      break;
+  }
+
+  // Stem from base to tip, then arrowhead wings at the tip
+  return `M0,${baseY}L0,${tipY}M${-halfWidth},${tipY + width}L0,${tipY}L${halfWidth},${tipY + width}`;
+}
+
+/**
+ * Create spike (filled triangle) vector path data (pointing up by default).
+ * The path is centered on the anchor point at origin — use SVG `transform` to position and rotate.
+ */
+export function vectorSpikePath({
+  length,
+  anchor = 'start',
+  width = 3,
+}: {
+  length: number;
+  anchor?: VectorAnchor;
+  width?: number;
+}) {
+  const halfWidth = width / 2;
+
+  let baseY: number, tipY: number;
+  switch (anchor) {
+    case 'start':
+      baseY = 0;
+      tipY = -length;
+      break;
+    case 'end':
+      baseY = length;
+      tipY = 0;
+      break;
+    case 'middle':
+    default:
+      baseY = length / 2;
+      tipY = -length / 2;
+      break;
+  }
+
+  return `M${-halfWidth},${baseY}L0,${tipY}L${halfWidth},${baseY}`;
+}
+
+/**
+ * Apply rotation (degrees) and translation to a path string containing only M and L commands
+ * with absolute coordinates. Converts local vector path data to absolute positioned coordinates.
+ */
+export function transformVectorPath(
+  pathData: string,
+  cx: number,
+  cy: number,
+  rotateDeg: number
+) {
+  const rad = (rotateDeg * Math.PI) / 180;
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+
+  return pathData.replace(
+    /([ML])(-?\d*\.?\d+),(-?\d*\.?\d+)/g,
+    (_match, cmd, xStr, yStr) => {
+      const lx = Number(xStr);
+      const ly = Number(yStr);
+      const ax = cx + lx * cos - ly * sin;
+      const ay = cy + lx * sin + ly * cos;
+      return `${cmd}${ax},${ay}`;
+    }
+  );
 }
 
 /** Flatten all `y` coordinates to `0` */

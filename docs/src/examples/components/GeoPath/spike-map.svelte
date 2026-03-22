@@ -4,7 +4,7 @@
 	import { scaleLinear } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, getSettings, Layer, spikePath, Spline, Tooltip } from 'layerchart';
+	import { Chart, GeoPath, getSettings, Layer, Vector, Tooltip } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
@@ -32,7 +32,7 @@
 	});
 	const populationByFips = index(population, (d) => d.fips);
 
-	const width = 7;
+	const spikeWidth = 7;
 	const maxHeight = 200;
 	const heightScale = scaleLinear()
 		.domain([0, max(population, (d) => d.population) ?? 0])
@@ -80,8 +80,12 @@
 						{@const [x, y] = geoPath?.centroid(feature) ?? [0, 0]}
 						{@const d = feature.properties.data}
 						{@const height = heightScale(d?.population ?? 0)}
-						<Spline
-							pathData={spikePath({ x, y, width, height })}
+						<Vector
+							x={x}
+							y={y}
+							length={height}
+							shape="spike"
+							width={spikeWidth}
 							class="stroke-danger fill-danger/25"
 							{strokeWidth}
 						/>

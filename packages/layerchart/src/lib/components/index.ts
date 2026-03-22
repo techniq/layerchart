@@ -145,6 +145,8 @@ export { default as Tree } from './Tree.svelte';
 export * from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';
 export * from './Treemap.svelte';
+export { default as Vector } from './Vector.svelte';
+export * from './Vector.svelte';
 export { default as Voronoi } from './Voronoi.svelte';
 export * from './Voronoi.svelte';
 export { default as WebGL } from './layers/WebGL.svelte';
