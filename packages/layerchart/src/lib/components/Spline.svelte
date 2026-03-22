@@ -53,14 +53,17 @@
 <script lang="ts">
   import { draw as _drawTransition } from 'svelte/transition';
 
+  import { geoPath as d3GeoPath } from 'd3-geo';
   import { line as d3Line, lineRadial } from 'd3-shape';
   import { max } from 'd3-array';
 
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Path, { type PathProps } from './Path.svelte';
 
   const ctx = getChartContext();
+  const geo = getGeoContext();
 
   let { data, x, y, seriesKey, defined, curve, ...restProps }: SplineProps = $props();
 
@@ -98,6 +101,21 @@
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
   const d = $derived.by(() => {
+    const resolvedData = data ?? series?.data ?? ctx.data;
+
+    // Geo mode: convert data to GeoJSON LineString and render via geoPath
+    if (geo.projection) {
+      const coordinates = resolvedData
+        .filter((d: any) => {
+          if (defined) return defined(d, 0, resolvedData);
+          return xAccessor(d) != null && yAccessor(d) != null;
+        })
+        .map((d: any) => [xAccessor(d), yAccessor(d)]);
+
+      const lineString = { type: 'LineString' as const, coordinates };
+      return d3GeoPath(geo.projection)(lineString) ?? '';
+    }
+
     const path = ctx.radial
       ? lineRadial()
           .angle((d) => getScaleValue(d, ctx.xScale, xAccessor) + 0) // Never apply xOffset (LineChart radar, BarChart radial, ...)?
@@ -110,7 +128,7 @@
     path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
     if (curve) path.curve(curve);
 
-    return path(data ?? series?.data ?? ctx.data) ?? '';
+    return path(resolvedData) ?? '';
   });
 </script>
 

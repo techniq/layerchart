@@ -13,6 +13,19 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 
 :example{ name="basic" showCode }
 
+### Geo mode
+
+When inside a `GeoProjection` context, Spline automatically renders as a projected geographic path. The `x` and `y` accessors extract longitude/latitude from each data point, which are converted to a GeoJSON `LineString` and rendered via `geoPath(projection)` — providing geodesic interpolation (great circle arcs) and proper antimeridian wrapping.
+
+```svelte
+<Chart data={voyageData} x="longitude" y="latitude"
+    geo={{ projection: geoNaturalEarth1, fitGeojson: countries }}>
+	<Spline class="fill-none stroke-primary" />
+</Chart>
+```
+
+This works the same way as [Observable Plot's Line mark](https://observablehq.com/plot/marks/line) with projections.
+
 ### Playground
 
 :example{ name="playground" }

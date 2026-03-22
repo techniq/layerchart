@@ -275,3 +275,18 @@ When a primitive is placed inside a `GeoProjection` context, positional x/y prop
 ```
 
 Each airport's `longitude` and `latitude` properties are projected through the globe projection. Since `r={2}` is a number, it stays as a 2px radius. You can also make `r` data-driven (e.g., `r="passengers"`) to create a proportional symbol map.
+
+### Spline
+
+[Spline](/docs/components/Spline) also supports geo mode. When a projection is set, it automatically converts data into a GeoJSON `LineString` and renders via `geoPath` — giving proper geodesic interpolation and antimeridian handling.
+
+```svelte
+<Chart data={voyageData} x="longitude" y="latitude">
+	<GeoProjection projection={geoNaturalEarth1} fitGeojson={geojson}>
+		<Svg>
+			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+			<Spline class="fill-none stroke-primary" />
+		</Svg>
+	</GeoProjection>
+</Chart>
+```

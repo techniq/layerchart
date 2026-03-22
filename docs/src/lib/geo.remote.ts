@@ -203,6 +203,14 @@ export const getD1FootballTeams = prerender(async () => {
 	return data;
 });
 
+export const getBeagleVoyage = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/beagle-voyage.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { longitude: number; latitude: number }[];
+	return data;
+});
+
 export const getWorldLinks = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/world-links.json').then((r) =>
