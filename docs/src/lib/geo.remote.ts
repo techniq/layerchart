@@ -186,6 +186,23 @@ export const getWorldAirports = prerender(async () => {
 	return data;
 });
 
+export const getD1FootballTeams = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/d1-football-teams.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as {
+		team: string;
+		college: string;
+		conference: string;
+		city: string;
+		state: string;
+		latitude: number;
+		longitude: number;
+		espn_id: number;
+	}[];
+	return data;
+});
+
 export const getWorldLinks = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/world-links.json').then((r) =>
