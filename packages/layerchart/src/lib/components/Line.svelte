@@ -126,7 +126,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
 
@@ -258,13 +258,23 @@
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
-    itemStroke?: string | undefined
+    itemStroke?: string | undefined,
+    itemFillOpacity?: number | undefined,
+    itemStrokeWidth?: number | undefined,
+    itemOpacity?: number | undefined,
+    itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
       : {
-          styles: { fill: itemFill ?? fill, stroke: itemStroke ?? stroke, strokeWidth, opacity },
-          classes: cls('lc-line', className),
+          styles: {
+            fill: itemFill ?? fill,
+            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            stroke: itemStroke ?? stroke,
+            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
+          },
+          classes: cls('lc-line', itemClass ?? (typeof className === 'string' ? className : undefined)),
           style: restProps.style as string | undefined,
         };
   }
@@ -277,7 +287,11 @@
       for (const item of resolvedItems) {
         const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
+        const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d);
+        const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
+        const resolvedOpacity = resolveStyleProp(opacity, item.d);
+        const resolvedClass = resolveStyleProp(className, item.d);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         const pathData = `M ${item.x1},${item.y1} L ${item.x2},${item.y2}`;
         renderPathData(ctx, pathData, styleOpts);
       }
@@ -328,6 +342,10 @@
     {#each resolvedItems as item (item.key)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       <line
         x1={item.x1}
         y1={item.y1}
@@ -335,13 +353,13 @@
         y2={item.y2}
         fill={resolvedFill}
         stroke={resolvedStroke}
-        fill-opacity={fillOpacity}
-        stroke-width={strokeWidth}
-        {opacity}
+        fill-opacity={resolvedFillOpacity}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
         marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
         marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
         marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-        class={cls('lc-line', className)}
+        class={cls('lc-line', resolvedClass)}
         {...restProps}
       />
     {/each}
@@ -353,13 +371,13 @@
       y2={motionY2.current}
       fill={fill as string}
       stroke={stroke as string}
-      fill-opacity={fillOpacity}
-      stroke-width={strokeWidth}
-      {opacity}
+      fill-opacity={fillOpacity as number}
+      stroke-width={strokeWidth as number}
+      opacity={opacity as number}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-      class={cls('lc-line', className)}
+      class={cls('lc-line', className as string)}
       {...restProps}
     />
     <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
@@ -370,6 +388,9 @@
   {#if dataMode}
     {#each resolvedItems as item (item.key)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       {@const { angle, length } = pointsToAngleAndLength(
         { x: item.x1, y: item.y1 },
         { x: item.x2, y: item.y2 }
@@ -379,12 +400,12 @@
         style:left="{item.x1}px"
         style:top="{item.y1}px"
         style:width="{length}px"
-        style:height="{strokeWidth ?? 1}px"
+        style:height="{resolvedStrokeWidth ?? 1}px"
         style:transform="translateY(-50%) rotate({angle}deg)"
         style:transform-origin="0 50%"
-        style:opacity
+        style:opacity={resolvedOpacity}
         style:background-color={resolvedStroke}
-        class={cls('lc-line', className)}
+        class={cls('lc-line', resolvedClass)}
         style={restProps.style}
       ></div>
     {/each}
@@ -399,12 +420,12 @@
       style:left="{motionX1.current}px"
       style:top="{motionY1.current}px"
       style:width="{length}px"
-      style:height="{strokeWidth ?? 1}px"
+      style:height="{(strokeWidth as number) ?? 1}px"
       style:transform="translateY(-50%) rotate({angle}deg)"
       style:transform-origin="0 50%"
-      style:opacity
+      style:opacity={opacity as number}
       style:background-color={stroke as string}
-      class={cls('lc-line', className)}
+      class={cls('lc-line', className as string)}
       style={restProps.style}
     ></div>
   {/if}

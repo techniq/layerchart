@@ -169,7 +169,7 @@
   } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -352,13 +352,23 @@
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
-    itemStroke?: string | undefined
+    itemStroke?: string | undefined,
+    itemFillOpacity?: number | undefined,
+    itemStrokeWidth?: number | undefined,
+    itemOpacity?: number | undefined,
+    itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
       : {
-          styles: { fill: itemFill ?? fill, fillOpacity, stroke: itemStroke ?? stroke, strokeWidth, opacity },
-          classes: cls('lc-polygon', className),
+          styles: {
+            fill: itemFill ?? fill,
+            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            stroke: itemStroke ?? stroke,
+            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
+          },
+          classes: cls('lc-polygon', itemClass ?? (typeof className === 'string' ? className : undefined)),
           style: restProps.style as string | undefined,
         };
   }
@@ -372,7 +382,11 @@
         const pathData = resolvePolygon(d);
         const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
+        const resolvedFillOpacity = resolveStyleProp(fillOpacity, d);
+        const resolvedStrokeWidth = resolveStyleProp(strokeWidth, d);
+        const resolvedOpacity = resolveStyleProp(opacity, d);
+        const resolvedClass = resolveStyleProp(className, d);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         renderPathData(ctx, pathData, styleOpts);
       }
     } else {
@@ -421,14 +435,18 @@
       {@const pathData = resolvePolygon(d)}
       {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, d)}
+      {@const resolvedClass = resolveStyleProp(className, d)}
       <path
         d={pathData}
         fill={resolvedFill}
-        fill-opacity={fillOpacity}
+        fill-opacity={resolvedFillOpacity}
         stroke={resolvedStroke}
-        stroke-width={strokeWidth}
-        {opacity}
-        class={cls('lc-polygon', className)}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
+        class={cls('lc-polygon', resolvedClass)}
         {...restProps}
       />
     {/each}
@@ -436,11 +454,11 @@
     <path
       d={tweenedState.current}
       fill={fill as string}
-      fill-opacity={fillOpacity}
+      fill-opacity={fillOpacity as number}
       stroke={stroke as string}
-      stroke-width={strokeWidth}
-      {opacity}
-      class={cls('lc-polygon', className)}
+      stroke-width={strokeWidth as number}
+      opacity={opacity as number}
+      class={cls('lc-polygon', className as string)}
       {...restProps}
       bind:this={ref}
     />

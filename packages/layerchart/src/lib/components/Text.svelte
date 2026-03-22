@@ -232,7 +232,7 @@
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { get } from '@layerstack/utils';
   import { chartDataArray } from '$lib/utils/common.js';
@@ -531,21 +531,25 @@
   ) {
     function getTextStyles(
       itemFill?: string | undefined,
-      itemStroke?: string | undefined
+      itemStroke?: string | undefined,
+      itemFillOpacity?: number | undefined,
+      itemStrokeWidth?: number | undefined,
+      itemOpacity?: number | undefined,
+      itemClass?: string | undefined
     ) {
       return styleOverrides
-        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
         : {
             styles: {
               fill: itemFill ?? fill,
-              fillOpacity,
+              fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
               stroke: itemStroke ?? stroke,
-              strokeWidth,
-              opacity,
+              strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+              opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
               paintOrder: 'stroke',
               textAnchor,
             },
-            classes: cls('lc-text', className),
+            classes: cls('lc-text', itemClass ?? (typeof className === 'string' ? className : undefined)),
           };
     }
 
@@ -561,7 +565,11 @@
         const text = resolveTextValue(item.d);
         const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
-        const itemStyles = getTextStyles(resolvedFill, resolvedStroke);
+        const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d);
+        const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
+        const resolvedOpacity = resolveStyleProp(opacity, item.d);
+        const resolvedClass = resolveStyleProp(className, item.d);
+        const itemStyles = getTextStyles(resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         ctx.save();
         if (rotate !== undefined) {
           const radians = degreesToRadians(rotate);
@@ -652,6 +660,10 @@
       {@const text = resolveTextValue(item.d)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       {@const dataRotateTransform = rotate ? `rotate(${rotate}, ${item.x}, ${item.y})` : ''}
       <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]}>
         <text
@@ -662,11 +674,11 @@
           dominant-baseline={dominantBaseline}
           {...restProps}
           fill={resolvedFill}
-          fill-opacity={fillOpacity}
+          fill-opacity={resolvedFillOpacity}
           stroke={resolvedStroke}
-          stroke-width={strokeWidth}
-          {opacity}
-          class={['lc-text', className]}
+          stroke-width={resolvedStrokeWidth}
+          opacity={resolvedOpacity}
+          class={['lc-text', resolvedClass]}
         >
           <tspan
             x={item.x}
@@ -693,12 +705,12 @@
           {dy}
           {...restProps}
           fill={fill as string}
-          fill-opacity={fillOpacity}
+          fill-opacity={fillOpacity as number}
           stroke={stroke as string}
-          stroke-width={strokeWidth}
-          {opacity}
+          stroke-width={strokeWidth as number}
+          opacity={opacity as number}
           transform={transformProp}
-          class={['lc-text', className]}
+          class={['lc-text', className as string]}
         >
           <textPath
             style="text-anchor: {textAnchor};"
@@ -720,11 +732,11 @@
           dominant-baseline={dominantBaseline}
           {...restProps}
           fill={fill as string}
-          fill-opacity={fillOpacity}
+          fill-opacity={fillOpacity as number}
           stroke={stroke as string}
-          stroke-width={strokeWidth}
-          {opacity}
-          class={['lc-text', className]}
+          stroke-width={strokeWidth as number}
+          opacity={opacity as number}
+          class={['lc-text', className as string]}
         >
           {#each wordsByLines as line, index}
             <tspan
@@ -743,6 +755,7 @@
   {#if dataMode}
     {#each resolvedItems as item (item.key)}
       {@const text = resolveTextValue(item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
       {@const translateY =
         verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
@@ -759,7 +772,7 @@
         {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
         style:white-space="pre-wrap"
         style:line-height={lineHeight}
-        class={['lc-text', className]}
+        class={['lc-text', resolvedClass]}
       >
         {text}
       </div>
@@ -781,7 +794,7 @@
       {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
       style:white-space="pre-wrap"
       style:line-height={lineHeight}
-      class={['lc-text', className]}
+      class={['lc-text', className as string]}
     >
       {textValue}
     </div>

@@ -192,7 +192,7 @@
   }
 </script>
 
-<Group class="lc-labels-g" opacity={derivedOpacity}>
+<Group class="lc-labels-g" opacity={derivedOpacity as number}>
   <Points {data} {x} {y} {seriesKey}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}

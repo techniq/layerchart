@@ -96,7 +96,7 @@
   import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
@@ -220,13 +220,23 @@
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
-    itemStroke?: string | undefined
+    itemStroke?: string | undefined,
+    itemFillOpacity?: number | undefined,
+    itemStrokeWidth?: number | undefined,
+    itemOpacity?: number | undefined,
+    itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
       : {
-          styles: { fill: itemFill ?? fill, fillOpacity, stroke: itemStroke ?? stroke, strokeWidth, opacity },
-          classes: cls('lc-circle', className),
+          styles: {
+            fill: itemFill ?? fill,
+            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            stroke: itemStroke ?? stroke,
+            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
+          },
+          classes: cls('lc-circle', itemClass ?? (typeof className === 'string' ? className : undefined)),
           style: restProps.style as string | undefined,
         };
   }
@@ -239,7 +249,11 @@
       for (const item of resolvedItems) {
         const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
+        const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d);
+        const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
+        const resolvedOpacity = resolveStyleProp(opacity, item.d);
+        const resolvedClass = resolveStyleProp(className, item.d);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         renderCircle(ctx, item, styleOpts);
       }
     } else {
@@ -290,16 +304,20 @@
     {#each resolvedItems as item (item.key)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       <circle
         cx={item.cx}
         cy={item.cy}
         r={item.r}
         fill={resolvedFill}
-        fill-opacity={fillOpacity}
+        fill-opacity={resolvedFillOpacity}
         stroke={resolvedStroke}
-        stroke-width={strokeWidth}
-        {opacity}
-        class={cls('lc-circle', className)}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
+        class={cls('lc-circle', resolvedClass)}
         {...restProps}
       />
     {/each}
@@ -310,11 +328,11 @@
       cy={motionCy.current}
       r={motionR.current}
       fill={fill as string}
-      fill-opacity={fillOpacity}
+      fill-opacity={fillOpacity as number}
       stroke={stroke as string}
-      stroke-width={strokeWidth}
-      {opacity}
-      class={cls('lc-circle', className)}
+      stroke-width={strokeWidth as number}
+      opacity={opacity as number}
+      class={cls('lc-circle', className as string)}
       {...restProps}
     />
   {/if}
@@ -323,6 +341,10 @@
     {#each resolvedItems as item (item.key)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       <div
         style:position="absolute"
         style:left="{item.cx}px"
@@ -331,12 +353,12 @@
         style:height="{item.r * 2}px"
         style:border-radius="50%"
         style:background-color={resolvedFill}
-        style:opacity
-        style:border-width={strokeWidth}
+        style:opacity={resolvedOpacity}
+        style:border-width={resolvedStrokeWidth}
         style:border-color={resolvedStroke}
         style:border-style="solid"
         style:transform="translate(-50%, -50%)"
-        class={cls('lc-circle', className)}
+        class={cls('lc-circle', resolvedClass)}
         {...restProps}
       ></div>
     {/each}
@@ -349,12 +371,12 @@
       style:height="{motionR.current * 2}px"
       style:border-radius="50%"
       style:background-color={fill as string}
-      style:opacity
-      style:border-width={strokeWidth}
+      style:opacity={opacity as number}
+      style:border-width={strokeWidth as number}
       style:border-color={stroke as string}
       style:border-style="solid"
       style:transform="translate(-50%, -50%)"
-      class={cls('lc-circle', className)}
+      class={cls('lc-circle', className as string)}
       {...restProps}
     >
       {@render children?.()}

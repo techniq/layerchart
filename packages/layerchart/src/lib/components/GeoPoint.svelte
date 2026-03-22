@@ -35,7 +35,17 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let { lat, long, ref: refProp = $bindable(), children, ...restProps }: GeoPointProps = $props();
+  let {
+    lat,
+    long,
+    ref: refProp = $bindable(),
+    children,
+    opacity,
+    fillOpacity,
+    strokeWidth,
+    class: className,
+    ...restProps
+  }: GeoPointProps = $props();
 
   let ref = $state<Element>();
   $effect.pre(() => {
@@ -53,11 +63,11 @@
 
 {#if layerCtx === 'svg'}
   {#if children}
-    <Group {x} {y} {...extractLayerProps(restProps, 'lc-geo-point-group')}>
+    <Group {x} {y} opacity={opacity as number} class={className as string} {...extractLayerProps(restProps, 'lc-geo-point-group')}>
       {@render children({ x, y })}
     </Group>
   {:else}
-    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'lc-geo-point')} />
+    <Circle cx={x} cy={y} {opacity} {fillOpacity} {strokeWidth} class={className} {...extractLayerProps(restProps, 'lc-geo-point')} />
   {/if}
 {/if}
 
@@ -68,6 +78,6 @@
     {@render children({ x, y })}
     <!-- </Group> -->
   {:else}
-    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'lc-geo-point')} />
+    <Circle cx={x} cy={y} {opacity} {fillOpacity} {strokeWidth} class={className} {...extractLayerProps(restProps, 'lc-geo-point')} />
   {/if}
 {/if}

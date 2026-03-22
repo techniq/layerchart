@@ -109,10 +109,16 @@ export function resolveGeoDataPair<T>(
 export type ColorProp<T = any> = string | ((d: T) => any);
 
 /**
- * Style props for primitives that support data-driven fill/stroke.
- * Overrides `fill` and `stroke` from CommonStyleProps to accept ColorProp.
+ * A style prop that can be a static value or a per-item accessor function.
+ * In data mode, if a function is provided, it is called with the data item.
  */
-export type DataDrivenStyleProps<T = any> = Omit<CommonStyleProps, 'fill' | 'stroke'> & {
+export type StyleProp<V, T = any> = V | ((d: T) => V);
+
+/**
+ * Style props for primitives that support data-driven styling.
+ * All style props accept either a static value or a per-item accessor function.
+ */
+export type DataDrivenStyleProps<T = any> = {
   /**
    * The fill color.
    * - `string`: in data mode, if it matches a data property name, the value is
@@ -128,6 +134,34 @@ export type DataDrivenStyleProps<T = any> = Omit<CommonStyleProps, 'fill' | 'str
    * - `function(d)`: accessor called per data item, result passed through cScale.
    */
   stroke?: ColorProp<T>;
+
+  /**
+   * The fill opacity (0 to 1).
+   * - `number`: static value
+   * - `function(d)`: accessor called per data item
+   */
+  fillOpacity?: StyleProp<number | undefined, T>;
+
+  /**
+   * The stroke width.
+   * - `number`: static value
+   * - `function(d)`: accessor called per data item
+   */
+  strokeWidth?: StyleProp<number | undefined, T>;
+
+  /**
+   * The opacity (0 to 1).
+   * - `number`: static value
+   * - `function(d)`: accessor called per data item
+   */
+  opacity?: StyleProp<number | undefined, T>;
+
+  /**
+   * CSS class name(s).
+   * - `string`: static class string
+   * - `function(d)`: accessor called per data item, returns class string
+   */
+  class?: StyleProp<string | undefined, T>;
 };
 
 /**
@@ -162,4 +196,18 @@ export function resolveColorProp<T>(
   }
 
   return undefined;
+}
+
+/**
+ * Resolves a StyleProp for a specific data item.
+ * If the value is a function, calls it with the data item.
+ * Otherwise returns the static value.
+ */
+export function resolveStyleProp<V, T>(
+  value: StyleProp<V, T> | undefined,
+  d: T
+): V | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value === 'function') return (value as (d: T) => V)(d);
+  return value;
 }

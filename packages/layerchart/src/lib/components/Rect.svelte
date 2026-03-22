@@ -138,7 +138,7 @@
   import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { resolveInsets } from '$lib/utils/rect.svelte.js';
@@ -314,13 +314,23 @@
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
-    itemStroke?: string | undefined
+    itemStroke?: string | undefined,
+    itemFillOpacity?: number | undefined,
+    itemStrokeWidth?: number | undefined,
+    itemOpacity?: number | undefined,
+    itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
       : {
-          styles: { fill: itemFill ?? fill, fillOpacity, stroke: itemStroke ?? stroke, strokeWidth, opacity },
-          classes: cls('lc-rect', className),
+          styles: {
+            fill: itemFill ?? fill,
+            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            stroke: itemStroke ?? stroke,
+            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
+          },
+          classes: cls('lc-rect', itemClass ?? (typeof className === 'string' ? className : undefined)),
           style: restProps.style as string | undefined,
         };
   }
@@ -333,7 +343,11 @@
       for (const item of resolvedItems) {
         const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
+        const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d);
+        const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
+        const resolvedOpacity = resolveStyleProp(opacity, item.d);
+        const resolvedClass = resolveStyleProp(className, item.d);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         renderRect(ctx, {
           x: item.x,
           y: item.y,
@@ -402,19 +416,23 @@
     {#each resolvedItems as item (item.key)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       <rect
         x={item.x}
         y={item.y}
         width={item.width}
         height={item.height}
         fill={resolvedFill}
-        fill-opacity={fillOpacity}
+        fill-opacity={resolvedFillOpacity}
         stroke={resolvedStroke}
-        stroke-width={strokeWidth}
-        {opacity}
+        stroke-width={resolvedStrokeWidth}
+        opacity={resolvedOpacity}
         {rx}
         {ry}
-        class={cls('lc-rect', className)}
+        class={cls('lc-rect', resolvedClass)}
         {...restProps}
         {onclick}
         {ondblclick}
@@ -432,13 +450,13 @@
       width={motionWidth.current}
       height={motionHeight.current}
       fill={fill as string}
-      fill-opacity={fillOpacity}
+      fill-opacity={fillOpacity as number}
       stroke={stroke as string}
-      stroke-width={strokeWidth}
-      {opacity}
+      stroke-width={strokeWidth as number}
+      opacity={opacity as number}
       {rx}
       {ry}
-      class={cls('lc-rect', className)}
+      class={cls('lc-rect', className as string)}
       {...restProps}
       {onclick}
       {ondblclick}
@@ -455,6 +473,10 @@
     {#each resolvedItems as item (item.key)}
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
+      {@const resolvedClass = resolveStyleProp(className, item.d)}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
@@ -464,12 +486,12 @@
         style:width="{item.width}px"
         style:height="{item.height}px"
         style:background={resolvedFill}
-        style:background-opacity={opacity}
-        style:border-width="{strokeWidth}px"
+        style:opacity={resolvedOpacity}
+        style:border-width="{resolvedStrokeWidth}px"
         style:border-style="solid"
         style:border-color={resolvedStroke}
         style:border-radius="{rx}px"
-        class={cls('lc-rect', className)}
+        class={cls('lc-rect', resolvedClass)}
         {...restProps as any}
         {onclick}
         {ondblclick}
@@ -490,12 +512,12 @@
       style:width="{motionWidth.current}px"
       style:height="{motionHeight.current}px"
       style:background={fill as string}
-      style:background-opacity={opacity}
-      style:border-width="{strokeWidth}px"
+      style:opacity={opacity as number}
+      style:border-width="{strokeWidth as number}px"
       style:border-style="solid"
       style:border-color={stroke as string}
       style:border-radius="{rx}px"
-      class={cls('lc-rect', className)}
+      class={cls('lc-rect', className as string)}
       {...restProps as any}
       {onclick}
       {ondblclick}
