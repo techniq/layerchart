@@ -1847,7 +1847,7 @@
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 57,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -1868,7 +1868,7 @@
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 54,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
@@ -2114,6 +2114,13 @@
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
       "lineNumber": 35,
+      "line": "<Layer>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 61,
       "line": "<Layer>"
     },
     {
@@ -3069,6 +3076,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
@@ -3454,5 +3468,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-21T15:42:47.656Z"
+  "updatedAt": "2026-03-22T12:54:33.158Z"
 }

@@ -3606,29 +3606,71 @@
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 123,
+      "lineNumber": 150,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 125,
-      "line": "<Tooltip.Header>"
+      "lineNumber": 153,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 128,
+      "lineNumber": 154,
       "line": "<Tooltip.List>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 129,
-      "line": "<Tooltip.Item label=\"Value\" value={data.value} format=\"integer\" />"
+      "lineNumber": 156,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 162,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 163,
+      "line": "<Tooltip.Item label=\"Total\" value={data.total} format=\"integer\" />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 166,
+      "line": "<Tooltip.Header>{data.source} ↔ {data.target}</Tooltip.Header>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 167,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 168,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 173,
+      "line": "<Tooltip.Item"
     },
     {
       "example": "beeswarm",
@@ -4145,70 +4187,70 @@
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 69,
+      "lineNumber": 63,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 71,
+      "lineNumber": 65,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 72,
+      "lineNumber": 66,
       "line": "<Tooltip.List>"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 73,
+      "lineNumber": 67,
       "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 74,
+      "lineNumber": 68,
       "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 66,
+      "lineNumber": 60,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 68,
+      "lineNumber": 62,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 69,
+      "lineNumber": 63,
       "line": "<Tooltip.List>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 70,
+      "lineNumber": 64,
       "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 71,
+      "lineNumber": 65,
       "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
     },
     {
@@ -4441,6 +4483,41 @@
       "path": "/docs/components/Graticule/basic",
       "lineNumber": 68,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 76,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 78,
+      "line": "<Tooltip.Header>{data.team}</Tooltip.Header>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 79,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 80,
+      "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 81,
+      "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
       "example": "custom",
@@ -6088,5 +6165,5 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:49.833Z"
+  "updatedAt": "2026-03-22T12:54:33.910Z"
 }

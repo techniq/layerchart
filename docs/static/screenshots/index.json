@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-21T15:42:43.922Z",
+  "generatedAt": "2026-03-22T12:54:31.331Z",
   "totalComponents": 63,
-  "totalExamples": 772,
+  "totalExamples": 774,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1859,12 +1859,12 @@
         {
           "name": "hover",
           "path": "/example/Chord/hover",
-          "checksum": "fa2e446f49f3f1f167126e9ec0fe7e99"
+          "checksum": "b534d518d720e4280c249b098b33686b"
         },
         {
           "name": "ticks",
           "path": "/example/Chord/ticks",
-          "checksum": "4a157b53a91273ae5be78f514db11b65"
+          "checksum": "c60be8422b71734c40e9c36eb5703d9d"
         }
       ]
     },
@@ -2219,7 +2219,7 @@
         {
           "name": "us-airports",
           "path": "/example/GeoPoint/us-airports",
-          "checksum": "ba5581b61a03bb4af70f206ef916fb64"
+          "checksum": "ad3638503e2521e6a3edb627554fffe8"
         },
         {
           "name": "us-state-capitals",
@@ -2229,7 +2229,7 @@
         {
           "name": "world-airports",
           "path": "/example/GeoPoint/world-airports",
-          "checksum": "d1f5f1d896ba32b0b49188a9fca35f9a"
+          "checksum": "a2f74fe4fd0a140e2f993e06b0923ec2"
         },
         {
           "name": "world-capitals",
@@ -2431,6 +2431,11 @@
     {
       "component": "Image",
       "examples": [
+        {
+          "name": "college-football-map",
+          "path": "/example/Image/college-football-map",
+          "checksum": "c8d63aa0ad9c5ecd8a55c8f8a71f84c1"
+        },
         {
           "name": "country-flags",
           "path": "/example/Image/country-flags",
@@ -3845,6 +3850,11 @@
           "name": "end-snippet-with-draw",
           "path": "/example/Spline/end-snippet-with-draw",
           "checksum": "e4fc14db5a2199259d1891731cbedc9f"
+        },
+        {
+          "name": "geo-routes",
+          "path": "/example/Spline/geo-routes",
+          "checksum": "6f9a49eb3d8a2e7e548f5dad0f1876c8"
         },
         {
           "name": "gradient-encoding",

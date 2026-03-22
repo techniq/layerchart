@@ -398,7 +398,7 @@
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 87,
+      "lineNumber": 89,
       "line": "<Arc"
     },
     {
@@ -486,5 +486,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:46.604Z"
+  "updatedAt": "2026-03-22T12:54:31.896Z"
 }

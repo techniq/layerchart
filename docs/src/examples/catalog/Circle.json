@@ -395,6 +395,20 @@
       "line": "<Circle"
     },
     {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 46,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 52,
+      "line": "<Circle"
+    },
+    {
       "example": "us-state-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-state-capitals",
@@ -407,6 +421,20 @@
       "path": "/docs/components/GeoPoint/us-state-capitals",
       "lineNumber": 49,
       "line": "<Circle cx={x} cy={y} r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-airports",
+      "lineNumber": 43,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-airports",
+      "lineNumber": 49,
+      "line": "<Circle"
     },
     {
       "example": "world-capitals",
@@ -780,5 +808,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:21.926Z"
+  "updatedAt": "2026-03-22T12:54:32.357Z"
 }

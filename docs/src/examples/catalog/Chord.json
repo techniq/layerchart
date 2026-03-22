@@ -164,22 +164,22 @@
         },
         {
           "component": "Arc",
-          "lineNumber": 87,
+          "lineNumber": 89,
           "line": "<Arc"
         },
         {
           "component": "Group",
-          "lineNumber": 99,
+          "lineNumber": 126,
           "line": "<Group"
         },
         {
           "component": "Text",
-          "lineNumber": 105,
+          "lineNumber": 132,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 123,
+          "lineNumber": 150,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -192,7 +192,7 @@
         {
           "component": "Chart",
           "lineNumber": 36,
-          "line": "<Chart height={800} padding={{ top: 40, bottom: 40 }}>"
+          "line": "<Chart height={800} padding={{ top: 60, bottom: 60, left: 60, right: 60 }}>"
         },
         {
           "component": "Layer",
@@ -264,5 +264,5 @@
       "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={descending} sortChords={descending}>"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:47.719Z"
+  "updatedAt": "2026-03-22T12:54:32.331Z"
 }

@@ -139,7 +139,14 @@
       "path": "/docs/components/Graticule/basic",
       "lineNumber": 61,
       "line": "<Graticule"
+    },
+    {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 28,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.442Z"
+  "updatedAt": "2026-03-22T12:54:33.016Z"
 }

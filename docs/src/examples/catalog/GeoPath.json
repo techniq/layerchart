@@ -1183,7 +1183,28 @@
       "path": "/docs/components/Hull/geo",
       "lineNumber": 32,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 63,
+      "line": "<GeoPath geojson={feature} class=\"fill-surface-content/5 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 27,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} />"
+    },
+    {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 30,
+      "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-content/20\" />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.224Z"
+  "updatedAt": "2026-03-22T12:54:32.860Z"
 }

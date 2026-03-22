@@ -2,6 +2,38 @@
   "component": "Image",
   "examples": [
     {
+      "name": "college-football-map",
+      "title": "college football map",
+      "path": "/docs/components/Image/college-football-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 41,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 61,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 63,
+          "line": "<GeoPath geojson={feature} class=\"fill-surface-content/5 stroke-surface-content/20\" />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 66,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 76,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
       "name": "country-flags",
       "title": "country flags",
       "path": "/docs/components/Image/country-flags",
@@ -134,6 +166,13 @@
   ],
   "usage": [
     {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 66,
+      "line": "<Image"
+    },
+    {
       "example": "country-flags",
       "component": "Image",
       "path": "/docs/components/Image/country-flags",
@@ -183,5 +222,5 @@
       "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:46.203Z"
+  "updatedAt": "2026-03-22T12:54:33.124Z"
 }
