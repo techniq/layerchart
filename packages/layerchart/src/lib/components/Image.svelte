@@ -147,13 +147,16 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { get } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
-  import { hasAnyDataProp, resolveDataProp } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { createId } from '$lib/utils/createId.js';
 
@@ -190,6 +193,7 @@
 
   // Chart context (safe to call outside Chart -- returns fallback)
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -202,9 +206,18 @@
     const defaultSize = resolvedR !== undefined ? resolvedR * 2 : 16;
     const resolvedWidth = width !== undefined ? resolveDataProp(width, d, null, defaultSize) : defaultSize;
     const resolvedHeight = height !== undefined ? resolveDataProp(height, d, null, defaultSize) : defaultSize;
+
+    let resolvedX: number, resolvedY: number;
+    if (geo.projection) {
+      [resolvedX, resolvedY] = resolveGeoDataPair(x, y, d, geo.projection);
+    } else {
+      resolvedX = resolveDataProp(x, d, chartCtx.xScale, 0);
+      resolvedY = resolveDataProp(y, d, chartCtx.yScale, 0);
+    }
+
     return {
-      x: resolveDataProp(x, d, chartCtx.xScale, 0),
-      y: resolveDataProp(y, d, chartCtx.yScale, 0),
+      x: resolvedX,
+      y: resolvedY,
       width: resolvedWidth,
       height: resolvedHeight,
       r: resolvedR,
@@ -222,6 +235,42 @@
     // Otherwise literal URL
     return href;
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveImage(d);
+      untrack(() => dataMotionMap.update(key, { x: resolved.x, y: resolved.y, width: resolved.width, height: resolved.height }));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveImage(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x: animated?.x ?? resolved.x,
+        y: animated?.y ?? resolved.y,
+        width: animated?.width ?? resolved.width,
+        height: animated?.height ?? resolved.height,
+        r: resolved.r,
+        rotate: resolved.rotate,
+      };
+    });
+  });
 
   // --- Pixel mode ---
   let ref = $state<SVGImageElement>();
@@ -287,16 +336,15 @@
 
   function canvasRender(ctx: CanvasRenderingContext2D) {
     if (dataMode) {
-      for (const d of resolvedData) {
-        const resolved = resolveImage(d);
-        const resolvedHrefValue = resolveHref(d);
+      for (const item of resolvedItems) {
+        const resolvedHrefValue = resolveHref(item.d);
         if (!resolvedHrefValue) continue;
 
         const img = getOrLoadImage(resolvedHrefValue);
         if (!img) continue;
 
-        const renderX = resolved.x - resolved.width / 2;
-        const renderY = resolved.y - resolved.height / 2;
+        const renderX = item.x - item.width / 2;
+        const renderY = item.y - item.height / 2;
 
         ctx.save();
 
@@ -304,19 +352,19 @@
           ctx.globalAlpha = opacity;
         }
 
-        if (resolved.rotate) {
-          ctx.translate(resolved.x, resolved.y);
-          ctx.rotate((resolved.rotate * Math.PI) / 180);
-          ctx.translate(-resolved.x, -resolved.y);
+        if (item.rotate) {
+          ctx.translate(item.x, item.y);
+          ctx.rotate((item.rotate * Math.PI) / 180);
+          ctx.translate(-item.x, -item.y);
         }
 
-        if (resolved.r !== undefined) {
+        if (item.r !== undefined) {
           ctx.beginPath();
-          ctx.arc(resolved.x, resolved.y, resolved.r, 0, 2 * Math.PI);
+          ctx.arc(item.x, item.y, item.r, 0, 2 * Math.PI);
           ctx.clip();
         }
 
-        ctx.drawImage(img, renderX, renderY, resolved.width, resolved.height);
+        ctx.drawImage(img, renderX, renderY, item.width, item.height);
         ctx.restore();
       }
     } else {
@@ -369,7 +417,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         motionX.current,
         motionY.current,
         motionWidth.current,
@@ -386,15 +434,14 @@
 
 {#if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveImage(d)}
-      {@const resolvedHrefValue = resolveHref(d)}
-      {@const renderX = resolved.x - resolved.width / 2}
-      {@const renderY = resolved.y - resolved.height / 2}
-      {#if resolved.r !== undefined}
+    {#each resolvedItems as item, i (item.key)}
+      {@const resolvedHrefValue = resolveHref(item.d)}
+      {@const renderX = item.x - item.width / 2}
+      {@const renderY = item.y - item.height / 2}
+      {#if item.r !== undefined}
         <defs>
           <clipPath id="{clipId}-{i}">
-            <circle cx={resolved.x} cy={resolved.y} r={resolved.r} />
+            <circle cx={item.x} cy={item.y} r={item.r} />
           </clipPath>
         </defs>
       {/if}
@@ -402,10 +449,10 @@
         href={resolvedHrefValue}
         x={renderX}
         y={renderY}
-        width={resolved.width}
-        height={resolved.height}
-        clip-path={resolved.r !== undefined ? `url(#${clipId}-${i})` : undefined}
-        transform={resolved.rotate ? `rotate(${resolved.rotate}, ${resolved.x}, ${resolved.y})` : undefined}
+        width={item.width}
+        height={item.height}
+        clip-path={item.r !== undefined ? `url(#${clipId}-${i})` : undefined}
+        transform={item.rotate ? `rotate(${item.rotate}, ${item.x}, ${item.y})` : undefined}
         {preserveAspectRatio}
         crossorigin={crossOrigin}
         image-rendering={imageRendering}
@@ -441,19 +488,18 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveImage(d)}
-      {@const resolvedHrefValue = resolveHref(d)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedHrefValue = resolveHref(item.d)}
       <img
         src={resolvedHrefValue}
         alt=""
         style:position="absolute"
-        style:left="{resolved.x - resolved.width / 2}px"
-        style:top="{resolved.y - resolved.height / 2}px"
-        style:width="{resolved.width}px"
-        style:height="{resolved.height}px"
-        style:clip-path={resolved.r !== undefined ? `circle(${resolved.r}px at center)` : undefined}
-        style:transform={resolved.rotate ? `rotate(${resolved.rotate}deg)` : undefined}
+        style:left="{item.x - item.width / 2}px"
+        style:top="{item.y - item.height / 2}px"
+        style:width="{item.width}px"
+        style:height="{item.height}px"
+        style:clip-path={item.r !== undefined ? `circle(${item.r}px at center)` : undefined}
+        style:transform={item.rotate ? `rotate(${item.rotate}deg)` : undefined}
         style:opacity
         style:object-fit="cover"
         crossorigin={crossOrigin}

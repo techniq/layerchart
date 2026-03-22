@@ -103,13 +103,17 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
+  import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { hasAnyDataProp, resolveDataProp } from '$lib/utils/dataProp.js';
+  import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
+  import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
 
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   let {
     x,
@@ -140,11 +144,47 @@
 
   // Resolve a single data item to pixel coordinates
   function resolveGroup(d: any) {
+    if (geo.projection) {
+      const [projX, projY] = resolveGeoDataPair(x, y, d, geo.projection);
+      return { x: projX, y: projY };
+    }
     return {
       x: resolveDataProp(x, d, chartCtx.xScale, 0),
       y: resolveDataProp(y, d, chartCtx.yScale, 0),
     };
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveGroup(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveGroup(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x: animated?.x ?? resolved.x,
+        y: animated?.y ?? resolved.y,
+      };
+    });
+  });
 
   // --- Pixel mode (motion only applies here) ---
   let ref = $state<Element>();
@@ -218,10 +258,9 @@
   {@render children?.()}
 {:else if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveGroup(d)}
+    {#each resolvedItems as item (item.key)}
       <g
-        style:transform="translate({resolved.x}px, {resolved.y}px)"
+        style:transform="translate({item.x}px, {item.y}px)"
         class={['lc-group-g', className]}
         {opacity}
         {...restProps}
@@ -245,10 +284,9 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveGroup(d)}
+    {#each resolvedItems as item (item.key)}
       <div
-        style:transform="translate({resolved.x}px, {resolved.y}px)"
+        style:transform="translate({item.x}px, {item.y}px)"
         style:opacity
         {...restProps}
         class={['lc-group-div', className]}

@@ -222,15 +222,18 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { get } from '@layerstack/utils';
   import { chartDataArray } from '$lib/utils/common.js';
 
@@ -281,6 +284,7 @@
 
   // Chart context
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -289,6 +293,10 @@
 
   // Resolve position for a data item
   function resolveTextPosition(d: any) {
+    if (geo.projection) {
+      const [projX, projY] = resolveGeoDataPair(x as any, y as any, d, geo.projection);
+      return { x: projX, y: projY };
+    }
     return {
       x: resolveDataProp(x as any, d, chartCtx.xScale, 0),
       y: resolveDataProp(y as any, d, chartCtx.yScale, 0),
@@ -307,6 +315,38 @@
     }
     return value != null ? String(value) : '';
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveTextPosition(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveTextPosition(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x: animated?.x ?? resolved.x,
+        y: animated?.y ?? resolved.y,
+      };
+    });
+  });
 
   const layerCtx = getLayerContext();
 
@@ -517,23 +557,22 @@
         textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
-      for (const d of resolvedData) {
-        const pos = resolveTextPosition(d);
-        const text = resolveTextValue(d);
-        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
-        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+      for (const item of resolvedItems) {
+        const text = resolveTextValue(item.d);
+        const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const itemStyles = getTextStyles(resolvedFill, resolvedStroke);
         ctx.save();
         if (rotate !== undefined) {
           const radians = degreesToRadians(rotate);
-          ctx.translate(pos.x, pos.y);
+          ctx.translate(item.x, item.y);
           ctx.rotate(radians);
-          ctx.translate(-pos.x, -pos.y);
+          ctx.translate(-item.x, -item.y);
         }
         renderText(
           ctx,
           text,
-          { x: pos.x + getPixelValue(dx), y: pos.y + getPixelValue(dy) + dataModeStartDy },
+          { x: item.x + getPixelValue(dx), y: item.y + getPixelValue(dy) + dataModeStartDy },
           itemStyles
         );
         ctx.restore();
@@ -588,7 +627,7 @@
       render,
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         value,
         motionX.current,
         motionY.current,
@@ -609,16 +648,15 @@
 
 {#if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const pos = resolveTextPosition(d)}
-      {@const text = resolveTextValue(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
-      {@const dataRotateTransform = rotate ? `rotate(${rotate}, ${pos.x}, ${pos.y})` : ''}
+    {#each resolvedItems as item (item.key)}
+      {@const text = resolveTextValue(item.d)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
+      {@const dataRotateTransform = rotate ? `rotate(${rotate}, ${item.x}, ${item.y})` : ''}
       <svg x={dx} y={dy} {...svgProps} class={['lc-text-svg', svgProps?.class]}>
         <text
-          x={pos.x}
-          y={pos.y}
+          x={item.x}
+          y={item.y}
           transform={transformProp ?? dataRotateTransform}
           text-anchor={textAnchor}
           dominant-baseline={dominantBaseline}
@@ -631,7 +669,7 @@
           class={['lc-text', className]}
         >
           <tspan
-            x={pos.x}
+            x={item.x}
             dy={dataModeStartDy}
             class="lc-text-tspan"
           >
@@ -703,16 +741,15 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const pos = resolveTextPosition(d)}
-      {@const text = resolveTextValue(d)}
+    {#each resolvedItems as item (item.key)}
+      {@const text = resolveTextValue(item.d)}
       {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
       {@const translateY =
         verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
       <div
         style:position="absolute"
-        style:left="{getPixelValue(dx) + pos.x}px"
-        style:top="{getPixelValue(dy) + pos.y}px"
+        style:left="{getPixelValue(dx) + item.x}px"
+        style:top="{getPixelValue(dy) + item.y}px"
         style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
         style:transform-origin="{verticalAnchor === 'middle'
           ? 'center'

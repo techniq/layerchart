@@ -152,6 +152,7 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
@@ -161,13 +162,15 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
+    createDataMotionMap,
     extractTweenConfig,
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { polygon } from '$lib/utils/shape.js';
@@ -211,6 +214,7 @@
 
   // Chart context (safe to call outside Chart — returns fallback)
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data mode detection: if any positional prop is a string or function
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
@@ -222,8 +226,13 @@
 
   // Resolve a single data item to a polygon path string
   function resolvePolygon(d: any) {
-    const resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
-    const resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+    let resolvedCx: number, resolvedCy: number;
+    if (geo.projection) {
+      [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
+    } else {
+      resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+      resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+    }
     const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
 
     const pts = typeof points === 'number'
@@ -245,6 +254,58 @@
 
     return roundedPolygonPath(pts, cornerRadius);
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      // Polygon resolve returns a path string, so resolve coords separately for motion
+      let resolvedCx: number, resolvedCy: number;
+      if (geo.projection) {
+        [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
+      } else {
+        resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+        resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+      }
+      const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
+      untrack(() => dataMotionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // TODO: Apply animated values from dataMotionMap to SVG/HTML/Canvas templates.
+  // Polygon uses a path string from resolvePolygon(), so animated cx/cy/r values
+  // need to be passed through the polygon generator to produce an animated path.
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      let resolvedCx: number, resolvedCy: number;
+      if (geo.projection) {
+        [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
+      } else {
+        resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+        resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+      }
+      const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        cx: animated?.cx ?? resolvedCx,
+        cy: animated?.cy ?? resolvedCy,
+        r: animated?.r ?? resolvedR,
+      };
+    });
+  });
 
   // --- Pixel mode (motion only applies here) ---
   const initialCx = initialCxProp ?? (typeof cx === 'number' ? cx : 0);
@@ -340,7 +401,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         fillKey.current,
         fillOpacity,
         strokeKey.current,

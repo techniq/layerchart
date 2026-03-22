@@ -3,7 +3,7 @@
 	import { feature } from 'topojson-client';
 	import GeoPointControls from '$lib/components/controls/GeoPointControls.svelte';
 
-	import { Chart, GeoPath, GeoPoint, getSettings, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, GeoPath, getSettings, Layer, Tooltip } from 'layerchart';
 	import { getCountriesTopology, getWorldAirports } from '$lib/geo.remote';
 
 	const [worldData, airportsData] = $derived(
@@ -40,22 +40,16 @@
 				<GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
 			{/each}
 
-			{#each data.world.airports as airport}
-				<GeoPoint
-					lat={airport.latitude}
-					long={airport.longitude}
-					r={1}
-					class="fill-primary pointer-events-none"
-				/>
-			{/each}
+			<Circle cx="longitude" cy="latitude" r={1} class="fill-primary pointer-events-none" />
 		</Layer>
 
 		<!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
 		<Layer>
 			{#if context.tooltip.data}
-				<GeoPoint
-					lat={context.tooltip.data.latitude}
-					long={context.tooltip.data.longitude}
+				<Circle
+					data={[context.tooltip.data]}
+					cx="longitude"
+					cy="latitude"
 					r={4}
 					class="stroke-primary/50 fill-none pointer-events-none"
 					motion="spring"

@@ -92,10 +92,12 @@
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { untrack } from 'svelte';
+  import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -126,6 +128,7 @@
 
   // Chart context (safe to call outside Chart — returns fallback)
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -134,6 +137,14 @@
 
   // Resolve a single data item to pixel coordinates
   function resolveCircle(d: any) {
+    if (geo.projection) {
+      const [projX, projY] = resolveGeoDataPair(cx, cy, d, geo.projection);
+      return {
+        cx: projX,
+        cy: projY,
+        r: resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1),
+      };
+    }
     return {
       cx: resolveDataProp(cx, d, chartCtx.xScale, 0),
       cy: resolveDataProp(cy, d, chartCtx.yScale, 0),
@@ -141,7 +152,42 @@
     };
   }
 
-  // --- Pixel mode (motion only applies here) ---
+  // --- Data mode: resolved items with optional motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  // Update motion targets when resolved values change
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveCircle(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  // Reading Spring .current here makes this reactive to animation frames
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveCircle(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        cx: animated?.cx ?? resolved.cx,
+        cy: animated?.cy ?? resolved.cy,
+        r: animated?.r ?? resolved.r,
+      };
+    });
+  });
+
+  // --- Pixel mode ---
   let ref = $state<SVGCircleElement>();
 
   $effect.pre(() => {
@@ -190,12 +236,11 @@
     styleOverrides: ComputedStylesOptions | undefined
   ) {
     if (dataMode) {
-      for (const d of resolvedData) {
-        const resolved = resolveCircle(d);
-        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
-        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+      for (const item of resolvedItems) {
+        const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
-        renderCircle(ctx, resolved, styleOpts);
+        renderCircle(ctx, item, styleOpts);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
@@ -224,7 +269,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         motionCx.current,
         motionCy.current,
         motionR.current,
@@ -242,14 +287,13 @@
 
 {#if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveCircle(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <circle
-        cx={resolved.cx}
-        cy={resolved.cy}
-        r={resolved.r}
+        cx={item.cx}
+        cy={item.cy}
+        r={item.r}
         fill={resolvedFill}
         fill-opacity={fillOpacity}
         stroke={resolvedStroke}
@@ -276,16 +320,15 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveCircle(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <div
         style:position="absolute"
-        style:left="{resolved.cx}px"
-        style:top="{resolved.cy}px"
-        style:width="{resolved.r * 2}px"
-        style:height="{resolved.r * 2}px"
+        style:left="{item.cx}px"
+        style:top="{item.cy}px"
+        style:width="{item.r * 2}px"
+        style:height="{item.r * 2}px"
         style:border-radius="50%"
         style:background-color={resolvedFill}
         style:opacity

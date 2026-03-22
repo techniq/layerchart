@@ -103,12 +103,14 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
 
+  import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -140,6 +142,7 @@
 
   // Chart context
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -148,6 +151,15 @@
 
   // Resolve a single data item to pixel coordinates
   function resolveEllipse(d: any) {
+    if (geo.projection) {
+      const [projX, projY] = resolveGeoDataPair(cx, cy, d, geo.projection);
+      return {
+        cx: projX,
+        cy: projY,
+        rx: resolveDataProp(rx, d, chartCtx.rScale, typeof rx === 'number' ? rx : 1),
+        ry: resolveDataProp(ry, d, chartCtx.rScale, typeof ry === 'number' ? ry : 1),
+      };
+    }
     return {
       cx: resolveDataProp(cx, d, chartCtx.xScale, 0),
       cy: resolveDataProp(cy, d, chartCtx.yScale, 0),
@@ -155,6 +167,40 @@
       ry: resolveDataProp(ry, d, chartCtx.rScale, typeof ry === 'number' ? ry : 1),
     };
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveEllipse(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveEllipse(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        cx: animated?.cx ?? resolved.cx,
+        cy: animated?.cy ?? resolved.cy,
+        rx: animated?.rx ?? resolved.rx,
+        ry: animated?.ry ?? resolved.ry,
+      };
+    });
+  });
 
   // --- Pixel mode ---
   let ref = $state<SVGEllipseElement>();
@@ -209,12 +255,11 @@
     styleOverrides: ComputedStylesOptions | undefined
   ) {
     if (dataMode) {
-      for (const d of resolvedData) {
-        const resolved = resolveEllipse(d);
-        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
-        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+      for (const item of resolvedItems) {
+        const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
-        renderEllipse(ctx, resolved, styleOpts);
+        renderEllipse(ctx, item, styleOpts);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
@@ -248,7 +293,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         motionCx.current,
         motionCy.current,
         motionRx.current,
@@ -266,15 +311,14 @@
 
 {#if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveEllipse(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <ellipse
-        cx={resolved.cx}
-        cy={resolved.cy}
-        rx={resolved.rx}
-        ry={resolved.ry}
+        cx={item.cx}
+        cy={item.cy}
+        rx={item.rx}
+        ry={item.ry}
         fill={resolvedFill}
         fill-opacity={fillOpacity}
         stroke={resolvedStroke}
@@ -302,16 +346,15 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveEllipse(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <div
         style:position="absolute"
-        style:left="{resolved.cx}px"
-        style:top="{resolved.cy}px"
-        style:width="{resolved.rx * 2}px"
-        style:height="{resolved.ry * 2}px"
+        style:left="{item.cx}px"
+        style:top="{item.cy}px"
+        style:width="{item.rx * 2}px"
+        style:height="{item.ry * 2}px"
         style:border-radius="50%"
         style:background-color={resolvedFill}
         style:opacity

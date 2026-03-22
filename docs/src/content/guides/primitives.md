@@ -227,7 +227,51 @@ Each circle's fill is determined by its `category` value, resolved through the c
 
 ### Notes
 
-- **Motion/animation**: Only works in pixel mode. In data mode, motion props are ignored.
+- **Motion/animation**: Works in both pixel and data mode. In data mode, resolved values are animated per item using the item key for identity — useful for smoothly transitioning a highlighted element (e.g., tooltip indicator) between data points.
 - **`ref` binding**: Only available in pixel mode (single element).
 - **Events**: In data mode, event handlers (onclick, etc.) are attached to each rendered element.
 - **Key function**: Use `key={(d, i) => d.id}` for efficient keyed rendering in data mode.
+
+## Geo Mode
+
+When a primitive is placed inside a `GeoProjection` context, positional x/y props automatically resolve through the geo projection instead of chart scales. This means you can plot geographic data directly with primitives — no wrapper component needed.
+
+```svelte
+<Chart {data} r="population" rRange={[2, 20]} c="region" cRange={['steelblue', 'coral']}>
+	<GeoProjection projection={geoNaturalEarth1} fitGeojson={geojson}>
+		<Svg>
+			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+			<Circle cx="longitude" cy="latitude" r="population" fill="region" />
+		</Svg>
+	</GeoProjection>
+</Chart>
+```
+
+### How It Works
+
+- **x/y pairs are projected together** — `cx`/`cy` (or `x`/`y`, `x1`/`y1`, etc.) are extracted as `[longitude, latitude]` and passed through `projection([lon, lat])` to get `[px, py]`
+- **Non-positional props are unchanged** — `r`, `rx`, `ry`, `width`, `height`, `fill`, `stroke` continue to resolve through their respective chart scales (`rScale`, `cScale`, etc.)
+- **Same data mode rules apply** — string or function props trigger data mode and iterate over chart data
+
+### Projection Mapping
+
+| Prop pairs (projected together)  | Non-geo props (unchanged)        |
+| -------------------------------- | -------------------------------- |
+| `cx`/`cy`, `x`/`y`              | `r`, `rx`, `ry`                  |
+| `x1`/`y1`, `x2`/`y2`           | `width`, `height`                |
+| `x0`/`y0`, `x1`/`y1` (Rect)    | `fill`, `stroke`                 |
+
+### Example: Airports on a Globe
+
+```svelte
+<Chart data={airports}>
+	<GeoProjection projection={geoOrthographic} fitGeojson={geojson}>
+		<Svg>
+			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+			<Circle cx="longitude" cy="latitude" r={2} class="fill-primary" />
+		</Svg>
+	</GeoProjection>
+</Chart>
+```
+
+Each airport's `longitude` and `latitude` properties are projected through the globe projection. Since `r={2}` is a number, it stays as a 2px radius. You can also make `r` data-driven (e.g., `r="passengers"`) to create a proportional symbol map.

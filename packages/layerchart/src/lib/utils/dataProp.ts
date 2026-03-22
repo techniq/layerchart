@@ -66,6 +66,39 @@ export function resolveDataProp<T>(
 }
 
 /**
+ * Extract the raw value from a DataProp without applying any scale.
+ * Numbers pass through, strings do property lookup, functions are called.
+ */
+export function extractRawDataValue<T>(
+  value: DataProp<T> | undefined | null,
+  d: T
+): any {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') return get(d, value);
+  if (typeof value === 'function') return value(d);
+  return undefined;
+}
+
+/**
+ * Resolve a pair of x/y DataProps through a geo projection.
+ * x = longitude, y = latitude → projection([lon, lat]) → [px, py]
+ */
+export function resolveGeoDataPair<T>(
+  xProp: DataProp<T> | undefined | null,
+  yProp: DataProp<T> | undefined | null,
+  d: T,
+  projection: (coords: [number, number]) => [number, number] | null,
+  defaults: [number, number] = [0, 0]
+): [number, number] {
+  const rawX = extractRawDataValue(xProp, d);
+  const rawY = extractRawDataValue(yProp, d);
+  if (rawX == null || rawY == null) return defaults;
+  const result = projection([rawX, rawY]);
+  return result ?? defaults;
+}
+
+/**
  * A color prop that can be a literal CSS color string, a data property name
  * (resolved through cScale), or an accessor function (result passed through cScale).
  *

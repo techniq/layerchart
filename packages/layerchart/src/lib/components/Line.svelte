@@ -121,10 +121,13 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
 
+  import { untrack } from 'svelte';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -162,6 +165,7 @@
 
   // Chart context
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -170,6 +174,11 @@
 
   // Resolve a single data item to pixel coordinates
   function resolveLine(d: any) {
+    if (geo.projection) {
+      const [projX1, projY1] = resolveGeoDataPair(x1, y1, d, geo.projection);
+      const [projX2, projY2] = resolveGeoDataPair(x2, y2, d, geo.projection);
+      return { x1: projX1, y1: projY1, x2: projX2, y2: projY2 };
+    }
     return {
       x1: resolveDataProp(x1, d, chartCtx.xScale, 0),
       y1: resolveDataProp(y1, d, chartCtx.yScale, 0),
@@ -177,6 +186,40 @@
       y2: resolveDataProp(y2, d, chartCtx.yScale, 0),
     };
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveLine(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveLine(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x1: animated?.x1 ?? resolved.x1,
+        y1: animated?.y1 ?? resolved.y1,
+        x2: animated?.x2 ?? resolved.x2,
+        y2: animated?.y2 ?? resolved.y2,
+      };
+    });
+  });
 
   // --- Markers (shared across all lines in data mode) ---
   const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
@@ -231,12 +274,11 @@
     styleOverrides: ComputedStylesOptions | undefined
   ) {
     if (dataMode) {
-      for (const d of resolvedData) {
-        const resolved = resolveLine(d);
-        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
-        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+      for (const item of resolvedItems) {
+        const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
-        const pathData = `M ${resolved.x1},${resolved.y1} L ${resolved.x2},${resolved.y2}`;
+        const pathData = `M ${item.x1},${item.y1} L ${item.x2},${item.y2}`;
         renderPathData(ctx, pathData, styleOpts);
       }
     } else {
@@ -261,7 +303,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         motionX1.current,
         motionY1.current,
         motionX2.current,
@@ -283,15 +325,14 @@
     <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
     <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
     <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveLine(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <line
-        x1={resolved.x1}
-        y1={resolved.y1}
-        x2={resolved.x2}
-        y2={resolved.y2}
+        x1={item.x1}
+        y1={item.y1}
+        x2={item.x2}
+        y2={item.y2}
         fill={resolvedFill}
         stroke={resolvedStroke}
         fill-opacity={fillOpacity}
@@ -327,17 +368,16 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveLine(d)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       {@const { angle, length } = pointsToAngleAndLength(
-        { x: resolved.x1, y: resolved.y1 },
-        { x: resolved.x2, y: resolved.y2 }
+        { x: item.x1, y: item.y1 },
+        { x: item.x2, y: item.y2 }
       )}
       <div
         style:position="absolute"
-        style:left="{resolved.x1}px"
-        style:top="{resolved.y1}px"
+        style:left="{item.x1}px"
+        style:top="{item.y1}px"
         style:width="{length}px"
         style:height="{strokeWidth ?? 1}px"
         style:transform="translateY(-50%) rotate({angle}deg)"

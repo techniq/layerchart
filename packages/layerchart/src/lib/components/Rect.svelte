@@ -132,11 +132,14 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
 
+  import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { resolveInsets } from '$lib/utils/rect.svelte.js';
 
@@ -183,6 +186,7 @@
 
   // Chart context
   const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   // Data to iterate over in data mode
   const resolvedData: any[] = $derived(
@@ -194,16 +198,21 @@
     const resolvedInsets = resolveInsets(insets);
 
     if (hasEdgeProps) {
-      // Edge-based mode: compute from x0/x1/y0/y1
-      const rx0 = resolveDataProp(x0, d, chartCtx.xScale, 0);
-      const rx1 = resolveDataProp(x1, d, chartCtx.xScale, 0);
-      const ry0 = resolveDataProp(y0, d, chartCtx.yScale, 0);
-      const ry1 = resolveDataProp(y1, d, chartCtx.yScale, 0);
+      let rx0: number, rx1p: number, ry0: number, ry1p: number;
+      if (geo.projection) {
+        [rx0, ry0] = resolveGeoDataPair(x0, y0, d, geo.projection);
+        [rx1p, ry1p] = resolveGeoDataPair(x1, y1, d, geo.projection);
+      } else {
+        rx0 = resolveDataProp(x0, d, chartCtx.xScale, 0);
+        rx1p = resolveDataProp(x1, d, chartCtx.xScale, 0);
+        ry0 = resolveDataProp(y0, d, chartCtx.yScale, 0);
+        ry1p = resolveDataProp(y1, d, chartCtx.yScale, 0);
+      }
 
-      const left = Math.min(rx0, rx1) + resolvedInsets.left;
-      const right = Math.max(rx0, rx1) - resolvedInsets.right;
-      const top = Math.min(ry0, ry1) + resolvedInsets.top;
-      const bottom = Math.max(ry0, ry1) - resolvedInsets.bottom;
+      const left = Math.min(rx0, rx1p) + resolvedInsets.left;
+      const right = Math.max(rx0, rx1p) - resolvedInsets.right;
+      const top = Math.min(ry0, ry1p) + resolvedInsets.top;
+      const bottom = Math.max(ry0, ry1p) - resolvedInsets.bottom;
 
       return {
         x: left,
@@ -212,15 +221,55 @@
         height: Math.max(0, bottom - top),
       };
     } else {
-      // Standard data mode: resolve x/y through scales, width/height are pixels
+      let resolvedX: number, resolvedY: number;
+      if (geo.projection) {
+        [resolvedX, resolvedY] = resolveGeoDataPair(x, y, d, geo.projection);
+      } else {
+        resolvedX = resolveDataProp(x, d, chartCtx.xScale, 0);
+        resolvedY = resolveDataProp(y, d, chartCtx.yScale, 0);
+      }
       return {
-        x: resolveDataProp(x, d, chartCtx.xScale, 0) + resolvedInsets.left,
-        y: resolveDataProp(y, d, chartCtx.yScale, 0) + resolvedInsets.top,
+        x: resolvedX + resolvedInsets.left,
+        y: resolvedY + resolvedInsets.top,
         width: Math.max(0, (width ?? 0) - resolvedInsets.left - resolvedInsets.right),
         height: Math.max(0, (height ?? 0) - resolvedInsets.top - resolvedInsets.bottom),
       };
     }
   }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveRect(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveRect(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x: animated?.x ?? resolved.x,
+        y: animated?.y ?? resolved.y,
+        width: animated?.width ?? resolved.width,
+        height: animated?.height ?? resolved.height,
+      };
+    });
+  });
 
   // Normalize rx/ry - if only one is provided, use it for both (SVG behavior)
   // Coerce to number for canvas rendering (SVG allows string like "50%")
@@ -281,12 +330,18 @@
     styleOverrides: ComputedStylesOptions | undefined
   ) {
     if (dataMode) {
-      for (const d of resolvedData) {
-        const resolved = resolveRect(d);
-        const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale);
-        const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale);
+      for (const item of resolvedItems) {
+        const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
+        const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke);
-        renderRect(ctx, { ...resolved, rx, ry }, styleOpts);
+        renderRect(ctx, {
+          x: item.x,
+          y: item.y,
+          width: item.width,
+          height: item.height,
+          rx,
+          ry,
+        }, styleOpts);
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
@@ -324,7 +379,7 @@
       },
       deps: () => [
         dataMode,
-        dataMode ? resolvedData : null,
+        dataMode ? resolvedItems : null,
         motionX.current,
         motionY.current,
         motionWidth.current,
@@ -344,15 +399,14 @@
 
 {#if layerCtx === 'svg'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveRect(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <rect
-        x={resolved.x}
-        y={resolved.y}
-        width={resolved.width}
-        height={resolved.height}
+        x={item.x}
+        y={item.y}
+        width={item.width}
+        height={item.height}
         fill={resolvedFill}
         fill-opacity={fillOpacity}
         stroke={resolvedStroke}
@@ -398,18 +452,17 @@
   {/if}
 {:else if layerCtx === 'html'}
   {#if dataMode}
-    {#each resolvedData as d, i (keyFn(d, i))}
-      {@const resolved = resolveRect(d)}
-      {@const resolvedFill = resolveColorProp(fill, d, chartCtx.cScale)}
-      {@const resolvedStroke = resolveColorProp(stroke, d, chartCtx.cScale)}
+    {#each resolvedItems as item (item.key)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         style:position="absolute"
-        style:left="{resolved.x}px"
-        style:top="{resolved.y}px"
-        style:width="{resolved.width}px"
-        style:height="{resolved.height}px"
+        style:left="{item.x}px"
+        style:top="{item.y}px"
+        style:width="{item.width}px"
+        style:height="{item.height}px"
         style:background={resolvedFill}
         style:background-opacity={opacity}
         style:border-width="{strokeWidth}px"
