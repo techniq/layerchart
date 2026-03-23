@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-23T00:08:13.477Z",
+  "generatedAt": "2026-03-23T09:35:41.138Z",
   "totalComponents": 64,
-  "totalExamples": 781,
+  "totalExamples": 783,
   "components": [
     {
       "component": "AnnotationLine",
@@ -942,6 +942,11 @@
           "checksum": "9e9ba378cc6a34fba982bd57724f3fc6"
         },
         {
+          "name": "duration-labels",
+          "path": "/example/BarChart/duration-labels",
+          "checksum": ""
+        },
+        {
           "name": "duration-points",
           "path": "/example/BarChart/duration-points",
           "checksum": "ab28c2120617002ebe7e0a44ab3a3497"
@@ -979,7 +984,7 @@
         {
           "name": "group-series-labels",
           "path": "/example/BarChart/group-series-labels",
-          "checksum": "7aada8ead9c66f29f3a922c6370733ab"
+          "checksum": "bef16c9f16597bfcc77f9d41174c4175"
         },
         {
           "name": "group-series-series-long-data",
@@ -1059,7 +1064,7 @@
         {
           "name": "oscilloscope-frequency",
           "path": "/example/BarChart/oscilloscope-frequency",
-          "checksum": "fef1e6aaafb79f0f27968c832ea342a7"
+          "checksum": "6129f43de5d789b96af96078217a0112"
         },
         {
           "name": "override-axis-ticks-with-custom-scale",
@@ -1180,6 +1185,11 @@
           "name": "series-horizontal-diverging-as-percent",
           "path": "/example/BarChart/series-horizontal-diverging-as-percent",
           "checksum": "a45af53ba921d1867507ff7ba433b9b8"
+        },
+        {
+          "name": "series-stack-separate-data",
+          "path": "/example/BarChart/series-stack-separate-data",
+          "checksum": "8928effba8167e9912b3659e86754b99"
         },
         {
           "name": "single-axis-x",

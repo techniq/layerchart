@@ -1835,35 +1835,35 @@
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 86,
+      "lineNumber": 100,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 88,
+      "lineNumber": 102,
       "line": "<Tooltip.Header>{format(context.y(data))}</Tooltip.Header>"
     },
     {
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 89,
+      "lineNumber": 103,
       "line": "<Tooltip.List>"
     },
     {
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 90,
+      "lineNumber": 104,
       "line": "<Tooltip.Item label=\"Start\" value={data.start} format=\"day\" />"
     },
     {
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 91,
+      "lineNumber": 105,
       "line": "<Tooltip.Item label=\"End\" value={data.end} format=\"day\" />"
     },
     {
@@ -6277,5 +6277,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-23T09:15:12.588Z"
+  "updatedAt": "2026-03-23T09:35:44.472Z"
 }

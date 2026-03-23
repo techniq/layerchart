@@ -323,12 +323,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 56,
+          "lineNumber": 66,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 86,
+          "lineNumber": 100,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1494,7 +1494,7 @@
       "example": "duration-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-labels",
-      "lineNumber": 56,
+      "lineNumber": 66,
       "line": "<BarChart"
     },
     {
@@ -1988,5 +1988,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-23T09:15:09.919Z"
+  "updatedAt": "2026-03-23T09:35:42.367Z"
 }
