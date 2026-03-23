@@ -17,7 +17,7 @@
 		phase: 0
 	});
 
-	const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line'] as const;
+	const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line', 'square', 'square-stroke'] as const;
 
 	const motion = $derived(config.tweened ? 'tween' : 'none');
 	const data = $derived(
