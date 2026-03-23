@@ -352,7 +352,14 @@
       "path": "/docs/components/TransformContext/planet-distances",
       "lineNumber": 234,
       "line": "<line"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 69,
+      "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.774Z"
+  "updatedAt": "2026-03-23T00:08:15.905Z"
 }

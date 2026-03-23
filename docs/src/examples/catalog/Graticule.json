@@ -120,6 +120,13 @@
       "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
     },
     {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 54,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -148,5 +155,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.016Z"
+  "updatedAt": "2026-03-23T00:08:15.644Z"
 }

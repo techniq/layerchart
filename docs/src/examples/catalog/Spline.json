@@ -893,13 +893,6 @@
       "line": "<Spline"
     },
     {
-      "example": "spike-map",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 83,
-      "line": "<Spline"
-    },
-    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -1250,5 +1243,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.780Z"
+  "updatedAt": "2026-03-23T00:08:16.662Z"
 }

@@ -192,13 +192,13 @@
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
-          "component": "Spline",
+          "component": "Vector",
           "lineNumber": 83,
-          "line": "<Spline"
+          "line": "<Vector"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 113,
+          "lineNumber": 117,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -789,14 +789,14 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 93,
+      "lineNumber": 97,
       "line": "<GeoPath"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 105,
+      "lineNumber": 109,
       "line": "<GeoPath"
     },
     {
@@ -1087,6 +1087,20 @@
       "line": "<GeoPath"
     },
     {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 53,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" />"
+    },
+    {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 55,
+      "line": "<GeoPath geojson={land} class=\"fill-surface-content/10 stroke-surface-content/30\" />"
+    },
+    {
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
@@ -1204,7 +1218,21 @@
       "path": "/docs/components/Spline/geo-routes",
       "lineNumber": 30,
       "line": "<GeoPath geojson={feature} class=\"fill-surface-content/10 stroke-surface-content/20\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 85,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 103,
+      "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:32.860Z"
+  "updatedAt": "2026-03-23T00:08:15.472Z"
 }

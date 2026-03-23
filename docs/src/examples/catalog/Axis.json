@@ -4539,7 +4539,49 @@
       "path": "/docs/components/TransformContext/planet-distances",
       "lineNumber": 255,
       "line": "<Axis placement=\"bottom\" format={formatDistance} />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" />"
     }
   ],
-  "updatedAt": "2026-03-21T15:42:44.792Z"
+  "updatedAt": "2026-03-23T00:08:14.504Z"
 }

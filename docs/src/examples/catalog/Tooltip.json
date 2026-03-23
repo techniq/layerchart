@@ -3963,42 +3963,42 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 113,
+      "lineNumber": 117,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 116,
+      "lineNumber": 120,
       "line": "<Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 118,
+      "lineNumber": 122,
       "line": "<Tooltip.List>"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 119,
+      "lineNumber": 123,
       "line": "<Tooltip.Item"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 125,
+      "lineNumber": 129,
       "line": "<Tooltip.Item"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 131,
+      "lineNumber": 135,
       "line": "<Tooltip.Item"
     },
     {
@@ -6163,7 +6163,84 @@
       "path": "/docs/components/Treemap/playground",
       "lineNumber": 193,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 112,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 114,
+      "line": "<Tooltip.Header>{data.county_name}, {data.state_name}</Tooltip.Header>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 115,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 116,
+      "line": "<Tooltip.Item label=\"Democrat\" value={data.votes_dem} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 117,
+      "line": "<Tooltip.Item label=\"Republican\" value={data.votes_gop} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 118,
+      "line": "<Tooltip.Item label=\"Total\" value={data.total_votes} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 51,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 53,
+      "line": "<Tooltip.Header>Wind</Tooltip.Header>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 55,
+      "line": "<Tooltip.Item label=\"Speed (m/s)\" value={data.speed} format=\"decimal\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 56,
+      "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.910Z"
+  "updatedAt": "2026-03-23T00:08:16.801Z"
 }

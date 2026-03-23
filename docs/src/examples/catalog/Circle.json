@@ -801,6 +801,34 @@
       "line": "<Circle"
     },
     {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 23,
+      "line": "<Circle cx={100} cy={150} r={3} class=\"fill-primary\" />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 27,
+      "line": "<Circle cx={200} cy={150} r={3} class=\"fill-secondary\" />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 31,
+      "line": "<Circle cx={300} cy={150} r={3} class=\"fill-danger\" />"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 70,
+      "line": "<circle cx={0} cy={-len} r={4} class=\"fill-success\" />"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -808,5 +836,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:32.357Z"
+  "updatedAt": "2026-03-23T00:08:14.879Z"
 }

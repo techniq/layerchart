@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-22T12:54:31.331Z",
-  "totalComponents": 63,
-  "totalExamples": 774,
+  "generatedAt": "2026-03-23T00:08:13.477Z",
+  "totalComponents": 64,
+  "totalExamples": 781,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2139,7 +2139,7 @@
         {
           "name": "spike-map",
           "path": "/example/GeoPath/spike-map",
-          "checksum": "b43033203fa83b7362c303bab1289fb8"
+          "checksum": "2f2e2081c3453d588df161da8f62c193"
         },
         {
           "name": "submarine-cables-globe",
@@ -2250,6 +2250,11 @@
           "name": "projection-playground",
           "path": "/example/GeoProjection/projection-playground",
           "checksum": "98b9b55909b2b4f2827291ed7b624f0d"
+        },
+        {
+          "name": "satellite",
+          "path": "/example/GeoProjection/satellite",
+          "checksum": "dc9a9dcf31103231df3d0419c40f25cf"
         },
         {
           "name": "shapefile-preview",
@@ -4175,6 +4180,41 @@
           "name": "stacked-zoom",
           "path": "/example/Treemap/stacked-zoom",
           "checksum": "905ff894a81d7e3a80b2591eff4b8667"
+        }
+      ]
+    },
+    {
+      "component": "Vector",
+      "examples": [
+        {
+          "name": "anchor",
+          "path": "/example/Vector/anchor",
+          "checksum": "962f8e3d63062d1d4fded4e46acbf08e"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Vector/basic",
+          "checksum": "78a100070413ec737058e339d4782aca"
+        },
+        {
+          "name": "data-mode",
+          "path": "/example/Vector/data-mode",
+          "checksum": "c4860b513e4791b98ff5506d39b07bd6"
+        },
+        {
+          "name": "election-wind-map",
+          "path": "/example/Vector/election-wind-map",
+          "checksum": "c6771850bcd81becf95ddc04ca66fac2"
+        },
+        {
+          "name": "shapes",
+          "path": "/example/Vector/shapes",
+          "checksum": "2bde63b936ba0b99adcb1c23f951801b"
+        },
+        {
+          "name": "wind-map",
+          "path": "/example/Vector/wind-map",
+          "checksum": "3957a46a3025849e363ed1ee7395aecd"
         }
       ]
     },

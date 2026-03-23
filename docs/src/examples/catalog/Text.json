@@ -855,7 +855,56 @@
       "path": "/docs/components/Treemap/stacked-zoom",
       "lineNumber": 122,
       "line": "<Text"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 29,
+      "line": "<Text x={45} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">arrow</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 33,
+      "line": "<Text x={125} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 39,
+      "line": "<Text x={215} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">spike</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 51,
+      "line": "<Text x={305} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 66,
+      "line": "<Text x={395} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">custom</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 75,
+      "line": "<Text x={480} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 98,
+      "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.846Z"
+  "updatedAt": "2026-03-23T00:08:16.717Z"
 }

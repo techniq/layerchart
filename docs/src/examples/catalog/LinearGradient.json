@@ -227,7 +227,7 @@
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
-      "lineNumber": 113,
+      "lineNumber": 114,
       "line": "<LinearGradient"
     },
     {
@@ -546,5 +546,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.846Z"
+  "updatedAt": "2026-03-23T00:08:15.952Z"
 }

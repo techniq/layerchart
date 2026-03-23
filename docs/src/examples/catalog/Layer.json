@@ -1714,7 +1714,7 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 103,
+      "lineNumber": 107,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -1904,6 +1904,13 @@
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/projection-playground",
       "lineNumber": 72,
+      "line": "<Layer>"
+    },
+    {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 52,
       "line": "<Layer>"
     },
     {
@@ -3461,6 +3468,55 @@
       "line": "<Layer>"
     },
     {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 28,
+      "line": "<Layer"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 84,
+      "line": "<Layer>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 99,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -3468,5 +3524,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.158Z"
+  "updatedAt": "2026-03-23T00:08:15.855Z"
 }

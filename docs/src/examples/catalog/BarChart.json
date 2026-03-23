@@ -699,17 +699,17 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 96,
+          "lineNumber": 97,
           "line": "<BarChart"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 113,
+          "lineNumber": 114,
           "line": "<LinearGradient"
         },
         {
           "component": "Bars",
-          "lineNumber": 119,
+          "lineNumber": 120,
           "line": "<Bars radius={1} fill={gradient} />"
         }
       ]
@@ -1596,7 +1596,7 @@
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
-      "lineNumber": 96,
+      "lineNumber": 97,
       "line": "<BarChart"
     },
     {
@@ -1950,5 +1950,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:47.099Z"
+  "updatedAt": "2026-03-23T00:08:14.569Z"
 }

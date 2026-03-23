@@ -2004,6 +2004,13 @@
       "line": "<Chart"
     },
     {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
@@ -3530,6 +3537,48 @@
       "line": "<Chart height={600}>"
     },
     {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 20,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 69,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 26,
+      "line": "<Chart padding={{ top: 20, bottom: 10, left: 10, right: 10 }} height={300}>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 25,
+      "line": "<Chart"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -3537,5 +3586,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:32.229Z"
+  "updatedAt": "2026-03-23T00:08:14.755Z"
 }
