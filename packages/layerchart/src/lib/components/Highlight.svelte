@@ -179,7 +179,7 @@
 
   const axis = $derived(
     axisProp == null
-      ? isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) || Array.isArray(yValue)
+      ? isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) || ctx.valueAxis === 'x'
         ? 'y'
         : 'x'
       : axisProp
