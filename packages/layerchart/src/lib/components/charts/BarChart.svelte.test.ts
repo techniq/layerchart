@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import BarChart from './BarChart.svelte';
+import BarChartFixedWidthTest from './BarChartFixedWidthTest.svelte';
 
 const wideData = [
   { year: '2016', apples: 480, bananas: 240, cherries: 120, grapes: 50 },
@@ -279,6 +280,72 @@ describe('BarChart', () => {
 
       const barsGroups = container.querySelectorAll('.lc-bars');
       expect(barsGroups.length).toBe(2);
+    });
+  });
+
+  describe('fixed width/height', () => {
+    it('should render vertical bars with fixed width', async () => {
+      const { container } = render(BarChartFixedWidthTest, {
+        data: simpleData,
+        x: 'name',
+        y: 'value',
+        barWidth: 20,
+      });
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const rects = container.querySelectorAll('rect');
+      expect(rects.length).toBeGreaterThan(0);
+      for (const rect of rects) {
+        const width = rect.getAttribute('width');
+        expect(width).toBe('20');
+      }
+    });
+
+    it('should center fixed-width bars within their band', async () => {
+      const { container } = render(BarChartFixedWidthTest, {
+        data: simpleData,
+        x: 'name',
+        y: 'value',
+        barWidth: 10,
+      });
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const rects = container.querySelectorAll('rect');
+      expect(rects.length).toBeGreaterThan(0);
+
+      // All bars should have the fixed width
+      for (const rect of rects) {
+        expect(rect.getAttribute('width')).toBe('10');
+      }
+
+      // Bars should have different x positions (centered within each band)
+      const xPositions = Array.from(rects).map((r) => parseFloat(r.getAttribute('x')!));
+      const uniquePositions = new Set(xPositions);
+      expect(uniquePositions.size).toBe(simpleData.length);
+    });
+
+    it('should render horizontal bars with fixed height', async () => {
+      const { container } = render(BarChartFixedWidthTest, {
+        data: simpleData,
+        x: 'value',
+        y: 'name',
+        orientation: 'horizontal',
+        barHeight: 15,
+      });
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const rects = container.querySelectorAll('rect');
+      expect(rects.length).toBeGreaterThan(0);
+      for (const rect of rects) {
+        const height = rect.getAttribute('height');
+        expect(height).toBe('15');
+      }
     });
   });
 });

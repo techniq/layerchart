@@ -58,6 +58,16 @@
     initialWidth?: number;
 
     /**
+     * Fixed width in pixels. Overrides the scale-derived width and centers the bar within its band.
+     */
+    width?: number;
+
+    /**
+     * Fixed height in pixels. Overrides the scale-derived height and centers the bar within its band.
+     */
+    height?: number;
+
+    /**
      * Control which corners are rounded with radius. Uses <path> instead of <rect> when not set
      * to `all`
      */
@@ -123,6 +133,8 @@
     initialY,
     initialHeight,
     initialWidth,
+    width: widthProp,
+    height: heightProp,
     ...restProps
   }: BarProps = $props();
 
@@ -193,7 +205,24 @@
     }))
   );
 
-  const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
+  const scaleDimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
+
+  // Apply fixed width/height overrides, centering within the scale-derived band
+  const dimensions = $derived.by(() => {
+    let { x, y, width, height } = scaleDimensions;
+
+    if (widthProp != null) {
+      x = x + (width - widthProp) / 2;
+      width = widthProp;
+    }
+
+    if (heightProp != null) {
+      y = y + (height - heightProp) / 2;
+      height = heightProp;
+    }
+
+    return { x, y, width, height };
+  });
 
   const valueAccessor = $derived(accessor(ctx.valueAxis === 'y' ? y : x));
   const value = $derived(valueAccessor(data));

@@ -10,6 +10,7 @@ coverage/
 .vscode
 
 test-*
+.vitest-attachments/
 
 # Content Collections
 .content-collections
