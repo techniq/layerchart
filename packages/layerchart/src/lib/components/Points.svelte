@@ -85,11 +85,14 @@
     seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
   );
 
-  function getOffset(value: any, offset: Offset, scale: AnyScale) {
+  function getOffset(value: any, offset: Offset, scale: AnyScale, subScale?: AnyScale) {
     if (typeof offset === 'function') {
       return offset(value, ctx);
     } else if (offset != null) {
       return offset;
+    } else if (subScale && seriesKey) {
+      // Center within grouped sub-band (replaces main band centering)
+      return subScale(seriesKey) + (subScale.bandwidth?.() ?? 0) / 2;
     } else if (isScaleBand(scale) && !ctx.radial) {
       return scale.bandwidth() / 2;
     } else {
@@ -119,8 +122,8 @@
     const scaledX: number = ctx.xScale(xVal);
     const scaledY: number = ctx.yScale(yVal);
 
-    const x = scaledX + getOffset(scaledX, offsetX, ctx.xScale);
-    const y = scaledY + getOffset(scaledY, offsetY, ctx.yScale);
+    const x = scaledX + getOffset(scaledX, offsetX, ctx.xScale, ctx.x1Scale);
+    const y = scaledY + getOffset(scaledY, offsetY, ctx.yScale, ctx.y1Scale);
 
     const radialPoint = pointRadial(x, y);
 

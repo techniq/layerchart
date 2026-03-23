@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BarChart, defaultChartPadding, accessor, Text } from 'layerchart';
+	import { BarChart, defaultChartPadding } from 'layerchart';
 	import { wideData } from '$lib/utils/data.js';
 
 	const data = wideData;
@@ -26,6 +26,7 @@
 	]}
 	seriesLayout="group"
 	bandPadding={0.2}
+	labels
 	props={{
 		xAxis: { format: 'none' },
 		yAxis: { format: 'metric' },
@@ -35,23 +36,4 @@
 	}}
 	padding={defaultChartPadding({ left: 24 })}
 	height={300}
->
-	<!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
-	{#snippet aboveMarks({ context })}
-		{#each context.series.visibleSeries as s}
-			{#each wideData as d}
-				{@const valueAccessor = accessor(s.key)}
-				{@const value = valueAccessor(d)}
-				<Text
-					x={context.xScale(d.year) +
-						(context.x1Scale?.(s.key) ?? 0) +
-						(context.x1Scale?.bandwidth?.() ?? 0) / 2}
-					y={context.yScale(value)}
-					{value}
-					textAnchor="middle"
-					class="text-xs"
-				/>
-			{/each}
-		{/each}
-	{/snippet}
-</BarChart>
+/>
