@@ -27,10 +27,10 @@
 	padding={defaultChartPadding({ left: 25, bottom: 24 })}
 	brush={{
 		axis: 'both',
-		resetOnEnd: true,
 		onBrushEnd: (e) => {
 			xDomain = e.brush.x;
 			yDomain = e.brush.y;
+			e.brush.reset();
 		}
 	}}
 	height={300}

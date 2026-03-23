@@ -85,7 +85,7 @@
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush
-    ? { axis: 'both', resetOnEnd: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
+    ? { axis: 'both', zoomOnBrush: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
     : false}
   {series}
   {axis}

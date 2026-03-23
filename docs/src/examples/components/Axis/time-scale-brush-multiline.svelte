@@ -19,9 +19,9 @@
 	yDomain={[0, 100]}
 	padding={defaultChartPadding({ top: 30, bottom: 30, left: 25, right: 25 })}
 	brush={{
-		resetOnEnd: true,
 		onBrushEnd: (e) => {
-			xDomain = e.xDomain;
+			xDomain = e.brush.x;
+			e.brush.reset();
 		}
 	}}
 	height={200}
@@ -36,10 +36,9 @@
 	xDomain={initialXDomain}
 	padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
 	brush={{
-		mode: 'separated',
-		xDomain,
+		x: xDomain as any,
 		onChange: (e) => {
-			xDomain = e.xDomain;
+			xDomain = e.brush.x;
 		}
 	}}
 	height={80}

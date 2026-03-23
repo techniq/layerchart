@@ -55,9 +55,9 @@ related: []
 
 :example{name="separate-chart-(filter-data)"}
 
-### Sync brushes with `bind:xDomain`
+### Synced brushes
 
-:example{name="sync-brushes-with-bind-xdomain"}
+:example{name="synced-brushes"}
 
 ### Tooltip interop
 
@@ -66,6 +66,10 @@ related: []
 ### Selection
 
 :example{name="selection"}
+
+### Programmatic control
+
+:example{name="programmatic-control"}
 
 ### Minimap
 

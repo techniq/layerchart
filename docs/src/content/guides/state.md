@@ -35,7 +35,7 @@ Includes all chart state including
   - Series
   - Brush
 
-### Access
+### Context access
 
 #### Composition
 
@@ -52,10 +52,22 @@ Includes all chart state including
 ```svelte
 <script lang="ts">
 	import { getChartContext } from 'layerchart';
-
 	const ctx = getChartContext();
 	// ex. `ctx.xScale()`
 </script>
+```
+
+#### External to Chart
+
+```svelte
+<script lang="ts">
+	import { type ChartState } from 'layerchart';
+	let context = $state<ChartState>(null!);
+</script>
+
+<Chart bind:context}>
+	<!-- ... -->
+</Chart>
 ```
 
 ## Layer

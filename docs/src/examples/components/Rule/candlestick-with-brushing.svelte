@@ -60,7 +60,7 @@
 	height={40}
 	brush={{
 		onChange: (e) => {
-			xDomain = e.xDomain;
+			xDomain = e.brush.x;
 		}
 	}}
 >

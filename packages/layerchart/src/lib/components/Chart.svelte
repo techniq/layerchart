@@ -607,7 +607,16 @@
     };
 
     /** Props passed to BrushContext */
-    brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
+    brush?:
+      | (Partial<ComponentProps<typeof BrushContext>> & {
+          /**
+           * Zoom the chart domain to the brushed area on brush end.
+           *
+           * @default false
+           */
+          zoomOnBrush?: boolean;
+        })
+      | boolean;
 
     /** Series definitions for multi-series charts */
     series?: SeriesData<T, any>[];
@@ -909,26 +918,35 @@
     };
   });
 
-  const brushEnabled = $derived(brush === true || (typeof brush === 'object' && !brush.disabled));
-  const isIntegratedBrush = $derived(
-    brushEnabled && (brush === true || (typeof brush === 'object' && brush.mode !== 'separated'))
-  );
-
   const enhancedBrushProps = $derived.by(() => {
     if (!brush) return { disabled: true };
     const userProps = typeof brush === 'object' ? brush : {};
-    if (!isIntegratedBrush) return userProps;
 
     const userOnBrushEnd = userProps.onBrushEnd;
+    const zoomOnBrush = 'zoomOnBrush' in userProps ? userProps.zoomOnBrush : false;
+    const needsEnhancement = transform?.mode === 'domain' || zoomOnBrush;
+    if (!needsEnhancement) return userProps;
+
     return {
       ...userProps,
       onBrushEnd: (e: { brush: BrushState }) => {
-        if (transform?.mode === 'domain') {
-          chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
+        if (e.brush.active) {
+          if (transform?.mode === 'domain') {
+            chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
+          } else if (zoomOnBrush) {
+            const axis = userProps.axis ?? 'x';
+            if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
+            if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
+          }
+          e.brush.reset();
         } else {
-          const axis = userProps.axis ?? 'x';
-          if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
-          if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
+          // Brush was cleared (click-to-reset) — reset transform/domain too
+          if (transform?.mode === 'domain') {
+            chartState.transform.reset();
+          } else if (zoomOnBrush) {
+            brushXDomain = undefined;
+            brushYDomain = undefined;
+          }
         }
         userOnBrushEnd?.(e);
       },
@@ -964,7 +982,7 @@
         {processTranslate}
         {...transformProps}
         constrain={composedConstrain}
-        disablePointer={brushEnabled || transform?.disablePointer}
+        disablePointer={(brush === true || (typeof brush === 'object' && !brush.disabled)) || transform?.disablePointer}
         {ondragstart}
         {onTransform}
         {ondragend}

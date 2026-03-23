@@ -25,9 +25,9 @@
 	yDomain={[0, null]}
 	padding={defaultChartPadding({ left: 25, bottom: 24 })}
 	brush={{
-		resetOnEnd: true,
 		onBrushEnd: (e) => {
 			xDomain = e.brush.x;
+			e.brush.reset();
 		}
 	}}
 	height={300}

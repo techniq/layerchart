@@ -1,10 +1,10 @@
 ---
 title: Transform (Pan & Zoom)
 category: state
-order: 2
+order: 3
 ---
 
-LayerChart provides a transform system for panning and zooming charts, maps, and other visualizations. It supports multiple modes depending on the type of visualization: narrowing the data domain for cartesian charts, applying visual transforms for images and maps, or modifying geographic projections for globes.
+LayerChart provides a transform system for panning and zooming charts, maps, and other visualizations. It supports multiple modes depending on the type of visualization: narrowing the data domain for cartesian charts, applying visual transforms for images and maps, or modifying geographic projections for maps and globes.
 
 ## Modes
 

@@ -230,7 +230,7 @@
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush
-    ? { axis: 'x', resetOnEnd: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
+    ? { axis: 'x', zoomOnBrush: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
     : false}
   {series}
   {seriesLayout}
