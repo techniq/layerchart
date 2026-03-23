@@ -258,7 +258,8 @@
       {#if typeof labels === 'function'}
         {@render labels(snippetProps)}
       {:else if labels}
-        {#each context.series.visibleSeries as s, i (s.key)}
+        {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
+        {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
           <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
         {/each}
       {/if}
