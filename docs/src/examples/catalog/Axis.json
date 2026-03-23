@@ -2266,6 +2266,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -4583,5 +4597,5 @@
       "line": "<Axis placement=\"left\" />"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:14.504Z"
+  "updatedAt": "2026-03-23T11:04:17.759Z"
 }

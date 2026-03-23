@@ -1260,6 +1260,33 @@
       ]
     },
     {
+      "name": "vertical-fixed-width",
+      "title": "vertical fixed width",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Bars",
+          "lineNumber": 27,
+          "line": "<Bars width={20} strokeWidth={1} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
       "name": "vertical-gradient",
       "title": "vertical gradient",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -2543,6 +2570,13 @@
       "line": "<Bars>"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 27,
+      "line": "<Bars width={20} strokeWidth={1} class=\"fill-primary\" />"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -2788,5 +2822,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:14.599Z"
+  "updatedAt": "2026-03-23T11:04:17.926Z"
 }

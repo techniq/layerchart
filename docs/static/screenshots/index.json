@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-23T09:35:41.138Z",
+  "generatedAt": "2026-03-23T11:14:10.965Z",
   "totalComponents": 64,
-  "totalExamples": 783,
+  "totalExamples": 786,
   "components": [
     {
       "component": "AnnotationLine",
@@ -944,7 +944,7 @@
         {
           "name": "duration-labels",
           "path": "/example/BarChart/duration-labels",
-          "checksum": ""
+          "checksum": "e0addc4369e66959968dfd8eaaa231fb"
         },
         {
           "name": "duration-points",
@@ -1187,6 +1187,11 @@
           "checksum": "a45af53ba921d1867507ff7ba433b9b8"
         },
         {
+          "name": "series-horizontal-labels",
+          "path": "/example/BarChart/series-horizontal-labels",
+          "checksum": "550834cdd6fa0238e0f8a01314074a31"
+        },
+        {
           "name": "series-stack-separate-data",
           "path": "/example/BarChart/series-stack-separate-data",
           "checksum": "8928effba8167e9912b3659e86754b99"
@@ -1285,6 +1290,11 @@
           "name": "vertical-default",
           "path": "/example/BarChart/vertical-default",
           "checksum": "fbc64ff1e4a255e2cb8f79400bb22d0e"
+        },
+        {
+          "name": "vertical-fixed-width",
+          "path": "/example/BarChart/vertical-fixed-width",
+          "checksum": "429b1ed7d40034eb54f5753e9260deaa"
         }
       ]
     },
@@ -1485,6 +1495,11 @@
           "name": "vertical-customize-individual-styles",
           "path": "/example/Bars/vertical-customize-individual-styles",
           "checksum": "9e2139bc1821ee3f05d047a4f8cb3181"
+        },
+        {
+          "name": "vertical-fixed-width",
+          "path": "/example/Bars/vertical-fixed-width",
+          "checksum": "25100d1f08d9da028b0fd550389af963"
         },
         {
           "name": "vertical-gradient",

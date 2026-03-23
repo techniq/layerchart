@@ -1038,6 +1038,13 @@
       "line": "<Chart"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -3586,5 +3593,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:14.755Z"
+  "updatedAt": "2026-03-23T11:04:18.065Z"
 }

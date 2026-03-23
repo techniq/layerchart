@@ -1025,6 +1025,18 @@
       ]
     },
     {
+      "name": "series-horizontal-labels",
+      "title": "series horizontal labels",
+      "path": "/docs/components/BarChart/series-horizontal-labels",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 15,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "series-stack-separate-data",
       "title": "series stack separate data",
       "path": "/docs/components/BarChart/series-stack-separate-data",
@@ -1296,6 +1308,18 @@
           "component": "BarChart",
           "lineNumber": 15,
           "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} />"
+        }
+      ]
+    },
+    {
+      "name": "vertical-fixed-width",
+      "title": "vertical fixed width",
+      "path": "/docs/components/BarChart/vertical-fixed-width",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 15,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} props={{ bars: { width: 20 } }} />"
         }
       ]
     }
@@ -1799,6 +1823,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "series-horizontal-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-horizontal-labels",
+      "lineNumber": 15,
+      "line": "<BarChart"
+    },
+    {
       "example": "series-stack-separate-data",
       "component": "BarChart",
       "path": "/docs/components/BarChart/series-stack-separate-data",
@@ -1939,6 +1970,13 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} />"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/vertical-fixed-width",
+      "lineNumber": 15,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" height={300} props={{ bars: { width: 20 } }} />"
+    },
+    {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
@@ -1988,5 +2026,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-23T09:35:42.367Z"
+  "updatedAt": "2026-03-23T11:14:12.300Z"
 }

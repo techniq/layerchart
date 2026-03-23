@@ -878,6 +878,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -3524,5 +3531,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:15.855Z"
+  "updatedAt": "2026-03-23T11:04:18.726Z"
 }
