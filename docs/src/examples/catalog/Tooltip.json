@@ -1832,6 +1832,41 @@
       "line": "<Tooltip.Item label=\"end\" value={data.end} format={formatYear} />"
     },
     {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 86,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 88,
+      "line": "<Tooltip.Header>{format(context.y(data))}</Tooltip.Header>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 89,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 90,
+      "line": "<Tooltip.Item label=\"Start\" value={data.start} format=\"day\" />"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 91,
+      "line": "<Tooltip.Item label=\"End\" value={data.end} format=\"day\" />"
+    },
+    {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-points",
@@ -6242,5 +6277,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:16.801Z"
+  "updatedAt": "2026-03-23T09:15:12.588Z"
 }

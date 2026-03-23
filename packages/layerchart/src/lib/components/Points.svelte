@@ -2,7 +2,16 @@
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
 
-  export type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
+  export type Point = {
+    x: number;
+    y: number;
+    r: number;
+    xValue: any;
+    yValue: any;
+    data: any;
+    /** Index within array accessor (0 = start/low edge, 1 = end/high edge). Undefined for single-value points. */
+    edgeIndex?: number;
+  };
   type Offset = number | ((value: number, context: any) => number) | undefined;
 
   export type PointsPropsWithoutHTML = {
@@ -110,14 +119,14 @@
       ? accessor(y)
       : stackAccessors
         ? stackAccessors.y1
-        : Array.isArray(seriesAccessor)
+        : Array.isArray(seriesAccessor) && ctx.valueAxis === 'y'
           ? accessor(seriesAccessor[1])
           : accessor((ctx.valueAxis === 'y' ? seriesAccessor : undefined) ?? ctx.y)
   );
   const pointsData = $derived(data ?? series?.data ?? ctx.data);
 
   // Pre-calculate common values to avoid redundant calculations
-  const getPointObject = (xVal: number, yVal: number, d: any): Point => {
+  const getPointObject = (xVal: number, yVal: number, d: any, edgeIndex?: number): Point => {
     // Only calculate these scaled values once per point
     const scaledX: number = ctx.xScale(xVal);
     const scaledY: number = ctx.yScale(yVal);
@@ -134,6 +143,7 @@
       xValue: xVal,
       yValue: yVal,
       data: d,
+      edgeIndex,
     };
   };
 
@@ -145,9 +155,11 @@
       if (Array.isArray(xValue)) {
         return xValue
           .filter(Boolean)
-          .map((xVal: number) => getPointObject(xVal, yValue as number, d));
+          .map((xVal: number, i: number) => getPointObject(xVal, yValue as number, d, i));
       } else if (Array.isArray(yValue)) {
-        return yValue.filter(Boolean).map((yVal: number) => getPointObject(xValue, yVal, d));
+        return yValue
+          .filter(Boolean)
+          .map((yVal: number, i: number) => getPointObject(xValue, yVal, d, i));
       } else if (xValue != null && yValue != null) {
         return getPointObject(xValue as number, yValue as number, d);
       }

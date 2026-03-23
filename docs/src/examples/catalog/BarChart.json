@@ -317,6 +317,23 @@
       ]
     },
     {
+      "name": "duration-labels",
+      "title": "duration labels",
+      "path": "/docs/components/BarChart/duration-labels",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 56,
+          "line": "<BarChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 86,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
       "name": "duration-points",
       "title": "duration points",
       "path": "/docs/components/BarChart/duration-points",
@@ -449,11 +466,6 @@
           "component": "BarChart",
           "lineNumber": 9,
           "line": "<BarChart"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 45,
-          "line": "<Text"
         }
       ]
     },
@@ -1013,6 +1025,18 @@
       ]
     },
     {
+      "name": "series-stack-separate-data",
+      "title": "series stack separate data",
+      "path": "/docs/components/BarChart/series-stack-separate-data",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 12,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "single-axis-x",
       "title": "single axis x",
       "path": "/docs/components/BarChart/single-axis-x",
@@ -1467,6 +1491,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 56,
+      "line": "<BarChart"
+    },
+    {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-points",
@@ -1768,6 +1799,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "series-stack-separate-data",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/series-stack-separate-data",
+      "lineNumber": 12,
+      "line": "<BarChart"
+    },
+    {
       "example": "single-axis-x",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-axis-x",
@@ -1950,5 +1988,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:14.569Z"
+  "updatedAt": "2026-03-23T09:15:09.919Z"
 }

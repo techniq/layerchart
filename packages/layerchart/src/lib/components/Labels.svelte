@@ -112,8 +112,11 @@
   );
 
   function getTextProps(point: Point): ComponentProps<typeof Text> {
-    // Used for positioning
+    // Used for positioning direction.
+    // For array accessors (edgeIndex defined), use edge position: 0 = start/low, 1 = end/high
     const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
+    const isLowEdge =
+      point.edgeIndex != null ? point.edgeIndex === 0 : pointValue < 0;
 
     // extract the true fill value from `fill` which could be an
     // accessor function or string/undefined
@@ -138,7 +141,7 @@
 
     if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
-      if (pointValue < 0) {
+      if (isLowEdge) {
         // left
         return {
           value: formattedValue,
@@ -163,7 +166,7 @@
       }
     } else {
       // Position label top/bottom on vertical bars
-      if (pointValue < 0) {
+      if (isLowEdge) {
         // bottom
         return {
           value: formattedValue,

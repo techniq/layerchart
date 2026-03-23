@@ -339,13 +339,6 @@
       "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
     },
     {
-      "example": "group-series-labels",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/group-series-labels",
-      "lineNumber": 45,
-      "line": "<Text"
-    },
-    {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
@@ -906,5 +899,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-03-23T00:08:16.717Z"
+  "updatedAt": "2026-03-23T09:15:12.403Z"
 }
