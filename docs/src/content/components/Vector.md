@@ -31,11 +31,11 @@ Pass string property names to `x`, `y`, `length`, and `rotate` to drive vectors 
 
 :example{ name="data-mode" showCode }
 
-### Flow field
+### Wind map
 
-A grid of vectors arranged in a flow pattern, demonstrating data-driven direction and magnitude.
+A geographic wind map showing wind speed and direction over Western Europe using real meteorological data.
 
-:example{ name="flow-field" showCode }
+:example{ name="wind-map" showCode }
 
 ### Election wind map
 

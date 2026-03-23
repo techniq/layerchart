@@ -189,6 +189,19 @@ export const getUsPresidentialElection2020 = prerender(async () => {
 	return data;
 });
 
+export const getWind = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/wind.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as Array<{
+		longitude: number;
+		latitude: number;
+		u: number;
+		v: number;
+	}>;
+	return data;
+});
+
 export const getWorldCapitals = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
