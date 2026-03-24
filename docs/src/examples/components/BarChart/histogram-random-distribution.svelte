@@ -27,6 +27,7 @@
 	height={300}
 	tooltipContext={{ mode: 'band' }}
 	highlight={{ area: true }}
+	clip
 >
 	{#snippet marks()}
 		<Rect x0="x0" y0={(d) => 0} x1="x1" y1="length" insets={{ x: 1 }} class="fill-primary" />

@@ -29,6 +29,7 @@
 	motion={{ type: 'spring' }}
 	tooltipContext={{ mode: 'band' }}
 	highlight={{ area: true }}
+	clip
 >
 	{#snippet marks()}
 		<Rect x0={(d) => 0} y0="x0" x1="length" y1="x1" insets={{ y: 1 }} class="fill-primary" />
