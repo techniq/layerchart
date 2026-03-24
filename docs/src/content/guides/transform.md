@@ -1,7 +1,6 @@
 ---
 title: Transform (Pan & Zoom)
 category: state
-order: 3
 ---
 
 LayerChart provides a transform system for panning and zooming charts, maps, and other visualizations. It supports multiple modes depending on the type of visualization: narrowing the data domain for cartesian charts, applying visual transforms for images and maps, or modifying geographic projections for maps and globes.
@@ -126,12 +125,12 @@ By default, scroll/wheel events are processed immediately. To prevent accidental
 />
 ```
 
-| Value       | Key              |
-| ----------- | ---------------- |
+| Value       | Key                               |
+| ----------- | --------------------------------- |
 | `'meta'`    | ⌘ Command (Mac) / ⊞ Win (Windows) |
-| `'alt'`     | ⌥ Option / Alt   |
-| `'control'` | Control          |
-| `'shift'`   | Shift            |
+| `'alt'`     | ⌥ Option / Alt                    |
+| `'control'` | Control                           |
+| `'shift'`   | Shift                             |
 
 When set, scroll events without the key held are ignored (no `preventDefault`), allowing normal page scrolling.
 
@@ -463,23 +462,23 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 
 ## Quick reference
 
-| Use case               | Configuration                                                    | Example                                                                                 |
-| ---------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`                      | [pan-zoom](/docs/components/BarChart/pan-zoom)                                          |
-| Limit zoom depth       | `scaleExtent: [1, 10]`                                           | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
-| Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`              | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
-| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
+| Use case               | Configuration                                             | Example                                                                                 |
+| ---------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`               | [pan-zoom](/docs/components/BarChart/pan-zoom)                                          |
+| Limit zoom depth       | `scaleExtent: [1, 10]`                                    | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
+| Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`       | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
+| Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`         | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
 | Pan/zoom a map (geo)   | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
-| Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)             | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
-| Geo map zoom limits    | `scaleExtent: [1, 8]`                                            | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
-| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
-| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                       | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
-| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls                     | [basic](/docs/components/Pack/basic)                                                    |
-| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                                    |
-| Dynamic data loading   | Derive data from `context.xDomain` visible range                 | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
-| Drag inertia           | `inertia: true` with `motion: 'spring'`                          | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |
-| Require key to scroll  | `scrollActivationKey: 'meta'`                                    | [scroll-activation-key](/docs/components/TransformContext/scroll-activation-key)         |
+| Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)      | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
+| Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
+| Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
+| Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
+| Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls              | [basic](/docs/components/Pack/basic)                                                    |
+| Animated transforms    | `motion: { type: 'tween', duration: 800 }`                | [basic](/docs/components/Pack/basic)                                                    |
+| Dynamic data loading   | Derive data from `context.xDomain` visible range          | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
+| Drag inertia           | `inertia: true` with `motion: 'spring'`                   | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |
+| Require key to scroll  | `scrollActivationKey: 'meta'`                             | [scroll-activation-key](/docs/components/TransformContext/scroll-activation-key)        |
 
 ## API reference
 

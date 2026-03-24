@@ -1,7 +1,6 @@
 ---
 title: Tooltip (Hover Data)
 category: state
-order: 5
 ---
 
 LayerChart provides a tooltip system for showing data on hover. It has two parts: a `TooltipContext` (integrated into `<Chart tooltip={...}>`) that manages which data point the user is hovering, and `Tooltip` display components (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, `Tooltip.Item`) that render the visual tooltip. The context handles all the pointer tracking and data lookup; the display components are just HTML you can style and compose freely.
@@ -12,18 +11,18 @@ Add `tooltipContext` to a `Chart` and render `Tooltip.Root` inside it:
 
 ```svelte
 <Chart {data} x="date" y="value" tooltipContext={{ mode: 'bisect-x' }}>
-  <Layer>
-    <Area />
-    <Highlight points lines />
-  </Layer>
-  <Tooltip.Root>
-    {#snippet children({ data })}
-      <Tooltip.Header value={data.date} format="day" />
-      <Tooltip.List>
-        <Tooltip.Item label="value" value={data.value} />
-      </Tooltip.List>
-    {/snippet}
-  </Tooltip.Root>
+	<Layer>
+		<Area />
+		<Highlight points lines />
+	</Layer>
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
+			<Tooltip.List>
+				<Tooltip.Item label="value" value={data.value} />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>
 ```
 
@@ -41,18 +40,18 @@ Simplified charts (`LineChart`, `AreaChart`, `BarChart`, `ScatterChart`) include
 
 The `mode` prop on `tooltipContext` controls how the nearest data point is found. Different chart types work best with different modes:
 
-| Mode           | How it works                                             | Best for                                      |
-| -------------- | -------------------------------------------------------- | --------------------------------------------- |
-| `bisect-x`     | Binary search along x-axis (requires sorted data)       | Time series, line/area charts                 |
-| `bisect-y`     | Binary search along y-axis (requires sorted data)       | Horizontal charts                             |
-| `band`         | Full-bandwidth hit targets using transparent paths       | Bar charts, categorical axes                  |
-| `bisect-band`  | Bisect + band combined                                   | Bar charts with sorted time axis              |
-| `bounds`       | Hit detection based on data element bounds               | Duration bars, overlapping ranges             |
-| `voronoi`      | Geometric partitioning via Voronoi diagram               | Scatter plots, irregular point layouts        |
-| `quadtree`     | Spatial index (faster than voronoi for large datasets)   | Scatter plots, geographic points              |
-| `quadtree-x`   | Quadtree constrained to x-axis                           | Time series (like bisect-x but spatial)       |
-| `quadtree-y`   | Quadtree constrained to y-axis                           | Horizontal charts                             |
-| `manual`       | You call `tooltip.show(e, data)` / `tooltip.hide()`     | Geo boundaries, pie/donut slices, custom shapes |
+| Mode          | How it works                                           | Best for                                        |
+| ------------- | ------------------------------------------------------ | ----------------------------------------------- |
+| `bisect-x`    | Binary search along x-axis (requires sorted data)      | Time series, line/area charts                   |
+| `bisect-y`    | Binary search along y-axis (requires sorted data)      | Horizontal charts                               |
+| `band`        | Full-bandwidth hit targets using transparent paths     | Bar charts, categorical axes                    |
+| `bisect-band` | Bisect + band combined                                 | Bar charts with sorted time axis                |
+| `bounds`      | Hit detection based on data element bounds             | Duration bars, overlapping ranges               |
+| `voronoi`     | Geometric partitioning via Voronoi diagram             | Scatter plots, irregular point layouts          |
+| `quadtree`    | Spatial index (faster than voronoi for large datasets) | Scatter plots, geographic points                |
+| `quadtree-x`  | Quadtree constrained to x-axis                         | Time series (like bisect-x but spatial)         |
+| `quadtree-y`  | Quadtree constrained to y-axis                         | Horizontal charts                               |
+| `manual`      | You call `tooltip.show(e, data)` / `tooltip.hide()`    | Geo boundaries, pie/donut slices, custom shapes |
 
 ### Choosing a mode
 
@@ -87,11 +86,11 @@ For `voronoi` and `quadtree` modes, set `radius` to limit the search distance in
 
 `Tooltip.Root` controls where the tooltip appears relative to the hovered data. The `x` and `y` props set the positioning strategy independently per axis:
 
-| Value      | Behavior                                    |
-| ---------- | ------------------------------------------- |
-| `'pointer'`| Follows the mouse cursor (default)          |
-| `'data'`   | Snaps to the hovered data point's position  |
-| `number`   | Fixed position in pixels                    |
+| Value       | Behavior                                   |
+| ----------- | ------------------------------------------ |
+| `'pointer'` | Follows the mouse cursor (default)         |
+| `'data'`    | Snaps to the hovered data point's position |
+| `number`    | Fixed position in pixels                   |
 
 ### Pointer following (default)
 
@@ -157,11 +156,11 @@ The `anchor` prop controls which corner of the tooltip aligns to the position po
 
 Tooltips are contained within their chart container by default, flipping sides when they would overflow. The `contained` prop controls this:
 
-| Value         | Behavior                                      |
-| ------------- | --------------------------------------------- |
-| `'container'` | Stay within the chart container (default)     |
-| `'window'`    | Stay within the browser viewport              |
-| `false`       | No containment — can overflow freely          |
+| Value         | Behavior                                  |
+| ------------- | ----------------------------------------- |
+| `'container'` | Stay within the chart container (default) |
+| `'window'`    | Stay within the browser viewport          |
+| `false`       | No containment — can overflow freely      |
 
 ```svelte
 <Tooltip.Root contained="window">
@@ -187,8 +186,8 @@ A grid container that aligns label-value pairs:
 
 ```svelte
 <Tooltip.List>
-  <Tooltip.Item label="Revenue" value={data.revenue} format="currency" />
-  <Tooltip.Item label="Users" value={data.users} format="integer" />
+	<Tooltip.Item label="Revenue" value={data.revenue} format="currency" />
+	<Tooltip.Item label="Users" value={data.users} format="integer" />
 </Tooltip.List>
 ```
 
@@ -200,13 +199,13 @@ A single label-value row. The `color` prop shows a color indicator:
 <Tooltip.Item label="Apples" value={data.apples} color="red" />
 ```
 
-| Prop         | Type                           | Description                       |
-| ------------ | ------------------------------ | --------------------------------- |
-| `label`      | `string \| number \| Snippet` | Left-side label                   |
-| `value`      | `any`                          | Right-side value                  |
-| `format`     | `FormatType \| FormatConfig`   | Value formatting                  |
-| `valueAlign` | `'left' \| 'right' \| 'center'` | Alignment of value column       |
-| `color`      | `string`                       | Color dot indicator               |
+| Prop         | Type                            | Description               |
+| ------------ | ------------------------------- | ------------------------- |
+| `label`      | `string \| number \| Snippet`   | Left-side label           |
+| `value`      | `any`                           | Right-side value          |
+| `format`     | `FormatType \| FormatConfig`    | Value formatting          |
+| `valueAlign` | `'left' \| 'right' \| 'center'` | Alignment of value column |
+| `color`      | `string`                        | Color dot indicator       |
 
 ### `Tooltip.Separator`
 
@@ -214,9 +213,9 @@ A visual divider between groups of items:
 
 ```svelte
 <Tooltip.List>
-  <Tooltip.Item label="Revenue" value={data.revenue} />
-  <Tooltip.Separator />
-  <Tooltip.Item label="Total" value={data.total} />
+	<Tooltip.Item label="Revenue" value={data.revenue} />
+	<Tooltip.Separator />
+	<Tooltip.Item label="Total" value={data.total} />
 </Tooltip.List>
 ```
 
@@ -230,11 +229,11 @@ Since tooltips are just HTML, you can render anything inside `Tooltip.Root`:
 
 The `variant` prop controls the tooltip's visual style:
 
-| Value       | Appearance                                |
-| ----------- | ----------------------------------------- |
-| `'default'` | Dark background, light text (default)     |
-| `'invert'`  | Light background, dark text               |
-| `'none'`    | No built-in styling — fully custom        |
+| Value       | Appearance                            |
+| ----------- | ------------------------------------- |
+| `'default'` | Dark background, light text (default) |
+| `'invert'`  | Light background, dark text           |
+| `'none'`    | No built-in styling — fully custom    |
 
 :example{ component="Tooltip" name="invert-variant" }
 
@@ -271,13 +270,13 @@ When using multi-series charts, the tooltip state includes a `series` array with
 
 ```svelte
 <LineChart
-  {data}
-  x="date"
-  series={[
-    { key: 'apples', color: 'red' },
-    { key: 'bananas', color: 'yellow' }
-  ]}
-  tooltipContext={{ mode: 'bisect-x' }}
+	{data}
+	x="date"
+	series={[
+		{ key: 'apples', color: 'red' },
+		{ key: 'bananas', color: 'yellow' }
+	]}
+	tooltipContext={{ mode: 'bisect-x' }}
 />
 ```
 
@@ -285,14 +284,14 @@ For custom tooltips with series data, iterate over the series in your snippet:
 
 ```svelte
 <Tooltip.Root>
-  {#snippet children({ data, series })}
-    <Tooltip.Header value={data.date} format="day" />
-    <Tooltip.List>
-      {#each series as s}
-        <Tooltip.Item label={s.label} value={s.value} color={s.color} />
-      {/each}
-    </Tooltip.List>
-  {/snippet}
+	{#snippet children({ data, series })}
+		<Tooltip.Header value={data.date} format="day" />
+		<Tooltip.List>
+			{#each series as s}
+				<Tooltip.Item label={s.label} value={s.value} color={s.color} />
+			{/each}
+		</Tooltip.List>
+	{/snippet}
 </Tooltip.Root>
 ```
 
@@ -304,11 +303,11 @@ Set `locked` to keep the tooltip open and prevent it from updating when the poin
 
 ```svelte
 <Chart tooltipContext={{ mode: 'bisect-x', locked: true }}>
-  <Tooltip.Root pointerEvents>
-    {#snippet children({ data })}
-      <a href="/detail/{data.id}">View details</a>
-    {/snippet}
-  </Tooltip.Root>
+	<Tooltip.Root pointerEvents>
+		{#snippet children({ data })}
+			<a href="/detail/{data.id}">View details</a>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>
 ```
 
@@ -326,12 +325,12 @@ Set `hideDelay` (in milliseconds) to keep the tooltip visible briefly after the 
 
 The `touchEvents` prop controls how touch interactions behave on mobile. It maps to the CSS `touch-action` property:
 
-| Value      | Behavior                                           |
-| ---------- | -------------------------------------------------- |
-| `'pan-y'`  | Vertical scrolling allowed, horizontal shows tooltip (default) |
-| `'pan-x'`  | Horizontal scrolling allowed                       |
-| `'none'`   | All touch triggers tooltip (may block scrolling)   |
-| `'auto'`   | Browser default touch behavior                     |
+| Value     | Behavior                                                       |
+| --------- | -------------------------------------------------------------- |
+| `'pan-y'` | Vertical scrolling allowed, horizontal shows tooltip (default) |
+| `'pan-x'` | Horizontal scrolling allowed                                   |
+| `'none'`  | All touch triggers tooltip (may block scrolling)               |
+| `'auto'`  | Browser default touch behavior                                 |
 
 ## Externally accessing tooltip data
 
@@ -339,16 +338,14 @@ Use `bind:context` on `Chart` to read tooltip state from outside:
 
 ```svelte
 <script>
-  let context = $state();
+	let context = $state();
 </script>
 
 {#if context?.tooltip.data}
-  <p>Hovering: {context.tooltip.data.date}</p>
+	<p>Hovering: {context.tooltip.data.date}</p>
 {/if}
 
-<Chart bind:context {data} x="date" y="value" tooltipContext={{ mode: 'bisect-x' }}>
-  ...
-</Chart>
+<Chart bind:context {data} x="date" y="value" tooltipContext={{ mode: 'bisect-x' }}>...</Chart>
 ```
 
 :example{ component="Tooltip" name="externally-access-tooltip-data" }
@@ -357,11 +354,11 @@ You can also access tooltip state inside snippet props:
 
 ```svelte
 <Chart {data} tooltipContext={{ mode: 'bisect-x' }}>
-  {#snippet children({ context })}
-    {#if context.tooltip.data}
-      <text>{context.tooltip.data.value}</text>
-    {/if}
-  {/snippet}
+	{#snippet children({ context })}
+		{#if context.tooltip.data}
+			<text>{context.tooltip.data.value}</text>
+		{/if}
+	{/snippet}
 </Chart>
 ```
 
@@ -371,18 +368,18 @@ For shapes that don't map neatly to x/y coordinates (geo boundaries, pie slices,
 
 ```svelte
 <Chart tooltipContext={{ mode: 'manual' }}>
-  {#snippet children({ context })}
-    <GeoPath
-      geojson={feature}
-      onpointerenter={(e) => context.tooltip.show(e, feature.properties)}
-      onpointerleave={(e) => context.tooltip.hide(e)}
-    />
-  {/snippet}
-  <Tooltip.Root>
-    {#snippet children({ data })}
-      <Tooltip.Header value={data.name} />
-    {/snippet}
-  </Tooltip.Root>
+	{#snippet children({ context })}
+		<GeoPath
+			geojson={feature}
+			onpointerenter={(e) => context.tooltip.show(e, feature.properties)}
+			onpointerleave={(e) => context.tooltip.hide(e)}
+		/>
+	{/snippet}
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.name} />
+		{/snippet}
+	</Tooltip.Root>
 </Chart>
 ```
 
@@ -392,28 +389,28 @@ Several shape components have a built-in `tooltip` boolean prop that wires up `s
 
 ```svelte
 <Chart tooltipContext={{ mode: 'manual' }}>
-  <Pie {data} tooltip />
-  <Tooltip.Root>
-    {#snippet children({ data })}
-      <Tooltip.Header value={data.name} />
-      <Tooltip.List>
-        <Tooltip.Item label="value" value={data.value} />
-      </Tooltip.List>
-    {/snippet}
-  </Tooltip.Root>
+	<Pie {data} tooltip />
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.name} />
+			<Tooltip.List>
+				<Tooltip.Item label="value" value={data.value} />
+			</Tooltip.List>
+		{/snippet}
+	</Tooltip.Root>
 </Chart>
 ```
 
 Components with the `tooltip` prop:
 
-| Component  | Typical use case                     |
-| ---------- | ------------------------------------ |
-| `Arc`      | Gauge / donut segments               |
-| `Bar`      | Individual bars in custom layouts    |
+| Component  | Typical use case                                |
+| ---------- | ----------------------------------------------- |
+| `Arc`      | Gauge / donut segments                          |
+| `Bar`      | Individual bars in custom layouts               |
 | `Pie`      | Pie chart slices (sets `tooltip` on each `Arc`) |
-| `GeoPath`  | Map regions / geographic boundaries  |
-| `Ribbon`   | Chord diagram ribbons                |
-| `Calendar` | Calendar heatmap cells               |
+| `GeoPath`  | Map regions / geographic boundaries             |
+| `Ribbon`   | Chord diagram ribbons                           |
+| `Calendar` | Calendar heatmap cells                          |
 
 ## Debug mode
 
@@ -448,40 +445,40 @@ Add an `onclick` handler to `tooltipContext` to respond to clicks on data points
 
 ## TooltipState properties
 
-| Property                  | Type               | Description                                     |
-| ------------------------- | ------------------ | ----------------------------------------------- |
-| `data`                    | `T \| null`        | The hovered data point (or null)                |
-| `x`                       | `number`           | Pointer x position in chart coordinates         |
-| `y`                       | `number`           | Pointer y position in chart coordinates         |
-| `series`                  | `TooltipSeries[]`  | Series values at the hovered point              |
-| `isHoveringTooltipArea`   | `boolean`          | Whether the pointer is in the tooltip area      |
-| `isHoveringTooltipContent`| `boolean`          | Whether the pointer is over the tooltip itself  |
+| Property                   | Type              | Description                                    |
+| -------------------------- | ----------------- | ---------------------------------------------- |
+| `data`                     | `T \| null`       | The hovered data point (or null)               |
+| `x`                        | `number`          | Pointer x position in chart coordinates        |
+| `y`                        | `number`          | Pointer y position in chart coordinates        |
+| `series`                   | `TooltipSeries[]` | Series values at the hovered point             |
+| `isHoveringTooltipArea`    | `boolean`         | Whether the pointer is in the tooltip area     |
+| `isHoveringTooltipContent` | `boolean`         | Whether the pointer is over the tooltip itself |
 
 ### Methods
 
-| Method              | Description                              |
-| ------------------- | ---------------------------------------- |
+| Method              | Description                                |
+| ------------------- | ------------------------------------------ |
 | `show(event, data)` | Show tooltip with given data (manual mode) |
-| `hide(event?)`      | Hide the tooltip                         |
+| `hide(event?)`      | Hide the tooltip                           |
 
 ## Quick reference
 
-| Use case                         | Configuration                                                   | Example                                                                                             |
-| -------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Basic tooltip                    | `tooltipContext={{ mode: 'bisect-x' }}`                         | [basic](/docs/components/Tooltip/basic)                                                             |
-| Pointer following                | `<Tooltip.Root>` (default)                                      | [default-mouse-position-with-offset](/docs/components/Tooltip/default-mouse-position-with-offset)   |
-| Data snapping                    | `<Tooltip.Root x="data" y="data">`                              | [data-snapping](/docs/components/Tooltip/data-snapping)                                             |
-| Multiple tooltips                | Multiple `<Tooltip.Root>` with fixed axes                       | [multiple-tooltips](/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis)              |
-| Scatter plot                     | `tooltipContext={{ mode: 'quadtree' }}`                         | [scatter-plot](/docs/components/Tooltip/scatter-plot)                                               |
-| Stacked area                     | Series + `tooltipContext={{ mode: 'bisect-x' }}`                | [stacked-area](/docs/components/Tooltip/stacked-area)                                               |
-| Custom content                   | Any HTML inside `Tooltip.Root`                                  | [custom-content](/docs/components/Tooltip/custom-content)                                           |
-| Invert variant                   | `<Tooltip.Root variant="invert">`                               | [invert-variant](/docs/components/Tooltip/invert-variant)                                           |
-| Color swatches                   | `<Tooltip.Item color="...">`                                    | [color-swatch](/docs/components/Tooltip/color-swatch)                                               |
-| External data access             | `bind:context` on `Chart`                                       | [externally-access-tooltip-data](/docs/components/Tooltip/externally-access-tooltip-data)            |
-| Anchor placement                 | `<Tooltip.Root anchor="bottom-right">`                          | [anchor-location](/docs/components/Tooltip/anchor-location)                                         |
-| Disable animation                | `<Tooltip.Root motion={false}>`                                 | [disable-motion](/docs/components/Tooltip/disable-motion)                                           |
-| Bar chart tooltip                | `tooltipContext={{ mode: 'band' }}`                             | [simple-bars](/docs/components/Tooltip/simple-bars)                                                 |
-| Manual mode (geo/pie)            | `tooltipContext={{ mode: 'manual' }}` + `show()`/`hide()`      |                                                                                                     |
+| Use case              | Configuration                                             | Example                                                                                           |
+| --------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Basic tooltip         | `tooltipContext={{ mode: 'bisect-x' }}`                   | [basic](/docs/components/Tooltip/basic)                                                           |
+| Pointer following     | `<Tooltip.Root>` (default)                                | [default-mouse-position-with-offset](/docs/components/Tooltip/default-mouse-position-with-offset) |
+| Data snapping         | `<Tooltip.Root x="data" y="data">`                        | [data-snapping](/docs/components/Tooltip/data-snapping)                                           |
+| Multiple tooltips     | Multiple `<Tooltip.Root>` with fixed axes                 | [multiple-tooltips](/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis)            |
+| Scatter plot          | `tooltipContext={{ mode: 'quadtree' }}`                   | [scatter-plot](/docs/components/Tooltip/scatter-plot)                                             |
+| Stacked area          | Series + `tooltipContext={{ mode: 'bisect-x' }}`          | [stacked-area](/docs/components/Tooltip/stacked-area)                                             |
+| Custom content        | Any HTML inside `Tooltip.Root`                            | [custom-content](/docs/components/Tooltip/custom-content)                                         |
+| Invert variant        | `<Tooltip.Root variant="invert">`                         | [invert-variant](/docs/components/Tooltip/invert-variant)                                         |
+| Color swatches        | `<Tooltip.Item color="...">`                              | [color-swatch](/docs/components/Tooltip/color-swatch)                                             |
+| External data access  | `bind:context` on `Chart`                                 | [externally-access-tooltip-data](/docs/components/Tooltip/externally-access-tooltip-data)         |
+| Anchor placement      | `<Tooltip.Root anchor="bottom-right">`                    | [anchor-location](/docs/components/Tooltip/anchor-location)                                       |
+| Disable animation     | `<Tooltip.Root motion={false}>`                           | [disable-motion](/docs/components/Tooltip/disable-motion)                                         |
+| Bar chart tooltip     | `tooltipContext={{ mode: 'band' }}`                       | [simple-bars](/docs/components/Tooltip/simple-bars)                                               |
+| Manual mode (geo/pie) | `tooltipContext={{ mode: 'manual' }}` + `show()`/`hide()` |                                                                                                   |
 
 ## API reference
 

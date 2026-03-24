@@ -1,7 +1,6 @@
 ---
 title: Brush (Selection)
 category: state
-order: 2
 ---
 
 LayerChart provides a brush system for interactive selection on charts. Brushing lets users drag to select a region, which can drive filtering, zooming, syncing between charts, or any custom behavior. The `BrushState` manages the selection and a `BrushContext` component handles pointer interactions.
