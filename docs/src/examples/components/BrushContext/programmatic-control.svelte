@@ -29,6 +29,9 @@
 			context?.brush.move({ x: [data[start].date, data[data.length - 1].date] });
 		}}>Last Third</Button
 	>
+</ButtonGroup>
+
+<ButtonGroup variant="fill-light" size="sm" class="mb-2">
 	<Button onclick={() => context?.brush.selectAll()}>Select All</Button>
 	<Button onclick={() => context?.brush.reset()}>Reset</Button>
 </ButtonGroup>
