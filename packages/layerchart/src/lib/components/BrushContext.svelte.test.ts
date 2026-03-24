@@ -269,7 +269,7 @@ describe('BrushContext', () => {
       const rect = brushEl.getBoundingClientRect();
 
       // Simulate a brush drag: pointerdown → pointermove → pointerup
-      // Drag from 20% to 80% of the chart width (domain ~2 to ~8)
+      // All dispatched on the brush element so e.target has classList/getBoundingClientRect.
       const startX = rect.left + rect.width * 0.2;
       const endX = rect.left + rect.width * 0.8;
       const y = rect.top + rect.height / 2;
@@ -277,10 +277,10 @@ describe('BrushContext', () => {
       brushEl.dispatchEvent(
         new PointerEvent('pointerdown', { clientX: startX, clientY: y, bubbles: true })
       );
-      window.dispatchEvent(
+      brushEl.dispatchEvent(
         new PointerEvent('pointermove', { clientX: endX, clientY: y, bubbles: true })
       );
-      window.dispatchEvent(
+      brushEl.dispatchEvent(
         new PointerEvent('pointerup', { clientX: endX, clientY: y, bubbles: true })
       );
       await tick();
