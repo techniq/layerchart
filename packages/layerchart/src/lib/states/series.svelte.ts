@@ -22,7 +22,21 @@ export class SeriesState<TData, TComponent extends Component> {
   #series = $derived(this._getSeries());
   #stackConfig = $derived(this._getStackConfig());
 
-  selectedKeys = new SelectionState<string>();
+  selectedKeys: SelectionState<string>;
+
+  /**
+   * Reactively syncs selectedKeys when series `selected` props change.
+   * When any series explicitly sets `selected: false`, the remaining series
+   * (with `selected` undefined or true) are pre-selected.
+   */
+  #_syncSelectedFromProps = $effect.root(() => {
+    $effect(() => {
+      const keys = SeriesState.#selectedKeysFromSeries(this.#series);
+      if (keys) {
+        this.selectedKeys.current = keys;
+      }
+    });
+  });
 
   /**
    * The current highlight series key for the chart.
@@ -35,6 +49,20 @@ export class SeriesState<TData, TComponent extends Component> {
   ) {
     this._getSeries = getSeries;
     this._getStackConfig = getStackConfig ?? (() => null);
+
+    // Compute initial selectedKeys synchronously from series `selected` props
+    const initialKeys = SeriesState.#selectedKeysFromSeries(getSeries());
+    this.selectedKeys = new SelectionState<string>({ initial: initialKeys ?? undefined });
+  }
+
+  /**
+   * Extract selected keys from series definitions.
+   * Returns keys of visible series when any series has `selected: false`, or null if all are visible.
+   */
+  static #selectedKeysFromSeries(series: { key: string; selected?: boolean }[]): string[] | null {
+    const hasExplicitDeselection = series.some((s) => s.selected === false);
+    if (!hasExplicitDeselection) return null;
+    return series.filter((s) => s.selected !== false).map((s) => s.key);
   }
 
   /**

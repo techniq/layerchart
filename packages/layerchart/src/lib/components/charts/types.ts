@@ -12,6 +12,11 @@ export type SeriesData<TData, TComponent extends Component> = {
   maxValue?: number;
   data?: TData[];
   color?: string;
+  /**
+   * Whether the series is initially visible. Defaults to `true` (visible).
+   * Set to `false` to hide a series on mount. Reactive — changing this will update visibility.
+   */
+  selected?: boolean;
   props?: Partial<ComponentProps<TComponent>>;
 };
 
