@@ -67,6 +67,7 @@
 	}}
 	padding={{ left: 100, right: 100 }}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		<Layer>
