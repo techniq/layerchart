@@ -674,6 +674,18 @@
       ]
     },
     {
+      "name": "series-programmatic-control",
+      "title": "series programmatic control",
+      "path": "/docs/components/LineChart/series-programmatic-control",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 44,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "series-separate-data",
       "title": "series separate data",
       "path": "/docs/components/LineChart/series-separate-data",
@@ -1397,6 +1409,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "series-programmatic-control",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/series-programmatic-control",
+      "lineNumber": 44,
+      "line": "<LineChart"
+    },
+    {
       "example": "series-separate-data",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-separate-data",
@@ -1495,5 +1514,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.882Z"
+  "updatedAt": "2026-03-24T16:00:55.668Z"
 }

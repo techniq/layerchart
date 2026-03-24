@@ -287,9 +287,9 @@
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 69,
       "line": "<LinearGradient"
     },
@@ -546,5 +546,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:15.952Z"
+  "updatedAt": "2026-03-24T16:00:55.689Z"
 }

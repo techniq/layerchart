@@ -174,35 +174,35 @@
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 56,
+      "lineNumber": 57,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 34,
+      "lineNumber": 35,
       "line": "<Rect x0={(d) => 0} y0=\"x0\" x1=\"length\" y1=\"x1\" insets={{ y: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 32,
+      "lineNumber": 33,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
@@ -857,5 +857,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:23.633Z"
+  "updatedAt": "2026-03-24T16:06:11.245Z"
 }

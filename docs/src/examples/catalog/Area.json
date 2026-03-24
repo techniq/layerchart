@@ -1224,6 +1224,13 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 52,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
       "example": "separate-chart-(clip-data-y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
@@ -1280,17 +1287,17 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 74,
       "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
-      "lineNumber": 95,
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "lineNumber": 93,
       "line": "<Area"
     },
     {
@@ -1455,5 +1462,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-03-21T15:42:44.666Z"
+  "updatedAt": "2026-03-24T16:00:54.755Z"
 }

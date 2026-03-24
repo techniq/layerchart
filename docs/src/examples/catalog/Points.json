@@ -242,14 +242,14 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 48,
+      "lineNumber": 59,
       "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 71,
+      "lineNumber": 83,
       "line": "<Points>"
     },
     {
@@ -400,5 +400,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.780Z"
+  "updatedAt": "2026-03-24T16:00:55.913Z"
 }

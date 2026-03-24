@@ -642,14 +642,14 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 73,
+      "lineNumber": 74,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content fill-blue-400/50\" />"
     },
     {
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 76,
+      "lineNumber": 77,
       "line": "<GeoPath"
     },
     {
@@ -1234,5 +1234,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:15.472Z"
+  "updatedAt": "2026-03-24T16:00:55.347Z"
 }

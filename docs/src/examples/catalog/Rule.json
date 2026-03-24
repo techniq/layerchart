@@ -558,9 +558,9 @@
       "line": "<Rule y={0} />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 67,
       "line": "<Rule y={0} />"
     },
@@ -698,5 +698,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:53.516Z"
+  "updatedAt": "2026-03-24T16:00:56.015Z"
 }

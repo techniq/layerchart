@@ -566,7 +566,7 @@
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
@@ -580,7 +580,7 @@
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush-multiline",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
@@ -1147,14 +1147,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 43,
+      "lineNumber": 54,
       "line": "<Layer>"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 70,
+      "lineNumber": 82,
+      "line": "<Layer>"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
@@ -1221,17 +1228,17 @@
       "line": "<Layer>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 64,
       "line": "<Layer>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
-      "lineNumber": 94,
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "lineNumber": 92,
       "line": "<Layer>"
     },
     {
@@ -1630,7 +1637,7 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 72,
+      "lineNumber": 73,
       "line": "<Layer>"
     },
     {
@@ -3412,6 +3419,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 21,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
@@ -3531,5 +3545,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-23T11:04:18.726Z"
+  "updatedAt": "2026-03-24T16:00:55.601Z"
 }

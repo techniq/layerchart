@@ -195,7 +195,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 80,
+      "lineNumber": 92,
       "line": "<Circle"
     },
     {
@@ -836,5 +836,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:14.879Z"
+  "updatedAt": "2026-03-24T16:00:55.124Z"
 }

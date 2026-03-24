@@ -1307,14 +1307,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 25,
+      "lineNumber": 30,
       "line": "<Chart"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 54,
+      "lineNumber": 65,
+      "line": "<Chart"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 39,
       "line": "<Chart"
     },
     {
@@ -1381,16 +1388,16 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" brush={{ classes: { range: 'striped-background' } }} height={40}>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 55,
       "line": "<Chart"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 81,
       "line": "<Chart"
     },
@@ -3488,6 +3495,13 @@
       "line": "<Chart"
     },
     {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
@@ -3593,5 +3607,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-23T11:04:18.065Z"
+  "updatedAt": "2026-03-24T16:00:55.040Z"
 }

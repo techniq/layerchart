@@ -1660,7 +1660,7 @@
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: timeYear.every(1) }} />"
     },
     {
@@ -1681,7 +1681,7 @@
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush-multiline",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: timeYear.every(1) }} />"
     },
     {
@@ -2745,14 +2745,28 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 44,
+      "lineNumber": 55,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 45,
+      "lineNumber": 56,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 51,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2812,16 +2826,16 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 65,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 66,
       "line": "<Axis placement=\"bottom\" />"
     },
@@ -4597,5 +4611,5 @@
       "line": "<Axis placement=\"left\" />"
     }
   ],
-  "updatedAt": "2026-03-23T11:04:17.759Z"
+  "updatedAt": "2026-03-24T16:00:54.806Z"
 }

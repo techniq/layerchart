@@ -34,7 +34,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 47,
+      "lineNumber": 58,
       "line": "<ChartClipPath>"
     },
     {
@@ -52,9 +52,9 @@
       "line": "<ChartClipPath>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 68,
       "line": "<ChartClipPath>"
     },
@@ -115,5 +115,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.357Z"
+  "updatedAt": "2026-03-24T16:00:55.089Z"
 }

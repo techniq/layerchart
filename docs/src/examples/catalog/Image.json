@@ -220,7 +220,14 @@
       "path": "/docs/components/TransformContext/planet-distances",
       "lineNumber": 244,
       "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
+    },
+    {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 22,
+      "line": "<image"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.124Z"
+  "updatedAt": "2026-03-24T16:00:55.562Z"
 }

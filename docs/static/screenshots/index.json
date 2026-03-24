@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-23T11:14:10.965Z",
+  "generatedAt": "2026-03-24T16:06:08.641Z",
   "totalComponents": 64,
-  "totalExamples": 786,
+  "totalExamples": 789,
   "components": [
     {
       "component": "AnnotationLine",
@@ -439,7 +439,7 @@
         {
           "name": "brush-sync",
           "path": "/example/AreaChart/brush-sync",
-          "checksum": "249db2b9d265128482edd968b6c97fa1"
+          "checksum": "a28374b95efaf812511fc0fa44511606"
         },
         {
           "name": "curve",
@@ -819,12 +819,12 @@
         {
           "name": "time-scale-brush",
           "path": "/example/Axis/time-scale-brush",
-          "checksum": "971fdd7df56bd31762cd1b4d9c8a82ff"
+          "checksum": "2df83b07578ccee97c281c1a2a1de58a"
         },
         {
           "name": "time-scale-brush-multiline",
           "path": "/example/Axis/time-scale-brush-multiline",
-          "checksum": "b0fd04bc229bbccfb286c821dd7bb604"
+          "checksum": "6ddcb90afea8bea94d1de34fce8d7c5b"
         },
         {
           "name": "time-scale-explicit",
@@ -999,27 +999,27 @@
         {
           "name": "histogram-date-time-count",
           "path": "/example/BarChart/histogram-date-time-count",
-          "checksum": "b34d08dabf465edabe2f1f36e0ba255d"
+          "checksum": "43df8ac6d94df728e85ee39713758ee4"
         },
         {
           "name": "histogram-date-time-interval",
           "path": "/example/BarChart/histogram-date-time-interval",
-          "checksum": "5cabb554dc52296053c59bc62e5ab2c8"
+          "checksum": "825d5b3ab5c44714f963d86f0a2f77e5"
         },
         {
           "name": "histogram-horizontal",
           "path": "/example/BarChart/histogram-horizontal",
-          "checksum": "b0177ce752bcd38d69437594b79622ab"
+          "checksum": "866c493dbba2e7604d7065486c91364c"
         },
         {
           "name": "histogram-random-distribution",
           "path": "/example/BarChart/histogram-random-distribution",
-          "checksum": "2981f5ea1ab5cf58fc66c2050c1ccc6a"
+          "checksum": "5facd6821d027e02465bd2359f84b5ac"
         },
         {
           "name": "histogram-vertical",
           "path": "/example/BarChart/histogram-vertical",
-          "checksum": "85e6ae12e826546b6fc6ab5ab8ea1d03"
+          "checksum": "8a1f69ac91d5d0c700e083b7b6dd47fb"
         },
         {
           "name": "horizontal",
@@ -1679,22 +1679,27 @@
         {
           "name": "integrated-brush-(both-axis-area)",
           "path": "/example/BrushContext/integrated-brush-(both-axis-area)",
-          "checksum": "2ed2484010aa62b500ba5b864d014e7a"
+          "checksum": "d7ee09f3acce07b0c1091474e7730595"
         },
         {
           "name": "integrated-brush-(x-axis)",
           "path": "/example/BrushContext/integrated-brush-(x-axis)",
-          "checksum": "2ba8db1a6223a68da38c6cd0907cfd3d"
+          "checksum": "cc0d4c346412e4240cfb9761e9a79abf"
         },
         {
           "name": "integrated-brush-(y-axis)",
           "path": "/example/BrushContext/integrated-brush-(y-axis)",
-          "checksum": "435d3f7fe49c596276de691a35fb4209"
+          "checksum": "2e511d5b9e534da03708bb9665b39da1"
         },
         {
           "name": "minimap",
           "path": "/example/BrushContext/minimap",
-          "checksum": "a73ccede521dc321553b8f278ae5f2fd"
+          "checksum": "f4098f9cda019c94ee830e54558c388d"
+        },
+        {
+          "name": "programmatic-control",
+          "path": "/example/BrushContext/programmatic-control",
+          "checksum": "c9939b6ca3669e757474d370f8746646"
         },
         {
           "name": "selection",
@@ -1727,14 +1732,14 @@
           "checksum": "bc87c0d8396a15db959099533b025eec"
         },
         {
-          "name": "sync-brushes-with-bind-xdomain",
-          "path": "/example/BrushContext/sync-brushes-with-bind-xdomain",
-          "checksum": "d9a16068be8a50220b9b74e9dc0d29aa"
+          "name": "synced-brushes",
+          "path": "/example/BrushContext/synced-brushes",
+          "checksum": "4437f58eddef3689dc1a7ecbf5badadf"
         },
         {
           "name": "tooltip-interop",
           "path": "/example/BrushContext/tooltip-interop",
-          "checksum": "1f67d42b93a71c81e2f57280b42c6219"
+          "checksum": "ba4a6c79048aeb9a2d142a1da085abd4"
         }
       ]
     },
@@ -1964,22 +1969,22 @@
         {
           "name": "basic",
           "path": "/example/Dagre/basic",
-          "checksum": "95488c08ba75a0f9cae4b861e2e4ed05"
+          "checksum": "471f09f37b6dfa1df608facc8896c336"
         },
         {
           "name": "playground",
           "path": "/example/Dagre/playground",
-          "checksum": "208a6a099774586e220eeaf04b62d8fb"
+          "checksum": "aadce6e16d6748c4dde5baaca25b649f"
         },
         {
           "name": "software-user-flow",
           "path": "/example/Dagre/software-user-flow",
-          "checksum": "fed68a784a20e01c5a0f6532dbeda6b5"
+          "checksum": "33ab3c64a63c7a1424e25820359ab1ac"
         },
         {
           "name": "tcp-state-diagram",
           "path": "/example/Dagre/tcp-state-diagram",
-          "checksum": "17c2500c1697e3b0b10172f989dcbbb6"
+          "checksum": "7f2750ea954d7a79e9c935931c7f4517"
         }
       ]
     },
@@ -2114,12 +2119,12 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoContext/geojson-preview",
-          "checksum": "a08e9b87a2ff983b2493edf5c30bf57d"
+          "checksum": "323a6809688ce46171d86541697e6ef0"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoContext/projection-playground",
-          "checksum": "6d4f84c2827368c417d818004250888a"
+          "checksum": "df351b699c608a31876d6b35a03c21f1"
         },
         {
           "name": "shapefile-preview",
@@ -2129,7 +2134,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoContext/topojson-preview",
-          "checksum": "6f2360e16037f740c61791ff3d3b671c"
+          "checksum": "d576cd2a788fc5469da82dd593ad41ef"
         }
       ]
     },
@@ -2144,12 +2149,12 @@
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "2240f97582be81b2ce1900d9304ec6ff"
+          "checksum": "c4f75c4b6bd75a43352d4e05ee9d97fe"
         },
         {
           "name": "choropleth",
           "path": "/example/GeoPath/choropleth",
-          "checksum": "dacbe405081334c047a3af48571fed6d"
+          "checksum": "8c627fae6f996e32ebb0e5b557e29627"
         },
         {
           "name": "eclipses-globe",
@@ -2164,7 +2169,7 @@
         {
           "name": "spike-map",
           "path": "/example/GeoPath/spike-map",
-          "checksum": "2f2e2081c3453d588df161da8f62c193"
+          "checksum": "135b2870b17f3c348c06e53410e89d4c"
         },
         {
           "name": "submarine-cables-globe",
@@ -2184,12 +2189,12 @@
         {
           "name": "transform-canvas",
           "path": "/example/GeoPath/transform-canvas",
-          "checksum": "5881d376c4eeeaccc4e8b88da0c6860f"
+          "checksum": "7b9d30aae27732597e13d886a6cf39be"
         },
         {
           "name": "transform-canvas-scale-extent",
           "path": "/example/GeoPath/transform-canvas-scale-extent",
-          "checksum": "c85880d8cdcfca665d7b7fd2d125275e"
+          "checksum": "bf6e522a596a4251bd98dbeff0f15308"
         },
         {
           "name": "transform-globe-constrain",
@@ -2204,7 +2209,7 @@
         {
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
-          "checksum": "46ef162c809d0d20eac4d60e57d9dede"
+          "checksum": "ec4529bfb54595a29ef6d9cc3f778b49"
         },
         {
           "name": "translucent-globe",
@@ -2269,7 +2274,7 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoProjection/geojson-preview",
-          "checksum": "596cf6c2e3190a7d45a627f1c23e8280"
+          "checksum": "8159cb0663d14237a0924efd43ea7582"
         },
         {
           "name": "projection-playground",
@@ -2289,7 +2294,7 @@
         {
           "name": "topojson-preview",
           "path": "/example/GeoProjection/topojson-preview",
-          "checksum": "408140ccb0beeca4caae4a11fb7a8ed1"
+          "checksum": "f284f98205e6d0a99b8498dde7172002"
         }
       ]
     },
@@ -2324,17 +2329,17 @@
         {
           "name": "zoomable",
           "path": "/example/GeoTile/zoomable",
-          "checksum": "e5224918095692ff760cb4dd4f51b10d"
+          "checksum": "148ca6541edf156fce9bfaff6d935ada"
         },
         {
           "name": "zoomable-seamless-layers",
           "path": "/example/GeoTile/zoomable-seamless-layers",
-          "checksum": "bd52383cd1cfcf6ee9ead5a22eddce17"
+          "checksum": "0d90e06a89af1c89c4c2c1e4202d4f1f"
         },
         {
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
-          "checksum": "6f64e7129b213eb63bd42c00d8198f82"
+          "checksum": "266928179a899960aec0a45cacd3811b"
         }
       ]
     },
@@ -2464,7 +2469,7 @@
         {
           "name": "college-football-map",
           "path": "/example/Image/college-football-map",
-          "checksum": "c8d63aa0ad9c5ecd8a55c8f8a71f84c1"
+          "checksum": "1784e553ddbbff737d35bfcb8cb15bb3"
         },
         {
           "name": "country-flags",
@@ -2895,6 +2900,11 @@
           "name": "series-point-click",
           "path": "/example/LineChart/series-point-click",
           "checksum": "cd43d9ab9ed1ffe41d62643e313617ff"
+        },
+        {
+          "name": "series-programmatic-control",
+          "path": "/example/LineChart/series-programmatic-control",
+          "checksum": "9c042d8db1df0886fb558979111bf0f8"
         },
         {
           "name": "series-separate-data",
@@ -3664,7 +3674,7 @@
         {
           "name": "candlestick-with-brushing",
           "path": "/example/Rule/candlestick-with-brushing",
-          "checksum": "ba523748b346a042fdc0abe060887268"
+          "checksum": "f5777c7f7cb43c4e07ddff6799d279c5"
         },
         {
           "name": "data-x-band",
@@ -4139,22 +4149,27 @@
         {
           "name": "pan-zoom-html-image",
           "path": "/example/TransformContext/pan-zoom-html-image",
-          "checksum": "c32c31af57f00bc40db3c80aef972afb"
+          "checksum": "7c6d778b61cb47e0ee0ce6a37b773644"
         },
         {
           "name": "pan-zoom-svg-image",
           "path": "/example/TransformContext/pan-zoom-svg-image",
-          "checksum": "db446ce78323bfbf9506a612de870225"
+          "checksum": "a54a0450e1398b2a09e2b955ecbd163a"
         },
         {
           "name": "planet-distances",
           "path": "/example/TransformContext/planet-distances",
-          "checksum": "99422bd79e852850e2427e72395df8f4"
+          "checksum": "7a81c9ed3f074c42b54398de7fcfbf74"
         },
         {
           "name": "playground",
           "path": "/example/TransformContext/playground",
-          "checksum": "aa99cc0eb293457519cffee07fb67f94"
+          "checksum": "af33cd6874a0e610ab3fb1e7be1aa1c5"
+        },
+        {
+          "name": "scroll-activation-key",
+          "path": "/example/TransformContext/scroll-activation-key",
+          "checksum": "b78e1b355e0d571be1d9278e28aa0233"
         }
       ]
     },

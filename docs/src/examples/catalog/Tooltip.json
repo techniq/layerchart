@@ -1968,210 +1968,210 @@
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 52,
+      "lineNumber": 53,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 54,
+      "lineNumber": 55,
       "line": "<Tooltip.Header class=\"text-center\">"
-    },
-    {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 57,
-      "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
       "lineNumber": 58,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 59,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 59,
+      "lineNumber": 60,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 61,
+      "lineNumber": 62,
       "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 59,
+      "lineNumber": 60,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 61,
+      "lineNumber": 62,
       "line": "<Tooltip.Header class=\"text-center\">"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 64,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
       "lineNumber": 65,
-      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
       "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 67,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 68,
+      "lineNumber": 69,
       "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 39,
-      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
-    },
-    {
-      "example": "histogram-horizontal",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-horizontal",
       "lineNumber": 40,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
       "lineNumber": 41,
-      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
       "lineNumber": 42,
+      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-horizontal",
+      "lineNumber": 43,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "histogram-random-distribution",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 37,
-      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "lineNumber": 38,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "lineNumber": 39,
-      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
       "lineNumber": 40,
+      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-random-distribution",
+      "lineNumber": 41,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Tooltip.Item label=\"value\" value={d} />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 45,
+      "lineNumber": 46,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
@@ -3872,7 +3872,7 @@
       "example": "projection-playground",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/projection-playground",
-      "lineNumber": 84,
+      "lineNumber": 85,
       "line": "<Tooltip.Root>"
     },
     {
@@ -6277,5 +6277,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-23T09:35:44.472Z"
+  "updatedAt": "2026-03-24T16:06:11.505Z"
 }
