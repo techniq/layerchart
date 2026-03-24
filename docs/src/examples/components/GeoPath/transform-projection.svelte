@@ -53,7 +53,7 @@
 	}}
 	transform={{
 		mode: 'projection',
-		initialScrollMode: 'none',
+		scrollMode: 'none',
 		motion: { type: 'tween', duration: 800, easing: cubicOut },
 		inertia: true
 	}}

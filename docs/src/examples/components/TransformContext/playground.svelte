@@ -39,7 +39,7 @@
 		transform={{
 			mode: 'canvas',
 			motion: config.tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
-			initialScrollMode: 'scale'
+			scrollMode: 'scale'
 		}}
 		clip
 		padding={50}

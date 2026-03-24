@@ -62,7 +62,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	height={600}
 	clip

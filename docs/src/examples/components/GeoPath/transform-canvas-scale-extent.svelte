@@ -22,7 +22,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale',
+		scrollMode: 'scale',
 		scaleExtent: [1, 8]
 	}}
 	height={400}

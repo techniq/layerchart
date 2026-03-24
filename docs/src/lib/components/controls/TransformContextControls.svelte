@@ -158,7 +158,7 @@
 				menuIcon={null}
 				{size}
 				value={chart.transform.scrollMode}
-				on:change={(e) => chart.transform.setScrollMode(e.detail.value)}
+				on:change={(e) => (chart.transform.scrollMode = e.detail.value)}
 				class="text-surface-content"
 			>
 				<svelte:fragment slot="selection" let:value>

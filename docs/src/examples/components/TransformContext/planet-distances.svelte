@@ -212,7 +212,7 @@
 		mode: 'domain',
 		axis: 'x',
 		scaleExtent: [1, maxZoomScale],
-		initialScrollMode: 'scale',
+		scrollMode: 'scale',
 		motion: { type: 'spring' },
 		domainExtent: { x: { min: 'data', max: 'data' } }
 	}}

@@ -14,7 +14,9 @@ related:
   ]
 ---
 
-## Playground
+## Usage
+
+### Playground
 
 :example{ name="playground" }
 
@@ -25,3 +27,7 @@ related:
 ### Pan/Zoom HTML image
 
 :example{ name="pan-zoom-html-image" }
+
+### Scroll Activation Key
+
+:example{ name="scroll-activation-key" }

@@ -48,7 +48,7 @@
 		}}
 		transform={{
 			mode: 'projection',
-			initialScrollMode: 'scale'
+			scrollMode: 'scale'
 		}}
 		padding={{
 			top: 100,

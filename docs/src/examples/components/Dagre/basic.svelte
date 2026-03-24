@@ -35,7 +35,7 @@
 	<Chart
 		transform={{
 			mode: 'canvas',
-			initialScrollMode: 'scale',
+			scrollMode: 'scale',
 			motion: { type: 'tween', duration: 800, easing: cubicOut }
 		}}
 		clip

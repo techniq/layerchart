@@ -73,7 +73,7 @@ When `fitGeojson` is provided and translate mode is active, the initial translat
 <!-- Flat map: pan/zoom (auto-detected) -->
 <Chart
 	geo={{ projection: geoMercator, fitGeojson: states }}
-	transform={{ mode: 'projection', initialScrollMode: 'scale' }}
+	transform={{ mode: 'projection', scrollMode: 'scale' }}
 />
 ```
 
@@ -102,7 +102,7 @@ To enable zoom on a globe alongside rotation:
 
 ### Scroll mode
 
-The `initialScrollMode` option controls what the mouse wheel/trackpad does:
+The `scrollMode` option controls what the mouse wheel/trackpad does:
 
 | Value         | Effect                                                |
 | ------------- | ----------------------------------------------------- |
@@ -110,7 +110,32 @@ The `initialScrollMode` option controls what the mouse wheel/trackpad does:
 | `'translate'` | Scroll wheel pans                                     |
 | `'none'`      | Scroll wheel does nothing (default for `canvas` mode) |
 
-The scroll mode can be changed at runtime via `context.transform.setScrollMode('scale')`.
+The scroll mode is reactive and can be changed at runtime via `context.transform.scrollMode = 'scale'`.
+
+### Scroll activation key
+
+By default, scroll/wheel events are processed immediately. To prevent accidental zoom/pan when scrolling the page, require a modifier key to be held:
+
+```svelte
+<Chart
+	transform={{
+		mode: 'canvas',
+		scrollMode: 'scale',
+		scrollActivationKey: 'meta'
+	}}
+/>
+```
+
+| Value       | Key              |
+| ----------- | ---------------- |
+| `'meta'`    | ⌘ Command (Mac) / ⊞ Win (Windows) |
+| `'alt'`     | ⌥ Option / Alt   |
+| `'control'` | Control          |
+| `'shift'`   | Shift            |
+
+When set, scroll events without the key held are ignored (no `preventDefault`), allowing normal page scrolling.
+
+:example{ component="TransformContext" name="scroll-activation-key" }
 
 ### Pointer interactions
 
@@ -426,7 +451,7 @@ Inertia works with all transform modes and respects `translateExtent`, `constrai
 The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
 
 ```svelte
-<Chart transform={{ mode: 'canvas', initialScrollMode: 'scale' }}>
+<Chart transform={{ mode: 'canvas', scrollMode: 'scale' }}>
 	{#snippet children()}
 		<TransformContextControls />
 		<!-- chart content -->
@@ -444,8 +469,8 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Limit zoom depth       | `scaleExtent: [1, 10]`                                           | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
 | Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`              | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`                | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
-| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', initialScrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
-| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', initialScrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
+| Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
+| Pan/zoom a map (geo)   | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
 | Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)             | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                            | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                            | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
@@ -454,3 +479,4 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                       | [basic](/docs/components/Pack/basic)                                                    |
 | Dynamic data loading   | Derive data from `context.xDomain` visible range                 | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
 | Drag inertia           | `inertia: true` with `motion: 'spring'`                          | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |
+| Require key to scroll  | `scrollActivationKey: 'meta'`                                    | [scroll-activation-key](/docs/components/TransformContext/scroll-activation-key)         |

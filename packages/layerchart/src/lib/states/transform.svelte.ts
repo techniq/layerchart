@@ -10,6 +10,7 @@ import type { ChartState } from './chart.svelte.js';
 
 export type TransformMode = 'canvas' | 'domain' | 'projection' | 'none';
 export type TransformScrollMode = 'scale' | 'translate' | 'none';
+export type ScrollActivationKey = 'meta' | 'alt' | 'control' | 'shift';
 
 export const DEFAULT_TRANSLATE = { x: 0, y: 0 };
 export const DEFAULT_SCALE = 1;
@@ -43,7 +44,7 @@ export type TransformStateOptions = {
     deltaY: number
   ) => { x: number; y: number };
   disablePointer?: boolean;
-  initialScrollMode?: TransformScrollMode;
+  scrollMode?: TransformScrollMode;
   clickDistance?: number;
   initialTranslate?: { x: number; y: number };
   initialScale?: number;
@@ -53,6 +54,9 @@ export type TransformStateOptions = {
 
   /** Enable inertia (momentum) after drag release. Pass `true` for defaults or an options object. */
   inertia?: boolean | InertiaOptions;
+
+  /** Require a modifier key to be held for scroll/wheel to activate zoom/pan. Default: no key required. */
+  scrollActivationKey?: ScrollActivationKey;
 
   /** Min/max scale factor [minScale, maxScale]. Default: no limit. */
   scaleExtent?: [number, number];
@@ -91,6 +95,7 @@ export class TransformState {
   onTransform: (details: { scale: number; translate: { x: number; y: number } }) => void;
   ondragstart: () => void;
   ondragend: () => void;
+  scrollActivationKey: ScrollActivationKey | undefined;
   scaleExtent: [number, number] | undefined;
   translateExtent: [[number, number], [number, number]] | undefined;
   constrain: ((transform: TransformConstraint) => TransformConstraint) | undefined;
@@ -132,6 +137,7 @@ export class TransformState {
     this.onTransform = options.onTransform ?? (() => {});
     this.ondragstart = options.ondragstart ?? (() => {});
     this.ondragend = options.ondragend ?? (() => {});
+    this.scrollActivationKey = options.scrollActivationKey;
     this.scaleExtent = options.scaleExtent;
     this.translateExtent = options.translateExtent;
     this.constrain = options.constrain;
@@ -163,7 +169,7 @@ export class TransformState {
         velocityWindow: 160,
       };
     }
-    this.scrollMode = options.initialScrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
+    this.scrollMode = options.scrollMode ?? (this.mode === 'domain' ? 'scale' : 'none');
 
     // Initialize motion controllers
     const resolvedMotion = parseMotionProp(options.motion);
@@ -487,8 +493,23 @@ export class TransformState {
     this.scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
 
+  private _isActivationKeyHeld(e: WheelEvent): boolean {
+    if (!this.scrollActivationKey) return true;
+    switch (this.scrollActivationKey) {
+      case 'meta':
+        return e.metaKey;
+      case 'alt':
+        return e.altKey;
+      case 'control':
+        return e.ctrlKey;
+      case 'shift':
+        return e.shiftKey;
+    }
+  }
+
   onWheel(e: WheelEvent & { currentTarget: HTMLElement }) {
     if (this.mode === 'none' || this.scrollMode === 'none') return;
+    if (!this._isActivationKeyHeld(e)) return;
 
     e.preventDefault();
 

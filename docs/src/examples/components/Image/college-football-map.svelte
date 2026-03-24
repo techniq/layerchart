@@ -46,7 +46,7 @@
 	}}
 	transform={{
 		mode: 'projection',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	tooltipContext={{ mode: 'voronoi' }}
 	x="longitude"

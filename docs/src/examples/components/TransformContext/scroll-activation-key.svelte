@@ -4,11 +4,14 @@
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 </script>
 
+<p class="text-sm text-surface-content/50 mb-2">Hold <kbd class="px-1 py-0.5 rounded bg-surface-200 text-xs font-mono">⌘ Command</kbd> to zoom with scroll</p>
+
 <Chart
 	transform={{
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut },
-		scrollMode: 'scale'
+		scrollMode: 'scale',
+		scrollActivationKey: 'meta'
 	}}
 	clip
 	height={500}

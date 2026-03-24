@@ -43,7 +43,7 @@
     motion,
     processTranslate,
     disablePointer,
-    initialScrollMode,
+    scrollMode,
     clickDistance,
     initialTranslate,
     initialScale,
@@ -54,6 +54,7 @@
     translateExtent,
     constrain,
     inertia,
+    scrollActivationKey,
     ...restProps
   }: TransformContextProps = $props();
 
@@ -63,7 +64,7 @@
     motion,
     processTranslate,
     disablePointer,
-    initialScrollMode,
+    scrollMode,
     clickDistance,
     initialTranslate,
     initialScale,
@@ -74,6 +75,7 @@
     translateExtent,
     constrain,
     inertia,
+    scrollActivationKey,
   };
 
   let ref = $state<HTMLElement>();
@@ -99,6 +101,12 @@
       transformState.initialTranslate = newTranslate;
       transformState.initialScale = newScale;
       transformState.reset();
+    }
+  });
+
+  $effect.pre(() => {
+    if (scrollMode !== undefined) {
+      transformState.scrollMode = scrollMode;
     }
   });
 
@@ -140,6 +148,10 @@
         velocityWindow: 160,
       };
     }
+  });
+
+  $effect.pre(() => {
+    transformState.scrollActivationKey = scrollActivationKey;
   });
 
   // Bind `state` prop

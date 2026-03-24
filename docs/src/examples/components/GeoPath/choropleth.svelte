@@ -62,7 +62,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	padding={{ top: 60 }}
 	tooltipContext={{ raiseTarget: getSettings().layer === 'svg' }}

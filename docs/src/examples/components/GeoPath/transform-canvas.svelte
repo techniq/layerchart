@@ -53,7 +53,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'none',
+		scrollMode: 'none',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
 	}}
 	height={600}

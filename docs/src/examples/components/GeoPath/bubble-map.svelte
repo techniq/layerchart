@@ -76,7 +76,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	padding={{ top: 60 }}
 	height={600}

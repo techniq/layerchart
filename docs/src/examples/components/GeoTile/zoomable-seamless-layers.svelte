@@ -49,7 +49,7 @@
 		}}
 		transform={{
 			mode: 'projection',
-			initialScrollMode: 'scale',
+			scrollMode: 'scale',
 			motion: { type: 'tween', duration: 800, easing: cubicOut },
 			inertia: { decay: 0.99, _maxVelocity: 1.4 }
 		}}

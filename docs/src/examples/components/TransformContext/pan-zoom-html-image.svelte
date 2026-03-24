@@ -8,7 +8,7 @@
 	transform={{
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut },
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	clip
 	height={500}
