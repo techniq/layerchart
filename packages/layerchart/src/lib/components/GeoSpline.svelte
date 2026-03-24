@@ -1,7 +1,7 @@
 <script lang="ts" module>
-  import Spline, { type SplineProps } from './Spline.svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import type { Without } from '$lib/utils/types.js';
+  import type { PathProps } from './Path.svelte';
 
   export type GeoSplinePropsWithoutHTML = {
     /**
@@ -29,14 +29,16 @@
   };
 
   export type GeoSplineProps = GeoSplinePropsWithoutHTML &
-    Without<SplineProps, GeoSplinePropsWithoutHTML>;
+    Without<PathProps, GeoSplinePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
+  import { line as d3Line } from 'd3-shape';
 
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import Path from './Path.svelte';
 
   let { link, loft = 1.0, curve = curveNatural, ...restProps }: GeoSplineProps = $props();
 
@@ -62,12 +64,18 @@
   const middle = $derived(
     geo.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
   ) as [number, number];
+
+  // Build SVG path directly since coordinates are already projected to screen space.
+  // Using Spline would double-project via its geo mode.
+  const d = $derived(
+    d3Line<[number, number]>()
+      .x((d) => d[0])
+      .y((d) => d[1])
+      .curve(curve)([source, middle, target]) ?? ''
+  );
 </script>
 
-<Spline
-  data={[source, middle, target]}
-  x={(d) => d[0]}
-  y={(d) => d[1]}
-  {curve}
+<Path
+  pathData={d}
   {...extractLayerProps(restProps, 'lc-geo-spline')}
 />
