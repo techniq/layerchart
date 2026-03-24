@@ -938,6 +938,7 @@
             if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
             if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
           }
+          userOnBrushEnd?.(e);
           e.brush.reset();
         } else {
           // Brush was cleared (click-to-reset) — reset transform/domain too
@@ -947,8 +948,8 @@
             brushXDomain = undefined;
             brushYDomain = undefined;
           }
+          userOnBrushEnd?.(e);
         }
-        userOnBrushEnd?.(e);
       },
     };
   });

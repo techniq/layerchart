@@ -243,6 +243,59 @@ describe('BrushContext', () => {
     });
   });
 
+  describe('zoomOnBrush with onBrushEnd', () => {
+    it('should pass brush domain values to onBrushEnd before resetting', async () => {
+      let chartContext: any;
+      let receivedX: any = null;
+
+      const { container } = render(BrushTestHarness, {
+        chartProps: {
+          ...defaultChartProps,
+          brush: {
+            zoomOnBrush: true,
+            onBrushEnd: (e: any) => {
+              receivedX = [...e.brush.x];
+            },
+          },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      const brushEl = container.querySelector('.lc-brush-context') as HTMLElement;
+      const rect = brushEl.getBoundingClientRect();
+
+      // Simulate a brush drag: pointerdown → pointermove → pointerup
+      // Drag from 20% to 80% of the chart width (domain ~2 to ~8)
+      const startX = rect.left + rect.width * 0.2;
+      const endX = rect.left + rect.width * 0.8;
+      const y = rect.top + rect.height / 2;
+
+      brushEl.dispatchEvent(
+        new PointerEvent('pointerdown', { clientX: startX, clientY: y, bubbles: true })
+      );
+      window.dispatchEvent(
+        new PointerEvent('pointermove', { clientX: endX, clientY: y, bubbles: true })
+      );
+      window.dispatchEvent(
+        new PointerEvent('pointerup', { clientX: endX, clientY: y, bubbles: true })
+      );
+      await tick();
+
+      // The user's onBrushEnd callback should have received domain values before reset
+      expect(receivedX).not.toBeNull();
+      expect(receivedX[0]).not.toBeNull();
+      expect(receivedX[1]).not.toBeNull();
+      expect(receivedX[0]).toBeLessThan(receivedX[1]);
+
+      // After the enhanced handler runs, brush should be reset
+      expect(chartContext.brush.x).toEqual([null, null]);
+    });
+  });
+
   describe('external sync (x/y props)', () => {
     it('should show brush when x prop is provided with a sub-domain', async () => {
       const { container } = render(Chart, {
