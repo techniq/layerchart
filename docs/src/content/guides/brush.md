@@ -4,7 +4,7 @@ category: state
 order: 2
 ---
 
-LayerChart provides a brush system for interactive selection on charts. Brushing lets users drag to select a region, which can drive filtering, zooming, syncing between charts, or any custom behavior. The API is inspired by [d3-brush](https://d3js.org/d3-brush), with an imperative `BrushState` that manages the selection and a `BrushContext` component that handles pointer interactions.
+LayerChart provides a brush system for interactive selection on charts. Brushing lets users drag to select a region, which can drive filtering, zooming, syncing between charts, or any custom behavior. The `BrushState` manages the selection and a `BrushContext` component handles pointer interactions.
 
 ## Quick start
 
@@ -130,11 +130,11 @@ Access the brush state via the chart context to control it from code:
 
 ### Methods
 
-| Method             | Description                                                 |
-| ------------------ | ----------------------------------------------------------- |
-| `move({ x?, y? })` | Set the selection programmatically (like d3's `brush.move`) |
-| `reset()`          | Clear the selection                                         |
-| `selectAll()`      | Select the full domain extent                               |
+| Method             | Description                        |
+| ------------------ | ---------------------------------- |
+| `move({ x?, y? })` | Set the selection programmatically |
+| `reset()`          | Clear the selection                |
+| `selectAll()`      | Select the full domain extent      |
 
 ### Properties
 
