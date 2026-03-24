@@ -446,6 +446,9 @@ export class ChartState<
           const data = s.data ?? chartDataArray(this.data);
           return data.flatMap(acc);
         });
+        if (baseline != null) {
+          return [min([baseline, ...seriesDomain]), max([baseline, ...seriesDomain])];
+        }
         return extent(seriesDomain);
       }
     }
