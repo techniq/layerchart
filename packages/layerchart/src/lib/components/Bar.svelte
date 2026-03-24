@@ -85,6 +85,11 @@
       | 'bottom-right';
 
     motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+
+    /**
+     * Setup pointer events to show tooltip for related data.
+     */
+    tooltip?: boolean;
   } & CommonStyleProps;
 
   export type BarProps = BarPropsWithoutHTML &
@@ -96,7 +101,7 @@
 </script>
 
 <script lang="ts">
-  import type { SVGAttributes } from 'svelte/elements';
+  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
   import { greatestAbs } from '@layerstack/utils';
 
   import Rect from './Rect.svelte';
@@ -135,6 +140,10 @@
     initialWidth,
     width: widthProp,
     height: heightProp,
+    tooltip,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
     ...restProps
   }: BarProps = $props();
 
@@ -265,6 +274,21 @@
       .split('\n')
       .join('')
   );
+
+  const onPointerEnter: PointerEventHandler<Element> = (e) => {
+    onpointerenter?.(e);
+    if (tooltip) ctx.tooltip.show(e, data);
+  };
+
+  const onPointerMove: PointerEventHandler<Element> = (e) => {
+    onpointermove?.(e);
+    if (tooltip) ctx.tooltip.show(e, data);
+  };
+
+  const onPointerLeave: PointerEventHandler<Element> = (e) => {
+    onpointerleave?.(e);
+    if (tooltip) ctx.tooltip.hide();
+  };
 </script>
 
 {#if ctx.radial}
@@ -279,6 +303,9 @@
     {strokeWidth}
     {opacity}
     cornerRadius={radius}
+    onpointerenter={onPointerEnter}
+    onpointermove={onPointerMove}
+    onpointerleave={onPointerLeave}
     {...extractLayerProps(restProps, 'lc-bar')}
   />
 {:else if rounded === 'all' || rounded === 'none' || radius === 0}
@@ -295,6 +322,9 @@
     {initialHeight}
     {initialWidth}
     {...dimensions}
+    onpointerenter={onPointerEnter}
+    onpointermove={onPointerMove}
+    onpointerleave={onPointerLeave}
     {...extractLayerProps(restProps, 'lc-bar')}
   />
 {:else}
@@ -307,6 +337,9 @@
     {strokeWidth}
     {opacity}
     motion={tweenMotion}
+    onpointerenter={onPointerEnter}
+    onpointermove={onPointerMove}
+    onpointerleave={onPointerLeave}
     {...extractLayerProps(restProps, 'lc-bar')}
   />
 {/if}
