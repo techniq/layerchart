@@ -14,20 +14,6 @@ related:
   ]
 ---
 
-## Usage
-
-### Playground
-
-:example{ name="playground" }
-
-### Pan/Zoom SVG image
-
-:example{ name="pan-zoom-svg-image" }
-
-### Pan/Zoom HTML image
-
-:example{ name="pan-zoom-html-image" }
-
-### Scroll Activation Key
-
-:example{ name="scroll-activation-key" }
+::note
+See the [Transform guide](/docs/guides/transform) for usage details, modes, constraints, and examples.
+::

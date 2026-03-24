@@ -220,3 +220,7 @@ Combining `brush` with `transform={{ mode: 'domain' }}` enables brush-to-zoom wi
 | Point selection         | `brush={{ axis: 'both', onChange: ... }}`                | [selection](/docs/components/BrushContext/selection)                          |
 | Custom styling          | `brush={{ classes: { range: '...', handle: '...' } }}`   | [simple-styling](/docs/components/BrushContext/simple-styling)                |
 | Disable click-to-reset  | `brush={{ clickToReset: false }}`                        |                                                                               |
+
+## API reference
+
+- [BrushContext](/docs/components/BrushContext) — component API and props

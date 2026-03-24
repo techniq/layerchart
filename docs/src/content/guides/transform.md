@@ -480,3 +480,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Dynamic data loading   | Derive data from `context.xDomain` visible range                 | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |
 | Drag inertia           | `inertia: true` with `motion: 'spring'`                          | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)             |
 | Require key to scroll  | `scrollActivationKey: 'meta'`                                    | [scroll-activation-key](/docs/components/TransformContext/scroll-activation-key)         |
+
+## API reference
+
+- [TransformContext](/docs/components/TransformContext) — component API and props

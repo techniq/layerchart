@@ -482,3 +482,9 @@ Add an `onclick` handler to `tooltipContext` to respond to clicks on data points
 | Disable animation                | `<Tooltip.Root motion={false}>`                                 | [disable-motion](/docs/components/Tooltip/disable-motion)                                           |
 | Bar chart tooltip                | `tooltipContext={{ mode: 'band' }}`                             | [simple-bars](/docs/components/Tooltip/simple-bars)                                                 |
 | Manual mode (geo/pie)            | `tooltipContext={{ mode: 'manual' }}` + `show()`/`hide()`      |                                                                                                     |
+
+## API reference
+
+- [Tooltip](/docs/components/Tooltip) — display component API and props (`Tooltip.Root`, `Tooltip.Header`, `Tooltip.List`, `Tooltip.Item`, `Tooltip.Separator`)
+- [TooltipContext](/docs/components/TooltipContext) — interaction component API and props
+- [Highlight](/docs/components/Highlight) — visual highlight indicators

@@ -306,3 +306,7 @@ Annotations can be associated with a specific series via `seriesKey`. When set, 
 | Default visible series          | `series={[{ key: '...', selected: false }]}`               | [series-programmatic-control](/docs/components/LineChart/series-programmatic-control)     |
 | Per-series tooltips             | Custom tooltip snippet with `context.series`               | [series-individual-tooltip](/docs/components/LineChart/series-individual-tooltip)         |
 | Scatter series                  | `series={[...]}` on ScatterChart                           | [series](/docs/components/ScatterChart/series)                                           |
+
+## API reference
+
+- [Legend](/docs/components/Legend) — legend component API and props
