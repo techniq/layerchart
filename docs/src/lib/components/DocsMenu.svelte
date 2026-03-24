@@ -24,7 +24,9 @@
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
 	const filteredGuides = allGuides.filter((g) => !g.draft);
-	const guidesByCategory = flatGroup(filteredGuides, (d) => d.category?.toLowerCase());
+	const guidesByCategory = flatGroup(filteredGuides, (d) => d.category?.toLowerCase()).sort(
+		sortFunc(([category]) => (category ? 1 : 0))
+	);
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
