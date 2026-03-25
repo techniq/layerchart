@@ -37,13 +37,13 @@
 </script>
 
 <script lang="ts">
-  import { untrack } from 'svelte';
   import type { Snippet } from 'svelte';
 
   import Bar, { type BarProps, type BarPropsWithoutHTML } from './Bar.svelte';
   import Group from './Group.svelte';
 
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { chartDataArray } from '../utils/common.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -63,15 +63,10 @@
 
   const ctx = getChartContext();
 
-  // Register this mark with the chart for domain/series calculation.
-  $effect(() => {
-    return untrack(() =>
-      ctx.registerMark(() => ({
-        data: dataProp,
-        seriesKey,
-        color: fill as string | undefined,
-      }))
-    );
+  registerComponentNode({
+    name: 'Bars',
+    kind: 'mark',
+    markInfo: () => ({ data: dataProp, seriesKey, color: fill as string | undefined }),
   });
 
   // Get series data if seriesKey is provided

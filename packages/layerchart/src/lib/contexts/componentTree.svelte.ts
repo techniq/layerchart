@@ -1,6 +1,9 @@
+import { untrack } from 'svelte';
 import { Context } from 'runed';
 import type { ComponentRender } from './canvas.js';
 import { getCanvasContext } from './canvas.js';
+import { getChartContext } from './chart.js';
+import type { MarkInfo } from '$lib/states/chart.svelte.js';
 
 export type NodeKind = 'group' | 'mark' | 'composite-mark';
 
@@ -23,6 +26,12 @@ export interface RegisterComponentNodeOptions<T extends Element = Element> {
   kind: NodeKind;
   /** Canvas render info. When provided, sets up dependency tracking and cleanup automatically. */
   canvasRender?: ComponentRender<T>;
+  /**
+   * Mark info getter for chart domain/series calculation.
+   * When provided and not inside a composite mark, automatically registers with ChartState
+   * via `$effect` + `untrack` to avoid circular derived references.
+   */
+  markInfo?: () => MarkInfo;
 }
 
 const _ParentNode = new Context<ComponentNode | null>('ComponentTreeParent');
@@ -42,18 +51,25 @@ export function getParentNode(): ComponentNode | null {
  * - Dependency tracking for canvas invalidation
  * - Cleanup (node removal + invalidation) on destroy
  *
+ * When `markInfo` is provided (and not inside a composite mark), automatically sets up:
+ * - Chart mark registration via `$effect` + `untrack`
+ * - Cleanup on destroy
+ *
  * @example
- * // Non-canvas node (composite mark):
+ * // Composite mark (shields children from chart registration):
  * registerComponentNode({ name: 'Area', kind: 'composite-mark' })
  *
- * // Canvas leaf mark:
- * registerComponentNode({ name: 'Circle', kind: 'mark', canvasRender: { render, deps, events } })
+ * // Mark with chart registration:
+ * registerComponentNode({ name: 'Spline', kind: 'mark', markInfo: () => ({ data, x, y, seriesKey, color }) })
+ *
+ * // Canvas leaf mark with chart registration:
+ * registerComponentNode({ name: 'Circle', kind: 'mark', canvasRender: { render, deps, events }, markInfo: () => ({ ... }) })
  *
  * // Canvas group:
  * registerComponentNode({ name: 'Group', kind: 'group', canvasRender: { render, deps, events } })
  */
 export function registerComponentNode<T extends Element = Element>(options: RegisterComponentNodeOptions<T>): ComponentNode {
-  const { name, kind, canvasRender } = options;
+  const { name, kind, canvasRender, markInfo } = options;
   const parent = getParentNode();
 
   // Walk ancestors to check for composite-mark
@@ -106,6 +122,15 @@ export function registerComponentNode<T extends Element = Element>(options: Regi
     canvasCtx.invalidate();
   }
 
+  // When mark info is provided and not inside a composite mark,
+  // register with ChartState for domain/series calculation
+  if (markInfo && !insideCompositeMark) {
+    const chartCtx = getChartContext();
+    $effect(() => {
+      return untrack(() => chartCtx.registerMark(markInfo));
+    });
+  }
+
   return node;
 }
 
@@ -119,4 +144,3 @@ export function removeComponentNode(node: ComponentNode) {
     if (idx >= 0) node.parent.children.splice(idx, 1);
   }
 }
-

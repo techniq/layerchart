@@ -56,7 +56,6 @@
 </script>
 
 <script lang="ts">
-  import { untrack } from 'svelte';
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
@@ -77,10 +76,6 @@
 
   const ctx = getChartContext();
 
-  // Register as composite mark (shields child Spline from chart registration).
-  // insideCompositeMark is computed from ancestors *before* this node.
-  const { insideCompositeMark: skipRegistration } = registerComponentNode({ name: 'Area', kind: 'composite-mark' });
-
   let {
     curve,
     data,
@@ -97,21 +92,12 @@
     ...restProps
   }: AreaProps = $props();
 
-  // Register this mark with the chart for domain/series calculation.
-  // Skip when inside a composite mark (Threshold, etc.) to avoid circular derived references.
-  if (!skipRegistration) {
-    $effect(() => {
-      return untrack(() =>
-        ctx.registerMark(() => ({
-          data,
-          x,
-          y: y1 ?? y0,
-          seriesKey,
-          color: fill as string | undefined,
-        }))
-      );
-    });
-  }
+  // Register as composite mark (shields child Spline) + chart mark registration
+  registerComponentNode({
+    name: 'Area',
+    kind: 'composite-mark',
+    markInfo: () => ({ data, x, y: y1 ?? y0, seriesKey, color: fill as string | undefined }),
+  });
 
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
   let seriesData = $derived(series?.data);

@@ -51,7 +51,6 @@
 </script>
 
 <script lang="ts">
-  import { untrack } from 'svelte';
   import { draw as _drawTransition } from 'svelte/transition';
 
   import { geoPath as d3GeoPath } from 'd3-geo';
@@ -66,25 +65,14 @@
 
   const ctx = getChartContext();
   const geo = getGeoContext();
-  const { insideCompositeMark: skipRegistration } = registerComponentNode({ name: 'Spline', kind: 'mark' });
 
   let { data, x, y, seriesKey, defined, curve, stroke, ...restProps }: SplineProps = $props();
 
-  // Register this mark with the chart for domain/series calculation.
-  // Skip when inside a composite mark (Area, Hull, etc.) to avoid circular derived references.
-  if (!skipRegistration) {
-    $effect(() => {
-      return untrack(() =>
-        ctx.registerMark(() => ({
-          data,
-          x,
-          y,
-          seriesKey,
-          color: stroke as string | undefined,
-        }))
-      );
-    });
-  }
+  registerComponentNode({
+    name: 'Spline',
+    kind: 'mark',
+    markInfo: () => ({ data, x, y, seriesKey, color: stroke as string | undefined }),
+  });
 
   function getScaleValue(
     data: any,
