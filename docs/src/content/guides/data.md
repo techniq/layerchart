@@ -9,13 +9,63 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ## Data patterns
 
-| Pattern | When to use |
-|---------|-------------|
-| Chart data | Single mark or shared data across marks |
-| Chart data + per-mark accessors | Same data, different values per mark (e.g. `y="apples"` vs `y="oranges"`) |
-| Per-mark data | Individual marks need different data than the chart |
-| Series (unified data) | Multiple series from the same data array (wide format) with legend/tooltip |
-| Series (per-series data) | Each series has its own data array (long format / different lengths) |
+**Chart data** — Single mark or shared data across marks.
+
+```svelte
+<Chart data={salesData} x="date" y="revenue">
+  <Spline />
+</Chart>
+```
+
+**Chart data + per-mark accessors** — Same data, different values per mark.
+
+```svelte
+<Chart data={fruitData} x="date">
+  <Spline y="apples" />
+  <Spline y="oranges" />
+</Chart>
+```
+
+**Per-mark data** — Individual marks need different data than the chart.
+
+```svelte
+<Chart x="date" y="value">
+  <Spline data={actualData} />
+  <Spline data={forecastData} />
+</Chart>
+```
+
+**Series (unified data)** — Multiple series from the same data array (wide format) with legend/tooltip.
+
+```svelte
+<Chart
+  data={fruitData}
+  x="date"
+  series={[
+    { key: 'apples', label: 'Apples' },
+    { key: 'oranges', label: 'Oranges' },
+  ]}
+>
+  <Spline />
+  <Legend />
+</Chart>
+```
+
+**Series (per-series data)** — Each series has its own data array (long format / different lengths).
+
+```svelte
+<Chart
+  x="date"
+  y="value"
+  series={[
+    { key: 'actual', data: actualData },
+    { key: 'forecast', data: forecastData },
+  ]}
+>
+  <Spline />
+  <Legend />
+</Chart>
+```
 
 ## Accessors
 
@@ -67,3 +117,9 @@ A single data array with per-series values as separate properties (wide format):
 Each series has its own data array:
 
 :example{ component="Chart" name="data-series-separate-data" showCode }
+
+## Performance
+
+Passing data and accessors as Chart-level props (`data`, `x`, `y`, `series`) is the most efficient approach — all info is available immediately and domains, scales, and axes compute in a single render pass.
+
+Per-mark accessors (`<Spline y="apples" />`) and per-mark data (`<Spline data={...} />`) use mark registration, which runs after the initial render. This means the chart renders twice: once with incomplete domain info, then again after marks register. The visual difference is negligible, but for performance-critical charts with many marks or large datasets, prefer Chart-level props.
