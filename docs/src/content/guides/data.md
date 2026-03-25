@@ -73,7 +73,6 @@ The `x` and `y` props accept several accessor types:
 | -------- | --------------------------- | ---------------------------------------- |
 | String   | `x="date"`                  | Property name lookup                     |
 | Function | `x={(d) => d.date}`         | Custom accessor function                 |
-| Index    | `x={0}`                     | Array index (for tuple data)             |
 | Array    | `y={['apples', 'oranges']}` | Multiple values (for domain calculation) |
 
 ## Chart data
