@@ -3,6 +3,7 @@ import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
 
 export type { ChartState };
+export type { NodeKind, ComponentNode, RegisterComponentNodeOptions } from '$lib/states/chart.svelte.js';
 
 const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartContext');
 
@@ -12,6 +13,14 @@ const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartCon
  */
 const fallbackContext = {
   registerMark: () => () => { /* no-op */ },
+  registerComponentNode: (_options: any) => ({
+    id: Symbol('noop'),
+    kind: 'mark' as const,
+    name: 'noop',
+    parent: null,
+    children: [],
+    insideCompositeMark: false,
+  }),
   series: {
     series: [],
     visibleSeries: [],

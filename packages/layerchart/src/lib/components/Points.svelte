@@ -65,7 +65,6 @@
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
@@ -87,7 +86,7 @@
     ...restProps
   }: PointsProps = $props();
 
-  registerComponentNode({
+  ctx.registerComponentNode({
     name: 'Points',
     kind: 'mark',
     markInfo: () => ({ data, x, y, seriesKey, color: (fill ?? stroke) as string | undefined }),

@@ -47,7 +47,6 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -92,7 +91,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'GeoTile', kind: 'mark', canvasRender: {
+    ctx.registerComponentNode({ name: 'GeoTile', kind: 'mark', canvasRender: {
       render,
       deps: () => [tiles],
     } });

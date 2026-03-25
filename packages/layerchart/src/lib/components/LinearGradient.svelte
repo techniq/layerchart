@@ -78,7 +78,6 @@
 <script lang="ts">
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { createId } from '$lib/utils/createId.js';
@@ -175,7 +174,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'Gradient', kind: 'mark', canvasRender: {
+    ctx.registerComponentNode({ name: 'Gradient', kind: 'mark', canvasRender: {
       render,
       deps: () => [x1, y1, x2, y2, stops, className],
     } });

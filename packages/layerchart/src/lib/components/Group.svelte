@@ -105,7 +105,6 @@
 
   import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
   import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
@@ -221,7 +220,7 @@
   const layerCtx = getLayerContext();
 
   if (layerCtx === 'canvas') {
-    registerComponentNode({
+    chartCtx.registerComponentNode({
       name: 'Group',
       kind: 'group',
       canvasRender: {

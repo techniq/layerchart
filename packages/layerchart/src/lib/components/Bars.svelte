@@ -43,7 +43,6 @@
   import Group from './Group.svelte';
 
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { chartDataArray } from '../utils/common.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -63,7 +62,7 @@
 
   const ctx = getChartContext();
 
-  registerComponentNode({
+  ctx.registerComponentNode({
     name: 'Bars',
     kind: 'mark',
     markInfo: () => ({ data: dataProp, seriesKey, color: fill as string | undefined }),

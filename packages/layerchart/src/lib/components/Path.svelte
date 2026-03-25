@@ -87,7 +87,6 @@
 
   import Group from './Group.svelte';
   import { flattenPathData } from '../utils/path.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import MarkerWrapper from './MarkerWrapper.svelte';
@@ -189,7 +188,7 @@
   const strokeKey = createKey(() => stroke);
 
   if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'Path', kind: 'mark', canvasRender: {
+    ctx.registerComponentNode({ name: 'Path', kind: 'mark', canvasRender: {
       render,
       events: {
         click: restProps.onclick,

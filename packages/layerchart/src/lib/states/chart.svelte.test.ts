@@ -226,7 +226,7 @@ describe('ChartState mark registration', () => {
     try {
       expect(state.seriesState.isDefaultSeries).toBe(true);
 
-      const unregister = state.registerMark(() => ({ y: 'value', color: 'red' }));
+      const unregister = state.registerMark({ y: 'value', color: 'red' });
       flushSync();
 
       // After registration, implicit series should be created
@@ -257,8 +257,8 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ y: 'apples', color: 'red' }));
-      state.registerMark(() => ({ y: 'bananas', color: 'yellow' }));
+      state.registerMark({ y: 'apples', color: 'red' });
+      state.registerMark({ y: 'bananas', color: 'yellow' });
       flushSync();
 
       expect(state.seriesState.isDefaultSeries).toBe(false);
@@ -278,8 +278,8 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ seriesKey: 'temp', color: 'blue' }));
-      state.registerMark(() => ({ seriesKey: 'humidity', color: 'green' }));
+      state.registerMark({ seriesKey: 'temp', color: 'blue' });
+      state.registerMark({ seriesKey: 'humidity', color: 'green' });
       flushSync();
 
       expect(state.seriesState.series).toHaveLength(2);
@@ -303,8 +303,8 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ x: 'apples', color: 'red' }));
-      state.registerMark(() => ({ x: 'bananas', color: 'yellow' }));
+      state.registerMark({ x: 'apples', color: 'red' });
+      state.registerMark({ x: 'bananas', color: 'yellow' });
       flushSync();
 
       expect(state.seriesState.isDefaultSeries).toBe(false);
@@ -329,8 +329,8 @@ describe('ChartState mark registration', () => {
 
     try {
       // Register marks that would normally create implicit series
-      state.registerMark(() => ({ y: 'apples', color: 'red' }));
-      state.registerMark(() => ({ y: 'bananas', color: 'yellow' }));
+      state.registerMark({ y: 'apples', color: 'red' });
+      state.registerMark({ y: 'bananas', color: 'yellow' });
       flushSync();
 
       // Explicit series should take precedence
@@ -349,8 +349,8 @@ describe('ChartState mark registration', () => {
 
     try {
       // Two marks referencing the same y accessor
-      state.registerMark(() => ({ y: 'value', color: 'red' }));
-      state.registerMark(() => ({ y: 'value', color: 'blue' }));
+      state.registerMark({ y: 'value', color: 'red' });
+      state.registerMark({ y: 'value', color: 'blue' });
       flushSync();
 
       // Should only create one series (first wins)
@@ -373,7 +373,7 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ data: markData }));
+      state.registerMark({ data: markData });
       flushSync();
 
       expect(state.flatData).toHaveLength(2);
@@ -391,7 +391,7 @@ describe('ChartState mark registration', () => {
 
     try {
       // Mark with data but no string y or seriesKey — no implicit series
-      state.registerMark(() => ({ data: [{ date: '2024-01', value: 10 }] }));
+      state.registerMark({ data: [{ date: '2024-01', value: 10 }] });
       flushSync();
 
       expect(state.seriesState.isDefaultSeries).toBe(true);
@@ -415,8 +415,8 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ y: 'apples', color: 'red' }));
-      state.registerMark(() => ({ y: 'bananas', color: 'yellow' }));
+      state.registerMark({ y: 'apples', color: 'red' });
+      state.registerMark({ y: 'bananas', color: 'yellow' });
       flushSync();
 
       // y accessor should return both values
@@ -442,14 +442,95 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ y: 'value', data: markData1, color: 'red' }));
-      state.registerMark(() => ({ y: 'value', data: markData2, color: 'blue' }));
+      state.registerMark({ y: 'value', data: markData1, color: 'red' });
+      state.registerMark({ y: 'value', data: markData2, color: 'blue' });
       flushSync();
 
       // Both marks have the same y='value' key so they deduplicate to one series,
       // but the first mark's data should be on the series
       expect(state.seriesState.series).toHaveLength(1);
       expect(state.seriesState.series[0].data).toBe(markData1);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should include data from two marks with same y accessor but different data arrays', () => {
+    const data1: TestData[] = [
+      { date: '2024-01', value: 30 },
+      { date: '2024-02', value: 40 },
+    ];
+    const data2: TestData[] = [
+      { date: '2024-01', value: 60 },
+      { date: '2024-02', value: 70 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: data1, color: 'red' });
+      state.registerMark({ y: 'value', data: data2, color: 'blue' });
+      flushSync();
+
+      // Both datasets should appear in flatData for correct domain calculation.
+      // data1 is on the implicit series; data2 has a different reference so it's extra.
+      expect(state.flatData.length).toBeGreaterThanOrEqual(data1.length + data2.length);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should calculate correct y domain from two marks with same y accessor but different data', () => {
+    const data1: TestData[] = [
+      { date: '2024-01', value: 30 },
+      { date: '2024-02', value: 40 },
+    ];
+    const data2: TestData[] = [
+      { date: '2024-01', value: 60 },
+      { date: '2024-02', value: 70 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: data1, color: 'red' });
+      state.registerMark({ y: 'value', data: data2, color: 'blue' });
+      flushSync();
+
+      // Domain must span both datasets: [30, 70]
+      expect(state._yDomain).toEqual([30, 70]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not double-include data when mark data matches series data reference', () => {
+    const markData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      // Register the same data reference twice (should not double-count in flatData)
+      state.registerMark({ y: 'value', data: markData, color: 'red' });
+      state.registerMark({ y: 'value', data: markData, color: 'blue' });
+      flushSync();
+
+      // Only one series (deduplication by key), data1 is its data.
+      // The second mark shares the same reference, so flatData only includes markData once
+      // (via the series). Total items = markData.length.
+      expect(state.flatData).toHaveLength(markData.length);
     } finally {
       cleanup();
     }
@@ -469,7 +550,7 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      const unregister = state.registerMark(() => ({ data: markData }));
+      const unregister = state.registerMark({ data: markData });
       flushSync();
 
       expect(state.flatData).toHaveLength(3); // 1 chart + 2 mark
@@ -490,7 +571,7 @@ describe('ChartState mark registration', () => {
     });
 
     try {
-      state.registerMark(() => ({ y: 'value', color: 'red', label: 'Temperature' }));
+      state.registerMark({ y: 'value', color: 'red', label: 'Temperature' });
       flushSync();
 
       expect(state.seriesState.series[0].label).toBe('Temperature');
@@ -514,8 +595,8 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
     });
 
     try {
-      state.registerMark(() => ({ y: 'apples', color: 'red' }));
-      state.registerMark(() => ({ y: 'bananas', color: 'yellow' }));
+      state.registerMark({ y: 'apples', color: 'red' });
+      state.registerMark({ y: 'bananas', color: 'yellow' });
       flushSync();
 
       // Both visible: domain should span all values
@@ -629,6 +710,95 @@ describe('ChartState default padding', () => {
 
     try {
       expect(state.padding).toEqual({ top: 10, right: 10, bottom: 10, left: 10 });
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
+  type DateValueData = { date: Date; value: number };
+
+  it('should derive x accessor from marks when x prop is absent', () => {
+    const data: DateValueData[] = [
+      { date: new Date(2024, 0, 1), value: 30 },
+      { date: new Date(2024, 1, 1), value: 40 },
+    ];
+
+    const { state, cleanup } = createChartState<DateValueData>({});
+
+    try {
+      state.registerMark({ x: 'date', y: 'value', data });
+      flushSync();
+
+      expect(state.x(data[0])).toEqual(new Date(2024, 0, 1));
+      // y is derived from implicit series — returns array form (single-element for one series)
+      expect(state.y(data[0])).toEqual([30]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should derive correct y domain across two marks with different data and no y prop', () => {
+    const temperatureData: DateValueData[] = [
+      { date: new Date(2024, 0, 1), value: 32 },
+      { date: new Date(2024, 1, 1), value: 28 },
+    ];
+    const humidityData: DateValueData[] = [
+      { date: new Date(2024, 0, 1), value: 60 },
+      { date: new Date(2024, 1, 1), value: 70 },
+    ];
+
+    const { state, cleanup } = createChartState<DateValueData>({});
+
+    try {
+      state.registerMark({ x: 'date', y: 'value', data: temperatureData, color: 'red' });
+      state.registerMark({ x: 'date', y: 'value', data: humidityData, color: 'blue' });
+      flushSync();
+
+      // y domain should span both datasets
+      expect(state._yDomain).toEqual([28, 70]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should deduplicate repeated mark x keys into a single accessor', () => {
+    const data: DateValueData[] = [
+      { date: new Date(2024, 0, 1), value: 10 },
+    ];
+
+    const { state, cleanup } = createChartState<DateValueData>({});
+
+    try {
+      // Two marks, same x='date' — should not create duplicate keys
+      state.registerMark({ x: 'date', y: 'value', data });
+      state.registerMark({ x: 'date', y: 'value', data });
+      flushSync();
+
+      // x accessor should work normally (not return array of duplicates)
+      expect(state.x(data[0])).toEqual(new Date(2024, 0, 1));
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should use explicit x/y from Chart props over mark-derived values', () => {
+    const data: DateValueData[] = [
+      { date: new Date(2024, 0, 1), value: 10 },
+    ];
+
+    const { state, cleanup } = createChartState<DateValueData>({
+      x: 'value', // explicit — should override 'date' from marks
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ x: 'date', y: 'value', data });
+      flushSync();
+
+      // Chart props take precedence
+      expect(state.x(data[0])).toEqual(10);
     } finally {
       cleanup();
     }

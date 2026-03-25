@@ -60,7 +60,6 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import Path, { type PathProps } from './Path.svelte';
 
   const ctx = getChartContext();
@@ -68,7 +67,7 @@
 
   let { data, x, y, seriesKey, defined, curve, stroke, ...restProps }: SplineProps = $props();
 
-  registerComponentNode({
+  ctx.registerComponentNode({
     name: 'Spline',
     kind: 'mark',
     markInfo: () => ({ data, x, y, seriesKey, color: stroke as string | undefined }),

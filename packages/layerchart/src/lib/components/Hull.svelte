@@ -65,10 +65,12 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
+
+  const ctx = getChartContext();
+  const geo = getGeoContext();
 
   // Mark as composite so child Spline doesn't register
-  registerComponentNode({ name: 'Hull', kind: 'composite-mark' });
+  ctx.registerComponentNode({ name: 'Hull', kind: 'composite-mark' });
 
   let {
     data,
@@ -87,9 +89,6 @@
   $effect.pre(() => {
     refProp = ref;
   });
-
-  const ctx = getChartContext();
-  const geo = getGeoContext();
 
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { type ComponentNode } from '$lib/contexts/componentTree.svelte.js';
+  import type { ComponentNode } from '$lib/contexts/chart.js';
 
   export type CanvasPropsWithoutHTML = {
     /**
@@ -107,7 +107,6 @@
     type CanvasContextValue,
     type ComponentRender,
   } from '$lib/contexts/canvas.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -147,8 +146,8 @@
 
   const logger = new Logger('Canvas');
 
-  // Root node for the component tree — children register via registerComponentNode
-  const rootNode = registerComponentNode({ name: 'Canvas', kind: 'group' });
+  // Root node for the component tree — children register via ctx.registerComponentNode
+  const rootNode = ctx.registerComponentNode({ name: 'Canvas', kind: 'group' });
   let pendingInvalidation = false;
   let frameId: number | undefined;
 

@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
-import { removeComponentNode, type ComponentNode } from './componentTree.svelte.js';
+import type { ComponentNode } from '$lib/states/chart.svelte.js';
 // Note: registerComponentNode requires Svelte context (setContext/getContext)
 // and is tested indirectly via chart state and component integration tests.
+// _removeComponentNode is private on ChartState and tested indirectly.
 
 /** Helper to create a minimal node without Svelte context */
 function makeNode(name: string, parent: ComponentNode | null = null): ComponentNode {
@@ -21,36 +22,6 @@ function makeNode(name: string, parent: ComponentNode | null = null): ComponentN
 }
 
 describe('componentTree', () => {
-  describe('removeComponentNode', () => {
-    it('should remove a child from its parent', () => {
-      const parent = makeNode('parent');
-      const child = makeNode('child', parent);
-
-      expect(parent.children).toHaveLength(1);
-      removeComponentNode(child);
-      expect(parent.children).toHaveLength(0);
-    });
-
-    it('should only remove the specified child', () => {
-      const parent = makeNode('parent');
-      const child1 = makeNode('child1', parent);
-      const child2 = makeNode('child2', parent);
-      const child3 = makeNode('child3', parent);
-
-      removeComponentNode(child2);
-      expect(parent.children).toHaveLength(2);
-      expect(parent.children).toContain(child1);
-      expect(parent.children).toContain(child3);
-      expect(parent.children).not.toContain(child2);
-    });
-
-    it('should handle removing a root node (no parent)', () => {
-      const root = makeNode('root');
-      // Should not throw
-      removeComponentNode(root);
-    });
-  });
-
   describe('tree structure', () => {
     it('should build a multi-level tree', () => {
       const root = makeNode('root');
@@ -75,8 +46,10 @@ describe('componentTree', () => {
       makeNode('leaf1', group);
       makeNode('leaf2', group);
 
-      // Remove the group (and its children become orphaned)
-      removeComponentNode(group);
+      // Simulate _removeComponentNode (private on ChartState) — remove group from root
+      const idx = root.children.indexOf(group);
+      if (idx >= 0) root.children.splice(idx, 1);
+
       expect(root.children).toHaveLength(0);
       // Group still has its children (for cleanup order - children destroy first)
       expect(group.children).toHaveLength(2);

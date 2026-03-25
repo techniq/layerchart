@@ -136,7 +136,6 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
@@ -378,8 +377,19 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'Rect', kind: 'mark', canvasRender: {
+  chartCtx.registerComponentNode({
+    name: 'Rect',
+    kind: 'mark',
+    markInfo: () => {
+      if (!dataMode) return {};
+      return {
+        data: dataProp,
+        x: typeof x === 'string' ? x : undefined,
+        y: typeof y === 'string' ? y : undefined,
+        color: typeof fill === 'string' ? fill : typeof stroke === 'string' ? stroke : undefined,
+      };
+    },
+    canvasRender: layerCtx === 'canvas' ? {
       render,
       events: {
         click: onclick,
@@ -406,8 +416,8 @@
         rx,
         ry,
       ],
-    } });
-  }
+    } : undefined,
+  });
 </script>
 
 {#if layerCtx === 'svg'}

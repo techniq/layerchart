@@ -98,14 +98,13 @@
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-
-  // Mark as composite so child Splines (radial grid) don't register
-  registerComponentNode({ name: 'Grid', kind: 'composite-mark' });
   import { autoTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   const ctx = getChartContext();
+
+  // Mark as composite so child Splines (radial grid) don't register
+  ctx.registerComponentNode({ name: 'Grid', kind: 'composite-mark' });
 
   let {
     x = false,

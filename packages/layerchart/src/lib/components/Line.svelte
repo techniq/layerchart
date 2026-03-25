@@ -122,7 +122,6 @@
   import { merge } from '@layerstack/utils';
 
   import { untrack } from 'svelte';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
@@ -305,8 +304,19 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'Line', kind: 'mark', canvasRender: {
+  chartCtx.registerComponentNode({
+    name: 'Line',
+    kind: 'mark',
+    markInfo: () => {
+      if (!dataMode) return {};
+      return {
+        data: dataProp,
+        x: typeof x1 === 'string' ? x1 : typeof x2 === 'string' ? x2 : undefined,
+        y: typeof y1 === 'string' ? y1 : typeof y2 === 'string' ? y2 : undefined,
+        color: typeof stroke === 'string' ? stroke : typeof fill === 'string' ? fill : undefined,
+      };
+    },
+    canvasRender: layerCtx === 'canvas' ? {
       render,
       events: {
         click: restProps.onclick,
@@ -328,8 +338,8 @@
         className,
         restProps.style,
       ],
-    } });
-  }
+    } : undefined,
+  });
 </script>
 
 {#if layerCtx === 'svg'}

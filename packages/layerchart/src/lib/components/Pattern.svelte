@@ -126,8 +126,10 @@
 
 <script lang="ts">
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { createPattern } from '$lib/utils/canvas.js';
+
+  const chartCtx = getChartContext();
 
   const uid = $props.id();
 
@@ -248,7 +250,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    registerComponentNode({ name: 'Pattern', kind: 'mark', canvasRender: {
+    chartCtx.registerComponentNode({ name: 'Pattern', kind: 'mark', canvasRender: {
       render,
       deps: () => [width, height, shapes, background],
     } });

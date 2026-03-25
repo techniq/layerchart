@@ -20,9 +20,9 @@
 	];
 </script>
 
-<Chart x="date" y="value" height={300}>
+<Chart height={300}>
 	{#snippet marks()}
-		<Spline data={temperatureData} stroke="var(--color-apples)" />
-		<Spline data={humidityData} stroke="var(--color-oranges)" />
+		<Spline x="date" y="value" data={temperatureData} stroke="var(--color-apples)" />
+		<Spline x="date" y="value" data={humidityData} stroke="var(--color-oranges)" />
 	{/snippet}
 </Chart>

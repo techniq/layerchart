@@ -1,7 +1,10 @@
+import { untrack } from 'svelte';
 import { scaleOrdinal, scaleSqrt } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
-import { useDebounce } from 'runed';
+import { Context, useDebounce } from 'runed';
+import type { ComponentRender } from '$lib/contexts/canvas.js';
+import { getCanvasContext } from '$lib/contexts/canvas.js';
 
 import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
 import {
@@ -53,6 +56,37 @@ export interface MarkInfo {
   label?: string;
 }
 
+export type NodeKind = 'group' | 'mark' | 'composite-mark';
+
+export interface ComponentNode {
+  id: symbol;
+  kind: NodeKind;
+  name: string;
+  parent: ComponentNode | null;
+  children: ComponentNode[];
+  /** Canvas render info — only present for components that render on canvas */
+  canvasRender?: ComponentRender;
+  /** Whether this node has a composite-mark ancestor (computed on creation) */
+  insideCompositeMark: boolean;
+}
+
+export interface RegisterComponentNodeOptions<T extends Element = Element> {
+  /** Display name for the node (used for debugging) */
+  name: string;
+  /** The type of node */
+  kind: NodeKind;
+  /** Canvas render info. When provided, sets up dependency tracking and cleanup automatically. */
+  canvasRender?: ComponentRender<T>;
+  /**
+   * Mark info getter for chart domain/series calculation.
+   * When provided and not inside a composite mark, automatically registered reactively.
+   */
+  markInfo?: () => MarkInfo;
+}
+
+/** Svelte context key for tracking the nearest parent ComponentNode. */
+const _ParentNodeContext = new Context<ComponentNode | null>('ComponentTreeParent');
+
 export class ChartState<
   TData = any,
   XScale extends AnyScale = AnyScale,
@@ -79,23 +113,124 @@ export class ChartState<
   // Mount state
   isMounted = $state(false);
 
-  // Mark registration — marks register getter functions on mount for domain/series calculation.
-  // Composite marks set InsideCompositeMark context so child marks skip registration,
-  // preventing circular derived references.
-  private _markGetters = $state<Array<{ _id: number; getInfo: () => MarkInfo }>>([]);
+  // Mark registration — marks register stable MarkInfo snapshots on mount for
+  // domain/series calculation. Snapshots are updated via $effect (not $derived)
+  // in registerComponentNode, so reads here never create circular derived refs.
+  // Composite marks set insideCompositeMark context so child marks skip registration.
+  //
+  // Use a plain array + reactive version counter instead of $state<array> so that
+  // registerMark() never reads $state during execution. If it did (e.g. spreading
+  // a $state array), calling registerMark() from a $effect would subscribe that
+  // effect to _markInfos changes, then the effect's own write would trigger it to
+  // re-run → infinite loop.
+  private _markInfosRaw: Array<{ _id: number; info: MarkInfo }> = [];
+  private _markInfosVersion = $state(0);
   private _nextMarkId = 0;
 
+  /** Reactive accessor — reads _markInfosVersion to create a reactive dependency,
+   * returns the plain array so items are never wrapped in Svelte proxies. */
+  private get _markInfos() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    this._markInfosVersion;
+    return this._markInfosRaw;
+  }
+
   /**
-   * Register a mark with the chart. The getter function is called reactively to
-   * retrieve current mark info (data, accessors, series key, color, label).
-   * Returns a cleanup function to call on unmount.
+   * Register a mark with the chart. The MarkInfo snapshot is stored directly
+   * (not inside $derived) so chart deriveds can read _markInfos without creating
+   * circular references. Returns a cleanup function to call on unmount.
+   *
+   * For use in tests or synchronous contexts. In components, use `registerComponentNode` with `markInfo`.
    */
-  registerMark(getInfo: () => MarkInfo): () => void {
+  registerMark(info: MarkInfo): () => void {
     const id = ++this._nextMarkId;
-    this._markGetters = [...this._markGetters, { _id: id, getInfo }];
+    this._markInfosRaw.push({ _id: id, info });
+    this._markInfosVersion++;
     return () => {
-      this._markGetters = this._markGetters.filter((r) => r._id !== id);
+      const idx = this._markInfosRaw.findIndex((r) => r._id === id);
+      if (idx !== -1) this._markInfosRaw.splice(idx, 1);
+      this._markInfosVersion++;
     };
+  }
+
+  /**
+   * Call this during component initialization to register a mark info getter.
+   * Sets up a $effect that captures a snapshot at mount (via untrack) and
+   * deregisters automatically when the component is destroyed.
+   *
+   * Must be called in a Svelte component initialization context (e.g. from
+   * registerComponentNode called in a component's <script> block).
+   */
+  private trackMark(getMarkInfo: () => MarkInfo): void {
+    $effect(() => {
+      return untrack(() => this.registerMark(getMarkInfo()));
+    });
+  }
+
+  /**
+   * Register a component tree node. Call at the top level of a component's <script> block.
+   * Sets self as context for children, handles canvas deps/cleanup, and mark registration.
+   */
+  registerComponentNode<T extends Element = Element>(options: RegisterComponentNodeOptions<T>): ComponentNode {
+    const { name, kind, canvasRender, markInfo } = options;
+    const parent = _ParentNodeContext.getOr(null);
+
+    // Walk ancestors to check for composite-mark
+    let insideCompositeMark = false;
+    let ancestor = parent;
+    while (ancestor) {
+      if (ancestor.kind === 'composite-mark') {
+        insideCompositeMark = true;
+        break;
+      }
+      ancestor = ancestor.parent;
+    }
+
+    const node: ComponentNode = {
+      id: Symbol(name),
+      kind,
+      name,
+      parent,
+      children: [],
+      canvasRender: canvasRender as ComponentRender | undefined,
+      insideCompositeMark,
+    };
+
+    if (parent) parent.children.push(node);
+    _ParentNodeContext.set(node);
+
+    if (canvasRender) {
+      const canvasCtx = getCanvasContext();
+
+      if (canvasRender.deps) {
+        $effect.pre(() => {
+          canvasRender.deps?.();
+          canvasCtx.invalidate();
+        });
+      }
+
+      $effect.pre(() => {
+        return () => {
+          this._removeComponentNode(node);
+          canvasCtx.invalidate();
+        };
+      });
+
+      canvasCtx.invalidate();
+    }
+
+    if (markInfo && !insideCompositeMark) {
+      this.trackMark(markInfo);
+    }
+
+    return node;
+  }
+
+  private _removeComponentNode(node: ComponentNode): void {
+    if (node.parent) {
+      const idx = node.parent.children.indexOf(node);
+      if (idx >= 0) node.parent.children.splice(idx, 1);
+    }
   }
 
   // Container ref (set from Chart.svelte)
@@ -127,8 +262,7 @@ export class ChartState<
         // Use the value axis accessor (y for horizontal charts, x for vertical).
         const valueAxis = this.props.valueAxis ?? 'y';
         const implicitSeries: SeriesData<TData, any>[] = [];
-        for (const { getInfo } of this._markGetters) {
-          const info = getInfo();
+        for (const { info } of this._markInfos) {
           const valueAccessor = valueAxis === 'y' ? info.y : info.x;
           const key =
             info.seriesKey ??
@@ -294,13 +428,15 @@ export class ChartState<
     // Include data from marks that have their own data but aren't already in a series.
     // Include data from marks that have their own data but aren't already in a series
     const extra: TData[] = [];
-    for (const { getInfo } of this._markGetters) {
-      const info = getInfo();
+    for (const { info } of this._markInfos) {
       if (!info.data) continue;
-      // If this mark's data is already included via a series, skip it
+      // If this mark's exact data array is already included via a series, skip it.
+      // Use reference equality (===) so marks sharing the same accessor key but
+      // different data arrays (e.g. two Circle marks with separate datasets) are
+      // both included in domain calculation.
       const key =
         info.seriesKey ?? (typeof info.y === 'string' ? (info.y as string) : undefined);
-      if (key && this.seriesState?.series.some((s) => s.key === key && s.data)) continue;
+      if (key && this.seriesState?.series.some((s) => s.key === key && s.data === info.data)) continue;
       extra.push(...info.data);
     }
 
@@ -310,11 +446,11 @@ export class ChartState<
 
   // Cached scale props - use this.flatData which derives from seriesState.visibleSeriesData when available
   _xScaleProp = $derived.by(() => {
-    return this.props.xScale ?? autoScale(this.props.xDomain, this.flatData, this.props.x);
+    return this.props.xScale ?? autoScale(this.props.xDomain, this.flatData, this.x);
   });
 
   _yScaleProp = $derived.by(() => {
-    return this.props.yScale ?? autoScale(this.props.yDomain, this.flatData, this.props.y);
+    return this.props.yScale ?? autoScale(this.props.yDomain, this.flatData, this.y);
   });
 
   _zScaleProp = $derived.by(() => {
@@ -343,6 +479,20 @@ export class ChartState<
     } else if (this.valueAxis === axis && this.seriesState && !this.seriesState.isDefaultSeries) {
       // Derive accessor from series (explicit or mark-implied) values/keys
       return accessor(this.seriesState.series.map((s) => s.value ?? s.key));
+    }
+
+    // Derive position axis accessor from registered marks when not set on the Chart.
+    // This allows marks like <Circle cx="date" cy="value" /> to define the axes
+    // without requiring x/y on the Chart itself.
+    const markAxisKeys: string[] = [];
+    for (const { info } of this._markInfos) {
+      const markKey = axis === 'x' ? info.x : info.y;
+      if (typeof markKey === 'string' && !markAxisKeys.includes(markKey)) {
+        markAxisKeys.push(markKey);
+      }
+    }
+    if (markAxisKeys.length > 0) {
+      return accessor(markAxisKeys.length === 1 ? markAxisKeys[0] : markAxisKeys);
     }
 
     // No accessor available — identity function
@@ -526,15 +676,37 @@ export class ChartState<
 
       // For non-default series, calculate domain from all visible series values
       if (!this.seriesState.isDefaultSeries) {
-        const seriesDomain = this.series.visibleSeries.flatMap((s) => {
+        const seriesValues = this.series.visibleSeries.flatMap((s) => {
           const acc = accessor(s.value ?? axisAccessor ?? s.key);
           const data = s.data ?? chartDataArray(this.data);
           return data.flatMap(acc);
         });
-        if (baseline != null) {
-          return [min([baseline, ...seriesDomain]), max([baseline, ...seriesDomain])];
+
+        // Also include data from registered marks whose data isn't the primary
+        // data for any visible series. This handles marks with the same accessor
+        // key but different data arrays (e.g. two Circle marks pointing at
+        // separate datasets with the same field name).
+        const extraMarkValues: any[] = [];
+        for (const { info } of this._markInfos) {
+          if (!info.data) continue;
+          const infoKey =
+            info.seriesKey ?? (typeof info.y === 'string' ? (info.y as string) : undefined);
+          if (
+            infoKey &&
+            this.seriesState.visibleSeries.some((s) => s.key === infoKey && s.data === info.data)
+          )
+            continue;
+          const markAccessor = (axis === 'y' ? info.y : info.x) ?? axisAccessor;
+          if (markAccessor) {
+            extraMarkValues.push(...info.data.flatMap(accessor(markAccessor)));
+          }
         }
-        return extent(seriesDomain);
+
+        const allValues = [...seriesValues, ...extraMarkValues];
+        if (baseline != null) {
+          return [min([baseline, ...allValues]), max([baseline, ...allValues])];
+        }
+        return extent(allValues);
       }
     }
 

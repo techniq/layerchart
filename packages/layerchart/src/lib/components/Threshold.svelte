@@ -45,12 +45,11 @@
   import Area from './Area.svelte';
   import ClipPath from './ClipPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
 
   const ctx = getChartContext();
 
   // Mark as composite so child Areas don't register
-  registerComponentNode({ name: 'Threshold', kind: 'composite-mark' });
+  ctx.registerComponentNode({ name: 'Threshold', kind: 'composite-mark' });
 
   let { curve, defined, below, above, children }: ThresholdProps = $props();
 </script>

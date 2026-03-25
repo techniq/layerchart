@@ -65,7 +65,6 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import {
     createMotion,
     extractTweenConfig,
@@ -93,7 +92,7 @@
   }: AreaProps = $props();
 
   // Register as composite mark (shields child Spline) + chart mark registration
-  registerComponentNode({
+  ctx.registerComponentNode({
     name: 'Area',
     kind: 'composite-mark',
     markInfo: () => ({ data, x, y: y1 ?? y0, seriesKey, color: fill as string | undefined }),
