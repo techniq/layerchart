@@ -3,8 +3,6 @@ title: Data
 order: 6
 ---
 
-# Data
-
 LayerChart supports passing data at multiple levels, giving you flexibility from simple single-series charts to complex multi-series visualizations.
 
 ## Data patterns
@@ -13,7 +11,7 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ```svelte
 <Chart data={salesData} x="date" y="revenue">
-  <Spline />
+	<Spline />
 </Chart>
 ```
 
@@ -21,8 +19,8 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ```svelte
 <Chart data={fruitData} x="date">
-  <Spline y="apples" />
-  <Spline y="oranges" />
+	<Spline y="apples" />
+	<Spline y="oranges" />
 </Chart>
 ```
 
@@ -30,8 +28,8 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ```svelte
 <Chart x="date" y="value">
-  <Spline data={actualData} />
-  <Spline data={forecastData} />
+	<Spline data={actualData} />
+	<Spline data={forecastData} />
 </Chart>
 ```
 
@@ -39,15 +37,15 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ```svelte
 <Chart
-  data={fruitData}
-  x="date"
-  series={[
-    { key: 'apples', label: 'Apples' },
-    { key: 'oranges', label: 'Oranges' },
-  ]}
+	data={fruitData}
+	x="date"
+	series={[
+		{ key: 'apples', label: 'Apples' },
+		{ key: 'oranges', label: 'Oranges' }
+	]}
 >
-  <Spline />
-  <Legend />
+	<Spline />
+	<Legend />
 </Chart>
 ```
 
@@ -55,15 +53,15 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 ```svelte
 <Chart
-  x="date"
-  y="value"
-  series={[
-    { key: 'actual', data: actualData },
-    { key: 'forecast', data: forecastData },
-  ]}
+	x="date"
+	y="value"
+	series={[
+		{ key: 'actual', data: actualData },
+		{ key: 'forecast', data: forecastData }
+	]}
 >
-  <Spline />
-  <Legend />
+	<Spline />
+	<Legend />
 </Chart>
 ```
 
@@ -71,12 +69,12 @@ LayerChart supports passing data at multiple levels, giving you flexibility from
 
 The `x` and `y` props accept several accessor types:
 
-| Type | Example | Description |
-|------|---------|-------------|
-| String | `x="date"` | Property name lookup |
-| Function | `x={(d) => d.date}` | Custom accessor function |
-| Index | `x={0}` | Array index (for tuple data) |
-| Array | `y={['apples', 'oranges']}` | Multiple values (for domain calculation) |
+| Type     | Example                     | Description                              |
+| -------- | --------------------------- | ---------------------------------------- |
+| String   | `x="date"`                  | Property name lookup                     |
+| Function | `x={(d) => d.date}`         | Custom accessor function                 |
+| Index    | `x={0}`                     | Array index (for tuple data)             |
+| Array    | `y={['apples', 'oranges']}` | Multiple values (for domain calculation) |
 
 ## Chart data
 
