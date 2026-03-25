@@ -500,6 +500,76 @@ describe('ChartState mark registration', () => {
   });
 });
 
+describe('ChartState implicit series domain update on visibility toggle', () => {
+  it('should update y domain when hiding an implicit series', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 10, bananas: 50 },
+      { date: '2024-02', apples: 20, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      x: 'date',
+      // No y prop — will be derived from marks
+    });
+
+    try {
+      state.registerMark(() => ({ y: 'apples', color: 'red' }));
+      state.registerMark(() => ({ y: 'bananas', color: 'yellow' }));
+      flushSync();
+
+      // Both visible: domain should span all values
+      expect(state.seriesState.series).toHaveLength(2);
+      expect(state._yDomain).toEqual([10, 80]);
+
+      // Toggle "apples" — when selection is empty, toggling adds it,
+      // making only "apples" visible (bananas hidden)
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      // With only apples visible, domain should be [10, 20]
+      expect(state.seriesState.visibleSeries).toHaveLength(1);
+      expect(state.seriesState.visibleSeries[0].key).toBe('apples');
+      expect(state._yDomain).toEqual([10, 20]);
+      expect(state._baseYDomain).toEqual([10, 20]);
+      expect(state.yDomain).toEqual([10, 20]);
+      // Verify scale domain updated too
+      expect(state.yScale.domain()).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should update y domain when hiding an explicit series', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 10, bananas: 50 },
+      { date: '2024-02', apples: 20, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state._yDomain).toEqual([10, 80]);
+
+      // Select only apples (hides bananas)
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.seriesState.visibleSeries).toHaveLength(1);
+      expect(state.seriesState.visibleSeries[0].key).toBe('apples');
+      expect(state._yDomain).toEqual([10, 20]);
+      expect(state._baseYDomain).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState default padding', () => {
   it('should apply default padding when using ChartChildren layout (no children snippet)', () => {
     const { state, cleanup } = createChartState<TestData>({
