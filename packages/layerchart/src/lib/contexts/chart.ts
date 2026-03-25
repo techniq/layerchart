@@ -11,6 +11,7 @@ const _ChartContext = new Context<ChartState<any, AnyScale, AnyScale>>('ChartCon
  * Provides safe defaults to prevent runtime errors.
  */
 const fallbackContext = {
+  registerMark: () => () => { /* no-op */ },
   series: {
     series: [],
     visibleSeries: [],

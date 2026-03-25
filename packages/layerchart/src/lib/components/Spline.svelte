@@ -51,6 +51,7 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { draw as _drawTransition } from 'svelte/transition';
 
   import { geoPath as d3GeoPath } from 'd3-geo';
@@ -60,12 +61,30 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import Path, { type PathProps } from './Path.svelte';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
+  const { insideCompositeMark: skipRegistration } = registerComponentNode({ name: 'Spline', kind: 'mark' });
 
-  let { data, x, y, seriesKey, defined, curve, ...restProps }: SplineProps = $props();
+  let { data, x, y, seriesKey, defined, curve, stroke, ...restProps }: SplineProps = $props();
+
+  // Register this mark with the chart for domain/series calculation.
+  // Skip when inside a composite mark (Area, Hull, etc.) to avoid circular derived references.
+  if (!skipRegistration) {
+    $effect(() => {
+      return untrack(() =>
+        ctx.registerMark(() => ({
+          data,
+          x,
+          y,
+          seriesKey,
+          color: stroke as string | undefined,
+        }))
+      );
+    });
+  }
 
   function getScaleValue(
     data: any,
@@ -137,7 +156,7 @@
 
 <Path
   pathData={d}
-  stroke={series?.color}
+  stroke={stroke ?? series?.color}
   opacity={series?.key == null ||
   // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
   ctx.series.visibleSeries.length <= 1 ||

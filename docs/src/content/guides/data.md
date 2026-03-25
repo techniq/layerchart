@@ -5,28 +5,32 @@ order: 6
 
 # Data
 
-LayerChart supports passing data in a variety of ways including:
+LayerChart supports passing data at multiple levels, giving you flexibility from simple single-series charts to complex multi-series visualizations.
 
-- Chart
-  ```svelte
-  <Chart data={...}>
-  ```
-- Unified data, per-series values
-  ```svelte
-  <Chart data={...} series={[{ key: 'one' }, ...]}>
-  ```
-- Per-series
-  ```svelte
-  <Chart series={[{ key: 'one', data: [...] }, ...]}>
-  ```
-- Per-mark
-  ```svelte
-  <Spline data={...}>
-  ```
+## Data patterns
 
-all supporting single and multiple marks per Chart.
+| Pattern | When to use |
+|---------|-------------|
+| Chart data | Single mark or shared data across marks |
+| Chart data + per-mark accessors | Same data, different values per mark (e.g. `y="apples"` vs `y="oranges"`) |
+| Per-mark data | Individual marks need different data than the chart |
+| Series (unified data) | Multiple series from the same data array (wide format) with legend/tooltip |
+| Series (per-series data) | Each series has its own data array (long format / different lengths) |
+
+## Accessors
+
+The `x` and `y` props accept several accessor types:
+
+| Type | Example | Description |
+|------|---------|-------------|
+| String | `x="date"` | Property name lookup |
+| Function | `x={(d) => d.date}` | Custom accessor function |
+| Index | `x={0}` | Array index (for tuple data) |
+| Array | `y={['apples', 'oranges']}` | Multiple values (for domain calculation) |
 
 ## Chart data
+
+The simplest approach — pass `data`, `x`, and `y` directly to Chart.
 
 ### Single mark
 
@@ -34,56 +38,32 @@ all supporting single and multiple marks per Chart.
 
 ### Multiple marks
 
+Each mark specifies its own `y` accessor. The chart automatically aggregates accessors from registered marks for domain calculation — no need to pass `y={['apples', 'oranges']}` on Chart.
+
 :example{ component="Chart" name="data-chart-multi" showCode }
 
-> TODO: improve tooltip, legend support without requiring series
+Tooltip and legend also work automatically based on the registered marks. See the [Series guide](/docs/guides/series) for more control over colors, labels, stacking, and legend behavior.
 
-> TODO: do not require passing in `y={[...]}` as well
+## Per-mark data
 
-## Marks data
+Marks can provide their own `data` prop, which is included in the chart's domain calculation automatically.
 
-> Can also provide accessors Spline. Currently need to pass overall chart data (or series) (see next)
+:example{ component="Chart" name="data-mark-data" showCode }
 
-```svelte
-<Chart
-  {data}
-  x="date"
-  y="value"
->
-  {#snippet marks()}
-	  <Spline data={[{ year: 2025, value: 10 }, ...]} />
-  {/snippet}
-</Chart>
-```
-
-> TODO: need to support adding marks data to overall Chart context (implicit series?)
-
-Similar to SveltePlot
-
-```svelte
-<Chart>
-  {#snippet marks()}
-	  <Spline data={[{ year: 2025, value: 10 }, ...]} x="date" y="value" />
-  {/snippet}
-</Chart>
-```
+Data resolves in this order: mark `data` prop → series data → chart `data`.
 
 ## Series
 
-- useful to define common color (for marks, legend, tooltip)
-  - define key, color, label (optional), data (optional)
-- can simplify by passing series props (not needing custom marks)
-  - debatable?
-- Passing `series.data` instead of `<Spline {data}>` might be faster (don't have to wait for all components to register on the context before determining the extents (scales, axis, etc))
+For multi-series charts with full tooltip, legend, and stacking support, use the `series` prop. See the [Series guide](/docs/guides/series) for complete documentation.
 
 ### Unified data with per-series values
 
-A single data array with per-series values as separate properties
+A single data array with per-series values as separate properties (wide format):
 
 :example{ component="Chart" name="data-series-chart-data" showCode }
 
 ### Per-series data
 
-Each series has it's own data
+Each series has its own data array:
 
 :example{ component="Chart" name="data-series-separate-data" showCode }

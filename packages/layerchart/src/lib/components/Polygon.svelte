@@ -167,7 +167,7 @@
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
@@ -400,8 +400,7 @@
   const strokeKey = createKey(() => stroke);
 
   if (layerCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'Polygon',
+    registerComponentNode({ name: 'Polygon', kind: 'mark', canvasRender: {
       render,
       events: {
         click: restProps.onclick,
@@ -425,7 +424,7 @@
         tweenedState.current,
         restProps.style,
       ],
-    });
+    } });
   }
 </script>
 

@@ -37,6 +37,7 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import type { Snippet } from 'svelte';
 
   import Bar, { type BarProps, type BarPropsWithoutHTML } from './Bar.svelte';
@@ -61,6 +62,17 @@
   }: BarsProps = $props();
 
   const ctx = getChartContext();
+
+  // Register this mark with the chart for domain/series calculation.
+  $effect(() => {
+    return untrack(() =>
+      ctx.registerMark(() => ({
+        data: dataProp,
+        seriesKey,
+        color: fill as string | undefined,
+      }))
+    );
+  });
 
   // Get series data if seriesKey is provided
   const series = $derived(

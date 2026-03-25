@@ -78,7 +78,11 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import Group from './Group.svelte';
+
+  // Mark as composite so child Points doesn't register
+  registerComponentNode({ name: 'Labels', kind: 'composite-mark' });
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();

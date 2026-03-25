@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import { type ComponentNode } from '$lib/contexts/componentTree.svelte.js';
+
   export type CanvasPropsWithoutHTML = {
     /**
      * The `<canvas>` tag. Useful for bindings.
@@ -86,17 +88,6 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  /**
-   * Handles the automatic registration of the component to the canvas context,
-   * with dependency tracking and cleanup on destroy.
-   */
-  export function registerCanvasComponent<T extends Element>(component: ComponentRender<T>) {
-    const canvasContext = getCanvasContext();
-
-    $effect.pre(() => {
-      return untrack(() => canvasContext.register(component));
-    });
-  }
 </script>
 
 <script lang="ts">
@@ -112,11 +103,11 @@
   import type { HTMLCanvasAttributes, PointerEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import {
-    getCanvasContext,
     setCanvasContext,
     type CanvasContextValue,
     type ComponentRender,
   } from '$lib/contexts/canvas.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -156,7 +147,8 @@
 
   const logger = new Logger('Canvas');
 
-  let components = new Map<Symbol, ComponentRender<Element>>();
+  // Root node for the component tree — children register via registerComponentNode
+  const rootNode = registerComponentNode({ name: 'Canvas', kind: 'group' });
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
@@ -268,32 +260,8 @@
       context.scale(ctx.transform.scale, ctx.transform.scale);
     }
 
-    // separate components into those that retain state and those that don't
-    const retainStateComponents: ComponentRender[] = [];
-    const nonRetainStateComponents: ComponentRender[] = [];
-
-    for (const [_, c] of components) {
-      if (c.retainState) {
-        retainStateComponents.push(c);
-      } else {
-        nonRetainStateComponents.push(c);
-      }
-    }
-
-    // render retainState components on main canvas first
-    for (const c of retainStateComponents) {
-      c.render(context);
-    }
-
-    // store the main canvas transform after retainState components
-    const mainTransformAfterRetain = context.getTransform();
-
-    // render non-retainState components on main canvas
-    for (const c of nonRetainStateComponents) {
-      context.save();
-      c.render(context);
-      context.restore();
-    }
+    // Recursively render the component tree with proper save/restore scoping
+    renderTree(context, rootNode);
 
     /*
      * Sync hit canvas with main canvas
@@ -308,75 +276,88 @@
         scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
         hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
 
-        // reset and sync transform to the state after retainState components
-        hitCanvasContext.resetTransform();
-        hitCanvasContext.setTransform(mainTransformAfterRetain);
+        // sync transform with main canvas (padding, center, zoom already applied)
+        hitCanvasContext.setTransform(context.getTransform());
 
         // reset color generator
         colorGenerator = rgbColorGenerator();
 
-        // render retainState components on hit canvas (e.g., Group)
-        for (const c of retainStateComponents) {
-          const componentHasEvents =
-            c.events && Object.values(c.events).filter((d) => d).length > 0;
-
-          if (componentHasEvents) {
-            // since the transform was already applied via setTransform, skip rendering
-            // the retainState component's transform again; proceed to its children
-            continue;
-          }
-        }
-
-        // render non-retainState components on hit canvas
-        for (const c of nonRetainStateComponents) {
-          const componentHasEvents =
-            c.events && Object.values(c.events).filter((d) => d).length > 0;
-
-          if (componentHasEvents) {
-            const color = getColorStr(colorGenerator.next().value);
-            const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
-
-            hitCanvasContext.save();
-            c.render(hitCanvasContext, styleOverrides);
-            hitCanvasContext.restore();
-
-            componentByColor.set(color, c);
-          }
-        }
+        // render hit canvas tree
+        renderHitTree(hitCanvasContext, rootNode);
       }
     }
 
     pendingInvalidation = false;
   }
 
+  /**
+   * Recursively render the component tree.
+   * Group nodes: save → render (translate/opacity) → recurse children → restore
+   * Leaf nodes: save → render → restore
+   */
+  function renderTree(canvasCtx: CanvasRenderingContext2D, node: ComponentNode) {
+    if (node.kind === 'group' && node.canvasRender) {
+      // Group: save state, apply transform, render children, restore
+      canvasCtx.save();
+      node.canvasRender.render(canvasCtx);
+      for (const child of node.children) {
+        renderTree(canvasCtx, child);
+      }
+      canvasCtx.restore();
+    } else if (node.canvasRender) {
+      // Leaf mark: save, render, restore
+      canvasCtx.save();
+      node.canvasRender.render(canvasCtx);
+      canvasCtx.restore();
+    } else {
+      // Non-rendering node (e.g. root, composite-mark): just recurse children
+      for (const child of node.children) {
+        renderTree(canvasCtx, child);
+      }
+    }
+  }
+
+  /**
+   * Recursively render the hit canvas tree for pointer event detection.
+   * Only renders components that have event handlers, using unique colors.
+   */
+  function renderHitTree(hitCtx: CanvasRenderingContext2D, node: ComponentNode) {
+    if (node.kind === 'group' && node.canvasRender) {
+      // Group: apply transform, recurse children (scoped by save/restore)
+      hitCtx.save();
+      node.canvasRender.render(hitCtx);
+      for (const child of node.children) {
+        renderHitTree(hitCtx, child);
+      }
+      hitCtx.restore();
+    } else if (node.canvasRender) {
+      const hasEvents =
+        node.canvasRender.events &&
+        Object.values(node.canvasRender.events).some((d) => d);
+
+      if (hasEvents) {
+        const color = getColorStr(colorGenerator.next().value);
+        const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
+
+        hitCtx.save();
+        node.canvasRender.render(hitCtx, styleOverrides);
+        hitCtx.restore();
+
+        componentByColor.set(color, node.canvasRender);
+      }
+    } else {
+      // Non-rendering node: recurse children
+      for (const child of node.children) {
+        renderHitTree(hitCtx, child);
+      }
+    }
+  }
+
   function createCanvasContext(): CanvasContextValue {
-    function register<T extends Element>(component: ComponentRender<T>) {
-      const key = Symbol();
-      components.set(key, component as ComponentRender<Element>);
-      invalidate();
-
-      const cleanupRoot = $effect.root(() => {
-        if (component.deps) {
-          $effect.pre(() => {
-            component.deps?.(); // track deps
-            invalidate(); // invalidate when deps change.
-          });
-        }
-      });
-
-      $effect.pre(() => {
-        return cleanupRoot;
-      });
-
-      /**
-       * Removes the component from the registry and cleans up the invalidation
-       * effect
-       */
-      return () => {
-        components.delete(key);
-        cleanupRoot();
-        invalidate();
-      };
+    // Legacy register method — registration is now handled by the component tree
+    // via registerComponentNode. Keep for interface compatibility.
+    function register<T extends Element>(_component: ComponentRender<T>) {
+      return () => {};
     }
 
     function invalidate() {

@@ -105,7 +105,7 @@
 
   import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
   import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
@@ -221,27 +221,26 @@
   const layerCtx = getLayerContext();
 
   if (layerCtx === 'canvas') {
-    registerCanvasComponent({
+    registerComponentNode({
       name: 'Group',
-      render: (ctx) => {
-        const currentGlobalAlpha = ctx.globalAlpha;
-        ctx.globalAlpha = opacity ?? 1;
-
-        ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
-
-        // Restore in case it was modified by `opacity`
-        ctx.globalAlpha = currentGlobalAlpha;
+      kind: 'group',
+      canvasRender: {
+        render: (ctx) => {
+          ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
+          if (opacity != null) {
+            ctx.globalAlpha *= opacity;
+          }
+        },
+        events: {
+          click: restProps.onclick,
+          dblclick: restProps.ondblclick,
+          pointerenter: restProps.onpointerenter,
+          pointermove: restProps.onpointermove,
+          pointerleave: restProps.onpointerleave,
+          pointerdown: restProps.onpointerdown,
+        },
+        deps: () => [motionX.current, motionY.current, opacity],
       },
-      retainState: true,
-      events: {
-        click: restProps.onclick,
-        dblclick: restProps.ondblclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-      },
-      deps: () => [motionX.current, motionY.current, opacity],
     });
   }
 

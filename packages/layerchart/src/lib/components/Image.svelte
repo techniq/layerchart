@@ -154,7 +154,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
@@ -405,8 +405,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'Image',
+    registerComponentNode({ name: 'Image', kind: 'mark', canvasRender: {
       render: canvasRender,
       events: {
         click: restProps.onclick,
@@ -428,7 +427,7 @@
         restProps.style,
         loadedImageCount,
       ],
-    });
+    } });
   }
 </script>
 

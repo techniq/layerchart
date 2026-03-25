@@ -4,9 +4,7 @@ import type { MouseEventHandler, PointerEventHandler, TouchEventHandler } from '
 import type { ComputedStylesOptions } from '$lib/utils/canvas.js';
 
 export type ComponentRender<T extends Element = Element> = {
-  name: string;
   render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
-  retainState?: boolean;
   events?: {
     click?: MouseEventHandler<T> | null;
     dblclick?: MouseEventHandler<T> | null;

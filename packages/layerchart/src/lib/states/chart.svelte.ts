@@ -14,7 +14,7 @@ import {
 } from '$lib/utils/scales.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
-import { accessor, chartDataArray, defaultChartPadding } from '$lib/utils/common.js';
+import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
 import { filterObject } from '$lib/utils/filterObject.js';
 import { calcDomain, calcScaleExtents, createGetter, createChartScale } from '$lib/utils/chart.js';
 import { printDebug } from '$lib/utils/debug.js';
@@ -24,6 +24,7 @@ import type { TransformState } from './transform.svelte.js';
 import type { TooltipState } from './tooltip.svelte.js';
 import type { BrushDomainType, BrushState } from './brush.svelte.js';
 import { SeriesState, type StackLayout } from './series.svelte.js';
+import type { SeriesData } from '$lib/components/charts/types.js';
 import { createControlledMotion, parseMotionProp } from '$lib/utils/motion.svelte.js';
 
 const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -34,6 +35,22 @@ const EMPTY_SERIES: any[] = [];
 interface ScaleEntry {
   scale: AnyScale;
   sort?: boolean;
+}
+
+/** Information a mark registers with the chart for domain/series calculation */
+export interface MarkInfo {
+  /** The mark's own data array (if overriding chart data) */
+  data?: any[];
+  /** x accessor override */
+  x?: Accessor;
+  /** y accessor override */
+  y?: Accessor;
+  /** Series key for this mark */
+  seriesKey?: string;
+  /** Color for legend/tooltip */
+  color?: string;
+  /** Label for legend/tooltip */
+  label?: string;
 }
 
 export class ChartState<
@@ -62,6 +79,25 @@ export class ChartState<
   // Mount state
   isMounted = $state(false);
 
+  // Mark registration — marks register getter functions on mount for domain/series calculation.
+  // Composite marks set InsideCompositeMark context so child marks skip registration,
+  // preventing circular derived references.
+  private _markGetters = $state<Array<{ _id: number; getInfo: () => MarkInfo }>>([]);
+  private _nextMarkId = 0;
+
+  /**
+   * Register a mark with the chart. The getter function is called reactively to
+   * retrieve current mark info (data, accessors, series key, color, label).
+   * Returns a cleanup function to call on unmount.
+   */
+  registerMark(getInfo: () => MarkInfo): () => void {
+    const id = ++this._nextMarkId;
+    this._markGetters = [...this._markGetters, { _id: id, getInfo }];
+    return () => {
+      this._markGetters = this._markGetters.filter((r) => r._id !== id);
+    };
+  }
+
   // Container ref (set from Chart.svelte)
   containerRef = $state<HTMLElement | undefined>();
 
@@ -80,9 +116,35 @@ export class ChartState<
     // Create GeoState instance
     this.geoState = new GeoState(() => this.props.geo ?? {});
 
-    // Create SeriesState internally from series/seriesLayout props
+    // Create SeriesState internally from series/seriesLayout props.
+    // When no explicit series are provided, derive implicit series from mark registrations.
     this.seriesState = new SeriesState(
-      () => this.props.series ?? EMPTY_SERIES,
+      () => {
+        const explicit = this.props.series;
+        if (explicit && explicit.length > 0) return explicit;
+
+        // Generate implicit series from registered marks.
+        // Use the value axis accessor (y for horizontal charts, x for vertical).
+        const valueAxis = this.props.valueAxis ?? 'y';
+        const implicitSeries: SeriesData<TData, any>[] = [];
+        for (const { getInfo } of this._markGetters) {
+          const info = getInfo();
+          const valueAccessor = valueAxis === 'y' ? info.y : info.x;
+          const key =
+            info.seriesKey ??
+            (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
+          if (!key) continue;
+          if (implicitSeries.some((s) => s.key === key)) continue;
+          implicitSeries.push({
+            key,
+            color: info.color,
+            label: info.label,
+            value: valueAccessor as Accessor<TData>,
+            data: info.data,
+          });
+        }
+        return implicitSeries.length > 0 ? implicitSeries : EMPTY_SERIES;
+      },
       () => {
         const layout = this.props.seriesLayout;
         if (!layout || !layout.startsWith('stack')) return null;
@@ -226,7 +288,25 @@ export class ChartState<
     return this.props.data ?? [];
   });
 
-  flatData = $derived((this.props.flatData ?? this.data) as TData[]);
+  flatData = $derived.by(() => {
+    const base = (this.props.flatData ?? this.data) as TData[];
+
+    // Include data from marks that have their own data but aren't already in a series.
+    // Include data from marks that have their own data but aren't already in a series
+    const extra: TData[] = [];
+    for (const { getInfo } of this._markGetters) {
+      const info = getInfo();
+      if (!info.data) continue;
+      // If this mark's data is already included via a series, skip it
+      const key =
+        info.seriesKey ?? (typeof info.y === 'string' ? (info.y as string) : undefined);
+      if (key && this.seriesState?.series.some((s) => s.key === key && s.data)) continue;
+      extra.push(...info.data);
+    }
+
+    if (extra.length === 0) return base;
+    return [...base, ...extra] as TData[];
+  });
 
   // Cached scale props - use this.flatData which derives from seriesState.visibleSeriesData when available
   _xScaleProp = $derived.by(() => {
@@ -261,11 +341,11 @@ export class ChartState<
     if (axisAccessor) {
       return makeAccessor(axisAccessor);
     } else if (this.valueAxis === axis && this.seriesState && !this.seriesState.isDefaultSeries) {
-      // TODO: should this only apply if !this.seriesState.isDefaultSeries?
+      // Derive accessor from series (explicit or mark-implied) values/keys
       return accessor(this.seriesState.series.map((s) => s.value ?? s.key));
     }
 
-    // TODO: what should the fallback be?
+    // No accessor available — identity function
     return makeAccessor(axisAccessor);
   }
 
@@ -288,10 +368,15 @@ export class ChartState<
 
   padding = $derived.by(() => {
     let paddingProp = this.props.padding;
-    // When no explicit padding, compute default from axis/legend (unless radial)
-    if (paddingProp == null && !this.props.radial && this.props.axis) {
+    // When no explicit padding, compute default from axis/legend (unless radial).
+    // When `children` is not set, ChartChildren renders with axis=true by default,
+    // so apply matching padding. When `children` IS set (Treemap, Pack, etc.),
+    // the user controls layout — only apply padding if axis is explicitly set.
+    const hasChartChildrenLayout = !this.props.children;
+    const effectiveAxis = this.props.axis ?? (hasChartChildrenLayout ? true : false);
+    if (paddingProp == null && !this.props.radial && effectiveAxis) {
       paddingProp = defaultChartPadding({
-        axis: this.props.axis as any,
+        axis: effectiveAxis as any,
         legend: this.props.legend as any,
       });
     }

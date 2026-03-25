@@ -59,15 +59,18 @@
 </script>
 
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { pointRadial } from 'd3-shape';
 
   import Circle, { type CircleProps } from './Circle.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
+  const { insideCompositeMark: skipRegistration } = registerComponentNode({ name: 'Points', kind: 'mark' });
 
   let {
     data,
@@ -85,6 +88,22 @@
     children,
     ...restProps
   }: PointsProps = $props();
+
+  // Register this mark with the chart for domain/series calculation.
+  // Skip when inside a composite mark (Labels, etc.) to avoid circular derived references.
+  if (!skipRegistration) {
+    $effect(() => {
+      return untrack(() =>
+        ctx.registerMark(() => ({
+          data,
+          x,
+          y,
+          seriesKey,
+          color: (fill ?? stroke) as string | undefined,
+        }))
+      );
+    });
+  }
 
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
   let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));

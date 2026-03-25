@@ -65,6 +65,10 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { registerComponentNode } from '$lib/contexts/componentTree.svelte.js';
+
+  // Mark as composite so child Spline doesn't register
+  registerComponentNode({ name: 'Hull', kind: 'composite-mark' });
 
   let {
     data,

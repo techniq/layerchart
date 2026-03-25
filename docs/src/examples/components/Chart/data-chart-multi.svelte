@@ -11,7 +11,7 @@
 	];
 </script>
 
-<Chart {data} x="date" y={['apples', 'oranges']} height={300}>
+<Chart {data} x="date" height={300}>
 	{#snippet marks()}
 		<Spline y="apples" stroke="var(--color-apples)" />
 		<Spline y="oranges" stroke="var(--color-oranges)" />
