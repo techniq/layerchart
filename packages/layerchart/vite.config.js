@@ -78,6 +78,25 @@ const config = defineConfig({
           exclude: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.ssr.{test,spec}.{js,ts}'],
         },
       },
+      {
+        // Benchmarks (browser-based Svelte component benchmarks)
+        extends: true,
+        test: {
+          name: 'bench',
+          testTimeout: 30000,
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
+            headless: true,
+          },
+          include: ['src/**/*.svelte.bench.{js,ts}'],
+          setupFiles: ['./src/vitest-setup-client.ts'],
+          benchmark: {
+            include: ['src/**/*.svelte.bench.{js,ts}'],
+          },
+        },
+      },
     ],
     coverage: {
       include: ['src'],

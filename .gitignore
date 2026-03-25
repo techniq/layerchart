@@ -11,6 +11,7 @@ coverage/
 
 test-*
 .vitest-attachments/
+bench-results/
 
 # Content Collections
 .content-collections
