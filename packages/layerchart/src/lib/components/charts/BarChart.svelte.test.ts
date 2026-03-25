@@ -191,6 +191,78 @@ describe('BarChart', () => {
       const barsGroups = container.querySelectorAll('.lc-bars');
       expect(barsGroups.length).toBe(4);
     });
+
+    describe('stackDiverging edge rounding', () => {
+      it('should round the tip of each direction, not inner layers', async () => {
+        // apples (positive inner), grapes (positive tip), bananas (negative tip)
+        const { container } = render(BarChart, {
+          data: wideData,
+          x: 'year',
+          series: [
+            { key: 'apples', color: 'red' },
+            { key: 'grapes', color: 'purple' },
+            { key: 'bananas', value: (d: any) => -d.bananas, color: 'yellow' },
+          ],
+          seriesLayout: 'stackDiverging',
+          height: 300,
+        });
+
+        const barsGroups = container.querySelectorAll('.lc-bars');
+        expect(barsGroups.length).toBe(3);
+
+        // apples (inner positive layer) → rounded='none' → <rect>, not <path>
+        expect(barsGroups[0].querySelectorAll('rect.lc-bar').length).toBe(wideData.length);
+        expect(barsGroups[0].querySelectorAll('path.lc-bar').length).toBe(0);
+
+        // grapes (tip of positive stack) → rounded='edge' → <path> with top arcs
+        const grapesPaths = barsGroups[1].querySelectorAll('path.lc-bar');
+        expect(grapesPaths.length).toBe(wideData.length);
+        grapesPaths.forEach((p) => {
+          // top-right arc has positive x,y deltas: a r,r 0 0 1 +r,+r
+          expect(p.getAttribute('d')).toMatch(/a[\d.]+,[\d.]+ 0 0 1 [\d.]+,[\d.]+/);
+        });
+
+        // bananas (tip of negative stack) → rounded='edge' → <path> with bottom arcs
+        const bananasPaths = barsGroups[2].querySelectorAll('path.lc-bar');
+        expect(bananasPaths.length).toBe(wideData.length);
+        bananasPaths.forEach((p) => {
+          // bottom-right arc has negative x, positive y delta: a r,r 0 0 1 -r,+r
+          expect(p.getAttribute('d')).toMatch(/a[\d.]+,[\d.]+ 0 0 1 -[\d.]+,[\d.]+/);
+        });
+      });
+
+      it('should round both tips when there is one positive and one negative series', async () => {
+        const { container } = render(BarChart, {
+          data: wideData,
+          x: 'year',
+          series: [
+            { key: 'apples', color: 'red' },
+            { key: 'bananas', value: (d: any) => -d.bananas, color: 'yellow' },
+          ],
+          seriesLayout: 'stackDiverging',
+          height: 300,
+        });
+
+        const barsGroups = container.querySelectorAll('.lc-bars');
+        expect(barsGroups.length).toBe(2);
+
+        // apples is the only positive series → it is the tip → <path> with top arcs
+        const applesPaths = barsGroups[0].querySelectorAll('path.lc-bar');
+        expect(applesPaths.length).toBe(wideData.length);
+        applesPaths.forEach((p) => {
+          // top-right arc has positive x,y deltas: a r,r 0 0 1 +r,+r
+          expect(p.getAttribute('d')).toMatch(/a[\d.]+,[\d.]+ 0 0 1 [\d.]+,[\d.]+/);
+        });
+
+        // bananas is the only negative series → it is the tip → <path> with bottom arcs
+        const bananasPaths = barsGroups[1].querySelectorAll('path.lc-bar');
+        expect(bananasPaths.length).toBe(wideData.length);
+        bananasPaths.forEach((p) => {
+          // bottom-right arc has negative x, positive y delta: a r,r 0 0 1 -r,+r
+          expect(p.getAttribute('d')).toMatch(/a[\d.]+,[\d.]+ 0 0 1 -[\d.]+,[\d.]+/);
+        });
+      });
+    });
   });
 
   describe('no series prop (transition example pattern)', () => {

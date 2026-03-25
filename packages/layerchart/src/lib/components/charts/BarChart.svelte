@@ -230,7 +230,12 @@
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush
-    ? { axis: 'x', zoomOnBrush: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
+    ? {
+        axis: 'x',
+        zoomOnBrush: true,
+        ...(typeof brush === 'object' ? brush : null),
+        ...props.brush,
+      }
     : false}
   {series}
   {seriesLayout}
@@ -250,11 +255,13 @@
           seriesKey={s.key}
           x1={valueAxis === 'y' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           y1={valueAxis === 'x' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
-          rounded={context.series.isStacked && i !== context.series.visibleSeries.length - 1
-            ? 'none'
-            : Array.isArray(xProp) || Array.isArray(yProp)
-              ? 'all'
-              : 'edge'}
+          rounded={context.series.divergingEdgeKeys
+            ? context.series.divergingEdgeKeys.has(s.key) ? 'edge' : 'none'
+            : context.series.isStacked && i !== context.series.visibleSeries.length - 1
+              ? 'none'
+              : Array.isArray(xProp) || Array.isArray(yProp)
+                ? 'all'
+                : 'edge'}
           radius={4}
           strokeWidth={1}
           {stackPadding}

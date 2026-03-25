@@ -173,6 +173,36 @@ export class SeriesState<TData, TComponent extends Component> {
   });
 
   /**
+   * For stackDiverging layout, returns the set of series keys that are "tips"
+   * (outermost in each direction) and should have rounded edges.
+   * Returns null for non-diverging layouts.
+   */
+  get divergingEdgeKeys(): Set<string> | null {
+    if (this.stackLayout !== 'stackDiverging' || !this.#stackMap) return null;
+
+    const firstEntry = this.#stackMap.values().next().value;
+    if (!firstEntry) return null;
+
+    let maxPosY1 = -Infinity;
+    let minNegY0 = Infinity;
+    let posTipKey: string | null = null;
+    let negTipKey: string | null = null;
+
+    for (const s of this.visibleSeries) {
+      const stackVal = firstEntry.get(s.key);
+      if (!stackVal) continue;
+      const [y0, y1] = stackVal;
+      if (y1 > maxPosY1) { maxPosY1 = y1; posTipKey = s.key; }
+      if (y0 < minNegY0) { minNegY0 = y0; negTipKey = s.key; }
+    }
+
+    const tips = new Set<string>();
+    if (posTipKey != null && maxPosY1 > 0) tips.add(posTipKey);
+    if (negTipKey != null && minNegY0 < 0) tips.add(negTipKey);
+    return tips;
+  }
+
+  /**
    * Get stack [y0, y1] values for a data point in a specific series.
    * Returns null if stacking is not enabled or series/data not found.
    */
