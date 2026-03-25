@@ -1,4 +1,5 @@
 export { applyLanes } from './array.js';
+export * from './download.js';
 export * from './canvas.js';
 export * from './common.js';
 export * from './dataProp.js';
