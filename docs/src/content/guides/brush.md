@@ -205,6 +205,10 @@ Combining `brush` with `transform={{ mode: 'domain' }}` enables brush-to-zoom wi
 
 :example{ component="LineChart" name="brush-pan-zoom" }
 
+An overview chart below the main chart can act as a navigation scrollbar. The overview brush reflects the main chart's visible region and dragging it pans/zooms the main chart:
+
+:example{ component="LineChart" name="pan-zoom-with-overview" }
+
 ## Quick reference
 
 | Use case                | Configuration                                            | Example                                                                       |
@@ -216,6 +220,7 @@ Combining `brush` with `transform={{ mode: 'domain' }}` enables brush-to-zoom wi
 | Synced multi-chart      | Shared `xDomain` state with `x` and `onChange`           | [sync-brushes](/docs/components/BrushContext/synced-brushes)                  |
 | Programmatic control    | `context.brush.move()`, `.reset()`, `.selectAll()`       | [programmatic-control](/docs/components/BrushContext/programmatic-control)    |
 | Brush + pan/zoom        | `brush` + `transform={{ mode: 'domain' }}`               | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                   |
+| Overview + pan/zoom     | `brush.x` synced to main chart's `context.xDomain`       | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)   |
 | Point selection         | `brush={{ axis: 'both', onChange: ... }}`                | [selection](/docs/components/BrushContext/selection)                          |
 | Custom styling          | `brush={{ classes: { range: '...', handle: '...' } }}`   | [simple-styling](/docs/components/BrushContext/simple-styling)                |
 | Disable click-to-reset  | `brush={{ clickToReset: false }}`                        |                                                                               |
