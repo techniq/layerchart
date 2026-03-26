@@ -38,8 +38,9 @@ function parseStyleString(styleString: string | null | undefined): StyleOptions 
 }
 
 type StyleOptions = Partial<
-  Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
+  Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeOpacity' | 'strokeWidth' | 'opacity'> & {
     fillOpacity?: number | string;
+    strokeOpacity?: number | string;
     strokeWidth?: number | string;
     opacity?: number | string;
   }
@@ -56,6 +57,7 @@ const supportedStyles = [
   'fill',
   'fillOpacity',
   'stroke',
+  'strokeOpacity',
   'strokeWidth',
   'strokeDasharray',
   'opacity',
@@ -261,6 +263,14 @@ function render(
           : resolvedStyles?.stroke;
 
       if (stroke && !['none'].includes(stroke)) {
+        const currentGlobalAlpha = ctx.globalAlpha;
+
+        const strokeOpacity = Number(resolvedStyles?.strokeOpacity);
+        const opacity = Number(resolvedStyles?.opacity);
+        if (!isNaN(strokeOpacity) && strokeOpacity !== 1) {
+          ctx.globalAlpha = strokeOpacity * (isNaN(opacity) ? 1 : opacity);
+        }
+
         ctx.lineWidth =
           typeof resolvedStyles?.strokeWidth === 'string'
             ? Number(resolvedStyles?.strokeWidth?.replace('px', ''))
@@ -268,6 +278,9 @@ function render(
 
         ctx.strokeStyle = stroke;
         render.stroke(ctx);
+
+        // Restore in case it was modified by `strokeOpacity`
+        ctx.globalAlpha = currentGlobalAlpha;
       }
     }
   }

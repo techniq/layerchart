@@ -100,6 +100,11 @@ export type CommonStyleProps = {
   stroke?: string;
 
   /**
+   * The stroke opacity of the element. (0 to 1)
+   */
+  strokeOpacity?: number;
+
+  /**
    * The stroke width of the element.
    */
   strokeWidth?: number;

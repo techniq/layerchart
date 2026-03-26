@@ -106,6 +106,7 @@
     draw,
     fill,
     stroke,
+    strokeOpacity,
     strokeWidth,
     fillOpacity,
     class: className,
@@ -176,7 +177,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
+            styles: { fill, fillOpacity, stroke, strokeOpacity, strokeWidth, opacity },
             classes: cls('lc-path', className),
             style: restProps.style as string | undefined,
           }
@@ -204,6 +205,7 @@
         fillKey.current,
         fillOpacity,
         strokeKey.current,
+        strokeOpacity,
         strokeWidth,
         opacity,
         className,
@@ -277,6 +279,7 @@
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
+      stroke-opacity={strokeOpacity}
       stroke-width={strokeWidth}
       {opacity}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
