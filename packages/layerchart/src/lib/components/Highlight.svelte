@@ -10,6 +10,7 @@
   export type HighlightPoint = {
     x: number;
     y: number;
+    r?: number;
     fill: string;
     data: HighlightPointData;
     seriesKey?: string;
@@ -30,6 +31,13 @@
      * Override `y` from context
      */
     y?: Accessor;
+
+    /**
+     * Use the chart's radius scale for highlight point size.
+     * When `true`, uses the `r` config from the chart context.
+     * When an accessor is provided, uses it to read the radius value from the data.
+     */
+    r?: boolean | Accessor;
 
     axis?: 'x' | 'y' | 'both' | 'none';
 
@@ -139,6 +147,7 @@
     data,
     x: xProp = ctx.x,
     y: yProp = ctx.y,
+    r: rProp,
     axis: axisProp,
     points = false,
     lines: linesProp = false,
@@ -155,6 +164,17 @@
 
   const x = $derived(accessor(xProp));
   const y = $derived(accessor(yProp));
+
+  /** Resolve radius for a data item using the chart's rScale */
+  function getPointRadius(d: any): number | undefined {
+    if (!rProp || !d) return undefined;
+    if (rProp === true) {
+      return ctx.config.r ? ctx.rGet(d) : undefined;
+    }
+    // Custom accessor — read value and apply rScale
+    const value = accessor(rProp)(d);
+    return value != null ? ctx.rScale(value) : undefined;
+  }
 
   const highlightData = $derived(data ?? ctx.tooltip.data);
 
@@ -596,6 +616,15 @@
         };
       });
     }
+
+    // Add radius from rScale if r prop is set
+    if (rProp) {
+      const pointR = getPointRadius(highlightData);
+      if (pointR != null) {
+        tmpPoints = tmpPoints.map((p) => ({ ...p, r: pointR }));
+      }
+    }
+
     return tmpPoints;
   });
 </script>
@@ -676,8 +705,8 @@
           cx={point.x}
           cy={point.y}
           fill={point.fill}
-          r={4}
-          strokeWidth={6}
+          r={point.r ?? 4}
+          strokeWidth={point.r ? 2 : 6}
           opacity={pointOpacity}
           {...extractLayerProps(points, 'lc-highlight-point')}
           onpointerdown={onPointClick &&
