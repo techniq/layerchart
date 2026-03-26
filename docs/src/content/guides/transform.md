@@ -235,6 +235,12 @@ The same click-to-zoom pattern using canvas mode, where the visual transform is 
 
 :example{ component="GeoPath" name="transform-canvas" }
 
+The same patterns work at world scale — click a country to zoom in:
+
+:example{ component="GeoPath" name="transform-world-projection" }
+
+:example{ component="GeoPath" name="transform-world-canvas" }
+
 Click a state to zoom with seamless tile layers that load progressively at each zoom level:
 
 :example{ component="GeoTile" name="zoomable-seamless-layers" }
@@ -482,6 +488,8 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`         | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
 | Pan/zoom a map (geo)   | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
+| World map (CSS)        | Canvas mode + world countries                              | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)               |
+| World map (geo)        | Projection mode + world countries                          | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
 | Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)      | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |

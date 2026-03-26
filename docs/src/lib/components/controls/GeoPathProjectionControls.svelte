@@ -9,7 +9,7 @@
 	let { projections, projection = $bindable() }: Props = $props();
 </script>
 
-<div class="grid grid-cols-[1fr_2fr] gap-2 mb-4 screeenshot-hidden">
+<div class="grid grid-cols-[1fr] gap-2 mb-4 screeenshot-hidden">
 	<SelectField
 		label="Projections"
 		options={projections}

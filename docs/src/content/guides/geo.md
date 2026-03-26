@@ -262,6 +262,14 @@ Applies a CSS/SVG transform to the rendered output without re-projecting. Faster
 
 :example{ component="GeoPath" name="transform-canvas" }
 
+### World map
+
+The same patterns work at world scale — click a country to zoom in:
+
+:example{ component="GeoPath" name="transform-world-projection" }
+
+:example{ component="GeoPath" name="transform-world-canvas" }
+
 ### Globe rotation
 
 Globe projections auto-detect rotation mode — dragging rotates the globe instead of panning:
@@ -378,8 +386,10 @@ The `geo` prop on `Chart` provides the primary projection context. Use the `GeoP
 | Zoomable tile map     | `GeoTile` + `transform={{ mode: 'projection' }}`          | [zoomable-seamless-layers](/docs/components/GeoTile/zoomable-seamless-layers) |
 | Curved connections    | `GeoSpline` with `link`                                   | [world-map](/docs/components/GeoSpline/world-map)                             |
 | Map tooltips          | `tooltipContext` + `GeoPath tooltip`                      | [tooltip](/docs/components/GeoPath/tooltip)                                   |
-| Pan/zoom (projection) | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)         |
-| Pan/zoom (canvas)     | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                 |
+| Pan/zoom (projection) | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
+| Pan/zoom (canvas)     | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
+| World map (projection)| Projection mode + world countries                          | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
+| World map (canvas)    | Canvas mode + world countries                              | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)               |
 | Globe rotation        | `transform={{ mode: 'projection' }}` + `geoOrthographic`  | [translucent-globe](/docs/components/GeoPath/translucent-globe)               |
 | Globe with inertia    | `transform={{ mode: 'projection', inertia: true }}`       | [transform-globe-inertia](/docs/components/GeoPath/transform-globe-inertia)   |
 | Bubble map            | `GeoPath` + scaled circles                                | [bubble-map](/docs/components/GeoPath/bubble-map)                             |
