@@ -3,7 +3,18 @@ import memoize from 'memoize';
 import { cls } from '@layerstack/tailwind';
 import type { PatternShape } from '$lib/components/Pattern.svelte';
 
+/** @deprecated - use `isTransparentFill` instead */
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
+
+/**
+ * Returns true if the fill color is effectively invisible (none, transparent, or alpha=0).
+ * Used to skip canvas fill rendering for invisible fills.
+ */
+function isTransparentFill(fill: string): boolean {
+  if (!fill || fill === 'none' || fill === 'transparent') return true;
+  // Match rgba(..., 0) - alpha channel is 0 (fully transparent)
+  return /rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*0\s*\)/.test(fill);
+}
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
@@ -202,14 +213,16 @@ function render(
     // Text properties
     ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
-    // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
     if (resolvedStyles.textAnchor === 'middle') {
       ctx.textAlign = 'center';
     } else if (resolvedStyles.textAnchor === 'end') {
       ctx.textAlign = 'right';
-    } else {
-      ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    } else if (resolvedStyles.textAnchor === 'start') {
+      ctx.textAlign = 'left';
+    } else if (resolvedStyles.textAlign) {
+      ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign;
     }
+    // If textAnchor/textAlign are unset, ctx.textAlign retains its pre-set value (e.g. from Text.svelte)
 
     // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
     // ctx.textBaseline = 'top';
@@ -241,7 +254,7 @@ function render(
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
 
-      if (fill && !['none', DEFAULT_FILL].includes(fill)) {
+      if (fill && !isTransparentFill(fill)) {
         const currentGlobalAlpha = ctx.globalAlpha;
 
         const fillOpacity = Number(resolvedStyles?.fillOpacity);

@@ -546,9 +546,12 @@
               strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
               opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
               paintOrder: 'stroke',
-              textAnchor,
+              // Only include textAnchor in constantStyles when explicitly non-default,
+              // so that CSS class-based text-anchor (e.g. [text-anchor:middle]) can take effect
+              ...(textAnchor !== 'start' ? { textAnchor } : {}),
             },
             classes: cls('lc-text', itemClass ?? (typeof className === 'string' ? className : undefined)),
+            style: restProps.style as string | undefined,
           };
     }
 
