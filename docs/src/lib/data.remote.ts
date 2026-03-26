@@ -212,6 +212,23 @@ export const getHydro = prerender(async () => {
 	return data;
 });
 
+export type CountryGdpLifeExpectancy = {
+	title: string;
+	id: string;
+	continent: string;
+	x: number;
+	y: number;
+	value: number;
+};
+
+export const getCountryGdpLifeExpectancy = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/country-gdp-life-expectancy.json').then((r) =>
+		r.json()
+	)) as CountryGdpLifeExpectancy[];
+	return data;
+});
+
 export const getForceGroupDots = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/force-group-dots.json').then((r) => r.json())) as {

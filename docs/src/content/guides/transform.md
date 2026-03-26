@@ -26,6 +26,10 @@ Zooming and panning modifies the chart's domain — the range of data values sho
 
 :example{ component="BarChart" name="pan-zoom" }
 
+<!-- A bubble chart with zoomable axes, showing GDP per capita vs life expectancy by continent:
+
+:example{ component="ScatterChart" name="zoomable-bubble" } -->
+
 The `axis` option restricts which axis is affected:
 
 | Value    | Effect                   |
@@ -157,6 +161,14 @@ Combining `brush` with `transform` enables brush-to-zoom: the user draws a selec
 ```
 
 :example{ component="LineChart" name="brush-pan-zoom" }
+
+### Overview brush
+
+A separate overview chart below the main chart can act as a navigation control. The overview shows the full dataset with a brush that reflects the main chart's visible region. Zooming or panning the main chart updates the brush; dragging the brush scrolls the main chart.
+
+Bind the main chart's `context` to read its `xDomain`, then pass it as the overview brush's `x` prop. On brush change, call `zoomToBrush()` to sync back:
+
+:example{ component="LineChart" name="pan-zoom-with-overview" }
 
 ## Programmatic control
 
@@ -474,6 +486,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
+| Overview brush         | Separate chart with `brush.x` synced to `context.xDomain` | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)             |
 | Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls              | [basic](/docs/components/Pack/basic)                                                    |
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                | [basic](/docs/components/Pack/basic)                                                    |
 | Dynamic data loading   | Derive data from `context.xDomain` visible range          | [pan-zoom-dynamic-data](/docs/components/LineChart/pan-zoom-dynamic-data)               |

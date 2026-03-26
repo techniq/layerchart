@@ -73,7 +73,6 @@
   {xDomain}
   y={yProp}
   {yDomain}
-  yNice
   c={yProp}
   cRange={['var(--color-primary, currentColor)']}
   {...restProps}
@@ -85,7 +84,12 @@
         ...(typeof tooltipContext === 'object' ? tooltipContext : null),
       }}
   brush={brush
-    ? { axis: 'both', zoomOnBrush: true, ...(typeof brush === 'object' ? brush : null), ...props.brush }
+    ? {
+        axis: 'both',
+        zoomOnBrush: true,
+        ...(typeof brush === 'object' ? brush : null),
+        ...props.brush,
+      }
     : false}
   {series}
   {axis}
@@ -111,7 +115,9 @@
     {:else if tooltipContext}
       <Tooltip.Root {context} {...props.tooltip?.root}>
         {#snippet children({ data })}
-          {@const activeSeries = context.tooltip.series.find((s) => s.key === data?.seriesKey) ?? context.tooltip.series[0]}
+          {@const activeSeries =
+            context.tooltip.series.find((s) => s.key === data?.seriesKey) ??
+            context.tooltip.series[0]}
           {#if activeSeries?.key !== 'default'}
             <Tooltip.Header
               value={activeSeries.label ?? activeSeries.key}
