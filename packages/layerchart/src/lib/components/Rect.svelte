@@ -152,6 +152,7 @@
     fill,
     fillOpacity,
     stroke,
+    strokeOpacity,
     initialHeight,
     initialWidth,
     strokeWidth,
@@ -315,6 +316,7 @@
     itemFill?: string | undefined,
     itemStroke?: string | undefined,
     itemFillOpacity?: number | undefined,
+    itemStrokeOpacity?: number | undefined,
     itemStrokeWidth?: number | undefined,
     itemOpacity?: number | undefined,
     itemClass?: string | undefined
@@ -326,6 +328,7 @@
             fill: itemFill ?? fill,
             fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
+            strokeOpacity: itemStrokeOpacity ?? (typeof strokeOpacity === 'number' ? strokeOpacity : undefined),
             strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
@@ -343,10 +346,11 @@
         const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale);
         const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale);
         const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d);
+        const resolvedStrokeOpacity = resolveStyleProp(strokeOpacity, item.d);
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
         renderRect(ctx, {
           x: item.x,
           y: item.y,
@@ -409,6 +413,8 @@
         motionHeight.current,
         fillKey.current,
         strokeKey.current,
+        fillOpacity,
+        strokeOpacity,
         strokeWidth,
         opacity,
         className,
@@ -426,6 +432,7 @@
       {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
       {@const resolvedStroke = resolveColorProp(stroke, item.d, chartCtx.cScale)}
       {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedStrokeOpacity = resolveStyleProp(strokeOpacity, item.d)}
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
@@ -437,6 +444,7 @@
         fill={resolvedFill}
         fill-opacity={resolvedFillOpacity}
         stroke={resolvedStroke}
+        stroke-opacity={resolvedStrokeOpacity}
         stroke-width={resolvedStrokeWidth}
         opacity={resolvedOpacity}
         {rx}
@@ -461,6 +469,7 @@
       fill={fill as string}
       fill-opacity={fillOpacity as number}
       stroke={stroke as string}
+      stroke-opacity={strokeOpacity as number}
       stroke-width={strokeWidth as number}
       opacity={opacity as number}
       {rx}

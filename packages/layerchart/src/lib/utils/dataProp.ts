@@ -143,6 +143,13 @@ export type DataDrivenStyleProps<T = any> = {
   fillOpacity?: StyleProp<number | undefined, T>;
 
   /**
+   * The stroke opacity (0 to 1).
+   * - `number`: static value
+   * - `function(d)`: accessor called per data item
+   */
+  strokeOpacity?: StyleProp<number | undefined, T>;
+
+  /**
    * The stroke width.
    * - `number`: static value
    * - `function(d)`: accessor called per data item
