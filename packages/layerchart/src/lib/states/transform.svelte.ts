@@ -190,8 +190,10 @@ export class TransformState {
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
     if (this.processTranslate) return this.processTranslate(x, y, deltaX, deltaY);
     if (this.mode === 'domain') {
+      // Negate deltaY because screen Y (top→bottom) is inverted vs data Y (bottom→top)
       if (this.axis === 'x') return { x: x + deltaX, y: 0 };
-      if (this.axis === 'y') return { x: 0, y: y + deltaY };
+      if (this.axis === 'y') return { x: 0, y: y - deltaY };
+      return { x: x + deltaX, y: y - deltaY };
     }
     return { x: x + deltaX, y: y + deltaY };
   }
@@ -323,6 +325,15 @@ export class TransformState {
     options: Parameters<typeof this._scale.set>[1] | undefined = undefined
   ) {
     if (!this.ctx) return;
+
+    // In domain mode, reflect Y point because screen Y is inverted vs data Y.
+    // This ensures zoom targets the correct data position under the cursor.
+    if (this.mode === 'domain' && this.axis !== 'x') {
+      point = {
+        x: point.x,
+        y: this.ctx.padding.top + this.ctx.height - (point.y - this.ctx.padding.top),
+      };
+    }
 
     const currentScale = this._scale.current;
     const newScale = this._clampScale(this._scale.current * value);
