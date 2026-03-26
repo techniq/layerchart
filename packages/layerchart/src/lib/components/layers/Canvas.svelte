@@ -158,46 +158,66 @@
   let hitCanvasContext = $state<CanvasRenderingContext2D>();
   let colorGenerator = rgbColorGenerator();
   let activeCanvas = $state(false);
-  let lastActiveComponent: ComponentRender | null | undefined = null;
+  let lastActiveNode: ComponentNode | null | undefined = null;
 
-  const componentByColor = new Map<string, ComponentRender>();
+  const nodeByColor = new Map<string, ComponentNode>();
 
-  function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
+  function getPointerNode(e: PointerEvent | MouseEvent | TouchEvent) {
     const { x, y } = localPoint(e);
     const color = getPixelColor(hitCanvasContext!, x, y);
     const colorKey = getColorStr(color);
-    const component = componentByColor.get(colorKey);
-    logger.debug({ colorKey, component, componentByColor });
-    return component;
+    const node = nodeByColor.get(colorKey);
+    logger.debug({ colorKey, node, nodeByColor });
+    return node;
+  }
+
+  type EventName = keyof NonNullable<ComponentRender['events']>;
+
+  /**
+   * Walk up the component tree from a node and call the given event on any
+   * ancestor groups that have a handler for it, simulating DOM event bubbling.
+   */
+  function bubbleEvent(node: ComponentNode | null | undefined, eventName: EventName, e: Event) {
+    // Fire event on the hit node itself
+    (node?.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined)?.(e);
+    // Bubble up to ancestor groups
+    let ancestor = node?.parent;
+    while (ancestor) {
+      const handler = ancestor.kind === 'group'
+        ? ancestor.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined
+        : undefined;
+      handler?.(e);
+      ancestor = ancestor.parent;
+    }
   }
 
   const onPointerMove: PointerEventHandler<Element> = (e) => {
     activeCanvas = true;
-    const component = getPointerComponent(e);
+    const node = getPointerNode(e);
 
-    if (component != lastActiveComponent) {
+    if (node != lastActiveNode) {
       // TODO: Should `pointerleave`/`pointerout` and `pointerenter`/`pointerover` be handled differently?
-      if (lastActiveComponent) {
-        lastActiveComponent.events?.pointerleave?.(e);
-        lastActiveComponent.events?.pointerout?.(e);
+      if (lastActiveNode) {
+        bubbleEvent(lastActiveNode, 'pointerleave', e);
+        bubbleEvent(lastActiveNode, 'pointerout', e);
       }
 
-      component?.events?.pointerenter?.(e);
-      component?.events?.pointerover?.(e);
+      bubbleEvent(node, 'pointerenter', e);
+      bubbleEvent(node, 'pointerover', e);
     }
-    component?.events?.pointermove?.(e);
+    bubbleEvent(node, 'pointermove', e);
 
-    lastActiveComponent = component;
+    lastActiveNode = node;
   };
 
   const onPointerLeave: PointerEventHandler<Element> = (e) => {
     // Pointer outside of canvas
 
     // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
-    lastActiveComponent?.events?.pointerleave?.(e);
-    lastActiveComponent?.events?.pointerout?.(e);
+    bubbleEvent(lastActiveNode, 'pointerleave', e);
+    bubbleEvent(lastActiveNode, 'pointerout', e);
 
-    lastActiveComponent = null;
+    lastActiveNode = null;
     activeCanvas = false;
   };
   /**
@@ -278,8 +298,9 @@
         // sync transform with main canvas (padding, center, zoom already applied)
         hitCanvasContext.setTransform(context.getTransform());
 
-        // reset color generator
+        // reset color generator and node map
         colorGenerator = rgbColorGenerator();
+        nodeByColor.clear();
 
         // render hit canvas tree
         renderHitTree(hitCanvasContext, rootNode);
@@ -316,25 +337,26 @@
     }
   }
 
+  function nodeHasEvents(node: ComponentNode) {
+    return node.canvasRender?.events && Object.values(node.canvasRender.events).some((d) => d);
+  }
+
   /**
    * Recursively render the hit canvas tree for pointer event detection.
-   * Only renders components that have event handlers, using unique colors.
+   * Renders components that have event handlers (or whose ancestor group does), using unique colors.
    */
-  function renderHitTree(hitCtx: CanvasRenderingContext2D, node: ComponentNode) {
+  function renderHitTree(hitCtx: CanvasRenderingContext2D, node: ComponentNode, ancestorHasEvents = false) {
     if (node.kind === 'group' && node.canvasRender) {
+      const groupHasEvents = ancestorHasEvents || nodeHasEvents(node);
       // Group: apply transform, recurse children (scoped by save/restore)
       hitCtx.save();
       node.canvasRender.render(hitCtx);
       for (const child of node.children) {
-        renderHitTree(hitCtx, child);
+        renderHitTree(hitCtx, child, groupHasEvents);
       }
       hitCtx.restore();
     } else if (node.canvasRender) {
-      const hasEvents =
-        node.canvasRender.events &&
-        Object.values(node.canvasRender.events).some((d) => d);
-
-      if (hasEvents) {
+      if (nodeHasEvents(node) || ancestorHasEvents) {
         const color = getColorStr(colorGenerator.next().value);
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
 
@@ -342,12 +364,12 @@
         node.canvasRender.render(hitCtx, styleOverrides);
         hitCtx.restore();
 
-        componentByColor.set(color, node.canvasRender);
+        nodeByColor.set(color, node);
       }
     } else {
       // Non-rendering node: recurse children
       for (const child of node.children) {
-        renderHitTree(hitCtx, child);
+        renderHitTree(hitCtx, child, ancestorHasEvents);
       }
     }
   }
@@ -385,18 +407,18 @@
   class={['lc-layout-canvas', className]}
   class:disablePointerEvents={pointerEvents === false}
   onclick={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.click?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'click', e);
     onclick?.(e);
   }}
   ondblclick={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.dblclick?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'dblclick', e);
     ondblclick?.(e);
   }}
   onpointerdown={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.pointerdown?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'pointerdown', e);
     onpointerdown?.(e);
   }}
   onpointerenter={(e) => {
@@ -413,12 +435,12 @@
   }}
   ontouchmove={(e) => {
     // Prevent touch from interfering with pointer if over data
-    if (lastActiveComponent) {
+    if (lastActiveNode) {
       e.preventDefault();
     }
 
-    const component = getPointerComponent(e);
-    component?.events?.touchmove?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'touchmove', e);
   }}
   {...restProps}
 >
