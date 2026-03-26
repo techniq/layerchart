@@ -2278,6 +2278,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 50,
+      "line": "<Layer>"
+    },
+    {
       "example": "line",
       "component": "Marker",
       "path": "/docs/components/Marker/line",
@@ -3545,5 +3552,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.601Z"
+  "updatedAt": "2026-03-26T17:40:21.577Z"
 }

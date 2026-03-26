@@ -664,7 +664,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 115,
+      "lineNumber": 114,
       "line": "<Text"
     },
     {
@@ -899,5 +899,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-03-23T09:15:12.403Z"
+  "updatedAt": "2026-03-26T17:40:25.722Z"
 }

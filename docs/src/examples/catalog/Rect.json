@@ -783,7 +783,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 101,
+      "lineNumber": 100,
       "line": "<Rect"
     },
     {
@@ -857,5 +857,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-03-24T16:06:11.245Z"
+  "updatedAt": "2026-03-26T17:40:24.380Z"
 }

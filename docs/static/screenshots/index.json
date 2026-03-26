@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-24T16:06:08.641Z",
+  "generatedAt": "2026-03-26T17:40:17.322Z",
   "totalComponents": 64,
-  "totalExamples": 789,
+  "totalExamples": 793,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1249,7 +1249,7 @@
         {
           "name": "stack-series-diverging",
           "path": "/example/BarChart/stack-series-diverging",
-          "checksum": "f18f17beb4e134b269c0b355e234b98d"
+          "checksum": "179ef6038054a289edfebe6641be0d1f"
         },
         {
           "name": "stack-series-expand",
@@ -1849,12 +1849,22 @@
         {
           "name": "data-chart-multi",
           "path": "/example/Chart/data-chart-multi",
-          "checksum": "13bd9d79c2299c124496db27149c0ac9"
+          "checksum": "8465623d5a3bddbef1e8231669b89bb7"
         },
         {
           "name": "data-chart-single",
           "path": "/example/Chart/data-chart-single",
           "checksum": "0c6d2e571568980c6fbbfc35f7447989"
+        },
+        {
+          "name": "data-mark-data",
+          "path": "/example/Chart/data-mark-data",
+          "checksum": "ea3ddec304182b3c9b968aea49d1018a"
+        },
+        {
+          "name": "data-primitive-data",
+          "path": "/example/Chart/data-primitive-data",
+          "checksum": "efd3caa58c1a5ac2d77533bc543ed361"
         },
         {
           "name": "data-series-chart-data",
@@ -2807,6 +2817,11 @@
           "checksum": "5adf6c0b714a200eb9664b3a550b90ac"
         },
         {
+          "name": "pan-zoom-with-overview",
+          "path": "/example/LineChart/pan-zoom-with-overview",
+          "checksum": "556dcc6e773d571e9fa1ba6d84141d9d"
+        },
+        {
           "name": "perf-dimension-arrays",
           "path": "/example/LineChart/perf-dimension-arrays",
           "checksum": "8d40d16f5f49eebb10fc95550603a81c"
@@ -3044,12 +3059,12 @@
         {
           "name": "filterable",
           "path": "/example/Partition/filterable",
-          "checksum": "8bdccbd9db5b9746e402ba83563d1470"
+          "checksum": "1939b3934a223116ada97d13010a22de"
         },
         {
           "name": "horizontal",
           "path": "/example/Partition/horizontal",
-          "checksum": "81d7db049a161213eeadac75d8308672"
+          "checksum": "3f4066ac75265ad9dd04ac20633ac9cc"
         },
         {
           "name": "sunburst",
@@ -3059,7 +3074,7 @@
         {
           "name": "vertical",
           "path": "/example/Partition/vertical",
-          "checksum": "c80d51fe63f77138afdcc86914ffbdb5"
+          "checksum": "7e7bacbd7d597badbbb9db95fe116010"
         }
       ]
     },
@@ -3709,12 +3724,12 @@
         {
           "name": "complex",
           "path": "/example/Sankey/complex",
-          "checksum": "36818e39ea8b1447eb02b600d4a8b1de"
+          "checksum": "beba84374cf768b0a035e781ce4d3198"
         },
         {
           "name": "hierarchy",
           "path": "/example/Sankey/hierarchy",
-          "checksum": "69a79276c6016e28f205345d3c516928"
+          "checksum": "e5193fb7101b476619f02b650945042f"
         },
         {
           "name": "node-select",
@@ -3860,6 +3875,11 @@
           "name": "tooltip-click",
           "path": "/example/ScatterChart/tooltip-click",
           "checksum": "b8d7a8998752c7bff664de06656c6a22"
+        },
+        {
+          "name": "zoomable-bubble",
+          "path": "/example/ScatterChart/zoomable-bubble",
+          "checksum": "27cf489c0c3b91c7f6a7fe2ce524834b"
         }
       ]
     },
@@ -4199,27 +4219,27 @@
         {
           "name": "complex",
           "path": "/example/Treemap/complex",
-          "checksum": "ec43fbd4f690174e30b99e7ea9a4fe18"
+          "checksum": "6e1e0fc4640e20a52fb63bb7667559cf"
         },
         {
           "name": "nested-filter",
           "path": "/example/Treemap/nested-filter",
-          "checksum": "e0f577e0c4bf85180ad52060b8e42171"
+          "checksum": "5ce042719bc47914ee02d5b6af3cd80b"
         },
         {
           "name": "nested-zoom",
           "path": "/example/Treemap/nested-zoom",
-          "checksum": "a14ba01a482cabdde9eb2afcb53564df"
+          "checksum": "2ea52f3d0f447660a7a75f87b5e13fce"
         },
         {
           "name": "playground",
           "path": "/example/Treemap/playground",
-          "checksum": "6cf498455232c6da0b587e158ced1c09"
+          "checksum": "0fda448f1690e833b82958fa366a79a0"
         },
         {
           "name": "stacked-zoom",
           "path": "/example/Treemap/stacked-zoom",
-          "checksum": "905ff894a81d7e3a80b2591eff4b8667"
+          "checksum": "a9c7a7cb92565fece29e657ff2acd7e6"
         }
       ]
     },

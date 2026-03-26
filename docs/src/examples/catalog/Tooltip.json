@@ -5304,6 +5304,48 @@
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
     },
     {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 60,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 62,
+      "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 63,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"GDP per capita\" value={data.x} format=\"currency\" />"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value={data.y} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"integer\" />"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -6277,5 +6319,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-24T16:06:11.505Z"
+  "updatedAt": "2026-03-26T17:40:25.924Z"
 }

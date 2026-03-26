@@ -1315,6 +1315,13 @@
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 51,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
@@ -1462,5 +1469,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:54.755Z"
+  "updatedAt": "2026-03-26T17:40:18.630Z"
 }

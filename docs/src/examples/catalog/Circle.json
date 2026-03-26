@@ -206,6 +206,20 @@
       "line": "<Circle"
     },
     {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 26,
+      "line": "<Circle cx=\"date\" cy=\"value\" data={temperatureData} r={5} fill=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 28,
+      "line": "<Circle cx=\"date\" cy=\"value\" data={humidityData} r={5} fill=\"var(--color-oranges)\" />"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Circle",
       "path": "/docs/components/Circle/color-via-ordinal-scale",
@@ -836,5 +850,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.124Z"
+  "updatedAt": "2026-03-26T17:40:20.194Z"
 }

@@ -149,7 +149,7 @@
         {
           "component": "Chart",
           "lineNumber": 14,
-          "line": "<Chart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
+          "line": "<Chart {data} x=\"date\" height={300}>"
         },
         {
           "component": "Spline",
@@ -172,6 +172,45 @@
           "component": "Spline",
           "lineNumber": 16,
           "line": "<Spline />"
+        }
+      ]
+    },
+    {
+      "name": "data-mark-data",
+      "title": "data mark data",
+      "path": "/docs/components/Chart/data-mark-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 25,
+          "line": "<Spline x=\"date\" y=\"value\" data={temperatureData} stroke=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-primitive-data",
+      "title": "data primitive data",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 25,
+          "line": "<!-- <Spline data={temperatureData} stroke=\"var(--color-apples)\" /> -->"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 26,
+          "line": "<Circle cx=\"date\" cy=\"value\" data={temperatureData} r={5} fill=\"var(--color-apples)\" />"
         }
       ]
     },
@@ -1525,7 +1564,7 @@
       "component": "Chart",
       "path": "/docs/components/Chart/data-chart-multi",
       "lineNumber": 14,
-      "line": "<Chart {data} x=\"date\" y={['apples', 'oranges']} height={300}>"
+      "line": "<Chart {data} x=\"date\" height={300}>"
     },
     {
       "example": "data-chart-single",
@@ -1533,6 +1572,20 @@
       "path": "/docs/components/Chart/data-chart-single",
       "lineNumber": 14,
       "line": "<Chart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "data-mark-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-mark-data",
+      "lineNumber": 23,
+      "line": "<Chart height={300}>"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 23,
+      "line": "<Chart height={300}>"
     },
     {
       "example": "data-series-chart-data",
@@ -2359,6 +2412,13 @@
       "path": "/docs/components/LinearGradient/units",
       "lineNumber": 6,
       "line": "<Chart height={320} width={700}>"
+    },
+    {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 30,
+      "line": "<Chart"
     },
     {
       "example": "line",
@@ -3607,5 +3667,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.040Z"
+  "updatedAt": "2026-03-26T17:40:19.994Z"
 }

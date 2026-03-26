@@ -277,7 +277,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 100,
+      "lineNumber": 99,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
@@ -358,5 +358,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:33.048Z"
+  "updatedAt": "2026-03-26T17:40:21.136Z"
 }

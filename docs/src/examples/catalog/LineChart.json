@@ -421,6 +421,33 @@
       ]
     },
     {
+      "name": "pan-zoom-with-overview",
+      "title": "pan zoom with overview",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 11,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 50,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 51,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
       "name": "perf-dimension-arrays",
       "title": "perf dimension arrays",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -1241,6 +1268,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 11,
+      "line": "<LineChart"
+    },
+    {
       "example": "perf-dimension-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
@@ -1514,5 +1548,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.668Z"
+  "updatedAt": "2026-03-26T17:40:21.828Z"
 }

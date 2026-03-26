@@ -837,6 +837,34 @@
       "line": "<Spline />"
     },
     {
+      "example": "data-mark-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-mark-data",
+      "lineNumber": 25,
+      "line": "<Spline x=\"date\" y=\"value\" data={temperatureData} stroke=\"var(--color-apples)\" />"
+    },
+    {
+      "example": "data-mark-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-mark-data",
+      "lineNumber": 26,
+      "line": "<Spline x=\"date\" y=\"value\" data={humidityData} stroke=\"var(--color-oranges)\" />"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 25,
+      "line": "<!-- <Spline data={temperatureData} stroke=\"var(--color-apples)\" /> -->"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 27,
+      "line": "<!-- <Spline data={humidityData} stroke=\"var(--color-oranges)\" /> -->"
+    },
+    {
       "example": "data-series-chart-data",
       "component": "Chart",
       "path": "/docs/components/Chart/data-series-chart-data",
@@ -1243,5 +1271,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:16.662Z"
+  "updatedAt": "2026-03-26T17:40:25.506Z"
 }
