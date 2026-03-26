@@ -310,8 +310,8 @@
 
         case 'bisect-band': {
           // `x` and `y` values at pointer coordinate
-          const xValueAtPoint = scaleInvert(ctx.xScale, point.x);
-          const yValueAtPoint = scaleInvert(ctx.yScale, point.y);
+          const xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
+          const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
 
           if (isScaleBand(ctx.xScale)) {
             // Find point closest to pointer within the x band
