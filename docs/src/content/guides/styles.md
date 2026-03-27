@@ -15,7 +15,7 @@ If you can think of a way to define a color, Layerchart probably [supports it](#
 
 ### Canvas
 
-Primitives rendered within Canvas layers support the same CSS classes and inline styles as Svg, allowing for use of `fill`, `stroke`, `font`, and even `paint-order`. Canvas layers also support CSS variables and light/dark mode, and will respond with media queries changes.
+Primitives rendered within Canvas layers support the same CSS classes and inline styles as Svg, allowing for use of `fill`, `stroke`, `font`, and even `paint-order`. Canvas layers also support CSS variables and light/dark mode, and will respond to media query changes.
 
 ### Global CSS colors
 
@@ -27,12 +27,12 @@ By default, LayerChart uses `currentColor` for default colors, but you can overr
 - **--color-surface-300**: A darker surface color used for surface/backgrounds.
 - **--color-surface-content**: The color used for text and content.
 
-You can apply a base "theme" in `app.css` to globally style base elements of your charts including primary color of chart visualization (i.e. line of LineChart), backgrounds, axises and text content.
+You can apply a base "theme" in `app.css` to globally style base elements of your charts including primary color of chart visualization (i.e. line of LineChart), backgrounds, axes, and text content.
 
 #### User defined global CSS colors
 
 :::tip
-If you are not seeing the chart, or it is colored incorrectly, then the probably likely residesing in this file. Debug via browser devtools to see CSS color variables.
+If you are not seeing the chart, or it is colored incorrectly, then the issue probably resides in this file. Debug via browser devtools to see CSS color variables.
 :::
 
 ```css title="app.css"
@@ -66,7 +66,7 @@ and for dark mode support:
 
 #### Third party framework colors
 
-If you're already using one of these popular UI frameworks, use can easily leverage it's theming with built-in integrations to map the framework's theme into layerchart colors.
+If you're already using one of these popular UI frameworks, you can easily leverage its theming with built-in integrations to map the framework's theme into layerchart colors.
 
 :::tabs{key="framework"}
 
