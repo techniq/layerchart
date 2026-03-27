@@ -4,7 +4,7 @@ category: migrations
 order: 1
 ---
 
-This guide covers migrating from LayerChart v1 (Svelte 4, Tailwind 3) to v2 (Svelte 5, Tailwind 4 (optional)). For changes specific to the `state-refactor` branch beyond `@next`, see the [state-refactor migration guide](/docs/guides/migrations/state-refactor).
+This guide covers migrating from LayerChart v1 (Svelte 4, Tailwind 3) to v2 (Svelte 5, Tailwind 4 (optional)). If you are already on `@next` and only need changes since then, see the [state-refactor migration guide](/docs/guides/migrations/state-refactor).
 
 ## New Features
 
@@ -45,6 +45,10 @@ See the [styles guide](/docs/guides/styles) for details.
 | [`AnnotationLine`](/docs/components/AnnotationLine) / [`AnnotationPoint`](/docs/components/AnnotationPoint) / [`AnnotationRange`](/docs/components/AnnotationRange) | Annotation system                                                       |
 | [`Ellipse`](/docs/components/Ellipse)                                                                                                                               | Ellipse primitive                                                       |
 | [`Polygon`](/docs/components/Polygon)                                                                                                                               | Polygon primitive with custom shapes                                    |
+| [`Cell`](/docs/components/Cell)                                                                                                                                     | Heatmap/matrix cells                                                    |
+| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon)                                                                                             | Chord diagrams                                                          |
+| [`Image`](/docs/components/Image)                                                                                                                                   | Image rendering in charts                                               |
+| [`Vector`](/docs/components/Vector)                                                                                                                                 | Vector/arrow mark                                                       |
 
 ### Annotation Integration
 
@@ -82,15 +86,75 @@ Annotations can now be passed directly to simplified charts:
 - `onNodesChange` callback
 - `links` exposed via `children` snippet
 
+### Mark Registration & Implicit Series
+
+Marks now register their data and accessors with the Chart automatically. No more manually passing all accessor arrays to `<Chart>`:
+
+```diff
+- <Chart y={['apples', 'oranges']}>
+-   <Spline y="apples" />
+-   <Spline y="oranges" />
+- </Chart>
+
++ <Chart>
++   <Spline y="apples" />
++   <Spline y="oranges" />
++ </Chart>
+```
+
+Implicit series are generated from mark registrations, enabling tooltip and legend support without explicit `series` definitions. See the [series guide](/docs/guides/series) and [state guide](/docs/guides/state).
+
+### Data-Driven Primitives
+
+Primitives (Circle, Ellipse, Group, Line, Polygon, Rect, Text) now accept string or function accessors for positional props to automatically resolve values through chart scales and iterate over data:
+
+```svelte
+<Circle x="date" y="value" r={5} />
+<Rect x="category" y="amount" fill="group" />
+```
+
+Color properties (`fill`, `stroke`) can also be data-driven via the chart's color scale (`cScale`). See the [primitives guide](/docs/guides/primitives).
+
+### Transform & Brush Enhancements
+
+- Cartesian pan/zoom via `transform={{ mode: 'domain' }}` with single or both axis support
+- `scrollActivationKey` — require modifier key for scroll zoom/pan
+- Inertia (momentum) support for drag gestures
+- Zoom/pan constraints (`scaleExtent`, `translateExtent`, `constrain`, `domainExtent`)
+- Brush redesign with `BrushState` class for programmatic control (`move`, `selectAll`, `reset`)
+
+See the [transform guide](/docs/guides/transform) and [brush guide](/docs/guides/brush).
+
+### Chart Export Utilities
+
+```ts
+import { downloadImage, downloadSvg, getChartImageBlob, getChartSvgString } from 'layerchart';
+```
+
+### Geo Projection Support
+
+- Primitives (Circle, Rect, etc.) support geo projection
+- Spline supports geo projection for route paths
+- `quadtree` tooltip mode for geo visualizations
+
+See the [geo guide](/docs/guides/geo).
+
+### Continuous Color Scales
+
+`cScale` now supports sequential/diverging color scales (e.g. `scaleSequential(interpolateTurbo)`) without requiring `cRange`. See the [scales guide](/docs/guides/scales).
+
 ### Canvas Improvements
 
-- Reduced computed style lookups with memoization
-- Hit canvas skipped when unneeded for better performance
-- Rounded `Rect` via `rx`/`ry` in Canvas
+- Unified component tree with proper Group transform scoping
+- `ClipPath` support in Canvas
+- `strokeOpacity` on Path, Rect, and other primitives
+- Rounded `Rect` via `rx`/`ry`
 - Dashed stroke support
+- Event handlers on `Group` components
 - `style` attribute passthrough
 - Default `lc-*` classes applied in Canvas (matching Svg)
 - Disableable hit canvas (useful during animations)
+- Reduced computed style lookups with memoization
 
 ### Global Settings
 
@@ -115,7 +179,13 @@ New `settings` context for configuring global defaults like default layer type a
 - `Legend`: `selected` prop to fade unselected items
 - `SeriesState`: `isHighlighted(seriesKey)` helper
 - `Text`: Word wrapping with `\n`, `fill: currentColor` default
-- `Highlight`: Radial area support, `opacity` prop
+- `Highlight`: Radial area support, `opacity` prop, data-driven `r` prop
+- `Bar`: Fixed `width` / `height` props to override scale-derived dimensions
+- `Rect`: New edge-based props (`x0`/`x1`/`y0`/`y1`) and `insets` support
+- `Chart`: [`motion`](/docs/guides/animation) prop to transition x/y scales using tween or spring
+- `SeriesState`: Support `selected` as part of [series](/docs/guides/series) declaration
+- `Labels`: `seriesKey` filter for multi-series charts
+- Default chart padding applied when using `marks`/`grid`/`axis` snippets (see [structure guide](/docs/guides/structure))
 - `LinearGradient`: Html context support
 - `Circle` / `Rect`: `children` snippet for Html layers
 - `Spline`: `value` in `startContent` / `endContent` snippets
@@ -273,6 +343,83 @@ The `selected` prop has been removed from Treemap.
 + defaultChartPadding({ left: 50 })
 ```
 
+### Chart
+
+#### `tooltip` prop renamed to `tooltipContext`
+
+```diff
+- <Chart tooltip={{ mode: 'bisect-x' }}>
++ <Chart tooltipContext={{ mode: 'bisect-x' }}>
+```
+
+#### `isVertical` removed from ChartState, `valueAxis` added
+
+`ChartState.isVertical` has been removed in favor of `ChartState.valueAxis`. Simplified charts still accept `orientation`.
+
+```diff
+- if (ctx.isVertical) { ... }
++ if (ctx.valueAxis === 'y') { ... }
+```
+
+### GeoContext → GeoProjection
+
+```diff
+- import { GeoContext } from 'layerchart'
++ import { GeoProjection } from 'layerchart'
+```
+
+### Tooltip prop on Arc, Pie, Calendar, GeoPath
+
+Simplified from config object to boolean:
+
+```diff
+- <Arc tooltipContext={{ mode: 'item' }} />
++ <Arc tooltip />
+```
+
+### Brush API redesign
+
+See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed props: `mode`, `resetOnEnd`, `ignoreResetClick`, `onReset`.
+
+### TransformContext
+
+```diff
+- <TransformContext initialScrollMode="zoom">
++ <TransformContext scrollMode="zoom">
+
+- <Chart transform={{ mode: 'rotate' }}>
++ <Chart transform={{ mode: 'projection' }}>
+
+- <Chart transform={{ domainExtent: 'original' }}>
++ <Chart transform={{ domainExtent: 'data' }}>
+```
+
+### Context / State API
+
+Standalone context getters removed — use `getChartContext()` instead:
+
+```diff
+- import { getTooltipContext } from 'layerchart'
++ import { getChartContext } from 'layerchart'
++ const chart = getChartContext()
++ // chart.tooltip, chart.brushState, chart.transformState
+```
+
+Bind and property renames:
+
+```diff
+- <BrushContext bind:brushContext>
++ <BrushContext bind:state>
+
+- <TransformContext bind:transformContext>
++ <TransformContext bind:state>
+
+- import { getRenderContext } from 'layerchart'
++ import { getLayerContext } from 'layerchart'
+```
+
+See the [state guide](/docs/guides/state) for the new architecture.
+
 ### Default tooltip modes changed
 
 - `AreaChart`: `bisect-x` → `quadtree-x`
@@ -283,16 +430,34 @@ These new defaults work with categorical data and don't require sorted data. See
 
 ## Quick Reference — Find & Replace
 
-| Before                      | After                          | Scope                |
-| --------------------------- | ------------------------------ | -------------------- |
-| `renderContext=`            | `layer=`                       | Simplified charts    |
-| `<Axis x="left">`           | `<Axis x="$left">`             | Axis position        |
-| `<Axis x="right">`          | `<Axis x="$right">`            | Axis position        |
-| `<Axis y="top">`            | `<Axis y="$top">`              | Axis position        |
-| `<Axis y="bottom">`         | `<Axis y="$bottom">`           | Axis position        |
-| `bar={` / `{bar}`           | `data={` / `{data}`            | Bar component        |
-| `splineRef`                 | `pathRef`                      | Spline bind          |
-| `labelOffset=`              | `labelXOffset=`                | AnnotationLine/Point |
-| `classes={{ swatches`       | `classes={{ item`              | Legend               |
-| `<Points links`             | `<Points />` + `<Rule>`        | Points component     |
-| `defaultChartPadding(a, b)` | `defaultChartPadding({ ... })` | Utility              |
+| Before | After | Scope |
+|--------|-------|-------|
+| `GeoContext` | `GeoProjection` | Component rename |
+| `renderContext=` | `layer=` | Simplified charts |
+| `<Axis x="left">` | `<Axis x="$left">` | Axis position |
+| `<Axis x="right">` | `<Axis x="$right">` | Axis position |
+| `<Axis y="top">` | `<Axis y="$top">` | Axis position |
+| `<Axis y="bottom">` | `<Axis y="$bottom">` | Axis position |
+| `bar={` / `{bar}` | `data={` / `{data}` | Bar component |
+| `splineRef` | `pathRef` | Spline bind |
+| `labelOffset=` | `labelXOffset=` | AnnotationLine/Point |
+| `classes={{ swatches` | `classes={{ item` | Legend |
+| `<Points links` | `<Points />` + `<Rule>` | Points component |
+| `defaultChartPadding(a, b)` | `defaultChartPadding({ ... })` | Utility |
+| `ctx.isVertical` | `ctx.valueAxis === 'y'` | ChartState property |
+| `<Chart tooltip=` | `<Chart tooltipContext=` | Chart prop only |
+| `tooltipContext` | `tooltip` | Arc/Pie/Calendar/GeoPath |
+| `initialScrollMode` | `scrollMode` | TransformContext prop |
+| `domainExtent: 'original'` | `domainExtent: 'data'` | Transform config |
+| `mode: 'rotate'` | `mode: 'projection'` | Transform config |
+| `getTooltipContext` | `getChartContext().tooltip` | Context API |
+| `getBrushContext` | `getChartContext().brushState` | Context API |
+| `getTransformContext` | `getChartContext().transformState` | Context API |
+| `getRenderContext` | `getLayerContext` | Context API |
+| `bind:brushContext` | `bind:state` | BrushContext |
+| `bind:transformContext` | `bind:state` | TransformContext |
+| `brushContext` | `brushState` | ChartState property |
+| `transformContext` | `transformState` | ChartState property |
+| `supportedContexts` | `layers` | Component prop |
+| `resetOnEnd` | `e.brush.reset()` in onBrushEnd | Brush |
+| `ignoreResetClick` | `clickToReset` | Brush |
