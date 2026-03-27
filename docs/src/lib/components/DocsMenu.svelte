@@ -28,6 +28,8 @@
 		sortFunc(([category]) => (category ? 1 : 0))
 	);
 
+	const collapsibleCategories = ['migrations'];
+
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
 		.sort(
@@ -80,7 +82,19 @@
 			<LucideGlobe class="size-4 text-surface-content/70" /> Guides
 		</h2>
 		{#each guidesByCategory as [category, guides]}
-			{#if category}
+			{#if category && collapsibleCategories.includes(category)}
+				<details class="ml-2 mb-6 last:mb-0 group" open={guides.some((g) => page.url.pathname.includes(`/docs/guides/${g.slug}`))}>
+					<summary class="text-surface-content/80 mb-3 text-sm font-medium capitalize cursor-pointer list-none flex items-center gap-1 select-none [&::-webkit-details-marker]:hidden">
+						<span class="transition-transform duration-200 group-open:rotate-90 text-surface-content/40">&#9656;</span>
+						{category}
+					</summary>
+					<div class="border-l border-surface-content/10">
+						{#each sortCollection(guides) as guide}
+							{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
+						{/each}
+					</div>
+				</details>
+			{:else if category}
 				<div class="ml-2 mb-6 last:mb-0">
 					<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 					<div class="border-l border-surface-content/10">

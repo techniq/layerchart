@@ -1,0 +1,317 @@
+---
+title: '@next → state-refactor'
+category: migrations
+order: 2
+---
+
+This guide covers changes introduced on the `state-refactor` branch beyond what was already in `@next`. If you are migrating from v1 (stable), see the [v1 → v2 migration guide](/docs/guides/migrations/v1-to-v2) for earlier breaking changes (Svelte 5, Tailwind 4, LayerCake removal, etc.).
+
+## New Features
+
+### Mark Registration & Implicit Series
+
+Marks now register their data and accessors with the Chart automatically. No more manually passing all accessor arrays to `<Chart>`:
+
+```diff
+- <Chart y={['apples', 'oranges']}>
+-   <Spline y="apples" />
+-   <Spline y="oranges" />
+- </Chart>
+
++ <Chart>
++   <Spline y="apples" />
++   <Spline y="oranges" />
++ </Chart>
+```
+
+Implicit series are generated from mark registrations, enabling tooltip and legend support without explicit `series` definitions. See the [series guide](/docs/guides/series) and [state guide](/docs/guides/state) for more details.
+
+### Data-Driven Primitives
+
+Primitives (Circle, Ellipse, Group, Line, Polygon, Rect, Text) now accept string or function accessors for positional props to automatically resolve values through chart scales and iterate over data. Components also accept an optional `data` prop to override chart context data.
+
+```svelte
+<Circle x="date" y="value" r={5} />
+<Rect x="category" y="amount" fill="group" />
+```
+
+Color properties (`fill`, `stroke`) can also be data-driven, resolving per-item through the chart's color scale (`cScale`). See the [primitives guide](/docs/guides/primitives) for usage details.
+
+### Canvas Layer Improvements
+
+Canvas rendering received significant fixes and new capabilities. See the [layers guide](/docs/guides/layers) for more on Svg, Canvas, and Html rendering.
+
+**Unified component tree:** Canvas rendering now uses a unified component tree with proper `save()`/`restore()` scoping, fixing Group transforms (translate, opacity) leaking to sibling components. The new `registerComponentNode()` API replaces `registerCanvasComponent`.
+
+**Newly supported in Canvas layers:**
+
+- `ClipPath` — now works with Canvas contexts
+- `strokeOpacity` — supported on Path, Rect, and other primitives
+- Dashed strokes
+- Rounded `Rect` via `rx`/`ry`
+- Event handlers on `Group` components
+- `style` attribute passthrough
+
+**Performance:** Reduced computed style lookups with memoization, skip unnecessary hit canvas work when unneeded.
+
+### New Components
+
+| Component                                                               | Description               |
+| ----------------------------------------------------------------------- | ------------------------- |
+| [`Cell`](/docs/components/Cell)                                         | Heatmap/matrix cells      |
+| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon) | Chord diagrams            |
+| [`Image`](/docs/components/Image)                                       | Image rendering in charts |
+| [`Vector`](/docs/components/Vector)                                     | Vector/arrow mark         |
+
+### Chart Export Utilities
+
+New utilities to export charts as PNG/JPEG/WebP images or SVG files:
+
+```ts
+import { downloadImage, downloadSvg, getChartImageBlob, getChartSvgString } from 'layerchart';
+```
+
+### Transform Enhancements
+
+- Cartesian pan/zoom via `transform={{ mode: 'domain' }}` with single or both axis support
+- `scrollActivationKey` — require modifier key (meta, alt, control, shift) for scroll zoom/pan
+- Inertia (momentum) support for drag gestures
+- Zoom/pan constraints (`scaleExtent`, `translateExtent`, `constrain`, `domainExtent`)
+
+See the [transform guide](/docs/guides/transform) for examples.
+
+### Brush Redesign
+
+The brush system has been rebuilt around a new `BrushState` class with programmatic control:
+
+- `BrushState.move({ x?, y? })` — programmatic selection control
+- `BrushState.selectAll()` — select full domain extent
+- `BrushState.reset()` — clear selection
+- `clickToReset` prop (default `true`)
+- `zoomOnBrush` prop on simplified charts
+
+See the [brush guide](/docs/guides/brush) for the full API.
+
+### Geo Projection Support
+
+- Primitives (Circle, Rect, etc.) now support geo projection
+- Spline supports geo projection for route paths
+
+See the [geo guide](/docs/guides/geo) for examples.
+
+### Continuous Color Scales
+
+`cScale` now supports sequential/diverging color scales (e.g. `scaleSequential(interpolateTurbo)`) without requiring `cRange`. Numeric `cDomain` values are auto-detected to use `extent` for continuous `[min, max]` domains. See the [scales guide](/docs/guides/scales) for details.
+
+### Other Notable Features
+
+- `SeriesState`: Support `selected` as part of [series](/docs/guides/series) declaration
+- `Labels`: `seriesKey` filter for multi-series charts
+- `Highlight`: Data-driven `r` prop for scaled highlight points
+- `Bar`: Fixed `width` / `height` props to override scale-derived dimensions
+- `Rect`: New edge-based props (`x0`/`x1`/`y0`/`y1`) and `insets` support
+- `Chart`: [`motion`](/docs/guides/animation) prop to transition x/y scales using tween or spring
+- Default chart padding applied when using `marks`/`grid`/`axis` snippets (see [structure guide](/docs/guides/structure))
+
+### New & Updated Examples
+
+Over 90 new examples have been added across the docs. Here are some highlights:
+
+**Pan/Zoom & Transform:**
+- [Pan/zoom with overview](/docs/components/LineChart/pan-zoom-with-overview) — brush + transform working together across two synchronized charts
+- [Zoomable bubble chart](/docs/components/ScatterChart/zoomable-bubble) — ScatterChart with zoom support
+- [BarChart pan/zoom](/docs/components/BarChart/pan-zoom) — cartesian domain pan/zoom on bar charts
+- [Pan/zoom with dynamic data](/docs/components/LineChart/pan-zoom-dynamic-data) — streaming data with constrained viewport
+- [Globe with inertia](/docs/components/GeoPath/transform-globe-inertia) — drag with momentum on an animated globe
+- [Planet distances](/docs/components/TransformContext/planet-distances) — interactive solar system scale explorer
+- [World map transform](/docs/components/GeoPath/transform-world-projection) — click-to-zoom world map (canvas & projection modes)
+
+**Geo & Maps:**
+- [Satellite projection](/docs/components/GeoProjection/satellite) — tilted satellite view
+- [College football map](/docs/components/Image/college-football-map) — geo-positioned images
+- [Geo route paths](/docs/components/Spline/geo-routes) — Spline with geo projection for flight/route paths
+- [Election wind map](/docs/components/Vector/election-wind-map) — vector field visualization
+
+**New Component Examples:**
+- [Cell heatmap](/docs/components/Cell/basic), [punchcard](/docs/components/Cell/punchcard), [color scale](/docs/components/Cell/color-scale)
+- [Chord diagrams](/docs/components/Chord/basic) with [hover](/docs/components/Chord/hover), [gradient](/docs/components/Chord/gradient), and [ticks](/docs/components/Chord/ticks)
+- [Image](/docs/components/Image/pixel-mode) with [country flags](/docs/components/Image/country-flags), [US presidents](/docs/components/Image/us-presidents), and [sports logos](/docs/components/Image/sports-logos)
+- [Vector](/docs/components/Vector/basic) with [shapes](/docs/components/Vector/shapes), [wind map](/docs/components/Vector/wind-map), and [anchoring](/docs/components/Vector/anchor)
+
+**Data-Driven Primitives:**
+- Data mode examples for [Circle](/docs/components/Circle/data-mode), [Rect](/docs/components/Rect/data-mode-edge), [Text](/docs/components/Text/data-mode), [Line](/docs/components/Line/data-mode), [Ellipse](/docs/components/Ellipse/data-mode), [Polygon](/docs/components/Polygon/data-mode), and [Group](/docs/components/Group/data-mode)
+- Color scale examples ([ordinal](/docs/components/Circle/color-via-ordinal-scale), [threshold](/docs/components/Circle/color-via-threshold-scale)) for each primitive
+
+**Charts & Series:**
+- [Ridgeline](/docs/components/Area/ridgeline) and [ridgeline KDE](/docs/components/Area/ridgeline-kde) charts
+- [Oscilloscope ridgeline](/docs/components/Area/oscilloscope-ridgeline)
+- [Series with separate data](/docs/components/BarChart/series-stack-separate-data) per series
+- [Programmatic series control](/docs/components/LineChart/series-programmatic-control)
+- [Brush programmatic control](/docs/components/BrushContext/programmatic-control)
+
+Browse the full [examples gallery](/docs/examples) for more.
+
+## Breaking Changes
+
+### Chart
+
+#### `tooltip` prop renamed to `tooltipContext`
+
+The `tooltip` prop on `<Chart>` has been renamed to `tooltipContext` to avoid conflict with the new `tooltip` snippet. See the [tooltip guide](/docs/guides/tooltip) for updated usage.
+
+```diff
+- <Chart tooltip={{ mode: 'bisect-x' }}>
++ <Chart tooltipContext={{ mode: 'bisect-x' }}>
+```
+
+#### `isVertical` removed from ChartState, `valueAxis` added to Chart
+
+`ChartState.isVertical` has been removed in favor of `ChartState.valueAxis` (`'x'` | `'y'`), which explicitly defines which axis represents the value (dependent variable).
+
+Simplified charts (`BarChart`, `LineChart`, etc.) **still accept `orientation`** as before — each chart maps it to the correct `valueAxis` internally. The `<Chart>` component uses `valueAxis` directly, since `orientation` is ambiguous at that level (a "vertical" BarChart has `valueAxis="y"`, while a "vertical" LineChart has `valueAxis="x"`).
+
+When accessing chart state programmatically:
+
+```diff
+- if (ctx.isVertical) { ... }
++ if (ctx.valueAxis === 'y') { ... }
+```
+
+When using `<Chart>` directly (not simplified charts):
+
+```diff
+- <Chart ...>
++ <Chart valueAxis="x" ...>
+```
+
+### GeoContext → GeoProjection
+
+The component has been renamed. See the [geo guide](/docs/guides/geo) for updated examples.
+
+```diff
+- import { GeoContext } from 'layerchart'
++ import { GeoProjection } from 'layerchart'
+
+- <GeoContext projection={geoAlbersUsa}>
++ <GeoProjection projection={geoAlbersUsa}>
+```
+
+### Tooltip prop on Arc, Pie, Calendar, GeoPath
+
+These components simplified the tooltip prop from a config object to a boolean. See the [tooltip guide](/docs/guides/tooltip) for details.
+
+```diff
+- <Arc tooltipContext={{ mode: 'item' }} />
++ <Arc tooltip />
+
+- <GeoPath tooltipContext />
++ <GeoPath tooltip />
+```
+
+### Brush prop changes
+
+The following props have been removed or replaced. See the [brush guide](/docs/guides/brush) for the new API.
+
+| Removed                              | Replacement                                               |
+| ------------------------------------ | --------------------------------------------------------- |
+| `mode` ('integrated' \| 'separated') | Sync behavior driven by presence of `x`/`y` props         |
+| `resetOnEnd`                         | Call `e.brush.reset()` in `onBrushEnd` handler            |
+| `ignoreResetClick`                   | `clickToReset` (default `true`)                           |
+| `onReset` event                      | Check `brush.active === false` in `onBrushEnd`/`onChange` |
+
+### TransformContext
+
+See the [transform guide](/docs/guides/transform) for updated examples.
+
+#### `initialScrollMode` renamed to `scrollMode` (reactive)
+
+```diff
+- <TransformContext initialScrollMode="zoom">
++ <TransformContext scrollMode="zoom">
+```
+
+#### `domainExtent: 'original'` renamed to `'data'`
+
+```diff
+- <Chart transform={{ domainExtent: 'original' }}>
++ <Chart transform={{ domainExtent: 'data' }}>
+```
+
+### Context / State API
+
+The context system has been consolidated. See the [state guide](/docs/guides/state) for the new architecture.
+
+#### Context getters/setters removed
+
+Standalone context functions have been removed in favor of the unified `getChartContext()`:
+
+```diff
+- import { getTooltipContext } from 'layerchart'
+- const tooltip = getTooltipContext()
++ import { getChartContext } from 'layerchart'
++ const chart = getChartContext()
++ // chart.tooltip, chart.brushState, chart.transformState
+```
+
+Removed functions:
+
+- `getTooltipContext()` / `setTooltipContext()`
+- `getBrushContext()` / `setBrushContext()`
+- `getTransformContext()` / `setTransformContext()`
+
+#### Bind renames
+
+```diff
+- <BrushContext bind:brushContext>
++ <BrushContext bind:state>
+
+- <TransformContext bind:transformContext>
++ <TransformContext bind:state>
+```
+
+ChartState properties:
+
+```diff
+- chartCtx.brushContext
++ chartCtx.brushState
+
+- chartCtx.transformContext
++ chartCtx.transformState
+```
+
+#### Render context → Layer context
+
+See the [layers guide](/docs/guides/layers) for the updated API.
+
+```diff
+- import { getRenderContext } from 'layerchart'
++ import { getLayerContext } from 'layerchart'
+
+// Component prop rename:
+- supportedContexts={['svg', 'canvas']}
++ layers={['svg', 'canvas']}
+```
+
+## Quick Reference — Find & Replace
+
+| Before                     | After                              | Scope                    |
+| -------------------------- | ---------------------------------- | ------------------------ |
+| `GeoContext`               | `GeoProjection`                    | Component rename         |
+| `initialScrollMode`        | `scrollMode`                       | TransformContext prop    |
+| `domainExtent: 'original'` | `domainExtent: 'data'`             | Transform config         |
+| `ctx.isVertical`           | `ctx.valueAxis === 'y'`            | ChartState property      |
+| `<Chart tooltip=`          | `<Chart tooltipContext=`           | Chart prop only          |
+| `tooltipContext`           | `tooltip`                          | Arc/Pie/Calendar/GeoPath |
+| `getTooltipContext`        | `getChartContext().tooltip`        | Context API              |
+| `getBrushContext`          | `getChartContext().brushState`     | Context API              |
+| `getTransformContext`      | `getChartContext().transformState` | Context API              |
+| `getRenderContext`         | `getLayerContext`                  | Context API              |
+| `bind:brushContext`        | `bind:state`                       | BrushContext             |
+| `bind:transformContext`    | `bind:state`                       | TransformContext         |
+| `brushContext`             | `brushState`                       | ChartState property      |
+| `transformContext`         | `transformState`                   | ChartState property      |
+| `supportedContexts`        | `layers`                           | Component prop           |
+| `resetOnEnd`               | `e.brush.reset()` in onBrushEnd    | Brush                    |
+| `ignoreResetClick`         | `clickToReset`                     | Brush                    |
+| `onReset`                  | check `brush.active` in onBrushEnd | Brush                    |
+| `mode: 'rotate'`           | `mode: 'projection'`               | Transform config         |
