@@ -101,7 +101,7 @@ If you're already using one of these popular UI frameworks, you can easily lever
 
 :::
 
-### User Defined options
+### User defined options
 
 Each component can be customized via style attributes and CSS classes. This allows you to define colors in a variety of ways.
 
@@ -176,7 +176,7 @@ Inline options are recommended for one-off color definitions. Use [global option
 
 
     ::tab{label="SVG style attributes"}
-    Here the color is set via [SVG Attributes]("https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute") such as `stroke`, `fill`, `strokeWidth`.
+    Here the color is set via [SVG Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute) such as `stroke`, `fill`, `strokeWidth`.
     ```svelte live {8}
     <script lang="ts">
       import { Chart, Layer, Text } from 'layerchart';
