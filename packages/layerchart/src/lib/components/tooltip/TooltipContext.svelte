@@ -333,8 +333,8 @@
         // Extract value from the data
         const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
 
-        // Color from series or from color scale
-        const color = s.color ?? ctx.cScale?.(ctx.c(tooltipData));
+        // Color from color scale (if configured) or series definition
+        const color = ctx.cScale?.(ctx.c(tooltipData)) ?? s.color;
 
         return {
           key: s.key,

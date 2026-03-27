@@ -154,10 +154,12 @@ export function createScale(
     scaleCopy.domain(domain);
   }
 
-  if (typeof range === 'function') {
-    scaleCopy.range(range(context));
-  } else {
-    scaleCopy.range(range);
+  if (range != null) {
+    if (typeof range === 'function') {
+      scaleCopy.range(range(context));
+    } else {
+      scaleCopy.range(range);
+    }
   }
   return scaleCopy;
 }

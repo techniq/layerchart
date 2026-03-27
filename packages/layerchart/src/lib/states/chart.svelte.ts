@@ -795,7 +795,15 @@ export class ChartState<
   y1Domain = $derived(
     this.props.y1Domain ?? (this.y1 ? extent(chartDataArray(this.data), this.y1) : undefined)
   );
-  cDomain = $derived(this.props.cDomain ?? unique(chartDataArray(this.data).map(this.c)));
+  cDomain = $derived.by(() => {
+    if (this.props.cDomain) return this.props.cDomain;
+    const values = chartDataArray(this.data).map(this.c);
+    // Use extent for numeric values (continuous scales), unique for categorical (ordinal scales)
+    if (values.length > 0 && typeof values[0] === 'number') {
+      return extent(values) as [number, number];
+    }
+    return unique(values);
+  });
 
   snappedPadding = $derived($state.snapshot(this.props.xPadding));
   snappedExtents = $derived($state.snapshot(this.extents));
@@ -934,7 +942,7 @@ export class ChartState<
   y1Get = $derived(this.y1 ? createGetter(this.y1, this.y1Scale) : null);
 
   cScale = $derived(
-    this.props.cRange
+    this.props.cScale || this.props.cRange
       ? createScale(this.props.cScale ?? scaleOrdinal(), this.cDomain, this.props.cRange, {
           width: this.width,
           height: this.height,
