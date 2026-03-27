@@ -56,12 +56,16 @@ Canvas rendering received significant fixes and new capabilities. See the [layer
 
 ### New Components
 
-| Component                                                               | Description               |
-| ----------------------------------------------------------------------- | ------------------------- |
-| [`Cell`](/docs/components/Cell)                                         | Heatmap/matrix cells      |
-| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon) | Chord diagrams            |
-| [`Image`](/docs/components/Image)                                       | Image rendering in charts |
-| [`Vector`](/docs/components/Vector)                                     | Vector/arrow mark         |
+| Component                                                               | Description                                            |
+| ----------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`BoxPlot`](/docs/components/BoxPlot)                                   | Box-and-whisker plot (quartiles, whiskers, outliers)   |
+| [`Violin`](/docs/components/Violin)                                     | Violin plot (KDE density curve with optional box/median) |
+| [`Cell`](/docs/components/Cell)                                         | Heatmap/matrix cells                                   |
+| [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon) | Chord diagrams                                         |
+| [`Image`](/docs/components/Image)                                       | Image rendering in charts                              |
+| [`Vector`](/docs/components/Vector)                                     | Vector/arrow mark                                      |
+
+New utility functions [`computeBoxStats`](/docs/utils/stats) and [`kde`](/docs/utils/stats) for computing box plot statistics and kernel density estimation.
 
 ### Chart Export Utilities
 

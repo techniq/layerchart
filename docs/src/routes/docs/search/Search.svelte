@@ -146,13 +146,19 @@
 			return 0;
 		});
 
-		// Convert to MenuOption format
-		const opts = sorted.map((result) => ({
-			label: result.title,
-			value: result.slug,
-			group: groupLabels[getGroupType(result)],
-			result
-		}));
+		// Convert to MenuOption format, deduplicating by slug
+		const seen = new Set<string>();
+		const opts: SearchOption[] = [];
+		for (const result of sorted) {
+			if (seen.has(result.slug)) continue;
+			seen.add(result.slug);
+			opts.push({
+				label: result.title,
+				value: result.slug,
+				group: groupLabels[getGroupType(result)],
+				result
+			});
+		}
 		return opts;
 	});
 
