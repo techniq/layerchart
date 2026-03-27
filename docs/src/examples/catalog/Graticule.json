@@ -99,6 +99,20 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 67,
+      "line": "<Graticule class=\"stroke-surface-content/20\" strokeWidth={1 / context.transform.scale} />"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 82,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
@@ -155,5 +169,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.453Z"
+  "updatedAt": "2026-03-26T19:56:43.290Z"
 }

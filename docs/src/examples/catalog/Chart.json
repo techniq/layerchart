@@ -1987,6 +1987,20 @@
       "line": "<Chart"
     },
     {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 48,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 63,
+      "line": "<Chart"
+    },
+    {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
@@ -3667,5 +3681,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:19.994Z"
+  "updatedAt": "2026-03-27T02:41:20.665Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-26T17:40:17.322Z",
+  "generatedAt": "2026-03-27T02:41:19.306Z",
   "totalComponents": 64,
-  "totalExamples": 793,
+  "totalExamples": 795,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2220,6 +2220,16 @@
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
           "checksum": "ec4529bfb54595a29ef6d9cc3f778b49"
+        },
+        {
+          "name": "transform-world-canvas",
+          "path": "/example/GeoPath/transform-world-canvas",
+          "checksum": "f788528bb83dd1c31e953bf67929bfc5"
+        },
+        {
+          "name": "transform-world-projection",
+          "path": "/example/GeoPath/transform-world-projection",
+          "checksum": "9c78aac6bef154d5f18a0b376b55292d"
         },
         {
           "name": "translucent-globe",
