@@ -24,6 +24,16 @@ Marks now register their data and accessors with the Chart automatically. No mor
 + </Chart>
 ```
 
+Marks are also **series-aware** via the `seriesKey` prop. When provided, a mark automatically resolves its data, accessors, stack offsets, and color from the matching series definition — no manual wiring required:
+
+```svelte
+{#each context.series.visibleSeries as s (s.key)}
+  <Spline seriesKey={s.key} />
+{/each}
+```
+
+Simplified charts (`LineChart`, `BarChart`, etc.) handle this internally, iterating over visible series and passing `seriesKey` to each mark.
+
 Implicit series are generated from mark registrations, enabling tooltip and legend support without explicit `series` definitions. See the [series guide](/docs/guides/series) and [state guide](/docs/guides/state) for more details.
 
 ### Data-Driven Primitives
@@ -251,6 +261,28 @@ See the [transform guide](/docs/guides/transform) for updated examples.
 + <Chart transform={{ domainExtent: 'data' }}>
 ```
 
+### Simplified Chart `get*Props` helpers removed
+
+Simplified charts (`BarChart`, `LineChart`, `AreaChart`, `ScatterChart`) previously exposed helper functions like `getBarsProps()`, `getSplineProps()`, `getAreaProps()`, `getPointsProps()`, etc. as parameters in the `marks` snippet. These have been removed — marks are now series-aware via `seriesKey` and resolve their own data, accessors, and styling from the chart context.
+
+If you were using these helpers in a custom `marks` snippet, pass `seriesKey` directly to the mark instead:
+
+```diff
+- {#snippet marks({ visibleSeries, getBarsProps })}
+-   {#each visibleSeries as s, i (s.key)}
+-     <Bars {...getBarsProps(s, i)} />
+-   {/each}
+- {/snippet}
+
++ {#snippet marks({ context })}
++   {#each context.series.visibleSeries as s, i (s.key)}
++     <Bars seriesKey={s.key} />
++   {/each}
++ {/snippet}
+```
+
+Per-series overrides can be passed via the `props` field in [series definitions](/docs/guides/series), which get spread onto the mark automatically.
+
 ### Context / State API
 
 The context system has been consolidated. See the [state guide](/docs/guides/state) for the new architecture.
@@ -329,3 +361,4 @@ See the [layers guide](/docs/guides/layers) for the updated API.
 | `ignoreResetClick`         | `clickToReset`                     | Brush                    |
 | `onReset`                  | check `brush.active` in onBrushEnd | Brush                    |
 | `mode: 'rotate'`           | `mode: 'projection'`               | Transform config         |
+| `get*Props(s, i)`          | `seriesKey={s.key}`                | Simplified chart marks   |
