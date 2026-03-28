@@ -252,13 +252,13 @@ export function flattenPathData(pathData: string, yOverride = 0) {
     return `${command}${0}`;
   });
 
-  // TODO: Flatten all elliptical arc commands (ex. `a4,4 0 0 1 4,4`) with `0` height
-  // result = result.replace(
-  //   /a(\d+),(\d+) (\d+) (\d+) (\d+) (\d+),(\d+)/g,
-  //   (match, rx, ry, rot, large, sweep, x, y) => {
-  //     return `a${rx},0 ${rot} ${large} ${sweep} ${x},0`;
-  //   }
-  // );
+  // Flatten relative elliptical arc commands (ex. `a4,4 0 0 1 4,4`) — zero out ry and dy
+  result = result.replace(
+    /a(-?\d*\.?\d+),(-?\d*\.?\d+) (\d+) (\d+) (\d+) (-?\d*\.?\d+),(-?\d*\.?\d+)/g,
+    (match, rx, ry, rot, large, sweep, dx, dy) => {
+      return `a${rx},0 ${rot} ${large} ${sweep} ${dx},0`;
+    }
+  );
 
   return result;
 }

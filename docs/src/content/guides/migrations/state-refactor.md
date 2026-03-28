@@ -126,6 +126,7 @@ See the [geo guide](/docs/guides/geo) for examples.
 - `Labels`: `seriesKey` filter for multi-series charts
 - `Highlight`: Data-driven `r` prop for scaled highlight points
 - `Bar`: Auto-computes mount animation initial values from chart scales when `motion` is set — no more hardcoding `initialY`/`initialHeight`
+- `Path`: Fixed `flattenPathData` to handle relative arc commands, fixing rounded bar mount animations starting below the baseline
 - `Bar`: Fixed `width` / `height` props to override scale-derived dimensions
 - `Rect`: New edge-based props (`x0`/`x1`/`y0`/`y1`) and `insets` support
 - `Chart`: [`motion`](/docs/guides/animation) prop to transition x/y scales using tween or spring
