@@ -125,6 +125,7 @@ See the [geo guide](/docs/guides/geo) for examples.
 - `SeriesState`: Support `selected` as part of [series](/docs/guides/series) declaration
 - `Labels`: `seriesKey` filter for multi-series charts
 - `Highlight`: Data-driven `r` prop for scaled highlight points
+- `Bar`: Auto-computes mount animation initial values from chart scales when `motion` is set — no more hardcoding `initialY`/`initialHeight`
 - `Bar`: Fixed `width` / `height` props to override scale-derived dimensions
 - `Rect`: New edge-based props (`x0`/`x1`/`y0`/`y1`) and `insets` support
 - `Chart`: [`motion`](/docs/guides/animation) prop to transition x/y scales using tween or spring
@@ -193,6 +194,8 @@ The `tooltip` prop on `<Chart>` has been renamed to `tooltipContext` to avoid co
 `ChartState.isVertical` has been removed in favor of `ChartState.valueAxis` (`'x'` | `'y'`), which explicitly defines which axis represents the value (dependent variable).
 
 Simplified charts (`BarChart`, `LineChart`, etc.) **still accept `orientation`** as before — each chart maps it to the correct `valueAxis` internally. The `<Chart>` component uses `valueAxis` directly, since `orientation` is ambiguous at that level (a "vertical" BarChart has `valueAxis="y"`, while a "vertical" LineChart has `valueAxis="x"`).
+
+When `valueAxis` is not explicitly set, it is now inferred from the scale types: if `yScale` is a band scale, `valueAxis` defaults to `'x'`; if `xScale` is a band scale, it defaults to `'y'`; otherwise `'y'`.
 
 When accessing chart state programmatically:
 

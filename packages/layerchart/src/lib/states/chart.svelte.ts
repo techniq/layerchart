@@ -1032,7 +1032,10 @@ export class ChartState<
     return this.props.radial ?? false;
   }
   get valueAxis() {
-    return this.props.valueAxis ?? 'y';
+    return this.props.valueAxis
+      ?? (this.props.yScale && isScaleBand(this.props.yScale) ? 'x'
+        : this.props.xScale && isScaleBand(this.props.xScale) ? 'y'
+        : 'y');
   }
 
   // Fallback objects for when state hasn't been initialized yet
