@@ -286,6 +286,27 @@ export const getSeriesArrays = prerender(async () => {
 	return data;
 });
 
+export type VolcanoData = {
+	width: number;
+	height: number;
+	values: number[];
+};
+
+export const getVolcano = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/volcano.json').then((r) => r.json())) as VolcanoData;
+	return data;
+});
+
+export type FaithfulData = { eruptions: number; waiting: number };
+
+export const getFaithful = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/faithful.json').then((r) => r.json())) as FaithfulData[];
+	return data;
+});
+
+
 export const getShapeData = query(z.string().nullable(), async (file) => {
 	if (!file) return null;
 	const { fetch } = getRequestEvent();

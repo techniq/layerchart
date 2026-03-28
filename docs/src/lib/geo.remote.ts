@@ -2,7 +2,7 @@ import { prerender, getRequestEvent } from '$app/server';
 
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import { geoCentroid } from 'd3-geo';
-import { csvParse, autoType } from 'd3-dsv';
+import { csvParse, tsvParse, autoType } from 'd3-dsv';
 import { parse } from '@layerstack/utils';
 
 import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
@@ -153,6 +153,14 @@ export const getUsAirports = prerender(async () => {
 	const data = (await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
 	)) as { name: string; latitude: number; longitude: number }[];
+	return data;
+});
+
+export const getWalmarts = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/walmarts.tsv').then(async (r) =>
+		tsvParse(await r.text(), autoType)
+	)) as { longitude: number; latitude: number; date: Date }[];
 	return data;
 });
 

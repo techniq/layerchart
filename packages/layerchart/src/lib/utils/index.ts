@@ -13,6 +13,7 @@ export * from './stack.js';
 export * from './ticks.js';
 export * from './treemap.js';
 export * from './threshold.js';
+export * from './rasterInterpolate.js';
 export * from './stats.js';
 export * from './types.js';
 

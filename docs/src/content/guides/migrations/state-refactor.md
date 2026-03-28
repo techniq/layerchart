@@ -60,12 +60,15 @@ Canvas rendering received significant fixes and new capabilities. See the [layer
 | ----------------------------------------------------------------------- | ------------------------------------------------------ |
 | [`BoxPlot`](/docs/components/BoxPlot)                                   | Box-and-whisker plot (quartiles, whiskers, outliers)   |
 | [`Violin`](/docs/components/Violin)                                     | Violin plot (KDE density curve with optional box/median) |
+| [`Density`](/docs/components/Density)                                   | 2D kernel density estimation contours from scatter data |
+| [`Contour`](/docs/components/Contour)                                   | Isolines/filled contour bands from scalar fields       |
+| [`Raster`](/docs/components/Raster)                                     | Pixel-based heatmap from grids, functions, or scatter data |
 | [`Cell`](/docs/components/Cell)                                         | Heatmap/matrix cells                                   |
 | [`Chord`](/docs/components/Chord) / [`Ribbon`](/docs/components/Ribbon) | Chord diagrams                                         |
 | [`Image`](/docs/components/Image)                                       | Image rendering in charts                              |
 | [`Vector`](/docs/components/Vector)                                     | Vector/arrow mark                                      |
 
-New utility functions [`computeBoxStats`](/docs/utils/stats) and [`kde`](/docs/utils/stats) for computing box plot statistics and kernel density estimation.
+New utility functions [`computeBoxStats`](/docs/utils/stats) and [`kde`](/docs/utils/stats) for computing box plot statistics and kernel density estimation. New [`interpolateGrid`](/docs/utils/rasterInterpolate) utility for spatial interpolation of scattered data onto regular grids (none, nearest, barycentric methods).
 
 ### Chart Export Utilities
 
@@ -135,6 +138,13 @@ Over 90 new examples have been added across the docs. Here are some highlights:
 - [College football map](/docs/components/Image/college-football-map) — geo-positioned images
 - [Geo route paths](/docs/components/Spline/geo-routes) — Spline with geo projection for flight/route paths
 - [Election wind map](/docs/components/Vector/election-wind-map) — vector field visualization
+
+**Statistical & Scientific Visualization:**
+- [BoxPlot](/docs/components/BoxPlot/basic) with [horizontal](/docs/components/BoxPlot/horizontal), [tooltip](/docs/components/BoxPlot/with-tooltip), and [violin overlay](/docs/components/BoxPlot/with-violin)
+- [Violin](/docs/components/Violin/basic) with [box/median](/docs/components/Violin/with-box-median) and [bandwidth](/docs/components/Violin/bandwidth)
+- [Density](/docs/components/Density/basic) with [bandwidth slider](/docs/components/Density/bandwidth), [thresholds slider](/docs/components/Density/thresholds), and [Walmart store density map](/docs/components/Density/walmart)
+- [Contour](/docs/components/Contour/volcano-lines) with [volcano filled](/docs/components/Contour/volcano-filled), [sampled function](/docs/components/Contour/sampled), and [interactive controls](/docs/components/Contour/volcano-filled-interactive)
+- [Raster](/docs/components/Raster/volcano) with [Mandelbrot fractal](/docs/components/Raster/mandelbrot), [contour overlay](/docs/components/Raster/with-contour-overlay), and [atan2 color map](/docs/components/Raster/atan2)
 
 **New Component Examples:**
 - [Cell heatmap](/docs/components/Cell/basic), [punchcard](/docs/components/Cell/punchcard), [color scale](/docs/components/Cell/color-scale)
