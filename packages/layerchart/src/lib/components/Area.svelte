@@ -57,7 +57,7 @@
 
 <script lang="ts">
   import type { CurveFactory } from 'd3-shape';
-  import { max, min } from 'd3-array';
+  import { min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
 
   import Spline from './Spline.svelte';
@@ -117,7 +117,9 @@
         ? stackAccessors.y0
         : Array.isArray(seriesAccessor)
           ? accessor(seriesAccessor[0])
-          : (d: any) => min(ctx.yDomain)
+          : Array.isArray(ctx.config.y) && ctx.config.y[0] === 0
+            ? (d: any) => ctx.y(d)[0]
+            : (d: any) => min(ctx.yScale.domain())
   );
   const y1Accessor = $derived(
     y1
@@ -128,7 +130,9 @@
           ? accessor(seriesAccessor[1])
           : seriesAccessor
             ? accessor(seriesAccessor)
-            : ctx.y
+            : Array.isArray(ctx.config.y) && ctx.config.y[1] === 1
+              ? (d: any) => ctx.y(d)[1]
+              : ctx.y
   );
   const resolvedData = $derived(data ?? seriesData ?? ctx.data);
 
@@ -190,35 +194,8 @@
             const v = xAccessor(d);
             return ctx.xScale(v) + xOffset;
           })
-          .y0((d) => {
-            let value = max<number>(ctx.yRange)!;
-            if (y0 || stackAccessors || Array.isArray(seriesAccessor)) {
-              // Use explicit y0 prop, stack accessor, or array series accessor
-              value = ctx.yScale(y0Accessor(d));
-            } else if (Array.isArray(ctx.config.y) && ctx.config.y[0] === 0) {
-              // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
-              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = ctx.yScale(ctx.y(d)[0]);
-            }
-
-            return value + yOffset;
-          })
-          .y1((d) => {
-            let value = max<number>(ctx.yRange)!;
-            if (y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor) {
-              // Use explicit y1 prop, stack accessor, array series accessor, or series accessor
-              value = ctx.yScale(y1Accessor(d));
-            } else if (Array.isArray(ctx.config.y) && ctx.config.y[1] === 1) {
-              // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
-              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = ctx.yScale(ctx.y(d)[1]);
-            } else {
-              // Expect single value defined for `y` (ex. `<Chart y="value">`)
-              value = ctx.yScale(ctx.y(d));
-            }
-
-            return value + yOffset;
-          });
+          .y0((d) => ctx.yScale(y0Accessor(d)) + yOffset)
+          .y1((d) => ctx.yScale(y1Accessor(d)) + yOffset);
 
     _path.defined(defined ?? ((d: any) => xAccessor(d) != null && y1Accessor(d) != null));
 

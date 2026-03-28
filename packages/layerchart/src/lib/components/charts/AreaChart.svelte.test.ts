@@ -112,6 +112,34 @@ describe(`AreaChart`, () => {
     });
   });
 
+  describe('all-zero data', () => {
+    it('should render area path with valid d attribute when all values are 0', async () => {
+      const zeroData = [
+        { date: new Date('2024-01-01'), value: 0 },
+        { date: new Date('2024-01-02'), value: 0 },
+        { date: new Date('2024-01-03'), value: 0 },
+      ];
+
+      const { container } = render(AreaChart, {
+        data: zeroData,
+        x: 'date',
+        y: 'value',
+        height: 300,
+      });
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      const path = container.querySelector('path.lc-area-path');
+      expect(path).not.toBeNull();
+
+      // The path's d attribute should not contain NaN
+      const d = path!.getAttribute('d');
+      expect(d).not.toBeNull();
+      expect(d).not.toContain('NaN');
+    });
+  });
+
   describe('series layout', () => {
     it('should render with overlap layout', async () => {
       const { container } = render(AreaChart, {

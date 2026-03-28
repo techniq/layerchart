@@ -651,6 +651,74 @@ describe('ChartState implicit series domain update on visibility toggle', () => 
   });
 });
 
+describe('ChartState degenerate domain', () => {
+  it('should expand degenerate y domain [0, 0] to [0, 1]', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 0 },
+      { date: '2024-02', value: 0 },
+      { date: '2024-03', value: 0 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      yBaseline: 0,
+    });
+
+    try {
+      // Domain from data+baseline is [0,0] — scale should expand to [0,1]
+      expect(state._yDomain).toEqual([0, 0]);
+      expect(state.yScale.domain()).toEqual([0, 1]);
+      // yScale(0) should be a valid number (not NaN)
+      expect(state.yScale(0)).not.toBeNaN();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should expand degenerate y domain [5, 5] to [5, 6]', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 5 },
+      { date: '2024-02', value: 5 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      // _yDomain is undefined (no baseline/explicit domain), domain comes from extents
+      expect(state.yDomain).toEqual([5, 5]);
+      expect(state.yScale.domain()).toEqual([5, 6]);
+      expect(state.yScale(5)).not.toBeNaN();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not expand a non-degenerate domain', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      expect(state.yScale.domain()).toEqual([10, 20]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState default padding', () => {
   it('should apply default padding when using ChartChildren layout (no children snippet)', () => {
     const { state, cleanup } = createChartState<TestData>({
