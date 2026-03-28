@@ -260,6 +260,34 @@
       "line": "<Points>"
     },
     {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 31,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 24,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 24,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 31,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
       "example": "text",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/text",
@@ -400,5 +428,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.913Z"
+  "updatedAt": "2026-03-28T15:21:53.344Z"
 }

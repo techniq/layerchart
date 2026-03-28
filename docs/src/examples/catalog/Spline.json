@@ -931,7 +931,7 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 21,
+      "lineNumber": 24,
       "line": "<Spline stroke={gradient} />"
     },
     {
@@ -1271,5 +1271,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:25.506Z"
+  "updatedAt": "2026-03-28T15:21:53.627Z"
 }

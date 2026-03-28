@@ -1295,6 +1295,48 @@
     },
     {
       "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 27,
+      "line": "<Chart"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 27,
+      "line": "<Chart"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 10,
@@ -1686,6 +1728,41 @@
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 7,
+      "line": "<Chart"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 20,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 9,
+      "line": "<Chart padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1711,6 +1788,41 @@
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 34,
+      "line": "<Chart"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 21,
       "line": "<Chart"
     },
     {
@@ -3030,6 +3142,41 @@
       "line": "<Chart height={220}>"
     },
     {
+      "example": "atan2",
+      "component": "Raster",
+      "path": "/docs/components/Raster/atan2",
+      "lineNumber": 7,
+      "line": "<Chart"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 7,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-ordinal-scale",
@@ -3674,6 +3821,34 @@
       "line": "<Chart"
     },
     {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -3681,5 +3856,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-27T02:41:20.665Z"
+  "updatedAt": "2026-03-28T15:21:51.729Z"
 }

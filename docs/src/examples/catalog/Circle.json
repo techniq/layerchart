@@ -339,6 +339,13 @@
       "line": "<circle"
     },
     {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 35,
+      "line": "<Circle data={walmarts} cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -850,5 +857,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:20.194Z"
+  "updatedAt": "2026-03-28T15:21:51.892Z"
 }

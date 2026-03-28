@@ -437,8 +437,8 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 19,
-      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+      "lineNumber": 22,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
     },
     {
       "example": "gradient-threshold",
@@ -546,5 +546,5 @@
       "line": "<LinearGradient"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.689Z"
+  "updatedAt": "2026-03-28T15:21:53.034Z"
 }

@@ -395,6 +395,7 @@ async function main() {
 	let processedCount = 0;
 	let skippedCount = 0;
 	let errorCount = 0;
+	const failedExamples: string[] = [];
 
 	// Process each example
 	for (const example of examples) {
@@ -453,6 +454,7 @@ async function main() {
 		} catch (error) {
 			console.error(`  ✗ Error:`, error instanceof Error ? error.message : error);
 			errorCount++;
+			failedExamples.push(`${component}/${exampleName}`);
 			// Keep old checksum on error to retry next time
 			if (checksums[`${component}/${exampleName}`]) {
 				updatedChecksums[`${component}/${exampleName}`] = checksums[`${component}/${exampleName}`];
@@ -508,6 +510,12 @@ async function main() {
 	console.log(`  Screenshots generated: ${processedCount}`);
 	console.log(`  Screenshots skipped: ${skippedCount}`);
 	console.log(`  Errors: ${errorCount}`);
+	if (failedExamples.length > 0) {
+		console.log(`\nFailed examples:`);
+		for (const name of failedExamples) {
+			console.log(`  ✗ ${name}`);
+		}
+	}
 	console.log(`\n✅ Screenshots saved to ${SCREENSHOTS_DIR}`);
 }
 

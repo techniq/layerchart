@@ -2700,6 +2700,90 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" grid rule />"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 46,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 47,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 62,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 63,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
@@ -3062,6 +3146,132 @@
       "path": "/docs/components/Circle/styling-using-css-variables",
       "lineNumber": 13,
       "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 11,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -3650,6 +3860,76 @@
       "path": "/docs/components/Polygon/data-mode",
       "lineNumber": 17,
       "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "atan2",
+      "component": "Raster",
+      "path": "/docs/components/Raster/atan2",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "atan2",
+      "component": "Raster",
+      "path": "/docs/components/Raster/atan2",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -4609,7 +4889,63 @@
       "path": "/docs/components/Vector/wind-map",
       "lineNumber": 38,
       "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 51,
+      "line": "<Axis placement=\"bottom\" grid rule />"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:54.806Z"
+  "updatedAt": "2026-03-28T15:21:51.171Z"
 }

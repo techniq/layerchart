@@ -318,6 +318,20 @@
       "line": "<Highlight area />"
     },
     {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 57,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 92,
+      "line": "<Highlight area />"
+    },
+    {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
@@ -358,13 +372,6 @@
       "path": "/docs/components/LineChart/custom",
       "lineNumber": 24,
       "line": "<Highlight points lines />"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 28,
-      "line": "<Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />"
     },
     {
       "example": "gradient-threshold",
@@ -647,5 +654,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-03-12T05:41:46.112Z"
+  "updatedAt": "2026-03-28T15:21:52.793Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-27T02:41:19.306Z",
-  "totalComponents": 64,
-  "totalExamples": 795,
+  "generatedAt": "2026-03-28T15:21:49.054Z",
+  "totalComponents": 69,
+  "totalExamples": 820,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1654,6 +1654,41 @@
       ]
     },
     {
+      "component": "BoxPlot",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/BoxPlot/basic",
+          "checksum": "8ba6c070d9f42f8b0a4be36250c5320d"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/BoxPlot/horizontal",
+          "checksum": "adbbebb3caeef3f4bf2603fc132b274e"
+        },
+        {
+          "name": "pre-computed",
+          "path": "/example/BoxPlot/pre-computed",
+          "checksum": "031785677bac4ced6af9e3b413f916d8"
+        },
+        {
+          "name": "styled",
+          "path": "/example/BoxPlot/styled",
+          "checksum": "86e14a7174315dfaa63c4675baa1d437"
+        },
+        {
+          "name": "with-tooltip",
+          "path": "/example/BoxPlot/with-tooltip",
+          "checksum": "e4dd4e96e83735cfc81b482ec83fac89"
+        },
+        {
+          "name": "with-violin",
+          "path": "/example/BoxPlot/with-violin",
+          "checksum": "0cf9b82ea3c13ea009020dbbc5de9f81"
+        }
+      ]
+    },
+    {
       "component": "BrushContext",
       "examples": [
         {
@@ -1974,6 +2009,36 @@
       ]
     },
     {
+      "component": "Contour",
+      "examples": [
+        {
+          "name": "sampled",
+          "path": "/example/Contour/sampled",
+          "checksum": "7eec47e2f63c0a848900c5240a014cbb"
+        },
+        {
+          "name": "sampled-interactive",
+          "path": "/example/Contour/sampled-interactive",
+          "checksum": "09792119c168420d643458abb65c81d0"
+        },
+        {
+          "name": "volcano-filled",
+          "path": "/example/Contour/volcano-filled",
+          "checksum": "c107d9cf488606c40fbaa4bf8f2efac1"
+        },
+        {
+          "name": "volcano-filled-interactive",
+          "path": "/example/Contour/volcano-filled-interactive",
+          "checksum": "fc11087212549fe1153372e2192240de"
+        },
+        {
+          "name": "volcano-lines",
+          "path": "/example/Contour/volcano-lines",
+          "checksum": "c4267f147142ca9a3d1b65226cc2ac04"
+        }
+      ]
+    },
+    {
       "component": "Dagre",
       "examples": [
         {
@@ -1995,6 +2060,36 @@
           "name": "tcp-state-diagram",
           "path": "/example/Dagre/tcp-state-diagram",
           "checksum": "7f2750ea954d7a79e9c935931c7f4517"
+        }
+      ]
+    },
+    {
+      "component": "Density",
+      "examples": [
+        {
+          "name": "bandwidth",
+          "path": "/example/Density/bandwidth",
+          "checksum": "67d5e91e28bd093627fd66deb1084d63"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Density/basic",
+          "checksum": "8cd593c7dd1e6dc1aa8d45717a233918"
+        },
+        {
+          "name": "stroke-only",
+          "path": "/example/Density/stroke-only",
+          "checksum": "f6b34d296ed3bed7c96d03be9edaac0e"
+        },
+        {
+          "name": "thresholds",
+          "path": "/example/Density/thresholds",
+          "checksum": "3e8ab10b6aac28cc09a4ca69871d47a4"
+        },
+        {
+          "name": "walmart",
+          "path": "/example/Density/walmart",
+          "checksum": "18cf8cb00855020d0cd4f0d4c869f5d7"
         }
       ]
     },
@@ -2744,7 +2839,7 @@
         {
           "name": "gradient-encoding",
           "path": "/example/LineChart/gradient-encoding",
-          "checksum": "403a24aa4a557b9da309e765da033ae7"
+          "checksum": "864e41fb38f7f2434199f54f76b548a3"
         },
         {
           "name": "gradient-threshold",
@@ -3619,6 +3714,36 @@
       ]
     },
     {
+      "component": "Raster",
+      "examples": [
+        {
+          "name": "atan2",
+          "path": "/example/Raster/atan2",
+          "checksum": "448891430a661135a7dc477d791b8181"
+        },
+        {
+          "name": "mandelbrot",
+          "path": "/example/Raster/mandelbrot",
+          "checksum": "0b1066ebe004d973fc2058221eb7e0d4"
+        },
+        {
+          "name": "sampled",
+          "path": "/example/Raster/sampled",
+          "checksum": "83f1cd9ea829c198d1f44ae71f058346"
+        },
+        {
+          "name": "volcano",
+          "path": "/example/Raster/volcano",
+          "checksum": "511f401ad3bd868ec1764d716881690a"
+        },
+        {
+          "name": "with-contour-overlay",
+          "path": "/example/Raster/with-contour-overlay",
+          "checksum": "63f947053f4edcf192aef32f9b69d791"
+        }
+      ]
+    },
+    {
       "component": "Rect",
       "examples": [
         {
@@ -4285,6 +4410,31 @@
           "name": "wind-map",
           "path": "/example/Vector/wind-map",
           "checksum": "3957a46a3025849e363ed1ee7395aecd"
+        }
+      ]
+    },
+    {
+      "component": "Violin",
+      "examples": [
+        {
+          "name": "bandwidth",
+          "path": "/example/Violin/bandwidth",
+          "checksum": "ed3d33ea221db322984cff07db594fd1"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Violin/basic",
+          "checksum": "b75cc7397b904189245623475b042131"
+        },
+        {
+          "name": "horizontal",
+          "path": "/example/Violin/horizontal",
+          "checksum": "94a534d4a6dccd2fa35161d5eae4852f"
+        },
+        {
+          "name": "with-box-median",
+          "path": "/example/Violin/with-box-median",
+          "checksum": "2c52005f99ce345942e3379040901455"
         }
       ]
     },

@@ -3190,6 +3190,125 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 59,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 61,
+      "line": "<Tooltip.Header value={data.group} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 62,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 63,
+      "line": "<Tooltip.Item label=\"Max\" value={data.max} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"Q3\" value={data.q3} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Median\" value={data.median} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Q1\" value={data.q1} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Min\" value={data.min} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 69,
+      "line": "<Tooltip.Item label=\"Outliers\" value={data.outliers.join(', ')} />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 95,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 97,
+      "line": "<Tooltip.Header value={`Group ${data.group}`} />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 98,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 99,
+      "line": "<Tooltip.Item label=\"Max\" value={data.max} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 100,
+      "line": "<Tooltip.Item label=\"Q3\" value={data.q3} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 101,
+      "line": "<Tooltip.Item label=\"Median\" value={data.median} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 102,
+      "line": "<Tooltip.Item label=\"Q1\" value={data.q1} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 103,
+      "line": "<Tooltip.Item label=\"Min\" value={data.min} format=\"decimal\" />"
+    },
+    {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
@@ -4637,34 +4756,6 @@
       "path": "/docs/components/LineChart/custom-tooltip",
       "lineNumber": 25,
       "line": "<Tooltip.Root"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 33,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 36,
-      "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 37,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 38,
-      "line": "<Tooltip.Item label=\"value\" {value} color={temperatureColor(value)} />"
     },
     {
       "example": "gradient-threshold",
@@ -6361,5 +6452,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-27T02:41:22.659Z"
+  "updatedAt": "2026-03-28T15:21:53.774Z"
 }

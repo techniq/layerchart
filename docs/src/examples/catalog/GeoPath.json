@@ -661,6 +661,20 @@
   ],
   "usage": [
     {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 33,
+      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 34,
+      "line": "<GeoPath geojson={nation} class=\"fill-none stroke-surface-content\" strokeWidth={1} />"
+    },
+    {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
@@ -1340,5 +1354,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-03-26T19:56:41.830Z"
+  "updatedAt": "2026-03-28T15:21:52.430Z"
 }
