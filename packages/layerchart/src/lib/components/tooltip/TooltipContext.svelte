@@ -299,11 +299,16 @@
         case 'quadtree-x':
         case 'quadtree-y':
         case 'quadtree': {
-          tooltipData = quadtree?.find(
-            point.x - ctx.padding.left,
-            point.y - ctx.padding.top,
-            radius
-          );
+          let qx = point.x - ctx.padding.left;
+          let qy = point.y - ctx.padding.top;
+
+          // Apply inverse transform to convert screen coordinates to canvas coordinates
+          if (ctx.transform.mode === 'canvas') {
+            qx = (qx - ctx.transform.translate.x) / ctx.transform.scale;
+            qy = (qy - ctx.transform.translate.y) / ctx.transform.scale;
+          }
+
+          tooltipData = quadtree?.find(qx, qy, radius);
           break;
         }
       }
