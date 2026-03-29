@@ -1,7 +1,7 @@
 ---
 description: Composite mark rendering a pixel-based heatmap where each pixel is colored by a scalar value. Supports grid data, scattered data with spatial interpolation, and continuous functions.
 category: marks
-layers: [svg]
+layers: [svg, canvas, html]
 related: [Contour, Density]
 ---
 

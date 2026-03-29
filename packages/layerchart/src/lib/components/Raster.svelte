@@ -56,6 +56,7 @@
   import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { interpolateGrid } from '$lib/utils/rasterInterpolate.js';
+  import Image from './Image.svelte';
 
   const ctx = getChartContext();
 
@@ -232,16 +233,15 @@
 </script>
 
 {#if imageDataUrl}
-  <image
+  <Image
     href={imageDataUrl}
-    x={0}
-    y={0}
+    x={ctx.width / 2}
+    y={ctx.height / 2}
     width={ctx.width}
     height={ctx.height}
-    image-rendering={imageRendering}
+    {imageRendering}
     {opacity}
     preserveAspectRatio="none"
     class={cls('lc-raster', className)}
-    {...restProps}
   />
 {/if}
