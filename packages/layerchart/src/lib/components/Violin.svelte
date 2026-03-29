@@ -62,6 +62,8 @@
   import { curveCardinal } from 'd3-shape';
   import { quantile, ascending, deviation, max as d3Max } from 'd3-array';
 
+  import { cls } from '@layerstack/tailwind';
+
   import Group from './Group.svelte';
   import Path from './Path.svelte';
   import Rect from './Rect.svelte';
@@ -91,6 +93,7 @@
     onpointerenter,
     onpointermove,
     onpointerleave,
+    class: className,
     ...restProps
   }: ViolinProps = $props();
 
@@ -241,7 +244,7 @@
       {fillOpacity}
       {stroke}
       {strokeWidth}
-      class="lc-violin-area"
+      class={cls('lc-violin-area', className)}
     />
 
     {#if showBox && stats}
@@ -255,7 +258,7 @@
           fill="currentColor"
           fillOpacity={0.3}
           stroke="none"
-          class="lc-violin-box"
+          class={cls('lc-violin-box', className)}
         />
       {:else}
         <Rect
@@ -266,7 +269,7 @@
           fill="currentColor"
           fillOpacity={0.3}
           stroke="none"
-          class="lc-violin-box"
+          class={cls('lc-violin-box', className)}
         />
       {/if}
     {/if}
@@ -281,7 +284,7 @@
           y2={valueScale(stats.median)}
           stroke="currentColor"
           strokeWidth={2}
-          class="lc-violin-median"
+          class={cls('lc-violin-median', className)}
         />
       {:else}
         <Line
@@ -291,7 +294,7 @@
           y2={categoryPos + violinWidth * 0.15}
           stroke="currentColor"
           strokeWidth={2}
-          class="lc-violin-median"
+          class={cls('lc-violin-median', className)}
         />
       {/if}
     {/if}

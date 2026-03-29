@@ -23,6 +23,7 @@
 </script>
 
 <script lang="ts">
+  import { cls } from '@layerstack/tailwind';
   import { contourDensity } from 'd3-contour';
   import { geoPath } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -50,6 +51,8 @@
     stroke,
     strokeWidth,
     opacity,
+    class: className,
+    ...restProps
   }: DensityProps = $props();
 
   ctx.registerComponentNode({
@@ -128,7 +131,7 @@
         {fillOpacity}
         {stroke}
         {strokeWidth}
-        class="lc-density-contour"
+        class={cls('lc-density-contour', className)}
       />
     {/each}
   </Group>

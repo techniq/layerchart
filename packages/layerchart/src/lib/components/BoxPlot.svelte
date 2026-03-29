@@ -52,6 +52,7 @@
 
 <script lang="ts">
   import type { PointerEventHandler } from 'svelte/elements';
+  import { cls } from '@layerstack/tailwind';
   import { quantile } from 'd3-array';
 
   import Group from './Group.svelte';
@@ -87,6 +88,7 @@
     onpointerenter,
     onpointermove,
     onpointerleave,
+    class: className,
     ...restProps
   }: BoxPlotProps = $props();
 
@@ -213,7 +215,7 @@
         y2={q1Pos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-whisker"
+        class={cls('lc-boxplot-whisker', className)}
       />
 
       <!-- Upper whisker: q3 to max -->
@@ -224,7 +226,7 @@
         y2={maxPos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-whisker"
+        class={cls('lc-boxplot-whisker', className)}
       />
 
       <!-- Min cap -->
@@ -235,7 +237,7 @@
         y2={minPos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-cap"
+        class={cls('lc-boxplot-cap', className)}
       />
 
       <!-- Max cap -->
@@ -246,7 +248,7 @@
         y2={maxPos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-cap"
+        class={cls('lc-boxplot-cap', className)}
       />
 
       <!-- Box (Q1 to Q3) -->
@@ -260,7 +262,7 @@
         {stroke}
         {strokeWidth}
         rx={radius}
-        class="lc-boxplot-box"
+        class={cls('lc-boxplot-box', className)}
       />
 
       <!-- Median line -->
@@ -271,7 +273,7 @@
         y2={medianPos}
         {stroke}
         strokeWidth={strokeWidth * 2}
-        class="lc-boxplot-median"
+        class={cls('lc-boxplot-median', className)}
       />
 
       <!-- Outliers -->
@@ -282,7 +284,7 @@
           r={outlierRadius}
           {stroke}
           {strokeWidth}
-          class="lc-boxplot-outlier"
+          class={cls('lc-boxplot-outlier', className)}
         />
       {/each}
     {:else}
@@ -296,7 +298,7 @@
         y2={categoryPos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-whisker"
+        class={cls('lc-boxplot-whisker', className)}
       />
 
       <!-- Upper whisker: q3 to max -->
@@ -307,7 +309,7 @@
         y2={categoryPos}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-whisker"
+        class={cls('lc-boxplot-whisker', className)}
       />
 
       <!-- Min cap -->
@@ -318,7 +320,7 @@
         y2={categoryPos + whiskerCapWidth / 2}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-cap"
+        class={cls('lc-boxplot-cap', className)}
       />
 
       <!-- Max cap -->
@@ -329,7 +331,7 @@
         y2={categoryPos + whiskerCapWidth / 2}
         {stroke}
         {strokeWidth}
-        class="lc-boxplot-cap"
+        class={cls('lc-boxplot-cap', className)}
       />
 
       <!-- Box (Q1 to Q3) -->
@@ -343,7 +345,7 @@
         {stroke}
         {strokeWidth}
         rx={radius}
-        class="lc-boxplot-box"
+        class={cls('lc-boxplot-box', className)}
       />
 
       <!-- Median line -->
@@ -354,7 +356,7 @@
         y2={categoryPos + boxWidth / 2}
         {stroke}
         strokeWidth={strokeWidth * 2}
-        class="lc-boxplot-median"
+        class={cls('lc-boxplot-median', className)}
       />
 
       <!-- Outliers -->
@@ -365,7 +367,7 @@
           r={outlierRadius}
           {stroke}
           {strokeWidth}
-          class="lc-boxplot-outlier"
+          class={cls('lc-boxplot-outlier', className)}
         />
       {/each}
     {/if}

@@ -47,6 +47,7 @@
 </script>
 
 <script lang="ts">
+  import { cls } from '@layerstack/tailwind';
   import { scaleSequential } from 'd3-scale';
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max, min, blur2 } from 'd3-array';
@@ -70,6 +71,7 @@
     blur: blurRadius = 0,
     imageRendering = 'auto',
     opacity,
+    class: className,
     ...restProps
   }: RasterProps = $props();
 
@@ -239,7 +241,7 @@
     image-rendering={imageRendering}
     {opacity}
     preserveAspectRatio="none"
-    class="lc-raster"
+    class={cls('lc-raster', className)}
     {...restProps}
   />
 {/if}

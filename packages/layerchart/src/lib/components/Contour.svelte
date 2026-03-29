@@ -46,6 +46,7 @@
 </script>
 
 <script lang="ts">
+  import { cls } from '@layerstack/tailwind';
   import { contours as d3Contours } from 'd3-contour';
   import { geoPath, geoTransform } from 'd3-geo';
   import { scaleSequential } from 'd3-scale';
@@ -76,6 +77,8 @@
     stroke,
     strokeWidth,
     opacity,
+    class: className,
+    ...restProps
   }: ContourProps = $props();
 
   // Detect grid mode: data + width/height
@@ -206,7 +209,7 @@
         {fillOpacity}
         {stroke}
         {strokeWidth}
-        class="lc-contour-band"
+        class={cls('lc-contour-band', className)}
       />
     {/each}
   </Group>
