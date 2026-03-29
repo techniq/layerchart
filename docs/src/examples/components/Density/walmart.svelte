@@ -4,7 +4,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature, mesh } from 'topojson-client';
 
-	import { Chart, Circle, Density, GeoPath, Layer } from 'layerchart';
+	import { Chart, Circle, Density, GeoPath, Layer, Tooltip } from 'layerchart';
+	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import { getWalmarts, getUsStatesTopology } from '$lib/geo.remote.js';
 
@@ -19,20 +20,54 @@
 </script>
 
 <Chart
+	data={walmarts}
+	x="longitude"
+	y="latitude"
 	cScale={scaleSequential(interpolateYlGnBu)}
 	geo={{
 		projection: geoAlbersUsa,
 		fitGeojson: states
 	}}
+	transform={{
+		mode: 'canvas',
+		scrollMode: 'scale',
+		motion: 'spring'
+	}}
+	tooltipContext={{ mode: 'quadtree' }}
+	clip
 	height={500}
 >
 	{#snippet children({ context })}
-		{@const proj = context.geo.projection}
+		<TransformControls />
+
 		<Layer>
 			<Density data={walmarts} x="longitude" y="latitude" bandwidth={10} fillOpacity={0.7} />
 			<GeoPath geojson={statemesh} class="fill-none stroke-surface-content/30" strokeWidth={0.5} />
 			<GeoPath geojson={nation} class="fill-none stroke-surface-content" strokeWidth={1} />
-			<Circle data={walmarts} cx="longitude" cy="latitude" r={1} fill="currentColor" />
+			<Circle cx="longitude" cy="latitude" r={1} fill="currentColor" />
 		</Layer>
+
+		<Layer>
+			{#if context.tooltip.data}
+				<Circle
+					data={[context.tooltip.data]}
+					cx="longitude"
+					cy="latitude"
+					r={4}
+					class="stroke-surface-content/30 fill-surface-content/10 pointer-events-none"
+					motion="spring"
+				/>
+			{/if}
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.city}, {data.state}</Tooltip.Header>
+				<Tooltip.List>
+					<Tooltip.Item label="Type" value={data.type} />
+					<Tooltip.Item label="Opened" value={data.date} format="day" />
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
 	{/snippet}
 </Chart>
