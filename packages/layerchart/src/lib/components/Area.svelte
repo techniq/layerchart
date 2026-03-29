@@ -119,7 +119,9 @@
           ? accessor(seriesAccessor[0])
           : Array.isArray(ctx.config.y) && ctx.config.y[0] === 0
             ? (d: any) => ctx.y(d)[0]
-            : (d: any) => min(ctx.yScale.domain())
+            : ctx.props.yBaseline != null
+              ? () => ctx.props.yBaseline
+              : (d: any) => min(ctx.yScale.domain())
   );
   const y1Accessor = $derived(
     y1
