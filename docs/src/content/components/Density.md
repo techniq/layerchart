@@ -1,7 +1,7 @@
 ---
 description: Composite mark showing the estimated density of two-dimensional point clouds using kernel density estimation, rendered as contour bands.
 category: marks
-layers: [svg]
+layers: [svg, canvas]
 related: [Contour, Raster, Points]
 ---
 
@@ -27,7 +27,7 @@ Control the smoothness of the density estimate. Lower bandwidth shows more local
 
 ## Thresholds
 
-Control the number of contour levels. With _n_ thresholds and a maximum density of _d_, contour lines are drawn at _d_/_n_, 2_d_/_n_, etc.
+Control the number of contour levels. With _n_ thresholds and a maximum density of _d_, contour lines are drawn at _d_/_n_, 2*d*/_n_, etc.
 
 :example{ name="thresholds" showCode }
 
