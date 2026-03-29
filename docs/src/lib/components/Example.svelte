@@ -264,6 +264,16 @@
 					</Button>
 				{/if}
 
+				{#if component && name}
+					<Button
+						icon={LucideFilePen}
+						class="text-surface-content/70 py-1"
+						on:click={() => openInStackBlitz(component, name)}
+					>
+						Edit
+					</Button>
+				{/if}
+
 				<Toggle let:on={open} let:toggle let:toggleOff>
 					<Button icon={LucideDownload} class="text-surface-content/70 py-1" on:click={toggle}>
 						Download
@@ -275,23 +285,13 @@
 								Download as PNG
 							</MenuItem>
 							{#if settings.layer !== 'canvas'}
-							<MenuItem icon={LucideDownload} on:click={handleSvgDownload}>
-								Download as SVG
-							</MenuItem>
-						{/if}
+								<MenuItem icon={LucideDownload} on:click={handleSvgDownload}>
+									Download as SVG
+								</MenuItem>
+							{/if}
 						</Menu>
 					</Button>
 				</Toggle>
-
-				{#if component && name}
-					<Button
-						icon={LucideFilePen}
-						class="text-surface-content/70 py-1"
-						on:click={() => openInStackBlitz(component, name)}
-					>
-						Edit
-					</Button>
-				{/if}
 			</div>
 		{/if}
 	{:else}
