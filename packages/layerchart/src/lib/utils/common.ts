@@ -72,6 +72,10 @@ export function defaultChartPadding<TData>(
  * Handles complex objects such as `Date` by invoking `.valueOf()`
  */
 export function findRelatedData(data: any[], original: any, accessor: Function) {
+  if (data.includes(original)) {
+    return original;
+  }
+
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });

@@ -204,6 +204,24 @@
     }
   }
 
+  function resolveTooltipSeriesKey(series: any, seriesTooltipData: any) {
+    if (
+      mode === 'manual' &&
+      ctx.series.isDefaultSeries &&
+      series.key === 'default' &&
+      series.data == null &&
+      series.value != null &&
+      seriesTooltipData != null
+    ) {
+      const dataKey = ctx.c?.(seriesTooltipData);
+      if (typeof dataKey === 'string' || typeof dataKey === 'number') {
+        return `${dataKey}`;
+      }
+    }
+
+    return series.key;
+  }
+
   function showTooltip(e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) {
     // Cancel hiding tooltip if from previous event loop
     if (hideTimeoutId) {
@@ -332,21 +350,27 @@
             : findRelatedData(s.data, tooltipData, ctx.x)
           : tooltipData;
 
-        // Determine value accessor: series.value > ctx.y (if data) > ctx.x (if data, e.g. ArcChart) > series.key (if no data)
-        const valueAcc = accessor(s.value ?? (s.data ? (asAny(ctx.y) ?? asAny(ctx.x)) : s.key));
+        const valueAcc = accessor(
+          s.value ?? (s.data ? (ctx.props.y ?? ctx.props.x ?? asAny(ctx.y) ?? asAny(ctx.x)) : s.key)
+        );
 
         // Extract value from the data
         const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
+
+        const seriesKey = resolveTooltipSeriesKey(s, seriesTooltipData);
 
         // Color from color scale (if configured) or series definition
         const color = ctx.cScale?.(ctx.c(tooltipData)) ?? s.color;
 
         return {
-          key: s.key,
-          label: s.label ?? (s.key !== 'default' ? s.key : 'value'),
+          key: seriesKey,
+          label: s.label ?? (seriesKey !== 'default' ? seriesKey : 'value'),
           value: value,
           color,
-          visible: ctx.series.isVisible(s.key),
+          visible:
+            seriesKey === s.key
+              ? ctx.series.isVisible(s.key)
+              : ctx.series.selectedKeys.isEmpty() || ctx.series.selectedKeys.isSelected(seriesKey),
           config: s,
         };
       });
@@ -511,9 +535,7 @@
                     ? Math.min(yValue[0], yValue[1]) - yOffset
                     : min(ctx.yRange),
                   width: Math.abs(xValue[1] - xValue[0]),
-                  height: Array.isArray(yValue)
-                    ? Math.abs(yValue[1] - yValue[0])
-                    : fullHeight,
+                  height: Array.isArray(yValue) ? Math.abs(yValue[1] - yValue[0]) : fullHeight,
                   data: d,
                 };
               } else if (Array.isArray(yValue)) {
