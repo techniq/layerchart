@@ -332,8 +332,8 @@
             : findRelatedData(s.data, tooltipData, ctx.x)
           : tooltipData;
 
-        // Determine value accessor: series.value > series.key (if no data) > ctx.y
-        const valueAcc = accessor(s.value ?? (s.data ? asAny(ctx.y) : s.key));
+        // Determine value accessor: series.value > ctx.y (if data) > ctx.x (if data, e.g. ArcChart) > series.key (if no data)
+        const valueAcc = accessor(s.value ?? (s.data ? (asAny(ctx.y) ?? asAny(ctx.x)) : s.key));
 
         // Extract value from the data
         const value = seriesTooltipData ? valueAcc(seriesTooltipData) : undefined;
