@@ -2,7 +2,7 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Image, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, GeoPath, Image, Layer, Tooltip } from 'layerchart';
 	import { SelectField } from 'svelte-ux';
 	import { getUsStatesTopology, getD1FootballTeams } from '$lib/geo.remote';
 
@@ -57,6 +57,19 @@
 >
 	{#snippet children({ context })}
 		<TransformContextControls />
+
+		<Layer>
+			{#if context.tooltip.data}
+				<Circle
+					data={[context.tooltip.data]}
+					cx="longitude"
+					cy="latitude"
+					r={16}
+					class="stroke-surface-content/20 fill-surface-content/10 pointer-events-none"
+					motion="spring"
+				/>
+			{/if}
+		</Layer>
 
 		<Layer>
 			{#each states.features as feature (feature.id)}
