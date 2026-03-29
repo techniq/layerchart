@@ -125,6 +125,7 @@
   yNice={valueAxis === 'y'}
   {radial}
   {valueAxis}
+  {axis}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false
