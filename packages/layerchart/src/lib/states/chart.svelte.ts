@@ -154,24 +154,12 @@ export class ChartState<
   }
 
   /**
-   * Call this during component initialization to register a mark info getter.
-   * Sets up a $effect that captures a snapshot at mount (via untrack) and
-   * deregisters automatically when the component is destroyed.
-   *
-   * Must be called in a Svelte component initialization context (e.g. from
-   * registerComponentNode called in a component's <script> block).
-   */
-  private trackMark(getMarkInfo: () => MarkInfo): void {
-    $effect(() => {
-      return untrack(() => this.registerMark(getMarkInfo()));
-    });
-  }
-
-  /**
    * Register a component tree node. Call at the top level of a component's <script> block.
    * Sets self as context for children, handles canvas deps/cleanup, and mark registration.
    */
-  registerComponentNode<T extends Element = Element>(options: RegisterComponentNodeOptions<T>): ComponentNode {
+  registerComponentNode<T extends Element = Element>(
+    options: RegisterComponentNodeOptions<T>
+  ): ComponentNode {
     const { name, kind, canvasRender, markInfo } = options;
     const parent = _ParentNodeContext.getOr(null);
 
@@ -199,28 +187,30 @@ export class ChartState<
     if (parent) parent.children.push(node);
     _ParentNodeContext.set(node);
 
-    if (canvasRender) {
-      const canvasCtx = getCanvasContext();
+    const canvasCtx = canvasRender ? getCanvasContext() : null;
 
+    if (canvasRender) {
       if (canvasRender.deps) {
         $effect.pre(() => {
           canvasRender.deps?.();
-          canvasCtx.invalidate();
+          canvasCtx?.invalidate();
         });
       }
 
-      $effect.pre(() => {
-        return () => {
-          this._removeComponentNode(node);
-          canvasCtx.invalidate();
-        };
-      });
-
-      canvasCtx.invalidate();
+      canvasCtx!.invalidate();
     }
 
+    $effect.pre(() => {
+      return () => {
+        this._removeComponentNode(node);
+        canvasCtx?.invalidate();
+      };
+    });
+
     if (markInfo && !insideCompositeMark) {
-      this.trackMark(markInfo);
+      $effect(() => {
+        return untrack(() => this.registerMark(markInfo()));
+      });
     }
 
     return node;
@@ -434,9 +424,9 @@ export class ChartState<
       // Use reference equality (===) so marks sharing the same accessor key but
       // different data arrays (e.g. two Circle marks with separate datasets) are
       // both included in domain calculation.
-      const key =
-        info.seriesKey ?? (typeof info.y === 'string' ? (info.y as string) : undefined);
-      if (key && this.seriesState?.series.some((s) => s.key === key && s.data === info.data)) continue;
+      const key = info.seriesKey ?? (typeof info.y === 'string' ? (info.y as string) : undefined);
+      if (key && this.seriesState?.series.some((s) => s.key === key && s.data === info.data))
+        continue;
       extra.push(...info.data);
     }
 
@@ -1032,10 +1022,14 @@ export class ChartState<
     return this.props.radial ?? false;
   }
   get valueAxis() {
-    return this.props.valueAxis
-      ?? (this.props.yScale && isScaleBand(this.props.yScale) ? 'x'
-        : this.props.xScale && isScaleBand(this.props.xScale) ? 'y'
-        : 'y');
+    return (
+      this.props.valueAxis ??
+      (this.props.yScale && isScaleBand(this.props.yScale)
+        ? 'x'
+        : this.props.xScale && isScaleBand(this.props.xScale)
+          ? 'y'
+          : 'y')
+    );
   }
 
   // Fallback objects for when state hasn't been initialized yet
@@ -1095,10 +1089,7 @@ export class ChartState<
    * Convert a brush selection to transform scale/translate, zooming the chart to the brushed region.
    * Used by integrated brush mode when `transform.mode === 'domain'`.
    */
-  zoomToBrush(
-    brush: { x: BrushDomainType; y: BrushDomainType },
-    axis: 'x' | 'y' | 'both' = 'x'
-  ) {
+  zoomToBrush(brush: { x: BrushDomainType; y: BrushDomainType }, axis: 'x' | 'y' | 'both' = 'x') {
     const brushX = brush.x;
     const brushY = brush.y;
 

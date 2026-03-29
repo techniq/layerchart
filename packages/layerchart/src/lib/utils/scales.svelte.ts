@@ -146,7 +146,7 @@ export function scaleInvert(scale: AnyScale<any, any>, value: number) {
 export function createScale(
   scale: AnyScale,
   domain: DomainType,
-  range: any[] | readonly any[] | Function,
+  range?: any[] | readonly any[] | Function,
   context?: Record<any, any>
 ) {
   const scaleCopy = scale.copy();
