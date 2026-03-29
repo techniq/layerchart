@@ -705,6 +705,18 @@
       ]
     },
     {
+      "name": "motion-tween",
+      "title": "motion tween",
+      "path": "/docs/components/BarChart/motion-tween",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 14,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "oscilloscope-frequency",
       "title": "oscilloscope frequency",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
@@ -1648,6 +1660,13 @@
       "line": "<BarChart"
     },
     {
+      "example": "motion-tween",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/motion-tween",
+      "lineNumber": 14,
+      "line": "<BarChart"
+    },
+    {
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
@@ -2026,5 +2045,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-03-24T16:06:09.550Z"
+  "updatedAt": "2026-03-29T03:36:26.659Z"
 }

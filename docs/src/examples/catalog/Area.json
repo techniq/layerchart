@@ -831,6 +831,33 @@
       ]
     },
     {
+      "name": "tween-on-mount",
+      "title": "tween on mount",
+      "path": "/docs/components/Area/tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 18,
+          "line": "<Area motion=\"tween\" line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+        }
+      ]
+    },
+    {
       "name": "with-labels",
       "title": "with labels",
       "path": "/docs/components/Area/with-labels",
@@ -1103,6 +1130,13 @@
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 30,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 18,
+      "line": "<Area motion=\"tween\" line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
     },
     {
       "example": "with-labels",
@@ -1469,5 +1503,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:18.630Z"
+  "updatedAt": "2026-03-29T03:36:26.383Z"
 }

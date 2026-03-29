@@ -468,6 +468,13 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 13,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
       "example": "with-labels",
       "component": "Area",
       "path": "/docs/components/Area/with-labels",
@@ -1823,6 +1830,13 @@
       "component": "Density",
       "path": "/docs/components/Density/walmart",
       "lineNumber": 21,
+      "line": "<Chart"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 18,
       "line": "<Chart"
     },
     {
@@ -3485,6 +3499,13 @@
       "line": "<Chart"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 13,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -3856,5 +3877,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:51.729Z"
+  "updatedAt": "2026-03-29T03:36:27.104Z"
 }

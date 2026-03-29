@@ -1174,6 +1174,20 @@
       "line": "<Axis placement=\"bottom\" />"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "with-labels",
       "component": "Area",
       "path": "/docs/components/Area/with-labels",
@@ -3274,6 +3288,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "color-via-ordinal-scale",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/color-via-ordinal-scale",
@@ -4464,6 +4492,20 @@
       "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -4947,5 +4989,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:51.171Z"
+  "updatedAt": "2026-03-29T03:36:26.521Z"
 }

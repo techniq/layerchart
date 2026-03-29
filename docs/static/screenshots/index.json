@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-28T15:21:49.054Z",
+  "generatedAt": "2026-03-29T03:36:25.325Z",
   "totalComponents": 69,
-  "totalExamples": 820,
+  "totalExamples": 827,
   "components": [
     {
       "component": "AnnotationLine",
@@ -407,6 +407,11 @@
           "checksum": "ab781cec7b06045b75adf277d1486fd0"
         },
         {
+          "name": "tween-on-mount",
+          "path": "/example/Area/tween-on-mount",
+          "checksum": "347ec6bcd9524c190646ad63dfbe1020"
+        },
+        {
           "name": "with-labels",
           "path": "/example/Area/with-labels",
           "checksum": "c76168d2d54cb7986e790d65300c0c39"
@@ -421,6 +426,11 @@
     {
       "component": "AreaChart",
       "examples": [
+        {
+          "name": "all-zero",
+          "path": "/example/AreaChart/all-zero",
+          "checksum": "2d9c23f5b2f9fedb10fa12daa2cb8339"
+        },
         {
           "name": "band-scale",
           "path": "/example/AreaChart/band-scale",
@@ -485,6 +495,11 @@
           "name": "markers",
           "path": "/example/AreaChart/markers",
           "checksum": "623667f32364264b6515b9f74bb59785"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/AreaChart/motion-tween",
+          "checksum": "c5fb1820eaddf538960585590f82bf30"
         },
         {
           "name": "null-gaps",
@@ -1062,6 +1077,11 @@
           "checksum": "7d6f753a09c14174a0d64f6d05e78e91"
         },
         {
+          "name": "motion-tween",
+          "path": "/example/BarChart/motion-tween",
+          "checksum": "32481131d4ab2d3270f79e5667b2d4a1"
+        },
+        {
           "name": "oscilloscope-frequency",
           "path": "/example/BarChart/oscilloscope-frequency",
           "checksum": "6129f43de5d789b96af96078217a0112"
@@ -1414,7 +1434,7 @@
         {
           "name": "horizontal-stagger-tween-on-mount",
           "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-          "checksum": "4f72b38caae62f74f463fd7ff0e2673d"
+          "checksum": "f4eb7d683db86b42c6bac787e2837669"
         },
         {
           "name": "horizontal-time-scale-with-inset",
@@ -1454,7 +1474,7 @@
         {
           "name": "horizontal-tween-on-mount",
           "path": "/example/Bars/horizontal-tween-on-mount",
-          "checksum": "22dce59a04704193a7b284a04b9e9b7a"
+          "checksum": "c0e9184be37ae49138bd292ce4db829b"
         },
         {
           "name": "horizontal-with-grid-on-top",
@@ -1584,7 +1604,7 @@
         {
           "name": "vertical-stagger-tween-on-mount",
           "path": "/example/Bars/vertical-stagger-tween-on-mount",
-          "checksum": "c0be6abacc9d1a02a1ee10d91bc018a7"
+          "checksum": "e7e061530d85b0ae32a12bd0a7b84d23"
         },
         {
           "name": "vertical-stagger-tween-on-mount-rounded-edge",
@@ -1634,7 +1654,7 @@
         {
           "name": "vertical-tween-on-mount",
           "path": "/example/Bars/vertical-tween-on-mount",
-          "checksum": "815ddfe39d193a8413490d4670499e4c"
+          "checksum": "522d2268649cedecf919838acfe7a694"
         },
         {
           "name": "vertical-tween-on-mount-rounded-edge",
@@ -2090,6 +2110,11 @@
           "name": "walmart",
           "path": "/example/Density/walmart",
           "checksum": "18cf8cb00855020d0cd4f0d4c869f5d7"
+        },
+        {
+          "name": "weighted",
+          "path": "/example/Density/weighted",
+          "checksum": "13ac6bbfd28529a9923d6aac40cb80f5"
         }
       ]
     },
@@ -2880,6 +2905,11 @@
           "name": "line-annotation",
           "path": "/example/LineChart/line-annotation",
           "checksum": "cd6c5c6deaf46da476ecc2df8e75d961"
+        },
+        {
+          "name": "motion-tween",
+          "path": "/example/LineChart/motion-tween",
+          "checksum": "3b15e0cea381edbeec7c63d00906b885"
         },
         {
           "name": "null-dashed-gaps",
@@ -4110,6 +4140,11 @@
           "name": "radial-radar",
           "path": "/example/Spline/radial-radar",
           "checksum": "aca9c2d39896db1e72857b45d37b5041"
+        },
+        {
+          "name": "tween-on-mount",
+          "path": "/example/Spline/tween-on-mount",
+          "checksum": "631fa9c5327a1097e2d2d056f237736f"
         },
         {
           "name": "tweened",

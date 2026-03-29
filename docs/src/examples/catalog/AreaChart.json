@@ -2,6 +2,18 @@
   "component": "AreaChart",
   "examples": [
     {
+      "name": "all-zero",
+      "title": "all zero",
+      "path": "/docs/components/AreaChart/all-zero",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 11,
+          "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
+        }
+      ]
+    },
+    {
       "name": "band-scale",
       "title": "band scale",
       "path": "/docs/components/AreaChart/band-scale",
@@ -224,6 +236,18 @@
           "component": "Layer",
           "lineNumber": 46,
           "line": "<Layer type=\"html\">"
+        }
+      ]
+    },
+    {
+      "name": "motion-tween",
+      "title": "motion tween",
+      "path": "/docs/components/AreaChart/motion-tween",
+      "components": [
+        {
+          "component": "AreaChart",
+          "lineNumber": 14,
+          "line": "<AreaChart"
         }
       ]
     },
@@ -651,6 +675,13 @@
   ],
   "usage": [
     {
+      "example": "all-zero",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/all-zero",
+      "lineNumber": 11,
+      "line": "<AreaChart {data} x=\"date\" y=\"value\" height={300} />"
+    },
+    {
       "example": "band-scale",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/band-scale",
@@ -746,6 +777,13 @@
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/markers",
       "lineNumber": 13,
+      "line": "<AreaChart"
+    },
+    {
+      "example": "motion-tween",
+      "component": "AreaChart",
+      "path": "/docs/components/AreaChart/motion-tween",
+      "lineNumber": 14,
       "line": "<AreaChart"
     },
     {
@@ -966,5 +1004,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:36.389Z"
+  "updatedAt": "2026-03-29T03:36:26.431Z"
 }

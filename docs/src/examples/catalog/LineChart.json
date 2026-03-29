@@ -290,6 +290,18 @@
       ]
     },
     {
+      "name": "motion-tween",
+      "title": "motion tween",
+      "path": "/docs/components/LineChart/motion-tween",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "null-dashed-gaps",
       "title": "null dashed gaps",
       "path": "/docs/components/LineChart/null-dashed-gaps",
@@ -1202,6 +1214,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "motion-tween",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/motion-tween",
+      "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
       "example": "null-dashed-gaps",
       "component": "LineChart",
       "path": "/docs/components/LineChart/null-dashed-gaps",
@@ -1538,5 +1557,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:52.994Z"
+  "updatedAt": "2026-03-29T03:36:28.433Z"
 }

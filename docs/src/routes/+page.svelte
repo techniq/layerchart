@@ -61,6 +61,9 @@
 		{ component: 'LineChart', example: 'gradient-encoding' },
 		{ component: 'LineChart', example: 'large-radial-series' },
 		{ component: 'LineChart', example: 'large-series' },
+		{ component: 'Density', example: 'weighted' },
+		{ component: 'Contour', example: 'volcano-filled-interactive' },
+		{ component: 'Vector', example: 'wind-map' },
 		{ component: 'LineChart', example: 'radar' },
 		{ component: 'LineChart', example: 'radar-series' },
 		{ component: 'PieChart', example: 'arc' },
@@ -81,10 +84,12 @@
 		{ component: 'Image', example: 'us-presidents' },
 		// Marks
 		{ component: 'Calendar', example: 'rounded-cells' },
-		{ component: 'Hull', example: 'geo' },
+		// Statistics
+		{ component: 'BoxPlot', example: 'with-tooltip' },
 		// Interations
 		{ component: 'TransformContext', example: 'pan-zoom-svg-image' },
-		{ component: 'BrushContext', example: 'sync-brushes-with-bind-xdomain' },
+		{ component: 'TransformContext', example: 'planet-distances' },
+		{ component: 'BrushContext', example: 'synced-brushes' },
 		{ component: 'Voronoi', example: 'radius' },
 		// Fill
 		{ component: 'LinearGradient', example: 'tailwind-colors' },
@@ -97,6 +102,10 @@
 		{ component: 'GeoPath', example: 'bubble-map' },
 		{ component: 'GeoPath', example: 'choropleth' },
 		{ component: 'GeoPath', example: 'spike-map' },
+		{ component: 'Density', example: 'walmart' },
+		{ component: 'Vector', example: 'election-wind-map' },
+		{ component: 'Image', example: 'college-football-map' },
+		{ component: 'Hull', example: 'geo' },
 		{ component: 'GeoPath', example: 'eclipses-globe' },
 		{ component: 'GeoPath', example: 'submarine-cables-globe' },
 		{ component: 'GeoPath', example: 'timezones' },

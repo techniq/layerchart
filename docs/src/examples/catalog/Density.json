@@ -160,6 +160,43 @@
           "line": "<Circle data={walmarts} cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
         }
       ]
+    },
+    {
+      "name": "weighted",
+      "title": "weighted",
+      "path": "/docs/components/Density/weighted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 30,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 31,
+          "line": "<Density"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle"
+        }
+      ]
     }
   ],
   "usage": [
@@ -197,7 +234,14 @@
       "path": "/docs/components/Density/walmart",
       "lineNumber": 32,
       "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 31,
+      "line": "<Density"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:52.174Z"
+  "updatedAt": "2026-03-29T03:11:05.989Z"
 }

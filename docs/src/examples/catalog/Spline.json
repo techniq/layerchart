@@ -618,6 +618,33 @@
       ]
     },
     {
+      "name": "tween-on-mount",
+      "title": "tween on mount",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 18,
+          "line": "<Spline motion=\"tween\" class=\"stroke-primary stroke-2\" />"
+        }
+      ]
+    },
+    {
       "name": "tweened",
       "title": "tweened",
       "path": "/docs/components/Spline/tweened",
@@ -1194,6 +1221,13 @@
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 18,
+      "line": "<Spline motion=\"tween\" class=\"stroke-primary stroke-2\" />"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -1271,5 +1305,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.627Z"
+  "updatedAt": "2026-03-29T03:36:29.290Z"
 }
