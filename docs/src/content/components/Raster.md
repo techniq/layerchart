@@ -35,8 +35,8 @@ The classic fractal rendered pixel-by-pixel via a `value` function. Uses `pixelS
 
 :example{ name="mandelbrot" showCode }
 
-## Arctangent color map
+## Math functions
 
-`atan2(y, x)` mapped to a rainbow color scale, demonstrating angular color encoding.
+Explore various mathematical functions mapped to color scales, demonstrating how different equations produce distinct visual patterns.
 
-:example{ name="atan2" showCode }
+:example{ name="math-functions" showCode }

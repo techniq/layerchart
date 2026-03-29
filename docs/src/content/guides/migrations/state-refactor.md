@@ -156,7 +156,7 @@ Over 90 new examples have been added across the docs. Here are some highlights:
 - [Violin](/docs/components/Violin/basic) with [box/median](/docs/components/Violin/with-box-median) and [bandwidth](/docs/components/Violin/bandwidth)
 - [Density](/docs/components/Density/basic) with [bandwidth slider](/docs/components/Density/bandwidth), [thresholds slider](/docs/components/Density/thresholds), and [Walmart store density map](/docs/components/Density/walmart)
 - [Contour](/docs/components/Contour/volcano-lines) with [volcano filled](/docs/components/Contour/volcano-filled), [sampled function](/docs/components/Contour/sampled), and [interactive controls](/docs/components/Contour/volcano-filled-interactive)
-- [Raster](/docs/components/Raster/volcano) with [Mandelbrot fractal](/docs/components/Raster/mandelbrot), [contour overlay](/docs/components/Raster/with-contour-overlay), and [atan2 color map](/docs/components/Raster/atan2)
+- [Raster](/docs/components/Raster/volcano) with [Mandelbrot fractal](/docs/components/Raster/mandelbrot), [contour overlay](/docs/components/Raster/with-contour-overlay), and [math functions](/docs/components/Raster/math-functions)
 
 **New Component Examples:**
 - [Cell heatmap](/docs/components/Cell/basic), [punchcard](/docs/components/Cell/punchcard), [color scale](/docs/components/Cell/color-scale)
