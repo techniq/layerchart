@@ -45,7 +45,7 @@
 		fitGeojson: states
 	}}
 	transform={{
-		mode: 'projection',
+		mode: 'canvas',
 		scrollMode: 'scale'
 	}}
 	tooltipContext={{ mode: 'voronoi' }}
@@ -64,7 +64,8 @@
 					data={[context.tooltip.data]}
 					cx="longitude"
 					cy="latitude"
-					r={16}
+					r={16 / context.transform.scale}
+					strokeWidth={1 / context.transform.scale}
 					class="stroke-surface-content/20 fill-surface-content/10 pointer-events-none"
 					motion="spring"
 				/>
@@ -73,15 +74,19 @@
 
 		<Layer>
 			{#each states.features as feature (feature.id)}
-				<GeoPath geojson={feature} class="fill-surface-content/5 stroke-surface-content/20" />
+				<GeoPath
+					geojson={feature}
+					class="fill-surface-content/5 stroke-surface-content/20"
+					strokeWidth={1 / context.transform.scale}
+				/>
 			{/each}
 
 			<Image
 				href={(d) => `https://a.espncdn.com/i/teamlogos/ncaa/500/${d.espn_id}.png`}
 				x="longitude"
 				y="latitude"
-				width={24}
-				height={24}
+				width={24 / context.transform.scale}
+				height={24 / context.transform.scale}
 				preserveAspectRatio="xMidYMid slice"
 			/>
 		</Layer>
