@@ -4,6 +4,7 @@
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 
   import { accessor, type Accessor } from '../utils/common.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   export type SplinePropsWithoutHTML = {
     /**
@@ -44,7 +45,13 @@
      * @type {CurveFactory | CurveFactoryLineOnly | undefined}
      */
     curve?: CurveFactory | CurveFactoryLineOnly;
-  } & Omit<PathProps, 'x' | 'y'>;
+
+    /**
+     * Whether to animate the path using tweened interpolation.
+     * When set, the line will animate from the baseline (y=0) on mount.
+     */
+    motion?: MotionProp;
+  } & Omit<PathProps, 'x' | 'y' | 'motion'>;
 
   export type SplineProps = SplinePropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, SplinePropsWithoutHTML>;
@@ -56,16 +63,22 @@
   import { geoPath as d3GeoPath } from 'd3-geo';
   import { line as d3Line, lineRadial } from 'd3-shape';
   import { max } from 'd3-array';
+  import { interpolatePath } from 'd3-interpolate-path';
 
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import Path, { type PathProps } from './Path.svelte';
+  import {
+    createMotion,
+    extractTweenConfig,
+    type ResolvedMotion,
+  } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
 
-  let { data, x, y, seriesKey, defined, curve, stroke, ...restProps }: SplineProps = $props();
+  let { data, x, y, seriesKey, defined, curve, stroke, motion, ...restProps }: SplineProps = $props();
 
   ctx.registerComponentNode({
     name: 'Spline',
@@ -136,13 +149,55 @@
 
     return path(resolvedData) ?? '';
   });
+
+  const extractedTween = extractTweenConfig(motion);
+
+  const tweenOptions: ResolvedMotion | undefined = extractedTween
+    ? {
+        type: extractedTween.type,
+        options: {
+          interpolate: interpolatePath,
+          ...extractedTween.options,
+        },
+      }
+    : undefined;
+
+  /**
+   * Provide initial `0` horizontal baseline so the line animates up from y=0 on mount.
+   * Computes a proper flattened path using d3-line with all y-values at baseline.
+   */
+  function defaultPathData() {
+    if (!tweenOptions) return '';
+
+    if (ctx.config.x) {
+      const resolvedData = data ?? series?.data ?? ctx.data;
+      const baseline = Math.min(ctx.yScale(0) ?? ctx.yRange[0], ctx.yRange[0]);
+
+      const path = ctx.radial
+        ? lineRadial()
+            .angle((d) => getScaleValue(d, ctx.xScale, xAccessor) + 0)
+            .radius(() => baseline)
+        : d3Line()
+            .x((d) => getScaleValue(d, ctx.xScale, xAccessor) + xOffset)
+            .y(() => baseline);
+
+      path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+      if (curve) path.curve(curve);
+
+      return path(resolvedData) ?? '';
+    }
+
+    return '';
+  }
+
+  const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
 </script>
 
 <!-- TODO: handle in LineChart/etc? -->
 <!-- class: cls(props.spline?.class, s.props?.class), -->
 
 <Path
-  pathData={d}
+  pathData={tweenOptions ? tweenState.current : d}
   stroke={stroke ?? series?.color}
   opacity={series?.key == null ||
   // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
