@@ -97,7 +97,6 @@ Marks now register their data and accessors with the Chart automatically. No mor
 -   <Spline y="apples" />
 -   <Spline y="oranges" />
 - </Chart>
-
 + <Chart>
 +   <Spline y="apples" />
 +   <Spline y="oranges" />
@@ -389,9 +388,6 @@ See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed 
 - <TransformContext initialScrollMode="zoom">
 + <TransformContext scrollMode="zoom">
 
-- <Chart transform={{ mode: 'rotate' }}>
-+ <Chart transform={{ mode: 'projection' }}>
-
 - <Chart transform={{ domainExtent: 'original' }}>
 + <Chart transform={{ domainExtent: 'data' }}>
 ```
@@ -432,34 +428,33 @@ These new defaults work with categorical data and don't require sorted data. See
 
 ## Quick Reference — Find & Replace
 
-| Before | After | Scope |
-|--------|-------|-------|
-| `GeoContext` | `GeoProjection` | Component rename |
-| `renderContext=` | `layer=` | Simplified charts |
-| `<Axis x="left">` | `<Axis x="$left">` | Axis position |
-| `<Axis x="right">` | `<Axis x="$right">` | Axis position |
-| `<Axis y="top">` | `<Axis y="$top">` | Axis position |
-| `<Axis y="bottom">` | `<Axis y="$bottom">` | Axis position |
-| `bar={` / `{bar}` | `data={` / `{data}` | Bar component |
-| `splineRef` | `pathRef` | Spline bind |
-| `labelOffset=` | `labelXOffset=` | AnnotationLine/Point |
-| `classes={{ swatches` | `classes={{ item` | Legend |
-| `<Points links` | `<Points />` + `<Rule>` | Points component |
-| `defaultChartPadding(a, b)` | `defaultChartPadding({ ... })` | Utility |
-| `ctx.isVertical` | `ctx.valueAxis === 'y'` | ChartState property |
-| `<Chart tooltip=` | `<Chart tooltipContext=` | Chart prop only |
-| `tooltipContext` | `tooltip` | Arc/Pie/Calendar/GeoPath |
-| `initialScrollMode` | `scrollMode` | TransformContext prop |
-| `domainExtent: 'original'` | `domainExtent: 'data'` | Transform config |
-| `mode: 'rotate'` | `mode: 'projection'` | Transform config |
-| `getTooltipContext` | `getChartContext().tooltip` | Context API |
-| `getBrushContext` | `getChartContext().brushState` | Context API |
-| `getTransformContext` | `getChartContext().transformState` | Context API |
-| `getRenderContext` | `getLayerContext` | Context API |
-| `bind:brushContext` | `bind:state` | BrushContext |
-| `bind:transformContext` | `bind:state` | TransformContext |
-| `brushContext` | `brushState` | ChartState property |
-| `transformContext` | `transformState` | ChartState property |
-| `supportedContexts` | `layers` | Component prop |
-| `resetOnEnd` | `e.brush.reset()` in onBrushEnd | Brush |
-| `ignoreResetClick` | `clickToReset` | Brush |
+| Before                      | After                              | Scope                    |
+| --------------------------- | ---------------------------------- | ------------------------ |
+| `GeoContext`                | `GeoProjection`                    | Component rename         |
+| `renderContext=`            | `layer=`                           | Simplified charts        |
+| `<Axis x="left">`           | `<Axis x="$left">`                 | Axis position            |
+| `<Axis x="right">`          | `<Axis x="$right">`                | Axis position            |
+| `<Axis y="top">`            | `<Axis y="$top">`                  | Axis position            |
+| `<Axis y="bottom">`         | `<Axis y="$bottom">`               | Axis position            |
+| `bar={` / `{bar}`           | `data={` / `{data}`                | Bar component            |
+| `splineRef`                 | `pathRef`                          | Spline bind              |
+| `labelOffset=`              | `labelXOffset=`                    | AnnotationLine/Point     |
+| `classes={{ swatches`       | `classes={{ item`                  | Legend                   |
+| `<Points links`             | `<Points />` + `<Rule>`            | Points component         |
+| `defaultChartPadding(a, b)` | `defaultChartPadding({ ... })`     | Utility                  |
+| `ctx.isVertical`            | `ctx.valueAxis === 'y'`            | ChartState property      |
+| `<Chart tooltip=`           | `<Chart tooltipContext=`           | Chart prop only          |
+| `tooltipContext`            | `tooltip`                          | Arc/Pie/Calendar/GeoPath |
+| `initialScrollMode`         | `scrollMode`                       | TransformContext prop    |
+| `domainExtent: 'original'`  | `domainExtent: 'data'`             | Transform config         |
+| `getTooltipContext`         | `getChartContext().tooltip`        | Context API              |
+| `getBrushContext`           | `getChartContext().brushState`     | Context API              |
+| `getTransformContext`       | `getChartContext().transformState` | Context API              |
+| `getRenderContext`          | `getLayerContext`                  | Context API              |
+| `bind:brushContext`         | `bind:state`                       | BrushContext             |
+| `bind:transformContext`     | `bind:state`                       | TransformContext         |
+| `brushContext`              | `brushState`                       | ChartState property      |
+| `transformContext`          | `transformState`                   | ChartState property      |
+| `supportedContexts`         | `layers`                           | Component prop           |
+| `resetOnEnd`                | `e.brush.reset()` in onBrushEnd    | Brush                    |
+| `ignoreResetClick`          | `clickToReset`                     | Brush                    |

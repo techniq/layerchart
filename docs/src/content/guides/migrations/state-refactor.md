@@ -17,7 +17,6 @@ Marks now register their data and accessors with the Chart automatically. No mor
 -   <Spline y="apples" />
 -   <Spline y="oranges" />
 - </Chart>
-
 + <Chart>
 +   <Spline y="apples" />
 +   <Spline y="oranges" />
@@ -51,7 +50,7 @@ Color properties (`fill`, `stroke`) can also be data-driven, resolving per-item 
 
 Canvas rendering received significant fixes and new capabilities. See the [layers guide](/docs/guides/layers) for more on Svg, Canvas, and Html rendering.
 
-**Unified component tree:** Canvas rendering now uses a unified component tree with proper `save()`/`restore()` scoping, fixing Group transforms (translate, opacity) leaking to sibling components. The new `registerComponentNode()` API replaces `registerCanvasComponent`.
+**Unified component tree:** Canvas rendering now uses a unified component tree with proper `save()`/`restore()` scoping, fixing Group transforms (translate, opacity) leaking to sibling components.
 
 **Newly supported in Canvas layers:**
 
@@ -473,7 +472,6 @@ See the [layers guide](/docs/guides/layers) for the updated API.
 | `resetOnEnd`               | `e.brush.reset()` in onBrushEnd    | Brush                    |
 | `ignoreResetClick`         | `clickToReset`                     | Brush                    |
 | `onReset`                  | check `brush.active` in onBrushEnd | Brush                    |
-| `mode: 'rotate'`           | `mode: 'projection'`               | Transform config         |
 | `get*Props(s, i)`          | `seriesKey={s.key}`                | Simplified chart marks   |
 | `ChartContextValue`        | `ChartState`                       | TypeScript type          |
 | `fill-opacity`             | `fillOpacity`                      | Primitive/mark prop      |
