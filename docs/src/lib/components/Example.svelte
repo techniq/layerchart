@@ -149,6 +149,35 @@
 		return true;
 	});
 
+	let sentinelEl = $state<HTMLElement | null>(null);
+	let intersected = $state(false);
+	const lazy = $derived(!isDetailPage);
+	let isVisible = $derived(!lazy || intersected);
+
+	$effect(() => {
+		if (!lazy || !sentinelEl) return;
+
+		// Synchronously check if already in/near viewport to avoid flash for first examples
+		const rect = sentinelEl.getBoundingClientRect();
+		if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
+			intersected = true;
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					// console.log('Loading', component, name);
+					intersected = true;
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: '200px' }
+		);
+		observer.observe(sentinelEl);
+		return () => observer.disconnect();
+	});
+
 	let svgUnavailable = $state(false);
 	let svgUnavailableTimer: ReturnType<typeof setTimeout>;
 
@@ -179,7 +208,11 @@
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
 				style:view-transition-name={viewTransitionName}
 			>
-				<example.component bind:this={ref} />
+				{#if isVisible}
+					<example.component bind:this={ref} />
+				{:else}
+					<div bind:this={sentinelEl} class="min-h-25"></div>
+				{/if}
 
 				{#if canResize}
 					<div
