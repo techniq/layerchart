@@ -39,6 +39,10 @@ function triggerTooltip(el: Element) {
   el.dispatchEvent(new PointerEvent('pointermove', eventInit));
 }
 
+function triggerPointerEvent(el: Element, type: 'pointerenter' | 'pointerleave') {
+  el.dispatchEvent(new PointerEvent(type, { bubbles: true }));
+}
+
 describe('DefaultTooltip', () => {
   describe('AreaChart (multi-series, quadtree-x mode)', () => {
     it('should show header and all series items', async () => {
@@ -91,6 +95,58 @@ describe('DefaultTooltip', () => {
           (dot as HTMLElement).style.getPropertyValue('--color')
         );
         expect(colors).toEqual(['rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(255, 165, 0)']);
+      });
+    });
+
+    it('should fade non-highlighted tooltip series items on hover', async () => {
+      const { container } = render(AreaChart, {
+        data: timeSeriesData,
+        x: 'date',
+        series,
+        height: 300,
+        width: 400,
+      });
+
+      const tooltipCtx = container.querySelector('.lc-tooltip-context') as HTMLElement;
+      await expect.element(tooltipCtx).toBeInTheDocument();
+      triggerTooltip(tooltipCtx);
+
+      await vi.waitFor(() => {
+        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        expect(items.length).toBe(4);
+      });
+
+      const items = Array.from(
+        container.querySelectorAll('.lc-tooltip-item-root')
+      ) as HTMLElement[];
+      const labels = Array.from(
+        container.querySelectorAll('.lc-tooltip-item-label')
+      ) as HTMLElement[];
+
+      triggerPointerEvent(items[0], 'pointerenter');
+
+      await vi.waitFor(() => {
+        expect(items[0].dataset.highlighted).toBe('true');
+        expect(items[1].dataset.highlighted).toBe('false');
+        expect(items[2].dataset.highlighted).toBe('false');
+        expect(items[3].dataset.highlighted).toBeUndefined();
+        expect(getComputedStyle(labels[0]).opacity).not.toBe('0.1');
+        expect(getComputedStyle(labels[1]).opacity).toBe('0.1');
+        expect(getComputedStyle(labels[2]).opacity).toBe('0.1');
+        expect(getComputedStyle(labels[3]).opacity).not.toBe('0.1');
+      });
+
+      triggerPointerEvent(items[0], 'pointerleave');
+
+      await vi.waitFor(() => {
+        expect(items[0].dataset.highlighted).toBe('true');
+        expect(items[1].dataset.highlighted).toBe('true');
+        expect(items[2].dataset.highlighted).toBe('true');
+        expect(items[3].dataset.highlighted).toBeUndefined();
+        expect(getComputedStyle(labels[0]).opacity).not.toBe('0.1');
+        expect(getComputedStyle(labels[1]).opacity).not.toBe('0.1');
+        expect(getComputedStyle(labels[2]).opacity).not.toBe('0.1');
+        expect(getComputedStyle(labels[3]).opacity).not.toBe('0.1');
       });
     });
 

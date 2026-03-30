@@ -42,6 +42,10 @@
         : context.y(context.tooltip.data)
       : undefined
   );
+
+  function isSeriesItemHighlighted(seriesKey: string | null | undefined) {
+    return seriesKey ? context.series.isHighlighted(seriesKey, true) : undefined;
+  }
 </script>
 
 <Tooltip.Root {context} {...tooltipProps?.root}>
@@ -59,6 +63,7 @@
         <Tooltip.Item
           label={typeof context.config.x === 'string' ? context.config.x : 'x'}
           value={context.x(data)}
+          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
           {format}
           onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
           onpointerleave={() => (context.series.highlightKey = null)}
@@ -67,6 +72,7 @@
         <Tooltip.Item
           label={typeof context.config.y === 'string' ? context.config.y : 'y'}
           value={context.y(data)}
+          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
           {format}
           onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
           onpointerleave={() => (context.series.highlightKey = null)}
@@ -76,6 +82,7 @@
           <Tooltip.Item
             label={typeof context.config.r === 'string' ? context.config.r : 'r'}
             value={context.r(data)}
+            data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
             {format}
             onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
             onpointerleave={() => (context.series.highlightKey = null)}
@@ -92,6 +99,7 @@
             label={s.label}
             value={s.value}
             color={s.color}
+            data-highlighted={context.series.isHighlighted(s.key, true)}
             {format}
             valueAlign="right"
             onpointerenter={() => (context.series.highlightKey = s.key)}
