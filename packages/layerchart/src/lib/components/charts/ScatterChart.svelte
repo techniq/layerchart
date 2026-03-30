@@ -26,10 +26,8 @@
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
-  import { format } from '@layerstack/utils';
 
   import Chart from '../Chart.svelte';
-  import * as Tooltip from '../tooltip/index.js';
 
   import { chartDataArray } from '../../utils/common.js';
 
@@ -97,6 +95,7 @@
   {rule}
   {highlight}
   {legend}
+  tooltip={tooltipProp}
   {props}
 >
   {#snippet marks({ context })}
@@ -106,55 +105,6 @@
       {#each context.series.visibleSeries as s, i (s.key)}
         <Points seriesKey={s.key} {...props.points} />
       {/each}
-    {/if}
-  {/snippet}
-
-  {#snippet tooltip({ context })}
-    {#if typeof tooltipProp === 'function'}
-      {@render tooltipProp({ context })}
-    {:else if tooltipContext}
-      <Tooltip.Root {context} {...props.tooltip?.root}>
-        {#snippet children({ data })}
-          {@const activeSeries =
-            context.tooltip.series.find((s) => s.key === data?.seriesKey) ??
-            context.tooltip.series[0]}
-          {#if activeSeries?.key !== 'default'}
-            <Tooltip.Header
-              value={activeSeries.label ?? activeSeries.key}
-              color={activeSeries.color}
-              {...props.tooltip?.header}
-            />
-          {/if}
-          <Tooltip.List {...props.tooltip?.list}>
-            <Tooltip.Item
-              label={typeof context.config.x === 'string' ? context.config.x : 'x'}
-              value={context.x(data)}
-              {format}
-              onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
-              onpointerleave={() => (context.series.highlightKey = null)}
-              {...props.tooltip?.item}
-            />
-            <Tooltip.Item
-              label={typeof context.config.y === 'string' ? context.config.y : 'y'}
-              value={context.y(data)}
-              {format}
-              onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
-              onpointerleave={() => (context.series.highlightKey = null)}
-              {...props.tooltip?.item}
-            />
-            {#if context.config.r}
-              <Tooltip.Item
-                label={typeof context.config.r === 'string' ? context.config.r : 'r'}
-                value={context.r(data)}
-                {format}
-                onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
-                onpointerleave={() => (context.series.highlightKey = null)}
-                {...props.tooltip?.item}
-              />
-            {/if}
-          </Tooltip.List>
-        {/snippet}
-      </Tooltip.Root>
     {/if}
   {/snippet}
 </Chart>
