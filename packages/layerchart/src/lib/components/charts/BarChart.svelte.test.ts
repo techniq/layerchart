@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
 import BarChart from './BarChart.svelte';
@@ -261,6 +261,52 @@ describe('BarChart', () => {
           // bottom-right arc has negative x, positive y delta: a r,r 0 0 1 -r,+r
           expect(p.getAttribute('d')).toMatch(/a[\d.]+,[\d.]+ 0 0 1 -[\d.]+,[\d.]+/);
         });
+      });
+    });
+
+    it('tooltip should use explicit series colors, not color scale', async () => {
+      const { container } = render(BarChart, {
+        data: wideData,
+        x: 'year',
+        series: [
+          { key: 'apples', color: 'rgb(255, 0, 0)' },
+          { key: 'bananas', color: 'rgb(0, 128, 0)' },
+          { key: 'cherries', color: 'rgb(0, 0, 255)' },
+          { key: 'grapes', color: 'rgb(128, 0, 128)' },
+        ],
+        seriesLayout: 'group',
+        height: 300,
+        width: 400,
+      });
+
+      // Hover the tooltip band overlay rect to trigger the tooltip
+      const tooltipRect = container.querySelector('.lc-tooltip-rect') as SVGElement | null;
+      await expect.element(tooltipRect).toBeInTheDocument();
+
+      const rect = tooltipRect!.getBoundingClientRect();
+      const eventInit = {
+        bubbles: true,
+        clientX: rect.x + rect.width / 2,
+        clientY: rect.y + rect.height / 2,
+      };
+
+      tooltipRect!.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
+      await vi.waitFor(() => {
+        const colorDots = container.querySelectorAll('.lc-tooltip-item-color');
+        expect(colorDots.length).toBe(4);
+
+        const colors = Array.from(colorDots).map((dot) =>
+          (dot as HTMLElement).style.getPropertyValue('--color')
+        );
+
+        expect(colors).toEqual([
+          'rgb(255, 0, 0)',
+          'rgb(0, 128, 0)',
+          'rgb(0, 0, 255)',
+          'rgb(128, 0, 128)',
+        ]);
       });
     });
   });

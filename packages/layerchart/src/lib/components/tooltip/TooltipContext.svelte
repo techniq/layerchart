@@ -359,8 +359,10 @@
 
         const seriesKey = resolveTooltipSeriesKey(s, seriesTooltipData);
 
-        // Color from color scale (if configured) or series definition
-        const color = ctx.cScale?.(ctx.c(tooltipData)) ?? s.color;
+        // When user explicitly provides cScale, prefer scale-derived color (e.g. gradient encoding).
+        // Otherwise prefer series-defined color (e.g. BarChart with explicit series colors).
+        const scaleColor = ctx.cScale?.(ctx.c(tooltipData));
+        const color = ctx.props.cScale ? (scaleColor ?? s.color) : (s.color ?? scaleColor);
 
         return {
           key: seriesKey,
