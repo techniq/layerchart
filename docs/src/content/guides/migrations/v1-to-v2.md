@@ -92,7 +92,7 @@ Annotations can now be passed directly to simplified charts:
 
 Marks now register their data and accessors with the Chart automatically. No more manually passing all accessor arrays to `<Chart>`:
 
-```diff
+```svelte diff
 - <Chart y={['apples', 'oranges']}>
 -   <Spline y="apples" />
 -   <Spline y="oranges" />
@@ -203,7 +203,7 @@ LayerChart v2 requires **Svelte 5**. All components have been migrated to runes 
 
 **Slots → Snippets:**
 
-```diff
+```svelte diff
 - <Chart let:width let:height>
 -   <text>{width} x {height}</text>
 - </Chart>
@@ -244,7 +244,7 @@ The following transitive dependencies have also been removed:
 
 #### `renderContext` renamed to `layer`
 
-```diff
+```svelte diff
 - <LineChart renderContext="canvas">
 + <LineChart layer="canvas">
 ```
@@ -253,7 +253,7 @@ The following transitive dependencies have also been removed:
 
 #### Position props require `$` prefix
 
-```diff
+```svelte diff
 - <Axis x="left">
 + <Axis x="$left">
 
@@ -265,7 +265,7 @@ The following transitive dependencies have also been removed:
 
 #### `bar` prop renamed to `data`
 
-```diff
+```svelte diff
 - <Bar {bar} />
 + <Bar {data} />
 ```
@@ -276,7 +276,7 @@ The following transitive dependencies have also been removed:
 
 Use the new `Rule` component with x/y accessors instead:
 
-```diff
+```svelte diff
 - <Points links />
 + <Points />
 + <Rule y={['start', 'end']} />
@@ -294,7 +294,7 @@ import { Path } from 'layerchart';
 
 #### `splineRef` renamed to `pathRef`
 
-```diff
+```svelte diff
 - <Spline bind:splineRef />
 + <Spline bind:pathRef />
 ```
@@ -303,7 +303,7 @@ import { Path } from 'layerchart';
 
 #### `labelOffset` split into `labelXOffset` / `labelYOffset`
 
-```diff
+```svelte diff
 - <AnnotationLine labelOffset={10} />
 + <AnnotationLine labelXOffset={10} labelYOffset={0} />
 
@@ -315,7 +315,7 @@ import { Path } from 'layerchart';
 
 #### `classes.swatches` renamed to `classes.item`
 
-```diff
+```svelte diff
 - <Legend classes={{ swatches: 'gap-2' }} />
 + <Legend classes={{ item: 'gap-2' }} />
 ```
@@ -330,14 +330,14 @@ The `selected` prop has been removed from Treemap.
 
 #### Children snippet props removed
 
-```diff
+```svelte diff
 - <Blur>{#snippet children({ ... })}{/snippet}</Blur>
 + <Blur>{#snippet children()}{/snippet}</Blur>
 ```
 
 ### `defaultChartPadding()` signature changed
 
-```diff
+```svelte diff
 - defaultChartPadding(axis, legend)
 + defaultChartPadding({ axis, legend })
 
@@ -349,7 +349,7 @@ The `selected` prop has been removed from Treemap.
 
 #### `tooltip` prop renamed to `tooltipContext`
 
-```diff
+```svelte diff
 - <Chart tooltip={{ mode: 'bisect-x' }}>
 + <Chart tooltipContext={{ mode: 'bisect-x' }}>
 ```
@@ -358,14 +358,14 @@ The `selected` prop has been removed from Treemap.
 
 `ChartState.isVertical` has been removed in favor of `ChartState.valueAxis`. Simplified charts still accept `orientation`.
 
-```diff
+```svelte diff
 - if (ctx.isVertical) { ... }
 + if (ctx.valueAxis === 'y') { ... }
 ```
 
 ### GeoContext → GeoProjection
 
-```diff
+```svelte diff
 - import { GeoContext } from 'layerchart'
 + import { GeoProjection } from 'layerchart'
 ```
@@ -374,7 +374,7 @@ The `selected` prop has been removed from Treemap.
 
 Simplified from config object to boolean:
 
-```diff
+```svelte diff
 - <Arc tooltipContext={{ mode: 'item' }} />
 + <Arc tooltip />
 ```
@@ -385,7 +385,7 @@ See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed 
 
 ### TransformContext
 
-```diff
+```svelte diff
 - <TransformContext initialScrollMode="zoom">
 + <TransformContext scrollMode="zoom">
 
@@ -400,7 +400,7 @@ See the [brush guide](/docs/guides/brush) for the new `BrushState` API. Removed 
 
 Standalone context getters removed — use `getChartContext()` instead:
 
-```diff
+```svelte diff
 - import { getTooltipContext } from 'layerchart'
 + import { getChartContext } from 'layerchart'
 + const chart = getChartContext()
@@ -409,7 +409,7 @@ Standalone context getters removed — use `getChartContext()` instead:
 
 Bind and property renames:
 
-```diff
+```svelte diff
 - <BrushContext bind:brushContext>
 + <BrushContext bind:state>
 
