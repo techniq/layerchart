@@ -70,7 +70,7 @@
   const geo = getGeoContext();
 
   // Mark as composite so child Spline doesn't register
-  ctx.registerComponentNode({ name: 'Hull', kind: 'composite-mark' });
+  ctx.registerComponent({ name: 'Hull', kind: 'composite-mark' });
 
   let {
     data,

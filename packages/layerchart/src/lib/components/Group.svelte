@@ -220,7 +220,7 @@
   const layerCtx = getLayerContext();
 
   if (layerCtx === 'canvas') {
-    chartCtx.registerComponentNode({
+    chartCtx.registerComponent({
       name: 'Group',
       kind: 'group',
       canvasRender: {

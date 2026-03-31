@@ -91,7 +91,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponentNode({ name: 'GeoTile', kind: 'mark', canvasRender: {
+    ctx.registerComponent({ name: 'GeoTile', kind: 'mark', canvasRender: {
       render,
       deps: () => [tiles],
     } });

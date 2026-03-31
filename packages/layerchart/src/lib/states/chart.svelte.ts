@@ -70,7 +70,7 @@ export interface ComponentNode {
   insideCompositeMark: boolean;
 }
 
-export interface RegisterComponentNodeOptions<T extends Element = Element> {
+export interface RegisterComponentOptions<T extends Element = Element> {
   /** Display name for the node (used for debugging) */
   name: string;
   /** The type of node */
@@ -115,7 +115,7 @@ export class ChartState<
 
   // Mark registration — marks register stable MarkInfo snapshots on mount for
   // domain/series calculation. Snapshots are updated via $effect (not $derived)
-  // in registerComponentNode, so reads here never create circular derived refs.
+  // in registerComponent, so reads here never create circular derived refs.
   // Composite marks set insideCompositeMark context so child marks skip registration.
   //
   // Use a plain array + reactive version counter instead of $state<array> so that
@@ -140,7 +140,7 @@ export class ChartState<
    * (not inside $derived) so chart deriveds can read _markInfos without creating
    * circular references. Returns a cleanup function to call on unmount.
    *
-   * For use in tests or synchronous contexts. In components, use `registerComponentNode` with `markInfo`.
+   * For use in tests or synchronous contexts. In components, use `registerComponent` with `markInfo`.
    */
   registerMark(info: MarkInfo): () => void {
     const id = ++this._nextMarkId;
@@ -157,8 +157,8 @@ export class ChartState<
    * Register a component tree node. Call at the top level of a component's <script> block.
    * Sets self as context for children, handles canvas deps/cleanup, and mark registration.
    */
-  registerComponentNode<T extends Element = Element>(
-    options: RegisterComponentNodeOptions<T>
+  registerComponent<T extends Element = Element>(
+    options: RegisterComponentOptions<T>
   ): ComponentNode {
     const { name, kind, canvasRender, markInfo } = options;
     const parent = _ParentNodeContext.getOr(null);

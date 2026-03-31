@@ -84,7 +84,7 @@
   const ctx = getChartContext();
 
   // Mark as composite so child Points doesn't register
-  ctx.registerComponentNode({ name: 'Labels', kind: 'composite-mark' });
+  ctx.registerComponent({ name: 'Labels', kind: 'composite-mark' });
 
   let {
     data,

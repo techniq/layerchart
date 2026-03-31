@@ -98,7 +98,7 @@
   }: ViolinProps = $props();
 
   // Register as composite mark (shields child marks from domain calculation)
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Violin',
     kind: 'composite-mark',
   });

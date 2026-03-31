@@ -269,7 +269,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  chartCtx.registerComponentNode({
+  chartCtx.registerComponent({
     name: 'Circle',
     kind: 'mark',
     markInfo: () => {

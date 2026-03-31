@@ -13,7 +13,7 @@
   } = $props();
 
   const ctx = getChartContext();
-  const node = ctx.registerComponentNode({
+  const node = ctx.registerComponent({
     name: 'ComponentNodeLifecycleParent',
     kind: 'group',
   });

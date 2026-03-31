@@ -85,7 +85,7 @@
   const isGridMode = $derived(!!(dataProp && widthProp && heightProp));
 
   // Register as composite-mark with markInfo for grid mode domain participation
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Contour',
     kind: 'composite-mark',
     markInfo: () => {

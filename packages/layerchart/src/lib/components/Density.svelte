@@ -55,7 +55,7 @@
     ...restProps
   }: DensityProps = $props();
 
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Density',
     kind: 'composite-mark',
   });

@@ -631,7 +631,7 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  chartCtx.registerComponentNode({
+  chartCtx.registerComponent({
     name: 'Text',
     kind: 'mark',
     markInfo: () => {

@@ -144,7 +144,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponentNode({ name: 'Gradient', kind: 'mark', canvasRender: {
+    ctx.registerComponent({ name: 'Gradient', kind: 'mark', canvasRender: {
       render,
       deps: () => [stops, cx, cy, fx, fy, ctx.width, ctx.height],
     } });

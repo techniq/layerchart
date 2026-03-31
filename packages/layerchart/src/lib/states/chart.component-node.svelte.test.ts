@@ -5,7 +5,7 @@ import { page } from 'vitest/browser';
 import type { ChartState, ComponentNode } from './chart.svelte.js';
 import ComponentNodeLifecycleHarness from './__fixtures__/ComponentNodeLifecycleHarness.svelte';
 
-describe('ChartState registerComponentNode', () => {
+describe('ChartState registerComponent', () => {
   it('cleans up child nodes and mark registrations when components unmount', async () => {
     let chartContext: ChartState<any, any, any> | undefined;
     let parentNode: ComponentNode | undefined;

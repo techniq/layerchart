@@ -86,7 +86,7 @@
     ...restProps
   }: PointsProps = $props();
 
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Points',
     kind: 'mark',
     markInfo: () => ({ data, x, y, seriesKey, color: (fill ?? stroke) as string | undefined }),

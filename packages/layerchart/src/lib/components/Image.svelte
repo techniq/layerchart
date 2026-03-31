@@ -403,7 +403,7 @@
     }
   }
 
-  chartCtx.registerComponentNode({
+  chartCtx.registerComponent({
     name: 'Image',
     kind: 'mark',
     markInfo: () => {

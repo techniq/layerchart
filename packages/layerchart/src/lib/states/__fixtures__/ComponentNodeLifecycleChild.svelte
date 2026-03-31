@@ -3,7 +3,7 @@
 
   const ctx = getChartContext();
 
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'ComponentNodeLifecycleChild',
     kind: 'mark',
     markInfo: () => ({ y: 'value' }),

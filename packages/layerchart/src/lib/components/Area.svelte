@@ -92,7 +92,7 @@
   }: AreaProps = $props();
 
   // Register as composite mark (shields child Spline) + chart mark registration
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Area',
     kind: 'composite-mark',
     markInfo: () => ({ data, x, y: y1 ?? y0, seriesKey, color: fill as string | undefined }),

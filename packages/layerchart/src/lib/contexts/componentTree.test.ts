@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import type { ComponentNode } from '$lib/states/chart.svelte.js';
-// Note: registerComponentNode requires Svelte context (setContext/getContext)
+// Note: registerComponent requires Svelte context (setContext/getContext)
 // and is tested indirectly via chart state and component integration tests.
 // _removeComponentNode is private on ChartState and tested indirectly.
 

@@ -189,7 +189,7 @@
   const strokeKey = createKey(() => stroke);
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponentNode({ name: 'Path', kind: 'mark', canvasRender: {
+    ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
       render,
       events: {
         click: restProps.onclick,

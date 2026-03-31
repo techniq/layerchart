@@ -62,7 +62,7 @@
 
   const ctx = getChartContext();
 
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Bars',
     kind: 'mark',
     markInfo: () => ({ data: dataProp, seriesKey, color: fill as string | undefined }),

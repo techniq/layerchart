@@ -80,7 +80,7 @@
 
   let { data, x, y, seriesKey, defined, curve, stroke, motion, ...restProps }: SplineProps = $props();
 
-  ctx.registerComponentNode({
+  ctx.registerComponent({
     name: 'Spline',
     kind: 'mark',
     markInfo: () => ({ data, x, y, seriesKey, color: stroke as string | undefined }),

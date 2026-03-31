@@ -174,7 +174,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();
-  ctx.registerComponentNode({ name: 'Dagre', kind: 'composite-mark' });
+  ctx.registerComponent({ name: 'Dagre', kind: 'composite-mark' });
 
   let {
     data,

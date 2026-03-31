@@ -74,7 +74,7 @@
   const chartCtx = getChartContext();
 
   if (layerCtx === 'canvas') {
-    chartCtx.registerComponentNode({
+    chartCtx.registerComponent({
       name: 'ClipPath',
       kind: 'group',
       canvasRender: {

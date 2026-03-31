@@ -146,8 +146,8 @@
 
   const logger = new Logger('Canvas');
 
-  // Root node for the component tree — children register via ctx.registerComponentNode
-  const rootNode = ctx.registerComponentNode({ name: 'Canvas', kind: 'group' });
+  // Root node for the component tree — children register via ctx.registerComponent
+  const rootNode = ctx.registerComponent({ name: 'Canvas', kind: 'group' });
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
@@ -376,7 +376,7 @@
 
   function createCanvasContext(): CanvasContextValue {
     // Legacy register method — registration is now handled by the component tree
-    // via registerComponentNode. Keep for interface compatibility.
+    // via registerComponent. Keep for interface compatibility.
     function register<T extends Element>(_component: ComponentRender<T>) {
       return () => {};
     }
