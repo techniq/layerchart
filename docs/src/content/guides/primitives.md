@@ -234,16 +234,21 @@ Each circle's fill is determined by its `category` value, resolved through the c
 
 ## Geo Mode
 
-When a primitive is placed inside a `GeoProjection` context, positional x/y props automatically resolve through the geo projection instead of chart scales. This means you can plot geographic data directly with primitives — no wrapper component needed.
+When a primitive is placed inside a `Chart` with the `geo` prop, positional x/y props automatically resolve through the geo projection instead of chart scales. This means you can plot geographic data directly with primitives — no wrapper component needed.
 
 ```svelte
-<Chart {data} r="population" rRange={[2, 20]} c="region" cRange={['steelblue', 'coral']}>
-	<GeoProjection projection={geoNaturalEarth1} fitGeojson={geojson}>
-		<Svg>
-			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
-			<Circle cx="longitude" cy="latitude" r="population" fill="region" />
-		</Svg>
-	</GeoProjection>
+<Chart
+	{data}
+	r="population"
+	rRange={[2, 20]}
+	c="region"
+	cRange={['steelblue', 'coral']}
+	geo={{ projection: geoNaturalEarth1, fitGeojson: geojson }}
+>
+	<Svg>
+		<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+		<Circle cx="longitude" cy="latitude" r="population" fill="region" />
+	</Svg>
 </Chart>
 ```
 
@@ -255,22 +260,20 @@ When a primitive is placed inside a `GeoProjection` context, positional x/y prop
 
 ### Projection Mapping
 
-| Prop pairs (projected together)  | Non-geo props (unchanged)        |
-| -------------------------------- | -------------------------------- |
-| `cx`/`cy`, `x`/`y`              | `r`, `rx`, `ry`                  |
-| `x1`/`y1`, `x2`/`y2`           | `width`, `height`                |
-| `x0`/`y0`, `x1`/`y1` (Rect)    | `fill`, `stroke`                 |
+| Prop pairs (projected together) | Non-geo props (unchanged) |
+| ------------------------------- | ------------------------- |
+| `cx`/`cy`, `x`/`y`              | `r`, `rx`, `ry`           |
+| `x1`/`y1`, `x2`/`y2`            | `width`, `height`         |
+| `x0`/`y0`, `x1`/`y1` (Rect)     | `fill`, `stroke`          |
 
 ### Example: Airports on a Globe
 
 ```svelte
-<Chart data={airports}>
-	<GeoProjection projection={geoOrthographic} fitGeojson={geojson}>
-		<Svg>
-			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
-			<Circle cx="longitude" cy="latitude" r={2} class="fill-primary" />
-		</Svg>
-	</GeoProjection>
+<Chart data={airports} geo={{ projection: geoOrthographic, fitGeojson: geojson }}>
+	<Svg>
+		<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+		<Circle cx="longitude" cy="latitude" r={2} class="fill-primary" />
+	</Svg>
 </Chart>
 ```
 
@@ -281,12 +284,15 @@ Each airport's `longitude` and `latitude` properties are projected through the g
 [Spline](/docs/components/Spline) also supports geo mode. When a projection is set, it automatically converts data into a GeoJSON `LineString` and renders via `geoPath` — giving proper geodesic interpolation and antimeridian handling.
 
 ```svelte
-<Chart data={voyageData} x="longitude" y="latitude">
-	<GeoProjection projection={geoNaturalEarth1} fitGeojson={geojson}>
-		<Svg>
-			<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
-			<Spline class="fill-none stroke-primary" />
-		</Svg>
-	</GeoProjection>
+<Chart
+	data={voyageData}
+	x="longitude"
+	y="latitude"
+	geo={{ projection: geoNaturalEarth1, fitGeojson: geojson }}
+>
+	<Svg>
+		<GeoPath {geojson} class="fill-surface-200 stroke-surface-content/20" />
+		<Spline class="fill-none stroke-primary" />
+	</Svg>
 </Chart>
 ```
