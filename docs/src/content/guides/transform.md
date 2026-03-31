@@ -26,6 +26,10 @@ Zooming and panning modifies the chart's domain — the range of data values sho
 
 :example{ component="BarChart" name="pan-zoom" }
 
+A gradient-filled rectangle with full-chart grid axes, demonstrating both-axis zoom with `scaleExtent` up to 40x:
+
+:example{ component="TransformContext" name="pan-zoom-axes" }
+
 <!-- A bubble chart with zoomable axes, showing GDP per capita vs life expectancy by continent:
 
 :example{ component="ScatterChart" name="zoomable-bubble" } -->
@@ -483,6 +487,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Use case               | Configuration                                             | Example                                                                                 |
 | ---------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`               | [pan-zoom](/docs/components/BarChart/pan-zoom)                                          |
+| Pan/zoom both axes     | `transform={{ mode: 'domain', scaleExtent: [1, 40] }}`    | [pan-zoom-axes](/docs/components/TransformContext/pan-zoom-axes)                        |
 | Limit zoom depth       | `scaleExtent: [1, 10]`                                    | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
 | Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`       | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`         | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |

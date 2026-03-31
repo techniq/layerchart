@@ -808,7 +808,8 @@
         return val;
       };
 
-      // Constrain a single axis
+      // Constrain a single axis. Normalizes reversed domains (e.g. [500, 0])
+      // to ascending order, applies constraints, then maps back.
       const constrainAxis = (
         axisTranslate: number,
         axisScale: number,
@@ -821,24 +822,30 @@
         const d0 = baseDomain[0] as unknown;
         const d1 = baseDomain[1] as unknown;
         const isDate = d0 instanceof Date;
-        const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
-        const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
-        const range = numMax - numMin;
+        const rawD0 = isDate ? (d0 as Date).getTime() : (d0 as number);
+        const rawD1 = isDate ? (d1 as Date).getTime() : (d1 as number);
+        const range = Math.abs(rawD1 - rawD0);
         if (!isFinite(range) || range === 0) return axisTranslate;
 
-        const minVal = resolveValue(extent.min, baseDomain[0]);
-        const maxVal = resolveValue(extent.max, baseDomain[1]);
+        // Normalize reversed domains by flipping the translate
+        const reversed = rawD0 > rawD1;
+        const normTranslate = reversed ? dimension * axisScale - axisTranslate - dimension : axisTranslate;
+        const numMin = Math.min(rawD0, rawD1);
+
+        const rawMinVal = resolveValue(extent.min, baseDomain[0]);
+        const rawMaxVal = resolveValue(extent.max, baseDomain[1]);
+        const minVal = rawMinVal != null && rawMaxVal != null ? Math.min(rawMinVal, rawMaxVal) : rawMinVal;
+        const maxVal = rawMinVal != null && rawMaxVal != null ? Math.max(rawMinVal, rawMaxVal) : rawMaxVal;
 
         // Current visible domain from translate/scale
-        const f0 = -axisTranslate / axisScale / dimension;
-        const f1 = (dimension - axisTranslate) / axisScale / dimension;
+        const f0 = -normTranslate / axisScale / dimension;
+        const f1 = (dimension - normTranslate) / axisScale / dimension;
         let visMin = numMin + f0 * range;
         let visMax = numMin + f1 * range;
         const visRange = visMax - visMin;
 
         // Enforce minRange (max zoom in limit)
         if (extent.minRange != null && visRange < extent.minRange) {
-          // Widen around center of current view
           const center = (visMin + visMax) / 2;
           visMin = center - extent.minRange / 2;
           visMax = center + extent.minRange / 2;
@@ -852,13 +859,13 @@
         if (maxVal != null && visMax > maxVal) {
           visMax = maxVal;
           visMin = visMax - (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
-          // Re-check min after adjusting
           if (minVal != null && visMin < minVal) visMin = minVal;
         }
 
         // Back-compute translate from corrected visible domain
         const newF0 = (visMin - numMin) / range;
-        return -newF0 * axisScale * dimension;
+        const result = -newF0 * axisScale * dimension;
+        return reversed ? dimension * axisScale - result - dimension : result;
       };
 
       const transformAxis = transform?.axis ?? 'both';
@@ -869,9 +876,9 @@
           const d0 = chartState._baseXDomain[0] as unknown;
           const d1 = chartState._baseXDomain[1] as unknown;
           const isDate = d0 instanceof Date;
-          const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
-          const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
-          const fullRange = numMax - numMin;
+          const numD0 = isDate ? (d0 as Date).getTime() : (d0 as number);
+          const numD1 = isDate ? (d1 as Date).getTime() : (d1 as number);
+          const fullRange = Math.abs(numD1 - numD0);
           if (fullRange > 0) {
             const maxScale = fullRange / de.x.minRange;
             scale = Math.min(scale, maxScale);
@@ -888,9 +895,9 @@
           const d0 = chartState._baseYDomain[0] as unknown;
           const d1 = chartState._baseYDomain[1] as unknown;
           const isDate = d0 instanceof Date;
-          const numMin = isDate ? (d0 as Date).getTime() : (d0 as number);
-          const numMax = isDate ? (d1 as Date).getTime() : (d1 as number);
-          const fullRange = numMax - numMin;
+          const numD0 = isDate ? (d0 as Date).getTime() : (d0 as number);
+          const numD1 = isDate ? (d1 as Date).getTime() : (d1 as number);
+          const fullRange = Math.abs(numD1 - numD0);
           if (fullRange > 0) {
             const maxScale = fullRange / de.y.minRange;
             scale = Math.min(scale, maxScale);
