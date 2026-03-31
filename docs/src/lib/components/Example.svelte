@@ -23,6 +23,7 @@
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucideDownload from '~icons/lucide/download';
+	import LucideTerminal from '~icons/lucide/terminal';
 
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
@@ -306,6 +307,20 @@
 					>
 						Edit
 					</Button>
+
+					<Tooltip title="Copy: npx sv add @layerchart/sv=demo:components/{component}/{name}">
+						<Button
+							icon={LucideTerminal}
+							class="text-surface-content/70 py-1"
+							on:click={() => {
+								navigator.clipboard.writeText(
+									`npx sv add @layerchart/sv=demo:components/${component}/${name}`
+								);
+							}}
+						>
+							sv add
+						</Button>
+					</Tooltip>
 				{/if}
 
 				<Toggle let:on={open} let:toggle let:toggleOff>

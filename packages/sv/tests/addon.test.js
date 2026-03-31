@@ -10,7 +10,12 @@ const browser = false;
 const { test, prepareServer, testCases } = setupTest(
 	{ addon },
 	{
-		kinds: [{ type: 'default', options: { addon: { who: 'you' } } }],
+		kinds: [
+			{
+				type: 'default',
+				options: { '@layerchart/sv': { demo: 'components/ArcChart/gradient-with-text' } }
+			}
+		],
 		filter: (testCase) => testCase.variant.includes('kit'),
 		browser
 	}
@@ -21,29 +26,27 @@ test.concurrent.for(testCases)(
 	async (testCase, { page, ...ctx }) => {
 		const cwd = ctx.cwd(testCase);
 
-		const msg =
-			"This is a text file made by the Community Addon Template demo for the add-on: '@layerchart/sv'!";
+		// Check demo component was created
+		const demoPath = path.resolve(cwd, 'src/lib/layerchart/demos/ArcChart/gradient-with-text.svelte');
+		const demoContent = fs.readFileSync(demoPath, 'utf8');
+		expect(demoContent).toContain('layerchart');
+		expect(demoContent).toContain('ArcChart');
 
-		const contentPath = path.resolve(cwd, `src/lib/@layerchart/sv/content.txt`);
-		const contentContent = fs.readFileSync(contentPath, 'utf8');
+		// Check route was updated to import the demo
+		const routePath = path.resolve(cwd, 'src/routes/+page.svelte');
+		const routeContent = fs.readFileSync(routePath, 'utf8');
+		expect(routeContent).toContain('Demo');
+		expect(routeContent).toContain('$lib/layerchart/demos/ArcChart/gradient-with-text.svelte');
 
-		// Check if we have the imports
-		expect(contentContent).toContain(msg);
+		// Check package.json has layerchart dependency
+		const pkgPath = path.resolve(cwd, 'package.json');
+		const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+		expect(pkg.dependencies?.layerchart || pkg.devDependencies?.layerchart).toBeTruthy();
 
 		// For browser testing
 		if (browser) {
 			const { close } = await prepareServer({ cwd, page });
-			// kill server process when we're done
 			ctx.onTestFinished(async () => await close());
-
-			// expectations
-			const textContent = await page.locator('p').last().textContent();
-			if (testCase.variant.includes('kit')) {
-				expect(textContent).toContain(msg);
-			} else {
-				// it's not a kit plugin!
-				expect(textContent).not.toContain(msg);
-			}
 		}
 	}
 );
