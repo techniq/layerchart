@@ -1,0 +1,45 @@
+{
+	"name": "@layerchart/sv",
+	"description": "sv add-on for @layerchart/sv",
+	"version": "0.0.1",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"demo-create": "sv create demo --types ts --template minimal --no-add-ons --no-install",
+		"demo-add": "sv add file:../ --cwd demo --no-git-check --no-install",
+		"demo-add:ci": "sv add file:../=who:you --cwd demo --no-git-check --no-download-check --no-install",
+		"build": "tsdown",
+		"prepublishOnly": "npm run build",
+		"test": "vitest run"
+	},
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"default": "./src/index.js"
+		}
+	},
+	"publishConfig": {
+		"access": "public",
+		"exports": {
+			".": {
+				"default": "./dist/index.js"
+			}
+		}
+	},
+	"peerDependencies": {
+		"sv": "latest"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.58.2",
+		"@sveltejs/sv-utils": "latest",
+		"@types/node": "^25.2.1",
+		"sv": "latest",
+		"tsdown": "^0.21.4",
+		"vitest": "^4.1.0"
+	},
+	"keywords": [
+		"sv-add"
+	]
+}
