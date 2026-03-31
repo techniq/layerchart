@@ -42,9 +42,17 @@
 
 		<Layer>
 			<Density data={walmarts} x="longitude" y="latitude" bandwidth={10} fillOpacity={0.7} />
-			<GeoPath geojson={statemesh} class="fill-none stroke-surface-content/30" strokeWidth={0.5} />
-			<GeoPath geojson={nation} class="fill-none stroke-surface-content" strokeWidth={1} />
-			<Circle cx="longitude" cy="latitude" r={1} fill="currentColor" />
+			<GeoPath
+				geojson={statemesh}
+				class="fill-none stroke-surface-content/30"
+				strokeWidth={0.5 / context.transform.scale}
+			/>
+			<GeoPath
+				geojson={nation}
+				class="fill-none stroke-surface-content"
+				strokeWidth={1 / context.transform.scale}
+			/>
+			<Circle cx="longitude" cy="latitude" r={1 / context.transform.scale} fill="currentColor" />
 		</Layer>
 
 		<Layer>
@@ -53,7 +61,8 @@
 					data={[context.tooltip.data]}
 					cx="longitude"
 					cy="latitude"
-					r={4}
+					r={4 / context.transform.scale}
+					strokeWidth={1 / context.transform.scale}
 					class="stroke-surface-content/30 fill-surface-content/10 pointer-events-none"
 					motion="spring"
 				/>
