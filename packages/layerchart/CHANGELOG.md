@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.48
+
+### Patch Changes
+
+- fix(ChartState): Don't create spurious implicit series when mark accessor matches chart's own axis accessor, fixing domain corruption for heatmap/Cell charts ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.47
 
 ### Major Changes

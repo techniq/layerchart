@@ -80,6 +80,7 @@
     "fiery-lamps-tickle",
     "fix-area-all-zero",
     "fix-barchart-diverging-edge-rounding",
+    "fix-implicit-series-domain",
     "flat-arcs-heal",
     "flat-cases-enter",
     "four-lizards-win",
