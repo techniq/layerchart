@@ -140,6 +140,113 @@
           "line": "<Tooltip.Root {context}>"
         }
       ]
+    },
+    {
+      "name": "data-chart-multi",
+      "title": "data chart multi",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart {data} x=\"date\" height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 16,
+          "line": "<Spline y=\"apples\" stroke=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-chart-single",
+      "title": "data chart single",
+      "path": "/docs/components/Chart/data-chart-single",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart {data} x=\"date\" y=\"value\" height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 16,
+          "line": "<Spline />"
+        }
+      ]
+    },
+    {
+      "name": "data-mark-data",
+      "title": "data mark data",
+      "path": "/docs/components/Chart/data-mark-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 25,
+          "line": "<Spline x=\"date\" y=\"value\" data={temperatureData} stroke=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-primitive-data",
+      "title": "data primitive data",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 25,
+          "line": "<!-- <Spline data={temperatureData} stroke=\"var(--color-apples)\" /> -->"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 26,
+          "line": "<Circle cx=\"date\" cy=\"value\" data={temperatureData} r={5} fill=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-series-chart-data",
+      "title": "data series chart data",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 24,
+          "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
+        }
+      ]
+    },
+    {
+      "name": "data-series-separate-data",
+      "title": "data series separate data",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
+          "line": "<Chart"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 33,
+          "line": "<Spline seriesKey=\"apples\" stroke=\"var(--color-apples)\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -260,7 +367,7 @@
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "multiple-series",
@@ -291,11 +398,32 @@
       "line": "<Chart"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 136,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
       "lineNumber": 33,
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={20} height={300}>"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 69,
+      "line": "<Chart"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 159,
+      "line": "<Chart"
     },
     {
       "example": "stack",
@@ -316,28 +444,35 @@
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 15,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 13,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
     },
     {
       "example": "with-labels",
@@ -641,6 +776,41 @@
       "line": "<Chart"
     },
     {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 35,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-horizontal",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-horizontal",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-random-distribution",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-random-distribution",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "histogram-vertical",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-vertical",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
@@ -914,6 +1084,13 @@
       "line": "<Chart"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -1125,6 +1302,48 @@
     },
     {
       "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 27,
+      "line": "<Chart"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 27,
+      "line": "<Chart"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 36,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 32,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 50,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 10,
@@ -1176,14 +1395,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 25,
+      "lineNumber": 30,
       "line": "<Chart"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 54,
+      "lineNumber": 65,
+      "line": "<Chart"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 39,
       "line": "<Chart"
     },
     {
@@ -1250,16 +1476,16 @@
       "line": "<Chart {data} x=\"date\" y=\"value\" brush={{ classes: { range: 'striped-background' } }} height={40}>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 55,
       "line": "<Chart"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 81,
       "line": "<Chart"
     },
@@ -1327,6 +1553,41 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 26,
+      "line": "<Chart"
+    },
+    {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -1346,6 +1607,104 @@
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 36,
       "line": "<Chart"
+    },
+    {
+      "example": "data-chart-multi",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-multi",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" height={300}>"
+    },
+    {
+      "example": "data-chart-single",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-chart-single",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" height={300}>"
+    },
+    {
+      "example": "data-mark-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-mark-data",
+      "lineNumber": 23,
+      "line": "<Chart height={300}>"
+    },
+    {
+      "example": "data-primitive-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-primitive-data",
+      "lineNumber": 23,
+      "line": "<Chart height={300}>"
+    },
+    {
+      "example": "data-series-chart-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-chart-data",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-series-separate-data",
+      "component": "Chart",
+      "path": "/docs/components/Chart/data-series-separate-data",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 22,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 21,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 70,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 51,
+      "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 36,
+      "line": "<Chart height={800} padding={{ top: 60, bottom: 60, left: 60, right: 60 }}>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -1376,6 +1735,41 @@
       "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
     },
     {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 7,
+      "line": "<Chart"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 20,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 9,
+      "line": "<Chart padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1402,6 +1796,69 @@
       "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 34,
       "line": "<Chart"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 9,
+      "line": "<Chart"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -1561,7 +2018,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 125,
+      "lineNumber": 110,
       "line": "<Chart"
     },
     {
@@ -1628,10 +2085,45 @@
       "line": "<Chart"
     },
     {
+      "example": "transform-canvas-scale-extent",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-canvas-scale-extent",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-globe-inertia",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-inertia",
+      "lineNumber": 28,
+      "line": "<Chart"
+    },
+    {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
       "lineNumber": 49,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 48,
+      "line": "<Chart"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 63,
       "line": "<Chart"
     },
     {
@@ -1705,6 +2197,41 @@
       "line": "<Chart"
     },
     {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 89,
+      "line": "<Chart"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 61,
+      "line": "<Chart"
+    },
+    {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapefile-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/shapefile-preview",
+      "lineNumber": 103,
+      "line": "<Chart"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 97,
+      "line": "<Chart"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -1743,7 +2270,7 @@
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 44,
+      "lineNumber": 45,
       "line": "<Chart"
     },
     {
@@ -1873,6 +2400,13 @@
       "line": "<Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }} height={300}>"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 30, bottom: 20, left: 24, right: 10 }} height={300}>"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -1884,6 +2418,48 @@
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
       "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 41,
+      "line": "<Chart"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
+      "example": "pixel-mode",
+      "component": "Image",
+      "path": "/docs/components/Image/pixel-mode",
+      "lineNumber": 5,
+      "line": "<Chart padding={{ top: 10, bottom: 10, left: 10, right: 10 }} height={300}>"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 57,
+      "line": "<Chart"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 68,
+      "line": "<Chart"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 64,
       "line": "<Chart"
     },
     {
@@ -1906,6 +2482,27 @@
       "path": "/docs/components/Legend/chart-placement",
       "lineNumber": 6,
       "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 17,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -1955,6 +2552,13 @@
       "path": "/docs/components/LinearGradient/units",
       "lineNumber": 6,
       "line": "<Chart height={320} width={700}>"
+    },
+    {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 30,
+      "line": "<Chart"
     },
     {
       "example": "line",
@@ -2419,11 +3023,32 @@
       "line": "<Chart height={150}>"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
       "example": "cross",
       "component": "Polygon",
       "path": "/docs/components/Polygon/cross",
       "lineNumber": 13,
       "line": "<Chart height={150}>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 14,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "diamond",
@@ -2529,6 +3154,62 @@
       "path": "/docs/components/RadialGradient/units",
       "lineNumber": 7,
       "line": "<Chart height={220}>"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 92,
+      "line": "<Chart"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 7,
+      "line": "<Chart"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 11,
+      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 15,
+      "line": "<Chart {data} x={['x0', 'x1']} y=\"count\" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
     },
     {
       "example": "styling-using-attributes",
@@ -2727,6 +3408,13 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" yNice padding={25} height={300}>"
     },
     {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
@@ -2811,6 +3499,13 @@
       "line": "<Chart"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 13,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -2836,6 +3531,27 @@
       "component": "Spline",
       "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "lineNumber": 10,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 14,
+      "line": "<Chart"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 14,
       "line": "<Chart"
     },
     {
@@ -2993,6 +3709,13 @@
       "line": "<Chart"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
@@ -3007,10 +3730,24 @@
       "line": "<Chart"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 218,
+      "line": "<Chart"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
       "lineNumber": 35,
+      "line": "<Chart"
+    },
+    {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 9,
       "line": "<Chart"
     },
     {
@@ -3070,6 +3807,76 @@
       "line": "<Chart height={600}>"
     },
     {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 20,
+      "line": "<Chart"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 16,
+      "line": "<Chart"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 69,
+      "line": "<Chart"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 26,
+      "line": "<Chart padding={{ top: 20, bottom: 10, left: 10, right: 10 }} height={300}>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 25,
+      "line": "<Chart"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 39,
+      "line": "<Chart"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -3077,5 +3884,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:21.848Z"
+  "updatedAt": "2026-03-31T12:29:58.950Z"
 }

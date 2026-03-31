@@ -6,9 +6,10 @@
 	import OscilloscopeField from '$lib/components/controls/fields/OscilloscopeField.svelte';
 
 	const FFT_SIZE = 256;
+	const BIN_COUNT = Math.round((FFT_SIZE / 2) * 0.7);
 
 	// Generate mock frequency domain data for demonstration
-	const mockData = Array.from({ length: 128 }, (_, i) => ({
+	const mockData = Array.from({ length: BIN_COUNT }, (_, i) => ({
 		key: i,
 		value: Math.max(0, 160 - i * 2 + 40 * Math.random())
 	}));
@@ -75,7 +76,7 @@
 
 		analyser.getByteFrequencyData(dataArray);
 
-		data = Array.from(dataArray, (value, i) => ({
+		data = Array.from(dataArray.slice(0, BIN_COUNT), (value, i) => ({
 			key: i,
 			value
 		}));
@@ -96,13 +97,13 @@
 <BarChart
 	{data}
 	x="key"
-	xDomain={range(0, FFT_SIZE / 2)}
+	xDomain={range(0, BIN_COUNT)}
 	y="value"
 	yDomain={[0, 256]}
 	bandPadding={0.2}
 	rule={false}
 	axis="y"
-	tooltip={{ mode: 'manual' }}
+	tooltipContext={{ mode: 'manual' }}
 	props={{
 		yAxis: { format: (d) => decibels(d)?.toFixed(1) }
 	}}

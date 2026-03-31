@@ -76,9 +76,18 @@
   $effect.pre(() => {
     refProp = ref;
   });
+
+  function canvasClip(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  }
+
+  function canvasClipDeps() {
+    return [cx, cy, r];
+  }
 </script>
 
-<ClipPath {id} {disabled} {children}>
+<ClipPath {id} {disabled} {children} {canvasClip} {canvasClipDeps}>
   {#snippet clip()}
     <Circle
       {cx}

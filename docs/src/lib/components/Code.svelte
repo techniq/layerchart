@@ -1,15 +1,20 @@
 <script module lang="ts">
-	import { createHighlighter, type Highlighter } from 'shiki';
 	import { transformerMetaHighlight } from '@shikijs/transformers';
+	import { browser } from '$app/environment';
+	import type { Highlighter } from 'shiki/bundle/web';
 
 	let highlighter = $state<Highlighter | null>(null);
 
-	createHighlighter({
-		themes: ['github-light-default', 'github-dark-default'],
-		langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
-	}).then((h) => {
-		highlighter = h;
-	});
+	if (browser) {
+		import('shiki/bundle/web').then(({ createHighlighter }) =>
+			createHighlighter({
+				themes: ['github-light-default', 'github-dark-default'],
+				langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh', 'md']
+			})
+		).then((h) => {
+			highlighter = h;
+		});
+	}
 </script>
 
 <script lang="ts">

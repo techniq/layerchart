@@ -18,8 +18,7 @@
 		points: { opacity: 0.3 },
 		highlight: { lines: false }
 	}}
-	padding={24}
-	height={48}
+	height={24}
 >
 	{#snippet tooltip({ context })}
 		<Tooltip.Root x="data" y="data" yOffset={12} anchor="top">

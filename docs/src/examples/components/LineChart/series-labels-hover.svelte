@@ -29,10 +29,9 @@
 	padding={20}
 	height={300}
 >
-	{#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
-		{#if highlightKey}
-			{@const activeSeriesIndex = series.findIndex((s) => s.key === highlightKey)}
-			<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
+	{#snippet aboveMarks({ context })}
+		{#if context.series.highlightKey}
+			<Labels seriesKey={context.series.highlightKey} offset={10} />
 		{/if}
 	{/snippet}
 </LineChart>

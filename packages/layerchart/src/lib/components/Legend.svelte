@@ -103,7 +103,15 @@
      */
     ref?: HTMLElement;
 
-    children?: Snippet<[{ values: any[]; scale: AnyScale | null }]>;
+    children?: Snippet<
+      [
+        {
+          values: any[];
+          scale: AnyScale | null;
+          seriesItems: Array<{ key: string; label: string; color: string }> | null;
+        },
+      ]
+    >;
   };
 
   export type LegendProps = LegendPropsWithoutHTML &
@@ -136,11 +144,11 @@
     tickLength: tickLengthProp = 4,
     placement,
     orientation = 'horizontal',
-    onclick,
-    onpointerenter,
-    onpointerleave,
-    variant = 'ramp',
-    selected = [],
+    onclick: onclickProp,
+    onpointerenter: onpointerenterProp,
+    onpointerleave: onpointerleaveProp,
+    variant: variantProp,
+    selected: selectedProp,
     classes = {},
     ref: refProp = $bindable(),
     class: className,
@@ -155,7 +163,43 @@
 
   const ctx = getChartContext();
 
-  const scale = $derived(scaleProp ?? ctx.cScale);
+  // Check if we should use series-based legend (multiple series with colors defined)
+  const hasSeriesWithColors = $derived.by(() => {
+    if (!ctx.series) return false;
+    const allSeries = ctx.series.series ?? [];
+    // Check if we have multiple series OR a non-default series with colors
+    return allSeries.length > 0 && !ctx.series.isDefaultSeries && allSeries.some((s) => s.color);
+  });
+
+  // Use series-based legend if we have series with colors, otherwise use scale
+  const scale = $derived(hasSeriesWithColors ? null : (scaleProp ?? ctx.cScale));
+
+  // Create series items for series-based legend
+  const seriesItems = $derived.by(() => {
+    if (!hasSeriesWithColors || !ctx.series) return null;
+
+    // Get ALL series (not just visible) so legend items remain visible when deselected
+    const allSeries = ctx.series.series ?? [];
+    if (allSeries.length === 0) return null;
+
+    return allSeries
+      .filter((s) => s && s.key) // Filter out any invalid series
+      .map((s) => {
+        // Get label - prefer explicit label, then key
+        let label = s.label ?? s.key;
+
+        // If label is somehow not a string, convert it to string or use key
+        if (typeof label !== 'string') {
+          label = String(s.key);
+        }
+
+        return {
+          key: s.key,
+          label,
+          color: s.color ?? 'currentColor',
+        };
+      });
+  });
 
   type ScaleConfig = {
     xScale: AnyScale | undefined;
@@ -297,6 +341,44 @@
       };
     }
   });
+
+  const variant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
+  const selected = $derived(selectedProp ?? ctx.series?.selectedKeys?.current ?? []);
+
+  const swatchItems = $derived.by(() => {
+    if (seriesItems) {
+      // Series-based legend items
+      return seriesItems.map((series) => ({
+        value: series.key,
+        label: series.label,
+        color: series.color,
+        onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(series.key),
+        onpointerenter: (e: MouseEvent) => {
+          ctx.series!.highlightKey = series.key;
+        },
+        onpointerleave: (e: MouseEvent) => {
+          ctx.series!.highlightKey = null;
+        },
+        selected: selected.length === 0 || selected.includes(series.key),
+      }));
+    } else {
+      // Scale-based legend items
+      const tickValues = scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [];
+      return tickValues.map((tick) => ({
+        value: tick,
+        label: tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick,
+        color: scale?.(tick) ?? '',
+        onclick: (e: MouseEvent) => ctx.series?.selectedKeys?.toggle?.(tick),
+        onpointerenter: (e: MouseEvent) => {
+          ctx.series!.highlightKey = tick;
+        },
+        onpointerleave: (e: MouseEvent) => {
+          ctx.series!.highlightKey = null;
+        },
+        selected: selected.length === 0 || selected.includes(tick),
+      }));
+    }
+  });
 </script>
 
 <div
@@ -312,6 +394,7 @@
     {@render children({
       values: scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [],
       scale,
+      seriesItems,
     })}
   {:else if variant === 'ramp'}
     <svg
@@ -362,20 +445,20 @@
     </svg>
   {:else if variant === 'swatches'}
     <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
-      {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
-        {@const color = scale?.(tick) ?? ''}
-        {@const item = { value: tick, color }}
+      {#each swatchItems as item}
         <button
           class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
-          style:opacity={selected.length === 0 || selected.includes(tick) ? 1 : 0.3}
-          onclick={(e) => onclick?.(e, item)}
-          onpointerenter={(e) => onpointerenter?.(e, item)}
-          onpointerleave={(e) => onpointerleave?.(e, item)}
+          style:opacity={selected.length === 0 || selected.includes(item.value) ? 1 : 0.3}
+          onclick={(e) => onclickProp?.(e, item) ?? item.onclick?.(e)}
+          onpointerenter={(e) => onpointerenterProp?.(e, item) ?? item.onpointerenter?.(e)}
+          onpointerleave={(e) => onpointerleaveProp?.(e, item) ?? item.onpointerleave?.(e)}
         >
-          <div class={cls('lc-legend-swatch', classes.swatch)} style:background-color={color}></div>
+          <div
+            class={cls('lc-legend-swatch', classes.swatch)}
+            style:background-color={item.color}
+          ></div>
           <div class={cls('lc-legend-swatch-label', classes.label)}>
-            <!-- @ts-expect-error - improve types -->
-            {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
+            {item.label}
           </div>
         </button>
       {/each}

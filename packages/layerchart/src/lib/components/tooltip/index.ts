@@ -10,3 +10,5 @@ export { default as Separator } from './TooltipSeparator.svelte';
 export * from './TooltipSeparator.svelte';
 export { default as Root } from './Tooltip.svelte';
 export * from './Tooltip.svelte';
+
+export { TooltipState, type TooltipSeries } from '$lib/states/tooltip.svelte.js';

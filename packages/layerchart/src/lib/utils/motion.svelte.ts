@@ -1,3 +1,4 @@
+import { untrack } from 'svelte';
 import { Spring, Tween } from 'svelte/motion';
 
 /**
@@ -161,7 +162,13 @@ function setupTracking<T>(
   if (options.controlled) return;
 
   $effect(() => {
-    motion.set(getValue(), { instant: motion.target == null });
+    const value = getValue();
+    if (value == null) return;
+    // Use untrack to prevent reactive reads inside motion.set() and motion.target
+    // from being tracked as dependencies of this effect (which would cause infinite loops)
+    untrack(() => {
+      motion.set(value, { instant: motion.target == null });
+    });
   });
 }
 
@@ -227,6 +234,62 @@ export function createMotionTracker() {
     },
   };
 }
+
+/**
+ * Creates a motion state map for data mode rendering.
+ * Tracks per-item animated values keyed by the item key.
+ * Returns null if no motion is configured (type: 'none').
+ */
+export function createDataMotionMap(motionProp: MotionOptions | undefined) {
+  const config = parseMotionProp(motionProp);
+  if (config.type === 'none') return null;
+
+  const map = new Map<any, Map<string, MotionSpring<number> | MotionTween<number>>>();
+
+  function create(value: number): MotionSpring<number> | MotionTween<number> {
+    return config.type === 'spring'
+      ? new MotionSpring(value, config.options as SpringOptions)
+      : new MotionTween(value, config.options as TweenOptions);
+  }
+
+  return {
+    /** Update motion targets for an item. Creates states on first call per key/prop. */
+    update(key: any, values: Record<string, number>) {
+      let itemMap = map.get(key);
+      if (!itemMap) {
+        itemMap = new Map();
+        map.set(key, itemMap);
+      }
+      for (const [prop, value] of Object.entries(values)) {
+        let state = itemMap.get(prop);
+        if (!state) {
+          state = create(value);
+          itemMap.set(prop, state);
+        } else {
+          state.set(value);
+        }
+      }
+    },
+    /** Get current animated values for an item, or null if not tracked yet. */
+    get(key: any): Record<string, number> | null {
+      const itemMap = map.get(key);
+      if (!itemMap) return null;
+      const result: Record<string, number> = {};
+      for (const [prop, state] of itemMap) {
+        result[prop] = state.current;
+      }
+      return result;
+    },
+    /** Remove items no longer in the active set. */
+    cleanup(activeKeys: Set<any>) {
+      for (const key of map.keys()) {
+        if (!activeKeys.has(key)) map.delete(key);
+      }
+    },
+  };
+}
+
+export type DataMotionMap = NonNullable<ReturnType<typeof createDataMotionMap>>;
 
 /**
  * Extracts tween configuration from a motion prop

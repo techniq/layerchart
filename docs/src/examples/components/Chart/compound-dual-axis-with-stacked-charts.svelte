@@ -38,7 +38,7 @@
 		x="year"
 		y="efficiency"
 		padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
-		tooltip={{ mode: 'quadtree-x' }}
+		tooltipContext={{ mode: 'quadtree-x' }}
 	>
 		<Layer>
 			<Axis

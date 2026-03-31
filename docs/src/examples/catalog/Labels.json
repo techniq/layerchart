@@ -55,8 +55,8 @@
       "example": "series-labels-hover",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-labels-hover",
-      "lineNumber": 35,
-      "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
+      "lineNumber": 34,
+      "line": "<Labels seriesKey={context.series.highlightKey} offset={10} />"
     },
     {
       "example": "with-labels",
@@ -80,5 +80,5 @@
       "line": "<Labels format=\"integer\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.937Z"
+  "updatedAt": "2026-03-23T11:14:13.366Z"
 }

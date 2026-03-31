@@ -73,7 +73,7 @@
 	y1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
 	y1Range={({ yScale }) => [0, yScale.bandwidth()]}
 	padding={defaultChartPadding({ left: 30, right: 15, bottom: 20 })}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={400}
 >
 	{#snippet children({ context })}

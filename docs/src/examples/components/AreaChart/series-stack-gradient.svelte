@@ -30,8 +30,8 @@
 	padding={defaultChartPadding({ right: 10 })}
 	height={300}
 >
-	{#snippet marks({ series, getAreaProps })}
-		{#each series as s, i (s.key)}
+	{#snippet marks({ context })}
+		{#each context.series.series as s, i (s.key)}
 			<!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
 			<LinearGradient
 				stops={s.color
@@ -40,7 +40,7 @@
 				vertical
 			>
 				{#snippet children({ gradient })}
-					<Area {...getAreaProps(s, i)} fill={gradient} />
+					<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />
 				{/snippet}
 			</LinearGradient>
 		{/each}

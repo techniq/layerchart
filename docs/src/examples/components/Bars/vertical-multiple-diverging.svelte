@@ -20,7 +20,7 @@
 	y={['value', (d) => -d.baseline]}
 	yNice
 	padding={{ left: 24, bottom: 20, top: 8 }}
-	tooltip={{ mode: 'bisect-x' }}
+	tooltipContext={{ mode: 'bisect-x' }}
 	height={300}
 >
 	<Layer>

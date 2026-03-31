@@ -60,7 +60,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 148,
+      "lineNumber": 133,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -85,6 +85,34 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 37,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "transform-globe-inertia",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-inertia",
+      "lineNumber": 51,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 67,
+      "line": "<Graticule class=\"stroke-surface-content/20\" strokeWidth={1 / context.transform.scale} />"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 82,
+      "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
@@ -97,6 +125,20 @@
       "path": "/docs/components/GeoPath/translucent-globe",
       "lineNumber": 75,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 74,
+      "line": "<Graticule class=\"stroke-surface-content/20 pointer-events-none\" />"
+    },
+    {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 54,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
     },
     {
       "example": "draggable-globe",
@@ -118,7 +160,14 @@
       "path": "/docs/components/Graticule/basic",
       "lineNumber": 61,
       "line": "<Graticule"
+    },
+    {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 28,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-02-08T17:35:30.583Z"
+  "updatedAt": "2026-03-26T19:56:43.290Z"
 }

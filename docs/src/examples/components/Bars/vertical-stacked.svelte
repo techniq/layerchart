@@ -27,7 +27,7 @@
 	cDomain={colorKeys}
 	cRange={keyColors}
 	padding={{ left: 32, bottom: 20, top: 8 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={300}
 >
 	{#snippet children({ context })}

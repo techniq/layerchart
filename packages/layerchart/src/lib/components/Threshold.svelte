@@ -48,6 +48,9 @@
 
   const ctx = getChartContext();
 
+  // Mark as composite so child Areas don't register
+  ctx.registerComponent({ name: 'Threshold', kind: 'composite-mark' });
+
   let { curve, defined, below, above, children }: ThresholdProps = $props();
 </script>
 

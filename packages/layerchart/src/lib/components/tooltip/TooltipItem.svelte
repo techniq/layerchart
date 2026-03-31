@@ -173,6 +173,17 @@
       display: contents;
     }
 
+    :where(.lc-tooltip-item-root[data-highlighted])
+      > :where(.lc-tooltip-item-label, .lc-tooltip-item-value) {
+      opacity: 1;
+      transition: opacity 150ms ease;
+    }
+
+    :where(.lc-tooltip-item-root[data-highlighted='false'])
+      > :where(.lc-tooltip-item-label, .lc-tooltip-item-value) {
+      opacity: 0.1;
+    }
+
     :where(.lc-tooltip-item-color) {
       display: inline-block;
       width: 8px;

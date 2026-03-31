@@ -171,6 +171,11 @@
 </script>
 
 <script lang="ts">
+  import { getChartContext } from '$lib/contexts/chart.js';
+
+  const ctx = getChartContext();
+  ctx.registerComponent({ name: 'Dagre', kind: 'composite-mark' });
+
   let {
     data,
     nodes = (d: any) => d.nodes,

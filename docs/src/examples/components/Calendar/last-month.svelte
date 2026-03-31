@@ -36,26 +36,19 @@
 	padding={{ top: 20, bottom: 20 }}
 	height={200}
 >
-	{#snippet children({ context })}
-		<Layer>
-			<Calendar
-				start={firstDayOfPreviousMonth}
-				end={lastDayOfPreviousMonth}
-				tooltipContext={context.tooltip}
-				monthPath
-			/>
-		</Layer>
+	<Layer>
+		<Calendar start={firstDayOfPreviousMonth} end={lastDayOfPreviousMonth} tooltip monthPath />
+	</Layer>
 
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
 
-				{#if data.value != null}
-					<Tooltip.List>
-						<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-					</Tooltip.List>
-				{/if}
-			{/snippet}
-		</Tooltip.Root>
-	{/snippet}
+			{#if data.value != null}
+				<Tooltip.List>
+					<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+				</Tooltip.List>
+			{/if}
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

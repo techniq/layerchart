@@ -32,6 +32,35 @@ export const getAppleStock = prerender(async () => {
 	return data;
 });
 
+export const getAppleStockRange = query(
+	z.object({
+		start: z.string().optional(),
+		end: z.string().optional(),
+		maxPoints: z.number().optional().default(300)
+	}),
+	async ({ start, end, maxPoints }) => {
+		const { fetch } = getRequestEvent();
+		let data = await fetch('/data/examples/date/apple-stock.json').then(async (r) =>
+			parse<AppleStockData>(await r.text())
+		);
+
+		if (start || end) {
+			const startDate = start ? new Date(start) : undefined;
+			const endDate = end ? new Date(end) : undefined;
+			data = data.filter(
+				(d) => (!startDate || d.date >= startDate) && (!endDate || d.date <= endDate)
+			);
+		}
+
+		if (data.length > maxPoints) {
+			const step = (data.length - 1) / (maxPoints - 1);
+			data = Array.from({ length: maxPoints }, (_, i) => data![Math.round(i * step)]);
+		}
+
+		return data;
+	}
+);
+
 export const getDailyTemperature = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/daily-temperature.json').then(async (r) =>
@@ -183,6 +212,23 @@ export const getHydro = prerender(async () => {
 	return data;
 });
 
+export type CountryGdpLifeExpectancy = {
+	title: string;
+	id: string;
+	continent: string;
+	x: number;
+	y: number;
+	value: number;
+};
+
+export const getCountryGdpLifeExpectancy = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/country-gdp-life-expectancy.json').then((r) =>
+		r.json()
+	)) as CountryGdpLifeExpectancy[];
+	return data;
+});
+
 export const getForceGroupDots = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/force-group-dots.json').then((r) => r.json())) as {
@@ -239,6 +285,27 @@ export const getSeriesArrays = prerender(async () => {
 	};
 	return data;
 });
+
+export type VolcanoData = {
+	width: number;
+	height: number;
+	values: number[];
+};
+
+export const getVolcano = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/volcano.json').then((r) => r.json())) as VolcanoData;
+	return data;
+});
+
+export type FaithfulData = { eruptions: number; waiting: number };
+
+export const getFaithful = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/faithful.json').then((r) => r.json())) as FaithfulData[];
+	return data;
+});
+
 
 export const getShapeData = query(z.string().nullable(), async (file) => {
 	if (!file) return null;

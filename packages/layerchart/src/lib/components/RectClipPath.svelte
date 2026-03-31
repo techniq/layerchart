@@ -74,15 +74,26 @@
     id = createId('clipPath-', uid),
     x = 0,
     y = 0,
+    width,
+    height,
     disabled = false,
     children: childrenProp,
     ...restProps
   }: RectClipPathProps = $props();
+
+  function canvasClip(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.rect(x, y, width, height);
+  }
+
+  function canvasClipDeps() {
+    return [x, y, width, height];
+  }
 </script>
 
-<ClipPath {id} {disabled}>
+<ClipPath {id} {disabled} {canvasClip} {canvasClipDeps}>
   {#snippet clip()}
-    <Rect {x} {y} {...extractLayerProps(restProps, 'lc-clip-path-rect')} />
+    <Rect {x} {y} {width} {height} {...extractLayerProps(restProps, 'lc-clip-path-rect')} />
   {/snippet}
   {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}

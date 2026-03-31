@@ -34,7 +34,7 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 47,
+      "lineNumber": 58,
       "line": "<ChartClipPath>"
     },
     {
@@ -52,9 +52,9 @@
       "line": "<ChartClipPath>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 68,
       "line": "<ChartClipPath>"
     },
@@ -63,6 +63,13 @@
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
       "lineNumber": 43,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 30,
       "line": "<ChartClipPath>"
     },
     {
@@ -115,5 +122,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.357Z"
+  "updatedAt": "2026-03-29T03:11:05.664Z"
 }

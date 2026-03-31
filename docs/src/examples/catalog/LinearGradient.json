@@ -227,7 +227,7 @@
       "example": "oscilloscope-frequency",
       "component": "BarChart",
       "path": "/docs/components/BarChart/oscilloscope-frequency",
-      "lineNumber": 113,
+      "lineNumber": 114,
       "line": "<LinearGradient"
     },
     {
@@ -287,9 +287,9 @@
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 69,
       "line": "<LinearGradient"
     },
@@ -299,6 +299,13 @@
       "path": "/docs/components/BrushContext/tooltip-interop",
       "lineNumber": 44,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 76,
+      "line": "<LinearGradient"
     },
     {
       "example": "gradient",
@@ -430,8 +437,8 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 19,
-      "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+      "lineNumber": 22,
+      "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
     },
     {
       "example": "gradient-threshold",
@@ -537,7 +544,14 @@
       "path": "/docs/components/Spline/gradient-threshold",
       "lineNumber": 17,
       "line": "<LinearGradient"
+    },
+    {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 41,
+      "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:52.902Z"
+  "updatedAt": "2026-03-31T03:03:47.897Z"
 }

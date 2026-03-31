@@ -4,3 +4,7 @@ category: interactions
 layers: [svg, canvas]
 related: [Chart, Tooltip, Highlight]
 ---
+
+::note
+See the [Tooltip guide](/docs/guides/tooltip) for usage details, modes, positioning, and examples.
+::

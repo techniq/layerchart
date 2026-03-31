@@ -6,6 +6,7 @@
 <script lang="ts">
   import type { Component as ComponentType } from 'svelte';
   import Chart from '../Chart.svelte';
+  import type { ChartState } from '$lib/states/chart.svelte.js';
   import Layer from '../layers/Layer.svelte';
 
   type ChildComponent = {
@@ -21,6 +22,7 @@
     component,
     componentProps = {},
     childComponents = [],
+    oncontext,
   }: {
     useChart?: boolean;
     chartProps?: Record<string, any>;
@@ -29,7 +31,16 @@
     component: ComponentType;
     componentProps?: Record<string, any>;
     childComponents?: ChildComponent[];
+    oncontext?: (ctx: ChartState<any, any, any>) => void;
   } = $props();
+
+  let chartContext = $state<ChartState<any, any, any>>();
+
+  $effect(() => {
+    if (chartContext) {
+      oncontext?.(chartContext);
+    }
+  });
 
   const TestComponent = $derived(component);
 
@@ -66,7 +77,7 @@
 {/snippet}
 
 {#if useChart}
-  <Chart {...mergedChartProps} data-testid={chartTestId}>
+  <Chart {...mergedChartProps} bind:context={chartContext} data-testid={chartTestId}>
     <Layer center type={layer} {...layerProps}>
       {@render Component()}
     </Layer>

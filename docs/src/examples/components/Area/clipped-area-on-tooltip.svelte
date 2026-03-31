@@ -24,7 +24,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ top: 20, bottom: 20 }}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	height={300}
 >
 	{#snippet children({ context })}

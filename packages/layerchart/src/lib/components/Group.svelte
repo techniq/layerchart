@@ -2,32 +2,52 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
   import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
+  import type { DataProp } from '$lib/utils/dataProp.js';
   import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
 
   export type GroupPropsWithoutHTML<In extends Transition = Transition> = {
     /**
-     * Translate x
+     * Translate x position of the group.
+     * - `number`: pixel value (direct)
+     * - `string`: data property name, resolved via xScale
+     * - `function(d)`: accessor called per data item, result passed through xScale
      */
-    x?: number;
+    x?: DataProp;
 
     /**
-     * Initial translate x
+     * Initial translate x (pixel mode only).
      *
      * @default x
      */
     initialX?: number;
 
     /**
-     * Translate y
+     * Translate y position of the group.
+     * - `number`: pixel value (direct)
+     * - `string`: data property name, resolved via yScale
+     * - `function(d)`: accessor called per data item, result passed through yScale
      */
-    y?: number;
+    y?: DataProp;
 
     /**
-     * Initial translate y
+     * Initial translate y (pixel mode only).
      *
      * @default y
      */
     initialY?: number;
+
+    /**
+     * Data array to iterate over in data mode.
+     * Falls back to chart context data when not provided.
+     */
+    data?: any[];
+
+    /**
+     * Key function for keyed {#each} rendering in data mode.
+     *
+     * @default (d, i) => i
+     */
+    key?: (d: any, index: number) => any;
 
     /**
      * Center within chart
@@ -83,18 +103,24 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
+  import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
-
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
+  import { hasAnyDataProp, resolveDataProp, resolveGeoDataPair } from '$lib/utils/dataProp.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
+  import { chartDataArray } from '$lib/utils/common.js';
 
-  const ctx = getChartContext();
+  const chartCtx = getChartContext();
+  const geo = getGeoContext();
 
   let {
     x,
     initialX: initialXProp,
     y,
     initialY: initialYProp,
+    data: dataProp,
+    key: keyFn = (_: any, i: number) => i,
     center = false,
     preventTouchMove = false,
     opacity = undefined,
@@ -107,17 +133,74 @@
     ...restProps
   }: GroupProps = $props();
 
+  // Data mode detection: if any positional prop is a string or function
+  const dataMode = $derived(hasAnyDataProp(x, y));
+
+  // Data to iterate over in data mode
+  const resolvedData: any[] = $derived(
+    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
+  );
+
+  // Resolve a single data item to pixel coordinates
+  function resolveGroup(d: any) {
+    if (geo.projection) {
+      const [projX, projY] = resolveGeoDataPair(x, y, d, geo.projection);
+      return { x: projX, y: projY };
+    }
+    return {
+      x: resolveDataProp(x, d, chartCtx.xScale, 0),
+      y: resolveDataProp(y, d, chartCtx.yScale, 0),
+    };
+  }
+
+  // --- Data mode motion ---
+  const dataMotionMap = createDataMotionMap(motion);
+
+  $effect(() => {
+    if (!dataMode || !dataMotionMap) return;
+    const activeKeys = new Set<any>();
+    for (let i = 0; i < resolvedData.length; i++) {
+      const d = resolvedData[i];
+      const key = keyFn(d, i);
+      activeKeys.add(key);
+      const resolved = resolveGroup(d);
+      untrack(() => dataMotionMap.update(key, resolved));
+    }
+    untrack(() => dataMotionMap.cleanup(activeKeys));
+  });
+
+  // Single source of truth: resolved values with animated overlay
+  const resolvedItems = $derived.by(() => {
+    if (!dataMode) return [];
+    return resolvedData.map((d, i) => {
+      const key = keyFn(d, i);
+      const resolved = resolveGroup(d);
+      const animated = dataMotionMap?.get(key);
+      return {
+        d,
+        key,
+        x: animated?.x ?? resolved.x,
+        y: animated?.y ?? resolved.y,
+      };
+    });
+  });
+
+  // --- Pixel mode (motion only applies here) ---
   let ref = $state<Element>();
 
   $effect.pre(() => {
     refProp = ref;
   });
 
-  const initialX = initialXProp ?? x;
-  const initialY = initialYProp ?? y;
+  const initialX = initialXProp ?? (typeof x === 'number' ? x : undefined);
+  const initialY = initialYProp ?? (typeof y === 'number' ? y : undefined);
 
-  const trueX = $derived(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
-  const trueY = $derived(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
+  const trueX = $derived(
+    typeof x === 'number' ? x : (x == null && (center === 'x' || center === true) ? chartCtx.width / 2 : 0)
+  );
+  const trueY = $derived(
+    typeof y === 'number' ? y : (y == null && (center === 'y' || center === true) ? chartCtx.height / 2 : 0)
+  );
   const motionX = createMotion(initialX, () => trueX, motion);
   const motionY = createMotion(initialY, () => trueY, motion);
 
@@ -137,27 +220,26 @@
   const layerCtx = getLayerContext();
 
   if (layerCtx === 'canvas') {
-    registerCanvasComponent({
+    chartCtx.registerComponent({
       name: 'Group',
-      render: (ctx) => {
-        const currentGlobalAlpha = ctx.globalAlpha;
-        ctx.globalAlpha = opacity ?? 1;
-
-        ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
-
-        // Restore in case it was modified by `opacity`
-        ctx.globalAlpha = currentGlobalAlpha;
+      kind: 'group',
+      canvasRender: {
+        render: (ctx) => {
+          ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
+          if (opacity != null) {
+            ctx.globalAlpha *= opacity;
+          }
+        },
+        events: {
+          click: restProps.onclick,
+          dblclick: restProps.ondblclick,
+          pointerenter: restProps.onpointerenter,
+          pointermove: restProps.onpointermove,
+          pointerleave: restProps.onpointerleave,
+          pointerdown: restProps.onpointerdown,
+        },
+        deps: () => [motionX.current, motionY.current, opacity],
       },
-      retainState: true,
-      events: {
-        click: restProps.onclick,
-        dblclick: restProps.ondblclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-      },
-      deps: () => [motionX.current, motionY.current, opacity],
     });
   }
 
@@ -173,29 +255,57 @@
 {#if layerCtx === 'canvas'}
   {@render children?.()}
 {:else if layerCtx === 'svg'}
-  <g
-    style:transform
-    class={['lc-group-g', className]}
-    in:transitionIn={transitionInParams}
-    {opacity}
-    {...restProps}
-    ontouchmove={handleTouchMove}
-    bind:this={ref}
-  >
-    {@render children?.()}
-  </g>
+  {#if dataMode}
+    {#each resolvedItems as item (item.key)}
+      <g
+        style:transform="translate({item.x}px, {item.y}px)"
+        class={['lc-group-g', className]}
+        {opacity}
+        {...restProps}
+        ontouchmove={handleTouchMove}
+      >
+        {@render children?.()}
+      </g>
+    {/each}
+  {:else}
+    <g
+      style:transform
+      class={['lc-group-g', className]}
+      in:transitionIn={transitionInParams}
+      {opacity}
+      {...restProps}
+      ontouchmove={handleTouchMove}
+      bind:this={ref}
+    >
+      {@render children?.()}
+    </g>
+  {/if}
 {:else if layerCtx === 'html'}
-  <div
-    bind:this={ref}
-    style:transform
-    style:opacity
-    in:transitionIn={transitionInParams}
-    {...restProps}
-    class={['lc-group-div', className]}
-    ontouchmove={handleTouchMove}
-  >
-    {@render children?.()}
-  </div>
+  {#if dataMode}
+    {#each resolvedItems as item (item.key)}
+      <div
+        style:transform="translate({item.x}px, {item.y}px)"
+        style:opacity
+        {...restProps}
+        class={['lc-group-div', className]}
+        ontouchmove={handleTouchMove}
+      >
+        {@render children?.()}
+      </div>
+    {/each}
+  {:else}
+    <div
+      bind:this={ref}
+      style:transform
+      style:opacity
+      in:transitionIn={transitionInParams}
+      {...restProps}
+      class={['lc-group-div', className]}
+      ontouchmove={handleTouchMove}
+    >
+      {@render children?.()}
+    </div>
+  {/if}
 {/if}
 
 <style>

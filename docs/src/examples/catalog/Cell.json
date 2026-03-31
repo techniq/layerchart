@@ -1,0 +1,183 @@
+{
+  "component": "Cell",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Cell/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 42,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 44,
+          "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ]
+    },
+    {
+      "name": "circle",
+      "title": "circle",
+      "path": "/docs/components/Cell/circle",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 42,
+          "line": "<Cell x=\"day\" y=\"hour\" shape=\"circle\" fill=\"value\" />"
+        }
+      ]
+    },
+    {
+      "name": "color-scale",
+      "title": "color scale",
+      "path": "/docs/components/Cell/color-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 42,
+          "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
+        }
+      ]
+    },
+    {
+      "name": "punchcard",
+      "title": "punchcard",
+      "path": "/docs/components/Cell/punchcard",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"bottom\" format={(d) => 'Week ' + d} rule />"
+        },
+        {
+          "component": "Grid",
+          "lineNumber": 29,
+          "line": "<Grid x={false} y bandAlign=\"between\" />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 30,
+          "line": "<Cell x={(d) => timeWeek.count(timeYear(d.date), d.date)} y={(d) => d.date.getDay()} shape=\"circle\" r=\"value\" class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "rounded-insets",
+      "title": "rounded insets",
+      "path": "/docs/components/Cell/rounded-insets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 40,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Cell",
+          "lineNumber": 42,
+          "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 44,
+      "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 42,
+      "line": "<Cell x=\"day\" y=\"hour\" shape=\"circle\" fill=\"value\" />"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 42,
+      "line": "<Cell x=\"day\" y=\"hour\" fill=\"value\" insets={{ all: 1 }} />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 30,
+      "line": "<Cell x={(d) => timeWeek.count(timeYear(d.date), d.date)} y={(d) => d.date.getDay()} shape=\"circle\" r=\"value\" class=\"fill-primary\" />"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 42,
+      "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
+    }
+  ],
+  "updatedAt": "2026-03-18T04:40:47.519Z"
+}

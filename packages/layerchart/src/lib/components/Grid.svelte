@@ -103,6 +103,9 @@
 
   const ctx = getChartContext();
 
+  // Mark as composite so child Splines (radial grid) don't register
+  ctx.registerComponent({ name: 'Grid', kind: 'composite-mark' });
+
   let {
     x = false,
     y = false,

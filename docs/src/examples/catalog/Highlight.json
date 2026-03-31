@@ -97,7 +97,7 @@
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 66,
+      "lineNumber": 68,
       "line": "<Highlight lines points={{ fill: activeSeries?.color }} />"
     },
     {
@@ -318,6 +318,20 @@
       "line": "<Highlight area />"
     },
     {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 57,
+      "line": "<Highlight area />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 92,
+      "line": "<Highlight area />"
+    },
+    {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
@@ -360,13 +374,6 @@
       "line": "<Highlight points lines />"
     },
     {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 28,
-      "line": "<Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />"
-    },
-    {
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
@@ -384,7 +391,7 @@
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
     },
     {
@@ -638,7 +645,14 @@
       "path": "/docs/components/Tooltip/stacked-area",
       "lineNumber": 71,
       "line": "<Highlight"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 267,
+      "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.844Z"
+  "updatedAt": "2026-03-31T12:29:59.970Z"
 }

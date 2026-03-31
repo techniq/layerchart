@@ -22,7 +22,7 @@
 	y="date"
 	yScale={scaleBand().padding(0.4)}
 	padding={{ left: 32, bottom: 20, right: 8 }}
-	tooltip={{
+	tooltipContext={{
 		mode: 'band',
 		onclick(e, { data }) {
 			alert('You clicked on:\n' + JSON.stringify(data, null, 2));

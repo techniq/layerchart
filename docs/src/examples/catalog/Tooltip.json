@@ -1205,28 +1205,28 @@
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 71,
+      "lineNumber": 75,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 73,
+      "lineNumber": 77,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 74,
+      "lineNumber": 78,
       "line": "<Tooltip.List>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-individual-tooltip",
-      "lineNumber": 75,
+      "lineNumber": 79,
       "line": "<Tooltip.Item label={data?.fruit} value={data?.value} color={activeSeries?.color} />"
     },
     {
@@ -1832,6 +1832,41 @@
       "line": "<Tooltip.Item label=\"end\" value={data.end} format={formatYear} />"
     },
     {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 100,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 102,
+      "line": "<Tooltip.Header>{format(context.y(data))}</Tooltip.Header>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 103,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 104,
+      "line": "<Tooltip.Item label=\"Start\" value={data.start} format=\"day\" />"
+    },
+    {
+      "example": "duration-labels",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/duration-labels",
+      "lineNumber": 105,
+      "line": "<Tooltip.Item label=\"End\" value={data.end} format=\"day\" />"
+    },
+    {
       "example": "duration-points",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-points",
@@ -1933,210 +1968,210 @@
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 53,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 55,
+      "line": "<Tooltip.Header class=\"text-center\">"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 58,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
       "lineNumber": 59,
+      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 60,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "histogram-date-time-count",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "lineNumber": 62,
+      "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
+    },
+    {
+      "example": "histogram-date-time-interval",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 60,
       "line": "<Tooltip.Root>"
     },
     {
-      "example": "histogram-date-time-count",
+      "example": "histogram-date-time-interval",
       "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 61,
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
+      "lineNumber": 62,
       "line": "<Tooltip.Header class=\"text-center\">"
     },
     {
-      "example": "histogram-date-time-count",
+      "example": "histogram-date-time-interval",
       "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 64,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
+      "path": "/docs/components/BarChart/histogram-date-time-interval",
       "lineNumber": 65,
-      "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
-    },
-    {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 66,
-      "line": "<Tooltip.Separator />"
-    },
-    {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 68,
-      "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 66,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 68,
-      "line": "<Tooltip.Header class=\"text-center\">"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 71,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 72,
+      "lineNumber": 66,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 73,
+      "lineNumber": 67,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-date-time-interval",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 75,
+      "lineNumber": 69,
       "line": "<Tooltip.Item label=\"value\" value={d} format={'daytime'} />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 47,
+      "lineNumber": 38,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 49,
+      "lineNumber": 40,
       "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 50,
+      "lineNumber": 41,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 51,
+      "lineNumber": 42,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 52,
+      "lineNumber": 43,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 54,
+      "lineNumber": 45,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 42,
+      "lineNumber": 36,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 44,
+      "lineNumber": 38,
       "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 45,
+      "lineNumber": 39,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 46,
+      "lineNumber": 40,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 47,
+      "lineNumber": 41,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-random-distribution",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 49,
+      "lineNumber": 43,
       "line": "<Tooltip.Item label=\"value\" value={d} />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 47,
+      "lineNumber": 41,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 49,
+      "lineNumber": 43,
       "line": "<Tooltip.Header class=\"text-center\">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 50,
+      "lineNumber": 44,
       "line": "<Tooltip.List>"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 51,
+      "lineNumber": 45,
       "line": "<Tooltip.Item label=\"count\" value={data.length} format=\"integer\" />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 52,
+      "lineNumber": 46,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 54,
+      "lineNumber": 48,
       "line": "<Tooltip.Item label={d.name} value={d.weight} />"
     },
     {
@@ -2199,28 +2234,28 @@
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Tooltip.List>"
     },
     {
       "example": "single-dimension",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-dimension",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Tooltip.Item"
     },
     {
@@ -3155,6 +3190,125 @@
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 59,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 61,
+      "line": "<Tooltip.Header value={data.group} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 62,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 63,
+      "line": "<Tooltip.Item label=\"Max\" value={data.max} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"Q3\" value={data.q3} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Median\" value={data.median} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Q1\" value={data.q1} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Min\" value={data.min} />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 69,
+      "line": "<Tooltip.Item label=\"Outliers\" value={data.outliers.join(', ')} />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 95,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 97,
+      "line": "<Tooltip.Header value={`Group ${data.group}`} />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 98,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 99,
+      "line": "<Tooltip.Item label=\"Max\" value={data.max} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 100,
+      "line": "<Tooltip.Item label=\"Q3\" value={data.q3} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 101,
+      "line": "<Tooltip.Item label=\"Median\" value={data.median} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 102,
+      "line": "<Tooltip.Item label=\"Q1\" value={data.q1} format=\"decimal\" />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 103,
+      "line": "<Tooltip.Item label=\"Min\" value={data.min} format=\"decimal\" />"
+    },
+    {
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
@@ -3172,56 +3326,56 @@
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "90-days",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/90-days",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
     },
     {
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
       "lineNumber": 47,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "90-days",
-      "component": "Calendar",
-      "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 48,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 50,
+      "lineNumber": 43,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 52,
+      "lineNumber": 45,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 55,
+      "lineNumber": 48,
       "line": "<Tooltip.List>"
     },
     {
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 56,
+      "lineNumber": 49,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
@@ -3256,84 +3410,84 @@
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 49,
+      "lineNumber": 43,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 51,
+      "lineNumber": 45,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 54,
+      "lineNumber": 48,
       "line": "<Tooltip.List>"
     },
     {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 55,
+      "lineNumber": 49,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 55,
+      "lineNumber": 54,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 57,
+      "lineNumber": 56,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Calendar",
+      "path": "/docs/components/Calendar/multiple-years",
+      "lineNumber": 59,
+      "line": "<Tooltip.List>"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
       "lineNumber": 60,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "multiple-years",
-      "component": "Calendar",
-      "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 61,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 49,
+      "lineNumber": 43,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 51,
+      "lineNumber": 45,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 54,
+      "lineNumber": 48,
       "line": "<Tooltip.List>"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 55,
+      "lineNumber": 49,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
@@ -3575,6 +3729,139 @@
       "line": "<Tooltip.Item"
     },
     {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 152,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 154,
+      "line": "<Tooltip.Header>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 157,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 158,
+      "line": "<Tooltip.Item label=\"Value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 150,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 153,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 154,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 156,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 162,
+      "line": "<Tooltip.Separator />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 163,
+      "line": "<Tooltip.Item label=\"Total\" value={data.total} format=\"integer\" />"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 166,
+      "line": "<Tooltip.Header>{data.source} ↔ {data.target}</Tooltip.Header>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 167,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 168,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 173,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 63,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 65,
+      "line": "<Tooltip.Header>{data.city}, {data.state}</Tooltip.Header>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 66,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Type\" value={data.type} />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 68,
+      "line": "<Tooltip.Item label=\"Opened\" value={data.date} format=\"day\" />"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -3767,7 +4054,7 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 174,
+      "lineNumber": 159,
       "line": "<Tooltip.Root>"
     },
     {
@@ -3865,42 +4152,42 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 113,
+      "lineNumber": 117,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 116,
+      "lineNumber": 120,
       "line": "<Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 118,
+      "lineNumber": 122,
       "line": "<Tooltip.List>"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 119,
+      "lineNumber": 123,
       "line": "<Tooltip.Item"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 125,
+      "lineNumber": 129,
       "line": "<Tooltip.Item"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 131,
+      "lineNumber": 135,
       "line": "<Tooltip.Item"
     },
     {
@@ -3914,42 +4201,42 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 140,
+      "lineNumber": 133,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 143,
+      "lineNumber": 136,
       "line": "<Tooltip.List>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 144,
+      "lineNumber": 137,
       "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 145,
+      "lineNumber": 138,
       "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 146,
+      "lineNumber": 139,
       "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 147,
+      "lineNumber": 140,
       "line": "<Tooltip.Item"
     },
     {
@@ -3991,70 +4278,112 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 122,
+      "lineNumber": 123,
       "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "transform-canvas",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 127,
-      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
       "lineNumber": 128,
-      "line": "<Tooltip.List>"
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
       "lineNumber": 129,
-      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+      "line": "<Tooltip.List>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
       "lineNumber": 130,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-canvas",
+      "lineNumber": 131,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 120,
+      "lineNumber": 121,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 124,
+      "lineNumber": 125,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 125,
+      "lineNumber": 126,
       "line": "<Tooltip.List>"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 126,
+      "lineNumber": 127,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 127,
+      "lineNumber": 128,
+      "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 116,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 134,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 138,
+      "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 139,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 140,
+      "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 141,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
@@ -4089,71 +4418,120 @@
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 69,
+      "lineNumber": 63,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 71,
+      "lineNumber": 65,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 72,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "us-airports",
-      "component": "GeoPoint",
-      "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 73,
-      "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
-    },
-    {
-      "example": "us-airports",
-      "component": "GeoPoint",
-      "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 74,
-      "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
-    },
-    {
-      "example": "world-airports",
-      "component": "GeoPoint",
-      "path": "/docs/components/GeoPoint/world-airports",
       "lineNumber": 66,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
+    },
+    {
+      "example": "us-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/us-airports",
+      "lineNumber": 68,
+      "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "world-airports",
+      "component": "GeoPoint",
+      "path": "/docs/components/GeoPoint/world-airports",
+      "lineNumber": 60,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 68,
+      "lineNumber": 62,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 69,
+      "lineNumber": 63,
       "line": "<Tooltip.List>"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 70,
+      "lineNumber": 64,
       "line": "<Tooltip.Item label=\"Latitude\" value={data.latitude} format=\"decimal\" />"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 71,
+      "lineNumber": 65,
       "line": "<Tooltip.Item label=\"Longitude\" value={data.longitude} format=\"decimal\" />"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 126,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 128,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 130,
+      "line": "<Tooltip.Item label={key} {value} />"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 84,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 133,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 135,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 137,
+      "line": "<Tooltip.Item label={key} {value} />"
     },
     {
       "example": "basic",
@@ -4264,35 +4642,35 @@
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 91,
+      "lineNumber": 94,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 95,
+      "lineNumber": 98,
       "line": "<Tooltip.Header>{data.properties.name}</Tooltip.Header>"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 96,
+      "lineNumber": 99,
       "line": "<Tooltip.List>"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 97,
+      "lineNumber": 100,
       "line": "<Tooltip.Item label=\"longitude\" value={longitude} format=\"decimal\" />"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 98,
+      "lineNumber": 101,
       "line": "<Tooltip.Item label=\"latitude\" value={latitude} format=\"decimal\" />"
     },
     {
@@ -4338,6 +4716,41 @@
       "line": "<Tooltip.Root>"
     },
     {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 94,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 96,
+      "line": "<Tooltip.Header>{data.team}</Tooltip.Header>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 97,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 98,
+      "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 99,
+      "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -4378,34 +4791,6 @@
       "path": "/docs/components/LineChart/custom-tooltip",
       "lineNumber": 25,
       "line": "<Tooltip.Root"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 33,
-      "line": "<Tooltip.Root>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 36,
-      "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 37,
-      "line": "<Tooltip.List>"
-    },
-    {
-      "example": "gradient-encoding",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 38,
-      "line": "<Tooltip.Item label=\"value\" {value} color={temperatureColor(value)} />"
     },
     {
       "example": "gradient-threshold",
@@ -4495,28 +4880,28 @@
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 60,
+      "lineNumber": 64,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 62,
+      "lineNumber": 66,
       "line": "<Tooltip.Header>{format(context.x(data))}</Tooltip.Header>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 63,
+      "lineNumber": 67,
       "line": "<Tooltip.List>"
     },
     {
       "example": "series-individual-tooltip",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-individual-tooltip",
-      "lineNumber": 64,
+      "lineNumber": 68,
       "line": "<Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />"
     },
     {
@@ -4614,35 +4999,35 @@
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Tooltip.List>"
     },
     {
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
     },
     {
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 29,
+      "lineNumber": 28,
       "line": "<Tooltip.Item"
     },
     {
@@ -5083,8 +5468,50 @@
       "example": "single-dimension",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/single-dimension",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 60,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 62,
+      "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 63,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 64,
+      "line": "<Tooltip.Item label=\"GDP per capita\" value={data.x} format=\"currency\" />"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Life expectancy\" value={data.y} format=\"decimal\" />"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"integer\" />"
     },
     {
       "example": "multiple-series",
@@ -5864,6 +6291,41 @@
       "line": "<Tooltip.Item label={key} value={data.data[key]} />"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 270,
+      "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 272,
+      "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 273,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 274,
+      "line": "<Tooltip.Item label=\"Distance\" value={formatDistance(data.distance)} />"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 275,
+      "line": "<Tooltip.Item label=\"Radius\" value={`${data.radius.toLocaleString()} km`} />"
+    },
+    {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
@@ -5946,7 +6408,84 @@
       "path": "/docs/components/Treemap/playground",
       "lineNumber": 193,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 112,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 114,
+      "line": "<Tooltip.Header>{data.county_name}, {data.state_name}</Tooltip.Header>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 115,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 116,
+      "line": "<Tooltip.Item label=\"Democrat\" value={data.votes_dem} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 117,
+      "line": "<Tooltip.Item label=\"Republican\" value={data.votes_gop} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 118,
+      "line": "<Tooltip.Item label=\"Total\" value={data.total_votes} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 51,
+      "line": "<Tooltip.Root {context}>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 53,
+      "line": "<Tooltip.Header>Wind</Tooltip.Header>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 54,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 55,
+      "line": "<Tooltip.Item label=\"Speed (m/s)\" value={data.speed} format=\"decimal\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 56,
+      "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:03.059Z"
+  "updatedAt": "2026-03-31T12:30:01.286Z"
 }

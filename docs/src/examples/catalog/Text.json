@@ -2,6 +2,107 @@
   "component": "Text",
   "examples": [
     {
+      "name": "color-via-ordinal-scale",
+      "title": "color via ordinal scale",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 27,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"category\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 28,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "color-via-threshold-scale",
+      "title": "color via threshold scale",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 30,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 42,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} fill=\"value\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 43,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Text/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 25,
+          "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 26,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Text/playground",
@@ -210,6 +311,20 @@
       "line": "<Text"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 95,
+      "line": "<Text"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 185,
+      "line": "<Text"
+    },
+    {
       "example": "funnel",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/funnel",
@@ -222,13 +337,6 @@
       "path": "/docs/components/Axis/extent-ticks-only",
       "lineNumber": 23,
       "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
-    },
-    {
-      "example": "group-series-labels",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/group-series-labels",
-      "lineNumber": 45,
-      "line": "<Text"
     },
     {
       "example": "single-stack-with-indicator",
@@ -283,8 +391,50 @@
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Text"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 49,
+      "line": "<Text"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 50,
+      "line": "<Text"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 134,
+      "line": "<Text"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 132,
+      "line": "<Text"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 68,
+      "line": "<text"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 78,
+      "line": "<text"
     },
     {
       "example": "basic",
@@ -376,6 +526,13 @@
       "path": "/docs/components/Group/basic",
       "lineNumber": 14,
       "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 20,
+      "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
     },
     {
       "example": "geo",
@@ -507,7 +664,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 115,
+      "lineNumber": 114,
       "line": "<Text"
     },
     {
@@ -567,6 +724,27 @@
       "line": "<Text"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Text"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 43,
+      "line": "<Text"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 26,
+      "line": "<Text"
+    },
+    {
       "example": "playground",
       "component": "Text",
       "path": "/docs/components/Text/playground",
@@ -579,6 +757,13 @@
       "path": "/docs/components/Text/word-wrap-with-explicit-newline",
       "lineNumber": 10,
       "line": "<Text value={'March\\n2025'} verticalAnchor=\"start\" />"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 256,
+      "line": "<Text"
     },
     {
       "example": "basic",
@@ -663,7 +848,56 @@
       "path": "/docs/components/Treemap/stacked-zoom",
       "lineNumber": 122,
       "line": "<Text"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 29,
+      "line": "<Text x={45} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">arrow</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 33,
+      "line": "<Text x={125} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 39,
+      "line": "<Text x={215} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">spike</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 51,
+      "line": "<Text x={305} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 66,
+      "line": "<Text x={395} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\">custom</Text>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 75,
+      "line": "<Text x={480} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 98,
+      "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.355Z"
+  "updatedAt": "2026-03-31T12:30:01.190Z"
 }

@@ -12,11 +12,11 @@
 		<Layer>
 			<Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-			{#if context.brush.isActive}
+			{#if context.brush.active}
 				<Text
 					x={-4}
 					y={context.height / 2}
-					value={format(context.brush.xDomain?.[0] as any)}
+					value={format(context.brush.x?.[0] as any)}
 					textAnchor="end"
 					verticalAnchor="middle"
 					class="text-xs"
@@ -24,7 +24,7 @@
 				<Text
 					x={context.width + 4}
 					y={context.height / 2}
-					value={format(context.brush.xDomain?.[1] as any)}
+					value={format(context.brush.x?.[1] as any)}
 					verticalAnchor="middle"
 					class="text-xs"
 				/>

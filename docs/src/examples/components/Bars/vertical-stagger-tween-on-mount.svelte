@@ -34,21 +34,11 @@
 			{#each data as d, i}
 				<Bar
 					data={d}
-					initialY={300 - 24}
-					initialHeight={0}
 					motion={{
-						y: {
-							type: 'tween',
-							duration: 500,
-							easing: cubicInOut,
-							delay: i * 30
-						},
-						height: {
-							type: 'tween',
-							duration: 500,
-							easing: cubicInOut,
-							delay: i * 30
-						}
+						type: 'tween',
+						duration: 500,
+						easing: cubicInOut,
+						delay: i * 30
 					}}
 					strokeWidth={1}
 					class="fill-primary"

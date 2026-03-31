@@ -20,7 +20,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={{ left: 24, bottom: 20, top: 8 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={300}
 >
 	<Layer>

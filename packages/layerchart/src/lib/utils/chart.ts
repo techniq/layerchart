@@ -117,6 +117,15 @@ export function createChartScale(
     }
   }
 
+  // Guard against degenerate domains where min === max (e.g. all-zero data).
+  // A degenerate domain causes the scale to return NaN for all inputs.
+  if (typeof trueScale.domain === 'function' && typeof trueScale.invert === 'function') {
+    const [dMin, dMax] = trueScale.domain();
+    if (typeof dMin === 'number' && typeof dMax === 'number' && dMin === dMax) {
+      trueScale.domain([dMin, dMin + 1]);
+    }
+  }
+
   return trueScale;
 }
 

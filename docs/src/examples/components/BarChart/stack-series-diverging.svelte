@@ -12,14 +12,16 @@
 	series={[
 		{
 			key: 'apples',
-			color: 'var(--color-apples)',
-			props: { rounded: 'bottom' }
+			color: 'var(--color-apples)'
+		},
+		{
+			key: 'grapes',
+			color: 'var(--color-grapes)'
 		},
 		{
 			key: 'bananas',
 			value: (d) => -d.bananas,
-			color: 'var(--color-bananas)',
-			props: { rounded: 'top' }
+			color: 'var(--color-bananas)'
 		}
 	]}
 	seriesLayout="stackDiverging"

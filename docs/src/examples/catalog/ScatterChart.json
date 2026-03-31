@@ -329,7 +329,7 @@
         },
         {
           "component": "Tooltip",
-          "lineNumber": 25,
+          "lineNumber": 24,
           "line": "<Tooltip.Root x=\"data\" y=\"data\" yOffset={12} anchor=\"top\">"
         }
       ]
@@ -343,6 +343,23 @@
           "component": "ScatterChart",
           "lineNumber": 9,
           "line": "<ScatterChart"
+        }
+      ]
+    },
+    {
+      "name": "zoomable-bubble",
+      "title": "zoomable bubble",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 28,
+          "line": "<ScatterChart"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 60,
+          "line": "<Tooltip.Root>"
         }
       ]
     }
@@ -522,7 +539,14 @@
       "path": "/docs/components/ScatterChart/tooltip-click",
       "lineNumber": 9,
       "line": "<ScatterChart"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 28,
+      "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.291Z"
+  "updatedAt": "2026-03-26T17:40:25.419Z"
 }

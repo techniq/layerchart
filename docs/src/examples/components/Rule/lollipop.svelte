@@ -15,7 +15,7 @@
 	y="frequency"
 	yNice
 	padding={{ left: 20, bottom: 32 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={400}
 >
 	<Layer>

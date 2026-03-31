@@ -14,7 +14,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={25}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	height={300}
 >
 	<Layer>

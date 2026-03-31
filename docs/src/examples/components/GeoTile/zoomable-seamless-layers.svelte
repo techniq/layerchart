@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
@@ -44,11 +45,13 @@
 	<Chart
 		geo={{
 			projection: geoMercator,
-			fitGeojson: filteredStates,
-			applyTransform: ['translate', 'scale']
+			fitGeojson: filteredStates
 		}}
 		transform={{
-			initialScrollMode: 'scale'
+			mode: 'projection',
+			scrollMode: 'scale',
+			motion: { type: 'tween', duration: 800, easing: cubicOut },
+			inertia: { decay: 0.99, _maxVelocity: 1.4 }
 		}}
 		clip
 		height={600}
@@ -73,7 +76,7 @@
 					<GeoPath
 						geojson={feature}
 						class="stroke-none"
-						tooltipContext={context.tooltip}
+						tooltip
 						onclick={() => {
 							if (!context.geo.projection) return;
 							const featureTransform = geoFitObjectTransform(

@@ -113,6 +113,10 @@ related: [Chart, Points]
 
 :example{ name="brush" }
 
+### Zoomable bubble
+
+:example{ name="zoomable-bubble" }
+
 ### Custom
 
 :example{ name="custom" } -->

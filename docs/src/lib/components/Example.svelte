@@ -1,7 +1,16 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+	import {
+		Button,
+		CopyButton,
+		Dialog,
+		Menu,
+		MenuItem,
+		Notification,
+		Toggle,
+		Tooltip
+	} from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 
 	import { examples } from '$lib/context';
@@ -13,9 +22,13 @@
 	import LucideTable from '~icons/lucide/table';
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
+	import LucideDownload from '~icons/lucide/download';
 
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
+	import { downloadImage, downloadSvg, getSettings } from 'layerchart';
+
+	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
 
 	let {
@@ -135,6 +148,48 @@
 
 		return true;
 	});
+
+	let sentinelEl = $state<HTMLElement | null>(null);
+	let intersected = $state(false);
+	const lazy = $derived(!isDetailPage);
+	let isVisible = $derived(!lazy || intersected);
+
+	$effect(() => {
+		if (!lazy || !sentinelEl) return;
+
+		// Synchronously check if already in/near viewport to avoid flash for first examples
+		const rect = sentinelEl.getBoundingClientRect();
+		if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
+			intersected = true;
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					intersected = true;
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: '200px' }
+		);
+		observer.observe(sentinelEl);
+		return () => observer.disconnect();
+	});
+
+	// $inspect({ component, name, isVisible, intersected, lazy, example });
+
+	let svgUnavailable = $state(false);
+	let svgUnavailableTimer: ReturnType<typeof setTimeout>;
+
+	function handleSvgDownload() {
+		const downloaded = downloadSvg(containerEl!, { filename: name ?? component });
+		if (!downloaded) {
+			clearTimeout(svgUnavailableTimer);
+			svgUnavailable = true;
+			svgUnavailableTimer = setTimeout(() => (svgUnavailable = false), 3000);
+		}
+	}
 </script>
 
 <div class={cls('example relative', clip && 'overflow-clip', className)}>
@@ -154,7 +209,11 @@
 				style:width={containerWidth ? `${containerWidth}px` : undefined}
 				style:view-transition-name={viewTransitionName}
 			>
-				<example.component bind:this={ref} />
+				{#if isVisible}
+					<example.component bind:this={ref} />
+				{:else}
+					<div bind:this={sentinelEl} class="min-h-25"></div>
+				{/if}
 
 				{#if canResize}
 					<div
@@ -248,6 +307,25 @@
 						Edit
 					</Button>
 				{/if}
+
+				<Toggle let:on={open} let:toggle let:toggleOff>
+					<Button icon={LucideDownload} class="text-surface-content/70 py-1" on:click={toggle}>
+						Download
+						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-1' }}>
+							<MenuItem
+								icon={LucideDownload}
+								on:click={() => downloadImage(containerEl!, { filename: name ?? component })}
+							>
+								Download as PNG
+							</MenuItem>
+							{#if settings.layer !== 'canvas'}
+								<MenuItem icon={LucideDownload} on:click={handleSvgDownload}>
+									Download as SVG
+								</MenuItem>
+							{/if}
+						</Menu>
+					</Button>
+				</Toggle>
 			</div>
 		{/if}
 	{:else}
@@ -260,3 +338,14 @@
 		</div>
 	{/if}
 </div>
+
+{#if svgUnavailable}
+	<div class="fixed bottom-4 right-4 z-50">
+		<Notification
+			description="SVG download is not available for Canvas-only charts"
+			color="warning"
+			closeIcon
+			on:close={() => (svgUnavailable = false)}
+		/>
+	</div>
+{/if}

@@ -2,6 +2,38 @@
   "component": "TransformContext",
   "examples": [
     {
+      "name": "pan-zoom-axes",
+      "title": "pan zoom axes",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 19,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 40,
+          "line": "<Layer>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 41,
+          "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 43,
+          "line": "<Rect"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 53,
+          "line": "<Axis"
+        }
+      ]
+    },
+    {
       "name": "pan-zoom-html-image",
       "title": "pan zoom html image",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
@@ -29,14 +61,61 @@
           "line": "<Chart"
         },
         {
-          "component": "TransformControls",
-          "lineNumber": 16,
-          "line": "<TransformControls />"
-        },
-        {
           "component": "Layer",
           "lineNumber": 18,
           "line": "<Layer type=\"svg\">"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 19,
+          "line": "<image"
+        }
+      ]
+    },
+    {
+      "name": "planet-distances",
+      "title": "planet distances",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 218,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 239,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 245,
+          "line": "<line"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 255,
+          "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 256,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 266,
+          "line": "<Axis placement=\"bottom\" format={formatDistance} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 267,
+          "line": "<Highlight lines axis=\"x\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 270,
+          "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
         }
       ]
     },
@@ -71,8 +150,30 @@
           "line": "<Circle"
         }
       ]
+    },
+    {
+      "name": "scroll-activation-key",
+      "title": "scroll activation key",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 21,
+          "line": "<Layer type=\"svg\">"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 22,
+          "line": "<image"
+        }
+      ]
     }
   ],
   "usage": [],
-  "updatedAt": "2026-02-07T20:21:32.483Z"
+  "updatedAt": "2026-03-31T12:30:01.407Z"
 }

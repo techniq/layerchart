@@ -20,7 +20,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	height={300}
 >
 	<Layer>

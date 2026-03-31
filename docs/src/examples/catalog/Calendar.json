@@ -13,17 +13,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 38,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "Calendar",
-          "lineNumber": 39,
-          "line": "<Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />"
+          "lineNumber": 38,
+          "line": "<Calendar start={ninetyDaysAgo} end={now} tooltip monthPath />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -62,17 +62,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Calendar",
-          "lineNumber": 41,
-          "line": "<Calendar"
+          "lineNumber": 40,
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip cellSize={16} monthPath />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 50,
+          "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -95,7 +95,7 @@
         {
           "component": "Calendar",
           "lineNumber": 41,
-          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>"
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
         },
         {
           "component": "Tooltip",
@@ -116,17 +116,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Calendar",
-          "lineNumber": 41,
-          "line": "<Calendar"
+          "lineNumber": 40,
+          "line": "<Calendar start={firstDayOfPreviousMonth} end={lastDayOfPreviousMonth} tooltip monthPath />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 49,
+          "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -143,27 +143,27 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 36,
+          "lineNumber": 35,
           "line": "<Layer>"
         },
         {
           "component": "Group",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Group y={140 * i}>"
         },
         {
           "component": "Text",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Text"
         },
         {
           "component": "Calendar",
-          "lineNumber": 50,
-          "line": "<Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />"
+          "lineNumber": 49,
+          "line": "<Calendar {start} {end} tooltip cellSize={16} monthPath />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 55,
+          "lineNumber": 54,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -180,17 +180,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 39,
           "line": "<Layer>"
         },
         {
           "component": "Calendar",
-          "lineNumber": 41,
-          "line": "<Calendar"
+          "lineNumber": 40,
+          "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip monthPath />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 49,
+          "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -233,8 +233,8 @@
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 39,
-      "line": "<Calendar start={ninetyDaysAgo} end={now} tooltipContext={context.tooltip} monthPath />"
+      "lineNumber": 38,
+      "line": "<Calendar start={ninetyDaysAgo} end={now} tooltip monthPath />"
     },
     {
       "example": "basic",
@@ -247,36 +247,36 @@
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 41,
-      "line": "<Calendar"
+      "lineNumber": 40,
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip cellSize={16} monthPath />"
     },
     {
       "example": "html-with-padding",
       "component": "Calendar",
       "path": "/docs/components/Calendar/html-with-padding",
       "lineNumber": 41,
-      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>"
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     },
     {
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 41,
-      "line": "<Calendar"
+      "lineNumber": 40,
+      "line": "<Calendar start={firstDayOfPreviousMonth} end={lastDayOfPreviousMonth} tooltip monthPath />"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 50,
-      "line": "<Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />"
+      "lineNumber": 49,
+      "line": "<Calendar {start} {end} tooltip cellSize={16} monthPath />"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 41,
-      "line": "<Calendar"
+      "lineNumber": 40,
+      "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear} tooltip monthPath />"
     },
     {
       "example": "rounded-cells",
@@ -286,5 +286,5 @@
       "line": "<Calendar start={firstDayOfYear} end={lastDayOfYear}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.441Z"
+  "updatedAt": "2026-03-02T17:24:36.557Z"
 }

@@ -25,7 +25,7 @@
 	y={['value', 'baseline']}
 	padding={{ left: 16, bottom: 24 }}
 	labels
-	tooltip={false}
+	tooltipContext={false}
 	height={300}
 >
 	{#snippet marks()}

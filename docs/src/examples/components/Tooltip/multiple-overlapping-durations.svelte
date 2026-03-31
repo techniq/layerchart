@@ -40,7 +40,7 @@
 	x={['startDate', 'endDate']}
 	y="name"
 	xNice
-	tooltip={{
+	tooltipContext={{
 		mode: settings.mode
 	}}
 	padding={defaultChartPadding({ left: 36, bottom: 36, right: 20 })}

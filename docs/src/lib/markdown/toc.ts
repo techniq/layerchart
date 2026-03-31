@@ -15,7 +15,11 @@ export function extractTocFromMarkdown(content: string) {
 	while ((match = headingRegex.exec(stripped)) !== null) {
 		const level = match[1].length;
 		// Strip inline MDC directives (e.g. `:icon{name="lucide:user" class="..."}`)
-		const text = match[2].replace(/:[a-zA-Z][\w-]*\{[^}]*\}/g, '').trim();
+		// and markdown links (e.g. `[text](url)` → `text`)
+		const text = match[2]
+			.replace(/:[a-zA-Z][\w-]*\{[^}]*\}/g, '')
+			.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+			.trim();
 		if (!text) continue;
 		// Use github-slugger then strip leading/trailing dashes (matching rehypeCleanSlugIds)
 		const id = githubSlug(text);

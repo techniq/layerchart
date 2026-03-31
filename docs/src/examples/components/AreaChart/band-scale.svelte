@@ -12,7 +12,7 @@
 	xScale={scaleBand()}
 	x="fruit"
 	y="value"
-	tooltip={{
+	tooltipContext={{
 		mode: 'band'
 	}}
 	padding={defaultChartPadding({ left: 30 })}

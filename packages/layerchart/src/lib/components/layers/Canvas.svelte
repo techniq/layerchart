@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import type { ComponentNode } from '$lib/contexts/chart.js';
+
   export type CanvasPropsWithoutHTML = {
     /**
      * The `<canvas>` tag. Useful for bindings.
@@ -86,17 +88,6 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  /**
-   * Handles the automatic registration of the component to the canvas context,
-   * with dependency tracking and cleanup on destroy.
-   */
-  export function registerCanvasComponent<T extends Element>(component: ComponentRender<T>) {
-    const canvasContext = getCanvasContext();
-
-    $effect.pre(() => {
-      return untrack(() => canvasContext.register(component));
-    });
-  }
 </script>
 
 <script lang="ts">
@@ -104,16 +95,14 @@
   import { Logger, localPoint } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { setLayerContext } from '$lib/contexts/layer.js';
-  import { getTransformContext } from '$lib/contexts/transform.js';
   import { getPixelColor, scaleCanvas } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { useMutationObserver, watch } from 'runed';
   import type { HTMLCanvasAttributes, PointerEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { getChartContext } from '$lib/contexts/chart.js';
   import {
-    getCanvasContext,
     setCanvasContext,
     type CanvasContextValue,
     type ComponentRender,
@@ -154,11 +143,11 @@
   });
 
   const ctx = getChartContext();
-  const transformCtx = getTransformContext();
 
   const logger = new Logger('Canvas');
 
-  let components = new Map<Symbol, ComponentRender<Element>>();
+  // Root node for the component tree — children register via ctx.registerComponent
+  const rootNode = ctx.registerComponent({ name: 'Canvas', kind: 'group' });
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
@@ -169,46 +158,66 @@
   let hitCanvasContext = $state<CanvasRenderingContext2D>();
   let colorGenerator = rgbColorGenerator();
   let activeCanvas = $state(false);
-  let lastActiveComponent: ComponentRender | null | undefined = null;
+  let lastActiveNode: ComponentNode | null | undefined = null;
 
-  const componentByColor = new Map<string, ComponentRender>();
+  const nodeByColor = new Map<string, ComponentNode>();
 
-  function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
+  function getPointerNode(e: PointerEvent | MouseEvent | TouchEvent) {
     const { x, y } = localPoint(e);
     const color = getPixelColor(hitCanvasContext!, x, y);
     const colorKey = getColorStr(color);
-    const component = componentByColor.get(colorKey);
-    logger.debug({ colorKey, component, componentByColor });
-    return component;
+    const node = nodeByColor.get(colorKey);
+    logger.debug({ colorKey, node, nodeByColor });
+    return node;
+  }
+
+  type EventName = keyof NonNullable<ComponentRender['events']>;
+
+  /**
+   * Walk up the component tree from a node and call the given event on any
+   * ancestor groups that have a handler for it, simulating DOM event bubbling.
+   */
+  function bubbleEvent(node: ComponentNode | null | undefined, eventName: EventName, e: Event) {
+    // Fire event on the hit node itself
+    (node?.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined)?.(e);
+    // Bubble up to ancestor groups
+    let ancestor = node?.parent;
+    while (ancestor) {
+      const handler = ancestor.kind === 'group'
+        ? ancestor.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined
+        : undefined;
+      handler?.(e);
+      ancestor = ancestor.parent;
+    }
   }
 
   const onPointerMove: PointerEventHandler<Element> = (e) => {
     activeCanvas = true;
-    const component = getPointerComponent(e);
+    const node = getPointerNode(e);
 
-    if (component != lastActiveComponent) {
+    if (node != lastActiveNode) {
       // TODO: Should `pointerleave`/`pointerout` and `pointerenter`/`pointerover` be handled differently?
-      if (lastActiveComponent) {
-        lastActiveComponent.events?.pointerleave?.(e);
-        lastActiveComponent.events?.pointerout?.(e);
+      if (lastActiveNode) {
+        bubbleEvent(lastActiveNode, 'pointerleave', e);
+        bubbleEvent(lastActiveNode, 'pointerout', e);
       }
 
-      component?.events?.pointerenter?.(e);
-      component?.events?.pointerover?.(e);
+      bubbleEvent(node, 'pointerenter', e);
+      bubbleEvent(node, 'pointerover', e);
     }
-    component?.events?.pointermove?.(e);
+    bubbleEvent(node, 'pointermove', e);
 
-    lastActiveComponent = component;
+    lastActiveNode = node;
   };
 
   const onPointerLeave: PointerEventHandler<Element> = (e) => {
     // Pointer outside of canvas
 
     // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
-    lastActiveComponent?.events?.pointerleave?.(e);
-    lastActiveComponent?.events?.pointerout?.(e);
+    bubbleEvent(lastActiveNode, 'pointerleave', e);
+    bubbleEvent(lastActiveNode, 'pointerout', e);
 
-    lastActiveComponent = null;
+    lastActiveNode = null;
     activeCanvas = false;
   };
   /**
@@ -265,44 +274,20 @@
         y: center === 'y' || center === true ? ctx.height / 2 : 0,
       };
       context.translate(newTranslate.x, newTranslate.y);
-    } else if (transformCtx.mode === 'canvas' && !ignoreTransform) {
-      context.translate(transformCtx.translate.x, transformCtx.translate.y);
-      context.scale(transformCtx.scale, transformCtx.scale);
+    } else if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
+      context.translate(ctx.transform.translate.x, ctx.transform.translate.y);
+      context.scale(ctx.transform.scale, ctx.transform.scale);
     }
 
-    // separate components into those that retain state and those that don't
-    const retainStateComponents: ComponentRender[] = [];
-    const nonRetainStateComponents: ComponentRender[] = [];
-
-    for (const [_, c] of components) {
-      if (c.retainState) {
-        retainStateComponents.push(c);
-      } else {
-        nonRetainStateComponents.push(c);
-      }
-    }
-
-    // render retainState components on main canvas first
-    for (const c of retainStateComponents) {
-      c.render(context);
-    }
-
-    // store the main canvas transform after retainState components
-    const mainTransformAfterRetain = context.getTransform();
-
-    // render non-retainState components on main canvas
-    for (const c of nonRetainStateComponents) {
-      context.save();
-      c.render(context);
-      context.restore();
-    }
+    // Recursively render the component tree with proper save/restore scoping
+    renderTree(context, rootNode);
 
     /*
      * Sync hit canvas with main canvas
      */
     if (hitCanvasContext) {
-      const inactiveMoving = !activeCanvas && transformCtx.moving;
-      if (disableHitCanvas || transformCtx.dragging || inactiveMoving) {
+      const inactiveMoving = !activeCanvas && ctx.transform.moving;
+      if (disableHitCanvas || ctx.transform.dragging || inactiveMoving) {
         // Skip rendering hit canvas
         hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
       } else {
@@ -310,75 +295,90 @@
         scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
         hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
 
-        // reset and sync transform to the state after retainState components
-        hitCanvasContext.resetTransform();
-        hitCanvasContext.setTransform(mainTransformAfterRetain);
+        // sync transform with main canvas (padding, center, zoom already applied)
+        hitCanvasContext.setTransform(context.getTransform());
 
-        // reset color generator
+        // reset color generator and node map
         colorGenerator = rgbColorGenerator();
+        nodeByColor.clear();
 
-        // render retainState components on hit canvas (e.g., Group)
-        for (const c of retainStateComponents) {
-          const componentHasEvents =
-            c.events && Object.values(c.events).filter((d) => d).length > 0;
-
-          if (componentHasEvents) {
-            // since the transform was already applied via setTransform, skip rendering
-            // the retainState component's transform again; proceed to its children
-            continue;
-          }
-        }
-
-        // render non-retainState components on hit canvas
-        for (const c of nonRetainStateComponents) {
-          const componentHasEvents =
-            c.events && Object.values(c.events).filter((d) => d).length > 0;
-
-          if (componentHasEvents) {
-            const color = getColorStr(colorGenerator.next().value);
-            const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
-
-            hitCanvasContext.save();
-            c.render(hitCanvasContext, styleOverrides);
-            hitCanvasContext.restore();
-
-            componentByColor.set(color, c);
-          }
-        }
+        // render hit canvas tree
+        renderHitTree(hitCanvasContext, rootNode);
       }
     }
 
     pendingInvalidation = false;
   }
 
+  /**
+   * Recursively render the component tree.
+   * Group nodes: save → render (translate/opacity) → recurse children → restore
+   * Leaf nodes: save → render → restore
+   */
+  function renderTree(canvasCtx: CanvasRenderingContext2D, node: ComponentNode) {
+    if (node.kind === 'group' && node.canvasRender) {
+      // Group: save state, apply transform, render children, restore
+      canvasCtx.save();
+      node.canvasRender.render(canvasCtx);
+      for (const child of node.children) {
+        renderTree(canvasCtx, child);
+      }
+      canvasCtx.restore();
+    } else if (node.canvasRender) {
+      // Leaf mark: save, render, restore
+      canvasCtx.save();
+      node.canvasRender.render(canvasCtx);
+      canvasCtx.restore();
+    } else {
+      // Non-rendering node (e.g. root, composite-mark): just recurse children
+      for (const child of node.children) {
+        renderTree(canvasCtx, child);
+      }
+    }
+  }
+
+  function nodeHasEvents(node: ComponentNode) {
+    return node.canvasRender?.events && Object.values(node.canvasRender.events).some((d) => d);
+  }
+
+  /**
+   * Recursively render the hit canvas tree for pointer event detection.
+   * Renders components that have event handlers (or whose ancestor group does), using unique colors.
+   */
+  function renderHitTree(hitCtx: CanvasRenderingContext2D, node: ComponentNode, ancestorHasEvents = false) {
+    if (node.kind === 'group' && node.canvasRender) {
+      const groupHasEvents = ancestorHasEvents || nodeHasEvents(node);
+      // Group: apply transform, recurse children (scoped by save/restore)
+      hitCtx.save();
+      node.canvasRender.render(hitCtx);
+      for (const child of node.children) {
+        renderHitTree(hitCtx, child, groupHasEvents);
+      }
+      hitCtx.restore();
+    } else if (node.canvasRender) {
+      if (nodeHasEvents(node) || ancestorHasEvents) {
+        const color = getColorStr(colorGenerator.next().value);
+        const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
+
+        hitCtx.save();
+        node.canvasRender.render(hitCtx, styleOverrides);
+        hitCtx.restore();
+
+        nodeByColor.set(color, node);
+      }
+    } else {
+      // Non-rendering node: recurse children
+      for (const child of node.children) {
+        renderHitTree(hitCtx, child, ancestorHasEvents);
+      }
+    }
+  }
+
   function createCanvasContext(): CanvasContextValue {
-    function register<T extends Element>(component: ComponentRender<T>) {
-      const key = Symbol();
-      components.set(key, component as ComponentRender<Element>);
-      invalidate();
-
-      const cleanupRoot = $effect.root(() => {
-        if (component.deps) {
-          $effect.pre(() => {
-            component.deps?.(); // track deps
-            invalidate(); // invalidate when deps change.
-          });
-        }
-      });
-
-      $effect.pre(() => {
-        return cleanupRoot;
-      });
-
-      /**
-       * Removes the component from the registry and cleans up the invalidation
-       * effect
-       */
-      return () => {
-        components.delete(key);
-        cleanupRoot();
-        invalidate();
-      };
+    // Legacy register method — registration is now handled by the component tree
+    // via registerComponent. Keep for interface compatibility.
+    function register<T extends Element>(_component: ComponentRender<T>) {
+      return () => {};
     }
 
     function invalidate() {
@@ -393,7 +393,7 @@
   const canvasContext = createCanvasContext();
 
   $effect.pre(() => {
-    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, transformCtx.dragging];
+    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, ctx.transform.dragging];
     canvasContext.invalidate();
   });
 
@@ -407,18 +407,18 @@
   class={['lc-layout-canvas', className]}
   class:disablePointerEvents={pointerEvents === false}
   onclick={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.click?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'click', e);
     onclick?.(e);
   }}
   ondblclick={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.dblclick?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'dblclick', e);
     ondblclick?.(e);
   }}
   onpointerdown={(e) => {
-    const component = getPointerComponent(e);
-    component?.events?.pointerdown?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'pointerdown', e);
     onpointerdown?.(e);
   }}
   onpointerenter={(e) => {
@@ -435,12 +435,12 @@
   }}
   ontouchmove={(e) => {
     // Prevent touch from interfering with pointer if over data
-    if (lastActiveComponent) {
+    if (lastActiveNode) {
       e.preventDefault();
     }
 
-    const component = getPointerComponent(e);
-    component?.events?.touchmove?.(e);
+    const node = getPointerNode(e);
+    bubbleEvent(node, 'touchmove', e);
   }}
   {...restProps}
 >

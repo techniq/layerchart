@@ -156,6 +156,22 @@ export const getUsAirports = prerender(async () => {
 	return data;
 });
 
+export const getWalmarts = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const raw = (await fetch('/data/examples/geo/walmarts.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { long: number; lat: number; opendate: Date; city: string; state: string; type: string }[];
+	const data = raw.map((d) => ({
+		longitude: d.long,
+		latitude: d.lat,
+		date: d.opendate,
+		city: d.city,
+		state: d.state,
+		type: d.type
+	}));
+	return data;
+});
+
 export const getUsCountyPopulation = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
@@ -166,6 +182,38 @@ export const getUsCountyPopulation = prerender(async () => {
 		DP05_0001E: string;
 		DP05_0019E: string;
 		DP05_0019PE: string;
+	}>;
+	return data;
+});
+
+export const getUsPresidentialElection2020 = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/us-presidential-election-2020.csv').then(
+		async (r) => csvParse(await r.text(), autoType)
+	)) as Array<{
+		state_name: string;
+		county_fips: number;
+		county_name: string;
+		votes_gop: number;
+		votes_dem: number;
+		total_votes: number;
+		diff: number;
+		per_gop: number;
+		per_dem: number;
+		per_point_diff: number;
+	}>;
+	return data;
+});
+
+export const getWind = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/wind.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as Array<{
+		longitude: number;
+		latitude: number;
+		u: number;
+		v: number;
 	}>;
 	return data;
 });
@@ -183,6 +231,31 @@ export const getWorldAirports = prerender(async () => {
 	const data = (await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
 	)) as { name: string; latitude: number; longitude: number }[];
+	return data;
+});
+
+export const getD1FootballTeams = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/d1-football-teams.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as {
+		team: string;
+		college: string;
+		conference: string;
+		city: string;
+		state: string;
+		latitude: number;
+		longitude: number;
+		espn_id: number;
+	}[];
+	return data;
+});
+
+export const getBeagleVoyage = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/beagle-voyage.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as { longitude: number; latitude: number }[];
 	return data;
 });
 

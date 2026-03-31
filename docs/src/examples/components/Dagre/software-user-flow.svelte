@@ -37,7 +37,7 @@
 			mode: 'canvas',
 			initialScale: 0.75,
 			initialTranslate: { x: 0, y: -110 },
-			initialScrollMode: 'scale',
+			scrollMode: 'scale',
 			motion: { type: 'tween', duration: 800, easing: cubicOut }
 		}}
 		clip

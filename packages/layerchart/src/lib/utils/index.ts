@@ -1,6 +1,8 @@
 export { applyLanes } from './array.js';
+export * from './download.js';
 export * from './canvas.js';
 export * from './common.js';
+export * from './dataProp.js';
 export * from './geo.js';
 export * from './hierarchy.js';
 export * from './math.js';
@@ -11,6 +13,8 @@ export * from './stack.js';
 export * from './ticks.js';
 export * from './treemap.js';
 export * from './threshold.js';
+export * from './rasterInterpolate.js';
+export * from './stats.js';
 export * from './types.js';
 
 export * from './graph/dagre.js';

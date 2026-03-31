@@ -14,7 +14,7 @@ const apiFiles = import.meta.glob<string>('/src/generated/api/*.json', {
 	import: 'default'
 });
 
-const guideSources = import.meta.glob<string>('/src/content/guides/*.md', {
+const guideSources = import.meta.glob<string>('/src/content/guides/**/*.md', {
 	eager: true,
 	query: '?raw',
 	import: 'default'

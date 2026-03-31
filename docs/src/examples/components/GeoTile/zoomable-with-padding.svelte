@@ -44,11 +44,11 @@
 	<Chart
 		geo={{
 			projection: geoMercator,
-			fitGeojson: filteredStates,
-			applyTransform: ['translate', 'scale']
+			fitGeojson: filteredStates
 		}}
 		transform={{
-			initialScrollMode: 'scale'
+			mode: 'projection',
+			scrollMode: 'scale'
 		}}
 		padding={{
 			top: 100,
@@ -75,7 +75,7 @@
 					<GeoPath
 						geojson={feature}
 						class="stroke-none"
-						tooltipContext={context.tooltip}
+						tooltip
 						onclick={() => {
 							if (!context.geo.projection) return;
 							const featureTransform = geoFitObjectTransform(

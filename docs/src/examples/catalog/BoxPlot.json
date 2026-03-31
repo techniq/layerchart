@@ -1,0 +1,237 @@
+{
+  "component": "BoxPlot",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/BoxPlot/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 27,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 36,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 37,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 40,
+          "line": "<BoxPlot data={item} values=\"values\" />"
+        }
+      ]
+    },
+    {
+      "name": "horizontal",
+      "title": "horizontal",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 27,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" rule />"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 41,
+          "line": "<BoxPlot data={item} values=\"values\" />"
+        }
+      ]
+    },
+    {
+      "name": "pre-computed",
+      "title": "pre computed",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 37,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 38,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 41,
+          "line": "<BoxPlot data={item} min=\"min\" q1=\"q1\" median=\"median\" q3=\"q3\" max=\"max\" outliers=\"outliers\" />"
+        }
+      ]
+    },
+    {
+      "name": "styled",
+      "title": "styled",
+      "path": "/docs/components/BoxPlot/styled",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 36,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 46,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 49,
+          "line": "<BoxPlot"
+        }
+      ]
+    },
+    {
+      "name": "with-tooltip",
+      "title": "with tooltip",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 44,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 47,
+          "line": "<BoxPlot"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 57,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 59,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "with-violin",
+      "title": "with violin",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 50,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 61,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 62,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Violin",
+          "lineNumber": 66,
+          "line": "<Violin"
+        },
+        {
+          "component": "BoxPlot",
+          "lineNumber": 74,
+          "line": "<BoxPlot"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 92,
+          "line": "<Highlight area />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 95,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 40,
+      "line": "<BoxPlot data={item} values=\"values\" />"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 41,
+      "line": "<BoxPlot data={item} values=\"values\" />"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 41,
+      "line": "<BoxPlot data={item} min=\"min\" q1=\"q1\" median=\"median\" q3=\"q3\" max=\"max\" outliers=\"outliers\" />"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 49,
+      "line": "<BoxPlot"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 47,
+      "line": "<BoxPlot"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 74,
+      "line": "<BoxPlot"
+    }
+  ],
+  "updatedAt": "2026-03-28T15:21:51.539Z"
+}

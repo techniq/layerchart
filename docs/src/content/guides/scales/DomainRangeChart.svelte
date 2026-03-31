@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chart, Layer, Line, type ChartContextValue } from 'layerchart';
+	import { Chart, Layer, Line, type ChartState } from 'layerchart';
 	import { scaleLinear } from 'd3-scale';
 	import { AnimationFrames } from 'runed';
 	import { Button, ButtonGroup } from 'svelte-ux';
@@ -67,7 +67,7 @@
 		{ fpsLimit: 60 }
 	);
 
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 </script>
 
 <div class="text-right">
