@@ -14,7 +14,7 @@
 		Layer,
 		Text,
 		findAncestor,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
@@ -25,7 +25,7 @@
 	let padding = $state(3);
 	let nodes = $state.raw<HierarchyCircularNode<any>[]>([]);
 	let selected = $state.raw<HierarchyCircularNode<any>>();
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 
 	// Move until https://github.com/sveltejs/svelte/issues/17090 is resolved
 	let data = await getFlare();

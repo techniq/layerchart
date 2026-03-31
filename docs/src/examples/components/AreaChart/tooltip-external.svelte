@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AreaChart, defaultChartPadding, type ChartContextValue } from 'layerchart';
+	import { AreaChart, defaultChartPadding, type ChartState } from 'layerchart';
 	import { timeDay } from 'd3-time';
 	import { randomWalk } from '$lib/utils/data.js';
 	import { format } from '@layerstack/utils';
@@ -12,7 +12,7 @@
 
 	export { data };
 
-	let context = $state<ChartContextValue<(typeof data)[number]>>(null!);
+	let context = $state<ChartState<(typeof data)[number]>>(null!);
 </script>
 
 <div class="text-sm">

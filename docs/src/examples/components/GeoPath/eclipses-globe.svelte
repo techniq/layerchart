@@ -17,7 +17,7 @@
 		Legend,
 		Layer,
 		Tooltip,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 
 	import GeoPathEclipsesControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
@@ -33,7 +33,7 @@
 	const countries = feature(topology, topology.objects.countries);
 	const eclipses = feature(eclipsesData, eclipsesData.objects.eclipses);
 
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 
 	let velocity = $state(3);
 	const timer = new TimerState({

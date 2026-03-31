@@ -8,7 +8,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { feature } from 'topojson-client';
 
@@ -23,7 +23,7 @@
 
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue<(typeof earthquakes)[number]>>();
+	let context = $state<ChartState<(typeof earthquakes)[number]>>();
 
 	let velocity = $state(3);
 

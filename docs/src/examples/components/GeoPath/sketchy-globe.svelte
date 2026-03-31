@@ -4,7 +4,7 @@
 	import { feature } from 'topojson-client';
 	import { presimplify, simplify } from 'topojson-simplify';
 
-	import { Chart, GeoPath, Graticule, Layer, type ChartContextValue } from 'layerchart';
+	import { Chart, GeoPath, Graticule, Layer, type ChartState } from 'layerchart';
 	import GeoPathGlobeControls2 from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
@@ -13,7 +13,7 @@
 	const topology = await getCountriesTopology();
 	let curve = $state(curveCatmullRomClosed);
 	let minArea = $state(2);
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 	let velocity = $state(1);
 
 	const simplifiedGeojson = $derived(simplify(presimplify(topology), Math.pow(10, 2 - minArea)));

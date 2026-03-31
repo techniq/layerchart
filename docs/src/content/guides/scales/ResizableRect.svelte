@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Rect, Text, type ChartContextValue } from 'layerchart';
+	import { Rect, Text, type ChartState } from 'layerchart';
 	import { movable } from '$lib/attachments/movable';
 	import { scaleLinear } from 'd3-scale';
 
@@ -18,7 +18,7 @@
 		isHovering = $bindable(false),
 		onValueChange
 	}: {
-		context: ChartContextValue;
+		context: ChartState;
 		bounds: number[];
 		value?: number;
 		label: string;
