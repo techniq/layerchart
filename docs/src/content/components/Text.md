@@ -31,7 +31,7 @@ Use a threshold scale to color text based on value ranges.
 
 :example{ name="color-via-threshold-scale" showCode }
 
-## Examples
+## Use cases
 
 ### Truncate text of axis labels
 
