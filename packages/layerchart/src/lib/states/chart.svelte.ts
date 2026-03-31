@@ -779,12 +779,20 @@ export class ChartState<
   zDomain = $derived(calcDomain('z', this.extents, this.props.zDomain));
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
-  x1Domain = $derived(
-    this.props.x1Domain ?? (this.x1 ? extent(chartDataArray(this.data), this.x1) : undefined)
-  );
-  y1Domain = $derived(
-    this.props.y1Domain ?? (this.y1 ? extent(chartDataArray(this.data), this.y1) : undefined)
-  );
+  x1Domain = $derived.by(() => {
+    const domain =
+      this.props.x1Domain ?? (this.x1 ? extent(chartDataArray(this.data), this.x1) : undefined);
+    if (!domain) return undefined;
+    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+    return domain.filter((key: any) => visibleKeys.has(key));
+  });
+  y1Domain = $derived.by(() => {
+    const domain =
+      this.props.y1Domain ?? (this.y1 ? extent(chartDataArray(this.data), this.y1) : undefined);
+    if (!domain) return undefined;
+    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+    return domain.filter((key: any) => visibleKeys.has(key));
+  });
   cDomain = $derived.by(() => {
     if (this.props.cDomain) return this.props.cDomain;
     const values = chartDataArray(this.data).map(this.c);

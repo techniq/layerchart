@@ -337,6 +337,56 @@ describe('BarChart', () => {
     });
   });
 
+  describe('legend series toggle adjusts group scale', () => {
+    it('should adjust grouped bar widths when series are toggled via legend', async () => {
+      const { container } = render(BarChart, {
+        data: wideData,
+        x: 'year',
+        series,
+        seriesLayout: 'group',
+        legend: true,
+        height: 300,
+        width: 400,
+      });
+
+      const svg = container.querySelector('svg');
+      await expect.element(svg).toBeInTheDocument();
+
+      // Get initial bar widths (4 series visible)
+      // Bars may be <rect> or <path> (when rounded), so query by class
+      const getBarWidths = () =>
+        Array.from(container.querySelectorAll('.lc-bar')).map((el) => {
+          if (el.tagName === 'rect') {
+            return parseFloat(el.getAttribute('width')!);
+          }
+          // For <path> bars, use bounding box width
+          return (el as SVGGraphicsElement).getBBox().width;
+        });
+
+      await vi.waitFor(() => {
+        const widths = getBarWidths();
+        expect(widths.length).toBeGreaterThan(0);
+      });
+
+      const initialWidths = getBarWidths();
+      const initialBarWidth = initialWidths[0];
+
+      // Click a legend button to select only that series (exclusive select)
+      const legendButtons = container.querySelectorAll('.lc-legend-swatch-button');
+      expect(legendButtons.length).toBe(4);
+      (legendButtons[1] as HTMLElement).click();
+
+      // After selecting one series, only that series' bars should remain and be wider
+      await vi.waitFor(() => {
+        const widths = getBarWidths();
+        // Should only have bars for 1 visible series now (1 series × 4 data points)
+        expect(widths.length).toBe(wideData.length);
+        // Each bar should be wider than before since the group band is divided among fewer series
+        expect(widths[0]).toBeGreaterThan(initialBarWidth);
+      });
+    });
+  });
+
   describe('separate data per series', () => {
     const separateData = {
       apples: [
