@@ -85,7 +85,7 @@
 	const maxZoomScale = maxDistance / (mercuryDistance * 1.05);
 
 	let context = $state<ChartState<(typeof planets)[number]>>(null!);
-	let isPlaying = $state(false);
+	let playingAnimation = $state<'scale' | 'translate' | null>(null);
 
 	function formatDistance(d: number) {
 		if (d === 0) return '0';
@@ -98,14 +98,14 @@
 	function stopPlaying() {
 		cancelPlaying?.();
 		cancelPlaying = null;
-		isPlaying = false;
+		playingAnimation = null;
 	}
 
-	async function play(steps: Generator<number>) {
+	async function play(name: 'scale' | 'translate', steps: Generator<number>) {
 		stopPlaying();
 		let cancelled = false;
 		cancelPlaying = () => (cancelled = true);
-		isPlaying = true;
+		playingAnimation = name;
 		let result = steps.next();
 		while (!result.done) {
 			if (cancelled) return;
@@ -115,7 +115,7 @@
 		}
 		context.transform.reset();
 		cancelPlaying = null;
-		isPlaying = false;
+		playingAnimation = null;
 	}
 
 	function zoomToDistance(distance: number) {
@@ -178,28 +178,39 @@
 	<div class="ml-auto flex items-center gap-2">
 		<button
 			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
-			onclick={() => play(scaleSteps())}
+			onclick={() => {
+				if (playingAnimation === 'scale') {
+					stopPlaying();
+					context?.transform.reset();
+				} else {
+					play('scale', scaleSteps());
+				}
+			}}
 		>
-			<LucidePlay class="size-3" />
+			{#if playingAnimation === 'scale'}
+				<LucideSquare class="size-3" />
+			{:else}
+				<LucidePlay class="size-3" />
+			{/if}
 			Scale
 		</button>
 		<button
 			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1"
-			onclick={() => play(translateSteps())}
-		>
-			<LucidePlay class="size-3" />
-			Translate
-		</button>
-		<button
-			class="px-3 py-1 rounded border border-pink-500/50 text-pink-500 hover:bg-pink-500/10 inline-flex items-center gap-1 disabled:opacity-30 disabled:pointer-events-none"
 			onclick={() => {
-				stopPlaying();
-				context?.transform.reset();
+				if (playingAnimation === 'translate') {
+					stopPlaying();
+					context?.transform.reset();
+				} else {
+					play('translate', translateSteps());
+				}
 			}}
-			disabled={!isPlaying}
 		>
-			<LucideSquare class="size-3" />
-			Stop
+			{#if playingAnimation === 'translate'}
+				<LucideSquare class="size-3" />
+			{:else}
+				<LucidePlay class="size-3" />
+			{/if}
+			Translate
 		</button>
 	</div>
 </div>
