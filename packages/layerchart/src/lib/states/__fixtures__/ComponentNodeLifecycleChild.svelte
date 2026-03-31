@@ -6,7 +6,7 @@
   ctx.registerComponent({
     name: 'ComponentNodeLifecycleChild',
     kind: 'mark',
-    markInfo: () => ({ y: 'value' }),
+    markInfo: () => ({ y: 'other' }),
   });
 </script>
 

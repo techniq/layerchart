@@ -250,7 +250,8 @@ export class ChartState<
 
         // Generate implicit series from registered marks.
         // Use the value axis accessor (y for horizontal charts, x for vertical).
-        const valueAxis = this.props.valueAxis ?? 'y';
+        const valueAxis = this.valueAxis;
+        const chartValueProp = valueAxis === 'y' ? this.props.y : this.props.x;
         const implicitSeries: SeriesData<TData, any>[] = [];
         for (const { info } of this._markInfos) {
           const valueAccessor = valueAxis === 'y' ? info.y : info.x;
@@ -258,6 +259,10 @@ export class ChartState<
             info.seriesKey ??
             (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
           if (!key) continue;
+          // Skip if the mark just reuses the chart's own axis accessor and has no
+          // separate data — it's not defining a new series, just using the chart's axis.
+          // Marks with their own data arrays are kept (multi-dataset scenario).
+          if (key === chartValueProp && !info.data) continue;
           if (implicitSeries.some((s) => s.key === key)) continue;
           implicitSeries.push({
             key,

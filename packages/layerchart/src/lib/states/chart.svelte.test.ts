@@ -225,7 +225,6 @@ describe('ChartState mark registration', () => {
     const { state, cleanup } = createChartState<TestData>({
       data: [{ date: '2024-01', value: 10 }],
       x: 'date',
-      y: 'value',
     });
 
     try {
@@ -244,6 +243,24 @@ describe('ChartState mark registration', () => {
       flushSync();
 
       // After unregistration, should revert to default
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not create implicit series when mark accessor matches chart accessor', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 10 }],
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      // Mark with same y as chart — not a new series, just using chart's axis
+      state.registerMark({ y: 'value', color: 'red' });
+      flushSync();
+
       expect(state.seriesState.isDefaultSeries).toBe(true);
     } finally {
       cleanup();
