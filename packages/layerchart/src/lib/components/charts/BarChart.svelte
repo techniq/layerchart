@@ -72,12 +72,8 @@
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
-  import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
 
   import Chart from '../Chart.svelte';
-
-  import { accessor } from '$lib/utils/common.js';
-  import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
 
   let {
     data = [],
@@ -97,8 +93,6 @@
     onBarClick = () => {},
     props = {},
     profile = false,
-    xScale: xScaleProp,
-    yScale: yScaleProp,
     bandPadding = radial ? 0 : 0.4,
     groupPadding = 0,
     stackPadding = 0,
@@ -133,62 +127,6 @@
 
   const isGroupSeries = $derived(seriesLayout === 'group');
 
-  // Use first data item for scale type detection
-  const firstDataItem = $derived(data[0]);
-
-  const xScale = $derived(
-    xScaleProp ??
-      (xInterval
-        ? scaleTime()
-        : valueAxis === 'y'
-          ? scaleBand().padding(bandPadding)
-          : firstDataItem && accessor(xProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
-            ? scaleTime()
-            : scaleLinear())
-  );
-  const xBaseline = $derived(valueAxis === 'y' || isScaleTime(xScale) ? undefined : 0);
-
-  const yScale = $derived(
-    yScaleProp ??
-      (yInterval
-        ? scaleTime()
-        : valueAxis === 'y'
-          ? firstDataItem && accessor(yProp)(firstDataItem) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
-            ? scaleTime()
-            : scaleLinear()
-          : scaleBand().padding(bandPadding))
-  );
-  const yBaseline = $derived(valueAxis === 'y' || isScaleTime(yScale) ? 0 : undefined);
-
-  const x1Scale = $derived(
-    isGroupSeries && valueAxis === 'y' ? scaleBand().padding(groupPadding) : undefined
-  );
-  const x1Domain = $derived(
-    isGroupSeries && valueAxis === 'y' ? series.map((s) => s.key) : undefined
-  );
-
-  const x1Range = $derived(
-    isGroupSeries && valueAxis === 'y'
-      ? // TODO: can we do something better here where we don't need to cast this
-        // feels fragile!
-        ({ xScale }: { xScale: AnyScale }) => [0, xScale.bandwidth!()]
-      : undefined
-  );
-
-  const y1Scale = $derived(
-    isGroupSeries && valueAxis === 'x' ? scaleBand().padding(groupPadding) : undefined
-  );
-  const y1Domain = $derived(
-    isGroupSeries && valueAxis === 'x' ? series.map((s) => s.key) : undefined
-  );
-  const y1Range = $derived(
-    isGroupSeries && valueAxis === 'x'
-      ? // TODO: can we do something better here where we don't need to cast this
-        // feels fragile!
-        ({ yScale }: { yScale: AnyScale }) => [0, yScale.bandwidth!()]
-      : undefined
-  );
-
   if (profile) {
     console.time('BarChart render');
     onMount(() => {
@@ -202,25 +140,15 @@
   {data}
   x={xProp}
   {xDomain}
-  {xScale}
-  {xBaseline}
-  xNice={valueAxis === 'x'}
-  {x1Scale}
-  {x1Domain}
-  {x1Range}
   {xInterval}
   y={yProp}
-  {yScale}
-  {yBaseline}
-  yNice={valueAxis === 'y'}
-  {y1Scale}
-  {y1Domain}
-  {y1Range}
   {yInterval}
   c={valueAxis === 'y' ? yProp : xProp}
   cRange={['var(--color-primary, currentColor)']}
   {radial}
   {valueAxis}
+  {bandPadding}
+  {groupPadding}
   {...restProps}
   tooltipContext={tooltipContext === false
     ? false

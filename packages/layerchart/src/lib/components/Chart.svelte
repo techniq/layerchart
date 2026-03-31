@@ -625,6 +625,18 @@
     seriesLayout?: StackLayout | 'group';
 
     /**
+     * Padding between primary bands (e.g. bars), applied to the category axis scaleBand().padding().
+     * When set, the category axis (opposite of valueAxis) automatically uses a scaleBand with this padding.
+     */
+    bandPadding?: number;
+
+    /**
+     * Padding between group/series items when using seriesLayout="group", applied to the x1/y1 scaleBand().padding().
+     * @default 0
+     */
+    groupPadding?: number;
+
+    /**
      * A callback function that is called when the chart is resized.
      */
     onResize?: (e: ChartResizeDetail) => void;

@@ -118,11 +118,9 @@
   x={xProp ?? (valueAxis === 'x' ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
   xBaseline={valueAxis === 'y' || (xScale && isScaleTime(xScale)) ? undefined : 0}
-  xNice={valueAxis === 'x'}
   {yScale}
   y={yProp ?? (valueAxis === 'y' ? series.map((s) => s.value ?? s.key) : undefined)}
   yBaseline={valueAxis === 'x' || (yScale && isScaleTime(yScale)) ? undefined : 0}
-  yNice={valueAxis === 'y'}
   {radial}
   {valueAxis}
   {axis}

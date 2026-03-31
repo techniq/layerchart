@@ -3,9 +3,11 @@ import { flushSync } from 'svelte';
 
 import { ChartState } from './chart.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
+import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
 type TestData = { date: string; value: number };
 type MultiSeriesData = { date: string; apples: number; bananas: number };
+type WideData = { year: string; apples: number; bananas: number; cherries: number; grapes: number };
 
 function createChartState<T = TestData>(props: Partial<ChartPropsWithoutHTML<T>>) {
   let cleanup: () => void;
@@ -867,6 +869,402 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
 
       // Chart props take precedence
       expect(state.x(data[0])).toEqual(10);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState bandPadding auto-derives category axis scale', () => {
+  const wideData: WideData[] = [
+    { year: '2016', apples: 480, bananas: 240, cherries: 120, grapes: 50 },
+    { year: '2017', apples: 960, bananas: 480, cherries: 240, grapes: 100 },
+    { year: '2018', apples: 1920, bananas: 960, cherries: 480, grapes: 200 },
+    { year: '2019', apples: 3840, bananas: 1920, cherries: 960, grapes: 400 },
+  ];
+
+  it('should use scaleBand on x when bandPadding set and valueAxis=y', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      y: 'apples',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      expect(isScaleBand(state.xScale)).toBe(true);
+      expect(state.xScale.bandwidth!()).toBeGreaterThan(0);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should use scaleBand on y when bandPadding set and valueAxis=x', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      y: 'year',
+      x: 'apples',
+      valueAxis: 'x',
+      bandPadding: 0.4,
+    });
+
+    try {
+      expect(isScaleBand(state.yScale)).toBe(true);
+      expect(state.yScale.bandwidth!()).toBeGreaterThan(0);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not use scaleBand when bandPadding is not set', () => {
+    const data: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data,
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+    });
+
+    try {
+      // Without bandPadding, autoScale determines the scale from data type
+      // String data should still get scaleBand via autoScale, but without custom padding
+      expect(isScaleBand(state.xScale)).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState auto-baseline from bandPadding', () => {
+  it('should auto-derive yBaseline=0 when bandPadding set and valueAxis=y', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 50, bananas: 60 },
+      { date: '2024-02', apples: 70, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      // With bandPadding, auto-baseline should include 0
+      expect(state._yDomain).toEqual([0, 80]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should auto-derive xBaseline=0 when bandPadding set and valueAxis=x', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 50, bananas: 60 },
+      { date: '2024-02', apples: 70, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      y: 'date',
+      valueAxis: 'x',
+      bandPadding: 0.4,
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      expect(state._xDomain).toEqual([0, 80]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not auto-derive baseline without bandPadding', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 50, bananas: 60 },
+      { date: '2024-02', apples: 70, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      // Without bandPadding, no auto-baseline — domain is just extent
+      expect(state._yDomain).toEqual([50, 80]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should respect explicit baseline over auto-baseline', () => {
+    const data: MultiSeriesData[] = [
+      { date: '2024-01', apples: 50, bananas: 60 },
+      { date: '2024-02', apples: 70, bananas: 80 },
+    ];
+
+    const { state, cleanup } = createChartState<MultiSeriesData>({
+      data,
+      x: 'date',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      yBaseline: 10,
+      series: [{ key: 'apples' }, { key: 'bananas' }],
+    });
+
+    try {
+      // Explicit yBaseline=10 should take precedence over auto-baseline=0
+      expect(state._yDomain).toEqual([10, 80]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState auto-nice from valueAxis', () => {
+  it('should auto-nice the value axis when valueAxis is set', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 10 }],
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+    });
+
+    try {
+      expect(state.yNice).toBe(true);
+      expect(state.xNice).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should auto-nice xNice when valueAxis=x', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 10 }],
+      x: 'value',
+      y: 'date',
+      valueAxis: 'x',
+    });
+
+    try {
+      expect(state.xNice).toBe(true);
+      expect(state.yNice).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not auto-nice when valueAxis is not set', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 10 }],
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      expect(state.xNice).toBe(false);
+      expect(state.yNice).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should respect explicit xNice/yNice over auto-derived', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [{ date: '2024-01', value: 10 }],
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+      yNice: false,
+      xNice: true,
+    });
+
+    try {
+      expect(state.yNice).toBe(false);
+      expect(state.xNice).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState group layout auto-derives x1/y1', () => {
+  const wideData: WideData[] = [
+    { year: '2016', apples: 480, bananas: 240, cherries: 120, grapes: 50 },
+    { year: '2017', apples: 960, bananas: 480, cherries: 240, grapes: 100 },
+  ];
+
+  const series = [
+    { key: 'apples' },
+    { key: 'bananas' },
+    { key: 'cherries' },
+    { key: 'grapes' },
+  ];
+
+  it('should auto-derive x1Domain from series keys when seriesLayout=group and valueAxis=y', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas', 'cherries', 'grapes']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should auto-derive y1Domain from series keys when seriesLayout=group and valueAxis=x', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      y: 'year',
+      valueAxis: 'x',
+      bandPadding: 0.4,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      expect(state.y1Domain).toEqual(['apples', 'bananas', 'cherries', 'grapes']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should auto-create x1Scale as scaleBand for group layout', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      expect(state.x1Scale).not.toBeNull();
+      expect(isScaleBand(state.x1Scale!)).toBe(true);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas', 'cherries', 'grapes']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not auto-derive x1 when seriesLayout is not group', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      seriesLayout: 'stack',
+      series,
+    });
+
+    try {
+      expect(state.x1Domain).toBeUndefined();
+      expect(state.x1Scale).toBeNull();
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should apply groupPadding to auto-derived x1Scale', () => {
+    const { state: stateNoPad, cleanup: c1 } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      groupPadding: 0,
+      seriesLayout: 'group',
+      series,
+    });
+
+    const { state: stateWithPad, cleanup: c2 } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      groupPadding: 0.5,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      // With more padding, bandwidth should be smaller
+      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(
+        stateNoPad.x1Scale!.bandwidth!()
+      );
+    } finally {
+      c1();
+      c2();
+    }
+  });
+
+  it('should update x1Domain to only visible series when toggling legend', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      expect(state.x1Domain).toEqual(['apples', 'bananas', 'cherries', 'grapes']);
+
+      // Select only 'apples' (hides the other 3)
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.seriesState.visibleSeries).toHaveLength(1);
+      expect(state.x1Domain).toEqual(['apples']);
+
+      // x1Scale domain should also update
+      expect(state.x1Scale!.domain()).toEqual(['apples']);
+
+      // Deselect to show all again
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      expect(state.x1Domain).toEqual(['apples', 'bananas', 'cherries', 'grapes']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should update x1Scale bandwidth when series visibility changes', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: wideData,
+      x: 'year',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      groupPadding: 0,
+      seriesLayout: 'group',
+      series,
+    });
+
+    try {
+      const initialBandwidth = state.x1Scale!.bandwidth!();
+
+      // Select only 'apples'
+      state.seriesState.selectedKeys.toggle('apples');
+      flushSync();
+
+      // With only 1 series, bandwidth should be larger (full group band)
+      expect(state.x1Scale!.bandwidth!()).toBeGreaterThan(initialBandwidth);
     } finally {
       cleanup();
     }

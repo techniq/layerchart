@@ -1,5 +1,5 @@
 import { untrack } from 'svelte';
-import { scaleOrdinal, scaleSqrt } from 'd3-scale';
+import { scaleBand, scaleOrdinal, scaleSqrt } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
 import { Context, useDebounce } from 'runed';
@@ -436,11 +436,21 @@ export class ChartState<
 
   // Cached scale props - use this.flatData which derives from seriesState.visibleSeriesData when available
   _xScaleProp = $derived.by(() => {
-    return this.props.xScale ?? autoScale(this.props.xDomain, this.flatData, this.x);
+    if (this.props.xScale) return this.props.xScale;
+    // When bandPadding is set and x is the category axis, use scaleBand with padding
+    if (this.props.bandPadding != null && this.valueAxis === 'y') {
+      return scaleBand().padding(this.props.bandPadding);
+    }
+    return autoScale(this.props.xDomain, this.flatData, this.x);
   });
 
   _yScaleProp = $derived.by(() => {
-    return this.props.yScale ?? autoScale(this.props.yDomain, this.flatData, this.y);
+    if (this.props.yScale) return this.props.yScale;
+    // When bandPadding is set and y is the category axis, use scaleBand with padding
+    if (this.props.bandPadding != null && this.valueAxis === 'x') {
+      return scaleBand().padding(this.props.bandPadding);
+    }
+    return autoScale(this.props.yDomain, this.flatData, this.y);
   });
 
   _zScaleProp = $derived.by(() => {
@@ -636,10 +646,28 @@ export class ChartState<
     return (isDate ? [new Date(newMin), new Date(newMax)] : [newMin, newMax]) as number[];
   }
 
+  /**
+   * Auto-derive baseline for an axis based on valueAxis.
+   * The value axis gets baseline=0 (unless time scale), the category axis gets none.
+   */
+  private _autoBaseline(axis: 'x' | 'y'): number | null | undefined {
+    const valueAxis = this.props.valueAxis;
+    // Only auto-derive baseline for simplified charts that set bandPadding
+    if (valueAxis == null || this.props.bandPadding == null) return undefined;
+    if (valueAxis === axis) {
+      // Value axis — baseline 0 unless time scale
+      const scale = axis === 'x' ? this._xScaleProp : this._yScaleProp;
+      return isScaleTime(scale) ? undefined : 0;
+    }
+    // Category axis — no baseline
+    return undefined;
+  }
+
   private resolveDomain(axis: 'x' | 'y'): DomainType | undefined {
     const domain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
-    const baseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
+    const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
+    const baseline = explicitBaseline ?? this._autoBaseline(axis);
     const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
 
     // If explicit domain is provided, use it
@@ -780,18 +808,32 @@ export class ChartState<
   rDomain = $derived(calcDomain('r', this.extents, this.props.rDomain));
 
   x1Domain = $derived.by(() => {
-    const domain =
-      this.props.x1Domain ?? (this.x1 ? extent(chartDataArray(this.data), this.x1) : undefined);
-    if (!domain) return undefined;
-    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-    return domain.filter((key: any) => visibleKeys.has(key));
+    if (this.props.x1Domain) {
+      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+      return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+    }
+    // Auto-derive for grouped series when x is the category axis
+    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
+      return this.seriesState.visibleSeries.map((s) => s.key);
+    }
+    if (this.x1) {
+      return extent(chartDataArray(this.data), this.x1);
+    }
+    return undefined;
   });
   y1Domain = $derived.by(() => {
-    const domain =
-      this.props.y1Domain ?? (this.y1 ? extent(chartDataArray(this.data), this.y1) : undefined);
-    if (!domain) return undefined;
-    const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-    return domain.filter((key: any) => visibleKeys.has(key));
+    if (this.props.y1Domain) {
+      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+      return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+    }
+    // Auto-derive for grouped series when y is the category axis
+    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {
+      return this.seriesState.visibleSeries.map((s) => s.key);
+    }
+    if (this.y1) {
+      return extent(chartDataArray(this.data), this.y1);
+    }
+    return undefined;
   });
   cDomain = $derived.by(() => {
     if (this.props.cDomain) return this.props.cDomain;
@@ -811,7 +853,7 @@ export class ChartState<
       scale: this._xScaleProp,
       domain: this.xDomain,
       padding: this.snappedPadding,
-      nice: this.props.xNice ?? false,
+      nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
       range: this.xRangeProp,
@@ -828,7 +870,7 @@ export class ChartState<
       scale: this._yScaleProp,
       domain: this.yDomain,
       padding: this.props.yPadding,
-      nice: this.props.yNice ?? false,
+      nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
       range: this.yRangeProp,
@@ -846,7 +888,7 @@ export class ChartState<
       scale: this._xScaleProp,
       domain: this._baseXDomain,
       padding: this.snappedPadding,
-      nice: this.props.xNice ?? false,
+      nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
       range: this.xRangeProp,
@@ -861,7 +903,7 @@ export class ChartState<
       scale: this._yScaleProp,
       domain: this._baseYDomain,
       padding: this.props.yPadding,
-      nice: this.props.yNice ?? false,
+      nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
       range: this.yRangeProp,
@@ -905,37 +947,53 @@ export class ChartState<
 
   rGet = $derived(createGetter(this.r, this.rScale));
 
-  x1Scale = $derived(
-    this.props.x1Range
-      ? createScale(
-          this.props.x1Scale ?? autoScale(this.props.x1Domain, this.flatData, this.props.x1),
-          this.x1Domain,
-          this.props.x1Range,
-          {
-            xScale: this.xScale,
-            width: this.width,
-            height: this.height,
-          }
-        )
-      : null
-  );
+  x1Scale = $derived.by(() => {
+    // Explicit x1Range — existing behavior
+    if (this.props.x1Range) {
+      return createScale(
+        this.props.x1Scale ?? autoScale(this.props.x1Domain, this.flatData, this.props.x1),
+        this.x1Domain,
+        this.props.x1Range,
+        { xScale: this.xScale, width: this.width, height: this.height }
+      );
+    }
+    // Auto-derive for grouped series when x is the category axis
+    if (this.props.seriesLayout === 'group' && this.valueAxis === 'y' && this.x1Domain) {
+      const groupPadding = this.props.groupPadding ?? 0;
+      return createScale(
+        scaleBand().padding(groupPadding),
+        this.x1Domain,
+        ({ xScale }: { xScale: AnyScale }) => [0, (xScale as any).bandwidth()],
+        { xScale: this.xScale, width: this.width, height: this.height }
+      );
+    }
+    return null;
+  });
 
   x1Get = $derived(this.x1 ? createGetter(this.x1, this.x1Scale) : null);
 
-  y1Scale = $derived(
-    this.props.y1Range
-      ? createScale(
-          this.props.y1Scale ?? autoScale(this.props.y1Domain, this.flatData, this.props.y1),
-          this.y1Domain,
-          this.props.y1Range,
-          {
-            yScale: this.yScale,
-            width: this.width,
-            height: this.height,
-          }
-        )
-      : null
-  );
+  y1Scale = $derived.by(() => {
+    // Explicit y1Range — existing behavior
+    if (this.props.y1Range) {
+      return createScale(
+        this.props.y1Scale ?? autoScale(this.props.y1Domain, this.flatData, this.props.y1),
+        this.y1Domain,
+        this.props.y1Range,
+        { yScale: this.yScale, width: this.width, height: this.height }
+      );
+    }
+    // Auto-derive for grouped series when y is the category axis
+    if (this.props.seriesLayout === 'group' && this.valueAxis === 'x' && this.y1Domain) {
+      const groupPadding = this.props.groupPadding ?? 0;
+      return createScale(
+        scaleBand().padding(groupPadding),
+        this.y1Domain,
+        ({ yScale }: { yScale: AnyScale }) => [0, (yScale as any).bandwidth()],
+        { yScale: this.yScale, width: this.width, height: this.height }
+      );
+    }
+    return null;
+  });
 
   y1Get = $derived(this.y1 ? createGetter(this.y1, this.y1Scale) : null);
 
@@ -967,10 +1025,13 @@ export class ChartState<
     return this.props.percentRange ?? false;
   }
   get xNice() {
-    return this.props.xNice ?? false;
+    if (this.props.xNice !== undefined) return this.props.xNice;
+    // Auto-nice the value axis when valueAxis is explicitly set
+    return this.props.valueAxis === 'x';
   }
   get yNice() {
-    return this.props.yNice ?? false;
+    if (this.props.yNice !== undefined) return this.props.yNice;
+    return this.props.valueAxis === 'y';
   }
   get zNice() {
     return this.props.zNice ?? false;
