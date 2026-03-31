@@ -167,7 +167,6 @@
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting) {
-					// console.log('Loading', component, name);
 					intersected = true;
 					observer.disconnect();
 				}
@@ -177,6 +176,8 @@
 		observer.observe(sentinelEl);
 		return () => observer.disconnect();
 	});
+
+	// $inspect({ component, name, isVisible, intersected, lazy, example });
 
 	let svgUnavailable = $state(false);
 	let svgUnavailableTimer: ReturnType<typeof setTimeout>;
