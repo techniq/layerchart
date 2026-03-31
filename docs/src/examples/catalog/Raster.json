@@ -2,33 +2,6 @@
   "component": "Raster",
   "examples": [
     {
-      "name": "atan2",
-      "title": "atan2",
-      "path": "/docs/components/Raster/atan2",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 7,
-          "line": "<Chart"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 14,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 15,
-          "line": "<Axis placement=\"left\" grid rule />"
-        },
-        {
-          "component": "Raster",
-          "lineNumber": 17,
-          "line": "<Raster value={(x, y) => Math.atan2(y, x)} />"
-        }
-      ]
-    },
-    {
       "name": "mandelbrot",
       "title": "mandelbrot",
       "path": "/docs/components/Raster/mandelbrot",
@@ -52,6 +25,38 @@
           "component": "Raster",
           "lineNumber": 25,
           "line": "<Raster value={mandelbrot} pixelSize={2} />"
+        }
+      ]
+    },
+    {
+      "name": "math-functions",
+      "title": "math functions",
+      "path": "/docs/components/Raster/math-functions",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 92,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 99,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 100,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 102,
+          "line": "<Raster value={fn.fn} />"
+        },
+        {
+          "component": "Contour",
+          "lineNumber": 104,
+          "line": "<Contour"
         }
       ]
     },
@@ -144,18 +149,18 @@
   ],
   "usage": [
     {
-      "example": "atan2",
-      "component": "Raster",
-      "path": "/docs/components/Raster/atan2",
-      "lineNumber": 17,
-      "line": "<Raster value={(x, y) => Math.atan2(y, x)} />"
-    },
-    {
       "example": "mandelbrot",
       "component": "Raster",
       "path": "/docs/components/Raster/mandelbrot",
       "lineNumber": 25,
       "line": "<Raster value={mandelbrot} pixelSize={2} />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 102,
+      "line": "<Raster value={fn.fn} />"
     },
     {
       "example": "sampled",
@@ -179,5 +184,5 @@
       "line": "<Raster"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.443Z"
+  "updatedAt": "2026-03-31T03:03:48.503Z"
 }

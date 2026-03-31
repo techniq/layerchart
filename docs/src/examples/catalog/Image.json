@@ -17,18 +17,23 @@
           "line": "<Layer>"
         },
         {
-          "component": "GeoPath",
+          "component": "Circle",
           "lineNumber": 63,
-          "line": "<GeoPath geojson={feature} class=\"fill-surface-content/5 stroke-surface-content/20\" />"
+          "line": "<Circle"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 77,
+          "line": "<GeoPath"
         },
         {
           "component": "Image",
-          "lineNumber": 66,
+          "lineNumber": 84,
           "line": "<Image"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 76,
+          "lineNumber": 94,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -169,7 +174,7 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 66,
+      "lineNumber": 84,
       "line": "<Image"
     },
     {
@@ -229,5 +234,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-03-24T16:00:55.562Z"
+  "updatedAt": "2026-03-31T03:03:47.598Z"
 }

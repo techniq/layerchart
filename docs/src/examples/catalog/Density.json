@@ -136,28 +136,33 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 21,
+          "lineNumber": 22,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 43,
           "line": "<Layer>"
         },
         {
           "component": "Density",
-          "lineNumber": 32,
+          "lineNumber": 44,
           "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 33,
+          "lineNumber": 45,
           "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 35,
-          "line": "<Circle data={walmarts} cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+          "lineNumber": 47,
+          "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 63,
+          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -232,7 +237,7 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 32,
+      "lineNumber": 44,
       "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
     },
     {
@@ -243,5 +248,5 @@
       "line": "<Density"
     }
   ],
-  "updatedAt": "2026-03-29T03:11:05.989Z"
+  "updatedAt": "2026-03-31T03:03:46.304Z"
 }

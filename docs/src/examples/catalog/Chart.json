@@ -1829,7 +1829,7 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 21,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -3156,17 +3156,17 @@
       "line": "<Chart height={220}>"
     },
     {
-      "example": "atan2",
-      "component": "Raster",
-      "path": "/docs/components/Raster/atan2",
-      "lineNumber": 7,
-      "line": "<Chart"
-    },
-    {
       "example": "mandelbrot",
       "component": "Raster",
       "path": "/docs/components/Raster/mandelbrot",
       "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 92,
       "line": "<Chart"
     },
     {
@@ -3709,6 +3709,13 @@
       "line": "<Chart"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
@@ -3877,5 +3884,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:27.104Z"
+  "updatedAt": "2026-03-31T03:03:45.883Z"
 }

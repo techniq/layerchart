@@ -808,6 +808,13 @@
       "line": "<Rect"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 43,
+      "line": "<Rect"
+    },
+    {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
@@ -857,5 +864,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:24.380Z"
+  "updatedAt": "2026-03-31T03:03:48.528Z"
 }

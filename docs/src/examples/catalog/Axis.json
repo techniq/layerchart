@@ -3890,20 +3890,6 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "atan2",
-      "component": "Raster",
-      "path": "/docs/components/Raster/atan2",
-      "lineNumber": 15,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "atan2",
-      "component": "Raster",
-      "path": "/docs/components/Raster/atan2",
-      "lineNumber": 16,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
       "example": "mandelbrot",
       "component": "Raster",
       "path": "/docs/components/Raster/mandelbrot",
@@ -3915,6 +3901,20 @@
       "component": "Raster",
       "path": "/docs/components/Raster/mandelbrot",
       "lineNumber": 24,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 100,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 101,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4884,6 +4884,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 53,
+      "line": "<Axis"
+    },
+    {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 60,
+      "line": "<Axis"
+    },
+    {
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
@@ -4989,5 +5003,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:26.521Z"
+  "updatedAt": "2026-03-31T03:03:45.493Z"
 }

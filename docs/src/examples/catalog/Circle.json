@@ -342,8 +342,15 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 35,
-      "line": "<Circle data={walmarts} cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+      "lineNumber": 47,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 52,
+      "line": "<Circle"
     },
     {
       "example": "weighted",
@@ -505,6 +512,13 @@
       "path": "/docs/components/Hull/geo",
       "lineNumber": 47,
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 63,
+      "line": "<Circle"
     },
     {
       "example": "all-3-layers",
@@ -864,5 +878,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-29T03:11:05.721Z"
+  "updatedAt": "2026-03-31T03:03:46.054Z"
 }

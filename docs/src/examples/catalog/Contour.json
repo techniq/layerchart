@@ -174,6 +174,13 @@
       "line": "<Contour"
     },
     {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 104,
+      "line": "<Contour"
+    },
+    {
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
@@ -181,5 +188,5 @@
       "line": "<Contour"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:52.072Z"
+  "updatedAt": "2026-03-31T03:03:46.227Z"
 }

@@ -664,14 +664,14 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 33,
+      "lineNumber": 45,
       "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 34,
+      "lineNumber": 46,
       "line": "<GeoPath geojson={nation} class=\"fill-none stroke-surface-content\" strokeWidth={1} />"
     },
     {
@@ -1322,8 +1322,8 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 63,
-      "line": "<GeoPath geojson={feature} class=\"fill-surface-content/5 stroke-surface-content/20\" />"
+      "lineNumber": 77,
+      "line": "<GeoPath"
     },
     {
       "example": "geo-routes",
@@ -1354,5 +1354,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:52.430Z"
+  "updatedAt": "2026-03-31T03:03:46.711Z"
 }

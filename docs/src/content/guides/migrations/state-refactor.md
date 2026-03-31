@@ -146,7 +146,7 @@ See the [geo guide](/docs/guides/geo) for examples.
 
 ### New & Updated Examples
 
-Over 90 new examples have been added across the docs. Here are some highlights:
+Over 100 new examples have been added across the docs. Here are some highlights:
 
 **Pan/Zoom & Transform:**
 

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-29T03:36:25.325Z",
+  "generatedAt": "2026-03-31T03:03:44.757Z",
   "totalComponents": 69,
-  "totalExamples": 827,
+  "totalExamples": 828,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2109,7 +2109,7 @@
         {
           "name": "walmart",
           "path": "/example/Density/walmart",
-          "checksum": "18cf8cb00855020d0cd4f0d4c869f5d7"
+          "checksum": "c22216e9c14f947fad4f8f576290edb9"
         },
         {
           "name": "weighted",
@@ -2609,7 +2609,7 @@
         {
           "name": "college-football-map",
           "path": "/example/Image/college-football-map",
-          "checksum": "1784e553ddbbff737d35bfcb8cb15bb3"
+          "checksum": "75b529c88d5c11c1d51e726a6dc22b9e"
         },
         {
           "name": "country-flags",
@@ -3747,14 +3747,14 @@
       "component": "Raster",
       "examples": [
         {
-          "name": "atan2",
-          "path": "/example/Raster/atan2",
-          "checksum": "448891430a661135a7dc477d791b8181"
-        },
-        {
           "name": "mandelbrot",
           "path": "/example/Raster/mandelbrot",
           "checksum": "0b1066ebe004d973fc2058221eb7e0d4"
+        },
+        {
+          "name": "math-functions",
+          "path": "/example/Raster/math-functions",
+          "checksum": "bd33f1ff9fc29afbc8e7655fc23efea6"
         },
         {
           "name": "sampled",
@@ -4336,6 +4336,11 @@
     {
       "component": "TransformContext",
       "examples": [
+        {
+          "name": "pan-zoom-axes",
+          "path": "/example/TransformContext/pan-zoom-axes",
+          "checksum": "fb83ffb39aea6a93489cd60d27ce04e9"
+        },
         {
           "name": "pan-zoom-html-image",
           "path": "/example/TransformContext/pan-zoom-html-image",

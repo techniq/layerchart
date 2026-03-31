@@ -544,7 +544,14 @@
       "path": "/docs/components/Spline/gradient-threshold",
       "lineNumber": 17,
       "line": "<LinearGradient"
+    },
+    {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 41,
+      "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.034Z"
+  "updatedAt": "2026-03-31T03:03:47.897Z"
 }

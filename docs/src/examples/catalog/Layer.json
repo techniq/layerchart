@@ -1588,7 +1588,14 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 31,
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -2296,6 +2303,13 @@
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
       "lineNumber": 61,
+      "line": "<Layer>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 75,
       "line": "<Layer>"
     },
     {
@@ -3034,17 +3048,17 @@
       "line": "<Layer>"
     },
     {
-      "example": "atan2",
-      "component": "Raster",
-      "path": "/docs/components/Raster/atan2",
-      "lineNumber": 14,
-      "line": "<Layer>"
-    },
-    {
       "example": "mandelbrot",
       "component": "Raster",
       "path": "/docs/components/Raster/mandelbrot",
       "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 99,
       "line": "<Layer>"
     },
     {
@@ -3594,6 +3608,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
@@ -3776,5 +3797,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:28.267Z"
+  "updatedAt": "2026-03-31T03:03:47.703Z"
 }

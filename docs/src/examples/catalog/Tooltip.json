@@ -3827,6 +3827,41 @@
       "line": "<Tooltip.Item"
     },
     {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 63,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 65,
+      "line": "<Tooltip.Header>{data.city}, {data.state}</Tooltip.Header>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 66,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 67,
+      "line": "<Tooltip.Item label=\"Type\" value={data.type} />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 68,
+      "line": "<Tooltip.Item label=\"Opened\" value={data.date} format=\"day\" />"
+    },
+    {
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
@@ -4684,35 +4719,35 @@
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 76,
+      "lineNumber": 94,
       "line": "<Tooltip.Root {context}>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 78,
+      "lineNumber": 96,
       "line": "<Tooltip.Header>{data.team}</Tooltip.Header>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 79,
+      "lineNumber": 97,
       "line": "<Tooltip.List>"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 80,
+      "lineNumber": 98,
       "line": "<Tooltip.Item label=\"Location\" value=\"{data.city}, {data.state}\" />"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 81,
+      "lineNumber": 99,
       "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
@@ -6452,5 +6487,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.774Z"
+  "updatedAt": "2026-03-31T03:03:48.869Z"
 }
