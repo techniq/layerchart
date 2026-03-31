@@ -1,9 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { flushSync } from 'svelte';
 
+import { scaleBand } from 'd3-scale';
+import { timeDay } from 'd3-time';
+
 import { ChartState } from './chart.svelte.js';
 import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
-import { isScaleBand } from '$lib/utils/scales.svelte.js';
+import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 
 type TestData = { date: string; value: number };
 type MultiSeriesData = { date: string; apples: number; bananas: number };
@@ -934,6 +937,166 @@ describe('ChartState bandPadding auto-derives category axis scale', () => {
       // Without bandPadding, autoScale determines the scale from data type
       // String data should still get scaleBand via autoScale, but without custom padding
       expect(isScaleBand(state.xScale)).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState xInterval forces scaleTime over scaleBand', () => {
+  it('should use scaleTime when xInterval is set even with bandPadding', () => {
+    type DateData = { date: Date; value: number };
+    const data: DateData[] = [
+      { date: new Date(2024, 0, 1), value: 40 },
+      { date: new Date(2024, 0, 5), value: 60 },
+    ];
+
+    const { state, cleanup } = createChartState<DateData>({
+      data,
+      x: 'date',
+      y: 'value',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+      xInterval: timeDay,
+    });
+
+    try {
+      expect(isScaleBand(state.xScale)).toBe(false);
+      expect(isScaleTime(state.xScale)).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should use scaleBand when xInterval is not set with bandPadding', () => {
+    const { state, cleanup } = createChartState<WideData>({
+      data: [{ year: '2016', apples: 480, bananas: 240, cherries: 120, grapes: 50 }],
+      x: 'year',
+      y: 'apples',
+      valueAxis: 'y',
+      bandPadding: 0.4,
+    });
+
+    try {
+      expect(isScaleBand(state.xScale)).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState explicit baseline=null disables auto-baseline', () => {
+  it('should not include baseline=0 in domain when xBaseline=null', () => {
+    type RangeData = { label: string; start: number; end: number };
+    const data: RangeData[] = [
+      { label: 'A', start: 15, end: 25 },
+      { label: 'B', start: 25, end: 35 },
+    ];
+
+    const { state, cleanup } = createChartState<RangeData>({
+      data,
+      x: ['start', 'end'] as any,
+      y: (d: any) => 1,
+      valueAxis: 'x',
+      bandPadding: 0,
+      xBaseline: null,
+      xNice: false,
+    });
+
+    try {
+      // Domain should be [15, 35], not [0, 35]
+      const domain = state.xScale.domain();
+      expect(domain[0]).toBe(15);
+      expect(domain[1]).toBe(35);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should include auto-baseline=0 when xBaseline is not provided', () => {
+    type RangeData = { label: string; start: number; end: number };
+    const data: RangeData[] = [
+      { label: 'A', start: 15, end: 25 },
+      { label: 'B', start: 25, end: 35 },
+    ];
+
+    const { state, cleanup } = createChartState<RangeData>({
+      data,
+      x: ['start', 'end'] as any,
+      y: (d: any) => 1,
+      valueAxis: 'x',
+      bandPadding: 0,
+      xNice: false,
+      // xBaseline not provided — auto-baseline should kick in
+    });
+
+    try {
+      // Domain should be [0, 35] due to auto-baseline
+      const domain = state.xScale.domain();
+      expect(domain[0]).toBe(0);
+      expect(domain[1]).toBe(35);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState yReverse with band scales', () => {
+  it('should not reverse y when auto-derived scaleBand (horizontal bar chart)', () => {
+    type AgeData = { age: string; male: number; female: number };
+    const data: AgeData[] = [
+      { age: '0-4', male: 200, female: 190 },
+      { age: '5-9', male: 180, female: 175 },
+      { age: '85+', male: 20, female: 15 },
+    ];
+
+    const { state, cleanup } = createChartState<AgeData>({
+      data,
+      y: 'age',
+      valueAxis: 'x',
+      bandPadding: 0.4,
+      series: [{ key: 'male' }, { key: 'female' }],
+    });
+
+    try {
+      expect(isScaleBand(state.yScale)).toBe(true);
+      expect(state.yReverse).toBe(false);
+      // Domain should preserve data order (0-4 first)
+      expect(state.yScale.domain()).toEqual(['0-4', '5-9', '85+']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not reverse y when explicit scaleBand is provided', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [
+        { date: '2024-01', value: 10 },
+        { date: '2024-02', value: 20 },
+      ],
+      y: 'date',
+      yScale: scaleBand().padding(0.4),
+    });
+
+    try {
+      expect(state.yReverse).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should reverse y for linear scales (default)', () => {
+    const { state, cleanup } = createChartState<TestData>({
+      data: [
+        { date: '2024-01', value: 10 },
+        { date: '2024-02', value: 20 },
+      ],
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      expect(state.yReverse).toBe(true);
     } finally {
       cleanup();
     }

@@ -1,5 +1,5 @@
 import { untrack } from 'svelte';
-import { scaleBand, scaleOrdinal, scaleSqrt } from 'd3-scale';
+import { scaleBand, scaleOrdinal, scaleSqrt, scaleTime } from 'd3-scale';
 import { extent, max, min } from 'd3-array';
 import { unique } from '@layerstack/utils';
 import { Context, useDebounce } from 'runed';
@@ -437,6 +437,8 @@ export class ChartState<
   // Cached scale props - use this.flatData which derives from seriesState.visibleSeriesData when available
   _xScaleProp = $derived.by(() => {
     if (this.props.xScale) return this.props.xScale;
+    // When xInterval is set, use scaleTime (takes precedence over bandPadding)
+    if (this.props.xInterval) return scaleTime();
     // When bandPadding is set and x is the category axis, use scaleBand with padding
     if (this.props.bandPadding != null && this.valueAxis === 'y') {
       return scaleBand().padding(this.props.bandPadding);
@@ -446,6 +448,8 @@ export class ChartState<
 
   _yScaleProp = $derived.by(() => {
     if (this.props.yScale) return this.props.yScale;
+    // When yInterval is set, use scaleTime (takes precedence over bandPadding)
+    if (this.props.yInterval) return scaleTime();
     // When bandPadding is set and y is the category axis, use scaleBand with padding
     if (this.props.bandPadding != null && this.valueAxis === 'x') {
       return scaleBand().padding(this.props.bandPadding);
@@ -468,9 +472,7 @@ export class ChartState<
       (this.props.radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
-  yReverse = $derived(
-    this.props.yScale ? !isScaleBand(this.props.yScale) && !isScaleTime(this.props.yScale) : true
-  );
+  yReverse = $derived(!isScaleBand(this._yScaleProp) && !isScaleTime(this._yScaleProp));
 
   private resolveAccessor(axis: 'x' | 'y') {
     const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
@@ -667,7 +669,8 @@ export class ChartState<
     const domain = axis === 'x' ? this.props.xDomain : this.props.yDomain;
     const interval = axis === 'x' ? this.props.xInterval : this.props.yInterval;
     const explicitBaseline = axis === 'x' ? this.props.xBaseline : this.props.yBaseline;
-    const baseline = explicitBaseline ?? this._autoBaseline(axis);
+    // Use explicit baseline if provided (null means "no baseline"), otherwise auto-derive
+    const baseline = explicitBaseline !== undefined ? explicitBaseline : this._autoBaseline(axis);
     const axisAccessor = axis === 'x' ? this.props.x : this.props.y;
 
     // If explicit domain is provided, use it

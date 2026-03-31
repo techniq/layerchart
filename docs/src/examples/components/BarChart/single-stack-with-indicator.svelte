@@ -40,7 +40,7 @@
 	{data}
 	x={['start', 'end']}
 	y={(d) => 1}
-	xBaseline={undefined}
+	xBaseline={null}
 	xNice={false}
 	c="label"
 	cRange={[
