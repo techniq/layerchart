@@ -762,7 +762,7 @@
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 245,
+      "lineNumber": 256,
       "line": "<Text"
     },
     {
@@ -899,5 +899,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-03-26T17:40:25.722Z"
+  "updatedAt": "2026-03-31T12:30:01.190Z"
 }

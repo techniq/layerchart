@@ -6294,35 +6294,35 @@
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 259,
+      "lineNumber": 270,
       "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
     },
     {
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 261,
+      "lineNumber": 272,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 262,
+      "lineNumber": 273,
       "line": "<Tooltip.List>"
     },
     {
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 263,
+      "lineNumber": 274,
       "line": "<Tooltip.Item label=\"Distance\" value={formatDistance(data.distance)} />"
     },
     {
       "example": "planet-distances",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/planet-distances",
-      "lineNumber": 264,
+      "lineNumber": 275,
       "line": "<Tooltip.Item label=\"Radius\" value={`${data.radius.toLocaleString()} km`} />"
     },
     {
@@ -6487,5 +6487,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:48.869Z"
+  "updatedAt": "2026-03-31T12:30:01.286Z"
 }

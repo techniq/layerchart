@@ -79,42 +79,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 207,
+          "lineNumber": 218,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 228,
+          "lineNumber": 239,
           "line": "<Layer>"
         },
         {
           "component": "Line",
-          "lineNumber": 234,
+          "lineNumber": 245,
           "line": "<line"
         },
         {
           "component": "Image",
-          "lineNumber": 244,
+          "lineNumber": 255,
           "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
         },
         {
           "component": "Text",
-          "lineNumber": 245,
+          "lineNumber": 256,
           "line": "<Text"
         },
         {
           "component": "Axis",
-          "lineNumber": 255,
+          "lineNumber": 266,
           "line": "<Axis placement=\"bottom\" format={formatDistance} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 256,
+          "lineNumber": 267,
           "line": "<Highlight lines axis=\"x\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 259,
+          "lineNumber": 270,
           "line": "<Tooltip.Root x=\"data\" y={0} anchor=\"top\">"
         }
       ]
@@ -175,5 +175,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-03-31T03:03:49.051Z"
+  "updatedAt": "2026-03-31T12:30:01.407Z"
 }
