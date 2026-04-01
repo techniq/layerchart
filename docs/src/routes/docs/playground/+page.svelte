@@ -32,19 +32,7 @@
 	import CodeEditor from './CodeEditor.svelte';
 	import { Overlay, ProgressCircle } from 'svelte-ux';
 	import { AnsiUp } from 'ansi_up';
-
-	/* TODO:
-	- incase you didn't see it you can click console to expand/collapse.
-	- second pass background colors, etc. I'm always open for revisions.
-	- console output seems to missing some later stage loading state - "load preview..."
-	- filter blank \n going to console output?
-	- collapse console when loaded is working, but performing too early.
-	- Refresh correct, or something thru webcontainer?
-	- Buttons from Svelte-UX w/Icons - icons not centered vertically.
-	- Code - Open Project in StackBlitz
-	- Code - Open Project in Svelte REPL
-	- Code - Download Project
-	*/
+	import { openInSvelteREPL } from '$lib/utils/svelte-repl';
 
 	let { data }: { data: PageData } = $props();
 	const ansiUp = new AnsiUp();
@@ -188,7 +176,14 @@
 
 	// Open Project in REPL
 	async function openInREPL() {
-		// This needs wired up
+		if (!webcontainerInstance) return;
+
+		try {
+			const mainSource = await webcontainerInstance.fs.readFile('src/routes/+page.svelte', 'utf-8');
+			await openInSvelteREPL(mainSource);
+		} catch (err) {
+			console.error('Failed to open in REPL:', err);
+		}
 	}
 
 	onMount(async () => {
@@ -343,6 +338,40 @@
 	}
 
 	// Handle click outside of file tree to close it
+	// Save current +page.svelte to local filesystem via system save dialog
+	async function saveNewExample() {
+		if (!webcontainerInstance) return;
+
+		try {
+			const content = await webcontainerInstance.fs.readFile('src/routes/+page.svelte', 'utf-8');
+
+			const handle = await window.showSaveFilePicker({
+				suggestedName: 'new-example.svelte',
+				types: [
+					{
+						description: 'Svelte files',
+						accept: { 'text/plain': ['.svelte'] }
+					}
+				]
+			});
+
+			const writable = await handle.createWritable();
+			await writable.write(content);
+			await writable.close();
+		} catch (err: any) {
+			// User cancelled the dialog
+			if (err.name === 'AbortError') return;
+			console.error('Failed to save example:', err);
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.metaKey && event.shiftKey && event.key === 's') {
+			event.preventDefault();
+			saveNewExample();
+		}
+	}
+
 	function handleClickOutside(event: MouseEvent) {
 		// Don't close if clicking on SVG icons (folder toggles)
 		const target = event.target as Element;
@@ -354,7 +383,7 @@
 	}
 </script>
 
-<svelte:window onclick={handleClickOutside} />
+<svelte:window onclick={handleClickOutside} onkeydown={handleKeydown} />
 
 <div class="h-[calc(100vh-64px)] flex bg-surface-100">
 	<!-- Editor Panel -->
@@ -400,23 +429,14 @@
 					</div>
 					<Tooltip title="Open in StackBlitz" placement="top" offset={6}>
 						<Button
-							href="https://stackblitz.com"
 							icon={SimpleIconsStackblitz}
 							size="sm"
 							variant="fill-light"
-							target="_blank"
-							onclick={openInStackBlitz()}
+							onclick={openInStackBlitz}
 						/>
 					</Tooltip>
 					<Tooltip title="Open in REPL" placement="top" offset={6}>
-						<Button
-							href="https://svelte.dev/playground"
-							icon={SimpleIconsSvelte}
-							size="sm"
-							variant="fill-light"
-							target="_blank"
-							onclick={openInREPL()}
-						/>
+						<Button icon={SimpleIconsSvelte} size="sm" variant="fill-light" onclick={openInREPL} />
 					</Tooltip>
 					<Tooltip title="Download" placement="top" offset={6}>
 						<Button
@@ -556,3 +576,10 @@
 		</Pane>
 	</PaneGroup>
 </div>
+
+<style>
+	/* Hide "Edit this page" */
+	:global(div:has(> a[href*='/github'])) {
+		display: none;
+	}
+</style>
