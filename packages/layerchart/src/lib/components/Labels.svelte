@@ -41,10 +41,11 @@
     seriesKey?: string;
 
     /**
-     * The placement of the label relative to the point
+     * The placement of the label relative to the point.
+     * `smart` dynamically positions labels based on neighboring point values (peak, trough, rising, falling).
      * @default 'outside'
      */
-    placement?: 'inside' | 'outside' | 'center';
+    placement?: 'inside' | 'outside' | 'center' | 'smart';
 
     /**
      * The offset of the label from the point
@@ -114,12 +115,11 @@
         : 0.1)
   );
 
-  function getTextProps(point: Point): ComponentProps<typeof Text> {
+  function getTextProps(point: Point, points?: Point[], i?: number): ComponentProps<typeof Text> {
     // Used for positioning direction.
     // For array accessors (edgeIndex defined), use edge position: 0 = start/low, 1 = end/high
     const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
-    const isLowEdge =
-      point.edgeIndex != null ? point.edgeIndex === 0 : pointValue < 0;
+    const isLowEdge = point.edgeIndex != null ? point.edgeIndex === 0 : pointValue < 0;
 
     // extract the true fill value from `fill` which could be an
     // accessor function or string/undefined
@@ -142,11 +142,13 @@
             : ctx.yScale.tickFormat?.())
     );
 
+    let result: ComponentProps<typeof Text>;
+
     if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
       if (isLowEdge) {
         // left
-        return {
+        result = {
           value: formattedValue,
           fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
@@ -157,7 +159,7 @@
         };
       } else {
         // right
-        return {
+        result = {
           value: formattedValue,
           fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
@@ -171,7 +173,7 @@
       // Position label top/bottom on vertical bars
       if (isLowEdge) {
         // bottom
-        return {
+        result = {
           value: formattedValue,
           fill: fillValue,
           x: point.x,
@@ -183,7 +185,7 @@
         };
       } else {
         // top
-        return {
+        result = {
           value: formattedValue,
           fill: fillValue,
           x: point.x,
@@ -195,6 +197,48 @@
         };
       }
     }
+
+    if (placement === 'smart' && points != null && i != null) {
+      const getValue = (p: Point): number => (isScaleBand(ctx.yScale) ? p.xValue : p.yValue);
+      const curr = getValue(point);
+      const prev = i > 0 ? getValue(points[i - 1]) : curr;
+      const next = i < points.length - 1 ? getValue(points[i + 1]) : curr;
+
+      const xPrevTight = Math.abs(prev - curr) < offset;
+      const xNextTight = Math.abs(curr - next) < offset;
+      const isPeak = (prev <= curr && curr >= next) || (xPrevTight && xNextTight);
+      const isTrough = (prev >= curr && curr <= next) || (xPrevTight && xNextTight);
+      const isRising = !isPeak && !isTrough && prev < curr;
+      const isFalling = !isPeak && !isTrough && prev >= curr;
+
+      return {
+        ...result,
+        x: point.x,
+        y: point.y,
+        dx: isRising
+          ? xPrevTight
+            ? offset
+            : -offset
+          : isFalling
+            ? xNextTight
+              ? -offset
+              : offset
+            : 0,
+        dy: isPeak ? -offset : isTrough ? offset : 0,
+        textAnchor: isRising
+          ? xPrevTight
+            ? 'start'
+            : 'end'
+          : isFalling
+            ? xNextTight
+              ? 'end'
+              : 'start'
+            : 'middle',
+        verticalAnchor: isPeak ? 'end' : isTrough ? 'start' : 'middle',
+      };
+    }
+
+    return result;
   }
 </script>
 
@@ -202,7 +246,8 @@
   <Points {data} {x} {y} {seriesKey}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
-        {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
+        {@const baseProps = getTextProps(point, points, i)}
+        {@const textProps = extractLayerProps(baseProps, 'lc-labels-text')}
         {#if childrenProp}
           {@render childrenProp({ data: point, textProps })}
         {:else}
@@ -210,7 +255,7 @@
             data-placement={placement}
             {...textProps}
             {...restProps}
-            {...extractLayerProps(getTextProps(point), 'lc-labels-text', className ?? '')}
+            {...extractLayerProps(baseProps, 'lc-labels-text', className ?? '')}
           />
         {/if}
       {/each}
