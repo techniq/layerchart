@@ -8,7 +8,7 @@
      *
      * Pass `children` to render a custom element/component inside the marker instead.
      */
-    type?: 'arrow' | 'triangle' | 'line' | 'circle' | 'circle-stroke' | 'dot';
+    type?: 'arrow' | 'triangle' | 'line' | 'circle' | 'circle-stroke' | 'dot' | 'square' | 'square-stroke';
 
     /**
      * Unique identifier for the marker
@@ -117,6 +117,8 @@
       <circle cx={5} cy={5} r={5} class="lc-marker-circle" />
     {:else if type === 'line'}
       <polyline points="5 0, 5 10" class="lc-marker-line" />
+    {:else if type === 'square' || type === 'square-stroke'}
+      <rect x={0} y={0} width={10} height={10} class="lc-marker-square" />
     {/if}
   </marker>
 </defs>
@@ -128,6 +130,7 @@
 
       &[data-type='arrow'],
       &[data-type='circle-stroke'],
+      &[data-type='square-stroke'],
       &[data-type='line'] {
         fill: none;
         stroke: context-stroke;
@@ -141,11 +144,13 @@
 
       &[data-type='triangle'],
       &[data-type='dot'],
-      &[data-type='circle'] {
+      &[data-type='circle'],
+      &[data-type='square'] {
         fill: context-stroke;
       }
 
-      &[data-type='circle-stroke'] {
+      &[data-type='circle-stroke'],
+      &[data-type='square-stroke'] {
         fill: var(--color-surface-100, light-dark(white, black));
       }
     }
