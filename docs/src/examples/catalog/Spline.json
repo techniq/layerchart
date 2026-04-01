@@ -237,22 +237,22 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 17,
+          "lineNumber": 16,
           "line": "<LinearGradient"
         },
         {
           "component": "Spline",
-          "lineNumber": 26,
+          "lineNumber": 25,
           "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
         }
       ]
@@ -1140,7 +1140,7 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
@@ -1305,5 +1305,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:29.290Z"
+  "updatedAt": "2026-04-01T13:16:19.667Z"
 }

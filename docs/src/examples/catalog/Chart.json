@@ -251,6 +251,13 @@
   ],
   "usage": [
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 28,
+      "line": "<Chart height={260} padding={10}>"
+    },
+    {
       "example": "color-wheel",
       "component": "Arc",
       "path": "/docs/components/Arc/color-wheel",
@@ -269,6 +276,20 @@
       "component": "Arc",
       "path": "/docs/components/Arc/draggable-arc",
       "lineNumber": 12,
+      "line": "<Chart height={200} padding={20}>"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 32,
+      "line": "<Chart height={160} padding={20}>"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 87,
       "line": "<Chart height={200} padding={20}>"
     },
     {
@@ -305,6 +326,13 @@
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
       "lineNumber": 14,
       "line": "<Chart height={240} padding={20}>"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 32,
+      "line": "<Chart height={200} padding={20}>"
     },
     {
       "example": "tween-value-on-mount",
@@ -776,6 +804,13 @@
       "line": "<Chart"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 184,
+      "line": "<Chart"
+    },
+    {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
@@ -808,6 +843,13 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
       "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 184,
       "line": "<Chart"
     },
     {
@@ -2039,7 +2081,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 66,
+      "lineNumber": 58,
       "line": "<Chart"
     },
     {
@@ -3177,6 +3219,13 @@
       "line": "<Chart"
     },
     {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 18,
+      "line": "<Chart"
+    },
+    {
       "example": "volcano",
       "component": "Raster",
       "path": "/docs/components/Raster/volcano",
@@ -3188,7 +3237,7 @@
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
       "lineNumber": 11,
-      "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+      "line": "<Chart"
     },
     {
       "example": "color-via-ordinal-scale",
@@ -3884,5 +3933,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-03-31T12:29:58.950Z"
+  "updatedAt": "2026-04-01T13:16:17.567Z"
 }

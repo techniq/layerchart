@@ -171,6 +171,48 @@
   ],
   "usage": [
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 32,
+      "line": "<Circle r={100} class=\"fill-surface-200 stroke-surface-content/20\" strokeWidth={2} />"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 104,
+      "line": "<Circle r={4} class=\"fill-red-500\" />"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 105,
+      "line": "<Circle r={2} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 135,
+      "line": "<Circle r={6} class=\"fill-surface-content\" />"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 136,
+      "line": "<Circle r={3} class=\"fill-surface-200\" />"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 107,
+      "line": "<Circle r={5} class=\"fill-surface-content\" />"
+    },
+    {
       "example": "multiple-series",
       "component": "Area",
       "path": "/docs/components/Area/multiple-series",
@@ -342,14 +384,14 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 47,
-      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+      "lineNumber": 55,
+      "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 52,
+      "lineNumber": 60,
       "line": "<Circle"
     },
     {
@@ -878,5 +920,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:46.054Z"
+  "updatedAt": "2026-04-01T13:16:17.703Z"
 }

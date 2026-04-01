@@ -3,6 +3,13 @@
   "examples": [],
   "usage": [
     {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 37,
+      "line": "<ClipPath>"
+    },
+    {
       "example": "segmented-arc-clip-mask",
       "component": "Arc",
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
@@ -29,7 +36,14 @@
       "path": "/docs/components/GeoTile/clipped",
       "lineNumber": 42,
       "line": "<ClipPath useId=\"clip\">"
+    },
+    {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 37,
+      "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:36.682Z"
+  "updatedAt": "2026-04-01T13:16:17.746Z"
 }

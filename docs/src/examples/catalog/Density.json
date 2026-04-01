@@ -152,16 +152,16 @@
         {
           "component": "GeoPath",
           "lineNumber": 45,
-          "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+          "line": "<GeoPath"
         },
         {
           "component": "Circle",
-          "lineNumber": 47,
-          "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} fill=\"currentColor\" />"
+          "lineNumber": 55,
+          "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 63,
+          "lineNumber": 72,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -248,5 +248,5 @@
       "line": "<Density"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:46.304Z"
+  "updatedAt": "2026-04-01T13:16:17.912Z"
 }

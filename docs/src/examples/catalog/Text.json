@@ -185,10 +185,52 @@
       "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
     },
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 63,
+      "line": "<Text"
+    },
+    {
       "example": "draggable-arc",
       "component": "Arc",
       "path": "/docs/components/Arc/draggable-arc",
       "lineNumber": 66,
+      "line": "<Text"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 89,
+      "line": "<Text"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 100,
+      "line": "<Text"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 108,
+      "line": "<Text"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 115,
+      "line": "<Text"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 139,
       "line": "<Text"
     },
     {
@@ -276,6 +318,27 @@
       "line": "<Text"
     },
     {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 72,
+      "line": "<Text"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 110,
+      "line": "<Text"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 117,
+      "line": "<Text"
+    },
+    {
       "example": "gradient-with-text",
       "component": "ArcChart",
       "path": "/docs/components/ArcChart/gradient-with-text",
@@ -339,11 +402,60 @@
       "line": "<Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 220,
+      "line": "<Text"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 229,
+      "line": "<Text"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 250,
+      "line": "<Text"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 222,
+      "line": "<Text"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 231,
+      "line": "<Text"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 253,
+      "line": "<Text"
+    },
+    {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
       "lineNumber": 67,
       "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 100,
+      "line": "<Text"
     },
     {
       "example": "horizontal-average-annotation-rule",
@@ -899,5 +1011,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-03-31T12:30:01.190Z"
+  "updatedAt": "2026-04-01T13:16:19.740Z"
 }

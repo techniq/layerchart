@@ -112,6 +112,13 @@
   ],
   "usage": [
     {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 35,
+      "line": "<LinearGradient class=\"from-emerald-500 via-yellow-500 to-red-500\">"
+    },
+    {
       "example": "label-direction",
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
@@ -542,7 +549,7 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 17,
+      "lineNumber": 16,
       "line": "<LinearGradient"
     },
     {
@@ -553,5 +560,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:47.897Z"
+  "updatedAt": "2026-04-01T13:16:18.546Z"
 }

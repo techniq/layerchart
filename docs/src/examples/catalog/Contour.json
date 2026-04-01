@@ -181,6 +181,13 @@
       "line": "<Contour"
     },
     {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 53,
+      "line": "<Contour"
+    },
+    {
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
@@ -188,5 +195,5 @@
       "line": "<Contour"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:46.227Z"
+  "updatedAt": "2026-04-01T13:16:17.840Z"
 }

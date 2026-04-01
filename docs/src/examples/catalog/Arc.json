@@ -2,6 +2,43 @@
   "component": "Arc",
   "examples": [
     {
+      "name": "clock",
+      "title": "clock",
+      "path": "/docs/components/Arc/clock",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 28,
+          "line": "<Chart height={260} padding={10}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 29,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 30,
+          "line": "<Group>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 32,
+          "line": "<Circle r={100} class=\"fill-surface-200 stroke-surface-content/20\" strokeWidth={2} />"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 37,
+          "line": "<Line"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 63,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "color-wheel",
       "title": "color wheel",
       "path": "/docs/components/Arc/color-wheel",
@@ -74,6 +111,95 @@
           "component": "Text",
           "lineNumber": 66,
           "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "gauge",
+      "title": "gauge",
+      "path": "/docs/components/Arc/gauge",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart height={160} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 34,
+          "line": "<Group y={20}>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 35,
+          "line": "<LinearGradient class=\"from-emerald-500 via-yellow-500 to-red-500\">"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 37,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 39,
+          "line": "<Arc"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 81,
+          "line": "<Line"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 89,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "gauge-gradient",
+      "title": "gauge gradient",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 87,
+          "line": "<Chart height={200} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 88,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 89,
+          "line": "<Group y={16}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 92,
+          "line": "<Arc"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 107,
+          "line": "<Line"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 115,
+          "line": "<Text"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 135,
+          "line": "<Circle r={6} class=\"fill-surface-content\" />"
         }
       ]
     },
@@ -238,6 +364,48 @@
       ]
     },
     {
+      "name": "speedometer",
+      "title": "speedometer",
+      "path": "/docs/components/Arc/speedometer",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 32,
+          "line": "<Chart height={200} padding={20}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 33,
+          "line": "<Layer center>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 34,
+          "line": "<Group y={20}>"
+        },
+        {
+          "component": "Arc",
+          "lineNumber": 37,
+          "line": "<Arc"
+        },
+        {
+          "component": "Line",
+          "lineNumber": 64,
+          "line": "<Line"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 72,
+          "line": "<Text"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 107,
+          "line": "<Circle r={5} class=\"fill-surface-content\" />"
+        }
+      ]
+    },
+    {
       "name": "tween-value-on-mount",
       "title": "tween value on mount",
       "path": "/docs/components/Arc/tween-value-on-mount",
@@ -297,6 +465,34 @@
       "line": "<Arc"
     },
     {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 39,
+      "line": "<Arc"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 49,
+      "line": "<Arc"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 63,
+      "line": "<Arc"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 92,
+      "line": "<Arc"
+    },
+    {
       "example": "label-direction",
       "component": "Arc",
       "path": "/docs/components/Arc/label-direction",
@@ -336,6 +532,20 @@
       "component": "Arc",
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
       "lineNumber": 30,
+      "line": "<Arc"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 37,
+      "line": "<Arc"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 47,
       "line": "<Arc"
     },
     {
@@ -486,5 +696,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:31.896Z"
+  "updatedAt": "2026-04-01T13:16:16.352Z"
 }

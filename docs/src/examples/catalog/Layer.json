@@ -66,6 +66,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 29,
+      "line": "<Layer center>"
+    },
+    {
       "example": "color-wheel",
       "component": "Arc",
       "path": "/docs/components/Arc/color-wheel",
@@ -84,6 +91,20 @@
       "component": "Arc",
       "path": "/docs/components/Arc/draggable-arc",
       "lineNumber": 14,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 33,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 88,
       "line": "<Layer center>"
     },
     {
@@ -119,6 +140,13 @@
       "component": "Arc",
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
       "lineNumber": 15,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 33,
       "line": "<Layer center>"
     },
     {
@@ -605,10 +633,24 @@
       "line": "<Layer>"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 194,
+      "line": "<Layer>"
+    },
+    {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/docs/components/BarChart/custom-chart",
       "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 195,
       "line": "<Layer>"
     },
     {
@@ -1595,7 +1637,7 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 50,
+      "lineNumber": 58,
       "line": "<Layer>"
     },
     {
@@ -1840,7 +1882,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 80,
+      "lineNumber": 72,
       "line": "<Layer>"
     },
     {
@@ -3069,6 +3111,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
       "example": "volcano",
       "component": "Raster",
       "path": "/docs/components/Raster/volcano",
@@ -3079,7 +3128,7 @@
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
-      "lineNumber": 12,
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
@@ -3324,7 +3373,7 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Layer>"
     },
     {
@@ -3797,5 +3846,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-03-31T12:30:00.267Z"
+  "updatedAt": "2026-04-01T13:16:18.421Z"
 }

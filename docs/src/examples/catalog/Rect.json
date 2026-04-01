@@ -171,6 +171,13 @@
   ],
   "usage": [
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 200,
+      "line": "<Rect"
+    },
+    {
       "example": "histogram-date-time-count",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-date-time-count",
@@ -204,6 +211,13 @@
       "path": "/docs/components/BarChart/histogram-vertical",
       "lineNumber": 37,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 202,
+      "line": "<Rect"
     },
     {
       "example": "handle-arrows",
@@ -864,5 +878,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:48.528Z"
+  "updatedAt": "2026-04-01T13:16:19.294Z"
 }

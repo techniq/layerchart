@@ -1713,6 +1713,13 @@
       "line": "<Axis"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 242,
+      "line": "<Axis"
+    },
+    {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/docs/components/BarChart/custom-chart",
@@ -1725,6 +1732,13 @@
       "path": "/docs/components/BarChart/custom-chart",
       "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 245,
+      "line": "<Axis"
     },
     {
       "example": "single-stack-with-indicator",
@@ -3949,14 +3963,14 @@
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
-      "lineNumber": 13,
+      "lineNumber": 17,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
-      "lineNumber": 14,
+      "lineNumber": 18,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4341,14 +4355,14 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -5003,5 +5017,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-03-31T12:29:58.238Z"
+  "updatedAt": "2026-04-01T13:16:16.581Z"
 }

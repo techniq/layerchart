@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-03-31T12:29:57.147Z",
+  "generatedAt": "2026-04-01T13:16:15.497Z",
   "totalComponents": 69,
-  "totalExamples": 828,
+  "totalExamples": 836,
   "components": [
     {
       "component": "AnnotationLine",
@@ -162,6 +162,11 @@
       "component": "Arc",
       "examples": [
         {
+          "name": "clock",
+          "path": "/example/Arc/clock",
+          "checksum": "789ec253610c9a958c6d5e5fe5c3ba10"
+        },
+        {
           "name": "color-wheel",
           "path": "/example/Arc/color-wheel",
           "checksum": "edaae71497469e043baf500b71c547d4"
@@ -175,6 +180,16 @@
           "name": "draggable-arc",
           "path": "/example/Arc/draggable-arc",
           "checksum": "5344a0bbb361a96b333a8e46ce094e33"
+        },
+        {
+          "name": "gauge",
+          "path": "/example/Arc/gauge",
+          "checksum": "2d36750f741dee6bdf4be9ff4ef90fc3"
+        },
+        {
+          "name": "gauge-gradient",
+          "path": "/example/Arc/gauge-gradient",
+          "checksum": "10d59f5e11a95ce5fa59afb0910ca6bd"
         },
         {
           "name": "label-direction",
@@ -200,6 +215,11 @@
           "name": "segmented-arc-clip-mask",
           "path": "/example/Arc/segmented-arc-clip-mask",
           "checksum": "4ec3c48596b9dc7b56af6a3bef6f3aba"
+        },
+        {
+          "name": "speedometer",
+          "path": "/example/Arc/speedometer",
+          "checksum": "6df459c295a5d8e8394caaace11e65c1"
         },
         {
           "name": "tween-value-on-mount",
@@ -629,7 +649,7 @@
         {
           "name": "tooltip-external",
           "path": "/example/AreaChart/tooltip-external",
-          "checksum": "d71aa5d9ab700a167e662b749b39f6ff"
+          "checksum": "eb2afbc7a0dbebc1f7ccfe77547851fc"
         },
         {
           "name": "tooltip-fixed-with-hide-delay",
@@ -907,6 +927,11 @@
           "checksum": "0df6a9556a3ee916dd104fff879b23c8"
         },
         {
+          "name": "company-race",
+          "path": "/example/BarChart/company-race",
+          "checksum": "271b0ac2977d5da5ea95ee91f4fd2794"
+        },
+        {
           "name": "custom-chart",
           "path": "/example/BarChart/custom-chart",
           "checksum": "92752845212701f133a526ac2e979663"
@@ -1050,6 +1075,11 @@
           "name": "labels-inside-placement",
           "path": "/example/BarChart/labels-inside-placement",
           "checksum": "ccf493026818850c9815fb2c743ce6c1"
+        },
+        {
+          "name": "language-race",
+          "path": "/example/BarChart/language-race",
+          "checksum": "f4c74230ea73bf7b0a0149faeb7f1b22"
         },
         {
           "name": "legend-custom-labels",
@@ -1234,7 +1264,7 @@
         {
           "name": "single-stack-with-indicator",
           "path": "/example/BarChart/single-stack-with-indicator",
-          "checksum": "2af706a966b31c6e9ff732875e488d35"
+          "checksum": "b5ed42de649219c650d3f83c1fd5d4f5"
         },
         {
           "name": "sparkbar",
@@ -1315,6 +1345,11 @@
           "name": "vertical-fixed-width",
           "path": "/example/BarChart/vertical-fixed-width",
           "checksum": "429b1ed7d40034eb54f5753e9260deaa"
+        },
+        {
+          "name": "waterfall",
+          "path": "/example/BarChart/waterfall",
+          "checksum": "7191662ad2569a419926437debba9596"
         }
       ]
     },
@@ -2109,7 +2144,7 @@
         {
           "name": "walmart",
           "path": "/example/Density/walmart",
-          "checksum": "c22216e9c14f947fad4f8f576290edb9"
+          "checksum": "f130ed04d71185d96226c783868d2d13"
         },
         {
           "name": "weighted",
@@ -2234,7 +2269,7 @@
         {
           "name": "earthquake-globe",
           "path": "/example/GeoCircle/earthquake-globe",
-          "checksum": "80f3a03313fc2dd82e2b87f1ad96fefc"
+          "checksum": "8a5ba5b2aacf62a594bbb0df3dba2356"
         },
         {
           "name": "playground",
@@ -2289,12 +2324,12 @@
         {
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
-          "checksum": "23aed1f3b1bcf7aecfb623b42b9d5902"
+          "checksum": "9cee4dcad5917eb458ee896576e567c5"
         },
         {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
-          "checksum": "ca4295b161744efba73967c102a81f37"
+          "checksum": "d3475796ec9b2ec369b396c480bfc7a3"
         },
         {
           "name": "spike-map",
@@ -2304,7 +2339,7 @@
         {
           "name": "submarine-cables-globe",
           "path": "/example/GeoPath/submarine-cables-globe",
-          "checksum": "27df027201e3f09e9ca538e1f7e7dd68"
+          "checksum": "c158789abda9a9b4bfa4cd3d09c4df9b"
         },
         {
           "name": "timezones",
@@ -3184,7 +3219,7 @@
         {
           "name": "basic",
           "path": "/example/Pack/basic",
-          "checksum": "29fc12fa57a274d740657c5f7c898a4c"
+          "checksum": "da80054a15263a43bcc54eba82846436"
         }
       ]
     },
@@ -3762,6 +3797,11 @@
           "checksum": "83f1cd9ea829c198d1f44ae71f058346"
         },
         {
+          "name": "us-water-vapor",
+          "path": "/example/Raster/us-water-vapor",
+          "checksum": "f35fcd7d200011f94d4991d5e4ac670b"
+        },
+        {
           "name": "volcano",
           "path": "/example/Raster/volcano",
           "checksum": "511f401ad3bd868ec1764d716881690a"
@@ -3769,7 +3809,7 @@
         {
           "name": "with-contour-overlay",
           "path": "/example/Raster/with-contour-overlay",
-          "checksum": "63f947053f4edcf192aef32f9b69d791"
+          "checksum": "474a775dd9c67a935a6cd33c11e3ef43"
         }
       ]
     },
@@ -4089,7 +4129,7 @@
         {
           "name": "gradient-threshold",
           "path": "/example/Spline/gradient-threshold",
-          "checksum": "f3b0391de32b0c20df43a72f591346a5"
+          "checksum": "03f9cbf0344dca60ac2e224357a51f47"
         },
         {
           "name": "label-using-start-end-snippets",
@@ -4284,7 +4324,7 @@
         {
           "name": "externally-access-tooltip-data",
           "path": "/example/Tooltip/externally-access-tooltip-data",
-          "checksum": "088bc21c19ddd2afb81db32e9b9daff9"
+          "checksum": "9b67687b027aac91c010ab539e47c4bd"
         },
         {
           "name": "invert-variant",

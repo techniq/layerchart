@@ -114,32 +114,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 66,
+          "lineNumber": 58,
           "line": "<Chart"
         },
         {
           "component": "Legend",
-          "lineNumber": 78,
+          "lineNumber": 70,
           "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
         },
         {
           "component": "Layer",
-          "lineNumber": 80,
+          "lineNumber": 72,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 81,
+          "lineNumber": 73,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 82,
+          "lineNumber": 74,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 99,
+          "lineNumber": 92,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -665,14 +665,14 @@
       "component": "Density",
       "path": "/docs/components/Density/walmart",
       "lineNumber": 45,
-      "line": "<GeoPath geojson={statemesh} class=\"fill-none stroke-surface-content/30\" strokeWidth={0.5} />"
+      "line": "<GeoPath"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 46,
-      "line": "<GeoPath geojson={nation} class=\"fill-none stroke-surface-content\" strokeWidth={1} />"
+      "lineNumber": 50,
+      "line": "<GeoPath"
     },
     {
       "example": "earthquake-globe",
@@ -818,21 +818,21 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 81,
+      "lineNumber": 73,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 83,
+      "lineNumber": 75,
       "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 89,
+      "lineNumber": 81,
       "line": "<GeoPath"
     },
     {
@@ -1326,6 +1326,20 @@
       "line": "<GeoPath"
     },
     {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 39,
+      "line": "<GeoPath geojson={nation} class=\"stroke-none\" />"
+    },
+    {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 69,
+      "line": "<GeoPath geojson={nation} class=\"fill-none stroke-[#2f2f2f]\" strokeWidth={1.25} />"
+    },
+    {
       "example": "geo-routes",
       "component": "Spline",
       "path": "/docs/components/Spline/geo-routes",
@@ -1354,5 +1368,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-03-31T03:03:46.711Z"
+  "updatedAt": "2026-04-01T13:16:18.058Z"
 }

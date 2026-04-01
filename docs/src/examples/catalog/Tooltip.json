@@ -2322,6 +2322,55 @@
       "line": "<Tooltip.Item label=\"value\" value={format(data.value, 'decimal')} />"
     },
     {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 58,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 60,
+      "line": "<Tooltip.Header>{data.label}</Tooltip.Header>"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 61,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 63,
+      "line": "<Tooltip.Item label=\"Value\" value={data.end} format=\"currencyRound\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 65,
+      "line": "<Tooltip.Item label=\"Start\" value={data.start} format=\"currencyRound\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 66,
+      "line": "<Tooltip.Item"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 71,
+      "line": "<Tooltip.Item label=\"End\" value={data.end} format=\"currencyRound\" valueAlign=\"right\" />"
+    },
+    {
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-candlestick-bars",
@@ -3830,35 +3879,35 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 63,
+      "lineNumber": 72,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 65,
+      "lineNumber": 74,
       "line": "<Tooltip.Header>{data.city}, {data.state}</Tooltip.Header>"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 66,
+      "lineNumber": 75,
       "line": "<Tooltip.List>"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 67,
+      "lineNumber": 76,
       "line": "<Tooltip.Item label=\"Type\" value={data.type} />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 68,
+      "lineNumber": 77,
       "line": "<Tooltip.Item label=\"Opened\" value={data.date} format=\"day\" />"
     },
     {
@@ -4145,7 +4194,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 99,
+      "lineNumber": 92,
       "line": "<Tooltip.Root>"
     },
     {
@@ -6487,5 +6536,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-03-31T12:30:01.286Z"
+  "updatedAt": "2026-04-01T13:16:19.842Z"
 }

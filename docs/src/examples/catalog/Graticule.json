@@ -67,7 +67,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 82,
+      "lineNumber": 74,
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
@@ -169,5 +169,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-03-26T19:56:43.290Z"
+  "updatedAt": "2026-04-01T13:16:18.234Z"
 }

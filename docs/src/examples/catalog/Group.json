@@ -78,11 +78,39 @@
   ],
   "usage": [
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 30,
+      "line": "<Group>"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 34,
+      "line": "<Group y={20}>"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 89,
+      "line": "<Group y={16}>"
+    },
+    {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/docs/components/Arc/partial-arc",
       "lineNumber": 14,
       "line": "<Group y={16}>"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 34,
+      "line": "<Group y={20}>"
     },
     {
       "example": "gradient-with-text",
@@ -111,6 +139,20 @@
       "path": "/docs/components/Area/ridgeline-kde",
       "lineNumber": 171,
       "line": "<Group y={rowY}>"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 199,
+      "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 201,
+      "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
     },
     {
       "example": "multiple-years",
@@ -358,5 +400,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:21.136Z"
+  "updatedAt": "2026-04-01T13:16:18.283Z"
 }

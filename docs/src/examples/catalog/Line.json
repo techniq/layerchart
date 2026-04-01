@@ -186,10 +186,94 @@
   ],
   "usage": [
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 37,
+      "line": "<Line"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 50,
+      "line": "<Line"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 74,
+      "line": "<Line"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 84,
+      "line": "<Line"
+    },
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 94,
+      "line": "<Line"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 81,
+      "line": "<Line"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 107,
+      "line": "<Line"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 127,
+      "line": "<Line"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 64,
+      "line": "<Line"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 88,
+      "line": "<Line"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 99,
+      "line": "<Line"
+    },
+    {
       "example": "markers",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/markers",
       "lineNumber": 29,
+      "line": "<Line"
+    },
+    {
+      "example": "waterfall",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/waterfall",
+      "lineNumber": 87,
       "line": "<Line"
     },
     {
@@ -361,5 +445,5 @@
       "line": "<line x1={0} y1={0} x2={0} y2={-len} class=\"stroke-success\" stroke-width={2} />"
     }
   ],
-  "updatedAt": "2026-03-31T12:30:00.324Z"
+  "updatedAt": "2026-04-01T13:16:18.498Z"
 }
