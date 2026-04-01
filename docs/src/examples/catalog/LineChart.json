@@ -38,6 +38,18 @@
       ]
     },
     {
+      "name": "brush-pan-zoom",
+      "title": "brush pan zoom",
+      "path": "/docs/components/LineChart/brush-pan-zoom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "curve",
       "title": "curve",
       "path": "/docs/components/LineChart/curve",
@@ -146,28 +158,18 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 17,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
+          "lineNumber": 12,
+          "line": "<LineChart"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 19,
-          "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
+          "lineNumber": 22,
+          "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
         },
         {
           "component": "Spline",
-          "lineNumber": 21,
+          "lineNumber": 24,
           "line": "<Spline stroke={gradient} />"
-        },
-        {
-          "component": "Highlight",
-          "lineNumber": 28,
-          "line": "<Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />"
-        },
-        {
-          "component": "Tooltip",
-          "lineNumber": 33,
-          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -288,6 +290,18 @@
       ]
     },
     {
+      "name": "motion-tween",
+      "title": "motion tween",
+      "path": "/docs/components/LineChart/motion-tween",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 14,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "null-dashed-gaps",
       "title": "null dashed gaps",
       "path": "/docs/components/LineChart/null-dashed-gaps",
@@ -357,6 +371,81 @@
           "component": "LineChart",
           "lineNumber": 14,
           "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom",
+      "title": "pan zoom",
+      "path": "/docs/components/LineChart/pan-zoom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 9,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-custom-constrain",
+      "title": "pan zoom custom constrain",
+      "path": "/docs/components/LineChart/pan-zoom-custom-constrain",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-domain-extent",
+      "title": "pan zoom domain extent",
+      "path": "/docs/components/LineChart/pan-zoom-domain-extent",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-dynamic-data",
+      "title": "pan zoom dynamic data",
+      "path": "/docs/components/LineChart/pan-zoom-dynamic-data",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 53,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "pan-zoom-with-overview",
+      "title": "pan zoom with overview",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 11,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 50,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 51,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
     },
@@ -562,12 +651,12 @@
         },
         {
           "component": "Highlight",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Highlight lines points={{ fill: activeSeriesColor }} />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 60,
+          "lineNumber": 64,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -584,8 +673,8 @@
         },
         {
           "component": "Labels",
-          "lineNumber": 35,
-          "line": "<Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />"
+          "lineNumber": 34,
+          "line": "<Labels seriesKey={context.series.highlightKey} offset={10} />"
         }
       ]
     },
@@ -609,6 +698,18 @@
         {
           "component": "LineChart",
           "lineNumber": 15,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
+      "name": "series-programmatic-control",
+      "title": "series programmatic control",
+      "path": "/docs/components/LineChart/series-programmatic-control",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 44,
           "line": "<LineChart"
         }
       ]
@@ -980,41 +1081,6 @@
       "line": "<LineChart"
     },
     {
-      "example": "histogram-date-time-count",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-count",
-      "lineNumber": 35,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-date-time-interval",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-date-time-interval",
-      "lineNumber": 39,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-horizontal",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 22,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-random-distribution",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-random-distribution",
-      "lineNumber": 18,
-      "line": "<LineChart"
-    },
-    {
-      "example": "histogram-vertical",
-      "component": "BarChart",
-      "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 22,
-      "line": "<LineChart"
-    },
-    {
       "example": "axis-labels-inside",
       "component": "LineChart",
       "path": "/docs/components/LineChart/axis-labels-inside",
@@ -1032,6 +1098,13 @@
       "example": "brush",
       "component": "LineChart",
       "path": "/docs/components/LineChart/brush",
+      "lineNumber": 9,
+      "line": "<LineChart"
+    },
+    {
+      "example": "brush-pan-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/brush-pan-zoom",
       "lineNumber": 9,
       "line": "<LineChart"
     },
@@ -1081,8 +1154,8 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 17,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
+      "lineNumber": 12,
+      "line": "<LineChart"
     },
     {
       "example": "gradient-threshold",
@@ -1141,6 +1214,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "motion-tween",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/motion-tween",
+      "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
       "example": "null-dashed-gaps",
       "component": "LineChart",
       "path": "/docs/components/LineChart/null-dashed-gaps",
@@ -1166,6 +1246,41 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/override-color",
       "lineNumber": 14,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom",
+      "lineNumber": 9,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-custom-constrain",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-custom-constrain",
+      "lineNumber": 15,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-domain-extent",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-domain-extent",
+      "lineNumber": 15,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-dynamic-data",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-dynamic-data",
+      "lineNumber": 53,
+      "line": "<LineChart"
+    },
+    {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 11,
       "line": "<LineChart"
     },
     {
@@ -1337,6 +1452,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "series-programmatic-control",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/series-programmatic-control",
+      "lineNumber": 44,
+      "line": "<LineChart"
+    },
+    {
       "example": "series-separate-data",
       "component": "LineChart",
       "path": "/docs/components/LineChart/series-separate-data",
@@ -1435,5 +1557,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:02.287Z"
+  "updatedAt": "2026-03-29T03:36:28.433Z"
 }

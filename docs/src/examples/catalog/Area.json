@@ -258,7 +258,7 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
         },
         {
           "component": "Layer",
@@ -481,6 +481,33 @@
       ]
     },
     {
+      "name": "oscilloscope-ridgeline",
+      "title": "oscilloscope ridgeline",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 136,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 147,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 150,
+          "line": "<Group y={rowY}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 151,
+          "line": "<Area"
+        }
+      ]
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Area/playground",
@@ -509,6 +536,80 @@
           "component": "Points",
           "lineNumber": 46,
           "line": "<Points {motion} r={3} class=\"fill-surface-100 stroke-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "ridgeline",
+      "title": "ridgeline",
+      "path": "/docs/components/Area/ridgeline",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 69,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 78,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 81,
+          "line": "<Group y={rowY}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 82,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 95,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 105,
+          "line": "<Axis placement=\"bottom\" rule />"
+        }
+      ]
+    },
+    {
+      "name": "ridgeline-kde",
+      "title": "ridgeline kde",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 159,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 168,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 171,
+          "line": "<Group y={rowY}>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 172,
+          "line": "<Area"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 185,
+          "line": "<Text"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 195,
+          "line": "<Axis placement=\"bottom\" rule />"
         }
       ]
     },
@@ -589,7 +690,7 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
         },
         {
           "component": "Layer",
@@ -626,7 +727,7 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
         },
         {
           "component": "Layer",
@@ -663,7 +764,7 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
         },
         {
           "component": "Layer",
@@ -700,7 +801,7 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltip={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
         },
         {
           "component": "Layer",
@@ -726,6 +827,33 @@
           "component": "Area",
           "lineNumber": 22,
           "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "tween-on-mount",
+      "title": "tween on mount",
+      "path": "/docs/components/Area/tween-on-mount",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 13,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={20} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 14,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 15,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 18,
+          "line": "<Area motion=\"tween\" line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
         }
       ]
     },
@@ -920,10 +1048,31 @@
       "line": "<Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 151,
+      "line": "<Area"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
       "lineNumber": 38,
+      "line": "<Area"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 82,
+      "line": "<Area"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 172,
       "line": "<Area"
     },
     {
@@ -983,6 +1132,13 @@
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 18,
+      "line": "<Area motion=\"tween\" line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/30\" />"
+    },
+    {
       "example": "with-labels",
       "component": "Area",
       "path": "/docs/components/Area/with-labels",
@@ -1029,7 +1185,7 @@
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/series-stack-gradient",
       "lineNumber": 43,
-      "line": "<Area {...getAreaProps(s, i)} fill={gradient} />"
+      "line": "<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />"
     },
     {
       "example": "threshold",
@@ -1102,6 +1258,13 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 52,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
       "example": "separate-chart-(clip-data-y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
@@ -1158,17 +1321,17 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 74,
       "line": "<Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
-      "lineNumber": 95,
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "lineNumber": 93,
       "line": "<Area"
     },
     {
@@ -1184,6 +1347,13 @@
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
       "lineNumber": 25,
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
+    },
+    {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 51,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "radial-line-with-areas",
@@ -1333,5 +1503,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-02-09T15:50:50.030Z"
+  "updatedAt": "2026-03-29T03:36:26.383Z"
 }

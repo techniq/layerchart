@@ -12,17 +12,16 @@ import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
  * Convert CSV rows in format: 'source,target,value' to SankeyGraph
  */
 export function sankeyGraphFromCsv(csv: string): SankeyGraph<any, any> {
-  const links = csvParseRows(csv, ([source, target, value /*, linkColor = color*/]) =>
-    source && target
-      ? {
-          source,
-          target,
-          // @ts-expect-error
-          value: !value || isNaN((value = +value)) ? 1 : +value,
-          // color: linkColor,
-        }
-      : null
-  );
+  const links = csvParseRows(csv, (row) => {
+    const [source, target, rawValue] = row;
+    if (!source || !target) return null;
+    const num = rawValue ? +rawValue : NaN;
+    return {
+      source,
+      target,
+      value: isNaN(num) ? 1 : num,
+    };
+  });
 
   return { nodes: sankeyNodesFromLinks(links), links };
 }

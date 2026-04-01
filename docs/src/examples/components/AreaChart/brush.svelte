@@ -11,9 +11,9 @@
 	x="date"
 	y="value"
 	brush
+	motion={{ type: 'spring' }}
 	props={{
-		area: { motion: { type: 'tween', duration: 200 } },
-		xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
+		xAxis: { tickMultiline: true },
 		canvas: {
 			class: 'cursor-crosshair'
 		},

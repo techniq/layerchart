@@ -3,58 +3,123 @@
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
   import * as Tooltip from '../tooltip/index.js';
-  import type { SimplifiedChartPropsObject } from './types.js';
-  import type { SeriesState } from '$lib/states/series.svelte.js';
   import { format } from '@layerstack/utils';
-  import { accessor, findRelatedData } from '$lib/utils/common.js';
+  import type { ChartChildrenProps } from '../ChartChildren.svelte';
 
   let {
     tooltipProps,
-    seriesState,
     canHaveTotal = false,
   }: {
-    tooltipProps?: SimplifiedChartPropsObject['tooltip'];
-    seriesState: SeriesState<any, any>;
+    tooltipProps?: NonNullable<ChartChildrenProps<any>['props']>['tooltip'];
     canHaveTotal?: boolean;
   } = $props();
 
   const context = getChartContext();
+
+  // Get visible series (already in correct order from TooltipContext)
+  const visibleSeries = $derived(context.tooltip.series.filter((s) => s.visible));
+
+  // Single-point modes find one specific data point (by proximity in both x+y),
+  // so the tooltip shows dimensional info (x, y, r) for that point.
+  // Multi-series modes find data at a single axis position, showing all series values.
+  const isSinglePointMode = $derived(
+    context.tooltip.mode === 'quadtree' || context.tooltip.mode === 'voronoi'
+  );
+
+  // For single-point mode: find the active series for the hovered data point
+  const activeSeries = $derived(
+    isSinglePointMode
+      ? (context.tooltip.series.find((s) => s.key === context.tooltip.data?.seriesKey) ??
+          context.tooltip.series[0])
+      : null
+  );
+
+  // Header label comes from x-axis (or y-axis for horizontal/vertical charts)
+  const headerLabel = $derived(
+    context.tooltip.data
+      ? context.valueAxis === 'y'
+        ? context.x(context.tooltip.data)
+        : context.y(context.tooltip.data)
+      : undefined
+  );
+
+  function isSeriesItemHighlighted(seriesKey: string | null | undefined) {
+    return seriesKey ? context.series.isHighlighted(seriesKey, true) : undefined;
+  }
 </script>
 
 <Tooltip.Root {context} {...tooltipProps?.root}>
-  {#snippet children({ data, payload })}
-    <Tooltip.Header value={payload[0].label} {format} {...tooltipProps?.header} />
-
-    <Tooltip.List {...tooltipProps?.list}>
-      <!-- Reverse series order so tooltip items match stacks -->
-      {#each payload as p, i (p.key ?? i)}
-        <Tooltip.Item
-          label={p.name}
-          value={p.value}
-          color={p.color}
-          {format}
-          valueAlign="right"
-          onpointerenter={() => (seriesState.highlightKey.current = p.key)}
-          onpointerleave={() => (seriesState.highlightKey.current = null)}
-          {...tooltipProps?.item}
-        />
-      {/each}
-
-      {#if canHaveTotal && payload.length > 1 && !tooltipProps?.hideTotal}
-        <Tooltip.Separator {...tooltipProps?.separator} children={undefined} />
-
-        <Tooltip.Item
-          label="total"
-          value={sum(seriesState.visibleSeries, (s) => {
-            const seriesTooltipData = s.data ? findRelatedData(s.data, data, context.x) : data;
-            const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
-            return seriesTooltipData ? valueAccessor(seriesTooltipData) : 0;
-          })}
-          format="integer"
-          valueAlign="right"
-          {...tooltipProps?.item}
+  {#snippet children({ data })}
+    {#if isSinglePointMode}
+      {#if activeSeries && activeSeries.key !== 'default'}
+        <Tooltip.Header
+          value={activeSeries.label ?? activeSeries.key}
+          color={activeSeries.color}
+          {...tooltipProps?.header}
         />
       {/if}
-    </Tooltip.List>
+
+      <Tooltip.List {...tooltipProps?.list}>
+        <Tooltip.Item
+          label={typeof context.config.x === 'string' ? context.config.x : 'x'}
+          value={context.x(data)}
+          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+          {format}
+          onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+          onpointerleave={() => (context.series.highlightKey = null)}
+          {...tooltipProps?.item}
+        />
+        <Tooltip.Item
+          label={typeof context.config.y === 'string' ? context.config.y : 'y'}
+          value={context.y(data)}
+          data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+          {format}
+          onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+          onpointerleave={() => (context.series.highlightKey = null)}
+          {...tooltipProps?.item}
+        />
+        {#if context.config.r}
+          <Tooltip.Item
+            label={typeof context.config.r === 'string' ? context.config.r : 'r'}
+            value={context.r(data)}
+            data-highlighted={isSeriesItemHighlighted(activeSeries?.key)}
+            {format}
+            onpointerenter={() => (context.series.highlightKey = activeSeries?.key ?? null)}
+            onpointerleave={() => (context.series.highlightKey = null)}
+            {...tooltipProps?.item}
+          />
+        {/if}
+      </Tooltip.List>
+    {:else}
+      <Tooltip.Header value={headerLabel} {format} {...tooltipProps?.header} />
+
+      <Tooltip.List {...tooltipProps?.list}>
+        {#each visibleSeries as s, i (s.key ?? i)}
+          <Tooltip.Item
+            label={s.label}
+            value={s.value}
+            color={s.color}
+            data-highlighted={context.series.isHighlighted(s.key, true)}
+            {format}
+            valueAlign="right"
+            onpointerenter={() => (context.series.highlightKey = s.key)}
+            onpointerleave={() => (context.series.highlightKey = null)}
+            {...tooltipProps?.item}
+          />
+        {/each}
+
+        {#if canHaveTotal && visibleSeries.length > 1 && !tooltipProps?.hideTotal}
+          <Tooltip.Separator {...tooltipProps?.separator} children={undefined} />
+
+          <Tooltip.Item
+            label="total"
+            value={sum(visibleSeries, (s) => s.value ?? 0)}
+            format="integer"
+            valueAlign="right"
+            {...tooltipProps?.item}
+          />
+        {/if}
+      </Tooltip.List>
+    {/if}
   {/snippet}
 </Tooltip.Root>

@@ -259,7 +259,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 78,
+      "lineNumber": 70,
       "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
     },
     {
@@ -529,6 +529,13 @@
       "line": "<Legend"
     },
     {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 28,
+      "line": "<Legend"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
@@ -536,5 +543,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.935Z"
+  "updatedAt": "2026-04-01T13:16:18.471Z"
 }

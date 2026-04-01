@@ -25,11 +25,10 @@
 			x="date"
 			y="value"
 			{xDomain}
-			brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+			brush={{ onBrushEnd: (e) => { xDomain = e.brush.x; e.brush.reset(); } }}
+			motion={{ type: 'spring' }}
 			props={{
-				area: { motion: { type: 'tween', duration: 200 } },
 				xAxis: {
-					motion: { type: 'tween', duration: 200 },
 					tickMultiline: true
 				}
 			}}
@@ -44,11 +43,10 @@
 			x="date"
 			y="value"
 			{xDomain}
-			brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+			brush={{ onBrushEnd: (e) => { xDomain = e.brush.x; e.brush.reset(); } }}
+			motion={{ type: 'spring' }}
 			props={{
-				area: { motion: { type: 'tween', duration: 200 } },
 				xAxis: {
-					motion: { type: 'tween', duration: 200 },
 					tickMultiline: true
 				}
 			}}

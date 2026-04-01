@@ -21,7 +21,7 @@
 		<Layer>
 			<Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-			{#if context.brush.isActive}
+			{#if context.brush.active}
 				<rect
 					x={context.brush.range.x}
 					width={context.brush.handleSize}

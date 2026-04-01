@@ -11,7 +11,7 @@
 		Layer,
 		Tooltip,
 		defaultChartPadding,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { Button } from 'svelte-ux';
 	import { sortFunc } from '@layerstack/utils';
@@ -26,7 +26,7 @@
 	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 
 	let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 
@@ -104,9 +104,64 @@
 	export { data };
 </script>
 
-<div class="h-[600px] grid grid-cols-[224px_1fr] relative">
+<div class="grid sm:h-[600px] sm:grid-cols-[1fr_224px] gap-3 relative">
 	<AnimatedGlobeControls {isPlaying} {selectedFeature} {play} {stop} />
-	<div class="overflow-auto scrollbar-none">
+
+	<Chart
+		geo={{
+			projection: geoOrthographic,
+			fitGeojson: countries
+		}}
+		transform={{
+			mode: 'projection',
+			motion: { type: 'spring', stiffness: 0.04 },
+			inertia: true
+		}}
+		tooltipContext={{ touchEvents: 'none' }}
+		bind:context
+		padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
+		height={600}
+	>
+		{#if debug}
+			<div class="absolute bottom-0 right-0 z-10 grid gap-1">
+				<!-- Debug components removed for simplified example -->
+			</div>
+		{/if}
+
+		<Layer {debug}>
+			<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+			<Graticule class="stroke-surface-content/20" />
+
+			{#each countries.features as country (country)}
+				<GeoPath
+					geojson={country}
+					class={cls(
+						'stroke-surface-content/50 fill-white cursor-pointer',
+						selectedFeature?.properties.name === country.properties.name
+							? 'stroke-primary-900 fill-primary'
+							: 'hover:fill-gray-200' // Canvas highlight handled below
+					)}
+					onclick={() => (selectedFeature = country)}
+					tooltip
+				/>
+			{/each}
+		</Layer>
+
+		{#if layer === 'canvas'}
+			<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+			<Layer type="canvas" pointerEvents={false}>
+				{#if context.tooltip.data}
+					<GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
+				{/if}
+			</Layer>
+		{/if}
+
+		<Tooltip.Root>
+			{context.tooltip.data.properties.name}
+		</Tooltip.Root>
+	</Chart>
+
+	<div class="h-75 sm:h-full overflow-auto scrollbar-none">
 		{#each countries.features.sort(sortFunc('properties.name')) as country (country)}
 			{@const isSelected = selectedFeature?.properties.name === country.properties.name}
 			<div use:scrollIntoView={{ condition: isSelected }}>
@@ -121,59 +176,4 @@
 			</div>
 		{/each}
 	</div>
-
-	<Chart
-		geo={{
-			projection: geoOrthographic,
-			fitGeojson: countries,
-			applyTransform: ['rotate']
-		}}
-		transform={{
-			motion: { type: 'spring', stiffness: 0.04 }
-		}}
-		tooltip={{ touchEvents: 'none' }}
-		bind:context
-		padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
-		height={600}
-	>
-		{#snippet children()}
-			{#if debug}
-				<div class="absolute bottom-0 right-0 z-10 grid gap-1">
-					<!-- Debug components removed for simplified example -->
-				</div>
-			{/if}
-
-			<Layer {debug}>
-				<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-				<Graticule class="stroke-surface-content/20" />
-
-				{#each countries.features as country (country)}
-					<GeoPath
-						geojson={country}
-						class={cls(
-							'stroke-surface-content/50 fill-white cursor-pointer',
-							selectedFeature?.properties.name === country.properties.name
-								? 'stroke-primary-900 fill-primary'
-								: 'hover:fill-gray-200' // Canvas highlight handled below
-						)}
-						onclick={() => (selectedFeature = country)}
-						tooltipContext={context.tooltip}
-					/>
-				{/each}
-			</Layer>
-
-			{#if layer === 'canvas'}
-				<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-				<Layer type="canvas" pointerEvents={false}>
-					{#if context.tooltip.data}
-						<GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
-					{/if}
-				</Layer>
-			{/if}
-
-			<Tooltip.Root>
-				{context.tooltip.data.properties.name}
-			</Tooltip.Root>
-		{/snippet}
-	</Chart>
 </div>

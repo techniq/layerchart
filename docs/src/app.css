@@ -96,11 +96,19 @@ pre {
 	/* Diff highlighting */
 	&.has-diff {
 		& .diff-add {
-			@apply bg-green-500/15 dark:bg-green-500/10 border-l-[3px] border-l-green-500 pl-2 -ml-2;
+			@apply bg-green-500/15 dark:bg-green-500/10;
+			&::before {
+				content: '+';
+				@apply text-green-500 w-4 pl-1 inline-block;
+			}
 		}
 
 		& .diff-remove {
-			@apply bg-red-500/15 dark:bg-red-500/10 border-l-[3px] border-l-red-500 pl-2 -ml-2 opacity-70;
+			@apply bg-red-500/15 dark:bg-red-500/10 opacity-70;
+			&::before {
+				content: '-';
+				@apply text-red-500 w-4 pl-1 inline-block;
+			}
 		}
 	}
 

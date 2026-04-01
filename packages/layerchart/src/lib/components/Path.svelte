@@ -87,7 +87,6 @@
 
   import Group from './Group.svelte';
   import { flattenPathData } from '../utils/path.js';
-  import { registerCanvasComponent } from './layers/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import MarkerWrapper from './MarkerWrapper.svelte';
@@ -107,6 +106,7 @@
     draw,
     fill,
     stroke,
+    strokeOpacity,
     strokeWidth,
     fillOpacity,
     class: className,
@@ -177,7 +177,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
+            styles: { fill, fillOpacity, stroke, strokeOpacity, strokeWidth, opacity },
             classes: cls('lc-path', className),
             style: restProps.style as string | undefined,
           }
@@ -189,8 +189,7 @@
   const strokeKey = createKey(() => stroke);
 
   if (layerCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'Path',
+    ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
       render,
       events: {
         click: restProps.onclick,
@@ -206,13 +205,14 @@
         fillKey.current,
         fillOpacity,
         strokeKey.current,
+        strokeOpacity,
         strokeWidth,
         opacity,
         className,
         tweenedState.current,
         restProps.style,
       ],
-    });
+    } });
   }
 
   let startPoint = $state<DOMPoint | undefined>();
@@ -279,6 +279,7 @@
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
+      stroke-opacity={strokeOpacity}
       stroke-width={strokeWidth}
       {opacity}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}

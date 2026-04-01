@@ -1076,6 +1076,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 105,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 195,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "stack",
       "component": "Area",
       "path": "/docs/components/Area/stack",
@@ -1158,6 +1172,20 @@
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "with-labels",
@@ -1646,7 +1674,7 @@
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: timeYear.every(1) }} />"
     },
     {
@@ -1667,7 +1695,7 @@
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush-multiline",
-      "lineNumber": 48,
+      "lineNumber": 47,
       "line": "<Axis placement=\"bottom\" rule grid ticks={{ interval: timeYear.every(1) }} />"
     },
     {
@@ -1685,6 +1713,13 @@
       "line": "<Axis"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 242,
+      "line": "<Axis"
+    },
+    {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/docs/components/BarChart/custom-chart",
@@ -1697,6 +1732,13 @@
       "path": "/docs/components/BarChart/custom-chart",
       "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 245,
+      "line": "<Axis"
     },
     {
       "example": "single-stack-with-indicator",
@@ -2252,6 +2294,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -2672,6 +2728,90 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" grid rule />"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 39,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 46,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 47,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 44,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 45,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 62,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 63,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
@@ -2717,14 +2857,28 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 44,
+      "lineNumber": 55,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 45,
+      "lineNumber": 56,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 51,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -2784,16 +2938,16 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 65,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 66,
       "line": "<Axis placement=\"bottom\" />"
     },
@@ -2810,6 +2964,76 @@
       "path": "/docs/components/BrushContext/tooltip-interop",
       "lineNumber": 42,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 42,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" format={(d) => 'Week ' + d} rule />"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} rule />"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 40,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 41,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
@@ -2868,6 +3092,48 @@
       "line": "<Axis"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "styling-using-attributes",
       "component": "Circle",
       "path": "/docs/components/Circle/styling-using-attributes",
@@ -2907,6 +3173,188 @@
       "component": "Circle",
       "path": "/docs/components/Circle/styling-using-css-variables",
       "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 11,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 21,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 22,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 19,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3085,6 +3533,20 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
       "example": "scatter",
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
@@ -3097,6 +3559,97 @@
       "path": "/docs/components/Hull/scatter",
       "lineNumber": 37,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"bottom\" label=\"GDP per capita (USD)\" rule />"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"left\" label=\"Life expectancy (years)\" rule />"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 65,
+      "line": "<Axis placement=\"bottom\" label=\"Distance from Sun (million km)\" rule />"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 78,
+      "line": "<Axis placement=\"bottom\" label=\"Wins\" rule />"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 79,
+      "line": "<Axis placement=\"left\" label=\"Points scored\" rule />"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 73,
+      "line": "<Axis placement=\"bottom\" label=\"Inauguration\" rule />"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 74,
+      "line": "<Axis placement=\"left\" label=\"Historical rating\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "styling-using-attributes",
@@ -3307,6 +3860,160 @@
       "path": "/docs/components/Points/with-tooltip-and-highlight",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 100,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 101,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 30,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "styling-using-attributes",
@@ -3648,14 +4355,14 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3799,6 +4506,20 @@
       "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -3853,6 +4574,48 @@
       "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "lineNumber": 22,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 28,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 23,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "anchor-location",
@@ -4133,7 +4896,126 @@
       "path": "/docs/components/Tooltip/stacked-area",
       "lineNumber": 59,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 53,
+      "line": "<Axis"
+    },
+    {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 60,
+      "line": "<Axis"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 266,
+      "line": "<Axis placement=\"bottom\" format={formatDistance} />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 19,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 20,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 37,
+      "line": "<Axis placement=\"bottom\" />"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 38,
+      "line": "<Axis placement=\"left\" />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 56,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 57,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 51,
+      "line": "<Axis placement=\"bottom\" grid rule />"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 49,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 50,
+      "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-02-13T15:08:00.588Z"
+  "updatedAt": "2026-04-01T13:16:16.581Z"
 }

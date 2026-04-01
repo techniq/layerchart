@@ -62,7 +62,10 @@ const components = defineCollection({
 		const catalogPath = join(process.cwd(), `src/examples/catalog/${path}.json`);
 		let catalogFirstExample: string | undefined;
 		if (existsSync(catalogPath)) {
-			toc.push({ id: 'examples', text: 'Examples', level: 2 });
+			// Only add "Examples" TOC entry if not already present from markdown headings
+			if (!toc.some((t) => t.id === 'examples')) {
+				toc.push({ id: 'examples', text: 'Examples', level: 2 });
+			}
 			try {
 				const catalog = JSON.parse(readFileSync(catalogPath, 'utf-8'));
 				catalogFirstExample = catalog.examples?.[0]?.name;
@@ -153,6 +156,7 @@ const guides = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string().optional(),
+		category: z.string().optional(),
 		order: z.number().optional(),
 		draft: z.boolean().default(false),
 		content: z.string()

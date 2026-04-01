@@ -7,18 +7,26 @@ related: [Bars, Highlight, RectClipPath]
 
 ## Usage
 
+### Pixel mode
+
+Pass numeric pixel values for `x`, `y`, `width`, and `height` to draw rectangles at exact positions.
+
 :example{ name="styling-using-classes" showCode }
 
-<!-- ## Examples
+### Data mode
 
-### Styling using classes
+Pass string property names or accessor functions to edge props (`x0`, `x1`, `y0`, `y1`) to derive rectangle bounds from data. The component renders one rect per data item, ideal for histograms and bar-like layouts.
 
-:example{ name="styling-using-classes" }
+:example{ name="data-mode-edge" showCode }
 
-### Styling using attributes
+### Color via ordinal scale
 
-:example{ name="styling-using-attributes" }
+Use `fill` with a data property name to color each rect through the chart's color scale.
 
-### Styling using CSS variables
+:example{ name="color-via-ordinal-scale" showCode }
 
-:example{ name="styling-using-css-variables" } -->
+### Color via threshold scale
+
+Use a threshold scale to color rects based on value ranges.
+
+:example{ name="color-via-threshold-scale" showCode }

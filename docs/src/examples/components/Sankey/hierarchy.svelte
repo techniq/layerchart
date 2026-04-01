@@ -79,8 +79,7 @@
 						stroke={config.linkColorBy === 'static'
 							? undefined
 							: colorScale(link[config.linkColorBy][config.nodeColorBy])}
-						stroke-opacity={highlightLinkIndexes.length &&
-						!highlightLinkIndexes.includes(link.index)
+						strokeOpacity={highlightLinkIndexes.length && !highlightLinkIndexes.includes(link.index)
 							? linkOpacity.inactive
 							: linkOpacity.default}
 						strokeWidth={link.width}

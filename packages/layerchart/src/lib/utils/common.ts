@@ -2,7 +2,7 @@ import type { Component, ComponentProps } from 'svelte';
 import { get } from '@layerstack/utils';
 
 import type Chart from '../components/Chart.svelte';
-import type { SimplifiedChartProps } from '$lib/components/charts/types.js';
+import type { ChartProps } from '$lib/components/Chart.svelte';
 
 export type Accessor<TData = any> =
   | number
@@ -41,11 +41,11 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
   return [];
 }
 
-export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
+export function defaultChartPadding<TData>(
   options:
     | {
-        axis?: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'];
-        legend?: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend'];
+        axis?: ChartProps<TData>['axis'];
+        legend?: ChartProps<TData>['legend'];
         top?: number;
         left?: number;
         bottom?: number;
@@ -72,6 +72,10 @@ export function defaultChartPadding<TData, SeriesComponent extends Component, TS
  * Handles complex objects such as `Date` by invoking `.valueOf()`
  */
 export function findRelatedData(data: any[], original: any, accessor: Function) {
+  if (data.includes(original)) {
+    return original;
+  }
+
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });

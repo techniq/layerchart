@@ -14,7 +14,7 @@
 		xNice
 		y="date"
 		padding={25}
-		tooltip={{ mode: 'quadtree-y' }}
+		tooltipContext={{ mode: 'quadtree-y' }}
 		height={600}
 		width={400}
 	>

@@ -6,6 +6,7 @@ import type { ComponentProps } from 'svelte';
 import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
 import Arc from './Arc.svelte';
 import Text from './Text.svelte';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 
 const defaultProps: Partial<ComponentProps<typeof Arc>> = {
   fill: 'currentColor',
@@ -492,71 +493,63 @@ describe(`Arc`, () => {
       await expect.element(el).toHaveClass('stroke-surface-content/10');
     });
 
-    // tooltipContext + data
-    it('should call tooltipContext.show on pointer enter with data', async () => {
-      const mockTooltipContext = {
-        show: vi.fn(),
-        hide: vi.fn(),
-        x: 0,
-        y: 0,
-        data: null,
-        payload: [],
-        mode: 'manual' as const,
-        isHoveringTooltipArea: false,
-        isHoveringTooltipContent: false,
-      };
+    // tooltip context integration
+    it('should call tooltip.show on pointer enter with data', async () => {
       const testData = { label: 'Test', value: 50 };
+      let chartContext: ChartState<any, any, any> | undefined;
 
       render(TestHarness, {
         component: Arc,
+        chartProps: { tooltipContext: { mode: 'manual' } },
         componentProps: {
           ...defaultProps,
           value: 50,
           fill: 'blue',
-          tooltipContext: mockTooltipContext,
+          tooltip: true,
           data: testData,
         },
-      });
-
-      const el = page.getByTestId(componentTestId);
-      await expect.element(el).toBeInTheDocument();
-      await el.hover();
-
-      expect(mockTooltipContext.show).toHaveBeenCalled();
-      expect(mockTooltipContext.show.mock.calls[0][1]).toEqual(testData);
-    });
-
-    it('should call tooltipContext.hide on pointer leave', async () => {
-      const mockTooltipContext = {
-        show: vi.fn(),
-        hide: vi.fn(),
-        x: 0,
-        y: 0,
-        data: null,
-        payload: [],
-        mode: 'manual' as const,
-        isHoveringTooltipArea: false,
-        isHoveringTooltipContent: false,
-      };
-
-      render(TestHarness, {
-        component: Arc,
-        componentProps: {
-          ...defaultProps,
-          value: 50,
-          fill: 'blue',
-          tooltipContext: mockTooltipContext,
-          data: { value: 50 },
+        oncontext: (ctx: ChartState<any, any, any>) => {
+          chartContext = ctx;
         },
       });
 
       const el = page.getByTestId(componentTestId);
       await expect.element(el).toBeInTheDocument();
+
+      const tooltipShowSpy = vi.spyOn(chartContext!.tooltip, 'show');
+      await el.hover();
+
+      expect(tooltipShowSpy).toHaveBeenCalled();
+      expect(tooltipShowSpy.mock.calls[0][1]).toEqual(testData);
+    });
+
+    it('should call tooltip.hide on pointer leave', async () => {
+      let chartContext: ChartState<any, any, any> | undefined;
+
+      render(TestHarness, {
+        component: Arc,
+        chartProps: { tooltipContext: { mode: 'manual' } },
+        componentProps: {
+          ...defaultProps,
+          value: 50,
+          fill: 'blue',
+          tooltip: true,
+          data: { value: 50 },
+        },
+        oncontext: (ctx: ChartState<any, any, any>) => {
+          chartContext = ctx;
+        },
+      });
+
+      const el = page.getByTestId(componentTestId);
+      await expect.element(el).toBeInTheDocument();
+
+      const tooltipHideSpy = vi.spyOn(chartContext!.tooltip, 'hide');
       await el.hover();
       // Move away from the element to trigger pointer leave
       await page.getByTestId('test-lc-chart').hover({ position: { x: 0, y: 0 } });
 
-      expect(mockTooltipContext.hide).toHaveBeenCalled();
+      expect(tooltipHideSpy).toHaveBeenCalled();
     });
 
     // fill

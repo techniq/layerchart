@@ -10,15 +10,7 @@
 	import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoPath,
-		Graticule,
-		Legend,
-		Layer,
-		Tooltip,
-		type ChartContextValue
-	} from 'layerchart';
+	import { Chart, GeoPath, Graticule, Legend, Layer, Tooltip, type ChartState } from 'layerchart';
 
 	import GeoPathEclipsesControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { format } from '@layerstack/utils';
@@ -33,7 +25,7 @@
 	const countries = feature(topology, topology.objects.countries);
 	const eclipses = feature(eclipsesData, eclipsesData.objects.eclipses);
 
-	let context = $state<ChartContextValue>(null!);
+	let context = $state<ChartState>(null!);
 
 	let velocity = $state(3);
 	const timer = new TimerState({
@@ -66,9 +58,9 @@
 <Chart
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'projection' }}
 	ondragstart={timer.stop}
 	bind:context
 	padding={{ top: 60 }}
@@ -89,6 +81,7 @@
 				<GeoPath
 					geojson={feature}
 					fill={hasColor ? colorScale(feature.properties.Date) : undefined}
+					stroke="none"
 					class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
 					onpointermove={(e) => context.tooltip.show(e, feature.properties)}
 					onpointerleave={(e) => context.tooltip.hide()}

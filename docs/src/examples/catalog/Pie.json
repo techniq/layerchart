@@ -594,17 +594,17 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<Layer center>"
         },
         {
           "component": "Pie",
-          "lineNumber": 22,
-          "line": "<Pie tooltipContext={context.tooltip} />"
+          "lineNumber": 21,
+          "line": "<Pie tooltip />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -847,8 +847,8 @@
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 22,
-      "line": "<Pie tooltipContext={context.tooltip} />"
+      "lineNumber": 21,
+      "line": "<Pie tooltip />"
     },
     {
       "example": "tooltip-with-arcs-slot",
@@ -865,5 +865,5 @@
       "line": "<Pie motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.144Z"
+  "updatedAt": "2026-03-02T17:24:38.171Z"
 }

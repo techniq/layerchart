@@ -37,15 +37,80 @@
           "line": "<Text value=\"point\" textAnchor=\"middle\" verticalAnchor=\"start\" class=\"text-xs\" dy={12} />"
         }
       ]
+    },
+    {
+      "name": "data-mode",
+      "title": "data mode",
+      "path": "/docs/components/Group/data-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 14,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 30, bottom: 20, left: 24, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 15,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 16,
+          "line": "<Axis placement=\"bottom\" rule />"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 18,
+          "line": "<Group x=\"date\" y=\"value\">"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 19,
+          "line": "<Circle r={4} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 20,
+          "line": "<Text value=\"label\" textAnchor=\"middle\" dy={-2} class=\"text-xs fill-surface-content\" />"
+        }
+      ]
     }
   ],
   "usage": [
+    {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 30,
+      "line": "<Group>"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 34,
+      "line": "<Group y={20}>"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 89,
+      "line": "<Group y={16}>"
+    },
     {
       "example": "partial-arc",
       "component": "Arc",
       "path": "/docs/components/Arc/partial-arc",
       "lineNumber": 14,
       "line": "<Group y={16}>"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 34,
+      "line": "<Group y={20}>"
     },
     {
       "example": "gradient-with-text",
@@ -55,11 +120,74 @@
       "line": "<Group y={20}>"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 150,
+      "line": "<Group y={rowY}>"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 81,
+      "line": "<Group y={rowY}>"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 171,
+      "line": "<Group y={rowY}>"
+    },
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 199,
+      "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 201,
+      "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
+    },
+    {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Group y={140 * i}>"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 45,
+      "line": "<Group"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 46,
+      "line": "<Group"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 128,
+      "line": "<Group"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 126,
+      "line": "<Group"
     },
     {
       "example": "basic",
@@ -109,6 +237,13 @@
       "path": "/docs/components/Group/basic",
       "lineNumber": 12,
       "line": "<Group x={100} y={100}>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 18,
+      "line": "<Group x=\"date\" y=\"value\">"
     },
     {
       "example": "basic",
@@ -184,7 +319,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 100,
+      "lineNumber": 99,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
@@ -265,5 +400,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.844Z"
+  "updatedAt": "2026-04-01T13:16:18.283Z"
 }

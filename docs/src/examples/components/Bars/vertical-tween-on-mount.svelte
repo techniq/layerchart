@@ -32,11 +32,10 @@
 		<Axis placement="bottom" rule />
 		{#if show}
 			<Bars
-				initialY={300 - 24}
-				initialHeight={0}
 				motion={{
-					y: { type: 'tween', duration: 500, easing: cubicInOut },
-					height: { type: 'tween', duration: 500, easing: cubicInOut }
+					type: 'tween',
+					duration: 500,
+					easing: cubicInOut
 				}}
 				strokeWidth={1}
 				class="fill-primary"

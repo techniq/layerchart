@@ -14,7 +14,7 @@ const apiFiles = import.meta.glob<string>('/src/generated/api/*.json', {
 	import: 'default'
 });
 
-const guideSources = import.meta.glob<string>('/src/content/guides/*.md', {
+const guideSources = import.meta.glob<string>('/src/content/guides/**/*.md', {
 	eager: true,
 	query: '?raw',
 	import: 'default'
@@ -32,22 +32,22 @@ const catalogFiles = import.meta.glob<string>('/src/examples/catalog/*.json', {
 	import: 'default'
 });
 
-const BASE_URL = 'https://layerchart.com';
-
 /** Generate URL for a docs page */
-function docsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
+function docsUrl(baseUrl: string, type: 'components' | 'utils' | 'guides', slug: string): string {
 	if (type === 'guides') {
-		return `${BASE_URL}/docs/${slug}`;
+		return `${baseUrl}/docs/${slug}`;
 	}
-	return `${BASE_URL}/docs/${type}/${slug}`;
+	return `${baseUrl}/docs/${type}/${slug}`;
 }
 
 /** Generate URL for an llms.txt endpoint */
-function llmsUrl(type: 'components' | 'utils' | 'guides', slug: string): string {
-	return `${docsUrl(type, slug)}/llms.txt`;
+function llmsUrl(baseUrl: string, type: 'components' | 'utils' | 'guides', slug: string): string {
+	return `${docsUrl(baseUrl, type, slug)}/llms.txt`;
 }
 
 interface GenerateMarkdownOptions {
+	/** Base URL for the site (e.g. 'https://layerchart.com') */
+	baseUrl: string;
 	/** Heading level for the title. 1 = "#", 2 = "##", etc. Default: 1 */
 	headingLevel?: number;
 	/** Whether to inline all example code blocks. Default: false */
@@ -61,7 +61,8 @@ interface GenerateMarkdownOptions {
 function inlineExampleDirectives(
 	content: string,
 	slug: string,
-	type: 'components' | 'utils'
+	type: 'components' | 'utils',
+	baseUrl: string
 ): string {
 	// Remove HTML comments first to avoid inlining commented-out examples
 	content = content.replace(/<!--[\s\S]*?-->/g, '');
@@ -75,7 +76,7 @@ function inlineExampleDirectives(
 			if (raw) {
 				return '```svelte\n' + trimCode(raw) + '\n```';
 			}
-			return `See example: [${component}/${name}](${docsUrl('components', component)}/${name})`;
+			return `See example: [${component}/${name}](${docsUrl(baseUrl, 'components', component)}/${name})`;
 		}
 	);
 
@@ -94,7 +95,7 @@ function inlineExampleDirectives(
 /**
  * Process markdown content for LLMs by removing custom syntax and converting to vanilla markdown
  */
-function processMarkdownContent(content: string): string {
+function processMarkdownContent(content: string, baseUrl: string): string {
 	// Remove frontmatter (YAML between --- markers at start of file)
 	content = content.replace(/^---\n[\s\S]*?\n---\n*/, '');
 
@@ -187,7 +188,7 @@ function processMarkdownContent(content: string): string {
 	content = content.replace(
 		/:example\{component="([^"]+)"\s+name="([^"]+)"[^}]*\}/g,
 		(_match, comp: string, name: string) =>
-			`See example: [${comp}/${name}](${docsUrl('components', comp)}/${name})`
+			`See example: [${comp}/${name}](${docsUrl(baseUrl, 'components', comp)}/${name})`
 	);
 
 	// Convert remaining :example directives (same-component, not inlined) to plain text
@@ -242,9 +243,9 @@ ${rows.join('\n')}`;
  */
 export function generateComponentMarkdown(
 	component: (typeof allComponents)[number],
-	options: GenerateMarkdownOptions = {}
+	options: GenerateMarkdownOptions
 ): string {
-	const { headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
+	const { baseUrl, headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
 	const h = (level: number) => '#'.repeat(level);
 
 	const sections: string[] = [];
@@ -267,9 +268,9 @@ export function generateComponentMarkdown(
 	if (component.content) {
 		let rawContent = component.content;
 		if (shouldInlineExamples) {
-			rawContent = inlineExampleDirectives(rawContent, component.slug, 'components');
+			rawContent = inlineExampleDirectives(rawContent, component.slug, 'components', baseUrl);
 		}
-		const processed = processMarkdownContent(rawContent);
+		const processed = processMarkdownContent(rawContent, baseUrl);
 		if (processed) {
 			sections.push(processed);
 		}
@@ -303,46 +304,17 @@ export function generateComponentMarkdown(
 		if (examples && examples.length > 0) {
 			sections.push(`${h(headingLevel + 1)} Examples`);
 			const exampleLinks = examples
-				.map((ex) => `- [${ex.name}](${docsUrl('components', component.slug)}/${ex.name})`)
+				.map((ex) => `- [${ex.name}](${docsUrl(baseUrl, 'components', component.slug)}/${ex.name})`)
 				.join('\n');
 			sections.push(exampleLinks);
 		}
-
-		// TODO: should we include usage examples?
-		// Additional usage in other component examples (deduplicated)
-		// const usage = catalog.usage as Array<{ example: string; component: string; path: string }>;
-		// if (usage && usage.length > 0) {
-		// 	const exampleNames = new Set(examples?.map((ex) => ex.name) ?? []);
-		// 	const seen = new Set<string>();
-		// 	const uniqueUsage = usage.filter((item) => {
-		// 		// Exclude if already shown in main examples
-		// 		if (item.component === catalog.component && exampleNames.has(item.example)) {
-		// 			return false;
-		// 		}
-		// 		const key = `${item.component}::${item.example}`;
-		// 		if (seen.has(key)) return false;
-		// 		seen.add(key);
-		// 		return true;
-		// 	});
-
-		// 	if (uniqueUsage.length > 0) {
-		// 		sections.push(`${h(headingLevel + 1)} Additional Usage`);
-		// 		const usageLinks = uniqueUsage
-		// 			.map(
-		// 				(u) =>
-		// 					`- [${u.component}/${u.example}](${BASE_URL}/docs/components/${u.component}/${u.example})`
-		// 			)
-		// 			.join('\n');
-		// 		sections.push(usageLinks);
-		// 	}
-		// }
 	}
 
 	// Related
 	if (component.related && component.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);
 		const relatedLinks = component.related
-			.map((r) => `- [${r}](${docsUrl('components', r)})`)
+			.map((r) => `- [${r}](${docsUrl(baseUrl, 'components', r)})`)
 			.join('\n');
 		sections.push(relatedLinks);
 	}
@@ -355,9 +327,9 @@ export function generateComponentMarkdown(
  */
 export function generateUtilMarkdown(
 	util: (typeof allUtils)[number],
-	options: GenerateMarkdownOptions = {}
+	options: GenerateMarkdownOptions
 ): string {
-	const { headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
+	const { baseUrl, headingLevel = 1, inlineExamples: shouldInlineExamples = false } = options;
 	const h = (level: number) => '#'.repeat(level);
 
 	const sections: string[] = [];
@@ -372,9 +344,9 @@ export function generateUtilMarkdown(
 	if (util.content) {
 		let rawContent = util.content;
 		if (shouldInlineExamples) {
-			rawContent = inlineExampleDirectives(rawContent, util.slug, 'utils');
+			rawContent = inlineExampleDirectives(rawContent, util.slug, 'utils', baseUrl);
 		}
-		const processed = processMarkdownContent(rawContent);
+		const processed = processMarkdownContent(rawContent, baseUrl);
 		if (processed) {
 			sections.push(processed);
 		}
@@ -383,7 +355,7 @@ export function generateUtilMarkdown(
 	// Related
 	if (util.related && util.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);
-		const relatedLinks = util.related.map((r) => `- [${r}](${docsUrl('utils', r)})`).join('\n');
+		const relatedLinks = util.related.map((r) => `- [${r}](${docsUrl(baseUrl, 'utils', r)})`).join('\n');
 		sections.push(relatedLinks);
 	}
 
@@ -450,7 +422,7 @@ export function generateGuideMarkdown(options: {
 			.join(' ');
 	}
 
-	const content = processMarkdownContent(raw);
+	const content = processMarkdownContent(raw, '');
 	return `# ${title}\n\n${content}`;
 }
 
@@ -486,6 +458,7 @@ function getAllExamplePaths(): string[] {
 }
 
 interface CollectionListOptions {
+	baseUrl: string;
 	title: string;
 	items: Array<{ slug: string; name: string; description?: string }>;
 	type: 'components' | 'utils' | 'guides';
@@ -495,7 +468,7 @@ interface CollectionListOptions {
  * Generate a markdown section listing collection items as links to their llms.txt endpoints.
  */
 function generateCollectionListSection(options: CollectionListOptions): string {
-	const { title, items, type } = options;
+	const { baseUrl, title, items, type } = options;
 
 	const fallbackLabel =
 		type === 'components' ? 'component' : type === 'utils' ? 'utility' : 'guide';
@@ -505,7 +478,7 @@ function generateCollectionListSection(options: CollectionListOptions): string {
 		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((item) => {
 			const description = item.description || `Documentation for ${item.name} ${fallbackLabel}`;
-			return `- [${item.name}](${llmsUrl(type, item.slug)}): ${description}`;
+			return `- [${item.name}](${llmsUrl(baseUrl, type, item.slug)}): ${description}`;
 		});
 
 	return `## ${title}\n\n${lines.join('\n')}`;
@@ -514,7 +487,7 @@ function generateCollectionListSection(options: CollectionListOptions): string {
 /**
  * Generate markdown for a single component example
  */
-export function generateExampleMarkdown(componentSlug: string, exampleName: string): string | null {
+export function generateExampleMarkdown(baseUrl: string, componentSlug: string, exampleName: string): string | null {
 	const raw = getExampleSource('components', componentSlug, exampleName);
 	if (!raw) return null;
 
@@ -547,7 +520,7 @@ export function generateExampleMarkdown(componentSlug: string, exampleName: stri
 	if (usedComponents.length > 0) {
 		sections.push('## Components');
 		const links = usedComponents
-			.map((comp) => `- [${comp.name}](${llmsUrl('components', comp.slug)})`)
+			.map((comp) => `- [${comp.name}](${llmsUrl(baseUrl, 'components', comp.slug)})`)
 			.join('\n');
 		sections.push(links);
 	}
@@ -558,7 +531,7 @@ export function generateExampleMarkdown(componentSlug: string, exampleName: stri
 /**
  * Generate the llms.txt index with links to all documentation
  */
-export function generateLlmsTxt(): string {
+export function generateLlmsTxt(baseUrl: string): string {
 	const sections: string[] = [];
 
 	// Header
@@ -570,12 +543,13 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 
 	// Guides
 	sections.push(
-		generateCollectionListSection({ title: 'Guides', items: getSortedGuides(), type: 'guides' })
+		generateCollectionListSection({ baseUrl, title: 'Guides', items: getSortedGuides(), type: 'guides' })
 	);
 
 	// Components
 	sections.push(
 		generateCollectionListSection({
+			baseUrl,
 			title: 'Components',
 			items: allComponents,
 			type: 'components'
@@ -584,7 +558,7 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 
 	// Utilities
 	sections.push(
-		generateCollectionListSection({ title: 'Utilities', items: allUtils, type: 'utils' })
+		generateCollectionListSection({ baseUrl, title: 'Utilities', items: allUtils, type: 'utils' })
 	);
 
 	// Examples
@@ -595,7 +569,7 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 		if (match) {
 			const [, componentName, exampleName] = match;
 			examples.push(
-				`- [${componentName}/${exampleName}](${llmsUrl('components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
+				`- [${componentName}/${exampleName}](${llmsUrl(baseUrl, 'components', `${componentName}/${exampleName}`)}): Example code for ${componentName}`
 			);
 		}
 	}
@@ -609,7 +583,7 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 /**
  * Generate the full llms.txt with all components and utilities
  */
-export function generateFullLlmsTxt(): string {
+export function generateFullLlmsTxt(baseUrl: string): string {
 	const sections: string[] = [];
 
 	// Header
@@ -620,7 +594,7 @@ export function generateFullLlmsTxt(): string {
 This file contains the complete LLM-optimized documentation for all components and utilities.`);
 
 	sections.push(
-		generateCollectionListSection({ title: 'Guides', items: getSortedGuides(), type: 'guides' })
+		generateCollectionListSection({ baseUrl, title: 'Guides', items: getSortedGuides(), type: 'guides' })
 	);
 
 	// Components section - full content
@@ -632,7 +606,7 @@ This file contains the complete LLM-optimized documentation for all components a
 		.sort((a, b) => a.name.localeCompare(b.name));
 
 	for (const component of sortedComponents) {
-		sections.push(generateComponentMarkdown(component, { headingLevel: 2 }));
+		sections.push(generateComponentMarkdown(component, { baseUrl, headingLevel: 2 }));
 	}
 
 	// Utilities section - full content
@@ -644,7 +618,7 @@ This file contains the complete LLM-optimized documentation for all components a
 		.sort((a, b) => a.name.localeCompare(b.name));
 
 	for (const util of sortedUtils) {
-		sections.push(generateUtilMarkdown(util, { headingLevel: 2 }));
+		sections.push(generateUtilMarkdown(util, { baseUrl, headingLevel: 2 }));
 	}
 
 	return sections.join('\n\n');

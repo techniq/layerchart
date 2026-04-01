@@ -23,7 +23,12 @@
 
 	let { onItemClick, class: className }: { onItemClick?: () => void; class?: string } = $props();
 
-	const guides = sortCollection(allGuides.filter((g) => !g.draft));
+	const filteredGuides = allGuides.filter((g) => !g.draft);
+	const guidesByCategory = flatGroup(filteredGuides, (d) => d.category?.toLowerCase()).sort(
+		sortFunc(([category]) => (category ? 1 : 0))
+	);
+
+	const collapsibleCategories = ['migrations'];
 
 	const componentsByCategory = flatGroup(allComponents, (d) => d.category?.toLowerCase())
 		.filter(([category]) => category !== 'examples')
@@ -76,11 +81,36 @@
 		<h2 class="flex gap-2 items-center mb-4 text-base font-semibold capitalize">
 			<LucideGlobe class="size-4 text-surface-content/70" /> Guides
 		</h2>
-		<div class="border-l border-surface-content/10">
-			{#each guides as guide}
-				{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
-			{/each}
-		</div>
+		{#each guidesByCategory as [category, guides]}
+			{#if category && collapsibleCategories.includes(category)}
+				<details class="ml-2 mb-6 last:mb-0 group" open={guides.some((g) => page.url.pathname.includes(`/docs/guides/${g.slug}`))}>
+					<summary class="text-surface-content/80 mb-3 text-sm font-medium capitalize cursor-pointer list-none flex items-center gap-1 select-none [&::-webkit-details-marker]:hidden">
+						<span class="transition-transform duration-200 group-open:rotate-90 text-surface-content/40">&#9656;</span>
+						{category}
+					</summary>
+					<div class="border-l border-surface-content/10">
+						{#each sortCollection(guides) as guide}
+							{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
+						{/each}
+					</div>
+				</details>
+			{:else if category}
+				<div class="ml-2 mb-6 last:mb-0">
+					<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
+					<div class="border-l border-surface-content/10">
+						{#each sortCollection(guides) as guide}
+							{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
+						{/each}
+					</div>
+				</div>
+			{:else}
+				<div class="ml-2 border-l border-surface-content/10 mb-6 last:mb-0">
+					{#each sortCollection(guides) as guide}
+						{@render navItem({ label: guide.name, path: `/docs/guides/${guide.slug}` })}
+					{/each}
+				</div>
+			{/if}
+		{/each}
 	</section>
 
 	<section>
@@ -88,7 +118,7 @@
 			<LucideBlocks class="size-4 text-surface-content/70" /> Components
 		</h2>
 		{#each componentsByCategory as [category, components]}
-			<div class="mb-6 last:mb-0">
+			<div class="ml-2 mb-6 last:mb-0">
 				<h3 class="text-surface-content/80 mb-3 text-sm font-medium capitalize">{category}</h3>
 				<div class="border-l border-surface-content/10">
 					{#each sortCollection(components) as component}
@@ -103,7 +133,7 @@
 		<h2 class="flex gap-2 items-center mb-3 text-base font-semibold capitalize">
 			<LucideParentheses class="size-4 text-surface-content/70" /> Utils
 		</h2>
-		<div class="border-l border-surface-content/10">
+		<div class="ml-2 border-l border-surface-content/10">
 			{#each allUtils as util}
 				{@render navItem({ label: util.name, path: `/docs/utils/${util.slug}` })}
 			{/each}

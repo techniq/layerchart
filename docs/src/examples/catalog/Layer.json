@@ -66,6 +66,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "clock",
+      "component": "Arc",
+      "path": "/docs/components/Arc/clock",
+      "lineNumber": 29,
+      "line": "<Layer center>"
+    },
+    {
       "example": "color-wheel",
       "component": "Arc",
       "path": "/docs/components/Arc/color-wheel",
@@ -84,6 +91,20 @@
       "component": "Arc",
       "path": "/docs/components/Arc/draggable-arc",
       "lineNumber": 14,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gauge",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge",
+      "lineNumber": 33,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gauge-gradient",
+      "component": "Arc",
+      "path": "/docs/components/Arc/gauge-gradient",
+      "lineNumber": 88,
       "line": "<Layer center>"
     },
     {
@@ -119,6 +140,13 @@
       "component": "Arc",
       "path": "/docs/components/Arc/segmented-arc-clip-mask",
       "lineNumber": 15,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "speedometer",
+      "component": "Arc",
+      "path": "/docs/components/Arc/speedometer",
+      "lineNumber": 33,
       "line": "<Layer center>"
     },
     {
@@ -213,10 +241,31 @@
       "line": "<Layer>"
     },
     {
+      "example": "oscilloscope-ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/oscilloscope-ridgeline",
+      "lineNumber": 147,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Area",
       "path": "/docs/components/Area/playground",
       "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "ridgeline",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline",
+      "lineNumber": 78,
+      "line": "<Layer>"
+    },
+    {
+      "example": "ridgeline-kde",
+      "component": "Area",
+      "path": "/docs/components/Area/ridgeline-kde",
+      "lineNumber": 168,
       "line": "<Layer>"
     },
     {
@@ -259,6 +308,13 @@
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
       "lineNumber": 17,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/tween-on-mount",
+      "lineNumber": 14,
       "line": "<Layer>"
     },
     {
@@ -545,7 +601,7 @@
       "example": "time-scale-brush",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
@@ -559,7 +615,7 @@
       "example": "time-scale-brush-multiline",
       "component": "Axis",
       "path": "/docs/components/Axis/time-scale-brush-multiline",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
@@ -577,10 +633,24 @@
       "line": "<Layer>"
     },
     {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 194,
+      "line": "<Layer>"
+    },
+    {
       "example": "custom-chart",
       "component": "BarChart",
       "path": "/docs/components/BarChart/custom-chart",
       "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 195,
       "line": "<Layer>"
     },
     {
@@ -857,6 +927,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "vertical-fixed-width",
+      "component": "Bars",
+      "path": "/docs/components/Bars/vertical-fixed-width",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
       "example": "vertical-gradient",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-gradient",
@@ -1068,6 +1145,48 @@
     },
     {
       "example": "basic",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/basic",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
+      "example": "horizontal",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/horizontal",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "pre-computed",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/pre-computed",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "styled",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/styled",
+      "lineNumber": 45,
+      "line": "<Layer>"
+    },
+    {
+      "example": "with-tooltip",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-tooltip",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "with-violin",
+      "component": "BoxPlot",
+      "path": "/docs/components/BoxPlot/with-violin",
+      "lineNumber": 61,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
       "lineNumber": 11,
@@ -1119,14 +1238,21 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 43,
+      "lineNumber": 54,
       "line": "<Layer>"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 70,
+      "lineNumber": 82,
+      "line": "<Layer>"
+    },
+    {
+      "example": "programmatic-control",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/programmatic-control",
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
@@ -1193,17 +1319,17 @@
       "line": "<Layer>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
+      "path": "/docs/components/BrushContext/synced-brushes",
       "lineNumber": 64,
       "line": "<Layer>"
     },
     {
-      "example": "sync-brushes-with-bind-xdomain",
+      "example": "synced-brushes",
       "component": "BrushContext",
-      "path": "/docs/components/BrushContext/sync-brushes-with-bind-xdomain",
-      "lineNumber": 94,
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "lineNumber": 92,
       "line": "<Layer>"
     },
     {
@@ -1217,7 +1343,7 @@
       "example": "90-days",
       "component": "Calendar",
       "path": "/docs/components/Calendar/90-days",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -1231,7 +1357,7 @@
       "example": "fixed-cell-size",
       "component": "Calendar",
       "path": "/docs/components/Calendar/fixed-cell-size",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1245,21 +1371,21 @@
       "example": "last-month",
       "component": "Calendar",
       "path": "/docs/components/Calendar/last-month",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
       "example": "multiple-years",
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
       "example": "responsive-cell-size-default",
       "component": "Calendar",
       "path": "/docs/components/Calendar/responsive-cell-size-default",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1267,6 +1393,41 @@
       "component": "Calendar",
       "path": "/docs/components/Calendar/rounded-cells",
       "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Cell",
+      "path": "/docs/components/Cell/basic",
+      "lineNumber": 41,
+      "line": "<Layer>"
+    },
+    {
+      "example": "circle",
+      "component": "Cell",
+      "path": "/docs/components/Cell/circle",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-scale",
+      "component": "Cell",
+      "path": "/docs/components/Cell/color-scale",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "punchcard",
+      "component": "Cell",
+      "path": "/docs/components/Cell/punchcard",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "rounded-insets",
+      "component": "Cell",
+      "path": "/docs/components/Cell/rounded-insets",
+      "lineNumber": 39,
       "line": "<Layer>"
     },
     {
@@ -1288,6 +1449,62 @@
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
       "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Chord",
+      "path": "/docs/components/Chord/basic",
+      "lineNumber": 23,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "directed",
+      "component": "Chord",
+      "path": "/docs/components/Chord/directed",
+      "lineNumber": 22,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "gradient",
+      "component": "Chord",
+      "path": "/docs/components/Chord/gradient",
+      "lineNumber": 72,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 53,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "ticks",
+      "component": "Chord",
+      "path": "/docs/components/Chord/ticks",
+      "lineNumber": 37,
+      "line": "<Layer center>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Circle",
+      "path": "/docs/components/Circle/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Circle",
+      "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 17,
       "line": "<Layer>"
     },
     {
@@ -1319,6 +1536,41 @@
       "line": "<Layer>"
     },
     {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 14,
+      "line": "<Layer>"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 12,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano-filled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled-interactive",
+      "lineNumber": 21,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano-lines",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-lines",
+      "lineNumber": 10,
+      "line": "<Layer>"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -1345,6 +1597,76 @@
       "path": "/docs/components/Dagre/tcp-state-diagram",
       "lineNumber": 47,
       "line": "<Layer center>"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 43,
+      "line": "<Layer>"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-ordinal-scale",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Ellipse",
+      "path": "/docs/components/Ellipse/data-mode",
+      "lineNumber": 17,
+      "line": "<Layer>"
     },
     {
       "example": "styling-using-attributes",
@@ -1518,14 +1840,14 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 146,
+      "lineNumber": 131,
       "line": "<Layer {debug}>"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 167,
+      "lineNumber": 152,
       "line": "<Layer type=\"canvas\" pointerEvents={false}>"
     },
     {
@@ -1560,7 +1882,7 @@
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 80,
+      "lineNumber": 72,
       "line": "<Layer>"
     },
     {
@@ -1581,7 +1903,7 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 103,
+      "lineNumber": 107,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -1595,7 +1917,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 102,
+      "lineNumber": 101,
       "line": "<Layer>"
     },
     {
@@ -1616,28 +1938,77 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 64,
+      "lineNumber": 65,
       "line": "<Layer>"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 112,
+      "lineNumber": 113,
       "line": "<Layer pointerEvents={false}>"
     },
     {
-      "example": "transform-projection",
+      "example": "transform-canvas-scale-extent",
       "component": "GeoPath",
-      "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 65,
+      "path": "/docs/components/GeoPath/transform-canvas-scale-extent",
+      "lineNumber": 34,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-globe-constrain",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-constrain",
+      "lineNumber": 35,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-globe-inertia",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-globe-inertia",
+      "lineNumber": 49,
       "line": "<Layer>"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 110,
+      "lineNumber": 66,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-projection",
+      "lineNumber": 111,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 65,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-world-canvas",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-canvas",
+      "lineNumber": 106,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 80,
+      "line": "<Layer>"
+    },
+    {
+      "example": "transform-world-projection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/transform-world-projection",
+      "lineNumber": 125,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -1693,7 +2064,7 @@
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 57,
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -1714,7 +2085,7 @@
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 54,
+      "lineNumber": 47,
       "line": "<Layer>"
     },
     {
@@ -1729,6 +2100,55 @@
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
       "lineNumber": 58,
+      "line": "<Layer>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 102,
+      "line": "<Layer>"
+    },
+    {
+      "example": "geojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/geojson-preview",
+      "lineNumber": 113,
+      "line": "<Layer>"
+    },
+    {
+      "example": "projection-playground",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/projection-playground",
+      "lineNumber": 72,
+      "line": "<Layer>"
+    },
+    {
+      "example": "satellite",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/satellite",
+      "lineNumber": 52,
+      "line": "<Layer>"
+    },
+    {
+      "example": "shapefile-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/shapefile-preview",
+      "lineNumber": 109,
+      "line": "<Layer>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 109,
+      "line": "<Layer>"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/topojson-preview",
+      "lineNumber": 120,
       "line": "<Layer>"
     },
     {
@@ -1770,7 +2190,7 @@
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 65,
+      "lineNumber": 68,
       "line": "<Layer>"
     },
     {
@@ -1900,6 +2320,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "data-mode",
+      "component": "Group",
+      "path": "/docs/components/Group/data-mode",
+      "lineNumber": 15,
+      "line": "<Layer>"
+    },
+    {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
@@ -1911,6 +2338,55 @@
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
       "lineNumber": 35,
+      "line": "<Layer>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 61,
+      "line": "<Layer>"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 75,
+      "line": "<Layer>"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
+      "example": "pixel-mode",
+      "component": "Image",
+      "path": "/docs/components/Image/pixel-mode",
+      "lineNumber": 6,
+      "line": "<Layer>"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 64,
+      "line": "<Layer>"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 77,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 72,
       "line": "<Layer>"
     },
     {
@@ -1933,6 +2409,27 @@
       "path": "/docs/components/Layer/all-3-layers",
       "lineNumber": 22,
       "line": "<Layer center type=\"html\">"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Line",
+      "path": "/docs/components/Line/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Line",
+      "path": "/docs/components/Line/data-mode",
+      "lineNumber": 17,
+      "line": "<Layer>"
     },
     {
       "example": "styling-using-attributes",
@@ -1988,6 +2485,13 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
       "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "pan-zoom-with-overview",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/pan-zoom-with-overview",
+      "lineNumber": 50,
       "line": "<Layer>"
     },
     {
@@ -2316,7 +2820,7 @@
       "example": "tooltip",
       "component": "Pie",
       "path": "/docs/components/Pie/tooltip",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Layer center>"
     },
     {
@@ -2453,9 +2957,30 @@
       "line": "<Layer>"
     },
     {
+      "example": "color-via-ordinal-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-ordinal-scale",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/color-via-threshold-scale",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
       "example": "cross",
       "component": "Polygon",
       "path": "/docs/components/Polygon/cross",
+      "lineNumber": 15,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Polygon",
+      "path": "/docs/components/Polygon/data-mode",
       "lineNumber": 15,
       "line": "<Layer>"
     },
@@ -2562,6 +3087,69 @@
       "component": "RadialGradient",
       "path": "/docs/components/RadialGradient/units",
       "lineNumber": 8,
+      "line": "<Layer>"
+    },
+    {
+      "example": "mandelbrot",
+      "component": "Raster",
+      "path": "/docs/components/Raster/mandelbrot",
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "math-functions",
+      "component": "Raster",
+      "path": "/docs/components/Raster/math-functions",
+      "lineNumber": 99,
+      "line": "<Layer>"
+    },
+    {
+      "example": "sampled",
+      "component": "Raster",
+      "path": "/docs/components/Raster/sampled",
+      "lineNumber": 14,
+      "line": "<Layer>"
+    },
+    {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
+      "example": "volcano",
+      "component": "Raster",
+      "path": "/docs/components/Raster/volcano",
+      "lineNumber": 12,
+      "line": "<Layer>"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 16,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 29,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
+      "lineNumber": 16,
       "line": "<Layer>"
     },
     {
@@ -2768,6 +3356,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "geo-routes",
+      "component": "Spline",
+      "path": "/docs/components/Spline/geo-routes",
+      "lineNumber": 26,
+      "line": "<Layer>"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
@@ -2778,7 +3373,7 @@
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Layer>"
     },
     {
@@ -2852,6 +3447,13 @@
       "line": "<Layer center>"
     },
     {
+      "example": "tween-on-mount",
+      "component": "Spline",
+      "path": "/docs/components/Spline/tween-on-mount",
+      "lineNumber": 14,
+      "line": "<Layer>"
+    },
+    {
       "example": "tweened",
       "component": "Spline",
       "path": "/docs/components/Spline/tweened",
@@ -2877,6 +3479,27 @@
       "component": "Spline",
       "path": "/docs/components/Spline/with-tooltip-and-highlight",
       "lineNumber": 20,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-ordinal-scale",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Text",
+      "path": "/docs/components/Text/color-via-threshold-scale",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Text",
+      "path": "/docs/components/Text/data-mode",
+      "lineNumber": 22,
       "line": "<Layer>"
     },
     {
@@ -3034,6 +3657,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "pan-zoom-axes",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-axes",
+      "lineNumber": 40,
+      "line": "<Layer>"
+    },
+    {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
@@ -3048,11 +3678,25 @@
       "line": "<Layer type=\"svg\">"
     },
     {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 239,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
       "lineNumber": 50,
       "line": "<Layer>"
+    },
+    {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 21,
+      "line": "<Layer type=\"svg\">"
     },
     {
       "example": "basic",
@@ -3118,6 +3762,83 @@
       "line": "<Layer>"
     },
     {
+      "example": "anchor",
+      "component": "Vector",
+      "path": "/docs/components/Vector/anchor",
+      "lineNumber": 18,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Vector",
+      "path": "/docs/components/Vector/basic",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "data-mode",
+      "component": "Vector",
+      "path": "/docs/components/Vector/data-mode",
+      "lineNumber": 28,
+      "line": "<Layer"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 84,
+      "line": "<Layer>"
+    },
+    {
+      "example": "election-wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/election-wind-map",
+      "lineNumber": 99,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
+      "example": "shapes",
+      "component": "Vector",
+      "path": "/docs/components/Vector/shapes",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "wind-map",
+      "component": "Vector",
+      "path": "/docs/components/Vector/wind-map",
+      "lineNumber": 36,
+      "line": "<Layer>"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Violin",
+      "path": "/docs/components/Violin/bandwidth",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Violin",
+      "path": "/docs/components/Violin/basic",
+      "lineNumber": 48,
+      "line": "<Layer>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Violin",
+      "path": "/docs/components/Violin/horizontal",
+      "lineNumber": 49,
+      "line": "<Layer>"
+    },
+    {
+      "example": "with-box-median",
+      "component": "Violin",
+      "path": "/docs/components/Violin/with-box-median",
+      "lineNumber": 48,
+      "line": "<Layer>"
+    },
+    {
       "example": "radius",
       "component": "Voronoi",
       "path": "/docs/components/Voronoi/radius",
@@ -3125,5 +3846,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.461Z"
+  "updatedAt": "2026-04-01T13:16:18.421Z"
 }

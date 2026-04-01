@@ -30,7 +30,7 @@
 	xScale={scaleBand().padding(0.4)}
 	y={['value', (d) => -d.baseline]}
 	yNice
-	tooltip={{ mode: 'bisect-x' }}
+	tooltipContext={{ mode: 'bisect-x' }}
 	padding={defaultChartPadding({ top: 10, left: 20 })}
 	height={300}
 >

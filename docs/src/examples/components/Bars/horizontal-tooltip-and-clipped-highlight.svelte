@@ -22,7 +22,7 @@
 	y="date"
 	yScale={scaleBand().padding(0.4)}
 	padding={{ left: 32, bottom: 20, right: 8 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	class="group"
 	height={300}
 >

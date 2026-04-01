@@ -13,7 +13,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import GeoPathSubmarineControls from '$lib/components/controls/GeoPathSubmarineControls.svelte';
 
@@ -29,7 +29,7 @@
 
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue>();
+	let context = $state<ChartState>();
 
 	let velocity = $state(3);
 	const timer = new TimerState({
@@ -56,9 +56,9 @@
 <Chart
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'projection' }}
 	ondragstart={timer.stop}
 	bind:context
 	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}

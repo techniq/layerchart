@@ -32,36 +32,34 @@
 	padding={{ top: 20, left: 20 }}
 	height={450}
 >
-	{#snippet children({ context })}
-		<Layer>
-			{#each range(2021, 2024) as year, i}
-				{@const start = new Date(year, 0, 1)}
-				{@const end = endOfInterval('year', start)}
-				<Group y={140 * i}>
-					<Text
-						value={year}
-						class="text-xs"
-						rotate={270}
-						x={-20}
-						y={(16 * 7) / 2}
-						textAnchor="middle"
-						verticalAnchor="start"
-					/>
-					<Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />
-				</Group>
-			{/each}
-		</Layer>
+	<Layer>
+		{#each range(2021, 2024) as year, i}
+			{@const start = new Date(year, 0, 1)}
+			{@const end = endOfInterval('year', start)}
+			<Group y={140 * i}>
+				<Text
+					value={year}
+					class="text-xs"
+					rotate={270}
+					x={-20}
+					y={(16 * 7) / 2}
+					textAnchor="middle"
+					verticalAnchor="start"
+				/>
+				<Calendar {start} {end} tooltip cellSize={16} monthPath />
+			</Group>
+		{/each}
+	</Layer>
 
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
 
-				{#if data.value != null}
-					<Tooltip.List>
-						<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-					</Tooltip.List>
-				{/if}
-			{/snippet}
-		</Tooltip.Root>
-	{/snippet}
+			{#if data.value != null}
+				<Tooltip.List>
+					<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+				</Tooltip.List>
+			{/if}
+		{/snippet}
+	</Tooltip.Root>
 </Chart>

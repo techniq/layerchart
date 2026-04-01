@@ -62,10 +62,10 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	padding={{ top: 60 }}
-	tooltip={{ raiseTarget: getSettings().layer === 'svg' }}
+	tooltipContext={{ raiseTarget: getSettings().layer === 'svg' }}
 	height={600}
 >
 	{#snippet children({ context })}
@@ -79,7 +79,7 @@
 					fill={colorScale(feature.properties.data?.population ?? 0)}
 					class="stroke-none hover:stroke-white"
 					{strokeWidth}
-					tooltipContext={context.tooltip}
+					tooltip
 				/>
 			{/each}
 

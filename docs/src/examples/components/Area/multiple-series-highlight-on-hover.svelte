@@ -47,7 +47,7 @@
 	cDomain={Object.keys(fruitColors)}
 	cRange={Object.values(fruitColors)}
 	padding={defaultChartPadding({ top: 10, bottom: 20, left: 20, right: 60 })}
-	tooltip={{ mode: 'quadtree' }}
+	tooltipContext={{ mode: 'quadtree' }}
 	height={300}
 >
 	{#snippet children({ context })}

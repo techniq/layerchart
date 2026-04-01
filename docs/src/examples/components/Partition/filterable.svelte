@@ -129,7 +129,7 @@
 											stroke={colorBy === 'children'
 												? 'var(--color-primary-content)'
 												: hsl(nodeColor).darker(1).toString()}
-											stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+											strokeOpacity={colorBy === 'children' ? 0.2 : 1}
 											fill={nodeColor}
 											rx={5}
 											motion={{ type: 'tween', delay: 600 }}

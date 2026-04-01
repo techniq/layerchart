@@ -54,10 +54,8 @@
 </script>
 
 <script lang="ts">
-  import { getTransformContext } from '$lib/contexts/transform.js';
-
-  import { setLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { setLayerContext } from '$lib/contexts/layer.js';
 
   let {
     ref: refProp = $bindable(),
@@ -83,11 +81,10 @@
   const roleVal = $derived(role || (label || labelledBy || describedBy ? 'figure' : undefined));
 
   const ctx = getChartContext();
-  const transformCtx = getTransformContext();
 
   const transform = $derived.by(() => {
-    if (transformCtx.mode === 'canvas' && !ignoreTransform) {
-      return `translate(${transformCtx.translate.x}px,${transformCtx.translate.y}px) scale(${transformCtx.scale})`;
+    if (ctx.transform.mode === 'canvas' && !ignoreTransform) {
+      return `translate(${ctx.transform.translate.x}px,${ctx.transform.translate.y}px) scale(${ctx.transform.scale})`;
     } else if (center) {
       return `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}px, ${center === 'y' || center === true ? ctx.height / 2 : 0}px)`;
     }

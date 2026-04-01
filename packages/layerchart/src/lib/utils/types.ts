@@ -19,11 +19,21 @@ export function asAny(x: any): any {
  *
  * @template T - The base object type from which properties will be omitted.
  * @template U - The object type whose properties will be omitted from 'T'.
+ *
  * @example
  * type Result = Without<{ a: number; b: string; }, { b: string; }>;
  * // Result type will be { a: number; }
  */
 export type Without<T extends object, U extends object> = Omit<T, keyof U>;
+
+/**
+ * Extracts the non-nullable array type from a type that may include nulls.
+ *
+ * @example
+ * type Result = NonNullArray<(number | null)[]>;
+ * // Result type will be number[].
+ */
+export type NonNullArray<T> = T extends (infer U | null)[] ? U[] : never;
 
 export type AxisKey = 'x' | 'y' | 'z' | 'r';
 
@@ -88,6 +98,11 @@ export type CommonStyleProps = {
    * The stroke color of the element.
    */
   stroke?: string;
+
+  /**
+   * The stroke opacity of the element. (0 to 1)
+   */
+  strokeOpacity?: number;
 
   /**
    * The stroke width of the element.

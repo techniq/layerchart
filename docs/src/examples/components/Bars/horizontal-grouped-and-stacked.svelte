@@ -44,7 +44,7 @@
 	y1Domain={[1, 2]}
 	y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
 	padding={defaultChartPadding({ left: 32, bottom: 20, right: 15 })}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={300}
 >
 	{#snippet children({ context })}

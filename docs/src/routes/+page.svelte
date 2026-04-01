@@ -30,6 +30,7 @@
 		{ component: 'AreaChart', example: 'funnel' },
 		{ component: 'AreaChart', example: 'range-annotation' },
 		{ component: 'AreaChart', example: 'radial' },
+		{ component: 'Area', example: 'ridgeline-kde' },
 		{ component: 'AreaChart', example: 'series-stack-gradient' },
 		{ component: 'AreaChart', example: 'sparkline' },
 		{ component: 'AreaChart', example: 'threshold' },
@@ -39,6 +40,7 @@
 		{ component: 'BarChart', example: 'gradient' },
 		{ component: 'BarChart', example: 'group-series-labels' },
 		{ component: 'BarChart', example: 'labels' },
+		{ component: 'BarChart', example: 'waterfall' },
 		{ component: 'BarChart', example: 'oscilloscope-frequency' },
 		{ component: 'BarChart', example: 'radial-horizontal-duration' },
 		{ component: 'BarChart', example: 'radial-horizontal-grid-between' },
@@ -60,6 +62,9 @@
 		{ component: 'LineChart', example: 'gradient-encoding' },
 		{ component: 'LineChart', example: 'large-radial-series' },
 		{ component: 'LineChart', example: 'large-series' },
+		{ component: 'Density', example: 'weighted' },
+		{ component: 'Contour', example: 'volcano-filled-interactive' },
+		{ component: 'Vector', example: 'wind-map' },
 		{ component: 'LineChart', example: 'radar' },
 		{ component: 'LineChart', example: 'radar-series' },
 		{ component: 'PieChart', example: 'arc' },
@@ -72,17 +77,22 @@
 		{ component: 'Axis', example: 'axis-label-placement-top-bottom' },
 		{ component: 'Rule', example: 'candlestick-with-brushing' },
 		// Primitives
+		{ component: 'Arc', example: 'gauge-gradient' },
+		{ component: 'Arc', example: 'clock' },
 		{ component: 'Arc', example: 'color-wheel' },
 		{ component: 'Arc', example: 'label-direction' },
 		{ component: 'Connector', example: 'playground' },
 		{ component: 'Marker', example: 'styling' },
 		{ component: 'Polygon', example: 'hexagon' },
+		{ component: 'Image', example: 'us-presidents' },
 		// Marks
 		{ component: 'Calendar', example: 'rounded-cells' },
-		{ component: 'Hull', example: 'geo' },
+		// Statistics
+		{ component: 'BoxPlot', example: 'with-tooltip' },
 		// Interations
 		{ component: 'TransformContext', example: 'pan-zoom-svg-image' },
-		{ component: 'BrushContext', example: 'sync-brushes-with-bind-xdomain' },
+		{ component: 'TransformContext', example: 'planet-distances' },
+		{ component: 'BrushContext', example: 'synced-brushes' },
 		{ component: 'Voronoi', example: 'radius' },
 		// Fill
 		{ component: 'LinearGradient', example: 'tailwind-colors' },
@@ -95,6 +105,11 @@
 		{ component: 'GeoPath', example: 'bubble-map' },
 		{ component: 'GeoPath', example: 'choropleth' },
 		{ component: 'GeoPath', example: 'spike-map' },
+		{ component: 'Density', example: 'walmart' },
+		{ component: 'Raster', example: 'us-water-vapor' },
+		{ component: 'Vector', example: 'election-wind-map' },
+		{ component: 'Image', example: 'college-football-map' },
+		{ component: 'Hull', example: 'geo' },
 		{ component: 'GeoPath', example: 'eclipses-globe' },
 		{ component: 'GeoPath', example: 'submarine-cables-globe' },
 		{ component: 'GeoPath', example: 'timezones' },
@@ -110,6 +125,7 @@
 		{ component: 'GeoTile', example: 'zoomable-seamless-layers' },
 		{ component: 'Graticule', example: 'basic' },
 		// Layout
+		{ component: 'Chord', example: 'gradient' },
 		{ component: 'Dagre', example: 'playground' },
 		{ component: 'Dagre', example: 'tcp-state-diagram' },
 		{ component: 'ForceSimulation', example: 'beeswarm' },
@@ -133,7 +149,6 @@
 		{ component: 'MotionPath', example: 'sync-with-draw' }
 	];
 </script>
-
 
 <header class="flex h-16 items-center px-4 py-2">
 	<a href="/" class="hidden xs:flex invisible md:visible items-center gap-3 w-60 text-xl font-bold">

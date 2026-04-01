@@ -189,6 +189,22 @@
     ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
   );
 
+  // Default format to 'percentRound' for stackExpand layout considering axis direction
+  const resolvedFormat = $derived.by(() => {
+    if (format !== undefined) return format;
+
+    if (ctx.series.stackLayout === 'stackExpand') {
+      const isValueAxis =
+        (ctx.valueAxis === 'x' && ['horizontal', 'angle'].includes(orientation)) ||
+        (ctx.valueAxis === 'y' && ['vertical', 'radius'].includes(orientation));
+      if (isValueAxis) {
+        return 'percentRound';
+      }
+    }
+
+    return undefined;
+  });
+
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
@@ -220,7 +236,7 @@
     }
 
     // Use format to filter ticks (helpful to keep ticks above a threshold for wide charts or short durations)
-    const formatType = typeof format === 'object' ? format?.type : format;
+    const formatType = typeof resolvedFormat === 'object' ? resolvedFormat?.type : resolvedFormat;
 
     if (formatType === 'integer') {
       tickVals = tickVals.filter(Number.isInteger);
@@ -254,7 +270,7 @@
       scale,
       ticks,
       count: tickCount,
-      formatType: format,
+      formatType: resolvedFormat,
       multiline: tickMultiline,
       placement,
     })

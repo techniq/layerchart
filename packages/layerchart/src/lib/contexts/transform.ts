@@ -2,7 +2,7 @@ import { Context } from 'runed';
 
 import {} from '$lib/components/TransformContext.svelte';
 import {
-  createDefaultTransformContext,
+  createDefaultTransformState,
   type TransformMode,
   type TransformScrollMode,
 } from '$lib/states/transform.svelte.js';
@@ -13,7 +13,8 @@ export type TransformContextValue = {
    * The current transform mode.
    *
    * - `canvas`: The transform is applied to the canvas element.
-   * - `manual`: The transform is applied manually.
+   * - `domain`: The transform narrows/shifts the visible data domain.
+   * - `projection`: The transform updates the geo projection.
    * - `none`: No transform is applied.
    */
   mode: TransformMode;
@@ -104,7 +105,7 @@ export type TransformContextValue = {
 const _TransformContext = new Context<TransformContextValue>('TransformContext');
 
 export function getTransformContext() {
-  return _TransformContext.getOr(createDefaultTransformContext());
+  return _TransformContext.getOr(createDefaultTransformState());
 }
 
 export function setTransformContext(transform: TransformContextValue) {

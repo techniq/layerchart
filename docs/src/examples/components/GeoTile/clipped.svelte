@@ -46,7 +46,7 @@
 			{#each filteredStates.features as feature}
 				<GeoPath
 					geojson={feature}
-					tooltipContext={context.tooltip}
+					tooltip
 					class="stroke-black/20 hover:fill-white/30"
 					onclick={() => (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
 				/>

@@ -30,6 +30,10 @@ const config = defineConfig({
   plugins: [sveltekit()],
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
+    // @dagrejs/dagre is CJS-only; pre-bundle for SSR to convert to ESM
+    optimizeDeps: {
+      include: ['@dagrejs/dagre'],
+    },
   },
   test: {
     projects: [
@@ -72,6 +76,25 @@ const config = defineConfig({
           environment: 'node',
           include: ['src/**/*.{test,spec}.{js,ts}'],
           exclude: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.ssr.{test,spec}.{js,ts}'],
+        },
+      },
+      {
+        // Benchmarks (browser-based Svelte component benchmarks)
+        extends: true,
+        test: {
+          name: 'bench',
+          testTimeout: 30000,
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
+            headless: true,
+          },
+          include: ['src/**/*.svelte.bench.{js,ts}'],
+          setupFiles: ['./src/vitest-setup-client.ts'],
+          benchmark: {
+            include: ['src/**/*.svelte.bench.{js,ts}'],
+          },
         },
       },
     ],

@@ -76,7 +76,7 @@
 	}}
 	transform={{
 		mode: 'canvas',
-		initialScrollMode: 'scale'
+		scrollMode: 'scale'
 	}}
 	padding={{ top: 60 }}
 	height={600}
@@ -110,7 +110,7 @@
 			{#each enrichedCountiesFeatures as feature}
 				<GeoPath
 					geojson={feature}
-					tooltipContext={context.tooltip}
+					tooltip
 					class="stroke-none hover:fill-surface-content/10"
 					{strokeWidth}
 				/>

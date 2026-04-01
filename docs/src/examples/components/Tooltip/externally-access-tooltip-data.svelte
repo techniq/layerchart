@@ -7,7 +7,7 @@
 		Highlight,
 		Tooltip,
 		defaultChartPadding,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { format } from '@layerstack/utils';
 	import { createDateSeries } from '$lib/utils/data.js';
@@ -20,7 +20,7 @@
 		keys: ['value', 'baseline']
 	});
 
-	let context: ChartContextValue<(typeof data)[number]> | undefined = $state();
+	let context: ChartState<(typeof data)[number]> | undefined = $state();
 
 	export { data };
 </script>
@@ -43,7 +43,7 @@
 	yDomain={[0, null]}
 	yNice
 	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
-	tooltip={{ mode: 'quadtree-x' }}
+	tooltipContext={{ mode: 'quadtree-x' }}
 	bind:context
 	height={300}
 >

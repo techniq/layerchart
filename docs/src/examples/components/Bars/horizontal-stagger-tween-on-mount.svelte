@@ -37,11 +37,11 @@
 			{#each data as d, i}
 				<Bar
 					data={d}
-					initialX={0}
-					initialWidth={0}
 					motion={{
-						x: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 },
-						width: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 }
+						type: 'tween',
+						duration: 500,
+						easing: cubicInOut,
+						delay: i * 30
 					}}
 					strokeWidth={1}
 					class="fill-primary"

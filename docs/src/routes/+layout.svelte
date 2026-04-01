@@ -5,6 +5,7 @@
 	import { watch } from 'runed';
 
 	import { dev } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { preparePageTransition } from '$lib/page-transitions';
 	import '@fontsource-variable/inter';
@@ -54,6 +55,20 @@
 
 	// View transition for navigation
 	preparePageTransition();
+
+	// Scroll to hash target after client-side navigation (View Transitions can prevent native hash scrolling)
+	afterNavigate(() => {
+		const hash = window.location.hash;
+		if (hash) {
+			const el = document.querySelector(hash);
+			if (el) {
+				// Use requestAnimationFrame to ensure the view transition has finished rendering
+				requestAnimationFrame(() => {
+					el.scrollIntoView();
+				});
+			}
+		}
+	});
 
 	const defaultDescription =
 		'Composable Svelte chart components to build a large variety of visualizations';

@@ -1,47 +1,10 @@
 <script lang="ts" module>
-  import { Context } from 'runed';
+  import type { Snippet } from 'svelte';
 
-  const _BrushContext = new Context<BrushContextValue>('BrushContext');
-
-  export type BrushRange = {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-
-  export type BrushContextValue = {
-    xDomain: DomainType;
-    yDomain: DomainType;
-    isActive: boolean;
-    range: BrushRange;
-    handleSize: number;
-  };
-
-  const defaultContext: BrushContextValue = {
-    xDomain: null,
-    yDomain: null,
-    isActive: false,
-    range: {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-    },
-    handleSize: 0,
-  };
-  export function getBrushContext() {
-    const defaults = $state(defaultContext);
-    return _BrushContext.getOr(defaults);
-  }
-
-  export function setBrushContext(brush: BrushContextValue) {
-    return _BrushContext.set(brush);
-  }
+  import { BrushState, type BrushDomainType } from '$lib/states/brush.svelte.js';
 
   type BrushEventPayload = {
-    xDomain: DomainType | null;
-    yDomain: DomainType | null;
+    brush: BrushState;
   };
 
   type BrushContextPropsWithoutHTML = {
@@ -60,35 +23,23 @@
     handleSize?: number;
 
     /**
-     * Only show range while actively brushing.
-     * Useful with `brushEnd` event
+     * Whether clicking on the empty area resets the brush.
      *
-     * @default false
+     * @default true
      */
-    resetOnEnd?: boolean;
+    clickToReset?: boolean;
 
     /**
-     * Ignore click to reset.
-     * Useful to add click handlers to marks.  Requires external resetting (button, another chart, etc)
-     *
-     * @default false
+     * External x domain to sync the brush to.
+     * When provided, the brush reactively updates to reflect this value.
      */
-    ignoreResetClick?: boolean;
-
-    xDomain?: DomainType;
-
-    yDomain?: DomainType;
+    x?: BrushDomainType;
 
     /**
-     * Mode of operation
-     *  - `integrated`: use with single chart
-     *  - `separated`: use with separate (typically smaller) chart and state can be managed
-     * externally (sync with other charts, etc).  Show active selection when domain does not equal
-     * original
-     *
-     * @default 'integrated'
+     * External y domain to sync the brush to.
+     * When provided, the brush reactively updates to reflect this value.
      */
-    mode?: 'integrated' | 'separated';
+    y?: BrushDomainType;
 
     /**
      * Disable brush
@@ -120,46 +71,42 @@
       labels?: string;
     };
 
-    onChange?: (detail: BrushEventPayload) => void;
     onBrushStart?: (detail: BrushEventPayload) => void;
+    onChange?: (detail: BrushEventPayload) => void;
     onBrushEnd?: (detail: BrushEventPayload) => void;
-    onReset?: (detail: BrushEventPayload) => void;
 
     /**
-     * A reference to this brush's context for use in parent
-     * components.
+     * A reference to this brush's state for use in parent components.
      *
      * @bindable
      */
-    brushContext?: BrushContextValue;
+    state?: BrushState;
 
-    children?: Snippet<[{ brushContext: BrushContextValue }]>;
+    children?: Snippet<[{ state: BrushState }]>;
   };
 </script>
 
 <script lang="ts">
-  import { extent, min, max } from 'd3-array';
-  import { clamp, localPoint } from '@layerstack/utils';
+  import { untrack } from 'svelte';
+  import { localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
+  import type { NonNullArray } from 'layerchart/utils/types.js';
 
-  import { scaleInvert, type DomainType } from '../utils/scales.svelte.js';
-  import { add } from '../utils/math.js';
+  import { scaleInvert } from '../utils/scales.svelte.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import type { Snippet } from 'svelte';
 
   const ctx = getChartContext();
 
   let {
-    brushContext: brushContextProp = $bindable(),
+    x,
+    y,
+    state: stateProp = $bindable(),
+
     axis = 'x',
     handleSize = 5,
-    resetOnEnd = false,
-    ignoreResetClick = false,
-    xDomain: xDomain,
-    yDomain: yDomain,
-    mode = 'integrated',
+    clickToReset = true,
     disabled = false,
     range = {},
     handle = {},
@@ -167,95 +114,27 @@
     onBrushEnd = () => {},
     onBrushStart = () => {},
     onChange = () => {},
-    onReset = () => {},
     children,
   }: BrushContextPropsWithoutHTML = $props();
 
   let rootEl = $state<HTMLElement>();
 
-  if (xDomain === undefined) {
-    xDomain = ctx.xScale.domain();
-  }
-  if (yDomain === undefined) {
-    yDomain = ctx.yScale.domain();
-  }
+  const brushState = new BrushState(ctx, { x, y, axis });
+  stateProp = brushState;
 
-  $effect.pre(() => {
-    if (xDomain !== undefined) return;
-    xDomain = ctx.xScale.domain();
+  $effect(() => {
+    brushState.handleSize = handleSize;
   });
-
-  $effect.pre(() => {
-    if (yDomain !== undefined) return;
-    yDomain = ctx.yScale.domain();
-  });
-
-  const ogXDomain = xDomain;
-  const ogYDomain = yDomain;
-  const originalXDomain = ctx.config.xDomain;
-  const originalYDomain = ctx.config.yDomain;
-
-  const xDomainMinMax = $derived(extent<number>(ctx.xScale.domain()) as [number, number]);
-  const xDomainMin = $derived(xDomainMinMax[0]);
-  const xDomainMax = $derived(xDomainMinMax[1]);
-
-  const yDomainMinMax = $derived(extent<number>(ctx.yScale.domain()) as [number, number]);
-  const yDomainMin = $derived(yDomainMinMax[0]);
-  const yDomainMax = $derived(yDomainMinMax[1]);
-
-  const top = $derived(ctx.yScale(yDomain?.[1]));
-  const bottom = $derived(ctx.yScale(yDomain?.[0]));
-  const left = $derived(ctx.xScale(xDomain?.[0]));
-  const right = $derived(ctx.xScale(xDomain?.[1]));
-
-  const _range = $derived({
-    x: axis === 'both' || axis === 'x' ? left : 0,
-    y: axis === 'both' || axis === 'y' ? top : 0,
-    width: axis === 'both' || axis === 'x' ? right - left : ctx.width,
-    height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
-  });
-
-  let isActive = $state(false);
-
-  const brushContext = {
-    get xDomain() {
-      return xDomain!;
-    },
-    set xDomain(v: DomainType) {
-      xDomain = v;
-    },
-    get yDomain() {
-      return yDomain!;
-    },
-    set yDomain(v: DomainType) {
-      yDomain = v;
-    },
-    get isActive() {
-      return isActive;
-    },
-    set isActive(v: boolean) {
-      isActive = v;
-    },
-    get range() {
-      return _range;
-    },
-    get handleSize() {
-      return handleSize;
-    },
-  };
-
-  brushContextProp = brushContext;
-
-  setBrushContext(brushContext);
 
   const logger = new Logger('BrushContext');
   const RESET_THRESHOLD = 1; // size of pointer delta to ignore
 
   function handler(
+    /** Callback on pointer move */
     fn: (
       start: {
-        xDomain: [number, number];
-        yDomain: [number, number];
+        x: NonNullArray<BrushDomainType>;
+        y: NonNullArray<BrushDomainType>;
         value: { x: number; y: number };
       },
       value: { x: number; y: number }
@@ -283,15 +162,21 @@
       }
 
       const start = {
-        xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
-        yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
+        x: [
+          brushState.x[0] ?? brushState.xDomainMin,
+          brushState.x[1] ?? brushState.xDomainMax,
+        ] as Parameters<typeof fn>[0]['x'],
+        y: [
+          brushState.y[0] ?? brushState.yDomainMin,
+          brushState.y[1] ?? brushState.yDomainMax,
+        ] as Parameters<typeof fn>[0]['y'],
         value: {
           x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
           y: scaleInvert(ctx.yScale, startPoint?.y ?? 0),
         },
       };
 
-      onBrushStart({ xDomain, yDomain });
+      onBrushStart({ brush: brushState });
 
       const onPointerMove = (e: PointerEvent) => {
         const currentPoint = localPoint(e, rootEl);
@@ -300,7 +185,7 @@
           y: scaleInvert(ctx.yScale, currentPoint?.y ?? 0),
         });
 
-        onChange({ xDomain, yDomain });
+        onChange({ brush: brushState });
       };
 
       const onPointerUp = (e: PointerEvent) => {
@@ -315,37 +200,28 @@
 
         if (
           (isClickOutside && xPointDelta < RESET_THRESHOLD && yPointDelta < RESET_THRESHOLD) ||
-          _range.width < RESET_THRESHOLD ||
-          _range.height < RESET_THRESHOLD
+          brushState.range.width < RESET_THRESHOLD ||
+          brushState.range.height < RESET_THRESHOLD
         ) {
           // Clicked on frame, or pointer delta was less than threshold (default: 1px)
-          if (ignoreResetClick) {
-            logger.debug('ignoring frame click reset');
-          } else {
+          if (clickToReset) {
             logger.debug('resetting due to frame click');
-            reset();
-            onChange({ xDomain, yDomain });
+            brushState.reset();
+            onChange({ brush: brushState });
+          } else {
+            logger.debug('ignoring frame click reset (clickToReset: false)');
           }
         } else {
           logger.debug('drag end', {
             target: e.target,
             xPointDelta,
             yPointDelta,
-            rangeWidth: _range.width,
-            rangeHeight: _range.height,
+            rangeWidth: brushState.range.width,
+            rangeHeight: brushState.range.height,
           });
         }
 
-        onBrushEnd({ xDomain, yDomain });
-
-        if (resetOnEnd) {
-          if (ignoreResetClick) {
-            // Still hide brush, but do not reset domain
-            brushContext.isActive = false;
-          } else {
-            reset();
-          }
-        }
+        onBrushEnd({ brush: brushState });
 
         window.removeEventListener('pointermove', onPointerMove);
         window.removeEventListener('pointerup', onPointerUp);
@@ -358,109 +234,47 @@
 
   const createRange = handler((start, value) => {
     logger.debug('createRange');
-    brushContext.isActive = true;
-
-    xDomain = [
-      // @ts-expect-error
-      clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
-      // @ts-expect-error
-      clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
-    ];
-    // xDomain = [start.value.x, value.x];
-
-    yDomain = [
-      // @ts-expect-error
-      clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
-      // @ts-expect-error
-      clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
-    ];
+    brushState.setRange(start.value, value);
   });
 
   const adjustRange = handler((start, value) => {
     logger.debug('adjustRange');
-    const dx = clamp(
-      value.x - start.value.x,
-      xDomainMin - start.xDomain[0],
-      xDomainMax - start.xDomain[1]
-    );
-    xDomain = [add(start.xDomain[0], dx), add(start.xDomain[1], dx)];
-
-    const dy = clamp(
-      value.y - start.value.y,
-      yDomainMin - start.yDomain[0],
-      yDomainMax - start.yDomain[1]
-    );
-    yDomain = [add(start.yDomain[0], dy), add(start.yDomain[1], dy)];
+    brushState.moveRange(start as any, value);
   });
 
   const adjustTop = handler((start, value) => {
     logger.debug('adjustTop');
-    yDomain = [
-      clamp(value.y < start.yDomain[0] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
-      clamp(value.y < start.yDomain[0] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
-    ];
+    brushState.adjustEdge('top', start as any, value);
   });
 
   const adjustBottom = handler((start, value) => {
     logger.debug('adjustBottom');
-    yDomain = [
-      clamp(value.y > start.yDomain[1] ? start.yDomain[1] : value.y, yDomainMin, yDomainMax),
-      clamp(value.y > start.yDomain[1] ? value.y : start.yDomain[1], yDomainMin, yDomainMax),
-    ];
+    brushState.adjustEdge('bottom', start as any, value);
   });
 
   const adjustLeft = handler((start, value) => {
     logger.debug('adjustLeft');
-    xDomain = [
-      clamp(value.x > start.xDomain[1] ? start.xDomain[1] : value.x, xDomainMin, xDomainMax),
-      clamp(value.x > start.xDomain[1] ? value.x : start.xDomain[1], xDomainMin, xDomainMax),
-    ];
+    brushState.adjustEdge('left', start as any, value);
   });
 
   const adjustRight = handler((start, value) => {
     logger.debug('adjustRight');
-    xDomain = [
-      clamp(value.x < start.xDomain[0] ? value.x : start.xDomain[0], xDomainMin, xDomainMax),
-      clamp(value.x < start.xDomain[0] ? start.xDomain[0] : value.x, xDomainMin, xDomainMax),
-    ];
+    brushState.adjustEdge('right', start as any, value);
   });
 
-  function reset() {
-    logger.debug('reset');
-    brushContext.isActive = false;
-
-    onReset({ xDomain, yDomain });
-
-    xDomain = ogXDomain;
-    yDomain = ogYDomain;
-  }
-
-  function selectAll() {
-    logger.debug('selectedAll');
-    xDomain = [xDomainMin, xDomainMax];
-    yDomain = [yDomainMin, yDomainMax];
-  }
-
+  // Sync external x/y props into brush state when provided
   $effect.pre(() => {
-    if (mode === 'separated') {
-      // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
-      const isXAxisActive =
-        xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
-        xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf();
-
-      const isYAxisActive =
-        yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
-        yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
-
-      const result =
-        axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
-      brushContext.isActive = result;
+    if (x !== undefined || y !== undefined) {
+      const extX = x;
+      const extY = y;
+      // Avoid tracking brushState internals to prevent reactive loops
+      untrack(() => brushState.syncFromExternal(extX, extY));
     }
   });
 </script>
 
 {#if disabled}
-  {@render children?.({ brushContext })}
+  {@render children?.({ state: brushState })}
 {:else}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
@@ -471,7 +285,10 @@
     style:height="{ctx.height}px"
     class={cls('lc-brush-context')}
     onpointerdown={createRange}
-    ondblclick={() => selectAll()}
+    ondblclick={(e) => {
+      brushState.selectAll();
+      e.stopPropagation();
+    }}
   >
     <div
       class={cls('lc-brush-container')}
@@ -480,54 +297,57 @@
       style:width="{ctx.containerWidth}px"
       style:height="{ctx.containerHeight}px"
     >
-      {@render children?.({ brushContext })}
+      {@render children?.({ state: brushState })}
     </div>
 
-    {#if brushContext.isActive}
+    {#if brushState.active}
       <div
         {...range}
-        style:left="{_range.x}px"
-        style:top="{_range.y}px"
-        style:width="{_range.width}px"
-        style:height="{_range.height}px"
+        style:left="{brushState.range.x}px"
+        style:top="{brushState.range.y}px"
+        style:width="{brushState.range.width}px"
+        style:height="{brushState.range.height}px"
         class={cls('lc-brush-range', classes.range, range?.class)}
         onpointerdown={adjustRange}
-        ondblclick={() => reset()}
+        ondblclick={() => {
+          brushState.reset();
+          onChange({ brush: brushState });
+        }}
       ></div>
 
       {#if axis === 'both' || axis === 'y'}
         <div
           {...handle}
-          style:left="{_range.x}px"
-          style:top="{_range.y}px"
-          style:width="{_range.width}px"
+          style:left="{brushState.range.x}px"
+          style:top="{brushState.range.y}px"
+          style:width="{brushState.range.width}px"
           style:height="{handleSize}px"
           data-position="top"
           class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustTop}
           ondblclick={(e) => {
             e.stopPropagation();
-            if (yDomain) {
-              yDomain[0] = yDomainMin;
-              onChange({ xDomain, yDomain });
+            if (brushState.y[0]) {
+              brushState.y[0] = brushState.yDomainMin;
+              onChange({ brush: brushState });
             }
           }}
         ></div>
 
         <div
           {...handle}
-          style:left="{_range.x}px"
-          style:top="{bottom - handleSize}px"
-          style:width="{_range.width}px"
+          style:left="{brushState.range.x}px"
+          style:top="{brushState.range.y + brushState.range.height - handleSize}px"
+          style:width="{brushState.range.width}px"
           style:height="{handleSize}px"
           data-position="bottom"
           class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustBottom}
           ondblclick={(e) => {
             e.stopPropagation();
-            if (yDomain) {
-              yDomain[1] = yDomainMax;
-              onChange({ xDomain, yDomain });
+            if (brushState.y[1]) {
+              brushState.y[1] = brushState.yDomainMax;
+              onChange({ brush: brushState });
             }
           }}
         ></div>
@@ -536,36 +356,36 @@
       {#if axis === 'both' || axis === 'x'}
         <div
           {...handle}
-          style:left="{_range.x}px"
-          style:top="{_range.y}px"
+          style:left="{brushState.range.x}px"
+          style:top="{brushState.range.y}px"
           style:width="{handleSize}px"
-          style:height="{_range.height}px"
+          style:height="{brushState.range.height}px"
           data-position="left"
           class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustLeft}
           ondblclick={(e) => {
             e.stopPropagation();
-            if (xDomain) {
-              xDomain[0] = xDomainMin;
-              onChange({ xDomain, yDomain });
+            if (brushState.x[0]) {
+              brushState.x[0] = brushState.xDomainMin;
+              onChange({ brush: brushState });
             }
           }}
         ></div>
 
         <div
           {...handle}
-          style:left="{right - handleSize + 1}px"
-          style:top="{_range.y}px"
+          style:left="{brushState.range.x + brushState.range.width - handleSize + 1}px"
+          style:top="{brushState.range.y}px"
           style:width="{handleSize}px"
-          style:height="{_range.height}px"
+          style:height="{brushState.range.height}px"
           data-position="right"
           class={cls('lc-brush-handle', classes.handle, handle?.class)}
           onpointerdown={adjustRight}
           ondblclick={(e) => {
             e.stopPropagation();
-            if (xDomain) {
-              xDomain[1] = xDomainMax;
-              onChange({ xDomain: xDomain, yDomain: yDomain });
+            if (brushState.x[1]) {
+              brushState.x[1] = brushState.xDomainMax;
+              onChange({ brush: brushState });
             }
           }}
         ></div>

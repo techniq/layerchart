@@ -1,0 +1,135 @@
+team,college,conference,city,state,latitude,longitude,espn_id
+Alabama Crimson Tide,Alabama,SEC,Tuscaloosa,AL,33.2098,-87.5692,333
+Arkansas Razorbacks,Arkansas,SEC,Fayetteville,AR,36.0686,-94.1778,8
+Auburn Tigers,Auburn,SEC,Auburn,AL,32.6026,-85.4875,2
+Florida Gators,Florida,SEC,Gainesville,FL,29.6499,-82.3486,57
+Georgia Bulldogs,Georgia,SEC,Athens,GA,33.9480,-83.3732,61
+Kentucky Wildcats,Kentucky,SEC,Lexington,KY,38.0223,-84.5054,96
+LSU Tigers,LSU,SEC,Baton Rouge,LA,30.4122,-91.1837,99
+Mississippi State Bulldogs,Mississippi State,SEC,Starkville,MS,33.4552,-88.7893,344
+Missouri Tigers,Missouri,SEC,Columbia,MO,38.9358,-92.3340,142
+Oklahoma Sooners,Oklahoma,SEC,Norman,OK,35.2058,-97.4425,201
+Ole Miss Rebels,Ole Miss,SEC,Oxford,MS,34.3625,-89.5345,145
+South Carolina Gamecocks,South Carolina,SEC,Columbia,SC,33.9727,-80.9816,2579
+Tennessee Volunteers,Tennessee,SEC,Knoxville,TN,35.9550,-83.9250,2633
+Texas Longhorns,Texas,SEC,Austin,TX,30.2837,-97.7326,251
+Texas A&M Aggies,Texas A&M,SEC,College Station,TX,30.6047,-96.3399,245
+Vanderbilt Commodores,Vanderbilt,SEC,Nashville,TN,36.1437,-86.8090,238
+Illinois Fighting Illini,Illinois,Big Ten,Champaign,IL,40.1020,-88.2272,356
+Indiana Hoosiers,Indiana,Big Ten,Bloomington,IN,39.1806,-86.5264,84
+Iowa Hawkeyes,Iowa,Big Ten,Iowa City,IA,41.6592,-91.5510,2294
+Maryland Terrapins,Maryland,Big Ten,College Park,MD,38.9907,-76.9488,120
+Michigan Wolverines,Michigan,Big Ten,Ann Arbor,MI,42.2659,-83.7486,130
+Michigan State Spartans,Michigan State,Big Ten,East Lansing,MI,42.7284,-84.4802,127
+Minnesota Golden Gophers,Minnesota,Big Ten,Minneapolis,MN,44.9765,-93.2248,135
+Nebraska Cornhuskers,Nebraska,Big Ten,Lincoln,NE,40.8206,-96.7056,158
+Northwestern Wildcats,Northwestern,Big Ten,Evanston,IL,42.0597,-87.6746,77
+Ohio State Buckeyes,Ohio State,Big Ten,Columbus,OH,40.0017,-83.0195,194
+Oregon Ducks,Oregon,Big Ten,Eugene,OR,44.0582,-123.0676,2483
+Penn State Nittany Lions,Penn State,Big Ten,University Park,PA,40.8121,-77.8562,213
+Purdue Boilermakers,Purdue,Big Ten,West Lafayette,IN,40.4388,-86.9175,2509
+Rutgers Scarlet Knights,Rutgers,Big Ten,Piscataway,NJ,40.5139,-74.4649,164
+UCLA Bruins,UCLA,Big Ten,Los Angeles,CA,34.1614,-118.1676,26
+USC Trojans,USC,Big Ten,Los Angeles,CA,34.0141,-118.2879,30
+Washington Huskies,Washington,Big Ten,Seattle,WA,47.6505,-122.3016,264
+Wisconsin Badgers,Wisconsin,Big Ten,Madison,WI,43.0700,-89.4116,275
+Arizona Wildcats,Arizona,Big 12,Tucson,AZ,32.2289,-110.9489,12
+Arizona State Sun Devils,Arizona State,Big 12,Tempe,AZ,33.4255,-111.9326,9
+BYU Cougars,BYU,Big 12,Provo,UT,40.2574,-111.6545,252
+Baylor Bears,Baylor,Big 12,Waco,TX,31.5586,-97.1164,239
+Cincinnati Bearcats,Cincinnati,Big 12,Cincinnati,OH,39.1320,-84.5150,2132
+Colorado Buffaloes,Colorado,Big 12,Boulder,CO,40.0094,-105.2668,38
+Houston Cougars,Houston,Big 12,Houston,TX,29.7214,-95.3418,248
+Iowa State Cyclones,Iowa State,Big 12,Ames,IA,42.0140,-93.6358,66
+Kansas Jayhawks,Kansas,Big 12,Lawrence,KS,38.9569,-95.2510,2305
+Kansas State Wildcats,Kansas State,Big 12,Manhattan,KS,39.2020,-96.5927,2306
+Oklahoma State Cowboys,Oklahoma State,Big 12,Stillwater,OK,36.1239,-97.0667,197
+TCU Horned Frogs,TCU,Big 12,Fort Worth,TX,32.7098,-97.3686,2628
+Texas Tech Red Raiders,Texas Tech,Big 12,Lubbock,TX,33.5907,-101.8720,2641
+UCF Knights,UCF,Big 12,Orlando,FL,28.6024,-81.2001,2116
+Utah Utes,Utah,Big 12,Salt Lake City,UT,40.7600,-111.8488,254
+West Virginia Mountaineers,West Virginia,Big 12,Morgantown,WV,39.6500,-79.9559,277
+Boston College Eagles,Boston College,ACC,Chestnut Hill,MA,42.3355,-71.1685,103
+California Golden Bears,California,ACC,Berkeley,CA,37.8708,-122.2505,25
+Clemson Tigers,Clemson,ACC,Clemson,SC,34.6783,-82.8427,228
+Duke Blue Devils,Duke,ACC,Durham,NC,36.0014,-78.9425,150
+Florida State Seminoles,Florida State,ACC,Tallahassee,FL,30.4383,-84.3040,52
+Georgia Tech Yellow Jackets,Georgia Tech,ACC,Atlanta,GA,33.7723,-84.3928,59
+Louisville Cardinals,Louisville,ACC,Louisville,KY,38.2175,-85.7588,97
+Miami Hurricanes,Miami,ACC,Coral Gables,FL,25.9475,-80.1216,2390
+NC State Wolfpack,NC State,ACC,Raleigh,NC,35.7868,-78.6719,152
+North Carolina Tar Heels,North Carolina,ACC,Chapel Hill,NC,35.9050,-79.0469,153
+Notre Dame Fighting Irish,Notre Dame,Independent,Notre Dame,IN,41.7053,-86.2353,87
+Pitt Panthers,Pitt,ACC,Pittsburgh,PA,40.4436,-79.9533,221
+SMU Mustangs,SMU,ACC,Dallas,TX,32.8403,-96.7830,2567
+Stanford Cardinal,Stanford,ACC,Stanford,CA,37.4346,-122.1609,24
+Syracuse Orange,Syracuse,ACC,Syracuse,NY,43.0362,-76.1363,183
+Virginia Cavaliers,Virginia,ACC,Charlottesville,VA,38.0310,-78.5139,258
+Virginia Tech Hokies,Virginia Tech,ACC,Blacksburg,VA,37.2200,-80.4180,259
+Wake Forest Demon Deacons,Wake Forest,ACC,Winston-Salem,NC,36.1349,-80.2770,154
+Army Black Knights,Army,American,West Point,NY,41.3915,-73.9557,349
+Charlotte 49ers,Charlotte,American,Charlotte,NC,35.3088,-80.7336,2429
+East Carolina Pirates,East Carolina,American,Greenville,NC,35.6034,-77.3722,151
+FAU Owls,FAU,American,Boca Raton,FL,26.3714,-80.1017,2226
+Memphis Tigers,Memphis,American,Memphis,TN,35.1185,-89.9376,235
+Navy Midshipmen,Navy,American,Annapolis,MD,38.9880,-76.4842,2426
+North Texas Mean Green,North Texas,American,Denton,TX,33.2106,-97.1468,249
+Rice Owls,Rice,American,Houston,TX,29.7163,-95.4097,242
+South Florida Bulls,South Florida,American,Tampa,FL,28.0661,-82.4120,58
+Temple Owls,Temple,American,Philadelphia,PA,39.9814,-75.1497,218
+Tulane Green Wave,Tulane,American,New Orleans,LA,29.9434,-90.0645,2655
+Tulsa Golden Hurricane,Tulsa,American,Tulsa,OK,36.1490,-95.9472,202
+UAB Blazers,UAB,American,Birmingham,AL,33.5010,-86.8068,5
+UTSA Roadrunners,UTSA,American,San Antonio,TX,29.5832,-98.6196,2636
+FIU Panthers,FIU,Conference USA,Miami,FL,25.7563,-80.3742,2229
+Jacksonville State Gamecocks,Jacksonville State,Conference USA,Jacksonville,AL,33.8207,-85.7649,55
+Kennesaw State Owls,Kennesaw State,Conference USA,Kennesaw,GA,34.0392,-84.5819,338
+Liberty Flames,Liberty,Conference USA,Lynchburg,VA,37.3520,-79.1724,2335
+Louisiana Tech Bulldogs,Louisiana Tech,Conference USA,Ruston,LA,32.5272,-92.6486,2348
+Middle Tennessee Blue Raiders,Middle Tennessee,Conference USA,Murfreesboro,TN,35.8507,-86.3685,2393
+New Mexico State Aggies,New Mexico State,Conference USA,Las Cruces,NM,32.2805,-106.7476,166
+Sam Houston Bearkats,Sam Houston,Conference USA,Huntsville,TX,30.7119,-95.5414,2534
+Western Kentucky Hilltoppers,Western Kentucky,Conference USA,Bowling Green,KY,36.9837,-86.4545,98
+Akron Zips,Akron,MAC,Akron,OH,41.0742,-81.5085,2006
+Ball State Cardinals,Ball State,MAC,Muncie,IN,40.2063,-85.4090,2050
+Bowling Green Falcons,Bowling Green,MAC,Bowling Green,OH,41.3779,-83.6306,189
+Buffalo Bulls,Buffalo,MAC,Buffalo,NY,42.9999,-78.7880,2084
+Central Michigan Chippewas,Central Michigan,MAC,Mount Pleasant,MI,43.5975,-84.7660,2117
+Eastern Michigan Eagles,Eastern Michigan,MAC,Ypsilanti,MI,42.2505,-83.6248,2199
+Kent State Golden Flashes,Kent State,MAC,Kent,OH,41.1453,-81.3416,2309
+Miami (OH) RedHawks,Miami (OH),MAC,Oxford,OH,39.5091,-84.7333,193
+Northern Illinois Huskies,Northern Illinois,MAC,DeKalb,IL,41.9345,-88.7739,2459
+Ohio Bobcats,Ohio,MAC,Athens,OH,39.3259,-82.1023,195
+Toledo Rockets,Toledo,MAC,Toledo,OH,41.6579,-83.6132,2649
+Western Michigan Broncos,Western Michigan,MAC,Kalamazoo,MI,42.2834,-85.6042,2711
+Air Force Falcons,Air Force,Mountain West,Colorado Springs,CO,38.9968,-104.8573,2005
+Boise State Broncos,Boise State,Mountain West,Boise,ID,43.6029,-116.1975,68
+Colorado State Rams,Colorado State,Mountain West,Fort Collins,CO,40.5760,-105.0926,36
+Fresno State Bulldogs,Fresno State,Mountain West,Fresno,CA,36.8133,-119.7554,278
+Hawaii Rainbow Warriors,Hawaii,Mountain West,Honolulu,HI,21.2969,-157.8171,62
+Nevada Wolf Pack,Nevada,Mountain West,Reno,NV,39.5460,-119.8154,2440
+New Mexico Lobos,New Mexico,Mountain West,Albuquerque,NM,35.0828,-106.6194,167
+San Diego State Aztecs,San Diego State,Mountain West,San Diego,CA,32.7749,-117.0715,21
+San Jose State Spartans,San Jose State,Mountain West,San Jose,CA,37.3201,-121.8680,23
+UNLV Rebels,UNLV,Mountain West,Las Vegas,NV,36.1101,-115.1488,2439
+Utah State Aggies,Utah State,Mountain West,Logan,UT,41.7520,-111.8131,328
+Wyoming Cowboys,Wyoming,Mountain West,Laramie,WY,41.3133,-105.5669,2751
+Appalachian State Mountaineers,Appalachian State,Sun Belt,Boone,NC,36.2139,-81.6874,2026
+Arkansas State Red Wolves,Arkansas State,Sun Belt,Jonesboro,AR,35.8418,-90.6797,2032
+Coastal Carolina Chanticleers,Coastal Carolina,Sun Belt,Conway,SC,33.7948,-79.0193,324
+Georgia Southern Eagles,Georgia Southern,Sun Belt,Statesboro,GA,32.4213,-81.7832,290
+Georgia State Panthers,Georgia State,Sun Belt,Atlanta,GA,33.7537,-84.3867,2247
+James Madison Dukes,James Madison,Sun Belt,Harrisonburg,VA,38.4375,-79.0119,256
+Louisiana Ragin' Cajuns,Louisiana,Sun Belt,Lafayette,LA,30.2132,-92.0189,309
+Louisiana-Monroe Warhawks,Louisiana-Monroe,Sun Belt,Monroe,LA,32.5293,-92.0758,2433
+Marshall Thundering Herd,Marshall,Sun Belt,Huntington,WV,38.4244,-82.4253,276
+Old Dominion Monarchs,Old Dominion,Sun Belt,Norfolk,VA,36.8857,-76.3060,295
+South Alabama Jaguars,South Alabama,Sun Belt,Mobile,AL,30.6964,-88.1783,6
+Southern Miss Golden Eagles,Southern Miss,Sun Belt,Hattiesburg,MS,31.3280,-89.3340,2572
+Texas State Bobcats,Texas State,Sun Belt,San Marcos,TX,29.8885,-97.9390,326
+Troy Trojans,Troy,Sun Belt,Troy,AL,31.7991,-85.9636,2653
+UConn Huskies,UConn,Independent,Storrs,CT,41.8077,-72.2540,41
+UMass Minutemen,UMass,Independent,Amherst,MA,42.3868,-72.5301,113
+Oregon State Beavers,Oregon State,Pac-12,Corvallis,OR,44.5590,-123.2816,204
+Washington State Cougars,Washington State,Pac-12,Pullman,WA,46.7324,-117.1580,265
+UTEP Miners,UTEP,Conference USA,El Paso,TX,31.7692,-106.5047,2638

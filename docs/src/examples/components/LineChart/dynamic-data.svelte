@@ -19,10 +19,9 @@
 		x="x"
 		y="y"
 		yBaseline={undefined}
-		tooltip={false}
+		tooltipContext={false}
+		motion={{ type: 'spring' }}
 		props={{
-			yAxis: { motion: 'tween' },
-			grid: { motion: 'tween' }
 			// spline: {
 			//   draw: {
 			//     // easing function to only draw the last data point

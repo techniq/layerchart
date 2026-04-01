@@ -24,7 +24,7 @@
 	x="date"
 	y={['value', 'baseline']}
 	padding={{ left: 16, bottom: 24 }}
-	tooltip={false}
+	tooltipContext={false}
 	height={300}
 >
 	{#snippet marks()}

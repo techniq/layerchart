@@ -1,0 +1,252 @@
+{
+  "component": "Density",
+  "examples": [
+    {
+      "name": "bandwidth",
+      "title": "bandwidth",
+      "path": "/docs/components/Density/bandwidth",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 30,
+          "line": "<Density {bandwidth} thresholds={20} fillOpacity={0.8} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 31,
+          "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Density/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 23,
+          "line": "<Density bandwidth={10} thresholds={20} fillOpacity={0.8} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 24,
+          "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+        }
+      ]
+    },
+    {
+      "name": "stroke-only",
+      "title": "stroke only",
+      "path": "/docs/components/Density/stroke-only",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 9,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 20,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 21,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 23,
+          "line": "<Density fill=\"none\" stroke=\"oklch(0.6 0.2 260)\" strokeWidth={1} bandwidth={10} thresholds={20} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 24,
+          "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+        }
+      ]
+    },
+    {
+      "name": "thresholds",
+      "title": "thresholds",
+      "path": "/docs/components/Density/thresholds",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 30,
+          "line": "<Density bandwidth={10} {thresholds} fillOpacity={0.8} />"
+        },
+        {
+          "component": "Points",
+          "lineNumber": 31,
+          "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+        }
+      ]
+    },
+    {
+      "name": "walmart",
+      "title": "walmart",
+      "path": "/docs/components/Density/walmart",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 22,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 43,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 44,
+          "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 45,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 55,
+          "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 72,
+          "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "weighted",
+      "title": "weighted",
+      "path": "/docs/components/Density/weighted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 28,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 30,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "Density",
+          "lineNumber": 31,
+          "line": "<Density"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 37,
+          "line": "<Circle"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 30,
+      "line": "<Density {bandwidth} thresholds={20} fillOpacity={0.8} />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 23,
+      "line": "<Density bandwidth={10} thresholds={20} fillOpacity={0.8} />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 23,
+      "line": "<Density fill=\"none\" stroke=\"oklch(0.6 0.2 260)\" strokeWidth={1} bandwidth={10} thresholds={20} />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 30,
+      "line": "<Density bandwidth={10} {thresholds} fillOpacity={0.8} />"
+    },
+    {
+      "example": "walmart",
+      "component": "Density",
+      "path": "/docs/components/Density/walmart",
+      "lineNumber": 44,
+      "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 31,
+      "line": "<Density"
+    }
+  ],
+  "updatedAt": "2026-04-01T13:16:17.912Z"
+}

@@ -1,0 +1,252 @@
+{
+  "component": "Image",
+  "examples": [
+    {
+      "name": "college-football-map",
+      "title": "college football map",
+      "path": "/docs/components/Image/college-football-map",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 41,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 61,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 63,
+          "line": "<Circle"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 77,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 84,
+          "line": "<Image"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 94,
+          "line": "<Tooltip.Root {context}>"
+        }
+      ]
+    },
+    {
+      "name": "country-flags",
+      "title": "country flags",
+      "path": "/docs/components/Image/country-flags",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 26,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 27,
+          "line": "<Axis placement=\"bottom\" label=\"GDP per capita (USD)\" rule />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 29,
+          "line": "<Image"
+        }
+      ]
+    },
+    {
+      "name": "pixel-mode",
+      "title": "pixel mode",
+      "path": "/docs/components/Image/pixel-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart padding={{ top: 10, bottom: 10, left: 10, right: 10 }} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 7,
+          "line": "<Image"
+        }
+      ]
+    },
+    {
+      "name": "planets",
+      "title": "planets",
+      "path": "/docs/components/Image/planets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 57,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 64,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 65,
+          "line": "<Axis placement=\"bottom\" label=\"Distance from Sun (million km)\" rule />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 66,
+          "line": "<Image"
+        }
+      ]
+    },
+    {
+      "name": "sports-logos",
+      "title": "sports logos",
+      "path": "/docs/components/Image/sports-logos",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 68,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 77,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 78,
+          "line": "<Axis placement=\"bottom\" label=\"Wins\" rule />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 80,
+          "line": "<Image"
+        }
+      ]
+    },
+    {
+      "name": "us-presidents",
+      "title": "us presidents",
+      "path": "/docs/components/Image/us-presidents",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 64,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 72,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 73,
+          "line": "<Axis placement=\"bottom\" label=\"Inauguration\" rule />"
+        },
+        {
+          "component": "Image",
+          "lineNumber": 75,
+          "line": "<Image"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "company-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/company-race",
+      "lineNumber": 210,
+      "line": "<Image"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 212,
+      "line": "<Image"
+    },
+    {
+      "example": "college-football-map",
+      "component": "Image",
+      "path": "/docs/components/Image/college-football-map",
+      "lineNumber": 84,
+      "line": "<Image"
+    },
+    {
+      "example": "country-flags",
+      "component": "Image",
+      "path": "/docs/components/Image/country-flags",
+      "lineNumber": 29,
+      "line": "<Image"
+    },
+    {
+      "example": "pixel-mode",
+      "component": "Image",
+      "path": "/docs/components/Image/pixel-mode",
+      "lineNumber": 7,
+      "line": "<Image"
+    },
+    {
+      "example": "planets",
+      "component": "Image",
+      "path": "/docs/components/Image/planets",
+      "lineNumber": 66,
+      "line": "<Image"
+    },
+    {
+      "example": "sports-logos",
+      "component": "Image",
+      "path": "/docs/components/Image/sports-logos",
+      "lineNumber": 80,
+      "line": "<Image"
+    },
+    {
+      "example": "us-presidents",
+      "component": "Image",
+      "path": "/docs/components/Image/us-presidents",
+      "lineNumber": 75,
+      "line": "<Image"
+    },
+    {
+      "example": "pan-zoom-svg-image",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-svg-image",
+      "lineNumber": 19,
+      "line": "<image"
+    },
+    {
+      "example": "planet-distances",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/planet-distances",
+      "lineNumber": 255,
+      "line": "<Image href={planet.image} x={cx} y={cy} width={r * 2} height={r * 2} />"
+    },
+    {
+      "example": "scroll-activation-key",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/scroll-activation-key",
+      "lineNumber": 22,
+      "line": "<image"
+    }
+  ],
+  "updatedAt": "2026-04-01T13:16:18.368Z"
+}

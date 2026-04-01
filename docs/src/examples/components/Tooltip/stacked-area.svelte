@@ -48,7 +48,7 @@
 	cDomain={keys}
 	cRange={['var(--color-apples)', 'var(--color-bananas)', 'var(--color-oranges)']}
 	padding={defaultChartPadding({ top: 5, left: 28, bottom: 24, right: 15 })}
-	tooltip={{
+	tooltipContext={{
 		mode: settings.mode
 	}}
 	height={300}

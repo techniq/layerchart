@@ -8,7 +8,7 @@
 		Graticule,
 		Layer,
 		Tooltip,
-		type ChartContextValue
+		type ChartState
 	} from 'layerchart';
 	import { feature } from 'topojson-client';
 
@@ -23,7 +23,7 @@
 
 	const countries = feature(topology, topology.objects.countries);
 
-	let context = $state<ChartContextValue<(typeof earthquakes)[number]>>();
+	let context = $state<ChartState<(typeof earthquakes)[number]>>();
 
 	let velocity = $state(3);
 
@@ -59,9 +59,9 @@
 	rRange={[0, 1]}
 	geo={{
 		projection: geoOrthographic,
-		fitGeojson: countries,
-		applyTransform: ['rotate']
+		fitGeojson: countries
 	}}
+	transform={{ mode: 'projection' }}
 	ondragstart={timer.stop}
 	padding={{ top: 5, bottom: 5, left: 5, right: 5 }}
 	height={600}

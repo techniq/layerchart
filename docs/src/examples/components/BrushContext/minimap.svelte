@@ -17,8 +17,13 @@
 	});
 	export { data };
 
+	// Committed domain — drives main chart's visible range
 	let xDomain = $state<DomainType>([null, null]);
 	let yDomain = $state<DomainType>([null, null]);
+
+	// Live brush position — updates during drag for minimap display
+	let brushX = $state<DomainType>([null, null]);
+	let brushY = $state<DomainType>([null, null]);
 </script>
 
 <div class="relative">
@@ -31,10 +36,16 @@
 		yNice
 		brush={{
 			axis: 'both',
-			resetOnEnd: true,
+			onChange: (e) => {
+				brushX = e.brush.x;
+				brushY = e.brush.y;
+			},
 			onBrushEnd: (e) => {
-				xDomain = e.xDomain;
-				yDomain = e.yDomain;
+				xDomain = e.brush.x;
+				yDomain = e.brush.y;
+				brushX = e.brush.x;
+				brushY = e.brush.y;
+				e.brush.reset();
 			}
 		}}
 		padding={defaultChartPadding({ left: 20, bottom: 24 })}
@@ -58,12 +69,13 @@
 			yNice
 			brush={{
 				axis: 'both',
-				mode: 'separated',
-				xDomain: xDomain,
-				yDomain: yDomain,
+				x: brushX as any,
+				y: brushY as any,
 				onChange: (e) => {
-					xDomain = e.xDomain;
-					yDomain = e.yDomain;
+					xDomain = e.brush.x;
+					yDomain = e.brush.y;
+					brushX = e.brush.x;
+					brushY = e.brush.y;
 				}
 			}}
 		>

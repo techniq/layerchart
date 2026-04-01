@@ -5,18 +5,6 @@ layers: [svg, canvas]
 related: []
 ---
 
-<script lang="ts">
-	import { getSettings } from 'layerchart';
-
-	const settings = getSettings()
-</script>
-
-{#if settings.layer === 'canvas'}
-::warning
-Examples broken due to `Group` not positioning [correctly](https://github.com/techniq/layerchart/issues/662) with `Canvas` layers
-::
-{/if}
-
 ## Usage
 
 :example{ name="basic" showCode }

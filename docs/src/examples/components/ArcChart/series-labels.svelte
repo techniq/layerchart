@@ -25,12 +25,12 @@
 	cornerRadius={10}
 	height={180}
 >
-	{#snippet arc({ props, seriesIndex, visibleSeries })}
+	{#snippet arc({ context, props, seriesIndex })}
 		<Arc {...props}>
 			{#snippet children({ getArcTextProps })}
 				<Text
 					{...getArcTextProps('middle')}
-					value={visibleSeries[seriesIndex].key}
+					value={context.series.visibleSeries[seriesIndex].key}
 					class="fill-black pointer-events-none"
 					font-size="12px"
 				/>

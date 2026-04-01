@@ -35,7 +35,7 @@
 	x1Domain={[1, 2]}
 	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
 	padding={{ left: 32, bottom: 20, top: 8 }}
-	tooltip={{ mode: 'band' }}
+	tooltipContext={{ mode: 'band' }}
 	height={300}
 >
 	{#snippet children({ context })}

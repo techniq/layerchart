@@ -242,14 +242,14 @@
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 48,
+      "lineNumber": 59,
       "line": "<Points class=\"fill-primary/30 stroke-primary\" r={4} />"
     },
     {
       "example": "minimap",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/minimap",
-      "lineNumber": 71,
+      "lineNumber": 83,
       "line": "<Points>"
     },
     {
@@ -258,6 +258,34 @@
       "path": "/docs/components/BrushContext/selection",
       "lineNumber": 43,
       "line": "<Points>"
+    },
+    {
+      "example": "bandwidth",
+      "component": "Density",
+      "path": "/docs/components/Density/bandwidth",
+      "lineNumber": 31,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Density",
+      "path": "/docs/components/Density/basic",
+      "lineNumber": 24,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "stroke-only",
+      "component": "Density",
+      "path": "/docs/components/Density/stroke-only",
+      "lineNumber": 24,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 31,
+      "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "text",
@@ -400,5 +428,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-02-10T16:19:22.780Z"
+  "updatedAt": "2026-03-28T15:21:53.344Z"
 }

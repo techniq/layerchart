@@ -5,6 +5,10 @@ layers: [svg, canvas]
 related: [Graticule]
 ---
 
+:::tip
+See the [Geo guide](/docs/guides/geo) for a full walkthrough of projections, fitting, rendering components, tooltips, and pan/zoom on maps.
+:::
+
 ## Usage
 
 :example{ name="tooltip" showCode }

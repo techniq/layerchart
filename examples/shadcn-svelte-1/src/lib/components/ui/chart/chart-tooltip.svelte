@@ -2,7 +2,7 @@
 	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { getPayloadConfigFromPayload, useChart, type TooltipPayload } from "./chart-utils.js";
-	import { getTooltipContext, Tooltip as TooltipPrimitive } from "layerchart";
+	import { getChartContext,  Tooltip as TooltipPrimitive } from "layerchart";
 	import type { Snippet } from "svelte";
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,12 +48,12 @@
 	} = $props();
 
 	const chart = useChart();
-	const tooltipCtx = getTooltipContext();
+	const ctx = getChartContext();
 
 	const formattedLabel = $derived.by(() => {
-		if (hideLabel || !tooltipCtx.payload?.length) return null;
+		if (hideLabel || !ctx.tooltip.payload?.length) return null;
 
-		const [item] = tooltipCtx.payload;
+		const [item] = ctx.tooltip.payload;
 		const key = labelKey ?? item?.label ?? item?.name ?? "value";
 
 		const itemConfig = getPayloadConfigFromPayload(chart.config, item, key);
@@ -65,10 +65,10 @@
 
 		if (value === undefined) return null;
 		if (!labelFormatter) return value;
-		return labelFormatter(value, tooltipCtx.payload);
+		return labelFormatter(value, ctx.tooltip.payload);
 	});
 
-	const nestLabel = $derived(tooltipCtx.payload.length === 1 && indicator !== "dot");
+	const nestLabel = $derived(ctx.tooltip.payload.length === 1 && indicator !== "dot");
 </script>
 
 {#snippet TooltipLabel()}
@@ -86,7 +86,7 @@
 <TooltipPrimitive.Root variant="none">
 	<div
 		class={cn(
-			"border-border/50 bg-background grid min-w-[9rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
+			"border-border/50 bg-background grid min-w-36 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
 			className
 		)}
 		{...restProps}
@@ -95,7 +95,7 @@
 			{@render TooltipLabel()}
 		{/if}
 		<div class="grid gap-1.5">
-			{#each tooltipCtx.payload as item, i (item.key + i)}
+			{#each ctx.tooltip.payload as item, i (item.key + i)}
 				{@const key = `${nameKey || item.key || item.name || "value"}`}
 				{@const itemConfig = getPayloadConfigFromPayload(chart.config, item, key)}
 				{@const indicatorColor = color || item.payload?.color || item.color}
@@ -111,7 +111,7 @@
 							name: item.name,
 							item,
 							index: i,
-							payload: tooltipCtx.payload,
+							payload: ctx.tooltip.payload,
 						})}
 					{:else}
 						{#if itemConfig?.icon}

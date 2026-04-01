@@ -99,7 +99,7 @@
 								stroke={config.colorBy === 'children'
 									? 'var(--color-primary-content)'
 									: hsl(nodeColor).darker(1).toString()}
-								stroke-opacity={config.colorBy === 'children' ? 0.2 : 1}
+								strokeOpacity={config.colorBy === 'children' ? 0.2 : 1}
 								fill={nodeColor}
 								fillOpacity={node.children ? 0.5 : 1}
 								rx={5}

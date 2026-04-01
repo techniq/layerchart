@@ -21,7 +21,7 @@
 		yDomain={[0, null]}
 		yNice
 		padding={{ left: 24, bottom: 20, top: 8 }}
-		tooltip={{ mode: 'bisect-x' }}
+		tooltipContext={{ mode: 'bisect-x' }}
 	>
 		<Layer>
 			<Axis placement="left" grid rule />
