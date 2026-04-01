@@ -220,11 +220,22 @@
             : null
   );
 
+  // For band scales with domain-mode transform, scale up effective size by the zoom factor
+  // so that more tick labels appear as bands get wider when zoomed in
+  const effectiveSize = $derived.by(() => {
+    if (!ctxSize) return ctxSize;
+    const ts = ctx.transformState;
+    if (ts?.mode === 'domain' && isScaleBand(scale) && ts.scale > 1) {
+      return ctxSize * ts.scale;
+    }
+    return ctxSize;
+  });
+
   const tickCount = $derived(
     typeof ticks === 'number'
       ? ticks
-      : tickSpacing && ctxSize
-        ? Math.round(ctxSize / tickSpacing)
+      : tickSpacing && effectiveSize
+        ? Math.round(effectiveSize / tickSpacing)
         : undefined
   );
   const tickVals = $derived.by(() => {
