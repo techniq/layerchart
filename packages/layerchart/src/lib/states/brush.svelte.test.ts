@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { BrushState } from './brush.svelte.js';
+import { BrushState, expandBandBrushDomain } from './brush.svelte.js';
 import type { BrushChartContext } from './brush.svelte.js';
 
 /** Create a mock chart context with a simple linear scale over [0, 100] */
@@ -400,5 +400,181 @@ describe('BrushState', () => {
       // Should be the same reference (no write)
       expect(brush.x).toBe(originalX);
     });
+  });
+
+  describe('band scale support', () => {
+    const categories = ['A', 'B', 'C', 'D', 'E'];
+    const bandwidth = 80; // 500 / 5 = 100 step, with padding ~80 band
+
+    function createBandMockCtx(): BrushChartContext {
+      const width = 500;
+      const height = 300;
+      const step = width / categories.length;
+      const bw = bandwidth;
+
+      const xScale = Object.assign(
+        (v: any) => {
+          const idx = categories.indexOf(v);
+          return idx * step + (step - bw) / 2;
+        },
+        { bandwidth: () => bw }
+      );
+      const yScale = (v: any) => height - ((v as number) / 100) * height;
+
+      return {
+        xScale,
+        yScale,
+        baseXScale: { domain: () => categories },
+        baseYScale: { domain: () => [0, 100] },
+        width,
+        height,
+      };
+    }
+
+    it('should return correct domain min/max for band scales', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx);
+
+      expect(brush.xDomainMin).toBe('A');
+      expect(brush.xDomainMax).toBe('E');
+    });
+
+    it('should selectAll with first and last categories', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx);
+
+      brush.selectAll();
+
+      expect(brush.x).toEqual(['A', 'E']);
+    });
+
+    it('should setRange with categorical values', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx);
+
+      brush.setRange({ x: 'B', y: 30 }, { x: 'D', y: 70 });
+
+      expect(brush.active).toBe(true);
+      expect(brush.x).toEqual(['B', 'D']);
+    });
+
+    it('should setRange with reversed categorical values', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx);
+
+      brush.setRange({ x: 'D', y: 30 }, { x: 'B', y: 70 });
+
+      expect(brush.x).toEqual(['B', 'D']);
+    });
+
+    it('should clamp setRange to domain bounds', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx);
+
+      // 'A' is the min, 'E' is the max
+      brush.setRange({ x: 'A', y: 0 }, { x: 'E', y: 100 });
+
+      expect(brush.x).toEqual(['A', 'E']);
+    });
+
+    it('should compute range with bandwidth for band scales', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['B', 'D'], axis: 'x' });
+
+      const range = brush.range;
+      // Right edge should include bandwidth of last category
+      const leftPx = ctx.xScale('B');
+      const rightPx = ctx.xScale('D') + bandwidth;
+      expect(range.x).toBe(leftPx);
+      expect(range.width).toBe(rightPx - leftPx);
+    });
+
+    it('should moveRange by category offset', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['B', 'C'], y: [20, 40] });
+
+      brush.moveRange(
+        { x: ['B', 'C'], y: [20, 40], value: { x: 'B', y: 30 } },
+        { x: 'C', y: 40 }
+      );
+
+      // Delta of 1 category to the right
+      expect(brush.x).toEqual(['C', 'D']);
+    });
+
+    it('should clamp moveRange to domain bounds', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['D', 'E'] });
+
+      brush.moveRange(
+        { x: ['D', 'E'], y: [0, 100], value: { x: 'D', y: 50 } },
+        { x: 'E', y: 50 } // try to move right by 1
+      );
+
+      // Should stay at domain boundary
+      expect(brush.x).toEqual(['D', 'E']);
+    });
+
+    it('should adjustEdge right for categorical', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['B', 'D'] });
+
+      brush.adjustEdge('right', { x: ['B', 'D'], y: [0, 100] }, { x: 'E', y: 50 });
+
+      expect(brush.x).toEqual(['B', 'E']);
+    });
+
+    it('should adjustEdge left for categorical', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['B', 'D'] });
+
+      brush.adjustEdge('left', { x: ['B', 'D'], y: [0, 100] }, { x: 'A', y: 50 });
+
+      expect(brush.x).toEqual(['A', 'D']);
+    });
+
+    it('should invert edges when dragged past opposite edge (categorical)', () => {
+      const ctx = createBandMockCtx();
+      const brush = new BrushState(ctx, { x: ['B', 'D'] });
+
+      // Drag left handle past right edge
+      brush.adjustEdge('left', { x: ['B', 'D'], y: [0, 100] }, { x: 'E', y: 50 });
+
+      expect(brush.x).toEqual(['D', 'E']);
+    });
+  });
+});
+
+describe('expandBandBrushDomain', () => {
+  const baseDomain = ['A', 'B', 'C', 'D', 'E'];
+
+  it('should expand [first, last] to full category subarray', () => {
+    expect(expandBandBrushDomain(['B', 'D'], baseDomain)).toEqual(['B', 'C', 'D']);
+  });
+
+  it('should return full domain for [first, last] matching full extent', () => {
+    expect(expandBandBrushDomain(['A', 'E'], baseDomain)).toEqual(['A', 'B', 'C', 'D', 'E']);
+  });
+
+  it('should return single category when first equals last', () => {
+    expect(expandBandBrushDomain(['C', 'C'], baseDomain)).toEqual(['C']);
+  });
+
+  it('should pass through numeric domains unchanged', () => {
+    expect(expandBandBrushDomain([10, 50], [0, 100])).toEqual([10, 50]);
+  });
+
+  it('should pass through null domains unchanged', () => {
+    expect(expandBandBrushDomain([null, null], baseDomain)).toEqual([null, null]);
+  });
+
+  it('should pass through Date domains unchanged', () => {
+    const d1 = new Date('2024-01-01');
+    const d2 = new Date('2024-06-01');
+    expect(expandBandBrushDomain([d1, d2], [d1, d2])).toEqual([d1, d2]);
+  });
+
+  it('should return unchanged if category not found in domain', () => {
+    expect(expandBandBrushDomain(['X', 'Y'], baseDomain)).toEqual(['X', 'Y']);
   });
 });

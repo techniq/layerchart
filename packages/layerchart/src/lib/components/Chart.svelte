@@ -7,7 +7,7 @@
 
   import { getObjectOrNull, type Accessor } from '$lib/utils/common.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
-  import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
+  import { type AnyScale, type DomainType, isScaleBand } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
     Nice,
@@ -22,7 +22,7 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
-  import { type BrushDomainType, type BrushState } from '$lib/states/brush.svelte.js';
+  import { type BrushDomainType, type BrushState, expandBandBrushDomain } from '$lib/states/brush.svelte.js';
 
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
@@ -833,6 +833,9 @@
 
         const d0 = baseDomain[0] as unknown;
         const d1 = baseDomain[1] as unknown;
+
+        // Skip domain extent constraint for categorical scales (range clamping handles boundaries)
+        if (typeof d0 === 'string') return axisTranslate;
         const isDate = d0 instanceof Date;
         const rawD0 = isDate ? (d0 as Date).getTime() : (d0 as number);
         const rawD1 = isDate ? (d1 as Date).getTime() : (d1 as number);
@@ -925,15 +928,52 @@
     };
   });
 
-  // Compose user-provided constrain with domainExtent constrain
+  // Whether this is a band scale domain transform (affects scaleExtent and constrain defaults)
+  const isBandDomainTransform = $derived(
+    transform?.mode === 'domain' && (
+      ((transform.axis ?? 'both') !== 'y' && isScaleBand(chartState._xScaleProp)) ||
+      ((transform.axis ?? 'both') !== 'x' && isScaleBand(chartState._yScaleProp))
+    )
+  );
+
+  // For band scale domain transforms, enforce scaleExtent minimum of 1 (can't zoom out past initial view)
+  const resolvedScaleExtent = $derived.by(() => {
+    if (!isBandDomainTransform) return transform?.scaleExtent;
+    const userExtent = transform?.scaleExtent;
+    return [Math.max(1, userExtent?.[0] ?? 1), userExtent?.[1] ?? Infinity] as [number, number];
+  });
+
+  // Default constrain for band scale domain transforms: prevent panning past data boundaries
+  const bandScaleConstrain = $derived.by(() => {
+    if (!isBandDomainTransform) return undefined;
+    const xIsBand =
+      (transform!.axis ?? 'both') !== 'y' && isScaleBand(chartState._xScaleProp);
+    const yIsBand =
+      (transform!.axis ?? 'both') !== 'x' && isScaleBand(chartState._yScaleProp);
+
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      let { scale, translate } = t;
+      let tx = translate.x;
+      let ty = translate.y;
+      if (xIsBand) {
+        // translate.x must be in [width * (1 - scale), 0]
+        tx = Math.max(chartState.width * (1 - scale), Math.min(0, tx));
+      }
+      if (yIsBand) {
+        ty = Math.max(chartState.height * (1 - scale), Math.min(0, ty));
+      }
+      return { scale, translate: { x: tx, y: ty } };
+    };
+  });
+
+  // Compose user-provided constrain with domainExtent constrain and band scale constrain
   const composedConstrain = $derived.by(() => {
     const userConstrain = transform?.constrain;
-    if (!domainExtentConstrain && !userConstrain) return undefined;
-    if (!domainExtentConstrain) return userConstrain;
-    if (!userConstrain) return domainExtentConstrain;
-    // Domain extent first, then user constrain
+    const constrains = [bandScaleConstrain, domainExtentConstrain, userConstrain].filter(Boolean) as Array<(t: { scale: number; translate: { x: number; y: number } }) => { scale: number; translate: { x: number; y: number } }>;
+    if (constrains.length === 0) return undefined;
+    if (constrains.length === 1) return constrains[0];
     return (t: { scale: number; translate: { x: number; y: number } }) => {
-      return userConstrain(domainExtentConstrain(t));
+      return constrains.reduce((acc, fn) => fn(acc), t);
     };
   });
 
@@ -954,8 +994,12 @@
             chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
           } else if (zoomOnBrush) {
             const axis = userProps.axis ?? 'x';
-            if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
-            if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
+            if (axis === 'x' || axis === 'both') {
+              brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
+            }
+            if (axis === 'y' || axis === 'both') {
+              brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
+            }
           }
           userOnBrushEnd?.(e);
           e.brush.reset();
@@ -993,7 +1037,7 @@
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
-      {@const { domainExtent: _de, constrain: _uc, apply: _apply, ...transformProps } = transform ?? {}}
+      {@const { domainExtent: _de, constrain: _uc, apply: _apply, scaleExtent: _se, ...transformProps } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
         mode={transform?.mode ?? 'none'}
@@ -1001,6 +1045,7 @@
         initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
         {processTranslate}
         {...transformProps}
+        scaleExtent={resolvedScaleExtent}
         constrain={composedConstrain}
         disablePointer={(brush === true || (typeof brush === 'object' && !brush.disabled)) || transform?.disablePointer}
         {ondragstart}

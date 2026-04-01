@@ -26,6 +26,10 @@ Zooming and panning modifies the chart's domain — the range of data values sho
 
 :example{ component="BarChart" name="pan-zoom" }
 
+For categorical (band scale) data, domain mode rescales the band range — bars grow proportionally as you zoom and pan smoothly across categories. Panning is automatically constrained to data boundaries:
+
+:example{ component="BarChart" name="pan-zoom-band" }
+
 A gradient-filled rectangle with full-chart grid axes, demonstrating both-axis zoom with `scaleExtent` up to 40x:
 
 :example{ component="TransformContext" name="pan-zoom-axes" }
@@ -487,6 +491,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Use case               | Configuration                                             | Example                                                                                 |
 | ---------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Pan/zoom a time series | `transform={{ mode: 'domain', axis: 'x' }}`               | [pan-zoom](/docs/components/BarChart/pan-zoom)                                          |
+| Pan/zoom categories    | `transform={{ mode: 'domain', axis: 'x' }}` (band scale)  | [pan-zoom-band](/docs/components/BarChart/pan-zoom-band)                                |
 | Pan/zoom both axes     | `transform={{ mode: 'domain', scaleExtent: [1, 40] }}`    | [pan-zoom-axes](/docs/components/TransformContext/pan-zoom-axes)                        |
 | Limit zoom depth       | `scaleExtent: [1, 10]`                                    | [pan-zoom-scale-extent](/docs/components/BarChart/pan-zoom-scale-extent)                |
 | Keep data in view      | `domainExtent: { x: { min: 'data', max: 'data' } }`       | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
@@ -499,6 +504,7 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
+| Brush-to-zoom (band)   | `brush` + `transform` on band scale                       | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)                   |
 | Overview brush         | Separate chart with `brush.x` synced to `context.xDomain` | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)             |
 | Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls              | [basic](/docs/components/Pack/basic)                                                    |
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                | [basic](/docs/components/Pack/basic)                                                    |

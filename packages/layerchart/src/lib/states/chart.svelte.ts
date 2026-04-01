@@ -477,6 +477,33 @@ export class ChartState<
       (this.props.radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
+  /** Transform-aware range for band scales in domain mode (D3 range-rescaling pattern) */
+  private _xScaleRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      isScaleBand(this._xScaleProp) &&
+      this.width > 0
+    ) {
+      const { scale, translate } = this.transformState;
+      return [translate.x, translate.x + this.width * scale];
+    }
+    return this.xRangeProp;
+  });
+
+  private _yScaleRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      isScaleBand(this._yScaleProp) &&
+      this.height > 0
+    ) {
+      const { scale, translate } = this.transformState;
+      return [translate.y, translate.y + this.height * scale];
+    }
+    return this.yRangeProp;
+  });
+
   yReverse = $derived(!isScaleBand(this._yScaleProp) && !isScaleTime(this._yScaleProp));
 
   private resolveAccessor(axis: 'x' | 'y') {
@@ -864,7 +891,7 @@ export class ChartState<
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
-      range: this.xRangeProp,
+      range: this._xScaleRange,
       height: this.height,
       width: this.width,
       extents: this.snappedExtents,
@@ -881,7 +908,7 @@ export class ChartState<
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
-      range: this.yRangeProp,
+      range: this._yScaleRange,
       height: this.height,
       width: this.width,
       extents: this.filteredExtents,
@@ -1021,8 +1048,29 @@ export class ChartState<
   zDomainPossiblyNice = $derived(this.zScale.domain());
   rDomainPossiblyNice = $derived(this.rScale.domain());
 
-  xRange = $derived(getRange(this.xScale));
-  yRange = $derived(getRange(this.yScale));
+  /** Viewport range — always [0, width] / [height, 0] for layout components (axis, grid, etc).
+   *  When band scale domain transform is active, xScale.range() is wider than the viewport,
+   *  so we return the base scale's range instead. */
+  xRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      isScaleBand(this._xScaleProp)
+    ) {
+      return getRange(this.baseXScale);
+    }
+    return getRange(this.xScale);
+  });
+  yRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      isScaleBand(this._yScaleProp)
+    ) {
+      return getRange(this.baseYScale);
+    }
+    return getRange(this.yScale);
+  });
   zRange = $derived(getRange(this.zScale));
   rRange = $derived(getRange(this.rScale));
 
@@ -1171,25 +1219,58 @@ export class ChartState<
     const brushY = brush.y;
 
     if ((axis === 'x' || axis === 'both') && brushX[0] != null && brushX[1] != null) {
-      const baseMinX = +this._baseXDomain[0];
-      const baseRangeX = +this._baseXDomain[1] - baseMinX;
-      const brushMinX = +brushX[0];
-      const brushRangeX = +brushX[1] - brushMinX;
+      const baseDomainX = this._baseXDomain;
 
-      if (brushRangeX > 0 && baseRangeX > 0) {
-        const newScale = baseRangeX / brushRangeX;
-        const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
+      if (typeof baseDomainX[0] === 'string') {
+        // Categorical: compute scale/translate from domain indices
+        const totalCount = baseDomainX.length;
+        const startIdx = baseDomainX.indexOf(brushX[0] as string);
+        const endIdx = baseDomainX.indexOf(brushX[1] as string) + 1;
+        const selectedCount = endIdx - startIdx;
 
-        let newTranslateY = 0;
-        if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-          const baseMinY = +this._baseYDomain[0];
-          const baseRangeY = +this._baseYDomain[1] - baseMinY;
-          const brushMinY = +brushY[0];
-          newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
+        if (selectedCount > 0 && totalCount > 0) {
+          const newScale = totalCount / selectedCount;
+          const newTranslateX = -(startIdx / totalCount) * this.width * newScale;
+
+          let newTranslateY = 0;
+          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
+            const baseDomainY = this._baseYDomain;
+            if (typeof baseDomainY[0] === 'string') {
+              const yTotal = baseDomainY.length;
+              const yStart = baseDomainY.indexOf(brushY[0] as string);
+              const yEnd = baseDomainY.indexOf(brushY[1] as string) + 1;
+              const ySelected = yEnd - yStart;
+              if (ySelected > 0) {
+                newTranslateY = -(yStart / yTotal) * this.height * newScale;
+              }
+            }
+          }
+
+          this.transform.setScale(newScale);
+          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
         }
+      } else {
+        // Continuous: existing numeric logic
+        const baseMinX = +baseDomainX[0];
+        const baseRangeX = +baseDomainX[1] - baseMinX;
+        const brushMinX = +brushX[0];
+        const brushRangeX = +brushX[1] - brushMinX;
 
-        this.transform.setScale(newScale);
-        this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+        if (brushRangeX > 0 && baseRangeX > 0) {
+          const newScale = baseRangeX / brushRangeX;
+          const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
+
+          let newTranslateY = 0;
+          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
+            const baseMinY = +this._baseYDomain[0];
+            const baseRangeY = +this._baseYDomain[1] - baseMinY;
+            const brushMinY = +brushY[0];
+            newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
+          }
+
+          this.transform.setScale(newScale);
+          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+        }
       }
     }
   }
