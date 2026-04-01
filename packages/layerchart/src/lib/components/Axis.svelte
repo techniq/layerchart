@@ -47,7 +47,7 @@
      * Width or height of each tick in pixels (enabling responsive count)
      * @default 80 (top|bottom|angle) or 50 (left|right|radius)
      */
-    tickSpacing?: number;
+    tickSpacing?: number | null;
 
     /**
      * Whether to render tick labels on multiple lines for additional context

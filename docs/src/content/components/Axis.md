@@ -19,6 +19,8 @@ Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes 
 
 :example{ name="linechart-tickspacing" showCode }
 
+:example{ name="barchart-tickspacing" showCode }
+
 ::tip
 See also: time scale [auto](/docs/components/Axis/time-scale-auto), [multiline](/docs/components/Axis/time-scale-auto-multiline), and [brush](/docs/components/Axis/time-scale-brush-multiline) examples
 ::
