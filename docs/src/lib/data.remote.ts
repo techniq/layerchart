@@ -326,6 +326,46 @@ export const getFaithful = prerender(async () => {
 	return data;
 });
 
+export type CategoryBrand = {
+	date: Date;
+	name: string;
+	category: string;
+	value: number;
+};
+
+export const getCategoryBrands = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/category-brands.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	) as unknown as CategoryBrand[];
+
+	// Ensure dates are Date objects
+	for (const d of data) {
+		d.date = new Date(d.date as unknown as string);
+	}
+
+	return data;
+});
+
+export type ProgrammingLanguage = {
+	date: Date;
+	name: string;
+	value: number;
+};
+
+export const getProgrammingLanguages = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/programming-languages.csv').then(async (r) =>
+		csvParse(await r.text(), autoType)
+	)) as unknown as ProgrammingLanguage[];
+
+	for (const d of data) {
+		d.date = new Date(d.date as unknown as string);
+	}
+
+	return data;
+});
+
 export const getShapeData = query(z.string().nullable(), async (file) => {
 	if (!file) return null;
 	const { fetch } = getRequestEvent();
