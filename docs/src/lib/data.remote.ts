@@ -1,7 +1,7 @@
 import { celsiusToFahrenheit } from 'layerchart';
 import { parse, sortFunc } from '@layerstack/utils';
 import { ascending, flatGroup, max, mean, min } from 'd3-array';
-import { csvParse, autoType } from 'd3-dsv';
+import { csvParse, csvParseRows, autoType } from 'd3-dsv';
 
 import { prerender, getRequestEvent, query } from '$app/server';
 import { z } from 'zod';
@@ -298,14 +298,33 @@ export const getVolcano = prerender(async () => {
 	return data;
 });
 
+export type WaterVaporData = {
+	width: number;
+	height: number;
+	values: number[];
+};
+
+export const getWaterVapor = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const rows = csvParseRows(
+		await fetch('/data/examples/geo/water-vapor.csv').then((r) => r.text())
+	);
+	return {
+		width: rows[0]?.length ?? 0,
+		height: rows.length,
+		values: rows.flat().map((value) => (value === '99999.0' ? NaN : +value))
+	} satisfies WaterVaporData;
+});
+
 export type FaithfulData = { eruptions: number; waiting: number };
 
 export const getFaithful = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = (await fetch('/data/examples/faithful.json').then((r) => r.json())) as FaithfulData[];
+	const data = (await fetch('/data/examples/faithful.json').then((r) =>
+		r.json()
+	)) as FaithfulData[];
 	return data;
 });
-
 
 export const getShapeData = query(z.string().nullable(), async (file) => {
 	if (!file) return null;

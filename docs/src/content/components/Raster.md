@@ -23,6 +23,12 @@ Layer [Contour](/docs/components/Contour) stroke lines over a Raster for the bes
 
 :example{ name="with-contour-overlay" showCode }
 
+## US water vapor
+
+Clip a global water-vapor raster to the U.S. boundary and overlay isolines on top of the projected map.
+
+:example{ name="us-water-vapor" showCode }
+
 ## Sampled function
 
 When no data is provided, the raster mark evaluates a continuous function _f_(_x_,_y_) at each pixel. Here, `sin(x) * cos(y)` is colored with a diverging scale.
