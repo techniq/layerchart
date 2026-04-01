@@ -4,7 +4,7 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { RangeField, SelectField, Switch } from 'svelte-ux';
 
-	let value = $state(0.68);
+	let value = $state(68);
 	let segments = $state(150);
 	let tickCount = $state(5);
 	let outerRadius = $state(80);
@@ -37,7 +37,7 @@
 		'interpolateCividis'
 	];
 
-	const domain: [number, number] = [0, 1];
+	const domain: [number, number] = [0, 100];
 	const halfSpan = $derived(arcSpan / 2);
 	const angleRange = $derived([-halfSpan, halfSpan] as [number, number]);
 	const angleScale = $derived(scaleLinear().domain(domain).range(angleRange));
@@ -47,23 +47,22 @@
 
 	const segmentData = $derived(
 		Array.from({ length: segments }, (_, i) => {
-			const t0 = i / segments;
-			const t1 = (i + 1) / segments;
+			const t = i / segments;
 			return {
-				startAngle: (angleScale(t0) * Math.PI) / 180,
-				endAngle: (angleScale(t1) * Math.PI) / 180,
-				color: interpolate(invertColors ? 1 - t0 : t0)
+				startAngle: (angleScale(t * 100) * Math.PI) / 180,
+				endAngle: (angleScale(((i + 1) / segments) * 100) * Math.PI) / 180,
+				color: interpolate(invertColors ? 1 - t : t)
 			};
 		})
 	);
 
-	const ticks = $derived(Array.from({ length: tickCount + 1 }, (_, i) => i / tickCount));
+	const ticks = $derived(Array.from({ length: tickCount + 1 }, (_, i) => (i / tickCount) * 100));
 
 	const needleAngleRad = $derived((angleScale(value) * Math.PI) / 180);
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_1fr] gap-2 mb-2">
-	<RangeField label="Percentage" bind:value min={0} max={1} step={0.01} />
+	<RangeField label="Value" bind:value min={0} max={100} step={1} />
 	<RangeField label="Arc Span" bind:value={arcSpan} min={10} max={360} step={5} />
 	<RangeField label="Ticks" bind:value={tickCount} min={1} max={20} />
 	<RangeField label="Inner Radius" bind:value={innerRadius} min={10} max={outerRadius - 2} />
@@ -73,6 +72,7 @@
 		label="Color Scheme"
 		bind:value={colorScheme}
 		options={colorSchemes.map((s) => ({ label: s.replace('interpolate', ''), value: s }))}
+		stepper
 		clearable={false}
 		toggleIcon={null}
 		class="col-span-full"
@@ -115,7 +115,8 @@
 				<Text
 					x={Math.sin(angleRad) * labelRadius}
 					y={-Math.cos(angleRad) * labelRadius}
-					value={Math.round(tick * 100) + '%'}
+					value={tick / 100}
+					format="percentRound"
 					textAnchor="middle"
 					verticalAnchor="middle"
 					class="text-[8px] fill-surface-content/50 tabular-nums"
@@ -136,7 +137,7 @@
 
 			<!-- Value display -->
 			<Text
-				value={Math.round(value * 100) + '%'}
+				value={value + '%'}
 				textAnchor="middle"
 				verticalAnchor="middle"
 				dy={30}
