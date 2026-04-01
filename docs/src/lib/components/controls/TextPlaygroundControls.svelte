@@ -56,6 +56,7 @@
 		<RangeField label="x" bind:value={config.x} min={-300} max={300} />
 		<RangeField label="y" bind:value={config.y} min={-300} max={300} />
 		<RangeField label="width" bind:value={config.width} max={300} />
+		<RangeField label="rotate" bind:value={config.rotate} max={720} />
 
 		<Field label="textAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
 			<ToggleGroup bind:value={config.textAnchor} variant="outline" size="sm" inset class="w-full">
@@ -79,12 +80,6 @@
 			</ToggleGroup>
 		</Field>
 
-		<Field label="showAnchor" let:id>
-			<Switch bind:checked={config.showAnchor} {id} />
-		</Field>
-
-		<RangeField label="rotate" bind:value={config.rotate} max={720} />
-
 		<TextField label="lineHeight" bind:value={config.lineHeight} />
 
 		<Field label="scaleToFit" let:id>
@@ -94,9 +89,15 @@
 		<Field label="resize svg (container)" let:id>
 			<Switch bind:checked={config.resizeSvg} {id} />
 		</Field>
+
+		<Field label="showAnchor" let:id>
+			<Switch bind:checked={config.showAnchor} {id} />
+		</Field>
+
 		<Field label="truncate text" let:id>
 			<Switch bind:checked={config.truncate} {id} />
 		</Field>
+		<div></div>
 		{#if config.truncate}
 			<RangeField
 				label="maxChars"
@@ -104,8 +105,6 @@
 				min={0}
 				max={config.value.length}
 			/>
-
-			<TextField label="ellipsis" bind:value={config.truncateOptions.ellipsis} />
 			<Field label="position" classes={{ input: 'mt-[6px] mb-1' }}>
 				<ToggleGroup
 					bind:value={config.truncateOptions.position}
@@ -119,6 +118,7 @@
 					<ToggleOption value="end">end</ToggleOption>
 				</ToggleGroup>
 			</Field>
+			<TextField label="ellipsis" bind:value={config.truncateOptions.ellipsis} />
 		{/if}
 	</div>
 </div>

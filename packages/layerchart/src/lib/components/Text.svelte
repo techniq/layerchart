@@ -3,6 +3,7 @@
   import type { DataDrivenStyleProps } from '$lib/utils/dataProp.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import type { FormatType, FormatConfig } from '@layerstack/utils';
 
   /**
    * Check if a string looks like a CSS/SVG value (percentage, em, px, etc.)
@@ -163,6 +164,12 @@
      */
     ref?: SVGTextElement;
 
+    /**
+     * Format the displayed value. When set with `motion` and a numeric `value`,
+     * the number will tween smoothly and be formatted for display.
+     */
+    format?: FormatType | FormatConfig;
+
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
 
@@ -224,7 +231,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { cls } from '@layerstack/tailwind';
-  import { merge } from '@layerstack/utils';
+  import { merge, format as formatValue } from '@layerstack/utils';
 
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -263,6 +270,7 @@
     stroke,
     fill,
     fillOpacity,
+    format,
     motion,
     svgRef: svgRefProp = $bindable(),
     ref: refProp = $bindable(),
@@ -387,10 +395,25 @@
     };
   });
 
-  // Handle null and convert `\n` strings back to newline characters
-  const rawText = $derived(
-    typeof value !== 'function' && value != null ? value.toString().replace(/\\n/g, '\n') : ''
+  // Tween numeric values when motion is configured
+  const motionValue = createMotion(
+    typeof value === 'number' ? value : 0,
+    () => (typeof value === 'number' ? value : 0),
+    typeof value === 'number' && motion ? (typeof motion === 'object' && 'type' in motion ? motion : undefined) : undefined
   );
+
+  // Handle null and convert `\n` strings back to newline characters
+  const rawText = $derived.by(() => {
+    if (typeof value === 'function' || value == null) return '';
+    if (typeof value === 'number' && motion) {
+      const v = motionValue.current;
+      // @ts-expect-error - improve format types
+      return format ? formatValue(v, format) : String(v);
+    }
+    // @ts-expect-error - improve format types
+    const text = format ? formatValue(value, format) : value.toString();
+    return text.replace(/\\n/g, '\n');
+  });
 
   const textValue = $derived.by(() => {
     if (!truncateConfig) return rawText;
