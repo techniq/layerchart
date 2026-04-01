@@ -9,8 +9,7 @@
 
 <Chart {data} x="date" y="value" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>
 	{#snippet children({ context })}
-		{@const thresholdOffset =
-			(context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
+		{@const thresholdOffset = (context.yScale(50) / context.containerHeight) * 100 + '%'}
 		<Layer>
 			<Axis placement="left" grid rule />
 			<Axis placement="bottom" rule />
