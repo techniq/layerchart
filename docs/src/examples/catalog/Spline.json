@@ -948,6 +948,20 @@
       "line": "<Spline"
     },
     {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 39,
+      "line": "<Spline"
+    },
+    {
+      "example": "bump-labels",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-labels",
+      "lineNumber": 46,
+      "line": "<Spline y={s.key} stroke={s.color} curve={curveBumpX} class=\"stroke-2\" />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -1305,5 +1319,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.667Z"
+  "updatedAt": "2026-04-01T23:39:55.879Z"
 }

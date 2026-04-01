@@ -4800,6 +4800,34 @@
       "line": "<Tooltip.Item label=\"Conference\" value={data.conference} />"
     },
     {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 53,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 55,
+      "line": "<Tooltip.Header>{data.year}</Tooltip.Header>"
+    },
+    {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 56,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 58,
+      "line": "<Tooltip.Item label={key} value={'#' + data[key]} />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -6704,5 +6732,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-01T16:49:33.016Z"
+  "updatedAt": "2026-04-01T23:39:56.044Z"
 }

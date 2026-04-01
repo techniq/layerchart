@@ -67,6 +67,18 @@
       ]
     },
     {
+      "name": "brush-band",
+      "title": "brush band",
+      "path": "/docs/components/BarChart/brush-band",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 9,
+          "line": "<BarChart {data} x=\"state\" y=\"value\" brush height={300} />"
+        }
+      ]
+    },
+    {
       "name": "brush-pan-zoom",
       "title": "brush pan zoom",
       "path": "/docs/components/BarChart/brush-pan-zoom",
@@ -74,6 +86,18 @@
         {
           "component": "BarChart",
           "lineNumber": 16,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
+      "name": "brush-pan-zoom-band",
+      "title": "brush pan zoom band",
+      "path": "/docs/components/BarChart/brush-pan-zoom-band",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 9,
           "line": "<BarChart"
         }
       ]
@@ -852,6 +876,18 @@
       ]
     },
     {
+      "name": "pan-zoom-band",
+      "title": "pan zoom band",
+      "path": "/docs/components/BarChart/pan-zoom-band",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 9,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "pan-zoom-domain-extent",
       "title": "pan zoom domain extent",
       "path": "/docs/components/BarChart/pan-zoom-domain-extent",
@@ -1496,6 +1532,13 @@
       "line": "<BarChart data={dateSeriesData} x=\"date\" y=\"value\" height={300}>"
     },
     {
+      "example": "barchart-tickspacing",
+      "component": "Axis",
+      "path": "/docs/components/Axis/barchart-tickspacing",
+      "lineNumber": 26,
+      "line": "<BarChart"
+    },
+    {
       "example": "barchart-xinterval-xinset",
       "component": "Axis",
       "path": "/docs/components/Axis/barchart-xinterval-xinset",
@@ -1538,10 +1581,24 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" xInterval={timeDay} brush height={300} />"
     },
     {
+      "example": "brush-band",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/brush-band",
+      "lineNumber": 9,
+      "line": "<BarChart {data} x=\"state\" y=\"value\" brush height={300} />"
+    },
+    {
       "example": "brush-pan-zoom",
       "component": "BarChart",
       "path": "/docs/components/BarChart/brush-pan-zoom",
       "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "brush-pan-zoom-band",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/brush-pan-zoom-band",
+      "lineNumber": 9,
       "line": "<BarChart"
     },
     {
@@ -1801,6 +1858,13 @@
       "component": "BarChart",
       "path": "/docs/components/BarChart/pan-zoom",
       "lineNumber": 16,
+      "line": "<BarChart"
+    },
+    {
+      "example": "pan-zoom-band",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/pan-zoom-band",
+      "lineNumber": 9,
       "line": "<BarChart"
     },
     {
@@ -2168,5 +2232,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:16.772Z"
+  "updatedAt": "2026-04-01T23:39:53.231Z"
 }

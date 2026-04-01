@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-01T16:49:28.458Z",
+  "generatedAt": "2026-04-01T23:39:51.969Z",
   "totalComponents": 70,
-  "totalExamples": 842,
+  "totalExamples": 850,
   "components": [
     {
       "component": "AnnotationLine",
@@ -682,6 +682,11 @@
           "checksum": "21ab207c64e335d90f31ff9939bc12b2"
         },
         {
+          "name": "barchart-tickspacing",
+          "path": "/example/Axis/barchart-tickspacing",
+          "checksum": ""
+        },
+        {
           "name": "barchart-xinterval-xinset",
           "path": "/example/Axis/barchart-xinterval-xinset",
           "checksum": "b27288c0a347cece85007f81740ab1dd"
@@ -902,9 +907,19 @@
           "checksum": "4b39996c958561578c7d85b6d6fb9682"
         },
         {
+          "name": "brush-band",
+          "path": "/example/BarChart/brush-band",
+          "checksum": "2ef08d588b0618e3424f8719e6c6737e"
+        },
+        {
           "name": "brush-pan-zoom",
           "path": "/example/BarChart/brush-pan-zoom",
           "checksum": "9296a53f9fc964f5e39f5e6513f0640e"
+        },
+        {
+          "name": "brush-pan-zoom-band",
+          "path": "/example/BarChart/brush-pan-zoom-band",
+          "checksum": "48c54f3baf7cd75f0483b802d73ed178"
         },
         {
           "name": "color-bars-class",
@@ -1125,6 +1140,11 @@
           "name": "pan-zoom",
           "path": "/example/BarChart/pan-zoom",
           "checksum": "1471b5b3042e9c7b45a7a8f540abd32b"
+        },
+        {
+          "name": "pan-zoom-band",
+          "path": "/example/BarChart/pan-zoom-band",
+          "checksum": "67a69dbd3d222a973467f6be6fa9aaa9"
         },
         {
           "name": "pan-zoom-domain-extent",
@@ -2867,6 +2887,21 @@
           "checksum": "c389c53707e23e369a4e2d41dedbd443"
         },
         {
+          "name": "bump-basic",
+          "path": "/example/LineChart/bump-basic",
+          "checksum": "157aedc8d08a1c18386e9cbe8f4d7f4f"
+        },
+        {
+          "name": "bump-highlight",
+          "path": "/example/LineChart/bump-highlight",
+          "checksum": "1640c79ad20c5c13c29d82f4401c6666"
+        },
+        {
+          "name": "bump-labels",
+          "path": "/example/LineChart/bump-labels",
+          "checksum": "64ae9358b4e7933844fdf17a7fb774ad"
+        },
+        {
           "name": "curve",
           "path": "/example/LineChart/curve",
           "checksum": "8eb631f85f99a83c5070bdcafaf5703d"
@@ -3122,6 +3157,11 @@
           "checksum": "a2f19c54ab0da2132122e17b940d8cf7"
         },
         {
+          "name": "smart-labels-with-points",
+          "path": "/example/LineChart/smart-labels-with-points",
+          "checksum": "5f64549853f26454eab3dbceb4e03b87"
+        },
+        {
           "name": "sparkline",
           "path": "/example/LineChart/sparkline",
           "checksum": "0a0d58d4f09464af31b83dbee57b7a68"
@@ -3169,7 +3209,7 @@
         {
           "name": "line",
           "path": "/example/Marker/line",
-          "checksum": "bc4a19d58e12439cc24f9e0f377a6339"
+          "checksum": "b1d1d4e751afaccb1e78857ded906c33"
         },
         {
           "name": "orientation",
@@ -3179,7 +3219,7 @@
         {
           "name": "spline",
           "path": "/example/Marker/spline",
-          "checksum": "085a77466edb8eeccb93c476349bf017"
+          "checksum": "b3b641a44f274f2295b4c0a00dd70c31"
         },
         {
           "name": "spline-w-thicker-stroke",

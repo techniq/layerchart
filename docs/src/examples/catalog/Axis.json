@@ -68,6 +68,18 @@
       ]
     },
     {
+      "name": "barchart-tickspacing",
+      "title": "barchart tickspacing",
+      "path": "/docs/components/Axis/barchart-tickspacing",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 26,
+          "line": "<BarChart"
+        }
+      ]
+    },
+    {
       "name": "barchart-xinterval-xinset",
       "title": "barchart xinterval xinset",
       "path": "/docs/components/Axis/barchart-xinterval-xinset",
@@ -3694,6 +3706,13 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
+      "example": "bump-labels",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-labels",
+      "lineNumber": 43,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -5017,5 +5036,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:16.581Z"
+  "updatedAt": "2026-04-01T23:39:53.097Z"
 }

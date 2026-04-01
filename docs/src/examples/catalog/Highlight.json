@@ -367,6 +367,13 @@
       "line": "<Highlight lines />"
     },
     {
+      "example": "bump-highlight",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-highlight",
+      "lineNumber": 49,
+      "line": "<Highlight lines points />"
+    },
+    {
       "example": "custom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/custom",
@@ -654,5 +661,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-03-31T12:29:59.970Z"
+  "updatedAt": "2026-04-01T23:39:54.865Z"
 }

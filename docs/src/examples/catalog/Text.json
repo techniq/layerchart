@@ -654,6 +654,20 @@
       "line": "<Text"
     },
     {
+      "example": "bump-labels",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-labels",
+      "lineNumber": 52,
+      "line": "<Text"
+    },
+    {
+      "example": "bump-labels",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-labels",
+      "lineNumber": 62,
+      "line": "<Text"
+    },
+    {
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
@@ -1011,5 +1025,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.740Z"
+  "updatedAt": "2026-04-01T23:39:55.958Z"
 }
