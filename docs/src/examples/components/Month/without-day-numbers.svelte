@@ -20,39 +20,34 @@
 	export { data };
 </script>
 
-<div class="h-[600px] p-4 border rounded-sm overflow-auto">
-	<Chart
-		{data}
-		x="date"
-		c="value"
-		cScale={scaleThreshold().unknown('transparent')}
-		cDomain={[25, 50, 75]}
-		cRange={[
-			'var(--color-primary-100)',
-			'var(--color-primary-300)',
-			'var(--color-primary-500)',
-			'var(--color-primary-700)'
-		]}
-	>
-		<Layer>
-			<Month
-				start={firstDayOfYear}
-				end={now}
-				showDayNumber={false}
-				tooltip
-			/>
-		</Layer>
+<Chart
+	{data}
+	x="date"
+	c="value"
+	cScale={scaleThreshold().unknown('transparent')}
+	cDomain={[25, 50, 75]}
+	cRange={[
+		'var(--color-primary-100)',
+		'var(--color-primary-300)',
+		'var(--color-primary-500)',
+		'var(--color-primary-700)'
+	]}
+	height={600}
+	clip
+>
+	<Layer>
+		<Month start={firstDayOfYear} end={now} showDayNumber={false} tooltip />
+	</Layer>
 
-		<Tooltip.Root>
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.date} format="day" />
+	<Tooltip.Root>
+		{#snippet children({ data })}
+			<Tooltip.Header value={data.date} format="day" />
 
-				{#if data.value != null}
-					<Tooltip.List>
-						<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-					</Tooltip.List>
-				{/if}
-			{/snippet}
-		</Tooltip.Root>
-	</Chart>
-</div>
+			{#if data.value != null}
+				<Tooltip.List>
+					<Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+				</Tooltip.List>
+			{/if}
+		{/snippet}
+	</Tooltip.Root>
+</Chart>
