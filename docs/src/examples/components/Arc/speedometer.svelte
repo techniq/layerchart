@@ -2,11 +2,11 @@
 	import { Arc, Chart, Circle, Group, Layer, Line, Text } from 'layerchart';
 	import { scaleLinear } from 'd3-scale';
 
-	let speed = $state(85);
+	let speed = $state(45);
 
 	export { speed as data };
 
-	const domain: [number, number] = [0, 220];
+	const domain: [number, number] = [0, 120];
 	const angleRange: [number, number] = [-120, 120];
 	let outerRadius = 80;
 	let innerRadius = 70;
@@ -14,20 +14,20 @@
 	const angleScale = scaleLinear().domain(domain).range(angleRange);
 
 	const zones = [
-		{ min: 0, max: 80, class: 'fill-emerald-500' },
-		{ min: 80, max: 140, class: 'fill-yellow-500' },
-		{ min: 140, max: 180, class: 'fill-orange-500' },
-		{ min: 180, max: 220, class: 'fill-red-500' },
+		{ min: 0, max: 45, class: 'fill-emerald-500' },
+		{ min: 45, max: 75, class: 'fill-yellow-500' },
+		{ min: 75, max: 100, class: 'fill-orange-500' },
+		{ min: 100, max: 120, class: 'fill-red-500' },
 	];
 
-	const majorTicks = Array.from({ length: 12 }, (_, i) => i * 20);
-	const minorTicks = Array.from({ length: 45 }, (_, i) => i * 5).filter((t) => t % 20 !== 0);
+	const majorTicks = Array.from({ length: 13 }, (_, i) => i * 10);
+	const minorTicks = Array.from({ length: 25 }, (_, i) => i * 5).filter((t) => t % 10 !== 0);
 
 	const needleAngleRad = $derived((angleScale(speed) * Math.PI) / 180);
 </script>
 
 <div class="flex flex-col items-center gap-2">
-	<input type="range" min={0} max={220} bind:value={speed} class="w-48" />
+	<input type="range" min={0} max={120} bind:value={speed} class="w-48" />
 
 	<Chart height={200} padding={20}>
 		<Layer center>
@@ -117,7 +117,7 @@
 				<Text
 					x={0}
 					y={42}
-					value="km/h"
+					value="mph"
 					textAnchor="middle"
 					verticalAnchor="middle"
 					class="text-[8px] fill-surface-content/50"
