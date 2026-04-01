@@ -5017,6 +5017,174 @@
       "line": "<Tooltip.Item label=\"variance\" value={data.value - data.baseline} />"
     },
     {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 41,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 43,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 47,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 43,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 45,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 43,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 45,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 48,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 49,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 41,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 43,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 46,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 47,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 42,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 44,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 47,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 48,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 42,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 44,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 47,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 48,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" valueAlign=\"right\" />"
+    },
+    {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
@@ -6536,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.842Z"
+  "updatedAt": "2026-04-01T16:49:33.016Z"
 }

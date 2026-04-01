@@ -4,29 +4,6 @@ import { playwright } from '@vitest/browser-playwright';
 
 /** @type {import('vite').UserConfig} */
 const config = defineConfig({
-  // Pre-bundle these dependencies to prevent Vite reload during tests
-  // which causes "Failed to fetch dynamically imported module" errors
-  // Ref: https://github.com/vitest-dev/vitest/issues/5477
-  optimizeDeps: {
-    include: [
-      '@layerstack/tailwind',
-      '@layerstack/utils',
-      '@layerstack/svelte-state',
-      '@layerstack/utils/object',
-      'd3-array',
-      'd3-color',
-      'd3-delaunay',
-      'd3-geo',
-      'd3-geo-voronoi',
-      'd3-interpolate-path',
-      'd3-path',
-      'd3-scale',
-      'd3-shape',
-      'd3-quadtree',
-      'memoize',
-      'runed',
-    ],
-  },
   plugins: [sveltekit()],
   ssr: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440

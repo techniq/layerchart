@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-01T13:16:15.497Z",
-  "totalComponents": 69,
-  "totalExamples": 836,
+  "generatedAt": "2026-04-01T16:49:28.458Z",
+  "totalComponents": 70,
+  "totalExamples": 842,
   "components": [
     {
       "component": "AnnotationLine",
@@ -3194,6 +3194,41 @@
       ]
     },
     {
+      "component": "Month",
+      "examples": [
+        {
+          "name": "90-days",
+          "path": "/example/Month/90-days",
+          "checksum": "38666db0aab5d41c08d861cab208f820"
+        },
+        {
+          "name": "basic",
+          "path": "/example/Month/basic",
+          "checksum": "451942bc236fb0e36067f3aec4360371"
+        },
+        {
+          "name": "custom-cell-size",
+          "path": "/example/Month/custom-cell-size",
+          "checksum": "5102a5ac4908a56b2def4291fa3b2d1e"
+        },
+        {
+          "name": "multiple-years",
+          "path": "/example/Month/multiple-years",
+          "checksum": "df3e1f9490addbee71b43676e2c387ad"
+        },
+        {
+          "name": "without-day-numbers",
+          "path": "/example/Month/without-day-numbers",
+          "checksum": "571a6e00733e9fece9397384c95048db"
+        },
+        {
+          "name": "without-month-labels",
+          "path": "/example/Month/without-month-labels",
+          "checksum": "aefe9166f2b6b27f1fc19dc6e05a6bd9"
+        }
+      ]
+    },
+    {
       "component": "MotionPath",
       "examples": [
         {
@@ -4394,7 +4429,7 @@
         {
           "name": "planet-distances",
           "path": "/example/TransformContext/planet-distances",
-          "checksum": "7a81c9ed3f074c42b54398de7fcfbf74"
+          "checksum": "0b74a5edb63bea832249fda121f81b37"
         },
         {
           "name": "playground",

@@ -2652,6 +2652,48 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={200}>"
     },
     {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 24,
+      "line": "<Chart"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 22,
+      "line": "<Chart"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 23,
+      "line": "<Chart"
+    },
+    {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/docs/components/MotionPath/repeat-indefinitely",
@@ -3933,5 +3975,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:17.567Z"
+  "updatedAt": "2026-04-01T16:49:30.210Z"
 }

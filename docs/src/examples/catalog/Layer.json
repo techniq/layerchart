@@ -2544,6 +2544,48 @@
       "line": "<Layer>"
     },
     {
+      "example": "90-days",
+      "component": "Month",
+      "path": "/docs/components/Month/90-days",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "basic",
+      "component": "Month",
+      "path": "/docs/components/Month/basic",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "custom-cell-size",
+      "component": "Month",
+      "path": "/docs/components/Month/custom-cell-size",
+      "lineNumber": 39,
+      "line": "<Layer>"
+    },
+    {
+      "example": "multiple-years",
+      "component": "Month",
+      "path": "/docs/components/Month/multiple-years",
+      "lineNumber": 37,
+      "line": "<Layer>"
+    },
+    {
+      "example": "without-day-numbers",
+      "component": "Month",
+      "path": "/docs/components/Month/without-day-numbers",
+      "lineNumber": 38,
+      "line": "<Layer>"
+    },
+    {
+      "example": "without-month-labels",
+      "component": "Month",
+      "path": "/docs/components/Month/without-month-labels",
+      "lineNumber": 38,
+      "line": "<Layer>"
+    },
+    {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/docs/components/MotionPath/repeat-indefinitely",
@@ -3846,5 +3888,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.421Z"
+  "updatedAt": "2026-04-01T16:49:31.366Z"
 }
