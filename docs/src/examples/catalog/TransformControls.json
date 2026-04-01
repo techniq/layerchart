@@ -1,0 +1,42 @@
+{
+  "component": "TransformControls",
+  "examples": [],
+  "usage": [
+    {
+      "example": "geojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/geojson-preview",
+      "lineNumber": 112,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "topojson-preview",
+      "component": "GeoContext",
+      "path": "/docs/components/GeoContext/topojson-preview",
+      "lineNumber": 119,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "zoomable",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable",
+      "lineNumber": 63,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "zoomable-with-padding",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/zoomable-with-padding",
+      "lineNumber": 69,
+      "line": "<TransformControls />"
+    },
+    {
+      "example": "pan-zoom-svg-image",
+      "component": "TransformContext",
+      "path": "/docs/components/TransformContext/pan-zoom-svg-image",
+      "lineNumber": 16,
+      "line": "<TransformControls />"
+    }
+  ],
+  "updatedAt": "2026-02-07T17:00:32.859Z"
+}

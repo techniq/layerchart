@@ -58,9 +58,9 @@
     offset?: number;
 
     /**
-     * Tooltip context to setup pointer events to show tooltip for related data
+     * Setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue;
+    tooltip?: boolean;
 
     /**
      * Sort function to sort the arcs
@@ -78,8 +78,7 @@
   import Arc from './Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 
   /*
@@ -101,7 +100,7 @@
     padAngle = 0,
     motion,
     offset = 0,
-    tooltipContext,
+    tooltip,
     sort,
     children,
   }: PiePropsWithoutHTML = $props();
@@ -149,7 +148,7 @@
       {offset}
       fill={ctx.config.c ? ctx.cScale?.(ctx.c(arc.data)) : null}
       data={arc.data}
-      {tooltipContext}
+      {tooltip}
     />
   {/each}
 {/if}

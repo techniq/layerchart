@@ -44,11 +44,11 @@
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
-  import { getRenderContext, getChartContext } from './Chart.svelte';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
+  import { getLayerContext } from '$lib/contexts/layer.js';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
-  import { getGeoContext } from './GeoContext.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
@@ -62,17 +62,17 @@
   }: GeoTilePropsWithoutHTML = $props();
 
   const ctx = getChartContext();
-  const geoCtx = getGeoContext();
-  const renderCtx = getRenderContext();
+  const geo = getGeoContext();
+  const layerCtx = getLayerContext();
 
-  const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
+  const center = $derived(geo.projection?.([0, 0]) ?? [0, 0]);
 
   const tiles = $derived(
     d3Tile()
       .size([ctx.containerWidth, ctx.containerHeight])
       .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
       // TODO: is this fine to add the 0 as a default?
-      .scale(geoCtx.projection ? geoCtx.projection.scale() * 2 * Math.PI : undefined)
+      .scale(geo.projection ? geo.projection.scale() * 2 * Math.PI : undefined)
       .tileSize(tileSize)
       .zoomDelta(zoomDelta)()
   );
@@ -90,16 +90,15 @@
     }
   }
 
-  if (renderCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'GeoTile',
+  if (layerCtx === 'canvas') {
+    ctx.registerComponent({ name: 'GeoTile', kind: 'mark', canvasRender: {
       render,
       deps: () => [tiles],
-    });
+    } });
   }
 </script>
 
-{#if renderCtx === 'svg' && url}
+{#if layerCtx === 'svg' && url}
   {#if children}
     {@render children({ tiles })}
   {:else}

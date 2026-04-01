@@ -1,7 +1,7 @@
 <script lang="ts" module>
-  import Spline, { type SplineProps } from './Spline.svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import type { Without } from '$lib/utils/types.js';
+  import type { PathProps } from './Path.svelte';
 
   export type GeoSplinePropsWithoutHTML = {
     /**
@@ -29,57 +29,53 @@
   };
 
   export type GeoSplineProps = GeoSplinePropsWithoutHTML &
-    Without<SplineProps, GeoSplinePropsWithoutHTML>;
+    Without<PathProps, GeoSplinePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
+  import { line as d3Line } from 'd3-shape';
 
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import Path from './Path.svelte';
 
-  let {
-    link,
-    loft = 1.0,
-    curve = curveNatural,
-    pathRef: pathRefProp = $bindable(),
-    ...restProps
-  }: GeoSplineProps = $props();
+  let { link, loft = 1.0, curve = curveNatural, ...restProps }: GeoSplineProps = $props();
 
-  let pathRef = $state<SVGPathElement>();
-  $effect.pre(() => {
-    pathRefProp = pathRef;
-  });
-
-  const geoCtx = getGeoContext();
+  const geo = getGeoContext();
 
   const loftedProjection = $derived(
-    geoCtx.projection
+    geo.projection
       ? geoOrthographic()
-          .translate(geoCtx.projection.translate())
-          .rotate(geoCtx.projection.rotate())
-          .scale(geoCtx.projection.scale() * loft)
+          .translate(geo.projection.translate())
+          .rotate(geo.projection.rotate())
+          .scale(geo.projection.scale() * loft)
       : undefined
   );
 
-  const source = $derived(geoCtx.projection ? geoCtx.projection(link.source) : [0, 0]) as [
+  const source = $derived(geo.projection ? geo.projection(link.source) : [0, 0]) as [
     number,
     number,
   ];
-  const target = $derived(geoCtx.projection ? geoCtx.projection(link.target) : [0, 0]) as [
+  const target = $derived(geo.projection ? geo.projection(link.target) : [0, 0]) as [
     number,
     number,
   ];
   const middle = $derived(
-    geoCtx.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
+    geo.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
   ) as [number, number];
+
+  // Build SVG path directly since coordinates are already projected to screen space.
+  // Using Spline would double-project via its geo mode.
+  const d = $derived(
+    d3Line<[number, number]>()
+      .x((d) => d[0])
+      .y((d) => d[1])
+      .curve(curve)([source, middle, target]) ?? ''
+  );
 </script>
 
-<Spline
-  bind:pathRef
-  data={[source, middle, target]}
-  x={(d) => d[0]}
-  y={(d) => d[1]}
-  {curve}
+<Path
+  pathData={d}
   {...extractLayerProps(restProps, 'lc-geo-spline')}
 />

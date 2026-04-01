@@ -1,207 +1,18 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
+  import { TransformState, type TransformStateOptions } from '$lib/states/transform.svelte.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
-  const DEFAULT_TRANSLATE = { x: 0, y: 0 };
-  const DEFAULT_SCALE = 1;
-
-  type TransformMode = 'canvas' | 'manual' | 'none';
-  type TransformScrollMode = 'scale' | 'translate' | 'none';
-
-  export type TransformContextValue = {
+  type TransformContextPropsWithoutHTML = TransformStateOptions & {
     /**
-     * The current transform mode.
-     *
-     * - `canvas`: The transform is applied to the canvas element.
-     * - `manual`: The transform is applied manually.
-     * - `none`: No transform is applied.
-     */
-    mode: TransformMode;
-
-    /**
-     * The current scale of the transform.
-     */
-    scale: number;
-
-    /**
-     * Set the scale of the transform
-     * @param value - the scale value to set
-     * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
-     */
-    setScale(value: number, options?: MotionProp): void;
-
-    /**
-     * The current translate of the transform.
-     */
-    translate: { x: number; y: number };
-
-    /**
-     * Set the translate of the transform
-     * @param point - the point to translate to
-     * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
-     */
-    setTranslate(point: { x: number; y: number }, options?: MotionProp): void;
-
-    /**
-     * Whether the transform is currently being moved
-     */
-    moving: boolean;
-
-    /**
-     * Whether the transform is currently being dragged
-     */
-    dragging: boolean;
-
-    /**
-     * The scroll mode of the transform.
-     *
-     * - `scale`: Scrolling will zoom in/out the canvas.
-     * - `translate`: Scrolling will pan the canvas.
-     * - `none`: No scroll mode is applied.
-     */
-    scrollMode: TransformScrollMode;
-
-    /**
-     * Set the scroll mode of the transform
-     *
-     * @param mode - the scroll mode to set
-     */
-    setScrollMode(mode: TransformScrollMode): void;
-
-    /**
-     * Reset the transform to its initial state
-     */
-    reset(): void;
-
-    /**
-     * Zoom in the transform
-     */
-    zoomIn(): void;
-
-    /**
-     * Zoom out the transform
-     *
-     */
-    zoomOut(): void;
-
-    /**
-     * Translate the transform to the center of the canvas
-     */
-    translateCenter(): void;
-
-    /**
-     * Zoom to a specific point in the canvas
-     *
-     * @param center - The point (in chart coordinates) that should become the new
-     * center of the view after zooming.
-     *
-     * @param rect - A rectangular region (in chart coordinates) that the view should scale to fit.
-     * If omitted, the scale defaults to 1 (no zoom).
-     */
-    zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }): void;
-  };
-
-  const _TransformContext = new Context<TransformContextValue>('TransformContext');
-
-  function createDefaultTransformContext() {
-    let defaultTranslate = $state(DEFAULT_TRANSLATE);
-    let defaultScale = $state(DEFAULT_SCALE);
-
-    const defaultContext: TransformContextValue = {
-      mode: 'none',
-      get scale() {
-        return defaultScale;
-      },
-      setScale: (value: number) => {
-        defaultScale = value;
-      },
-      get translate() {
-        return defaultTranslate;
-      },
-      setTranslate: (value: { x: 0; y: 0 }) => {
-        defaultTranslate = value;
-      },
-      moving: false,
-      dragging: false,
-      scrollMode: 'none',
-      setScrollMode: () => {},
-      reset: () => {},
-      zoomIn: () => {},
-      zoomOut: () => {},
-      translateCenter: () => {},
-      zoomTo: () => {},
-    };
-    return defaultContext;
-  }
-
-  export function getTransformContext() {
-    return _TransformContext.getOr(createDefaultTransformContext());
-  }
-
-  export function setTransformContext(transform: TransformContextValue) {
-    return _TransformContext.set(transform);
-  }
-
-  type TransformContextPropsWithoutHTML = {
-    mode?: TransformMode;
-    processTranslate?: (
-      x: number,
-      y: number,
-      deltaX: number,
-      deltaY: number
-    ) => {
-      x: number;
-      y: number;
-    };
-    /**
-     * Disable pointer events including move/dragging.  Useful for `mode="canvas" but only want
-     * zoomTo() interactions
-     *
-     * @default false
-     */
-    disablePointer?: boolean;
-
-    /**
-     * A bindable reference to the transform context value.
+     * A bindable reference to TransformState.
      *
      * @bindable
      */
-    transformContext?: TransformContextValue;
+    state?: TransformState;
 
-    /**
-     * Initial scroll mode.
-     * This is set to `none` by default, but can be set to `scale` or `translate`
-     *
-     * @default 'none'
-     */
-    initialScrollMode?: TransformScrollMode;
-
-    /**
-     * Distance/threshold to consider drag vs click (disable click propagation)
-     *
-     * @default 10
-     */
-    clickDistance?: number;
-
-    /**
-     * Initial translate value
-     */
-    initialTranslate?: { x: number; y: number };
-
-    /**
-     *  Initial scale value
-     */
-    initialScale?: number;
-
-    /**
-     * A callback function that is called when the transform is applied.
-     * @param e
-     */
-    onTransform?: (details: { scale: number; translate: { x: number; y: number } }) => void;
-
-    ondragstart?: () => void;
-    ondragend?: () => void;
     ref?: HTMLElement;
-    children?: Snippet<[{ transformContext: TransformContextValue }]>;
+    children?: Snippet<[{ transformState: TransformState }]>;
 
     motion?: MotionProp;
   };
@@ -211,33 +22,12 @@
 </script>
 
 <script lang="ts">
-  import { localPoint } from '@layerstack/utils';
-  import { Context, watch } from 'runed';
-  import type { Without } from '$lib/utils/types.js';
-  import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
-  import {
-    createControlledMotion,
-    createMotionTracker,
-    parseMotionProp,
-    type MotionProp,
-  } from '$lib/utils/motion.svelte.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   let {
-    mode = 'none',
-    motion,
-    processTranslate = (x: number, y: number, deltaX: number, deltaY: number) => ({
-      x: x + deltaX,
-      y: y + deltaY,
-    }),
-    disablePointer = false,
-    initialScrollMode = 'none',
-    clickDistance = 10,
-    ondragend = () => {},
-    ondragstart = () => {},
-    onTransform = () => {},
-    initialTranslate,
-    initialScale,
+    state: stateProp = $bindable(),
     onwheel = () => {},
     onpointerdown = () => {},
     onpointermove = () => {},
@@ -248,156 +38,143 @@
     ref: refProp = $bindable(),
     children,
     class: className,
-    transformContext = $bindable(),
+    mode,
+    axis,
+    motion,
+    processTranslate,
+    disablePointer,
+    scrollMode,
+    clickDistance,
+    initialTranslate,
+    initialScale,
+    onTransform,
+    ondragstart,
+    ondragend,
+    scaleExtent,
+    translateExtent,
+    constrain,
+    inertia,
+    scrollActivationKey,
     ...restProps
   }: TransformContextProps = $props();
+
+  const options: TransformStateOptions = {
+    mode,
+    axis,
+    motion,
+    processTranslate,
+    disablePointer,
+    scrollMode,
+    clickDistance,
+    initialTranslate,
+    initialScale,
+    onTransform,
+    ondragstart,
+    ondragend,
+    scaleExtent,
+    translateExtent,
+    constrain,
+    inertia,
+    scrollActivationKey,
+  };
 
   let ref = $state<HTMLElement>();
   $effect.pre(() => {
     refProp = ref;
   });
 
-  transformContext = {
-    get mode() {
-      return mode;
-    },
-    get scale() {
-      return scale.current;
-    },
-    setScale,
-    get translate() {
-      return translate.current;
-    },
-    setTranslate,
-    get dragging() {
-      return dragging;
-    },
-    get moving() {
-      return moving;
-    },
-    reset,
-    zoomIn,
-    zoomOut,
-    translateCenter,
-    zoomTo,
-    get scrollMode() {
-      return scrollMode;
-    },
-    setScrollMode,
-  };
-
   const ctx = getChartContext();
 
-  let pointerDown = false;
-  let dragging = $state(false);
-  let scrollMode = $state<TransformScrollMode>(initialScrollMode);
+  // Create TransformState instance
+  const transformState = new TransformState(ctx, options);
 
-  const resolvedMotion = parseMotionProp(motion);
-
-  const translate = createControlledMotion(initialTranslate ?? DEFAULT_TRANSLATE, resolvedMotion);
-  const scale = createControlledMotion(initialScale ?? DEFAULT_SCALE, resolvedMotion);
-
-  let startPoint: { x: number; y: number } = { x: 0, y: 0 };
-  let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
-
-  export function setScrollMode(mode: TransformScrollMode) {
-    scrollMode = mode;
-  }
-
-  export function reset() {
-    translate.target = initialTranslate ?? DEFAULT_TRANSLATE;
-    scale.target = initialScale ?? DEFAULT_SCALE;
-  }
-
-  export function zoomIn() {
-    scaleTo(1.25, { x: (ctx.width + ctx.padding.left) / 2, y: (ctx.height + ctx.padding.top) / 2 });
-  }
-
-  export function zoomOut() {
-    scaleTo(0.8, { x: (ctx.width + ctx.padding.left) / 2, y: (ctx.height + ctx.padding.top) / 2 });
-  }
-
-  export function translateCenter() {
-    translate.target = {
-      x: 0,
-      y: 0,
-    };
-  }
-
-  export function zoomTo(
-    center: { x: number; y: number },
-    rect?: { width: number; height: number }
-  ) {
-    const newScale = rect
-      ? ctx.width < ctx.height
-        ? ctx.width / rect.width
-        : ctx.height / rect.height
-      : 1;
-
-    translate.target = {
-      x: ctx.width / 2 - center.x * newScale,
-      y: ctx.height / 2 - center.y * newScale,
-    };
-
-    if (rect) {
-      scale.target = newScale;
+  // Sync initial transform values when they change (e.g., when projection changes for geo transforms)
+  $effect.pre(() => {
+    const newTranslate = initialTranslate ?? { x: 0, y: 0 };
+    const newScale = initialScale ?? 1;
+    // Only reset if values actually changed from current initial values
+    if (
+      newTranslate.x !== transformState.initialTranslate.x ||
+      newTranslate.y !== transformState.initialTranslate.y ||
+      newScale !== transformState.initialScale
+    ) {
+      transformState.initialTranslate = newTranslate;
+      transformState.initialScale = newScale;
+      transformState.reset();
     }
-  }
+  });
+
+  $effect.pre(() => {
+    if (scrollMode !== undefined) {
+      transformState.scrollMode = scrollMode;
+    }
+  });
+
+  $effect.pre(() => {
+    transformState.constrain = constrain;
+  });
+
+  $effect.pre(() => {
+    transformState.scaleExtent = scaleExtent;
+  });
+
+  $effect.pre(() => {
+    transformState.translateExtent = translateExtent;
+  });
+
+  $effect.pre(() => {
+    if (inertia === true) {
+      transformState.inertia = {
+        enabled: true,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    } else if (typeof inertia === 'object') {
+      transformState.inertia = {
+        enabled: true,
+        decay: inertia.decay ?? 0.99,
+        minVelocity: inertia.minVelocity ?? 0.1,
+        maxVelocity: inertia.maxVelocity ?? Infinity,
+        velocityWindow: inertia.velocityWindow ?? 160,
+      };
+    } else {
+      transformState.inertia = {
+        enabled: false,
+        decay: 0.99,
+        minVelocity: 0.1,
+        maxVelocity: Infinity,
+        velocityWindow: 160,
+      };
+    }
+  });
+
+  $effect.pre(() => {
+    transformState.scrollActivationKey = scrollActivationKey;
+  });
+
+  // Bind `state` prop
+  stateProp = transformState;
 
   function onPointerDown(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerdown?.(e);
-    if (mode === 'none' || disablePointer) return;
-
-    e.preventDefault();
-
-    pointerDown = true;
-    dragging = false;
-    startPoint = localPoint(e);
-    startTranslate = translate.current;
-
-    ondragstart?.();
+    transformState.onPointerDown(e);
   }
 
   function onPointerMove(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointermove?.(e);
-    if (!pointerDown) return;
-
-    e.preventDefault(); // Stop text selection
-
-    const endPoint = localPoint(e);
-    const deltaX = endPoint.x - startPoint.x;
-    const deltaY = endPoint.y - startPoint.y;
-
-    if (!dragging) {
-      // If dragged beyond threshold, disable click propagation
-      dragging = deltaX * deltaX + deltaY * deltaY > clickDistance;
-    }
-
-    if (dragging) {
-      e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
-      e.currentTarget?.setPointerCapture(e.pointerId);
-
-      setTranslate(
-        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
-        translate.type === 'spring'
-          ? { instant: true }
-          : translate.type === 'tween'
-            ? { duration: 0 }
-            : undefined
-      );
-    }
+    transformState.onPointerMove(e);
   }
 
   function onPointerUp(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerup?.(e);
-    pointerDown = false;
-    dragging = false;
-    ondragend?.();
+    transformState.onPointerUp(e);
   }
 
   function onClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     onclickcapture?.(e);
-    if (dragging) {
+    if (transformState.dragging) {
       // Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
       e.stopPropagation();
     }
@@ -405,100 +182,13 @@
 
   function onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     ondblclick?.(e);
-    if (mode === 'none' || disablePointer) return;
-    const point = localPoint(e);
-    scaleTo(e.shiftKey ? 0.5 : 2, point);
+    transformState.onDoubleClick(e);
   }
 
   function onWheel(e: WheelEvent & { currentTarget: HTMLElement }) {
     onwheel?.(e);
-    if (mode === 'none' || disablePointer || scrollMode === 'none') return;
-
-    e.preventDefault();
-
-    const point = (startPoint = localPoint(e));
-
-    // Pinch to zoom is registered as a wheel event with control key
-    const pinchToZoom = e.ctrlKey;
-
-    if (scrollMode === 'scale' || pinchToZoom) {
-      // https://github.com/d3/d3-zoom#zoom_wheelDelta
-      const scaleBy =
-        -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
-
-      scaleTo(
-        Math.pow(2, scaleBy),
-        point,
-        scale.type === 'spring'
-          ? { instant: true }
-          : scale.type === 'tween'
-            ? { duration: 0 }
-            : undefined
-      );
-    } else if (scrollMode === 'translate') {
-      const startTranslate = translate.current;
-      translate
-        .set(
-          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
-          translate.type === 'spring'
-            ? { instant: true }
-            : translate.type === 'tween'
-              ? { duration: 0 }
-              : undefined
-        )
-        .then(() => {})
-        .catch(() => {});
-    }
+    transformState.onWheel(e);
   }
-
-  /**
-   * Apply scale and translate towards point
-   */
-  function scaleTo(
-    value: number,
-    point: { x: number; y: number },
-    options: Parameters<(typeof scale)['set']>[1] | undefined = undefined
-  ) {
-    const currentScale = scale.current;
-    const newScale = scale.current * value;
-    setScale(newScale, options);
-
-    // Translate towards point (ex. mouse cursor/center) while zooming in/out
-    const invertTransformPoint = {
-      x: (point.x - ctx.padding.left - translate.current.x) / currentScale,
-      y: (point.y - ctx.padding.top - translate.current.y) / currentScale,
-    };
-    const newTranslate = {
-      x: point.x - ctx.padding.left - invertTransformPoint.x * newScale,
-      y: point.y - ctx.padding.top - invertTransformPoint.y * newScale,
-    };
-    setTranslate(newTranslate, options);
-  }
-
-  const translating = createMotionTracker();
-  const scaling = createMotionTracker();
-
-  const moving = $derived(dragging || translating.current || scaling.current);
-
-  export function setTranslate(
-    point: { x: number; y: number },
-    options?: Parameters<(typeof translate)['set']>[1]
-  ) {
-    translating.handle(translate.set(point, options));
-  }
-
-  export function setScale(value: number, options?: MotionProp) {
-    scaling.handle(scale.set(value, options));
-  }
-
-  watch([() => scale.current, () => translate.current], () => {
-    onTransform({
-      scale: scale.current,
-      translate: translate.current,
-    });
-  });
-
-  setTransformContext(transformContext);
 </script>
 
 <div
@@ -510,7 +200,7 @@
     // Touch events cause pointer events to be interrupted.
     // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
     // https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#touch-action_css_property
-    if (mode !== 'none' && !disablePointer) {
+    if (transformState.mode !== 'none' && !transformState.disablePointer) {
       e.preventDefault();
     }
   }}
@@ -521,7 +211,7 @@
   bind:this={ref}
   {...restProps}
 >
-  {@render children?.({ transformContext: transformContext })}
+  {@render children?.({ transformState })}
 </div>
 
 <style>

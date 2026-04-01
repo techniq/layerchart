@@ -2,8 +2,7 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -113,11 +112,11 @@
     offset?: number;
 
     /**
-     * Tooltip context to setup pointer events to show tooltip for related data.
+     * Setup pointer events to show tooltip for related data.
      *
      * **Must set `data` prop as well**
      */
-    tooltipContext?: TooltipContextValue;
+    tooltip?: boolean;
 
     /**
      * Data to set when showing tooltip
@@ -128,7 +127,7 @@
      * Pass true to enable the track with default props, or pass an object
      * of props to enable the track.
      */
-    track?: boolean | Partial<ComponentProps<typeof Spline>>;
+    track?: boolean | Partial<ComponentProps<typeof Path>>;
 
     /**
      * A reference to the track element
@@ -160,9 +159,9 @@
   } & CommonStyleProps;
 
   export type ArcProps = ArcPropsWithoutHTML &
-    // we omit the spline props to avoid conflicts with attribute names since we are
-    // passing them through to `<Spline />`
-    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & SplinePropsWithoutHTML>;
+    // we omit the path props to avoid conflicts with attribute names since we are
+    // passing them through to `<Path />`
+    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & PathPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -188,7 +187,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
@@ -230,7 +229,7 @@
     onpointermove = () => {},
     onpointerleave = () => {},
     ontouchmove = () => {},
-    tooltipContext,
+    tooltip,
     track = false,
     children,
     class: className,
@@ -353,17 +352,17 @@
 
   const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);
-    tooltipContext?.show(e, data);
+    if (tooltip) ctx.tooltip.show(e, data);
   };
 
   const onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
     onpointermove?.(e);
-    tooltipContext?.show(e, data);
+    if (tooltip) ctx.tooltip.show(e, data);
   };
 
   const onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerleave?.(e);
-    tooltipContext?.hide();
+    if (tooltip) ctx.tooltip.hide();
   };
 
   function getTrackTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
@@ -398,7 +397,7 @@
 </script>
 
 {#if track}
-  <Spline
+  <Path
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
@@ -406,14 +405,14 @@
   />
 {/if}
 
-<Spline
+<Path
   bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
   {fillOpacity}
   {stroke}
-  stroke-width={strokeWidth}
+  {strokeWidth}
   {opacity}
   {...restProps}
   class={cls('lc-arc-line', className)}
@@ -422,9 +421,10 @@
   onpointerleave={onPointerLeave}
   ontouchmove={(e) => {
     ontouchmove?.(e);
-    if (!tooltipContext) return;
-    // Prevent touch to not interfere with pointer when using tooltip
-    e.preventDefault();
+    if (tooltip) {
+      // Prevent touch to not interfere with pointer when using tooltip
+      e.preventDefault();
+    }
   }}
 />
 

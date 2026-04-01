@@ -30,11 +30,14 @@
     y1?: Accessor;
 
     /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `y0`/`y1` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * Whether to tween the interpolated path data using d3-interpolate-path
      */
     motion?: MotionProp;
-
-    clipPath?: string;
 
     curve?: CurveFactory;
 
@@ -46,7 +49,7 @@
      * @default false
      */
     line?: boolean | Partial<ComponentProps<typeof Spline>>;
-  } & CommonStyleProps;
+  } & Omit<PathProps, 'x' | 'y' | 'y0' | 'y1'>;
 
   export type AreaProps = AreaPropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
@@ -54,51 +57,86 @@
 
 <script lang="ts">
   import type { CurveFactory } from 'd3-shape';
-  import { max, min } from 'd3-array';
+  import { min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { merge } from 'lodash-es';
 
-  import { getRenderContext } from './Chart.svelte';
   import Spline from './Spline.svelte';
+  import Path, { type PathProps } from './Path.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import {
     createMotion,
     extractTweenConfig,
     type MotionProp,
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
-  import { createKey } from '$lib/utils/key.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
-  const renderCtx = getRenderContext();
 
   let {
-    clipPath,
     curve,
     data,
     defined,
     fill,
-    fillOpacity,
+    stroke = 'none',
     line = false,
-    opacity,
     pathData,
-    stroke,
-    strokeWidth,
     motion,
     x,
     y0,
     y1,
+    seriesKey,
     ...restProps
   }: AreaProps = $props();
 
+  // Register as composite mark (shields child Spline) + chart mark registration
+  ctx.registerComponent({
+    name: 'Area',
+    kind: 'composite-mark',
+    markInfo: () => ({ data, x, y: y1 ?? y0, seriesKey, color: fill as string | undefined }),
+  });
+
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let seriesData = $derived(series?.data);
+  let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
+
+  // Get stack accessors if seriesKey is provided and stacking is enabled
+  let stackAccessors = $derived(
+    seriesKey && ctx.series.isStacked ? ctx.series.getStackAccessors(seriesKey) : null
+  );
+
   const xAccessor = $derived(x ? accessor(x) : ctx.x);
-  const y0Accessor = $derived(y0 ? accessor(y0) : (d: any) => min(ctx.yDomain));
-  const y1Accessor = $derived(y1 ? accessor(y1) : ctx.y);
+  // Use stack accessors when available, otherwise fall back to explicit props or defaults
+  // Also handle array-form seriesAccessor like ['baseline', 'value']
+  const y0Accessor = $derived(
+    y0
+      ? accessor(y0)
+      : stackAccessors
+        ? stackAccessors.y0
+        : Array.isArray(seriesAccessor)
+          ? accessor(seriesAccessor[0])
+          : Array.isArray(ctx.config.y) && ctx.config.y[0] === 0
+            ? (d: any) => ctx.y(d)[0]
+            : ctx.props.yBaseline != null
+              ? () => ctx.props.yBaseline
+              : (d: any) => min(ctx.yScale.domain())
+  );
+  const y1Accessor = $derived(
+    y1
+      ? accessor(y1)
+      : stackAccessors
+        ? stackAccessors.y1
+        : Array.isArray(seriesAccessor)
+          ? accessor(seriesAccessor[1])
+          : seriesAccessor
+            ? accessor(seriesAccessor)
+            : Array.isArray(ctx.config.y) && ctx.config.y[1] === 1
+              ? (d: any) => ctx.y(d)[1]
+              : ctx.y
+  );
+  const resolvedData = $derived(data ?? seriesData ?? ctx.data);
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
@@ -143,7 +181,7 @@
       if (curve) path.curve(curve);
 
       // TODO: type this appropriately otherwise we will have bugs in the future
-      return path(data ?? ctx.data);
+      return path(resolvedData);
     }
   }
 
@@ -158,91 +196,40 @@
             const v = xAccessor(d);
             return ctx.xScale(v) + xOffset;
           })
-          .y0((d) => {
-            let value = max<number>(ctx.yRange)!;
-            if (y0) {
-              value = ctx.yScale(y0Accessor(d));
-            } else if (Array.isArray(ctx.config.y) && ctx.config.y[0] === 0) {
-              // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
-              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = ctx.yScale(ctx.y(d)[0]);
-            }
-
-            return value + yOffset;
-          })
-          .y1((d) => {
-            let value = max<number>(ctx.yRange)!;
-            if (y1) {
-              value = ctx.yScale(y1Accessor(d));
-            } else if (Array.isArray(ctx.config.y) && ctx.config.y[1] === 1) {
-              // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
-              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = ctx.yScale(ctx.y(d)[1]);
-            } else {
-              // Expect single value defined for `y` (ex. `<Chart y="value">`)
-              value = ctx.yScale(ctx.y(d));
-            }
-
-            return value + yOffset;
-          });
+          .y0((d) => ctx.yScale(y0Accessor(d)) + yOffset)
+          .y1((d) => ctx.yScale(y1Accessor(d)) + yOffset);
 
     _path.defined(defined ?? ((d: any) => xAccessor(d) != null && y1Accessor(d) != null));
 
     if (curve) _path.curve(curve);
 
-    return pathData ?? _path(data ?? ctx.data) ?? defaultPathData();
+    return pathData ?? _path(resolvedData) ?? defaultPathData();
   });
 
   const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
 
-  function render(
-    ctx: CanvasRenderingContext2D,
-    styleOverrides: ComputedStylesOptions | undefined
-  ) {
-    renderPathData(
-      ctx,
-      tweenState.current,
-      styleOverrides
-        ? merge({ styles: { strokeWidth } }, styleOverrides)
-        : {
-            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: restProps.class ?? '',
-          }
-    );
-  }
+  const lineYAccessor = $derived.by(() => {
+    // For diverging stacks, use the outer edge (y0 for below-baseline series, y1 for above)
+    if (stackAccessors && ctx.series.stackLayout === 'stackDiverging') {
+      const firstPoint = resolvedData?.[0];
+      if (firstPoint) {
+        const val = stackAccessors.value(firstPoint);
+        if (val && val[1] <= 0) return y0Accessor;
+      }
+    }
 
-  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
-
-  if (renderCtx === 'canvas') {
-    registerCanvasComponent({
-      name: 'Area',
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        fillKey.current,
-        fillOpacity,
-        strokeKey.current,
-        strokeWidth,
-        opacity,
-        restProps.class,
-        tweenState.current,
-      ],
-    });
-  }
+    return y1 || stackAccessors || Array.isArray(seriesAccessor) || seriesAccessor
+      ? y1Accessor
+      : undefined;
+  });
 </script>
 
 {#if line}
   <Spline
-    {data}
+    data={data ?? seriesData}
     {x}
-    y={y1}
+    y={lineYAccessor}
+    {seriesKey}
     {curve}
     {defined}
     {motion}
@@ -250,15 +237,15 @@
   />
 {/if}
 
-{#if renderCtx === 'svg'}
-  <path
-    d={tweenState.current}
-    clip-path={clipPath}
-    {fill}
-    fill-opacity={fillOpacity}
-    {stroke}
-    stroke-width={strokeWidth}
-    {opacity}
-    {...extractLayerProps(restProps, 'lc-area-path')}
-  />
-{/if}
+<Path
+  pathData={tweenState.current}
+  fill={fill ?? series?.color}
+  {stroke}
+  opacity={series?.key == null ||
+  // Checking `visibleSeries.length <= 1` fixes re-animated tweened areas on hover
+  ctx.series.visibleSeries.length <= 1 ||
+  ctx.series.isHighlighted(series.key, true)
+    ? 1
+    : 0.1}
+  {...extractLayerProps(restProps, 'lc-area-path')}
+/>

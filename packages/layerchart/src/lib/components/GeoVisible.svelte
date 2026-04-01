@@ -12,12 +12,12 @@
 
 <script lang="ts">
   import { isVisible } from '$lib/utils/geo.js';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
 
   let { lat, long, children }: GeoVisibleProps = $props();
-  const geoCtx = getGeoContext();
+  const geo = getGeoContext();
 </script>
 
-{#if geoCtx.projection && isVisible(geoCtx.projection)([long, lat])}
+{#if geo.projection && isVisible(geo.projection)([long, lat])}
   {@render children?.()}
 {/if}

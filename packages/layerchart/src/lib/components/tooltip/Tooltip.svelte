@@ -1,7 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import type { TooltipPayload } from './tooltipMetaContext.js';
   import type { Placement } from '../types.js';
 
   export type Align = 'start' | 'center' | 'end';
@@ -103,15 +102,6 @@
            * The chart data that triggered the tooltip.
            */
           data: T;
-
-          /**
-           * An array of tooltip payloads, each containing data for a specific series,
-           * along with their own `payload` property that contains the same data as `data`.
-           *
-           * This is useful when working with the simplified charts, such as `AreaChart`, `BarChart`,
-           * `PieChart`, etc., where series construction is handled internally.
-           */
-          payload: TooltipPayload[];
         },
       ]
     >;
@@ -146,7 +136,7 @@
      * Optionally pass the chart's context to the tooltip to get
      * type inference for the data.
      */
-    context?: ChartContextValue<T, any, any>;
+    context?: ChartState<T, any, any>;
   };
 
   export type TooltipProps<T = any> = TooltipPropsWithoutHTML<T> &
@@ -158,10 +148,10 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
-  import { getChartContext, type ChartContextValue } from '../Chart.svelte';
-  import { getTooltipContext } from './TooltipContext.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import type { ChartState } from '$lib/states/chart.svelte.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { untrack, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
   let {
     anchor = 'top-left',
@@ -190,7 +180,6 @@
   });
 
   const ctx = getChartContext();
-  const tooltipCtx = getTooltipContext();
 
   let tooltipWidth = $state<number | null>(null);
   let tooltipHeight = $state<number | null>(null);
@@ -202,7 +191,7 @@
 
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
-    if (!tooltipCtx.data || tooltipWidth === null || tooltipHeight === null) {
+    if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
       return { x: null, y: null };
     }
 
@@ -210,12 +199,17 @@
       ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
 
+    const rawXGet = x === 'data' ? ctx.xGet(ctx.tooltip.data) : undefined;
+    const xFromData = Array.isArray(rawXGet)
+      ? (rawXGet[0] + rawXGet[rawXGet.length - 1]) / 2
+      : rawXGet;
+
     const xValue: number =
       typeof x === 'number'
         ? x
         : x === 'data'
-          ? ctx.xGet(tooltipCtx.data) + ctx.padding.left + xBandOffset
-          : tooltipCtx.x;
+          ? xFromData + ctx.padding.left + xBandOffset
+          : ctx.tooltip.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -241,12 +235,17 @@
     const yBandOffset = isScaleBand(ctx.yScale)
       ? ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2
       : 0;
+    const rawYGet = y === 'data' ? ctx.yGet(ctx.tooltip.data) : undefined;
+    const yFromData = Array.isArray(rawYGet)
+      ? (rawYGet[0] + rawYGet[rawYGet.length - 1]) / 2
+      : rawYGet;
+
     const yValue: number =
       typeof y === 'number'
         ? y
         : y === 'data'
-          ? ctx.yGet(tooltipCtx.data) + ctx.padding.top + yBandOffset
-          : tooltipCtx.y;
+          ? yFromData + ctx.padding.top + yBandOffset
+          : ctx.tooltip.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {
@@ -348,13 +347,13 @@
   const motionY = createMotion(null, () => positions.y, motion);
 
   $effect(() => {
-    if (!tooltipCtx.data) {
-      tooltipCtx.isHoveringTooltipContent = false;
+    if (!ctx.tooltip.data) {
+      ctx.tooltip.isHoveringTooltipContent = false;
     }
   });
 </script>
 
-{#if tooltipCtx.data}
+{#if ctx.tooltip.data}
   <div
     {...props.root}
     class={cls('lc-tooltip-root', classes.root, props.root?.class)}
@@ -366,10 +365,10 @@
     bind:clientHeight={tooltipHeight}
     bind:this={rootRef}
     onpointerenter={() => {
-      tooltipCtx.isHoveringTooltipContent = true;
+      ctx.tooltip.isHoveringTooltipContent = true;
     }}
     onpointerleave={() => {
-      tooltipCtx.isHoveringTooltipContent = false;
+      ctx.tooltip.isHoveringTooltipContent = false;
     }}
   >
     <div
@@ -379,7 +378,7 @@
     >
       {#if children}
         <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
-          {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
+          {@render children({ data: ctx.tooltip.data })}
         </div>
       {/if}
     </div>

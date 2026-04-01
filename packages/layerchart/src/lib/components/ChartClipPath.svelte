@@ -25,7 +25,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';

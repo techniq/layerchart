@@ -146,7 +146,7 @@ export function scaleInvert(scale: AnyScale<any, any>, value: number) {
 export function createScale(
   scale: AnyScale,
   domain: DomainType,
-  range: any[] | readonly any[] | Function,
+  range?: any[] | readonly any[] | Function,
   context?: Record<any, any>
 ) {
   const scaleCopy = scale.copy();
@@ -154,10 +154,12 @@ export function createScale(
     scaleCopy.domain(domain);
   }
 
-  if (typeof range === 'function') {
-    scaleCopy.range(range(context));
-  } else {
-    scaleCopy.range(range);
+  if (range != null) {
+    if (typeof range === 'function') {
+      scaleCopy.range(range(context));
+    } else {
+      scaleCopy.range(range);
+    }
   }
   return scaleCopy;
 }
@@ -234,7 +236,7 @@ export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenOpt
   const tweenedDomain = new Tween<Domain>(undefined as Domain, tweenedOptions);
   const tweenedRange = new Tween<Range>(undefined as Range, tweenedOptions);
 
-  const tweenedScale = $derived.by(() => {
+  const _tweenedScale = $derived.by(() => {
     const scaledInstance = scale.domain ? scale : scale();
     if (tweenedDomain.current) {
       scaledInstance.domain(tweenedDomain.current);
@@ -247,7 +249,7 @@ export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenOpt
 
   return {
     get current() {
-      return tweenedScale;
+      return _tweenedScale;
     },
     domain: (values: Domain) => tweenedDomain.set(values),
     range: (values: Range) => tweenedRange.set(values),

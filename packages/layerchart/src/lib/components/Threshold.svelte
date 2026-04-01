@@ -40,13 +40,16 @@
       - https://github.com/airbnb/visx/issues/245
   */
 
-  import { min } from 'd3-array';
+  import { min, max } from 'd3-array';
 
   import Area from './Area.svelte';
   import ClipPath from './ClipPath.svelte';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();
+
+  // Mark as composite so child Areas don't register
+  ctx.registerComponent({ name: 'Threshold', kind: 'composite-mark' });
 
   let { curve, defined, below, above, children }: ThresholdProps = $props();
 </script>
@@ -55,7 +58,7 @@
 {#key curve}
   <ClipPath>
     {#snippet clip()}
-      <Area y0={(d) => ctx.y(d)[0]} y1={(d) => min(ctx.yDomain)} {curve} {defined} />
+      <Area y0={(d) => ctx.y(d)[1]} y1={(d) => max(ctx.yDomain)} {curve} {defined} />
     {/snippet}
     {@render above?.({ curve, defined })}
   </ClipPath>

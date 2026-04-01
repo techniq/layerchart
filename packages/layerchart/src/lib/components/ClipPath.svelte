@@ -3,7 +3,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import { getRenderContext } from './Chart.svelte';
+  import { getLayerContext } from '$lib/contexts/layer.js';
 
   export type ClipPathPropsWithoutHTML = {
     /**
@@ -36,6 +36,16 @@
      * Provides the id, url, and useId for the clipPath as snippet props.
      */
     children?: Snippet<[{ id: string; url: string; useId?: string }]>;
+    /**
+     * Canvas clip path function. When provided and in canvas mode, sets up a canvas
+     * clip region by drawing a path and calling `ctx.clip()` before rendering children.
+     */
+    canvasClip?: (ctx: CanvasRenderingContext2D) => void;
+    /**
+     * Reactive deps for canvas clip invalidation. Return array of values that,
+     * when changed, should trigger a canvas redraw.
+     */
+    canvasClipDeps?: () => any[];
   };
 
   export type ClipPathProps = ClipPathPropsWithoutHTML &
@@ -43,6 +53,8 @@
 </script>
 
 <script lang="ts">
+  import { getChartContext } from '$lib/contexts/chart.js';
+
   const uid = $props.id();
 
   let {
@@ -51,15 +63,34 @@
     disabled = false,
     children,
     clip,
+    canvasClip,
+    canvasClipDeps,
     ...restProps
   }: ClipPathPropsWithoutHTML = $props();
 
   const url = $derived(`url(#${id})`);
 
-  const renderContext = getRenderContext();
+  const layerCtx = getLayerContext();
+  const chartCtx = getChartContext();
+
+  if (layerCtx === 'canvas') {
+    chartCtx.registerComponent({
+      name: 'ClipPath',
+      kind: 'group',
+      canvasRender: {
+        render: (ctx) => {
+          if (!disabled && canvasClip) {
+            canvasClip(ctx);
+            ctx.clip();
+          }
+        },
+        deps: () => canvasClipDeps?.() ?? [],
+      },
+    });
+  }
 </script>
 
-{#if renderContext === 'svg'}
+{#if layerCtx === 'svg'}
   <defs>
     <clipPath {id} {...restProps}>
       {@render clip?.({ id })}
@@ -72,7 +103,7 @@
 {/if}
 
 {#if children}
-  {#if disabled || renderContext !== 'svg'}
+  {#if disabled || layerCtx !== 'svg'}
     {@render children({ id, url, useId })}
   {:else}
     <g style:clip-path={url} class="lc-clip-path-g">

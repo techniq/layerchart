@@ -1,0 +1,198 @@
+@import 'tailwindcss';
+@import '@layerstack/tailwind/core.css';
+@import '@layerstack/tailwind/utils.css';
+/* @import '@layerstack/tailwind/themes/basic.css'; */
+@import '@layerstack/tailwind/themes/all.css';
+
+@source '../node_modules/svelte-ux/dist';
+
+@theme {
+	--breakpoint-xs: 30rem; /* 480px */
+
+	--font-sans: 'Inter Variable', sans-serif;
+	/* --font-mono: 'Departure Mono', 'monospace'; */
+	--font-pixel: 'Departure Mono', 'monospace';
+	--color-apples: color-mix(in oklab, var(--color-green-500) 90%, transparent);
+	--color-bananas: color-mix(in oklab, var(--color-yellow-500) 90%, transparent);
+	--color-cherries: color-mix(in oklab, var(--color-red-500) 90%, transparent);
+	--color-grapes: color-mix(in oklab, var(--color-purple-500) 90%, transparent);
+	--color-oranges: color-mix(in oklab, var(--color-orange-500) 90%, transparent);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
+		outline-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
+	}
+}
+
+@layer utilities {
+	.background-gradient {
+		background: radial-gradient(
+			49.63% 57.02% at 58.99% -7.2%,
+			color-mix(in oklab, var(--color-primary) 5%, transparent) 39.4%,
+			transparent 100%
+		);
+	}
+
+	.background-grid {
+		--size: 50px;
+		--_g: #0000 90deg, color-mix(in srgb, var(--color-primary) 5%, transparent) 0;
+
+		background:
+			conic-gradient(from 90deg at 2px 2px, var(--_g)) 0 0 / var(--size) var(--size),
+			conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0 / calc(var(--size) / 5)
+				calc(var(--size) / 5);
+	}
+}
+
+@font-face {
+	font-family: 'Departure Mono';
+	src: url('/fonts/DepartureMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Shiki light/dark theming */
+code[data-theme*=' '],
+code[data-theme*=' '] span {
+	@apply text-(--shiki-light) dark:text-(--shiki-dark);
+	/* @apply bg-(--shiki-light-bg) dark:bg-(--shiki-dark-bg); */
+}
+
+/* Inline code styling */
+code:not(pre > code):not(.custom) {
+	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
+}
+
+/* Code block figure container */
+figure[data-rehype-pretty-code-figure] {
+	/* Title/filename display - hidden, handled by pre.svelte component */
+	& figcaption[data-rehype-pretty-code-title] {
+		@apply hidden;
+	}
+
+	/* Pre element within figure */
+	& pre {
+		@apply my-0 rounded-none border-0;
+	}
+}
+
+/* Code block highlighting */
+pre {
+	/* Diff highlighting */
+	&.has-diff {
+		& .diff-add {
+			@apply bg-green-500/15 dark:bg-green-500/10;
+			&::before {
+				content: '+';
+				@apply text-green-500 w-4 pl-1 inline-block;
+			}
+		}
+
+		& .diff-remove {
+			@apply bg-red-500/15 dark:bg-red-500/10 opacity-70;
+			&::before {
+				content: '-';
+				@apply text-red-500 w-4 pl-1 inline-block;
+			}
+		}
+	}
+
+	/* Line highlighting */
+	& .highlighted {
+		@apply bg-blue-500/10 dark:bg-blue-500/8 border-l-[3px] border-l-blue-500 pl-2 -ml-2;
+	}
+}
+
+/* Line numbers */
+code[data-line-numbers] {
+	counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+	counter-increment: line;
+	content: counter(line);
+	@apply inline-block w-4 mr-6 pr-2 text-right text-surface-content/40;
+	@apply border-r border-surface-content/10;
+}
+
+/* Custom scrollbar styling */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent) transparent;
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+	@apply w-2.5 h-2.5;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-surface-content/5;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply bg-surface-content/20 rounded-full;
+	transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	@apply bg-surface-content/30;
+}
+
+*::-webkit-scrollbar-thumb:active {
+	@apply bg-surface-content/40;
+}
+
+/* Steps component styling - inspired by Docus */
+.steps {
+	@apply ms-4 pl-7 border-l border-surface-content/10;
+	counter-reset: step;
+
+	/* Headings (h2, h3, h4) in steps */
+	& :is(h2, h3, h4) {
+		counter-increment: step;
+		@apply relative font-semibold text-lg mb-2 mt-6 first:mt-0;
+
+		/* Counter circle */
+		&::before {
+			content: counter(step);
+			@apply absolute size-6 -left-10 bg-surface-100 rounded-full;
+			@apply font-semibold text-sm tabular-nums;
+			@apply inline-flex items-center justify-center;
+			@apply ring-1 ring-surface-content/20;
+		}
+	}
+}
+
+.ToggleGroup {
+	user-select: none;
+}
+
+/* Disable view transitions for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
+}
+
+::view-transition-old(*),
+::view-transition-new(*),
+html:active-view-transition {
+	scroll-behavior: auto;
+}

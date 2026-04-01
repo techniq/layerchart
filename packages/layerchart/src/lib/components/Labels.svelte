@@ -36,6 +36,11 @@
     y?: Accessor<T>;
 
     /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set.
+     */
+    seriesKey?: string;
+
+    /**
      * The placement of the label relative to the point
      * @default 'outside'
      */
@@ -72,17 +77,21 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import Group from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
+
+  // Mark as composite so child Points doesn't register
+  ctx.registerComponent({ name: 'Labels', kind: 'composite-mark' });
 
   let {
     data,
     value,
     x,
     y,
+    seriesKey,
     placement = 'outside',
     offset = placement === 'center' ? 0 : 4,
     format,
@@ -90,12 +99,27 @@
     children: childrenProp,
     class: className,
     fill,
+    opacity,
     ...restProps
   }: LabelsProps<TData> = $props();
 
+  // TODO: Should we let `Points` handle opacity for children snippet as well?
+  let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
+  let derivedOpacity = $derived(
+    opacity ??
+      (series?.key == null ||
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
+        ? 1
+        : 0.1)
+  );
+
   function getTextProps(point: Point): ComponentProps<typeof Text> {
-    // Used for positioning
+    // Used for positioning direction.
+    // For array accessors (edgeIndex defined), use edge position: 0 = start/low, 1 = end/high
     const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
+    const isLowEdge =
+      point.edgeIndex != null ? point.edgeIndex === 0 : pointValue < 0;
 
     // extract the true fill value from `fill` which could be an
     // accessor function or string/undefined
@@ -120,7 +144,7 @@
 
     if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
-      if (pointValue < 0) {
+      if (isLowEdge) {
         // left
         return {
           value: formattedValue,
@@ -145,7 +169,7 @@
       }
     } else {
       // Position label top/bottom on vertical bars
-      if (pointValue < 0) {
+      if (isLowEdge) {
         // bottom
         return {
           value: formattedValue,
@@ -174,8 +198,8 @@
   }
 </script>
 
-<Group class="lc-labels-g">
-  <Points {data} {x} {y}>
+<Group class="lc-labels-g" opacity={derivedOpacity as number}>
+  <Points {data} {x} {y} {seriesKey}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
         {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}

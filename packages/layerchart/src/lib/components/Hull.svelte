@@ -63,8 +63,14 @@
   import GeoPath from './GeoPath.svelte';
   import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
-  import { getChartContext } from './Chart.svelte';
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
+
+  const ctx = getChartContext();
+  const geo = getGeoContext();
+
+  // Mark as composite so child Spline doesn't register
+  ctx.registerComponent({ name: 'Hull', kind: 'composite-mark' });
 
   let {
     data,
@@ -84,9 +90,6 @@
     refProp = ref;
   });
 
-  const ctx = getChartContext();
-  const geoCtx = getGeoContext();
-
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {
       const xValue = ctx.x(d);
@@ -104,7 +107,7 @@
 </script>
 
 <Group {...restProps} class={cls('lc-hull-g', classes.root, className)} bind:ref>
-  {#if geoCtx.projection}
+  {#if geo.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
       geojson={polygon}

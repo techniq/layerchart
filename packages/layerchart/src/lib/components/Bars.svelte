@@ -18,10 +18,20 @@
      */
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
+    /**
+     * Series key to use for accessor. Only applicable if `<Chart>` uses `series`.
+     */
+    seriesKey?: string;
+
+    /**
+     * Padding between stacked bars.
+     */
+    stackPadding?: number;
+
     children?: Snippet;
     // TODO: investigate
     [key: string]: any;
-  } & Omit<BarPropsWithoutHTML, 'data' | 'children'>;
+  } & Omit<BarPropsWithoutHTML, 'data' | 'children' | 'seriesKey' | 'stackPadding'>;
 
   export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'data'>;
 </script>
@@ -32,7 +42,7 @@
   import Bar, { type BarProps, type BarPropsWithoutHTML } from './Bar.svelte';
   import Group from './Group.svelte';
 
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import { chartDataArray } from '../utils/common.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -45,11 +55,25 @@
     radius = 0,
     strokeWidth = 0,
     stroke = 'black',
+    seriesKey,
+    stackPadding = 0,
     ...restProps
   }: BarsProps = $props();
 
   const ctx = getChartContext();
-  const data = $derived(chartDataArray(dataProp ?? ctx.data));
+
+  ctx.registerComponent({
+    name: 'Bars',
+    kind: 'mark',
+    markInfo: () => ({ data: dataProp, seriesKey, color: fill as string | undefined }),
+  });
+
+  // Get series data if seriesKey is provided
+  const series = $derived(
+    seriesKey ? ctx.series.series.find((s) => s.key === seriesKey) : undefined
+  );
+  const seriesData = $derived(series?.data);
+  const data = $derived(chartDataArray(dataProp ?? seriesData ?? ctx.data));
 </script>
 
 <Group class="lc-bars">
@@ -62,7 +86,9 @@
         {radius}
         {strokeWidth}
         {stroke}
-        fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
+        {seriesKey}
+        {stackPadding}
+        fill={fill ?? series?.color ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}
         {...extractLayerProps(restProps, 'lc-bars-bar')}
       />

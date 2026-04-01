@@ -1,0 +1,48 @@
+<script lang="ts">
+	import { Area, AreaChart, defaultChartPadding, LinearGradient } from 'layerchart';
+	import { createDateSeries } from '$lib/utils/data.js';
+
+	const data = createDateSeries({
+		count: 30,
+		min: 10,
+		max: 100,
+		value: 'integer',
+		keys: ['apples', 'bananas', 'oranges']
+	});
+	export { data };
+</script>
+
+<AreaChart
+	{data}
+	x="date"
+	series={[
+		{ key: 'apples', color: 'var(--color-apples)' },
+		{
+			key: 'bananas',
+			color: 'var(--color-bananas)'
+		},
+		{
+			key: 'oranges',
+			color: 'var(--color-oranges)'
+		}
+	]}
+	seriesLayout="stack"
+	padding={defaultChartPadding({ right: 10 })}
+	height={300}
+>
+	{#snippet marks({ context })}
+		{#each context.series.series as s, i (s.key)}
+			<!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
+			<LinearGradient
+				stops={s.color
+					? [s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']
+					: undefined}
+				vertical
+			>
+				{#snippet children({ gradient })}
+					<Area seriesKey={s.key} line={{ stroke: s.color }} fill={gradient} fillOpacity={0.3} />
+				{/snippet}
+			</LinearGradient>
+		{/each}
+	{/snippet}
+</AreaChart>

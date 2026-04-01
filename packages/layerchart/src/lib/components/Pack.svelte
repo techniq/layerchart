@@ -3,6 +3,9 @@
   import type { Snippet } from 'svelte';
 
   export type PackProps<T> = {
+    /** d3 hierarchy node */
+    hierarchy: HierarchyNode<T>;
+
     /**
      * The size of the pack layout.
      */
@@ -16,11 +19,6 @@
     padding?: number;
 
     /**
-     * The hierarchy data to be packed.
-     */
-    hierarchy: HierarchyNode<T>;
-
-    /**
      * A bindable reference to the computed packed nodes.
      *
      * @bindable
@@ -32,7 +30,7 @@
 </script>
 
 <script lang="ts" generics="T">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();
 

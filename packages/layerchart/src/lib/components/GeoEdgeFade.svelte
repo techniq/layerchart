@@ -1,7 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { Without } from '$lib/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
 
   export type GeoEdgeFadePropsWithoutHTML = {
     link: { source: [number, number]; target: [number, number] };
@@ -22,7 +21,7 @@
   import { scaleLinear } from 'd3-scale';
   import { geoDistance } from 'd3-geo';
 
-  import { getGeoContext } from './GeoContext.svelte';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Group, { type GroupProps } from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -40,13 +39,13 @@
     refProp = ref;
   });
 
-  const geoCtx = getGeoContext();
+  const geo = getGeoContext();
 
   const fade = scaleLinear().domain([-0.1, 0]).range([0, 0.1]);
   const clamper = scaleLinear().domain([0, 1]).range([0, 1]).clamp(true);
 
   const center = $derived(
-    geoCtx.projection?.invert?.(geoCtx.projection?.translate()) ?? ([0, 0] as [number, number])
+    geo.projection?.invert?.(geo.projection?.translate()) ?? ([0, 0] as [number, number])
   );
   const source = $derived(link.source);
   const target = $derived(link.target);

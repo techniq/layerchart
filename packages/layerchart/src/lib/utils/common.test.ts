@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { accessor, resolveMaybeFn, getObjectOrNull } from './common.js';
+import { accessor, findRelatedData, resolveMaybeFn, getObjectOrNull } from './common.js';
 
 export const testData = {
   one: 1,
@@ -62,6 +62,18 @@ describe('getObjectOrNull', () => {
   it('returns the object if value is an object', () => {
     const obj = { a: 1 };
     expect(getObjectOrNull(obj)).toBe(obj);
+  });
+});
+
+describe('findRelatedData', () => {
+  it('prefers exact object identity before accessor matching', () => {
+    const first = { id: 'first', value: 10 };
+    const second = { id: 'second', value: 10 };
+    const data = [first, second];
+
+    const actual = findRelatedData(data, second, accessor('value'));
+
+    expect(actual).toBe(second);
   });
 });
 

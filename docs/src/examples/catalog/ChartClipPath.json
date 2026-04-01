@@ -1,0 +1,133 @@
+{
+  "component": "ChartClipPath",
+  "examples": [],
+  "usage": [
+    {
+      "example": "clip-tween-on-mount",
+      "component": "Area",
+      "path": "/docs/components/Area/clip-tween-on-mount",
+      "lineNumber": 21,
+      "line": "<ChartClipPath"
+    },
+    {
+      "example": "language-race",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/language-race",
+      "lineNumber": 196,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "integrated-brush-(both-axis-area)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
+      "lineNumber": 41,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "integrated-brush-(x-axis)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
+      "lineNumber": 38,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "integrated-brush-(y-axis)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
+      "lineNumber": 38,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "minimap",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/minimap",
+      "lineNumber": 58,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 44,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 32,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "synced-brushes",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/synced-brushes",
+      "lineNumber": 68,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "tooltip-interop",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/tooltip-interop",
+      "lineNumber": 43,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "weighted",
+      "component": "Density",
+      "path": "/docs/components/Density/weighted",
+      "lineNumber": 30,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "us-state-with-surrounding-states",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
+      "lineNumber": 47,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "filterable",
+      "component": "Partition",
+      "path": "/docs/components/Partition/filterable",
+      "lineNumber": 109,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "horizontal",
+      "component": "Partition",
+      "path": "/docs/components/Partition/horizontal",
+      "lineNumber": 96,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "vertical",
+      "component": "Partition",
+      "path": "/docs/components/Partition/vertical",
+      "lineNumber": 97,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/docs/components/Treemap/nested-zoom",
+      "lineNumber": 89,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "stacked-zoom",
+      "component": "Treemap",
+      "path": "/docs/components/Treemap/stacked-zoom",
+      "lineNumber": 87,
+      "line": "<ChartClipPath>"
+    },
+    {
+      "example": "radius",
+      "component": "Voronoi",
+      "path": "/docs/components/Voronoi/radius",
+      "lineNumber": 25,
+      "line": "<ChartClipPath>"
+    }
+  ],
+  "updatedAt": "2026-04-01T13:16:17.657Z"
+}

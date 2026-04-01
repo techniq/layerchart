@@ -47,7 +47,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import LinearGradient from './LinearGradient.svelte';
   import Pattern from './Pattern.svelte';
   import Rect from './Rect.svelte';
@@ -72,20 +72,21 @@
 
   const ctx = getChartContext();
 
-  const rect = $derived<ComponentProps<typeof Rect>>({
-    x: x
-      ? ctx.xScale(x[0] ?? ctx.xDomain[0]) -
-        (isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0)
-      : ctx.xRange[0],
-    y: y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1],
-    width: x
-      ? ctx.xScale(x[1] ?? ctx.xDomain[1]) -
-        ctx.xScale(x[0] ?? ctx.xDomain[0]) +
-        (isScaleBand(ctx.xScale) ? ctx.xScale.step() : 0)
-      : ctx.width,
-    height: y
-      ? ctx.yScale(y[0] ?? ctx.yDomain[0]) - ctx.yScale(y[1] ?? ctx.yDomain[1])
-      : ctx.height,
+  const rect = $derived.by(() => {
+    const x0 = x ? ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.xRange[0];
+    const x1 = x ? ctx.xScale(x[1] ?? ctx.xDomain[1]) : ctx.xRange[1];
+    const y0 = y ? ctx.yScale(y[0] ?? ctx.yDomain[0]) : ctx.yRange[0];
+    const y1 = y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1];
+
+    const bandPadding = isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0;
+    const bandStep = isScaleBand(ctx.xScale) ? ctx.xScale.step() : 0;
+
+    return {
+      x: Math.min(x0, x1) - bandPadding,
+      y: Math.min(y0, y1),
+      width: Math.abs(x1 - x0) + bandStep,
+      height: Math.abs(y1 - y0),
+    } satisfies ComponentProps<typeof Rect>;
   });
 
   const labelProps = $derived<ComponentProps<typeof Text>>({

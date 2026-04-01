@@ -62,9 +62,9 @@
     dayNumberProps?: Partial<ComponentProps<typeof Text>>;
 
     /**
-     * Tooltip context to setup mouse events to show tooltip for related data
+     * Setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue;
+    tooltip?: boolean;
 
     children?: Snippet<[{ cells: MonthCell[]; cellSize: number }]>;
   } & Omit<
@@ -83,11 +83,10 @@
   import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import Group from './Group.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -104,7 +103,7 @@
     showDayNumber = true,
     monthLabel = true,
     dayNumberProps = {},
-    tooltipContext: tooltip,
+    tooltip,
     children,
     ...restProps
   }: MonthPropsWithoutHTML = $props();
@@ -213,8 +212,8 @@
         width={cellSize}
         height={cellSize}
         fill={cell.color}
-        onpointermove={(e) => tooltip?.show(e, cell.data)}
-        onpointerleave={(e) => tooltip?.hide()}
+        onpointermove={(e) => tooltip && ctx.tooltip?.show(e, cell.data)}
+        onpointerleave={(e) => tooltip && ctx.tooltip?.hide()}
         {...extractLayerProps(restProps, 'lc-month-cell')}
       />
 

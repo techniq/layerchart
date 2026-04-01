@@ -6,7 +6,8 @@
   export type GraticulePropsWithoutHTML = {
     lines?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
     outline?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
-    step?: [number, number];
+    stepX?: number;
+    stepY?: number;
   };
 
   export type GraticuleProps = GraticulePropsWithoutHTML &
@@ -18,13 +19,9 @@
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import Group from './Group.svelte';
 
-  let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
+  let { lines, outline, stepX = 10, stepY = 10, ...restProps }: GraticuleProps = $props();
 
-  const graticule = geoGraticule();
-
-  $effect(() => {
-    graticule.step(step);
-  });
+  const graticule = $derived(geoGraticule().step([stepX, stepY]));
 </script>
 
 <Group class="lc-graticule-g">

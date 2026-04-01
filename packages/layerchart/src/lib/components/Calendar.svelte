@@ -39,9 +39,9 @@
     monthLabel?: boolean | Partial<ComponentProps<typeof Text>>;
 
     /**
-     * Tooltip context to setup mouse events to show tooltip for related data
+     * Setup pointer events to show tooltip for related data
      */
-    tooltipContext?: TooltipContextValue;
+    tooltip?: boolean;
 
     children?: Snippet<[{ cells: CalendarCell[]; cellSize: [number, number] }]>;
   } & Omit<
@@ -60,11 +60,10 @@
   import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';
-  import { getChartContext } from './Chart.svelte';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -75,7 +74,7 @@
     cellSize: cellSizeProp,
     monthPath = false,
     monthLabel = true,
-    tooltipContext: tooltip,
+    tooltip,
     children,
     ...restProps
   }: CalendarPropsWithoutHTML = $props();
@@ -126,8 +125,8 @@
       width={cellSize[0]}
       height={cellSize[1]}
       fill={cell.color}
-      onpointermove={(e) => tooltip?.show(e, cell.data)}
-      onpointerleave={(e) => tooltip?.hide()}
+      onpointermove={(e) => tooltip && ctx.tooltip?.show(e, cell.data)}
+      onpointerleave={(e) => tooltip && ctx.tooltip?.hide()}
       strokeWidth={1}
       {...extractLayerProps(restProps, 'lc-calendar-cell')}
     />

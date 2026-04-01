@@ -1,0 +1,136 @@
+<script lang="ts">
+	import {
+		Axis,
+		Bar,
+		Chart,
+		Layer,
+		Tooltip,
+		defaultChartPadding,
+		groupStackData
+	} from 'layerchart';
+	import { fruitColors } from '$lib/utils/fruitColors';
+	import { scaleBand } from 'd3-scale';
+	import { longData } from '$lib/utils/data.js';
+	import { cubicInOut } from 'svelte/easing';
+	import { unique } from '@layerstack/utils';
+	import GroupedStackedComboField from '$lib/components/controls/fields/GroupedStackedComboField.svelte';
+
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
+
+	let chartMode = $state<'group' | 'stack' | 'groupStack'>('group');
+
+	const groupBy = $derived(
+		(
+			{
+				group: 'fruit',
+				stack: undefined,
+				groupStack: 'basket'
+			} as const
+		)[chartMode]
+	);
+	const stackBy = $derived(
+		(
+			{
+				group: undefined,
+				stack: 'fruit',
+				groupStack: 'fruit'
+			} as const
+		)[chartMode]
+	);
+
+	const data = $derived(
+		groupStackData(longData, {
+			xKey: 'year',
+			groupBy,
+			stackBy
+		}) as {
+			year: string;
+			fruit: string;
+			basket: number;
+			keys: string[];
+			value: number;
+			values: number[];
+		}[]
+	);
+
+	export { data };
+</script>
+
+<GroupedStackedComboField bind:chartMode />
+
+<Chart
+	{data}
+	x="year"
+	xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
+	y="values"
+	yNice
+	c="fruit"
+	cDomain={colorKeys}
+	cRange={fruitColors}
+	x1={groupBy}
+	x1Scale={groupBy ? scaleBand().padding(0.1) : undefined}
+	x1Domain={groupBy ? unique(data.map((d) => d[groupBy])) : undefined}
+	x1Range={({ xScale }) => [0, xScale.bandwidth()]}
+	padding={{ left: 32, bottom: 20, top: 8 }}
+	height={300}
+>
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+			<g>
+				{#each data as d (d.year + '-' + d.fruit)}
+					<Bar
+						data={d}
+						fill={context.cScale?.(d.fruit)}
+						strokeWidth={1}
+						motion={{
+							x: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: groupBy ? 0 : 300
+							},
+							y: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: groupBy ? 300 : 0
+							},
+							width: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: groupBy ? 0 : 300
+							},
+							height: {
+								type: 'tween',
+								easing: cubicInOut,
+								delay: groupBy ? 300 : 0
+							}
+						}}
+						class="cursor-pointer"
+						onclick={(e) => {
+							alert('You clicked on: ' + JSON.stringify(d, null, 2));
+						}}
+						onpointerenter={(e) => context.tooltip.show(e, d)}
+						onpointermove={(e) => context.tooltip.show(e, d)}
+						onpointerleave={(e) => context.tooltip.hide()}
+					/>
+				{/each}
+			</g>
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header>{data.year}</Tooltip.Header>
+				<Tooltip.List>
+					<Tooltip.Item
+						label={data.fruit}
+						value={data.value}
+						color={context.cScale?.(data.fruit)}
+						format="integer"
+						valueAlign="right"
+					/>
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</Chart>

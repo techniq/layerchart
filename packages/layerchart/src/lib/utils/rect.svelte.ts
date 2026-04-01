@@ -1,7 +1,7 @@
-import type { ChartContextValue } from '$lib/components/Chart.svelte';
+import { max, min } from 'd3-array';
+import type { ChartState } from '$lib/states/chart.svelte.js';
 import { accessor, type Accessor } from './common.js';
 import { isScaleBand } from './scales.svelte.js';
-import { max, min } from 'd3-array';
 
 /**
  * A set of inset distances, applied to a rectangle to shrink or expand
@@ -36,14 +36,14 @@ type DimensionGetterOptions = {
   insets?: Insets;
 };
 
-type ResolvedInsets = {
+export type ResolvedInsets = {
   left: number;
   right: number;
   top: number;
   bottom: number;
 };
 
-function resolveInsets(insets?: Insets): ResolvedInsets {
+export function resolveInsets(insets?: Insets): ResolvedInsets {
   const all = insets?.all ?? 0;
 
   const x = insets?.x ?? all;
@@ -58,7 +58,7 @@ function resolveInsets(insets?: Insets): ResolvedInsets {
 }
 
 export function createDimensionGetter<TData>(
-  ctx: ChartContextValue<TData>,
+  ctx: ChartState<TData>,
   getOptions?: () => DimensionGetterOptions
 ) {
   const options = $derived(getOptions?.());
@@ -74,17 +74,20 @@ export function createDimensionGetter<TData>(
     const _x1 = accessor(options?.x1 ?? ctx.x1);
     const _y1 = accessor(options?.y1 ?? ctx.y1);
 
+    const hasX1 = (options?.x1 ?? ctx.config.x1) != null;
+    const hasY1 = (options?.y1 ?? ctx.config.y1) != null;
+
     if (isScaleBand(ctx.yScale)) {
       // Horizontal band
       const y =
         firstValue(ctx.yScale(_y(item)) ?? 0) +
-        (ctx.y1Scale ? ctx.y1Scale(_y1(item)) : 0) +
+        (hasY1 && ctx.y1Scale ? ctx.y1Scale(_y1(item)) : 0) +
         insets.top;
 
       const height = Math.max(
         0,
         ctx.yScale.bandwidth
-          ? (ctx.y1Scale ? (ctx.y1Scale.bandwidth?.() ?? 0) : ctx.yScale.bandwidth()) -
+          ? (hasY1 && ctx.y1Scale ? (ctx.y1Scale.bandwidth?.() ?? 0) : ctx.yScale.bandwidth()) -
               insets.bottom -
               insets.top
           : 0
@@ -119,12 +122,14 @@ export function createDimensionGetter<TData>(
     } else if (isScaleBand(ctx.xScale)) {
       // Vertical band or linear
       const x =
-        firstValue(ctx.xScale(_x(item))) + (ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) + insets.left;
+        firstValue(ctx.xScale(_x(item))) +
+        (hasX1 && ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) +
+        insets.left;
 
       const width = Math.max(
         0,
         ctx.xScale.bandwidth
-          ? (ctx.x1Scale ? (ctx.x1Scale.bandwidth?.() ?? 0) : ctx.xScale.bandwidth()) -
+          ? (hasX1 && ctx.x1Scale ? (ctx.x1Scale.bandwidth?.() ?? 0) : ctx.xScale.bandwidth()) -
               insets.left -
               insets.right
           : 0
@@ -166,8 +171,10 @@ export function createDimensionGetter<TData>(
       const xValue = _x(item);
       const start = ctx.xInterval.floor(xValue);
       const end = ctx.xInterval.offset(start);
-      const x = ctx.xScale(start) + insets.left;
-      const width = ctx.xScale(end) - x - insets.right;
+      const xStart = ctx.xScale(start);
+      const xEnd = ctx.xScale(end);
+      const x = Math.min(xStart, xEnd) + insets.left;
+      const width = Math.abs(xEnd - xStart) - insets.left - insets.right;
 
       const yValue = _y(item);
 
@@ -200,8 +207,10 @@ export function createDimensionGetter<TData>(
       const yValue = _y(item);
       const start = ctx.yInterval.floor(yValue);
       const end = ctx.yInterval.offset(start);
-      const y = ctx.yScale(start) + insets.top;
-      const height = ctx.yScale(end) - y - insets.bottom;
+      const yStart = ctx.yScale(start);
+      const yEnd = ctx.yScale(end);
+      const y = Math.min(yStart, yEnd) + insets.top;
+      const height = Math.abs(yEnd - yStart) - insets.top - insets.bottom;
 
       const xValue = _x(item);
 

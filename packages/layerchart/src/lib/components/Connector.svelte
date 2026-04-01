@@ -46,10 +46,10 @@
      * @default `d3.curveLinear`
      */
     curve?: CurveFactory;
-  } & SplinePropsWithoutHTML;
+  } & PathPropsWithoutHTML;
 
   export type ConnectorProps = ConnectorPropsWithoutHTML &
-    Without<SplineProps, ConnectorPropsWithoutHTML>;
+    Without<PathProps, ConnectorPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -61,7 +61,7 @@
     type ConnectorSweep,
     type ConnectorType,
   } from '$lib/utils/connectorUtils.js';
-  import Spline, { type SplineProps, type SplinePropsWithoutHTML } from './Spline.svelte';
+  import Path, { type PathProps, type PathPropsWithoutHTML } from './Path.svelte';
   import type { Without } from '$lib/utils/types.js';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -135,7 +135,7 @@
   );
 </script>
 
-<Spline
+<Path
   pathData={motionPath.current}
   bind:pathRef
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}

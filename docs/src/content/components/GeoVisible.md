@@ -1,0 +1,6 @@
+---
+description: Geographic component which determines and renders only the geographic features currently within the visible map viewport to optimize performance and clarity.
+category: geo
+layers: [svg, canvas]
+related: []
+---

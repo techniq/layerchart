@@ -1,0 +1,25 @@
+<script module>
+	export const layers = ['svg', 'canvas'];
+</script>
+
+<script lang="ts">
+	import { AnnotationLine, LineChart } from 'layerchart';
+	import { getAppleStock } from '$lib/data.remote';
+
+	const data = $derived(await getAppleStock());
+
+	export { data };
+</script>
+
+<LineChart {data} x="date" y="value" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>
+	{#snippet aboveMarks({ context })}
+		<AnnotationLine
+			y={500}
+			label="Max"
+			props={{
+				line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+				label: { class: 'fill-danger' }
+			}}
+		/>
+	{/snippet}
+</LineChart>

@@ -29,16 +29,16 @@
   };
 
   export type MonthPathProps = MonthPathPropsWithoutHTML &
-    // we omit the spline props to avoid conflicts with attribute names since we are
-    // passing them through to `<Spline />`
-    Without<SVGAttributes<SVGPathElement>, MonthPathPropsWithoutHTML & SplinePropsWithoutHTML>;
+    // we omit the path props to avoid conflicts with attribute names since we are
+    // passing them through to `<Path />`
+    Without<SVGAttributes<SVGPathElement>, MonthPathPropsWithoutHTML & PathPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
   import { timeWeek } from 'd3-time';
   import { cls } from '@layerstack/tailwind';
   import { endOfInterval } from '@layerstack/utils';
-  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
 
   let {
     date,
@@ -76,13 +76,7 @@
   `);
 </script>
 
-<Spline
-  bind:pathRef
-  {pathData}
-  fill="none"
-  class={cls('lc-month-path', className)}
-  {...restProps}
-/>
+<Path bind:pathRef {pathData} fill="none" class={cls('lc-month-path', className)} {...restProps} />
 
 <style>
   @layer components {

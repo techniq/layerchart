@@ -1,0 +1,85 @@
+<script lang="ts">
+	import {
+		Area,
+		Axis,
+		Chart,
+		Highlight,
+		Layer,
+		Tooltip,
+		asAny,
+		defaultChartPadding
+	} from 'layerchart';
+	import { stack, type Series } from 'd3-shape';
+	import flatten from '$lib/utils/flatten.js';
+	import { createDateSeries } from '$lib/utils/data.js';
+
+	const keys = ['apples', 'bananas', 'oranges'];
+	const multiSeriesData = createDateSeries({
+		count: 30,
+		min: 10,
+		max: 100,
+		value: 'integer',
+		keys
+	});
+
+	type B = Series<
+		{
+			date: number;
+		},
+		string
+	>[];
+
+	const stackData = stack().keys(keys)(multiSeriesData) as B;
+
+	const fruitColors = {
+		apples: 'var(--color-apples)',
+		bananas: 'var(--color-bananas)',
+		oranges: 'var(--color-oranges)'
+	};
+
+	export { stackData as data };
+</script>
+
+<Chart
+	data={stackData}
+	flatData={flatten(stackData)}
+	x={(d) => asAny(d).data.date}
+	y={[0, 1]}
+	yNice
+	c="key"
+	cDomain={Object.keys(fruitColors)}
+	cRange={Object.values(fruitColors)}
+	tooltipContext={{ mode: 'quadtree-x' }}
+	padding={defaultChartPadding({ left: 25, bottom: 20, right: 15 })}
+	height={300}
+>
+	{#snippet children({ context })}
+		<Layer>
+			<Axis placement="left" grid rule />
+			<Axis placement="bottom" rule />
+
+			{#each stackData as seriesData}
+				{@const color = context.cGet(seriesData)}
+				<Area
+					data={seriesData}
+					line={{ stroke: color, 'stroke-width': 2 }}
+					fill={color}
+					fillOpacity={0.2}
+				/>
+			{/each}
+
+			<Highlight points lines />
+		</Layer>
+
+		<Tooltip.Root>
+			{#snippet children({ data })}
+				<Tooltip.Header value={data.date} format="day" />
+				<Tooltip.List>
+					{#each keys as key}
+						<Tooltip.Item label={key} value={data.data[key]} color={context.cScale?.(key)} />
+					{/each}
+				</Tooltip.List>
+			{/snippet}
+		</Tooltip.Root>
+	{/snippet}
+</Chart>
