@@ -71,10 +71,10 @@ Updates the geo projection based on transform interactions. The projection is re
 
 Which projection properties are updated is controlled by the `apply` option and auto-detected from the projection type:
 
-| Projection type                                 | Default `apply`                                      | Behavior                |
-| ----------------------------------------------- | ---------------------------------------------------- | ----------------------- |
-| Flat maps (`geoMercator`, `geoAlbersUsa`, etc.) | `{ translate: true, scale: true, rotation: false }`  | Drag pans, scroll zooms |
-| Globe projections (`geoOrthographic`, etc.)     | `{ rotation: true, scale: false, translate: false }` | Drag rotates the globe  |
+| Projection type                                 | Default `apply`                                     | Behavior                   |
+| ----------------------------------------------- | --------------------------------------------------- | -------------------------- |
+| Flat maps (`geoMercator`, `geoAlbersUsa`, etc.) | `{ translate: true, scale: true, rotation: false }` | Drag pans, scroll zooms    |
+| Globe projections (`geoOrthographic`, etc.)     | `{ rotation: true, scale: true, translate: false }` | Drag rotates, scroll zooms |
 
 Auto-detection uses the projection's `clipAngle` — projections with a default clip angle (like orthographic) are treated as globes. Override with explicit `apply` values when needed.
 
@@ -100,12 +100,12 @@ When `fitGeojson` is provided and translate mode is active, the initial translat
 
 :example{ component="GeoPath" name="translucent-globe" }
 
-To enable zoom on a globe alongside rotation:
+Scroll zoom works on globes by default. To disable it, override with `apply`:
 
 ```svelte
 <Chart
 	geo={{ projection: geoOrthographic, fitGeojson: countries }}
-	transform={{ mode: 'projection', apply: { rotation: true, scale: true } }}
+	transform={{ mode: 'projection', apply: { rotation: true, scale: false } }}
 />
 ```
 
@@ -286,6 +286,8 @@ This works identically for geo canvas transforms:
 
 :example{ component="GeoPath" name="transform-canvas-scale-extent" }
 
+In `projection` mode, `scaleExtent` is interpreted as **relative to the initial fitted scale**. For example, `[0.5, 8]` means 0.5x to 8x of the projection's fitted scale — not absolute pixel values.
+
 ### `domainExtent` — constrain in data space
 
 For `mode: 'domain'` charts, `domainExtent` lets you express constraints in data units rather than pixel/transform space. This is useful when you want to say things like "don't pan before January 2020" or "always show at least 7 days."
@@ -387,12 +389,14 @@ Constrains panning to a bounding box in pixel coordinates `[[minX, minY], [maxX,
 
 For `domain` mode, prefer `domainExtent` which lets you express bounds in data units.
 
+In `projection` mode with flat maps, `translateExtent` defines pan bounds **relative to the initial fitted position**, and the allowed range scales with zoom level. For globe projections using rotation, values are passed through as degrees (yaw/pitch).
+
 ### How constraints compose
 
 When multiple constraint options are provided, they are applied in order:
 
-1. `scaleExtent` — clamps scale
-2. `translateExtent` — clamps translate
+1. `scaleExtent` — clamps scale (relative multipliers in projection mode)
+2. `translateExtent` — clamps translate (zoom-aware bounds in projection mode)
 3. `domainExtent` — clamps in domain space (converted to a `constrain` function internally)
 4. `constrain` — final custom adjustment
 
@@ -498,13 +502,13 @@ It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orie
 | Minimum visible range  | `domainExtent: { x: { minRange: 7 * 86400000 } }`         | [pan-zoom-domain-extent](/docs/components/LineChart/pan-zoom-domain-extent)             |
 | Pan/zoom a map (CSS)   | `transform={{ mode: 'canvas', scrollMode: 'scale' }}`     | [transform-canvas](/docs/components/GeoPath/transform-canvas)                           |
 | Pan/zoom a map (geo)   | `transform={{ mode: 'projection', scrollMode: 'scale' }}` | [transform-projection](/docs/components/GeoPath/transform-projection)                   |
-| World map (CSS)        | Canvas mode + world countries                              | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)               |
-| World map (geo)        | Projection mode + world countries                          | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
+| World map (CSS)        | Canvas mode + world countries                             | [transform-world-canvas](/docs/components/GeoPath/transform-world-canvas)               |
+| World map (geo)        | Projection mode + world countries                         | [transform-world-projection](/docs/components/GeoPath/transform-world-projection)       |
 | Globe rotation         | `transform={{ mode: 'projection' }}` (auto-detected)      | [translucent-globe](/docs/components/GeoPath/translucent-globe)                         |
 | Geo map zoom limits    | `scaleExtent: [1, 8]`                                     | [transform-canvas-scale-extent](/docs/components/GeoPath/transform-canvas-scale-extent) |
 | Globe pitch clamping   | `constrain` with `Math.max(-90, ...)`                     | [transform-globe-constrain](/docs/components/GeoPath/transform-globe-constrain)         |
 | Brush-to-zoom          | `brush` + `transform={{ mode: 'domain' }}`                | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                             |
-| Brush-to-zoom (band)   | `brush` + `transform` on band scale                       | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)                   |
+| Brush-to-zoom (band)   | `brush` + `transform` on band scale                       | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)                    |
 | Overview brush         | Separate chart with `brush.x` synced to `context.xDomain` | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)             |
 | Programmatic zoom only | `disablePointer: true` with `zoomTo()` calls              | [basic](/docs/components/Pack/basic)                                                    |
 | Animated transforms    | `motion: { type: 'tween', duration: 800 }`                | [basic](/docs/components/Pack/basic)                                                    |

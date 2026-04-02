@@ -14,7 +14,7 @@ describe('TransformContext', () => {
         height: 300,
         geo: {
           projection: geoMercator,
-          fitGeojson: { type: 'Sphere' } as GeoJSON.GeoJsonObject,
+          fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
         },
         transform: {
           mode: 'projection' as const,
@@ -36,7 +36,7 @@ describe('TransformContext', () => {
       // Switch to orthographic (globe)
       chartProps.geo = {
         projection: geoOrthographic,
-        fitGeojson: { type: 'Sphere' } as GeoJSON.GeoJsonObject,
+        fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
       };
       await tick();
 
@@ -53,7 +53,7 @@ describe('TransformContext', () => {
         height: 300,
         geo: {
           projection: geoOrthographic,
-          fitGeojson: { type: 'Sphere' } as GeoJSON.GeoJsonObject,
+          fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
         },
         transform: {
           mode: 'projection' as const,
@@ -75,7 +75,7 @@ describe('TransformContext', () => {
       // Switch to Mercator (flat)
       chartProps.geo = {
         projection: geoMercator,
-        fitGeojson: { type: 'Sphere' } as GeoJSON.GeoJsonObject,
+        fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
       };
       await tick();
 
@@ -93,7 +93,7 @@ describe('TransformContext', () => {
           height: 300,
           geo: {
             projection: geoOrthographic,
-            fitGeojson: { type: 'Sphere' } as GeoJSON.GeoJsonObject,
+            fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
           },
           transform: {
             mode: 'projection' as const,
@@ -120,6 +120,50 @@ describe('TransformContext', () => {
 
       // Verify the projection scale also updated (transformApply.scale = true for globes)
       expect(chartContext.geo.projection?.scale()).toBeCloseTo(initialScale * 2, 0);
+    });
+
+    it('should interpret scaleExtent as relative multipliers in projection mode', async () => {
+      let chartContext: any;
+
+      render(TransformTestHarness, {
+        chartProps: {
+          height: 300,
+          geo: {
+            projection: geoMercator,
+            fitGeojson: { type: 'Sphere' } as unknown as GeoJSON.GeoJsonObject,
+          },
+          transform: {
+            mode: 'projection' as const,
+            scrollMode: 'scale' as const,
+            scaleExtent: [0.5, 2] as [number, number],
+          },
+        },
+        oncontext: (ctx: any) => {
+          chartContext = ctx;
+        },
+      });
+
+      await vi.waitFor(() => expect(chartContext).toBeDefined());
+
+      const initialScale = chartContext.transform.scale;
+      expect(initialScale).toBeGreaterThan(10); // Mercator fitSize scale is typically large
+
+      // Try to zoom way beyond 2x — should be clamped to 2x initial
+      chartContext.transform.setScale(initialScale * 5, { instant: true });
+      await tick();
+
+      await vi.waitFor(() => {
+        // Should be clamped to ~2x the initial scale
+        expect(chartContext.transform.scale).toBeCloseTo(initialScale * 2, 0);
+      });
+
+      // Try to zoom below 0.5x — should be clamped to 0.5x initial
+      chartContext.transform.setScale(initialScale * 0.1, { instant: true });
+      await tick();
+
+      await vi.waitFor(() => {
+        expect(chartContext.transform.scale).toBeCloseTo(initialScale * 0.5, 0);
+      });
     });
 
     it('should sync disablePointer reactively', async () => {

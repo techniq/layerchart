@@ -936,11 +936,63 @@
     )
   );
 
-  // For band scale domain transforms, enforce scaleExtent minimum of 1 (can't zoom out past initial view)
+  // For projection mode, scaleExtent is relative to the initial fitted scale (like d3-zoom).
+  // e.g. [0.5, 8] means 0.5x to 8x of the fitted projection scale.
+  // For band scale domain transforms, enforce minimum of 1 (can't zoom out past initial view).
   const resolvedScaleExtent = $derived.by(() => {
+    if (transform?.mode === 'projection' && transform?.scaleExtent && initialTransform) {
+      const baseScale = initialTransform.scale;
+      return [
+        transform.scaleExtent[0] * baseScale,
+        transform.scaleExtent[1] * baseScale,
+      ] as [number, number];
+    }
     if (!isBandDomainTransform) return transform?.scaleExtent;
     const userExtent = transform?.scaleExtent;
     return [Math.max(1, userExtent?.[0] ?? 1), userExtent?.[1] ?? Infinity] as [number, number];
+  });
+
+  // For projection mode with flat projections, translateExtent defines the pannable world bounds
+  // at the initial (1x) zoom level, similar to d3-zoom. The allowed translate range scales with
+  // the zoom ratio so you can pan more when zoomed in.
+  // For rotation mode (globes), translateExtent is passed through as degrees (yaw/pitch).
+  const resolvedTranslateExtent = $derived.by(() => {
+    if (transform?.mode === 'projection' && transform?.translateExtent) {
+      if (resolvedApply.rotation) {
+        // Rotation mode: values are degrees (yaw/pitch), pass through as-is
+        return transform.translateExtent;
+      }
+      // Flat projection translate mode: handled via projectionTranslateConstrain below
+      return undefined;
+    }
+    return transform?.translateExtent;
+  });
+
+  // For flat projection mode, implement d3-zoom-style translate constraining:
+  // The viewport (at current zoom) must overlap with the translateExtent world bounds.
+  // As zoom increases, the allowed translate range grows proportionally.
+  const projectionTranslateConstrain = $derived.by(() => {
+    if (transform?.mode !== 'projection' || !transform?.translateExtent || !initialTransform || resolvedApply.rotation) {
+      return undefined;
+    }
+
+    const baseScale = initialTransform.scale;
+    const baseTranslate = initialTransform.translate;
+    const [[x0, y0], [x1, y1]] = transform.translateExtent;
+
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      let { scale, translate } = t;
+      // Zoom ratio relative to fitted scale
+      const k = scale / baseScale;
+
+      // Allowed translate range scales with zoom ratio
+      translate = {
+        x: Math.max(baseTranslate.x + x0 * k, Math.min(baseTranslate.x + x1 * k, translate.x)),
+        y: Math.max(baseTranslate.y + y0 * k, Math.min(baseTranslate.y + y1 * k, translate.y)),
+      };
+
+      return { scale, translate };
+    };
   });
 
   // Default constrain for band scale domain transforms: prevent panning past data boundaries
@@ -969,7 +1021,7 @@
   // Compose user-provided constrain with domainExtent constrain and band scale constrain
   const composedConstrain = $derived.by(() => {
     const userConstrain = transform?.constrain;
-    const constrains = [bandScaleConstrain, domainExtentConstrain, userConstrain].filter(Boolean) as Array<(t: { scale: number; translate: { x: number; y: number } }) => { scale: number; translate: { x: number; y: number } }>;
+    const constrains = [bandScaleConstrain, domainExtentConstrain, projectionTranslateConstrain, userConstrain].filter(Boolean) as Array<(t: { scale: number; translate: { x: number; y: number } }) => { scale: number; translate: { x: number; y: number } }>;
     if (constrains.length === 0) return undefined;
     if (constrains.length === 1) return constrains[0];
     return (t: { scale: number; translate: { x: number; y: number } }) => {
@@ -1037,7 +1089,7 @@
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
-      {@const { domainExtent: _de, constrain: _uc, apply: _apply, scaleExtent: _se, ...transformProps } = transform ?? {}}
+      {@const { domainExtent: _de, constrain: _uc, apply: _apply, scaleExtent: _se, translateExtent: _te, ...transformProps } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
         mode={transform?.mode ?? 'none'}
@@ -1046,6 +1098,7 @@
         {processTranslate}
         {...transformProps}
         scaleExtent={resolvedScaleExtent}
+        translateExtent={resolvedTranslateExtent}
         constrain={composedConstrain}
         disablePointer={(brush === true || (typeof brush === 'object' && !brush.disabled)) || transform?.disablePointer}
         {ondragstart}
