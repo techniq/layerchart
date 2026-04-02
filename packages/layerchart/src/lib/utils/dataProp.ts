@@ -179,26 +179,39 @@ export type DataDrivenStyleProps<T = any> = {
  * - `function`: called with data item, result passed through cScale.
  * - `undefined`/`null`: returns undefined.
  */
+/**
+ * Returns true if the string looks like a CSS color value rather than a data property name.
+ * Matches: `#hex`, and functional notation like `rgb(...)`, `hsl(...)`, `var(...)`,
+ * `url(...)`, `color-mix(...)`, etc.
+ */
+function isCSSColor(value: string): boolean {
+  return value.startsWith('#') || value.includes('(');
+}
+
 export function resolveColorProp<T>(
   value: ColorProp<T> | undefined | null,
   d: T,
-  cScale: AnyScale | null | undefined
+  cScale: AnyScale | null | undefined,
+  ...args: any[]
 ): string | undefined {
   if (value === undefined || value === null) return undefined;
 
   if (typeof value === 'function') {
-    const rawValue = value(d);
+    const rawValue = (value as Function)(d, ...args);
     if (rawValue === undefined || rawValue === null) return undefined;
     return cScale ? String(cScale(rawValue)) : String(rawValue);
   }
 
   if (typeof value === 'string') {
+    // CSS color literals are never data property lookups
+    if (isCSSColor(value)) return value;
+
     const dataValue = get(d, value);
     if (dataValue !== undefined) {
       // Data property — resolve through cScale
       return cScale ? String(cScale(dataValue)) : String(dataValue);
     }
-    // Not a data property — literal CSS color
+    // Not a data property — treat as literal CSS color (e.g. named colors like 'red')
     return value;
   }
 
@@ -212,9 +225,10 @@ export function resolveColorProp<T>(
  */
 export function resolveStyleProp<V, T>(
   value: StyleProp<V, T> | undefined,
-  d: T
+  d: T,
+  ...args: any[]
 ): V | undefined {
   if (value === undefined) return undefined;
-  if (typeof value === 'function') return (value as (d: T) => V)(d);
+  if (typeof value === 'function') return (value as Function)(d, ...args);
   return value;
 }

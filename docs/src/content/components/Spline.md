@@ -13,6 +13,12 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 
 :example{ name="basic" showCode }
 
+### Per-segment styling
+
+Pass a function to `stroke`, `fill`, or `opacity` to style each segment independently. Consecutive data points with the same resolved value are grouped into separate path segments.
+
+:example{ name="stroke-grouping" showCode }
+
 ### Geo mode
 
 When inside a `GeoProjection` context, Spline automatically renders as a projected geographic path. The `x` and `y` accessors extract longitude/latitude from each data point, which are converted to a GeoJSON `LineString` and rendered via `geoPath(projection)` — providing geodesic interpolation (great circle arcs) and proper antimeridian wrapping.
