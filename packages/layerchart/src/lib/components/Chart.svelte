@@ -751,7 +751,7 @@
     }
 
     const defaults = isGlobe
-      ? { rotation: true, scale: false, translate: false }
+      ? { rotation: true, scale: true, translate: false }
       : { rotation: false, scale: true, translate: true };
 
     // User overrides win; enforce mutual exclusion
