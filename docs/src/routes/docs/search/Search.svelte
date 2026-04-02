@@ -114,6 +114,16 @@
 		}
 	];
 
+	/** Rank a result for "Best match": 0 = title starts with query, 1 = title contains query, -1 = no match */
+	function bestMatchRank(result: SearchEntry, query: string): number {
+		if (result.type === 'heading') return -1;
+		const plainTitle = result.title.replace(/<[^>]*>/g, '').toLowerCase();
+		const q = query.toLowerCase().trim();
+		if (plainTitle.startsWith(q)) return 0;
+		if (plainTitle.includes(q)) return 1;
+		return -1;
+	}
+
 	// Convert search results to MenuOption format with grouping
 	const options = $derived.by((): SearchOption[] => {
 		// Show default options when no search query
@@ -121,30 +131,43 @@
 
 		if (!searchResults.length) return [];
 
-		// Sort by group order, then by parent slug (so headings appear after their parent page)
-		const sorted = [...searchResults].sort((a, b) => {
-			const aGroupType = getGroupType(a);
-			const bGroupType = getGroupType(b);
+		// Split results into best matches (starts with, then contains) and the rest
+		const startsWithMatches: SearchEntry[] = [];
+		const containsMatches: SearchEntry[] = [];
+		const rest: SearchEntry[] = [];
+		for (const result of searchResults) {
+			const rank = bestMatchRank(result, searchQuery);
+			if (rank === 0) startsWithMatches.push(result);
+			else if (rank === 1) containsMatches.push(result);
+			else rest.push(result);
+		}
 
-			// First sort by group
-			if (groupOrder[aGroupType] !== groupOrder[bGroupType]) {
-				return groupOrder[aGroupType] - groupOrder[bGroupType];
-			}
+		// Sort helper: by group order, then parent slug, then headings after parent
+		function sortEntries(entries: SearchEntry[]) {
+			return [...entries].sort((a, b) => {
+				const aGroupType = getGroupType(a);
+				const bGroupType = getGroupType(b);
 
-			// Within the same group, sort by parent slug so headings follow their parent
-			const aParentSlug = a.type === 'heading' ? a.parentSlug : a.slug;
-			const bParentSlug = b.type === 'heading' ? b.parentSlug : b.slug;
+				if (groupOrder[aGroupType] !== groupOrder[bGroupType]) {
+					return groupOrder[aGroupType] - groupOrder[bGroupType];
+				}
 
-			if (aParentSlug !== bParentSlug) {
-				return (aParentSlug ?? '').localeCompare(bParentSlug ?? '');
-			}
+				const aParentSlug = a.type === 'heading' ? a.parentSlug : a.slug;
+				const bParentSlug = b.type === 'heading' ? b.parentSlug : b.slug;
 
-			// Parent pages come before their headings
-			if (a.type !== 'heading' && b.type === 'heading') return -1;
-			if (a.type === 'heading' && b.type !== 'heading') return 1;
+				if (aParentSlug !== bParentSlug) {
+					return (aParentSlug ?? '').localeCompare(bParentSlug ?? '');
+				}
 
-			return 0;
-		});
+				if (a.type !== 'heading' && b.type === 'heading') return -1;
+				if (a.type === 'heading' && b.type !== 'heading') return 1;
+
+				return 0;
+			});
+		}
+
+		const bestMatches = [...sortEntries(startsWithMatches), ...sortEntries(containsMatches)];
+		const sorted = [...bestMatches, ...sortEntries(rest)];
 
 		// Convert to MenuOption format, deduplicating by slug
 		const seen = new Set<string>();
@@ -152,10 +175,11 @@
 		for (const result of sorted) {
 			if (seen.has(result.slug)) continue;
 			seen.add(result.slug);
+			const isBest = bestMatches.includes(result);
 			opts.push({
 				label: result.title,
 				value: result.slug,
-				group: groupLabels[getGroupType(result)],
+				group: isBest ? 'Best match' : groupLabels[getGroupType(result)],
 				result
 			});
 		}
