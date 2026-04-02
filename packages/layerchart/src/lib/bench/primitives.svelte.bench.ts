@@ -7,12 +7,17 @@ afterEach(() => {
   cleanup();
 });
 
-const PRIMITIVES = ['rect', 'circle', 'ellipse', 'line', 'group', 'text', 'path'] as const;
 const COUNT = 100;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // LayerChart primitives vs native SVG elements — 100 instances each
+//
+// Representative subset: rect (shape), circle (shape), group (container),
+// text (complex), path (path-based). Ellipse/line follow the same
+// architecture as rect/circle and would show the same ratio.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+const PRIMITIVES = ['rect', 'circle', 'group', 'text', 'path'] as const;
 
 for (const primitive of PRIMITIVES) {
   describe(`${primitive} — ${COUNT} instances`, () => {
@@ -29,11 +34,11 @@ for (const primitive of PRIMITIVES) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Scaling: 10, 100, 500, 1000 instances (rect as representative)
+// Scaling: rect at 10, 100, 250 instances
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 describe('rect — scaling', () => {
-  for (const count of [10, 100, 500, 1000]) {
+  for (const count of [10, 100, 250]) {
     bench(`Native <rect> × ${count}`, () => {
       cleanup();
       render(PrimitiveBench, { primitive: 'rect', mode: 'native', count });
@@ -42,20 +47,6 @@ describe('rect — scaling', () => {
     bench(`LayerChart <Rect> × ${count}`, () => {
       cleanup();
       render(PrimitiveBench, { primitive: 'rect', mode: 'layerchart', count });
-    });
-  }
-});
-
-describe('circle — scaling', () => {
-  for (const count of [10, 100, 500, 1000]) {
-    bench(`Native <circle> × ${count}`, () => {
-      cleanup();
-      render(PrimitiveBench, { primitive: 'circle', mode: 'native', count });
-    });
-
-    bench(`LayerChart <Circle> × ${count}`, () => {
-      cleanup();
-      render(PrimitiveBench, { primitive: 'circle', mode: 'layerchart', count });
     });
   }
 });
