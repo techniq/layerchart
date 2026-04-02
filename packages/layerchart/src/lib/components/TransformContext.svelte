@@ -111,6 +111,14 @@
   });
 
   $effect.pre(() => {
+    transformState.processTranslate = processTranslate;
+  });
+
+  $effect.pre(() => {
+    transformState.disablePointer = disablePointer ?? false;
+  });
+
+  $effect.pre(() => {
     transformState.constrain = constrain;
   });
 
