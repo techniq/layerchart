@@ -2274,6 +2274,13 @@
       "line": "<Chart"
     },
     {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 269,
+      "line": "<Chart"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -2594,6 +2601,13 @@
       "path": "/docs/components/LinearGradient/units",
       "lineNumber": 6,
       "line": "<Chart height={320} width={700}>"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 91,
+      "line": "<Chart"
     },
     {
       "example": "pan-zoom-with-overview",
@@ -3590,6 +3604,13 @@
       "line": "<Chart"
     },
     {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 15,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={25} height={300}>"
+    },
+    {
       "example": "tween-on-mount",
       "component": "Spline",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -3975,5 +3996,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-01T16:49:30.210Z"
+  "updatedAt": "2026-04-02T19:16:00.836Z"
 }

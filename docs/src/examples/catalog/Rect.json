@@ -388,6 +388,13 @@
       "line": "<Rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 151,
+      "line": "<rect"
+    },
+    {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
@@ -825,7 +832,7 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Rect"
     },
     {
@@ -878,5 +885,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.294Z"
+  "updatedAt": "2026-04-02T19:16:02.410Z"
 }

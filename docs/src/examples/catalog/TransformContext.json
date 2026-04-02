@@ -13,22 +13,22 @@
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 41,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Rect"
         },
         {
           "component": "Axis",
-          "lineNumber": 53,
+          "lineNumber": 54,
           "line": "<Axis"
         }
       ]
@@ -175,5 +175,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-03-31T12:30:01.407Z"
+  "updatedAt": "2026-04-02T19:16:02.929Z"
 }

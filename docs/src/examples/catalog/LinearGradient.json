@@ -441,6 +441,20 @@
       "line": "<LinearGradient class=\"from-green-500 to-blue-500\" units=\"userSpaceOnUse\">"
     },
     {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 103,
+      "line": "<LinearGradient"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 107,
+      "line": "<LinearGradient"
+    },
+    {
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
@@ -556,9 +570,9 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 41,
+      "lineNumber": 42,
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.546Z"
+  "updatedAt": "2026-04-02T19:16:01.942Z"
 }

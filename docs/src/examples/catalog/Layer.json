@@ -2152,6 +2152,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 286,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 293,
+      "line": "<Layer>"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -2478,6 +2492,13 @@
       "component": "LinearGradient",
       "path": "/docs/components/LinearGradient/units",
       "lineNumber": 7,
+      "line": "<Layer>"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 102,
       "line": "<Layer>"
     },
     {
@@ -3489,6 +3510,13 @@
       "line": "<Layer center>"
     },
     {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 16,
+      "line": "<Layer>"
+    },
+    {
       "example": "tween-on-mount",
       "component": "Spline",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -3702,7 +3730,7 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Layer>"
     },
     {
@@ -3888,5 +3916,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-01T16:49:31.366Z"
+  "updatedAt": "2026-04-02T19:16:01.850Z"
 }

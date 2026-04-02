@@ -60,6 +60,7 @@
 			example: 'compound-separate-scales-with-stacked-charts-and-overridden-marks'
 		},
 		{ component: 'LineChart', example: 'gradient-encoding' },
+		{ component: 'LineChart', example: 'bump-state-population-ranks' },
 		{ component: 'LineChart', example: 'large-radial-series' },
 		{ component: 'LineChart', example: 'large-series' },
 		{ component: 'Density', example: 'weighted' },

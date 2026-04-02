@@ -1235,6 +1235,20 @@
       "line": "<GeoPath"
     },
     {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 289,
+      "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
+    },
+    {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 301,
+      "line": "<GeoPath"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -1368,5 +1382,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.058Z"
+  "updatedAt": "2026-04-02T19:16:01.400Z"
 }

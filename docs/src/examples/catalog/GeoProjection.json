@@ -145,6 +145,33 @@
           "line": "<Tooltip.Root>"
         }
       ]
+    },
+    {
+      "name": "true-size",
+      "title": "true size",
+      "path": "/docs/components/GeoProjection/true-size",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 269,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 286,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 287,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 289,
+          "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -156,5 +183,5 @@
       "line": "<GeoProjection"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:15.539Z"
+  "updatedAt": "2026-04-02T19:16:01.448Z"
 }

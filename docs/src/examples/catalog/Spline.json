@@ -618,6 +618,33 @@
       ]
     },
     {
+      "name": "stroke-grouping",
+      "title": "stroke grouping",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 16,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 17,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 19,
+          "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+        }
+      ]
+    },
+    {
       "name": "tween-on-mount",
       "title": "tween on mount",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -948,18 +975,11 @@
       "line": "<Spline"
     },
     {
-      "example": "bump-highlight",
+      "example": "bump-state-population-ranks",
       "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-highlight",
-      "lineNumber": 39,
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 123,
       "line": "<Spline"
-    },
-    {
-      "example": "bump-labels",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-labels",
-      "lineNumber": 46,
-      "line": "<Spline y={s.key} stroke={s.color} curve={curveBumpX} class=\"stroke-2\" />"
     },
     {
       "example": "custom",
@@ -1235,6 +1255,13 @@
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
     },
     {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 19,
+      "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
+    },
+    {
       "example": "tween-on-mount",
       "component": "Spline",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -1319,5 +1346,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-01T23:39:55.879Z"
+  "updatedAt": "2026-04-02T19:16:02.594Z"
 }

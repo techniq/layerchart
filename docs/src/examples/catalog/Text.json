@@ -654,18 +654,11 @@
       "line": "<Text"
     },
     {
-      "example": "bump-labels",
+      "example": "bump-state-population-ranks",
       "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-labels",
-      "lineNumber": 52,
-      "line": "<Text"
-    },
-    {
-      "example": "bump-labels",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-labels",
-      "lineNumber": 62,
-      "line": "<Text"
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 160,
+      "line": "<text"
     },
     {
       "example": "basic",
@@ -1025,5 +1018,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-01T23:39:55.958Z"
+  "updatedAt": "2026-04-02T19:16:02.654Z"
 }

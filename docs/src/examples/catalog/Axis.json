@@ -3706,11 +3706,18 @@
       "line": "<Axis placement=\"left\" rule />"
     },
     {
-      "example": "bump-labels",
+      "example": "bump-state-population-ranks",
       "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-labels",
-      "lineNumber": 43,
-      "line": "<Axis placement=\"bottom\" rule />"
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 112,
+      "line": "<Axis placement=\"top\" rule={false} />"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 113,
+      "line": "<Axis placement=\"bottom\" rule={false} />"
     },
     {
       "example": "custom",
@@ -4525,6 +4532,20 @@
       "line": "<Axis placement=\"angle\" grid={{ class: 'stroke-surface-content/20' }} />"
     },
     {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 17,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "tween-on-mount",
       "component": "Spline",
       "path": "/docs/components/Spline/tween-on-mount",
@@ -4920,14 +4941,14 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 53,
+      "lineNumber": 54,
       "line": "<Axis"
     },
     {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 60,
+      "lineNumber": 61,
       "line": "<Axis"
     },
     {
@@ -5036,5 +5057,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-01T23:39:53.097Z"
+  "updatedAt": "2026-04-02T19:16:00.334Z"
 }

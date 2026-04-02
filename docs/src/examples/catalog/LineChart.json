@@ -50,68 +50,44 @@
       ]
     },
     {
-      "name": "bump-basic",
-      "title": "bump basic",
-      "path": "/docs/components/LineChart/bump-basic",
+      "name": "bump-state-population-ranks",
+      "title": "bump state population ranks",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
       "components": [
         {
-          "component": "LineChart",
-          "lineNumber": 16,
-          "line": "<LineChart"
-        }
-      ]
-    },
-    {
-      "name": "bump-highlight",
-      "title": "bump highlight",
-      "path": "/docs/components/LineChart/bump-highlight",
-      "components": [
-        {
-          "component": "LineChart",
-          "lineNumber": 17,
-          "line": "<LineChart"
+          "component": "Chart",
+          "lineNumber": 91,
+          "line": "<Chart"
         },
         {
-          "component": "Spline",
-          "lineNumber": 39,
-          "line": "<Spline"
+          "component": "Layer",
+          "lineNumber": 102,
+          "line": "<Layer>"
         },
         {
-          "component": "Highlight",
-          "lineNumber": 49,
-          "line": "<Highlight lines points />"
-        },
-        {
-          "component": "Tooltip",
-          "lineNumber": 53,
-          "line": "<Tooltip.Root>"
-        }
-      ]
-    },
-    {
-      "name": "bump-labels",
-      "title": "bump labels",
-      "path": "/docs/components/LineChart/bump-labels",
-      "components": [
-        {
-          "component": "LineChart",
-          "lineNumber": 31,
-          "line": "<LineChart"
+          "component": "LinearGradient",
+          "lineNumber": 103,
+          "line": "<LinearGradient"
         },
         {
           "component": "Axis",
-          "lineNumber": 43,
-          "line": "<Axis placement=\"bottom\" rule />"
+          "lineNumber": 112,
+          "line": "<Axis placement=\"top\" rule={false} />"
         },
         {
           "component": "Spline",
-          "lineNumber": 46,
-          "line": "<Spline y={s.key} stroke={s.color} curve={curveBumpX} class=\"stroke-2\" />"
+          "lineNumber": 123,
+          "line": "<Spline"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 151,
+          "line": "<rect"
         },
         {
           "component": "Text",
-          "lineNumber": 52,
-          "line": "<Text"
+          "lineNumber": 160,
+          "line": "<text"
         }
       ]
     },
@@ -1187,27 +1163,6 @@
       "line": "<LineChart"
     },
     {
-      "example": "bump-basic",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-basic",
-      "lineNumber": 16,
-      "line": "<LineChart"
-    },
-    {
-      "example": "bump-highlight",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-highlight",
-      "lineNumber": 17,
-      "line": "<LineChart"
-    },
-    {
-      "example": "bump-labels",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/bump-labels",
-      "lineNumber": 31,
-      "line": "<LineChart"
-    },
-    {
       "example": "curve",
       "component": "LineChart",
       "path": "/docs/components/LineChart/curve",
@@ -1663,5 +1618,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-04-01T23:39:55.082Z"
+  "updatedAt": "2026-04-02T19:16:01.922Z"
 }

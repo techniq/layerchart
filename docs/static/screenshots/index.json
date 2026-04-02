@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-01T23:39:51.969Z",
+  "generatedAt": "2026-04-02T19:15:59.235Z",
   "totalComponents": 70,
   "totalExamples": 850,
   "components": [
@@ -684,7 +684,7 @@
         {
           "name": "barchart-tickspacing",
           "path": "/example/Axis/barchart-tickspacing",
-          "checksum": ""
+          "checksum": "54141bf7721375f2566f08417c9fe1f5"
         },
         {
           "name": "barchart-xinterval-xinset",
@@ -2490,6 +2490,11 @@
           "name": "topojson-preview",
           "path": "/example/GeoProjection/topojson-preview",
           "checksum": "f284f98205e6d0a99b8498dde7172002"
+        },
+        {
+          "name": "true-size",
+          "path": "/example/GeoProjection/true-size",
+          "checksum": "035c742da3e29ac2a77d691d6ad8fbdd"
         }
       ]
     },
@@ -2887,19 +2892,9 @@
           "checksum": "c389c53707e23e369a4e2d41dedbd443"
         },
         {
-          "name": "bump-basic",
-          "path": "/example/LineChart/bump-basic",
-          "checksum": "157aedc8d08a1c18386e9cbe8f4d7f4f"
-        },
-        {
-          "name": "bump-highlight",
-          "path": "/example/LineChart/bump-highlight",
-          "checksum": "1640c79ad20c5c13c29d82f4401c6666"
-        },
-        {
-          "name": "bump-labels",
-          "path": "/example/LineChart/bump-labels",
-          "checksum": "64ae9358b4e7933844fdf17a7fb774ad"
+          "name": "bump-state-population-ranks",
+          "path": "/example/LineChart/bump-state-population-ranks",
+          "checksum": "c8cc292e07a22c5e3395646f254c39bd"
         },
         {
           "name": "curve",
@@ -4257,6 +4252,11 @@
           "checksum": "aca9c2d39896db1e72857b45d37b5041"
         },
         {
+          "name": "stroke-grouping",
+          "path": "/example/Spline/stroke-grouping",
+          "checksum": "c3dc743b4a91d5d020a2d22a9e43134f"
+        },
+        {
           "name": "tween-on-mount",
           "path": "/example/Spline/tween-on-mount",
           "checksum": "631fa9c5327a1097e2d2d056f237736f"
@@ -4454,7 +4454,7 @@
         {
           "name": "pan-zoom-axes",
           "path": "/example/TransformContext/pan-zoom-axes",
-          "checksum": "fb83ffb39aea6a93489cd60d27ce04e9"
+          "checksum": "789841b372344ff620306f6704d0bc9a"
         },
         {
           "name": "pan-zoom-html-image",

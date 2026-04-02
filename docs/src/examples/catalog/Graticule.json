@@ -141,6 +141,13 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     },
     {
+      "example": "true-size",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size",
+      "lineNumber": 287,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -169,5 +176,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.234Z"
+  "updatedAt": "2026-04-02T19:16:01.558Z"
 }
