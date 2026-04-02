@@ -240,7 +240,7 @@
 		placeholder="Search for anything..."
 		inlineOptions
 		autofocus
-		loading={!searchIndexReady && open}
+		loading={!searchIndexReady && !searchQuery}
 		clearSearchOnOpen={false}
 		search={async (_text, options) => options}
 		classes={{
