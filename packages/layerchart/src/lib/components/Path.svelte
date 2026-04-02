@@ -118,6 +118,14 @@
     endContent,
     opacity,
     pathRef: pathRefProp = $bindable(),
+    onclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerdown,
+    onpointerover,
+    onpointerout,
+    ontouchmove,
     ...restProps
   }: PathProps = $props();
 
@@ -192,14 +200,14 @@
     ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
       render,
       events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-        pointerover: restProps.onpointerover,
-        pointerout: restProps.onpointerout,
-        touchmove: restProps.ontouchmove,
+        get click() { return onclick; },
+        get pointerenter() { return onpointerenter; },
+        get pointermove() { return onpointermove; },
+        get pointerleave() { return onpointerleave; },
+        get pointerdown() { return onpointerdown; },
+        get pointerover() { return onpointerover; },
+        get pointerout() { return onpointerout; },
+        get touchmove() { return ontouchmove; },
       },
       deps: () => [
         fillKey.current,
@@ -275,6 +283,14 @@
     <path
       d={tweenedState.current}
       {...restProps}
+      {onclick}
+      {onpointerenter}
+      {onpointermove}
+      {onpointerleave}
+      {onpointerdown}
+      {onpointerover}
+      {onpointerout}
+      {ontouchmove}
       class={cls('lc-path', className)}
       {fill}
       fill-opacity={fillOpacity}
