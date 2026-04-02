@@ -257,26 +257,28 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      // Polygon resolve returns a path string, so resolve coords separately for motion
-      let resolvedCx: number, resolvedCy: number;
-      if (geo.projection) {
-        [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
-      } else {
-        resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
-        resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        // Polygon resolve returns a path string, so resolve coords separately for motion
+        let resolvedCx: number, resolvedCy: number;
+        if (geo.projection) {
+          [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
+        } else {
+          resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+          resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+        }
+        const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
+        untrack(() => dataMotionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
       }
-      const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
-      untrack(() => dataMotionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // TODO: Apply animated values from dataMotionMap to SVG/HTML/Canvas templates.
   // Polygon uses a path string from resolvePolygon(), so animated cx/cy/r values
@@ -395,8 +397,8 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Polygon',
@@ -425,9 +427,9 @@
       deps: () => [
         dataMode,
         dataMode ? resolvedItems : null,
-        fillKey.current,
+        fillKey!.current,
         fillOpacity,
-        strokeKey.current,
+        strokeKey!.current,
         strokeWidth,
         opacity,
         className,

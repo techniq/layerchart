@@ -178,6 +178,26 @@ export function createMotion<T = any>(
   motionProp: MotionOptions | undefined,
   options: InternalMotionOptions = {}
 ) {
+  // Fast path: when no motion is configured, skip all state/effect overhead
+  // and return a lightweight passthrough that reads directly from the getter.
+  if (motionProp === undefined) {
+    return {
+      type: 'none' as const,
+      get current() {
+        return getValue();
+      },
+      get target() {
+        return getValue();
+      },
+      set target(v: T) {
+        // no-op for passthrough
+      },
+      set(_value: T, _options?: any): Promise<void> {
+        return Promise.resolve();
+      },
+    };
+  }
+
   const motion = parseMotionProp(motionProp);
   const motionState =
     motion.type === 'spring'
@@ -241,6 +261,8 @@ export function createMotionTracker() {
  * Returns null if no motion is configured (type: 'none').
  */
 export function createDataMotionMap(motionProp: MotionOptions | undefined) {
+  // Fast path: skip parseMotionProp overhead when no motion is configured
+  if (motionProp === undefined) return null;
   const config = parseMotionProp(motionProp);
   if (config.type === 'none') return null;
 

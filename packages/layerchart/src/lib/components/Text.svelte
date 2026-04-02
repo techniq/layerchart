@@ -326,18 +326,20 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveTextPosition(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveTextPosition(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -651,8 +653,8 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Text',
@@ -674,8 +676,8 @@
         value,
         motionX.current,
         motionY.current,
-        fillKey.current,
-        strokeKey.current,
+        fillKey!.current,
+        strokeKey!.current,
         strokeWidth,
         opacity,
         className,

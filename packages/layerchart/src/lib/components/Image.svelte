@@ -238,18 +238,20 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveImage(d);
-      untrack(() => dataMotionMap.update(key, { x: resolved.x, y: resolved.y, width: resolved.width, height: resolved.height }));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveImage(d);
+        untrack(() => dataMotionMap.update(key, { x: resolved.x, y: resolved.y, width: resolved.width, height: resolved.height }));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -292,22 +294,22 @@
   const motionX = createMotion(
     _initialX,
     () => (typeof x === 'number' ? x : 0),
-    parseMotionProp(motion, 'x')
+    motion === undefined ? undefined : parseMotionProp(motion, 'x')
   );
   const motionY = createMotion(
     _initialY,
     () => (typeof y === 'number' ? y : 0),
-    parseMotionProp(motion, 'y')
+    motion === undefined ? undefined : parseMotionProp(motion, 'y')
   );
   const motionWidth = createMotion(
     _initialWidth,
     () => resolvedPixelWidth,
-    parseMotionProp(motion, 'width')
+    motion === undefined ? undefined : parseMotionProp(motion, 'width')
   );
   const motionHeight = createMotion(
     _initialHeight,
     () => resolvedPixelHeight,
-    parseMotionProp(motion, 'height')
+    motion === undefined ? undefined : parseMotionProp(motion, 'height')
   );
 
   // Pixel mode r and rotate (only when direct number values)

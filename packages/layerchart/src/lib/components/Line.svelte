@@ -189,18 +189,20 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveLine(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveLine(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -301,8 +303,8 @@
     }
   }
 
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Line',
@@ -331,8 +333,8 @@
         motionY1.current,
         motionX2.current,
         motionY2.current,
-        fillKey.current,
-        strokeKey.current,
+        fillKey!.current,
+        strokeKey!.current,
         strokeWidth,
         opacity,
         className,

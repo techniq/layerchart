@@ -209,7 +209,11 @@ export class ChartState<
 
     if (markInfo && !insideCompositeMark) {
       $effect(() => {
-        return untrack(() => this.registerMark(markInfo()));
+        const info = markInfo();
+        // Skip registration for empty mark info (e.g. pixel-mode marks)
+        // to avoid unnecessary array push/splice and version bumps
+        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label) return;
+        return untrack(() => this.registerMark(info));
       });
     }
 

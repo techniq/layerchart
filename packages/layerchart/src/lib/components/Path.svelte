@@ -193,8 +193,8 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   if (layerCtx === 'canvas') {
     ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
@@ -210,9 +210,9 @@
         get touchmove() { return ontouchmove; },
       },
       deps: () => [
-        fillKey.current,
+        fillKey!.current,
         fillOpacity,
-        strokeKey.current,
+        strokeKey!.current,
         strokeOpacity,
         strokeWidth,
         opacity,
