@@ -90,11 +90,7 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
   import Path, { type PathProps } from './Path.svelte';
-  import {
-    createMotion,
-    extractTweenConfig,
-    type ResolvedMotion,
-  } from '$lib/utils/motion.svelte.js';
+  import { createMotion, extractTweenConfig } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
@@ -231,24 +227,13 @@
     }));
   });
 
-  const extractedTween = extractTweenConfig(motion);
-
-  const tweenOptions: ResolvedMotion | undefined = extractedTween
-    ? {
-        type: extractedTween.type,
-        options: {
-          interpolate: interpolatePath,
-          ...extractedTween.options,
-        },
-      }
-    : undefined;
-
   /**
    * Provide initial `0` horizontal baseline so the line animates up from y=0 on mount.
    * Computes a proper flattened path using d3-line with all y-values at baseline.
    */
   function defaultPathData() {
-    if (!tweenOptions) return '';
+    // Skip baseline computation when motion is not initially enabled (faster initial render)
+    if (!extractTweenConfig(motion)) return '';
 
     if (ctx.config.x) {
       const resolvedData = data ?? series?.data ?? ctx.data;
@@ -271,7 +256,14 @@
     return '';
   }
 
-  const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
+  // Always create tween motion so it's ready when motion is toggled on
+  const tweenState = createMotion(defaultPathData(), () => d, {
+    type: 'tween',
+    interpolate: interpolatePath,
+  });
+
+  /** Reactively check whether motion is enabled */
+  const isTweened = $derived(extractTweenConfig(motion) != null);
 
   const seriesOpacity = $derived(
     series?.key == null ||
@@ -298,7 +290,7 @@
   {/each}
 {:else}
   <Path
-    pathData={tweenOptions ? tweenState.current : d}
+    pathData={isTweened ? tweenState.current : d}
     stroke={(typeof stroke === 'string' ? stroke : undefined) ?? series?.color}
     fill={typeof fill === 'string' ? fill : undefined}
     {...series?.props}
