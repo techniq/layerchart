@@ -124,7 +124,7 @@
 			class="grid grid-cols-(--column-count) gap-4"
 		>
 			{#each examples as example (example.name)}
-				<ExampleLink component={catalog.component} example={example.name} />
+				<ExampleLink component={catalog.component} example={example.name} title={example.title} />
 			{/each}
 		</div>
 	{:else if catalog.examples?.length}

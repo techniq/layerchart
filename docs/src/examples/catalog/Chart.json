@@ -2085,6 +2085,13 @@
       "line": "<Chart"
     },
     {
+      "example": "interpolating-projections",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "lineNumber": 169,
+      "line": "<Chart"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -3821,6 +3828,27 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 10,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={25} height={300}>"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
+      "example": "variable-width",
+      "component": "Trail",
+      "path": "/docs/components/Trail/variable-width",
+      "lineNumber": 11,
+      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice r=\"value\" rScale={scaleLinear()} rRange={[2, 16]} padding={25} height={300}>"
+    },
+    {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
@@ -3996,5 +4024,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:00.836Z"
+  "updatedAt": "2026-04-03T15:31:24.127Z"
 }

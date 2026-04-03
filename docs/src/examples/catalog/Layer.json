@@ -1886,6 +1886,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "interpolating-projections",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "lineNumber": 177,
+      "line": "<Layer>"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -3727,6 +3734,27 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 11,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "variable-width",
+      "component": "Trail",
+      "path": "/docs/components/Trail/variable-width",
+      "lineNumber": 12,
+      "line": "<Layer>"
+    },
+    {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
@@ -3916,5 +3944,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.850Z"
+  "updatedAt": "2026-04-03T15:31:25.004Z"
 }

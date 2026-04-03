@@ -26,9 +26,13 @@ export async function loadExample(
 
 		const { default: comp, ...module } = componentModule as {
 			default: Component;
+			title?: string;
+			description?: string;
 			layers?: string[];
 		};
-		const source = (rawSource.default as string).replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
+		const source = (rawSource.default as string)
+			.replace(/<script\s+module>[\s\S]*?<\/script>\n*/g, '')
+			.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
 
 		return { component: comp, source, module };
 	} catch (e) {

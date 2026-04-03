@@ -12,6 +12,7 @@
 	let {
 		component,
 		example,
+		title,
 		showComponent,
 		variant = 'default',
 		aspect = undefined,
@@ -19,6 +20,7 @@
 	}: {
 		component: string;
 		example: string;
+		title?: string;
 		showComponent?: boolean;
 		variant?: ComponentProps<typeof ImageLink>['variant'];
 		aspect?: ComponentProps<typeof ExampleScreenshot>['aspect'];
@@ -67,6 +69,6 @@
 				class="shrink-0 text-surface-content/50 group-hover:text-primary-content/50"
 			/>
 		{/if}
-		<span class="first-letter:capitalize truncate">{example.replaceAll('-', ' ')}</span>
+		<span class="first-letter:capitalize truncate">{title ?? example.replaceAll('-', ' ')}</span>
 	{/snippet}
 </ImageLink>

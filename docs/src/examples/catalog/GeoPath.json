@@ -145,6 +145,33 @@
       ]
     },
     {
+      "name": "interpolating-projections",
+      "title": "interpolating projections",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 169,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 177,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 178,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/20 fill-none\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 180,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        }
+      ]
+    },
+    {
       "name": "sketchy-globe",
       "title": "sketchy globe",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -836,6 +863,20 @@
       "line": "<GeoPath"
     },
     {
+      "example": "interpolating-projections",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "lineNumber": 178,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/20 fill-none\" />"
+    },
+    {
+      "example": "interpolating-projections",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "lineNumber": 182,
+      "line": "<GeoPath geojson={land} class=\"fill-surface-content/15\" />"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -1382,5 +1423,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.400Z"
+  "updatedAt": "2026-04-03T15:31:24.682Z"
 }

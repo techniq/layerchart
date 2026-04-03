@@ -93,7 +93,7 @@
 
 	<div class="flex items-center gap-4">
 		<h1 class="text-3xl font-bold first-letter:capitalize">
-			{page.params.example?.replaceAll('-', ' ') ?? metadata.name}
+			{pageExample?.module?.title ?? page.params.example?.replaceAll('-', ' ') ?? metadata.name}
 		</h1>
 		<span class="flex items-center gap-1">
 			{#if layers?.length}
@@ -126,6 +126,10 @@
 			</Toggle>
 		</span>
 	</div>
+
+	{#if pageExample?.module?.description}
+		<div class="text-sm text-surface-content/70">{pageExample.module.description}</div>
+	{/if}
 
 	{#if page.params.example == null}
 		<div class="text-sm text-surface-content/70">{metadata.description}</div>

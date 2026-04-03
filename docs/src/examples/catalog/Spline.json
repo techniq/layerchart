@@ -1339,6 +1339,13 @@
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 28,
+      "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
@@ -1346,5 +1353,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:02.594Z"
+  "updatedAt": "2026-04-03T15:31:25.665Z"
 }

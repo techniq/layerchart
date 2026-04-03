@@ -23,8 +23,10 @@ export interface ComponentUsageInExample {
 export interface ExampleInfo {
 	/** The name of the example (filename without .svelte extension) */
 	name: string;
-	/** Human-readable title (name with hyphens replaced by spaces) */
+	/** Human-readable title (from <script module> export or name with hyphens replaced by spaces) */
 	title: string;
+	/** Optional description (from <script module> export) */
+	description?: string;
 	/** The URL path to view the example */
 	path: string;
 	/** All components used in this example */

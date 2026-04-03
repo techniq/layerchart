@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-02T19:15:59.235Z",
-  "totalComponents": 70,
-  "totalExamples": 850,
+  "generatedAt": "2026-04-03T15:31:23.019Z",
+  "totalComponents": 71,
+  "totalExamples": 854,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1144,7 +1144,7 @@
         {
           "name": "pan-zoom-band",
           "path": "/example/BarChart/pan-zoom-band",
-          "checksum": "67a69dbd3d222a973467f6be6fa9aaa9"
+          "checksum": "0dc013ca70bf8642e588bbd59b6dbb9a"
         },
         {
           "name": "pan-zoom-domain-extent",
@@ -2345,6 +2345,11 @@
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
           "checksum": "9cee4dcad5917eb458ee896576e567c5"
+        },
+        {
+          "name": "interpolating-projections",
+          "path": "/example/GeoPath/interpolating-projections",
+          "checksum": "996aa787aae79348520344cc46071300"
         },
         {
           "name": "sketchy-globe",
@@ -4445,6 +4450,26 @@
           "name": "stacked-area",
           "path": "/example/Tooltip/stacked-area",
           "checksum": "c815802a4a7301665006270328ac7804"
+        }
+      ]
+    },
+    {
+      "component": "Trail",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/Trail/basic",
+          "checksum": "f53be229e5c2be05e2da11e0c46ac582"
+        },
+        {
+          "name": "tdf-stage",
+          "path": "/example/Trail/tdf-stage",
+          "checksum": "e2e7a0d9c12da5e891575080c5c350b0"
+        },
+        {
+          "name": "variable-width",
+          "path": "/example/Trail/variable-width",
+          "checksum": "9298e3fbd50ef0c7ff11917421a4c0d3"
         }
       ]
     },

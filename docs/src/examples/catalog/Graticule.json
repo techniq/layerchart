@@ -71,6 +71,13 @@
       "line": "<Graticule class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "interpolating-projections",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/interpolating-projections",
+      "lineNumber": 180,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -176,5 +183,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.558Z"
+  "updatedAt": "2026-04-03T15:31:24.827Z"
 }

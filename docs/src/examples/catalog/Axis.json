@@ -4938,6 +4938,48 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"left\" grid label=\"Latitude\" />"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"bottom\" label=\"Longitude\" />"
+    },
+    {
+      "example": "variable-width",
+      "component": "Trail",
+      "path": "/docs/components/Trail/variable-width",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "variable-width",
+      "component": "Trail",
+      "path": "/docs/components/Trail/variable-width",
+      "lineNumber": 14,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
@@ -5057,5 +5099,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:00.334Z"
+  "updatedAt": "2026-04-03T15:31:23.718Z"
 }
