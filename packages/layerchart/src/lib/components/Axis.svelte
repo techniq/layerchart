@@ -150,11 +150,7 @@
     rule = false,
     grid = false,
     ticks,
-    tickSpacing = ['top', 'bottom', 'angle'].includes(placement)
-      ? 80
-      : ['left', 'right', 'radius'].includes(placement)
-        ? 50
-        : undefined,
+    tickSpacing: tickSpacingProp,
     tickMultiline = false,
     tickLength = 4,
     tickMarks = true,
@@ -184,6 +180,18 @@
 
   const scale = $derived(
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
+  );
+
+  const tickSpacing = $derived(
+    tickSpacingProp !== undefined
+      ? tickSpacingProp
+      : isScaleBand(scale)
+        ? null
+        : ['top', 'bottom', 'angle'].includes(placement)
+          ? 80
+          : ['left', 'right', 'radius'].includes(placement)
+            ? 50
+            : undefined
   );
   const interval = $derived(
     ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval

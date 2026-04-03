@@ -12,5 +12,8 @@
 	y="value"
 	clip
 	transform={{ mode: 'domain', axis: 'x', scaleExtent: [1, 10] }}
+	props={{
+		xAxis: { tickSpacing: 25 }
+	}}
 	height={300}
 />
