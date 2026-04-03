@@ -141,6 +141,8 @@ export { default as Svg } from './layers/Svg.svelte';
 export * from './layers/Svg.svelte';
 export { default as Text } from './Text.svelte';
 export * from './Text.svelte';
+export { default as Trail } from './Trail.svelte';
+export * from './Trail.svelte';
 export { default as Threshold } from './Threshold.svelte';
 export * from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';

@@ -1,0 +1,116 @@
+{
+  "component": "Trail",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Trail/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 12,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 14,
+          "line": "<Trail r={6} class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "tdf-stage",
+      "title": "Tour de France Stage Profile",
+      "path": "/docs/components/Trail/tdf-stage",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 25,
+          "line": "<Axis placement=\"left\" grid label=\"Latitude\" />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 27,
+          "line": "<Trail r=\"elev\" class=\"fill-danger/40\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 28,
+          "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
+        }
+      ],
+      "description": "Elevation profile of a Tour de France stage using trail width to encode elevation."
+    },
+    {
+      "name": "variable-width",
+      "title": "variable width",
+      "path": "/docs/components/Trail/variable-width",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice r=\"value\" rScale={scaleLinear()} rRange={[2, 16]} padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 12,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 13,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 15,
+          "line": "<Trail r=\"value\" class=\"fill-primary\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 14,
+      "line": "<Trail r={6} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 27,
+      "line": "<Trail r=\"elev\" class=\"fill-danger/40\" />"
+    },
+    {
+      "example": "variable-width",
+      "component": "Trail",
+      "path": "/docs/components/Trail/variable-width",
+      "lineNumber": 15,
+      "line": "<Trail r=\"value\" class=\"fill-primary\" />"
+    }
+  ],
+  "updatedAt": "2026-04-03T15:31:25.944Z"
+}
