@@ -1,5 +1,17 @@
 # LayerChart
 
+## 2.0.0-next.50
+
+### Minor Changes
+
+- feat: New Trail component for variable-width lines ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Axis): Default `tickSpacing` to `null` for categorical band scales, showing all ticks by default instead of reducing them. Use `tickSpacing={80}` to opt-in to tick reducing on categorical band scale axes. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- fix(Spline): Make motion prop reactive so toggling between tween/none updates without remount ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.49
 
 ### Minor Changes
