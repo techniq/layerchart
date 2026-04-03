@@ -3737,7 +3737,21 @@
       "example": "basic",
       "component": "Trail",
       "path": "/docs/components/Trail/basic",
-      "lineNumber": 11,
+      "lineNumber": 22,
+      "line": "<Layer>"
+    },
+    {
+      "example": "curves",
+      "component": "Trail",
+      "path": "/docs/components/Trail/curves",
+      "lineNumber": 55,
+      "line": "<Layer>"
+    },
+    {
+      "example": "playground",
+      "component": "Trail",
+      "path": "/docs/components/Trail/playground",
+      "lineNumber": 46,
       "line": "<Layer>"
     },
     {
@@ -3745,13 +3759,6 @@
       "component": "Trail",
       "path": "/docs/components/Trail/tdf-stage",
       "lineNumber": 24,
-      "line": "<Layer>"
-    },
-    {
-      "example": "variable-width",
-      "component": "Trail",
-      "path": "/docs/components/Trail/variable-width",
-      "lineNumber": 12,
       "line": "<Layer>"
     },
     {
@@ -3944,5 +3951,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-03T15:31:25.004Z"
+  "updatedAt": "2026-04-03T20:08:35.569Z"
 }

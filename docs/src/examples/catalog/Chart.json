@@ -3832,7 +3832,21 @@
       "component": "Trail",
       "path": "/docs/components/Trail/basic",
       "lineNumber": 10,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice padding={25} height={300}>"
+      "line": "<Chart"
+    },
+    {
+      "example": "curves",
+      "component": "Trail",
+      "path": "/docs/components/Trail/curves",
+      "lineNumber": 45,
+      "line": "<Chart"
+    },
+    {
+      "example": "playground",
+      "component": "Trail",
+      "path": "/docs/components/Trail/playground",
+      "lineNumber": 35,
+      "line": "<Chart"
     },
     {
       "example": "tdf-stage",
@@ -3840,13 +3854,6 @@
       "path": "/docs/components/Trail/tdf-stage",
       "lineNumber": 15,
       "line": "<Chart"
-    },
-    {
-      "example": "variable-width",
-      "component": "Trail",
-      "path": "/docs/components/Trail/variable-width",
-      "lineNumber": 11,
-      "line": "<Chart {data} x=\"date\" y=\"value\" yDomain={[0, null]} yNice r=\"value\" rScale={scaleLinear()} rRange={[2, 16]} padding={25} height={300}>"
     },
     {
       "example": "pan-zoom-axes",
@@ -4024,5 +4031,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-03T15:31:24.127Z"
+  "updatedAt": "2026-04-03T20:08:34.621Z"
 }

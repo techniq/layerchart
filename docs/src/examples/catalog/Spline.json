@@ -1339,6 +1339,20 @@
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
+      "example": "curves",
+      "component": "Trail",
+      "path": "/docs/components/Trail/curves",
+      "lineNumber": 57,
+      "line": "<Spline curve={curve.value} class=\"stroke-surface-content/40 stroke-1\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Trail",
+      "path": "/docs/components/Trail/playground",
+      "lineNumber": 52,
+      "line": "<Spline"
+    },
+    {
       "example": "tdf-stage",
       "component": "Trail",
       "path": "/docs/components/Trail/tdf-stage",
@@ -1353,5 +1367,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-03T15:31:25.665Z"
+  "updatedAt": "2026-04-03T20:08:36.374Z"
 }

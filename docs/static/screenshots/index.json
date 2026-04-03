@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-03T15:31:23.019Z",
+  "generatedAt": "2026-04-03T20:08:32.870Z",
   "totalComponents": 71,
-  "totalExamples": 854,
+  "totalExamples": 855,
   "components": [
     {
       "component": "AnnotationLine",
@@ -4459,17 +4459,22 @@
         {
           "name": "basic",
           "path": "/example/Trail/basic",
-          "checksum": "f53be229e5c2be05e2da11e0c46ac582"
+          "checksum": "9528f390b710bf46b624a8d03aa6b5c9"
+        },
+        {
+          "name": "curves",
+          "path": "/example/Trail/curves",
+          "checksum": "a2d4e77750999e1e6eac316e77b7b110"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Trail/playground",
+          "checksum": "795034ba16e831675a17c1acac471016"
         },
         {
           "name": "tdf-stage",
           "path": "/example/Trail/tdf-stage",
-          "checksum": "e2e7a0d9c12da5e891575080c5c350b0"
-        },
-        {
-          "name": "variable-width",
-          "path": "/example/Trail/variable-width",
-          "checksum": "9298e3fbd50ef0c7ff11917421a4c0d3"
+          "checksum": "6e82c8144a23ae6b30ba55367d046426"
         }
       ]
     },
