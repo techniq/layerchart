@@ -182,19 +182,25 @@
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
   );
 
+  const interval = $derived(
+    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
+
+  const defaultTickSpacing = $derived(
+    ['top', 'bottom', 'angle'].includes(placement)
+      ? 80
+      : ['left', 'right', 'radius'].includes(placement)
+        ? 50
+        : undefined
+  );
+
+  // Disable tick thinning for categorical band scales (no interval), but keep spacing for date-based band scales
   const tickSpacing = $derived(
     tickSpacingProp !== undefined
       ? tickSpacingProp
-      : isScaleBand(scale)
+      : isScaleBand(scale) && interval == null
         ? null
-        : ['top', 'bottom', 'angle'].includes(placement)
-          ? 80
-          : ['left', 'right', 'radius'].includes(placement)
-            ? 50
-            : undefined
-  );
-  const interval = $derived(
-    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+        : defaultTickSpacing
   );
 
   // Default format to 'percentRound' for stackExpand layout considering axis direction
@@ -239,11 +245,21 @@
     return ctxSize;
   });
 
+  // Count used for tick thinning (null tickSpacing disables thinning)
   const tickCount = $derived(
     typeof ticks === 'number'
       ? ticks
       : tickSpacing && effectiveSize
         ? Math.round(effectiveSize / tickSpacing)
+        : undefined
+  );
+
+  // Count used for formatting (always based on default spacing so time formatting works)
+  const formatCount = $derived(
+    typeof ticks === 'number'
+      ? ticks
+      : defaultTickSpacing && effectiveSize
+        ? Math.round(effectiveSize / defaultTickSpacing)
         : undefined
   );
   const tickVals = $derived.by(() => {
@@ -288,7 +304,7 @@
     autoTickFormat({
       scale,
       ticks,
-      count: tickCount,
+      count: formatCount,
       formatType: resolvedFormat,
       multiline: tickMultiline,
       placement,
