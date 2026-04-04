@@ -171,10 +171,11 @@ function render(
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   let resolvedStyles: StyleOptions;
   if (
-    styleOptions.classes == null &&
-    !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var('))
+    typeof document === 'undefined' ||
+    (styleOptions.classes == null &&
+      !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var(')))
   ) {
-    // Skip resolving styles if no classes are provided and no styles are using CSS variables
+    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles are using CSS variables
     resolvedStyles = mergedStyles;
   } else {
     // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
@@ -248,8 +249,8 @@ function render(
     if (attr === 'fill') {
       const fill =
         styleOptions.styles?.fill &&
-        ((styleOptions.styles?.fill as any) instanceof CanvasGradient ||
-          (styleOptions.styles?.fill as any) instanceof CanvasPattern ||
+        ((typeof CanvasGradient !== 'undefined' && (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
+          (typeof CanvasPattern !== 'undefined' && (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
@@ -270,7 +271,7 @@ function render(
     } else if (attr === 'stroke') {
       const stroke =
         styleOptions.styles?.stroke &&
-        ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
+        ((typeof CanvasGradient !== 'undefined' && (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
           : resolvedStyles?.stroke;
@@ -469,7 +470,7 @@ export function clearCanvasContext(
   @see: https://web.dev/articles/canvas-hidipi
 */
 export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height: number) {
-  const devicePixelRatio = window.devicePixelRatio || 1;
+  const devicePixelRatio = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
 
   ctx.canvas.width = width * devicePixelRatio;
   ctx.canvas.height = height * devicePixelRatio;
@@ -483,7 +484,7 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
 
 /** Get pixel color (r,g,b,a) at canvas coordinates */
 export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
-  const dpr = window.devicePixelRatio ?? 1;
+  const dpr = (typeof window !== 'undefined' ? window.devicePixelRatio : null) ?? 1;
   const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
   const [r, g, b, a] = imageData.data;
   return { r, g, b, a };

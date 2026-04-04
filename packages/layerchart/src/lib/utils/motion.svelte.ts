@@ -161,6 +161,20 @@ function setupTracking<T>(
 ) {
   if (options.controlled) return;
 
+  // On the server (SSR), $effect won't run, so eagerly set the target value
+  // to ensure render closures capture the actual computed state (not the initial/baseline value).
+  if (typeof window === 'undefined') {
+    try {
+      const value = getValue();
+      if (value != null) {
+        motion.set(value, { instant: true });
+      }
+    } catch {
+      // getValue() may fail if reactive dependencies aren't ready yet; ignore
+    }
+    return;
+  }
+
   $effect(() => {
     const value = getValue();
     if (value == null) return;

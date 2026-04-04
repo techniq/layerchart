@@ -2,6 +2,7 @@ import { Context } from 'runed';
 import type { MouseEventHandler, PointerEventHandler, TouchEventHandler } from 'svelte/elements';
 
 import type { ComputedStylesOptions } from '$lib/utils/canvas.js';
+import type { ComponentNode } from '$lib/states/chart.svelte.js';
 
 export type ComponentRender<T extends Element = Element> = {
   render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
@@ -30,6 +31,8 @@ export type CanvasContextValue = {
    */
   register<T extends Element>(component: ComponentRender<T>): () => void;
   invalidate(): void;
+  /** Get the root ComponentNode of the canvas render tree. Used for server-side rendering. */
+  getRootNode?: () => ComponentNode;
 };
 
 const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
