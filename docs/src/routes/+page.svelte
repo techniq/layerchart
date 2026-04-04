@@ -60,6 +60,8 @@
 			example: 'compound-separate-scales-with-stacked-charts-and-overridden-marks'
 		},
 		{ component: 'LineChart', example: 'gradient-encoding' },
+		{ component: 'Trail', example: 'tdf-stage' },
+		{ component: 'Spline', example: 'stroke-grouping' },
 		{ component: 'LineChart', example: 'bump-state-population-ranks' },
 		{ component: 'LineChart', example: 'large-radial-series' },
 		{ component: 'LineChart', example: 'large-series' },
