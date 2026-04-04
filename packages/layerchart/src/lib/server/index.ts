@@ -1,3 +1,5 @@
+import { render } from 'svelte/server';
+import type { Component } from 'svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 import type { ComponentNode } from '$lib/states/chart.svelte.js';
 import type { CaptureTarget } from './captureStore.js';
@@ -29,10 +31,6 @@ export type CanvasFactory = (
 };
 
 export type RenderOptions = {
-  /** Width of the output image in pixels. */
-  width: number;
-  /** Height of the output image in pixels. */
-  height: number;
   /** Pixel ratio for high-DPI output. @default 1 */
   devicePixelRatio?: number;
   /** Output format. @default 'png' */
@@ -51,9 +49,18 @@ export type RenderOptions = {
   createCanvas: CanvasFactory;
 };
 
+export type RenderChartOptions = RenderOptions & {
+  /** Width of the output image in pixels. */
+  width: number;
+  /** Height of the output image in pixels. */
+  height: number;
+  /** Additional props to pass to the chart component. */
+  props?: Record<string, any>;
+};
+
 /**
  * Create a capture callback for use with `render()` from `svelte/server`.
- * Pass the returned `onCapture` as the `_onCapture` prop to your chart component.
+ * Pass the returned `onCapture` as the `onCapture` prop to your chart component.
  * After `render()` completes, call `getCapture()` to retrieve the chart state and
  * component tree.
  *
@@ -64,7 +71,7 @@ export type RenderOptions = {
  * import MyChart from './MyChart.svelte';
  *
  * const { onCapture, getCapture } = createCaptureCallback();
- * const rendered = render(MyChart, { props: { data, width: 800, height: 400, _onCapture: onCapture } });
+ * const rendered = render(MyChart, { props: { data, width: 800, height: 400, onCapture } });
  * rendered.body; // Force the SSR render to fully flush before reading capture state
  * const capture = getCapture();
  * ```
@@ -80,9 +87,67 @@ export function createCaptureCallback() {
 }
 
 /**
+ * Render a chart component to an image buffer in a single call.
+ *
+ * This is a convenience function that handles SSR rendering, capture, and
+ * canvas rendering in one step. The component should use `<ServerChart>`
+ * internally and accept `width`, `height`, and `capture` props.
+ *
+ * @example
+ * ```ts
+ * import { createCanvas, Path2D } from '\@napi-rs/canvas';
+ * import { renderChart } from 'layerchart/server';
+ * import MyChart from './MyChart.svelte';
+ *
+ * // Register Path2D globally for canvas rendering
+ * if (typeof globalThis.Path2D === 'undefined') (globalThis as any).Path2D = Path2D;
+ *
+ * const buffer = renderChart(MyChart, {
+ *   width: 800,
+ *   height: 400,
+ *   props: { data: myData },
+ *   createCanvas: (w, h) => createCanvas(w, h),
+ * });
+ *
+ * // Use as a Response in a SvelteKit endpoint
+ * return new Response(buffer, {
+ *   headers: { 'Content-Type': 'image/png' }
+ * });
+ * ```
+ */
+export function renderChart(
+  component: Component<any>,
+  options: RenderChartOptions
+): Buffer | Uint8Array {
+  const { width, height, props = {}, ...renderOptions } = options;
+  const captureTarget: CaptureTarget = {};
+
+  // SSR render to build the component tree and capture chart state
+  const rendered = render(component, {
+    props: { ...props, width, height, capture: captureTarget }
+  });
+  // Force the SSR render to fully flush
+  void rendered.body;
+
+  if (!captureTarget.chartState || !captureTarget.rootNode) {
+    throw new Error(
+      'Failed to capture chart state. Ensure the component uses <ServerChart> with a `capture` prop.'
+    );
+  }
+
+  return renderCapturedChart(captureTarget as CapturedChart, {
+    width,
+    height,
+    ...renderOptions,
+  });
+}
+
+/**
  * Render a captured chart component tree to an image buffer.
  * Call this after `render()` from `svelte/server` has been used to build
  * the component tree with a capture callback.
+ *
+ * For most use cases, prefer {@link renderChart} which handles the full pipeline.
  *
  * @example
  * ```ts
@@ -96,7 +161,7 @@ export function createCaptureCallback() {
  *
  * // Build component tree via SSR render
  * const { onCapture, getCapture } = createCaptureCallback();
- * const rendered = render(MyChart, { props: { data, width: 800, height: 400, _onCapture: onCapture } });
+ * const rendered = render(MyChart, { props: { data, width: 800, height: 400, onCapture } });
  * rendered.body; // Force the SSR render to fully flush before reading capture state
  *
  * // Render to image
@@ -109,7 +174,7 @@ export function createCaptureCallback() {
  */
 export function renderCapturedChart(
   capture: CapturedChart,
-  options: RenderOptions
+  options: RenderOptions & { width: number; height: number }
 ): Buffer | Uint8Array {
   const {
     width,
