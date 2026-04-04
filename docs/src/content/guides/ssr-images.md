@@ -129,6 +129,7 @@ const buffer = renderChart(MyChart, {
   format: 'png',         // 'png' | 'jpeg'
   quality: 0.92,         // JPEG quality (0-1)
   devicePixelRatio: 2,   // High-DPI output
+  background: 'white',   // Background color (transparent by default)
 });
 ```
 
@@ -141,6 +142,7 @@ const buffer = renderChart(MyChart, {
 | `format` | `'png' \| 'jpeg'` | `'png'` | Output format |
 | `quality` | `number` | `0.92` | JPEG quality |
 | `devicePixelRatio` | `number` | `1` | Pixel ratio for high-DPI |
+| `background` | `string` | — | Background fill color. Omit for transparent PNG. Recommended for JPEG. |
 
 ### `renderCapturedChart(capture, options)`
 
@@ -194,6 +196,21 @@ Since `Grid` and `Axis` are SVG-only, you can draw grid lines using `Line` which
   />
 {/each}
 ```
+
+### Transparency and background
+
+PNG output is transparent by default. To add a solid background, use the `background` option:
+
+```ts
+const buffer = renderChart(MyChart, {
+  width: 800,
+  height: 400,
+  background: 'white',
+  // ...
+});
+```
+
+JPEG does not support transparency and will render a black background unless you set `background`. Always set a background when using JPEG format.
 
 ### High-DPI images
 

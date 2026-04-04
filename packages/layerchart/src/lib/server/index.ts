@@ -38,6 +38,13 @@ export type RenderOptions = {
   /** JPEG quality (0-1). Only used when format is 'jpeg'. @default 0.92 */
   quality?: number;
   /**
+   * Background color to fill before rendering the chart.
+   * When omitted, PNG output is transparent.
+   * Set to `'white'` (or any CSS color) for an opaque background —
+   * recommended for JPEG which does not support transparency.
+   */
+  background?: string;
+  /**
    * Canvas factory function.
    *
    * Example with \@napi-rs/canvas:
@@ -182,6 +189,7 @@ export function renderCapturedChart(
     devicePixelRatio = 1,
     format = 'png',
     quality = 0.92,
+    background,
     createCanvas,
   } = options;
 
@@ -190,6 +198,12 @@ export function renderCapturedChart(
   const canvasHeight = Math.round(height * devicePixelRatio);
   const canvas = createCanvas(canvasWidth, canvasHeight);
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+  // Fill background (canvas is transparent by default)
+  if (background) {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  }
 
   // Apply DPI scaling
   if (devicePixelRatio !== 1) {

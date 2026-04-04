@@ -21,11 +21,13 @@ export function renderChartResponse({ component, props, url }: RenderChartRespon
 	const width = Number(url.searchParams.get('width') ?? 800);
 	const height = Number(url.searchParams.get('height') ?? 400);
 	const format = url.searchParams.get('format') === 'jpeg' ? 'jpeg' : 'png';
+	const background = url.searchParams.get('background') ?? undefined;
 
 	const buffer = renderChart(component, {
 		width,
 		height,
 		format,
+		background,
 		props,
 		createCanvas: createNodeCanvas
 	});
