@@ -29,42 +29,45 @@ Create a Svelte component using `<ServerChart>` instead of `<Chart>`:
 ```svelte
 <!-- src/lib/charts/MyLineChart.svelte -->
 <script lang="ts">
-  import { ServerChart } from 'layerchart/server';
-  import type { CaptureTarget } from 'layerchart/server';
-  import { Area, Spline } from 'layerchart';
+	import { ServerChart } from 'layerchart/server';
+	import type { CaptureTarget } from 'layerchart/server';
+	import { Axis, Grid, Spline } from 'layerchart';
 
-  let {
-    data,
-    width,
-    height,
-    capture,
-    onCapture
-  }: {
-    data: { date: number; value: number }[];
-    width: number;
-    height: number;
-    capture?: CaptureTarget;
-    onCapture?: (data: CaptureTarget) => void;
-  } = $props();
+	let {
+		data,
+		width,
+		height,
+		capture,
+		onCapture
+	}: {
+		data: { date: number; value: number }[];
+		width: number;
+		height: number;
+		capture?: CaptureTarget;
+		onCapture?: (data: CaptureTarget) => void;
+	} = $props();
 </script>
 
 <ServerChart
-  {capture}
-  {onCapture}
-  {width}
-  {height}
-  {data}
-  x="date"
-  y="value"
-  yDomain={[0, null]}
-  padding={{ top: 20, right: 20, bottom: 24, left: 24 }}
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	x="date"
+	y="value"
+	yDomain={[0, null]}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
 >
-  <Area fill="rgba(59, 130, 246, 0.15)" stroke="none" />
-  <Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />
 </ServerChart>
 ```
 
 The key props are:
+
 - **`capture`** — An object that `ServerChart` populates with the chart state and component tree during SSR
 - **`width` / `height`** — The output image dimensions in pixels
 
@@ -79,34 +82,35 @@ import MyLineChart from '$lib/charts/MyLineChart.svelte';
 
 // Register Path2D globally (required once)
 if (typeof globalThis.Path2D === 'undefined') {
-  (globalThis as any).Path2D = Path2D;
+	(globalThis as any).Path2D = Path2D;
 }
 
 const data = Array.from({ length: 50 }, (_, i) => ({
-  date: i,
-  value: 50 + 30 * Math.sin(i / 5)
+	date: i,
+	value: 50 + 30 * Math.sin(i / 5)
 }));
 
 export const GET: RequestHandler = async ({ url }) => {
-  const width = Number(url.searchParams.get('width') ?? 800);
-  const height = Number(url.searchParams.get('height') ?? 400);
-  const format = url.searchParams.get('format') === 'jpeg' ? 'jpeg' : 'png';
+	const width = Number(url.searchParams.get('width') ?? 800);
+	const height = Number(url.searchParams.get('height') ?? 400);
+	const format = url.searchParams.get('format') === 'jpeg' ? 'jpeg' : 'png';
 
-  const buffer = renderChart(MyLineChart, {
-    width,
-    height,
-    format,
-    props: { data },
-    createCanvas: (w, h) => createCanvas(w, h) as any,
-  });
+	const buffer = renderChart(MyLineChart, {
+		width,
+		height,
+		format,
+		props: { data },
+		createCanvas: (w, h) => createCanvas(w, h) as any
+	});
 
-  return new Response(buffer, {
-    headers: { 'Content-Type': `image/${format}` }
-  });
+	return new Response(buffer, {
+		headers: { 'Content-Type': `image/${format}` }
+	});
 };
 ```
 
 The chart image is now available at `/api/chart` and supports query params:
+
 - `/api/chart` — 800x400 PNG (defaults)
 - `/api/chart?width=1200&height=600` — custom size
 - `/api/chart?format=jpeg` — JPEG output
@@ -121,28 +125,28 @@ The simplest way to render a chart to an image buffer. Handles SSR render, captu
 import { renderChart } from 'layerchart/server';
 
 const buffer = renderChart(MyChart, {
-  width: 800,
-  height: 400,
-  props: { data: myData },
-  createCanvas: (w, h) => createCanvas(w, h),
-  // Optional:
-  format: 'png',         // 'png' | 'jpeg'
-  quality: 0.92,         // JPEG quality (0-1)
-  devicePixelRatio: 2,   // High-DPI output
-  background: 'white',   // Background color (transparent by default)
+	width: 800,
+	height: 400,
+	props: { data: myData },
+	createCanvas: (w, h) => createCanvas(w, h),
+	// Optional:
+	format: 'png', // 'png' | 'jpeg'
+	quality: 0.92, // JPEG quality (0-1)
+	devicePixelRatio: 2, // High-DPI output
+	background: 'white' // Background color (transparent by default)
 });
 ```
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `width` | `number` | — | Image width in pixels |
-| `height` | `number` | — | Image height in pixels |
-| `props` | `Record<string, any>` | `{}` | Additional props passed to the chart component |
-| `createCanvas` | `(w, h) => Canvas` | — | Canvas factory (e.g. from `@napi-rs/canvas`) |
-| `format` | `'png' \| 'jpeg'` | `'png'` | Output format |
-| `quality` | `number` | `0.92` | JPEG quality |
-| `devicePixelRatio` | `number` | `1` | Pixel ratio for high-DPI |
-| `background` | `string` | — | Background fill color. Omit for transparent PNG. Recommended for JPEG. |
+| Option             | Type                  | Default | Description                                                            |
+| ------------------ | --------------------- | ------- | ---------------------------------------------------------------------- |
+| `width`            | `number`              | —       | Image width in pixels                                                  |
+| `height`           | `number`              | —       | Image height in pixels                                                 |
+| `props`            | `Record<string, any>` | `{}`    | Additional props passed to the chart component                         |
+| `createCanvas`     | `(w, h) => Canvas`    | —       | Canvas factory (e.g. from `@napi-rs/canvas`)                           |
+| `format`           | `'png' \| 'jpeg'`     | `'png'` | Output format                                                          |
+| `quality`          | `number`              | `0.92`  | JPEG quality                                                           |
+| `devicePixelRatio` | `number`              | `1`     | Pixel ratio for high-DPI                                               |
+| `background`       | `string`              | —       | Background fill color. Omit for transparent PNG. Recommended for JPEG. |
 
 ### `renderCapturedChart(capture, options)`
 
@@ -152,50 +156,155 @@ Lower-level function for advanced use cases where you need control over the SSR 
 
 A wrapper component around `<Chart>` + `<Canvas>` designed for server rendering. Accepts all `<Chart>` props plus:
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `capture` | `CaptureTarget` | Object populated with chart state during SSR |
-| `onCapture` | `(data) => void` | Callback alternative to the `capture` prop |
+| Prop        | Type             | Description                                  |
+| ----------- | ---------------- | -------------------------------------------- |
+| `capture`   | `CaptureTarget`  | Object populated with chart state during SSR |
+| `onCapture` | `(data) => void` | Callback alternative to the `capture` prop   |
+
+## Examples
+
+These examples are rendered live from the API endpoints in this project.
+
+### Line chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	x="date"
+	y="value"
+	yDomain={[0, null]}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
+>
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/line?background=white" />
+```
+
+![Line chart](/api/charts/line?background=white)
+
+### Bar chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	x="category"
+	xScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
+	y="value"
+	yDomain={[0, null]}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
+>
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Bars fill="rgb(59, 130, 246)" radius={4} />
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/bar?background=white" />
+```
+
+![Bar chart](/api/charts/bar?background=white)
+
+### Area chart (multi-series)
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	x="date"
+	y="value"
+	yDomain={[0, null]}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
+>
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Area y1="value2" fill="rgba(249, 115, 22, 0.15)" stroke="none" />
+	<Spline y="value2" stroke="rgb(249, 115, 22)" strokeWidth={2} />
+	<Area fill="rgba(59, 130, 246, 0.15)" stroke="none" />
+	<Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/area?background=white" />
+```
+
+![Area chart](/api/charts/area?background=white)
+
+### Scatter chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	x="x"
+	y="y"
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
+>
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Points fill="rgba(59, 130, 246, 0.6)" stroke="rgb(59, 130, 246)" strokeWidth={1} r={5} />
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/scatter?background=white" />
+```
+
+![Scatter chart](/api/charts/scatter?background=white)
 
 ## Supported components
 
 Server-side rendering works with components that have **canvas rendering support**. Most primitive and data mark components work:
 
-| Works | Component |
-|-------|-----------|
-| Yes | `Spline`, `Area`, `Line`, `Path`, `Rect`, `Circle`, `Ellipse`, `Polygon` |
-| Yes | `Bars`, `Points`, `Group`, `Text`* |
-| Yes | `LinearGradient`, `RadialGradient`, `Pattern`, `ClipPath` |
-| Yes | `GeoPath` (via `Path` canvas render) |
-| No | `Axis`, `Grid`, `Rule` (SVG-only) |
-| No | `Tooltip`, `Legend`, `Highlight` (interactive/DOM) |
+| Works | Component                                                                |
+| ----- | ------------------------------------------------------------------------ |
+| Yes   | `Spline`, `Area`, `Line`, `Path`, `Rect`, `Circle`, `Ellipse`, `Polygon` |
+| Yes   | `Bars`, `Points`, `Group`, `Text`                                        |
+| Yes   | `Axis`, `Grid`, `Rule`                                                   |
+| Yes   | `LinearGradient`, `RadialGradient`, `Pattern`, `ClipPath`                |
+| Yes   | `GeoPath` (via `Path` canvas render)                                     |
+| No    | `Tooltip`, `Legend`, `Highlight` (interactive/DOM)                       |
 
-\* `Text` requires DOM for font resolution via `getComputedStyles`. When rendering server-side, text will use fallback font metrics. For reliable text, set explicit font styles.
+> **Note:** CSS classes and Tailwind utilities don't apply on the server. Pass explicit `stroke` and `fill` props to `Axis`, `Grid`, and other components for control over colors.
 
 ## Tips
 
-### Grid lines without `Grid`
+### Styling Axis and Grid
 
-Since `Grid` and `Axis` are SVG-only, you can draw grid lines using `Line` which has canvas support:
+Since CSS variables don't resolve on the server, `Axis` and `Grid` accept `stroke` and `fill` props that pass through to their child Lines and Text:
 
 ```svelte
-<script lang="ts">
-  import { getChartContext, isScaleBand, Line } from 'layerchart';
-  const ctx = getChartContext();
-  const ticks = $derived(ctx.yScale.ticks?.(5) ?? []);
-</script>
-
-{#each ticks as tick}
-  <Line
-    x1={0}
-    y1={ctx.yScale(tick)}
-    x2={ctx.width}
-    y2={ctx.yScale(tick)}
-    stroke="rgba(0,0,0,0.08)"
-    strokeWidth={1}
-  />
-{/each}
+<Grid y stroke="rgba(0,0,0,0.1)" />
+<Axis placement="bottom" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+<Axis placement="left" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
 ```
+
+- **`stroke`** — applied to grid lines, axis rule, tick marks, and tick label stroke
+- **`fill`** — applied to tick labels and axis label text fill
 
 ### Transparency and background
 
@@ -203,10 +312,10 @@ PNG output is transparent by default. To add a solid background, use the `backgr
 
 ```ts
 const buffer = renderChart(MyChart, {
-  width: 800,
-  height: 400,
-  background: 'white',
-  // ...
+	width: 800,
+	height: 400,
+	background: 'white'
+	// ...
 });
 ```
 
@@ -218,10 +327,10 @@ Pass `devicePixelRatio: 2` for retina-quality output (doubles the canvas resolut
 
 ```ts
 const buffer = renderChart(MyChart, {
-  width: 800,
-  height: 400,
-  devicePixelRatio: 2,
-  // ...
+	width: 800,
+	height: 400,
+	devicePixelRatio: 2
+	// ...
 });
 ```
 

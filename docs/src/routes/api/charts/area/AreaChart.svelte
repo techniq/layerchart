@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Area, Spline } from 'layerchart';
-	import CanvasGrid from '../CanvasGrid.svelte';
+	import { Area, Axis, Grid, Spline } from 'layerchart';
 
 	let {
 		data,
@@ -28,10 +27,12 @@
 	x="date"
 	y="value"
 	yDomain={[0, null]}
-	padding={{ top: 20, right: 20, bottom: 24, left: 24 }}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
 >
-	<CanvasGrid yTicks={5} xTicks={6} />
-	<Area y="value2" fill="rgba(249, 115, 22, 0.15)" stroke="none" />
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Area y1="value2" fill="rgba(249, 115, 22, 0.15)" stroke="none" />
 	<Spline y="value2" stroke="rgb(249, 115, 22)" strokeWidth={2} />
 	<Area fill="rgba(59, 130, 246, 0.15)" stroke="none" />
 	<Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />

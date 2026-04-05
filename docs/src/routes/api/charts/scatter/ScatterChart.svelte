@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Points } from 'layerchart';
-	import CanvasGrid from '../CanvasGrid.svelte';
+	import { Axis, Grid, Points } from 'layerchart';
 
 	let {
 		data,
@@ -27,8 +26,10 @@
 	{data}
 	x="x"
 	y="y"
-	padding={{ top: 20, right: 20, bottom: 24, left: 24 }}
+	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
 >
-	<CanvasGrid yTicks={5} xTicks={5} />
+	<Grid y stroke="rgba(0,0,0,0.1)" />
+	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Axis placement="left" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
 	<Points fill="rgba(59, 130, 246, 0.6)" stroke="rgb(59, 130, 246)" strokeWidth={1} r={5} />
 </ServerChart>

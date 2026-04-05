@@ -17,7 +17,11 @@ type RenderChartResponseOptions = {
 	url: URL;
 };
 
-export function renderChartResponse({ component, props, url }: RenderChartResponseOptions): Response {
+export function renderChartResponse({
+	component,
+	props,
+	url
+}: RenderChartResponseOptions): Response {
 	const width = Number(url.searchParams.get('width') ?? 800);
 	const height = Number(url.searchParams.get('height') ?? 400);
 	const format = url.searchParams.get('format') === 'jpeg' ? 'jpeg' : 'png';

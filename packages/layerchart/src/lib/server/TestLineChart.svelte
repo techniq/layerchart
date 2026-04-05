@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { ServerChart } from 'layerchart/server';
-	import type { CaptureTarget } from 'layerchart/server';
-	import { Axis, Grid, Spline } from 'layerchart';
+	import ServerChart from './ServerChart.svelte';
+	import type { CaptureTarget } from './captureStore.js';
+	import Area from '$lib/components/Area.svelte';
+	import Spline from '$lib/components/Spline.svelte';
 
 	let {
 		data,
@@ -27,10 +28,8 @@
 	x="date"
 	y="value"
 	yDomain={[0, null]}
-	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
+	padding={{ top: 20, right: 20, bottom: 20, left: 20 }}
 >
-	<Grid y stroke="rgba(0,0,0,0.1)" />
-	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
-	<Axis placement="left" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
+	<Area fill="rgba(59, 130, 246, 0.15)" stroke="none" />
 	<Spline stroke="rgb(59, 130, 246)" strokeWidth={2} />
 </ServerChart>

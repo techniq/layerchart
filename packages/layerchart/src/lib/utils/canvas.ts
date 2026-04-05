@@ -18,6 +18,7 @@ function isTransparentFill(fill: string): boolean {
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
+
 /**
  * Parse an inline CSS style string into a StyleOptions object.
  * Converts kebab-case properties to camelCase (e.g., 'stroke-dasharray' -> 'strokeDasharray')
@@ -87,6 +88,14 @@ export function _getComputedStyles(
   canvas: HTMLCanvasElement,
   { styles, classes }: ComputedStylesOptions = {}
 ) {
+  // Server-side: no DOM available, return styles with sensible defaults
+  if (typeof document === 'undefined') {
+    const merged = { ...styles } as CSSStyleDeclaration;
+    if (!merged.fontSize) merged.fontSize = '10px';
+    if (!merged.fontFamily) merged.fontFamily = 'sans-serif';
+    return merged;
+  }
+
   // console.count(`getComputedStyles: ${getComputedStylesKey(canvas, { styles, classes })}`);
   try {
     // Get or create `<svg>` below `<canvas>`
@@ -177,6 +186,13 @@ function render(
   ) {
     // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles are using CSS variables
     resolvedStyles = mergedStyles;
+
+    // On server, provide sensible defaults for styles that would normally come from CSS
+    if (typeof document === 'undefined') {
+      if (!resolvedStyles.stroke && !resolvedStyles.fill) {
+        resolvedStyles = { ...resolvedStyles, stroke: 'black' };
+      }
+    }
   } else {
     // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
     const { constantStyles, variableStyles } = Object.entries(mergedStyles).reduce<{
@@ -211,8 +227,11 @@ function render(
 
   // font/text properties can be expensive to set (not sure why), so only apply if needed (renderText())
   if (applyText) {
-    // Text properties
-    ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+    // Text properties — use defaults for server-side rendering where computed styles aren't available
+    const fontSize = resolvedStyles.fontSize || '10px';
+    const fontFamily = resolvedStyles.fontFamily || 'sans-serif';
+    const fontWeight = resolvedStyles.fontWeight || '';
+    ctx.font = `${fontWeight} ${fontSize} ${fontFamily}`.trim(); // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
     if (resolvedStyles.textAnchor === 'middle') {
       ctx.textAlign = 'center';

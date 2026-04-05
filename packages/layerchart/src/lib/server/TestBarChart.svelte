@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { ServerChart } from 'layerchart/server';
-	import type { CaptureTarget } from 'layerchart/server';
-	import { Axis, Bars, Grid } from 'layerchart';
 	import { scaleBand } from 'd3-scale';
+	import ServerChart from './ServerChart.svelte';
+	import type { CaptureTarget } from './captureStore.js';
+	import Bars from '$lib/components/Bars.svelte';
 
 	let {
 		data,
@@ -31,8 +31,5 @@
 	yDomain={[0, null]}
 	padding={{ top: 20, right: 20, bottom: 30, left: 40 }}
 >
-	<Grid y stroke="rgba(0,0,0,0.1)" />
-	<Axis placement="bottom" rule stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
-	<Axis placement="left" stroke="rgba(0,0,0,0.3)" fill="rgba(0,0,0,0.5)" />
 	<Bars fill="rgb(59, 130, 246)" radius={4} />
 </ServerChart>
