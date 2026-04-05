@@ -1,3 +1,4 @@
+import { building } from '$app/environment';
 import { createCanvas, Path2D } from '@napi-rs/canvas';
 import { renderChart } from 'layerchart/server';
 import type { CanvasFactory } from 'layerchart/server';
@@ -11,6 +12,11 @@ if (typeof globalThis.Path2D === 'undefined') {
 const createNodeCanvas: CanvasFactory = (canvasWidth, canvasHeight) =>
 	createCanvas(canvasWidth, canvasHeight) as unknown as ReturnType<CanvasFactory>;
 
+function getParam(url: URL, name: string): string | null {
+	if (building) return null;
+	return url.searchParams.get(name);
+}
+
 type RenderChartResponseOptions = {
 	component: Component<any>;
 	props: Record<string, any>;
@@ -22,10 +28,10 @@ export function renderChartResponse({
 	props,
 	url
 }: RenderChartResponseOptions): Response {
-	const width = Number(url.searchParams.get('width') ?? 800);
-	const height = Number(url.searchParams.get('height') ?? 400);
-	const format = url.searchParams.get('format') === 'jpeg' ? 'jpeg' : 'png';
-	const background = url.searchParams.get('background') ?? 'white';
+	const width = Number(getParam(url, 'width') ?? 800);
+	const height = Number(getParam(url, 'height') ?? 400);
+	const format = getParam(url, 'format') === 'jpeg' ? 'jpeg' : 'png';
+	const background = getParam(url, 'background') ?? 'white';
 
 	const buffer = renderChart(component, {
 		width,
