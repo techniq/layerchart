@@ -5,6 +5,8 @@ import { renderChartResponse } from '../renderChartEndpoint.js';
 import type { RequestHandler } from './$types';
 import GeoChart from './GeoChart.svelte';
 
+export const prerender = true;
+
 let cachedStates: ReturnType<typeof feature> | null = null;
 
 async function getStates(fetchFn: typeof fetch) {

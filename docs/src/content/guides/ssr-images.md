@@ -187,10 +187,10 @@ These examples are rendered live from the API endpoints in this project.
 ```
 
 ```html
-<img src="/api/charts/line?background=white" />
+<img src="/api/charts/line" />
 ```
 
-![Line chart](/api/charts/line?background=white)
+![Line chart](/api/charts/line)
 
 ### Bar chart
 
@@ -215,10 +215,10 @@ These examples are rendered live from the API endpoints in this project.
 ```
 
 ```html
-<img src="/api/charts/bar?background=white" />
+<img src="/api/charts/bar" />
 ```
 
-![Bar chart](/api/charts/bar?background=white)
+![Bar chart](/api/charts/bar)
 
 ### Area chart (multi-series)
 
@@ -245,10 +245,10 @@ These examples are rendered live from the API endpoints in this project.
 ```
 
 ```html
-<img src="/api/charts/area?background=white" />
+<img src="/api/charts/area" />
 ```
 
-![Area chart](/api/charts/area?background=white)
+![Area chart](/api/charts/area)
 
 ### Scatter chart
 
@@ -271,10 +271,10 @@ These examples are rendered live from the API endpoints in this project.
 ```
 
 ```html
-<img src="/api/charts/scatter?background=white" />
+<img src="/api/charts/scatter" />
 ```
 
-![Scatter chart](/api/charts/scatter?background=white)
+![Scatter chart](/api/charts/scatter)
 
 ## Supported components
 
@@ -333,6 +333,23 @@ const buffer = renderChart(MyChart, {
 	// ...
 });
 ```
+
+### Cloudflare and edge runtimes
+
+Server-side chart rendering requires a **native Node.js canvas library** such as `@napi-rs/canvas`, `node-canvas`, or `skia-canvas`. These are native addons that do not run on edge runtimes like Cloudflare Workers.
+
+If you deploy to Cloudflare Pages (or similar edge platforms), **prerender your chart endpoints** so the images are generated at build time:
+
+```ts
+// +server.ts
+export const prerender = true;
+
+export const GET: RequestHandler = async ({ url }) => {
+	return renderChartResponse({ component: MyChart, props: { data }, url });
+};
+```
+
+Prerendered endpoints become static files served directly from the CDN — no server-side canvas library needed at runtime. Note that query parameters (like `?width=1200`) are not available for prerendered routes, so bake any defaults into the endpoint code.
 
 ### Inline styles only
 

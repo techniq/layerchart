@@ -2,6 +2,8 @@ import { renderChartResponse } from '../renderChartEndpoint.js';
 import type { RequestHandler } from './$types';
 import ScatterChart from './ScatterChart.svelte';
 
+export const prerender = true;
+
 // Generate clustered scatter data
 const random = (seed: number) => {
 	const x = Math.sin(seed) * 10000;

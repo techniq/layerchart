@@ -2,6 +2,8 @@ import { renderChartResponse } from '../renderChartEndpoint.js';
 import type { RequestHandler } from './$types';
 import BarChart from './BarChart.svelte';
 
+export const prerender = true;
+
 const data = [
 	{ category: 'A', value: 28 },
 	{ category: 'B', value: 55 },
