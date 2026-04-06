@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { flushSync } from 'svelte';
 
 import { scaleBand } from 'd3-scale';
+import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
@@ -11,6 +12,7 @@ import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 type TestData = { date: string; value: number };
 type MultiSeriesData = { date: string; apples: number; bananas: number };
 type WideData = { year: string; apples: number; bananas: number; cherries: number; grapes: number };
+type GeoData = { name: string; longitude: number; latitude: number };
 
 function createChartState<T = TestData>(props: Partial<ChartPropsWithoutHTML<T>>) {
   let cleanup: () => void;
@@ -597,6 +599,130 @@ describe('ChartState mark registration', () => {
       flushSync();
 
       expect(state.seriesState.series[0].label).toBe('Temperature');
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState geo projection skips markInfo', () => {
+  const geoData: GeoData[] = [
+    { name: 'New York', longitude: -74.006, latitude: 40.7128 },
+    { name: 'Los Angeles', longitude: -118.2437, latitude: 34.0522 },
+    { name: 'Chicago', longitude: -87.6298, latitude: 41.8781 },
+  ];
+
+  it('should not create implicit series from marks when geo projection is active', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      // Register a mark with its own data (like a tooltip highlight Circle)
+      state.registerMark({ data: [geoData[0]], x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // Should remain default series — mark should not create implicit "latitude" series
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not add mark data to flatData when geo projection is active', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      state.registerMark({ data: [geoData[0]], x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // flatData should only contain chart data, not the mark's extra data
+      expect(state.flatData).toHaveLength(3);
+      expect(state.flatData).toBe(geoData);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not derive x/y accessors from marks when geo projection is active', () => {
+    // Chart with geo but no explicit x/y — marks should not fill in the accessors
+    const { state: stateWithGeo, cleanup: cleanupGeo } = createChartState<GeoData>({
+      data: geoData,
+      geo: { projection: geoAlbersUsa },
+    });
+
+    const { state: stateWithoutGeo, cleanup: cleanupNoGeo } = createChartState<GeoData>({
+      data: geoData,
+    });
+
+    try {
+      // Both start with null x accessor (no x prop set)
+      expect(stateWithGeo.x).toBeNull();
+      expect(stateWithoutGeo.x).toBeNull();
+
+      stateWithGeo.registerMark({ x: 'longitude', y: 'latitude' });
+      stateWithoutGeo.registerMark({ x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // Without geo: mark should derive x accessor
+      expect(stateWithoutGeo.x).not.toBeNull();
+      expect(stateWithoutGeo.x!(geoData[0])).toBe(geoData[0].longitude);
+
+      // With geo: mark should NOT derive x accessor
+      expect(stateWithGeo.x).toBeNull();
+    } finally {
+      cleanupGeo();
+      cleanupNoGeo();
+    }
+  });
+
+  it('should preserve seriesKey/color/label from marks in geo mode for legends', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      state.registerMark({ seriesKey: 'earthquakes', color: 'red', label: 'Earthquakes' });
+      state.registerMark({ seriesKey: 'volcanos', color: 'orange', label: 'Volcanos' });
+      flushSync();
+
+      // seriesKey/color/label should still create implicit series for legends
+      expect(state.seriesState.isDefaultSeries).toBe(false);
+      expect(state.seriesState.series).toHaveLength(2);
+      expect(state.seriesState.series[0]).toMatchObject({ key: 'earthquakes', color: 'red', label: 'Earthquakes' });
+      expect(state.seriesState.series[1]).toMatchObject({ key: 'volcanos', color: 'orange', label: 'Volcanos' });
+
+      // But flatData should not include extra mark data
+      expect(state.flatData).toHaveLength(3);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should still process marks normally without geo projection', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'name',
+    });
+
+    try {
+      state.registerMark({ y: 'latitude', color: 'blue' });
+      flushSync();
+
+      // Without geo, marks should create implicit series as normal
+      expect(state.seriesState.isDefaultSeries).toBe(false);
+      expect(state.seriesState.series[0].key).toBe('latitude');
     } finally {
       cleanup();
     }

@@ -128,10 +128,24 @@ export class ChartState<
   private _nextMarkId = 0;
 
   /** Reactive accessor — reads _markInfosVersion to create a reactive dependency,
-   * returns the plain array so items are never wrapped in Svelte proxies. */
+   * returns the plain array so items are never wrapped in Svelte proxies.
+   *
+   * When a geo projection is active, strips x/y/data from mark info — those
+   * values are geographic coordinates handled by the projection, not xScale/yScale.
+   * seriesKey/color/label are preserved so marks can still contribute to legends. */
   private get _markInfos() {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this._markInfosVersion;
+    if (this.geoState.props.projection) {
+      return this._markInfosRaw.map(({ _id, info }) => ({
+        _id,
+        info: {
+          seriesKey: info.seriesKey,
+          color: info.color,
+          label: info.label,
+        } as MarkInfo,
+      }));
+    }
     return this._markInfosRaw;
   }
 
