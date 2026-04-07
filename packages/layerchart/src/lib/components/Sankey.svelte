@@ -107,8 +107,6 @@
   const ctx = getChartContext();
 
   const sankeyData = $derived.by(() => {
-    if (typeof document === 'undefined') return { nodes: [], links: [] };
-
     return (
       d3Sankey()
         .size([ctx.width, ctx.height])

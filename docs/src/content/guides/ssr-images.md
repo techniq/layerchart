@@ -330,6 +330,134 @@ These examples are rendered live from the API endpoints in this project.
 
 ![Scatter chart](/api/charts/scatter)
 
+### Sankey chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	{data}
+	flatData={[]}
+	padding={{ top: 10, right: 100, bottom: 10, left: 10 }}
+>
+	<Sankey nodeId={(d) => d.id}>
+		{#snippet children({ links, nodes })}
+			{#each links as link}
+				<Link sankey data={link} strokeWidth={link.width} stroke="rgba(59, 130, 246, 0.2)" fill="none" />
+			{/each}
+			{#each nodes as node (node.id)}
+				{@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+				{@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
+				<Group x={node.x0} y={node.y0}>
+					<Rect width={nodeWidth} height={nodeHeight} fill="rgb(59, 130, 246)" />
+					<Text
+						value={node.id}
+						x={node.height === 0 ? -4 : nodeWidth + 4}
+						y={nodeHeight / 2}
+						textAnchor={node.height === 0 ? 'end' : 'start'}
+						verticalAnchor="middle"
+						fill="rgba(0,0,0,0.7)"
+					/>
+				</Group>
+			{/each}
+		{/snippet}
+	</Sankey>
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/sankey" />
+```
+
+![Sankey chart](/api/charts/sankey)
+
+### Tree chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	padding={{ top: 20, bottom: 20, left: 60, right: 60 }}
+>
+	<Tree {hierarchy} orientation="horizontal">
+		{#snippet children({ nodes, links })}
+			{#each links as link}
+				<Link data={link} orientation="horizontal" stroke="rgba(0,0,0,0.2)" fill="none" />
+			{/each}
+			{#each nodes as node}
+				<Group x={node.y - nodeWidth / 2} y={node.x - nodeHeight / 2}>
+					<Rect
+						width={nodeWidth}
+						height={nodeHeight}
+						fill="white"
+						stroke={node.children ? 'rgb(59, 130, 246)' : 'rgba(0,0,0,0.3)'}
+						rx={10}
+					/>
+					<Text
+						value={node.data.name}
+						x={nodeWidth / 2}
+						y={nodeHeight / 2}
+						dy={-2}
+						textAnchor="middle"
+						verticalAnchor="middle"
+						fill={node.children ? 'rgb(59, 130, 246)' : 'rgba(0,0,0,0.5)'}
+					/>
+				</Group>
+			{/each}
+		{/snippet}
+	</Tree>
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/tree" />
+```
+
+![Tree chart](/api/charts/tree)
+
+### Treemap chart
+
+```svelte
+<ServerChart
+	{capture}
+	{onCapture}
+	{width}
+	{height}
+	padding={{ top: 4, right: 4, bottom: 4, left: 4 }}
+>
+	<Treemap hierarchy={root} paddingOuter={4} paddingInner={4} paddingTop={20}>
+		{#snippet children({ nodes })}
+			{#each nodes as node}
+				{@const nodeWidth = node.x1 - node.x0}
+				{@const nodeHeight = node.y1 - node.y0}
+				{@const nodeColor = getNodeColor(node)}
+				<Group x={node.x0} y={node.y0}>
+					<Rect
+						width={nodeWidth}
+						height={nodeHeight}
+						stroke={hsl(nodeColor).darker(1).toString()}
+						fill={nodeColor}
+						fillOpacity={node.children ? 0.5 : 1}
+						rx={5}
+					/>
+					<Text value={node.data.name} x={4} y={12} fill="rgba(0,0,0,0.7)" />
+				</Group>
+			{/each}
+		{/snippet}
+	</Treemap>
+</ServerChart>
+```
+
+```html
+<img src="/api/charts/treemap" />
+```
+
+![Treemap chart](/api/charts/treemap)
+
 ## Supported components
 
 Server-side rendering works with components that have **canvas rendering support**. Most primitive and data mark components work:
