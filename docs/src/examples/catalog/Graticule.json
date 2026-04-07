@@ -155,6 +155,41 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     },
     {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 42,
+      "line": "<Graticule class=\"stroke-surface-content/15\" />"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 58,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 59,
+      "line": "<Graticule class=\"stroke-surface-content/15\" />"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 172,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 110,
+      "line": "<Graticule class=\"stroke-surface-content/15\" />"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -183,5 +218,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-03T15:31:24.827Z"
+  "updatedAt": "2026-04-07T04:17:11.065Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-03T20:08:32.870Z",
-  "totalComponents": 71,
-  "totalExamples": 855,
+  "generatedAt": "2026-04-07T04:17:09.228Z",
+  "totalComponents": 72,
+  "totalExamples": 860,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2500,6 +2500,36 @@
           "name": "true-size",
           "path": "/example/GeoProjection/true-size",
           "checksum": "035c742da3e29ac2a77d691d6ad8fbdd"
+        }
+      ]
+    },
+    {
+      "component": "GeoRaster",
+      "examples": [
+        {
+          "name": "globe",
+          "path": "/example/GeoRaster/globe",
+          "checksum": "66f701470d712d416d3c4e474bdbde38"
+        },
+        {
+          "name": "planets",
+          "path": "/example/GeoRaster/planets",
+          "checksum": "cab8dbb5ef6d0aae329701710dbd4e1a"
+        },
+        {
+          "name": "projections",
+          "path": "/example/GeoRaster/projections",
+          "checksum": "26c954908eed21834b689684dce25bf1"
+        },
+        {
+          "name": "textures",
+          "path": "/example/GeoRaster/textures",
+          "checksum": "3a251b3c441be2a1059db05853418240"
+        },
+        {
+          "name": "tiles-globe",
+          "path": "/example/GeoRaster/tiles-globe",
+          "checksum": "2f93bbace3c7b6b694d7fff266ace1b1"
         }
       ]
     },
