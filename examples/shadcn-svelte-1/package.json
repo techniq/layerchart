@@ -22,7 +22,7 @@
 		"@tailwindcss/vite": "^4.2.2",
 		"bits-ui": "^2.16.3",
 		"clsx": "^2.1.1",
-		"layerchart": "next",
+		"layerchart": "workspace:*",
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",

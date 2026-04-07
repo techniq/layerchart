@@ -19,7 +19,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"daisyui": "^5.5.19",
-		"layerchart": "next",
+		"layerchart": "workspace:*",
 		"mode-watcher": "^1.1.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",
