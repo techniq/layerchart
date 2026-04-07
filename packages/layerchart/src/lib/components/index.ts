@@ -69,6 +69,8 @@ export { default as GeoPath } from './GeoPath.svelte';
 export * from './GeoPath.svelte';
 export { default as GeoPoint } from './GeoPoint.svelte';
 export * from './GeoPoint.svelte';
+export { default as GeoRaster } from './GeoRaster.svelte';
+export * from './GeoRaster.svelte';
 export { default as GeoSpline } from './GeoSpline.svelte';
 export * from './GeoSpline.svelte';
 export { default as GeoTile } from './GeoTile.svelte';

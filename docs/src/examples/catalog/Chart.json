@@ -2288,6 +2288,41 @@
       "line": "<Chart"
     },
     {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 19,
+      "line": "<Chart"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 70,
+      "line": "<Chart"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 46,
+      "line": "<Chart"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 147,
+      "line": "<Chart"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 85,
+      "line": "<Chart"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -4031,5 +4066,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-03T20:08:34.621Z"
+  "updatedAt": "2026-04-07T16:36:35.950Z"
 }

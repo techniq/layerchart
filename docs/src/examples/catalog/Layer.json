@@ -2173,6 +2173,76 @@
       "line": "<Layer>"
     },
     {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 37,
+      "line": "<Layer type=\"canvas\">"
+    },
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 40,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 90,
+      "line": "<Layer type=\"canvas\">"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 93,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 54,
+      "line": "<Layer type=\"canvas\">"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 57,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 165,
+      "line": "<Layer type=\"canvas\">"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 170,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 103,
+      "line": "<Layer type=\"canvas\">"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 108,
+      "line": "<Layer type=\"svg\">"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -3951,5 +4021,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-03T20:08:35.569Z"
+  "updatedAt": "2026-04-07T16:36:37.027Z"
 }

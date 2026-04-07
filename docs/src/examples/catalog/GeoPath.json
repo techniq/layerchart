@@ -1290,6 +1290,62 @@
       "line": "<GeoPath"
     },
     {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 41,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 44,
+      "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 94,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/30\" />"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 58,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 61,
+      "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 171,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 109,
+      "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 112,
+      "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/30\" />"
+    },
+    {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
@@ -1423,5 +1479,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-03T15:31:24.682Z"
+  "updatedAt": "2026-04-07T16:36:36.526Z"
 }
