@@ -93,6 +93,10 @@ export class GeoState {
       if ('translate' in _projection) {
         if (this.props.translate) {
           _projection.translate(this.props.translate);
+        } else if (!this.props.fitGeojson) {
+          // Default translate to container center when not explicitly set
+          // and not already positioned via fitSize/fitGeojson
+          _projection.translate([this.chartWidth / 2, this.chartHeight / 2]);
         }
 
         if (this.transformState?.mode === 'projection' && this.transformApply.translate) {
