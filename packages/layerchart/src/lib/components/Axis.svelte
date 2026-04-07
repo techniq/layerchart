@@ -102,6 +102,18 @@
     scale?: any;
 
     /**
+     * Stroke color for axis rule, grid lines, and tick marks.
+     * Useful for server-side rendering where CSS variables are not available.
+     */
+    stroke?: string;
+
+    /**
+     * Fill color for tick labels and axis label.
+     * Useful for server-side rendering where CSS variables are not available.
+     */
+    fill?: string;
+
+    /**
      * Classes for styling various parts of the axis
      * @default {}
      */
@@ -156,6 +168,8 @@
     tickMarks = true,
     format,
     tickLabelProps,
+    stroke,
+    fill,
     motion,
     transitionIn,
     transitionInParams,
@@ -167,6 +181,8 @@
   }: AxisProps<T> = $props();
 
   const ctx = getChartContext();
+
+  ctx.registerComponent({ name: 'Axis', kind: 'composite-mark' });
 
   const orientation = $derived(
     placement === 'angle'
@@ -465,6 +481,8 @@
     // complement 10px text (until Text supports custom styles)
     capHeight: '7px',
     lineHeight: '11px',
+    fill,
+    stroke,
     ...labelProps,
     class: cls('lc-axis-label', classes.label, labelProps?.class),
   }) satisfies ComponentProps<typeof Text>;
@@ -479,6 +497,7 @@
     <Rule
       x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
       y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
+      {stroke}
       {motion}
       {...extractLayerProps(rule, 'lc-axis-rule', classes.rule ?? '')}
     />
@@ -506,6 +525,8 @@
       // complement 10px text (until Text supports custom styles)
       capHeight: '7px',
       lineHeight: '11px',
+      fill,
+      stroke,
       ...tickLabelProps,
       class: cls('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
     }}
@@ -515,6 +536,7 @@
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
+          {stroke}
           {motion}
           {...extractLayerProps(grid, 'lc-axis-grid', classes.rule ?? '')}
         />
@@ -528,6 +550,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x}
             y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
+            {stroke}
             {motion}
             class={tickClasses}
           />
@@ -537,6 +560,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
             y2={tickCoords.y}
+            {stroke}
             {motion}
             class={tickClasses}
           />
@@ -546,6 +570,7 @@
             y1={radialTickCoordsY}
             x2={radialTickMarkCoordsX}
             y2={radialTickMarkCoordsY}
+            {stroke}
             {motion}
             class={tickClasses}
           />

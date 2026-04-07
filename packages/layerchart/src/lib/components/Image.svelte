@@ -514,7 +514,7 @@
         style:object-fit="cover"
         crossorigin={crossOrigin}
         class={cls('lc-image', className)}
-        {...restProps}
+        {...restProps as any}
       />
     {/each}
   {:else}
@@ -532,7 +532,7 @@
       style:object-fit="cover"
       crossorigin={crossOrigin}
       class={cls('lc-image', className)}
-      {...restProps}
+      {...restProps as any}
     />
   {/if}
 {/if}

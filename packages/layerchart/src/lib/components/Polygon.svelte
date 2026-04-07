@@ -168,7 +168,13 @@
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -219,9 +225,7 @@
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to a polygon path string
   function resolvePolygon(d: any) {
@@ -234,22 +238,23 @@
     }
     const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
 
-    const pts = typeof points === 'number'
-      ? polygon({
-          cx: resolvedCx,
-          cy: resolvedCy,
-          count: points,
-          radius: resolvedR,
-          rotate,
-          inset,
-          scaleX,
-          scaleY,
-          skewX,
-          skewY,
-          tiltX,
-          tiltY,
-        })
-      : points;
+    const pts =
+      typeof points === 'number'
+        ? polygon({
+            cx: resolvedCx,
+            cy: resolvedCy,
+            count: points,
+            radius: resolvedR,
+            rotate,
+            inset,
+            scaleX,
+            scaleY,
+            skewX,
+            skewY,
+            tiltX,
+            tiltY,
+          })
+        : points;
 
     return roundedPolygonPath(pts, cornerRadius);
   }
@@ -350,6 +355,13 @@
 
   const layerCtx = getLayerContext();
 
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
@@ -360,16 +372,29 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-polygon', itemClass ?? (typeof className === 'string' ? className : undefined)),
+          classes: cls(
+            'lc-polygon',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
           style: restProps.style as string | undefined,
         };
   }
@@ -387,7 +412,15 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, d);
         const resolvedOpacity = resolveStyleProp(opacity, d);
         const resolvedClass = resolveStyleProp(className, d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         renderPathData(ctx, pathData, styleOpts);
       }
     } else {
@@ -412,31 +445,34 @@
         color: typeof fill === 'string' ? fill : typeof stroke === 'string' ? stroke : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-        pointerover: restProps.onpointerover,
-        pointerout: restProps.onpointerout,
-        touchmove: restProps.ontouchmove,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        fillKey!.current,
-        fillOpacity,
-        strokeKey!.current,
-        strokeWidth,
-        opacity,
-        className,
-        tweenedState.current,
-        restProps.style,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: restProps.onclick,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+              pointerdown: restProps.onpointerdown,
+              pointerover: restProps.onpointerover,
+              pointerout: restProps.onpointerout,
+              touchmove: restProps.ontouchmove,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              fillKey!.current,
+              fillOpacity,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+              tweenedState.current,
+              restProps.style,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -464,12 +500,12 @@
   {:else}
     <path
       d={tweenedState.current}
-      fill={fill as string}
-      fill-opacity={fillOpacity as number}
-      stroke={stroke as string}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
-      class={cls('lc-polygon', className as string)}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
+      class={cls('lc-polygon', staticClassName)}
       {...restProps}
       bind:this={ref}
     />

@@ -131,13 +131,20 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { merge } from '@layerstack/utils';
+  import type { HTMLAttributes } from 'svelte/elements';
 
   import { untrack } from 'svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap, type MotionOptions } from '$lib/utils/motion.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { resolveInsets } from '$lib/utils/rect.svelte.js';
@@ -189,9 +196,7 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to rect dimensions
   function resolveRect(d: any) {
@@ -288,8 +293,8 @@
 
   const _initialX = initialX ?? (typeof x === 'number' ? x : 0);
   const _initialY = initialY ?? (typeof y === 'number' ? y : 0);
-  const _initialWidth = initialWidth ?? (width ?? 0);
-  const _initialHeight = initialHeight ?? (height ?? 0);
+  const _initialWidth = initialWidth ?? width ?? 0;
+  const _initialHeight = initialHeight ?? height ?? 0;
 
   // Parse motion config once, then pass resolved config to each axis
   // (avoids 4 separate parseMotionProp calls that re-parse the same prop)
@@ -316,6 +321,20 @@
 
   const layerCtx = getLayerContext();
 
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeOpacity = $derived(
+    typeof strokeOpacity === 'number' ? strokeOpacity : undefined
+  );
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  const staticBorderWidth = $derived(
+    typeof strokeWidth === 'number' ? `${strokeWidth}px` : undefined
+  );
+  const htmlRestProps = $derived(restProps as unknown as HTMLAttributes<HTMLDivElement>);
+
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
@@ -327,17 +346,31 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeOpacity: itemStrokeOpacity ?? (typeof strokeOpacity === 'number' ? strokeOpacity : undefined),
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeOpacity:
+              itemStrokeOpacity ?? (typeof strokeOpacity === 'number' ? strokeOpacity : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-rect', itemClass ?? (typeof className === 'string' ? className : undefined)),
+          classes: cls(
+            'lc-rect',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
           style: restProps.style as string | undefined,
         };
   }
@@ -355,15 +388,28 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
-        renderRect(ctx, {
-          x: item.x,
-          y: item.y,
-          width: item.width,
-          height: item.height,
-          rx,
-          ry,
-        }, styleOpts);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
+        renderRect(
+          ctx,
+          {
+            x: item.x,
+            y: item.y,
+            width: item.width,
+            height: item.height,
+            rx,
+            ry,
+          },
+          styleOpts
+        );
       }
     } else {
       const styleOpts = getStyleOptions(styleOverrides);
@@ -399,36 +445,39 @@
         color: typeof fill === 'string' ? fill : typeof stroke === 'string' ? stroke : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: onclick,
-        dblclick: ondblclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
-        pointerover: onpointerover,
-        pointerout: onpointerout,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        motionX.current,
-        motionY.current,
-        motionWidth.current,
-        motionHeight.current,
-        fillKey!.current,
-        strokeKey!.current,
-        fillOpacity,
-        strokeOpacity,
-        strokeWidth,
-        opacity,
-        className,
-        restProps.style,
-        rx,
-        ry,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: onclick,
+              dblclick: ondblclick,
+              pointerenter: onpointerenter,
+              pointermove: onpointermove,
+              pointerleave: onpointerleave,
+              pointerover: onpointerover,
+              pointerout: onpointerout,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              motionX.current,
+              motionY.current,
+              motionWidth.current,
+              motionHeight.current,
+              fillKey!.current,
+              strokeKey!.current,
+              fillOpacity,
+              strokeOpacity,
+              strokeWidth,
+              opacity,
+              className,
+              restProps.style,
+              rx,
+              ry,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -472,15 +521,15 @@
       y={motionY.current}
       width={motionWidth.current}
       height={motionHeight.current}
-      fill={fill as string}
-      fill-opacity={fillOpacity as number}
-      stroke={stroke as string}
-      stroke-opacity={strokeOpacity as number}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-opacity={staticStrokeOpacity}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
       {rx}
       {ry}
-      class={cls('lc-rect', className as string)}
+      class={cls('lc-rect', staticClassName)}
       {...restProps}
       {onclick}
       {ondblclick}
@@ -516,7 +565,7 @@
         style:border-color={resolvedStroke}
         style:border-radius="{rx}px"
         class={cls('lc-rect', resolvedClass)}
-        {...restProps as any}
+        {...htmlRestProps}
         {onclick}
         {ondblclick}
         {onpointerenter}
@@ -535,14 +584,14 @@
       style:top="{motionY.current}px"
       style:width="{motionWidth.current}px"
       style:height="{motionHeight.current}px"
-      style:background={fill as string}
-      style:opacity={opacity as number}
-      style:border-width="{strokeWidth as number}px"
+      style:background={staticFill}
+      style:opacity={staticOpacity}
+      style:border-width={staticBorderWidth}
       style:border-style="solid"
-      style:border-color={stroke as string}
+      style:border-color={staticStroke}
       style:border-radius="{rx}px"
-      class={cls('lc-rect', className as string)}
-      {...restProps as any}
+      class={cls('lc-rect', staticClassName)}
+      {...htmlRestProps}
       {onclick}
       {ondblclick}
       {onpointerenter}

@@ -108,7 +108,13 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
@@ -144,9 +150,7 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates
   function resolveEllipse(d: any) {
@@ -217,26 +221,10 @@
 
   const layerCtx = getLayerContext();
 
-  const motionCx = createMotion(
-    initialCx,
-    () => (typeof cx === 'number' ? cx : 0),
-    motion
-  );
-  const motionCy = createMotion(
-    initialCy,
-    () => (typeof cy === 'number' ? cy : 0),
-    motion
-  );
-  const motionRx = createMotion(
-    initialRx,
-    () => (typeof rx === 'number' ? rx : 1),
-    motion
-  );
-  const motionRy = createMotion(
-    initialRy,
-    () => (typeof ry === 'number' ? ry : 1),
-    motion
-  );
+  const motionCx = createMotion(initialCx, () => (typeof cx === 'number' ? cx : 0), motion);
+  const motionCy = createMotion(initialCy, () => (typeof cy === 'number' ? cy : 0), motion);
+  const motionRx = createMotion(initialRx, () => (typeof rx === 'number' ? rx : 1), motion);
+  const motionRy = createMotion(initialRy, () => (typeof ry === 'number' ? ry : 1), motion);
 
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
@@ -248,16 +236,29 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-ellipse', itemClass ?? (typeof className === 'string' ? className : undefined)),
+          classes: cls(
+            'lc-ellipse',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
         };
   }
 
@@ -273,7 +274,15 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         renderEllipse(ctx, item, styleOpts);
       }
     } else {
@@ -295,6 +304,13 @@
   const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
   const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+
   chartCtx.registerComponent({
     name: 'Ellipse',
     kind: 'mark',
@@ -307,30 +323,33 @@
         color: typeof fill === 'string' ? fill : typeof stroke === 'string' ? stroke : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerdown: restProps.onpointerdown,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        motionCx.current,
-        motionCy.current,
-        motionRx.current,
-        motionRy.current,
-        fillKey!.current,
-        fillOpacity,
-        strokeKey!.current,
-        strokeWidth,
-        opacity,
-        className,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: restProps.onclick,
+              pointerdown: restProps.onpointerdown,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              motionCx.current,
+              motionCy.current,
+              motionRx.current,
+              motionRy.current,
+              fillKey!.current,
+              fillOpacity,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -364,12 +383,12 @@
       cy={motionCy.current}
       rx={motionRx.current}
       ry={motionRy.current}
-      fill={fill as string}
-      fill-opacity={fillOpacity as number}
-      stroke={stroke as string}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
-      class={cls('lc-ellipse', className as string)}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
+      class={cls('lc-ellipse', staticClassName)}
       {...restProps}
     />
   {/if}
@@ -407,13 +426,13 @@
       style:width="{motionRx.current * 2}px"
       style:height="{motionRy.current * 2}px"
       style:border-radius="50%"
-      style:background-color={fill as string}
-      style:opacity={opacity as number}
-      style:border-width={strokeWidth as number}
-      style:border-color={stroke as string}
+      style:background-color={staticFill}
+      style:opacity={staticOpacity}
+      style:border-width={staticStrokeWidth}
+      style:border-color={staticStroke}
       style:border-style="solid"
       style:transform="translate(-50%, -50%)"
-      class={cls('lc-ellipse', className as string)}
+      class={cls('lc-ellipse', staticClassName)}
       {...restProps}
     ></div>
   {/if}

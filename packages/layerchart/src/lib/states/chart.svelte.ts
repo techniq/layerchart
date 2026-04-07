@@ -256,8 +256,12 @@ export class ChartState<
   constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this._propsGetter = propsGetter;
 
-    // Create GeoState instance
-    this.geoState = new GeoState(() => this.props.geo ?? {});
+    // Create GeoState instance — pass a dimensions getter so projection
+    // is available during SSR (where $effect doesn't run)
+    this.geoState = new GeoState(
+      () => this.props.geo ?? {},
+      () => ({ width: this.width, height: this.height })
+    );
 
     // Create SeriesState internally from series/seriesLayout props.
     // When no explicit series are provided, derive implicit series from mark registrations.
@@ -1242,8 +1246,8 @@ export class ChartState<
       if (typeof baseDomainX[0] === 'string') {
         // Categorical: compute scale/translate from domain indices
         const totalCount = baseDomainX.length;
-        const startIdx = baseDomainX.indexOf(brushX[0] as string);
-        const endIdx = baseDomainX.indexOf(brushX[1] as string) + 1;
+        const startIdx = (baseDomainX as unknown as string[]).indexOf(brushX[0] as string);
+        const endIdx = (baseDomainX as unknown as string[]).indexOf(brushX[1] as string) + 1;
         const selectedCount = endIdx - startIdx;
 
         if (selectedCount > 0 && totalCount > 0) {
@@ -1255,8 +1259,8 @@ export class ChartState<
             const baseDomainY = this._baseYDomain;
             if (typeof baseDomainY[0] === 'string') {
               const yTotal = baseDomainY.length;
-              const yStart = baseDomainY.indexOf(brushY[0] as string);
-              const yEnd = baseDomainY.indexOf(brushY[1] as string) + 1;
+              const yStart = (baseDomainY as unknown as string[]).indexOf(brushY[0] as string);
+              const yEnd = (baseDomainY as unknown as string[]).indexOf(brushY[1] as string) + 1;
               const ySelected = yEnd - yStart;
               if (ySelected > 0) {
                 newTranslateY = -(yStart / yTotal) * this.height * newScale;
