@@ -367,9 +367,9 @@ describe('renderPathData', () => {
   it('applies strokeOpacity less than 1', () => {
     const globalAlphaValues: number[] = [];
     const originalStroke = ctx.stroke.bind(ctx);
-    vi.spyOn(ctx, 'stroke').mockImplementation((...args: any[]) => {
+    vi.spyOn(ctx, 'stroke').mockImplementation(function (this: CanvasRenderingContext2D) {
       globalAlphaValues.push(ctx.globalAlpha);
-      originalStroke(...args);
+      originalStroke();
     });
 
     renderPathData(ctx, 'M0,0 L100,0', {

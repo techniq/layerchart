@@ -14,7 +14,7 @@ const series = [
   { key: 'apples', color: 'red' },
   { key: 'bananas', color: 'yellow' },
   { key: 'oranges', color: 'orange' },
-] as const;
+];
 
 function createSeriesState(
   seriesData = series as any[],

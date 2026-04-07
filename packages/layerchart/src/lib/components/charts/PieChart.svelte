@@ -231,7 +231,7 @@
   // Reading context.series.allSeriesData here would create a derived_references_self cycle:
   //   SeriesState.#series → ChartState.props → data={visibleData} → chartData → context.series.allSeriesData → #series
   const chartData = $derived.by(() => {
-    const seriesData = series.flatMap((s) => s.data ?? []);
+    const seriesData = series.flatMap((s) => ('data' in s ? s.data : undefined) ?? []);
     return (seriesData.length > 0 ? seriesData : chartDataArray(data)) as Array<TData>;
   });
 
@@ -245,7 +245,7 @@
 
   // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
   const allSeriesColors = $derived(
-    series.map((s) => s.color).filter((c) => c != null) as string[]
+    series.map((s) => ('color' in s ? s.color : undefined)).filter((c) => c != null) as string[]
   );
 
   // Custom tickFormat for PieChart legends - uses data labels instead of series labels
