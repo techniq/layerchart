@@ -238,7 +238,12 @@
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { get } from '@layerstack/utils';
   import { chartDataArray } from '$lib/utils/common.js';
@@ -294,9 +299,7 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve position for a data item
   function resolveTextPosition(d: any) {
@@ -401,7 +404,11 @@
   const motionValue = createMotion(
     typeof value === 'number' ? value : 0,
     () => (typeof value === 'number' ? value : 0),
-    typeof value === 'number' && motion ? (typeof motion === 'object' && 'type' in motion ? motion : undefined) : undefined
+    typeof value === 'number' && motion
+      ? typeof motion === 'object' && 'type' in motion
+        ? motion
+        : undefined
+      : undefined
   );
 
   // Handle null and convert `\n` strings back to newline characters
@@ -549,6 +556,13 @@
     motion
   );
 
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -562,20 +576,33 @@
       itemClass?: string | undefined
     ) {
       return styleOverrides
-        ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+        ? merge(
+            {
+              styles: {
+                strokeWidth:
+                  itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+              },
+            },
+            styleOverrides
+          )
         : {
             styles: {
               fill: itemFill ?? fill,
-              fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+              fillOpacity:
+                itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
               stroke: itemStroke ?? stroke,
-              strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
               opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
               paintOrder: 'stroke',
               // Only include textAnchor in constantStyles when explicitly non-default,
               // so that CSS class-based text-anchor (e.g. [text-anchor:middle]) can take effect
               ...(textAnchor !== 'start' ? { textAnchor } : {}),
             },
-            classes: cls('lc-text', itemClass ?? (typeof className === 'string' ? className : undefined)),
+            classes: cls(
+              'lc-text',
+              itemClass ?? (typeof className === 'string' ? className : undefined)
+            ),
             style: restProps.style as string | undefined,
           };
     }
@@ -584,8 +611,7 @@
       const baseStyles = getTextStyles();
       const computedStyles = getComputedStyles(ctx.canvas, baseStyles);
       ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
-      const textAlign =
-        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
       for (const item of resolvedItems) {
@@ -596,7 +622,14 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const itemStyles = getTextStyles(resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const itemStyles = getTextStyles(
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         ctx.save();
         if (rotate !== undefined) {
           const radians = degreesToRadians(rotate);
@@ -634,8 +667,7 @@
 
       ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
 
-      const textAlign =
-        textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+      const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
       for (let index = 0; index < wordsByLines.length; index++) {
@@ -668,26 +700,29 @@
         color: typeof fill === 'string' ? fill : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        value,
-        motionX.current,
-        motionY.current,
-        fillKey!.current,
-        strokeKey!.current,
-        strokeWidth,
-        opacity,
-        className,
-        truncateConfig,
-        rotate,
-        lineHeight,
-        textAnchor,
-        verticalAnchor,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              value,
+              motionX.current,
+              motionY.current,
+              fillKey!.current,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+              truncateConfig,
+              rotate,
+              lineHeight,
+              textAnchor,
+              verticalAnchor,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -717,11 +752,7 @@
           opacity={resolvedOpacity}
           class={['lc-text', resolvedClass]}
         >
-          <tspan
-            x={item.x}
-            dy={dataModeStartDy}
-            class="lc-text-tspan"
-          >
+          <tspan x={item.x} dy={dataModeStartDy} class="lc-text-tspan">
             {text}
           </tspan>
         </text>
@@ -741,13 +772,13 @@
           bind:this={ref}
           {dy}
           {...restProps}
-          fill={fill as string}
-          fill-opacity={fillOpacity as number}
-          stroke={stroke as string}
-          stroke-width={strokeWidth as number}
-          opacity={opacity as number}
+          fill={staticFill}
+          fill-opacity={staticFillOpacity}
+          stroke={staticStroke}
+          stroke-width={staticStrokeWidth}
+          opacity={staticOpacity}
           transform={transformProp}
-          class={['lc-text', className as string]}
+          class={['lc-text', staticClassName]}
         >
           <textPath
             style="text-anchor: {textAnchor};"
@@ -768,12 +799,12 @@
           text-anchor={textAnchor}
           dominant-baseline={dominantBaseline}
           {...restProps}
-          fill={fill as string}
-          fill-opacity={fillOpacity as number}
-          stroke={stroke as string}
-          stroke-width={strokeWidth as number}
-          opacity={opacity as number}
-          class={['lc-text', className as string]}
+          fill={staticFill}
+          fill-opacity={staticFillOpacity}
+          stroke={staticStroke}
+          stroke-width={staticStrokeWidth}
+          opacity={staticOpacity}
+          class={['lc-text', staticClassName]}
         >
           {#each wordsByLines as line, index}
             <tspan
@@ -831,7 +862,7 @@
       {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
       style:white-space="pre-wrap"
       style:line-height={lineHeight}
-      class={['lc-text', className as string]}
+      class={['lc-text', staticClassName]}
     >
       {textValue}
     </div>
