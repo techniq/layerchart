@@ -2298,7 +2298,7 @@
       "example": "planets",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/planets",
-      "lineNumber": 35,
+      "lineNumber": 70,
       "line": "<Chart"
     },
     {
@@ -4066,5 +4066,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-07T04:17:10.420Z"
+  "updatedAt": "2026-04-07T16:36:35.950Z"
 }

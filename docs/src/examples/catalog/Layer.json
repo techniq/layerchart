@@ -2190,14 +2190,14 @@
       "example": "planets",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/planets",
-      "lineNumber": 53,
+      "lineNumber": 90,
       "line": "<Layer type=\"canvas\">"
     },
     {
       "example": "planets",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/planets",
-      "lineNumber": 56,
+      "lineNumber": 93,
       "line": "<Layer type=\"svg\">"
     },
     {
@@ -4021,5 +4021,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-07T04:17:11.329Z"
+  "updatedAt": "2026-04-07T16:36:37.027Z"
 }

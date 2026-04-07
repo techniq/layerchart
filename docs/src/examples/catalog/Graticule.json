@@ -165,7 +165,7 @@
       "example": "planets",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/planets",
-      "lineNumber": 58,
+      "lineNumber": 95,
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     },
     {
@@ -218,5 +218,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-07T04:17:11.065Z"
+  "updatedAt": "2026-04-07T16:36:36.765Z"
 }

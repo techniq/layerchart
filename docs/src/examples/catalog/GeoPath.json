@@ -1307,7 +1307,7 @@
       "example": "planets",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/planets",
-      "lineNumber": 57,
+      "lineNumber": 94,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/30\" />"
     },
     {
@@ -1479,5 +1479,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-07T04:17:10.907Z"
+  "updatedAt": "2026-04-07T16:36:36.526Z"
 }
