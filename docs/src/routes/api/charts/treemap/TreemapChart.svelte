@@ -7,7 +7,7 @@
 
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Group, Rect, Text, Treemap } from 'layerchart';
+	import { Group, Rect, RectClipPath, Text, Treemap } from 'layerchart';
 
 	let {
 		data,
@@ -44,12 +44,7 @@
 	{height}
 	padding={{ top: 4, right: 4, bottom: 4, left: 4 }}
 >
-	<Treemap
-		hierarchy={root}
-		paddingOuter={4}
-		paddingInner={4}
-		paddingTop={20}
-	>
+	<Treemap hierarchy={root} paddingOuter={4} paddingInner={4} paddingTop={20}>
 		{#snippet children({ nodes })}
 			{#each nodes as node}
 				{@const nodeWidth = node.x1 - node.x0}
@@ -64,12 +59,9 @@
 						fillOpacity={node.children ? 0.5 : 1}
 						rx={5}
 					/>
-					<Text
-						value={node.data.name}
-						x={4}
-						y={12}
-						fill="rgba(0,0,0,0.7)"
-					/>
+					<RectClipPath width={nodeWidth} height={nodeHeight}>
+						<Text value={node.data.name} x={6} y={20} fill="rgba(0,0,0,0.7)" />
+					</RectClipPath>
 				</Group>
 			{/each}
 		{/snippet}
