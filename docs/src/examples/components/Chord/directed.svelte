@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
-	import { Chart, Layer, Chord, Ribbon, Arc, Group, Text } from 'layerchart';
+	import { Chart, Layer, Chord, Ribbon, Arc, ArcLabel } from 'layerchart';
 
 	const names = ['Asia', 'Europe', 'Africa', 'Americas', 'Oceania'];
 
@@ -42,21 +42,17 @@
 						{outerRadius}
 						fill={color(names[group.index])}
 						stroke="none"
-					/>
-					<Group
-						x={(outerRadius + 6) * Math.cos((group.startAngle + group.endAngle) / 2 - Math.PI / 2)}
-						y={(outerRadius + 6) * Math.sin((group.startAngle + group.endAngle) / 2 - Math.PI / 2)}
 					>
-						<Text
-							value={names[group.index]}
-							textAnchor={(group.startAngle + group.endAngle) / 2 > Math.PI ? 'end' : 'start'}
-							verticalAnchor="middle"
-							class="text-xs font-medium"
-							transform="rotate({(((group.startAngle + group.endAngle) / 2) * 180) / Math.PI -
-								90 +
-								((group.startAngle + group.endAngle) / 2 > Math.PI ? 180 : 0)})"
-						/>
-					</Group>
+						{#snippet children(arcProps)}
+							<ArcLabel
+								{...arcProps}
+								placement="centroid-rotated"
+								offset={(outerRadius - innerRadius) / 2 + 6}
+								value={names[group.index]}
+								class="text-xs font-medium"
+							/>
+						{/snippet}
+					</Arc>
 				{/each}
 			{/snippet}
 		</Chord>

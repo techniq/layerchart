@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Arc, ArcChart, Text } from 'layerchart';
+	import { ArcChart } from 'layerchart';
 
 	const data = [
 		{ key: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
@@ -23,18 +23,11 @@
 	outerRadius={-25}
 	innerRadius={-20}
 	cornerRadius={10}
+	labels={{
+		placement: 'middle',
+		startOffset: '0%',
+		value: 'key',
+		class: 'fill-black pointer-events-none text-xs'
+	}}
 	height={180}
->
-	{#snippet arc({ context, props, seriesIndex })}
-		<Arc {...props}>
-			{#snippet children({ getArcTextProps })}
-				<Text
-					{...getArcTextProps('middle')}
-					value={context.series.visibleSeries[seriesIndex].key}
-					class="fill-black pointer-events-none"
-					font-size="12px"
-				/>
-			{/snippet}
-		</Arc>
-	{/snippet}
-</ArcChart>
+/>
