@@ -7,7 +7,16 @@
 	import { feature } from 'topojson-client';
 	import { sortFunc } from '@layerstack/utils';
 
-	import { Chart, GeoPath, Legend, Layer, Tooltip, Circle, getSettings } from 'layerchart';
+	import {
+		Chart,
+		Circle,
+		CircleLegend,
+		GeoPath,
+		Layer,
+		Legend,
+		Tooltip,
+		getSettings
+	} from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
@@ -78,8 +87,9 @@
 		mode: 'canvas',
 		scrollMode: 'scale'
 	}}
-	padding={{ top: 60 }}
+	padding={{ top: 60, right: 60 }}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
@@ -134,6 +144,8 @@
 			placement="top-left"
 			class="bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
 		/>
+
+		<CircleLegend scale={rScale} title="Population" tickFormat="metric" placement="bottom-right" />
 
 		<Tooltip.Root>
 			{#snippet children({ data })}

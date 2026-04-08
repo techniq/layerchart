@@ -1770,6 +1770,13 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/basic",
+      "lineNumber": 6,
+      "line": "<Chart data={[{ value: 1 }, { value: 100 }]} r=\"value\" rRange={[2, 40]} height={120}>"
+    },
+    {
       "example": "playground",
       "component": "Connector",
       "path": "/docs/components/Connector/playground",
@@ -2067,7 +2074,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 72,
+      "lineNumber": 81,
       "line": "<Chart"
     },
     {
@@ -4066,5 +4073,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:40.633Z"
+  "updatedAt": "2026-04-08T15:37:35.005Z"
 }

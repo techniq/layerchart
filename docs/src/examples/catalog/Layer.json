@@ -1854,14 +1854,14 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 88,
+      "lineNumber": 98,
       "line": "<Layer>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 121,
+      "lineNumber": 131,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -4021,5 +4021,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:41.549Z"
+  "updatedAt": "2026-04-08T15:37:35.865Z"
 }

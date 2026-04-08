@@ -245,7 +245,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 131,
+      "lineNumber": 141,
       "line": "<Legend"
     },
     {
@@ -536,6 +536,13 @@
       "line": "<Legend"
     },
     {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 59,
+      "line": "<Legend placement=\"bottom\" />"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
@@ -543,5 +550,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.471Z"
+  "updatedAt": "2026-04-08T15:37:35.897Z"
 }

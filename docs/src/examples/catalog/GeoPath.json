@@ -45,32 +45,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 72,
+          "lineNumber": 81,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 88,
+          "lineNumber": 98,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 89,
+          "lineNumber": 99,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 96,
+          "lineNumber": 106,
           "line": "<Circle"
         },
         {
           "component": "Legend",
-          "lineNumber": 131,
+          "lineNumber": 141,
           "line": "<Legend"
         },
         {
+          "component": "CircleLegend",
+          "lineNumber": 148,
+          "line": "<CircleLegend scale={rScale} title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
+        },
+        {
           "component": "Tooltip",
-          "lineNumber": 138,
+          "lineNumber": 150,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -796,28 +801,28 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 89,
+      "lineNumber": 99,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 92,
+      "lineNumber": 102,
       "line": "<GeoPath geojson={feature} {strokeWidth}>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 111,
+      "lineNumber": 121,
       "line": "<GeoPath"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 123,
+      "lineNumber": 133,
       "line": "<GeoPath"
     },
     {
@@ -1479,5 +1484,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-07T16:36:36.526Z"
+  "updatedAt": "2026-04-08T15:37:35.492Z"
 }
