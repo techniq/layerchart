@@ -33,7 +33,7 @@
 			return;
 		}
 
-		// otherewise save to localStorage when selected keys change
+		// otherwise save to localStorage when selected keys change
 		const keys = context?.series?.selectedKeys?.current;
 		if (keys !== undefined) {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
