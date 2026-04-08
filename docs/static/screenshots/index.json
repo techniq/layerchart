@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-07T16:36:34.691Z",
+  "generatedAt": "2026-04-08T04:31:39.169Z",
   "totalComponents": 72,
-  "totalExamples": 860,
+  "totalExamples": 863,
   "components": [
     {
       "component": "AnnotationLine",
@@ -279,7 +279,7 @@
         {
           "name": "series-labels",
           "path": "/example/ArcChart/series-labels",
-          "checksum": "4d83eea18270efbb0069ac8d1caa1f9d"
+          "checksum": "095c9ae85eab6725a0e781c07a8c3869"
         },
         {
           "name": "series-motion-spring",
@@ -1090,6 +1090,11 @@
           "name": "labels-inside-placement",
           "path": "/example/BarChart/labels-inside-placement",
           "checksum": "ccf493026818850c9815fb2c743ce6c1"
+        },
+        {
+          "name": "labels-placement",
+          "path": "/example/BarChart/labels-placement",
+          "checksum": "4d364526a3214078358aebacd5027724"
         },
         {
           "name": "language-race",
@@ -1994,22 +1999,22 @@
         {
           "name": "basic",
           "path": "/example/Chord/basic",
-          "checksum": "70a5efffda6bb0891da3a3c76be1a18e"
+          "checksum": "fe4e57872bdafdb0271d2309f790df0e"
         },
         {
           "name": "directed",
           "path": "/example/Chord/directed",
-          "checksum": "440608905064c0b78a850f99fe8b6512"
+          "checksum": "43b6c339ef5416ba8d888dfcc091bbf6"
         },
         {
           "name": "gradient",
           "path": "/example/Chord/gradient",
-          "checksum": "f4aa01952338e77c8ad582e8c49143ab"
+          "checksum": "59f1b216a61ebbaf63ced045cf4ba345"
         },
         {
           "name": "hover",
           "path": "/example/Chord/hover",
-          "checksum": "b534d518d720e4280c249b098b33686b"
+          "checksum": "9c95ed56d8ed60873629bf23410b3afc"
         },
         {
           "name": "ticks",
@@ -3344,7 +3349,7 @@
         {
           "name": "sunburst",
           "path": "/example/Partition/sunburst",
-          "checksum": "384cf4b9077a43310239d2f3903fb7fa"
+          "checksum": "56f1dc8855cb46f25d626087e6f8118f"
         },
         {
           "name": "vertical",
@@ -3585,6 +3590,16 @@
           "name": "donut-with-text",
           "path": "/example/PieChart/donut-with-text",
           "checksum": "e2d1522aefb38746d6935a8219c7084d"
+        },
+        {
+          "name": "labels",
+          "path": "/example/PieChart/labels",
+          "checksum": "8ca5cd0c228f58739337ddfdf39cf308"
+        },
+        {
+          "name": "labels-callout",
+          "path": "/example/PieChart/labels-callout",
+          "checksum": "7acb378f392440b4692cf728c7f0b70e"
         },
         {
           "name": "legend",

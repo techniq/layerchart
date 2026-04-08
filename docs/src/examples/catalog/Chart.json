@@ -1710,7 +1710,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 70,
+      "lineNumber": 60,
       "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
     },
     {
@@ -2795,8 +2795,8 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 62,
-      "line": "<Chart height={600}>"
+      "lineNumber": 72,
+      "line": "<Chart height={800}>"
     },
     {
       "example": "vertical",
@@ -4066,5 +4066,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-07T16:36:35.950Z"
+  "updatedAt": "2026-04-08T04:31:40.633Z"
 }

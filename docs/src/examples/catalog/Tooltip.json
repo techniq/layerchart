@@ -3781,98 +3781,98 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 152,
+      "lineNumber": 133,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 154,
+      "lineNumber": 135,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 157,
+      "lineNumber": 138,
       "line": "<Tooltip.List>"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 158,
+      "lineNumber": 139,
       "line": "<Tooltip.Item label=\"Value\" value={data.value} format=\"integer\" />"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 150,
+      "lineNumber": 144,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 153,
+      "lineNumber": 147,
       "line": "<Tooltip.Header>{data.name}</Tooltip.Header>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 154,
+      "lineNumber": 148,
       "line": "<Tooltip.List>"
+    },
+    {
+      "example": "hover",
+      "component": "Chord",
+      "path": "/docs/components/Chord/hover",
+      "lineNumber": 150,
+      "line": "<Tooltip.Item"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
       "lineNumber": 156,
-      "line": "<Tooltip.Item"
-    },
-    {
-      "example": "hover",
-      "component": "Chord",
-      "path": "/docs/components/Chord/hover",
-      "lineNumber": 162,
       "line": "<Tooltip.Separator />"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 163,
+      "lineNumber": 157,
       "line": "<Tooltip.Item label=\"Total\" value={data.total} format=\"integer\" />"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 166,
+      "lineNumber": 160,
       "line": "<Tooltip.Header>{data.source} ↔ {data.target}</Tooltip.Header>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 167,
+      "lineNumber": 161,
       "line": "<Tooltip.List>"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 168,
+      "lineNumber": 162,
       "line": "<Tooltip.Item"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 173,
+      "lineNumber": 167,
       "line": "<Tooltip.Item"
     },
     {
@@ -5188,28 +5188,28 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 102,
+      "lineNumber": 142,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 104,
+      "lineNumber": 144,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 105,
+      "lineNumber": 145,
       "line": "<Tooltip.List>"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 106,
+      "lineNumber": 146,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
@@ -6704,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:02.758Z"
+  "updatedAt": "2026-04-08T04:31:42.385Z"
 }

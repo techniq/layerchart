@@ -115,6 +115,30 @@
       ]
     },
     {
+      "name": "labels",
+      "title": "labels",
+      "path": "/docs/components/PieChart/labels",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 35,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "labels-callout",
+      "title": "labels callout",
+      "path": "/docs/components/PieChart/labels-callout",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 31,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
       "name": "legend",
       "title": "legend",
       "path": "/docs/components/PieChart/legend",
@@ -418,6 +442,20 @@
       "line": "<PieChart"
     },
     {
+      "example": "labels",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels",
+      "lineNumber": 35,
+      "line": "<PieChart"
+    },
+    {
+      "example": "labels-callout",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels-callout",
+      "lineNumber": 31,
+      "line": "<PieChart"
+    },
+    {
       "example": "legend",
       "component": "PieChart",
       "path": "/docs/components/PieChart/legend",
@@ -551,5 +589,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.160Z"
+  "updatedAt": "2026-04-08T04:31:41.949Z"
 }

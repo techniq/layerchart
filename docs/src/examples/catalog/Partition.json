@@ -112,32 +112,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 62,
-          "line": "<Chart height={600}>"
+          "lineNumber": 72,
+          "line": "<Chart height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 64,
+          "lineNumber": 74,
           "line": "<Layer center>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 65,
+          "lineNumber": 75,
           "line": "<Bounds"
         },
         {
           "component": "Partition",
-          "lineNumber": 76,
+          "lineNumber": 86,
           "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
         },
         {
           "component": "Arc",
-          "lineNumber": 80,
+          "lineNumber": 97,
           "line": "<Arc"
         },
         {
+          "component": "ClipPath",
+          "lineNumber": 121,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "ArcLabel",
+          "lineNumber": 125,
+          "line": "<ArcLabel"
+        },
+        {
           "component": "Tooltip",
-          "lineNumber": 102,
+          "lineNumber": 142,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -214,7 +224,7 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 76,
+      "lineNumber": 86,
       "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
     },
     {
@@ -225,5 +235,5 @@
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.100Z"
+  "updatedAt": "2026-04-08T04:31:41.861Z"
 }

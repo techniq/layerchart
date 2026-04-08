@@ -577,13 +577,6 @@
       "line": "<Arc"
     },
     {
-      "example": "series-labels",
-      "component": "ArcChart",
-      "path": "/docs/components/ArcChart/series-labels",
-      "lineNumber": 29,
-      "line": "<Arc {...props}>"
-    },
-    {
       "example": "basic",
       "component": "Chord",
       "path": "/docs/components/Chord/basic",
@@ -601,7 +594,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 116,
+      "lineNumber": 103,
       "line": "<Arc"
     },
     {
@@ -629,8 +622,15 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 80,
+      "lineNumber": 97,
       "line": "<Arc"
+    },
+    {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/docs/components/Partition/sunburst",
+      "lineNumber": 123,
+      "line": "<Arc {startAngle} {endAngle} {innerRadius} {outerRadius} />"
     },
     {
       "example": "default-slot-render-each-arc",
@@ -696,5 +696,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:16.352Z"
+  "updatedAt": "2026-04-08T04:31:39.822Z"
 }

@@ -32,14 +32,9 @@
           "line": "<Arc"
         },
         {
-          "component": "Group",
-          "lineNumber": 45,
-          "line": "<Group"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 49,
-          "line": "<Text"
+          "component": "ArcLabel",
+          "lineNumber": 46,
+          "line": "<ArcLabel"
         }
       ]
     },
@@ -74,14 +69,9 @@
           "line": "<Arc"
         },
         {
-          "component": "Group",
-          "lineNumber": 46,
-          "line": "<Group"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 50,
-          "line": "<Text"
+          "component": "ArcLabel",
+          "lineNumber": 47,
+          "line": "<ArcLabel"
         }
       ]
     },
@@ -92,47 +82,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 70,
+          "lineNumber": 60,
           "line": "<Chart height={500} padding={{ top: 50, bottom: 30 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 72,
+          "lineNumber": 62,
           "line": "<Layer center>"
         },
         {
           "component": "Chord",
-          "lineNumber": 73,
+          "lineNumber": 63,
           "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 76,
+          "lineNumber": 66,
           "line": "<LinearGradient"
         },
         {
           "component": "Ribbon",
-          "lineNumber": 84,
+          "lineNumber": 71,
           "line": "<Ribbon"
         },
         {
           "component": "Arc",
-          "lineNumber": 116,
+          "lineNumber": 103,
           "line": "<Arc"
         },
         {
-          "component": "Group",
-          "lineNumber": 128,
-          "line": "<Group"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 134,
-          "line": "<Text"
+          "component": "ArcLabel",
+          "lineNumber": 116,
+          "line": "<ArcLabel"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 152,
+          "lineNumber": 133,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -168,18 +153,13 @@
           "line": "<Arc"
         },
         {
-          "component": "Group",
-          "lineNumber": 126,
-          "line": "<Group"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 132,
-          "line": "<Text"
+          "component": "ArcLabel",
+          "lineNumber": 127,
+          "line": "<ArcLabel"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 150,
+          "lineNumber": 144,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -246,7 +226,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 73,
+      "lineNumber": 63,
       "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={(a, b) => b - a}>"
     },
     {
@@ -264,5 +244,5 @@
       "line": "<Chord {matrix} padAngle={0.05} sortSubgroups={descending} sortChords={descending}>"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:32.331Z"
+  "updatedAt": "2026-04-08T04:31:40.719Z"
 }

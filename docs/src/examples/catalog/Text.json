@@ -346,13 +346,6 @@
       "line": "<Text"
     },
     {
-      "example": "series-labels",
-      "component": "ArcChart",
-      "path": "/docs/components/ArcChart/series-labels",
-      "lineNumber": 31,
-      "line": "<Text"
-    },
-    {
       "example": "explicit-axis-ticks-min-max",
       "component": "Area",
       "path": "/docs/components/Area/explicit-axis-ticks-min-max",
@@ -504,34 +497,6 @@
       "component": "Calendar",
       "path": "/docs/components/Calendar/multiple-years",
       "lineNumber": 40,
-      "line": "<Text"
-    },
-    {
-      "example": "basic",
-      "component": "Chord",
-      "path": "/docs/components/Chord/basic",
-      "lineNumber": 49,
-      "line": "<Text"
-    },
-    {
-      "example": "directed",
-      "component": "Chord",
-      "path": "/docs/components/Chord/directed",
-      "lineNumber": 50,
-      "line": "<Text"
-    },
-    {
-      "example": "gradient",
-      "component": "Chord",
-      "path": "/docs/components/Chord/gradient",
-      "lineNumber": 134,
-      "line": "<Text"
-    },
-    {
-      "example": "hover",
-      "component": "Chord",
-      "path": "/docs/components/Chord/hover",
-      "lineNumber": 132,
       "line": "<Text"
     },
     {
@@ -1018,5 +983,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-02T19:16:02.654Z"
+  "updatedAt": "2026-04-08T04:31:42.326Z"
 }

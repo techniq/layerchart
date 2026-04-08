@@ -163,34 +163,6 @@
     },
     {
       "example": "basic",
-      "component": "Chord",
-      "path": "/docs/components/Chord/basic",
-      "lineNumber": 45,
-      "line": "<Group"
-    },
-    {
-      "example": "directed",
-      "component": "Chord",
-      "path": "/docs/components/Chord/directed",
-      "lineNumber": 46,
-      "line": "<Group"
-    },
-    {
-      "example": "gradient",
-      "component": "Chord",
-      "path": "/docs/components/Chord/gradient",
-      "lineNumber": 128,
-      "line": "<Group"
-    },
-    {
-      "example": "hover",
-      "component": "Chord",
-      "path": "/docs/components/Chord/hover",
-      "lineNumber": 126,
-      "line": "<Group"
-    },
-    {
-      "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
       "lineNumber": 65,
@@ -400,5 +372,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.283Z"
+  "updatedAt": "2026-04-08T04:31:41.369Z"
 }

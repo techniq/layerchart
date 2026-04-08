@@ -711,6 +711,18 @@
       ]
     },
     {
+      "name": "labels-placement",
+      "title": "labels placement",
+      "path": "/docs/components/BarChart/labels-placement",
+      "components": [
+        {
+          "component": "BarChart",
+          "lineNumber": 35,
+          "line": "<BarChart {data} x=\"date\" y=\"value\" labels={{ placement }} yPadding={[20, 20]} height={300} />"
+        }
+      ]
+    },
+    {
       "name": "language-race",
       "title": "language race",
       "path": "/docs/components/BarChart/language-race",
@@ -1798,6 +1810,13 @@
       "line": "<BarChart {data} x=\"date\" y=\"value\" labels={{ placement: 'inside' }} height={300} />"
     },
     {
+      "example": "labels-placement",
+      "component": "BarChart",
+      "path": "/docs/components/BarChart/labels-placement",
+      "lineNumber": 35,
+      "line": "<BarChart {data} x=\"date\" y=\"value\" labels={{ placement }} yPadding={[20, 20]} height={300} />"
+    },
+    {
       "example": "legend-custom-labels",
       "component": "BarChart",
       "path": "/docs/components/BarChart/legend-custom-labels",
@@ -2232,5 +2251,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-01T23:39:53.231Z"
+  "updatedAt": "2026-04-08T04:31:40.308Z"
 }

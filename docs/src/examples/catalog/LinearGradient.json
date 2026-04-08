@@ -311,7 +311,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 76,
+      "lineNumber": 66,
       "line": "<LinearGradient"
     },
     {
@@ -574,5 +574,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.942Z"
+  "updatedAt": "2026-04-08T04:31:41.694Z"
 }

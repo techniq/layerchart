@@ -38,6 +38,13 @@
       "line": "<ClipPath useId=\"clip\">"
     },
     {
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/docs/components/Partition/sunburst",
+      "lineNumber": 121,
+      "line": "<ClipPath>"
+    },
+    {
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
@@ -45,5 +52,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:17.746Z"
+  "updatedAt": "2026-04-08T04:31:40.793Z"
 }

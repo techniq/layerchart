@@ -138,16 +138,6 @@
           "component": "ArcChart",
           "lineNumber": 12,
           "line": "<ArcChart"
-        },
-        {
-          "component": "Arc",
-          "lineNumber": 29,
-          "line": "<Arc {...props}>"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 31,
-          "line": "<Text"
         }
       ]
     },
@@ -338,5 +328,5 @@
       "line": "<ArcChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.242Z"
+  "updatedAt": "2026-04-08T04:31:39.852Z"
 }

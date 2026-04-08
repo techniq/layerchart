@@ -1,42 +1,42 @@
 {
-  "component": "Ribbon",
+  "component": "ArcLabel",
   "examples": [],
   "usage": [
     {
       "example": "basic",
       "component": "Chord",
       "path": "/docs/components/Chord/basic",
-      "lineNumber": 27,
-      "line": "<Ribbon"
+      "lineNumber": 46,
+      "line": "<ArcLabel"
     },
     {
       "example": "directed",
       "component": "Chord",
       "path": "/docs/components/Chord/directed",
-      "lineNumber": 26,
-      "line": "<Ribbon"
+      "lineNumber": 47,
+      "line": "<ArcLabel"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 71,
-      "line": "<Ribbon"
+      "lineNumber": 116,
+      "line": "<ArcLabel"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 57,
-      "line": "<Ribbon"
+      "lineNumber": 127,
+      "line": "<ArcLabel"
     },
     {
-      "example": "ticks",
-      "component": "Chord",
-      "path": "/docs/components/Chord/ticks",
-      "lineNumber": 41,
-      "line": "<Ribbon"
+      "example": "sunburst",
+      "component": "Partition",
+      "path": "/docs/components/Partition/sunburst",
+      "lineNumber": 125,
+      "line": "<ArcLabel"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:42.161Z"
+  "updatedAt": "2026-04-08T04:31:39.903Z"
 }

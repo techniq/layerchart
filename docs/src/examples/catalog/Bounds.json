@@ -20,7 +20,7 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 65,
+      "lineNumber": 75,
       "line": "<Bounds"
     },
     {
@@ -45,5 +45,5 @@
       "line": "<Bounds domain={asAny(selected)} motion={{ type: 'tween', duration: 800, easing: cubicOut }}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:30.943Z"
+  "updatedAt": "2026-04-08T04:31:40.465Z"
 }
