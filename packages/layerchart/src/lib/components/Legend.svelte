@@ -78,6 +78,14 @@
     selected?: string[];
 
     /**
+     * Value to indicate on the ramp (e.g. the currently hovered data point).
+     * When set, a downward-pointing arrow is drawn above the bar at this value's
+     * position. Defaults to auto-detecting from `ctx.tooltip.data` via the
+     * chart's color accessor (`ctx.c`).
+     */
+    value?: number | string | null;
+
+    /**
      * Classes to apply to the elements.
      *
      * @default {}
@@ -149,6 +157,7 @@
     onpointerleave: onpointerleaveProp,
     variant: variantProp,
     selected: selectedProp,
+    value: valueProp,
     classes = {},
     ref: refProp = $bindable(),
     class: className,
@@ -345,6 +354,36 @@
   const variant = $derived(variantProp ?? (seriesItems ? 'swatches' : 'ramp'));
   const selected = $derived(selectedProp ?? ctx.series?.selectedKeys?.current ?? []);
 
+  // Position indicator for the currently hovered value on the ramp. If `value`
+  // is explicitly provided, use it; otherwise fall back to `ctx.tooltip.data`
+  // piped through the chart's color accessor (`ctx.c`).
+  const indicatorX = $derived.by(() => {
+    if (variant !== 'ramp' || !scale) return null;
+    let value: any = valueProp;
+    if (value == null) {
+      const data = ctx.tooltip?.data;
+      if (data == null) return null;
+      value = ctx.c?.(data);
+    }
+    if (value == null) return null;
+
+    // Threshold / quantize / quantile scales — scaleConfig.xScale maps swatch
+    // *indices* to pixels, not the raw domain value. Find which bucket the
+    // value falls into and center on that swatch.
+    if ((scale as any).invertExtent) {
+      const i = scale.range().indexOf(scale(value));
+      if (i < 0) return null;
+      const x0 = scaleConfig.xScale?.(i - 1);
+      const x1 = scaleConfig.xScale?.(i);
+      if (typeof x0 !== 'number' || typeof x1 !== 'number') return null;
+      return (x0 + x1) / 2;
+    }
+
+    const x = scaleConfig.xScale?.(value);
+    if (typeof x !== 'number' || !Number.isFinite(x)) return null;
+    return x + scaleConfig.tickLabelOffset;
+  });
+
   const swatchItems = $derived.by(() => {
     if (seriesItems) {
       // Series-based legend items
@@ -397,10 +436,13 @@
       seriesItems,
     })}
   {:else if variant === 'ramp'}
+    {@const indicatorSize = 6}
+    {@const tickLabelY = height + tickLengthProp + tickFontSize}
+    {@const svgHeight = tickLabelY}
     <svg
       {width}
-      height={height + tickLengthProp + tickFontSize}
-      viewBox="0 0 {width} {height + tickLengthProp + tickFontSize}"
+      height={svgHeight}
+      viewBox="0 0 {width} {svgHeight}"
       class={cls('lc-legend-ramp-svg')}
     >
       <g class="lc-legend-ramp-g">
@@ -423,7 +465,7 @@
           <text
             text-anchor="middle"
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
-            y={height + tickLengthProp + tickFontSize}
+            y={tickLabelY}
             style:font-size={tickFontSize}
             class={cls('lc-legend-tick-text', classes.label)}
           >
@@ -442,6 +484,15 @@
           {/if}
         {/each}
       </g>
+
+      {#if indicatorX != null}
+        <path
+          d="M{indicatorX - 4},{height + indicatorSize + 1} L{indicatorX + 4},{height +
+            indicatorSize +
+            1} L{indicatorX},{height} Z"
+          class={cls('lc-legend-indicator')}
+        />
+      {/if}
     </svg>
   {:else if variant === 'swatches'}
     <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
@@ -535,6 +586,10 @@
 
     :where(.lc-legend-tick-line) {
       stroke: var(--color-surface-content, currentColor);
+    }
+
+    :where(.lc-legend-indicator) {
+      fill: var(--color-surface-content, currentColor);
     }
 
     :where(.lc-legend-swatch-group) {

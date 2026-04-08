@@ -96,6 +96,14 @@
     strokeWidth?: number;
 
     /**
+     * Value to indicate on the legend (e.g. the currently hovered data point).
+     * When set, a 50%-opacity filled circle is drawn at this value's radius.
+     * Defaults to auto-detecting from `ctx.tooltip.data` via the chart's
+     * radius accessor (`ctx.r`).
+     */
+    value?: number | null;
+
+    /**
      * Classes to apply to the elements.
      *
      * @default {}
@@ -143,6 +151,7 @@
     fill = 'none',
     stroke = 'currentColor',
     strokeWidth = 1,
+    value: valueProp,
     classes = {},
     ref: refProp = $bindable(),
     class: className,
@@ -187,6 +196,23 @@
   });
 
   const maxRadius = $derived(items[0]?.radius ?? 0);
+
+  // Indicator for the currently hovered value. If `value` is explicitly
+  // provided, use it; otherwise fall back to `ctx.tooltip.data` piped through
+  // the chart's radius accessor (`ctx.r`).
+  const indicatorRadius = $derived.by(() => {
+    if (!scale) return null;
+    let value: any = valueProp;
+    if (value == null) {
+      const data = ctx.tooltip?.data;
+      if (data == null) return null;
+      value = ctx.r?.(data);
+    }
+    if (value == null) return null;
+    const r = Number(scale(value));
+    if (!Number.isFinite(r) || r <= 0) return null;
+    return r;
+  });
 
   const padding = $derived(Math.ceil(strokeWidth / 2));
   const titleHeight = $derived(title ? titleFontSize + 6 : 0);
@@ -233,6 +259,16 @@
         </text>
       {/if}
       <g class="lc-circle-legend-g">
+        {#if indicatorRadius != null}
+          <circle
+            {cx}
+            cy={baseY - indicatorRadius}
+            r={indicatorRadius}
+            fill={stroke}
+            fill-opacity="0.5"
+            class={cls('lc-circle-legend-indicator')}
+          />
+        {/if}
         {#each items as item (item.value)}
           <circle
             {cx}
@@ -344,6 +380,10 @@
 
     :where(.lc-circle-legend-circle) {
       stroke: var(--color-surface-content, currentColor);
+    }
+
+    :where(.lc-circle-legend-indicator) {
+      fill: var(--color-surface-content, currentColor);
     }
   }
 </style>
