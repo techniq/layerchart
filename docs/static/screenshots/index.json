@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-08T15:43:46.172Z",
-  "totalComponents": 73,
-  "totalExamples": 866,
+  "generatedAt": "2026-04-08T20:33:53.532Z",
+  "totalComponents": 74,
+  "totalExamples": 872,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2349,6 +2349,41 @@
       ]
     },
     {
+      "component": "GeoLegend",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/GeoLegend/basic",
+          "checksum": "2cd910671731f80b97191b99d2b37572"
+        },
+        {
+          "name": "canvas-mode",
+          "path": "/example/GeoLegend/canvas-mode",
+          "checksum": "5ff86a85660654ee0c370877db9b80da"
+        },
+        {
+          "name": "stacked-units",
+          "path": "/example/GeoLegend/stacked-units",
+          "checksum": "409a50755400a74497478fad3ca54840"
+        },
+        {
+          "name": "tick-format",
+          "path": "/example/GeoLegend/tick-format",
+          "checksum": "a69fbf09edff7d64856bc5d01445ea17"
+        },
+        {
+          "name": "ticks",
+          "path": "/example/GeoLegend/ticks",
+          "checksum": "863a3f97070cece60a6dbdfc12da90c4"
+        },
+        {
+          "name": "variants",
+          "path": "/example/GeoLegend/variants",
+          "checksum": "dca3b61a2b84b51c693e55b8d5e9a6fd"
+        }
+      ]
+    },
+    {
       "component": "GeoPath",
       "examples": [
         {
@@ -2359,7 +2394,7 @@
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "bdac4fc8a376ec0c2906fd0ccbeebe96"
+          "checksum": "39c981f4a56931463a5ea794d13823b7"
         },
         {
           "name": "choropleth",

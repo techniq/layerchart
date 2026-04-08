@@ -1851,17 +1851,31 @@
       "line": "<Layer>"
     },
     {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
       "example": "tick-format",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/tick-format",
-      "lineNumber": 18,
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
+      "lineNumber": 24,
       "line": "<Layer>"
     },
     {
       "example": "variants",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/variants",
-      "lineNumber": 22,
+      "lineNumber": 23,
       "line": "<Layer>"
     },
     {
@@ -4049,5 +4063,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-08T16:38:01.760Z"
+  "updatedAt": "2026-04-08T20:33:55.879Z"
 }

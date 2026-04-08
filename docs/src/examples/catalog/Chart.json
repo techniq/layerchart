@@ -2078,9 +2078,23 @@
       "line": "<Chart"
     },
     {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
       "example": "tick-format",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/tick-format",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
       "lineNumber": 11,
       "line": "<Chart"
     },
@@ -4101,5 +4115,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-08T16:38:00.454Z"
+  "updatedAt": "2026-04-08T20:33:54.649Z"
 }

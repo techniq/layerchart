@@ -796,17 +796,31 @@
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 25,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
       "example": "tick-format",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/tick-format",
-      "lineNumber": 19,
+      "lineNumber": 25,
       "line": "<GeoPath geojson={countries} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
+      "lineNumber": 25,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "variants",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/variants",
-      "lineNumber": 23,
+      "lineNumber": 24,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
@@ -1517,5 +1531,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-08T16:38:01.157Z"
+  "updatedAt": "2026-04-08T20:33:55.312Z"
 }
