@@ -11,6 +11,7 @@
 		Chart,
 		Circle,
 		CircleLegend,
+		GeoLegend,
 		GeoPath,
 		Layer,
 		Legend,
@@ -146,6 +147,8 @@
 		/>
 
 		<CircleLegend scale={rScale} title="Population" tickFormat="metric" placement="bottom-right" />
+
+		<GeoLegend units="mi" placement="bottom-left" class="m-2" />
 
 		<Tooltip.Root>
 			{#snippet children({ data })}

@@ -4110,42 +4110,42 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 150,
+      "lineNumber": 153,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 153,
+      "lineNumber": 156,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 156,
+      "lineNumber": 159,
       "line": "<Tooltip.List>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 157,
+      "lineNumber": 160,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 163,
+      "lineNumber": 166,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 169,
+      "lineNumber": 172,
       "line": "<Tooltip.Item"
     },
     {
@@ -6704,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-08T15:37:36.811Z"
+  "updatedAt": "2026-04-08T15:58:19.027Z"
 }

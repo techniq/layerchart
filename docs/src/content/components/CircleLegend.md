@@ -2,7 +2,7 @@
 description: Nested-circle legend used to communicate values encoded by circle radius (typically `Chart` `rScale`). Inspired by Harry Stevens' Observable circle legend.
 category: common
 layers: [html]
-related: [Legend, Chart, ScatterChart, GeoPath]
+related: [Legend, GeoLegend, Chart, ScatterChart, GeoPath]
 ---
 
 ## Usage

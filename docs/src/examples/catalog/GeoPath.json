@@ -45,37 +45,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 81,
+          "lineNumber": 82,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 98,
+          "lineNumber": 99,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 99,
+          "lineNumber": 100,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 106,
+          "lineNumber": 107,
           "line": "<Circle"
         },
         {
           "component": "Legend",
-          "lineNumber": 141,
+          "lineNumber": 142,
           "line": "<Legend"
         },
         {
           "component": "CircleLegend",
-          "lineNumber": 148,
+          "lineNumber": 149,
           "line": "<CircleLegend scale={rScale} title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
         },
         {
+          "component": "GeoLegend",
+          "lineNumber": 151,
+          "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+        },
+        {
           "component": "Tooltip",
-          "lineNumber": 150,
+          "lineNumber": 153,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -777,6 +782,34 @@
       "line": "<GeoPath"
     },
     {
+      "example": "basic",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/basic",
+      "lineNumber": 28,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "canvas-mode",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/canvas-mode",
+      "lineNumber": 28,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "tick-format",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/tick-format",
+      "lineNumber": 19,
+      "line": "<GeoPath geojson={countries} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
+      "example": "variants",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/variants",
+      "lineNumber": 23,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+    },
+    {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
@@ -801,28 +834,28 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 99,
+      "lineNumber": 100,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 102,
+      "lineNumber": 103,
       "line": "<GeoPath geojson={feature} {strokeWidth}>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 121,
+      "lineNumber": 122,
       "line": "<GeoPath"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 133,
+      "lineNumber": 134,
       "line": "<GeoPath"
     },
     {
@@ -1484,5 +1517,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-08T15:37:35.492Z"
+  "updatedAt": "2026-04-08T16:38:01.157Z"
 }

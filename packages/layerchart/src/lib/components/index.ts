@@ -99,6 +99,8 @@ export { default as Layer } from './layers/Layer.svelte';
 export * from './layers/Layer.svelte';
 export { default as CircleLegend } from './CircleLegend.svelte';
 export * from './CircleLegend.svelte';
+export { default as GeoLegend } from './GeoLegend.svelte';
+export * from './GeoLegend.svelte';
 export { default as Legend } from './Legend.svelte';
 export * from './Legend.svelte';
 export { default as Line } from './Line.svelte';
