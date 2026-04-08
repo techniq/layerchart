@@ -38,7 +38,7 @@
         {
           "component": "CircleLegend",
           "lineNumber": 12,
-          "line": "<CircleLegend scale={linear} title=\"Linear\" />"
+          "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
         }
       ]
     }
@@ -77,14 +77,14 @@
       "component": "CircleLegend",
       "path": "/docs/components/CircleLegend/scale-types",
       "lineNumber": 12,
-      "line": "<CircleLegend scale={linear} title=\"Linear\" />"
+      "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
     },
     {
       "example": "scale-types",
       "component": "CircleLegend",
       "path": "/docs/components/CircleLegend/scale-types",
       "lineNumber": 13,
-      "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
+      "line": "<CircleLegend scale={linear} title=\"Linear\" tickFormat=\"metric\" />"
     },
     {
       "example": "scale-types",
@@ -115,5 +115,5 @@
       "line": "<CircleLegend"
     }
   ],
-  "updatedAt": "2026-04-08T15:37:35.142Z"
+  "updatedAt": "2026-04-08T15:43:47.208Z"
 }

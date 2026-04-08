@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-08T04:31:39.169Z",
-  "totalComponents": 72,
-  "totalExamples": 863,
+  "generatedAt": "2026-04-08T15:43:46.172Z",
+  "totalComponents": 73,
+  "totalExamples": 866,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2059,6 +2059,26 @@
       ]
     },
     {
+      "component": "CircleLegend",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/CircleLegend/basic",
+          "checksum": "675b5d43f0013dc2c2263093dfc6c430"
+        },
+        {
+          "name": "label-placement",
+          "path": "/example/CircleLegend/label-placement",
+          "checksum": "5ad3767fcafc04e0d1db7ba60300e0d7"
+        },
+        {
+          "name": "scale-types",
+          "path": "/example/CircleLegend/scale-types",
+          "checksum": "d7fbf59d4c5254801cb26b6a6985a590"
+        }
+      ]
+    },
+    {
       "component": "ColorRamp",
       "examples": [
         {
@@ -2339,7 +2359,7 @@
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "c4f75c4b6bd75a43352d4e05ee9d97fe"
+          "checksum": "bdac4fc8a376ec0c2906fd0ccbeebe96"
         },
         {
           "name": "choropleth",
@@ -4204,7 +4224,7 @@
         {
           "name": "zoomable-bubble",
           "path": "/example/ScatterChart/zoomable-bubble",
-          "checksum": "27cf489c0c3b91c7f6a7fe2ce524834b"
+          "checksum": "bc70d5c7302546a0390ea95316a58dc8"
         }
       ]
     },
