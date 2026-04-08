@@ -245,14 +245,14 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 142,
+      "lineNumber": 140,
       "line": "<Legend"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 100,
+      "lineNumber": 102,
       "line": "<Legend"
     },
     {
@@ -550,5 +550,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-04-08T15:58:17.898Z"
+  "updatedAt": "2026-04-08T22:44:11.402Z"
 }

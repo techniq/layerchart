@@ -461,7 +461,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 107,
+      "lineNumber": 108,
       "line": "<Circle"
     },
     {
@@ -920,5 +920,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-08T15:58:16.677Z"
+  "updatedAt": "2026-04-08T22:44:10.553Z"
 }

@@ -1896,28 +1896,28 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 99,
+      "lineNumber": 105,
       "line": "<Layer>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 132,
+      "lineNumber": 130,
       "line": "<Layer pointerEvents={false}>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<Layer>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 94,
+      "lineNumber": 96,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -4063,5 +4063,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-08T20:33:55.879Z"
+  "updatedAt": "2026-04-08T22:44:11.379Z"
 }

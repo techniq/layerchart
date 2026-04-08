@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-08T20:33:53.532Z",
+  "generatedAt": "2026-04-08T22:44:09.250Z",
   "totalComponents": 74,
   "totalExamples": 872,
   "components": [
@@ -2394,12 +2394,12 @@
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "39c981f4a56931463a5ea794d13823b7"
+          "checksum": "94e81c78b08833d8fb5d40dd556a721f"
         },
         {
           "name": "choropleth",
           "path": "/example/GeoPath/choropleth",
-          "checksum": "8c627fae6f996e32ebb0e5b557e29627"
+          "checksum": "4dd718c7dd5f28d641c90e5a4cdffac9"
         },
         {
           "name": "eclipses-globe",
@@ -3024,7 +3024,7 @@
         {
           "name": "gradient-encoding",
           "path": "/example/LineChart/gradient-encoding",
-          "checksum": "864e41fb38f7f2434199f54f76b548a3"
+          "checksum": "c6fa40fcde6d7d00c011367e973c579a"
         },
         {
           "name": "gradient-threshold",

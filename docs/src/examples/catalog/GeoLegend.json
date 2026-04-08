@@ -218,9 +218,9 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 151,
+      "lineNumber": 148,
       "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
     }
   ],
-  "updatedAt": "2026-04-08T20:33:55.230Z"
+  "updatedAt": "2026-04-08T22:44:10.931Z"
 }

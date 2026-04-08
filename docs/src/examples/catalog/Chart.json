@@ -2116,14 +2116,14 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 82,
+      "lineNumber": 81,
       "line": "<Chart"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 58,
+      "lineNumber": 54,
       "line": "<Chart"
     },
     {
@@ -4115,5 +4115,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-08T20:33:54.649Z"
+  "updatedAt": "2026-04-08T22:44:10.427Z"
 }

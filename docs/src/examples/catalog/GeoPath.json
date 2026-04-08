@@ -45,42 +45,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 82,
+          "lineNumber": 81,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 99,
+          "lineNumber": 105,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 100,
+          "lineNumber": 106,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 107,
+          "lineNumber": 108,
           "line": "<Circle"
         },
         {
           "component": "Legend",
-          "lineNumber": 142,
+          "lineNumber": 140,
           "line": "<Legend"
         },
         {
           "component": "CircleLegend",
-          "lineNumber": 149,
-          "line": "<CircleLegend scale={rScale} title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
+          "lineNumber": 146,
+          "line": "<CircleLegend title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 151,
+          "lineNumber": 148,
           "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 153,
+          "lineNumber": 150,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -92,27 +92,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 54,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 75,
+          "lineNumber": 77,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 77,
+          "lineNumber": 79,
           "line": "<GeoPath"
         },
         {
           "component": "Legend",
-          "lineNumber": 100,
+          "lineNumber": 102,
           "line": "<Legend"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 106,
+          "lineNumber": 107,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -848,49 +848,42 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 100,
+      "lineNumber": 106,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 103,
-      "line": "<GeoPath geojson={feature} {strokeWidth}>"
-    },
-    {
-      "example": "bubble-map",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 122,
+      "lineNumber": 120,
       "line": "<GeoPath"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 134,
+      "lineNumber": 132,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 77,
+      "lineNumber": 79,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 86,
+      "lineNumber": 88,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 96,
+      "lineNumber": 98,
       "line": "<GeoPath geojson={context.tooltip.data} class=\"stroke-white\" {strokeWidth} />"
     },
     {
@@ -1531,5 +1524,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-08T20:33:55.312Z"
+  "updatedAt": "2026-04-08T22:44:11.017Z"
 }

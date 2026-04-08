@@ -4110,84 +4110,84 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 153,
+      "lineNumber": 150,
       "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/bubble-map",
+      "lineNumber": 153,
+      "line": "<Tooltip.Header>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
       "lineNumber": 156,
-      "line": "<Tooltip.Header>"
-    },
-    {
-      "example": "bubble-map",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 159,
       "line": "<Tooltip.List>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 160,
+      "lineNumber": 157,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 166,
+      "lineNumber": 163,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 172,
+      "lineNumber": 169,
       "line": "<Tooltip.Item"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 106,
+      "lineNumber": 107,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 109,
+      "lineNumber": 110,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 112,
+      "lineNumber": 113,
       "line": "<Tooltip.List>"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 113,
+      "lineNumber": 114,
       "line": "<Tooltip.Item"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 119,
+      "lineNumber": 120,
       "line": "<Tooltip.Item"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 125,
+      "lineNumber": 126,
       "line": "<Tooltip.Item"
     },
     {
@@ -6704,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-08T15:58:19.027Z"
+  "updatedAt": "2026-04-08T22:44:12.343Z"
 }

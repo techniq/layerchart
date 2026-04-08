@@ -205,12 +205,12 @@
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 22,
+          "lineNumber": 24,
           "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
         },
         {
           "component": "Spline",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Spline stroke={gradient} />"
         }
       ]
@@ -1618,5 +1618,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.922Z"
+  "updatedAt": "2026-04-08T22:44:11.477Z"
 }

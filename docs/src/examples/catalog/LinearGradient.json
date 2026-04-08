@@ -458,7 +458,7 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 22,
+      "lineNumber": 24,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
     },
     {
@@ -574,5 +574,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:41.694Z"
+  "updatedAt": "2026-04-08T22:44:11.497Z"
 }
