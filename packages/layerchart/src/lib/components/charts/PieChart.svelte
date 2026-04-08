@@ -227,9 +227,11 @@
     ...restProps
   }: PieChartProps<TData> = $props();
 
-  const labelsConfig = $derived(
-    labels === true ? ({} as ArcLabelConfig & { value?: Accessor }) : labels || null
-  );
+  const labelsConfig = $derived.by<(ArcLabelConfig & { value?: Accessor }) | null>(() => {
+    if (labels === true) return { placement: 'callout' };
+    if (labels) return { placement: 'callout', ...labels };
+    return null;
+  });
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp

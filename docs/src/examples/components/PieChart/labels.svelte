@@ -5,16 +5,16 @@
 	import { fruitColors } from '$lib/utils/fruits';
 
 	const placements: { label: string; value: ArcLabelPlacement }[] = [
+		{ label: 'Callout', value: 'callout' },
 		{ label: 'Centroid', value: 'centroid' },
 		{ label: 'Centroid (rotated)', value: 'centroid-rotated' },
 		{ label: 'Centroid (radial)', value: 'centroid-radial' },
 		{ label: 'Inner', value: 'inner' },
 		{ label: 'Middle', value: 'middle' },
-		{ label: 'Outer', value: 'outer' },
-		{ label: 'Callout', value: 'callout' }
+		{ label: 'Outer', value: 'outer' }
 	];
 
-	let placement: ArcLabelPlacement = $state('centroid');
+	let placement: ArcLabelPlacement = $state('callout');
 	let offset = $state(0);
 
 	const data = longData.filter((d) => d.year === 2019);
