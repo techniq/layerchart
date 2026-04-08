@@ -13,7 +13,7 @@ related: [Chart, Pie]
 
 Enable arc labels via the `labels` prop. Pass `true` for defaults, or an object to configure placement and other [`ArcLabel`](/docs/components/ArcLabel) props.
 
-:example{ name="labels" }
+:example{ name="series-labels" }
 
 <!-- ## Examples
 
