@@ -9,6 +9,8 @@ export { default as AnnotationRange } from './AnnotationRange.svelte';
 export * from './AnnotationRange.svelte';
 export { default as Arc } from './Arc.svelte';
 export * from './Arc.svelte';
+export { default as ArcLabel } from './ArcLabel.svelte';
+export * from './ArcLabel.svelte';
 export { default as Area } from './Area.svelte';
 export * from './Area.svelte';
 export { default as Axis } from './Axis.svelte';

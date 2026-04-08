@@ -9,6 +9,12 @@ related: [Chart, Pie]
 
 :example{ name="basic" showCode }
 
+### Labels
+
+Enable arc labels via the `labels` prop. Pass `true` for defaults, or an object to configure placement and other [`ArcLabel`](/docs/components/ArcLabel) props.
+
+:example{ name="labels" }
+
 <!-- ## Examples
 
 ### Basic

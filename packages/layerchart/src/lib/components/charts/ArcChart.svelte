@@ -7,6 +7,7 @@
   import type { SeriesData } from './types.js';
 
   import Arc from '../Arc.svelte';
+  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
   import Group from '../Group.svelte';
 
   export type ArcChartExtraSnippetProps<TData> = {
@@ -28,8 +29,15 @@
     ChartProps<any>,
     // Props that don't apply to ArcChart
     'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
-  > &
-    Pick<
+  > & {
+      /**
+       * Render text labels on each arc.
+       *
+       * Pass `true` to enable with default placement (`centroid`), or an object
+       * to customize via `ArcLabel` props (placement, format, value accessor, etc).
+       */
+      labels?: boolean | (ArcLabelConfig & { value?: Accessor });
+    } & Pick<
       ArcPropsWithoutHTML,
       | 'cornerRadius'
       | 'trackCornerRadius'
@@ -163,6 +171,7 @@
     marks,
     tooltip: tooltipProp,
     arc,
+    labels = false,
     context = $bindable(),
     trackCornerRadius,
     trackPadAngle,
@@ -174,6 +183,10 @@
   }: ArcChartProps<TData> = $props();
 
   const center = $derived(centerProp ?? placement === 'center');
+
+  const labelsConfig = $derived(
+    labels === true ? ({} as ArcLabelConfig & { value?: Accessor }) : labels || null
+  );
 
   const c = $derived(cProp ?? key);
 
@@ -359,6 +372,30 @@
               seriesIndex: i,
               props: getArcProps(s, i),
             })}
+          {:else if labelsConfig}
+            {@const arcProps = getArcProps(s, i)}
+            <Arc {...arcProps}>
+              {#snippet children({
+                centroid,
+                startAngle,
+                endAngle,
+                innerRadius: arcInnerRadius,
+                outerRadius: arcOuterRadius,
+                getArcTextProps,
+              })}
+                {@const { value: labelValue, ...labelRest } = labelsConfig}
+                <ArcLabel
+                  {centroid}
+                  {startAngle}
+                  {endAngle}
+                  innerRadius={arcInnerRadius}
+                  outerRadius={arcOuterRadius}
+                  {getArcTextProps}
+                  value={accessor(labelValue ?? value)(s.data?.[0] || chartData[0])}
+                  {...labelRest}
+                />
+              {/snippet}
+            </Arc>
           {:else}
             <Arc {...getArcProps(s, i)} />
           {/if}

@@ -177,9 +177,16 @@ export type ArcTextOptions = {
 
   /**
    * An amount of padding to add to the outer radius of the path to add space
-   * between the text and the arc.
+   * between the text and the arc. Applies to `'outer'` and `'middle'` positions.
    */
   outerPadding?: number;
+
+  /**
+   * An amount of padding to subtract from the inner radius of the path to add
+   * space between the text and the arc. Applies to `'inner'` and `'middle'`
+   * positions. Positive values move the text inward (toward the chart center).
+   */
+  innerPadding?: number;
 
   /**
    * Optional offset specifically for 'outer-radial' position from the outer arc edge.
@@ -272,14 +279,18 @@ export function createArcTextProps(
   });
 
   const sharedProps = $derived.by(() => {
-    if (reverseText) {
+    // Center text along the arc path by default (50% startOffset, middle anchor).
+    // When the caller provides an explicit `startOffset`, honor it with a `start`
+    // anchor so the text begins at that position instead of centering around it.
+    if (opts.startOffset != null) {
       return {
-        startOffset: opts.startOffset ?? '100%',
-        textAnchor: 'end' as const,
+        startOffset: opts.startOffset,
+        textAnchor: 'start' as const,
       };
     }
     return {
-      startOffset: opts.startOffset ?? undefined,
+      startOffset: '50%',
+      textAnchor: 'middle' as const,
     };
   });
 

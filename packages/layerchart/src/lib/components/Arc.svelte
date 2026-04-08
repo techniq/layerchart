@@ -149,6 +149,10 @@
           centroid: [number, number];
           boundingBox: DOMRect;
           value: number;
+          startAngle: number;
+          endAngle: number;
+          innerRadius: number;
+          outerRadius: number;
           getTrackTextProps: GetArcTextProps;
           getArcTextProps: GetArcTextProps;
         },
@@ -370,8 +374,8 @@
       {
         startAngle: () => trackStartAngle,
         endAngle: () => trackEndAngle,
-        outerRadius: () => trackOuterRadius + (opts.outerPadding ? opts.outerPadding : 0),
-        innerRadius: () => trackInnerRadius,
+        outerRadius: () => trackOuterRadius + (opts.outerPadding ?? 0),
+        innerRadius: () => trackInnerRadius - (opts.innerPadding ?? 0),
         cornerRadius: () => trackCornerRadius,
         centroid: () => trackArcCentroid,
       },
@@ -385,8 +389,8 @@
       {
         startAngle: () => startAngle,
         endAngle: () => arcEndAngle,
-        outerRadius: () => outerRadius + (opts.outerPadding ? opts.outerPadding : 0),
-        innerRadius: () => innerRadius,
+        outerRadius: () => outerRadius + (opts.outerPadding ?? 0),
+        innerRadius: () => innerRadius - (opts.innerPadding ?? 0),
         cornerRadius: () => cornerRadius,
         centroid: () => trackArcCentroid,
       },
@@ -432,6 +436,10 @@
   centroid: trackArcCentroid,
   boundingBox,
   value: motionEndAngle.current,
+  startAngle,
+  endAngle: arcEndAngle,
+  innerRadius,
+  outerRadius,
   getTrackTextProps: getTrackTextProps,
   getArcTextProps: getArcTextProps,
 })}

@@ -5,7 +5,17 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { getFlare } from '$lib/data.remote';
-	import { Arc, Bounds, Chart, Layer, Partition, Tooltip, findAncestor } from 'layerchart';
+	import {
+		Arc,
+		ArcLabel,
+		Bounds,
+		Chart,
+		ClipPath,
+		Layer,
+		Partition,
+		Tooltip,
+		findAncestor
+	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 	import SunburstControls from '$lib/components/controls/SunburstControls.svelte';
@@ -59,7 +69,7 @@
 	</Button>
 </Breadcrumb>
 
-<Chart height={600}>
+<Chart height={800}>
 	{#snippet children({ context })}
 		<Layer center>
 			<Bounds
@@ -76,22 +86,52 @@
 					<Partition hierarchy={complexHierarchy} size={[1, 1]}>
 						{#snippet children({ nodes })}
 							{#each nodes as node}
+								{@const isRoot = node.depth === 0}
 								{@const nodeColor = getNodeColor(node, colorBy)}
+								{@const startAngle = Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
+								{@const endAngle = Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
+								{@const innerRadius = Math.max(0, yScale(node.y0))}
+								{@const outerRadius = Math.max(0, yScale(node.y1))}
+								{@const angle = endAngle - startAngle}
+								{@const thickness = outerRadius - innerRadius}
 								<Arc
 									value={node.value}
-									startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
-									endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
-									innerRadius={Math.max(0, yScale(node.y0))}
-									outerRadius={Math.max(0, yScale(node.y1))}
-									fill={nodeColor}
-									stroke="black"
-									class="cursor-pointer"
+									{startAngle}
+									{endAngle}
+									{innerRadius}
+									{outerRadius}
+									fill={isRoot ? 'transparent' : nodeColor}
+									class={isRoot
+										? 'stroke-none cursor-pointer'
+										: 'stroke-surface-300 cursor-pointer'}
 									onclick={() => {
 										selected = node;
 									}}
 									onpointermove={(e) => context.tooltip.show(e, node)}
 									onpointerleave={context.tooltip.hide}
-								></Arc>
+								>
+									{#snippet children(arcProps)}
+										<!--
+											Only label slices big enough to fit text:
+											- `!isRoot` hides the label on the root (transparent click-target) node
+											- `angle > 0.05` hides labels on very thin slices
+											- `thickness > 10` hides labels on short rings (near the center)
+										-->
+										{#if !isRoot && angle > 0.05 && thickness > 10}
+											<ClipPath>
+												{#snippet clip()}
+													<Arc {startAngle} {endAngle} {innerRadius} {outerRadius} />
+												{/snippet}
+												<ArcLabel
+													{...arcProps}
+													placement="centroid-radial"
+													value={node.data.name}
+													class="text-[8px] fill-black pointer-events-none"
+												/>
+											</ClipPath>
+										{/if}
+									{/snippet}
+								</Arc>
 							{/each}
 						{/snippet}
 					</Partition>
