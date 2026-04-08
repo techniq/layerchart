@@ -178,7 +178,7 @@ You can also read the highlight state in custom mark snippets:
 
 ## Programmatic control
 
-Access the series state via `bind:context` to build your own series toggle UI, set initial visibility, or control series from external components.
+Access the series state via `bind:context` to build your own series toggle UI, set initial visibility, or control series from external components. See the [persist-series example](/docs/components/LineChart/persist-series) for an example using localStorage to persist series selection.
 
 ### Custom legend
 
