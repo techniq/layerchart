@@ -357,8 +357,18 @@
           "line": "<ScatterChart"
         },
         {
-          "component": "Tooltip",
+          "component": "Legend",
+          "lineNumber": 59,
+          "line": "<Legend placement=\"bottom\" />"
+        },
+        {
+          "component": "CircleLegend",
           "lineNumber": 60,
+          "line": "<CircleLegend"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 69,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -548,5 +558,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-03-26T17:40:25.419Z"
+  "updatedAt": "2026-04-08T15:12:17.829Z"
 }

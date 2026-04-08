@@ -1,0 +1,119 @@
+{
+  "component": "CircleLegend",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/CircleLegend/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 6,
+          "line": "<Chart data={[{ value: 1 }, { value: 100 }]} r=\"value\" rRange={[2, 40]} height={120}>"
+        },
+        {
+          "component": "CircleLegend",
+          "lineNumber": 7,
+          "line": "<CircleLegend title=\"Population\" />"
+        }
+      ]
+    },
+    {
+      "name": "label-placement",
+      "title": "label placement",
+      "path": "/docs/components/CircleLegend/label-placement",
+      "components": [
+        {
+          "component": "CircleLegend",
+          "lineNumber": 9,
+          "line": "<CircleLegend {scale} title=\"Population\" tickFormat=\"metric\" labelPlacement=\"right\" />"
+        }
+      ]
+    },
+    {
+      "name": "scale-types",
+      "title": "scale types",
+      "path": "/docs/components/CircleLegend/scale-types",
+      "components": [
+        {
+          "component": "CircleLegend",
+          "lineNumber": 12,
+          "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/basic",
+      "lineNumber": 7,
+      "line": "<CircleLegend title=\"Population\" />"
+    },
+    {
+      "example": "label-placement",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/label-placement",
+      "lineNumber": 9,
+      "line": "<CircleLegend {scale} title=\"Population\" tickFormat=\"metric\" labelPlacement=\"right\" />"
+    },
+    {
+      "example": "label-placement",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/label-placement",
+      "lineNumber": 10,
+      "line": "<CircleLegend {scale} title=\"Population\" tickFormat=\"metric\" labelPlacement=\"left\" />"
+    },
+    {
+      "example": "label-placement",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/label-placement",
+      "lineNumber": 11,
+      "line": "<CircleLegend {scale} title=\"Population\" tickFormat=\"metric\" labelPlacement=\"inline\" />"
+    },
+    {
+      "example": "scale-types",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/scale-types",
+      "lineNumber": 12,
+      "line": "<CircleLegend scale={sqrt} title=\"Sqrt\" tickFormat=\"metric\" />"
+    },
+    {
+      "example": "scale-types",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/scale-types",
+      "lineNumber": 13,
+      "line": "<CircleLegend scale={linear} title=\"Linear\" tickFormat=\"metric\" />"
+    },
+    {
+      "example": "scale-types",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/scale-types",
+      "lineNumber": 14,
+      "line": "<CircleLegend scale={log} title=\"Log\" tickFormat=\"metric\" />"
+    },
+    {
+      "example": "scale-types",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/scale-types",
+      "lineNumber": 15,
+      "line": "<CircleLegend scale={pow} title=\"Pow (0.3)\" tickFormat=\"metric\" />"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/bubble-map",
+      "lineNumber": 149,
+      "line": "<CircleLegend scale={rScale} title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
+    },
+    {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 60,
+      "line": "<CircleLegend"
+    }
+  ],
+  "updatedAt": "2026-04-08T15:58:16.875Z"
+}

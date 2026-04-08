@@ -4110,42 +4110,42 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 138,
+      "lineNumber": 153,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 141,
+      "lineNumber": 156,
       "line": "<Tooltip.Header>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 144,
+      "lineNumber": 159,
       "line": "<Tooltip.List>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 145,
+      "lineNumber": 160,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 151,
+      "lineNumber": 166,
       "line": "<Tooltip.Item"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 157,
+      "lineNumber": 172,
       "line": "<Tooltip.Item"
     },
     {
@@ -5692,42 +5692,42 @@
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 60,
+      "lineNumber": 69,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 62,
+      "lineNumber": 71,
       "line": "<Tooltip.Header>{data.title}</Tooltip.Header>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 63,
+      "lineNumber": 72,
       "line": "<Tooltip.List>"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 64,
+      "lineNumber": 73,
       "line": "<Tooltip.Item label=\"GDP per capita\" value={data.x} format=\"currency\" />"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 65,
+      "lineNumber": 74,
       "line": "<Tooltip.Item label=\"Life expectancy\" value={data.y} format=\"decimal\" />"
     },
     {
       "example": "zoomable-bubble",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/zoomable-bubble",
-      "lineNumber": 66,
+      "lineNumber": 75,
       "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"integer\" />"
     },
     {
@@ -6704,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:42.385Z"
+  "updatedAt": "2026-04-08T15:58:19.027Z"
 }

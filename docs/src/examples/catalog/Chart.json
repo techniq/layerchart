@@ -1770,6 +1770,13 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "CircleLegend",
+      "path": "/docs/components/CircleLegend/basic",
+      "lineNumber": 6,
+      "line": "<Chart data={[{ value: 1 }, { value: 100 }]} r=\"value\" rRange={[2, 40]} height={120}>"
+    },
+    {
       "example": "playground",
       "component": "Connector",
       "path": "/docs/components/Connector/playground",
@@ -2057,6 +2064,48 @@
       "line": "<Chart"
     },
     {
+      "example": "basic",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/basic",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "canvas-mode",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/canvas-mode",
+      "lineNumber": 12,
+      "line": "<Chart"
+    },
+    {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "tick-format",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/tick-format",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
+      "lineNumber": 11,
+      "line": "<Chart"
+    },
+    {
+      "example": "variants",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/variants",
+      "lineNumber": 15,
+      "line": "<Chart"
+    },
+    {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
@@ -2067,7 +2116,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 72,
+      "lineNumber": 82,
       "line": "<Chart"
     },
     {
@@ -4066,5 +4115,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:40.633Z"
+  "updatedAt": "2026-04-08T20:33:54.649Z"
 }

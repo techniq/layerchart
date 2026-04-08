@@ -1,0 +1,226 @@
+{
+  "component": "GeoLegend",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/GeoLegend/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 28,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 31,
+          "line": "<GeoLegend title=\"Miles\" units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "canvas-mode",
+      "title": "canvas mode",
+      "path": "/docs/components/GeoLegend/canvas-mode",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 27,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 28,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 31,
+          "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "stacked-units",
+      "title": "stacked units",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 25,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 29,
+          "line": "<GeoLegend units=\"km\" labelPlacement=\"top\" />"
+        }
+      ]
+    },
+    {
+      "name": "tick-format",
+      "title": "tick format",
+      "path": "/docs/components/GeoLegend/tick-format",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 25,
+          "line": "<GeoPath geojson={countries} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 28,
+          "line": "<GeoLegend units=\"km\" tickFormat=\"metric\" placement=\"bottom-left\" class=\"m-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "ticks",
+      "title": "ticks",
+      "path": "/docs/components/GeoLegend/ticks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 11,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 24,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 25,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 28,
+          "line": "<GeoLegend units=\"mi\" ticks={1} placement=\"bottom-left\" class=\"m-2\" />"
+        }
+      ]
+    },
+    {
+      "name": "variants",
+      "title": "variants",
+      "path": "/docs/components/GeoLegend/variants",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 23,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 24,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
+        },
+        {
+          "component": "GeoLegend",
+          "lineNumber": 27,
+          "line": "<GeoLegend {variant} units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/basic",
+      "lineNumber": 31,
+      "line": "<GeoLegend title=\"Miles\" units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+    },
+    {
+      "example": "canvas-mode",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/canvas-mode",
+      "lineNumber": 31,
+      "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+    },
+    {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 29,
+      "line": "<GeoLegend units=\"km\" labelPlacement=\"top\" />"
+    },
+    {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 30,
+      "line": "<GeoLegend units=\"mi\" />"
+    },
+    {
+      "example": "tick-format",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/tick-format",
+      "lineNumber": 28,
+      "line": "<GeoLegend units=\"km\" tickFormat=\"metric\" placement=\"bottom-left\" class=\"m-2\" />"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
+      "lineNumber": 28,
+      "line": "<GeoLegend units=\"mi\" ticks={1} placement=\"bottom-left\" class=\"m-2\" />"
+    },
+    {
+      "example": "variants",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/variants",
+      "lineNumber": 27,
+      "line": "<GeoLegend {variant} units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+    },
+    {
+      "example": "bubble-map",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/bubble-map",
+      "lineNumber": 151,
+      "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+    }
+  ],
+  "updatedAt": "2026-04-08T20:33:55.230Z"
+}

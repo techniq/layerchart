@@ -1837,6 +1837,48 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/basic",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "canvas-mode",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/canvas-mode",
+      "lineNumber": 27,
+      "line": "<Layer>"
+    },
+    {
+      "example": "stacked-units",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/stacked-units",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "tick-format",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/tick-format",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "ticks",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/ticks",
+      "lineNumber": 24,
+      "line": "<Layer>"
+    },
+    {
+      "example": "variants",
+      "component": "GeoLegend",
+      "path": "/docs/components/GeoLegend/variants",
+      "lineNumber": 23,
+      "line": "<Layer>"
+    },
+    {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
@@ -1854,14 +1896,14 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 88,
+      "lineNumber": 99,
       "line": "<Layer>"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 121,
+      "lineNumber": 132,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -4021,5 +4063,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:41.549Z"
+  "updatedAt": "2026-04-08T20:33:55.879Z"
 }

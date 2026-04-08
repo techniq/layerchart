@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { defaultChartPadding, ScatterChart, Tooltip } from 'layerchart';
+	import { CircleLegend, defaultChartPadding, Legend, ScatterChart, Tooltip } from 'layerchart';
 	import { getCountryGdpLifeExpectancy } from '$lib/data.remote';
 	import { flatGroup } from 'd3-array';
 
@@ -52,10 +52,19 @@
 	}}
 	highlight={{ lines: true, points: true, axis: 'both', r: true }}
 	rule={false}
-	legend
 	padding={defaultChartPadding({ top: 20, bottom: 48, left: 20, right: 20 })}
 	height={500}
 >
+	{#snippet legend()}
+		<Legend placement="bottom" />
+		<CircleLegend
+			title="Population"
+			placement="bottom-right"
+			labelPlacement="left"
+			tickFormat="metric"
+			class="mr-4 mb-14"
+		/>
+	{/snippet}
 	{#snippet tooltip()}
 		<Tooltip.Root>
 			{#snippet children({ data })}
