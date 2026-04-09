@@ -564,6 +564,45 @@
       ]
     },
     {
+      "name": "persist-brush-zoom",
+      "title": "persist brush zoom",
+      "path": "/docs/components/LineChart/persist-brush-zoom",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 42,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 61,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 82,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 83,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+        }
+      ]
+    },
+    {
+      "name": "persist-series",
+      "title": "persist series",
+      "path": "/docs/components/LineChart/persist-series",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 44,
+          "line": "<LineChart"
+        }
+      ]
+    },
+    {
       "name": "point-annotations",
       "title": "point annotations",
       "path": "/docs/components/LineChart/point-annotations",
@@ -1415,6 +1454,20 @@
       "line": "<LineChart"
     },
     {
+      "example": "persist-brush-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/persist-brush-zoom",
+      "lineNumber": 42,
+      "line": "<LineChart"
+    },
+    {
+      "example": "persist-series",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/persist-series",
+      "lineNumber": 44,
+      "line": "<LineChart"
+    },
+    {
       "example": "point-annotations",
       "component": "LineChart",
       "path": "/docs/components/LineChart/point-annotations",
@@ -1618,5 +1671,5 @@
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.922Z"
+  "updatedAt": "2026-04-09T03:56:30.627Z"
 }

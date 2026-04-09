@@ -2659,6 +2659,13 @@
       "line": "<Chart"
     },
     {
+      "example": "persist-brush-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/persist-brush-zoom",
+      "lineNumber": 61,
+      "line": "<Chart"
+    },
+    {
       "example": "line",
       "component": "Marker",
       "path": "/docs/components/Marker/line",
@@ -4066,5 +4073,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:40.633Z"
+  "updatedAt": "2026-04-09T03:56:29.505Z"
 }
