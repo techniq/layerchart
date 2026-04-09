@@ -2635,6 +2635,13 @@
       "line": "<Layer>"
     },
     {
+      "example": "persist-brush-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/persist-brush-zoom",
+      "lineNumber": 82,
+      "line": "<Layer>"
+    },
+    {
       "example": "line",
       "component": "Marker",
       "path": "/docs/components/Marker/line",
@@ -4063,5 +4070,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:11.379Z"
+  "updatedAt": "2026-04-09T04:31:04.653Z"
 }

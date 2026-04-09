@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-08T22:44:09.250Z",
+  "generatedAt": "2026-04-09T04:31:02.063Z",
   "totalComponents": 74,
-  "totalExamples": 872,
+  "totalExamples": 874,
   "components": [
     {
       "component": "AnnotationLine",
@@ -3145,6 +3145,16 @@
           "name": "perf-wide-data-processed",
           "path": "/example/LineChart/perf-wide-data-processed",
           "checksum": "e787a635cb3e41d96d1140bf11ca1e8c"
+        },
+        {
+          "name": "persist-brush-zoom",
+          "path": "/example/LineChart/persist-brush-zoom",
+          "checksum": "c271b2a51eab0e9e9f6b5153f771cf07"
+        },
+        {
+          "name": "persist-series",
+          "path": "/example/LineChart/persist-series",
+          "checksum": "b3ba9b114b413cd4159a0126456e8d0c"
         },
         {
           "name": "point-annotations",
