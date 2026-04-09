@@ -113,7 +113,7 @@ Multiple charts can share the same `xDomain` state to stay synchronized:
 
 ## Programmatic control
 
-Access the brush state via the chart context to control it from code:
+Access the brush state via the chart context to control it from code. For example use localStorage to [persist the brush range/zoom](/docs/components/LineChart/persist-brush-zoom) between reloads. Below is an example of a custom UI for programmatic control.
 
 ```svelte
 <Chart {data} x="date" y="value" brush>
@@ -128,7 +128,6 @@ Access the brush state via the chart context to control it from code:
 :example{ component="BrushContext" name="programmatic-control" }
 
 ### Methods
-
 | Method             | Description                        |
 | ------------------ | ---------------------------------- |
 | `move({ x?, y? })` | Set the selection programmatically |
@@ -216,12 +215,12 @@ An overview chart below the main chart can act as a navigation scrollbar. The ov
 | Visual brush            | `brush`                                                  | [basic](/docs/components/BrushContext/basic)                                  |
 | Brush-to-zoom           | `brush={{ onBrushEnd: (e) => { ... e.brush.reset() } }}` | [integrated-brush](</docs/components/BrushContext/integrated-brush-(x-axis)>) |
 | Simplified chart zoom   | `brush` on LineChart/AreaChart/etc.                      | [brush](/docs/components/LineChart/brush)                                     |
-| Brush on categories     | `brush` on BarChart with band scale                      | [brush-band](/docs/components/BarChart/brush-band)                           |
+| Brush on categories     | `brush` on BarChart with band scale                      | [brush-band](/docs/components/BarChart/brush-band)                            |
 | Minimap (focus+context) | `brush={{ x: xDomain, onChange: ... }}`                  | [minimap](/docs/components/BrushContext/minimap)                              |
 | Synced multi-chart      | Shared `xDomain` state with `x` and `onChange`           | [sync-brushes](/docs/components/BrushContext/synced-brushes)                  |
 | Programmatic control    | `context.brush.move()`, `.reset()`, `.selectAll()`       | [programmatic-control](/docs/components/BrushContext/programmatic-control)    |
 | Brush + pan/zoom        | `brush` + `transform={{ mode: 'domain' }}`               | [brush-pan-zoom](/docs/components/LineChart/brush-pan-zoom)                   |
-| Brush + pan/zoom (band) | `brush` + `transform` on band scale                      | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)         |
+| Brush + pan/zoom (band) | `brush` + `transform` on band scale                      | [brush-pan-zoom-band](/docs/components/BarChart/brush-pan-zoom-band)          |
 | Overview + pan/zoom     | `brush.x` synced to main chart's `context.xDomain`       | [pan-zoom-with-overview](/docs/components/LineChart/pan-zoom-with-overview)   |
 | Point selection         | `brush={{ axis: 'both', onChange: ... }}`                | [selection](/docs/components/BrushContext/selection)                          |
 | Custom styling          | `brush={{ classes: { range: '...', handle: '...' } }}`   | [simple-styling](/docs/components/BrushContext/simple-styling)                |
