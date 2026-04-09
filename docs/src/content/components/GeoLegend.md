@@ -46,3 +46,15 @@ Use `labelPlacement="top"` to place labels above the bar so two legends with dif
 ## Reference point
 
 The pixels-per-unit ratio is measured at a single reference point on the projection — by default, the center of the chart's plot area (`[width / 2, height / 2]`). For conformal projections like Mercator where scale varies with latitude, the legend is only accurate at that reference point. Pass an explicit `referencePoint` in chart pixel coordinates to anchor the measurement elsewhere (e.g. near the legend itself, or over your region of interest).
+
+## Pre-projected data (`geoIdentity`)
+
+When rendering a topology whose coordinates have already been run through a projection (e.g. `us-atlas`'s `counties-albers-10m` / `states-albers-10m`), the chart uses `geoIdentity` as its projection. In that case `projection.invert` returns topology pixel coordinates rather than `[lon, lat]`, so the default distance calculation (which relies on `geoDistance` on inverted points) cannot work.
+
+Pass `referenceScale` with the scale of the original projection used to pre-project the data to opt into a direct calculation that combines the chart's fit scale with the known base scale. For the `us-atlas` albers topologies, that value is `1300`:
+
+```svelte
+<GeoLegend units="mi" referenceScale={1300} />
+```
+
+See the [`GeoPath` bubble map example](/docs/components/GeoPath#bubble-map) for a full setup.

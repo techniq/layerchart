@@ -85,6 +85,18 @@
     referencePoint?: [number, number];
 
     /**
+     * Scale of the projection originally used to pre-project the data, for
+     * charts that render pre-projected topologies via `geoIdentity`. For
+     * example, the `us-atlas` `counties-albers-10m` / `states-albers-10m`
+     * topologies are pre-projected with `geoAlbersUsa().scale(1300)`, so pass
+     * `referenceScale={1300}`. When provided, pixels-per-distance is derived
+     * directly from the chart's `geoIdentity` fit scale and this reference
+     * scale, bypassing the `projection.invert` + `geoDistance` path which
+     * does not work for pre-projected data.
+     */
+    referenceScale?: number;
+
+    /**
      * The placement of the legend.
      */
     placement?: Placement;
@@ -141,6 +153,7 @@
     height = 4,
     title = '',
     referencePoint,
+    referenceScale,
     placement,
     color = 'currentColor',
     classes = {},
@@ -163,19 +176,37 @@
   // `null` if no projection or invert is unavailable (or numerically degenerate).
   const pixelsPerUnit = $derived.by(() => {
     const projection = ctx.geo?.projection;
-    if (!projection || typeof projection.invert !== 'function') return null;
+    if (!projection) return null;
 
-    const refPx: [number, number] = referencePoint ?? [ctx.width / 2, ctx.height / 2];
-    const a = projection.invert(refPx);
-    const b = projection.invert([refPx[0] + 1, refPx[1]]);
-    if (!a || !b) return null;
-    if (!Number.isFinite(a[0]) || !Number.isFinite(b[0])) return null;
+    let pxPerUnit: number;
 
-    const radiansPerPx = geoDistance(a, b);
-    if (!Number.isFinite(radiansPerPx) || radiansPerPx === 0) return null;
+    if (referenceScale != null) {
+      // Pre-projected data path (e.g. `geoIdentity` + us-atlas
+      // `counties-albers-10m`): `projection.invert` returns topology pixel
+      // coordinates, not lon/lat, so `geoDistance` can't be used. Instead,
+      // combine the chart's fit scale with the known base projection scale:
+      //   topology units per chart px = 1 / fitScale
+      //   radians per topology unit   = 1 / referenceScale
+      //   units (mi/km) per radian    = earthRadius
+      // => px per unit = (fitScale * referenceScale) / earthRadius
+      const fitScale = typeof projection.scale === 'function' ? projection.scale() : null;
+      if (fitScale == null || !Number.isFinite(fitScale) || fitScale === 0) return null;
+      pxPerUnit = (fitScale * referenceScale) / earthRadius;
+    } else {
+      if (typeof projection.invert !== 'function') return null;
 
-    const unitsPerPx = radiansPerPx * earthRadius;
-    let pxPerUnit = 1 / unitsPerPx;
+      const refPx: [number, number] = referencePoint ?? [ctx.width / 2, ctx.height / 2];
+      const a = projection.invert(refPx);
+      const b = projection.invert([refPx[0] + 1, refPx[1]]);
+      if (!a || !b) return null;
+      if (!Number.isFinite(a[0]) || !Number.isFinite(b[0])) return null;
+
+      const radiansPerPx = geoDistance(a, b);
+      if (!Number.isFinite(radiansPerPx) || radiansPerPx === 0) return null;
+
+      const unitsPerPx = radiansPerPx * earthRadius;
+      pxPerUnit = 1 / unitsPerPx;
+    }
 
     // In `canvas` transform mode the projection itself is not re-scaled — the
     // rendered output is visually scaled by `ctx.transform.scale`, so we need

@@ -145,7 +145,7 @@
 
 		<CircleLegend title="Population" tickFormat="metric" placement="bottom-right" />
 
-		<GeoLegend units="mi" placement="bottom-left" class="m-2" />
+		<GeoLegend units="mi" referenceScale={1300} placement="bottom-left" class="m-2" />
 
 		<Tooltip.Root>
 			{#snippet children({ data })}
