@@ -1356,13 +1356,6 @@
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
-      "example": "persist-brush-zoom",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 83,
-      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
-    },
-    {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
@@ -1510,5 +1503,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-04-09T03:56:28.717Z"
+  "updatedAt": "2026-03-29T03:36:26.383Z"
 }
