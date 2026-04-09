@@ -16,26 +16,23 @@
 	let context: any = $state();
 	let loaded = false;
 
+	// load once when context is ready
 	$effect(() => {
-		// wait for context to be available
 		if (!context?.isMounted) return;
-
-		// load from localStorage once
-		if (!loaded) {
-			loaded = true;
-			const saved = localStorage.getItem(STORAGE_KEY);
-			if (saved) {
-				const keys = JSON.parse(saved);
-				if (Array.isArray(keys)) {
-					context.series.selectedKeys.current = keys;
-				}
+		const saved = localStorage.getItem(STORAGE_KEY);
+		if (saved) {
+			const keys = JSON.parse(saved);
+			if (Array.isArray(keys)) {
+				context.series.selectedKeys.current = keys;
 			}
-			return;
 		}
+		loaded = true;
+	});
 
-		// otherwise save to localStorage when selected keys change
+	// save whenever selected keys change (after initial load)
+	$effect(() => {
 		const keys = context?.series?.selectedKeys?.current;
-		if (keys !== undefined) {
+		if (loaded && keys) {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
 		}
 	});

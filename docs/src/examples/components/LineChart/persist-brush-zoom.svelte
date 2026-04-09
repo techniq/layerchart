@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { LineChart, Chart, Area, Layer, defaultChartPadding, type ChartState } from 'layerchart';
 	import { getAppleStock } from '$lib/data.remote';
 
@@ -8,13 +9,10 @@
 	let context = $state<ChartState>();
 	let loaded = false;
 
+	// load once when context is ready
 	$effect(() => {
-		// wait for context
 		if (!context?.isMounted) return;
-
-		if (!loaded) {
-			// load from localStorage once
-			loaded = true;
+		untrack(() => {
 			const saved = localStorage.getItem(STORAGE_KEY);
 			if (saved) {
 				const parsed = JSON.parse(saved);
@@ -25,12 +23,14 @@
 					);
 				}
 			}
-			return;
-		}
+			loaded = true;
+		});
+	});
 
-		// otherwise save to localStorage when brush range changes
+	// save whenever brush range changes (after initial load)
+	$effect(() => {
 		const range = context?.xDomain;
-		if (range) {
+		if (loaded && range) {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(range));
 		}
 	});
