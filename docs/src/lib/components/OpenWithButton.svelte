@@ -100,7 +100,7 @@
 					out:fly={{ y: showButtonCopied ? -20 : 20, duration: 500 }}
 					class="absolute inset-0 flex items-center justify-center ml-1"
 				>
-					{showButtonCopied ? 'Copied!' : 'Copy Page'}
+					{showButtonCopied ? 'Copied!' : 'Copy for LLM'}
 				</span>
 			{/key}
 		</span>
