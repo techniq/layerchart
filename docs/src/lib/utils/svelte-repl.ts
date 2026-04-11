@@ -105,38 +105,12 @@ export async function createSvelteReplUrl(files: File[]) {
 	const useTailWind = false;
 	// Temporary: use layerchart@next until layerchart is published as latest
 	const useNext = true;
-	// Temporary: use container until layerchart-docs2 is published to latest
-	const useContainer = true;
-	// Temporary add tailwind notice to the beginning of markup
-	const addTailwindNotice = false;
 
 	const playgroundFiles = files.map((f) => {
 		let contents = f.source;
 		if (f.name === 'App.svelte') {
-			const scriptsection = contents.match(/<script[^>]*>[\s\S]*?<\/script>/)?.[0];
-			if (scriptsection) contents = contents.replace(scriptsection, '');
-			if (useContainer) {
-				// add container div with possible height and width attributes
-				const componentOne = contents.match(/<[A-Z]\w*\b[\s\S]*?>/)?.[0];
-				const height = componentOne?.match(/height=\{(\d+)\}/)?.[1];
-				const width = componentOne?.match(/width=\{(\d+)\}/)?.[1];
-				const attrs = [height && `style:height="${height}px"`, width && `style:width="${width}px"`]
-					.filter(Boolean)
-					.join(' ');
-				const markup = contents.trim().split('\n').join('\n\t');
-				contents = `${scriptsection ?? ''}\n<div${attrs ? ` ${attrs}` : ''}>\n\t${markup}\n</div>\n`;
-			}
-
 			if (useNext) {
 				contents = contents.replace(/from\s+['"]layerchart['"]/g, "from 'layerchart@next'");
-			}
-
-			if (useTailWind && addTailwindNotice) {
-				// Add conditionally shown tailwind notice to the beginning of markup
-				contents = contents.replace(
-					/(<\/script>)/,
-					`$1\n\n<p class="!hidden" style="display:flex;justify-content:space-between;background:red;padding:4px;font-size:16px;text-align:center;"><span>↖</span><span>Please toggle on Tailwind setting to see the LayerChart (<a href="https://github.com/sveltejs/svelte.dev/issues/1220" target="_blank" rel="noopener noreferrer">Issue #1220</a>)</span><span></span></p>`
-				);
 			}
 
 			// Add theme CSS
@@ -163,15 +137,26 @@ export async function createSvelteReplUrl(files: File[]) {
 			--color-surface-content: hsl(240, 5%, 96%);
 		}
 	}
-	:global(.lc-root-container) {
+`;
+			if (
+				[
+					'--color-apples',
+					'--color-bananas',
+					'--color-cherries',
+					'--color-grapes',
+					'--color-oranges'
+				].some((token) => contents.includes(token))
+			) {
+				contents += `	:global(.lc-root-container) {
 		--color-apples: hsl(142, 71%, 45%);
 		--color-bananas: hsl(48, 96%, 53%);
 		--color-cherries: hsl(0, 84%, 60%);
 		--color-grapes: hsl(271, 91%, 65%);
 		--color-oranges: hsl(25, 95%, 53%);	
 	}
-</style>
 `;
+			}
+			contents += `</style>`;
 			contents = contents.trim();
 		}
 
