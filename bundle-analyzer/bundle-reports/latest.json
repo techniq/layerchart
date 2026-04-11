@@ -1,0 +1,273 @@
+{
+  "timestamp": "2026-04-10T15:23:04.985Z",
+  "results": [
+    {
+      "scenario": "core",
+      "description": "Bare minimum: Chart context + Svg layer",
+      "size": 623775,
+      "gzipSize": 152594,
+      "imports": [
+        "Chart",
+        "Svg"
+      ]
+    },
+    {
+      "scenario": "line-chart",
+      "description": "Basic line chart with axes and grid",
+      "size": 623799,
+      "gzipSize": 152643,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Line",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "line-chart-interactive",
+      "description": "Line chart with tooltip and highlight",
+      "size": 624176,
+      "gzipSize": 152802,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Line",
+        "Axis",
+        "Grid",
+        "Highlight",
+        "Tooltip"
+      ]
+    },
+    {
+      "scenario": "area-chart",
+      "description": "Area chart with axes",
+      "size": 631093,
+      "gzipSize": 154030,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Area",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "bar-chart",
+      "description": "Bar chart with axes",
+      "size": 626065,
+      "gzipSize": 153051,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Bars",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "scatter-chart",
+      "description": "Scatter plot with points",
+      "size": 624087,
+      "gzipSize": 152707,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Points",
+        "Point",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "pie-chart",
+      "description": "Pie/donut chart with arcs",
+      "size": 630755,
+      "gzipSize": 154353,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Pie",
+        "Arc",
+        "ArcLabel"
+      ]
+    },
+    {
+      "scenario": "high-level-charts",
+      "description": "All high-level chart components (LineChart, BarChart, etc.)",
+      "size": 681427,
+      "gzipSize": 162945,
+      "imports": [
+        "LineChart",
+        "AreaChart",
+        "BarChart",
+        "PieChart",
+        "ScatterChart",
+        "ArcChart"
+      ]
+    },
+    {
+      "scenario": "geo",
+      "description": "Geographic map with paths",
+      "size": 627171,
+      "gzipSize": 153145,
+      "imports": [
+        "Chart",
+        "Svg",
+        "GeoProjection",
+        "GeoPath",
+        "GeoPoint"
+      ]
+    },
+    {
+      "scenario": "geo-tiles",
+      "description": "Geographic map with tile layer",
+      "size": 631612,
+      "gzipSize": 154714,
+      "imports": [
+        "Chart",
+        "Svg",
+        "GeoProjection",
+        "GeoPath",
+        "GeoTile",
+        "TileImage"
+      ]
+    },
+    {
+      "scenario": "geo-full",
+      "description": "Full geo setup with all geo components",
+      "size": 655583,
+      "gzipSize": 160546,
+      "imports": [
+        "Chart",
+        "Svg",
+        "GeoProjection",
+        "GeoPath",
+        "GeoPoint",
+        "GeoCircle",
+        "GeoSpline",
+        "GeoTile",
+        "GeoRaster",
+        "GeoEdgeFade",
+        "GeoVisible",
+        "Graticule",
+        "GeoLegend",
+        "TileImage"
+      ]
+    },
+    {
+      "scenario": "force",
+      "description": "Force-directed graph layout",
+      "size": 641537,
+      "gzipSize": 157550,
+      "imports": [
+        "Chart",
+        "Svg",
+        "ForceSimulation",
+        "Link",
+        "Circle",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "hierarchy-tree",
+      "description": "Tree layout with links",
+      "size": 638961,
+      "gzipSize": 156720,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Tree",
+        "Link",
+        "Circle",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "hierarchy-treemap",
+      "description": "Treemap layout",
+      "size": 630208,
+      "gzipSize": 154678,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Treemap",
+        "Group",
+        "Rect",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "hierarchy-pack",
+      "description": "Circle packing layout",
+      "size": 630022,
+      "gzipSize": 154791,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Pack",
+        "Circle",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "dagre",
+      "description": "Dagre directed graph layout",
+      "size": 698768,
+      "gzipSize": 172907,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Dagre",
+        "Link",
+        "Circle",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "sankey",
+      "description": "Sankey flow diagram",
+      "size": 641176,
+      "gzipSize": 156850,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Sankey",
+        "Link",
+        "Rect",
+        "Text"
+      ]
+    },
+    {
+      "scenario": "chord",
+      "description": "Chord diagram",
+      "size": 632702,
+      "gzipSize": 154806,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Chord",
+        "Ribbon"
+      ]
+    },
+    {
+      "scenario": "canvas",
+      "description": "Canvas-based rendering",
+      "size": 623775,
+      "gzipSize": 152603,
+      "imports": [
+        "Chart",
+        "Canvas"
+      ]
+    },
+    {
+      "scenario": "all",
+      "description": "Everything from layerchart (worst case)",
+      "size": 987788,
+      "gzipSize": 241571,
+      "imports": [
+        "*"
+      ]
+    }
+  ]
+}
