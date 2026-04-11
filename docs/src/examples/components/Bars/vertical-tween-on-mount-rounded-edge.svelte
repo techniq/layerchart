@@ -12,7 +12,7 @@
 	});
 	export { data };
 
-	let show = $state(true);
+	let show = $state();
 </script>
 
 <ShowControls bind:show label="Show Bars" />

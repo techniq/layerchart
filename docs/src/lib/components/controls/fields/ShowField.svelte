@@ -1,15 +1,31 @@
 <script lang="ts">
+	import { useIntersectionObserver } from 'runed';
 	import { Field, Switch, type LabelPlacement } from 'svelte-ux';
 
 	let {
-		show = $bindable(true),
+		show = $bindable(),
 		label = 'Show',
 		labelPlacement = 'left' as LabelPlacement,
 		class: className = 'absolute top-2 right-2 z-1'
 	} = $props();
+
+	let target = $state<HTMLElement | null>(null);
+
+	useIntersectionObserver(
+		() => target,
+		(entries) => {
+			const entry = entries[0];
+			if (entry?.isIntersecting) {
+				setTimeout(() => {
+					show = true;
+				}, 1000);
+			}
+		},
+		{ once: true }
+	);
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden">
+<div bind:this={target} class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden">
 	<Field {label} {labelPlacement} let:id class={className}>
 		<Switch bind:checked={show} size="md" />
 	</Field>

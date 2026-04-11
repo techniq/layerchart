@@ -3,7 +3,7 @@
 	import { Arc, Chart, Layer } from 'layerchart';
 	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 
-	let show = $state(true);
+	let show = $state();
 	const data = {
 		arcs: [
 			{ initialValue: 0, value: 40, fillClass: 'fill-red-500', trackClass: 'fill-red-500/10' },

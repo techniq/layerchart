@@ -13,7 +13,7 @@
 		keys: ['value', 'baseline']
 	});
 
-	let show = $state(true);
+	let show = $state();
 
 	export { data };
 </script>
