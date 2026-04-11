@@ -93,7 +93,7 @@
 			copy(md);
 		}}
 	>
-		<span class="overflow-hidden relative inline-block" style="width: 70px; height: 1.2em;">
+		<span class="overflow-hidden relative inline-block" style="width: 90px; height: 1.2em;">
 			{#key showButtonCopied}
 				<span
 					in:fly={{ y: showButtonCopied ? 20 : -20, duration: 500 }}
