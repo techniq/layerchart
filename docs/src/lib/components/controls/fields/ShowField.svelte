@@ -6,6 +6,7 @@
 		show = $bindable(),
 		label = 'Show',
 		labelPlacement = 'left' as LabelPlacement,
+		inline = false,
 		class: className = 'absolute top-2 right-2 z-1'
 	} = $props();
 
@@ -25,8 +26,16 @@
 	);
 </script>
 
-<div bind:this={target} class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden">
-	<Field {label} {labelPlacement} let:id class={className}>
-		<Switch bind:checked={show} size="md" />
-	</Field>
-</div>
+{#if !inline}
+	<div bind:this={target} class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden">
+		<Field {label} {labelPlacement} let:id class={className}>
+			<Switch bind:checked={show} size="md" />
+		</Field>
+	</div>
+{:else}
+	<div bind:this={target}>
+		<Field {label} let:id>
+			<Switch bind:checked={show} size="md" />
+		</Field>
+	</div>
+{/if}
