@@ -19,7 +19,7 @@
 			if (entry?.isIntersecting) {
 				setTimeout(() => {
 					show = true;
-				}, 1000);
+				}, 750);
 			}
 		},
 		{ once: true }

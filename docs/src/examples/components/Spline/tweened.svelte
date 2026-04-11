@@ -5,7 +5,7 @@
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		pointCount: 100,
 		amplitude: 1,
 		frequency: 10,
