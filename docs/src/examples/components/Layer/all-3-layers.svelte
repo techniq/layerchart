@@ -20,7 +20,7 @@
 	</Layer>
 
 	<Layer center type="html">
-		<Circle id="left-eye" fill="black" r={15} cx={30} cy={-30} />
+		<Circle id="left-eye" stroke="black" fill="black" r={15} cx={30} cy={-30} />
 	</Layer>
 </Chart>
 

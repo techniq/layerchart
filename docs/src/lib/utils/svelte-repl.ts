@@ -114,7 +114,7 @@ export async function createSvelteReplUrl(files: File[]) {
 			}
 
 			// Add theme CSS
-			contents += `\n<style>
+			let themeCSS = `
 	:global(.lc-root-container) {
 		color-scheme: light;
 		--color-primary: hsl(217, 91%, 60%);
@@ -147,16 +147,22 @@ export async function createSvelteReplUrl(files: File[]) {
 					'--color-oranges'
 				].some((token) => contents.includes(token))
 			) {
-				contents += `	:global(.lc-root-container) {
+				themeCSS += `	:global(.lc-root-container) {
 		--color-apples: hsl(142, 71%, 45%);
 		--color-bananas: hsl(48, 96%, 53%);
 		--color-cherries: hsl(0, 84%, 60%);
 		--color-grapes: hsl(271, 91%, 65%);
-		--color-oranges: hsl(25, 95%, 53%);	
+		--color-oranges: hsl(25, 95%, 53%);
 	}
 `;
 			}
-			contents += `</style>`;
+
+			if (contents.includes('</style>')) {
+				// Inject into existing style block
+				contents = contents.replace('</style>', `${themeCSS}</style>`);
+			} else {
+				contents += `\n<style>${themeCSS}</style>`;
+			}
 			contents = contents.trim();
 		}
 
