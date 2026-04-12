@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getSimpleGraph } from '$lib/graph.remote';
+	let data = await getSimpleGraph();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { curveBasis } from 'd3-shape';
@@ -8,9 +13,6 @@
 	import DagreControls from '$lib/components/controls/DagreControls.svelte';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';
-	import { getSimpleGraph } from '$lib/graph.remote';
-
-	let data = await getSimpleGraph();
 	export { data };
 
 	let settings = $state({

@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getTcpStateGraph } from '$lib/graph.remote';
+	let data = await getTcpStateGraph();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { curveLinear } from 'd3-shape';
@@ -8,9 +13,6 @@
 	import DagreControls from '$lib/components/controls/DagreControls.svelte';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import ShowControls from '$lib/components/controls/fields/ShowField.svelte';
-	import { getTcpStateGraph } from '$lib/graph.remote';
-
-	let data = await getTcpStateGraph();
 	export { data };
 
 	let settings = $state({

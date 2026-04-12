@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getSfoTemperatures } from '$lib/data.remote';
+	const data = await getSfoTemperatures();
+</script>
+
 <script lang="ts">
 	import { scaleUtc } from 'd3-scale';
 	import { curveCatmullRom, curveCatmullRomClosed } from 'd3-shape';
 	import { Area, Axis, Chart, Layer, Spline } from 'layerchart';
-	import { getSfoTemperatures } from '$lib/data.remote';
 
-	const data = $derived(await getSfoTemperatures());
 
 	export { data };
 </script>

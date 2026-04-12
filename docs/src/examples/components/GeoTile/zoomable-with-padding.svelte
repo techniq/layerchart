@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
+	const geojson = await getUsCountiesTopology();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { geoMercator } from 'd3-geo';
@@ -15,9 +20,6 @@
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 
-	import { getUsCountiesTopology } from '$lib/geo.remote.js';
-
-	const geojson = await getUsCountiesTopology();
 	let settings = getSettings();
 
 	const states = $derived(feature(geojson, geojson.objects.states));

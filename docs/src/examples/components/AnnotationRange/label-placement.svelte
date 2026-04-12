@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { AnnotationRange, LineChart, defaultChartPadding, type Placement } from 'layerchart';
 	import AnnotationRangeControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	const placementOptions = [
 		'top-left',

@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { type ComponentProps } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
@@ -6,7 +11,6 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { getFlare } from '$lib/data.remote';
 	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
@@ -38,7 +42,6 @@
 		paddingRight: 0
 	});
 
-	let data = await getFlare();
 	const hierarchy = d3Hierarchy(data)
 		.sum((d) => d.value)
 		.sort(sortFunc('value', 'desc'));

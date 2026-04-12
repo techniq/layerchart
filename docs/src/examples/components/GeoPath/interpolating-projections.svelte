@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import {
@@ -39,9 +44,6 @@
 
 	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
 	import { Button, ButtonGroup, Field, RangeField, SelectField, Switch } from 'svelte-ux';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const land = feature(topology, topology.objects.land);
 
 	const projections = [

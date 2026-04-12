@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCars } from '$lib/data.remote';
+	let data = await getCars();
+</script>
+
 <script lang="ts">
 	import { untrack, type ComponentProps } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -6,7 +11,6 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
-	import { getCars } from '$lib/data.remote';
 	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
@@ -26,7 +30,6 @@
 		isFiltered: false
 	});
 
-	let data = await getCars();
 
 	let selectedCarNode = $state<HierarchyNode<any>>();
 

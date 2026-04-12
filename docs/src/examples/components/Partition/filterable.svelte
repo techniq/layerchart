@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCars } from '$lib/data.remote';
+	let data = await getCars();
+</script>
+
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import {
@@ -24,14 +29,11 @@
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import PartitionControls from '$lib/components/controls/PartitionControls.svelte';
-	import { getCars } from '$lib/data.remote';
-
 	let colorBy = $state<'children' | 'parent' | 'depth'>('children');
 	let padding = $state(0);
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
 
-	let data = await getCars();
 	let hierarchy = $derived(d3Hierarchy(getGrouped()).count());
 	let nodes = $state<HierarchyRectangularNode<any>[]>([]);
 	let selected = $state<HierarchyRectangularNode<any>>();

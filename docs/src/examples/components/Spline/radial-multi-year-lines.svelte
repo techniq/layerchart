@@ -1,12 +1,15 @@
+<script module lang="ts">
+	import { getDailyTemperatures } from '$lib/data.remote';
+	const data = await getDailyTemperatures();
+</script>
+
 <script lang="ts">
 	import { scaleUtc } from 'd3-scale';
 	import { flatGroup } from 'd3-array';
 	import { curveCatmullRom } from 'd3-shape';
 	import { cls } from '@layerstack/tailwind';
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
-	import { getDailyTemperatures } from '$lib/data.remote';
 
-	const data = $derived(await getDailyTemperatures());
 
 	export { data };
 </script>

@@ -1,10 +1,14 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { getFlare } from '$lib/data.remote';
 	import {
 		Arc,
 		ArcLabel,
@@ -22,7 +26,6 @@
 
 	let colorBy = $state<'parent' | 'depth'>('parent');
 
-	let data = await getFlare();
 	const complexHierarchy = hierarchy(data)
 		.sum((d) => d.value)
 		.sort(

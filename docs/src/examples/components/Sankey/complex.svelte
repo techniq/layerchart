@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getComplexGraph } from '$lib/graph.remote';
+	const data = await getComplexGraph();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateCool } from 'd3-scale-chromatic';
@@ -9,8 +14,6 @@
 	import SankeyControls, {
 		type SankeyConfig
 	} from '$lib/components/controls/SankeyControls.svelte';
-	import { getComplexGraph } from '$lib/graph.remote';
-
 	const colorScale = scaleSequential(interpolateCool);
 
 	let highlightLinkIndexes: Array<number | undefined> = $state([]);
@@ -34,7 +37,7 @@
 				}
 	);
 
-	const data = $derived(await getComplexGraph());
+
 	export { data };
 </script>
 

@@ -1,11 +1,14 @@
+<script module lang="ts">
+	import { getHydro } from '$lib/data.remote.js';
+	const data = await getHydro();
+</script>
+
 <script lang="ts">
 	import { Axis, BarChart, Tooltip, defaultChartPadding } from 'layerchart';
 	1;
 	import { scaleTime } from 'd3-scale';
 	import { extent } from 'd3-array';
-	import { getHydro } from '$lib/data.remote.js';
 
-	const data = $derived(await getHydro());
 	export { data };
 </script>
 

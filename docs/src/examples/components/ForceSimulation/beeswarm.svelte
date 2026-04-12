@@ -1,12 +1,14 @@
+<script module lang="ts">
+	import { getUsSenators } from '$lib/data.remote';
+	let usSenators = await getUsSenators();
+</script>
+
 <script lang="ts">
 	import { scaleOrdinal } from 'd3-scale';
 	import { forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
 	import { asAny, Axis, Chart, Circle, ForceSimulation, Layer, Tooltip } from 'layerchart';
 
-	import { getUsSenators } from '$lib/data.remote';
-
-	let usSenators = await getUsSenators();
 
 	type MySimulationNodeDatum = (typeof usSenators)[number] & SimulationNodeDatum;
 

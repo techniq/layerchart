@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getDailyTemperatures } from '$lib/data.remote';
+	const data = await getDailyTemperatures();
+</script>
+
 <script lang="ts">
 	import { LineChart, defaultChartPadding } from 'layerchart';
 	import { flatGroup } from 'd3-array';
-	import { getDailyTemperatures } from '$lib/data.remote';
 
-	const data = $derived(await getDailyTemperatures());
 	export { data };
 </script>
 

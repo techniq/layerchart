@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getOlympians } from '$lib/data.remote';
+	const olympians = await getOlympians();
+</script>
+
 <script lang="ts">
 	import { Chart, defaultChartPadding, Rect, Tooltip } from 'layerchart';
 	import { bin } from 'd3-array';
-	import { getOlympians } from '$lib/data.remote';
 	import HistogramControls from '$lib/components/controls/HistogramControls.svelte';
 
-	const olympians = await getOlympians();
 	let thresholds = $state(10);
 
 	const binByWeight = $derived(

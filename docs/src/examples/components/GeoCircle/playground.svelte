@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { Chart, GeoCircle, GeoPath, Graticule, Layer, defaultChartPadding } from 'layerchart';
 	import {
@@ -11,8 +16,6 @@
 	} from 'd3-geo';
 	import { range } from 'd3-array';
 	import { feature } from 'topojson-client';
-	import { getCountriesTopology } from '$lib/geo.remote';
-
 	import GeoCircleControls from '$lib/components/controls/GeoCirclePlaygroundControls.svelte';
 
 	let config = $state({
@@ -34,7 +37,6 @@
 		{ label: 'Orthographic', value: geoOrthographic }
 	];
 
-	const topology = await getCountriesTopology();
 	const geojson = $derived(feature(topology, topology.objects.countries));
 	const features = $derived(
 		config.projection === geoAlbersUsa

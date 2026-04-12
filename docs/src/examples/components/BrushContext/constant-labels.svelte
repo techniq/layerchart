@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { Area, Chart, Layer, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 	export { data };
 </script>
 

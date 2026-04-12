@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	const data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
@@ -19,13 +24,12 @@
 		Treemap,
 		findAncestor
 	} from 'layerchart';
-	import { getFlare } from '$lib/data.remote';
 	import type { TreemapProps } from 'layerchart';
 
 	type TreemapTileMethod = TreemapProps<any>['tile'];
 	type TreemapColorBy = 'children' | 'depth' | 'parent';
 
-	const data = $derived(await getFlare());
+
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)

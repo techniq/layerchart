@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getUsStatesTopology } from '$lib/geo.remote';
+	const topology = await getUsStatesTopology();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { geoMercator } from 'd3-geo';
@@ -5,9 +10,6 @@
 
 	import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
-	import { getUsStatesTopology } from '$lib/geo.remote';
-
-	const topology = await getUsStatesTopology();
 	const states = feature(topology, topology.objects.states);
 
 	const filteredStates = {

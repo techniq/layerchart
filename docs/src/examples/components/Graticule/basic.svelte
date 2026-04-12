@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import {
 		geoAlbersUsa,
@@ -14,8 +19,6 @@
 
 	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
 	import GraticuleControls from '$lib/components/controls/GraticuleControls.svelte';
-	import { getCountriesTopology } from '$lib/geo.remote';
-
 	let config = $state({
 		stepX: 10,
 		stepY: 10,
@@ -40,7 +43,6 @@
 		{ label: 'Gnomonic', value: geoGnomonic }
 	];
 
-	const topology = await getCountriesTopology();
 	const geojson = $derived(feature(topology, topology.objects.countries));
 </script>
 

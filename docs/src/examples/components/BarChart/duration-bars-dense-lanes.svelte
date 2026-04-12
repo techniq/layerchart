@@ -1,11 +1,14 @@
+<script module lang="ts">
+	import { getUsEvents } from '$lib/data.remote';
+	const usEvents = await getUsEvents();
+</script>
+
 <script lang="ts">
 	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { Duration } from 'svelte-ux';
-	import { getUsEvents } from '$lib/data.remote';
 	import { applyLanes } from 'layerchart';
 
-	const usEvents = await getUsEvents();
 	const data = applyLanes(usEvents, { start: 'startDate', end: 'endDate' });
 	export { data };
 </script>

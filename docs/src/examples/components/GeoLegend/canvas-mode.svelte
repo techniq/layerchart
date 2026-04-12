@@ -1,11 +1,13 @@
+<script module lang="ts">
+	import { getUsCountiesTopology } from '$lib/geo.remote';
+	const topology = await getUsCountiesTopology();
+</script>
+
 <script lang="ts">
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	import { Chart, GeoLegend, GeoPath, Layer } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-	import { getUsCountiesTopology } from '$lib/geo.remote';
-
-	const topology = await getUsCountiesTopology();
 	const states = feature(topology, topology.objects.states);
 </script>
 

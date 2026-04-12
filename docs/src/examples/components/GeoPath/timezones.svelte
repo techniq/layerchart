@@ -1,3 +1,10 @@
+<script module lang="ts">
+	import { getCountriesTopology, getUsStatesTopology, getTimezones } from '$lib/geo.remote.js';
+	const countriesTopojson = await getCountriesTopology();
+	const statesTopojson = await getUsStatesTopology();
+	const timezonesTopojson = await getTimezones();
+</script>
+
 <script lang="ts">
 	import {
 		geoAlbersUsa,
@@ -19,11 +26,6 @@
 	import TimezonesControls from '$lib/components/controls/GeoPathTimezonesControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getCountriesTopology, getUsStatesTopology, getTimezones } from '$lib/geo.remote.js';
-
-	const countriesTopojson = await getCountriesTopology();
-	const statesTopojson = await getUsStatesTopology();
-	const timezonesTopojson = await getTimezones();
 
 	let enableClip = $state(false);
 	let showDaylight = $state(false);
