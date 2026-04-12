@@ -8,37 +8,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 52,
+          "lineNumber": 55,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 64,
+          "lineNumber": 67,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 70,
+          "lineNumber": 73,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 72,
+          "lineNumber": 75,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 85,
+          "lineNumber": 88,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 104,
+          "lineNumber": 107,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 115,
+          "lineNumber": 118,
           "line": "<Text"
         }
       ]
@@ -50,27 +50,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 52,
+          "lineNumber": 55,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 64,
+          "lineNumber": 67,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 70,
+          "lineNumber": 73,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 72,
+          "lineNumber": 75,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 89,
+          "lineNumber": 92,
           "line": "<Group"
         }
       ]
@@ -81,16 +81,16 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 64,
+      "lineNumber": 67,
       "line": "<Tree"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 64,
+      "lineNumber": 67,
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.511Z"
+  "updatedAt": "2026-04-12T22:48:27.082Z"
 }

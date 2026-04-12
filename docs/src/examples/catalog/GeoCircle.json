@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 51,
+          "lineNumber": 53,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 70,
+          "lineNumber": 72,
           "line": "<Layer disableHitCanvas={timer.running}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 71,
+          "lineNumber": 73,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 73,
+          "lineNumber": 75,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 79,
+          "lineNumber": 81,
           "line": "<GeoCircle"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 89,
+          "lineNumber": 91,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -45,27 +45,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 63,
+          "lineNumber": 65,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 64,
+          "lineNumber": 66,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 65,
+          "lineNumber": 67,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 75,
+          "lineNumber": 77,
           "line": "<GeoCircle"
         }
       ]
@@ -76,30 +76,30 @@
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
-      "lineNumber": 79,
+      "lineNumber": 81,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/playground",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<GeoCircle"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/playground",
-      "lineNumber": 83,
+      "lineNumber": 85,
       "line": "<GeoCircle"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 127,
+      "lineNumber": 138,
       "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
     }
   ],
-  "updatedAt": "2026-03-02T17:24:37.266Z"
+  "updatedAt": "2026-04-12T22:48:25.548Z"
 }

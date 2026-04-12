@@ -72,22 +72,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 46,
+          "lineNumber": 48,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 52,
+          "lineNumber": 54,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 53,
+          "lineNumber": 55,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 54,
+          "lineNumber": 56,
           "line": "<Graticule class=\"stroke-surface-content/10\" />"
         }
       ]
@@ -99,17 +99,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 103,
+          "lineNumber": 105,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 109,
+          "lineNumber": 111,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 110,
+          "lineNumber": 112,
           "line": "<GeoPath {geojson} fill=\"white\" />"
         }
       ]
@@ -153,22 +153,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 269,
+          "lineNumber": 271,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 286,
+          "lineNumber": 288,
           "line": "<Layer>"
         },
         {
           "component": "Graticule",
-          "lineNumber": 287,
+          "lineNumber": 289,
           "line": "<Graticule class=\"stroke-surface-content/10\" />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 289,
+          "lineNumber": 291,
           "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
         }
       ]
@@ -179,9 +179,9 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
-      "lineNumber": 62,
+      "lineNumber": 64,
       "line": "<GeoProjection"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.448Z"
+  "updatedAt": "2026-04-12T22:48:25.706Z"
 }

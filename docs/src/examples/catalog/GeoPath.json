@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 110,
+          "lineNumber": 113,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 131,
+          "lineNumber": 134,
           "line": "<Layer {debug}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 132,
+          "lineNumber": 135,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 133,
+          "lineNumber": 136,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Canvas",
-          "lineNumber": 151,
+          "lineNumber": 154,
           "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 159,
+          "lineNumber": 162,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -45,42 +45,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 81,
+          "lineNumber": 83,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 105,
+          "lineNumber": 107,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 106,
+          "lineNumber": 108,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
           "component": "Circle",
-          "lineNumber": 108,
+          "lineNumber": 110,
           "line": "<Circle"
         },
         {
           "component": "Legend",
-          "lineNumber": 140,
+          "lineNumber": 142,
           "line": "<Legend"
         },
         {
           "component": "CircleLegend",
-          "lineNumber": 146,
+          "lineNumber": 148,
           "line": "<CircleLegend title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 148,
-          "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+          "lineNumber": 150,
+          "line": "<GeoLegend units=\"mi\" referenceScale={1300} placement=\"bottom-left\" class=\"m-2\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 150,
+          "lineNumber": 152,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -92,27 +92,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 54,
+          "lineNumber": 56,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 77,
+          "lineNumber": 79,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 79,
+          "lineNumber": 81,
           "line": "<GeoPath"
         },
         {
           "component": "Legend",
-          "lineNumber": 102,
+          "lineNumber": 104,
           "line": "<Legend"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 107,
+          "lineNumber": 109,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -124,32 +124,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 60,
           "line": "<Chart"
         },
         {
           "component": "Legend",
-          "lineNumber": 70,
+          "lineNumber": 72,
           "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
         },
         {
           "component": "Layer",
-          "lineNumber": 72,
+          "lineNumber": 74,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 73,
+          "lineNumber": 75,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 74,
+          "lineNumber": 76,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 92,
+          "lineNumber": 94,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -161,22 +161,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 169,
+          "lineNumber": 171,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 177,
+          "lineNumber": 179,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 178,
+          "lineNumber": 180,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/20 fill-none\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 180,
+          "lineNumber": 182,
           "line": "<Graticule class=\"stroke-surface-content/10\" />"
         }
       ]
@@ -188,22 +188,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 42,
+          "lineNumber": 44,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 53,
+          "lineNumber": 55,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 54,
+          "lineNumber": 56,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
       ]
@@ -215,27 +215,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 58,
+          "lineNumber": 60,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 74,
+          "lineNumber": 76,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 75,
+          "lineNumber": 77,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
         },
         {
           "component": "Vector",
-          "lineNumber": 83,
+          "lineNumber": 85,
           "line": "<Vector"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 117,
+          "lineNumber": 119,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -247,37 +247,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 56,
+          "lineNumber": 54,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 68,
+          "lineNumber": 66,
           "line": "<Layer disableHitCanvas={timer.running}>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 69,
+          "lineNumber": 67,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 70,
+          "lineNumber": 68,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "GeoVisible",
-          "lineNumber": 90,
+          "lineNumber": 88,
           "line": "<GeoVisible {lat} {long}>"
         },
         {
           "component": "GeoPoint",
-          "lineNumber": 91,
+          "lineNumber": 89,
           "line": "<GeoPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 103,
+          "lineNumber": 101,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -289,37 +289,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 93,
+          "lineNumber": 105,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 101,
+          "lineNumber": 113,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 102,
+          "lineNumber": 114,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
+          "component": "GeoClipPath",
+          "lineNumber": 116,
+          "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
+        },
+        {
           "component": "ClipPath",
-          "lineNumber": 105,
-          "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
+          "lineNumber": 136,
+          "line": "<ClipPath useId=\"globe\">"
         },
         {
           "component": "Blur",
-          "lineNumber": 126,
+          "lineNumber": 137,
           "line": "<Blur>"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 127,
+          "lineNumber": 138,
           "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 133,
+          "lineNumber": 144,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -363,22 +368,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 65,
+          "lineNumber": 67,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 67,
+          "lineNumber": 69,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 123,
+          "lineNumber": 125,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -390,17 +395,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 18,
+          "lineNumber": 20,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 34,
+          "lineNumber": 36,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 36,
+          "lineNumber": 38,
           "line": "<GeoPath"
         }
       ]
@@ -412,22 +417,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 36,
+          "lineNumber": 38,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
       ]
@@ -439,22 +444,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 50,
+          "lineNumber": 52,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
           "component": "Graticule",
-          "lineNumber": 51,
+          "lineNumber": 53,
           "line": "<Graticule class=\"stroke-surface-content/20\" />"
         }
       ]
@@ -466,22 +471,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 66,
+          "lineNumber": 68,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 68,
+          "lineNumber": 70,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 121,
+          "lineNumber": 123,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -557,32 +562,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 45,
+          "lineNumber": 47,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 58,
+          "lineNumber": 60,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 59,
+          "lineNumber": 61,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
         },
         {
           "component": "GeoProjection",
-          "lineNumber": 62,
+          "lineNumber": 64,
           "line": "<GeoProjection"
         },
         {
           "component": "Graticule",
-          "lineNumber": 68,
+          "lineNumber": 70,
           "line": "<Graticule class=\"stroke-surface-content/5\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 85,
+          "lineNumber": 87,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -594,22 +599,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 17,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 22,
+          "lineNumber": 24,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<GeoPath"
         },
         {
           "component": "Text",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<!-- <Text"
         }
       ]
@@ -621,17 +626,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 44,
+          "lineNumber": 46,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 45,
+          "lineNumber": 47,
           "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
         }
       ]
@@ -643,22 +648,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 41,
+          "lineNumber": 43,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 51,
+          "lineNumber": 53,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 63,
+          "lineNumber": 65,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -670,27 +675,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 38,
+          "lineNumber": 40,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 46,
+          "lineNumber": 48,
           "line": "<Layer>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 47,
+          "lineNumber": 49,
           "line": "<ChartClipPath>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<GeoPath"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 68,
+          "lineNumber": 70,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -701,50 +706,64 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 45,
+      "lineNumber": 47,
       "line": "<GeoPath"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 50,
+      "lineNumber": 52,
       "line": "<GeoPath"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
-      "lineNumber": 71,
+      "lineNumber": 73,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
     },
     {
       "example": "earthquake-globe",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/earthquake-globe",
-      "lineNumber": 76,
+      "lineNumber": 78,
       "line": "<GeoPath geojson={tectonicPlates} class=\"stroke-danger-100/30\" />"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/playground",
-      "lineNumber": 64,
+      "lineNumber": 66,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "playground",
       "component": "GeoCircle",
       "path": "/docs/components/GeoCircle/playground",
-      "lineNumber": 68,
+      "lineNumber": 70,
       "line": "<GeoPath"
+    },
+    {
+      "example": "basic",
+      "component": "GeoClipPath",
+      "path": "/docs/components/GeoClipPath/basic",
+      "lineNumber": 28,
+      "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/20\" />"
+    },
+    {
+      "example": "basic",
+      "component": "GeoClipPath",
+      "path": "/docs/components/GeoClipPath/basic",
+      "lineNumber": 31,
+      "line": "<GeoPath geojson={nation} class=\"fill-none stroke-surface-content\" />"
     },
     {
       "example": "geojson-preview",
@@ -771,7 +790,7 @@
       "example": "shapefile-preview",
       "component": "GeoContext",
       "path": "/docs/components/GeoContext/shapefile-preview",
-      "lineNumber": 110,
+      "lineNumber": 112,
       "line": "<GeoPath {geojson} fill=\"white\" />"
     },
     {
@@ -785,238 +804,231 @@
       "example": "basic",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/basic",
-      "lineNumber": 28,
+      "lineNumber": 30,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "canvas-mode",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/canvas-mode",
-      "lineNumber": 28,
+      "lineNumber": 30,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "stacked-units",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/stacked-units",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "tick-format",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/tick-format",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<GeoPath geojson={countries} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "ticks",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/ticks",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "variants",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/variants",
-      "lineNumber": 24,
+      "lineNumber": 26,
       "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 132,
+      "lineNumber": 135,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 136,
+      "lineNumber": 139,
       "line": "<GeoPath"
     },
     {
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 154,
+      "lineNumber": 157,
       "line": "<GeoPath geojson={context.tooltip.data} class=\"fill-surface-content/20\" />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 106,
+      "lineNumber": 108,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 120,
+      "lineNumber": 122,
       "line": "<GeoPath"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 132,
+      "lineNumber": 134,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 79,
+      "lineNumber": 81,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 88,
+      "lineNumber": 90,
       "line": "<GeoPath"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 98,
+      "lineNumber": 100,
       "line": "<GeoPath geojson={context.tooltip.data} class=\"stroke-white\" {strokeWidth} />"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 73,
+      "lineNumber": 75,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 81,
+      "lineNumber": 83,
       "line": "<GeoPath"
     },
     {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
-      "lineNumber": 178,
+      "lineNumber": 180,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/20 fill-none\" />"
     },
     {
       "example": "interpolating-projections",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/interpolating-projections",
-      "lineNumber": 182,
+      "lineNumber": 184,
       "line": "<GeoPath geojson={land} class=\"fill-surface-content/15\" />"
     },
     {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
-      "lineNumber": 54,
+      "lineNumber": 56,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
-      "lineNumber": 56,
+      "lineNumber": 58,
       "line": "<GeoPath geojson={land} {curve} class=\"stroke-surface-content/50 fill-white\" />"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" {strokeWidth} />"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 78,
+      "lineNumber": 80,
       "line": "<GeoPath geojson={feature} {strokeWidth}>"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 97,
+      "lineNumber": 99,
       "line": "<GeoPath"
     },
     {
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 109,
+      "lineNumber": 111,
       "line": "<GeoPath"
     },
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/submarine-cables-globe",
-      "lineNumber": 69,
+      "lineNumber": 67,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-surface-200 stroke-surface-content/20\" />"
     },
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/submarine-cables-globe",
-      "lineNumber": 71,
+      "lineNumber": 69,
       "line": "<GeoPath geojson={countries} class=\"stroke-surface-100/30 fill-surface-content\" />"
     },
     {
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/submarine-cables-globe",
-      "lineNumber": 76,
+      "lineNumber": 74,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 102,
+      "lineNumber": 114,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 104,
-      "line": "<GeoPath geojson={countriesGeojson} id=\"clip\" />"
-    },
-    {
-      "example": "timezones",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 107,
+      "lineNumber": 118,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 117,
+      "lineNumber": 128,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 fill-gray-900/20 pointer-events-none\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 121,
+      "lineNumber": 132,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
     },
     {
@@ -1044,77 +1056,77 @@
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 67,
+      "lineNumber": 69,
       "line": "<GeoPath"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 98,
+      "lineNumber": 100,
       "line": "<GeoPath"
     },
     {
       "example": "transform-canvas",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas",
-      "lineNumber": 115,
+      "lineNumber": 117,
       "line": "<GeoPath"
     },
     {
       "example": "transform-canvas-scale-extent",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-canvas-scale-extent",
-      "lineNumber": 36,
+      "lineNumber": 38,
       "line": "<GeoPath"
     },
     {
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 36,
+      "lineNumber": 38,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
     },
     {
       "example": "transform-globe-constrain",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-constrain",
-      "lineNumber": 39,
+      "lineNumber": 41,
       "line": "<GeoPath geojson={feature} class=\"stroke-surface-100/30 fill-surface-content/70\" />"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 50,
+      "lineNumber": 52,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
     },
     {
       "example": "transform-globe-inertia",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-globe-inertia",
-      "lineNumber": 53,
+      "lineNumber": 55,
       "line": "<GeoPath geojson={feature} class=\"stroke-surface-100/30 fill-surface-content/70\" />"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 68,
+      "lineNumber": 70,
       "line": "<GeoPath"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 96,
+      "lineNumber": 98,
       "line": "<GeoPath"
     },
     {
       "example": "transform-projection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/transform-projection",
-      "lineNumber": 113,
+      "lineNumber": 115,
       "line": "<GeoPath"
     },
     {
@@ -1163,77 +1175,77 @@
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
-      "lineNumber": 59,
+      "lineNumber": 61,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/20\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
-      "lineNumber": 70,
+      "lineNumber": 72,
       "line": "<GeoPath geojson={country} class=\"stroke-surface-content/5 fill-surface-content/10\" />"
     },
     {
       "example": "translucent-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/translucent-globe",
-      "lineNumber": 77,
+      "lineNumber": 79,
       "line": "<GeoPath"
     },
     {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<GeoPath"
     },
     {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
-      "lineNumber": 33,
+      "lineNumber": 35,
       "line": "<GeoPath geojson={feature}>"
     },
     {
       "example": "us-state",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state",
-      "lineNumber": 45,
+      "lineNumber": 47,
       "line": "<GeoPath geojson={selectedStateFeature} class=\"stroke-surface-content\" />"
     },
     {
       "example": "us-state-with-counties",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-counties",
-      "lineNumber": 51,
+      "lineNumber": 53,
       "line": "<GeoPath"
     },
     {
       "example": "us-state-with-counties",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-counties",
-      "lineNumber": 57,
+      "lineNumber": 59,
       "line": "<GeoPath"
     },
     {
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 49,
+      "lineNumber": 51,
       "line": "<GeoPath"
     },
     {
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 56,
+      "lineNumber": 58,
       "line": "<GeoPath"
     },
     {
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 61,
+      "lineNumber": 63,
       "line": "<GeoPath"
     },
     {
@@ -1296,21 +1308,21 @@
       "example": "satellite",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/satellite",
-      "lineNumber": 53,
+      "lineNumber": 55,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" />"
     },
     {
       "example": "satellite",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/satellite",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<GeoPath geojson={land} class=\"fill-surface-content/10 stroke-surface-content/30\" />"
     },
     {
       "example": "shapefile-preview",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/shapefile-preview",
-      "lineNumber": 110,
+      "lineNumber": 112,
       "line": "<GeoPath {geojson} fill=\"white\" />"
     },
     {
@@ -1324,28 +1336,28 @@
       "example": "true-size",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size",
-      "lineNumber": 289,
+      "lineNumber": 291,
       "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
     },
     {
       "example": "true-size",
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size",
-      "lineNumber": 301,
+      "lineNumber": 303,
       "line": "<GeoPath"
     },
     {
       "example": "globe",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/globe",
-      "lineNumber": 41,
+      "lineNumber": 43,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
     },
     {
       "example": "globe",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/globe",
-      "lineNumber": 44,
+      "lineNumber": 46,
       "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/40\" />"
     },
     {
@@ -1359,14 +1371,14 @@
       "example": "projections",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/projections",
-      "lineNumber": 58,
+      "lineNumber": 60,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
     },
     {
       "example": "projections",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/projections",
-      "lineNumber": 61,
+      "lineNumber": 63,
       "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/40\" />"
     },
     {
@@ -1380,91 +1392,84 @@
       "example": "tiles-globe",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/tiles-globe",
-      "lineNumber": 109,
+      "lineNumber": 111,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
     },
     {
       "example": "tiles-globe",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/tiles-globe",
-      "lineNumber": 112,
+      "lineNumber": 114,
       "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/30\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
-      "lineNumber": 27,
+      "lineNumber": 29,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
-      "lineNumber": 30,
+      "lineNumber": 32,
       "line": "<GeoPath geojson={country} class=\"stroke-surface-content/50 fill-white pointer-events-none\" />"
     },
     {
       "example": "world-map",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/world-map",
-      "lineNumber": 38,
+      "lineNumber": 40,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-blue-400/50\" />"
     },
     {
       "example": "world-map",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/world-map",
-      "lineNumber": 41,
+      "lineNumber": 43,
       "line": "<GeoPath geojson={country} class=\"stroke-surface-content/50 fill-white\" />"
     },
     {
       "example": "basic",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/basic",
-      "lineNumber": 47,
+      "lineNumber": 49,
       "line": "<GeoPath"
     },
     {
       "example": "clipped",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/clipped",
-      "lineNumber": 45,
-      "line": "<GeoPath geojson={selectedFeature} id=\"clip\" class=\"stroke-none\" />"
-    },
-    {
-      "example": "clipped",
-      "component": "GeoTile",
-      "path": "/docs/components/GeoTile/clipped",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<GeoPath"
     },
     {
       "example": "zoomable",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable",
-      "lineNumber": 69,
+      "lineNumber": 71,
       "line": "<GeoPath"
     },
     {
       "example": "zoomable-seamless-layers",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-seamless-layers",
-      "lineNumber": 76,
+      "lineNumber": 78,
       "line": "<GeoPath"
     },
     {
       "example": "zoomable-with-padding",
       "component": "GeoTile",
       "path": "/docs/components/GeoTile/zoomable-with-padding",
-      "lineNumber": 75,
+      "lineNumber": 77,
       "line": "<GeoPath"
     },
     {
       "example": "basic",
       "component": "Graticule",
       "path": "/docs/components/Graticule/basic",
-      "lineNumber": 60,
+      "lineNumber": 62,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content\" />"
     },
     {
@@ -1485,14 +1490,7 @@
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 39,
-      "line": "<GeoPath geojson={nation} class=\"stroke-none\" />"
-    },
-    {
-      "example": "us-water-vapor",
-      "component": "Raster",
-      "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 69,
+      "lineNumber": 65,
       "line": "<GeoPath geojson={nation} class=\"fill-none stroke-[#2f2f2f]\" strokeWidth={1.25} />"
     },
     {
@@ -1513,16 +1511,16 @@
       "example": "election-wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/election-wind-map",
-      "lineNumber": 85,
+      "lineNumber": 87,
       "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
     },
     {
       "example": "election-wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/election-wind-map",
-      "lineNumber": 103,
+      "lineNumber": 105,
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:11.017Z"
+  "updatedAt": "2026-04-12T22:48:25.654Z"
 }

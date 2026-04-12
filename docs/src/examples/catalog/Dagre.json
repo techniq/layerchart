@@ -8,37 +8,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 46,
+          "lineNumber": 48,
           "line": "<Layer>"
         },
         {
           "component": "Dagre",
-          "lineNumber": 47,
+          "lineNumber": 49,
           "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
         },
         {
           "component": "Spline",
-          "lineNumber": 51,
+          "lineNumber": 53,
           "line": "<Spline"
         },
         {
           "component": "Group",
-          "lineNumber": 65,
+          "lineNumber": 67,
           "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 66,
+          "lineNumber": 68,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 73,
+          "lineNumber": 75,
           "line": "<Text"
         }
       ]
@@ -92,37 +92,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 48,
+          "lineNumber": 50,
           "line": "<Layer>"
         },
         {
           "component": "Dagre",
-          "lineNumber": 49,
+          "lineNumber": 51,
           "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
         },
         {
           "component": "Spline",
-          "lineNumber": 53,
+          "lineNumber": 55,
           "line": "<Spline"
         },
         {
           "component": "Text",
-          "lineNumber": 63,
+          "lineNumber": 65,
           "line": "<Text"
         },
         {
           "component": "Group",
-          "lineNumber": 77,
+          "lineNumber": 79,
           "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 78,
+          "lineNumber": 80,
           "line": "<Rect"
         }
       ]
@@ -134,37 +134,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 34,
+          "lineNumber": 36,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 47,
+          "lineNumber": 49,
           "line": "<Layer center>"
         },
         {
           "component": "Dagre",
-          "lineNumber": 48,
+          "lineNumber": 50,
           "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
         },
         {
           "component": "Spline",
-          "lineNumber": 52,
+          "lineNumber": 54,
           "line": "<Spline"
         },
         {
           "component": "Text",
-          "lineNumber": 62,
+          "lineNumber": 64,
           "line": "<Text"
         },
         {
           "component": "Group",
-          "lineNumber": 76,
+          "lineNumber": 78,
           "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 77,
+          "lineNumber": 79,
           "line": "<Rect"
         }
       ]
@@ -175,7 +175,7 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 47,
+      "lineNumber": 49,
       "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
     },
     {
@@ -189,16 +189,16 @@
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 49,
+      "lineNumber": 51,
       "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 48,
+      "lineNumber": 50,
       "line": "<Dagre data={data as any} edges={(d) => d.links} {...settings}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.611Z"
+  "updatedAt": "2026-04-12T22:48:25.392Z"
 }
