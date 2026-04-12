@@ -130,6 +130,28 @@
       ]
     },
     {
+      "name": "segments",
+      "title": "segments",
+      "path": "/docs/components/Text/segments",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={80}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 7,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "truncate-axis-labels",
       "title": "truncate axis labels",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -836,6 +858,20 @@
       "line": "<Text {...config} truncate={config.truncate ? config.truncateOptions : false} />"
     },
     {
+      "example": "segments",
+      "component": "Text",
+      "path": "/docs/components/Text/segments",
+      "lineNumber": 7,
+      "line": "<Text"
+    },
+    {
+      "example": "segments",
+      "component": "Text",
+      "path": "/docs/components/Text/segments",
+      "lineNumber": 15,
+      "line": "<Text"
+    },
+    {
       "example": "word-wrap-with-explicit-newline",
       "component": "Text",
       "path": "/docs/components/Text/word-wrap-with-explicit-newline",
@@ -868,13 +904,13 @@
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
       "lineNumber": 112,
-      "line": "<text"
+      "line": "<Text"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 129,
+      "lineNumber": 144,
       "line": "<Text"
     },
     {
@@ -882,27 +918,27 @@
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
       "lineNumber": 163,
-      "line": "<text"
+      "line": "<Text"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 179,
-      "line": "<!-- <Text"
+      "lineNumber": 195,
+      "line": "<Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
       "lineNumber": 129,
-      "line": "<text"
+      "line": "<Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 145,
+      "lineNumber": 161,
       "line": "<Text"
     },
     {
@@ -910,13 +946,13 @@
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
       "lineNumber": 154,
-      "line": "<text"
+      "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 171,
+      "lineNumber": 186,
       "line": "<Text"
     },
     {
@@ -930,7 +966,7 @@
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 125,
+      "lineNumber": 126,
       "line": "<Text"
     },
     {
@@ -983,5 +1019,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.748Z"
+  "updatedAt": "2026-04-12T23:32:36.515Z"
 }

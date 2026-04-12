@@ -3713,6 +3713,13 @@
       "line": "<Layer {type}>"
     },
     {
+      "example": "segments",
+      "component": "Text",
+      "path": "/docs/components/Text/segments",
+      "lineNumber": 6,
+      "line": "<Layer>"
+    },
+    {
       "example": "word-wrap-with-explicit-newline",
       "component": "Text",
       "path": "/docs/components/Text/word-wrap-with-explicit-newline",
@@ -4077,5 +4084,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.988Z"
+  "updatedAt": "2026-04-12T23:32:35.318Z"
 }

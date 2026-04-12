@@ -6546,84 +6546,84 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 147,
+      "lineNumber": 163,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 149,
+      "lineNumber": 165,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 150,
+      "lineNumber": 166,
       "line": "<Tooltip.List>"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 151,
-      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
-    },
-    {
-      "example": "nested-zoom",
-      "component": "Treemap",
-      "path": "/docs/components/Treemap/nested-zoom",
       "lineNumber": 167,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
+    },
+    {
+      "example": "nested-zoom",
+      "component": "Treemap",
+      "path": "/docs/components/Treemap/nested-zoom",
+      "lineNumber": 184,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 169,
+      "lineNumber": 186,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 170,
+      "lineNumber": 187,
       "line": "<Tooltip.List>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 171,
+      "lineNumber": 188,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 189,
+      "lineNumber": 205,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 191,
+      "lineNumber": 207,
       "line": "<Tooltip.Header>{data.data.name}</Tooltip.Header>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 192,
+      "lineNumber": 208,
       "line": "<Tooltip.List>"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 193,
+      "lineNumber": 209,
       "line": "<Tooltip.Item label=\"value\" value={data.value} format=\"integer\" />"
     },
     {
@@ -6704,5 +6704,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.869Z"
+  "updatedAt": "2026-04-12T23:32:36.610Z"
 }

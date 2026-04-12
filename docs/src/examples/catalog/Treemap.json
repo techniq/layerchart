@@ -76,11 +76,11 @@
         {
           "component": "Text",
           "lineNumber": 112,
-          "line": "<text"
+          "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 147,
+          "lineNumber": 163,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -123,7 +123,7 @@
         {
           "component": "Text",
           "lineNumber": 163,
-          "line": "<text"
+          "line": "<Text"
         }
       ]
     },
@@ -175,11 +175,11 @@
         {
           "component": "Text",
           "lineNumber": 129,
-          "line": "<text"
+          "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 167,
+          "lineNumber": 184,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -222,11 +222,11 @@
         {
           "component": "Text",
           "lineNumber": 154,
-          "line": "<text"
+          "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 189,
+          "lineNumber": 205,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -328,5 +328,5 @@
       "line": "<Treemap {hierarchy} tile={config.tile} maintainAspectRatio={config.maintainAspectRatio}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:27.108Z"
+  "updatedAt": "2026-04-12T23:32:36.986Z"
 }

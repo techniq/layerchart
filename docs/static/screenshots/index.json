@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-12T22:48:24.002Z",
+  "generatedAt": "2026-04-12T23:32:30.949Z",
   "totalComponents": 75,
-  "totalExamples": 875,
+  "totalExamples": 876,
   "components": [
     {
       "component": "AnnotationLine",
@@ -4432,6 +4432,11 @@
           "checksum": "b406e9b6f5f2017daa94c1d94b44be90"
         },
         {
+          "name": "segments",
+          "path": "/example/Text/segments",
+          "checksum": "e08188c86ea7d3b29467b11b9affb905"
+        },
+        {
           "name": "truncate-axis-labels",
           "path": "/example/Text/truncate-axis-labels",
           "checksum": "38d821b89a56c3556fa6a1b6d8706fea"
@@ -4659,27 +4664,27 @@
         {
           "name": "complex",
           "path": "/example/Treemap/complex",
-          "checksum": "2533e6fb0632e87c9bfba06af59d0b82"
+          "checksum": "8d84d4664bccdeb0fca4c19f27618582"
         },
         {
           "name": "nested-filter",
           "path": "/example/Treemap/nested-filter",
-          "checksum": "ebfe013aed7e8bc9f4583ec0bcf49ce5"
+          "checksum": "bbd88ed013fc08ecb31b9b03716d5f85"
         },
         {
           "name": "nested-zoom",
           "path": "/example/Treemap/nested-zoom",
-          "checksum": "16dbd74cf6709f91ad75c89fcbe04ccb"
+          "checksum": "74203ed18d5f71938efa7fbf3ffa3f50"
         },
         {
           "name": "playground",
           "path": "/example/Treemap/playground",
-          "checksum": "0fda448f1690e833b82958fa366a79a0"
+          "checksum": "e8f248bf9315cd7920b13bf6aacc0a2e"
         },
         {
           "name": "stacked-zoom",
           "path": "/example/Treemap/stacked-zoom",
-          "checksum": "fe80baf817906152bc8d01eb8562870c"
+          "checksum": "c3316c0bbe86f84692ab28fb6135cb91"
         }
       ]
     },
