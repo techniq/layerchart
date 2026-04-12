@@ -67,6 +67,8 @@ export { default as GeoProjection } from './GeoProjection.svelte';
 export * from './GeoProjection.svelte';
 export { default as GeoEdgeFade } from './GeoEdgeFade.svelte';
 export * from './GeoEdgeFade.svelte';
+export { default as GeoClipPath } from './GeoClipPath.svelte';
+export * from './GeoClipPath.svelte';
 export { default as GeoPath } from './GeoPath.svelte';
 export * from './GeoPath.svelte';
 export { default as GeoPoint } from './GeoPoint.svelte';

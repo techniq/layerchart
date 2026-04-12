@@ -8,7 +8,7 @@
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
+	import { Chart, GeoClipPath, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 	const states = feature(topology, topology.objects.states);
 
@@ -41,10 +41,9 @@
 >
 	{#snippet children({ context })}
 		<Layer>
-			<ClipPath useId="clip">
+			<GeoClipPath geojson={selectedFeature}>
 				<GeoTile url={serviceUrl} {zoomDelta} />
-			</ClipPath>
-			<GeoPath geojson={selectedFeature} id="clip" class="stroke-none" />
+			</GeoClipPath>
 			{#each filteredStates.features as feature}
 				<GeoPath
 					geojson={feature}

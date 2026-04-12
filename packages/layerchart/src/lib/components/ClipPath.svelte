@@ -84,7 +84,7 @@
             ctx.clip();
           }
         },
-        deps: () => canvasClipDeps?.() ?? [],
+        deps: () => [disabled, ...(canvasClipDeps?.() ?? [])],
       },
     });
   }
