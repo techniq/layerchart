@@ -126,21 +126,37 @@
 												rx={5}
 											/>
 											<RectClipPath width={nodeWidth} height={nodeHeight}>
-												<text
+												<Text
+													segments={[
+														{
+															value: node.data.name,
+															class: cls(
+																'text-[10px] font-medium',
+																config.colorBy === 'children'
+																	? 'fill-primary-content'
+																	: 'fill-black'
+															),
+														},
+														...(node.children
+															? [
+																	{
+																		value: ` ${format(node.value ?? 0, 'integer')}`,
+																		class: cls(
+																			'text-[8px] font-extralight',
+																			config.colorBy === 'children'
+																				? 'fill-primary-content'
+																				: 'fill-black'
+																		),
+																	},
+																]
+															: []),
+													]}
+													verticalAnchor="start"
+													lineHeight="10px"
 													x={4}
-													y={16 * 0.6 + 4}
-													class={cls(
-														'text-[10px] font-medium',
-														config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-													)}
-												>
-													<tspan>{node.data.name}</tspan>
-													{#if node.children}
-														<tspan class="text-[8px] font-extralight">
-															{format(node.value ?? 0, 'integer')}
-														</tspan>
-													{/if}
-												</text>
+													y={3.6}
+												/>
+
 												{#if !node.children}
 													<Text
 														value={format(node.value ?? 0, 'integer')}
@@ -149,6 +165,7 @@
 															config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 														)}
 														verticalAnchor="start"
+														lineHeight="8px"
 														x={4}
 														y={16}
 													/>

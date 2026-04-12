@@ -119,8 +119,9 @@
 														config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 													)}
 													verticalAnchor="start"
+													lineHeight="10px"
 													x={4}
-													y={2}
+													y={3.6}
 												/>
 												<Text
 													value={format(node.value ?? 0, 'integer')}
@@ -129,6 +130,7 @@
 														config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
 													)}
 													verticalAnchor="start"
+													lineHeight="8px"
 													x={4}
 													y={16}
 												/>
