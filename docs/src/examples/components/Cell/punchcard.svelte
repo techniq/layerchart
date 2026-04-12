@@ -25,7 +25,7 @@
 >
 	<Layer>
 		<Axis placement="bottom" format={(d) => 'Week\u00A0' + d} rule />
-		<!-- \u00A0 is a non-breaking space, only necessart for HTML -->
+		<!-- \u00A0 is a non-breaking space, only necessary for HTML -->
 		<Axis placement="left" format={(d) => daysOfWeek[d]} rule />
 		<Grid x={false} y bandAlign="between" />
 		<Cell
