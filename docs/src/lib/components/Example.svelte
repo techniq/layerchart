@@ -223,7 +223,7 @@
 			>
 				{#if isVisible}
 					<svelte:boundary>
-						<example.component />
+						<example.component bind:this={ref} />
 						{#snippet pending()}
 							<div class="min-h-80 flex items-center justify-center text-surface-content/30">
 								Loading...
