@@ -24,9 +24,16 @@
 	height={300}
 >
 	<Layer>
-		<Axis placement="bottom" format={(d) => 'Week ' + d} rule />
+		<Axis placement="bottom" format={(d) => 'Week\u00A0' + d} rule />
+		<!-- \u00A0 is a non-breaking space, only necessart for HTML -->
 		<Axis placement="left" format={(d) => daysOfWeek[d]} rule />
 		<Grid x={false} y bandAlign="between" />
-		<Cell x={(d) => timeWeek.count(timeYear(d.date), d.date)} y={(d) => d.date.getDay()} shape="circle" r="value" class="fill-primary" />
+		<Cell
+			x={(d) => timeWeek.count(timeYear(d.date), d.date)}
+			y={(d) => d.date.getDay()}
+			shape="circle"
+			r="value"
+			fill="var(--color-primary)"
+		/>
 	</Layer>
 </Chart>
