@@ -65,6 +65,9 @@ importers:
       flexsearch:
         specifier: ^0.8.212
         version: 0.8.212
+      mathjs:
+        specifier: ^15.2.0
+        version: 15.2.0
       satori:
         specifier: ^0.26.0
         version: 0.26.0
@@ -3628,6 +3631,9 @@ packages:
     resolution: {integrity: sha512-buhp5kePrmda3vhc5B9t7pUQXAb2Tnd0qgpkIhPhkHXxJpiPJ11H0ZEU0oBpJ2QztSbzG/ZxMj/CHsYJqRHmyg==}
     engines: {node: '>= 12.0.0'}
 
+  complex.js@2.4.3:
+    resolution: {integrity: sha512-UrQVSUur14tNX6tiP4y8T4w4FeJAX3bi2cIv0pu/DTLFNxoq7z2Yh83Vfzztj6Px3X/lubqQ9IrPp7Bpn6p4MQ==}
+
   confbox@0.1.8:
     resolution: {integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==}
 
@@ -3823,6 +3829,9 @@ packages:
       supports-color:
         optional: true
 
+  decimal.js@10.6.0:
+    resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
+
   decode-named-character-reference@1.2.0:
     resolution: {integrity: sha512-c6fcElNV6ShtZXmsgNgFFV5tVX2PaV4g+MOAkb8eXHvn6sryJBrZa9r0zV6+dtTyoCKxtDy5tyQ5ZwQuidtd+Q==}
 
@@ -3916,6 +3925,9 @@ packages:
 
   escape-html@1.0.3:
     resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
+
+  escape-latex@1.2.0:
+    resolution: {integrity: sha512-nV5aVWW1K0wEiUIEdZ4erkGGH8mDxGyxSeqPzRNtWP7ataw+/olFObw7hujFWlVjNsaDFw5VZ5NzVSIqRgfTiw==}
 
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
@@ -4102,6 +4114,9 @@ packages:
 
   flexsearch@0.8.212:
     resolution: {integrity: sha512-wSyJr1GUWoOOIISRu+X2IXiOcVfg9qqBRyCPRUdLMIGJqPzMo+jMRlvE83t14v1j0dRMEaBbER/adQjp6Du2pw==}
+
+  fraction.js@5.3.4:
+    resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
 
   fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
@@ -4306,6 +4321,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  javascript-natural-sort@0.7.1:
+    resolution: {integrity: sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==}
+
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
@@ -4478,6 +4496,11 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  mathjs@15.2.0:
+    resolution: {integrity: sha512-UAQzSVob9rNLdGpqcFMYmSu9dkuLYy7Lr2hBEQS5SHQdknA9VppJz3cy2KkpMzTODunad6V6cNv+5kOLsePLow==}
+    engines: {node: '>= 18'}
+    hasBin: true
 
   mdast-util-find-and-replace@3.0.2:
     resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
@@ -5189,6 +5212,9 @@ packages:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
     engines: {node: '>=4'}
 
+  seedrandom@3.0.5:
+    resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
+
   semver@7.7.3:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
     engines: {node: '>=10'}
@@ -5421,6 +5447,9 @@ packages:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
     engines: {node: '>=8'}
 
+  tiny-emitter@2.1.0:
+    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+
   tiny-inflate@1.0.3:
     resolution: {integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==}
 
@@ -5491,6 +5520,10 @@ packages:
 
   type-level-regexp@0.1.17:
     resolution: {integrity: sha512-wTk4DH3cxwk196uGLK/E9pE45aLfeKJacKmcEgEOA/q5dnPGNxXt0cfYdFxb57L+sEpf1oJH4Dnx/pnRcku9jg==}
+
+  typed-function@4.2.2:
+    resolution: {integrity: sha512-VwaXim9Gp1bngi/q3do8hgttYn2uC3MoT/gfuMWylnj1IeZBUAyPddHZlo1K05BDoj8DYPpMdiHqH1dDYdJf2A==}
+    engines: {node: '>= 18'}
 
   typescript-eslint@8.57.1:
     resolution: {integrity: sha512-fLvZWf+cAGw3tqMCYzGIU6yR8K+Y9NT2z23RwOjlNFF2HwSB3KhdEFI5lSBv8tNmFkkBShSjsCjzx1vahZfISA==}
@@ -8785,6 +8818,8 @@ snapshots:
 
   comment-parser@1.4.1: {}
 
+  complex.js@2.4.3: {}
+
   confbox@0.1.8: {}
 
   confbox@0.2.2: {}
@@ -8957,6 +8992,8 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  decimal.js@10.6.0: {}
+
   decode-named-character-reference@1.2.0:
     dependencies:
       character-entities: 2.0.2
@@ -9105,6 +9142,8 @@ snapshots:
       '@esbuild/win32-x64': 0.27.3
 
   escape-html@1.0.3: {}
+
+  escape-latex@1.2.0: {}
 
   escape-string-regexp@4.0.0: {}
 
@@ -9302,6 +9341,8 @@ snapshots:
   flatted@3.4.2: {}
 
   flexsearch@0.8.212: {}
+
+  fraction.js@5.3.4: {}
 
   fs-extra@7.0.1:
     dependencies:
@@ -9536,6 +9577,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  javascript-natural-sort@0.7.1: {}
+
   jiti@2.6.1: {}
 
   js-yaml@3.14.2:
@@ -9680,6 +9723,18 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   markdown-table@3.0.4: {}
+
+  mathjs@15.2.0:
+    dependencies:
+      '@babel/runtime': 7.29.2
+      complex.js: 2.4.3
+      decimal.js: 10.6.0
+      escape-latex: 1.2.0
+      fraction.js: 5.3.4
+      javascript-natural-sort: 0.7.1
+      seedrandom: 3.0.5
+      tiny-emitter: 2.1.0
+      typed-function: 4.2.2
 
   mdast-util-find-and-replace@3.0.2:
     dependencies:
@@ -10639,6 +10694,8 @@ snapshots:
       extend-shallow: 2.0.1
       kind-of: 6.0.3
 
+  seedrandom@3.0.5: {}
+
   semver@7.7.3: {}
 
   semver@7.7.4: {}
@@ -10950,6 +11007,8 @@ snapshots:
 
   term-size@2.2.1: {}
 
+  tiny-emitter@2.1.0: {}
+
   tiny-inflate@1.0.3: {}
 
   tinybench@2.9.0: {}
@@ -11006,6 +11065,8 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-level-regexp@0.1.17: {}
+
+  typed-function@4.2.2: {}
 
   typescript-eslint@8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3):
     dependencies:

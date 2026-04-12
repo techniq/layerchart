@@ -134,6 +134,7 @@
 		"codemirror": "^6.0.2",
 		"d3-geo-projection": "^4.0.0",
 		"flexsearch": "^0.8.212",
+		"mathjs": "^15.2.0",
 		"satori": "^0.26.0",
 		"satori-html": "^0.3.2"
 	}
