@@ -228,14 +228,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 119,
+      "lineNumber": 120,
       "line": "<Group"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 108,
+      "lineNumber": 109,
       "line": "<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>"
     },
     {
@@ -372,5 +372,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.858Z"
+  "updatedAt": "2026-04-13T13:16:05.473Z"
 }

@@ -658,15 +658,15 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 144,
-      "line": "<text"
+      "lineNumber": 145,
+      "line": "<Text"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 122,
-      "line": "<text"
+      "lineNumber": 123,
+      "line": "<Text"
     },
     {
       "example": "vertical",
@@ -798,7 +798,7 @@
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 40,
+      "lineNumber": 45,
       "line": "<Text"
     },
     {
@@ -1019,5 +1019,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-12T23:32:36.515Z"
+  "updatedAt": "2026-04-13T13:16:06.598Z"
 }

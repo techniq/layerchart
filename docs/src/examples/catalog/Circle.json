@@ -811,7 +811,7 @@
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 39,
+      "lineNumber": 44,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
@@ -920,5 +920,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.203Z"
+  "updatedAt": "2026-04-13T13:16:04.585Z"
 }

@@ -205,7 +205,7 @@
       "components": [
         {
           "component": "PieChart",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<PieChart"
         }
       ]
@@ -217,7 +217,7 @@
       "components": [
         {
           "component": "PieChart",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<PieChart"
         }
       ]
@@ -494,14 +494,14 @@
       "example": "motion-spring",
       "component": "PieChart",
       "path": "/docs/components/PieChart/motion-spring",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<PieChart"
     },
     {
       "example": "motion-tween",
       "component": "PieChart",
       "path": "/docs/components/PieChart/motion-tween",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<PieChart"
     },
     {
@@ -589,5 +589,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:41.949Z"
+  "updatedAt": "2026-04-13T13:16:06.099Z"
 }

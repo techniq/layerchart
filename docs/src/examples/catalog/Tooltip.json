@@ -5731,6 +5731,34 @@
       "line": "<Tooltip.Item label=\"Population\" value={data.value} format=\"integer\" />"
     },
     {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 167,
+      "line": "<Tooltip.Root>"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 169,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 170,
+      "line": "<Tooltip.Item label=\"x\" value={format(context.x(data), 'decimal')} />"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 171,
+      "line": "<Tooltip.Item label=\"y\" value={format(context.y(data), 'decimal')} />"
+    },
+    {
       "example": "multiple-series",
       "component": "Spline",
       "path": "/docs/components/Spline/multiple-series",
@@ -6704,5 +6732,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-12T23:32:36.610Z"
+  "updatedAt": "2026-04-13T13:16:06.684Z"
 }

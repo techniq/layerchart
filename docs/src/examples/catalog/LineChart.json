@@ -176,7 +176,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<LineChart"
         }
       ]
@@ -338,7 +338,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<LineChart"
         }
       ]
@@ -1233,7 +1233,7 @@
       "example": "draw",
       "component": "LineChart",
       "path": "/docs/components/LineChart/draw",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<LineChart"
     },
     {
@@ -1310,7 +1310,7 @@
       "example": "motion-tween",
       "component": "LineChart",
       "path": "/docs/components/LineChart/motion-tween",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<LineChart"
     },
     {
@@ -1669,7 +1669,14 @@
       "path": "/docs/components/LineChart/vertical",
       "lineNumber": 10,
       "line": "<LineChart {data} x=\"value\" y=\"date\" orientation=\"vertical\" width={400} height={600} />"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 143,
+      "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.086Z"
+  "updatedAt": "2026-04-13T13:16:05.759Z"
 }

@@ -51,7 +51,7 @@
         {
           "component": "Spline",
           "lineNumber": 36,
-          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\" motion=\"tween\">"
         },
         {
           "component": "Circle",
@@ -110,16 +110,16 @@
         {
           "component": "Spline",
           "lineNumber": 37,
-          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+          "line": "<Spline"
         },
         {
           "component": "Circle",
-          "lineNumber": 39,
+          "lineNumber": 44,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 40,
+          "lineNumber": 45,
           "line": "<Text"
         }
       ]
@@ -318,6 +318,33 @@
           "component": "Spline",
           "lineNumber": 36,
           "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "math-formula",
+      "title": "math formula",
+      "path": "/docs/components/Spline/math-formula",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 143,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 160,
+          "line": "<Raster value={rasterValue} opacity={0.5} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 163,
+          "line": "<Spline seriesKey={s.key} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 167,
+          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -1133,7 +1160,7 @@
       "component": "Spline",
       "path": "/docs/components/Spline/basic-start-and-end-snippets",
       "lineNumber": 36,
-      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\" motion=\"tween\">"
     },
     {
       "example": "draw",
@@ -1147,7 +1174,7 @@
       "component": "Spline",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
       "lineNumber": 37,
-      "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+      "line": "<Spline"
     },
     {
       "example": "end-snippet-with-draw",
@@ -1190,6 +1217,13 @@
       "path": "/docs/components/Spline/markers-arrows",
       "lineNumber": 36,
       "line": "<Spline"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 163,
+      "line": "<Spline seriesKey={s.key} />"
     },
     {
       "example": "multiple-series",
@@ -1367,5 +1401,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.681Z"
+  "updatedAt": "2026-04-13T13:16:06.513Z"
 }

@@ -246,7 +246,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<AreaChart"
         }
       ]
@@ -783,7 +783,7 @@
       "example": "motion-tween",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/motion-tween",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<AreaChart"
     },
     {
@@ -1004,5 +1004,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.695Z"
+  "updatedAt": "2026-04-13T13:16:03.901Z"
 }

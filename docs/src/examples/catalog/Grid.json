@@ -384,7 +384,7 @@
       "example": "punchcard",
       "component": "Cell",
       "path": "/docs/components/Cell/punchcard",
-      "lineNumber": 29,
+      "lineNumber": 30,
       "line": "<Grid x={false} y bandAlign=\"between\" />"
     },
     {
@@ -493,5 +493,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.471Z"
+  "updatedAt": "2026-04-13T13:16:05.454Z"
 }

@@ -2771,14 +2771,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 108,
+      "lineNumber": 109,
       "line": "<Layer>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 89,
+      "lineNumber": 90,
       "line": "<Layer>"
     },
     {
@@ -3296,7 +3296,7 @@
       "example": "math-functions",
       "component": "Raster",
       "path": "/docs/components/Raster/math-functions",
-      "lineNumber": 99,
+      "lineNumber": 107,
       "line": "<Layer>"
     },
     {
@@ -4084,5 +4084,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-12T23:32:35.318Z"
+  "updatedAt": "2026-04-13T13:16:05.629Z"
 }

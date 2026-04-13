@@ -836,7 +836,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<BarChart"
         }
       ]
@@ -1855,7 +1855,7 @@
       "example": "motion-tween",
       "component": "BarChart",
       "path": "/docs/components/BarChart/motion-tween",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<BarChart"
     },
     {
@@ -2251,5 +2251,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.799Z"
+  "updatedAt": "2026-04-13T13:16:04.045Z"
 }

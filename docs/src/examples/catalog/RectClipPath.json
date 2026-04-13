@@ -83,14 +83,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 139,
+      "lineNumber": 140,
       "line": "<RectClipPath"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 109,
+      "lineNumber": 110,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.557Z"
+  "updatedAt": "2026-04-13T13:16:06.261Z"
 }

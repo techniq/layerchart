@@ -90,14 +90,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 111,
+      "lineNumber": 112,
       "line": "<ChartClipPath>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 99,
+      "lineNumber": 100,
       "line": "<ChartClipPath>"
     },
     {
@@ -129,5 +129,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.142Z"
+  "updatedAt": "2026-04-13T13:16:04.506Z"
 }

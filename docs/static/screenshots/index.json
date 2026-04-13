@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-12T23:32:30.949Z",
+  "generatedAt": "2026-04-13T13:16:03.229Z",
   "totalComponents": 75,
-  "totalExamples": 876,
+  "totalExamples": 877,
   "components": [
     {
       "component": "AnnotationLine",
@@ -204,7 +204,7 @@
         {
           "name": "playground",
           "path": "/example/Arc/playground",
-          "checksum": "afb724466f39f9dc0f063c9b119f4639"
+          "checksum": "0a93d82370f7a1fb96b00e93aacbff43"
         },
         {
           "name": "segmented-arc",
@@ -224,7 +224,7 @@
         {
           "name": "tween-value-on-mount",
           "path": "/example/Arc/tween-value-on-mount",
-          "checksum": "dbbb7cd6b0f4c3a96285da667a78a528"
+          "checksum": "f6c460e06268adbb8d066f9978c8b95d"
         }
       ]
     },
@@ -284,12 +284,12 @@
         {
           "name": "series-motion-spring",
           "path": "/example/ArcChart/series-motion-spring",
-          "checksum": "01a938545efbf036dfad1bc3ce3a92a6"
+          "checksum": "4c3e898e8e0c248bad21680845c44e7c"
         },
         {
           "name": "series-motion-tween",
           "path": "/example/ArcChart/series-motion-tween",
-          "checksum": "547e88ef5aa6ec1a84b17a83c06ebcdf"
+          "checksum": "253505efb3cbdb06d7a3228cd2e6696c"
         },
         {
           "name": "series-start-180",
@@ -324,7 +324,7 @@
         {
           "name": "clip-tween-on-mount",
           "path": "/example/Area/clip-tween-on-mount",
-          "checksum": "c9760449175b8fc245c71873f4a5a450"
+          "checksum": "de07817b9b5820ef60445177cc648a2a"
         },
         {
           "name": "clipped-area-on-tooltip",
@@ -429,7 +429,7 @@
         {
           "name": "tween-on-mount",
           "path": "/example/Area/tween-on-mount",
-          "checksum": "347ec6bcd9524c190646ad63dfbe1020"
+          "checksum": "d6b4f6eea0e14688f0f862b2e70643bb"
         },
         {
           "name": "with-labels",
@@ -519,7 +519,7 @@
         {
           "name": "motion-tween",
           "path": "/example/AreaChart/motion-tween",
-          "checksum": "c5fb1820eaddf538960585590f82bf30"
+          "checksum": "37b44ae6a12cf9b32a0d55c9b42b1f55"
         },
         {
           "name": "null-gaps",
@@ -1129,7 +1129,7 @@
         {
           "name": "motion-tween",
           "path": "/example/BarChart/motion-tween",
-          "checksum": "32481131d4ab2d3270f79e5667b2d4a1"
+          "checksum": "f5adeddb1d3e18a81716c8bb604d6b87"
         },
         {
           "name": "oscilloscope-frequency",
@@ -1494,7 +1494,7 @@
         {
           "name": "horizontal-stagger-tween-on-mount",
           "path": "/example/Bars/horizontal-stagger-tween-on-mount",
-          "checksum": "f4eb7d683db86b42c6bac787e2837669"
+          "checksum": "49487ada9ac802323afef1ea6ea87876"
         },
         {
           "name": "horizontal-time-scale-with-inset",
@@ -1534,7 +1534,7 @@
         {
           "name": "horizontal-tween-on-mount",
           "path": "/example/Bars/horizontal-tween-on-mount",
-          "checksum": "c0e9184be37ae49138bd292ce4db829b"
+          "checksum": "401b79dc30a8ffe7b5c0f0ce566ee1cb"
         },
         {
           "name": "horizontal-with-grid-on-top",
@@ -1664,12 +1664,12 @@
         {
           "name": "vertical-stagger-tween-on-mount",
           "path": "/example/Bars/vertical-stagger-tween-on-mount",
-          "checksum": "e7e061530d85b0ae32a12bd0a7b84d23"
+          "checksum": "eaa6fa9bea23f22e29188470872b0f0c"
         },
         {
           "name": "vertical-stagger-tween-on-mount-rounded-edge",
           "path": "/example/Bars/vertical-stagger-tween-on-mount-rounded-edge",
-          "checksum": "fac1e239be78f99726171227c41afa8d"
+          "checksum": "d909cd791740489f5de746a0c43130b3"
         },
         {
           "name": "vertical-time-scale-with-inset",
@@ -1714,12 +1714,12 @@
         {
           "name": "vertical-tween-on-mount",
           "path": "/example/Bars/vertical-tween-on-mount",
-          "checksum": "522d2268649cedecf919838acfe7a694"
+          "checksum": "4361f0664bd7fccf2235aba4683dc700"
         },
         {
           "name": "vertical-tween-on-mount-rounded-edge",
           "path": "/example/Bars/vertical-tween-on-mount-rounded-edge",
-          "checksum": "2c237ca6c70c07693e9bee5452bc3744"
+          "checksum": "198bf04471a8a9c9918ef7a52560bd30"
         },
         {
           "name": "vertical-with-grid-on-top",
@@ -1924,7 +1924,7 @@
         {
           "name": "punchcard",
           "path": "/example/Cell/punchcard",
-          "checksum": "710b1266e7548dd5447b586e93cbff4f"
+          "checksum": "f020a690b2652b4a0cd7ee92c0a57cc3"
         },
         {
           "name": "rounded-insets",
@@ -2764,7 +2764,7 @@
         {
           "name": "scatter",
           "path": "/example/Hull/scatter",
-          "checksum": "c5a68fc1856e6b5160f2d518f666e6bf"
+          "checksum": "ed08c5848f091ba567fc5bbdadceac1c"
         }
       ]
     },
@@ -3024,7 +3024,7 @@
         {
           "name": "draw",
           "path": "/example/LineChart/draw",
-          "checksum": "9c6b05438aa2c8519881e2a54acba251"
+          "checksum": "b311e46fce3126f453bc4d2f5c9b30f5"
         },
         {
           "name": "dynamic-data",
@@ -3079,7 +3079,7 @@
         {
           "name": "motion-tween",
           "path": "/example/LineChart/motion-tween",
-          "checksum": "3b15e0cea381edbeec7c63d00906b885"
+          "checksum": "bb44bf6ebc97b41488c734df40ffda00"
         },
         {
           "name": "null-dashed-gaps",
@@ -3324,7 +3324,7 @@
         {
           "name": "orientation",
           "path": "/example/Marker/orientation",
-          "checksum": "0634ac976854ec74387e0d45de5e3517"
+          "checksum": "fbdb4b0a504faa6cc2c13e702a73a89b"
         },
         {
           "name": "spline",
@@ -3384,17 +3384,17 @@
         {
           "name": "repeat-indefinitely",
           "path": "/example/MotionPath/repeat-indefinitely",
-          "checksum": "57416b9ac4a6198050fdf716f491fb5c"
+          "checksum": "5fde1737ac8fc61b786175f8d11701a3"
         },
         {
           "name": "rotate-object-with-path",
           "path": "/example/MotionPath/rotate-object-with-path",
-          "checksum": "7ade65446ee33f95e29fbdbeaaa88fbd"
+          "checksum": "4026633e8e8d4e87d57a347993228b5d"
         },
         {
           "name": "sync-with-draw",
           "path": "/example/MotionPath/sync-with-draw",
-          "checksum": "4f27c10140b5779670e85c7f01f016f1"
+          "checksum": "f0e24da83b4cedd313c9e4fad8ee64f0"
         }
       ]
     },
@@ -3414,12 +3414,12 @@
         {
           "name": "filterable",
           "path": "/example/Partition/filterable",
-          "checksum": "e20cc50602b7f6c0e70fea51d7755f3f"
+          "checksum": "f8c6aeb97349a0f5a0cd3b3a0cf4c008"
         },
         {
           "name": "horizontal",
           "path": "/example/Partition/horizontal",
-          "checksum": "fd29a4e49cdd25341a7121b83124597e"
+          "checksum": "92cd1563619390c85f5e6cf2befb5071"
         },
         {
           "name": "sunburst",
@@ -3614,7 +3614,7 @@
         {
           "name": "tweened",
           "path": "/example/Pie/tweened",
-          "checksum": "309f1836db97715386362dd164926e46"
+          "checksum": "2dfef61367f307ffc90557450b1f946c"
         }
       ]
     },
@@ -3704,12 +3704,12 @@
         {
           "name": "motion-spring",
           "path": "/example/PieChart/motion-spring",
-          "checksum": "81db57362ccf3a0b86321422b86b8d94"
+          "checksum": "a3b72cb6035f6cbb459d8a521e334858"
         },
         {
           "name": "motion-tween",
           "path": "/example/PieChart/motion-tween",
-          "checksum": "af4d4e3930ab55be392eae460da17fc5"
+          "checksum": "b80ef6f560a7dee0fb91b85eeea9f233"
         },
         {
           "name": "offset-slice",
@@ -3984,7 +3984,7 @@
         {
           "name": "math-functions",
           "path": "/example/Raster/math-functions",
-          "checksum": "bd33f1ff9fc29afbc8e7655fc23efea6"
+          "checksum": "4d94dbf8584421d96992f155b204cdd7"
         },
         {
           "name": "sampled",
@@ -4294,22 +4294,22 @@
         {
           "name": "basic-start-and-end-snippets",
           "path": "/example/Spline/basic-start-and-end-snippets",
-          "checksum": "7a338814b070fb2de0a9ae7c78629a52"
+          "checksum": "3852a074cb1ab4dd30762ddcb565cd59"
         },
         {
           "name": "draw",
           "path": "/example/Spline/draw",
-          "checksum": "f2f17404542e948e20314f42d2770b55"
+          "checksum": "7980a72d6f6d4fa587c720d290741b0a"
         },
         {
           "name": "end-slot-with-draw-with-value",
           "path": "/example/Spline/end-slot-with-draw-with-value",
-          "checksum": "d751058371c4bda967ede4f1f6190cac"
+          "checksum": "32291352c29096723e3171a192f93ee7"
         },
         {
           "name": "end-snippet-with-draw",
           "path": "/example/Spline/end-snippet-with-draw",
-          "checksum": "e4fc14db5a2199259d1891731cbedc9f"
+          "checksum": "c26f2e435a5282030b936b27dbdb3f51"
         },
         {
           "name": "geo-routes",
@@ -4329,12 +4329,17 @@
         {
           "name": "label-using-start-end-snippets",
           "path": "/example/Spline/label-using-start-end-snippets",
-          "checksum": "8cd2732f63b5ae2acb4ed3913c08f9f6"
+          "checksum": "3f1ef855c7d8e14f323fdeb45a9a5bde"
         },
         {
           "name": "markers-arrows",
           "path": "/example/Spline/markers-arrows",
-          "checksum": "25e3fd65a8ecbf11bbca22fb1c4a7da4"
+          "checksum": "ea1be3788087934c714fa477e10ca368"
+        },
+        {
+          "name": "math-formula",
+          "path": "/example/Spline/math-formula",
+          "checksum": "f3f2ca0bdcc2099f1694537ef4cb90ab"
         },
         {
           "name": "multiple-series",
@@ -4359,7 +4364,7 @@
         {
           "name": "playground",
           "path": "/example/Spline/playground",
-          "checksum": "7bae4e1784c28c62c6d7a702ee5b8e1e"
+          "checksum": "8ef06f48a5c5ea3c67165d61d3ea366e"
         },
         {
           "name": "radial-line-with-areas",
@@ -4384,12 +4389,12 @@
         {
           "name": "tween-on-mount",
           "path": "/example/Spline/tween-on-mount",
-          "checksum": "631fa9c5327a1097e2d2d056f237736f"
+          "checksum": "892c59a9946cacb031bbeb504152deb3"
         },
         {
           "name": "tweened",
           "path": "/example/Spline/tweened",
-          "checksum": "6c26447514bae81450af787d2310f22a"
+          "checksum": "c6190c9517b45ddb745cbb4e94777c8d"
         },
         {
           "name": "vertical",
@@ -4594,7 +4599,7 @@
         {
           "name": "playground",
           "path": "/example/Trail/playground",
-          "checksum": "795034ba16e831675a17c1acac471016"
+          "checksum": "0dabb828fe87e4241516a8f2f6d53bee"
         },
         {
           "name": "tdf-stage",

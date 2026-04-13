@@ -100,17 +100,17 @@
         {
           "component": "Axis",
           "lineNumber": 27,
-          "line": "<Axis placement=\"bottom\" format={(d) => 'Week ' + d} rule />"
+          "line": "<Axis placement=\"bottom\" format={(d) => 'Week\\u00A0' + d} rule />"
         },
         {
           "component": "Grid",
-          "lineNumber": 29,
+          "lineNumber": 30,
           "line": "<Grid x={false} y bandAlign=\"between\" />"
         },
         {
           "component": "Cell",
-          "lineNumber": 30,
-          "line": "<Cell x={(d) => timeWeek.count(timeYear(d.date), d.date)} y={(d) => d.date.getDay()} shape=\"circle\" r=\"value\" class=\"fill-primary\" />"
+          "lineNumber": 31,
+          "line": "<Cell"
         }
       ]
     },
@@ -168,8 +168,8 @@
       "example": "punchcard",
       "component": "Cell",
       "path": "/docs/components/Cell/punchcard",
-      "lineNumber": 30,
-      "line": "<Cell x={(d) => timeWeek.count(timeYear(d.date), d.date)} y={(d) => d.date.getDay()} shape=\"circle\" r=\"value\" class=\"fill-primary\" />"
+      "lineNumber": 31,
+      "line": "<Cell"
     },
     {
       "example": "rounded-insets",
@@ -179,5 +179,5 @@
       "line": "<Cell x=\"col\" y=\"row\" fill=\"value\" insets={{ all: 2 }} rx={4} />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:47.519Z"
+  "updatedAt": "2026-04-13T13:16:04.354Z"
 }

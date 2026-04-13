@@ -177,7 +177,7 @@
       "example": "math-functions",
       "component": "Raster",
       "path": "/docs/components/Raster/math-functions",
-      "lineNumber": 104,
+      "lineNumber": 112,
       "line": "<Contour"
     },
     {
@@ -195,5 +195,5 @@
       "line": "<Contour"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.371Z"
+  "updatedAt": "2026-04-13T13:16:04.870Z"
 }

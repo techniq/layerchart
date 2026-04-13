@@ -398,14 +398,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 128,
+      "lineNumber": 129,
       "line": "<Rect"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 112,
+      "lineNumber": 113,
       "line": "<Rect"
     },
     {
@@ -885,5 +885,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.537Z"
+  "updatedAt": "2026-04-13T13:16:06.238Z"
 }

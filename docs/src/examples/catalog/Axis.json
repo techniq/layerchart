@@ -3024,13 +3024,13 @@
       "component": "Cell",
       "path": "/docs/components/Cell/punchcard",
       "lineNumber": 27,
-      "line": "<Axis placement=\"bottom\" format={(d) => 'Week ' + d} rule />"
+      "line": "<Axis placement=\"bottom\" format={(d) => 'Week\\u00A0' + d} rule />"
     },
     {
       "example": "punchcard",
       "component": "Cell",
       "path": "/docs/components/Cell/punchcard",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Axis placement=\"left\" format={(d) => daysOfWeek[d]} rule />"
     },
     {
@@ -3947,14 +3947,14 @@
       "example": "math-functions",
       "component": "Raster",
       "path": "/docs/components/Raster/math-functions",
-      "lineNumber": 100,
+      "lineNumber": 108,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "math-functions",
       "component": "Raster",
       "path": "/docs/components/Raster/math-functions",
-      "lineNumber": 101,
+      "lineNumber": 109,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -5099,5 +5099,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.727Z"
+  "updatedAt": "2026-04-13T13:16:03.966Z"
 }

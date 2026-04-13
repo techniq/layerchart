@@ -2844,14 +2844,14 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 107,
+      "lineNumber": 108,
       "line": "<Chart height={600}>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 87,
+      "lineNumber": 88,
       "line": "<Chart height={600}>"
     },
     {
@@ -3369,7 +3369,7 @@
       "example": "math-functions",
       "component": "Raster",
       "path": "/docs/components/Raster/math-functions",
-      "lineNumber": 92,
+      "lineNumber": 100,
       "line": "<Chart"
     },
     {
@@ -4136,5 +4136,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-12T23:32:33.690Z"
+  "updatedAt": "2026-04-13T13:16:04.401Z"
 }
