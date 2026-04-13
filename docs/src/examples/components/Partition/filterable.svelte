@@ -22,6 +22,7 @@
 		Partition,
 		Rect,
 		RectClipPath,
+		Text,
 		Layer,
 		findAncestor
 	} from 'layerchart';
@@ -141,26 +142,36 @@
 											height={nodeHeight}
 											motion={{ type: 'tween', delay: 600 }}
 										>
-											<text
+											<Text
+												segments={[
+													{
+														value: node.data[0] ?? 'Overall',
+														class: cls(
+															'text-[10px] font-medium',
+															colorBy === 'children'
+																? 'fill-primary-content'
+																: 'fill-black'
+														),
+													},
+													...(node.children
+														? [
+																{
+																	value: ` ${format(node.value ?? 0, 'integer')}`,
+																	class: cls(
+																		'text-[8px] font-extralight',
+																		colorBy === 'children'
+																			? 'fill-primary-content'
+																			: 'fill-black'
+																	),
+																},
+															]
+														: []),
+												]}
+												verticalAnchor="start"
+												lineHeight="10px"
 												x={4}
-												y={16 * 0.6 + 4}
-												class={cls(
-													'text-[10px] font-medium',
-													colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-												)}
-											>
-												<tspan>{node.data[0] ?? 'Overall'}</tspan>
-												{#if node.children}
-													<tspan
-														class={cls(
-															'text-[8px] font-extralight',
-															colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-														)}
-													>
-														{format(node.value ?? 0, 'integer')}
-													</tspan>
-												{/if}
-											</text>
+												y={3.6}
+											/>
 										</RectClipPath>
 									</Group>
 								</g>

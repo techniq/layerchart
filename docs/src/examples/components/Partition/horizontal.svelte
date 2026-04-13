@@ -23,6 +23,7 @@
 		Rect,
 		RectClipPath,
 		Layer,
+		Text,
 		findAncestor
 	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
@@ -119,24 +120,32 @@
 													fill={nodeColor}
 													rx={5}
 												/>
-												<text
+												<Text
+													segments={[
+														{
+															value: node.data.name,
+															class: cls(
+																'text-[10px] font-medium',
+																colorBy === 'children'
+																	? 'fill-primary-content'
+																	: 'fill-black'
+															),
+														},
+														{
+															value: ` ${format(node.value ?? 0, 'integer')}`,
+															class: cls(
+																'text-[8px] font-extralight',
+																colorBy === 'children'
+																	? 'fill-primary-content'
+																	: 'fill-black'
+															),
+														},
+													]}
+													verticalAnchor="start"
+													lineHeight="10px"
 													x={4}
-													y={16 * 0.6 + 4}
-													class={cls(
-														'text-[10px] font-medium',
-														colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-													)}
-												>
-													<tspan>{node.data.name}</tspan>
-													<tspan
-														class={cls(
-															'text-[8px] font-extralight',
-															colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-														)}
-													>
-														{format(node.value ?? 0, 'integer')}
-													</tspan>
-												</text>
+													y={3.6}
+												/>
 											</g>
 										</RectClipPath>
 									</Group>
