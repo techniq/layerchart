@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from '$lib/utils/types.js';
+  import type { Without, CommonStyleProps } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { ComponentProps } from 'svelte';
 
@@ -47,7 +47,7 @@
      * @bindable
      */
     ref?: SVGGElement;
-  };
+  } & CommonStyleProps;
 
   export type HullProps = HullPropsWithoutHTML & Without<GroupProps, HullPropsWithoutHTML>;
 </script>
@@ -79,6 +79,12 @@
     onpointermove,
     onclick,
     onpointerleave,
+    fill,
+    fillOpacity,
+    stroke,
+    strokeOpacity,
+    strokeWidth,
+    opacity,
     class: className,
     ref: refProp = $bindable(),
     ...restProps
@@ -112,6 +118,12 @@
     <GeoPath
       geojson={polygon}
       {curve}
+      {fill}
+      {fillOpacity}
+      {stroke}
+      {strokeOpacity}
+      {strokeWidth}
+      {opacity}
       class={['lc-hull-path', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
@@ -125,6 +137,12 @@
       x={(d) => d[0]}
       y={(d) => d[1]}
       {curve}
+      {fill}
+      {fillOpacity}
+      {stroke}
+      {strokeOpacity}
+      {strokeWidth}
+      {opacity}
       class={['lc-hull-class', classes.path]}
       onclick={(e) => onclick?.(e, { points, polygon })}
       onpointermove={(e) => onpointermove?.(e, { points, polygon })}
