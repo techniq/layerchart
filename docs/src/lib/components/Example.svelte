@@ -310,17 +310,17 @@
 
 				<Toggle let:on={open} let:toggle let:toggleOff>
 					<Button icon={LucideImageDown} class="text-surface-content/70 py-1" on:click={toggle}>
-						Download
+						Export
 						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-1' }}>
 							<MenuItem
 								icon={LucideImageDown}
 								on:click={() => downloadImage(containerEl!, { filename: name ?? component })}
 							>
-								Download as PNG
+								Export as PNG
 							</MenuItem>
 							{#if settings.layer !== 'canvas'}
 								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
-									Download as SVG
+									Export as SVG
 								</MenuItem>
 							{/if}
 						</Menu>
