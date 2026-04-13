@@ -510,7 +510,7 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 40,
+      "lineNumber": 41,
       "line": "<Highlight points lines />"
     },
     {
@@ -619,6 +619,13 @@
       "line": "<Highlight area />"
     },
     {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 39,
+      "line": "<Highlight points lines />"
+    },
+    {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/scatter-plot",
@@ -654,5 +661,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.886Z"
+  "updatedAt": "2026-04-13T14:43:12.563Z"
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-13T13:16:03.229Z",
+  "generatedAt": "2026-04-13T14:43:10.094Z",
   "totalComponents": 75,
-  "totalExamples": 877,
+  "totalExamples": 878,
   "components": [
     {
       "component": "AnnotationLine",
@@ -4484,7 +4484,7 @@
         {
           "name": "anchor-location",
           "path": "/example/Tooltip/anchor-location",
-          "checksum": "b5fb77a036711df1a5b4b2f29aaa7b0d"
+          "checksum": "b390d38fb9ea7a648bf712f8514e1710"
         },
         {
           "name": "area",
@@ -4560,6 +4560,11 @@
           "name": "multiple-tooltips-with-fixed-single-axis-scaleband",
           "path": "/example/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
           "checksum": "ebc5e3d7b0113bb4061056285e4fb3fa"
+        },
+        {
+          "name": "portal-overflow",
+          "path": "/example/Tooltip/portal-overflow",
+          "checksum": "e5edffde1c2e358da7272edfa7fe0046"
         },
         {
           "name": "scatter-plot",

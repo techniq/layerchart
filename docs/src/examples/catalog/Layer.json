@@ -3730,7 +3730,7 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 36,
+      "lineNumber": 37,
       "line": "<Layer>"
     },
     {
@@ -3836,6 +3836,13 @@
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
       "lineNumber": 31,
+      "line": "<Layer>"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
@@ -4084,5 +4091,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:05.629Z"
+  "updatedAt": "2026-04-13T14:43:12.658Z"
 }

@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 26,
+          "lineNumber": 27,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 36,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 37,
+          "lineNumber": 38,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 39,
+          "lineNumber": 40,
           "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 40,
+          "lineNumber": 41,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 42,
+          "lineNumber": 43,
           "line": "<Tooltip.Root"
         }
       ]
@@ -600,6 +600,43 @@
           "component": "Tooltip",
           "lineNumber": 38,
           "line": "<Tooltip.Root"
+        }
+      ]
+    },
+    {
+      "name": "portal-overflow",
+      "title": "portal overflow",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 26,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 35,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 36,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 38,
+          "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+        },
+        {
+          "component": "Highlight",
+          "lineNumber": 39,
+          "line": "<Highlight points lines />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 41,
+          "line": "<Tooltip.Root {portal} contained={false}>"
         }
       ]
     },
@@ -5979,28 +6016,28 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 42,
+      "lineNumber": 43,
       "line": "<Tooltip.Root"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 51,
+      "lineNumber": 53,
       "line": "<Tooltip.Header value={data.date} format=\"day\" />"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 52,
+      "lineNumber": 54,
       "line": "<Tooltip.List>"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 53,
+      "lineNumber": 55,
       "line": "<Tooltip.Item label=\"value\" value={data.value} />"
     },
     {
@@ -6424,6 +6461,34 @@
       "line": "<Tooltip.Root"
     },
     {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 41,
+      "line": "<Tooltip.Root {portal} contained={false}>"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 43,
+      "line": "<Tooltip.Header value={data.date} format=\"day\" />"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 44,
+      "line": "<Tooltip.List>"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 45,
+      "line": "<Tooltip.Item label=\"value\" value={data.value} />"
+    },
+    {
       "example": "scatter-plot",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/scatter-plot",
@@ -6732,5 +6797,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:06.684Z"
+  "updatedAt": "2026-04-13T14:43:13.629Z"
 }

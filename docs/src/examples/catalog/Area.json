@@ -1422,7 +1422,7 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
@@ -1503,6 +1503,13 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 38,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/stacked-area",
@@ -1510,5 +1517,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.665Z"
+  "updatedAt": "2026-04-13T14:43:11.019Z"
 }

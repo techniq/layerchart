@@ -4661,14 +4661,14 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4879,6 +4879,20 @@
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/multiple-tooltips-with-fixed-single-axis-scaleband",
       "lineNumber": 33,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 36,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 37,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -5099,5 +5113,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:03.966Z"
+  "updatedAt": "2026-04-13T14:43:11.273Z"
 }
