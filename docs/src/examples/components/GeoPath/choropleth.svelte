@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
+	const geojson = await getUsCountiesAlbersTopology();
+	const populationData = await getUsCountyPopulation();
+</script>
+
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { scaleQuantile } from 'd3-scale';
@@ -8,10 +14,6 @@
 	import { Chart, GeoPath, Legend, Layer, Tooltip, getSettings } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
-	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
-
-	const geojson = await getUsCountiesAlbersTopology();
-	const populationData = await getUsCountyPopulation();
 
 	const states = feature(geojson, geojson.objects.states);
 	const counties = feature(geojson, geojson.objects.counties);

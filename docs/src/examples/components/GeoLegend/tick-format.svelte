@@ -1,10 +1,12 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoNaturalEarth1 } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	import { Chart, GeoLegend, GeoPath, Layer } from 'layerchart';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 </script>
 

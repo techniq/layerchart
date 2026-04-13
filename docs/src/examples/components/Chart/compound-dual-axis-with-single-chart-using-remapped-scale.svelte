@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getNewPassengerCars } from '$lib/data.remote.js';
+	const data = await getNewPassengerCars();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
 	import { scaleLinear } from 'd3-scale';
-	import { getNewPassengerCars } from '$lib/data.remote.js';
 
-	const data = $derived(await getNewPassengerCars());
 	export { data };
 </script>
 

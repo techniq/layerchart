@@ -1,11 +1,14 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { scaleOrdinal } from 'd3-scale';
 	import { quantize } from 'd3-interpolate';
 	import { interpolateSpectral } from 'd3-scale-chromatic';
 	import { Axis, Chart, Layer, Spline } from 'layerchart';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	const yearColor = scaleOrdinal<number, string>(quantize(interpolateSpectral, 6));
 

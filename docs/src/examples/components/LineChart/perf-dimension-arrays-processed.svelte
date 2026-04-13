@@ -1,13 +1,17 @@
+<script module lang="ts">
+	import { getDimensionArrays } from '$lib/data.remote.js';
+	const data = await getDimensionArrays();
+</script>
+
 <script lang="ts">
 	import { type ComponentProps } from 'svelte';
 	import { LineChart } from 'layerchart';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { zip } from 'd3-array';
-	import { getDimensionArrays } from '$lib/data.remote.js';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-	const data = $derived(await getDimensionArrays());
+
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

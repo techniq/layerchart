@@ -1,3 +1,10 @@
+<script module lang="ts">
+	import { getTectonicPlates, getEarthquakes, getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+	const tectonicPlates = await getTectonicPlates();
+	const earthquakes = await getEarthquakes();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { scaleSqrt } from 'd3-scale';
@@ -15,11 +22,6 @@
 	import EarthquakeControls from '$lib/components/controls/GeoCircleEarthquakeControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getTectonicPlates, getEarthquakes, getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
-	const tectonicPlates = await getTectonicPlates();
-	const earthquakes = await getEarthquakes();
 
 	const countries = feature(topology, topology.objects.countries);
 

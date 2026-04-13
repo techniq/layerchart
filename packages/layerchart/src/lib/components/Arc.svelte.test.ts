@@ -442,7 +442,7 @@ describe(`Arc`, () => {
       const el = page.getByTestId(componentTestId);
       await expect.element(el).toBeInTheDocument();
       const transform = el.element()?.getAttribute('transform');
-      expect(transform).toContain('translate(-4.539904997395462, 8.91006524188368)');
+      expect(transform).toContain('translate(1.2246467991473533e-15, 10)');
     });
 
     it('should apply zero offset by default', async () => {

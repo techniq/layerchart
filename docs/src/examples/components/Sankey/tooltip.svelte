@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getGreenhouseGraph } from '$lib/graph.remote';
+	const data = await getGreenhouseGraph();
+</script>
+
 <script lang="ts">
 	import { Icon } from 'svelte-ux';
 	import LucideArrowRight from '~icons/lucide/arrow-right';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
-	import { getGreenhouseGraph } from '$lib/graph.remote';
 
-	const data = $derived(await getGreenhouseGraph());
 	export { data };
 </script>
 

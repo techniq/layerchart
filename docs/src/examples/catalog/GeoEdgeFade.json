@@ -6,9 +6,9 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
-      "lineNumber": 33,
+      "lineNumber": 35,
       "line": "<GeoEdgeFade {link}>"
     }
   ],
-  "updatedAt": "2026-02-07T17:00:31.632Z"
+  "updatedAt": "2026-04-12T22:48:25.604Z"
 }

@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { AnnotationLine, LineChart, type Placement } from 'layerchart';
 	import AnnotationLineControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	let placement: Placement = $state('top-right');
 	let xOffset = $state(5);

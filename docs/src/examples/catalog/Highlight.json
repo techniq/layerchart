@@ -6,7 +6,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 46,
+      "lineNumber": 49,
       "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
     },
     {
@@ -125,7 +125,7 @@
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-candlestick-bars",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<Highlight area />"
     },
     {
@@ -335,35 +335,35 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
-      "lineNumber": 50,
+      "lineNumber": 53,
       "line": "<Highlight points lines />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 45,
+      "lineNumber": 48,
       "line": "<Highlight lines points />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 46,
+      "lineNumber": 49,
       "line": "<Highlight points={{ class: 'fill-secondary' }} y={(d) => context.y1Scale?.(d.efficiency)} />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 31,
+      "lineNumber": 34,
       "line": "<Highlight lines points />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 53,
+      "lineNumber": 56,
       "line": "<Highlight lines />"
     },
     {
@@ -377,7 +377,7 @@
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 30,
+      "lineNumber": 34,
       "line": "<Highlight"
     },
     {
@@ -405,28 +405,28 @@
       "example": "candlestick",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick",
-      "lineNumber": 29,
+      "lineNumber": 32,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-open-close-line-color",
-      "lineNumber": 29,
+      "lineNumber": 32,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 37,
+      "lineNumber": 40,
       "line": "<Highlight lines />"
     },
     {
       "example": "lollipop",
       "component": "Rule",
       "path": "/docs/components/Rule/lollipop",
-      "lineNumber": 26,
+      "lineNumber": 28,
       "line": "<Highlight area />"
     },
     {
@@ -654,5 +654,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-04-02T19:16:01.735Z"
+  "updatedAt": "2026-04-12T22:48:25.886Z"
 }

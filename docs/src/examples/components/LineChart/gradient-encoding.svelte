@@ -1,11 +1,15 @@
+<script module lang="ts">
+	import { getDailyTemperature } from '$lib/data.remote';
+	const data = await getDailyTemperature();
+</script>
+
 <script lang="ts">
 	import { defaultChartPadding, LinearGradient, LineChart, Spline } from 'layerchart';
-	import { getDailyTemperature } from '$lib/data.remote';
 	import { ticks } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 
-	const data = $derived(await getDailyTemperature());
+
 	export { data };
 </script>
 

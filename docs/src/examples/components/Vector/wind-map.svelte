@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getWind } from '$lib/geo.remote.js';
+	const windData = await getWind();
+</script>
+
 <script lang="ts">
 	import { max } from 'd3-array';
 	import { scaleSequential } from 'd3-scale';
@@ -5,9 +10,6 @@
 
 	import { Axis, Chart, Layer, Vector, Tooltip } from 'layerchart';
 
-	import { getWind } from '$lib/geo.remote.js';
-
-	const windData = await getWind();
 
 	const wind = windData.map((d) => {
 		const speed = Math.hypot(d.u, d.v);

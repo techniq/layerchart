@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
@@ -7,7 +12,6 @@
 	import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
-	import { getFlare } from '$lib/data.remote';
 	import { cls } from '@layerstack/tailwind';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 
@@ -20,7 +24,6 @@
 		radius: 60
 	});
 
-	let data = await getFlare();
 
 	let expandedNodeNames = $state(['flare']);
 	const hierarchy = $derived(

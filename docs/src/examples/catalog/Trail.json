@@ -90,36 +90,35 @@
     },
     {
       "name": "tdf-stage",
-      "title": "Tour de France Stage Profile",
+      "title": "tdf stage",
       "path": "/docs/components/Trail/tdf-stage",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 16,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 25,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" grid label=\"Latitude\" />"
         },
         {
           "component": "Trail",
-          "lineNumber": 27,
+          "lineNumber": 28,
           "line": "<Trail class=\"fill-danger/40\" />"
         },
         {
           "component": "Spline",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
         }
-      ],
-      "description": "Elevation profile of a Tour de France stage using trail width to encode elevation."
+      ]
     }
   ],
   "usage": [
@@ -148,9 +147,9 @@
       "example": "tdf-stage",
       "component": "Trail",
       "path": "/docs/components/Trail/tdf-stage",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<Trail class=\"fill-danger/40\" />"
     }
   ],
-  "updatedAt": "2026-04-03T20:08:36.649Z"
+  "updatedAt": "2026-04-12T22:48:27.017Z"
 }

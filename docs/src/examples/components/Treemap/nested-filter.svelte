@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCars } from '$lib/data.remote';
+	let data = await getCars();
+</script>
+
 <script lang="ts">
 	import { untrack, type ComponentProps } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -6,12 +11,11 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
-	import { getCars } from '$lib/data.remote';
 	import TreemapControls from '$lib/components/controls/TreemapControls.svelte';
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
-	import { Chart, Group, Rect, RectClipPath, Layer, Treemap, findAncestor } from 'layerchart';
+	import { Chart, Group, Rect, RectClipPath, Layer, Text, Treemap, findAncestor } from 'layerchart';
 
 	let config = $state({
 		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],
@@ -26,7 +30,6 @@
 		isFiltered: false
 	});
 
-	let data = await getCars();
 
 	let selectedCarNode = $state<HierarchyNode<any>>();
 
@@ -157,29 +160,49 @@
 								height={nodeHeight}
 								motion={{ type: 'tween', delay: 600 }}
 							>
-								<text
+								<Text
+									segments={[
+										{
+											value: node.data[0] ?? 'Overall',
+											class: cls(
+												'text-[10px] font-medium',
+												config.colorBy === 'children'
+													? 'fill-primary-content'
+													: 'fill-black'
+											),
+										},
+										...(node.children
+											? [
+													{
+														value: ` ${format(node.value ?? 0, 'integer')}`,
+														class: cls(
+															'text-[8px] font-extralight',
+															config.colorBy === 'children'
+																? 'fill-primary-content'
+																: 'fill-black'
+														),
+													},
+												]
+											: []),
+									]}
+									verticalAnchor="start"
+									lineHeight="10px"
 									x={4}
-									y={16 * 0.6 + 4}
-									class={cls(
-										'text-[10px] font-medium',
-										config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-									)}
-								>
-									<tspan>{node.data[0] ?? 'Overall'}</tspan>
-									{#if node.children}
-										<tspan class="text-[8px] font-extralight"
-											>{format(node.value ?? 0, 'integer')}</tspan
-										>
-									{/if}
-								</text>
+									y={3.6}
+								/>
+
 								{#if !node.children}
-									<!-- <Text
-												value={format(node.value ?? 0, 'integer')}
-                        class="text-[8px] font-extralight"
-												verticalAnchor="start"
-												x={4}
-												y={16}
-											/> -->
+									<Text
+										value={format(node.value ?? 0, 'integer')}
+										class={cls(
+											'text-[8px] font-extralight',
+											config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+										)}
+										verticalAnchor="start"
+										lineHeight="8px"
+										x={4}
+										y={16}
+									/>
 								{/if}
 							</RectClipPath>
 						</Group>

@@ -1,13 +1,14 @@
-<script module>
+<script module lang="ts">
+	import { getTdfStage } from '$lib/data.remote';
+	const data = await getTdfStage();
+
 	export const title = 'Tour de France Stage Profile';
-	export const description = 'Elevation profile of a Tour de France stage using trail width to encode elevation.';
+	export const description =
+		'Elevation profile of a Tour de France stage using trail width to encode elevation.';
 </script>
 
 <script lang="ts">
 	import { Axis, Chart, Layer, Spline, Trail } from 'layerchart';
-	import { getTdfStage } from '$lib/data.remote';
-
-	const data = $derived(await getTdfStage());
 
 	export { data };
 </script>

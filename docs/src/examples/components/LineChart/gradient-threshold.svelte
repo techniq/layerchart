@@ -1,9 +1,13 @@
+<script module lang="ts">
+	import { getDailyTemperature } from '$lib/data.remote';
+	const data = await getDailyTemperature();
+</script>
+
 <script lang="ts">
 	import { LinearGradient, LineChart, Highlight, Spline, Tooltip } from 'layerchart';
-	import { getDailyTemperature } from '$lib/data.remote';
 	import { format } from '@layerstack/utils';
 
-	const data = $derived(await getDailyTemperature());
+
 	export { data };
 </script>
 

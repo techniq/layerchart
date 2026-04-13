@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getUsEvents } from '$lib/data.remote';
+	const data = await getUsEvents();
+</script>
+
 <script lang="ts">
 	import { BarChart, defaultChartPadding, Tooltip } from 'layerchart';
 	import { scaleTime } from 'd3-scale';
 	import { Duration } from 'svelte-ux';
-	import { getUsEvents } from '$lib/data.remote';
 
-	const data = $derived(await getUsEvents());
 	export { data };
 </script>
 

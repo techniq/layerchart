@@ -1,13 +1,15 @@
+<script module lang="ts">
+	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+	const worldLinks = await getWorldLinks();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
 
-	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
-	const worldLinks = await getWorldLinks();
 
 	const countries = feature(topology, topology.objects.countries);
 	const data = { countries, worldLinks };

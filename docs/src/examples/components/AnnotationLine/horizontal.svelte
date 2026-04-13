@@ -1,12 +1,12 @@
-<script module>
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+
 	export const layers = ['svg', 'canvas'];
 </script>
 
 <script lang="ts">
 	import { AnnotationLine, LineChart } from 'layerchart';
-	import { getAppleStock } from '$lib/data.remote';
-
-	const data = $derived(await getAppleStock());
 
 	export { data };
 </script>

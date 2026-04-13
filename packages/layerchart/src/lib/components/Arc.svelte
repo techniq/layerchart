@@ -254,7 +254,10 @@
   const ctx = getChartContext();
 
   const endAngle = $derived(
-    endAngleProp ?? degreesToRadians(ctx.xRange ? max(ctx.xRange) : max(range))
+    endAngleProp ??
+      degreesToRadians(
+        (ctx.config.xRange ? max(ctx.config.xRange as number[]) : max(range))!
+      )
   );
 
   const motionEndAngle = createMotion(initialValue, () => value, motion);
@@ -279,13 +282,11 @@
     }
   }
 
-  const outerRadius = $derived(
-    getOuterRadius(outerRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
-  );
+  const chartRadius = $derived((Math.min(ctx.width, ctx.height) ?? 0) / 2);
+
+  const outerRadius = $derived(getOuterRadius(outerRadiusProp, chartRadius));
   const trackOuterRadius = $derived(
-    trackOuterRadiusProp
-      ? getOuterRadius(trackOuterRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
-      : outerRadius
+    trackOuterRadiusProp ? getOuterRadius(trackOuterRadiusProp, chartRadius) : outerRadius
   );
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {

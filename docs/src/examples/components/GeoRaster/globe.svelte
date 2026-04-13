@@ -1,11 +1,13 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
 	// NASA Blue Marble — equirectangular / plate carrée. Served locally from

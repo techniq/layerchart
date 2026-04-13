@@ -130,6 +130,28 @@
       ]
     },
     {
+      "name": "segments",
+      "title": "segments",
+      "path": "/docs/components/Text/segments",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={80}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 7,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "truncate-axis-labels",
       "title": "truncate axis labels",
       "path": "/docs/components/Text/truncate-axis-labels",
@@ -181,7 +203,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 58,
+      "lineNumber": 61,
       "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
     },
     {
@@ -398,42 +420,42 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 220,
+      "lineNumber": 224,
       "line": "<Text"
     },
     {
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 229,
+      "lineNumber": 233,
       "line": "<Text"
     },
     {
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 250,
+      "lineNumber": 254,
       "line": "<Text"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 222,
+      "lineNumber": 226,
       "line": "<Text"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 231,
+      "lineNumber": 235,
       "line": "<Text"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 253,
+      "lineNumber": 257,
       "line": "<Text"
     },
     {
@@ -468,28 +490,28 @@
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
-      "lineNumber": 16,
+      "lineNumber": 19,
       "line": "<Text"
     },
     {
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
-      "lineNumber": 24,
+      "lineNumber": 27,
       "line": "<Text"
     },
     {
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 16,
+      "lineNumber": 19,
       "line": "<Text"
     },
     {
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 24,
+      "lineNumber": 27,
       "line": "<Text"
     },
     {
@@ -517,7 +539,7 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 73,
+      "lineNumber": 75,
       "line": "<Text"
     },
     {
@@ -531,35 +553,35 @@
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 63,
+      "lineNumber": 65,
       "line": "<Text"
     },
     {
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 89,
+      "lineNumber": 91,
       "line": "<Text"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 62,
+      "lineNumber": 64,
       "line": "<Text"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 88,
+      "lineNumber": 90,
       "line": "<Text"
     },
     {
       "example": "us-country-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-country-map",
-      "lineNumber": 37,
+      "lineNumber": 39,
       "line": "<!-- <Text"
     },
     {
@@ -629,35 +651,35 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 140,
+      "lineNumber": 142,
       "line": "<Text"
     },
     {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 142,
+      "lineNumber": 144,
       "line": "<text"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 119,
+      "lineNumber": 122,
       "line": "<text"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 120,
+      "lineNumber": 123,
       "line": "<Text"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 130,
+      "lineNumber": 133,
       "line": "<Text"
     },
     {
@@ -741,35 +763,35 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 108,
+      "lineNumber": 111,
       "line": "<Text"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 114,
+      "lineNumber": 117,
       "line": "<Text"
     },
     {
       "example": "node-select",
       "component": "Sankey",
       "path": "/docs/components/Sankey/node-select",
-      "lineNumber": 49,
+      "lineNumber": 53,
       "line": "<Text"
     },
     {
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 20,
+      "lineNumber": 24,
       "line": "<Text"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 38,
+      "lineNumber": 41,
       "line": "<Text"
     },
     {
@@ -836,6 +858,20 @@
       "line": "<Text {...config} truncate={config.truncate ? config.truncateOptions : false} />"
     },
     {
+      "example": "segments",
+      "component": "Text",
+      "path": "/docs/components/Text/segments",
+      "lineNumber": 7,
+      "line": "<Text"
+    },
+    {
+      "example": "segments",
+      "component": "Text",
+      "path": "/docs/components/Text/segments",
+      "lineNumber": 15,
+      "line": "<Text"
+    },
+    {
       "example": "word-wrap-with-explicit-newline",
       "component": "Text",
       "path": "/docs/components/Text/word-wrap-with-explicit-newline",
@@ -853,7 +889,7 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 115,
+      "lineNumber": 118,
       "line": "<Text"
     },
     {
@@ -867,42 +903,42 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 108,
-      "line": "<text"
+      "lineNumber": 112,
+      "line": "<Text"
     },
     {
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 125,
+      "lineNumber": 144,
       "line": "<Text"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 160,
-      "line": "<text"
+      "lineNumber": 163,
+      "line": "<Text"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 176,
-      "line": "<!-- <Text"
+      "lineNumber": 195,
+      "line": "<Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 126,
-      "line": "<text"
+      "lineNumber": 129,
+      "line": "<Text"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 142,
+      "lineNumber": 161,
       "line": "<Text"
     },
     {
@@ -910,27 +946,27 @@
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
       "lineNumber": 154,
-      "line": "<text"
+      "line": "<Text"
     },
     {
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 171,
+      "lineNumber": 186,
       "line": "<Text"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 112,
+      "lineNumber": 115,
       "line": "<Text"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 122,
+      "lineNumber": 126,
       "line": "<Text"
     },
     {
@@ -983,5 +1019,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-08T04:31:42.326Z"
+  "updatedAt": "2026-04-12T23:32:36.515Z"
 }

@@ -384,14 +384,14 @@
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 60,
+      "lineNumber": 62,
       "line": "<Circle"
     },
     {
@@ -405,7 +405,7 @@
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
-      "lineNumber": 44,
+      "lineNumber": 46,
       "line": "<Circle"
     },
     {
@@ -419,7 +419,7 @@
       "example": "disjoint-graph",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/disjoint-graph",
-      "lineNumber": 75,
+      "lineNumber": 78,
       "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
     },
     {
@@ -433,7 +433,7 @@
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-playground",
-      "lineNumber": 179,
+      "lineNumber": 182,
       "line": "<Circle"
     },
     {
@@ -454,14 +454,14 @@
       "example": "tree",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
-      "lineNumber": 51,
+      "lineNumber": 54,
       "line": "<Circle"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 108,
+      "lineNumber": 110,
       "line": "<Circle"
     },
     {
@@ -615,7 +615,7 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 119,
+      "lineNumber": 121,
       "line": "<Circle"
     },
     {
@@ -920,5 +920,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:10.553Z"
+  "updatedAt": "2026-04-12T22:48:25.203Z"
 }

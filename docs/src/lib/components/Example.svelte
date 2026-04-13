@@ -14,6 +14,7 @@
 	import { cls } from '@layerstack/tailwind';
 
 	import { examples } from '$lib/context';
+	import { untrack } from 'svelte';
 	import Code from './Code.svelte';
 	import Json from './Json.svelte';
 
@@ -74,20 +75,32 @@
 	}
 
 	// Get example from context (eagerly loaded by layout)
+	// Cache context at init time — getContext() must be called during component initialization
+	const examplesCtx = examples.get();
+
 	// Use $state + $effect to break potential infinite reactivity loops during HMR
 	let example = $state<{ component: any; source: string } | undefined>(undefined);
 
 	$effect(() => {
+		const current = examplesCtx?.current;
+		let next: typeof example;
 		if (path) {
 			// Path-based example
 			const resolvedPath = resolveExamplePath(path, page.url.pathname);
-			example = examples.get()?.current['__path__']?.[resolvedPath];
+			next = current?.['__path__']?.[resolvedPath];
 		} else if (component && name) {
 			// Component/name-based example
-			example = examples.get()?.current[component]?.[name];
+			next = current?.[component]?.[name];
 		} else {
-			example = undefined;
+			next = undefined;
 		}
+		// Only assign if the reference actually changed to avoid unnecessary downstream reactivity
+		// Untrack both the read and write to prevent this effect from depending on its own output
+		untrack(() => {
+			if (example !== next) {
+				example = next;
+			}
+		});
 	});
 
 	let containerEl = $state<HTMLElement | null>(null);
@@ -118,7 +131,13 @@
 	}
 
 	let ref = $state<SvelteComponent | null>(null);
-	let data = $derived(ref?.data);
+	let data = $derived.by(() => {
+		try {
+			return ref?.data;
+		} catch {
+			return undefined;
+		}
+	});
 
 	// Ensure component name is always resolved consistently
 	const resolvedComponent = $derived(component ?? page.params.name ?? '');
@@ -156,13 +175,6 @@
 
 	$effect(() => {
 		if (!lazy || !sentinelEl) return;
-
-		// Synchronously check if already in/near viewport to avoid flash for first examples
-		const rect = sentinelEl.getBoundingClientRect();
-		if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
-			intersected = true;
-			return;
-		}
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -210,9 +222,16 @@
 				style:view-transition-name={viewTransitionName}
 			>
 				{#if isVisible}
-					<example.component bind:this={ref} />
+					<svelte:boundary>
+						<example.component bind:this={ref} />
+						{#snippet pending()}
+							<div class="min-h-80 flex items-center justify-center text-surface-content/30">
+								Loading...
+							</div>
+						{/snippet}
+					</svelte:boundary>
 				{:else}
-					<div bind:this={sentinelEl} class="min-h-25"></div>
+					<div bind:this={sentinelEl} class="min-h-80"></div>
 				{/if}
 
 				{#if canResize}

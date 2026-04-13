@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCars } from '$lib/data.remote';
+	let data = await getCars();
+</script>
+
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import {
@@ -17,6 +22,7 @@
 		Partition,
 		Rect,
 		RectClipPath,
+		Text,
 		Layer,
 		findAncestor
 	} from 'layerchart';
@@ -24,14 +30,11 @@
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import PartitionControls from '$lib/components/controls/PartitionControls.svelte';
-	import { getCars } from '$lib/data.remote';
-
 	let colorBy = $state<'children' | 'parent' | 'depth'>('children');
 	let padding = $state(0);
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
 
-	let data = await getCars();
 	let hierarchy = $derived(d3Hierarchy(getGrouped()).count());
 	let nodes = $state<HierarchyRectangularNode<any>[]>([]);
 	let selected = $state<HierarchyRectangularNode<any>>();
@@ -139,26 +142,36 @@
 											height={nodeHeight}
 											motion={{ type: 'tween', delay: 600 }}
 										>
-											<text
+											<Text
+												segments={[
+													{
+														value: node.data[0] ?? 'Overall',
+														class: cls(
+															'text-[10px] font-medium',
+															colorBy === 'children'
+																? 'fill-primary-content'
+																: 'fill-black'
+														),
+													},
+													...(node.children
+														? [
+																{
+																	value: ` ${format(node.value ?? 0, 'integer')}`,
+																	class: cls(
+																		'text-[8px] font-extralight',
+																		colorBy === 'children'
+																			? 'fill-primary-content'
+																			: 'fill-black'
+																	),
+																},
+															]
+														: []),
+												]}
+												verticalAnchor="start"
+												lineHeight="10px"
 												x={4}
-												y={16 * 0.6 + 4}
-												class={cls(
-													'text-[10px] font-medium',
-													colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-												)}
-											>
-												<tspan>{node.data[0] ?? 'Overall'}</tspan>
-												{#if node.children}
-													<tspan
-														class={cls(
-															'text-[8px] font-extralight',
-															colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-														)}
-													>
-														{format(node.value ?? 0, 'integer')}
-													</tspan>
-												{/if}
-											</text>
+												y={3.6}
+											/>
 										</RectClipPath>
 									</Group>
 								</g>

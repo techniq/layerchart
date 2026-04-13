@@ -1,3 +1,10 @@
+<script module lang="ts">
+	import { getCountriesTopology, getSubmarineCables, getSubmarineCablesLandingPoints } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+	const cables = await getSubmarineCables();
+	const landingPoints = await getSubmarineCablesLandingPoints();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
@@ -17,15 +24,6 @@
 	} from 'layerchart';
 	import GeoPathSubmarineControls from '$lib/components/controls/GeoPathSubmarineControls.svelte';
 
-	import {
-		getCountriesTopology,
-		getSubmarineCables,
-		getSubmarineCablesLandingPoints
-	} from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
-	const cables = await getSubmarineCables();
-	const landingPoints = await getSubmarineCablesLandingPoints();
 
 	const countries = feature(topology, topology.objects.countries);
 

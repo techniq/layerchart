@@ -144,14 +144,14 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 199,
+      "lineNumber": 203,
       "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 201,
+      "lineNumber": 205,
       "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
     },
     {
@@ -165,7 +165,7 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 65,
+      "lineNumber": 67,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
@@ -179,14 +179,14 @@
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 77,
+      "lineNumber": 79,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 76,
+      "lineNumber": 78,
       "line": "<Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion=\"tween\">"
     },
     {
@@ -221,28 +221,28 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 109,
+      "lineNumber": 111,
       "line": "<Group"
     },
     {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 117,
+      "lineNumber": 119,
       "line": "<Group"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 105,
+      "lineNumber": 108,
       "line": "<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 106,
+      "lineNumber": 109,
       "line": "<Group x={xScale(node.x0)} y={yScale(node.y0)} onclick={() => (selected = node)}>"
     },
     {
@@ -284,49 +284,49 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 89,
+      "lineNumber": 92,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 99,
+      "lineNumber": 102,
       "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
     },
     {
       "example": "node-select",
       "component": "Sankey",
       "path": "/docs/components/Sankey/node-select",
-      "lineNumber": 30,
+      "lineNumber": 34,
       "line": "<Group"
     },
     {
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 18,
+      "lineNumber": 22,
       "line": "<Group x={node.x0} y={node.y0}>"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<Group x={node.x0} y={node.y0}>"
     },
     {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 85,
+      "lineNumber": 88,
       "line": "<Group"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 89,
+      "lineNumber": 92,
       "line": "<Group"
     },
     {
@@ -340,21 +340,21 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 87,
+      "lineNumber": 91,
       "line": "<Group"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 131,
+      "lineNumber": 134,
       "line": "<Group"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 103,
+      "lineNumber": 106,
       "line": "<Group"
     },
     {
@@ -368,9 +368,9 @@
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 91,
+      "lineNumber": 94,
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:41.369Z"
+  "updatedAt": "2026-04-12T22:48:25.858Z"
 }

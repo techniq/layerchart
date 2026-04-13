@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -19,8 +24,6 @@
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import PackControls from '$lib/components/controls/PackControls.svelte';
-	import { getFlare } from '$lib/data.remote';
-
 	let colorBy: 'depth' | 'parent' | 'children' = $state('parent');
 	let padding = $state(3);
 	let nodes = $state.raw<HierarchyCircularNode<any>[]>([]);
@@ -28,7 +31,6 @@
 	let context = $state<ChartState>(null!);
 
 	// Move until https://github.com/sveltejs/svelte/issues/17090 is resolved
-	let data = await getFlare();
 
 	const complexHierarchy = hierarchy(data)
 		.sum((d) => d.value)

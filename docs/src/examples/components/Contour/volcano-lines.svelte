@@ -1,9 +1,11 @@
+<script module lang="ts">
+	import { getVolcano } from '$lib/data.remote.js';
+	const volcano = await getVolcano();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, Contour, Layer } from 'layerchart';
 
-	import { getVolcano } from '$lib/data.remote.js';
-
-	const volcano = await getVolcano();
 </script>
 
 <Chart padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>

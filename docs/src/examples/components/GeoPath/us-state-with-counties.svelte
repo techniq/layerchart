@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
+	const topology = await getUsCountiesTopology();
+</script>
+
 <script lang="ts">
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
@@ -6,9 +11,6 @@
 	import GeopathControls from '$lib/components/controls/GeoPathStatesControls.svelte';
 	import { sort } from '@layerstack/utils';
 
-	import { getUsCountiesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getUsCountiesTopology();
 	const counties = feature(topology, topology.objects.counties);
 	const states = feature(topology, topology.objects.states);
 

@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
+	const topology = await getUsCountiesAlbersTopology();
+	const populationData = await getUsCountyPopulation();
+</script>
+
 <script lang="ts">
 	import { index, max, descending } from 'd3-array';
 	import { geoIdentity, type GeoProjection } from 'd3-geo';
@@ -7,10 +13,6 @@
 	import { Chart, GeoPath, getSettings, Layer, Vector, Tooltip } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
-	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
-
-	const topology = await getUsCountiesAlbersTopology();
-	const populationData = await getUsCountyPopulation();
 
 	let settings = getSettings();
 

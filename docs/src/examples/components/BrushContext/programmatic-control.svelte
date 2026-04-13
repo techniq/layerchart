@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { Area, Axis, Chart, Layer, defaultChartPadding } from 'layerchart';
 	import { Button, ButtonGroup } from 'svelte-ux';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 	export { data };
 
 	let context: any = $state();
