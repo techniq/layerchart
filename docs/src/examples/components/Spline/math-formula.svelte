@@ -2,7 +2,7 @@
 	import { defaultChartPadding, LineChart, Raster, Spline, Tooltip } from 'layerchart';
 	import { Field, MenuField, Switch, TextField } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
-	import { evaluate } from 'mathjs';
+	import { browser } from '$app/environment';
 	import { scaleSequential } from 'd3-scale';
 	import {
 		interpolateRainbow,
@@ -37,6 +37,15 @@
 	let selected = $state('x^2');
 	let customFormula = $state('');
 	let showRaster = $state(false);
+	let evaluateFn: ((expr: string, scope?: object) => any) | null = $state(null);
+
+	$effect(() => {
+		if (browser) {
+			import('mathjs').then((m) => {
+				evaluateFn = m.evaluate;
+			});
+		}
+	});
 
 	const interpolators = [
 		{ label: 'Viridis', value: 'viridis', fn: interpolateViridis },
@@ -58,14 +67,15 @@
 	let interp = $derived(interpolators.find((i) => i.value === selectedInterp)!);
 
 	const formula = $derived(selected === 'custom' ? customFormula : selected);
-	const { data, error } = $derived(computeGraph(formula));
+	const { data, error } = $derived(computeGraph(formula, evaluateFn));
 
 	const rasterValue = $derived.by(() => {
 		const f = formula;
-		if (!f?.trim()) return (_x: number, _y: number) => 0;
+		const eval_ = evaluateFn;
+		if (!f?.trim() || !eval_) return (_x: number, _y: number) => 0;
 		return (x: number, _y: number) => {
 			try {
-				const y = evaluate(f, { x });
+				const y = eval_(f, { x });
 				return isFinite(y) ? y : NaN;
 			} catch {
 				return NaN;
@@ -73,13 +83,13 @@
 		};
 	});
 
-	function computeGraph(formula: string) {
-		if (!formula?.trim()) return { data: [], error: null };
+	function computeGraph(formula: string, eval_: typeof evaluateFn) {
+		if (!formula?.trim() || !eval_) return { data: [], error: null };
 
 		try {
 			const data = xs.flatMap((x) => {
 				try {
-					const y = evaluate(formula, { x });
+					const y = eval_(formula, { x });
 					return isFinite(y) && Math.abs(y) < 1e6 ? [{ x, y }] : [];
 				} catch {
 					return [];
