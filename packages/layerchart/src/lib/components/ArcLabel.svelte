@@ -222,7 +222,7 @@
           y: offsetCentroid[1],
           textAnchor: 'middle' as const,
           verticalAnchor: 'middle' as const,
-          transform: `rotate(${centroidRotation}, ${offsetCentroid[0]}, ${offsetCentroid[1]})`,
+          rotate: centroidRotation,
         };
       }
       return getArcTextProps?.('centroid', { startOffset, outerPadding }) ?? {};
