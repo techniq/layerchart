@@ -3,14 +3,18 @@
 	import {
 		interpolateRainbow,
 		interpolateSinebow,
+		interpolateWarm,
 		interpolateCool,
 		interpolateInferno,
 		interpolateViridis,
+		interpolateMagma,
 		interpolateTurbo,
+		interpolateCividis,
 		interpolateYlGnBu,
 		interpolateSpectral,
 		interpolatePlasma,
-		interpolateCubehelixDefault
+		interpolateCubehelixDefault,
+		interpolateRdYlBu
 	} from 'd3-scale-chromatic';
 	import { Axis, Chart, Contour, Layer, Raster } from 'layerchart';
 	import { Field, MenuField, Switch } from 'svelte-ux';
@@ -49,20 +53,24 @@
 	];
 
 	const interpolators = [
-		{ label: 'Rainbow', value: 'rainbow', fn: interpolateRainbow },
-		{ label: 'Sinebow', value: 'sinebow', fn: interpolateSinebow },
-		{ label: 'Turbo', value: 'turbo', fn: interpolateTurbo },
 		{ label: 'Viridis', value: 'viridis', fn: interpolateViridis },
 		{ label: 'Inferno', value: 'inferno', fn: interpolateInferno },
+		{ label: 'Magma', value: 'magma', fn: interpolateMagma },
 		{ label: 'Plasma', value: 'plasma', fn: interpolatePlasma },
+		{ label: 'Cividis', value: 'cividis', fn: interpolateCividis },
+		{ label: 'Turbo', value: 'turbo', fn: interpolateTurbo },
+		{ label: 'Rainbow', value: 'rainbow', fn: interpolateRainbow },
+		{ label: 'Sinebow', value: 'sinebow', fn: interpolateSinebow },
+		{ label: 'Warm', value: 'warm', fn: interpolateWarm },
 		{ label: 'Cool', value: 'cool', fn: interpolateCool },
+		{ label: 'Cubehelix', value: 'cubehelix', fn: interpolateCubehelixDefault },
 		{ label: 'YlGnBu', value: 'ylgnbu', fn: interpolateYlGnBu },
 		{ label: 'Spectral', value: 'spectral', fn: interpolateSpectral },
-		{ label: 'Cubehelix', value: 'cubehelix', fn: interpolateCubehelixDefault }
+		{ label: 'RdYlBu', value: 'rdylbu', fn: interpolateRdYlBu }
 	];
 
 	let selectedFn = $state(functions[0].value);
-	let selectedInterp = $state(interpolators[0].value);
+	let selectedInterp = $state('rainbow');
 	let fn = $derived(functions.find((f) => f.value === selectedFn)!);
 	let interp = $derived(interpolators.find((i) => i.value === selectedInterp)!);
 	let showContours = $state(false);
