@@ -34,8 +34,8 @@ describe('PieChart', () => {
     arc!.dispatchEvent(new PointerEvent('pointermove', eventInit));
 
     await vi.waitFor(() => {
-      const tooltipLabel = container.querySelector('.lc-tooltip-item-label');
-      const tooltipValue = container.querySelector('.lc-tooltip-item-value');
+      const tooltipLabel = document.querySelector('.lc-tooltip-item-label');
+      const tooltipValue = document.querySelector('.lc-tooltip-item-value');
 
       expect(tooltipLabel?.textContent).toContain('chrome');
       expect(tooltipValue?.textContent).toContain('275');

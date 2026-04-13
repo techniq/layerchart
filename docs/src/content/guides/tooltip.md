@@ -152,6 +152,33 @@ The `anchor` prop controls which corner of the tooltip aligns to the position po
 
 :example{ component="Tooltip" name="anchor-location" }
 
+### Portal
+
+By default, `Tooltip.Root` is portaled outside the chart DOM to `document.body` (or a `.PortalTarget` element if one exists). This prevents the tooltip from being clipped by ancestors with `overflow: hidden`.
+
+| Value                         | Behavior                                                    |
+| ----------------------------- | ----------------------------------------------------------- |
+| `true`                        | Portal to `.PortalTarget` or `document.body` (default)      |
+| `false`                       | Render inline within the chart (original behavior)          |
+| `{ target: '.my-container' }` | Portal to a specific CSS selector                           |
+| `{ target: element }`         | Portal to a specific DOM element                            |
+| `{ enabled: false }`          | Same as `false`                                             |
+
+```svelte
+<!-- Default: portaled to body -->
+<Tooltip.Root>
+
+<!-- Disable portal (inline positioning) -->
+<Tooltip.Root portal={false}>
+
+<!-- Portal to a custom target -->
+<Tooltip.Root portal={{ target: '.my-tooltip-container' }}>
+```
+
+Toggle `portal` off to see the tooltip clipped by the `overflow: hidden` container:
+
+:example{ component="Tooltip" name="portal-overflow" }
+
 ### Containment
 
 Tooltips are contained within their chart container by default, flipping sides when they would overflow. The `contained` prop controls this:
