@@ -108,7 +108,10 @@
   const ctx = getChartContext();
 
   const endAngle = $derived(
-    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
+    endAngleProp ??
+      degreesToRadians(
+        (ctx.config.xRange ? max(ctx.config.xRange as number[]) : max(range))!
+      )
   );
 
   const motionEndAngle = createMotion(0, () => endAngle, motion);
@@ -116,7 +119,10 @@
   const pie = $derived.by(() => {
     let _pie = d3pie<any>()
       .startAngle(
-        startAngleProp ?? degreesToRadians(ctx.config.xRange ? min(ctx.xRange) : min(range))
+        startAngleProp ??
+          degreesToRadians(
+            (ctx.config.xRange ? min(ctx.config.xRange as number[]) : min(range))!
+          )
       )
       .endAngle(motionEndAngle.current)
       .padAngle(padAngle)
