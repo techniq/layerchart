@@ -4,7 +4,22 @@
 	import { format } from '@layerstack/utils';
 	import { evaluate } from 'mathjs';
 	import { scaleSequential } from 'd3-scale';
-	import { interpolateViridis } from 'd3-scale-chromatic';
+	import {
+		interpolateRainbow,
+		interpolateSinebow,
+		interpolateWarm,
+		interpolateCool,
+		interpolateInferno,
+		interpolateViridis,
+		interpolateMagma,
+		interpolateTurbo,
+		interpolateCividis,
+		interpolateYlGnBu,
+		interpolateSpectral,
+		interpolatePlasma,
+		interpolateCubehelixDefault,
+		interpolateRdYlBu
+	} from 'd3-scale-chromatic';
 
 	const options = [
 		{ label: 'x²', value: 'x^2' },
@@ -22,6 +37,25 @@
 	let selected = $state('x^2');
 	let customFormula = $state('');
 	let showRaster = $state(false);
+
+	const interpolators = [
+		{ label: 'Viridis', value: 'viridis', fn: interpolateViridis },
+		{ label: 'Inferno', value: 'inferno', fn: interpolateInferno },
+		{ label: 'Magma', value: 'magma', fn: interpolateMagma },
+		{ label: 'Plasma', value: 'plasma', fn: interpolatePlasma },
+		{ label: 'Cividis', value: 'cividis', fn: interpolateCividis },
+		{ label: 'Turbo', value: 'turbo', fn: interpolateTurbo },
+		{ label: 'Rainbow', value: 'rainbow', fn: interpolateRainbow },
+		{ label: 'Sinebow', value: 'sinebow', fn: interpolateSinebow },
+		{ label: 'Warm', value: 'warm', fn: interpolateWarm },
+		{ label: 'Cool', value: 'cool', fn: interpolateCool },
+		{ label: 'Cubehelix', value: 'cubehelix', fn: interpolateCubehelixDefault },
+		{ label: 'YlGnBu', value: 'ylgnbu', fn: interpolateYlGnBu },
+		{ label: 'Spectral', value: 'spectral', fn: interpolateSpectral },
+		{ label: 'RdYlBu', value: 'rdylbu', fn: interpolateRdYlBu }
+	];
+	let selectedInterp = $state('viridis');
+	let interp = $derived(interpolators.find((i) => i.value === selectedInterp)!);
 
 	const formula = $derived(selected === 'custom' ? customFormula : selected);
 	const { data, error } = $derived(computeGraph(formula));
@@ -63,32 +97,44 @@
 	}
 </script>
 
-<div class="grid grid-cols-[1fr_1fr_auto] gap-2 mb-2">
-	<MenuField
-		label="Formula"
-		{options}
-		bind:value={selected}
-		stepper
-		classes={{ menuIcon: 'hidden' }}
-	/>
-	<TextField
-		label="Custom"
-		bind:value={customFormula}
-		placeholder="e.g. tan(x) or x^3 - x"
-		error={selected === 'custom' && customFormula && error ? error : false}
-		disabled={selected !== 'custom'}
-		onfocusin={() => (selected = 'custom')}
-	/>
-	<Field label="Raster">
-		<Switch bind:checked={showRaster} />
-	</Field>
+<div class="grid gap-2 mb-4">
+	<div class="grid grid-cols-[1fr_1fr] gap-2">
+		<MenuField
+			label="Formula"
+			{options}
+			bind:value={selected}
+			stepper
+			classes={{ menuIcon: 'hidden' }}
+		/>
+		<TextField
+			label="Custom"
+			bind:value={customFormula}
+			placeholder="e.g. tan(x) or x^3 - x"
+			error={selected === 'custom' && customFormula && error ? error : false}
+			disabled={selected !== 'custom'}
+			onfocusin={() => (selected = 'custom')}
+		/>
+	</div>
+	<div class="grid grid-cols-[auto_1fr] gap-2">
+		<Field label="Raster">
+			<Switch bind:checked={showRaster} />
+		</Field>
+		<MenuField
+			label="Color"
+			options={interpolators}
+			bind:value={selectedInterp}
+			disabled={!showRaster}
+			stepper
+			classes={{ menuIcon: 'hidden' }}
+		/>
+	</div>
 </div>
 
 <LineChart
 	{data}
 	x="x"
 	y="y"
-	cScale={showRaster ? scaleSequential(interpolateViridis) : undefined}
+	cScale={showRaster ? scaleSequential(interp.fn) : undefined}
 	props={{
 		yAxis: {
 			rule: true
