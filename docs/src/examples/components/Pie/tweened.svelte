@@ -3,7 +3,7 @@
 	import { createDateSeries } from '$lib/utils/data.js';
 	import ShowControl from '$lib/components/controls/fields/ShowField.svelte';
 
-	let show = $state(true);
+	let show = $state();
 
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 

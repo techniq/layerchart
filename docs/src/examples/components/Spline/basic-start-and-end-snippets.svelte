@@ -5,7 +5,7 @@
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		pointCount: 100,
 		amplitude: 1,
 		frequency: 10,
@@ -33,7 +33,7 @@
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 		{#if config.show}
-			<Spline curve={config.curve} class="stroke-primary stroke-2">
+			<Spline curve={config.curve} class="stroke-primary stroke-2" motion="tween">
 				{#snippet startContent()}
 					<Circle r={5} class="fill-primary" />
 				{/snippet}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { Axis, Chart, Layer, Spline, Circle, Text } from 'layerchart';
-	import SplineControls from '$lib/components/controls/SplineControls.svelte';
+	import SplineControls from '$lib/components/controls/SplineControls2.svelte';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
