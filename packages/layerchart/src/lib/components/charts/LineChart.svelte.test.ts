@@ -40,7 +40,7 @@ describe('LineChart', () => {
     tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
 
     await vi.waitFor(() => {
-      const colorDot = container.querySelector('.lc-tooltip-item-color') as HTMLElement | null;
+      const colorDot = document.querySelector('.lc-tooltip-item-color') as HTMLElement | null;
       expect(colorDot).not.toBeNull();
 
       const color = colorDot!.style.getPropertyValue('--color');

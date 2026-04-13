@@ -17,11 +17,12 @@
 	let anchor: ComponentProps<typeof Tooltip.Root>['anchor'] = $state('top-left');
 	let snap: 'pointer' | 'data' = $state('pointer');
 	let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state('container');
+	let portal: boolean = $state(true);
 
 	export { data };
 </script>
 
-<TooltipContextControls2 bind:anchor bind:snap bind:contained />
+<TooltipContextControls2 bind:anchor bind:snap bind:contained bind:portal />
 
 <Chart
 	{data}
@@ -46,6 +47,7 @@
 		y={snap}
 		yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
 		{contained}
+		{portal}
 	>
 		{#snippet children({ data })}
 			<Tooltip.Header value={data.date} format="day" />
