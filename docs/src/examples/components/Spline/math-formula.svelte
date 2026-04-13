@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { defaultChartPadding, LineChart, Tooltip } from 'layerchart';
-	import { MenuField, TextField } from 'svelte-ux';
+	import { defaultChartPadding, LineChart, Raster, Spline, Tooltip } from 'layerchart';
+	import { Field, MenuField, Switch, TextField } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { evaluate } from 'mathjs';
+	import { scaleSequential } from 'd3-scale';
+	import { interpolateViridis } from 'd3-scale-chromatic';
 
 	const options = [
 		{ label: 'x²', value: 'x^2' },
@@ -19,9 +21,23 @@
 	const xs = Array.from({ length: 100 }, (_, i) => -8 + i * 0.2);
 	let selected = $state('x^2');
 	let customFormula = $state('');
+	let showRaster = $state(false);
 
 	const formula = $derived(selected === 'custom' ? customFormula : selected);
 	const { data, error } = $derived(computeGraph(formula));
+
+	const rasterValue = $derived.by(() => {
+		const f = formula;
+		if (!f?.trim()) return (_x: number, _y: number) => 0;
+		return (x: number, _y: number) => {
+			try {
+				const y = evaluate(f, { x });
+				return isFinite(y) ? y : NaN;
+			} catch {
+				return NaN;
+			}
+		};
+	});
 
 	function computeGraph(formula: string) {
 		if (!formula?.trim()) return { data: [], error: null };
@@ -47,7 +63,7 @@
 	}
 </script>
 
-<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr_auto] gap-2 mb-2">
 	<MenuField
 		label="Formula"
 		{options}
@@ -63,12 +79,16 @@
 		disabled={selected !== 'custom'}
 		onfocusin={() => (selected = 'custom')}
 	/>
+	<Field label="Raster">
+		<Switch bind:checked={showRaster} />
+	</Field>
 </div>
 
 <LineChart
 	{data}
 	x="x"
 	y="y"
+	cScale={showRaster ? scaleSequential(interpolateViridis) : undefined}
 	props={{
 		yAxis: {
 			rule: true
@@ -79,6 +99,14 @@
 	height={400}
 	padding={defaultChartPadding({ left: 45, right: 45 })}
 >
+	{#snippet marks({ context })}
+		{#if showRaster}
+			<Raster value={rasterValue} opacity={0.5} />
+		{/if}
+		{#each context.series.visibleSeries as s (s.key)}
+			<Spline seriesKey={s.key} />
+		{/each}
+	{/snippet}
 	{#snippet tooltip({ context })}
 		<Tooltip.Root>
 			{#snippet children({ data })}
