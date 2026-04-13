@@ -16,9 +16,13 @@
 
 	let { data } = $props();
 
+	const stringParam = z.preprocess(
+		(val) => (typeof val === 'boolean' ? String(val) : val),
+		z.string().nullable().default(null)
+	);
 	export const schema = z.object({
-		filter: z.string().nullable().default(null),
-		category: z.string().nullable().default(null)
+		filter: stringParam,
+		category: stringParam
 	});
 	let params = useSearchParams(schema);
 
