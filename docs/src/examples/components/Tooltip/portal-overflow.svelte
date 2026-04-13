@@ -16,7 +16,7 @@
 	export { data };
 </script>
 
-<div class="grid gap-2 mb-4 screenshot-hidden">
+<div class="flex gap-2 mb-4 screenshot-hidden">
 	<Field label="Portal">
 		<Switch bind:checked={portal} />
 	</Field>

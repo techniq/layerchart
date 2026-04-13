@@ -51,6 +51,14 @@
     motion?: MotionProp;
 
     /**
+     * Duration of the fade in/out transition in milliseconds.
+     * Set to `0` to disable the fade transition.
+     *
+     * @default 100
+     */
+    fadeDuration?: number;
+
+    /**
      * Allow pointer events.  Disabled by default to reduce accidental selection, but useful to
      * enable to allow interactive tooltips (using `locked`)
      *
@@ -168,6 +176,7 @@
     anchor = 'top-left',
     classes = {},
     contained = 'container',
+    fadeDuration = 100,
     motion = 'spring',
     pointerEvents = false,
     portal: portalProp = true,
@@ -463,7 +472,7 @@
     class:portaled={isPortaled}
     style:top="{motionY.current}px"
     style:left="{motionX.current}px"
-    transition:fade={{ duration: 100 }}
+    transition:fade={{ duration: fadeDuration }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
     bind:this={rootRef}
