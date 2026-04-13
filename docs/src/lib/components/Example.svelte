@@ -23,7 +23,7 @@
 	import LucideTable from '~icons/lucide/table';
 	import LucideFilePen from '~icons/lucide/file-pen';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
-	import LucideDownload from '~icons/lucide/download';
+	import LucideImageDown from '~icons/lucide/image-down';
 
 	import { page } from '$app/state';
 	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
@@ -328,18 +328,18 @@
 				{/if}
 
 				<Toggle let:on={open} let:toggle let:toggleOff>
-					<Button icon={LucideDownload} class="text-surface-content/70 py-1" on:click={toggle}>
-						Download
+					<Button icon={LucideImageDown} class="text-surface-content/70 py-1" on:click={toggle}>
+						Export
 						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-1' }}>
 							<MenuItem
-								icon={LucideDownload}
+								icon={LucideImageDown}
 								on:click={() => downloadImage(containerEl!, { filename: name ?? component })}
 							>
-								Download as PNG
+								Export as PNG
 							</MenuItem>
 							{#if settings.layer !== 'canvas'}
-								<MenuItem icon={LucideDownload} on:click={handleSvgDownload}>
-									Download as SVG
+								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
+									Export as SVG
 								</MenuItem>
 							{/if}
 						</Menu>
