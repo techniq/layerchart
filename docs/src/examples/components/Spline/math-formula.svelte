@@ -1,18 +1,19 @@
 <script lang="ts">
 	import { defaultChartPadding, LineChart, Tooltip } from 'layerchart';
-	import { Radio, TextField } from 'svelte-ux';
+	import { MenuField, TextField } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { evaluate } from 'mathjs';
 
-	const presets: string[] = [
-		'x^2',
-		'log(x)',
-		'(x^2-4)/(x-2)',
-		'2^x',
-		'x^3 - 2*x',
-		'sin(x)',
-		'sqrt(x)',
-		'abs(x) - 3'
+	const options = [
+		{ label: 'x²', value: 'x^2' },
+		{ label: 'log(x)', value: 'log(x)' },
+		{ label: '(x²-4)/(x-2)', value: '(x^2-4)/(x-2)' },
+		{ label: '2ˣ', value: '2^x' },
+		{ label: 'x³ - 2x', value: 'x^3 - 2*x' },
+		{ label: 'sin(x)', value: 'sin(x)' },
+		{ label: 'sqrt(x)', value: 'sqrt(x)' },
+		{ label: 'abs(x) - 3', value: 'abs(x) - 3' },
+		{ label: 'Custom', value: 'custom' }
 	];
 
 	const xs = Array.from({ length: 100 }, (_, i) => -8 + i * 0.2);
@@ -46,28 +47,23 @@
 	}
 </script>
 
-<div class="flex flex-wrap gap-x-6 gap-y-4 items-center mb-2">
-	{#each presets as preset}
-		<Radio name="formula" bind:group={selected} value={preset}>{preset}</Radio>
-	{/each}
-	<Radio name="formula" bind:group={selected} value="custom" class="flex-1">
-		<div
-			class="flex justify-center items-center gap-2 w-full"
-			onfocusin={() => (selected = 'custom')}
-		>
-			<TextField
-				label="Custom"
-				labelPlacement="left"
-				bind:value={customFormula}
-				placeholder="e.g. tan(x) or x^3 - x"
-				error={customFormula && error ? error : false}
-				class="flex-1 min-w-[200px]"
-				classes={{ label: 'text-white' }}
-			/>
-		</div>
-	</Radio>
+<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
+	<MenuField
+		label="Formula"
+		{options}
+		bind:value={selected}
+		stepper
+		classes={{ menuIcon: 'hidden' }}
+	/>
+	<TextField
+		label="Custom"
+		bind:value={customFormula}
+		placeholder="e.g. tan(x) or x^3 - x"
+		error={selected === 'custom' && customFormula && error ? error : false}
+		disabled={selected !== 'custom'}
+		onfocusin={() => (selected = 'custom')}
+	/>
 </div>
-<div class="h-4 text-xs text-red-500 text-center mb-2">{error ?? ''}</div>
 
 <LineChart
 	{data}
