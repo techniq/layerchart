@@ -11,6 +11,7 @@
 
 	import { Chart, Circle, GeoPath, Layer, Path, Rect, type ChartState } from 'layerchart';
 	import { Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	import LucidePencil from '~icons/lucide/pencil';
 	import LucideSquare from '~icons/lucide/square';
@@ -131,7 +132,15 @@
 	function getLocalPoint(e: PointerEvent): { x: number; y: number } | null {
 		const point = localPoint(e, chartEl);
 		if (!point) return null;
-		return { x: point.x, y: point.y };
+		// Convert screen space → chart space by inverting the transform.
+		// In canvas mode, the transform is applied to rendering while the
+		// projection (and our pre-computed county hit data) stay fixed.
+		const t = chartContext?.transform;
+		if (!t) return { x: point.x, y: point.y };
+		return {
+			x: (point.x - t.translate.x) / t.scale,
+			y: (point.y - t.translate.y) / t.scale
+		};
 	}
 
 	function paintCounty(id: string) {
@@ -149,7 +158,9 @@
 	// brush, or the brush center falls inside the county bbox (catches small
 	// counties fully enclosed by the brush with no sampled vertex hit).
 	function paintBrushAt(pos: { x: number; y: number }) {
-		const half = brushSize / 2;
+		// brushSize is in screen pixels; convert to chart space
+		const scale = chartContext?.transform.scale ?? 1;
+		const half = brushSize / 2 / scale;
 		const r2 = half * half;
 		const bx0 = pos.x - half,
 			by0 = pos.y - half,
@@ -375,16 +386,25 @@
 					projection,
 					fitGeojson: states
 				}}
+				transform={{
+					mode: 'canvas',
+					scrollMode: 'translate',
+					scaleExtent: [1, 8],
+					disablePointer: true
+				}}
 				height={600}
+				clip
 			>
 				{#snippet children({ context })}
+					{@const strokeScale = 1 / context.transform.scale}
+					<TransformContextControls />
 					<Layer>
 						{#each counties.features as countyFeature (countyFeature.id)}
 							<GeoPath
 								geojson={countyFeature}
 								fill={paintedCounties.get(countyFeature.id as string) ?? '#e5e7eb'}
 								class="stroke-surface-100/50 hover:brightness-90"
-								strokeWidth={0.5}
+								strokeWidth={0.5 * strokeScale}
 								onclick={(e) => handleCountyClick(e, countyFeature)}
 								onpointerenter={() => handleCountyPointerEnter(countyFeature)}
 							/>
@@ -393,7 +413,7 @@
 						<GeoPath
 							geojson={states}
 							class="fill-none stroke-surface-content/30 pointer-events-none"
-							strokeWidth={1}
+							strokeWidth={1 * strokeScale}
 						/>
 					</Layer>
 
@@ -401,14 +421,14 @@
 					<Layer pointerEvents={false}>
 						{#if pointerPos && mode === 'box'}
 							<Rect
-								x={pointerPos.x - brushSize / 2}
-								y={pointerPos.y - brushSize / 2}
-								width={brushSize}
-								height={brushSize}
+								x={pointerPos.x - brushSize / 2 / context.transform.scale}
+								y={pointerPos.y - brushSize / 2 / context.transform.scale}
+								width={brushSize / context.transform.scale}
+								height={brushSize / context.transform.scale}
 								fill={selectedColor ?? 'rgba(0,0,0,0.1)'}
 								fillOpacity={0.25}
 								stroke={selectedColor ?? '#666'}
-								strokeWidth={1}
+								strokeWidth={1 * strokeScale}
 								class="pointer-events-none"
 							/>
 						{/if}
@@ -417,11 +437,11 @@
 							<Circle
 								cx={pointerPos.x}
 								cy={pointerPos.y}
-								r={brushSize / 2}
+								r={brushSize / 2 / context.transform.scale}
 								fill={selectedColor ?? 'rgba(0,0,0,0.1)'}
 								fillOpacity={0.25}
 								stroke={selectedColor ?? '#666'}
-								strokeWidth={1}
+								strokeWidth={1 * strokeScale}
 								class="pointer-events-none"
 							/>
 						{/if}
@@ -432,7 +452,7 @@
 								fill={selectedColor ?? 'rgba(0,0,0,0.1)'}
 								fillOpacity={0.2}
 								stroke={selectedColor ?? '#666'}
-								strokeWidth={1.5}
+								strokeWidth={1.5 * strokeScale}
 								class="pointer-events-none"
 							/>
 						{/if}
