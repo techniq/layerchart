@@ -1,7 +1,7 @@
 ---
 description: Composite mark drawing isolines to delineate regions above and below a particular continuous value. Supports grid data, scattered data with spatial interpolation, and continuous functions.
 category: marks
-layers: [svg]
+layers: [svg, canvas]
 related: [Density, Hull, Raster, GeoPath]
 ---
 
