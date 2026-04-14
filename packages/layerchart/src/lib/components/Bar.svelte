@@ -105,14 +105,13 @@
   import { greatestAbs } from '@layerstack/utils';
 
   import Rect from './Rect.svelte';
-  import Path from './Path.svelte';
 
   import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { type MotionProp } from '$lib/utils/motion.svelte.js';
   import Arc from './Arc.svelte';
 
   const ctx = getChartContext();
@@ -254,12 +253,14 @@
   const topRight = $derived(['all', 'top', 'right', 'top-right'].includes(rounded));
   const bottomLeft = $derived(['all', 'bottom', 'left', 'bottom-left'].includes(rounded));
   const bottomRight = $derived(['all', 'bottom', 'right', 'bottom-right'].includes(rounded));
-  const width = $derived(dimensions.width);
-  const height = $derived(dimensions.height);
 
-  // Clamp radius to prevent extending beyond bounding box
-  const r = $derived(Math.min(radius, width / 2, height / 2));
-  const diameter = $derived(2 * r);
+  // Per-corner radii: [tl, tr, br, bl], matching CSS `border-radius` shorthand.
+  const corners = $derived<[number, number, number, number]>([
+    topLeft ? radius : 0,
+    topRight ? radius : 0,
+    bottomRight ? radius : 0,
+    bottomLeft ? radius : 0,
+  ]);
 
   // Auto-compute initial values for mount animation when motion is configured
   const resolvedInitialY = $derived(
@@ -273,20 +274,6 @@
   );
   const resolvedInitialWidth = $derived(
     initialWidth ?? (motion && ctx.valueAxis === 'x' ? 0 : undefined)
-  );
-
-  const pathData = $derived(
-    `M${dimensions.x + r},${dimensions.y} h${width - diameter}
-      ${topRight ? `a${r},${r} 0 0 1 ${r},${r}` : `h${r}v${r}`}
-      v${height - diameter}
-      ${bottomRight ? `a${r},${r} 0 0 1 ${-r},${r}` : `v${r}h${-r}`}
-      h${diameter - width}
-      ${bottomLeft ? `a${r},${r} 0 0 1 ${-r},${-r}` : `h${-r}v${-r}`}
-      v${diameter - height}
-      ${topLeft ? `a${r},${r} 0 0 1 ${r},${-r}` : `v${-r}h${r}`}
-      z`
-      .split('\n')
-      .join('')
   );
 
   const onPointerEnter: PointerEventHandler<Element> = (e) => {
@@ -322,35 +309,20 @@
     onpointerleave={onPointerLeave}
     {...extractLayerProps(restProps, 'lc-bar')}
   />
-{:else if rounded === 'all' || rounded === 'none' || radius === 0}
+{:else}
   <Rect
     {fill}
     {fillOpacity}
     {stroke}
     {strokeWidth}
     {opacity}
-    rx={rounded === 'none' ? 0 : radius}
+    {corners}
     {motion}
     initialX={resolvedInitialX}
     initialY={resolvedInitialY}
     initialHeight={resolvedInitialHeight}
     initialWidth={resolvedInitialWidth}
     {...dimensions}
-    onpointerenter={onPointerEnter}
-    onpointermove={onPointerMove}
-    onpointerleave={onPointerLeave}
-    {...extractLayerProps(restProps, 'lc-bar')}
-  />
-{:else}
-  {@const tweenMotion = extractTweenConfig(motion)}
-  <Path
-    {pathData}
-    {fill}
-    {fillOpacity}
-    {stroke}
-    {strokeWidth}
-    {opacity}
-    motion={tweenMotion}
     onpointerenter={onPointerEnter}
     onpointermove={onPointerMove}
     onpointerleave={onPointerLeave}

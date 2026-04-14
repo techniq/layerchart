@@ -1,7 +1,7 @@
 ---
 description: Marking component which applies horizontal bars to represent and visually compare discrete data values.
 category: marks
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [Bar]
 ---
 

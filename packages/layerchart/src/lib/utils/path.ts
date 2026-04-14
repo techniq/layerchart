@@ -81,6 +81,39 @@ export function roundedPolygonPath(coords: { x: number; y: number }[], radius: n
   return path;
 }
 
+/**
+ * SVG path `d` attribute for a rectangle with per-corner rounding.
+ * Corners are ordered `[top-left, top-right, bottom-right, bottom-left]`
+ * (matching CSS `border-radius` shorthand). Path is drawn clockwise from
+ * the top-left corner.
+ */
+export function roundedRectPath(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  [tl, tr, br, bl]: [number, number, number, number]
+): string {
+  const topEdge = width - tl - tr;
+  const rightEdge = height - tr - br;
+  const bottomEdge = width - br - bl;
+  const leftEdge = height - bl - tl;
+  return [
+    `M${x + tl},${y}`,
+    `h${topEdge}`,
+    tr > 0 ? `a${tr},${tr} 0 0 1 ${tr},${tr}` : '',
+    `v${rightEdge}`,
+    br > 0 ? `a${br},${br} 0 0 1 ${-br},${br}` : '',
+    `h${-bottomEdge}`,
+    bl > 0 ? `a${bl},${bl} 0 0 1 ${-bl},${-bl}` : '',
+    `v${-leftEdge}`,
+    tl > 0 ? `a${tl},${tl} 0 0 1 ${tl},${-tl}` : '',
+    'z',
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
 /** Vector anchor position */
 export type VectorAnchor = 'start' | 'middle' | 'end';
 

@@ -1,7 +1,7 @@
 ---
 description: Primitive component creating individual rectangular bars to represent and compare discrete data values.
 category: primitives
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [Bars]
 ---
 

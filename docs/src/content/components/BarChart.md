@@ -1,7 +1,7 @@
 ---
 description: Streamlined visualization displaying categorical data using rectangular bars whose lengths represent the values of each category.
 category: charts
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [Chart, Bars]
 ---
 

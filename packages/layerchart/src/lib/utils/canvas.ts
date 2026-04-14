@@ -2,6 +2,7 @@ import type { ClassValue } from 'svelte/elements';
 import memoize from 'memoize';
 import { cls } from '@layerstack/tailwind';
 import type { PatternShape } from '$lib/components/Pattern.svelte';
+import { roundedRectPath } from './path.js';
 
 /** @deprecated - use `isTransparentFill` instead */
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
@@ -358,15 +359,25 @@ export function renderText(
 
 export function renderRect(
   ctx: CanvasRenderingContext2D,
-  coords: { x: number; y: number; width: number; height: number; rx?: number; ry?: number },
+  coords: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    rx?: number;
+    ry?: number;
+    /** Per-corner radii [tl, tr, br, bl]. Takes precedence over `rx`/`ry`. */
+    corners?: [number, number, number, number];
+  },
   styleOptions: ComputedStylesOptions = {}
 ) {
-  const { x, y, width, height } = coords;
+  const { x, y, width, height, corners } = coords;
   const rx = coords.rx ?? 0;
   const ry = coords.ry ?? rx; // Default ry to rx if not provided (SVG behavior)
+  const perCorner = corners && !corners.every((c) => c === corners[0]);
 
   // No rounding - use simple rect methods
-  if (rx === 0 && ry === 0) {
+  if (!perCorner && rx === 0 && ry === 0 && !corners) {
     render(
       ctx,
       {
@@ -381,7 +392,7 @@ export function renderRect(
   // Try native roundRect if available (modern browsers)
   if (typeof ctx.roundRect === 'function') {
     ctx.beginPath();
-    ctx.roundRect(x, y, width, height, [rx, ry]);
+    ctx.roundRect(x, y, width, height, corners ?? [rx, ry]);
     render(
       ctx,
       {
@@ -395,6 +406,12 @@ export function renderRect(
   }
 
   // Fallback: use path rendering for rounded corners
+  if (corners) {
+    const pathData = roundedRectPath(x, y, width, height, corners);
+    renderPathData(ctx, pathData, styleOptions);
+    return;
+  }
+
   // Clamp radii to half the width/height
   const clampedRx = Math.min(rx, width / 2);
   const clampedRy = Math.min(ry, height / 2);

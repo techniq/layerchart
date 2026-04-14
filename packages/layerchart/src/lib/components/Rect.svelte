@@ -5,7 +5,13 @@
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { DataProp, DataDrivenStyleProps } from '$lib/utils/dataProp.js';
-  import type { Insets } from '$lib/utils/rect.svelte.js';
+  import {
+    resolveCorners,
+    cornersUniform,
+    type Corners,
+    type Insets,
+  } from '$lib/utils/rect.svelte.js';
+  import { roundedRectPath } from '$lib/utils/path.js';
 
   export type RectPropsWithoutHTML = {
     /**
@@ -119,6 +125,13 @@
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
 
+    /**
+     * Per-corner radii. Accepts a number (all corners equal — same as `rx`),
+     * a `[tl, tr, br, bl]` tuple, or `{ topLeft, topRight, bottomRight, bottomLeft }`.
+     * Takes precedence over `rx`/`ry` when corners differ.
+     */
+    corners?: Corners;
+
     /** Children content to render.  Note: Only works for Html layers */
     children?: Snippet;
   } & DataDrivenStyleProps;
@@ -175,6 +188,7 @@
     key: keyFn = (_: any, i: number) => i,
     ref: refProp = $bindable(),
     motion,
+    corners,
     class: className,
     onclick,
     ondblclick,
@@ -279,10 +293,23 @@
     });
   });
 
+  // Fold a uniform `corners` value into rx/ry so SVG `<rect>` renders rounded
+  // corners without needing a `<path>`. When corners are per-corner different,
+  // `pixelPathData` kicks in below and SVG emits a `<path>` instead.
+  const cornersUniformValue = $derived.by(() => {
+    if (corners === undefined) return undefined;
+    if (typeof corners === 'number') return corners;
+    const resolved = resolveCorners(corners, Infinity, Infinity);
+    return cornersUniform(resolved) ? resolved[0] : undefined;
+  });
+  const cornersNonUniform = $derived(
+    corners !== undefined && cornersUniformValue === undefined
+  );
+
   // Normalize rx/ry - if only one is provided, use it for both (SVG behavior)
   // Coerce to number for canvas rendering (SVG allows string like "50%")
-  const rx = $derived(Number(rxProp ?? ryProp) || 0);
-  const ry = $derived(Number(ryProp ?? rxProp) || 0);
+  const rx = $derived(Number(rxProp ?? ryProp ?? cornersUniformValue) || 0);
+  const ry = $derived(Number(ryProp ?? rxProp ?? cornersUniformValue) || 0);
 
   // --- Pixel mode ---
   let ref = $state<SVGRectElement>();
@@ -334,6 +361,27 @@
     typeof strokeWidth === 'number' ? `${strokeWidth}px` : undefined
   );
   const htmlRestProps = $derived(restProps as unknown as HTMLAttributes<HTMLDivElement>);
+
+  // Resolved per-corner radii for the static (pixel-mode) rect, clamped to bounds.
+  const resolvedCorners = $derived(
+    corners !== undefined
+      ? resolveCorners(corners, motionWidth.current, motionHeight.current)
+      : undefined
+  );
+  const borderRadiusStyle = $derived(
+    resolvedCorners ? resolvedCorners.map((c) => `${c}px`).join(' ') : undefined
+  );
+  const pixelPathData = $derived(
+    resolvedCorners && cornersNonUniform
+      ? roundedRectPath(
+          motionX.current,
+          motionY.current,
+          motionWidth.current,
+          motionHeight.current,
+          resolvedCorners
+        )
+      : undefined
+  );
 
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
@@ -422,6 +470,7 @@
           height: motionHeight.current,
           rx,
           ry,
+          corners: resolvedCorners,
         },
         styleOpts
       );
@@ -475,6 +524,7 @@
               restProps.style,
               rx,
               ry,
+              resolvedCorners,
             ],
           }
         : undefined,
@@ -515,6 +565,27 @@
         {onpointerout}
       />
     {/each}
+  {:else if pixelPathData}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <path
+      d={pixelPathData}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-opacity={staticStrokeOpacity}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
+      class={cls('lc-rect', staticClassName)}
+      {...(restProps as unknown as SVGAttributes<SVGPathElement>)}
+      {onclick}
+      {ondblclick}
+      {onpointerenter}
+      {onpointermove}
+      {onpointerleave}
+      {onpointerover}
+      {onpointerout}
+    />
   {:else}
     <rect
       x={motionX.current}
@@ -589,7 +660,7 @@
       style:border-width={staticBorderWidth}
       style:border-style="solid"
       style:border-color={staticStroke}
-      style:border-radius="{rx}px"
+      style:border-radius={borderRadiusStyle ?? `${rx}px`}
       class={cls('lc-rect', staticClassName)}
       {...htmlRestProps}
       {onclick}
