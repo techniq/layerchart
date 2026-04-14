@@ -1,6 +1,71 @@
 {
   "component": "ClipPath",
-  "examples": [],
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/ClipPath/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 12,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 14,
+          "line": "<ClipPath {path}>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    },
+    {
+      "name": "inverted",
+      "title": "inverted",
+      "path": "/docs/components/ClipPath/inverted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 12,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 14,
+          "line": "<ClipPath {path} invert>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    }
+  ],
   "usage": [
     {
       "example": "gauge",
@@ -17,10 +82,24 @@
       "line": "<ClipPath>"
     },
     {
+      "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 14,
+      "line": "<ClipPath {path}>"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 14,
+      "line": "<ClipPath {path} invert>"
+    },
+    {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 136,
+      "lineNumber": 138,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
@@ -31,5 +110,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.273Z"
+  "updatedAt": "2026-04-14T21:42:23.514Z"
 }

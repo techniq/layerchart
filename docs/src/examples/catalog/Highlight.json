@@ -6,7 +6,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 49,
+      "lineNumber": 48,
       "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
     },
     {
@@ -661,5 +661,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:12.563Z"
+  "updatedAt": "2026-04-14T21:42:24.157Z"
 }

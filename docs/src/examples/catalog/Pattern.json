@@ -227,6 +227,20 @@
       "line": "<Pattern"
     },
     {
+      "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 12,
+      "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 12,
+      "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+    },
+    {
       "example": "circles",
       "component": "Pattern",
       "path": "/docs/components/Pattern/circles",
@@ -514,5 +528,5 @@
       "line": "<Pattern"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.127Z"
+  "updatedAt": "2026-04-14T21:42:24.631Z"
 }

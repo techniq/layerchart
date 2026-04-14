@@ -272,7 +272,7 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 403,
+      "lineNumber": 423,
       "line": "<Rect"
     },
     {
@@ -906,5 +906,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-14T03:50:52.753Z"
+  "updatedAt": "2026-04-14T21:42:24.893Z"
 }

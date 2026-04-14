@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-14T03:50:49.653Z",
-  "totalComponents": 75,
-  "totalExamples": 880,
+  "generatedAt": "2026-04-14T21:42:22.026Z",
+  "totalComponents": 76,
+  "totalExamples": 882,
   "components": [
     {
       "component": "AnnotationLine",
@@ -9,37 +9,37 @@
         {
           "name": "bar-chart",
           "path": "/example/AnnotationLine/bar-chart",
-          "checksum": "cfbd22c56473a0535acce86b45a976af"
+          "checksum": "b08237abe0d6ca9833cf95441d942a48"
         },
         {
           "name": "horizontal",
           "path": "/example/AnnotationLine/horizontal",
-          "checksum": "26a997388b1c755ded94a6fafa53fd31"
+          "checksum": "63095ddd62c9b8ec59e7c327e9e283e1"
         },
         {
           "name": "horizontal-placement",
           "path": "/example/AnnotationLine/horizontal-placement",
-          "checksum": "3d37720638f90549a3c981c9b9b4e6c7"
+          "checksum": "c5f3787cee263675abba7ed5d1c01301"
         },
         {
           "name": "horizontal-with-range",
           "path": "/example/AnnotationLine/horizontal-with-range",
-          "checksum": "6be4a16e4fd002739c6e80a2f0404937"
+          "checksum": "1d7f1b1e8d70f2188cc0832aac47e5e4"
         },
         {
           "name": "vertical",
           "path": "/example/AnnotationLine/vertical",
-          "checksum": "9cf88e4d37c307fff029fdac13a69af4"
+          "checksum": "a650ef4261a139fcd355da52fa6d4139"
         },
         {
           "name": "vertical-placement",
           "path": "/example/AnnotationLine/vertical-placement",
-          "checksum": "593065c3064c04619240c676082ac564"
+          "checksum": "150fadd417f5faaae22383779434956c"
         },
         {
           "name": "vertical-with-rotation",
           "path": "/example/AnnotationLine/vertical-with-rotation",
-          "checksum": "8a00e8ada81bdc12c1f263acf265b190"
+          "checksum": "c9fb134f44a9aa7e313b3338ec350097"
         }
       ]
     },
@@ -64,7 +64,7 @@
         {
           "name": "line-to-point",
           "path": "/example/AnnotationPoint/line-to-point",
-          "checksum": "ec44a84b90f1de6f711796edefc545d0"
+          "checksum": "c3cf32ce69d8c0916f410e9f4f4a88db"
         },
         {
           "name": "on-axis-with-tooltip",
@@ -74,7 +74,7 @@
         {
           "name": "on-series-with-line-and-tooltip",
           "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
-          "checksum": "2d9c0d3e5c537d9c1ff87595f9988cb4"
+          "checksum": "4da998685607cf281dd9771c7e331779"
         },
         {
           "name": "on-series-with-tooltip",
@@ -329,7 +329,7 @@
         {
           "name": "clipped-area-on-tooltip",
           "path": "/example/Area/clipped-area-on-tooltip",
-          "checksum": "5a23756153ff939e5abe96c1077b9179"
+          "checksum": "0d11d28c6f457d03a8eaf523bdd9ff83"
         },
         {
           "name": "explicit-axis-ticks-min-max",
@@ -509,12 +509,12 @@
         {
           "name": "line-annotation",
           "path": "/example/AreaChart/line-annotation",
-          "checksum": "70cf25c4d6533f7b115b3324ccb222bb"
+          "checksum": "4053b77ba008b6d7a1163e125c1960d0"
         },
         {
           "name": "markers",
           "path": "/example/AreaChart/markers",
-          "checksum": "623667f32364264b6515b9f74bb59785"
+          "checksum": "1cf879f77ca5ab7457fc2875d4082096"
         },
         {
           "name": "motion-tween",
@@ -709,7 +709,7 @@
         {
           "name": "grid-dashed",
           "path": "/example/Axis/grid-dashed",
-          "checksum": "9feda1ba05b91487fede2634a94e8121"
+          "checksum": "3970be10af86a75163111edf94140d0d"
         },
         {
           "name": "hide-zero-filter",
@@ -1124,7 +1124,7 @@
         {
           "name": "line-annotation",
           "path": "/example/BarChart/line-annotation",
-          "checksum": "7d6f753a09c14174a0d64f6d05e78e91"
+          "checksum": "9a93f60fbf296ae0aaf2fa0f7d561b39"
         },
         {
           "name": "motion-tween",
@@ -1219,7 +1219,7 @@
         {
           "name": "range-annotation-value",
           "path": "/example/BarChart/range-annotation-value",
-          "checksum": "918a80e2cf8a7d858c9129f99c7397bf"
+          "checksum": "cbadd29dfecae5651fc96a8b5f3e912a"
         },
         {
           "name": "remove-rounding",
@@ -1374,7 +1374,7 @@
         {
           "name": "waterfall",
           "path": "/example/BarChart/waterfall",
-          "checksum": "7191662ad2569a419926437debba9596"
+          "checksum": "cdab2f37ea12b870865f620bfb6cc6bb"
         }
       ]
     },
@@ -1384,7 +1384,7 @@
         {
           "name": "horizontal-average-annotation-rule",
           "path": "/example/Bars/horizontal-average-annotation-rule",
-          "checksum": "5007c406609b54fec47a1ed074ee95fd"
+          "checksum": "9eea001d39b0fccc6b3fcd28efe3dbb7"
         },
         {
           "name": "horizontal-basic",
@@ -1444,7 +1444,7 @@
         {
           "name": "horizontal-highlight-individual-bar-line",
           "path": "/example/Bars/horizontal-highlight-individual-bar-line",
-          "checksum": "2ea91e599ec51ccfc4b1be7f1c905d2e"
+          "checksum": "72760bbecf06e5a1ceea725a2ee7e389"
         },
         {
           "name": "horizontal-inside-labels",
@@ -1549,7 +1549,7 @@
         {
           "name": "vertical-average-annotation-rule",
           "path": "/example/Bars/vertical-average-annotation-rule",
-          "checksum": "eca4d87b30380c11df5b367730168c2a"
+          "checksum": "c0a6506dd3587d5c4a343f79046fa9aa"
         },
         {
           "name": "vertical-basic",
@@ -1609,7 +1609,7 @@
         {
           "name": "vertical-highlight-individual-bar-line",
           "path": "/example/Bars/vertical-highlight-individual-bar-line",
-          "checksum": "26181652b983b027269640fddb9f874e"
+          "checksum": "22209aebc8d48fbdfcf47aab32177a09"
         },
         {
           "name": "vertical-inside-labels",
@@ -2034,7 +2034,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Circle/color-via-threshold-scale",
-          "checksum": "60a45621abd8cd95d0b71a85d3ff9daf"
+          "checksum": "8392f7c9c2a513f0bca6fa87f9bd5d86"
         },
         {
           "name": "data-mode",
@@ -2075,6 +2075,21 @@
           "name": "scale-types",
           "path": "/example/CircleLegend/scale-types",
           "checksum": "d7fbf59d4c5254801cb26b6a6985a590"
+        }
+      ]
+    },
+    {
+      "component": "ClipPath",
+      "examples": [
+        {
+          "name": "basic",
+          "path": "/example/ClipPath/basic",
+          "checksum": "607df5e650127e75a3820d34590ec48b"
+        },
+        {
+          "name": "inverted",
+          "path": "/example/ClipPath/inverted",
+          "checksum": "b744385f46b79a27200830f4a1f7428f"
         }
       ]
     },
@@ -2209,7 +2224,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Ellipse/color-via-threshold-scale",
-          "checksum": "441ac8bec2623980d34bb84c0a8fc90c"
+          "checksum": "66eb89f2bbe0eeb25a9aa668f5d6db7b"
         },
         {
           "name": "data-mode",
@@ -2329,7 +2344,7 @@
         {
           "name": "basic",
           "path": "/example/GeoClipPath/basic",
-          "checksum": "b9d15b8584bc4cc600f69215f0fd8e60"
+          "checksum": "d06bef05bec9eb96afc409475dfb2cbf"
         }
       ]
     },
@@ -2424,7 +2439,7 @@
         {
           "name": "paint-brush-selection",
           "path": "/example/GeoPath/paint-brush-selection",
-          "checksum": "8a0a3be626a1e9a1576e1217bc99ec83"
+          "checksum": "e8f602fe7c0e2fe198a4e64484ce813a"
         },
         {
           "name": "sketchy-globe",
@@ -2444,7 +2459,7 @@
         {
           "name": "timezones",
           "path": "/example/GeoPath/timezones",
-          "checksum": "44836916dea194689dbe4412be8b4fbe"
+          "checksum": "07cb35f69c74c88a538d226fbc7a0c0d"
         },
         {
           "name": "tooltip",
@@ -2689,7 +2704,7 @@
         {
           "name": "dashed-lines",
           "path": "/example/Grid/dashed-lines",
-          "checksum": "187096a909816082d85d29f35e24f50e"
+          "checksum": "b9685013cbf38288913fe680826fcbf0"
         },
         {
           "name": "explicit-ticks",
@@ -2934,7 +2949,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Line/color-via-threshold-scale",
-          "checksum": "bc754729f628305832ec205435caba3d"
+          "checksum": "e1a5a61fa26f24c93f1d13c883da7941"
         },
         {
           "name": "data-mode",
@@ -3084,7 +3099,7 @@
         {
           "name": "line-annotation",
           "path": "/example/LineChart/line-annotation",
-          "checksum": "c0d385e692de40c8683c20c6f6f2b2fe"
+          "checksum": "a357039106b62451b336363626fd8a19"
         },
         {
           "name": "motion-tween",
@@ -3819,7 +3834,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Points/color-via-threshold-scale",
-          "checksum": "4197928e3ace04df5e2a62f2bf16a457"
+          "checksum": "4bab3a142b7a8aa922f6a73a5fe2a58b"
         },
         {
           "name": "with-labels",
@@ -3889,7 +3904,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Polygon/color-via-threshold-scale",
-          "checksum": "6c695946f8956f7d03d47e8bb24c146b"
+          "checksum": "ce58f23c0cf4ffd7cca620aa5ef99d4e"
         },
         {
           "name": "cross",
@@ -4029,7 +4044,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Rect/color-via-threshold-scale",
-          "checksum": "13bcb8ef24f0a59310f2b6c12a691a9d"
+          "checksum": "db2700395624a1664b56f36ef3d4b4e5"
         },
         {
           "name": "data-mode-edge",
@@ -4059,12 +4074,12 @@
         {
           "name": "annotation-x",
           "path": "/example/Rule/annotation-x",
-          "checksum": "187f96f6d9af7b3710f327c8867a12fe"
+          "checksum": "f3324844d625985900d91f94ce38b94a"
         },
         {
           "name": "annotation-y",
           "path": "/example/Rule/annotation-y",
-          "checksum": "b174438a96ea307890022abecae5e7d2"
+          "checksum": "3f3154daaae6f90a0fe1dafc91c80ab6"
         },
         {
           "name": "baseline-top-right",
@@ -4209,7 +4224,7 @@
         {
           "name": "line-annotation",
           "path": "/example/ScatterChart/line-annotation",
-          "checksum": "68f5eb03bf873739460fd2c92b0f1948"
+          "checksum": "c857ba67f6da21624eefe679ea3c4e26"
         },
         {
           "name": "point-annotations",
@@ -4434,7 +4449,7 @@
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Text/color-via-threshold-scale",
-          "checksum": "2acf809d7eace9946d932370f03db589"
+          "checksum": "abb15355e0866351cf83edf0758c365c"
         },
         {
           "name": "data-mode",
@@ -4539,7 +4554,7 @@
         {
           "name": "duration",
           "path": "/example/Tooltip/duration",
-          "checksum": "e7b416472fadc5253dbce9c9c3731029"
+          "checksum": "831dba9c8338d66b4200b393a022351e"
         },
         {
           "name": "externally-access-tooltip-data",
@@ -4559,7 +4574,7 @@
         {
           "name": "multiple-overlapping-durations",
           "path": "/example/Tooltip/multiple-overlapping-durations",
-          "checksum": "d0b7a4d350301e39b056d76b423c5385"
+          "checksum": "bd643f838ad6001a28e00f91bfe376b2"
         },
         {
           "name": "multiple-tooltips-with-fixed-single-axis",
@@ -4589,7 +4604,7 @@
         {
           "name": "single-date-time",
           "path": "/example/Tooltip/single-date-time",
-          "checksum": "26dbf1270910933b9d8b11152f426e5c"
+          "checksum": "2db73abcb22fa37e6991e1d08a06c38a"
         },
         {
           "name": "stacked-area",

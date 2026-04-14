@@ -67,42 +67,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 23,
+          "lineNumber": 22,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 34,
+          "lineNumber": 33,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 35,
+          "lineNumber": 34,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 37,
+          "lineNumber": 36,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 38,
+          "lineNumber": 37,
           "line": "<RectClipPath"
         },
         {
           "component": "Highlight",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
         },
         {
           "component": "Axis",
-          "lineNumber": 50,
+          "lineNumber": 49,
           "line": "<Axis placement=\"bottom\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 53,
+          "lineNumber": 52,
           "line": "<Tooltip.Root"
         }
       ]
@@ -946,14 +946,14 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 37,
+      "lineNumber": 36,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
     },
     {
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
@@ -1517,5 +1517,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:11.019Z"
+  "updatedAt": "2026-04-14T21:42:22.782Z"
 }

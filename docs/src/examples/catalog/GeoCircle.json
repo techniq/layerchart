@@ -97,9 +97,9 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 138,
+      "lineNumber": 140,
       "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.548Z"
+  "updatedAt": "2026-04-14T21:42:23.769Z"
 }

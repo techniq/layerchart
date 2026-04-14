@@ -359,7 +359,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Chart"
     },
     {
@@ -1777,6 +1777,20 @@
       "line": "<Chart data={[{ value: 1 }, { value: 100 }]} r=\"value\" rRange={[2, 40]} height={120}>"
     },
     {
+      "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 10,
+      "line": "<Chart height={300}>"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 10,
+      "line": "<Chart height={300}>"
+    },
+    {
       "example": "playground",
       "component": "Connector",
       "path": "/docs/components/Connector/playground",
@@ -2151,7 +2165,7 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 371,
+      "lineNumber": 382,
       "line": "<Chart"
     },
     {
@@ -2179,7 +2193,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 105,
+      "lineNumber": 107,
       "line": "<Chart"
     },
     {
@@ -4171,5 +4185,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-14T03:50:50.933Z"
+  "updatedAt": "2026-04-14T21:42:23.289Z"
 }

@@ -6,7 +6,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 38,
+      "lineNumber": 37,
       "line": "<RectClipPath"
     },
     {
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:06.261Z"
+  "updatedAt": "2026-04-14T21:42:24.918Z"
 }

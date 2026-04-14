@@ -25,12 +25,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 14,
+          "lineNumber": 12,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 16,
+          "lineNumber": 14,
           "line": "<AnnotationLine"
         }
       ]
@@ -138,7 +138,7 @@
       "example": "horizontal",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal",
-      "lineNumber": 16,
+      "lineNumber": 14,
       "line": "<AnnotationLine"
     },
     {
@@ -296,5 +296,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.480Z"
+  "updatedAt": "2026-04-14T21:42:22.581Z"
 }

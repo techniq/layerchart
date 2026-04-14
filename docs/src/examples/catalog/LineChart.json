@@ -1016,7 +1016,7 @@
       "example": "horizontal",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal",
-      "lineNumber": 14,
+      "lineNumber": 12,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -1678,5 +1678,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:05.759Z"
+  "updatedAt": "2026-04-14T21:42:24.359Z"
 }

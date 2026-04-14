@@ -188,32 +188,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 371,
+          "lineNumber": 382,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 381,
+          "lineNumber": 401,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 383,
+          "lineNumber": 403,
           "line": "<GeoPath"
         },
         {
           "component": "Rect",
-          "lineNumber": 403,
+          "lineNumber": 423,
           "line": "<Rect"
         },
         {
           "component": "Circle",
-          "lineNumber": 417,
+          "lineNumber": 437,
           "line": "<Circle"
         },
         {
           "component": "Path",
-          "lineNumber": 430,
+          "lineNumber": 450,
           "line": "<Path"
         }
       ]
@@ -326,42 +326,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 105,
+          "lineNumber": 107,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 113,
+          "lineNumber": 115,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 114,
+          "lineNumber": 116,
           "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
         },
         {
           "component": "GeoClipPath",
-          "lineNumber": 116,
+          "lineNumber": 118,
           "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
         },
         {
           "component": "ClipPath",
-          "lineNumber": 136,
+          "lineNumber": 138,
           "line": "<ClipPath useId=\"globe\">"
         },
         {
           "component": "Blur",
-          "lineNumber": 137,
+          "lineNumber": 139,
           "line": "<Blur>"
         },
         {
           "component": "GeoCircle",
-          "lineNumber": 138,
+          "lineNumber": 140,
           "line": "<GeoCircle center={antipode(sun)} class=\"stroke-none fill-black/50 pointer-events-none\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 144,
+          "lineNumber": 146,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -981,14 +981,14 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 383,
+      "lineNumber": 403,
       "line": "<GeoPath"
     },
     {
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 393,
+      "lineNumber": 413,
       "line": "<GeoPath"
     },
     {
@@ -1058,28 +1058,28 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 114,
+      "lineNumber": 116,
       "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"stroke-surface-content/30\" id=\"globe\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 118,
+      "lineNumber": 120,
       "line": "<GeoPath"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 128,
+      "lineNumber": 130,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 fill-gray-900/20 pointer-events-none\" />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 132,
+      "lineNumber": 134,
       "line": "<GeoPath geojson={feature} class=\"stroke-gray-900/10 pointer-events-none\" />"
     },
     {
@@ -1615,5 +1615,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-14T03:50:51.648Z"
+  "updatedAt": "2026-04-14T21:42:23.880Z"
 }

@@ -352,7 +352,7 @@
         {
           "component": "Axis",
           "lineNumber": 51,
-          "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+          "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
         },
         {
           "component": "Rule",
@@ -505,7 +505,7 @@
         {
           "component": "Axis",
           "lineNumber": 50,
-          "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+          "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
         },
         {
           "component": "Rule",
@@ -732,7 +732,7 @@
         {
           "component": "Axis",
           "lineNumber": 40,
-          "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+          "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
         },
         {
           "component": "Points",
@@ -913,21 +913,21 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 53,
+      "lineNumber": 52,
       "line": "<Tooltip.Root"
     },
     {
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 64,
+      "lineNumber": 63,
       "line": "<Tooltip.Root x={4} y={4} variant=\"none\" class=\"text-sm font-semibold leading-3\">"
     },
     {
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 70,
+      "lineNumber": 69,
       "line": "<Tooltip.Root"
     },
     {
@@ -4287,42 +4287,42 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 144,
+      "lineNumber": 146,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 147,
+      "lineNumber": 149,
       "line": "<Tooltip.List>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 148,
+      "lineNumber": 150,
       "line": "<Tooltip.Item label=\"Name\" value={tz_name1st} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 149,
+      "lineNumber": 151,
       "line": "<Tooltip.Item label=\"Places\" value={places} classes={{ value: 'max-w-[200px]' }} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 150,
+      "lineNumber": 152,
       "line": "<Tooltip.Item label=\"Timezone\" value={time_zone} />"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 151,
+      "lineNumber": 153,
       "line": "<Tooltip.Item"
     },
     {
@@ -6797,5 +6797,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:13.629Z"
+  "updatedAt": "2026-04-14T21:42:25.221Z"
 }

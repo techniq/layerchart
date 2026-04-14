@@ -24,7 +24,7 @@
         {
           "component": "Rule",
           "lineNumber": 9,
-          "line": "<Rule x={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         }
       ]
     },
@@ -51,7 +51,7 @@
         {
           "component": "Rule",
           "lineNumber": 9,
-          "line": "<Rule y={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         }
       ]
     },
@@ -499,7 +499,7 @@
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
       "lineNumber": 34,
-      "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+      "line": "<Rule"
     },
     {
       "example": "horizontal-inside-labels",
@@ -527,7 +527,7 @@
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-average-annotation-rule",
       "lineNumber": 32,
-      "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+      "line": "<Rule"
     },
     {
       "example": "vertical-inside-labels",
@@ -569,14 +569,14 @@
       "component": "Rule",
       "path": "/docs/components/Rule/annotation-x",
       "lineNumber": 9,
-      "line": "<Rule x={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+      "line": "<Rule"
     },
     {
       "example": "annotation-y",
       "component": "Rule",
       "path": "/docs/components/Rule/annotation-y",
       "lineNumber": 9,
-      "line": "<Rule y={70} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+      "line": "<Rule"
     },
     {
       "example": "baseline-top-right",
@@ -698,5 +698,5 @@
       "line": "<Rule />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.605Z"
+  "updatedAt": "2026-04-14T21:42:24.961Z"
 }

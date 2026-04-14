@@ -944,7 +944,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 50,
+      "lineNumber": 49,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -1386,7 +1386,7 @@
       "component": "Axis",
       "path": "/docs/components/Axis/grid-dashed",
       "lineNumber": 18,
-      "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 6 4' }} />"
+      "line": "<Axis placement=\"left\" grid={{ dashArray: [6, 4] }} />"
     },
     {
       "example": "hide-zero-filter",
@@ -4788,7 +4788,7 @@
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/duration",
       "lineNumber": 51,
-      "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+      "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
     },
     {
       "example": "duration",
@@ -4844,7 +4844,7 @@
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/multiple-overlapping-durations",
       "lineNumber": 50,
-      "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+      "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
     },
     {
       "example": "multiple-overlapping-durations",
@@ -4928,7 +4928,7 @@
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/single-date-time",
       "lineNumber": 40,
-      "line": "<Axis placement=\"left\" grid={{ style: 'stroke-dasharray: 2' }} rule />"
+      "line": "<Axis placement=\"left\" grid={{ dashArray: 2 }} rule />"
     },
     {
       "example": "single-date-time",
@@ -5113,5 +5113,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:11.273Z"
+  "updatedAt": "2026-04-14T21:42:22.847Z"
 }

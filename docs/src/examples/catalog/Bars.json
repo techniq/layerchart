@@ -29,11 +29,11 @@
         {
           "component": "Rule",
           "lineNumber": 34,
-          "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         },
         {
           "component": "Text",
-          "lineNumber": 35,
+          "lineNumber": 41,
           "line": "<Text"
         }
       ]
@@ -1105,11 +1105,11 @@
         {
           "component": "Rule",
           "lineNumber": 32,
-          "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         },
         {
           "component": "Text",
-          "lineNumber": 33,
+          "lineNumber": 39,
           "line": "<Text"
         }
       ]
@@ -2822,5 +2822,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.861Z"
+  "updatedAt": "2026-04-14T21:42:23.003Z"
 }

@@ -19,7 +19,7 @@
         {
           "component": "GeoClipPath",
           "lineNumber": 23,
-          "line": "<GeoClipPath geojson={nation}>"
+          "line": "<GeoClipPath geojson={nation} invert>"
         },
         {
           "component": "Graticule",
@@ -40,13 +40,13 @@
       "component": "GeoClipPath",
       "path": "/docs/components/GeoClipPath/basic",
       "lineNumber": 23,
-      "line": "<GeoClipPath geojson={nation}>"
+      "line": "<GeoClipPath geojson={nation} invert>"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 116,
+      "lineNumber": 118,
       "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
     },
     {
@@ -64,5 +64,5 @@
       "line": "<GeoClipPath geojson={nation}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:40:49.420Z"
+  "updatedAt": "2026-04-14T21:42:23.802Z"
 }

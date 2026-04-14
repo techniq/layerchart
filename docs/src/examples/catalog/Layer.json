@@ -174,7 +174,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 34,
+      "lineNumber": 33,
       "line": "<Layer>"
     },
     {
@@ -342,7 +342,7 @@
       "example": "markers",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/markers",
-      "lineNumber": 46,
+      "lineNumber": 49,
       "line": "<Layer type=\"html\">"
     },
     {
@@ -1529,6 +1529,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 11,
+      "line": "<Layer>"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 11,
+      "line": "<Layer>"
+    },
+    {
       "example": "playground",
       "component": "Connector",
       "path": "/docs/components/Connector/playground",
@@ -1945,14 +1959,14 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 381,
+      "lineNumber": 401,
       "line": "<Layer>"
     },
     {
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 401,
+      "lineNumber": 421,
       "line": "<Layer pointerEvents={false}>"
     },
     {
@@ -1987,7 +2001,7 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 113,
+      "lineNumber": 115,
       "line": "<Layer>"
     },
     {
@@ -4147,5 +4161,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-14T03:50:52.129Z"
+  "updatedAt": "2026-04-14T21:42:24.270Z"
 }

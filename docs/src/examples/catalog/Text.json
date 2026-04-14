@@ -476,14 +476,14 @@
       "example": "horizontal-average-annotation-rule",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-average-annotation-rule",
-      "lineNumber": 35,
+      "lineNumber": 41,
       "line": "<Text"
     },
     {
       "example": "vertical-average-annotation-rule",
       "component": "Bars",
       "path": "/docs/components/Bars/vertical-average-annotation-rule",
-      "lineNumber": 33,
+      "lineNumber": 39,
       "line": "<Text"
     },
     {
@@ -1019,5 +1019,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-13T13:16:06.598Z"
+  "updatedAt": "2026-04-14T21:42:25.133Z"
 }

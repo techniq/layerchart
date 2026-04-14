@@ -150,7 +150,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 35,
+      "lineNumber": 34,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -574,5 +574,5 @@
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.116Z"
+  "updatedAt": "2026-04-14T21:42:24.391Z"
 }

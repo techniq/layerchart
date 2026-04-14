@@ -230,7 +230,7 @@
       "example": "markers",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/markers",
-      "lineNumber": 36,
+      "lineNumber": 39,
       "line": "<Circle"
     },
     {
@@ -468,7 +468,7 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 417,
+      "lineNumber": 437,
       "line": "<Circle"
     },
     {
@@ -927,5 +927,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-14T03:50:51.076Z"
+  "updatedAt": "2026-04-14T21:42:23.447Z"
 }
