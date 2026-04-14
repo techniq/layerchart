@@ -26,6 +26,15 @@
     disabled?: boolean;
 
     /**
+     * Invert the clip — content renders *outside* the shape instead of inside.
+     * Implemented by combining the shape with an outer rect covering the chart
+     * bounds and applying the even-odd fill rule.
+     *
+     * @default false
+     */
+    invert?: boolean;
+
+    /**
      * SVG path `d` string describing the clip shape. When provided, this single
      * value drives all three layers:
      * - SVG: rendered as `<path d={path}>` inside the `<clipPath>`
@@ -63,6 +72,7 @@
     id = createId('clipPath-', uid),
     useId,
     disabled = false,
+    invert = false,
     children,
     clip,
     path,
@@ -74,9 +84,20 @@
   const layerCtx = getLayerContext();
   const chartCtx = getChartContext();
 
+  // Outer rect covering the chart bounds — combined with the clip shape under
+  // the even-odd fill rule to invert the clip.
+  const outerRect = $derived(
+    `M0,0 H${chartCtx.width} V${chartCtx.height} H0 Z`
+  );
+
+  // Effective path used for canvas + html layers when inverting.
+  const effectivePath = $derived(
+    invert && path ? `${outerRect} ${path}` : path
+  );
+
   // Cache the Path2D so `ctx.clip()` gets a stable reference per `path` change.
   const canvasPath = $derived(
-    layerCtx === 'canvas' && path ? new Path2D(path) : undefined
+    layerCtx === 'canvas' && effectivePath ? new Path2D(effectivePath) : undefined
   );
 
   if (layerCtx === 'canvas') {
@@ -86,10 +107,10 @@
       canvasRender: {
         render: (ctx) => {
           if (!disabled && canvasPath) {
-            ctx.clip(canvasPath);
+            ctx.clip(canvasPath, invert ? 'evenodd' : 'nonzero');
           }
         },
-        deps: () => [disabled, canvasPath],
+        deps: () => [disabled, canvasPath, invert],
       },
     });
   }
@@ -100,8 +121,8 @@
     <clipPath {id} {...restProps}>
       {#if clip}
         {@render clip({ id })}
-      {:else if path}
-        <path d={path} />
+      {:else if effectivePath}
+        <path d={effectivePath} clip-rule={invert ? 'evenodd' : undefined} />
       {/if}
 
       {#if useId}
@@ -118,12 +139,14 @@
     <g style:clip-path={url} class="lc-clip-path-g">
       {@render children({ id, url, useId })}
     </g>
-  {:else if layerCtx === 'html' && path}
+  {:else if layerCtx === 'html' && effectivePath}
     <div
       class="lc-clip-path-div"
       style:position="absolute"
       style:inset="0"
-      style:clip-path={`path("${path}")`}
+      style:clip-path={invert
+        ? `path(evenodd, "${effectivePath}")`
+        : `path("${effectivePath}")`}
     >
       {@render children({ id, url, useId })}
     </div>

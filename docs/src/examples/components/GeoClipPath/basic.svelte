@@ -20,7 +20,7 @@
 	height={400}
 >
 	<Layer>
-		<GeoClipPath geojson={nation}>
+		<GeoClipPath geojson={nation} invert>
 			<Graticule class="stroke-primary/30" />
 		</GeoClipPath>
 

@@ -25,6 +25,13 @@
     disabled?: boolean;
 
     /**
+     * Invert the clip — content renders *outside* the geojson shape.
+     *
+     * @default false
+     */
+    invert?: boolean;
+
+    /**
      * The children snippet to render content inside the clipPath.
      */
     children?: ClipPathPropsWithoutHTML['children'];
@@ -49,6 +56,7 @@
     id = createId('clipPath-', uid),
     geojson,
     disabled = false,
+    invert = false,
     children,
   }: GeoClipPathProps = $props();
 
@@ -61,4 +69,4 @@
   );
 </script>
 
-<ClipPath {id} {disabled} {children} {path} />
+<ClipPath {id} {disabled} {invert} {children} {path} />

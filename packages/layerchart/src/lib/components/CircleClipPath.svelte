@@ -37,6 +37,13 @@
     disabled?: boolean;
 
     /**
+     * Invert the clip — content renders *outside* the circle.
+     *
+     * @default false
+     */
+    invert?: boolean;
+
+    /**
      * A bindable reference to the underlying `<circle>` element'
      *
      * @bindable
@@ -63,6 +70,7 @@
     cy = 0,
     r,
     disabled = false,
+    invert = false,
     children,
   }: CircleClipPathPropsWithoutHTML = $props();
 
@@ -72,4 +80,4 @@
   );
 </script>
 
-<ClipPath {id} {disabled} {children} {path} />
+<ClipPath {id} {disabled} {invert} {children} {path} />

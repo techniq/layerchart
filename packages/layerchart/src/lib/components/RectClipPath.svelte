@@ -46,6 +46,13 @@
     disabled?: boolean;
 
     /**
+     * Invert the clip — content renders *outside* the rect.
+     *
+     * @default false
+     */
+    invert?: boolean;
+
+    /**
      * The default children snippet which provides
      * the id and url for the clipPath.
      */
@@ -76,13 +83,14 @@
     width,
     height,
     disabled = false,
+    invert = false,
     children: childrenProp,
   }: RectClipPathProps = $props();
 
   const path = $derived(`M${x},${y} h${width} v${height} h${-width} Z`);
 </script>
 
-<ClipPath {id} {disabled} {path}>
+<ClipPath {id} {disabled} {invert} {path}>
   {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}
   {/snippet}
