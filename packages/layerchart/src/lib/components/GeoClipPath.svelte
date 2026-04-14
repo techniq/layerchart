@@ -40,9 +40,7 @@
   import { geoPath as d3GeoPath } from 'd3-geo';
 
   import ClipPath from './ClipPath.svelte';
-  import GeoPath from './GeoPath.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
 
   const uid = $props.id();
@@ -52,24 +50,15 @@
     geojson,
     disabled = false,
     children,
-    ...restProps
   }: GeoClipPathProps = $props();
 
   const geo = getGeoContext();
 
-  function canvasClip(ctx: CanvasRenderingContext2D) {
-    if (!geo.projection || !geojson) return;
-    const pathGen = d3GeoPath(geo.projection, ctx);
-    pathGen(geojson);
-  }
-
-  function canvasClipDeps() {
-    return [geojson, geo.projection];
-  }
+  // d3-geo-path emits an SVG path `d` string that Path2D and
+  // `clip-path: path()` also accept — single source of truth for all layers.
+  const path = $derived(
+    geo.projection && geojson ? (d3GeoPath(geo.projection)(geojson) ?? undefined) : undefined
+  );
 </script>
 
-<ClipPath {id} {disabled} {children} {canvasClip} {canvasClipDeps}>
-  {#snippet clip()}
-    <GeoPath {geojson} class="stroke-none" {...extractLayerProps(restProps, 'lc-clip-path-geo')} />
-  {/snippet}
-</ClipPath>
+<ClipPath {id} {disabled} {children} {path} />

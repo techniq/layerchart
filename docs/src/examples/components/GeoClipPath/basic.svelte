@@ -6,7 +6,7 @@
 <script lang="ts">
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	import { Chart, GeoClipPath, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, GeoClipPath, GeoPath, Graticule, Layer, Rect } from 'layerchart';
 
 	const nation = feature(topology as any, (topology as any).objects.nation);
 	const states = feature(topology, topology.objects.states);

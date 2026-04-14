@@ -3,6 +3,9 @@
 	const countriesTopojson = await getCountriesTopology();
 	const statesTopojson = await getUsStatesTopology();
 	const timezonesTopojson = await getTimezones();
+
+	// Override/ignore Blur compatibility check
+	export let layers = ['svg', 'canvas'];
 </script>
 
 <script lang="ts">
@@ -35,7 +38,6 @@
 	} from 'layerchart';
 	import TimezonesControls from '$lib/components/controls/GeoPathTimezonesControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
-
 
 	let enableClip = $state(false);
 	let showDaylight = $state(false);

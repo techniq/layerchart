@@ -53,9 +53,7 @@
 </script>
 
 <script lang="ts">
-  import Circle from './Circle.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -64,38 +62,14 @@
     cx = 0,
     cy = 0,
     r,
-    motion,
     disabled = false,
-    ref: refProp = $bindable(),
     children,
-    ...restProps
   }: CircleClipPathPropsWithoutHTML = $props();
 
-  let ref = $state<SVGCircleElement>();
-
-  $effect.pre(() => {
-    refProp = ref;
-  });
-
-  function canvasClip(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  }
-
-  function canvasClipDeps() {
-    return [cx, cy, r];
-  }
+  // Two 180° arcs produce a full circle that Path2D / `clip-path: path()` accept.
+  const path = $derived(
+    `M${cx - r},${cy} a${r},${r} 0 1,0 ${2 * r},0 a${r},${r} 0 1,0 ${-2 * r},0 Z`
+  );
 </script>
 
-<ClipPath {id} {disabled} {children} {canvasClip} {canvasClipDeps}>
-  {#snippet clip()}
-    <Circle
-      {cx}
-      {cy}
-      {r}
-      {motion}
-      {...extractLayerProps(restProps, 'lc-clip-path-circle')}
-      bind:ref
-    />
-  {/snippet}
-</ClipPath>
+<ClipPath {id} {disabled} {children} {path} />

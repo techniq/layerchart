@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
+  import { type RectPropsWithoutHTML } from './Rect.svelte';
   import type { CommonEvents, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
@@ -65,7 +65,6 @@
 <script lang="ts">
   import ClipPath from './ClipPath.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   const uid = $props.id();
@@ -78,23 +77,12 @@
     height,
     disabled = false,
     children: childrenProp,
-    ...restProps
   }: RectClipPathProps = $props();
 
-  function canvasClip(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.rect(x, y, width, height);
-  }
-
-  function canvasClipDeps() {
-    return [x, y, width, height];
-  }
+  const path = $derived(`M${x},${y} h${width} v${height} h${-width} Z`);
 </script>
 
-<ClipPath {id} {disabled} {canvasClip} {canvasClipDeps}>
-  {#snippet clip()}
-    <Rect {x} {y} {width} {height} {...extractLayerProps(restProps, 'lc-clip-path-rect')} />
-  {/snippet}
+<ClipPath {id} {disabled} {path}>
   {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}
   {/snippet}

@@ -26,8 +26,20 @@
     disabled?: boolean;
 
     /**
-     * A snippet to insert content into the clipPath.
-     * Provides the id for the clipPath as a snippet prop.
+     * SVG path `d` string describing the clip shape. When provided, this single
+     * value drives all three layers:
+     * - SVG: rendered as `<path d={path}>` inside the `<clipPath>`
+     * - Canvas: wrapped in `Path2D` and applied via `ctx.clip(...)`
+     * - HTML: emitted as CSS `clip-path: path("...")` on a wrapper `<div>`
+     *
+     * For shapes that can't be expressed as an SVG path (or for advanced
+     * per-layer customization), use the `clip` snippet (SVG) alongside `path`.
+     */
+    path?: string;
+
+    /**
+     * A snippet to insert custom SVG content into the `<clipPath>`. When
+     * omitted and `path` is set, a `<path d={path}>` is rendered automatically.
      */
     clip?: Snippet<[{ id: string }]>;
 
@@ -36,16 +48,6 @@
      * Provides the id, url, and useId for the clipPath as snippet props.
      */
     children?: Snippet<[{ id: string; url: string; useId?: string }]>;
-    /**
-     * Canvas clip path function. When provided and in canvas mode, sets up a canvas
-     * clip region by drawing a path and calling `ctx.clip()` before rendering children.
-     */
-    canvasClip?: (ctx: CanvasRenderingContext2D) => void;
-    /**
-     * Reactive deps for canvas clip invalidation. Return array of values that,
-     * when changed, should trigger a canvas redraw.
-     */
-    canvasClipDeps?: () => any[];
   };
 
   export type ClipPathProps = ClipPathPropsWithoutHTML &
@@ -63,8 +65,7 @@
     disabled = false,
     children,
     clip,
-    canvasClip,
-    canvasClipDeps,
+    path,
     ...restProps
   }: ClipPathPropsWithoutHTML = $props();
 
@@ -73,18 +74,22 @@
   const layerCtx = getLayerContext();
   const chartCtx = getChartContext();
 
+  // Cache the Path2D so `ctx.clip()` gets a stable reference per `path` change.
+  const canvasPath = $derived(
+    layerCtx === 'canvas' && path ? new Path2D(path) : undefined
+  );
+
   if (layerCtx === 'canvas') {
     chartCtx.registerComponent({
       name: 'ClipPath',
       kind: 'group',
       canvasRender: {
         render: (ctx) => {
-          if (!disabled && canvasClip) {
-            canvasClip(ctx);
-            ctx.clip();
+          if (!disabled && canvasPath) {
+            ctx.clip(canvasPath);
           }
         },
-        deps: () => [disabled, ...(canvasClipDeps?.() ?? [])],
+        deps: () => [disabled, canvasPath],
       },
     });
   }
@@ -93,7 +98,11 @@
 {#if layerCtx === 'svg'}
   <defs>
     <clipPath {id} {...restProps}>
-      {@render clip?.({ id })}
+      {#if clip}
+        {@render clip({ id })}
+      {:else if path}
+        <path d={path} />
+      {/if}
 
       {#if useId}
         <use href="#{useId}" />
@@ -103,11 +112,22 @@
 {/if}
 
 {#if children}
-  {#if disabled || layerCtx !== 'svg'}
+  {#if disabled}
     {@render children({ id, url, useId })}
-  {:else}
+  {:else if layerCtx === 'svg'}
     <g style:clip-path={url} class="lc-clip-path-g">
       {@render children({ id, url, useId })}
     </g>
+  {:else if layerCtx === 'html' && path}
+    <div
+      class="lc-clip-path-div"
+      style:position="absolute"
+      style:inset="0"
+      style:clip-path={`path("${path}")`}
+    >
+      {@render children({ id, url, useId })}
+    </div>
+  {:else}
+    {@render children({ id, url, useId })}
   {/if}
 {/if}
