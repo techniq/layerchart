@@ -162,6 +162,27 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     },
     {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 325,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 364,
+      "line": "<Graticule class=\"stroke-surface-content/10\" />"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 435,
+      "line": "<Graticule class=\"stroke-surface-content/5\" />"
+    },
+    {
       "example": "globe",
       "component": "GeoRaster",
       "path": "/docs/components/GeoRaster/globe",
@@ -225,5 +246,5 @@
       "line": "<Graticule class=\"stroke-surface-content/10\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.808Z"
+  "updatedAt": "2026-04-14T03:50:51.919Z"
 }

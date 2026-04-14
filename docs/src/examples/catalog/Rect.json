@@ -269,6 +269,27 @@
       "line": "<Rect"
     },
     {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 403,
+      "line": "<Rect"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 331,
+      "line": "<Rect"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 374,
+      "line": "<Rect"
+    },
+    {
       "example": "direction-with-custom-colors",
       "component": "LinearGradient",
       "path": "/docs/components/LinearGradient/direction-with-custom-colors",
@@ -885,5 +906,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:06.238Z"
+  "updatedAt": "2026-04-14T03:50:52.753Z"
 }

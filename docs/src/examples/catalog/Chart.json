@@ -2148,6 +2148,13 @@
       "line": "<Chart"
     },
     {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 371,
+      "line": "<Chart"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -2341,6 +2348,27 @@
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size",
       "lineNumber": 271,
+      "line": "<Chart"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 311,
+      "line": "<Chart"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 350,
+      "line": "<Chart"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 406,
       "line": "<Chart"
     },
     {
@@ -4143,5 +4171,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:11.677Z"
+  "updatedAt": "2026-04-14T03:50:50.933Z"
 }

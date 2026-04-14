@@ -172,6 +172,43 @@
           "line": "<GeoPath geojson={feature} class=\"stroke-surface-content/20 fill-surface-200\" />"
         }
       ]
+    },
+    {
+      "name": "true-size-globe",
+      "title": "true size globe",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 311,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 320,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 321,
+          "line": "<GeoPath"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 325,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 331,
+          "line": "<Rect"
+        },
+        {
+          "component": "GeoProjection",
+          "lineNumber": 429,
+          "line": "<GeoProjection"
+        }
+      ]
     }
   ],
   "usage": [
@@ -181,7 +218,21 @@
       "path": "/docs/components/GeoPath/translucent-globe",
       "lineNumber": 64,
       "line": "<GeoProjection"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 429,
+      "line": "<GeoProjection"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 448,
+      "line": "<GeoProjection"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.706Z"
+  "updatedAt": "2026-04-14T03:50:51.709Z"
 }

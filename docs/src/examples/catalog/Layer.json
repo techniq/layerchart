@@ -1942,6 +1942,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 381,
+      "line": "<Layer>"
+    },
+    {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 401,
+      "line": "<Layer pointerEvents={false}>"
+    },
+    {
       "example": "sketchy-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/sketchy-globe",
@@ -2219,6 +2233,48 @@
       "component": "GeoProjection",
       "path": "/docs/components/GeoProjection/true-size",
       "lineNumber": 295,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 320,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 330,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 359,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 373,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 428,
+      "line": "<Layer>"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 447,
       "line": "<Layer>"
     },
     {
@@ -4091,5 +4147,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-13T14:43:12.658Z"
+  "updatedAt": "2026-04-14T03:50:52.129Z"
 }

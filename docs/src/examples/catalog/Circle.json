@@ -465,6 +465,13 @@
       "line": "<Circle"
     },
     {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 417,
+      "line": "<Circle"
+    },
+    {
       "example": "icons",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/icons",
@@ -920,5 +927,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.585Z"
+  "updatedAt": "2026-04-14T03:50:51.076Z"
 }

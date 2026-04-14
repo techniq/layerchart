@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-13T14:43:10.094Z",
+  "generatedAt": "2026-04-14T03:50:49.653Z",
   "totalComponents": 75,
-  "totalExamples": 878,
+  "totalExamples": 880,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2422,6 +2422,11 @@
           "checksum": "5f171eb32ef44733dc6cd80c874c0d21"
         },
         {
+          "name": "paint-brush-selection",
+          "path": "/example/GeoPath/paint-brush-selection",
+          "checksum": "8a0a3be626a1e9a1576e1217bc99ec83"
+        },
+        {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
           "checksum": "b7c7b1ab1f53fcb5a82d782dce939164"
@@ -2570,6 +2575,11 @@
           "name": "true-size",
           "path": "/example/GeoProjection/true-size",
           "checksum": "035c742da3e29ac2a77d691d6ad8fbdd"
+        },
+        {
+          "name": "true-size-globe",
+          "path": "/example/GeoProjection/true-size-globe",
+          "checksum": ""
         }
       ]
     },
