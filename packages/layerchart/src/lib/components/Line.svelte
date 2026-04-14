@@ -111,6 +111,14 @@
 
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
+
+    /**
+     * Dashed-line pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). Works across `<Svg>`, `<Canvas>`, and `<Html>`
+     * layers — HTML approximates the pattern via `repeating-linear-gradient`.
+     */
+    dashArray?: number | number[] | string;
   } & DataDrivenStyleProps;
 
   export type LineProps = LinePropsWithoutHTML &
@@ -137,6 +145,7 @@
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
+  import { parseDashArray, dashArrayToGradient } from '$lib/utils/path.js';
 
   const uid = $props.id();
 
@@ -162,8 +171,12 @@
     markerMid,
     motion,
     fillOpacity,
+    dashArray,
     ...restProps
   }: LineProps = $props();
+
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
 
   // Data mode detection
   const dataMode = $derived(hasAnyDataProp(x1, y1, x2, y2));
@@ -285,7 +298,12 @@
             'lc-line',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: restProps.style as string | undefined,
+          style: [
+            restProps.style as string | undefined,
+            dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+          ]
+            .filter(Boolean)
+            .join('; ') || undefined,
         };
   }
 
@@ -358,6 +376,7 @@
               opacity,
               className,
               restProps.style,
+              dashArrayAttr,
             ],
           }
         : undefined,
@@ -390,6 +409,7 @@
         marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
         marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
         marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-line', resolvedClass)}
         {...restProps}
       />
@@ -408,6 +428,7 @@
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+      stroke-dasharray={dashArrayAttr}
       class={cls('lc-line', staticClassName)}
       {...restProps}
     />
@@ -435,7 +456,10 @@
         style:transform="translateY(-50%) rotate({angle}deg)"
         style:transform-origin="0 50%"
         style:opacity={resolvedOpacity}
-        style:background-color={resolvedStroke}
+        style:background={dashArrayResolved
+          ? dashArrayToGradient(dashArrayResolved, resolvedStroke ?? 'var(--stroke-color)')
+          : undefined}
+        style:background-color={dashArrayResolved ? undefined : resolvedStroke}
         class={cls('lc-line', resolvedClass)}
         style={restProps.style}
       ></div>
@@ -455,7 +479,10 @@
       style:transform="translateY(-50%) rotate({angle}deg)"
       style:transform-origin="0 50%"
       style:opacity={staticOpacity}
-      style:background-color={staticStroke}
+      style:background={dashArrayResolved
+        ? dashArrayToGradient(dashArrayResolved, staticStroke ?? 'var(--stroke-color)')
+        : undefined}
+      style:background-color={dashArrayResolved ? undefined : staticStroke}
       class={cls('lc-line', staticClassName)}
       style={restProps.style}
     ></div>

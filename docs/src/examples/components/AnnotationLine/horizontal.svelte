@@ -1,8 +1,6 @@
 <script module lang="ts">
 	import { getAppleStock } from '$lib/data.remote';
 	const data = await getAppleStock();
-
-	export const layers = ['svg', 'canvas'];
 </script>
 
 <script lang="ts">
@@ -17,8 +15,8 @@
 			y={500}
 			label="Max"
 			props={{
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' },
-				label: { class: 'fill-danger' }
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' },
+				label: { fill: 'var(--color-danger)' }
 			}}
 		/>
 	{/snippet}

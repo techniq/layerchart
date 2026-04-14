@@ -114,6 +114,53 @@ export function roundedRectPath(
     .join(' ');
 }
 
+/**
+ * Normalize a dash-array value (CSS `stroke-dasharray`) to a numeric array.
+ * Accepts `"4 2"`, `"4,2"`, `[4, 2]`, or a single number (e.g. `4` → `[4, 4]`).
+ * Returns `null` when the input is empty or all zeros (i.e. solid stroke).
+ */
+export function parseDashArray(value: string | number | number[] | undefined): number[] | null {
+  if (value == null || value === '' || value === 'none') return null;
+  let arr: number[];
+  if (typeof value === 'number') {
+    arr = [value, value];
+  } else if (Array.isArray(value)) {
+    arr = value.filter((n) => Number.isFinite(n));
+  } else {
+    arr = value
+      .split(/[\s,]+/)
+      .filter((s) => s.length > 0)
+      .map((s) => Number(s.replace('px', '')))
+      .filter((n) => Number.isFinite(n));
+  }
+  if (arr.length === 0 || arr.every((n) => n === 0)) return null;
+  // SVG/Canvas semantics: an odd-length array is repeated (e.g. `[5]` → `[5, 5]`)
+  if (arr.length % 2 === 1) arr = [...arr, ...arr];
+  return arr;
+}
+
+/**
+ * Build a CSS `repeating-linear-gradient` string approximating a `stroke-dasharray`
+ * pattern along a horizontal line (use with `background` on a rotated `<div>`).
+ * Alternates stops between `color` (dash) and `transparent` (gap) to match SVG.
+ */
+export function dashArrayToGradient(
+  dashArray: number[],
+  color: string,
+  direction: string = 'to right'
+): string {
+  const stops: string[] = [];
+  let offset = 0;
+  for (let i = 0; i < dashArray.length; i++) {
+    const length = dashArray[i];
+    const isDash = i % 2 === 0;
+    const c = isDash ? color : 'transparent';
+    stops.push(`${c} ${offset}px ${offset + length}px`);
+    offset += length;
+  }
+  return `repeating-linear-gradient(${direction}, ${stops.join(', ')})`;
+}
+
 /** Vector anchor position */
 export type VectorAnchor = 'start' | 'middle' | 'end';
 

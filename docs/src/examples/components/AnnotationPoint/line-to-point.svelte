@@ -63,7 +63,7 @@
 			<AnnotationLine
 				x={annotation.x}
 				y={annotation.y}
-				props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
+				props={{ line: { dashArray: [4, 4], opacity: 0.5 } }}
 			/>
 
 			<AnnotationPoint

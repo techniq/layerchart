@@ -90,7 +90,7 @@
 					y1={context.yScale(d.end)}
 					y2={context.yScale(d.end)}
 					stroke="currentColor"
-					stroke-dasharray="4 3"
+					dashArray={[4, 3]}
 					strokeWidth={1}
 					opacity={0.3}
 				/>

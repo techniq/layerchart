@@ -681,6 +681,7 @@
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
+          dashArray={[2, 2]}
           {opacity}
           {...extractLayerProps(linesProp, 'lc-highlight-line')}
         />

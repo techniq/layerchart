@@ -37,7 +37,7 @@
 	height={300}
 >
 	<Layer>
-		<Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
+		<Axis placement="left" grid={{ dashArray: 2 }} rule />
 		<Axis placement="bottom" />
 		<Points class="fill-primary" />
 		<Highlight

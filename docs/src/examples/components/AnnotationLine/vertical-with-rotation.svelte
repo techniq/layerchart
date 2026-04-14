@@ -17,9 +17,9 @@
 			label="Start"
 			labelXOffset={4}
 			props={{
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' },
 				label: {
-					class: 'fill-danger',
+					fill: 'var(--color-danger)',
 					rotate: -90,
 					textAnchor: 'end',
 					verticalAnchor: 'end',
@@ -34,9 +34,9 @@
 			label="End"
 			labelXOffset={4}
 			props={{
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' },
 				label: {
-					class: 'fill-danger',
+					fill: 'var(--color-danger)',
 					rotate: 90,
 					verticalAnchor: 'end',
 					dx: -4,

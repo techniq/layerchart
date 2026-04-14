@@ -864,6 +864,9 @@
   {#if dataMode}
     {#each resolvedItems as item (item.key)}
       {@const text = resolveTextValue(item.d)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
       {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
       {@const translateY =
@@ -881,6 +884,8 @@
         {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
         style:white-space="pre-wrap"
         style:line-height={lineHeight}
+        style:color={resolvedFill}
+        style:opacity={resolvedOpacity ?? resolvedFillOpacity}
         class={['lc-text', resolvedClass]}
       >
         {text}
@@ -903,6 +908,8 @@
       {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
       style:white-space="pre-wrap"
       style:line-height={lineHeight}
+      style:color={staticFill}
+      style:opacity={staticOpacity ?? staticFillOpacity}
       class={['lc-text', staticClassName]}
     >
       {#if segments}

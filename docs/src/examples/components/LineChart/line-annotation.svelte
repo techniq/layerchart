@@ -21,8 +21,8 @@
 			labelXOffset: 4,
 			labelYOffset: 2,
 			props: {
-				label: { class: 'fill-danger' },
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' }
+				label: { fill: 'var(--color-danger)' },
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' }
 			}
 		}
 	]}

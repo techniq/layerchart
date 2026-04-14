@@ -34,7 +34,7 @@
 					y={annotation.y}
 					r={6}
 					props={{
-						line: { class: '[stroke-dasharray:4,4] opacity-50' }
+						line: { dashArray: [4, 4], opacity: 0.5 }
 					}}
 				/>
 

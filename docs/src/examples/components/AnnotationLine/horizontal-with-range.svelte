@@ -29,7 +29,7 @@
 			labelPlacement="bottom-right"
 			labelYOffset={2}
 			props={{
-				line: { class: '[stroke-dasharray:2,2] _stroke-danger' }
+				line: { dashArray: [2, 2] }
 			}}
 		/>
 	{/snippet}

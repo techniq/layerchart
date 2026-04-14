@@ -78,6 +78,13 @@
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
 
+    /**
+     * Dashed-border pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). HTML layer approximates via `border-style: dashed`.
+     */
+    dashArray?: number | number[] | string;
+
     /** Children content to render.  Note: Only works for Html layers */
     children?: Snippet;
   } & DataDrivenStyleProps;
@@ -106,6 +113,7 @@
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
+  import { parseDashArray } from '$lib/utils/path.js';
 
   let {
     cx = 0,
@@ -124,9 +132,13 @@
     opacity,
     class: className,
     ref: refProp = $bindable(),
+    dashArray,
     children,
     ...restProps
   }: CircleProps = $props();
+
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
 
   // Data mode detection: if any positional prop is a string or function
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
@@ -250,7 +262,12 @@
             'lc-circle',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: restProps.style as string | undefined,
+          style: [
+            restProps.style as string | undefined,
+            dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+          ]
+            .filter(Boolean)
+            .join('; ') || undefined,
         };
   }
 
@@ -328,6 +345,7 @@
               opacity,
               className,
               restProps.style,
+              dashArrayAttr,
             ],
           }
         : undefined,
@@ -352,6 +370,7 @@
         stroke={resolvedStroke}
         stroke-width={resolvedStrokeWidth}
         opacity={resolvedOpacity}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
       />
@@ -367,6 +386,7 @@
       stroke={staticStroke}
       stroke-width={staticStrokeWidth}
       opacity={staticOpacity}
+      stroke-dasharray={dashArrayAttr}
       class={cls('lc-circle', staticClassName)}
       {...restProps}
     />
@@ -391,7 +411,7 @@
         style:opacity={resolvedOpacity}
         style:border-width={resolvedStrokeWidth}
         style:border-color={resolvedStroke}
-        style:border-style="solid"
+        style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:transform="translate(-50%, -50%)"
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
@@ -409,7 +429,7 @@
       style:opacity={staticOpacity}
       style:border-width={staticStrokeWidth}
       style:border-color={staticStroke}
-      style:border-style="solid"
+      style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
       style:transform="translate(-50%, -50%)"
       class={cls('lc-circle', staticClassName)}
       {...restProps}

@@ -11,7 +11,7 @@
     type Corners,
     type Insets,
   } from '$lib/utils/rect.svelte.js';
-  import { roundedRectPath } from '$lib/utils/path.js';
+  import { roundedRectPath, parseDashArray } from '$lib/utils/path.js';
 
   export type RectPropsWithoutHTML = {
     /**
@@ -126,6 +126,13 @@
     motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
 
     /**
+     * Dashed-border pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). HTML layer approximates via `border-style: dashed`.
+     */
+    dashArray?: number | number[] | string;
+
+    /**
      * Per-corner radii. Accepts a number (all corners equal — same as `rx`),
      * a `[tl, tr, br, bl]` tuple, or `{ topLeft, topRight, bottomRight, bottomLeft }`.
      * Takes precedence over `rx`/`ry` when corners differ.
@@ -189,6 +196,7 @@
     ref: refProp = $bindable(),
     motion,
     corners,
+    dashArray,
     class: className,
     onclick,
     ondblclick,
@@ -296,6 +304,9 @@
   // Fold a uniform `corners` value into rx/ry so SVG `<rect>` renders rounded
   // corners without needing a `<path>`. When corners are per-corner different,
   // `pixelPathData` kicks in below and SVG emits a `<path>` instead.
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
+
   const cornersUniformValue = $derived.by(() => {
     if (corners === undefined) return undefined;
     if (typeof corners === 'number') return corners;
@@ -419,7 +430,12 @@
             'lc-rect',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: restProps.style as string | undefined,
+          style: [
+            restProps.style as string | undefined,
+            dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+          ]
+            .filter(Boolean)
+            .join('; ') || undefined,
         };
   }
 
@@ -525,6 +541,7 @@
               rx,
               ry,
               resolvedCorners,
+              dashArrayAttr,
             ],
           }
         : undefined,
@@ -554,6 +571,7 @@
         opacity={resolvedOpacity}
         {rx}
         {ry}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-rect', resolvedClass)}
         {...restProps}
         {onclick}
@@ -576,6 +594,7 @@
       stroke-opacity={staticStrokeOpacity}
       stroke-width={staticStrokeWidth}
       opacity={staticOpacity}
+      stroke-dasharray={dashArrayAttr}
       class={cls('lc-rect', staticClassName)}
       {...(restProps as unknown as SVGAttributes<SVGPathElement>)}
       {onclick}
@@ -600,6 +619,7 @@
       opacity={staticOpacity}
       {rx}
       {ry}
+      stroke-dasharray={dashArrayAttr}
       class={cls('lc-rect', staticClassName)}
       {...restProps}
       {onclick}
@@ -632,7 +652,7 @@
         style:background={resolvedFill}
         style:opacity={resolvedOpacity}
         style:border-width="{resolvedStrokeWidth}px"
-        style:border-style="solid"
+        style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:border-color={resolvedStroke}
         style:border-radius="{rx}px"
         class={cls('lc-rect', resolvedClass)}
@@ -658,7 +678,7 @@
       style:background={staticFill}
       style:opacity={staticOpacity}
       style:border-width={staticBorderWidth}
-      style:border-style="solid"
+      style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
       style:border-color={staticStroke}
       style:border-radius={borderRadiusStyle ?? `${rx}px`}
       class={cls('lc-rect', staticClassName)}

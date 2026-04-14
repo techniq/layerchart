@@ -29,7 +29,13 @@
 			<Axis placement="left" grid rule />
 			<Axis placement="bottom" rule />
 			<Bars strokeWidth={1} class="fill-primary" />
-			<Rule y={avg} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
+			<Rule
+				y={avg}
+				strokeWidth={2}
+				stroke="var(--color-danger)"
+				dashArray={[4]}
+				stroke-linecap="round"
+			/>
 			<Text
 				x={context.width}
 				y={context.yScale(avg)}
