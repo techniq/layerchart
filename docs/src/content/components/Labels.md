@@ -1,7 +1,7 @@
 ---
 description: Marking component which displays text directly on a chart to identify or annotate specific data points.
 category: marks
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: []
 ---
 
