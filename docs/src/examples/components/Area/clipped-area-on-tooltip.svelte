@@ -16,7 +16,6 @@
 	} from 'layerchart';
 	import { format } from '@layerstack/utils';
 
-
 	export { data };
 </script>
 
@@ -51,7 +50,7 @@
 		</Layer>
 
 		<Tooltip.Root
-			y={48}
+			y={24}
 			xOffset={4}
 			variant="none"
 			class="text-sm font-semibold text-primary leading-3"
