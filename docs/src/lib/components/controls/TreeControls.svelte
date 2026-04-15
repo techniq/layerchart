@@ -6,7 +6,7 @@
 
 	interface Props {
 		config: {
-			orientation: 'horizontal' | 'vertical';
+			orientation: 'horizontal' | 'vertical' | 'radial';
 			layout: 'chart' | 'node';
 			type: ConnectorType;
 			sweep: ConnectorSweep;
@@ -33,6 +33,7 @@
 		<ToggleGroup bind:value={config.orientation} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="horizontal">Horizontal</ToggleOption>
 			<ToggleOption value="vertical">Vertical</ToggleOption>
+			<ToggleOption value="radial">Radial</ToggleOption>
 		</ToggleGroup>
 	</Field>
 
@@ -53,14 +54,6 @@
 		classes={{ menuIcon: 'hidden' }}
 	/>
 
-	<MenuField
-		label="Connector Sweep"
-		options={sweepOptions}
-		bind:value={config.sweep}
-		stepper
-		classes={{ menuIcon: 'hidden' }}
-	/>
-
 	{#if config.type === 'd3'}
 		<CurveMenuField bind:value={config.curve} />
 	{/if}
@@ -68,4 +61,12 @@
 	{#if config.type === 'beveled' || config.type === 'rounded'}
 		<RangeField label="Radius" bind:value={config.radius} min={0} />
 	{/if}
+
+	<MenuField
+		label="Connector Sweep"
+		options={sweepOptions}
+		bind:value={config.sweep}
+		stepper
+		classes={{ menuIcon: 'hidden' }}
+	/>
 </div>

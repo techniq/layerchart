@@ -16,7 +16,7 @@
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 
 	let config = $state({
-		orientation: 'horizontal' as 'horizontal' | 'vertical',
+		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
 		type: 'd3' as ConnectorType,
 		sweep: 'none' as ConnectorSweep,
@@ -52,7 +52,10 @@
 <TreeControls bind:config />
 
 <Chart
-	padding={{ top: 32, left: nodeWidth / 2, right: nodeWidth / 2 }}
+	padding={config.orientation === 'radial'
+		? 40
+		: { top: 32, left: nodeWidth / 2, right: nodeWidth / 2 }}
+	radial={config.orientation === 'radial'}
 	transform={{
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
@@ -65,29 +68,42 @@
 
 		<Tree
 			{hierarchy}
-			orientation={config.orientation}
-			nodeSize={config.layout === 'node' ? nodeSize : undefined}
+			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
+			nodeSize={config.layout === 'node' && config.orientation !== 'radial' ? nodeSize : undefined}
 		>
 			{#snippet children({ nodes, links })}
 				<Layer>
-					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-						<Link
-							data={link}
-							orientation={config.orientation}
-							curve={config.curve}
-							type={config.type}
-							sweep={config.sweep}
-							radius={config.radius}
-							motion="tween"
-							class="stroke-surface-content opacity-20"
-						/>
-					{/each}
+					<Group center={config.orientation === 'radial'}>
+						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+							<Link
+								data={link}
+								orientation={config.orientation === 'radial' ? undefined : config.orientation}
+								curve={config.curve}
+								type={config.type}
+								sweep={config.sweep}
+								radius={config.radius}
+								motion="tween"
+								class="stroke-surface-content opacity-20"
+							/>
+						{/each}
 
-					{#each nodes as node (getNodeKey(node))}
-						<Group
-							x={(config.orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
-							y={(config.orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
-							motion="tween"
+						{#each nodes as node (getNodeKey(node))}
+							{@const nodeX =
+								config.orientation === 'radial'
+									? node.y * Math.sin(node.x)
+									: config.orientation === 'horizontal'
+										? node.y
+										: node.x}
+							{@const nodeY =
+								config.orientation === 'radial'
+									? -node.y * Math.cos(node.x)
+									: config.orientation === 'horizontal'
+										? node.x
+										: node.y}
+							<Group
+								x={nodeX - nodeWidth / 2}
+								y={nodeY - nodeHeight / 2}
+								motion="tween"
 							onclick={() => {
 								if (expandedNodeNames.includes(node.data.name)) {
 									expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
@@ -128,6 +144,7 @@
 							/>
 						</Group>
 					{/each}
+					</Group>
 				</Layer>
 			{/snippet}
 		</Tree>

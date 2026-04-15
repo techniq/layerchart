@@ -1,4 +1,13 @@
-import { type CurveFactory, line as d3Line, curveLinear } from 'd3-shape';
+import {
+  type CurveFactory,
+  curveLinear,
+  curveStep,
+  curveStepAfter,
+  curveStepBefore,
+  line as d3Line,
+  lineRadial,
+  linkRadial,
+} from 'd3-shape';
 
 export type ConnectorCoords = {
   x: number;
@@ -164,4 +173,175 @@ export function getConnectorD3Path({ source, target, sweep, curve }: GetConnecto
   if (!d || d.includes('NaN')) return FALLBACK_PATH;
 
   return d;
+}
+
+// --- Radial variants --------------------------------------------------------
+// In radial mode, `source`/`target` carry polar coords: `x` = angle, `y` = radius.
+// Angles follow d3 tree convention (0 = up); visx's math subtracts PI/2 so 0 = +x axis.
+
+type RadialGeometry = {
+  sa: number;
+  sr: number;
+  ta: number;
+  tr: number;
+  sc: number;
+  ss: number;
+  tc: number;
+  ts: number;
+  sx: number;
+  sy: number;
+  tx: number;
+  ty: number;
+  sweepFlag: 0 | 1;
+};
+
+function radialGeometry(source: ConnectorCoords, target: ConnectorCoords): RadialGeometry {
+  const sa = source.x - Math.PI / 2;
+  const sr = source.y;
+  const ta = target.x - Math.PI / 2;
+  const tr = target.y;
+  const sc = Math.cos(sa);
+  const ss = Math.sin(sa);
+  const tc = Math.cos(ta);
+  const ts = Math.sin(ta);
+  const sweepFlag: 0 | 1 =
+    Math.abs(ta - sa) > Math.PI ? (ta <= sa ? 1 : 0) : ta > sa ? 1 : 0;
+  return {
+    sa,
+    sr,
+    ta,
+    tr,
+    sc,
+    ss,
+    tc,
+    ts,
+    sx: sr * sc,
+    sy: sr * ss,
+    tx: tr * tc,
+    ty: tr * ts,
+    sweepFlag,
+  };
+}
+
+type GetConnectorRadialPresetPathProps = {
+  source: ConnectorCoords;
+  target: ConnectorCoords;
+  type: PresetConnectorType;
+  radius: number;
+};
+
+export function getConnectorRadialPresetPath({
+  source,
+  target,
+  type,
+  radius,
+}: GetConnectorRadialPresetPathProps): string {
+  const g = radialGeometry(source, target);
+  const { sr, ta, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
+
+  if (type === 'straight') {
+    return `M${sx},${sy}L${tx},${ty}`;
+  }
+
+  if (type === 'rounded') {
+    // visx LinkRadialCurve: cubic Bezier with rotated offset (percent controls tension)
+    const percent = 0.2;
+    const dx = tx - sx;
+    const dy = ty - sy;
+    const ix = percent * (dx + dy);
+    const iy = percent * (dy - dx);
+    return `M${sx},${sy}C${sx + ix},${sy + iy} ${tx + iy},${ty - ix} ${tx},${ty}`;
+  }
+
+  if (type === 'square') {
+    // Step at midpoint radius: radial + arc + radial
+    const mr = (sr + tr) / 2;
+    const p1x = mr * sc;
+    const p1y = mr * ss;
+    const p2x = mr * tc;
+    const p2y = mr * ts;
+    return `M${sx},${sy}L${p1x},${p1y}A${mr},${mr},0,0,${sweepFlag},${p2x},${p2y}L${tx},${ty}`;
+  }
+
+  // 'beveled': visx-style step with chord at source radius and chamfered corner
+  const cornerX = sr * tc;
+  const cornerY = sr * ts;
+  const chordDx = cornerX - sx;
+  const chordDy = cornerY - sy;
+  const chordLen = Math.hypot(chordDx, chordDy);
+
+  if (chordLen < 1e-6) {
+    // Source at origin — chord degenerates, just radial to target
+    return `M${sx},${sy}L${tx},${ty}`;
+  }
+
+  const radialLen = Math.abs(tr - sr) || 1;
+  const r = Math.max(0, Math.min(radius, chordLen, radialLen));
+  const cux = chordDx / chordLen;
+  const cuy = chordDy / chordLen;
+  const radialDir = Math.sign(tr - sr) || 1;
+
+  const p1x = cornerX - r * cux;
+  const p1y = cornerY - r * cuy;
+  const p2x = cornerX + radialDir * r * tc;
+  const p2y = cornerY + radialDir * r * ts;
+
+  return `M${sx},${sy}L${p1x},${p1y}L${p2x},${p2y}L${tx},${ty}`;
+}
+
+type GetConnectorRadialD3PathProps = {
+  source: ConnectorCoords;
+  target: ConnectorCoords;
+  curve?: CurveFactory;
+};
+
+export function getConnectorRadialD3Path({
+  source,
+  target,
+  curve,
+}: GetConnectorRadialD3PathProps): string {
+  const g = radialGeometry(source, target);
+  const { sr, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
+
+  // Step curves render as polar arcs/radials rather than cartesian stairs.
+  if (curve === curveStepBefore) {
+    // arc at source radius, then radial to target
+    const ax = sr * tc;
+    const ay = sr * ts;
+    return `M${sx},${sy}A${sr},${sr},0,0,${sweepFlag},${ax},${ay}L${tx},${ty}`;
+  }
+  if (curve === curveStepAfter) {
+    // radial at source angle to target radius, then arc at target radius
+    const ax = tr * sc;
+    const ay = tr * ss;
+    return `M${sx},${sy}L${ax},${ay}A${tr},${tr},0,0,${sweepFlag},${tx},${ty}`;
+  }
+  if (curve === curveStep) {
+    // radial to mid-radius, arc at mid-radius, radial to target
+    const mr = (sr + tr) / 2;
+    const p1x = mr * sc;
+    const p1y = mr * ss;
+    const p2x = mr * tc;
+    const p2y = mr * ts;
+    return `M${sx},${sy}L${p1x},${p1y}A${mr},${mr},0,0,${sweepFlag},${p2x},${p2y}L${tx},${ty}`;
+  }
+
+  if (curve) {
+    // Other curves: apply in polar space via d3.lineRadial between the two nodes
+    const gen = lineRadial().curve(curve);
+    const d = gen([
+      [source.x, source.y],
+      [target.x, target.y],
+    ]);
+    return d ?? FALLBACK_PATH;
+  }
+
+  // Default: smooth radial curve via d3.linkRadial (visx LinkRadial)
+  const linkGen = linkRadial<
+    { source: ConnectorCoords; target: ConnectorCoords },
+    ConnectorCoords
+  >()
+    .angle((d) => d.x)
+    .radius((d) => d.y);
+  return linkGen({ source, target }) ?? FALLBACK_PATH;
 }
