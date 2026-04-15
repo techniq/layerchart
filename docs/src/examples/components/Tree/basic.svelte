@@ -24,7 +24,6 @@
 		radius: 60
 	});
 
-
 	let expandedNodeNames = $state(['flare']);
 	const hierarchy = $derived(
 		d3Hierarchy(data, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
@@ -53,7 +52,7 @@
 <TreeControls bind:config />
 
 <Chart
-	padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
+	padding={{ top: 32, left: nodeWidth / 2, right: nodeWidth / 2 }}
 	transform={{
 		mode: 'canvas',
 		motion: { type: 'tween', duration: 800, easing: cubicOut }
@@ -62,7 +61,7 @@
 	height={800}
 >
 	{#snippet children()}
-		<TransformContextControls orientation="horizontal" class="-m-2" />
+		<TransformContextControls orientation="horizontal" />
 
 		<Tree
 			{hierarchy}

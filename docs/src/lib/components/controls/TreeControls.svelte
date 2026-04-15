@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { Field } from 'svelte-ux';
-	import { ToggleGroup, ToggleOption, RangeField } from 'svelte-ux';
+	import type { ComponentProps } from 'svelte';
+	import { Field, ToggleGroup, ToggleOption, RangeField, MenuField } from 'svelte-ux';
+	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
-	import type { CurveFactory } from 'd3-shape';
-	import { curveBumpX, curveBumpY, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-	import ConnectorControls from '$lib/components/controls/ConnectorControls.svelte';
 
 	interface Props {
 		config: {
@@ -12,15 +10,25 @@
 			layout: 'chart' | 'node';
 			type: ConnectorType;
 			sweep: ConnectorSweep;
-			curve: CurveFactory;
+			curve: ComponentProps<typeof CurveMenuField>['value'];
 			radius: number;
 		};
 	}
 
 	let { config = $bindable() }: Props = $props();
+
+	const typeOptions = ['straight', 'square', 'beveled', 'rounded', 'd3'].map((type) => ({
+		label: type,
+		value: type
+	}));
+
+	const sweepOptions = ['horizontal-vertical', 'vertical-horizontal', 'none'].map((sweep) => ({
+		label: sweep,
+		value: sweep
+	}));
 </script>
 
-<div class="grid grid-cols-2 gap-1 screenshot-hidden">
+<div class="grid grid-cols-2 gap-2 screenshot-hidden">
 	<Field label="Orientation">
 		<ToggleGroup bind:value={config.orientation} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="horizontal">Horizontal</ToggleOption>
@@ -35,13 +43,27 @@
 		</ToggleGroup>
 	</Field>
 </div>
-<div class="grid grid-cols-2 gap-1">
-	<ConnectorControls
-		bind:type={config.type}
-		bind:sweep={config.sweep}
-		bind:curve={config.curve}
-		bind:radius={config.radius}
+
+<div class="grid grid-cols-3 gap-2 mt-2 mb-2 screenshot-hidden">
+	<MenuField
+		label="Connector Type"
+		options={typeOptions}
+		bind:value={config.type}
+		stepper
+		classes={{ menuIcon: 'hidden' }}
 	/>
+
+	<MenuField
+		label="Connector Sweep"
+		options={sweepOptions}
+		bind:value={config.sweep}
+		stepper
+		classes={{ menuIcon: 'hidden' }}
+	/>
+
+	{#if config.type === 'd3'}
+		<CurveMenuField bind:value={config.curve} />
+	{/if}
 
 	{#if config.type === 'beveled' || config.type === 'rounded'}
 		<RangeField label="Radius" bind:value={config.radius} min={0} />
