@@ -125,6 +125,12 @@ export const getFlare = prerender(async () => {
 	return data;
 });
 
+export const getSimpleTree = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/hierarchy/simple-tree.json').then((r) => r.json());
+	return data;
+});
+
 export const getUsSenators = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>

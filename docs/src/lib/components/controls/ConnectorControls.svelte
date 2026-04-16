@@ -12,13 +12,13 @@
 	}
 
 	let {
-		type = $bindable('rounded' as ConnectorType),
+		type = $bindable('d3' as ConnectorType),
 		curve = $bindable(undefined as ComponentProps<typeof CurveMenuField>['value']),
 		sweep = $bindable('horizontal-vertical' as ConnectorSweep),
 		radius = $bindable(60)
 	}: Props = $props();
 
-	const typeOptions = ['straight', 'square', 'beveled', 'rounded', 'd3'].map((type) => ({
+	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded'].map((type) => ({
 		label: type,
 		value: type
 	}));

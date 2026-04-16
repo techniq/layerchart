@@ -46,6 +46,12 @@
      * @default `d3.curveLinear`
      */
     curve?: CurveFactory;
+
+    /**
+     * Interpret `source`/`target` as polar coordinates (`x` = angle, `y` = radius)
+     * and render the path in radial space. Defaults to `ctx.radial` when unset.
+     */
+    radial?: boolean;
   } & PathPropsWithoutHTML;
 
   export type ConnectorProps = ConnectorPropsWithoutHTML &
@@ -57,10 +63,13 @@
   import {
     getConnectorD3Path,
     getConnectorPresetPath,
+    getConnectorRadialD3Path,
+    getConnectorRadialPresetPath,
     type ConnectorCoords,
     type ConnectorSweep,
     type ConnectorType,
   } from '$lib/utils/connectorUtils.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
   import Path, { type PathProps, type PathPropsWithoutHTML } from './Path.svelte';
   import type { Without } from '$lib/utils/types.js';
   import { createId } from '$lib/utils/createId.js';
@@ -82,6 +91,7 @@
     type = 'rounded',
     radius = 20,
     curve = curveLinear,
+    radial: radialProp,
     pathRef = $bindable(),
     pathData: pathDataProp,
     marker,
@@ -91,6 +101,9 @@
     motion,
     ...restProps
   }: ConnectorProps = $props();
+
+  const ctx = getChartContext();
+  const radial = $derived(radialProp ?? ctx.radial ?? false);
 
   const sweep = $derived.by(() => {
     if (sweepProp) return sweepProp;
@@ -116,6 +129,11 @@
 
   const pathData = $derived.by(() => {
     if (pathDataProp) return pathDataProp;
+    if (radial) {
+      return type === 'd3'
+        ? getConnectorRadialD3Path({ source, target, curve })
+        : getConnectorRadialPresetPath({ source, target, type, radius });
+    }
     if (type === 'd3') {
       return getConnectorD3Path({
         source,
