@@ -223,7 +223,7 @@ function render(
     resolvedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
   if (resolvedStyles?.opacity) {
-    ctx.globalAlpha = Number(resolvedStyles?.opacity);
+    ctx.globalAlpha *= Number(resolvedStyles?.opacity);
   }
 
   // font/text properties can be expensive to set (not sure why), so only apply if needed (renderText())
@@ -279,8 +279,7 @@ function render(
         const currentGlobalAlpha = ctx.globalAlpha;
 
         const fillOpacity = Number(resolvedStyles?.fillOpacity);
-        const opacity = Number(resolvedStyles?.opacity);
-        ctx.globalAlpha = fillOpacity * opacity;
+        ctx.globalAlpha *= isNaN(fillOpacity) ? 1 : fillOpacity;
 
         ctx.fillStyle = fill;
         render.fill(ctx);
@@ -302,7 +301,7 @@ function render(
         const strokeOpacity = Number(resolvedStyles?.strokeOpacity);
         const opacity = Number(resolvedStyles?.opacity);
         if (!isNaN(strokeOpacity) && strokeOpacity !== 1) {
-          ctx.globalAlpha = strokeOpacity * (isNaN(opacity) ? 1 : opacity);
+          ctx.globalAlpha *= strokeOpacity;
         }
 
         ctx.lineWidth =
