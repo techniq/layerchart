@@ -224,6 +224,15 @@
 				{#if isVisible}
 					<svelte:boundary>
 						<example.component bind:this={ref} />
+						{#snippet failed(error, reset)}
+							<div class="border border-danger rounded-md bg-danger/5 p-4 text-sm">
+								<div class="font-semibold text-danger mb-2">
+									Example error{#if component && name}: {component}/{name}{/if}
+								</div>
+								<pre class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
+								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}>Retry</Button>
+							</div>
+						{/snippet}
 						{#snippet pending()}
 							<div class="min-h-80 flex items-center justify-center text-surface-content/30">
 								Loading...
