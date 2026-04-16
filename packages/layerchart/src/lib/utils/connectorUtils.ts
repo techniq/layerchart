@@ -254,6 +254,8 @@ export function getConnectorRadialPresetPath({
   }
 
   if (type === 'square') {
+    // Source at origin — degenerate arc, just radial to target
+    if (sr < 1e-6) return `M${sx},${sy}L${tx},${ty}`;
     // Step at midpoint radius: radial + arc + radial
     const mr = (sr + tr) / 2;
     const p1x = mr * sc;
@@ -304,6 +306,10 @@ export function getConnectorRadialD3Path({
   const { sr, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
 
   // Step curves render as polar arcs/radials rather than cartesian stairs.
+  // When source is at origin (root), degenerate to straight radial line.
+  if (curve === curveStepBefore || curve === curveStepAfter || curve === curveStep) {
+    if (sr < 1e-6) return `M${sx},${sy}L${tx},${ty}`;
+  }
   if (curve === curveStepBefore) {
     // arc at source radius, then radial to target
     const ax = sr * tc;
