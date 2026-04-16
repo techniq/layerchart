@@ -1,152 +1,59 @@
-<script module lang="ts">
-	import { getFlare } from '$lib/data.remote';
-	let data = await getFlare();
-</script>
+<script>
+	import { Chart, Group, Layer, Link, Rect, Text, Tree } from 'layerchart';
+	import { hierarchy } from 'd3-hierarchy';
 
-<script lang="ts">
-	import type { ComponentProps } from 'svelte';
-	import { cubicOut } from 'svelte/easing';
-	import { hierarchy as d3Hierarchy, type HierarchyNode } from 'd3-hierarchy';
-	import { curveBumpX } from 'd3-shape';
-
-	import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
-	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-	import TreeControls from '$lib/components/controls/TreeControls.svelte';
-	import { cls } from '@layerstack/tailwind';
-	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
-
-	let config = $state({
-		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
-		layout: 'chart' as 'chart' | 'node',
-		type: 'd3' as ConnectorType,
-		sweep: 'none' as ConnectorSweep,
-		curve: curveBumpX,
-		radius: 60
+	const data = hierarchy({
+		name: 'Root',
+		children: [
+			{
+				name: 'A',
+				children: [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }]
+			},
+			{
+				name: 'B',
+				children: [{ name: 'B1' }, { name: 'B2' }]
+			},
+			{ name: 'C' }
+		]
 	});
-
-	let expandedNodeNames = $state(['flare']);
-	const hierarchy = $derived(
-		d3Hierarchy(data, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
-	);
-	// .sum((d) => d.value)
-	// .sort(sortFunc('value', 'desc'));
-	let selected = $state();
-
-	function getNodeKey(node: HierarchyNode<{ name: string }>) {
-		return node.data.name + node.depth;
-	}
-
-	const nodeWidth = 120;
-	const nodeHeight = 20;
-	const nodeSiblingGap = 20;
-	const nodeParentGap = 100;
-	const nodeSize = $derived(
-		config.orientation === 'horizontal'
-			? ([nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] as [number, number])
-			: ([nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] as [number, number])
-	);
-
 	export { data };
+
+	const nodeWidth = 60;
+	const nodeHeight = 20;
 </script>
 
-<TreeControls bind:config />
-
-<Chart
-	padding={config.orientation === 'radial'
-		? 40
-		: { top: 32, left: nodeWidth / 2, right: nodeWidth / 2 }}
-	radial={config.orientation === 'radial'}
-	transform={{
-		mode: 'canvas',
-		motion: { type: 'tween', duration: 800, easing: cubicOut }
-	}}
-	clip
-	height={800}
->
-	{#snippet children()}
-		<TransformContextControls orientation="horizontal" />
-
-		<Tree
-			{hierarchy}
-			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
-			nodeSize={config.layout === 'node' && config.orientation !== 'radial' ? nodeSize : undefined}
-		>
+<Chart padding={{ top: 16, left: nodeWidth / 2, right: nodeWidth / 2 }} height={300}>
+	<Layer>
+		<Tree hierarchy={data} orientation="horizontal">
 			{#snippet children({ nodes, links })}
-				<Layer>
-					<Group center={config.orientation === 'radial'}>
-						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-							<Link
-								data={link}
-								orientation={config.orientation === 'radial' ? undefined : config.orientation}
-								curve={config.curve}
-								type={config.type}
-								sweep={config.sweep}
-								radius={config.radius}
-								motion="tween"
-								class="stroke-surface-content opacity-20"
-							/>
-						{/each}
+				{#each links as link}
+					<Link data={link} orientation="horizontal" class="stroke-surface-content opacity-20" />
+				{/each}
 
-						{#each nodes as node (getNodeKey(node))}
-							{@const nodeX =
-								config.orientation === 'radial'
-									? node.y * Math.sin(node.x)
-									: config.orientation === 'horizontal'
-										? node.y
-										: node.x}
-							{@const nodeY =
-								config.orientation === 'radial'
-									? -node.y * Math.cos(node.x)
-									: config.orientation === 'horizontal'
-										? node.x
-										: node.y}
-							<Group
-								x={nodeX - nodeWidth / 2}
-								y={nodeY - nodeHeight / 2}
-								motion="tween"
-							onclick={() => {
-								if (expandedNodeNames.includes(node.data.name)) {
-									expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
-								} else {
-									expandedNodeNames = [...expandedNodeNames, node.data.name];
-								}
-								selected = node;
-
-								// transform.zoomTo({
-								//   x: orientation === 'horizontal' ? selected.y : selected.x,
-								//   y: orientation === 'horizontal' ? selected.x : selected.y,
-								// });
-							}}
-							class={cls(node.data.children && 'cursor-pointer')}
-						>
-							<Rect
-								width={nodeWidth}
-								height={nodeHeight}
-								class={cls(
-									'fill-surface-100',
-									node.data.children
-										? 'stroke-primary hover:stroke-2'
-										: 'stroke-secondary [stroke-dasharray:1]'
-								)}
-								rx={10}
-							/>
-							<Text
-								value={node.data.name}
-								x={nodeWidth / 2}
-								y={nodeHeight / 2}
-								dy={-2}
-								textAnchor="middle"
-								verticalAnchor="middle"
-								class={cls(
-									'text-xs pointer-events-none',
-									node.data.children ? 'fill-primary' : 'fill-secondary'
-								)}
-							/>
-						</Group>
-					{/each}
+				{#each nodes as node}
+					<Group x={node.y - nodeWidth / 2} y={node.x - nodeHeight / 2}>
+						<Rect
+							width={nodeWidth}
+							height={nodeHeight}
+							class={node.data.children
+								? 'fill-surface-100 stroke-primary'
+								: 'fill-surface-100 stroke-secondary [stroke-dasharray:1]'}
+							rx={10}
+						/>
+						<Text
+							value={node.data.name}
+							x={nodeWidth / 2}
+							y={nodeHeight / 2}
+							dy={-2}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							class="text-xs pointer-events-none {node.data.children
+								? 'fill-primary'
+								: 'fill-secondary'}"
+						/>
 					</Group>
-				</Layer>
+				{/each}
 			{/snippet}
 		</Tree>
-	{/snippet}
+	</Layer>
 </Chart>

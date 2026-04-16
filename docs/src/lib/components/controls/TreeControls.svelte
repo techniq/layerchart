@@ -12,6 +12,9 @@
 			sweep: ConnectorSweep;
 			curve: ComponentProps<typeof CurveMenuField>['value'];
 			radius: number;
+			siblingGap: number;
+			parentGap: number;
+			angularSpacing: number;
 		};
 	}
 
@@ -69,4 +72,13 @@
 		stepper
 		classes={{ menuIcon: 'hidden' }}
 	/>
+</div>
+
+<div class="grid grid-cols-2 gap-2 mt-2 screenshot-hidden">
+	<RangeField label="Parent Gap" bind:value={config.parentGap} min={0} max={300} disabled={config.layout !== 'node'} />
+	{#if config.orientation === 'radial'}
+		<RangeField label="Angular Spacing (°)" bind:value={config.angularSpacing} min={5} max={90} disabled={config.layout !== 'node'} />
+	{:else}
+		<RangeField label="Sibling Gap" bind:value={config.siblingGap} min={0} max={100} disabled={config.layout !== 'node'} />
+	{/if}
 </div>

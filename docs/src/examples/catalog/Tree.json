@@ -8,37 +8,79 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 55,
+          "lineNumber": 25,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 67,
+          "lineNumber": 27,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 73,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 75,
+          "lineNumber": 30,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 88,
+          "lineNumber": 38,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 107,
+          "lineNumber": 39,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 118,
+          "lineNumber": 48,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/Tree/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 60,
+          "line": "<Chart"
+        },
+        {
+          "component": "Tree",
+          "lineNumber": 75,
+          "line": "<Tree"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 81,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 85,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 98,
+          "line": "<Group"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 130,
+          "line": "<Rect"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 141,
           "line": "<Text"
         }
       ]
@@ -81,7 +123,14 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 67,
+      "lineNumber": 27,
+      "line": "<Tree"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 75,
       "line": "<Tree"
     },
     {
@@ -92,5 +141,5 @@
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:27.082Z"
+  "updatedAt": "2026-04-16T00:00:00.000Z"
 }
