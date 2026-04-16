@@ -5,6 +5,8 @@
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 
 	interface Props {
+		dataset?: string;
+		datasetOptions?: { label: string; value: string }[];
 		config: {
 			orientation: 'horizontal' | 'vertical' | 'radial';
 			layout: 'chart' | 'node';
@@ -18,9 +20,9 @@
 		};
 	}
 
-	let { config = $bindable() }: Props = $props();
+	let { dataset = $bindable(), datasetOptions, config = $bindable() }: Props = $props();
 
-	const typeOptions = ['straight', 'square', 'beveled', 'rounded', 'd3'].map((type) => ({
+	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded'].map((type) => ({
 		label: type,
 		value: type
 	}));
@@ -31,7 +33,21 @@
 	}));
 </script>
 
-<div class="grid grid-cols-2 gap-2 screenshot-hidden">
+<div
+	class="grid gap-2 screenshot-hidden"
+	class:grid-cols-2={!datasetOptions}
+	class:grid-cols-3={datasetOptions}
+>
+	{#if datasetOptions}
+		<MenuField
+			label="Dataset"
+			options={datasetOptions}
+			bind:value={dataset}
+			stepper
+			classes={{ menuIcon: 'hidden' }}
+		/>
+	{/if}
+
 	<Field label="Orientation">
 		<ToggleGroup bind:value={config.orientation} variant="outline" size="sm" inset class="w-full">
 			<ToggleOption value="horizontal">Horizontal</ToggleOption>
@@ -75,10 +91,28 @@
 </div>
 
 <div class="grid grid-cols-2 gap-2 mt-2 screenshot-hidden">
-	<RangeField label="Parent Gap" bind:value={config.parentGap} min={0} max={300} disabled={config.layout !== 'node'} />
+	<RangeField
+		label="Parent Gap"
+		bind:value={config.parentGap}
+		min={0}
+		max={300}
+		disabled={config.layout !== 'node'}
+	/>
 	{#if config.orientation === 'radial'}
-		<RangeField label="Angular Spacing (°)" bind:value={config.angularSpacing} min={5} max={90} disabled={config.layout !== 'node'} />
+		<RangeField
+			label="Angular Spacing (°)"
+			bind:value={config.angularSpacing}
+			min={5}
+			max={90}
+			disabled={config.layout !== 'node'}
+		/>
 	{:else}
-		<RangeField label="Sibling Gap" bind:value={config.siblingGap} min={0} max={100} disabled={config.layout !== 'node'} />
+		<RangeField
+			label="Sibling Gap"
+			bind:value={config.siblingGap}
+			min={0}
+			max={100}
+			disabled={config.layout !== 'node'}
+		/>
 	{/if}
 </div>

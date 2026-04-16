@@ -10,7 +10,7 @@
 	let source = $state({ x: 300, y: 150 });
 	let target = $state({ x: 500, y: 300 });
 
-	let type: ConnectorType = $state('rounded');
+	let type: ConnectorType = $state('d3');
 	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 	let sweep: ConnectorSweep = $state('horizontal-vertical');
 	let radius = $state(60);

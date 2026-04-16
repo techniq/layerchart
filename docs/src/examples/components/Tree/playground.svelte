@@ -1,6 +1,6 @@
 <script module lang="ts">
-	import { getFlare } from '$lib/data.remote';
-	let data = await getFlare();
+	import { getFlare, getSimpleTree } from '$lib/data.remote';
+	let [flareData, simpleTreeData] = await Promise.all([getFlare(), getSimpleTree()]);
 </script>
 
 <script lang="ts">
@@ -15,6 +15,16 @@
 	import { cls } from '@layerstack/tailwind';
 	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
 
+	const datasetOptions = [
+		{ label: 'Simple', value: 'simple' },
+		{ label: 'Complex (flare)', value: 'flare' }
+	];
+
+	let selectedDataset = $state('simple');
+
+	const rawData = $derived(selectedDataset === 'flare' ? flareData : simpleTreeData);
+	const defaultExpanded = $derived(selectedDataset === 'flare' ? ['flare'] : ['R', 'A', 'B']);
+
 	let config = $state({
 		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
@@ -27,19 +37,24 @@
 		angularSpacing: 23
 	});
 
-	let expandedNodeNames = $state(['flare']);
+	let expandedNodeNames = $state(['R', 'A', 'B']);
+
+	$effect(() => {
+		// Reset expanded nodes when dataset changes
+		selectedDataset;
+		expandedNodeNames = [...defaultExpanded];
+	});
+
 	const hierarchy = $derived(
-		d3Hierarchy(data, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
+		d3Hierarchy(rawData, (d) => (expandedNodeNames.includes(d.name) ? d.children : null))
 	);
-	// .sum((d) => d.value)
-	// .sort(sortFunc('value', 'desc'));
 	let selected = $state();
 
 	function getNodeKey(node: HierarchyNode<{ name: string }>) {
 		return node.data.name + node.depth;
 	}
 
-	const nodeWidth = 120;
+	const nodeWidth = $derived(selectedDataset === 'simple' ? 60 : 120);
 	const nodeHeight = 20;
 	const nodeSize = $derived(
 		config.orientation === 'radial'
@@ -52,10 +67,11 @@
 				: ([nodeWidth + config.siblingGap, nodeHeight + config.parentGap] as [number, number])
 	);
 
+	const data = $derived(rawData);
 	export { data };
 </script>
 
-<TreeControls bind:config />
+<TreeControls bind:config bind:dataset={selectedDataset} {datasetOptions} />
 
 <Chart
 	padding={config.orientation === 'radial'
@@ -127,16 +143,23 @@
 								}}
 								class={cls(node.data.children && 'cursor-pointer')}
 							>
+								{@const isRoot = node.depth === 0}
+								{@const isExpanded = expandedNodeNames.includes(node.data.name)}
 								<Rect
 									width={nodeWidth}
 									height={nodeHeight}
 									class={cls(
-										'fill-surface-100',
-										node.data.children
-											? 'stroke-primary hover:stroke-2'
-											: 'stroke-secondary [stroke-dasharray:1]'
+										isRoot && isExpanded
+											? 'fill-success stroke-success'
+											: isRoot
+												? 'fill-surface-100 stroke-success'
+												: isExpanded
+													? 'fill-primary stroke-primary'
+													: node.data.children
+														? 'stroke-primary hover:stroke-2 fill-surface-100'
+														: 'stroke-secondary [stroke-dasharray:1] fill-surface-100'
 									)}
-									rx={10}
+									rx={node.data.children ? 4 : nodeHeight / 2}
 								/>
 								<Text
 									value={node.data.name}
@@ -147,7 +170,15 @@
 									verticalAnchor="middle"
 									class={cls(
 										'text-xs pointer-events-none',
-										node.data.children ? 'fill-primary' : 'fill-secondary'
+										isRoot && isExpanded
+											? 'fill-success-content font-bold'
+											: isRoot
+												? 'fill-success font-bold'
+												: isExpanded
+													? 'fill-primary-content font-bold'
+													: node.data.children
+														? 'fill-primary'
+														: 'fill-secondary'
 									)}
 								/>
 							</Group>
