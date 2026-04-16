@@ -1784,10 +1784,24 @@
       "line": "<Chart height={300}>"
     },
     {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 5,
+      "line": "<Chart height={300}>"
+    },
+    {
       "example": "inverted",
       "component": "ClipPath",
       "path": "/docs/components/ClipPath/inverted",
       "lineNumber": 10,
+      "line": "<Chart height={300}>"
+    },
+    {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 5,
       "line": "<Chart height={300}>"
     },
     {
@@ -4055,14 +4069,21 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 55,
-      "line": "<Chart"
+      "lineNumber": 25,
+      "line": "<Chart padding={{ top: 16, left: nodeWidth / 2, right: nodeWidth / 2 }} height={300}>"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
       "lineNumber": 55,
+      "line": "<Chart"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 76,
       "line": "<Chart"
     },
     {
@@ -4185,5 +4206,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:23.289Z"
+  "updatedAt": "2026-04-16T17:46:58.588Z"
 }

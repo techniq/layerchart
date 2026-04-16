@@ -367,6 +367,20 @@
       "line": "<Circle"
     },
     {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 11,
+      "line": "<circle cx=\"120\" cy=\"150\" r=\"90\" />"
+    },
+    {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 12,
+      "line": "<circle cx=\"240\" cy=\"150\" r=\"90\" />"
+    },
+    {
       "example": "playground",
       "component": "Connector",
       "path": "/docs/components/Connector/playground",
@@ -927,5 +941,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:23.447Z"
+  "updatedAt": "2026-04-16T17:46:58.724Z"
 }

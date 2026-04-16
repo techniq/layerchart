@@ -889,7 +889,14 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 118,
+      "lineNumber": 43,
+      "line": "<Text"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 164,
       "line": "<Text"
     },
     {
@@ -1019,5 +1026,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-14T21:42:25.133Z"
+  "updatedAt": "2026-04-16T17:47:00.772Z"
 }

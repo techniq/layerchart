@@ -241,6 +241,13 @@
       "line": "<Rect"
     },
     {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 13,
+      "line": "<rect x=\"100\" y=\"130\" width=\"160\" height=\"40\" />"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
@@ -860,7 +867,14 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 107,
+      "lineNumber": 35,
+      "line": "<Rect"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 148,
       "line": "<Rect"
     },
     {
@@ -906,5 +920,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.893Z"
+  "updatedAt": "2026-04-16T17:47:00.475Z"
 }

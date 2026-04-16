@@ -569,6 +569,13 @@
       "line": "<Polygon"
     },
     {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 9,
+      "line": "<Polygon"
+    },
+    {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/docs/components/MotionPath/repeat-indefinitely",
@@ -765,5 +772,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:16.486Z"
+  "updatedAt": "2026-04-16T17:47:00.397Z"
 }

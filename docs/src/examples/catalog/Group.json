@@ -319,14 +319,35 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 88,
-      "line": "<Group"
+      "lineNumber": 34,
+      "line": "<Group x={node.y - nodeWidth / 2} y={node.x - nodeHeight / 2}>"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
       "lineNumber": 92,
+      "line": "<Group"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 98,
+      "line": "<Group center={config.orientation === 'radial'}>"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 99,
+      "line": "<Group opacity={0.2}>"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 127,
       "line": "<Group"
     },
     {
@@ -372,5 +393,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:05.473Z"
+  "updatedAt": "2026-04-16T17:46:59.494Z"
 }

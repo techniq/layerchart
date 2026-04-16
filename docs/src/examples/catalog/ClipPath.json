@@ -34,6 +34,48 @@
       ]
     },
     {
+      "name": "clip-snippet",
+      "title": "clip snippet",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 9,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 11,
+          "line": "<circle cx=\"120\" cy=\"150\" r=\"90\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 13,
+          "line": "<rect x=\"100\" y=\"130\" width=\"160\" height=\"40\" />"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    },
+    {
       "name": "inverted",
       "title": "inverted",
       "path": "/docs/components/ClipPath/inverted",
@@ -64,6 +106,43 @@
           "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
         }
       ]
+    },
+    {
+      "name": "use-id",
+      "title": "use id",
+      "path": "/docs/components/ClipPath/use-id",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 7,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 9,
+          "line": "<Polygon"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 20,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 22,
+          "line": "<ClipPath useId=\"star-shape\">"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 23,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
     }
   ],
   "usage": [
@@ -89,11 +168,25 @@
       "line": "<ClipPath {path}>"
     },
     {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 9,
+      "line": "<ClipPath>"
+    },
+    {
       "example": "inverted",
       "component": "ClipPath",
       "path": "/docs/components/ClipPath/inverted",
       "lineNumber": 14,
       "line": "<ClipPath {path} invert>"
+    },
+    {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 22,
+      "line": "<ClipPath useId=\"star-shape\">"
     },
     {
       "example": "timezones",
@@ -110,5 +203,5 @@
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:23.514Z"
+  "updatedAt": "2026-04-16T17:46:58.803Z"
 }

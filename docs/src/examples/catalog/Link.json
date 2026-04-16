@@ -76,8 +76,8 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 75,
-      "line": "<Link"
+      "lineNumber": 30,
+      "line": "<Link data={link} orientation=\"horizontal\" class=\"stroke-surface-content opacity-20\" />"
     },
     {
       "example": "html-nodes",
@@ -85,7 +85,14 @@
       "path": "/docs/components/Tree/html-nodes",
       "lineNumber": 75,
       "line": "<Link"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 101,
+      "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.137Z"
+  "updatedAt": "2026-04-16T17:46:59.884Z"
 }

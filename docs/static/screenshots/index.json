@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-14T21:42:22.026Z",
+  "generatedAt": "2026-04-16T17:46:57.427Z",
   "totalComponents": 76,
-  "totalExamples": 882,
+  "totalExamples": 885,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2087,9 +2087,19 @@
           "checksum": "607df5e650127e75a3820d34590ec48b"
         },
         {
+          "name": "clip-snippet",
+          "path": "/example/ClipPath/clip-snippet",
+          "checksum": "d1ce9512758c932c9c0478235eb44ae5"
+        },
+        {
           "name": "inverted",
           "path": "/example/ClipPath/inverted",
           "checksum": "b744385f46b79a27200830f4a1f7428f"
+        },
+        {
+          "name": "use-id",
+          "path": "/example/ClipPath/use-id",
+          "checksum": "b59ac68f7794785ba19df1f91ff42e03"
         }
       ]
     },
@@ -2119,7 +2129,7 @@
         {
           "name": "playground",
           "path": "/example/Connector/playground",
-          "checksum": "56140e1dba0adeb06e39e4b6d4c1e8b7"
+          "checksum": "aca38f2e855865e33e6d94221a70f5dd"
         }
       ]
     },
@@ -4679,12 +4689,17 @@
         {
           "name": "basic",
           "path": "/example/Tree/basic",
-          "checksum": "700f2ab5b7189180ff4c498911aa9395"
+          "checksum": "d8e405c44f6f47e8d278f12832f9bd6e"
         },
         {
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
           "checksum": "c5d81e82f7bfdd7c0323385ff184b5af"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Tree/playground",
+          "checksum": "ef68ebac1a898e2cf38e9cb0d76f9a97"
         }
       ]
     },
