@@ -27,7 +27,10 @@
 </script>
 
 {#if !inline}
-	<div bind:this={target} class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden">
+	<div
+		bind:this={target}
+		class="grid grid-cols-[auto_1fr] gap-2 mb-3 screenshot-hidden lazy-loaded"
+	>
 		<Field {label} {labelPlacement} let:id class={className}>
 			<Switch bind:checked={show} size="md" />
 		</Field>
