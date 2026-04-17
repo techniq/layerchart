@@ -73,20 +73,31 @@
   const ctx = getChartContext();
 
   const rect = $derived.by(() => {
-    const x0 = x ? ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.xRange[0];
-    const x1 = x ? ctx.xScale(x[1] ?? ctx.xDomain[1]) : ctx.xRange[1];
-    const y0 = y ? ctx.yScale(y[0] ?? ctx.yDomain[0]) : ctx.yRange[0];
-    const y1 = y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1];
+    // `null`/`undefined` on either side means "extend to chart edge" (xRange/yRange).
+    // Tracked so band adjustments only apply to endpoints derived from the band scale,
+    // not to the xRange fallback (which already contains the full pixel extent).
+    const x0FromScale = x?.[0] != null;
+    const x1FromScale = x?.[1] != null;
+    const x0 = x0FromScale ? ctx.xScale(x![0]) : ctx.xRange[0];
+    const x1 = x1FromScale ? ctx.xScale(x![1]) : ctx.xRange[1];
+    const y0 = y?.[0] != null ? ctx.yScale(y[0]) : ctx.yRange[0];
+    const y1 = y?.[1] != null ? ctx.yScale(y[1]) : ctx.yRange[1];
 
     const bandPadding = isScaleBand(ctx.xScale)
       ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
     const bandStep = isScaleBand(ctx.xScale) ? ctx.xScale.step() : 0;
 
+    const leftFromScale = x0 <= x1 ? x0FromScale : x1FromScale;
+    const rightFromScale = x0 <= x1 ? x1FromScale : x0FromScale;
+
+    const left = Math.min(x0, x1) - (leftFromScale ? bandPadding : 0);
+    const right = Math.max(x0, x1) + (rightFromScale ? bandStep - bandPadding : 0);
+
     return {
-      x: Math.min(x0, x1) - bandPadding,
+      x: left,
       y: Math.min(y0, y1),
-      width: Math.abs(x1 - x0) + bandStep,
+      width: right - left,
       height: Math.abs(y1 - y0),
     } satisfies ComponentProps<typeof Rect>;
   });
