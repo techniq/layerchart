@@ -2575,13 +2575,6 @@
       "line": "<Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 20, right: 20 }} height={300}>"
     },
     {
-      "example": "tick-count-responsive",
-      "component": "Grid",
-      "path": "/docs/components/Grid/tick-count-responsive",
-      "lineNumber": 7,
-      "line": "<!-- <Chart"
-    },
-    {
       "example": "x-only",
       "component": "Grid",
       "path": "/docs/components/Grid/x-only",
@@ -3839,7 +3832,7 @@
       "component": "Text",
       "path": "/docs/components/Text/segments",
       "lineNumber": 5,
-      "line": "<Chart height={80}>"
+      "line": "<Chart height={50}>"
     },
     {
       "example": "word-wrap-with-explicit-newline",
@@ -4206,5 +4199,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:58.588Z"
+  "updatedAt": "2026-04-17T14:32:26.034Z"
 }

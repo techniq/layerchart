@@ -36,7 +36,7 @@
 		</Field>
 	</div>
 {:else}
-	<div bind:this={target}>
+	<div bind:this={target} class="screenshot-delay">
 		<Field {label} let:id>
 			<Switch bind:checked={show} size="md" />
 		</Field>

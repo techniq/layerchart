@@ -3524,13 +3524,6 @@
       "line": "<Axis placement=\"left\" rule ticks={null} />"
     },
     {
-      "example": "tick-count-responsive",
-      "component": "Grid",
-      "path": "/docs/components/Grid/tick-count-responsive",
-      "lineNumber": 17,
-      "line": "<Axis placement=\"bottom\" rule ticks={mdScreen.current ? 10 : 5} />"
-    },
-    {
       "example": "basic",
       "component": "Group",
       "path": "/docs/components/Group/basic",
@@ -5113,5 +5106,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:22.847Z"
+  "updatedAt": "2026-04-17T14:32:25.646Z"
 }

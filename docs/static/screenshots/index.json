@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-17T13:34:26.877Z",
+  "generatedAt": "2026-04-17T15:40:01.045Z",
   "totalComponents": 76,
-  "totalExamples": 885,
+  "totalExamples": 884,
   "components": [
     {
       "component": "AnnotationLine",
@@ -2757,11 +2757,6 @@
           "checksum": "ae760f0c0cce037110cebd25bba6b20c"
         },
         {
-          "name": "tick-count-responsive",
-          "path": "/example/Grid/tick-count-responsive",
-          "checksum": "267ce44cc4c35ae979fb4184b9018cfe"
-        },
-        {
           "name": "x-only",
           "path": "/example/Grid/x-only",
           "checksum": "8d7628f71c0f256b69eaee6001190933"
@@ -4474,7 +4469,7 @@
         {
           "name": "segments",
           "path": "/example/Text/segments",
-          "checksum": "e08188c86ea7d3b29467b11b9affb905"
+          "checksum": "47310c15b04f7aaf50b62b0765fa9c71"
         },
         {
           "name": "truncate-axis-labels",

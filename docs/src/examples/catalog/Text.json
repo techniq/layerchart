@@ -137,7 +137,7 @@
         {
           "component": "Chart",
           "lineNumber": 5,
-          "line": "<Chart height={80}>"
+          "line": "<Chart height={50}>"
         },
         {
           "component": "Layer",
@@ -1026,5 +1026,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-16T17:47:00.772Z"
+  "updatedAt": "2026-04-17T14:32:28.157Z"
 }

@@ -2516,13 +2516,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "tick-count-responsive",
-      "component": "Grid",
-      "path": "/docs/components/Grid/tick-count-responsive",
-      "lineNumber": 15,
-      "line": "<Layer>"
-    },
-    {
       "example": "x-only",
       "component": "Grid",
       "path": "/docs/components/Grid/x-only",
@@ -4182,5 +4175,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:59.713Z"
+  "updatedAt": "2026-04-17T14:32:27.192Z"
 }
