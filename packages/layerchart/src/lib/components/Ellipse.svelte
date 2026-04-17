@@ -423,7 +423,8 @@
         style:width="{item.rx * 2}px"
         style:height="{item.ry * 2}px"
         style:border-radius="50%"
-        style:background-color={resolvedFill}
+        style:background={resolvedFill}
+        style:background-origin="border-box"
         style:opacity={resolvedOpacity}
         style:border-width={resolvedBorderWidth}
         style:border-color={resolvedStroke}
@@ -441,7 +442,8 @@
       style:width="{motionRx.current * 2}px"
       style:height="{motionRy.current * 2}px"
       style:border-radius="50%"
-      style:background-color={staticFill}
+      style:background={staticFill}
+      style:background-origin="border-box"
       style:opacity={staticOpacity}
       style:border-width={staticBorderWidth}
       style:border-color={staticStroke}
@@ -469,8 +471,12 @@
     }
 
     /* Html layers */
-    :global(:where(.lc-layout-html .lc-ellipse):not([background-color])) {
-      background-color: var(--fill-color);
+    :global(:where(.lc-layout-html .lc-ellipse)) {
+      /* Match SVG sizing (visual extent equals `rx * 2`×`ry * 2`, border on outer edge) */
+      box-sizing: border-box;
+    }
+    :global(:where(.lc-layout-html .lc-ellipse):not([background])) {
+      background: var(--fill-color);
     }
     :global(:where(.lc-layout-html .lc-ellipse):not([border-color])) {
       border-color: var(--stroke-color);

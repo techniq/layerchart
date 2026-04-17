@@ -313,9 +313,7 @@
     const resolved = resolveCorners(corners, Infinity, Infinity);
     return cornersUniform(resolved) ? resolved[0] : undefined;
   });
-  const cornersNonUniform = $derived(
-    corners !== undefined && cornersUniformValue === undefined
-  );
+  const cornersNonUniform = $derived(corners !== undefined && cornersUniformValue === undefined);
 
   // Normalize rx/ry - if only one is provided, use it for both (SVG behavior)
   // Coerce to number for canvas rendering (SVG allows string like "50%")
@@ -436,12 +434,13 @@
             'lc-rect',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: [
-            restProps.style as string | undefined,
-            dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
-          ]
-            .filter(Boolean)
-            .join('; ') || undefined,
+          style:
+            [
+              restProps.style as string | undefined,
+              dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+            ]
+              .filter(Boolean)
+              .join('; ') || undefined,
         };
   }
 
@@ -602,7 +601,7 @@
       opacity={staticOpacity}
       stroke-dasharray={dashArrayAttr}
       class={cls('lc-rect', staticClassName)}
-      {...(restProps as unknown as SVGAttributes<SVGPathElement>)}
+      {...restProps as unknown as SVGAttributes<SVGPathElement>}
       {onclick}
       {ondblclick}
       {onpointerenter}
@@ -662,6 +661,7 @@
         style:width="{item.width}px"
         style:height="{item.height}px"
         style:background={resolvedFill}
+        style:background-origin="border-box"
         style:opacity={resolvedOpacity}
         style:border-width={resolvedBorderWidth}
         style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
@@ -688,6 +688,7 @@
       style:width="{motionWidth.current}px"
       style:height="{motionHeight.current}px"
       style:background={staticFill}
+      style:background-origin="border-box"
       style:opacity={staticOpacity}
       style:border-width={staticBorderWidth}
       style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
@@ -724,6 +725,10 @@
     }
 
     /* Html layers */
+    :global(:where(.lc-layout-html .lc-rect)) {
+      /* Match SVG sizing/positioning (visual extent equals `width`×`height`, border on outer edge) */
+      box-sizing: border-box;
+    }
     :global(:where(.lc-layout-html .lc-rect):not([background])) {
       background: var(--fill-color);
     }

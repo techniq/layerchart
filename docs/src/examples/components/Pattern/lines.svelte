@@ -13,7 +13,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
@@ -27,7 +27,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
@@ -41,7 +41,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
@@ -55,7 +55,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
@@ -69,7 +69,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
@@ -83,7 +83,7 @@
 					height={300}
 					rx={8}
 					fill={pattern}
-					class="stroke-surface-content"
+					stroke="var(--color-surface-content)"
 				/>
 			{/snippet}
 		</Pattern>
