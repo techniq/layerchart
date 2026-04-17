@@ -1,7 +1,7 @@
 ---
 description: Fill component which provides a line or circle-based fill pattern for chart elements.
 category: fill
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [LinearGradient, RadialGradient]
 ---
 
