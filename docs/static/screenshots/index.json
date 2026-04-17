@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-17T15:40:01.045Z",
+  "generatedAt": "2026-04-17T17:34:08.579Z",
   "totalComponents": 76,
   "totalExamples": 884,
   "components": [
@@ -2374,7 +2374,7 @@
         {
           "name": "shapefile-preview",
           "path": "/example/GeoContext/shapefile-preview",
-          "checksum": "a7f6c927a97c46c58c128f61806864d3"
+          "checksum": "61e5226e0bc1509617a1a9bd8c946a30"
         },
         {
           "name": "topojson-preview",
@@ -2584,12 +2584,12 @@
         {
           "name": "satellite",
           "path": "/example/GeoProjection/satellite",
-          "checksum": "dc9a9dcf31103231df3d0419c40f25cf"
+          "checksum": "0ef248b175a7cd1ccff1c3d7962a955f"
         },
         {
           "name": "shapefile-preview",
           "path": "/example/GeoProjection/shapefile-preview",
-          "checksum": "a7f6c927a97c46c58c128f61806864d3"
+          "checksum": "61e5226e0bc1509617a1a9bd8c946a30"
         },
         {
           "name": "topojson-preview",
@@ -2599,12 +2599,12 @@
         {
           "name": "true-size",
           "path": "/example/GeoProjection/true-size",
-          "checksum": "035c742da3e29ac2a77d691d6ad8fbdd"
+          "checksum": "9f693f8eee45a002a5ceab5ce5e501ed"
         },
         {
           "name": "true-size-globe",
           "path": "/example/GeoProjection/true-size-globe",
-          "checksum": ""
+          "checksum": "df7237ba59d3abae260e976335194f59"
         }
       ]
     },
