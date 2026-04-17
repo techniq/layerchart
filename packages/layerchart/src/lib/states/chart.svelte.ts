@@ -867,8 +867,13 @@ export class ChartState<
 
   x1Domain = $derived.by(() => {
     if (this.props.x1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full x1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.x1Domain;
     }
     // Auto-derive for grouped series when x is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
@@ -881,8 +886,13 @@ export class ChartState<
   });
   y1Domain = $derived.by(() => {
     if (this.props.y1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full y1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.y1Domain;
     }
     // Auto-derive for grouped series when y is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {

@@ -1579,3 +1579,53 @@ describe('ChartState group layout auto-derives x1/y1', () => {
     }
   });
 });
+
+describe('ChartState x1Domain/y1Domain without series', () => {
+  type LongData = { year: number; fruit: string; value: number };
+  const longData: LongData[] = [
+    { year: 2019, fruit: 'apples', value: 3840 },
+    { year: 2019, fruit: 'bananas', value: 1920 },
+    { year: 2018, fruit: 'apples', value: 1600 },
+    { year: 2018, fruit: 'bananas', value: 1440 },
+  ];
+
+  it('should pass through explicit x1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through explicit y1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      y: 'year',
+      yScale: scaleBand(),
+      x: 'value',
+      y1: 'fruit',
+      y1Domain: ['apples', 'bananas'],
+      y1Range: ({ yScale }) => [0, (yScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.y1Domain).toEqual(['apples', 'bananas']);
+      expect(state.y1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+});

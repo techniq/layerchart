@@ -14,16 +14,21 @@ export const load = async ({ params }) => {
 		if (match && match[1] === componentName) {
 			const [, comp, exampleName] = match;
 
-			const component = (await componentExamples[path]()) as Component;
-			const source = (await componentSources[path]()) as string;
+			try {
+				const component = (await componentExamples[path]()) as Component;
+				const source = (await componentSources[path]()) as string;
 
-			// Remove `export { data };`
-			const cleanupSource = source.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
+				// Remove `export { data };`
+				const cleanupSource = source.replace(/(\n\s*)*^.*export .*;.*$(\n\s*)*/gm, '\n');
 
-			if (!examples[comp]) {
-				examples[comp] = {};
+				if (!examples[comp]) {
+					examples[comp] = {};
+				}
+				examples[comp][exampleName] = { component, source: cleanupSource, module: {} };
+			} catch (err) {
+				// Skip broken examples so one failure doesn't kill the whole batch load
+				console.warn(`Failed to load example ${comp}/${exampleName}:`, err);
 			}
-			examples[comp][exampleName] = { component, source: cleanupSource, module: {} };
 		}
 	}
 
