@@ -23,13 +23,14 @@
 	import LucideTable from '~icons/lucide/table';
 	import LucideGripVertical from '~icons/lucide/grip-vertical';
 	import LucideImageDown from '~icons/lucide/image-down';
+	import ChevronDownIcon from '~icons/lucide/chevron-down';
 
 	import { page } from '$app/state';
-	import { openInStackBlitz } from '$lib/utils/stackblitz.svelte';
 	import { downloadImage, downloadSvg, getSettings } from 'layerchart';
 
 	const settings = getSettings();
 	import { movable } from '$lib/actions/movable';
+	import EditWithButton from './EditWithButton.svelte';
 
 	let {
 		component = page.params.name!,
@@ -335,15 +336,25 @@
 				<Toggle let:on={open} let:toggle let:toggleOff>
 					<Button icon={LucideImageDown} class="text-surface-content/70 py-1" on:click={toggle}>
 						Export
+						<span
+							style="transition: transform 300ms ease; transform: rotate({open ? -180 : 0}deg);"
+						>
+							<ChevronDownIcon />
+						</span>
 						<Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-1' }}>
 							<MenuItem
 								icon={LucideImageDown}
 								on:click={() => downloadImage(containerEl!, { filename: name ?? component })}
+								class="text-surface-content/70 hover:text-surface-content"
 							>
 								Export as PNG
 							</MenuItem>
 							{#if settings.layer !== 'canvas'}
-								<MenuItem icon={LucideImageDown} on:click={handleSvgDownload}>
+								<MenuItem
+									icon={LucideImageDown}
+									on:click={handleSvgDownload}
+									class="text-surface-content/70 hover:text-surface-content"
+								>
 									Export as SVG
 								</MenuItem>
 							{/if}

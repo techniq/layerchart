@@ -16,7 +16,7 @@
 <ButtonGroup class="text-surface-content/70 py-1">
 	<Toggle bind:on={isOpen} let:on={open} let:toggle let:toggleOff>
 		<Button icon={LucideFilePen} on:click={toggle} class="py-1">
-			Edit in
+			Edit
 			<span style="transition: transform 300ms ease; transform: rotate({open ? -180 : 0}deg);">
 				<ChevronDownIcon />
 			</span>
@@ -29,7 +29,7 @@
 					}}
 				>
 					<Icon data={SvelteIcon} />
-					Svelte REPL (beta)
+					Svelte REPL
 				</MenuItem>
 				<MenuItem
 					class="text-surface-content/70 hover:text-surface-content"
