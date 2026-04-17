@@ -227,6 +227,15 @@
   const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
   const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
   const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  // Match SVG's implicit `stroke-width: 1` default: if `stroke` is set but
+  // `strokeWidth` is not, render a 1px border so HTML matches SVG/Canvas layers.
+  const staticBorderWidth = $derived(
+    typeof strokeWidth === 'number'
+      ? `${strokeWidth}px`
+      : typeof stroke === 'string'
+        ? '1px'
+        : undefined
+  );
 
   // Style options (shared between pixel and data mode)
   function getStyleOptions(
@@ -400,6 +409,12 @@
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
+      {@const resolvedBorderWidth =
+        resolvedStrokeWidth != null
+          ? `${resolvedStrokeWidth}px`
+          : resolvedStroke != null
+            ? '1px'
+            : undefined}
       <div
         style:position="absolute"
         style:left="{item.cx}px"
@@ -409,7 +424,7 @@
         style:border-radius="50%"
         style:background-color={resolvedFill}
         style:opacity={resolvedOpacity}
-        style:border-width={resolvedStrokeWidth}
+        style:border-width={resolvedBorderWidth}
         style:border-color={resolvedStroke}
         style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:transform="translate(-50%, -50%)"
@@ -427,7 +442,7 @@
       style:border-radius="50%"
       style:background-color={staticFill}
       style:opacity={staticOpacity}
-      style:border-width={staticStrokeWidth}
+      style:border-width={staticBorderWidth}
       style:border-color={staticStroke}
       style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
       style:transform="translate(-50%, -50%)"

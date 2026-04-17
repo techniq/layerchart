@@ -368,8 +368,14 @@
   const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
   const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
   const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  // Match SVG's implicit `stroke-width: 1` default: if `stroke` is set but
+  // `strokeWidth` is not, render a 1px border so HTML matches SVG/Canvas layers.
   const staticBorderWidth = $derived(
-    typeof strokeWidth === 'number' ? `${strokeWidth}px` : undefined
+    typeof strokeWidth === 'number'
+      ? `${strokeWidth}px`
+      : typeof stroke === 'string'
+        ? '1px'
+        : undefined
   );
   const htmlRestProps = $derived(restProps as unknown as HTMLAttributes<HTMLDivElement>);
 
@@ -641,6 +647,12 @@
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
+      {@const resolvedBorderWidth =
+        resolvedStrokeWidth != null
+          ? `${resolvedStrokeWidth}px`
+          : resolvedStroke != null
+            ? '1px'
+            : undefined}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
@@ -651,7 +663,7 @@
         style:height="{item.height}px"
         style:background={resolvedFill}
         style:opacity={resolvedOpacity}
-        style:border-width="{resolvedStrokeWidth}px"
+        style:border-width={resolvedBorderWidth}
         style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:border-color={resolvedStroke}
         style:border-radius="{rx}px"
