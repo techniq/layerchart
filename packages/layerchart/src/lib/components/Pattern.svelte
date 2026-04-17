@@ -250,7 +250,7 @@
   }
 
   if (layerCtx === 'canvas') {
-    chartCtx.registerComponent({ name: 'Pattern', kind: 'mark', canvasRender: {
+    chartCtx.registerComponent({ name: 'Pattern', kind: 'group', canvasRender: {
       render,
       deps: () => [width, height, shapes, background],
     } });
