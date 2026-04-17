@@ -218,7 +218,7 @@ async function captureScreenshots(
 		await page.waitForLoadState('domcontentloaded');
 
 		// wait if the lazy-loaded element found
-		if (document.querySelectorAll('lazy-loaded')) {
+		if (document.querySelectorAll('screenshot-delay')) {
 			await new Promise((resolve) => setTimeout(resolve, 2000));
 		}
 
