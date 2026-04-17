@@ -218,8 +218,8 @@ async function captureScreenshots(
 		await page.waitForLoadState('domcontentloaded');
 
 		// wait if the lazy-loaded element found
-		if (document.querySelectorAll('screenshot-delay')) {
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+		if ((await page.locator('.screenshot-delay').count()) > 0) {
+			await page.waitForTimeout(2000);
 		}
 
 		// Hide example controls before taking screenshots

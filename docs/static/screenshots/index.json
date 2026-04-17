@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-16T17:46:57.427Z",
+  "generatedAt": "2026-04-17T13:34:26.877Z",
   "totalComponents": 76,
   "totalExamples": 885,
   "components": [
@@ -3484,7 +3484,7 @@
         {
           "name": "circles",
           "path": "/example/Pattern/circles",
-          "checksum": "3a31e3cad3f8d32ec76df7262f1f3db5"
+          "checksum": "15ecd0ab0b6ba33955322c0061731afd"
         },
         {
           "name": "circles-custom-pattern-svg-only",
@@ -3499,7 +3499,7 @@
         {
           "name": "lines",
           "path": "/example/Pattern/lines",
-          "checksum": "6e5ce2c741848d25d107ce5ca167abd8"
+          "checksum": "b6fd15b9f167a98d2f2ae5cb20cee7af"
         },
         {
           "name": "lines-custom-pattern-svg-only",
