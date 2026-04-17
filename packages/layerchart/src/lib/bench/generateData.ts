@@ -29,10 +29,7 @@ export function generateTimeSeriesData(count: number): TimeSeriesPoint[] {
 /**
  * Generate wide-format multi-series data (one row per date, multiple value columns).
  */
-export function generateMultiSeriesData(
-  count: number,
-  seriesKeys: string[]
-): MultiSeriesPoint[] {
+export function generateMultiSeriesData(count: number, seriesKeys: string[]): MultiSeriesPoint[] {
   const start = new Date('2020-01-01').getTime();
   const dayMs = 86_400_000;
   const data: MultiSeriesPoint[] = new Array(count);

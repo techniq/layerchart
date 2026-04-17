@@ -333,17 +333,23 @@ describe('ChartState mark registration', () => {
 
       expect(state.seriesState.isDefaultSeries).toBe(false);
       expect(state.seriesState.series).toHaveLength(2);
-      expect(state.seriesState.series[0]).toMatchObject({ key: 'apples', color: 'red', value: 'apples' });
-      expect(state.seriesState.series[1]).toMatchObject({ key: 'bananas', color: 'yellow', value: 'bananas' });
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'apples',
+        color: 'red',
+        value: 'apples',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'bananas',
+        color: 'yellow',
+        value: 'bananas',
+      });
     } finally {
       cleanup();
     }
   });
 
   it('should not generate implicit series when explicit series are provided', () => {
-    const data: MultiSeriesData[] = [
-      { date: '2024-01', apples: 10, bananas: 15 },
-    ];
+    const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
       data,
@@ -700,8 +706,16 @@ describe('ChartState geo projection skips markInfo', () => {
       // seriesKey/color/label should still create implicit series for legends
       expect(state.seriesState.isDefaultSeries).toBe(false);
       expect(state.seriesState.series).toHaveLength(2);
-      expect(state.seriesState.series[0]).toMatchObject({ key: 'earthquakes', color: 'red', label: 'Earthquakes' });
-      expect(state.seriesState.series[1]).toMatchObject({ key: 'volcanos', color: 'orange', label: 'Volcanos' });
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'earthquakes',
+        color: 'red',
+        label: 'Earthquakes',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'volcanos',
+        color: 'orange',
+        label: 'Volcanos',
+      });
 
       // But flatData should not include extra mark data
       expect(state.flatData).toHaveLength(3);
@@ -980,9 +994,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should deduplicate repeated mark x keys into a single accessor', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({});
 
@@ -1000,9 +1012,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should use explicit x/y from Chart props over mark-derived values', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({
       x: 'value', // explicit — should override 'date' from marks
@@ -1408,12 +1418,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
     { year: '2017', apples: 960, bananas: 480, cherries: 240, grapes: 100 },
   ];
 
-  const series = [
-    { key: 'apples' },
-    { key: 'bananas' },
-    { key: 'cherries' },
-    { key: 'grapes' },
-  ];
+  const series = [{ key: 'apples' }, { key: 'bananas' }, { key: 'cherries' }, { key: 'grapes' }];
 
   it('should auto-derive x1Domain from series keys when seriesLayout=group and valueAxis=y', () => {
     const { state, cleanup } = createChartState<WideData>({
@@ -1509,9 +1514,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
 
     try {
       // With more padding, bandwidth should be smaller
-      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(
-        stateNoPad.x1Scale!.bandwidth!()
-      );
+      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(stateNoPad.x1Scale!.bandwidth!());
     } finally {
       c1();
       c2();

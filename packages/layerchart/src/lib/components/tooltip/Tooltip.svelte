@@ -377,10 +377,7 @@
           ) {
             rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
           }
-          if (
-            (xAlign === 'end' || xAlign === 'center') &&
-            containerRect.left + rect.left < 0
-          ) {
+          if ((xAlign === 'end' || xAlign === 'center') && containerRect.left + rect.left < 0) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
         }
@@ -393,10 +390,7 @@
           ) {
             rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
           }
-          if (
-            (yAlign === 'end' || yAlign === 'center') &&
-            containerRect.top + rect.top < 0
-          ) {
+          if ((yAlign === 'end' || yAlign === 'center') && containerRect.top + rect.top < 0) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
         }

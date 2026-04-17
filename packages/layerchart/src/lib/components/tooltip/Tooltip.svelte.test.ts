@@ -312,9 +312,7 @@ describe('Tooltip', () => {
 
         const tooltipTop = parseFloat(tooltipRoot.style.top);
         // Tooltip should not overflow the bottom of the viewport
-        expect(tooltipTop + tooltipRoot.offsetHeight).toBeLessThanOrEqual(
-          window.innerHeight + 1
-        );
+        expect(tooltipTop + tooltipRoot.offsetHeight).toBeLessThanOrEqual(window.innerHeight + 1);
       });
     });
   });

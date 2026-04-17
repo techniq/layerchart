@@ -296,26 +296,18 @@ export function vectorArrowFilledPath({
  * Apply rotation (degrees) and translation to a path string containing only M and L commands
  * with absolute coordinates. Converts local vector path data to absolute positioned coordinates.
  */
-export function transformVectorPath(
-  pathData: string,
-  cx: number,
-  cy: number,
-  rotateDeg: number
-) {
+export function transformVectorPath(pathData: string, cx: number, cy: number, rotateDeg: number) {
   const rad = (rotateDeg * Math.PI) / 180;
   const cos = Math.cos(rad);
   const sin = Math.sin(rad);
 
-  return pathData.replace(
-    /([ML])(-?\d*\.?\d+),(-?\d*\.?\d+)/g,
-    (_match, cmd, xStr, yStr) => {
-      const lx = Number(xStr);
-      const ly = Number(yStr);
-      const ax = cx + lx * cos - ly * sin;
-      const ay = cy + lx * sin + ly * cos;
-      return `${cmd}${ax},${ay}`;
-    }
-  );
+  return pathData.replace(/([ML])(-?\d*\.?\d+),(-?\d*\.?\d+)/g, (_match, cmd, xStr, yStr) => {
+    const lx = Number(xStr);
+    const ly = Number(yStr);
+    const ax = cx + lx * cos - ly * sin;
+    const ay = cy + lx * sin + ly * cos;
+    return `${cmd}${ax},${ay}`;
+  });
 }
 
 /** Flatten all `y` coordinates to `0` */

@@ -308,7 +308,9 @@
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
       outerRadius:
-        (context?.series.visibleSeries.length ?? 0) > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+        (context?.series.visibleSeries.length ?? 0) > 1
+          ? seriesIndex * (outerRadius ?? 0)
+          : outerRadius,
       innerRadius,
       cornerRadius,
       padAngle,
@@ -464,8 +466,13 @@
               value={valueAccessor(data)}
               color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
               {format}
-              onpointerenter={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = keyAccessor(data); }}
-              onpointerleave={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = null; }}
+              onpointerenter={() => {
+                if (snippetProps.context)
+                  snippetProps.context.series.highlightKey = keyAccessor(data);
+              }}
+              onpointerleave={() => {
+                if (snippetProps.context) snippetProps.context.series.highlightKey = null;
+              }}
               {...props.tooltip?.item}
             />
           </Tooltip.List>

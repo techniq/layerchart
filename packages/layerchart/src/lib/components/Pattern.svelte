@@ -252,16 +252,18 @@
   }
 
   if (layerCtx === 'canvas') {
-    chartCtx.registerComponent({ name: 'Pattern', kind: 'group', canvasRender: {
-      render,
-      deps: () => [width, height, shapes, background],
-    } });
+    chartCtx.registerComponent({
+      name: 'Pattern',
+      kind: 'group',
+      canvasRender: {
+        render,
+        deps: () => [width, height, shapes, background],
+      },
+    });
   }
 
   function withOpacity(color: string, opacity: number) {
-    return opacity === 1
-      ? color
-      : `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`;
+    return opacity === 1 ? color : `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`;
   }
 
   // Build a CSS `background` value from lines/circles/background.

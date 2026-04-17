@@ -271,12 +271,13 @@
             'lc-circle',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: [
-            restProps.style as string | undefined,
-            dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
-          ]
-            .filter(Boolean)
-            .join('; ') || undefined,
+          style:
+            [
+              restProps.style as string | undefined,
+              dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+            ]
+              .filter(Boolean)
+              .join('; ') || undefined,
         };
   }
 

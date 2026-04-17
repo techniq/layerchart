@@ -204,8 +204,7 @@ function radialGeometry(source: ConnectorCoords, target: ConnectorCoords): Radia
   const ss = Math.sin(sa);
   const tc = Math.cos(ta);
   const ts = Math.sin(ta);
-  const sweepFlag: 0 | 1 =
-    Math.abs(ta - sa) > Math.PI ? (ta <= sa ? 1 : 0) : ta > sa ? 1 : 0;
+  const sweepFlag: 0 | 1 = Math.abs(ta - sa) > Math.PI ? (ta <= sa ? 1 : 0) : ta > sa ? 1 : 0;
   return {
     sa,
     sr,

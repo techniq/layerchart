@@ -171,7 +171,6 @@ TODO:
       return FALLBACK_COORDS;
     }
   });
-
 </script>
 
 <Connector

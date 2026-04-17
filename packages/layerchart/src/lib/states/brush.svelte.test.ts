@@ -211,10 +211,7 @@ describe('BrushState', () => {
       const ctx = createMockCtx({ xDomain: [0, 100], yDomain: [0, 100] });
       const brush = new BrushState(ctx, { x: [20, 40], y: [20, 40] });
 
-      brush.moveRange(
-        { x: [20, 40], y: [20, 40], value: { x: 30, y: 30 } },
-        { x: 40, y: 50 }
-      );
+      brush.moveRange({ x: [20, 40], y: [20, 40], value: { x: 30, y: 30 } }, { x: 40, y: 50 });
 
       // Delta: x=+10, y=+20
       expect(brush.x).toEqual([30, 50]);
@@ -225,10 +222,7 @@ describe('BrushState', () => {
       const ctx = createMockCtx({ xDomain: [0, 100], yDomain: [0, 100] });
       const brush = new BrushState(ctx);
 
-      brush.moveRange(
-        { x: [80, 100], y: [80, 100], value: { x: 90, y: 90 } },
-        { x: 110, y: 110 }
-      );
+      brush.moveRange({ x: [80, 100], y: [80, 100], value: { x: 90, y: 90 } }, { x: 110, y: 110 });
 
       // Should not exceed domain max
       expect(brush.x).toEqual([80, 100]);
@@ -382,10 +376,7 @@ describe('BrushState', () => {
       const brush = new BrushState(ctx, { axis: 'x' });
 
       // Same date values but different object references — should compare by valueOf
-      brush.syncFromExternal(
-        [new Date('2024-01-01'), new Date('2024-12-31')],
-        null
-      );
+      brush.syncFromExternal([new Date('2024-01-01'), new Date('2024-12-31')], null);
 
       expect(brush.active).toBe(false);
     });
@@ -493,10 +484,7 @@ describe('BrushState', () => {
       const ctx = createBandMockCtx();
       const brush = new BrushState(ctx, { x: ['B', 'C'], y: [20, 40] });
 
-      brush.moveRange(
-        { x: ['B', 'C'], y: [20, 40], value: { x: 'B', y: 30 } },
-        { x: 'C', y: 40 }
-      );
+      brush.moveRange({ x: ['B', 'C'], y: [20, 40], value: { x: 'B', y: 30 } }, { x: 'C', y: 40 });
 
       // Delta of 1 category to the right
       expect(brush.x).toEqual(['C', 'D']);

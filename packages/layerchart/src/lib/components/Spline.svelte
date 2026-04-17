@@ -95,12 +95,30 @@
   const ctx = getChartContext();
   const geo = getGeoContext();
 
-  let { data, x, y, seriesKey, defined, curve, stroke, fill, opacity, motion, ...restProps }: SplineProps = $props();
+  let {
+    data,
+    x,
+    y,
+    seriesKey,
+    defined,
+    curve,
+    stroke,
+    fill,
+    opacity,
+    motion,
+    ...restProps
+  }: SplineProps = $props();
 
   ctx.registerComponent({
     name: 'Spline',
     kind: 'mark',
-    markInfo: () => ({ data, x, y, seriesKey, color: typeof stroke === 'string' ? stroke : undefined }),
+    markInfo: () => ({
+      data,
+      x,
+      y,
+      seriesKey,
+      color: typeof stroke === 'string' ? stroke : undefined,
+    }),
   });
 
   function getScaleValue(
@@ -267,8 +285,8 @@
 
   const seriesOpacity = $derived(
     series?.key == null ||
-    ctx.series.visibleSeries.length <= 1 ||
-    ctx.series.isHighlighted(series.key, true)
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
       ? 1
       : 0.1
   );

@@ -12,14 +12,7 @@
     width?: number;
   };
 
-  let {
-    features,
-    fitGeojson,
-    projection,
-    layer = 'svg',
-    height = 400,
-    width,
-  }: Props = $props();
+  let { features, fitGeojson, projection, layer = 'svg', height = 400, width }: Props = $props();
 </script>
 
 <Chart geo={{ projection, fitGeojson }} {width} {height}>

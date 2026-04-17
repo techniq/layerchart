@@ -131,7 +131,7 @@ export function renderChart(
 
   // SSR render to build the component tree and capture chart state
   const rendered = render(component, {
-    props: { ...props, width, height, capture: captureTarget }
+    props: { ...props, width, height, capture: captureTarget },
   });
   // Force the SSR render to fully flush
   void rendered.body;

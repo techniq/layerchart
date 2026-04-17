@@ -16,10 +16,7 @@ const series = [
   { key: 'oranges', color: 'orange' },
 ];
 
-function createSeriesState(
-  seriesData = series as any[],
-  stackConfig: any = null
-) {
+function createSeriesState(seriesData = series as any[], stackConfig: any = null) {
   return new SeriesState<TestData, Component>(
     () => seriesData,
     () => stackConfig

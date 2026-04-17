@@ -686,7 +686,14 @@
       if (segments) {
         let xOffset = baseX;
         for (const segment of segments) {
-          const segStyles = getTextStyles(undefined, undefined, undefined, undefined, undefined, segment.class);
+          const segStyles = getTextStyles(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            segment.class
+          );
           const text = String(segment.value);
           // Set font before rendering and measuring so width is accurate
           const segComputedStyles = getComputedStyles(ctx.canvas, segStyles);
@@ -838,10 +845,7 @@
         >
           {#if segments}
             {#each segments as segment, index (index)}
-              <tspan
-                dy={index === 0 ? startDy : 0}
-                class={['lc-text-tspan', segment.class]}
-              >
+              <tspan dy={index === 0 ? startDy : 0} class={['lc-text-tspan', segment.class]}>
                 {segment.value}
               </tspan>
             {/each}

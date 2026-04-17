@@ -69,10 +69,7 @@ export function resolveDataProp<T>(
  * Extract the raw value from a DataProp without applying any scale.
  * Numbers pass through, strings do property lookup, functions are called.
  */
-export function extractRawDataValue<T>(
-  value: DataProp<T> | undefined | null,
-  d: T
-): any {
+export function extractRawDataValue<T>(value: DataProp<T> | undefined | null, d: T): any {
   if (value === undefined || value === null) return undefined;
   if (typeof value === 'number') return value;
   if (typeof value === 'string') return get(d, value);

@@ -98,10 +98,7 @@ export class GeoState {
       }
 
       if (this.transformState?.mode === 'projection' && this.transformApply.translate) {
-        _projection.translate([
-          this.transformState.translate.x,
-          this.transformState.translate.y,
-        ]);
+        _projection.translate([this.transformState.translate.x, this.transformState.translate.y]);
       }
     }
 

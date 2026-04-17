@@ -264,13 +264,15 @@
 
   // Auto-compute initial values for mount animation when motion is configured
   const resolvedInitialY = $derived(
-    initialY ?? (motion && ctx.valueAxis === 'y' ? Math.max(ctx.yRange[0], ctx.yRange[1]) : undefined)
+    initialY ??
+      (motion && ctx.valueAxis === 'y' ? Math.max(ctx.yRange[0], ctx.yRange[1]) : undefined)
   );
   const resolvedInitialHeight = $derived(
     initialHeight ?? (motion && ctx.valueAxis === 'y' ? 0 : undefined)
   );
   const resolvedInitialX = $derived(
-    initialX ?? (motion && ctx.valueAxis === 'x' ? Math.min(ctx.xRange[0], ctx.xRange[1]) : undefined)
+    initialX ??
+      (motion && ctx.valueAxis === 'x' ? Math.min(ctx.xRange[0], ctx.xRange[1]) : undefined)
   );
   const resolvedInitialWidth = $derived(
     initialWidth ?? (motion && ctx.valueAxis === 'x' ? 0 : undefined)

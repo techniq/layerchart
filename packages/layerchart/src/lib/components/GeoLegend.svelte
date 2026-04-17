@@ -258,9 +258,7 @@
   const width = $derived(Math.ceil(barWidth) + padding * 2);
   const svgHeight = $derived(titleHeight + height + tickLabelHeight + padding * 2 + 3);
   const barY = $derived(
-    labelPlacement === 'top'
-      ? titleHeight + padding + tickLabelHeight
-      : titleHeight + padding
+    labelPlacement === 'top' ? titleHeight + padding + tickLabelHeight : titleHeight + padding
   );
   const tickLabelY = $derived(
     labelPlacement === 'top'

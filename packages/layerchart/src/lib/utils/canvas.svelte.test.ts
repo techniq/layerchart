@@ -392,7 +392,10 @@ describe('renderPathData', () => {
 
     const globalAlphaValues: number[] = [];
     const originalFill = ctx.fill.bind(ctx);
-    vi.spyOn(ctx, 'fill').mockImplementation(function (this: CanvasRenderingContext2D, ...args: any) {
+    vi.spyOn(ctx, 'fill').mockImplementation(function (
+      this: CanvasRenderingContext2D,
+      ...args: any
+    ) {
       globalAlphaValues.push(ctx.globalAlpha);
       originalFill(...args);
     });
@@ -434,7 +437,10 @@ describe('renderPathData', () => {
 
     const globalAlphaValues: number[] = [];
     const originalFill = ctx.fill.bind(ctx);
-    vi.spyOn(ctx, 'fill').mockImplementation(function (this: CanvasRenderingContext2D, ...args: any) {
+    vi.spyOn(ctx, 'fill').mockImplementation(function (
+      this: CanvasRenderingContext2D,
+      ...args: any
+    ) {
       globalAlphaValues.push(ctx.globalAlpha);
       originalFill(...args);
     });
@@ -627,14 +633,19 @@ describe('renderText', () => {
   it('calls strokeText when stroke is provided', () => {
     const strokeTextSpy = vi.spyOn(ctx, 'strokeText');
 
-    renderText(ctx, 'Hi', { x: 0, y: 0 }, {
-      styles: {
-        fill: 'none',
-        stroke: 'red',
-        strokeOpacity: '1',
-        opacity: '1',
-      },
-    });
+    renderText(
+      ctx,
+      'Hi',
+      { x: 0, y: 0 },
+      {
+        styles: {
+          fill: 'none',
+          stroke: 'red',
+          strokeOpacity: '1',
+          opacity: '1',
+        },
+      }
+    );
 
     expect(strokeTextSpy).toHaveBeenCalledWith('Hi', 0, 0);
   });

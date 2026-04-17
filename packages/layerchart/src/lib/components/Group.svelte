@@ -137,9 +137,7 @@
   const dataMode = $derived(hasAnyDataProp(x, y));
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates
   function resolveGroup(d: any) {
@@ -198,10 +196,18 @@
   const initialY = initialYProp ?? (typeof y === 'number' ? y : undefined);
 
   const trueX = $derived(
-    typeof x === 'number' ? x : (x == null && (center === 'x' || center === true) ? chartCtx.width / 2 : 0)
+    typeof x === 'number'
+      ? x
+      : x == null && (center === 'x' || center === true)
+        ? chartCtx.width / 2
+        : 0
   );
   const trueY = $derived(
-    typeof y === 'number' ? y : (y == null && (center === 'y' || center === true) ? chartCtx.height / 2 : 0)
+    typeof y === 'number'
+      ? y
+      : y == null && (center === 'y' || center === true)
+        ? chartCtx.height / 2
+        : 0
   );
   const motionX = createMotion(initialX, () => trueX, motion);
   const motionY = createMotion(initialY, () => trueY, motion);

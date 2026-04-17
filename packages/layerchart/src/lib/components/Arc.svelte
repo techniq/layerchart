@@ -255,9 +255,7 @@
 
   const endAngle = $derived(
     endAngleProp ??
-      degreesToRadians(
-        (ctx.config.xRange ? max(ctx.config.xRange as number[]) : max(range))!
-      )
+      degreesToRadians((ctx.config.xRange ? max(ctx.config.xRange as number[]) : max(range))!)
   );
 
   const motionEndAngle = createMotion(initialValue, () => value, motion);

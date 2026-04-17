@@ -173,8 +173,7 @@
           fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
           y: point.y,
-          textAnchor:
-            placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };
@@ -185,8 +184,7 @@
           fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
           y: point.y,
-          textAnchor:
-            placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };

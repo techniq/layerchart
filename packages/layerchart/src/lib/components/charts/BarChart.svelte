@@ -184,7 +184,9 @@
           x1={valueAxis === 'y' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           y1={valueAxis === 'x' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
           rounded={context.series.divergingEdgeKeys
-            ? context.series.divergingEdgeKeys.has(s.key) ? 'edge' : 'none'
+            ? context.series.divergingEdgeKeys.has(s.key)
+              ? 'edge'
+              : 'none'
             : context.series.isStacked && i !== context.series.visibleSeries.length - 1
               ? 'none'
               : Array.isArray(xProp) || Array.isArray(yProp)

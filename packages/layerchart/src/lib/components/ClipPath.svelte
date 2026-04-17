@@ -86,14 +86,10 @@
 
   // Outer rect covering the chart bounds — combined with the clip shape under
   // the even-odd fill rule to invert the clip.
-  const outerRect = $derived(
-    `M0,0 H${chartCtx.width} V${chartCtx.height} H0 Z`
-  );
+  const outerRect = $derived(`M0,0 H${chartCtx.width} V${chartCtx.height} H0 Z`);
 
   // Effective path used for canvas + html layers when inverting.
-  const effectivePath = $derived(
-    invert && path ? `${outerRect} ${path}` : path
-  );
+  const effectivePath = $derived(invert && path ? `${outerRect} ${path}` : path);
 
   // Cache the Path2D so `ctx.clip()` gets a stable reference per `path` change.
   const canvasPath = $derived(
@@ -144,9 +140,7 @@
       class="lc-clip-path-div"
       style:position="absolute"
       style:inset="0"
-      style:clip-path={invert
-        ? `path(evenodd, "${effectivePath}")`
-        : `path("${effectivePath}")`}
+      style:clip-path={invert ? `path(evenodd, "${effectivePath}")` : `path("${effectivePath}")`}
     >
       {@render children({ id, url, useId })}
     </div>

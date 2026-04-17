@@ -116,9 +116,7 @@ describe('DefaultTooltip', () => {
         expect(items.length).toBe(4);
       });
 
-      const items = Array.from(
-        document.querySelectorAll('.lc-tooltip-item-root')
-      ) as HTMLElement[];
+      const items = Array.from(document.querySelectorAll('.lc-tooltip-item-root')) as HTMLElement[];
       const labels = Array.from(
         document.querySelectorAll('.lc-tooltip-item-label')
       ) as HTMLElement[];

@@ -4,7 +4,18 @@
 
   type BaseRectCellProps = Omit<
     RectProps,
-    'width' | 'height' | 'x0' | 'x1' | 'y0' | 'y1' | 'initialX' | 'initialY' | 'initialWidth' | 'initialHeight' | 'motion' | 'ref'
+    | 'width'
+    | 'height'
+    | 'x0'
+    | 'x1'
+    | 'y0'
+    | 'y1'
+    | 'initialX'
+    | 'initialY'
+    | 'initialWidth'
+    | 'initialHeight'
+    | 'motion'
+    | 'ref'
   >;
 
   export type CellProps = BaseRectCellProps & {
@@ -36,13 +47,7 @@
   import Circle from './Circle.svelte';
   import Group from './Group.svelte';
 
-  let {
-    shape = 'rect',
-    r,
-    x,
-    y,
-    ...restProps
-  }: CellProps = $props();
+  let { shape = 'rect', r, x, y, ...restProps }: CellProps = $props();
 
   const chartCtx = getChartContext();
   const cellWidth = $derived(isScaleBand(chartCtx.xScale) ? chartCtx.xScale.bandwidth() : 0);

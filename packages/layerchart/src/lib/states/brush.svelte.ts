@@ -9,12 +9,11 @@ export type BrushDomainType = Array<number | Date | string | null>;
  * For band scales, expand a [first, last] brush selection into the full category subarray.
  * For continuous scales, returns the domain unchanged.
  */
-export function expandBandBrushDomain(brushDomain: BrushDomainType, baseDomain: any[]): BrushDomainType {
-  if (
-    brushDomain[0] == null ||
-    brushDomain[1] == null ||
-    typeof brushDomain[0] !== 'string'
-  ) {
+export function expandBandBrushDomain(
+  brushDomain: BrushDomainType,
+  baseDomain: any[]
+): BrushDomainType {
+  if (brushDomain[0] == null || brushDomain[1] == null || typeof brushDomain[0] !== 'string') {
     return brushDomain;
   }
   const startIdx = baseDomain.indexOf(brushDomain[0]);
@@ -156,8 +155,7 @@ export class BrushState {
     // Determine active state from current values
     const hasX = this.x[0] != null && this.x[1] != null;
     const hasY = this.y[0] != null && this.y[1] != null;
-    this.active =
-      this.axis === 'x' ? hasX : this.axis === 'y' ? hasY : hasX || hasY;
+    this.active = this.axis === 'x' ? hasX : this.axis === 'y' ? hasY : hasX || hasY;
   }
 
   /** Set brush to a new range, clamped to domain bounds */
@@ -168,8 +166,18 @@ export class BrushState {
 
     if (isCategoricalDomain(xDomain)) {
       this.x = [
-        clampByIndex(minByIndex(startValue.x, currentValue.x, xDomain), this.xDomainMin, this.xDomainMax, xDomain),
-        clampByIndex(maxByIndex(startValue.x, currentValue.x, xDomain), this.xDomainMin, this.xDomainMax, xDomain),
+        clampByIndex(
+          minByIndex(startValue.x, currentValue.x, xDomain),
+          this.xDomainMin,
+          this.xDomainMax,
+          xDomain
+        ),
+        clampByIndex(
+          maxByIndex(startValue.x, currentValue.x, xDomain),
+          this.xDomainMin,
+          this.xDomainMax,
+          xDomain
+        ),
       ];
     } else {
       this.x = [
@@ -180,8 +188,18 @@ export class BrushState {
 
     if (isCategoricalDomain(yDomain)) {
       this.y = [
-        clampByIndex(minByIndex(startValue.y, currentValue.y, yDomain), this.yDomainMin, this.yDomainMax, yDomain),
-        clampByIndex(maxByIndex(startValue.y, currentValue.y, yDomain), this.yDomainMin, this.yDomainMax, yDomain),
+        clampByIndex(
+          minByIndex(startValue.y, currentValue.y, yDomain),
+          this.yDomainMin,
+          this.yDomainMax,
+          yDomain
+        ),
+        clampByIndex(
+          maxByIndex(startValue.y, currentValue.y, yDomain),
+          this.yDomainMin,
+          this.yDomainMax,
+          yDomain
+        ),
       ];
     } else {
       this.y = [
@@ -250,17 +268,17 @@ export class BrushState {
     const yCat = isCategoricalDomain(yDomain);
 
     const clampX = (v: any) =>
-      xCat ? clampByIndex(v, this.xDomainMin, this.xDomainMax, xDomain) : clamp(v, this.xDomainMin, this.xDomainMax);
+      xCat
+        ? clampByIndex(v, this.xDomainMin, this.xDomainMax, xDomain)
+        : clamp(v, this.xDomainMin, this.xDomainMax);
     const clampY = (v: any) =>
-      yCat ? clampByIndex(v, this.yDomainMin, this.yDomainMax, yDomain) : clamp(v, this.yDomainMin, this.yDomainMax);
-    const ltX = (a: any, b: any) =>
-      xCat ? xDomain.indexOf(a) < xDomain.indexOf(b) : a < +b;
-    const gtX = (a: any, b: any) =>
-      xCat ? xDomain.indexOf(a) > xDomain.indexOf(b) : a > +b;
-    const ltY = (a: any, b: any) =>
-      yCat ? yDomain.indexOf(a) < yDomain.indexOf(b) : a < +b;
-    const gtY = (a: any, b: any) =>
-      yCat ? yDomain.indexOf(a) > yDomain.indexOf(b) : a > +b;
+      yCat
+        ? clampByIndex(v, this.yDomainMin, this.yDomainMax, yDomain)
+        : clamp(v, this.yDomainMin, this.yDomainMax);
+    const ltX = (a: any, b: any) => (xCat ? xDomain.indexOf(a) < xDomain.indexOf(b) : a < +b);
+    const gtX = (a: any, b: any) => (xCat ? xDomain.indexOf(a) > xDomain.indexOf(b) : a > +b);
+    const ltY = (a: any, b: any) => (yCat ? yDomain.indexOf(a) < yDomain.indexOf(b) : a < +b);
+    const gtY = (a: any, b: any) => (yCat ? yDomain.indexOf(a) > yDomain.indexOf(b) : a > +b);
 
     switch (edge) {
       case 'top':
@@ -302,10 +320,16 @@ export class BrushState {
     const newY = externalY ?? [null, null];
 
     // Only write when values actually differ to avoid reactive loops
-    if (this.x[0]?.valueOf() !== newX[0]?.valueOf() || this.x[1]?.valueOf() !== newX[1]?.valueOf()) {
+    if (
+      this.x[0]?.valueOf() !== newX[0]?.valueOf() ||
+      this.x[1]?.valueOf() !== newX[1]?.valueOf()
+    ) {
       this.x = newX;
     }
-    if (this.y[0]?.valueOf() !== newY[0]?.valueOf() || this.y[1]?.valueOf() !== newY[1]?.valueOf()) {
+    if (
+      this.y[0]?.valueOf() !== newY[0]?.valueOf() ||
+      this.y[1]?.valueOf() !== newY[1]?.valueOf()
+    ) {
       this.y = newY;
     }
 

@@ -78,7 +78,9 @@
     const y0 = y ? ctx.yScale(y[0] ?? ctx.yDomain[0]) : ctx.yRange[0];
     const y1 = y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1];
 
-    const bandPadding = isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0;
+    const bandPadding = isScaleBand(ctx.xScale)
+      ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
+      : 0;
     const bandStep = isScaleBand(ctx.xScale) ? ctx.xScale.step() : 0;
 
     return {

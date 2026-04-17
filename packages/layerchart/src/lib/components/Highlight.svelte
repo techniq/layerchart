@@ -389,9 +389,9 @@
               : null;
             // For diverging stacks, use the outer edge (y0 for below-baseline, y1 for above)
             const stackedY1 = stackValue
-              ? (ctx.series.stackLayout === 'stackDiverging' && stackValue[1] <= 0
-                  ? stackValue[0]
-                  : stackValue[1])
+              ? ctx.series.stackLayout === 'stackDiverging' && stackValue[1] <= 0
+                ? stackValue[0]
+                : stackValue[1]
               : 0;
 
             if (ctx.valueAxis === 'x') {

@@ -19,7 +19,6 @@ function isTransparentFill(fill: string): boolean {
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
-
 /**
  * Parse an inline CSS style string into a StyleOptions object.
  * Converts kebab-case properties to camelCase (e.g., 'stroke-dasharray' -> 'strokeDasharray')
@@ -269,8 +268,10 @@ function render(
     if (attr === 'fill') {
       const fill =
         styleOptions.styles?.fill &&
-        ((typeof CanvasGradient !== 'undefined' && (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
-          (typeof CanvasPattern !== 'undefined' && (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
+        ((typeof CanvasGradient !== 'undefined' &&
+          (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
+          (typeof CanvasPattern !== 'undefined' &&
+            (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
@@ -290,7 +291,8 @@ function render(
     } else if (attr === 'stroke') {
       const stroke =
         styleOptions.styles?.stroke &&
-        ((typeof CanvasGradient !== 'undefined' && (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
+        ((typeof CanvasGradient !== 'undefined' &&
+          (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
           : resolvedStyles?.stroke;
@@ -505,7 +507,7 @@ export function clearCanvasContext(
   @see: https://web.dev/articles/canvas-hidipi
 */
 export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height: number) {
-  const devicePixelRatio = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+  const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
 
   ctx.canvas.width = width * devicePixelRatio;
   ctx.canvas.height = height * devicePixelRatio;

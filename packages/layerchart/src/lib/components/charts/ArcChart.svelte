@@ -240,9 +240,7 @@
   );
 
   // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
-  const allSeriesColors = $derived(
-    series.map((s) => s.color).filter((c) => c != null) as string[]
-  );
+  const allSeriesColors = $derived(series.map((s) => s.color).filter((c) => c != null) as string[]);
 
   // Custom tickFormat for ArcChart legends - uses data labels instead of series labels
   const legendTickFormat = (tick: any) => {
@@ -416,8 +414,13 @@
               value={valueAccessor(data)}
               color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
               {format}
-              onpointerenter={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = keyAccessor(data); }}
-              onpointerleave={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = null; }}
+              onpointerenter={() => {
+                if (snippetProps.context)
+                  snippetProps.context.series.highlightKey = keyAccessor(data);
+              }}
+              onpointerleave={() => {
+                if (snippetProps.context) snippetProps.context.series.highlightKey = null;
+              }}
               {...props.tooltip?.item}
             />
           </Tooltip.List>

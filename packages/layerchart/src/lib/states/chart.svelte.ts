@@ -226,7 +226,8 @@ export class ChartState<
         const info = markInfo();
         // Skip registration for empty mark info (e.g. pixel-mode marks)
         // to avoid unnecessary array push/splice and version bumps
-        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label) return;
+        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label)
+          return;
         return untrack(() => this.registerMark(info));
       });
     }

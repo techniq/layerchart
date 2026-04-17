@@ -280,10 +280,7 @@ export function getChartSvgString(container: HTMLElement): string | null {
  * </button>
  * ```
  */
-export function downloadSvg(
-  container: HTMLElement,
-  options: ChartSvgOptions = {}
-): boolean {
+export function downloadSvg(container: HTMLElement, options: ChartSvgOptions = {}): boolean {
   const { filename = 'chart' } = options;
   const svgStr = getChartSvgString(container);
   if (svgStr === null) return false;
