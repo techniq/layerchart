@@ -24,7 +24,7 @@ These features are available across all layer types (including `Canvas`).
 
 Some primitives are not available in all layer types based on the primitive's needs and browser [capabilities](/docs/guides/layers).
 
-LayerChart does provide extended support than what is natively possible in some cases. For example `Text` provides word wrapping in `Svg` and `Canvas` layers, and all primitives support pointer and css styling in `Canvas`).
+LayerChart does provide extended support than what is natively possible in some cases. For example `Text` provides word wrapping in `Svg` and `Canvas` layers, and all primitives support pointer and css styling in `Canvas`.
 
 ## Components
 
