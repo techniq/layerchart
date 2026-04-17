@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
+  import type { PortalOptions } from '@layerstack/svelte-actions';
   import type { Without } from '$lib/utils/types.js';
   import type { Placement } from '../types.js';
 
@@ -48,6 +49,14 @@
      * @default "spring"
      */
     motion?: MotionProp;
+
+    /**
+     * Duration of the fade in/out transition in milliseconds.
+     * Set to `0` to disable the fade transition.
+     *
+     * @default 100
+     */
+    fadeDuration?: number;
 
     /**
      * Allow pointer events.  Disabled by default to reduce accidental selection, but useful to
@@ -133,6 +142,15 @@
     };
 
     /**
+     * Portal the tooltip outside the chart DOM hierarchy to avoid overflow clipping.
+     * Pass `true` to portal to `.PortalTarget` or `document.body`, a string CSS selector,
+     * an HTMLElement, or `false` to disable.
+     *
+     * @default true
+     */
+    portal?: PortalOptions;
+
+    /**
      * Optionally pass the chart's context to the tooltip to get
      * type inference for the data.
      */
@@ -146,6 +164,7 @@
 <script lang="ts" generics="T = any">
   import { fade } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
+  import { portal as portalAction } from '@layerstack/svelte-actions';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
@@ -157,8 +176,10 @@
     anchor = 'top-left',
     classes = {},
     contained = 'container',
+    fadeDuration = 100,
     motion = 'spring',
     pointerEvents = false,
+    portal: portalProp = true,
     variant = 'default',
     x = 'pointer',
     xOffset = x === 'pointer' ? 10 : 0,
@@ -189,9 +210,20 @@
     return value + (align === 'end' ? -additionalOffset : additionalOffset) - alignOffset;
   }
 
+  const isPortaled = $derived(
+    typeof portalProp === 'boolean' ? portalProp : portalProp?.enabled !== false
+  );
+
   const positions = $derived.by(() => {
     // if no data or tooltip size is not known yet, return null
     if (!ctx.tooltip.data || tooltipWidth === null || tooltipHeight === null) {
+      return { x: null, y: null };
+    }
+
+    // When portaled, we need the container's viewport rect to convert coordinates
+    const containerRect = isPortaled ? ctx.containerRef?.getBoundingClientRect() : null;
+    // If portaled but container rect not available yet, bail
+    if (isPortaled && !containerRect) {
       return { x: null, y: null };
     }
 
@@ -279,44 +311,18 @@
     rect.right = rect.left + tooltipWidth;
 
     if (contained === 'container') {
-      // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
-      if (typeof x !== 'number') {
-        // Check if outside of container and swap align side accordingly
-        if ((xAlign === 'start' || xAlign === 'center') && rect.right > ctx.containerWidth) {
-          rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
-        }
-        if ((xAlign === 'end' || xAlign === 'center') && rect.left < ctx.padding.left) {
-          rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
-        }
-      }
-      rect.right = rect.left + tooltipWidth;
-
-      if (typeof y !== 'number') {
-        if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > ctx.containerHeight) {
-          rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
-        }
-        if ((yAlign === 'end' || yAlign === 'center') && rect.top < ctx.padding.top) {
-          rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
-        }
-      }
-      rect.bottom = rect.top + tooltipHeight;
-    } else if (contained === 'window') {
-      // Check if outside of window / viewport and swap align side accordingly
-      // Root <div> won't be available on initial mount
-      if (rootRef?.parentElement) {
-        const parentViewportRect = rootRef.parentElement.getBoundingClientRect();
-
-        // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
+      if (isPortaled && containerRect) {
+        // Containment in viewport coordinates
         if (typeof x !== 'number') {
           if (
             (xAlign === 'start' || xAlign === 'center') &&
-            parentViewportRect.left + rect.right > window.innerWidth
+            containerRect.left + rect.right > containerRect.right
           ) {
             rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
           }
           if (
             (xAlign === 'end' || xAlign === 'center') &&
-            parentViewportRect.left + rect.left < 0
+            containerRect.left + rect.left < containerRect.left + ctx.padding.left
           ) {
             rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
           }
@@ -326,20 +332,118 @@
         if (typeof y !== 'number') {
           if (
             (yAlign === 'start' || yAlign === 'center') &&
-            parentViewportRect.top + rect.bottom > window.innerHeight
+            containerRect.top + rect.bottom > containerRect.bottom
           ) {
             rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
           }
-          if ((yAlign === 'end' || yAlign === 'center') && parentViewportRect.top + rect.top < 0) {
+          if (
+            (yAlign === 'end' || yAlign === 'center') &&
+            containerRect.top + rect.top < containerRect.top + ctx.padding.top
+          ) {
+            rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+          }
+        }
+        rect.bottom = rect.top + tooltipHeight;
+      } else {
+        // Original non-portaled container containment
+        if (typeof x !== 'number') {
+          // Check if outside of container and swap align side accordingly
+          if ((xAlign === 'start' || xAlign === 'center') && rect.right > ctx.containerWidth) {
+            rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+          }
+          if ((xAlign === 'end' || xAlign === 'center') && rect.left < ctx.padding.left) {
+            rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+          }
+        }
+        rect.right = rect.left + tooltipWidth;
+
+        if (typeof y !== 'number') {
+          if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > ctx.containerHeight) {
+            rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+          }
+          if ((yAlign === 'end' || yAlign === 'center') && rect.top < ctx.padding.top) {
             rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
           }
         }
         rect.bottom = rect.top + tooltipHeight;
       }
+    } else if (contained === 'window') {
+      if (isPortaled && containerRect) {
+        // Already in viewport coordinates, just clamp to window
+        if (typeof x !== 'number') {
+          if (
+            (xAlign === 'start' || xAlign === 'center') &&
+            containerRect.left + rect.right > window.innerWidth
+          ) {
+            rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+          }
+          if ((xAlign === 'end' || xAlign === 'center') && containerRect.left + rect.left < 0) {
+            rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+          }
+        }
+        rect.right = rect.left + tooltipWidth;
+
+        if (typeof y !== 'number') {
+          if (
+            (yAlign === 'start' || yAlign === 'center') &&
+            containerRect.top + rect.bottom > window.innerHeight
+          ) {
+            rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+          }
+          if ((yAlign === 'end' || yAlign === 'center') && containerRect.top + rect.top < 0) {
+            rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+          }
+        }
+        rect.bottom = rect.top + tooltipHeight;
+      } else {
+        // Original non-portaled window containment
+        // Root <div> won't be available on initial mount
+        if (rootRef?.parentElement) {
+          const parentViewportRect = rootRef.parentElement.getBoundingClientRect();
+
+          // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
+          if (typeof x !== 'number') {
+            if (
+              (xAlign === 'start' || xAlign === 'center') &&
+              parentViewportRect.left + rect.right > window.innerWidth
+            ) {
+              rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+            }
+            if (
+              (xAlign === 'end' || xAlign === 'center') &&
+              parentViewportRect.left + rect.left < 0
+            ) {
+              rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+            }
+          }
+          rect.right = rect.left + tooltipWidth;
+
+          if (typeof y !== 'number') {
+            if (
+              (yAlign === 'start' || yAlign === 'center') &&
+              parentViewportRect.top + rect.bottom > window.innerHeight
+            ) {
+              rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+            }
+            if (
+              (yAlign === 'end' || yAlign === 'center') &&
+              parentViewportRect.top + rect.top < 0
+            ) {
+              rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+            }
+          }
+          rect.bottom = rect.top + tooltipHeight;
+        }
+      }
     }
+
+    // When portaled, convert from container-relative to viewport-relative coordinates
+    const offsetX = isPortaled && containerRect ? containerRect.left : 0;
+    const offsetY = isPortaled && containerRect ? containerRect.top : 0;
+
     return {
-      x: rect.left,
-      y: rect.top,
+      x: rect.left + offsetX,
+      y: rect.top + offsetY,
     };
   });
 
@@ -356,11 +460,13 @@
 {#if ctx.tooltip.data}
   <div
     {...props.root}
+    use:portalAction={portalProp}
     class={cls('lc-tooltip-root', classes.root, props.root?.class)}
     class:disablePointerEvents={pointerEvents === false}
+    class:portaled={isPortaled}
     style:top="{motionY.current}px"
     style:left="{motionX.current}px"
-    transition:fade={{ duration: 100 }}
+    transition:fade={{ duration: fadeDuration }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
     bind:this={rootRef}
@@ -391,6 +497,10 @@
       position: absolute;
       z-index: 50;
       user-select: none;
+
+      &.portaled {
+        position: fixed;
+      }
 
       &.disablePointerEvents {
         pointer-events: none;

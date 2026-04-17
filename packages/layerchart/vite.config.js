@@ -57,6 +57,7 @@ const config = defineConfig({
       },
       {
         // Benchmarks (browser-based Svelte component benchmarks)
+        // Run via `pnpm bench` commands (`vitest bench`), not `pnpm test:unit`
         extends: true,
         test: {
           name: 'bench',
@@ -67,7 +68,7 @@ const config = defineConfig({
             instances: [{ browser: 'chromium' }],
             headless: true,
           },
-          include: ['src/**/*.svelte.bench.{js,ts}'],
+          include: [],
           setupFiles: ['./src/vitest-setup-client.ts'],
           benchmark: {
             include: ['src/**/*.svelte.bench.{js,ts}'],

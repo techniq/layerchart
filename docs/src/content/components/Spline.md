@@ -2,7 +2,7 @@
 description: Marking component which applies data points connected by smooth, curved lines to show trends or patterns over a continuous range.
 category: marks
 layers: [svg, canvas]
-related: [Path, LineChart]
+related: [Path, Trail, LineChart]
 ---
 
 ::tip
@@ -12,6 +12,12 @@ See also: [LineChart](/docs/components/LineChart) for simplified examples
 ## Usage
 
 :example{ name="basic" showCode }
+
+### Per-segment styling
+
+Pass a function to `stroke`, `fill`, or `opacity` to style each segment independently. Consecutive data points with the same resolved value are grouped into separate path segments.
+
+:example{ name="stroke-grouping" showCode }
 
 ### Geo mode
 

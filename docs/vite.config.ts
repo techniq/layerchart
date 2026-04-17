@@ -104,6 +104,8 @@ export default defineConfig({
 			'shiki',
 			'@shikijs/langs',
 			'@shikijs/themes',
+			'@napi-rs/canvas',
+			'mathjs',
 		]
 	}
 });

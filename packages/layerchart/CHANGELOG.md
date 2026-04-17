@@ -1,5 +1,256 @@
 # LayerChart
 
+## 2.0.0-next.57
+
+### Patch Changes
+
+- fix(AnnotationRange): Don't extend past chart bounds when `x` is omitted on band scales, and treat `null` on either side of `x`/`y` as "extend to chart edge". ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Spline): Restore `series.props.opacity` (and other style props) precedence over the computed series fade opacity. Regression introduced by per-segment styling refactor where the explicit `opacity` was spread after `series.props`, clobbering per-series opacity values (e.g. `series={[{ props: { opacity: 0.1 } }, ...]}`). ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(ChartState): Don't filter explicit `x1Domain`/`y1Domain` by visible series when no series are configured. Restores grouped layout for composable `<Chart>` usage (e.g. `<Bars>` with `x1`/`x1Domain`/`x1Range`) where the visible-series filter previously emptied the secondary band scale domain, collapsing all bars to a single category position. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.56
+
+### Minor Changes
+
+- feat(Circle, Ellipse): Support pattern/gradient `fill` values on the `<Html>` layer by switching from `background-color` to the `background` shorthand (with `background-origin: border-box` to keep patterns aligned under the border). Accepts values produced by `<Pattern>` / `<LinearGradient>` in HTML mode. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Pattern): Support `<Html>` layer by producing CSS `repeating-linear-gradient` (lines) and `radial-gradient` (circles) values usable as a `background`/`fill`. Gradient-valued `background` (e.g. `<Pattern background={gradient}>`) is also supported. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- fix(Pattern): Restore canvas layer support by registering as a `group` node so snippet children (e.g. `<Rect fill={pattern}>`) render correctly ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Rect): On the `<Html>` layer, set `background-origin: border-box` so fills/patterns start at the outer edge — previously the CSS `background` shorthand reset origin to `padding-box`, shifting patterns inward by `border-width` when a stroke was applied. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Rect, Circle, Ellipse): Apply `box-sizing: border-box` on the `<Html>` layer so the visual extent equals `width`×`height` (or `r * 2`, `rx * 2`×`ry * 2`) — the border is drawn within that extent instead of added to it, matching SVG bounds. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Rect, Circle, Ellipse): On the `<Html>` layer, default `border-width` to `1px` when `stroke` is set without an explicit `strokeWidth`, matching SVG's implicit `stroke-width: 1`. Also ensures Circle/Ellipse `border-width` gets the required `px` unit. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.55
+
+### Minor Changes
+
+- feat(Bar, Bars): Support `<Html>` layer ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  Bar/Bars now render in `<Html>` layers in addition to `<Svg>` and `<Canvas>`, including per-corner `rounded` variants (`top`, `bottom`, `left`, `right`, `edge`, and individual corners). Previously, any non-uniform `rounded` value fell through to a `<Path>` and was SVG-only.
+
+- feat(ClipPath, RectClipPath, CircleClipPath, GeoClipPath): HTML layer support + unified `path` API ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  `ClipPath` now accepts a single `path: string` (SVG path `d` syntax) that drives all three layers:
+  - **SVG**: rendered as `<path d={path}>` inside the `<clipPath>` element.
+  - **Canvas**: wrapped in `Path2D` and applied via `ctx.clip(...)`.
+  - **HTML**: emitted as `clip-path: path("${path}")` on a wrapper `<div>` covering the chart container.
+
+  This replaces the previous `canvasClip` / `canvasClipDeps` callbacks (and skipped HTML entirely) with a single declarative value. The `clip` snippet is still accepted for advanced/custom SVG content.
+
+  `RectClipPath`, `CircleClipPath`, and `GeoClipPath` are rewritten on top of this — they each compute a path string (d3-geo-path already emits one natively) and pass it through. All three now support `<Html>` layers in addition to `<Svg>` and `<Canvas>`.
+
+  Note: `clip-path: path()` requires Chrome 88+, Safari 13.1+, Firefox 118+.
+
+- feat(ClipPath, RectClipPath, CircleClipPath, GeoClipPath): Add `invert` prop to render content _outside_ the clip shape (cutouts/masks) across SVG, Canvas, and HTML layers ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Line, Rect, Circle, Text): Multi-layer compatible `dashArray` and inline color props ([#449](https://github.com/techniq/layerchart/pull/449))
+  - Added a typed `dashArray` prop to `Line`, `Rect`, and `Circle`. Accepts a number, array, or SVG-style string and maps to `stroke-dasharray` (SVG), `setLineDash` (Canvas), and either `repeating-linear-gradient` (HTML lines) or `border-style: dashed` (HTML borders). Previously dashed styling was SVG-only when applied via CSS class or attribute.
+  - `Text` and `Line` HTML branches now honor the `fill`/`stroke` props as inline `color`/`background`, so prop-based colors work across all three layers (not just SVG/Canvas).
+  - `Grid.x`/`Grid.y` and `Axis.grid` now accept `stroke`, `strokeWidth`, `opacity`, and `dashArray` in their object form, matching the props forwarded to the underlying line.
+  - `Rule` already forwarded arbitrary Line props via spread; `dashArray` now works there unchanged.
+  - Exports `parseDashArray` and `dashArrayToGradient` helpers from `path` utils.
+
+- feat(Tree, Link, Connector): Add radial support ([#831](https://github.com/techniq/layerchart/pull/831))
+
+  `Tree` now detects `<Chart radial>` and lays out with `d3.tree().size([2π, min(width, height)/2])` plus radial separation. Nodes emit polar coords (`x` = angle, `y` = radius).
+
+  `Connector` gains a `radial` prop (defaults to `ctx.radial`) that interprets `source`/`target` as polar and dispatches to new `getConnectorRadialPresetPath` / `getConnectorRadialD3Path` helpers. Radial behavior per connector `type`:
+  - `straight` — straight cartesian line
+  - `square` — radial → arc at midR → radial
+  - `beveled` — chord at source radius with chamfered corner (controlled by `radius`)
+  - `rounded` — visx LinkRadialCurve Bezier
+  - `d3` — `d3.linkRadial` by default; with a `curve` prop, `curveStep` / `curveStepBefore` / `curveStepAfter` map to polar arcs/radials, other curves go through `d3.lineRadial`
+
+  `Link` forwards `radial` to `Connector` automatically when inside a radial `<Chart>`.
+
+- feat(Rect): Add `corners` prop for per-corner rounding ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  New `corners` prop accepts either a number (equivalent to `rx`), a `[topLeft, topRight, bottomRight, bottomLeft]` tuple, or `{ topLeft, topRight, bottomRight, bottomLeft }`. Works across `<Svg>`, `<Canvas>`, and `<Html>` layers — Svg renders a `<rect>` when corners are uniform and a `<path>` when they differ, Canvas uses `roundRect`'s per-corner radii, and Html uses the 4-value `border-radius` shorthand.
+
+  Also exports a shared `roundedRectPath(x, y, width, height, [tl, tr, br, bl])` helper from `path` utils for building per-corner rounded-rect path data.
+
+### Patch Changes
+
+- fix(canvas): Compose globalAlpha multiplicatively so Group opacity propagates to children ([#831](https://github.com/techniq/layerchart/pull/831))
+
+  Canvas `renderPathData` was overwriting `ctx.globalAlpha` with absolute values for element opacity, fill opacity, and stroke opacity. This meant a parent `<Group opacity={0.2}>` had no effect on child marks rendered on canvas — the child's own opacity (defaulting to 1) would replace the inherited value.
+
+  Now all three sites multiply against the current `globalAlpha`, which correctly composes with ancestor Group opacity set via `save()`/`restore()` scoping. Also removes double-application of element `opacity` inside the fill/stroke blocks (it's already applied at the element level).
+
+## 2.0.0-next.54
+
+### Minor Changes
+
+- feat: New `GeoClipPath` component for clipping content to GeoJSON boundaries in both SVG and Canvas modes ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Text): Add `segments` prop for inline mixed-style text ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  New `segments` prop accepts an array of `{ value, class }` objects to render text with different styles (font size, weight, color) inline. Works across SVG (via tspans), Canvas (via sequential measureText/fillText), and HTML layers. Useful for labels that combine a bold name with a lighter value, such as treemap headers.
+
+- feat(Hull): Add CommonStyleProps (fill, fillOpacity, stroke, strokeOpacity, strokeWidth, opacity) for Canvas layer compatibility ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Tooltip): Add `fadeDuration` prop to control fade in/out transition ([#828](https://github.com/techniq/layerchart/pull/828))
+
+  The fade transition on `Tooltip.Root` is now configurable via the `fadeDuration` prop (default: `100`ms). Set to `0` to disable the fade transition entirely.
+
+- feat(Tooltip): Portal tooltip to body by default to fix overflow clipping. Resolves #446 ([#828](https://github.com/techniq/layerchart/pull/828))
+
+  Tooltip.Root now portals to `document.body` (or `.PortalTarget`) by default using the `portal` action from `@layerstack/svelte-actions`. This prevents tooltips from being clipped by ancestor elements with `overflow: hidden`. The tooltip uses `position: fixed` with viewport-relative coordinates when portaled. Set `portal={false}` to restore the previous inline behavior. Both `contained="container"` and `contained="window"` modes continue to work correctly with portaling.
+
+### Patch Changes
+
+- fix(ArcLabel): Support rotation in Canvas mode ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  Changed `centroid-rotated` and `centroid-radial` placements to pass `rotate` prop instead of SVG `transform` string to `Text`, enabling rotation in Canvas rendering.
+
+- fix: Pie and Arc components now correctly use Chart's `xRange` prop for angle degrees instead of the computed viewport pixel range, and compute radius from chart dimensions instead of scale range ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.53
+
+### Minor Changes
+
+- feat: Support pre-projected topologies in `GeoLegend` via `referenceScale` ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  Add a `referenceScale` prop to `GeoLegend` for charts that render pre-projected data with `geoIdentity` (e.g. `us-atlas`'s `counties-albers-10m` / `states-albers-10m`, pre-projected with `geoAlbersUsa().scale(1300)`). When provided, pixels-per-distance is derived from the chart's fit scale and the supplied base scale, bypassing the `projection.invert` + `geoDistance` path which only works for real lon/lat projections. The `GeoPath` bubble-map example now renders a correct scale bar.
+
+## 2.0.0-next.52
+
+### Minor Changes
+
+- feat(ArcLabel): New component for positioning text labels on arc segments ([#817](https://github.com/techniq/layerchart/pull/817))
+
+  `ArcLabel` is a new marking component for placing text (and optional leader lines) relative to an arc. It's used internally by `PieChart` and `ArcChart` when the `labels` prop is set, but can also be rendered directly inside an `Arc` children snippet.
+
+  Supported placements:
+  - `centroid` — at the arc centroid (horizontal text, default)
+  - `centroid-rotated` — at the centroid, rotated to follow the arc tangent, flipped where needed so text stays upright
+  - `centroid-radial` — at the centroid, rotated to read along the radial direction (center → outer edge)
+  - `inner` / `middle` / `outer` — along the inner, medial, or outer arc path (centered via `startOffset: '50%'` by default)
+  - `callout` — outside the arc with a leader line that bends horizontally to the label
+
+  `ArcLabel` accepts a single `offset` prop that is routed to the placement-appropriate radial padding (centroid offset, `innerPadding`/`outerPadding`, or `calloutLineLength`), plus `calloutLineLength` / `calloutLabelOffset` / `calloutPadding` for fine-grained control of callout leader lines. The leader line renders via the `Path` primitive, so it works in both SVG and Canvas chart layers.
+
+- breaking(Arc): Center arc text along path by default for `inner`/`middle`/`outer` positions ([#817](https://github.com/techniq/layerchart/pull/817))
+
+  `getArcTextProps('inner' | 'middle' | 'outer')` now defaults to `startOffset: '50%'` with `textAnchor: 'middle'`, centering the text along the arc path rather than anchoring it at the arc start. When an explicit `startOffset` is provided, the anchor falls back to `'start'` so the text begins at that position (matching prior behavior for callers that set a start offset).
+
+- feat(Arc): Add `innerPadding` option to `getArcTextProps` / `getTrackTextProps` ([#817](https://github.com/techniq/layerchart/pull/817))
+
+  `ArcTextOptions` now supports an `innerPadding` option, symmetric to the existing `outerPadding`. Positive values shrink the inner radius used to build the `inner`/`middle` arc text paths, moving text inward (toward the chart center). Previously, offsetting an `inner`-placed arc label away from the arc edge required overriding the path manually; now it works the same as `outerPadding` does for `outer` text.
+
+- feat(CircleLegend): New component for visualizing radius (`rScale`) values as nested circles ([#818](https://github.com/techniq/layerchart/pull/818))
+
+  `CircleLegend` displays a set of bottom-aligned nested circles representing values from a radius scale, useful alongside bubble maps and scatter charts that encode magnitude via circle area. By default it reads `rScale` from the chart context, but a `scale` prop can also be passed to render standalone.
+
+  Supports `tickValues` / `ticks` / `tickFormat` for value selection and formatting, a `title` rendered centered above the circles, and `labelPlacement="right" | "left" | "inline"` to render tick labels with a leader line on either side of the circles or centered inside each circle near the top.
+
+- feat(GeoLegend): New scale-bar legend showing real-world distance for the current `Chart` projection ([#818](https://github.com/techniq/layerchart/pull/818))
+
+  `GeoLegend` reads the active geo projection from the chart context and renders a labeled scale bar with tick subdivisions. By default it picks a "nice" round distance that covers ~25% of the chart width, but `distance` can be passed for an explicit value. Supports `units="km" | "mi"`, configurable `ticks`, `tickFormat`, `title`, and the standard `placement` props. Inspired by Harry Stevens' [d3-geo-scale-bar](https://observablehq.com/@harrystevens/introducing-d3-geo-scale-bar).
+
+- feat(Labels): Add `middle` placement and change `center` to center within the bar body ([#449](https://github.com/techniq/layerchart/pull/449))
+
+  `placement="center"` now positions the label at the center of the bar body (between the value edge and the baseline). The previous `center` behavior (label aligned to the value edge with a middle anchor) is now available as the new `placement="middle"`.
+
+- feat(Legend, CircleLegend): Show an indicator of the current tooltip value on the legend ([#818](https://github.com/techniq/layerchart/pull/818))
+
+  `Legend` (ramp variant) now draws a small upward-pointing arrow below the color ramp at the position of the currently hovered value, and `CircleLegend` draws a 50%-opacity filled circle at the corresponding radius. Both auto-read the hovered data from `ctx.tooltip.data` and pipe it through the chart's color (`ctx.c`) / radius (`ctx.r`) accessors, so wiring is automatic for charts that configure `c` / `r` / `cScale` / `rScale` via `Chart` props.
+
+  A new `value` prop on both components allows explicitly setting the indicator value (overriding the auto-detection), useful when the tooltip data shape doesn't match the chart's accessor.
+
+  For `scaleThreshold` / `scaleQuantize` / `scaleQuantile` scales, the `Legend` indicator centers on the matching bucket swatch.
+
+- feat(PieChart/ArcChart): Add top-level `labels` prop ([#817](https://github.com/techniq/layerchart/pull/817))
+
+  `PieChart` and `ArcChart` now accept a `labels` prop that renders text labels on each arc without requiring a custom `arc` snippet. Pass `true` to enable defaults (centroid placement, default value accessor), or an object to configure any `ArcLabel` props — placement, offset, value accessor, callout line lengths, leader line style, text class, etc.
+
+  ```svelte
+  <PieChart {data} labels={{ placement: 'callout', value: 'fruit' }} />
+  ```
+
+## 2.0.0-next.51
+
+### Minor Changes
+
+- feat: New `GeoRaster` component for reprojecting raster imagery (e.g. NASA Blue Marble) onto any d3-geo projection via per-pixel inverse sampling on Canvas ([#815](https://github.com/techniq/layerchart/pull/815))
+
+- feat: Add `renderChart()` to `layerchart/server` for server-side chart-to-image rendering (PNG/JPEG) ([#813](https://github.com/techniq/layerchart/pull/813))
+
+### Patch Changes
+
+- feat: Add `stroke` and `fill` props to `Axis` and `Grid` for explicit color control (useful for SSR where CSS variables are unavailable) ([#813](https://github.com/techniq/layerchart/pull/813))
+
+- fix: Skip mark x/y/data from domain/series calculation when geo projection is active ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Default geo projection `translate` to container center when `translate` and `fitGeojson` are not specified, instead of using d3-geo's fixed default (`[480, 250]`) ([#815](https://github.com/techniq/layerchart/pull/815))
+
+- fix: improve compatibility with UnoCSS Svelte scoped preprocessing ([#813](https://github.com/techniq/layerchart/pull/813))
+  - Remove TypeScript-only `as` assertions from exported Svelte markup in core mark components so preprocessors that parse markup expressions as plain JavaScript can consume packaged components without failing
+
+## 2.0.0-next.50
+
+### Minor Changes
+
+- feat: New Trail component for variable-width lines ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Axis): Default `tickSpacing` to `null` for categorical band scales, showing all ticks by default instead of reducing them. Use `tickSpacing={80}` to opt-in to tick reducing on categorical band scale axes. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- fix(Spline): Make motion prop reactive so toggling between tween/none updates without remount ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.49
+
+### Minor Changes
+
+- feat(Labels): Add `smart` placement option ([#799](https://github.com/techniq/layerchart/pull/799))
+
+  New `placement="smart"` mode that dynamically positions labels based on neighboring point values (peak, trough, rising, falling) to reduce overlapping.
+
+- feat(Chart, BrushState): Add band scale (categorical) support for transform pan/zoom and brush selection. Uses range-rescaling pattern to smoothly zoom and pan categorical bar charts. Automatically constrains panning to data boundaries and prevents zooming out past initial view. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Chart): In projection mode, `scaleExtent` and `translateExtent` are now interpreted as relative values (like d3-zoom). `scaleExtent: [0.5, 8]` means 0.5x to 8x of the fitted projection scale. `translateExtent` is offset from the initial fitted position in pixels. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Spline): Support function-valued `stroke`, `fill`, and `opacity` for per-segment styling ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Text): Add `format` prop and tween numeric `value` when `motion` is configured ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- Support `tickSpacing` for band scales on Axis, thinning tick labels when the domain is larger than the available space. Automatically shows more tick labels when zoomed in on band scale transforms. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- perf: Optimize primitive component instantiation (~3-5x faster for Rect, Circle, Ellipse, Line, Text, Path, Group) ([#449](https://github.com/techniq/layerchart/pull/449))
+  - `createMotion`: Fast-path passthrough when no `motion` prop is provided, avoiding `$state`/`$effect` overhead per axis
+  - `createDataMotionMap`: Short-circuit when `motion` is `undefined`, skipping `parseMotionProp` overhead
+  - `createKey`: Only create fill/stroke key trackers in canvas layer (skipped for SVG/HTML)
+  - `registerComponent`: Skip `registerMark` for empty `MarkInfo` (pixel-mode marks)
+  - All primitives: Skip `$effect` for data motion tracking when no motion is configured
+  - Rect/Image: Avoid per-axis `parseMotionProp` calls when `motion` is `undefined`
+
+- feat(Marker): Add `square` and `square-stroke` types ([#805](https://github.com/techniq/layerchart/pull/805))
+
+- fix(GeoPath): Fix canvas tooltip by conditionally passing onclick to Path, preventing non-interactive overlays from capturing hit canvas events ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(scaleBandInvert): Account for range offset in band scale inversion. Previously assumed range started at 0, causing incorrect pixel-to-category mapping when the scale range was transformed. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(TransformContext): Reactively sync `processTranslate` and `disablePointer` to TransformState when props change. Fixes inverted globe dragging when dynamically switching between flat and globe projections. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Chart): Enable scroll zoom for globe projections by including `scale: true` in default `transformApply` for globes. ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat(Raster, Contour): support bounded geo raster overlays with projected interpolation ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- feat: Add Month component ([#671](https://github.com/techniq/layerchart/pull/671))
+
+- fix(LinearGradient, RadialGradient): Register as `group` instead of `mark` in canvas component tree so wrapped children (e.g. Arc, Path) are rendered ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.48
 
 ### Patch Changes

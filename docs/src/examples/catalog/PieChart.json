@@ -115,6 +115,30 @@
       ]
     },
     {
+      "name": "labels",
+      "title": "labels",
+      "path": "/docs/components/PieChart/labels",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 35,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
+      "name": "labels-callout",
+      "title": "labels callout",
+      "path": "/docs/components/PieChart/labels-callout",
+      "components": [
+        {
+          "component": "PieChart",
+          "lineNumber": 31,
+          "line": "<PieChart"
+        }
+      ]
+    },
+    {
       "name": "legend",
       "title": "legend",
       "path": "/docs/components/PieChart/legend",
@@ -181,7 +205,7 @@
       "components": [
         {
           "component": "PieChart",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<PieChart"
         }
       ]
@@ -193,7 +217,7 @@
       "components": [
         {
           "component": "PieChart",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<PieChart"
         }
       ]
@@ -418,6 +442,20 @@
       "line": "<PieChart"
     },
     {
+      "example": "labels",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels",
+      "lineNumber": 35,
+      "line": "<PieChart"
+    },
+    {
+      "example": "labels-callout",
+      "component": "PieChart",
+      "path": "/docs/components/PieChart/labels-callout",
+      "lineNumber": 31,
+      "line": "<PieChart"
+    },
+    {
       "example": "legend",
       "component": "PieChart",
       "path": "/docs/components/PieChart/legend",
@@ -456,14 +494,14 @@
       "example": "motion-spring",
       "component": "PieChart",
       "path": "/docs/components/PieChart/motion-spring",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<PieChart"
     },
     {
       "example": "motion-tween",
       "component": "PieChart",
       "path": "/docs/components/PieChart/motion-tween",
-      "lineNumber": 16,
+      "lineNumber": 17,
       "line": "<PieChart"
     },
     {
@@ -551,5 +589,5 @@
       "line": "<PieChart"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.160Z"
+  "updatedAt": "2026-04-13T13:16:06.099Z"
 }

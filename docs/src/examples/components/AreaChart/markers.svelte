@@ -31,7 +31,10 @@
 				y1={context.height}
 				x2={context.xScale(p.date)}
 				y2={context.yScale(p.value)}
-				class="stroke-surface-content/50 stroke-2 [stroke-dasharray:4,4]"
+				stroke="var(--color-surface-content)"
+				strokeOpacity={0.5}
+				strokeWidth={2}
+				dashArray={[4, 4]}
 			/>
 			<Circle
 				cx={context.xScale(p.date)}

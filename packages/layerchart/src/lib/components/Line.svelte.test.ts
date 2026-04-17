@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
+import type { Component } from 'svelte';
 import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
 import Line from './Line.svelte';
 
@@ -9,7 +10,7 @@ describe('Line', () => {
   describe('pixel mode', () => {
     it('should render a line with pixel values', async () => {
       render(TestHarness, {
-        component: Line,
+        component: Line as unknown as Component,
         componentProps: {
           x1: 0,
           y1: 0,
@@ -32,7 +33,7 @@ describe('Line', () => {
 
     it('should render one line per data item with string accessors', async () => {
       render(TestHarness, {
-        component: Line,
+        component: Line as unknown as Component,
         chartProps: {
           data,
           x: 'date',
@@ -59,7 +60,7 @@ describe('Line', () => {
       ];
 
       render(TestHarness, {
-        component: Line,
+        component: Line as unknown as Component,
         chartProps: {
           data: colorData,
           x: 'date',
@@ -87,7 +88,7 @@ describe('Line', () => {
 
     it('should pass literal CSS colors through unchanged in data mode', async () => {
       render(TestHarness, {
-        component: Line,
+        component: Line as unknown as Component,
         chartProps: {
           data,
           x: 'date',
@@ -114,7 +115,7 @@ describe('Line', () => {
       const explicitData = [{ date: new Date('2024-01-01'), value: 20 }];
 
       render(TestHarness, {
-        component: Line,
+        component: Line as unknown as Component,
         chartProps: {
           data,
           x: 'date',

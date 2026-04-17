@@ -52,12 +52,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 30,
+          "lineNumber": 33,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 33,
+          "lineNumber": 36,
           "line": "<AnnotationPoint"
         }
       ]
@@ -69,27 +69,27 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 56,
+          "lineNumber": 59,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "Text",
-          "lineNumber": 58,
+          "lineNumber": 61,
           "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 60,
+          "lineNumber": 63,
           "line": "<AnnotationLine"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 66,
+          "lineNumber": 69,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 80,
+          "lineNumber": 83,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -101,22 +101,22 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 28,
+          "lineNumber": 31,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 30,
+          "lineNumber": 33,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 45,
+          "lineNumber": 48,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -128,27 +128,27 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 30,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 29,
+          "lineNumber": 32,
           "line": "<AnnotationLine"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 38,
+          "lineNumber": 41,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 54,
+          "lineNumber": 57,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -160,22 +160,22 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 30,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 29,
+          "lineNumber": 32,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 45,
+          "lineNumber": 48,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -187,12 +187,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 19,
+          "lineNumber": 22,
           "line": "<AnnotationPoint"
         }
       ]
@@ -217,44 +217,44 @@
       "example": "label-placement",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/label-placement",
-      "lineNumber": 33,
+      "lineNumber": 36,
       "line": "<AnnotationPoint"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 66,
+      "lineNumber": 69,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
-      "lineNumber": 38,
+      "lineNumber": 41,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
-      "lineNumber": 29,
+      "lineNumber": 32,
       "line": "<AnnotationPoint"
     },
     {
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/series-annotation",
-      "lineNumber": 19,
+      "lineNumber": 22,
       "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.186Z"
+  "updatedAt": "2026-04-12T22:48:24.507Z"
 }

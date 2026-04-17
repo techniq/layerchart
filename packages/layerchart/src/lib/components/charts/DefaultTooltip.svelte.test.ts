@@ -59,16 +59,16 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        // Should have a header
-        const header = container.querySelector('.lc-tooltip-header');
+        // Should have a header (portaled to body)
+        const header = document.querySelector('.lc-tooltip-header');
         expect(header).not.toBeNull();
 
         // Should have 4 tooltip items (3 series + 1 total)
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         expect(items.length).toBe(4);
 
         // Labels should match series keys + total
-        const labels = container.querySelectorAll('.lc-tooltip-item-label');
+        const labels = document.querySelectorAll('.lc-tooltip-item-label');
         expect(labels.length).toBe(4);
         const labelTexts = Array.from(labels).map((l) => l.textContent?.trim());
         expect(labelTexts).toEqual(['apples', 'bananas', 'oranges', 'total']);
@@ -89,7 +89,7 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const colorDots = container.querySelectorAll('.lc-tooltip-item-color');
+        const colorDots = document.querySelectorAll('.lc-tooltip-item-color');
         expect(colorDots.length).toBe(3);
         const colors = Array.from(colorDots).map((dot) =>
           (dot as HTMLElement).style.getPropertyValue('--color')
@@ -112,15 +112,13 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         expect(items.length).toBe(4);
       });
 
-      const items = Array.from(
-        container.querySelectorAll('.lc-tooltip-item-root')
-      ) as HTMLElement[];
+      const items = Array.from(document.querySelectorAll('.lc-tooltip-item-root')) as HTMLElement[];
       const labels = Array.from(
-        container.querySelectorAll('.lc-tooltip-item-label')
+        document.querySelectorAll('.lc-tooltip-item-label')
       ) as HTMLElement[];
 
       triggerPointerEvent(items[0], 'pointerenter');
@@ -164,7 +162,7 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         // 1 series item, no total
         expect(items.length).toBe(1);
       });
@@ -186,14 +184,14 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const header = container.querySelector('.lc-tooltip-header');
+        const header = document.querySelector('.lc-tooltip-header');
         expect(header).not.toBeNull();
 
         // 3 series + 1 total = 4 items
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         expect(items.length).toBe(4);
 
-        const labels = container.querySelectorAll('.lc-tooltip-item-label');
+        const labels = document.querySelectorAll('.lc-tooltip-item-label');
         const labelTexts = Array.from(labels).map((l) => l.textContent?.trim());
         expect(labelTexts).toEqual(['apples', 'bananas', 'oranges', 'total']);
       });
@@ -215,11 +213,11 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         // Should show x and y items
         expect(items.length).toBe(2);
 
-        const labels = Array.from(container.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
+        const labels = Array.from(document.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
           l.textContent?.trim()
         );
         expect(labels).toEqual(['x', 'y']);
@@ -241,11 +239,11 @@ describe('DefaultTooltip', () => {
       triggerTooltip(tooltipCtx);
 
       await vi.waitFor(() => {
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         // Should show x, y, and r items
         expect(items.length).toBe(3);
 
-        const labels = Array.from(container.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
+        const labels = Array.from(document.querySelectorAll('.lc-tooltip-item-label')).map((l) =>
           l.textContent?.trim()
         );
         expect(labels).toEqual(['x', 'y', 'size']);
@@ -270,12 +268,12 @@ describe('DefaultTooltip', () => {
 
       await vi.waitFor(() => {
         // Should show a header with the series name
-        const header = container.querySelector('.lc-tooltip-header');
+        const header = document.querySelector('.lc-tooltip-header');
         expect(header).not.toBeNull();
         expect(header!.textContent).not.toBe('');
 
         // Should show x and y items
-        const items = container.querySelectorAll('.lc-tooltip-item-root');
+        const items = document.querySelectorAll('.lc-tooltip-item-root');
         expect(items.length).toBe(2);
       });
     });

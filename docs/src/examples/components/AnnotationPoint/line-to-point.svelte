@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { AnnotationLine, AnnotationPoint, LineChart, Tooltip, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	const annotations = [
 		{
@@ -60,7 +63,7 @@
 			<AnnotationLine
 				x={annotation.x}
 				y={annotation.y}
-				props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
+				props={{ line: { dashArray: [4, 4], opacity: 0.5 } }}
 			/>
 
 			<AnnotationPoint

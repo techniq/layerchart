@@ -1,7 +1,7 @@
 ---
 description: Marking component which plots individual data points on a graph to show distribution, relationships, or clusters without connecting lines.
 category: marks
-layers: [svg, canvas]
+layers: [svg, canvas, html]
 related: [ScatterChart]
 ---
 

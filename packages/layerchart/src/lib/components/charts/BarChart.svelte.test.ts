@@ -294,7 +294,7 @@ describe('BarChart', () => {
       tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
 
       await vi.waitFor(() => {
-        const colorDots = container.querySelectorAll('.lc-tooltip-item-color');
+        const colorDots = document.querySelectorAll('.lc-tooltip-item-color');
         expect(colorDots.length).toBe(4);
 
         const colors = Array.from(colorDots).map((dot) =>

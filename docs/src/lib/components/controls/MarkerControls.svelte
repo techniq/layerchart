@@ -3,6 +3,7 @@
 	import { Field, RangeField, Switch } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/controls/fields/PathDataMenuField.svelte';
+	import ShowField from './fields/ShowField.svelte';
 
 	interface MarkerConfig {
 		show: boolean;
@@ -24,7 +25,7 @@
 
 	let {
 		config = $bindable({
-			show: true,
+			show: false,
 			tweened: true,
 			markerStart: undefined,
 			markerMid: undefined,
@@ -40,9 +41,7 @@
 </script>
 
 <div class="grid grid-cols-[auto_auto_auto_auto_auto_1fr_1fr_1fr] gap-2 mb-2 screenshot-hidden">
-	<Field label="Show" let:id>
-		<Switch bind:checked={config.show} {id} size="md" />
-	</Field>
+	<ShowField bind:show={config.show} inline />
 	<Field label="Tween" let:id>
 		<Switch bind:checked={config.tweened} {id} size="md" />
 	</Field>

@@ -1,12 +1,14 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
 	import { RangeField, Switch, Field } from 'svelte-ux';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
 	let decay = $state(0.99);

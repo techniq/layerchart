@@ -82,6 +82,9 @@ TODO:
 	*/
   import Connector, { type ConnectorProps } from './Connector.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { getChartContext } from '$lib/contexts/chart.js';
+
+  const ctx = getChartContext();
 
   let {
     data,
@@ -95,6 +98,7 @@ TODO:
     explicitCoords,
     type = 'd3',
     sweep = 'none',
+    radius = 20,
     ...restProps
   }: LinkProps = $props();
 
@@ -125,12 +129,14 @@ TODO:
   const xAccessor = $derived.by(() => {
     if (xProp) return xProp;
     if (sankey) return (d: any) => (d.isSource ? d.node.x1 : d.node.x0);
+    if (ctx.radial) return (d: any) => d.x;
     return (d: any) => (orientation === 'horizontal' ? d.y : d.x);
   });
 
   const yAccessor = $derived.by(() => {
     if (yProp) return yProp;
     if (sankey) return (d: any) => d.y;
+    if (ctx.radial) return (d: any) => d.y;
     return (d: any) => (orientation === 'horizontal' ? d.x : d.y);
   });
 
@@ -173,5 +179,7 @@ TODO:
   {type}
   {curve}
   {sweep}
+  {radius}
+  radial={ctx.radial}
   {...extractLayerProps(restProps, 'lc-link')}
 />

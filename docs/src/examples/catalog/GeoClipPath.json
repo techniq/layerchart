@@ -1,0 +1,68 @@
+{
+  "component": "GeoClipPath",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/GeoClipPath/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 15,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoClipPath",
+          "lineNumber": 23,
+          "line": "<GeoClipPath geojson={nation} invert>"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 24,
+          "line": "<Graticule class=\"stroke-primary/30\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 28,
+          "line": "<GeoPath geojson={feature} class=\"fill-none stroke-surface-content/20\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "GeoClipPath",
+      "path": "/docs/components/GeoClipPath/basic",
+      "lineNumber": 23,
+      "line": "<GeoClipPath geojson={nation} invert>"
+    },
+    {
+      "example": "timezones",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/timezones",
+      "lineNumber": 118,
+      "line": "<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>"
+    },
+    {
+      "example": "clipped",
+      "component": "GeoTile",
+      "path": "/docs/components/GeoTile/clipped",
+      "lineNumber": 44,
+      "line": "<GeoClipPath geojson={selectedFeature}>"
+    },
+    {
+      "example": "us-water-vapor",
+      "component": "Raster",
+      "path": "/docs/components/Raster/us-water-vapor",
+      "lineNumber": 37,
+      "line": "<GeoClipPath geojson={nation}>"
+    }
+  ],
+  "updatedAt": "2026-04-14T21:42:23.802Z"
+}

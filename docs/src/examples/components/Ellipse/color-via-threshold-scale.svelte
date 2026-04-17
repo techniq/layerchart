@@ -32,13 +32,13 @@
 		<AnnotationLine
 			y={50}
 			props={{
-				line: { class: 'stroke-danger/50 [stroke-dasharray:4]' },
+				line: { dashArray: [4], stroke: 'var(--color-danger)', strokeOpacity: 0.5 },
 			}}
 		/>
 		<AnnotationLine
 			y={90}
 			props={{
-				line: { class: 'stroke-success/50 [stroke-dasharray:4]' },
+				line: { dashArray: [4], stroke: 'var(--color-success)', strokeOpacity: 0.5 },
 			}}
 		/>
 		<Ellipse cx="date" cy="value" rx={12} ry={6} fill="value" />

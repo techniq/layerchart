@@ -5,7 +5,7 @@
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		pointCount: 100,
 		pathGenerator: (x: number) => x,
 		curve: undefined as ComponentProps<typeof CurveMenuField>['value'],

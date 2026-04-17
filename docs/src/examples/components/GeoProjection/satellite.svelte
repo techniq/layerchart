@@ -1,12 +1,14 @@
+<script module lang="ts">
+	import { getUsStatesTopology } from '$lib/geo.remote';
+	const topology = await getUsStatesTopology();
+</script>
+
 <script lang="ts">
 	import { geoSatellite } from 'd3-geo-projection';
 	import { merge } from 'topojson-client';
 
 	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
 	import { RangeField } from 'svelte-ux';
-	import { getUsStatesTopology } from '$lib/geo.remote';
-
-	const topology = await getUsStatesTopology();
 	const land = merge(topology, topology.objects.states.geometries as any);
 
 	let yaw = $state(76);

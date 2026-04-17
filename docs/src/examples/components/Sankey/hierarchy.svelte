@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	const data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { hierarchy as d3Hierarchy } from 'd3-hierarchy';
@@ -18,8 +23,6 @@
 	import SankeyControls, {
 		type SankeyConfig
 	} from '$lib/components/controls/SankeyControls.svelte';
-	import { getFlare } from '$lib/data.remote';
-
 	const colorScale = scaleSequential(interpolateCool);
 
 	let highlightLinkIndexes: Array<number | undefined> = $state([]);
@@ -43,7 +46,7 @@
 				}
 	);
 
-	const data = $derived(await getFlare());
+
 	const hierarchy = $derived(
 		d3Hierarchy(data)
 			.sum((d) => d.value)

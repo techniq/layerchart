@@ -1,8 +1,11 @@
+<script module lang="ts">
+	import { getCivilizationEvents } from '$lib/data.remote.js';
+	const data = await getCivilizationEvents();
+</script>
+
 <script lang="ts">
 	import { BarChart, Tooltip, applyLanes } from 'layerchart';
-	import { getCivilizationEvents } from '$lib/data.remote.js';
 
-	const data = $derived(await getCivilizationEvents());
 
 	function formatYear(number: number): string {
 		return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';

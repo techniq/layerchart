@@ -20,7 +20,7 @@
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 84,
+      "lineNumber": 71,
       "line": "<Ribbon"
     },
     {
@@ -38,5 +38,5 @@
       "line": "<Ribbon"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:49.530Z"
+  "updatedAt": "2026-04-08T04:31:42.161Z"
 }

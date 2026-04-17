@@ -75,7 +75,4 @@
   );
 </script>
 
-<Path
-  pathData={d}
-  {...extractLayerProps(restProps, 'lc-geo-spline')}
-/>
+<Path pathData={d} {...extractLayerProps(restProps, 'lc-geo-spline')} />

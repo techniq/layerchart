@@ -127,10 +127,22 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, extractRawDataValue, resolveGeoDataPair, resolveStyleProp, resolveColorProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    extractRawDataValue,
+    resolveGeoDataPair,
+    resolveStyleProp,
+    resolveColorProp,
+  } from '$lib/utils/dataProp.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { cls } from '@layerstack/tailwind';
-  import { vectorArrowPath, vectorArrowFilledPath, vectorSpikePath, transformVectorPath } from '$lib/utils/path.js';
+  import {
+    vectorArrowPath,
+    vectorArrowFilledPath,
+    vectorSpikePath,
+    transformVectorPath,
+  } from '$lib/utils/path.js';
   import Path from './Path.svelte';
 
   let {
@@ -169,11 +181,11 @@
   // Per-item style mode: when any style prop is a function, we must render individual paths
   const hasPerItemStyles = $derived(
     typeof fill === 'function' ||
-    typeof stroke === 'function' ||
-    typeof fillOpacity === 'function' ||
-    typeof strokeWidth === 'function' ||
-    typeof opacity === 'function' ||
-    typeof className === 'function'
+      typeof stroke === 'function' ||
+      typeof fillOpacity === 'function' ||
+      typeof strokeWidth === 'function' ||
+      typeof opacity === 'function' ||
+      typeof className === 'function'
   );
 
   // Contexts
@@ -182,9 +194,7 @@
   const layerCtx = getLayerContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates and values
   function resolveVector(d: any) {
@@ -200,26 +210,34 @@
     return {
       x: resolvedX,
       y: resolvedY,
-      length: resolveDataProp(lengthProp, d, chartCtx.rScale, typeof lengthProp === 'number' ? lengthProp : 12),
-      rotate: typeof rotateProp === 'number' ? rotateProp : (extractRawDataValue(rotateProp, d) ?? 0),
+      length: resolveDataProp(
+        lengthProp,
+        d,
+        chartCtx.rScale,
+        typeof lengthProp === 'number' ? lengthProp : 12
+      ),
+      rotate:
+        typeof rotateProp === 'number' ? rotateProp : (extractRawDataValue(rotateProp, d) ?? 0),
     };
   }
 
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveVector(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveVector(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -287,7 +305,11 @@
 
   const motionX = createMotion(initialX, () => (typeof x === 'number' ? x : 0), motion);
   const motionY = createMotion(initialY, () => (typeof y === 'number' ? y : 0), motion);
-  const motionLength = createMotion(initialLength, () => (typeof lengthProp === 'number' ? lengthProp : 12), motion);
+  const motionLength = createMotion(
+    initialLength,
+    () => (typeof lengthProp === 'number' ? lengthProp : 12),
+    motion
+  );
 
   const pixelRotate = $derived(typeof rotateProp === 'number' ? rotateProp : 0);
 
@@ -344,7 +366,10 @@
     stroke={stroke as string}
     strokeWidth={strokeWidth as number}
     opacity={opacity as number}
-    class="lc-vector {isFilled ? 'lc-vector-filled' : 'lc-vector-stroked'} {typeof className === 'string' ? className : ''}"
+    class="lc-vector {isFilled ? 'lc-vector-filled' : 'lc-vector-stroked'} {typeof className ===
+    'string'
+      ? className
+      : ''}"
   />
 {/if}
 

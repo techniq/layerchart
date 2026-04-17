@@ -25,10 +25,11 @@
 	transform={{
 		mode: 'domain',
 		scaleExtent: [1, 40],
-		domainExtent: {
-			x: { min: -100, max: domainSize + 100 },
-			y: { min: -100, max: domainSize + 100 }
-		},
+		// TODO: Disabled as domainExtent currently doesn't work well with inverted domains and zoom to cursor.
+		// domainExtent: {
+		// 	x: { min: -100, max: domainSize + 100 },
+		// 	y: { min: -100, max: domainSize + 100 }
+		// },
 		motion: { type: 'spring' }
 	}}
 	height={500}

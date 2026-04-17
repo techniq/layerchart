@@ -125,6 +125,12 @@ export const getFlare = prerender(async () => {
 	return data;
 });
 
+export const getSimpleTree = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/hierarchy/simple-tree.json').then((r) => r.json());
+	return data;
+});
+
 export const getUsSenators = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
@@ -335,9 +341,9 @@ export type CategoryBrand = {
 
 export const getCategoryBrands = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = await fetch('/data/examples/category-brands.csv').then(async (r) =>
+	const data = (await fetch('/data/examples/category-brands.csv').then(async (r) =>
 		csvParse(await r.text(), autoType)
-	) as unknown as CategoryBrand[];
+	)) as unknown as CategoryBrand[];
 
 	// Ensure dates are Date objects
 	for (const d of data) {
@@ -371,4 +377,14 @@ export const getShapeData = query(z.string().nullable(), async (file) => {
 	const { fetch } = getRequestEvent();
 	const geojson = await fetch(file).then((r) => r.json());
 	return geojson;
+});
+
+export type TdfStageData = { long: number; lat: number; elev: number }[];
+
+export const getTdfStage = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/geo/tdf-stage.json').then((r) =>
+		r.json()
+	)) as TdfStageData;
+	return data;
 });

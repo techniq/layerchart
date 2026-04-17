@@ -8,17 +8,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 11,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 12,
+          "lineNumber": 15,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -30,22 +30,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<Chart {data} x=\"date\" y=\"value\" padding={{ left: 80, right: 80 }} brush height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 12,
+          "lineNumber": 15,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 16,
+          "lineNumber": 19,
           "line": "<Text"
         }
       ]
@@ -57,22 +57,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 21,
+          "lineNumber": 24,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 22,
+          "lineNumber": 25,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Rect",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<rect"
         }
       ]
@@ -84,22 +84,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 14,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 16,
+          "lineNumber": 19,
           "line": "<Text"
         }
       ]
@@ -111,7 +111,44 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 21,
+          "lineNumber": 24,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 41,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 42,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "ChartClipPath",
+          "lineNumber": 44,
+          "line": "<ChartClipPath>"
+        },
+        {
+          "component": "LinearGradient",
+          "lineNumber": 45,
+          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
+        },
+        {
+          "component": "Area",
+          "lineNumber": 47,
+          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+        }
+      ]
+    },
+    {
+      "name": "integrated-brush-(x-axis)",
+      "title": "integrated brush (x axis)",
+      "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 23,
           "line": "<Chart"
         },
         {
@@ -142,75 +179,38 @@
       ]
     },
     {
-      "name": "integrated-brush-(x-axis)",
-      "title": "integrated brush (x axis)",
-      "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 20,
-          "line": "<Chart"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 35,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 36,
-          "line": "<Axis placement=\"left\" grid rule />"
-        },
-        {
-          "component": "ChartClipPath",
-          "lineNumber": 38,
-          "line": "<ChartClipPath>"
-        },
-        {
-          "component": "LinearGradient",
-          "lineNumber": 39,
-          "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
-        },
-        {
-          "component": "Area",
-          "lineNumber": 41,
-          "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
-        }
-      ]
-    },
-    {
       "name": "integrated-brush-(y-axis)",
       "title": "integrated brush (y axis)",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 20,
+          "lineNumber": 23,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 38,
+          "lineNumber": 41,
           "line": "<ChartClipPath>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 39,
+          "lineNumber": 42,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 41,
+          "lineNumber": 44,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
       ]
@@ -259,22 +259,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 39,
+          "lineNumber": 42,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 49,
+          "lineNumber": 52,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 50,
+          "lineNumber": 53,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Area",
-          "lineNumber": 52,
+          "lineNumber": 55,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -318,32 +318,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 21,
+          "lineNumber": 24,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 34,
+          "lineNumber": 37,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         },
         {
           "component": "Axis",
-          "lineNumber": 42,
+          "lineNumber": 45,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 44,
+          "lineNumber": 47,
           "line": "<ChartClipPath>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 45,
+          "lineNumber": 48,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         }
       ]
@@ -355,32 +355,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 20,
+          "lineNumber": 23,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 29,
+          "lineNumber": 32,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 30,
+          "lineNumber": 33,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 32,
+          "lineNumber": 35,
           "line": "<ChartClipPath>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 33,
+          "lineNumber": 36,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         }
       ]
@@ -392,27 +392,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 19,
+          "lineNumber": 22,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 34,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 32,
+          "lineNumber": 35,
           "line": "<Axis placement=\"left\" grid rule motion={{ type: 'tween', duration: 200 }} />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 34,
+          "lineNumber": 37,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Area"
         }
       ]
@@ -424,17 +424,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 20,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 18,
+          "lineNumber": 21,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -446,17 +446,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<Chart {data} x=\"date\" y=\"value\" brush={{ classes: { range: 'striped-background' } }} height={40}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 11,
+          "lineNumber": 14,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 12,
+          "lineNumber": 15,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -510,47 +510,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 23,
+          "lineNumber": 26,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 40,
+          "lineNumber": 43,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 41,
+          "lineNumber": 44,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 43,
+          "lineNumber": 46,
           "line": "<ChartClipPath>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 44,
+          "lineNumber": 47,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 46,
+          "lineNumber": 49,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 50,
+          "lineNumber": 53,
           "line": "<Highlight points lines />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 53,
+          "lineNumber": 56,
           "line": "<Tooltip.Root"
         }
       ]
     }
   ],
   "usage": [],
-  "updatedAt": "2026-03-24T16:00:54.951Z"
+  "updatedAt": "2026-04-12T22:48:24.963Z"
 }

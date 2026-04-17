@@ -70,7 +70,7 @@
         },
         {
           "component": "Hull",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<Hull"
         }
       ]
@@ -88,9 +88,9 @@
       "example": "scatter",
       "component": "Hull",
       "path": "/docs/components/Hull/scatter",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<Hull"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.887Z"
+  "updatedAt": "2026-04-13T13:16:05.553Z"
 }

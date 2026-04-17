@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getUsCountiesAlbersTopology, getUsPresidentialElection2020 } from '$lib/geo.remote.js';
+	const topology = await getUsCountiesAlbersTopology();
+	const electionData = await getUsPresidentialElection2020();
+</script>
+
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { geoIdentity, geoPath as d3GeoPath, type GeoProjection } from 'd3-geo';
@@ -5,10 +11,6 @@
 
 	import { Chart, GeoPath, Layer, Vector, Tooltip } from 'layerchart';
 
-	import { getUsCountiesAlbersTopology, getUsPresidentialElection2020 } from '$lib/geo.remote.js';
-
-	const topology = await getUsCountiesAlbersTopology();
-	const electionData = await getUsPresidentialElection2020();
 
 	const projection = geoIdentity as unknown as () => GeoProjection;
 

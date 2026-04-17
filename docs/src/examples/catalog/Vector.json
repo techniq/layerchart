@@ -89,27 +89,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 69,
+          "lineNumber": 71,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 84,
+          "lineNumber": 86,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 85,
+          "lineNumber": 87,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
         },
         {
           "component": "Vector",
-          "lineNumber": 87,
+          "lineNumber": 89,
           "line": "<Vector"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 112,
+          "lineNumber": 114,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -163,27 +163,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 36,
+          "lineNumber": 38,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 37,
+          "lineNumber": 39,
           "line": "<Axis placement=\"bottom\" />"
         },
         {
           "component": "Vector",
-          "lineNumber": 40,
+          "lineNumber": 42,
           "line": "<Vector"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 51,
+          "lineNumber": 53,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -194,7 +194,7 @@
       "example": "spike-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/spike-map",
-      "lineNumber": 83,
+      "lineNumber": 85,
       "line": "<Vector"
     },
     {
@@ -243,7 +243,7 @@
       "example": "election-wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/election-wind-map",
-      "lineNumber": 87,
+      "lineNumber": 89,
       "line": "<Vector"
     },
     {
@@ -299,9 +299,9 @@
       "example": "wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/wind-map",
-      "lineNumber": 40,
+      "lineNumber": 42,
       "line": "<Vector"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:17.084Z"
+  "updatedAt": "2026-04-12T22:48:27.131Z"
 }

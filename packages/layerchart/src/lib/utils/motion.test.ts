@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseMotionProp, extractTweenConfig } from './motion.svelte.js';
+import { createMotion, parseMotionProp, extractTweenConfig } from './motion.svelte.js';
 import type {
   MotionProp,
   MotionSpringOption,
@@ -142,6 +142,63 @@ describe('parseMotionProp', () => {
 
       const result = parseMotionProp<ValidProps>(propMap, 'x');
       expect(result).toEqual({ type: 'spring', options: {} });
+    });
+  });
+});
+
+describe('createMotion', () => {
+  describe('fast path (motionProp === undefined)', () => {
+    it('should return a passthrough that reads from the getter', () => {
+      let value = 42;
+      const motion = createMotion(0, () => value, undefined);
+      expect(motion.current).toBe(42);
+
+      value = 99;
+      expect(motion.current).toBe(99);
+    });
+
+    it('should have type "none"', () => {
+      const motion = createMotion(0, () => 0, undefined);
+      expect(motion.type).toBe('none');
+    });
+
+    it('should return resolved promise from set()', async () => {
+      const motion = createMotion(0, () => 0, undefined);
+      const result = motion.set(10);
+      expect(result).toBeInstanceOf(Promise);
+      await expect(result).resolves.toBeUndefined();
+    });
+
+    it('target getter should read from getValue', () => {
+      let value = 5;
+      const motion = createMotion(0, () => value, undefined);
+      expect(motion.target).toBe(5);
+
+      value = 20;
+      expect(motion.target).toBe(20);
+    });
+  });
+
+  describe('with explicit "none" motion', () => {
+    it('should create a MotionNone state (not a passthrough)', () => {
+      const motion = createMotion(0, () => 42, 'none');
+      // MotionNone stores its own state, so current reflects the initial value
+      // until the tracking effect runs (which requires Svelte runtime)
+      expect(motion.type).toBe('none');
+    });
+  });
+
+  describe('with spring motion', () => {
+    it('should create a spring motion state', () => {
+      const motion = createMotion(0, () => 42, 'spring');
+      expect(motion.type).toBe('spring');
+    });
+  });
+
+  describe('with tween motion', () => {
+    it('should create a tween motion state', () => {
+      const motion = createMotion(0, () => 42, 'tween');
+      expect(motion.type).toBe('tween');
     });
   });
 });

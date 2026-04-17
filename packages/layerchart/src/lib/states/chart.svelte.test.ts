@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { flushSync } from 'svelte';
 
 import { scaleBand } from 'd3-scale';
+import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
@@ -11,6 +12,7 @@ import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 type TestData = { date: string; value: number };
 type MultiSeriesData = { date: string; apples: number; bananas: number };
 type WideData = { year: string; apples: number; bananas: number; cherries: number; grapes: number };
+type GeoData = { name: string; longitude: number; latitude: number };
 
 function createChartState<T = TestData>(props: Partial<ChartPropsWithoutHTML<T>>) {
   let cleanup: () => void;
@@ -331,17 +333,23 @@ describe('ChartState mark registration', () => {
 
       expect(state.seriesState.isDefaultSeries).toBe(false);
       expect(state.seriesState.series).toHaveLength(2);
-      expect(state.seriesState.series[0]).toMatchObject({ key: 'apples', color: 'red', value: 'apples' });
-      expect(state.seriesState.series[1]).toMatchObject({ key: 'bananas', color: 'yellow', value: 'bananas' });
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'apples',
+        color: 'red',
+        value: 'apples',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'bananas',
+        color: 'yellow',
+        value: 'bananas',
+      });
     } finally {
       cleanup();
     }
   });
 
   it('should not generate implicit series when explicit series are provided', () => {
-    const data: MultiSeriesData[] = [
-      { date: '2024-01', apples: 10, bananas: 15 },
-    ];
+    const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
       data,
@@ -603,6 +611,138 @@ describe('ChartState mark registration', () => {
   });
 });
 
+describe('ChartState geo projection skips markInfo', () => {
+  const geoData: GeoData[] = [
+    { name: 'New York', longitude: -74.006, latitude: 40.7128 },
+    { name: 'Los Angeles', longitude: -118.2437, latitude: 34.0522 },
+    { name: 'Chicago', longitude: -87.6298, latitude: 41.8781 },
+  ];
+
+  it('should not create implicit series from marks when geo projection is active', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      // Register a mark with its own data (like a tooltip highlight Circle)
+      state.registerMark({ data: [geoData[0]], x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // Should remain default series — mark should not create implicit "latitude" series
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not add mark data to flatData when geo projection is active', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      state.registerMark({ data: [geoData[0]], x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // flatData should only contain chart data, not the mark's extra data
+      expect(state.flatData).toHaveLength(3);
+      expect(state.flatData).toBe(geoData);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not derive x/y accessors from marks when geo projection is active', () => {
+    // Chart with geo but no explicit x/y — marks should not fill in the accessors
+    const { state: stateWithGeo, cleanup: cleanupGeo } = createChartState<GeoData>({
+      data: geoData,
+      geo: { projection: geoAlbersUsa },
+    });
+
+    const { state: stateWithoutGeo, cleanup: cleanupNoGeo } = createChartState<GeoData>({
+      data: geoData,
+    });
+
+    try {
+      // Both start with null x accessor (no x prop set)
+      expect(stateWithGeo.x).toBeNull();
+      expect(stateWithoutGeo.x).toBeNull();
+
+      stateWithGeo.registerMark({ x: 'longitude', y: 'latitude' });
+      stateWithoutGeo.registerMark({ x: 'longitude', y: 'latitude' });
+      flushSync();
+
+      // Without geo: mark should derive x accessor
+      expect(stateWithoutGeo.x).not.toBeNull();
+      expect(stateWithoutGeo.x!(geoData[0])).toBe(geoData[0].longitude);
+
+      // With geo: mark should NOT derive x accessor
+      expect(stateWithGeo.x).toBeNull();
+    } finally {
+      cleanupGeo();
+      cleanupNoGeo();
+    }
+  });
+
+  it('should preserve seriesKey/color/label from marks in geo mode for legends', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'longitude',
+      y: 'latitude',
+      geo: { projection: geoAlbersUsa },
+    });
+
+    try {
+      state.registerMark({ seriesKey: 'earthquakes', color: 'red', label: 'Earthquakes' });
+      state.registerMark({ seriesKey: 'volcanos', color: 'orange', label: 'Volcanos' });
+      flushSync();
+
+      // seriesKey/color/label should still create implicit series for legends
+      expect(state.seriesState.isDefaultSeries).toBe(false);
+      expect(state.seriesState.series).toHaveLength(2);
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'earthquakes',
+        color: 'red',
+        label: 'Earthquakes',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'volcanos',
+        color: 'orange',
+        label: 'Volcanos',
+      });
+
+      // But flatData should not include extra mark data
+      expect(state.flatData).toHaveLength(3);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should still process marks normally without geo projection', () => {
+    const { state, cleanup } = createChartState<GeoData>({
+      data: geoData,
+      x: 'name',
+    });
+
+    try {
+      state.registerMark({ y: 'latitude', color: 'blue' });
+      flushSync();
+
+      // Without geo, marks should create implicit series as normal
+      expect(state.seriesState.isDefaultSeries).toBe(false);
+      expect(state.seriesState.series[0].key).toBe('latitude');
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState implicit series domain update on visibility toggle', () => {
   it('should update y domain when hiding an implicit series', () => {
     const data: MultiSeriesData[] = [
@@ -854,9 +994,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should deduplicate repeated mark x keys into a single accessor', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({});
 
@@ -874,9 +1012,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should use explicit x/y from Chart props over mark-derived values', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({
       x: 'value', // explicit — should override 'date' from marks
@@ -1282,12 +1418,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
     { year: '2017', apples: 960, bananas: 480, cherries: 240, grapes: 100 },
   ];
 
-  const series = [
-    { key: 'apples' },
-    { key: 'bananas' },
-    { key: 'cherries' },
-    { key: 'grapes' },
-  ];
+  const series = [{ key: 'apples' }, { key: 'bananas' }, { key: 'cherries' }, { key: 'grapes' }];
 
   it('should auto-derive x1Domain from series keys when seriesLayout=group and valueAxis=y', () => {
     const { state, cleanup } = createChartState<WideData>({
@@ -1383,9 +1514,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
 
     try {
       // With more padding, bandwidth should be smaller
-      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(
-        stateNoPad.x1Scale!.bandwidth!()
-      );
+      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(stateNoPad.x1Scale!.bandwidth!());
     } finally {
       c1();
       c2();
@@ -1445,6 +1574,56 @@ describe('ChartState group layout auto-derives x1/y1', () => {
 
       // With only 1 series, bandwidth should be larger (full group band)
       expect(state.x1Scale!.bandwidth!()).toBeGreaterThan(initialBandwidth);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState x1Domain/y1Domain without series', () => {
+  type LongData = { year: number; fruit: string; value: number };
+  const longData: LongData[] = [
+    { year: 2019, fruit: 'apples', value: 3840 },
+    { year: 2019, fruit: 'bananas', value: 1920 },
+    { year: 2018, fruit: 'apples', value: 1600 },
+    { year: 2018, fruit: 'bananas', value: 1440 },
+  ];
+
+  it('should pass through explicit x1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through explicit y1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      y: 'year',
+      yScale: scaleBand(),
+      x: 'value',
+      y1: 'fruit',
+      y1Domain: ['apples', 'bananas'],
+      y1Range: ({ yScale }) => [0, (yScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.y1Domain).toEqual(['apples', 'bananas']);
+      expect(state.y1Scale!.domain()).toEqual(['apples', 'bananas']);
     } finally {
       cleanup();
     }

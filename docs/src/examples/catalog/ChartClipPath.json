@@ -13,28 +13,28 @@
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 196,
+      "lineNumber": 200,
       "line": "<ChartClipPath>"
     },
     {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 41,
+      "lineNumber": 44,
       "line": "<ChartClipPath>"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 38,
+      "lineNumber": 41,
       "line": "<ChartClipPath>"
     },
     {
       "example": "integrated-brush-(y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
-      "lineNumber": 38,
+      "lineNumber": 41,
       "line": "<ChartClipPath>"
     },
     {
@@ -48,14 +48,14 @@
       "example": "separate-chart-(clip-data-y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
-      "lineNumber": 44,
+      "lineNumber": 47,
       "line": "<ChartClipPath>"
     },
     {
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 32,
+      "lineNumber": 35,
       "line": "<ChartClipPath>"
     },
     {
@@ -69,7 +69,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
-      "lineNumber": 43,
+      "lineNumber": 46,
       "line": "<ChartClipPath>"
     },
     {
@@ -83,42 +83,42 @@
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 47,
+      "lineNumber": 49,
       "line": "<ChartClipPath>"
     },
     {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 109,
+      "lineNumber": 112,
       "line": "<ChartClipPath>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 96,
+      "lineNumber": 100,
       "line": "<ChartClipPath>"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 97,
+      "lineNumber": 100,
       "line": "<ChartClipPath>"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 89,
+      "lineNumber": 92,
       "line": "<ChartClipPath>"
     },
     {
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 87,
+      "lineNumber": 90,
       "line": "<ChartClipPath>"
     },
     {
@@ -129,5 +129,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:17.657Z"
+  "updatedAt": "2026-04-13T13:16:04.506Z"
 }

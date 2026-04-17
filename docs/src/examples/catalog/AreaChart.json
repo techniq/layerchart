@@ -44,7 +44,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 9,
+          "lineNumber": 11,
           "line": "<AreaChart"
         }
       ]
@@ -207,7 +207,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 9,
+          "lineNumber": 12,
           "line": "<AreaChart"
         }
       ]
@@ -229,12 +229,12 @@
         },
         {
           "component": "Circle",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Circle"
         },
         {
           "component": "Layer",
-          "lineNumber": 46,
+          "lineNumber": 49,
           "line": "<Layer type=\"html\">"
         }
       ]
@@ -246,7 +246,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<AreaChart"
         }
       ]
@@ -270,12 +270,12 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 23,
+          "lineNumber": 26,
           "line": "<AreaChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -311,12 +311,12 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<AreaChart"
         },
         {
           "component": "Spline",
-          "lineNumber": 45,
+          "lineNumber": 48,
           "line": "<Spline y=\"avg\" curve={curveCatmullRom} class=\"stroke-primary\" />"
         }
       ]
@@ -328,7 +328,7 @@
       "components": [
         {
           "component": "AreaChart",
-          "lineNumber": 9,
+          "lineNumber": 12,
           "line": "<AreaChart"
         }
       ]
@@ -699,7 +699,7 @@
       "example": "brush",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/brush",
-      "lineNumber": 9,
+      "lineNumber": 11,
       "line": "<AreaChart"
     },
     {
@@ -769,7 +769,7 @@
       "example": "line-annotation",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/line-annotation",
-      "lineNumber": 9,
+      "lineNumber": 12,
       "line": "<AreaChart"
     },
     {
@@ -783,7 +783,7 @@
       "example": "motion-tween",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/motion-tween",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<AreaChart"
     },
     {
@@ -797,7 +797,7 @@
       "example": "point-annotations",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/point-annotations",
-      "lineNumber": 23,
+      "lineNumber": 26,
       "line": "<AreaChart"
     },
     {
@@ -818,14 +818,14 @@
       "example": "radial",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/radial",
-      "lineNumber": 10,
+      "lineNumber": 13,
       "line": "<AreaChart"
     },
     {
       "example": "range-annotation",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/range-annotation",
-      "lineNumber": 9,
+      "lineNumber": 12,
       "line": "<AreaChart"
     },
     {
@@ -1004,5 +1004,5 @@
       "line": "<AreaChart"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:26.431Z"
+  "updatedAt": "2026-04-14T21:42:22.815Z"
 }

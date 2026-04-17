@@ -174,7 +174,7 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 200,
+      "lineNumber": 204,
       "line": "<Rect"
     },
     {
@@ -195,7 +195,7 @@
       "example": "histogram-horizontal",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-horizontal",
-      "lineNumber": 35,
+      "lineNumber": 38,
       "line": "<Rect x0={(d) => 0} y0=\"x0\" x1=\"length\" y1=\"x1\" insets={{ y: 1 }} class=\"fill-primary\" />"
     },
     {
@@ -209,28 +209,28 @@
       "example": "histogram-vertical",
       "component": "BarChart",
       "path": "/docs/components/BarChart/histogram-vertical",
-      "lineNumber": 37,
+      "lineNumber": 40,
       "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 202,
+      "lineNumber": 206,
       "line": "<Rect"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 25,
+      "lineNumber": 28,
       "line": "<rect"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 37,
+      "lineNumber": 40,
       "line": "<rect"
     },
     {
@@ -241,10 +241,17 @@
       "line": "<Rect"
     },
     {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 13,
+      "line": "<rect x=\"100\" y=\"130\" width=\"160\" height=\"40\" />"
+    },
+    {
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 66,
+      "lineNumber": 68,
       "line": "<Rect"
     },
     {
@@ -258,14 +265,35 @@
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 78,
+      "lineNumber": 80,
       "line": "<Rect"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 77,
+      "lineNumber": 79,
+      "line": "<Rect"
+    },
+    {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 423,
+      "line": "<Rect"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 331,
+      "line": "<Rect"
+    },
+    {
+      "example": "true-size-globe",
+      "component": "GeoProjection",
+      "path": "/docs/components/GeoProjection/true-size-globe",
+      "lineNumber": 374,
       "line": "<Rect"
     },
     {
@@ -388,24 +416,31 @@
       "line": "<Rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />"
     },
     {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 151,
+      "line": "<rect"
+    },
+    {
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 126,
+      "lineNumber": 129,
       "line": "<Rect"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 109,
+      "lineNumber": 113,
       "line": "<Rect"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 110,
+      "lineNumber": 113,
       "line": "<Rect"
     },
     {
@@ -790,49 +825,56 @@
       "example": "complex",
       "component": "Sankey",
       "path": "/docs/components/Sankey/complex",
-      "lineNumber": 90,
+      "lineNumber": 93,
       "line": "<Rect"
     },
     {
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 100,
+      "lineNumber": 103,
       "line": "<Rect"
     },
     {
       "example": "node-select",
       "component": "Sankey",
       "path": "/docs/components/Sankey/node-select",
-      "lineNumber": 43,
+      "lineNumber": 47,
       "line": "<Rect"
     },
     {
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 19,
+      "lineNumber": 23,
       "line": "<Rect width={nodeWidth} height={nodeHeight} class=\"fill-primary\" />"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 31,
+      "lineNumber": 34,
       "line": "<Rect"
     },
     {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Rect"
     },
     {
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 104,
+      "lineNumber": 35,
+      "line": "<Rect"
+    },
+    {
+      "example": "playground",
+      "component": "Tree",
+      "path": "/docs/components/Tree/playground",
+      "lineNumber": 148,
       "line": "<Rect"
     },
     {
@@ -846,21 +888,21 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 96,
+      "lineNumber": 100,
       "line": "<Rect"
     },
     {
       "example": "nested-filter",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-filter",
-      "lineNumber": 143,
+      "lineNumber": 146,
       "line": "<Rect"
     },
     {
       "example": "nested-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/nested-zoom",
-      "lineNumber": 114,
+      "lineNumber": 117,
       "line": "<Rect"
     },
     {
@@ -874,9 +916,9 @@
       "example": "stacked-zoom",
       "component": "Treemap",
       "path": "/docs/components/Treemap/stacked-zoom",
-      "lineNumber": 102,
+      "lineNumber": 105,
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.294Z"
+  "updatedAt": "2026-04-16T17:47:00.475Z"
 }

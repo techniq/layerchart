@@ -8,27 +8,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Density",
-          "lineNumber": 30,
+          "lineNumber": 32,
           "line": "<Density {bandwidth} thresholds={20} fillOpacity={0.8} />"
         },
         {
           "component": "Points",
-          "lineNumber": 31,
+          "lineNumber": 33,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
       ]
@@ -40,27 +40,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 9,
+          "lineNumber": 11,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 20,
+          "lineNumber": 22,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 21,
+          "lineNumber": 23,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Density",
-          "lineNumber": 23,
+          "lineNumber": 25,
           "line": "<Density bandwidth={10} thresholds={20} fillOpacity={0.8} />"
         },
         {
           "component": "Points",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
       ]
@@ -72,27 +72,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 9,
+          "lineNumber": 11,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 20,
+          "lineNumber": 22,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 21,
+          "lineNumber": 23,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Density",
-          "lineNumber": 23,
+          "lineNumber": 25,
           "line": "<Density fill=\"none\" stroke=\"oklch(0.6 0.2 260)\" strokeWidth={1} bandwidth={10} thresholds={20} />"
         },
         {
           "component": "Points",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
       ]
@@ -104,27 +104,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 16,
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Density",
-          "lineNumber": 30,
+          "lineNumber": 32,
           "line": "<Density bandwidth={10} {thresholds} fillOpacity={0.8} />"
         },
         {
           "component": "Points",
-          "lineNumber": 31,
+          "lineNumber": 33,
           "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
         }
       ]
@@ -136,32 +136,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 22,
+          "lineNumber": 24,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 43,
+          "lineNumber": 45,
           "line": "<Layer>"
         },
         {
           "component": "Density",
-          "lineNumber": 44,
+          "lineNumber": 46,
           "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 45,
+          "lineNumber": 47,
           "line": "<GeoPath"
         },
         {
           "component": "Circle",
-          "lineNumber": 55,
+          "lineNumber": 57,
           "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 72,
+          "lineNumber": 74,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -209,35 +209,35 @@
       "example": "bandwidth",
       "component": "Density",
       "path": "/docs/components/Density/bandwidth",
-      "lineNumber": 30,
+      "lineNumber": 32,
       "line": "<Density {bandwidth} thresholds={20} fillOpacity={0.8} />"
     },
     {
       "example": "basic",
       "component": "Density",
       "path": "/docs/components/Density/basic",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<Density bandwidth={10} thresholds={20} fillOpacity={0.8} />"
     },
     {
       "example": "stroke-only",
       "component": "Density",
       "path": "/docs/components/Density/stroke-only",
-      "lineNumber": 23,
+      "lineNumber": 25,
       "line": "<Density fill=\"none\" stroke=\"oklch(0.6 0.2 260)\" strokeWidth={1} bandwidth={10} thresholds={20} />"
     },
     {
       "example": "thresholds",
       "component": "Density",
       "path": "/docs/components/Density/thresholds",
-      "lineNumber": 30,
+      "lineNumber": 32,
       "line": "<Density bandwidth={10} {thresholds} fillOpacity={0.8} />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 44,
+      "lineNumber": 46,
       "line": "<Density data={walmarts} x=\"longitude\" y=\"latitude\" bandwidth={10} fillOpacity={0.7} />"
     },
     {
@@ -248,5 +248,5 @@
       "line": "<Density"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:17.912Z"
+  "updatedAt": "2026-04-12T22:48:25.440Z"
 }

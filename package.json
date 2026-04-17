@@ -26,7 +26,7 @@
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "prettier-plugin-svelte": "^3.5.1",
     "rimraf": "6.1.3",
-    "wrangler": "^4.76.0"
+    "wrangler": "^4.81.1"
   },
   "packageManager": "pnpm@10.18.2",
   "pnpm": {

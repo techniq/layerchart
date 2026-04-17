@@ -77,6 +77,8 @@
 
   const ctx = getChartContext();
 
+  ctx.registerComponent({ name: 'Rule', kind: 'composite-mark' });
+
   const data = $derived(chartDataArray(dataProp ?? ctx.data));
 
   const singleX = $derived(

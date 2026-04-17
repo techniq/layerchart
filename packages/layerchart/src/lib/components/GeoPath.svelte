@@ -151,7 +151,7 @@
   <Path
     {pathData}
     {...restProps}
-    onclick={_onClick}
+    onclick={onclick ? _onClick : undefined}
     onpointerenter={tooltip || onpointerenter ? _onPointerEnter : undefined}
     onpointermove={tooltip || onpointermove ? _onPointerMove : undefined}
     onpointerleave={tooltip || onpointerleave ? _onPointerLeave : undefined}

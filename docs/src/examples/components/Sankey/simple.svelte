@@ -1,8 +1,12 @@
-<script lang="ts">
+<script module lang="ts">
 	import { getSimpleGraph } from '$lib/graph.remote';
+	const data = await getSimpleGraph();
+</script>
+
+<script lang="ts">
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text } from 'layerchart';
 
-	const data = $derived(await getSimpleGraph());
+
 </script>
 
 <Chart {data} flatData={[]} height={400}>

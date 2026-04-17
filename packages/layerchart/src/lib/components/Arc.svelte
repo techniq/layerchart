@@ -149,6 +149,10 @@
           centroid: [number, number];
           boundingBox: DOMRect;
           value: number;
+          startAngle: number;
+          endAngle: number;
+          innerRadius: number;
+          outerRadius: number;
           getTrackTextProps: GetArcTextProps;
           getArcTextProps: GetArcTextProps;
         },
@@ -250,7 +254,8 @@
   const ctx = getChartContext();
 
   const endAngle = $derived(
-    endAngleProp ?? degreesToRadians(ctx.xRange ? max(ctx.xRange) : max(range))
+    endAngleProp ??
+      degreesToRadians((ctx.config.xRange ? max(ctx.config.xRange as number[]) : max(range))!)
   );
 
   const motionEndAngle = createMotion(initialValue, () => value, motion);
@@ -275,13 +280,11 @@
     }
   }
 
-  const outerRadius = $derived(
-    getOuterRadius(outerRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
-  );
+  const chartRadius = $derived((Math.min(ctx.width, ctx.height) ?? 0) / 2);
+
+  const outerRadius = $derived(getOuterRadius(outerRadiusProp, chartRadius));
   const trackOuterRadius = $derived(
-    trackOuterRadiusProp
-      ? getOuterRadius(trackOuterRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
-      : outerRadius
+    trackOuterRadiusProp ? getOuterRadius(trackOuterRadiusProp, chartRadius) : outerRadius
   );
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
@@ -370,8 +373,8 @@
       {
         startAngle: () => trackStartAngle,
         endAngle: () => trackEndAngle,
-        outerRadius: () => trackOuterRadius + (opts.outerPadding ? opts.outerPadding : 0),
-        innerRadius: () => trackInnerRadius,
+        outerRadius: () => trackOuterRadius + (opts.outerPadding ?? 0),
+        innerRadius: () => trackInnerRadius - (opts.innerPadding ?? 0),
         cornerRadius: () => trackCornerRadius,
         centroid: () => trackArcCentroid,
       },
@@ -385,8 +388,8 @@
       {
         startAngle: () => startAngle,
         endAngle: () => arcEndAngle,
-        outerRadius: () => outerRadius + (opts.outerPadding ? opts.outerPadding : 0),
-        innerRadius: () => innerRadius,
+        outerRadius: () => outerRadius + (opts.outerPadding ?? 0),
+        innerRadius: () => innerRadius - (opts.innerPadding ?? 0),
         cornerRadius: () => cornerRadius,
         centroid: () => trackArcCentroid,
       },
@@ -432,6 +435,10 @@
   centroid: trackArcCentroid,
   boundingBox,
   value: motionEndAngle.current,
+  startAngle,
+  endAngle: arcEndAngle,
+  innerRadius,
+  outerRadius,
   getTrackTextProps: getTrackTextProps,
   getArcTextProps: getArcTextProps,
 })}

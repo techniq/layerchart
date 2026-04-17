@@ -8,7 +8,15 @@
      *
      * Pass `children` to render a custom element/component inside the marker instead.
      */
-    type?: 'arrow' | 'triangle' | 'line' | 'circle' | 'circle-stroke' | 'dot' | 'square' | 'square-stroke';
+    type?:
+      | 'arrow'
+      | 'triangle'
+      | 'line'
+      | 'circle'
+      | 'circle-stroke'
+      | 'dot'
+      | 'square'
+      | 'square-stroke';
 
     /**
      * Unique identifier for the marker

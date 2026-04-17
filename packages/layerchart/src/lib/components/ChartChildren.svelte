@@ -195,7 +195,12 @@
     {#if typeof grid === 'function'}
       {@render grid(snippetProps)}
     {:else if grid}
-      <Grid x={context.valueAxis === 'x' || context.radial} y={context.valueAxis === 'y' || context.radial} {...getObjectOrNull(grid)} {...props.grid} />
+      <Grid
+        x={context.valueAxis === 'x' || context.radial}
+        y={context.valueAxis === 'y' || context.radial}
+        {...getObjectOrNull(grid)}
+        {...props.grid}
+      />
     {/if}
 
     <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
@@ -212,7 +217,12 @@
       {#if typeof rule === 'function'}
         {@render rule(snippetProps)}
       {:else if rule}
-        <Rule x={context.valueAxis === 'x' ? 0 : false} y={context.valueAxis === 'y' ? 0 : false} {...getObjectOrNull(rule)} {...props.rule} />
+        <Rule
+          x={context.valueAxis === 'x' ? 0 : false}
+          y={context.valueAxis === 'y' ? 0 : false}
+          {...getObjectOrNull(rule)}
+          {...props.rule}
+        />
       {/if}
     {:else if axis}
       {#if axis !== 'x'}
@@ -236,12 +246,20 @@
       {#if typeof rule === 'function'}
         {@render rule(snippetProps)}
       {:else if rule}
-        <Rule x={context.valueAxis === 'x' ? 0 : false} y={context.valueAxis === 'y' ? 0 : false} {...getObjectOrNull(rule)} {...props.rule} />
+        <Rule
+          x={context.valueAxis === 'x' ? 0 : false}
+          y={context.valueAxis === 'y' ? 0 : false}
+          {...getObjectOrNull(rule)}
+          {...props.rule}
+        />
       {/if}
     {/if}
 
     <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-    <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'} full>
+    <ChartClipPath
+      disabled={!context.props.brush && context.transformState?.mode !== 'domain'}
+      full
+    >
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
       {:else if points}

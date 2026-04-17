@@ -11,13 +11,15 @@ related: [Grid, Rule]
 
 ### tickSpacing
 
-If using a continuous scales (ex. linear, time) and ticks become too crowded, you can use `tickSpacing` to control the number of pixels alloted for each tick (higher => fewer ticks).
+Controls the number of pixels allotted for each tick (higher => fewer ticks). Works with both continuous scales (linear, time) and band scales. When zoomed in on a band scale, tick labels automatically adjust to show more as bands get wider.
 
 ::note
 Default: `80` for horizontal axes (top/bottom/angle) and `50` for vertical axes (left/right/radius).
 ::
 
 :example{ name="linechart-tickspacing" showCode }
+
+:example{ name="barchart-tickspacing" showCode }
 
 ::tip
 See also: time scale [auto](/docs/components/Axis/time-scale-auto), [multiline](/docs/components/Axis/time-scale-auto-multiline), and [brush](/docs/components/Axis/time-scale-brush-multiline) examples

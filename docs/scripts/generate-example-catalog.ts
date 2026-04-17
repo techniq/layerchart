@@ -97,6 +97,26 @@ function extractComponentsFromExample(
 }
 
 /**
+ * Extract module-level exports (title, description) from a <script module> block
+ */
+function extractModuleExports(filePath: string): { title?: string; description?: string } {
+	const content = fs.readFileSync(filePath, 'utf-8');
+	const moduleMatch = content.match(/<script\s+module>([\s\S]*?)<\/script>/);
+	if (!moduleMatch) return {};
+
+	const moduleContent = moduleMatch[1];
+	const result: { title?: string; description?: string } = {};
+
+	const titleMatch = moduleContent.match(/export\s+const\s+title\s*=\s*['"`](.+?)['"`]/);
+	if (titleMatch) result.title = titleMatch[1];
+
+	const descMatch = moduleContent.match(/export\s+const\s+description\s*=\s*['"`](.+?)['"`]/);
+	if (descMatch) result.description = descMatch[1];
+
+	return result;
+}
+
+/**
  * Get all examples for a specific component
  */
 function getComponentExamples(componentName: string, allComponents: string[]): ExampleInfo[] {
@@ -119,12 +139,21 @@ function getComponentExamples(componentName: string, allComponents: string[]): E
 			// Extract all components used in this example
 			const componentsInExample = extractComponentsFromExample(filePath, allComponents);
 
-			examples.push({
+			// Extract module-level exports
+			const moduleExports = extractModuleExports(filePath);
+
+			const info: ExampleInfo = {
 				name: exampleName,
-				title: exampleName.replaceAll('-', ' '),
+				title: moduleExports.title ?? exampleName.replaceAll('-', ' '),
 				path: `/docs/components/${componentName}/${exampleName}`,
 				components: componentsInExample
-			});
+			};
+
+			if (moduleExports.description) {
+				info.description = moduleExports.description;
+			}
+
+			examples.push(info);
 		}
 	}
 

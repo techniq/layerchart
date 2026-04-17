@@ -139,9 +139,13 @@ export function autoTickVals(scale: AnyScale, ticks?: TicksConfig, count?: numbe
 
   // Band (use domain)
   if (isScaleBand(scale)) {
-    return ticks && typeof ticks === 'number'
-      ? scale.domain().filter((_, i) => i % ticks === 0)
-      : scale.domain();
+    const domain = scale.domain();
+    const resolvedCount = typeof ticks === 'number' ? ticks : count;
+    if (resolvedCount != null && resolvedCount < domain.length) {
+      const step = Math.max(1, Math.ceil(domain.length / resolvedCount));
+      return domain.filter((_, i) => i % step === 0);
+    }
+    return domain;
   }
 
   // Ticks from scale

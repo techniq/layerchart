@@ -1,3 +1,7 @@
+<script module>
+	export const layers = ['svg', 'canvas'];
+</script>
+
 <script lang="ts">
 	import { Area, BarChart, Tooltip } from 'layerchart';
 	import { createDateSeries } from '$lib/utils/data.js';

@@ -2,6 +2,7 @@ import type { ClassValue } from 'svelte/elements';
 import memoize from 'memoize';
 import { cls } from '@layerstack/tailwind';
 import type { PatternShape } from '$lib/components/Pattern.svelte';
+import { roundedRectPath } from './path.js';
 
 /** @deprecated - use `isTransparentFill` instead */
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
@@ -87,6 +88,14 @@ export function _getComputedStyles(
   canvas: HTMLCanvasElement,
   { styles, classes }: ComputedStylesOptions = {}
 ) {
+  // Server-side: no DOM available, return styles with sensible defaults
+  if (typeof document === 'undefined') {
+    const merged = { ...styles } as CSSStyleDeclaration;
+    if (!merged.fontSize) merged.fontSize = '10px';
+    if (!merged.fontFamily) merged.fontFamily = 'sans-serif';
+    return merged;
+  }
+
   // console.count(`getComputedStyles: ${getComputedStylesKey(canvas, { styles, classes })}`);
   try {
     // Get or create `<svg>` below `<canvas>`
@@ -171,11 +180,19 @@ function render(
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   let resolvedStyles: StyleOptions;
   if (
-    styleOptions.classes == null &&
-    !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var('))
+    typeof document === 'undefined' ||
+    (styleOptions.classes == null &&
+      !Object.values(mergedStyles).some((v) => typeof v === 'string' && v.includes('var(')))
   ) {
-    // Skip resolving styles if no classes are provided and no styles are using CSS variables
+    // Skip resolving styles if running on server (no DOM), or no classes are provided and no styles are using CSS variables
     resolvedStyles = mergedStyles;
+
+    // On server, provide sensible defaults for styles that would normally come from CSS
+    if (typeof document === 'undefined') {
+      if (!resolvedStyles.stroke && !resolvedStyles.fill) {
+        resolvedStyles = { ...resolvedStyles, stroke: 'black' };
+      }
+    }
   } else {
     // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
     const { constantStyles, variableStyles } = Object.entries(mergedStyles).reduce<{
@@ -205,13 +222,16 @@ function render(
     resolvedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
   if (resolvedStyles?.opacity) {
-    ctx.globalAlpha = Number(resolvedStyles?.opacity);
+    ctx.globalAlpha *= Number(resolvedStyles?.opacity);
   }
 
   // font/text properties can be expensive to set (not sure why), so only apply if needed (renderText())
   if (applyText) {
-    // Text properties
-    ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+    // Text properties — use defaults for server-side rendering where computed styles aren't available
+    const fontSize = resolvedStyles.fontSize || '10px';
+    const fontFamily = resolvedStyles.fontFamily || 'sans-serif';
+    const fontWeight = resolvedStyles.fontWeight || '';
+    ctx.font = `${fontWeight} ${fontSize} ${fontFamily}`.trim(); // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
     if (resolvedStyles.textAnchor === 'middle') {
       ctx.textAlign = 'center';
@@ -248,8 +268,10 @@ function render(
     if (attr === 'fill') {
       const fill =
         styleOptions.styles?.fill &&
-        ((styleOptions.styles?.fill as any) instanceof CanvasGradient ||
-          (styleOptions.styles?.fill as any) instanceof CanvasPattern ||
+        ((typeof CanvasGradient !== 'undefined' &&
+          (styleOptions.styles?.fill as any) instanceof CanvasGradient) ||
+          (typeof CanvasPattern !== 'undefined' &&
+            (styleOptions.styles?.fill as any) instanceof CanvasPattern) ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
           : resolvedStyles?.fill;
@@ -258,8 +280,7 @@ function render(
         const currentGlobalAlpha = ctx.globalAlpha;
 
         const fillOpacity = Number(resolvedStyles?.fillOpacity);
-        const opacity = Number(resolvedStyles?.opacity);
-        ctx.globalAlpha = fillOpacity * opacity;
+        ctx.globalAlpha *= isNaN(fillOpacity) ? 1 : fillOpacity;
 
         ctx.fillStyle = fill;
         render.fill(ctx);
@@ -270,7 +291,8 @@ function render(
     } else if (attr === 'stroke') {
       const stroke =
         styleOptions.styles?.stroke &&
-        ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
+        ((typeof CanvasGradient !== 'undefined' &&
+          (styleOptions.styles?.stroke as any) instanceof CanvasGradient) ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
           : resolvedStyles?.stroke;
@@ -281,7 +303,7 @@ function render(
         const strokeOpacity = Number(resolvedStyles?.strokeOpacity);
         const opacity = Number(resolvedStyles?.opacity);
         if (!isNaN(strokeOpacity) && strokeOpacity !== 1) {
-          ctx.globalAlpha = strokeOpacity * (isNaN(opacity) ? 1 : opacity);
+          ctx.globalAlpha *= strokeOpacity;
         }
 
         ctx.lineWidth =
@@ -338,15 +360,25 @@ export function renderText(
 
 export function renderRect(
   ctx: CanvasRenderingContext2D,
-  coords: { x: number; y: number; width: number; height: number; rx?: number; ry?: number },
+  coords: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    rx?: number;
+    ry?: number;
+    /** Per-corner radii [tl, tr, br, bl]. Takes precedence over `rx`/`ry`. */
+    corners?: [number, number, number, number];
+  },
   styleOptions: ComputedStylesOptions = {}
 ) {
-  const { x, y, width, height } = coords;
+  const { x, y, width, height, corners } = coords;
   const rx = coords.rx ?? 0;
   const ry = coords.ry ?? rx; // Default ry to rx if not provided (SVG behavior)
+  const perCorner = corners && !corners.every((c) => c === corners[0]);
 
   // No rounding - use simple rect methods
-  if (rx === 0 && ry === 0) {
+  if (!perCorner && rx === 0 && ry === 0 && !corners) {
     render(
       ctx,
       {
@@ -361,7 +393,7 @@ export function renderRect(
   // Try native roundRect if available (modern browsers)
   if (typeof ctx.roundRect === 'function') {
     ctx.beginPath();
-    ctx.roundRect(x, y, width, height, [rx, ry]);
+    ctx.roundRect(x, y, width, height, corners ?? [rx, ry]);
     render(
       ctx,
       {
@@ -375,6 +407,12 @@ export function renderRect(
   }
 
   // Fallback: use path rendering for rounded corners
+  if (corners) {
+    const pathData = roundedRectPath(x, y, width, height, corners);
+    renderPathData(ctx, pathData, styleOptions);
+    return;
+  }
+
   // Clamp radii to half the width/height
   const clampedRx = Math.min(rx, width / 2);
   const clampedRy = Math.min(ry, height / 2);
@@ -469,7 +507,7 @@ export function clearCanvasContext(
   @see: https://web.dev/articles/canvas-hidipi
 */
 export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height: number) {
-  const devicePixelRatio = window.devicePixelRatio || 1;
+  const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
 
   ctx.canvas.width = width * devicePixelRatio;
   ctx.canvas.height = height * devicePixelRatio;
@@ -483,7 +521,7 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
 
 /** Get pixel color (r,g,b,a) at canvas coordinates */
 export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
-  const dpr = window.devicePixelRatio ?? 1;
+  const dpr = (typeof window !== 'undefined' ? window.devicePixelRatio : null) ?? 1;
   const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
   const [r, g, b, a] = imageData.data;
   return { r, g, b, a };

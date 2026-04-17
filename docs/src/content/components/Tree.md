@@ -7,4 +7,8 @@ related: []
 
 ## Usage
 
-:example{ name="basic" }
+:example{ name="basic" showCode }
+
+### Playground
+
+:example{ name="playground" }

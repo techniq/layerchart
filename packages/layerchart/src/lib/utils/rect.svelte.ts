@@ -249,3 +249,56 @@ export function createDimensionGetter<TData>(
 export function firstValue(value: number | number[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }
+
+/**
+ * Per-corner radii, ordered [top-left, top-right, bottom-right, bottom-left] —
+ * matching CSS `border-radius` shorthand and Canvas `roundRect`.
+ */
+export type CornerRadii = [number, number, number, number];
+
+export type Corners =
+  | number
+  | CornerRadii
+  | {
+      topLeft?: number;
+      topRight?: number;
+      bottomRight?: number;
+      bottomLeft?: number;
+    };
+
+/**
+ * Normalize a `Corners` value to `[tl, tr, br, bl]`, clamping each corner to
+ * half the shorter side so opposite corners cannot overlap.
+ */
+export function resolveCorners(
+  corners: Corners | undefined,
+  width: number,
+  height: number
+): CornerRadii {
+  let tl = 0;
+  let tr = 0;
+  let br = 0;
+  let bl = 0;
+  if (typeof corners === 'number') {
+    tl = tr = br = bl = corners;
+  } else if (Array.isArray(corners)) {
+    [tl, tr, br, bl] = corners;
+  } else if (corners) {
+    tl = corners.topLeft ?? 0;
+    tr = corners.topRight ?? 0;
+    br = corners.bottomRight ?? 0;
+    bl = corners.bottomLeft ?? 0;
+  }
+  const max = Math.min(width, height) / 2;
+  return [
+    Math.min(Math.max(0, tl), max),
+    Math.min(Math.max(0, tr), max),
+    Math.min(Math.max(0, br), max),
+    Math.min(Math.max(0, bl), max),
+  ];
+}
+
+/** True when all four corner radii are equal (lets callers use simpler `rx`/`ry` rendering). */
+export function cornersUniform([tl, tr, br, bl]: CornerRadii): boolean {
+  return tl === tr && tr === br && br === bl;
+}

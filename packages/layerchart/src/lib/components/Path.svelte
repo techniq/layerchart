@@ -118,6 +118,14 @@
     endContent,
     opacity,
     pathRef: pathRefProp = $bindable(),
+    onclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerdown,
+    onpointerover,
+    onpointerout,
+    ontouchmove,
     ...restProps
   }: PathProps = $props();
 
@@ -185,34 +193,54 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-        pointerover: restProps.onpointerover,
-        pointerout: restProps.onpointerout,
-        touchmove: restProps.ontouchmove,
+    ctx.registerComponent({
+      name: 'Path',
+      kind: 'mark',
+      canvasRender: {
+        render,
+        events: {
+          get click() {
+            return onclick;
+          },
+          get pointerenter() {
+            return onpointerenter;
+          },
+          get pointermove() {
+            return onpointermove;
+          },
+          get pointerleave() {
+            return onpointerleave;
+          },
+          get pointerdown() {
+            return onpointerdown;
+          },
+          get pointerover() {
+            return onpointerover;
+          },
+          get pointerout() {
+            return onpointerout;
+          },
+          get touchmove() {
+            return ontouchmove;
+          },
+        },
+        deps: () => [
+          fillKey!.current,
+          fillOpacity,
+          strokeKey!.current,
+          strokeOpacity,
+          strokeWidth,
+          opacity,
+          className,
+          tweenedState.current,
+          restProps.style,
+        ],
       },
-      deps: () => [
-        fillKey.current,
-        fillOpacity,
-        strokeKey.current,
-        strokeOpacity,
-        strokeWidth,
-        opacity,
-        className,
-        tweenedState.current,
-        restProps.style,
-      ],
-    } });
+    });
   }
 
   let startPoint = $state<DOMPoint | undefined>();
@@ -275,6 +303,14 @@
     <path
       d={tweenedState.current}
       {...restProps}
+      {onclick}
+      {onpointerenter}
+      {onpointermove}
+      {onpointerleave}
+      {onpointerdown}
+      {onpointerover}
+      {onpointerout}
+      {ontouchmove}
       class={cls('lc-path', className)}
       {fill}
       fill-opacity={fillOpacity}

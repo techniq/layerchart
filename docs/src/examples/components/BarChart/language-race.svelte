@@ -1,14 +1,18 @@
+<script module lang="ts">
+	import { getProgrammingLanguages } from '$lib/data.remote.js';
+	const allData = await getProgrammingLanguages();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, ChartClipPath, Group, Image, Layer, Rect, Text } from 'layerchart';
 	import { Button, RangeField } from 'svelte-ux';
 	import LucidePlay from '~icons/lucide/play';
 	import LucidePause from '~icons/lucide/pause';
-	import { getProgrammingLanguages } from '$lib/data.remote.js';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { pairs, rollup, ascending, max, rank } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 
-	const allData = $derived(await getProgrammingLanguages());
+
 
 	const n = 12;
 	const k = 2; // less interpolation for monthly data

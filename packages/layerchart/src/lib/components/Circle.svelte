@@ -78,6 +78,13 @@
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
 
+    /**
+     * Dashed-border pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). HTML layer approximates via `border-style: dashed`.
+     */
+    dashArray?: number | number[] | string;
+
     /** Children content to render.  Note: Only works for Html layers */
     children?: Snippet;
   } & DataDrivenStyleProps;
@@ -95,11 +102,18 @@
   import { untrack } from 'svelte';
   import { createMotion, createDataMotionMap, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
+  import { parseDashArray } from '$lib/utils/path.js';
 
   let {
     cx = 0,
@@ -118,9 +132,13 @@
     opacity,
     class: className,
     ref: refProp = $bindable(),
+    dashArray,
     children,
     ...restProps
   }: CircleProps = $props();
+
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
 
   // Data mode detection: if any positional prop is a string or function
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
@@ -130,9 +148,7 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates
   function resolveCircle(d: any) {
@@ -154,19 +170,21 @@
   // --- Data mode: resolved items with optional motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  // Update motion targets when resolved values change
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveCircle(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  // Only create the data motion tracking effect when motion is actually configured
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveCircle(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   // Reading Spring .current here makes this reactive to animation frames
@@ -199,20 +217,24 @@
 
   const layerCtx = getLayerContext();
 
-  const motionCx = createMotion(
-    initialCx,
-    () => (typeof cx === 'number' ? cx : 0),
-    motion
-  );
-  const motionCy = createMotion(
-    initialCy,
-    () => (typeof cy === 'number' ? cy : 0),
-    motion
-  );
-  const motionR = createMotion(
-    initialR,
-    () => (typeof r === 'number' ? r : 1),
-    motion
+  const motionCx = createMotion(initialCx, () => (typeof cx === 'number' ? cx : 0), motion);
+  const motionCy = createMotion(initialCy, () => (typeof cy === 'number' ? cy : 0), motion);
+  const motionR = createMotion(initialR, () => (typeof r === 'number' ? r : 1), motion);
+
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  // Match SVG's implicit `stroke-width: 1` default: if `stroke` is set but
+  // `strokeWidth` is not, render a 1px border so HTML matches SVG/Canvas layers.
+  const staticBorderWidth = $derived(
+    typeof strokeWidth === 'number'
+      ? `${strokeWidth}px`
+      : typeof stroke === 'string'
+        ? '1px'
+        : undefined
   );
 
   // Style options (shared between pixel and data mode)
@@ -226,17 +248,36 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-circle', itemClass ?? (typeof className === 'string' ? className : undefined)),
-          style: restProps.style as string | undefined,
+          classes: cls(
+            'lc-circle',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
+          style:
+            [
+              restProps.style as string | undefined,
+              dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+            ]
+              .filter(Boolean)
+              .join('; ') || undefined,
         };
   }
 
@@ -252,7 +293,15 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         renderCircle(ctx, item, styleOpts);
       }
     } else {
@@ -266,8 +315,9 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  // Only create key trackers when in canvas mode (they're only used for canvas dep tracking)
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Circle',
@@ -281,30 +331,34 @@
         color: typeof fill === 'string' ? fill : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerdown: restProps.onpointerdown,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        motionCx.current,
-        motionCy.current,
-        motionR.current,
-        fillKey.current,
-        fillOpacity,
-        strokeKey.current,
-        strokeWidth,
-        opacity,
-        className,
-        restProps.style,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: restProps.onclick,
+              pointerdown: restProps.onpointerdown,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              motionCx.current,
+              motionCy.current,
+              motionR.current,
+              fillKey!.current,
+              fillOpacity,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+              restProps.style,
+              dashArrayAttr,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -326,6 +380,7 @@
         stroke={resolvedStroke}
         stroke-width={resolvedStrokeWidth}
         opacity={resolvedOpacity}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
       />
@@ -336,12 +391,13 @@
       cx={motionCx.current}
       cy={motionCy.current}
       r={motionR.current}
-      fill={fill as string}
-      fill-opacity={fillOpacity as number}
-      stroke={stroke as string}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
-      class={cls('lc-circle', className as string)}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
+      stroke-dasharray={dashArrayAttr}
+      class={cls('lc-circle', staticClassName)}
       {...restProps}
     />
   {/if}
@@ -354,6 +410,12 @@
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
+      {@const resolvedBorderWidth =
+        resolvedStrokeWidth != null
+          ? `${resolvedStrokeWidth}px`
+          : resolvedStroke != null
+            ? '1px'
+            : undefined}
       <div
         style:position="absolute"
         style:left="{item.cx}px"
@@ -361,11 +423,12 @@
         style:width="{item.r * 2}px"
         style:height="{item.r * 2}px"
         style:border-radius="50%"
-        style:background-color={resolvedFill}
+        style:background={resolvedFill}
+        style:background-origin="border-box"
         style:opacity={resolvedOpacity}
-        style:border-width={resolvedStrokeWidth}
+        style:border-width={resolvedBorderWidth}
         style:border-color={resolvedStroke}
-        style:border-style="solid"
+        style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:transform="translate(-50%, -50%)"
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
@@ -379,13 +442,14 @@
       style:width="{motionR.current * 2}px"
       style:height="{motionR.current * 2}px"
       style:border-radius="50%"
-      style:background-color={fill as string}
-      style:opacity={opacity as number}
-      style:border-width={strokeWidth as number}
-      style:border-color={stroke as string}
-      style:border-style="solid"
+      style:background={staticFill}
+      style:background-origin="border-box"
+      style:opacity={staticOpacity}
+      style:border-width={staticBorderWidth}
+      style:border-color={staticStroke}
+      style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
       style:transform="translate(-50%, -50%)"
-      class={cls('lc-circle', className as string)}
+      class={cls('lc-circle', staticClassName)}
       {...restProps}
     >
       {@render children?.()}
@@ -409,8 +473,12 @@
     }
 
     /* Html layers */
-    :global(:where(.lc-layout-html .lc-circle):not([background-color])) {
-      background-color: var(--fill-color);
+    :global(:where(.lc-layout-html .lc-circle)) {
+      /* Match SVG sizing (visual extent equals `r * 2`, border on outer edge) */
+      box-sizing: border-box;
+    }
+    :global(:where(.lc-layout-html .lc-circle):not([background])) {
+      background: var(--fill-color);
     }
     :global(:where(.lc-layout-html .lc-circle):not([border-color])) {
       border-color: var(--stroke-color);

@@ -137,9 +137,7 @@
   const dataMode = $derived(hasAnyDataProp(x, y));
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates
   function resolveGroup(d: any) {
@@ -156,18 +154,20 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveGroup(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveGroup(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -196,10 +196,18 @@
   const initialY = initialYProp ?? (typeof y === 'number' ? y : undefined);
 
   const trueX = $derived(
-    typeof x === 'number' ? x : (x == null && (center === 'x' || center === true) ? chartCtx.width / 2 : 0)
+    typeof x === 'number'
+      ? x
+      : x == null && (center === 'x' || center === true)
+        ? chartCtx.width / 2
+        : 0
   );
   const trueY = $derived(
-    typeof y === 'number' ? y : (y == null && (center === 'y' || center === true) ? chartCtx.height / 2 : 0)
+    typeof y === 'number'
+      ? y
+      : y == null && (center === 'y' || center === true)
+        ? chartCtx.height / 2
+        : 0
   );
   const motionX = createMotion(initialX, () => trueX, motion);
   const motionY = createMotion(initialY, () => trueY, motion);

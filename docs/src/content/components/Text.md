@@ -31,6 +31,12 @@ Use a threshold scale to color text based on value ranges.
 
 :example{ name="color-via-threshold-scale" showCode }
 
+### Segments
+
+Use the `segments` prop to render inline text with mixed styles (different font sizes, weights, or colors). Each segment gets its own `class` for styling. Works across SVG, Canvas, and HTML layers.
+
+:example{ name="segments" showCode }
+
 ## Use cases
 
 ### Truncate text of axis labels

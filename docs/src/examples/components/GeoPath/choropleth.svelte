@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
+	const geojson = await getUsCountiesAlbersTopology();
+	const populationData = await getUsCountyPopulation();
+</script>
+
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { scaleQuantile } from 'd3-scale';
@@ -8,10 +14,6 @@
 	import { Chart, GeoPath, Legend, Layer, Tooltip, getSettings } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 
-	import { getUsCountiesAlbersTopology, getUsCountyPopulation } from '$lib/geo.remote.js';
-
-	const geojson = await getUsCountiesAlbersTopology();
-	const populationData = await getUsCountyPopulation();
 
 	const states = feature(geojson, geojson.objects.states);
 	const counties = feature(geojson, geojson.objects.counties);
@@ -44,11 +46,7 @@
 		})
 	);
 
-	const colorScale = $derived(
-		scaleQuantile<string, string>()
-			.domain(population.map((d) => d.population))
-			.range(schemeBlues[9])
-	);
+	const colorDomain = $derived(population.map((d) => d.population));
 
 	const data = { geojson, populationData, states, counties, population, enrichedCountiesFeatures };
 
@@ -56,6 +54,11 @@
 </script>
 
 <Chart
+	data={enrichedCountiesFeatures}
+	c={(d) => d.properties.data?.population ?? 0}
+	cScale={scaleQuantile()}
+	cDomain={colorDomain}
+	cRange={schemeBlues[9]}
 	geo={{
 		projection,
 		fitGeojson: states
@@ -67,6 +70,7 @@
 	padding={{ top: 60 }}
 	tooltipContext={{ raiseTarget: getSettings().layer === 'svg' }}
 	height={600}
+	clip
 >
 	{#snippet children({ context })}
 		{@const strokeWidth = 1 / context.transform.scale}
@@ -76,7 +80,7 @@
 			{#each enrichedCountiesFeatures as feature}
 				<GeoPath
 					geojson={feature}
-					fill={colorScale(feature.properties.data?.population ?? 0)}
+					fill={context.cScale?.(feature.properties.data?.population ?? 0)}
 					class="stroke-none hover:stroke-white"
 					{strokeWidth}
 					tooltip
@@ -98,7 +102,6 @@
 		</Layer>
 
 		<Legend
-			scale={colorScale}
 			title="Population"
 			class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
 		/>

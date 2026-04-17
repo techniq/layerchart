@@ -128,10 +128,24 @@ export class ChartState<
   private _nextMarkId = 0;
 
   /** Reactive accessor — reads _markInfosVersion to create a reactive dependency,
-   * returns the plain array so items are never wrapped in Svelte proxies. */
+   * returns the plain array so items are never wrapped in Svelte proxies.
+   *
+   * When a geo projection is active, strips x/y/data from mark info — those
+   * values are geographic coordinates handled by the projection, not xScale/yScale.
+   * seriesKey/color/label are preserved so marks can still contribute to legends. */
   private get _markInfos() {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this._markInfosVersion;
+    if (this.geoState.props.projection) {
+      return this._markInfosRaw.map(({ _id, info }) => ({
+        _id,
+        info: {
+          seriesKey: info.seriesKey,
+          color: info.color,
+          label: info.label,
+        } as MarkInfo,
+      }));
+    }
     return this._markInfosRaw;
   }
 
@@ -209,7 +223,12 @@ export class ChartState<
 
     if (markInfo && !insideCompositeMark) {
       $effect(() => {
-        return untrack(() => this.registerMark(markInfo()));
+        const info = markInfo();
+        // Skip registration for empty mark info (e.g. pixel-mode marks)
+        // to avoid unnecessary array push/splice and version bumps
+        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label)
+          return;
+        return untrack(() => this.registerMark(info));
       });
     }
 
@@ -238,8 +257,12 @@ export class ChartState<
   constructor(propsGetter: () => ChartPropsWithoutHTML<TData, XScale, YScale>) {
     this._propsGetter = propsGetter;
 
-    // Create GeoState instance
-    this.geoState = new GeoState(() => this.props.geo ?? {});
+    // Create GeoState instance — pass a dimensions getter so projection
+    // is available during SSR (where $effect doesn't run)
+    this.geoState = new GeoState(
+      () => this.props.geo ?? {},
+      () => ({ width: this.width, height: this.height })
+    );
 
     // Create SeriesState internally from series/seriesLayout props.
     // When no explicit series are provided, derive implicit series from mark registrations.
@@ -476,6 +499,33 @@ export class ChartState<
     this.props.yRange ??
       (this.props.radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
+
+  /** Transform-aware range for band scales in domain mode (D3 range-rescaling pattern) */
+  private _xScaleRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      isScaleBand(this._xScaleProp) &&
+      this.width > 0
+    ) {
+      const { scale, translate } = this.transformState;
+      return [translate.x, translate.x + this.width * scale];
+    }
+    return this.xRangeProp;
+  });
+
+  private _yScaleRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      isScaleBand(this._yScaleProp) &&
+      this.height > 0
+    ) {
+      const { scale, translate } = this.transformState;
+      return [translate.y, translate.y + this.height * scale];
+    }
+    return this.yRangeProp;
+  });
 
   yReverse = $derived(!isScaleBand(this._yScaleProp) && !isScaleTime(this._yScaleProp));
 
@@ -817,8 +867,13 @@ export class ChartState<
 
   x1Domain = $derived.by(() => {
     if (this.props.x1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full x1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.x1Domain;
     }
     // Auto-derive for grouped series when x is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
@@ -831,8 +886,13 @@ export class ChartState<
   });
   y1Domain = $derived.by(() => {
     if (this.props.y1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full y1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.y1Domain;
     }
     // Auto-derive for grouped series when y is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {
@@ -864,7 +924,7 @@ export class ChartState<
       nice: this.xNice,
       reverse: this.props.xReverse ?? false,
       percentRange: this.props.percentRange ?? false,
-      range: this.xRangeProp,
+      range: this._xScaleRange,
       height: this.height,
       width: this.width,
       extents: this.snappedExtents,
@@ -881,7 +941,7 @@ export class ChartState<
       nice: this.yNice,
       reverse: this.yReverse,
       percentRange: this.props.percentRange ?? false,
-      range: this.yRangeProp,
+      range: this._yScaleRange,
       height: this.height,
       width: this.width,
       extents: this.filteredExtents,
@@ -1021,8 +1081,29 @@ export class ChartState<
   zDomainPossiblyNice = $derived(this.zScale.domain());
   rDomainPossiblyNice = $derived(this.rScale.domain());
 
-  xRange = $derived(getRange(this.xScale));
-  yRange = $derived(getRange(this.yScale));
+  /** Viewport range — always [0, width] / [height, 0] for layout components (axis, grid, etc).
+   *  When band scale domain transform is active, xScale.range() is wider than the viewport,
+   *  so we return the base scale's range instead. */
+  xRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'x' || this.transformState.axis === 'both') &&
+      isScaleBand(this._xScaleProp)
+    ) {
+      return getRange(this.baseXScale);
+    }
+    return getRange(this.xScale);
+  });
+  yRange = $derived.by(() => {
+    if (
+      this.transformState?.mode === 'domain' &&
+      (this.transformState.axis === 'y' || this.transformState.axis === 'both') &&
+      isScaleBand(this._yScaleProp)
+    ) {
+      return getRange(this.baseYScale);
+    }
+    return getRange(this.yScale);
+  });
   zRange = $derived(getRange(this.zScale));
   rRange = $derived(getRange(this.rScale));
 
@@ -1171,25 +1252,58 @@ export class ChartState<
     const brushY = brush.y;
 
     if ((axis === 'x' || axis === 'both') && brushX[0] != null && brushX[1] != null) {
-      const baseMinX = +this._baseXDomain[0];
-      const baseRangeX = +this._baseXDomain[1] - baseMinX;
-      const brushMinX = +brushX[0];
-      const brushRangeX = +brushX[1] - brushMinX;
+      const baseDomainX = this._baseXDomain;
 
-      if (brushRangeX > 0 && baseRangeX > 0) {
-        const newScale = baseRangeX / brushRangeX;
-        const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
+      if (typeof baseDomainX[0] === 'string') {
+        // Categorical: compute scale/translate from domain indices
+        const totalCount = baseDomainX.length;
+        const startIdx = (baseDomainX as unknown as string[]).indexOf(brushX[0] as string);
+        const endIdx = (baseDomainX as unknown as string[]).indexOf(brushX[1] as string) + 1;
+        const selectedCount = endIdx - startIdx;
 
-        let newTranslateY = 0;
-        if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
-          const baseMinY = +this._baseYDomain[0];
-          const baseRangeY = +this._baseYDomain[1] - baseMinY;
-          const brushMinY = +brushY[0];
-          newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
+        if (selectedCount > 0 && totalCount > 0) {
+          const newScale = totalCount / selectedCount;
+          const newTranslateX = -(startIdx / totalCount) * this.width * newScale;
+
+          let newTranslateY = 0;
+          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
+            const baseDomainY = this._baseYDomain;
+            if (typeof baseDomainY[0] === 'string') {
+              const yTotal = baseDomainY.length;
+              const yStart = (baseDomainY as unknown as string[]).indexOf(brushY[0] as string);
+              const yEnd = (baseDomainY as unknown as string[]).indexOf(brushY[1] as string) + 1;
+              const ySelected = yEnd - yStart;
+              if (ySelected > 0) {
+                newTranslateY = -(yStart / yTotal) * this.height * newScale;
+              }
+            }
+          }
+
+          this.transform.setScale(newScale);
+          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
         }
+      } else {
+        // Continuous: existing numeric logic
+        const baseMinX = +baseDomainX[0];
+        const baseRangeX = +baseDomainX[1] - baseMinX;
+        const brushMinX = +brushX[0];
+        const brushRangeX = +brushX[1] - brushMinX;
 
-        this.transform.setScale(newScale);
-        this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+        if (brushRangeX > 0 && baseRangeX > 0) {
+          const newScale = baseRangeX / brushRangeX;
+          const newTranslateX = -((brushMinX - baseMinX) / baseRangeX) * this.width * newScale;
+
+          let newTranslateY = 0;
+          if (axis === 'both' && brushY[0] != null && brushY[1] != null) {
+            const baseMinY = +this._baseYDomain[0];
+            const baseRangeY = +this._baseYDomain[1] - baseMinY;
+            const brushMinY = +brushY[0];
+            newTranslateY = -((brushMinY - baseMinY) / baseRangeY) * this.height * newScale;
+          }
+
+          this.transform.setScale(newScale);
+          this.transform.setTranslate({ x: newTranslateX, y: newTranslateY });
+        }
       }
     }
   }

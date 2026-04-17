@@ -15,6 +15,14 @@ const components = defineCollection({
 		description: z.string().optional(),
 		category: z.string().optional(),
 		layers: z.array(z.string()).default([]),
+		/**
+		 * Whether the component renders inside an `<Svg|Canvas|Html>` layer.
+		 * Set to `false` for components that live outside any layer (e.g.
+		 * Legend, CircleLegend, GeoLegend) — they don't constrain which layers
+		 * the rest of the chart can render into and are skipped when
+		 * intersecting example layer support.
+		 */
+		withinLayer: z.boolean().default(true),
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),

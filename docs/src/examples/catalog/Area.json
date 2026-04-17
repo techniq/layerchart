@@ -67,42 +67,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 20,
+          "lineNumber": 22,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 33,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 32,
+          "lineNumber": 34,
           "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
         },
         {
           "component": "Area",
-          "lineNumber": 34,
+          "lineNumber": 36,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 35,
+          "lineNumber": 37,
           "line": "<RectClipPath"
         },
         {
           "component": "Highlight",
-          "lineNumber": 46,
+          "lineNumber": 48,
           "line": "<Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />"
         },
         {
           "component": "Axis",
-          "lineNumber": 47,
+          "lineNumber": 49,
           "line": "<Axis placement=\"bottom\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 50,
+          "lineNumber": 52,
           "line": "<Tooltip.Root"
         }
       ]
@@ -946,14 +946,14 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 34,
+      "lineNumber": 36,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />"
     },
     {
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 42,
+      "lineNumber": 44,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
@@ -1212,112 +1212,112 @@
       "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
-      "lineNumber": 12,
+      "lineNumber": 15,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "constant-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/constant-labels",
-      "lineNumber": 13,
+      "lineNumber": 16,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 22,
+      "lineNumber": 25,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 14,
+      "lineNumber": 17,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 44,
+      "lineNumber": 47,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 41,
+      "lineNumber": 44,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
       "example": "integrated-brush-(y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
-      "lineNumber": 41,
+      "lineNumber": 44,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
       "example": "programmatic-control",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/programmatic-control",
-      "lineNumber": 52,
-      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
-    },
-    {
-      "example": "separate-chart-(clip-data-y-axis)",
-      "component": "BrushContext",
-      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
-      "lineNumber": 35,
-      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
-    },
-    {
-      "example": "separate-chart-(clip-data-y-axis)",
-      "component": "BrushContext",
-      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
-      "lineNumber": 47,
-      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
-    },
-    {
-      "example": "separate-chart-(clip-data)",
-      "component": "BrushContext",
-      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 35,
-      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
-    },
-    {
-      "example": "separate-chart-(clip-data)",
-      "component": "BrushContext",
-      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
       "lineNumber": 55,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 38,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "separate-chart-(clip-data-y-axis)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
+      "lineNumber": 50,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 38,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
+    },
+    {
+      "example": "separate-chart-(clip-data)",
+      "component": "BrushContext",
+      "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
+      "lineNumber": 58,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 36,
+      "lineNumber": 39,
       "line": "<Area"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 62,
+      "lineNumber": 65,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "simple-styling",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/simple-styling",
-      "lineNumber": 18,
+      "lineNumber": 21,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "striped-background",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/striped-background",
-      "lineNumber": 12,
+      "lineNumber": 15,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1338,35 +1338,42 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
-      "lineNumber": 46,
+      "lineNumber": 49,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />"
     },
     {
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 25,
+      "lineNumber": 29,
       "line": "<Area y1=\"value\" class=\"fill-secondary/20\" line={{ class: 'stroke-secondary' }} />"
     },
     {
       "example": "pan-zoom-with-overview",
       "component": "LineChart",
       "path": "/docs/components/LineChart/pan-zoom-with-overview",
-      "lineNumber": 51,
+      "lineNumber": 54,
+      "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
+    },
+    {
+      "example": "persist-brush-zoom",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/persist-brush-zoom",
+      "lineNumber": 86,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 24,
+      "lineNumber": 27,
       "line": "<Area"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<Area"
     },
     {
@@ -1415,7 +1422,7 @@
       "example": "anchor-location",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/anchor-location",
-      "lineNumber": 39,
+      "lineNumber": 40,
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
@@ -1496,6 +1503,13 @@
       "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
     },
     {
+      "example": "portal-overflow",
+      "component": "Tooltip",
+      "path": "/docs/components/Tooltip/portal-overflow",
+      "lineNumber": 38,
+      "line": "<Area class=\"fill-primary/30\" line={{ class: 'stroke-primary stroke-2' }} />"
+    },
+    {
       "example": "stacked-area",
       "component": "Tooltip",
       "path": "/docs/components/Tooltip/stacked-area",
@@ -1503,5 +1517,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-03-29T03:36:26.383Z"
+  "updatedAt": "2026-04-14T21:42:22.782Z"
 }

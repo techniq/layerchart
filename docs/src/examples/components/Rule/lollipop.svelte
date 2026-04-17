@@ -1,9 +1,11 @@
+<script module lang="ts">
+	import { getAlphabet } from '$lib/data.remote';
+	const alphabetData = await getAlphabet();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, Highlight, Layer, Points, Rule, Tooltip } from 'layerchart';
 	import { sort } from '@layerstack/utils';
-	import { getAlphabet } from '$lib/data.remote';
-
-	const alphabetData = await getAlphabet();
 	const data = $state(sort(alphabetData, (d) => d.letter));
 
 	export { data };

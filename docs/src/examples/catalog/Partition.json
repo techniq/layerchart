@@ -8,48 +8,48 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 105,
+          "lineNumber": 108,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 106,
+          "lineNumber": 109,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 107,
+          "lineNumber": 110,
           "line": "<Bounds domain={{ x0: selected?.y0, y0: selected?.x0, y1: selected?.x1 }}>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 109,
+          "lineNumber": 112,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Partition",
-          "lineNumber": 110,
+          "lineNumber": 113,
           "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
         },
         {
           "component": "Group",
-          "lineNumber": 117,
+          "lineNumber": 120,
           "line": "<Group"
         },
         {
           "component": "Rect",
-          "lineNumber": 126,
+          "lineNumber": 129,
           "line": "<Rect"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 137,
+          "lineNumber": 140,
           "line": "<RectClipPath"
         },
         {
           "component": "Text",
-          "lineNumber": 142,
-          "line": "<text"
+          "lineNumber": 145,
+          "line": "<Text"
         }
       ]
     },
@@ -60,48 +60,48 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 84,
+          "lineNumber": 88,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 86,
+          "lineNumber": 90,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 87,
+          "lineNumber": 91,
           "line": "<Bounds"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 96,
+          "lineNumber": 100,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Partition",
-          "lineNumber": 97,
+          "lineNumber": 101,
           "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
         },
         {
           "component": "Group",
-          "lineNumber": 105,
+          "lineNumber": 109,
           "line": "<Group x={xScale(node.y0)} y={yScale(node.x0)} onclick={() => (selected = node)}>"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 106,
+          "lineNumber": 110,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 109,
+          "lineNumber": 113,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 119,
-          "line": "<text"
+          "lineNumber": 123,
+          "line": "<Text"
         }
       ]
     },
@@ -112,32 +112,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 62,
-          "line": "<Chart height={600}>"
+          "lineNumber": 75,
+          "line": "<Chart height={800}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 64,
+          "lineNumber": 77,
           "line": "<Layer center>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 65,
+          "lineNumber": 78,
           "line": "<Bounds"
         },
         {
           "component": "Partition",
-          "lineNumber": 76,
+          "lineNumber": 89,
           "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
         },
         {
           "component": "Arc",
-          "lineNumber": 80,
+          "lineNumber": 100,
           "line": "<Arc"
         },
         {
+          "component": "ClipPath",
+          "lineNumber": 124,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "ArcLabel",
+          "lineNumber": 128,
+          "line": "<ArcLabel"
+        },
+        {
           "component": "Tooltip",
-          "lineNumber": 102,
+          "lineNumber": 145,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -149,47 +159,47 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 85,
+          "lineNumber": 88,
           "line": "<Chart height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 87,
+          "lineNumber": 90,
           "line": "<Layer>"
         },
         {
           "component": "Bounds",
-          "lineNumber": 88,
+          "lineNumber": 91,
           "line": "<Bounds"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 97,
+          "lineNumber": 100,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Partition",
-          "lineNumber": 98,
+          "lineNumber": 101,
           "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
         },
         {
           "component": "Group",
-          "lineNumber": 106,
+          "lineNumber": 109,
           "line": "<Group x={xScale(node.x0)} y={yScale(node.y0)} onclick={() => (selected = node)}>"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 107,
+          "lineNumber": 110,
           "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 110,
+          "lineNumber": 113,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 120,
+          "lineNumber": 123,
           "line": "<Text"
         }
       ]
@@ -200,30 +210,30 @@
       "example": "filterable",
       "component": "Partition",
       "path": "/docs/components/Partition/filterable",
-      "lineNumber": 110,
+      "lineNumber": 113,
       "line": "<Partition bind:nodes {hierarchy} {padding} {round}>"
     },
     {
       "example": "horizontal",
       "component": "Partition",
       "path": "/docs/components/Partition/horizontal",
-      "lineNumber": 97,
+      "lineNumber": 101,
       "line": "<Partition {padding} {round} {hierarchy} bind:nodes>"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 76,
+      "lineNumber": 89,
       "line": "<Partition hierarchy={complexHierarchy} size={[1, 1]}>"
     },
     {
       "example": "vertical",
       "component": "Partition",
       "path": "/docs/components/Partition/vertical",
-      "lineNumber": 98,
+      "lineNumber": 101,
       "line": "<Partition {hierarchy} bind:nodes orientation=\"vertical\" {padding} {round}>"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:32.100Z"
+  "updatedAt": "2026-04-13T13:16:05.986Z"
 }

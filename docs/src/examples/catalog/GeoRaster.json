@@ -1,0 +1,203 @@
+{
+  "component": "GeoRaster",
+  "examples": [
+    {
+      "name": "globe",
+      "title": "globe",
+      "path": "/docs/components/GeoRaster/globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 21,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 39,
+          "line": "<Layer type=\"canvas\">"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 40,
+          "line": "<GeoRaster image={imageUrl} interpolate=\"bilinear\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 43,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 44,
+          "line": "<Graticule class=\"stroke-surface-content/15\" />"
+        }
+      ]
+    },
+    {
+      "name": "planets",
+      "title": "planets",
+      "path": "/docs/components/GeoRaster/planets",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 70,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 90,
+          "line": "<Layer type=\"canvas\">"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 91,
+          "line": "<GeoRaster image={planet} interpolate=\"bilinear\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 94,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/30\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 95,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        }
+      ]
+    },
+    {
+      "name": "projections",
+      "title": "projections",
+      "path": "/docs/components/GeoRaster/projections",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 48,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 56,
+          "line": "<Layer type=\"canvas\">"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 57,
+          "line": "<GeoRaster image=\"/images/blue-marble.jpg\" interpolate=\"bilinear\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 60,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 61,
+          "line": "<Graticule class=\"stroke-surface-content/15\" />"
+        }
+      ]
+    },
+    {
+      "name": "textures",
+      "title": "textures",
+      "path": "/docs/components/GeoRaster/textures",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 147,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 165,
+          "line": "<Layer type=\"canvas\">"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 167,
+          "line": "<GeoRaster image={texture} interpolate=\"bilinear\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 171,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 172,
+          "line": "<Graticule class=\"stroke-surface-content/10\" />"
+        }
+      ]
+    },
+    {
+      "name": "tiles-globe",
+      "title": "tiles globe",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 87,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 105,
+          "line": "<Layer type=\"canvas\">"
+        },
+        {
+          "component": "GeoRaster",
+          "lineNumber": 107,
+          "line": "<GeoRaster image={mosaic} {sourceProjection} interpolate=\"bilinear\" />"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 111,
+          "line": "<GeoPath geojson={{ type: 'Sphere' }} class=\"fill-none stroke-surface-content/40\" />"
+        },
+        {
+          "component": "Graticule",
+          "lineNumber": 112,
+          "line": "<Graticule class=\"stroke-surface-content/15\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/globe",
+      "lineNumber": 40,
+      "line": "<GeoRaster image={imageUrl} interpolate=\"bilinear\" />"
+    },
+    {
+      "example": "planets",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/planets",
+      "lineNumber": 91,
+      "line": "<GeoRaster image={planet} interpolate=\"bilinear\" />"
+    },
+    {
+      "example": "projections",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/projections",
+      "lineNumber": 57,
+      "line": "<GeoRaster image=\"/images/blue-marble.jpg\" interpolate=\"bilinear\" />"
+    },
+    {
+      "example": "textures",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/textures",
+      "lineNumber": 167,
+      "line": "<GeoRaster image={texture} interpolate=\"bilinear\" />"
+    },
+    {
+      "example": "tiles-globe",
+      "component": "GeoRaster",
+      "path": "/docs/components/GeoRaster/tiles-globe",
+      "lineNumber": 107,
+      "line": "<GeoRaster image={mosaic} {sourceProjection} interpolate=\"bilinear\" />"
+    }
+  ],
+  "updatedAt": "2026-04-12T22:48:25.729Z"
+}

@@ -1,8 +1,11 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { LineChart, defaultChartPadding } from 'layerchart';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 	export { data };
 </script>
 
@@ -18,8 +21,8 @@
 			labelXOffset: 4,
 			labelYOffset: 2,
 			props: {
-				label: { class: 'fill-danger' },
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' }
+				label: { fill: 'var(--color-danger)' },
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' }
 			}
 		}
 	]}

@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -9,7 +14,6 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { getFlare } from '$lib/data.remote';
 	import {
 		Bounds,
 		Chart,
@@ -19,6 +23,7 @@
 		Rect,
 		RectClipPath,
 		Layer,
+		Text,
 		findAncestor
 	} from 'layerchart';
 	import { Breadcrumb, Button } from 'svelte-ux';
@@ -33,7 +38,6 @@
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
 
-	let data = await getFlare();
 	const hierarchy = d3Hierarchy(data)
 		.sum((d) => d.value)
 		.sort(sortFunc('value', 'desc')) as HierarchyRectangularNode<any>;
@@ -116,24 +120,32 @@
 													fill={nodeColor}
 													rx={5}
 												/>
-												<text
+												<Text
+													segments={[
+														{
+															value: node.data.name,
+															class: cls(
+																'text-[10px] font-medium',
+																colorBy === 'children'
+																	? 'fill-primary-content'
+																	: 'fill-black'
+															),
+														},
+														{
+															value: ` ${format(node.value ?? 0, 'integer')}`,
+															class: cls(
+																'text-[8px] font-extralight',
+																colorBy === 'children'
+																	? 'fill-primary-content'
+																	: 'fill-black'
+															),
+														},
+													]}
+													verticalAnchor="start"
+													lineHeight="10px"
 													x={4}
-													y={16 * 0.6 + 4}
-													class={cls(
-														'text-[10px] font-medium',
-														colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-													)}
-												>
-													<tspan>{node.data.name}</tspan>
-													<tspan
-														class={cls(
-															'text-[8px] font-extralight',
-															colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-														)}
-													>
-														{format(node.value ?? 0, 'integer')}
-													</tspan>
-												</text>
+													y={3.6}
+												/>
 											</g>
 										</RectClipPath>
 									</Group>

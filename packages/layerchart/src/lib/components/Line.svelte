@@ -111,6 +111,14 @@
 
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
+
+    /**
+     * Dashed-line pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). Works across `<Svg>`, `<Canvas>`, and `<Html>`
+     * layers — HTML approximates the pattern via `repeating-linear-gradient`.
+     */
+    dashArray?: number | number[] | string;
   } & DataDrivenStyleProps;
 
   export type LineProps = LinePropsWithoutHTML &
@@ -125,12 +133,19 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { createDataMotionMap } from '$lib/utils/motion.svelte.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
+  import { parseDashArray, dashArrayToGradient } from '$lib/utils/path.js';
 
   const uid = $props.id();
 
@@ -156,8 +171,12 @@
     markerMid,
     motion,
     fillOpacity,
+    dashArray,
     ...restProps
   }: LineProps = $props();
+
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
 
   // Data mode detection
   const dataMode = $derived(hasAnyDataProp(x1, y1, x2, y2));
@@ -167,9 +186,7 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates
   function resolveLine(d: any) {
@@ -189,18 +206,20 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveLine(d);
-      untrack(() => dataMotionMap.update(key, resolved));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveLine(d);
+        untrack(() => dataMotionMap.update(key, resolved));
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -231,28 +250,20 @@
   const _initialX2 = initialX2 ?? (typeof x2 === 'number' ? x2 : 0);
   const _initialY2 = initialY2 ?? (typeof y2 === 'number' ? y2 : 0);
 
-  const motionX1 = createMotion(
-    _initialX1,
-    () => (typeof x1 === 'number' ? x1 : 0),
-    motion
-  );
-  const motionY1 = createMotion(
-    _initialY1,
-    () => (typeof y1 === 'number' ? y1 : 0),
-    motion
-  );
-  const motionX2 = createMotion(
-    _initialX2,
-    () => (typeof x2 === 'number' ? x2 : 0),
-    motion
-  );
-  const motionY2 = createMotion(
-    _initialY2,
-    () => (typeof y2 === 'number' ? y2 : 0),
-    motion
-  );
+  const motionX1 = createMotion(_initialX1, () => (typeof x1 === 'number' ? x1 : 0), motion);
+  const motionY1 = createMotion(_initialY1, () => (typeof y1 === 'number' ? y1 : 0), motion);
+  const motionX2 = createMotion(_initialX2, () => (typeof x2 === 'number' ? x2 : 0), motion);
+  const motionY2 = createMotion(_initialY2, () => (typeof y2 === 'number' ? y2 : 0), motion);
 
   const layerCtx = getLayerContext();
+
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  const staticHeight = $derived(typeof strokeWidth === 'number' ? `${strokeWidth}px` : '1px');
 
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
@@ -264,17 +275,36 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-line', itemClass ?? (typeof className === 'string' ? className : undefined)),
-          style: restProps.style as string | undefined,
+          classes: cls(
+            'lc-line',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
+          style:
+            [
+              restProps.style as string | undefined,
+              dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+            ]
+              .filter(Boolean)
+              .join('; ') || undefined,
         };
   }
 
@@ -290,7 +320,15 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d);
         const resolvedOpacity = resolveStyleProp(opacity, item.d);
         const resolvedClass = resolveStyleProp(className, item.d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         const pathData = `M ${item.x1},${item.y1} L ${item.x2},${item.y2}`;
         renderPathData(ctx, pathData, styleOpts);
       }
@@ -301,8 +339,8 @@
     }
   }
 
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Line',
@@ -316,29 +354,33 @@
         color: typeof stroke === 'string' ? stroke : typeof fill === 'string' ? fill : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        motionX1.current,
-        motionY1.current,
-        motionX2.current,
-        motionY2.current,
-        fillKey.current,
-        strokeKey.current,
-        strokeWidth,
-        opacity,
-        className,
-        restProps.style,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: restProps.onclick,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              motionX1.current,
+              motionY1.current,
+              motionX2.current,
+              motionY2.current,
+              fillKey!.current,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+              restProps.style,
+              dashArrayAttr,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -368,6 +410,7 @@
         marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
         marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
         marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-line', resolvedClass)}
         {...restProps}
       />
@@ -378,15 +421,16 @@
       y1={motionY1.current}
       x2={motionX2.current}
       y2={motionY2.current}
-      fill={fill as string}
-      stroke={stroke as string}
-      fill-opacity={fillOpacity as number}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
+      fill={staticFill}
+      stroke={staticStroke}
+      fill-opacity={staticFillOpacity}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-      class={cls('lc-line', className as string)}
+      stroke-dasharray={dashArrayAttr}
+      class={cls('lc-line', staticClassName)}
       {...restProps}
     />
     <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
@@ -413,7 +457,10 @@
         style:transform="translateY(-50%) rotate({angle}deg)"
         style:transform-origin="0 50%"
         style:opacity={resolvedOpacity}
-        style:background-color={resolvedStroke}
+        style:background={dashArrayResolved
+          ? dashArrayToGradient(dashArrayResolved, resolvedStroke ?? 'var(--stroke-color)')
+          : undefined}
+        style:background-color={dashArrayResolved ? undefined : resolvedStroke}
         class={cls('lc-line', resolvedClass)}
         style={restProps.style}
       ></div>
@@ -429,12 +476,15 @@
       style:left="{motionX1.current}px"
       style:top="{motionY1.current}px"
       style:width="{length}px"
-      style:height="{(strokeWidth as number) ?? 1}px"
+      style:height={staticHeight}
       style:transform="translateY(-50%) rotate({angle}deg)"
       style:transform-origin="0 50%"
-      style:opacity={opacity as number}
-      style:background-color={stroke as string}
-      class={cls('lc-line', className as string)}
+      style:opacity={staticOpacity}
+      style:background={dashArrayResolved
+        ? dashArrayToGradient(dashArrayResolved, staticStroke ?? 'var(--stroke-color)')
+        : undefined}
+      style:background-color={dashArrayResolved ? undefined : staticStroke}
+      class={cls('lc-line', staticClassName)}
       style={restProps.style}
     ></div>
   {/if}

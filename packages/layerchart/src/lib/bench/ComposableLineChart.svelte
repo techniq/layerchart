@@ -34,7 +34,7 @@
   }: Props = $props();
 </script>
 
-<Chart {data} {x} {y} {width} {height} {series} xDomain={xDomain} yDomain={yDomain}>
+<Chart {data} {x} {y} {width} {height} {series} {xDomain} {yDomain}>
   <Layer type={layer}>
     {#if axis}
       <Axis placement="left" />

@@ -51,7 +51,7 @@
         {
           "component": "Spline",
           "lineNumber": 36,
-          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+          "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\" motion=\"tween\">"
         },
         {
           "component": "Circle",
@@ -110,16 +110,16 @@
         {
           "component": "Spline",
           "lineNumber": 37,
-          "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+          "line": "<Spline"
         },
         {
           "component": "Circle",
-          "lineNumber": 39,
+          "lineNumber": 44,
           "line": "<Circle r={5} class=\"fill-primary\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 40,
+          "lineNumber": 45,
           "line": "<Text"
         }
       ]
@@ -195,32 +195,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 18,
+          "lineNumber": 21,
           "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 19,
+          "lineNumber": 22,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 20,
+          "lineNumber": 23,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 22,
+          "lineNumber": 25,
           "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
         },
         {
           "component": "Spline",
-          "lineNumber": 24,
+          "lineNumber": 27,
           "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
         },
         {
           "component": "Legend",
-          "lineNumber": 28,
+          "lineNumber": 31,
           "line": "<Legend"
         }
       ]
@@ -232,27 +232,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 10,
+          "lineNumber": 13,
           "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 25, left: 16, bottom: 25 }} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 16,
+          "lineNumber": 19,
           "line": "<LinearGradient"
         },
         {
           "component": "Spline",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
         }
       ]
@@ -318,6 +318,33 @@
           "component": "Spline",
           "lineNumber": 36,
           "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "math-formula",
+      "title": "math formula",
+      "path": "/docs/components/Spline/math-formula",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 143,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Raster",
+          "lineNumber": 160,
+          "line": "<Raster value={rasterValue} opacity={0.5} />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 163,
+          "line": "<Spline seriesKey={s.key} />"
+        },
+        {
+          "component": "Tooltip",
+          "lineNumber": 167,
+          "line": "<Tooltip.Root>"
         }
       ]
     },
@@ -533,27 +560,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 12,
+          "lineNumber": 15,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 22,
+          "lineNumber": 25,
           "line": "<Layer center>"
         },
         {
           "component": "Spline",
-          "lineNumber": 23,
+          "lineNumber": 26,
           "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
         },
         {
           "component": "Area",
-          "lineNumber": 24,
+          "lineNumber": 27,
           "line": "<Area"
         },
         {
           "component": "Axis",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
         }
       ]
@@ -565,22 +592,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 28,
+          "lineNumber": 31,
           "line": "<Layer center>"
         },
         {
           "component": "Spline",
-          "lineNumber": 30,
+          "lineNumber": 33,
           "line": "<Spline"
         },
         {
           "component": "Axis",
-          "lineNumber": 43,
+          "lineNumber": 46,
           "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
         }
       ]
@@ -614,6 +641,33 @@
           "component": "Points",
           "lineNumber": 39,
           "line": "<Points class=\"fill-primary stroke-surface-200\" />"
+        }
+      ]
+    },
+    {
+      "name": "stroke-grouping",
+      "title": "stroke grouping",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 18,
+          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={25} height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 19,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 20,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 22,
+          "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
         }
       ]
     },
@@ -783,7 +837,7 @@
       "example": "radial",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/radial",
-      "lineNumber": 45,
+      "lineNumber": 48,
       "line": "<Spline y=\"avg\" curve={curveCatmullRom} class=\"stroke-primary\" />"
     },
     {
@@ -804,42 +858,42 @@
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 43,
+      "lineNumber": 46,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-single-chart-using-remapped-scale",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-single-chart-using-remapped-scale",
-      "lineNumber": 44,
+      "lineNumber": 47,
       "line": "<Spline y={(d) => context.y1Scale?.(d.efficiency)} class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<Spline class=\"stroke-2 stroke-primary\" />"
     },
     {
       "example": "compound-dual-axis-with-stacked-charts",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-dual-axis-with-stacked-charts",
-      "lineNumber": 51,
+      "lineNumber": 54,
       "line": "<Spline class=\"stroke-2 stroke-secondary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 40,
+      "lineNumber": 43,
       "line": "<Spline y=\"open\" class=\"stroke-primary\" />"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 41,
+      "lineNumber": 44,
       "line": "<Spline y=\"close\" class=\"stroke-secondary\" />"
     },
     {
@@ -923,7 +977,7 @@
       "example": "basic",
       "component": "Dagre",
       "path": "/docs/components/Dagre/basic",
-      "lineNumber": 51,
+      "lineNumber": 53,
       "line": "<Spline"
     },
     {
@@ -937,14 +991,21 @@
       "example": "software-user-flow",
       "component": "Dagre",
       "path": "/docs/components/Dagre/software-user-flow",
-      "lineNumber": 53,
+      "lineNumber": 55,
       "line": "<Spline"
     },
     {
       "example": "tcp-state-diagram",
       "component": "Dagre",
       "path": "/docs/components/Dagre/tcp-state-diagram",
-      "lineNumber": 52,
+      "lineNumber": 54,
+      "line": "<Spline"
+    },
+    {
+      "example": "bump-state-population-ranks",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/bump-state-population-ranks",
+      "lineNumber": 123,
       "line": "<Spline"
     },
     {
@@ -958,14 +1019,14 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 24,
+      "lineNumber": 30,
       "line": "<Spline stroke={gradient} />"
     },
     {
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 23,
+      "lineNumber": 27,
       "line": "<Spline stroke={gradient} />"
     },
     {
@@ -1099,7 +1160,7 @@
       "component": "Spline",
       "path": "/docs/components/Spline/basic-start-and-end-snippets",
       "lineNumber": 36,
-      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\">"
+      "line": "<Spline curve={config.curve} class=\"stroke-primary stroke-2\" motion=\"tween\">"
     },
     {
       "example": "draw",
@@ -1113,7 +1174,7 @@
       "component": "Spline",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
       "lineNumber": 37,
-      "line": "<Spline curve={config.curve} draw={{ duration: 3000 }} class=\"stroke-primary stroke-2\">"
+      "line": "<Spline"
     },
     {
       "example": "end-snippet-with-draw",
@@ -1133,14 +1194,14 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 24,
+      "lineNumber": 27,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 25,
+      "lineNumber": 28,
       "line": "<Spline class=\"stroke-2\" stroke={gradient} />"
     },
     {
@@ -1156,6 +1217,13 @@
       "path": "/docs/components/Spline/markers-arrows",
       "lineNumber": 36,
       "line": "<Spline"
+    },
+    {
+      "example": "math-formula",
+      "component": "Spline",
+      "path": "/docs/components/Spline/math-formula",
+      "lineNumber": 163,
+      "line": "<Spline seriesKey={s.key} />"
     },
     {
       "example": "multiple-series",
@@ -1203,14 +1271,14 @@
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 23,
+      "lineNumber": 26,
       "line": "<Spline y={(d) => d.avg} curve={curveCatmullRom} class=\"stroke-primary\" />"
     },
     {
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 30,
+      "lineNumber": 33,
       "line": "<Spline"
     },
     {
@@ -1219,6 +1287,13 @@
       "path": "/docs/components/Spline/radial-radar",
       "lineNumber": 38,
       "line": "<Spline {curve} class=\"stroke-primary fill-primary/20\" />"
+    },
+    {
+      "example": "stroke-grouping",
+      "component": "Spline",
+      "path": "/docs/components/Spline/stroke-grouping",
+      "lineNumber": 22,
+      "line": "<Spline stroke={(d) => yearColor(d.date.getFullYear())} class=\"stroke-2\" />"
     },
     {
       "example": "tween-on-mount",
@@ -1298,6 +1373,27 @@
       "line": "<Spline y=\"value\" {curve} class=\"stroke-[1.5]\" />"
     },
     {
+      "example": "curves",
+      "component": "Trail",
+      "path": "/docs/components/Trail/curves",
+      "lineNumber": 57,
+      "line": "<Spline curve={curve.value} class=\"stroke-surface-content/40 stroke-1\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Trail",
+      "path": "/docs/components/Trail/playground",
+      "lineNumber": 52,
+      "line": "<Spline"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 29,
+      "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
+    },
+    {
       "example": "playground",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/playground",
@@ -1305,5 +1401,5 @@
       "line": "<Spline curve={config.curve} motion=\"tween\" />"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:19.667Z"
+  "updatedAt": "2026-04-13T13:16:06.513Z"
 }

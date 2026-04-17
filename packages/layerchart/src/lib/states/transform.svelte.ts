@@ -190,7 +190,9 @@ export class TransformState {
   private _applyTranslate(x: number, y: number, deltaX: number, deltaY: number) {
     if (this.processTranslate) return this.processTranslate(x, y, deltaX, deltaY);
     if (this.mode === 'domain') {
-      // Negate deltaY because screen Y (top→bottom) is inverted vs data Y (bottom→top)
+      // Negate deltaY because screen Y (top→bottom) is inverted vs data Y (bottom→top).
+      // This works for both normal and reversed Y domains because _computeTransformDomain
+      // uses signed range, which naturally handles the reversal.
       if (this.axis === 'x') return { x: x + deltaX, y: 0 };
       if (this.axis === 'y') return { x: 0, y: y - deltaY };
       return { x: x + deltaX, y: y - deltaY };

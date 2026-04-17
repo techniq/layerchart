@@ -5,7 +5,7 @@
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		pointCount: 100,
 		amplitude: 1,
 		frequency: 10,
@@ -38,6 +38,7 @@
 				class="stroke-primary stroke-2"
 				markerStart="circle"
 				markerEnd={{ type: 'arrow', class: 'stroke-2' }}
+				motion="tween"
 			/>
 		{/if}
 	</Layer>

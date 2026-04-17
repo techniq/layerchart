@@ -1,0 +1,155 @@
+{
+  "component": "Trail",
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/Trail/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 22,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 23,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 25,
+          "line": "<Trail r=\"value\" class=\"fill-primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "curves",
+      "title": "Curves and caps",
+      "path": "/docs/components/Trail/curves",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 45,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 55,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 56,
+          "line": "<Trail curve={curve.value} {cap} class=\"fill-primary/40\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 57,
+          "line": "<Spline curve={curve.value} class=\"stroke-surface-content/40 stroke-1\" />"
+        }
+      ],
+      "description": "The trail mark supports round and butt capping and different interpolation methods."
+    },
+    {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/Trail/playground",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 35,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 46,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 47,
+          "line": "<Axis placement=\"left\" grid rule />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 50,
+          "line": "<Trail curve={config.curve} cap={config.cap} motion={config.motion} class=\"fill-primary\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 52,
+          "line": "<Spline"
+        }
+      ]
+    },
+    {
+      "name": "tdf-stage",
+      "title": "tdf stage",
+      "path": "/docs/components/Trail/tdf-stage",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 16,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis placement=\"left\" grid label=\"Latitude\" />"
+        },
+        {
+          "component": "Trail",
+          "lineNumber": 28,
+          "line": "<Trail class=\"fill-danger/40\" />"
+        },
+        {
+          "component": "Spline",
+          "lineNumber": 29,
+          "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
+        }
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "example": "basic",
+      "component": "Trail",
+      "path": "/docs/components/Trail/basic",
+      "lineNumber": 25,
+      "line": "<Trail r=\"value\" class=\"fill-primary\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Trail",
+      "path": "/docs/components/Trail/curves",
+      "lineNumber": 56,
+      "line": "<Trail curve={curve.value} {cap} class=\"fill-primary/40\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Trail",
+      "path": "/docs/components/Trail/playground",
+      "lineNumber": 50,
+      "line": "<Trail curve={config.curve} cap={config.cap} motion={config.motion} class=\"fill-primary\" />"
+    },
+    {
+      "example": "tdf-stage",
+      "component": "Trail",
+      "path": "/docs/components/Trail/tdf-stage",
+      "lineNumber": 28,
+      "line": "<Trail class=\"fill-danger/40\" />"
+    }
+  ],
+  "updatedAt": "2026-04-12T22:48:27.017Z"
+}

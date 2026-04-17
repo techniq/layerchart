@@ -122,10 +122,12 @@ export function createMotionScale<Domain, Range>(
 export function scaleBandInvert(scale: ScaleBand<any>) {
   const domain = scale.domain();
   const eachBand = scale.step();
-  const paddingOuter = eachBand * (scale.paddingOuter?.() ?? scale.padding()); // `scaleBand` uses paddingOuter(), while `scalePoint` uses padding() for outer paddding - https://github.com/d3/d3-scale#point_padding
+  const rangeStart = scale.range()[0];
+  const paddingOuter = scale.paddingOuter?.() ?? scale.padding(); // `scaleBand` uses paddingOuter(), while `scalePoint` uses padding() for outer paddding - https://github.com/d3/d3-scale#point_padding
 
   return function (value: number) {
-    const index = Math.floor((value - paddingOuter / 2) / eachBand);
+    // band[i] = rangeStart + step * (paddingOuter + i), so: i = (value - rangeStart) / step - paddingOuter
+    const index = Math.floor((value - rangeStart) / eachBand - paddingOuter);
     return domain[Math.max(0, Math.min(index, domain.length - 1))];
   };
 }

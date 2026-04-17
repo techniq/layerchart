@@ -81,6 +81,86 @@ export function roundedPolygonPath(coords: { x: number; y: number }[], radius: n
   return path;
 }
 
+/**
+ * SVG path `d` attribute for a rectangle with per-corner rounding.
+ * Corners are ordered `[top-left, top-right, bottom-right, bottom-left]`
+ * (matching CSS `border-radius` shorthand). Path is drawn clockwise from
+ * the top-left corner.
+ */
+export function roundedRectPath(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  [tl, tr, br, bl]: [number, number, number, number]
+): string {
+  const topEdge = width - tl - tr;
+  const rightEdge = height - tr - br;
+  const bottomEdge = width - br - bl;
+  const leftEdge = height - bl - tl;
+  return [
+    `M${x + tl},${y}`,
+    `h${topEdge}`,
+    tr > 0 ? `a${tr},${tr} 0 0 1 ${tr},${tr}` : '',
+    `v${rightEdge}`,
+    br > 0 ? `a${br},${br} 0 0 1 ${-br},${br}` : '',
+    `h${-bottomEdge}`,
+    bl > 0 ? `a${bl},${bl} 0 0 1 ${-bl},${-bl}` : '',
+    `v${-leftEdge}`,
+    tl > 0 ? `a${tl},${tl} 0 0 1 ${tl},${-tl}` : '',
+    'z',
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
+/**
+ * Normalize a dash-array value (CSS `stroke-dasharray`) to a numeric array.
+ * Accepts `"4 2"`, `"4,2"`, `[4, 2]`, or a single number (e.g. `4` → `[4, 4]`).
+ * Returns `null` when the input is empty or all zeros (i.e. solid stroke).
+ */
+export function parseDashArray(value: string | number | number[] | undefined): number[] | null {
+  if (value == null || value === '' || value === 'none') return null;
+  let arr: number[];
+  if (typeof value === 'number') {
+    arr = [value, value];
+  } else if (Array.isArray(value)) {
+    arr = value.filter((n) => Number.isFinite(n));
+  } else {
+    arr = value
+      .split(/[\s,]+/)
+      .filter((s) => s.length > 0)
+      .map((s) => Number(s.replace('px', '')))
+      .filter((n) => Number.isFinite(n));
+  }
+  if (arr.length === 0 || arr.every((n) => n === 0)) return null;
+  // SVG/Canvas semantics: an odd-length array is repeated (e.g. `[5]` → `[5, 5]`)
+  if (arr.length % 2 === 1) arr = [...arr, ...arr];
+  return arr;
+}
+
+/**
+ * Build a CSS `repeating-linear-gradient` string approximating a `stroke-dasharray`
+ * pattern along a horizontal line (use with `background` on a rotated `<div>`).
+ * Alternates stops between `color` (dash) and `transparent` (gap) to match SVG.
+ */
+export function dashArrayToGradient(
+  dashArray: number[],
+  color: string,
+  direction: string = 'to right'
+): string {
+  const stops: string[] = [];
+  let offset = 0;
+  for (let i = 0; i < dashArray.length; i++) {
+    const length = dashArray[i];
+    const isDash = i % 2 === 0;
+    const c = isDash ? color : 'transparent';
+    stops.push(`${c} ${offset}px ${offset + length}px`);
+    offset += length;
+  }
+  return `repeating-linear-gradient(${direction}, ${stops.join(', ')})`;
+}
+
 /** Vector anchor position */
 export type VectorAnchor = 'start' | 'middle' | 'end';
 
@@ -216,26 +296,18 @@ export function vectorArrowFilledPath({
  * Apply rotation (degrees) and translation to a path string containing only M and L commands
  * with absolute coordinates. Converts local vector path data to absolute positioned coordinates.
  */
-export function transformVectorPath(
-  pathData: string,
-  cx: number,
-  cy: number,
-  rotateDeg: number
-) {
+export function transformVectorPath(pathData: string, cx: number, cy: number, rotateDeg: number) {
   const rad = (rotateDeg * Math.PI) / 180;
   const cos = Math.cos(rad);
   const sin = Math.sin(rad);
 
-  return pathData.replace(
-    /([ML])(-?\d*\.?\d+),(-?\d*\.?\d+)/g,
-    (_match, cmd, xStr, yStr) => {
-      const lx = Number(xStr);
-      const ly = Number(yStr);
-      const ax = cx + lx * cos - ly * sin;
-      const ay = cy + lx * sin + ly * cos;
-      return `${cmd}${ax},${ay}`;
-    }
-  );
+  return pathData.replace(/([ML])(-?\d*\.?\d+),(-?\d*\.?\d+)/g, (_match, cmd, xStr, yStr) => {
+    const lx = Number(xStr);
+    const ly = Number(yStr);
+    const ax = cx + lx * cos - ly * sin;
+    const ay = cy + lx * sin + ly * cos;
+    return `${cmd}${ax},${ay}`;
+  });
 }
 
 /** Flatten all `y` coordinates to `0` */

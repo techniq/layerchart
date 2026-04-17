@@ -23,8 +23,8 @@
 			y: mean(data, (d) => d.value),
 			label: 'Avg',
 			props: {
-				line: { class: '[stroke-dasharray:2,2] stroke-danger' },
-				label: { class: 'fill-danger' }
+				line: { dashArray: [2, 2], stroke: 'var(--color-danger)' },
+				label: { fill: 'var(--color-danger)' }
 			}
 		}
 	]}

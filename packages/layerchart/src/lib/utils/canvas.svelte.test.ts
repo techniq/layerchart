@@ -367,9 +367,9 @@ describe('renderPathData', () => {
   it('applies strokeOpacity less than 1', () => {
     const globalAlphaValues: number[] = [];
     const originalStroke = ctx.stroke.bind(ctx);
-    vi.spyOn(ctx, 'stroke').mockImplementation((...args: any[]) => {
+    vi.spyOn(ctx, 'stroke').mockImplementation(function (this: CanvasRenderingContext2D) {
       globalAlphaValues.push(ctx.globalAlpha);
-      originalStroke(...args);
+      originalStroke();
     });
 
     renderPathData(ctx, 'M0,0 L100,0', {
@@ -384,6 +384,82 @@ describe('renderPathData', () => {
 
     // During stroke, globalAlpha should be 0.4 * 1 = 0.4
     expect(globalAlphaValues[0]).toBeCloseTo(0.4);
+  });
+
+  it('composes fill opacity with inherited globalAlpha (Group opacity)', () => {
+    // Simulate a parent Group setting globalAlpha to 0.5
+    ctx.globalAlpha = 0.5;
+
+    const globalAlphaValues: number[] = [];
+    const originalFill = ctx.fill.bind(ctx);
+    vi.spyOn(ctx, 'fill').mockImplementation(function (
+      this: CanvasRenderingContext2D,
+      ...args: any
+    ) {
+      globalAlphaValues.push(ctx.globalAlpha);
+      originalFill(...args);
+    });
+
+    renderPathData(ctx, 'M0,0 L100,0 L100,100 Z', {
+      styles: { fill: 'red', fillOpacity: '1', opacity: '1', stroke: 'none' },
+    });
+
+    // Should be 0.5 (inherited) * 1 * 1 = 0.5, not overwritten to 1
+    expect(globalAlphaValues[0]).toBeCloseTo(0.5);
+  });
+
+  it('composes stroke opacity with inherited globalAlpha (Group opacity)', () => {
+    ctx.globalAlpha = 0.5;
+
+    const globalAlphaValues: number[] = [];
+    const originalStroke = ctx.stroke.bind(ctx);
+    vi.spyOn(ctx, 'stroke').mockImplementation(function (this: CanvasRenderingContext2D) {
+      globalAlphaValues.push(ctx.globalAlpha);
+      originalStroke();
+    });
+
+    renderPathData(ctx, 'M0,0 L100,0', {
+      styles: {
+        fill: 'none',
+        stroke: 'black',
+        strokeOpacity: '0.4',
+        opacity: '1',
+        strokeWidth: '2',
+      },
+    });
+
+    // Should be 0.5 (inherited) * 0.4 = 0.2
+    expect(globalAlphaValues[0]).toBeCloseTo(0.2);
+  });
+
+  it('composes element opacity with inherited globalAlpha (Group opacity)', () => {
+    ctx.globalAlpha = 0.5;
+
+    const globalAlphaValues: number[] = [];
+    const originalFill = ctx.fill.bind(ctx);
+    vi.spyOn(ctx, 'fill').mockImplementation(function (
+      this: CanvasRenderingContext2D,
+      ...args: any
+    ) {
+      globalAlphaValues.push(ctx.globalAlpha);
+      originalFill(...args);
+    });
+
+    renderPathData(ctx, 'M0,0 L100,0 L100,100 Z', {
+      styles: { fill: 'red', fillOpacity: '1', opacity: '0.6', stroke: 'none' },
+    });
+
+    // Should be 0.5 (inherited) * 0.6 (element opacity) * 1 (fillOpacity) = 0.3
+    expect(globalAlphaValues[0]).toBeCloseTo(0.3);
+  });
+
+  it('restores globalAlpha after rendering with inherited alpha', () => {
+    ctx.globalAlpha = 0.5;
+
+    renderPathData(ctx, 'M0,0 L100,0 L100,100 Z', plainFill('red'));
+
+    // globalAlpha should be restored to inherited value after rendering
+    expect(ctx.globalAlpha).toBeCloseTo(0.5);
   });
 
   it('respects paintOrder stroke (stroke before fill)', () => {
@@ -557,14 +633,19 @@ describe('renderText', () => {
   it('calls strokeText when stroke is provided', () => {
     const strokeTextSpy = vi.spyOn(ctx, 'strokeText');
 
-    renderText(ctx, 'Hi', { x: 0, y: 0 }, {
-      styles: {
-        fill: 'none',
-        stroke: 'red',
-        strokeOpacity: '1',
-        opacity: '1',
-      },
-    });
+    renderText(
+      ctx,
+      'Hi',
+      { x: 0, y: 0 },
+      {
+        styles: {
+          fill: 'none',
+          stroke: 'red',
+          strokeOpacity: '1',
+          opacity: '1',
+        },
+      }
+    );
 
     expect(strokeTextSpy).toHaveBeenCalledWith('Hi', 0, 0);
   });

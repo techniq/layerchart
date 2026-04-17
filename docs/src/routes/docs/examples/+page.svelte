@@ -16,9 +16,13 @@
 
 	let { data } = $props();
 
+	const stringParam = z.preprocess(
+		(val) => (typeof val === 'boolean' ? String(val) : val),
+		z.string().nullable().default(null)
+	);
 	export const schema = z.object({
-		filter: z.string().nullable().default(null),
-		category: z.string().nullable().default(null)
+		filter: stringParam,
+		category: stringParam
 	});
 	let params = useSearchParams(schema);
 
@@ -65,7 +69,7 @@
 				}
 
 				// Otherwise, filter examples by name
-				const filteredExamples = examples.filter((example) => matchesQuery(example.name));
+				const filteredExamples = examples.filter((example) => matchesQuery(example.name) || matchesQuery(example.title));
 
 				// Only return component if it has matching examples
 				if (filteredExamples.length > 0) {
@@ -190,7 +194,7 @@
 				class="grid grid-cols-(--column-count) gap-4"
 			>
 				{#each examples as example (example.name)}
-					<ExampleLink {component} example={example.name} />
+					<ExampleLink {component} example={example.name} title={example.title} />
 				{/each}
 			</div>
 		</div>

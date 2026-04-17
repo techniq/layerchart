@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
@@ -13,9 +18,6 @@
 	} from 'layerchart';
 	import GeoPathTranslucentControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
 	let context = $state<ChartState>();

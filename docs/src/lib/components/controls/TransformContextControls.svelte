@@ -162,7 +162,9 @@
 				class="text-surface-content"
 			>
 				<svelte:fragment slot="selection" let:value>
-					<Icon data={value?.icon ?? LucideChevronDown} />
+					{#key value}
+						<Icon data={value?.icon ?? LucideChevronDown} />
+					{/key}
 				</svelte:fragment>
 			</MenuButton>
 		</Tooltip>

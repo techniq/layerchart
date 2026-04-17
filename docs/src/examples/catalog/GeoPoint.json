@@ -187,7 +187,7 @@
       "example": "submarine-cables-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/submarine-cables-globe",
-      "lineNumber": 91,
+      "lineNumber": 89,
       "line": "<GeoPoint"
     },
     {
@@ -236,28 +236,28 @@
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
-      "lineNumber": 34,
+      "lineNumber": 36,
       "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
     },
     {
       "example": "draggable-globe",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/draggable-globe",
-      "lineNumber": 35,
+      "lineNumber": 37,
       "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
     },
     {
       "example": "world-map",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/world-map",
-      "lineNumber": 46,
+      "lineNumber": 48,
       "line": "<GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class=\"fill-black\" />"
     },
     {
       "example": "world-map",
       "component": "GeoSpline",
       "path": "/docs/components/GeoSpline/world-map",
-      "lineNumber": 47,
+      "lineNumber": 49,
       "line": "<GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class=\"fill-black\" />"
     },
     {
@@ -268,5 +268,5 @@
       "line": "<GeoPoint lat={capital.latitude} long={capital.longitude}>"
     }
   ],
-  "updatedAt": "2026-03-22T12:54:32.896Z"
+  "updatedAt": "2026-04-12T22:48:25.675Z"
 }

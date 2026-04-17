@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 	import { curveCatmullRomClosed } from 'd3-shape';
@@ -8,9 +13,6 @@
 	import GeoPathGlobeControls2 from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	let curve = $state(curveCatmullRomClosed);
 	let minArea = $state(2);
 	let context = $state<ChartState>(null!);

@@ -1,16 +1,18 @@
 import { allComponents } from 'content-collections';
+import type { ComponentCatalog } from '$examples/catalog/types.js';
 
 interface ExampleInfo {
 	component: string;
 	category?: string;
 	examples: Array<{
 		name: string;
+		title: string;
 		path: string;
 	}>;
 }
 
 export async function load() {
-	const exampleModules = import.meta.glob('/src/examples/components/**/*.svelte');
+	const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/*.json', { eager: true, import: 'default' });
 
 	// Create a map of component names to their categories
 	const componentCategoryMap = new Map<string, string>();
@@ -20,38 +22,17 @@ export async function load() {
 		}
 	}
 
-	// Group examples by component
-	const componentMap = new Map<
-		string,
-		Array<{
-			name: string;
-			path: string;
-		}>
-	>();
-
-	for (const filePath of Object.keys(exampleModules)) {
-		// Parse path: /src/examples/components/ComponentName/example-name.svelte
-		const match = filePath.match(/\/examples\/components\/([^/]+)\/(.+)\.svelte$/);
-		if (!match) continue;
-
-		const [, componentName, exampleName] = match;
-
-		if (!componentMap.has(componentName)) {
-			componentMap.set(componentName, []);
-		}
-
-		componentMap.get(componentName)!.push({
-			name: exampleName,
-			path: `/example/${componentName}/${exampleName}`
-		});
-	}
-
-	// Convert to sorted array with category information
-	const components: ExampleInfo[] = Array.from(componentMap.entries())
-		.map(([component, examples]) => ({
-			component,
-			category: componentCategoryMap.get(component),
-			examples: examples.sort((a, b) => a.name.localeCompare(b.name))
+	// Build components list from catalog data
+	const components: ExampleInfo[] = Object.values(catalogModules)
+		.filter((catalog) => catalog.examples.length > 0)
+		.map((catalog) => ({
+			component: catalog.component,
+			category: componentCategoryMap.get(catalog.component),
+			examples: catalog.examples.map((example) => ({
+				name: example.name,
+				title: example.title,
+				path: `/example/${catalog.component}/${example.name}`
+			}))
 		}))
 		.sort((a, b) => a.component.localeCompare(b.component));
 

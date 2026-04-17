@@ -148,8 +148,7 @@
     const ext: [number, number] = [sorted[0], sorted[sorted.length - 1]];
 
     // Silverman's rule of thumb for bandwidth
-    const bw =
-      bandwidthProp ?? 1.06 * (deviation(sorted) ?? 1) * Math.pow(sorted.length, -1 / 5);
+    const bw = bandwidthProp ?? 1.06 * (deviation(sorted) ?? 1) * Math.pow(sorted.length, -1 / 5);
 
     const kernelFn = epanechnikov(bw);
 

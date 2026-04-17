@@ -34,12 +34,24 @@ describe('autoTickVals', () => {
     expect(autoTickVals(scale, ticksConfig)).toEqual([]);
   });
 
-  it('filters band scale domain with number ticks', () => {
+  it('filters band scale domain with explicit number ticks', () => {
     const scale = { domain: mockDomain, bandwidth: vi.fn() } as any;
-    expect(autoTickVals(scale, 2)).toEqual(['a', 'c', 'e']);
+    // ticks=2, domain has 5 items → step = ceil(5/2) = 3 → indices 0, 3
+    expect(autoTickVals(scale, 2)).toEqual(['a', 'd']);
   });
 
-  it('returns full domain for band scale without ticks', () => {
+  it('filters band scale domain using count parameter (from tickSpacing)', () => {
+    const scale = { domain: mockDomain, bandwidth: vi.fn() } as any;
+    // count=3, domain has 5 items → step = ceil(5/3) = 2 → indices 0, 2, 4
+    expect(autoTickVals(scale, undefined, 3)).toEqual(['a', 'c', 'e']);
+  });
+
+  it('returns full domain for band scale when count >= domain length', () => {
+    const scale = { domain: mockDomain, bandwidth: vi.fn() } as any;
+    expect(autoTickVals(scale, undefined, 10)).toEqual(['a', 'b', 'c', 'd', 'e']);
+  });
+
+  it('returns full domain for band scale without ticks or count', () => {
     const scale = { domain: mockDomain, bandwidth: vi.fn() } as any;
     expect(autoTickVals(scale)).toEqual(['a', 'b', 'c', 'd', 'e']);
   });

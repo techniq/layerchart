@@ -13,7 +13,7 @@
 		amplitude: 1,
 		frequency: 10,
 		phase: 0,
-		show: true,
+		show: false,
 		duration: '3s',
 		repeatCount: undefined as number | 'indefinite' | undefined,
 		start: undefined as string | undefined,

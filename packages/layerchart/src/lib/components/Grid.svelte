@@ -3,20 +3,31 @@
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
 
+  /** Props forwarded onto the underlying grid line (`<Line>`, `<Circle>`, or `<Spline>`). */
+  type GridLineProps = Pick<SVGAttributes<SVGElement>, 'class' | 'style'> & {
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number;
+    /** Dashed-line pattern. See `Line.dashArray`. */
+    dashArray?: number | number[] | string;
+  };
+
   export type GridPropsWithoutHTML<In extends Transition = Transition> = {
     /**
-     * Draw a x-axis lines
+     * Draw a x-axis lines. Pass props (class, style, stroke, strokeWidth,
+     * opacity, dashArray) to forward onto the underlying line.
      *
      * @default false
      */
-    x?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    x?: boolean | GridLineProps;
 
     /**
-     * Draw a y-axis lines
+     * Draw a y-axis lines. Pass props (class, style, stroke, strokeWidth,
+     * opacity, dashArray) to forward onto the underlying line.
      *
      * @default false
      */
-    y?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    y?: boolean | GridLineProps;
 
     /**
      * Control the number of x-axis ticks
@@ -43,6 +54,12 @@
      * @default 'circle'
      */
     radialY?: 'circle' | 'linear';
+
+    /**
+     * Stroke color for grid lines.
+     * Useful for server-side rendering where CSS variables are not available.
+     */
+    stroke?: string;
 
     /**
      * Classes to apply to the rendered elements.
@@ -113,6 +130,7 @@
     yTicks: yTicksProp,
     bandAlign = 'center',
     radialY = 'circle',
+    stroke,
     motion,
     transitionIn: transitionInProp,
     transitionInParams = { easing: cubicIn },
@@ -168,6 +186,7 @@
             {y1}
             {x2}
             {y2}
+            {stroke}
             motion={tweenConfig}
             {...splineProps}
             class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
@@ -176,6 +195,7 @@
           <Rule
             {x}
             xOffset={xBandOffset}
+            {stroke}
             {motion}
             {...splineProps}
             class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
@@ -189,6 +209,7 @@
         <Rule
           x={xTickVals[xTickVals.length - 1]}
           xOffset={ctx.xScale.step() + xBandOffset}
+          {stroke}
           {motion}
           {...splineProps}
           class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}
@@ -205,6 +226,7 @@
           {#if radialY === 'circle'}
             <Circle
               r={ctx.yScale(y) + yBandOffset}
+              {stroke}
               {motion}
               {...splineProps}
               class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
@@ -214,6 +236,7 @@
               data={xTickVals.map((x) => ({ x, y }))}
               x="x"
               y="y"
+              {stroke}
               motion={tweenConfig}
               curve={curveLinearClosed}
               {...splineProps}
@@ -226,6 +249,7 @@
             y1={ctx.yScale(y) + yBandOffset}
             x2={ctx.xRange[1]}
             y2={ctx.yScale(y) + yBandOffset}
+            {stroke}
             {motion}
             {...splineProps}
             class={cls('lc-grid-y-rule', classes.line, splineProps?.class)}
@@ -238,6 +262,7 @@
         {#if ctx.radial}
           <Circle
             r={ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
+            {stroke}
             {motion}
             {...splineProps}
             class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
@@ -250,6 +275,7 @@
             y1={y}
             x2={ctx.xRange[1]}
             y2={y}
+            {stroke}
             {motion}
             {...splineProps}
             class={cls('lc-grid-y-end-rule', classes.line, splineProps?.class)}

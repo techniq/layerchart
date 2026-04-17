@@ -42,15 +42,19 @@
 
     /**
      * The placement of the label relative to the point.
-     * `smart` dynamically positions labels based on neighboring point values (peak, trough, rising, falling).
+     * - `outside`: outside the bar/point.
+     * - `inside`: inside the bar/point near the value edge.
+     * - `middle`: aligned to the value edge with a middle anchor.
+     * - `center`: centered within the bar body (between the value edge and baseline).
+     * - `smart`: dynamically positions labels based on neighboring point values (peak, trough, rising, falling).
      * @default 'outside'
      */
-    placement?: 'inside' | 'outside' | 'center' | 'smart';
+    placement?: 'inside' | 'outside' | 'middle' | 'center' | 'smart';
 
     /**
      * The offset of the label from the point
      *
-     * @default placement === 'center' ? 0 : 4
+     * @default placement === 'center' || placement === 'middle' ? 0 : 4
      */
     offset?: number;
 
@@ -81,6 +85,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import Group from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { createDimensionGetter } from '$lib/utils/rect.svelte.js';
 
   const ctx = getChartContext();
 
@@ -94,7 +99,7 @@
     y,
     seriesKey,
     placement = 'outside',
-    offset = placement === 'center' ? 0 : 4,
+    offset = placement === 'center' || placement === 'middle' ? 0 : 4,
     format,
     key = (_: any, i: number) => i,
     children: childrenProp,
@@ -103,6 +108,9 @@
     opacity,
     ...restProps
   }: LabelsProps<TData> = $props();
+
+  // Used to compute the bar's bounding rect for `center` placement
+  const getDimensions = $derived(createDimensionGetter(ctx, () => ({ x, y })));
 
   // TODO: Should we let `Points` handle opacity for children snippet as well?
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
@@ -146,14 +154,26 @@
 
     if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
-      if (isLowEdge) {
+      if (placement === 'center') {
+        // Center within the bar body
+        const dims = getDimensions(point.data) ?? { x: point.x, y: point.y, width: 0, height: 0 };
+        result = {
+          value: formattedValue,
+          fill: fillValue,
+          x: dims.x + dims.width / 2,
+          y: dims.y + dims.height / 2,
+          textAnchor: 'middle',
+          verticalAnchor: 'middle',
+          capHeight: '.6rem',
+        };
+      } else if (isLowEdge) {
         // left
         result = {
           value: formattedValue,
           fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
           y: point.y,
-          textAnchor: placement === 'outside' ? 'end' : 'start',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };
@@ -164,14 +184,26 @@
           fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
           y: point.y,
-          textAnchor: placement === 'outside' ? 'start' : 'end',
+          textAnchor: placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };
       }
     } else {
       // Position label top/bottom on vertical bars
-      if (isLowEdge) {
+      if (placement === 'center') {
+        // Center within the bar body
+        const dims = getDimensions(point.data) ?? { x: point.x, y: point.y, width: 0, height: 0 };
+        result = {
+          value: formattedValue,
+          fill: fillValue,
+          x: dims.x + dims.width / 2,
+          y: dims.y + dims.height / 2,
+          capHeight: '.6rem',
+          textAnchor: 'middle',
+          verticalAnchor: 'middle',
+        };
+      } else if (isLowEdge) {
         // bottom
         result = {
           value: formattedValue,
@@ -181,7 +213,7 @@
           capHeight: '.6rem',
           textAnchor: 'middle',
           verticalAnchor:
-            placement === 'center' ? 'middle' : placement === 'outside' ? 'start' : 'end',
+            placement === 'middle' ? 'middle' : placement === 'outside' ? 'start' : 'end',
         };
       } else {
         // top
@@ -193,7 +225,7 @@
           capHeight: '.6rem',
           textAnchor: 'middle',
           verticalAnchor:
-            placement === 'center' ? 'middle' : placement === 'outside' ? 'end' : 'start',
+            placement === 'middle' ? 'middle' : placement === 'outside' ? 'end' : 'start',
         };
       }
     }
@@ -271,7 +303,8 @@
       --fill-color: var(--color-surface-content, currentColor);
       --stroke-color: var(--color-surface-100, light-dark(white, black));
 
-      &[data-placement='inside'] {
+      &[data-placement='inside'],
+      &[data-placement='center'] {
         --fill-color: var(--color-surface-100, light-dark(white, black));
         --stroke-color: var(--color-surface-content, currentColor);
       }

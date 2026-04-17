@@ -47,7 +47,7 @@ describe('hasAnyDataProp', () => {
 
 describe('resolveDataProp', () => {
   const data = { date: '2024-01-01', value: 42, nested: { x: 10 } };
-  const mockScale = vi.fn((v: any) => v * 2);
+  const mockScale = vi.fn((v: any) => v * 2) as any;
 
   beforeEach(() => {
     mockScale.mockClear();

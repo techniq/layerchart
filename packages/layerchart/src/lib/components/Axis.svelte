@@ -33,10 +33,18 @@
     rule?: boolean | Partial<ComponentProps<typeof Rule>>;
 
     /**
-     * Draw grid lines
+     * Draw grid lines. Pass props (class, style, stroke, strokeWidth, opacity,
+     * dashArray) to forward onto the underlying grid line.
      * @default false
      */
-    grid?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    grid?:
+      | boolean
+      | (Pick<SVGAttributes<SVGElement>, 'class' | 'style'> & {
+          stroke?: string;
+          strokeWidth?: number;
+          opacity?: number;
+          dashArray?: number | number[] | string;
+        });
 
     /**
      * Control the number of ticks
@@ -47,7 +55,7 @@
      * Width or height of each tick in pixels (enabling responsive count)
      * @default 80 (top|bottom|angle) or 50 (left|right|radius)
      */
-    tickSpacing?: number;
+    tickSpacing?: number | null;
 
     /**
      * Whether to render tick labels on multiple lines for additional context
@@ -102,6 +110,18 @@
     scale?: any;
 
     /**
+     * Stroke color for axis rule, grid lines, and tick marks.
+     * Useful for server-side rendering where CSS variables are not available.
+     */
+    stroke?: string;
+
+    /**
+     * Fill color for tick labels and axis label.
+     * Useful for server-side rendering where CSS variables are not available.
+     */
+    fill?: string;
+
+    /**
      * Classes for styling various parts of the axis
      * @default {}
      */
@@ -150,16 +170,14 @@
     rule = false,
     grid = false,
     ticks,
-    tickSpacing = ['top', 'bottom', 'angle'].includes(placement)
-      ? 80
-      : ['left', 'right', 'radius'].includes(placement)
-        ? 50
-        : undefined,
+    tickSpacing: tickSpacingProp,
     tickMultiline = false,
     tickLength = 4,
     tickMarks = true,
     format,
     tickLabelProps,
+    stroke,
+    fill,
     motion,
     transitionIn,
     transitionInParams,
@@ -171,6 +189,8 @@
   }: AxisProps<T> = $props();
 
   const ctx = getChartContext();
+
+  ctx.registerComponent({ name: 'Axis', kind: 'composite-mark' });
 
   const orientation = $derived(
     placement === 'angle'
@@ -185,8 +205,26 @@
   const scale = $derived(
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
   );
+
   const interval = $derived(
     ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
+
+  const defaultTickSpacing = $derived(
+    ['top', 'bottom', 'angle'].includes(placement)
+      ? 80
+      : ['left', 'right', 'radius'].includes(placement)
+        ? 50
+        : undefined
+  );
+
+  // Disable tick thinning for categorical band scales (no interval), but keep spacing for date-based band scales
+  const tickSpacing = $derived(
+    tickSpacingProp !== undefined
+      ? tickSpacingProp
+      : isScaleBand(scale) && interval == null
+        ? null
+        : defaultTickSpacing
   );
 
   // Default format to 'percentRound' for stackExpand layout considering axis direction
@@ -220,11 +258,32 @@
             : null
   );
 
+  // For band scales with domain-mode transform, scale up effective size by the zoom factor
+  // so that more tick labels appear as bands get wider when zoomed in
+  const effectiveSize = $derived.by(() => {
+    if (!ctxSize) return ctxSize;
+    const ts = ctx.transformState;
+    if (ts?.mode === 'domain' && isScaleBand(scale) && ts.scale > 1) {
+      return ctxSize * ts.scale;
+    }
+    return ctxSize;
+  });
+
+  // Count used for tick thinning (null tickSpacing disables thinning)
   const tickCount = $derived(
     typeof ticks === 'number'
       ? ticks
-      : tickSpacing && ctxSize
-        ? Math.round(ctxSize / tickSpacing)
+      : tickSpacing && effectiveSize
+        ? Math.round(effectiveSize / tickSpacing)
+        : undefined
+  );
+
+  // Count used for formatting (always based on default spacing so time formatting works)
+  const formatCount = $derived(
+    typeof ticks === 'number'
+      ? ticks
+      : defaultTickSpacing && effectiveSize
+        ? Math.round(effectiveSize / defaultTickSpacing)
         : undefined
   );
   const tickVals = $derived.by(() => {
@@ -269,7 +328,7 @@
     autoTickFormat({
       scale,
       ticks,
-      count: tickCount,
+      count: formatCount,
       formatType: resolvedFormat,
       multiline: tickMultiline,
       placement,
@@ -430,6 +489,8 @@
     // complement 10px text (until Text supports custom styles)
     capHeight: '7px',
     lineHeight: '11px',
+    fill,
+    stroke,
     ...labelProps,
     class: cls('lc-axis-label', classes.label, labelProps?.class),
   }) satisfies ComponentProps<typeof Text>;
@@ -444,6 +505,7 @@
     <Rule
       x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
       y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
+      {stroke}
       {motion}
       {...extractLayerProps(rule, 'lc-axis-rule', classes.rule ?? '')}
     />
@@ -471,6 +533,8 @@
       // complement 10px text (until Text supports custom styles)
       capHeight: '7px',
       lineHeight: '11px',
+      fill,
+      stroke,
       ...tickLabelProps,
       class: cls('lc-axis-tick-label', classes.tickLabel, tickLabelProps?.class),
     }}
@@ -480,6 +544,7 @@
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
+          {stroke}
           {motion}
           {...extractLayerProps(grid, 'lc-axis-grid', classes.rule ?? '')}
         />
@@ -493,6 +558,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x}
             y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
+            {stroke}
             {motion}
             class={tickClasses}
           />
@@ -502,6 +568,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
             y2={tickCoords.y}
+            {stroke}
             {motion}
             class={tickClasses}
           />
@@ -511,6 +578,7 @@
             y1={radialTickCoordsY}
             x2={radialTickMarkCoordsX}
             y2={radialTickMarkCoordsY}
+            {stroke}
             {motion}
             class={tickClasses}
           />

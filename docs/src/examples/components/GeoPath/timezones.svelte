@@ -1,3 +1,13 @@
+<script module lang="ts">
+	import { getCountriesTopology, getUsStatesTopology, getTimezones } from '$lib/geo.remote.js';
+	const countriesTopojson = await getCountriesTopology();
+	const statesTopojson = await getUsStatesTopology();
+	const timezonesTopojson = await getTimezones();
+
+	// Override/ignore Blur compatibility check
+	export let layers = ['svg', 'canvas'];
+</script>
+
 <script lang="ts">
 	import {
 		geoAlbersUsa,
@@ -15,15 +25,19 @@
 	// @ts-expect-error
 	import { century, equationOfTime, declination } from 'solar-calculator';
 
-	import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Layer, Tooltip, antipode } from 'layerchart';
+	import {
+		Blur,
+		Chart,
+		ClipPath,
+		GeoCircle,
+		GeoClipPath,
+		GeoPath,
+		Layer,
+		Tooltip,
+		antipode
+	} from 'layerchart';
 	import TimezonesControls from '$lib/components/controls/GeoPathTimezonesControls.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
-
-	import { getCountriesTopology, getUsStatesTopology, getTimezones } from '$lib/geo.remote.js';
-
-	const countriesTopojson = await getCountriesTopology();
-	const statesTopojson = await getUsStatesTopology();
-	const timezonesTopojson = await getTimezones();
 
 	let enableClip = $state(false);
 	let showDaylight = $state(false);
@@ -101,8 +115,7 @@
 	<Layer>
 		<GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
-		<GeoPath geojson={countriesGeojson} id="clip" />
-		<ClipPath useId="clip" disabled={!enableClip}>
+		<GeoClipPath geojson={countriesGeojson} disabled={!enableClip}>
 			{#each timezoneGeojson.features as feature}
 				<GeoPath
 					geojson={feature}
@@ -111,7 +124,7 @@
 					class="stroke-gray-900/50 hover:brightness-110"
 				/>
 			{/each}
-		</ClipPath>
+		</GeoClipPath>
 
 		{#each countriesGeojson.features as feature}
 			<GeoPath geojson={feature} class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none" />

@@ -192,8 +192,14 @@ export class SeriesState<TData, TComponent extends Component> {
       const stackVal = firstEntry.get(s.key);
       if (!stackVal) continue;
       const [y0, y1] = stackVal;
-      if (y1 > maxPosY1) { maxPosY1 = y1; posTipKey = s.key; }
-      if (y0 < minNegY0) { minNegY0 = y0; negTipKey = s.key; }
+      if (y1 > maxPosY1) {
+        maxPosY1 = y1;
+        posTipKey = s.key;
+      }
+      if (y0 < minNegY0) {
+        minNegY0 = y0;
+        negTipKey = s.key;
+      }
     }
 
     const tips = new Set<string>();
@@ -252,7 +258,9 @@ export class SeriesState<TData, TComponent extends Component> {
    * Check if the series is the default
    */
   get isDefaultSeries() {
-    return this.#series.length === 0 || (this.#series.length === 1 && this.#series[0].key === 'default');
+    return (
+      this.#series.length === 0 || (this.#series.length === 1 && this.#series[0].key === 'default')
+    );
   }
 
   /**

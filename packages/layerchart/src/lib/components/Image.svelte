@@ -195,16 +195,16 @@
   const geo = getGeoContext();
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to pixel coordinates and dimensions
   function resolveImage(d: any) {
     const resolvedR = r !== undefined ? resolveDataProp(r, d, null, 0) : undefined;
     const defaultSize = resolvedR !== undefined ? resolvedR * 2 : 16;
-    const resolvedWidth = width !== undefined ? resolveDataProp(width, d, null, defaultSize) : defaultSize;
-    const resolvedHeight = height !== undefined ? resolveDataProp(height, d, null, defaultSize) : defaultSize;
+    const resolvedWidth =
+      width !== undefined ? resolveDataProp(width, d, null, defaultSize) : defaultSize;
+    const resolvedHeight =
+      height !== undefined ? resolveDataProp(height, d, null, defaultSize) : defaultSize;
 
     let resolvedX: number, resolvedY: number;
     if (geo.projection) {
@@ -238,18 +238,27 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      const resolved = resolveImage(d);
-      untrack(() => dataMotionMap.update(key, { x: resolved.x, y: resolved.y, width: resolved.width, height: resolved.height }));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        const resolved = resolveImage(d);
+        untrack(() =>
+          dataMotionMap.update(key, {
+            x: resolved.x,
+            y: resolved.y,
+            width: resolved.width,
+            height: resolved.height,
+          })
+        );
+      }
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // Single source of truth: resolved values with animated overlay
   const resolvedItems = $derived.by(() => {
@@ -292,22 +301,22 @@
   const motionX = createMotion(
     _initialX,
     () => (typeof x === 'number' ? x : 0),
-    parseMotionProp(motion, 'x')
+    motion === undefined ? undefined : parseMotionProp(motion, 'x')
   );
   const motionY = createMotion(
     _initialY,
     () => (typeof y === 'number' ? y : 0),
-    parseMotionProp(motion, 'y')
+    motion === undefined ? undefined : parseMotionProp(motion, 'y')
   );
   const motionWidth = createMotion(
     _initialWidth,
     () => resolvedPixelWidth,
-    parseMotionProp(motion, 'width')
+    motion === undefined ? undefined : parseMotionProp(motion, 'width')
   );
   const motionHeight = createMotion(
     _initialHeight,
     () => resolvedPixelHeight,
-    parseMotionProp(motion, 'height')
+    motion === undefined ? undefined : parseMotionProp(motion, 'height')
   );
 
   // Pixel mode r and rotate (only when direct number values)
@@ -414,29 +423,32 @@
         y: typeof y === 'string' ? y : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render: canvasRender,
-      events: {
-        click: restProps.onclick,
-        pointerdown: restProps.onpointerdown,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        motionX.current,
-        motionY.current,
-        motionWidth.current,
-        motionHeight.current,
-        href,
-        opacity,
-        className,
-        restProps.style,
-        loadedImageCount,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render: canvasRender,
+            events: {
+              click: restProps.onclick,
+              pointerdown: restProps.onpointerdown,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              motionX.current,
+              motionY.current,
+              motionWidth.current,
+              motionHeight.current,
+              href,
+              opacity,
+              className,
+              restProps.style,
+              loadedImageCount,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -485,7 +497,9 @@
       width={motionWidth.current}
       height={motionHeight.current}
       clip-path={pixelR !== undefined ? `url(#${clipId})` : undefined}
-      transform={pixelRotate ? `rotate(${pixelRotate}, ${motionX.current}, ${motionY.current})` : undefined}
+      transform={pixelRotate
+        ? `rotate(${pixelRotate}, ${motionX.current}, ${motionY.current})`
+        : undefined}
       {preserveAspectRatio}
       crossorigin={crossOrigin}
       image-rendering={imageRendering}
@@ -512,7 +526,7 @@
         style:object-fit="cover"
         crossorigin={crossOrigin}
         class={cls('lc-image', className)}
-        {...restProps}
+        {...restProps as any}
       />
     {/each}
   {:else}
@@ -530,7 +544,7 @@
       style:object-fit="cover"
       crossorigin={crossOrigin}
       class={cls('lc-image', className)}
-      {...restProps}
+      {...restProps as any}
     />
   {/if}
 {/if}

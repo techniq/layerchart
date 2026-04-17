@@ -280,6 +280,21 @@ export const text = [
 		}
 	},
 	{
+		feature: 'selectable / copyable',
+		html: {
+			support: true
+		},
+		svg: {
+			support: true
+		},
+		canvas: {
+			support: false
+		},
+		webgl: {
+			support: false
+		}
+	},
+	{
 		feature: 'background',
 		html: {
 			support: true

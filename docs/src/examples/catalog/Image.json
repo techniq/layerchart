@@ -174,14 +174,14 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 210,
+      "lineNumber": 214,
       "line": "<Image"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 212,
+      "lineNumber": 216,
       "line": "<Image"
     },
     {
@@ -248,5 +248,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.368Z"
+  "updatedAt": "2026-04-12T22:48:25.950Z"
 }

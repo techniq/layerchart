@@ -29,11 +29,11 @@
         {
           "component": "Rule",
           "lineNumber": 34,
-          "line": "<Rule x={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         },
         {
           "component": "Text",
-          "lineNumber": 35,
+          "lineNumber": 41,
           "line": "<Text"
         }
       ]
@@ -126,32 +126,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 14,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 25,
+          "lineNumber": 28,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 26,
+          "lineNumber": 29,
           "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
         },
         {
           "component": "Bars",
-          "lineNumber": 28,
+          "lineNumber": 31,
           "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 30,
+          "lineNumber": 33,
           "line": "<Highlight area />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 33,
+          "lineNumber": 36,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -1105,11 +1105,11 @@
         {
           "component": "Rule",
           "lineNumber": 32,
-          "line": "<Rule y={avg} class=\"stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] \" />"
+          "line": "<Rule"
         },
         {
           "component": "Text",
-          "lineNumber": 33,
+          "lineNumber": 39,
           "line": "<Text"
         }
       ]
@@ -2321,14 +2321,14 @@
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-candlestick-bars",
-      "lineNumber": 28,
+      "lineNumber": 31,
       "line": "<Bars y={['high', 'low']} insets={{ x: 1.5 }} class=\"fill-surface-content\" />"
     },
     {
       "example": "horizontal-candlestick-bars",
       "component": "Bars",
       "path": "/docs/components/Bars/horizontal-candlestick-bars",
-      "lineNumber": 29,
+      "lineNumber": 32,
       "line": "<Bars y={['open', 'close']} insets={{ x: 0.5 }} />"
     },
     {
@@ -2790,7 +2790,7 @@
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 68,
+      "lineNumber": 71,
       "line": "<Bars insets={{ x: 0.5 }} />"
     },
     {
@@ -2822,5 +2822,5 @@
       "line": "<Bars radius={4} strokeWidth={1} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-23T11:04:17.926Z"
+  "updatedAt": "2026-04-14T21:42:23.003Z"
 }

@@ -1,11 +1,13 @@
+<script module lang="ts">
+	import { getVolcano } from '$lib/data.remote.js';
+	const volcano = await getVolcano();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Axis, Chart, Contour, Layer, Raster } from 'layerchart';
 
-	import { getVolcano } from '$lib/data.remote.js';
-
-	const volcano = await getVolcano();
 </script>
 
 <Chart

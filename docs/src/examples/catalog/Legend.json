@@ -245,21 +245,21 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 131,
+      "lineNumber": 142,
       "line": "<Legend"
     },
     {
       "example": "choropleth",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/choropleth",
-      "lineNumber": 100,
+      "lineNumber": 104,
       "line": "<Legend"
     },
     {
       "example": "eclipses-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/eclipses-globe",
-      "lineNumber": 70,
+      "lineNumber": 72,
       "line": "<Legend scale={colorScale} title=\"Eclipse date\" tickFormat=\"year\" />"
     },
     {
@@ -536,12 +536,19 @@
       "line": "<Legend"
     },
     {
+      "example": "zoomable-bubble",
+      "component": "ScatterChart",
+      "path": "/docs/components/ScatterChart/zoomable-bubble",
+      "lineNumber": 59,
+      "line": "<Legend placement=\"bottom\" />"
+    },
+    {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 28,
+      "lineNumber": 31,
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.471Z"
+  "updatedAt": "2026-04-12T22:48:26.018Z"
 }

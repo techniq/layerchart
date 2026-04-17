@@ -168,7 +168,13 @@
     type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { hasAnyDataProp, resolveDataProp, resolveColorProp, resolveGeoDataPair, resolveStyleProp } from '$lib/utils/dataProp.js';
+  import {
+    hasAnyDataProp,
+    resolveDataProp,
+    resolveColorProp,
+    resolveGeoDataPair,
+    resolveStyleProp,
+  } from '$lib/utils/dataProp.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { chartDataArray } from '$lib/utils/common.js';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -219,9 +225,7 @@
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
 
   // Data to iterate over in data mode
-  const resolvedData: any[] = $derived(
-    dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []
-  );
+  const resolvedData: any[] = $derived(dataMode ? (dataProp ?? chartDataArray(chartCtx.data)) : []);
 
   // Resolve a single data item to a polygon path string
   function resolvePolygon(d: any) {
@@ -234,22 +238,23 @@
     }
     const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
 
-    const pts = typeof points === 'number'
-      ? polygon({
-          cx: resolvedCx,
-          cy: resolvedCy,
-          count: points,
-          radius: resolvedR,
-          rotate,
-          inset,
-          scaleX,
-          scaleY,
-          skewX,
-          skewY,
-          tiltX,
-          tiltY,
-        })
-      : points;
+    const pts =
+      typeof points === 'number'
+        ? polygon({
+            cx: resolvedCx,
+            cy: resolvedCy,
+            count: points,
+            radius: resolvedR,
+            rotate,
+            inset,
+            scaleX,
+            scaleY,
+            skewX,
+            skewY,
+            tiltX,
+            tiltY,
+          })
+        : points;
 
     return roundedPolygonPath(pts, cornerRadius);
   }
@@ -257,26 +262,28 @@
   // --- Data mode motion ---
   const dataMotionMap = createDataMotionMap(motion);
 
-  $effect(() => {
-    if (!dataMode || !dataMotionMap) return;
-    const activeKeys = new Set<any>();
-    for (let i = 0; i < resolvedData.length; i++) {
-      const d = resolvedData[i];
-      const key = keyFn(d, i);
-      activeKeys.add(key);
-      // Polygon resolve returns a path string, so resolve coords separately for motion
-      let resolvedCx: number, resolvedCy: number;
-      if (geo.projection) {
-        [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
-      } else {
-        resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
-        resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+  if (dataMotionMap) {
+    $effect(() => {
+      if (!dataMode) return;
+      const activeKeys = new Set<any>();
+      for (let i = 0; i < resolvedData.length; i++) {
+        const d = resolvedData[i];
+        const key = keyFn(d, i);
+        activeKeys.add(key);
+        // Polygon resolve returns a path string, so resolve coords separately for motion
+        let resolvedCx: number, resolvedCy: number;
+        if (geo.projection) {
+          [resolvedCx, resolvedCy] = resolveGeoDataPair(cx, cy, d, geo.projection);
+        } else {
+          resolvedCx = resolveDataProp(cx, d, chartCtx.xScale, 0);
+          resolvedCy = resolveDataProp(cy, d, chartCtx.yScale, 0);
+        }
+        const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
+        untrack(() => dataMotionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
       }
-      const resolvedR = resolveDataProp(r, d, chartCtx.rScale, typeof r === 'number' ? r : 1);
-      untrack(() => dataMotionMap.update(key, { cx: resolvedCx, cy: resolvedCy, r: resolvedR }));
-    }
-    untrack(() => dataMotionMap.cleanup(activeKeys));
-  });
+      untrack(() => dataMotionMap.cleanup(activeKeys));
+    });
+  }
 
   // TODO: Apply animated values from dataMotionMap to SVG/HTML/Canvas templates.
   // Polygon uses a path string from resolvePolygon(), so animated cx/cy/r values
@@ -348,6 +355,13 @@
 
   const layerCtx = getLayerContext();
 
+  const staticFill = $derived(typeof fill === 'string' ? fill : undefined);
+  const staticFillOpacity = $derived(typeof fillOpacity === 'number' ? fillOpacity : undefined);
+  const staticStroke = $derived(typeof stroke === 'string' ? stroke : undefined);
+  const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
+  const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
+  const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+
   function getStyleOptions(
     styleOverrides: ComputedStylesOptions | undefined,
     itemFill?: string | undefined,
@@ -358,16 +372,29 @@
     itemClass?: string | undefined
   ) {
     return styleOverrides
-      ? merge({ styles: { strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined) } }, styleOverrides)
+      ? merge(
+          {
+            styles: {
+              strokeWidth:
+                itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            },
+          },
+          styleOverrides
+        )
       : {
           styles: {
             fill: itemFill ?? fill,
-            fillOpacity: itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
+            fillOpacity:
+              itemFillOpacity ?? (typeof fillOpacity === 'number' ? fillOpacity : undefined),
             stroke: itemStroke ?? stroke,
-            strokeWidth: itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
+            strokeWidth:
+              itemStrokeWidth ?? (typeof strokeWidth === 'number' ? strokeWidth : undefined),
             opacity: itemOpacity ?? (typeof opacity === 'number' ? opacity : undefined),
           },
-          classes: cls('lc-polygon', itemClass ?? (typeof className === 'string' ? className : undefined)),
+          classes: cls(
+            'lc-polygon',
+            itemClass ?? (typeof className === 'string' ? className : undefined)
+          ),
           style: restProps.style as string | undefined,
         };
   }
@@ -385,7 +412,15 @@
         const resolvedStrokeWidth = resolveStyleProp(strokeWidth, d);
         const resolvedOpacity = resolveStyleProp(opacity, d);
         const resolvedClass = resolveStyleProp(className, d);
-        const styleOpts = getStyleOptions(styleOverrides, resolvedFill, resolvedStroke, resolvedFillOpacity, resolvedStrokeWidth, resolvedOpacity, resolvedClass);
+        const styleOpts = getStyleOptions(
+          styleOverrides,
+          resolvedFill,
+          resolvedStroke,
+          resolvedFillOpacity,
+          resolvedStrokeWidth,
+          resolvedOpacity,
+          resolvedClass
+        );
         renderPathData(ctx, pathData, styleOpts);
       }
     } else {
@@ -395,8 +430,8 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = createKey(() => fill);
-  const strokeKey = createKey(() => stroke);
+  const fillKey = layerCtx === 'canvas' ? createKey(() => fill) : undefined;
+  const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   chartCtx.registerComponent({
     name: 'Polygon',
@@ -410,31 +445,34 @@
         color: typeof fill === 'string' ? fill : typeof stroke === 'string' ? stroke : undefined,
       };
     },
-    canvasRender: layerCtx === 'canvas' ? {
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerdown: restProps.onpointerdown,
-        pointerover: restProps.onpointerover,
-        pointerout: restProps.onpointerout,
-        touchmove: restProps.ontouchmove,
-      },
-      deps: () => [
-        dataMode,
-        dataMode ? resolvedItems : null,
-        fillKey.current,
-        fillOpacity,
-        strokeKey.current,
-        strokeWidth,
-        opacity,
-        className,
-        tweenedState.current,
-        restProps.style,
-      ],
-    } : undefined,
+    canvasRender:
+      layerCtx === 'canvas'
+        ? {
+            render,
+            events: {
+              click: restProps.onclick,
+              pointerenter: restProps.onpointerenter,
+              pointermove: restProps.onpointermove,
+              pointerleave: restProps.onpointerleave,
+              pointerdown: restProps.onpointerdown,
+              pointerover: restProps.onpointerover,
+              pointerout: restProps.onpointerout,
+              touchmove: restProps.ontouchmove,
+            },
+            deps: () => [
+              dataMode,
+              dataMode ? resolvedItems : null,
+              fillKey!.current,
+              fillOpacity,
+              strokeKey!.current,
+              strokeWidth,
+              opacity,
+              className,
+              tweenedState.current,
+              restProps.style,
+            ],
+          }
+        : undefined,
   });
 </script>
 
@@ -462,12 +500,12 @@
   {:else}
     <path
       d={tweenedState.current}
-      fill={fill as string}
-      fill-opacity={fillOpacity as number}
-      stroke={stroke as string}
-      stroke-width={strokeWidth as number}
-      opacity={opacity as number}
-      class={cls('lc-polygon', className as string)}
+      fill={staticFill}
+      fill-opacity={staticFillOpacity}
+      stroke={staticStroke}
+      stroke-width={staticStrokeWidth}
+      opacity={staticOpacity}
+      class={cls('lc-polygon', staticClassName)}
       {...restProps}
       bind:this={ref}
     />

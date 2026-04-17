@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { Button, Field, Menu, MenuField, Toggle } from 'svelte-ux';
+	import { Button, Field, Menu, MenuField, Switch, Toggle } from 'svelte-ux';
 	import { Tooltip } from 'layerchart';
 
 	interface Props {
 		anchor?: ComponentProps<typeof Tooltip.Root>['anchor'];
 		snap?: 'pointer' | 'data';
 		contained?: ComponentProps<typeof Tooltip.Root>['contained'];
+		portal?: boolean;
 	}
 
 	const anchorOptions = [
@@ -24,7 +25,8 @@
 	let {
 		anchor = $bindable('top-left' as ComponentProps<typeof Tooltip.Root>['anchor']),
 		snap = $bindable('pointer' as 'pointer' | 'data'),
-		contained = $bindable(false as ComponentProps<typeof Tooltip.Root>['contained'])
+		contained = $bindable(false as ComponentProps<typeof Tooltip.Root>['contained']),
+		portal = $bindable(true)
 	}: Props = $props();
 </script>
 
@@ -59,13 +61,19 @@
 		]}
 	/>
 
-	<MenuField
-		label="Contained"
-		bind:value={contained}
-		options={[
-			{ label: 'none', value: false },
-			{ label: 'container', value: 'container' },
-			{ label: 'window', value: 'window' }
-		]}
-	/>
+	<div class="flex gap-2">
+		<MenuField
+			label="Contained"
+			bind:value={contained}
+			options={[
+				{ label: 'none', value: false },
+				{ label: 'container', value: 'container' },
+				{ label: 'window', value: 'window' }
+			]}
+			class="flex-1"
+		/>
+		<Field label="Portal">
+			<Switch bind:checked={portal} />
+		</Field>
+	</div>
 </div>

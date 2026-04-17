@@ -6,6 +6,7 @@
   import type { SeriesData } from './types.js';
 
   import Arc from '../Arc.svelte';
+  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
   import Group from '../Group.svelte';
   import Pie from '../Pie.svelte';
 
@@ -28,6 +29,13 @@
     // Props that don't apply to PieChart
     'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
   > & {
+      /**
+       * Render text labels on each arc.
+       *
+       * Pass `true` to enable with default placement (`centroid`), or an object
+       * to customize via `ArcLabel` props (placement, format, value accessor, etc).
+       */
+      labels?: boolean | (ArcLabelConfig & { value?: Accessor });
       /**
        * The series data to be used for the chart.
        */
@@ -214,9 +222,16 @@
     tooltip: tooltipProp,
     pie,
     arc,
+    labels = false,
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
+
+  const labelsConfig = $derived.by<(ArcLabelConfig & { value?: Accessor }) | null>(() => {
+    if (labels === true) return { placement: 'callout' };
+    if (labels) return { placement: 'callout', ...labels };
+    return null;
+  });
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
@@ -231,7 +246,7 @@
   // Reading context.series.allSeriesData here would create a derived_references_self cycle:
   //   SeriesState.#series → ChartState.props → data={visibleData} → chartData → context.series.allSeriesData → #series
   const chartData = $derived.by(() => {
-    const seriesData = series.flatMap((s) => s.data ?? []);
+    const seriesData = series.flatMap((s) => ('data' in s ? s.data : undefined) ?? []);
     return (seriesData.length > 0 ? seriesData : chartDataArray(data)) as Array<TData>;
   });
 
@@ -245,7 +260,7 @@
 
   // Compute series colors locally to avoid derived_references_self cycle through context.series.allSeriesColors
   const allSeriesColors = $derived(
-    series.map((s) => s.color).filter((c) => c != null) as string[]
+    series.map((s) => ('color' in s ? s.color : undefined)).filter((c) => c != null) as string[]
   );
 
   // Custom tickFormat for PieChart legends - uses data labels instead of series labels
@@ -293,7 +308,9 @@
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
       outerRadius:
-        (context?.series.visibleSeries.length ?? 0) > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+        (context?.series.visibleSeries.length ?? 0) > 1
+          ? seriesIndex * (outerRadius ?? 0)
+          : outerRadius,
       innerRadius,
       cornerRadius,
       padAngle,
@@ -402,6 +419,29 @@
                       index: arcIdx,
                       seriesIndex: seriesIdx,
                     })}
+                  {:else if labelsConfig}
+                    <Arc {...arcProps}>
+                      {#snippet children({
+                        centroid,
+                        startAngle,
+                        endAngle,
+                        innerRadius: arcInnerRadius,
+                        outerRadius: arcOuterRadius,
+                        getArcTextProps,
+                      })}
+                        {@const { value: labelValue, ...labelRest } = labelsConfig}
+                        <ArcLabel
+                          {centroid}
+                          {startAngle}
+                          {endAngle}
+                          innerRadius={arcInnerRadius}
+                          outerRadius={arcOuterRadius}
+                          {getArcTextProps}
+                          value={accessor(labelValue ?? value)(arcData.data)}
+                          {...labelRest}
+                        />
+                      {/snippet}
+                    </Arc>
                   {:else}
                     <Arc {...arcProps} />
                   {/if}
@@ -426,8 +466,13 @@
               value={valueAccessor(data)}
               color={snippetProps.context.cScale?.(snippetProps.context.c(data))}
               {format}
-              onpointerenter={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = keyAccessor(data); }}
-              onpointerleave={() => { if (snippetProps.context) snippetProps.context.series.highlightKey = null; }}
+              onpointerenter={() => {
+                if (snippetProps.context)
+                  snippetProps.context.series.highlightKey = keyAccessor(data);
+              }}
+              onpointerleave={() => {
+                if (snippetProps.context) snippetProps.context.series.highlightKey = null;
+              }}
               {...props.tooltip?.item}
             />
           </Tooltip.List>

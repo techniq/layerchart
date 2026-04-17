@@ -5,6 +5,8 @@ export type LoadedExample = {
 	component: Component;
 	source: string;
 	module: {
+		title?: string;
+		description?: string;
 		layers?: string[];
 	};
 };

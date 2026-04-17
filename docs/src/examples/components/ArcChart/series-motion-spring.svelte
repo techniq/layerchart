@@ -9,11 +9,12 @@
 	];
 	export { data };
 
-	let show = $state(true);
+	let show = $state();
 </script>
 
 <ShowField bind:show label="Show Arcs" />
 
+<!-- Note wrapping div is for demo purposes only (Toggling visibility), it is not required in your code. -->
 <div style:height="180px">
 	{#if show}
 		<ArcChart
@@ -31,6 +32,7 @@
 			outerRadius={-25}
 			innerRadius={-20}
 			cornerRadius={10}
+			height={180}
 		/>
 	{/if}
 </div>

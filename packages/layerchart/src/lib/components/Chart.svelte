@@ -7,7 +7,7 @@
 
   import { getObjectOrNull, type Accessor } from '$lib/utils/common.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
-  import { type AnyScale, type DomainType } from '$lib/utils/scales.svelte.js';
+  import { type AnyScale, type DomainType, isScaleBand } from '$lib/utils/scales.svelte.js';
   import type {
     BaseRange,
     Nice,
@@ -22,7 +22,11 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
-  import { type BrushDomainType, type BrushState } from '$lib/states/brush.svelte.js';
+  import {
+    type BrushDomainType,
+    type BrushState,
+    expandBandBrushDomain,
+  } from '$lib/states/brush.svelte.js';
 
   import { setChartContext } from '$lib/contexts/chart.js';
   import { ChartState } from '$lib/states/chart.svelte.js';
@@ -741,7 +745,8 @@
 
   // Resolve which projection properties the transform state applies to
   const resolvedApply = $derived.by(() => {
-    if (transform?.mode !== 'projection') return { rotation: false, scale: false, translate: false };
+    if (transform?.mode !== 'projection')
+      return { rotation: false, scale: false, translate: false };
 
     // Auto-detect globe projections from clipAngle (flat projections return 0, globes return > 0)
     let isGlobe = false;
@@ -751,7 +756,7 @@
     }
 
     const defaults = isGlobe
-      ? { rotation: true, scale: false, translate: false }
+      ? { rotation: true, scale: true, translate: false }
       : { rotation: false, scale: true, translate: true };
 
     // User overrides win; enforce mutual exclusion
@@ -773,7 +778,10 @@
   });
 
   const initialTransform = $derived(
-    transform?.mode === 'projection' && (resolvedApply.translate || resolvedApply.scale) && geo?.fitGeojson && geo?.projection
+    transform?.mode === 'projection' &&
+      (resolvedApply.translate || resolvedApply.scale) &&
+      geo?.fitGeojson &&
+      geo?.projection
       ? geoFitObjectTransform(
           geo.projection(),
           [chartState.width, chartState.height],
@@ -827,12 +835,17 @@
         axisScale: number,
         dimension: number,
         baseDomain: number[],
-        extent: { min?: number | Date | 'data'; max?: number | Date | 'data'; minRange?: number } | undefined
+        extent:
+          | { min?: number | Date | 'data'; max?: number | Date | 'data'; minRange?: number }
+          | undefined
       ): number => {
         if (!extent || baseDomain.length < 2 || dimension <= 0) return axisTranslate;
 
         const d0 = baseDomain[0] as unknown;
         const d1 = baseDomain[1] as unknown;
+
+        // Skip domain extent constraint for categorical scales (range clamping handles boundaries)
+        if (typeof d0 === 'string') return axisTranslate;
         const isDate = d0 instanceof Date;
         const rawD0 = isDate ? (d0 as Date).getTime() : (d0 as number);
         const rawD1 = isDate ? (d1 as Date).getTime() : (d1 as number);
@@ -841,13 +854,17 @@
 
         // Normalize reversed domains by flipping the translate
         const reversed = rawD0 > rawD1;
-        const normTranslate = reversed ? dimension * axisScale - axisTranslate - dimension : axisTranslate;
+        const normTranslate = reversed
+          ? dimension * axisScale - axisTranslate - dimension
+          : axisTranslate;
         const numMin = Math.min(rawD0, rawD1);
 
         const rawMinVal = resolveValue(extent.min, baseDomain[0]);
         const rawMaxVal = resolveValue(extent.max, baseDomain[1]);
-        const minVal = rawMinVal != null && rawMaxVal != null ? Math.min(rawMinVal, rawMaxVal) : rawMinVal;
-        const maxVal = rawMinVal != null && rawMaxVal != null ? Math.max(rawMinVal, rawMaxVal) : rawMaxVal;
+        const minVal =
+          rawMinVal != null && rawMaxVal != null ? Math.min(rawMinVal, rawMaxVal) : rawMinVal;
+        const maxVal =
+          rawMinVal != null && rawMaxVal != null ? Math.max(rawMinVal, rawMaxVal) : rawMaxVal;
 
         // Current visible domain from translate/scale
         const f0 = -normTranslate / axisScale / dimension;
@@ -866,11 +883,15 @@
         // Enforce domain min/max (pan boundaries)
         if (minVal != null && visMin < minVal) {
           visMin = minVal;
-          visMax = visMin + (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
+          visMax =
+            visMin +
+            (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
         }
         if (maxVal != null && visMax > maxVal) {
           visMax = maxVal;
-          visMin = visMax - (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
+          visMin =
+            visMax -
+            (extent.minRange != null && visRange < extent.minRange ? extent.minRange : visRange);
           if (minVal != null && visMin < minVal) visMin = minVal;
         }
 
@@ -925,15 +946,116 @@
     };
   });
 
-  // Compose user-provided constrain with domainExtent constrain
+  // Whether this is a band scale domain transform (affects scaleExtent and constrain defaults)
+  const isBandDomainTransform = $derived(
+    transform?.mode === 'domain' &&
+      (((transform.axis ?? 'both') !== 'y' && isScaleBand(chartState._xScaleProp)) ||
+        ((transform.axis ?? 'both') !== 'x' && isScaleBand(chartState._yScaleProp)))
+  );
+
+  // For projection mode, scaleExtent is relative to the initial fitted scale (like d3-zoom).
+  // e.g. [0.5, 8] means 0.5x to 8x of the fitted projection scale.
+  // For band scale domain transforms, enforce minimum of 1 (can't zoom out past initial view).
+  const resolvedScaleExtent = $derived.by(() => {
+    if (transform?.mode === 'projection' && transform?.scaleExtent && initialTransform) {
+      const baseScale = initialTransform.scale;
+      return [transform.scaleExtent[0] * baseScale, transform.scaleExtent[1] * baseScale] as [
+        number,
+        number,
+      ];
+    }
+    if (!isBandDomainTransform) return transform?.scaleExtent;
+    const userExtent = transform?.scaleExtent;
+    return [Math.max(1, userExtent?.[0] ?? 1), userExtent?.[1] ?? Infinity] as [number, number];
+  });
+
+  // For projection mode with flat projections, translateExtent defines the pannable world bounds
+  // at the initial (1x) zoom level, similar to d3-zoom. The allowed translate range scales with
+  // the zoom ratio so you can pan more when zoomed in.
+  // For rotation mode (globes), translateExtent is passed through as degrees (yaw/pitch).
+  const resolvedTranslateExtent = $derived.by(() => {
+    if (transform?.mode === 'projection' && transform?.translateExtent) {
+      if (resolvedApply.rotation) {
+        // Rotation mode: values are degrees (yaw/pitch), pass through as-is
+        return transform.translateExtent;
+      }
+      // Flat projection translate mode: handled via projectionTranslateConstrain below
+      return undefined;
+    }
+    return transform?.translateExtent;
+  });
+
+  // For flat projection mode, implement d3-zoom-style translate constraining:
+  // The viewport (at current zoom) must overlap with the translateExtent world bounds.
+  // As zoom increases, the allowed translate range grows proportionally.
+  const projectionTranslateConstrain = $derived.by(() => {
+    if (
+      transform?.mode !== 'projection' ||
+      !transform?.translateExtent ||
+      !initialTransform ||
+      resolvedApply.rotation
+    ) {
+      return undefined;
+    }
+
+    const baseScale = initialTransform.scale;
+    const baseTranslate = initialTransform.translate;
+    const [[x0, y0], [x1, y1]] = transform.translateExtent;
+
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      let { scale, translate } = t;
+      // Zoom ratio relative to fitted scale
+      const k = scale / baseScale;
+
+      // Allowed translate range scales with zoom ratio
+      translate = {
+        x: Math.max(baseTranslate.x + x0 * k, Math.min(baseTranslate.x + x1 * k, translate.x)),
+        y: Math.max(baseTranslate.y + y0 * k, Math.min(baseTranslate.y + y1 * k, translate.y)),
+      };
+
+      return { scale, translate };
+    };
+  });
+
+  // Default constrain for band scale domain transforms: prevent panning past data boundaries
+  const bandScaleConstrain = $derived.by(() => {
+    if (!isBandDomainTransform) return undefined;
+    const xIsBand = (transform!.axis ?? 'both') !== 'y' && isScaleBand(chartState._xScaleProp);
+    const yIsBand = (transform!.axis ?? 'both') !== 'x' && isScaleBand(chartState._yScaleProp);
+
+    return (t: { scale: number; translate: { x: number; y: number } }) => {
+      let { scale, translate } = t;
+      let tx = translate.x;
+      let ty = translate.y;
+      if (xIsBand) {
+        // translate.x must be in [width * (1 - scale), 0]
+        tx = Math.max(chartState.width * (1 - scale), Math.min(0, tx));
+      }
+      if (yIsBand) {
+        ty = Math.max(chartState.height * (1 - scale), Math.min(0, ty));
+      }
+      return { scale, translate: { x: tx, y: ty } };
+    };
+  });
+
+  // Compose user-provided constrain with domainExtent constrain and band scale constrain
   const composedConstrain = $derived.by(() => {
     const userConstrain = transform?.constrain;
-    if (!domainExtentConstrain && !userConstrain) return undefined;
-    if (!domainExtentConstrain) return userConstrain;
-    if (!userConstrain) return domainExtentConstrain;
-    // Domain extent first, then user constrain
+    const constrains = [
+      bandScaleConstrain,
+      domainExtentConstrain,
+      projectionTranslateConstrain,
+      userConstrain,
+    ].filter(Boolean) as Array<
+      (t: { scale: number; translate: { x: number; y: number } }) => {
+        scale: number;
+        translate: { x: number; y: number };
+      }
+    >;
+    if (constrains.length === 0) return undefined;
+    if (constrains.length === 1) return constrains[0];
     return (t: { scale: number; translate: { x: number; y: number } }) => {
-      return userConstrain(domainExtentConstrain(t));
+      return constrains.reduce((acc, fn) => fn(acc), t);
     };
   });
 
@@ -954,8 +1076,12 @@
             chartState.zoomToBrush(e.brush, userProps.axis ?? 'x');
           } else if (zoomOnBrush) {
             const axis = userProps.axis ?? 'x';
-            if (axis === 'x' || axis === 'both') brushXDomain = e.brush.x;
-            if (axis === 'y' || axis === 'both') brushYDomain = e.brush.y;
+            if (axis === 'x' || axis === 'both') {
+              brushXDomain = expandBandBrushDomain(e.brush.x, chartState._baseXDomain);
+            }
+            if (axis === 'y' || axis === 'both') {
+              brushYDomain = expandBandBrushDomain(e.brush.y, chartState._baseYDomain);
+            }
           }
           userOnBrushEnd?.(e);
           e.brush.reset();
@@ -993,7 +1119,14 @@
   >
     {#key chartState.isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->
-      {@const { domainExtent: _de, constrain: _uc, apply: _apply, ...transformProps } = transform ?? {}}
+      {@const {
+        domainExtent: _de,
+        constrain: _uc,
+        apply: _apply,
+        scaleExtent: _se,
+        translateExtent: _te,
+        ...transformProps
+      } = transform ?? {}}
       <TransformContext
         bind:state={chartState.transformState}
         mode={transform?.mode ?? 'none'}
@@ -1001,8 +1134,12 @@
         initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
         {processTranslate}
         {...transformProps}
+        scaleExtent={resolvedScaleExtent}
+        translateExtent={resolvedTranslateExtent}
         constrain={composedConstrain}
-        disablePointer={(brush === true || (typeof brush === 'object' && !brush.disabled)) || transform?.disablePointer}
+        disablePointer={brush === true ||
+          (typeof brush === 'object' && !brush.disabled) ||
+          transform?.disablePointer}
         {ondragstart}
         {onTransform}
         {ondragend}
@@ -1010,7 +1147,11 @@
         <!-- svelte-ignore ownership_invalid_binding -->
         <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <TooltipContext onclick={onTooltipClick} {...getObjectOrNull(tooltipContext)} bind:state={chartState.tooltipState}>
+          <TooltipContext
+            onclick={onTooltipClick}
+            {...getObjectOrNull(tooltipContext)}
+            bind:state={chartState.tooltipState}
+          >
             <ChartChildren {children} {tooltipContext} {...restProps} />
           </TooltipContext>
         </BrushContext>

@@ -1,5 +1,11 @@
 <script lang="ts" module>
   import type { ComponentNode } from '$lib/contexts/chart.js';
+  import type { ChartState } from '$lib/states/chart.svelte.js';
+
+  type SSRCaptureTarget = {
+    chartState?: ChartState<any, any, any>;
+    rootNode?: ComponentNode;
+  };
 
   export type CanvasPropsWithoutHTML = {
     /**
@@ -80,6 +86,12 @@
      */
     debug?: boolean;
 
+    /** @internal Server-side capture target used by layerchart/server. */
+    ssrCapture?: SSRCaptureTarget;
+
+    /** @internal Server-side capture callback used by layerchart/server. */
+    ssrCaptureCallback?: (data: SSRCaptureTarget) => void;
+
     children?: Snippet<
       [{ ref: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D | undefined }]
     >;
@@ -87,7 +99,6 @@
 
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
-
 </script>
 
 <script lang="ts">
@@ -107,10 +118,13 @@
     type CanvasContextValue,
     type ComponentRender,
   } from '$lib/contexts/canvas.js';
+  import { renderTree } from '$lib/server/renderTree.js';
 
   let {
     ref: refProp = $bindable(),
     canvasContext: canvasContextProp = $bindable(),
+    ssrCapture,
+    ssrCaptureCallback,
     willReadFrequently = false,
     debug = false,
     zIndex = 0,
@@ -183,9 +197,10 @@
     // Bubble up to ancestor groups
     let ancestor = node?.parent;
     while (ancestor) {
-      const handler = ancestor.kind === 'group'
-        ? ancestor.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined
-        : undefined;
+      const handler =
+        ancestor.kind === 'group'
+          ? (ancestor.canvasRender?.events?.[eventName] as ((e: Event) => void) | null | undefined)
+          : undefined;
       handler?.(e);
       ancestor = ancestor.parent;
     }
@@ -225,21 +240,23 @@
    */
 
   // Invalidate/redraw if color scheme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">`
-  const { dark } = new MediaQueryPresets();
-  watch(
-    () => dark.current,
-    () => {
-      canvasContext.invalidate();
-    }
-  );
-  useMutationObserver(
-    () => document.documentElement,
-    () => canvasContext.invalidate(),
-    {
-      attributes: true,
-      attributeFilter: ['class', 'data-theme'],
-    }
-  );
+  if (typeof window !== 'undefined') {
+    const { dark } = new MediaQueryPresets();
+    watch(
+      () => dark.current,
+      () => {
+        canvasContext.invalidate();
+      }
+    );
+    useMutationObserver(
+      () => document.documentElement,
+      () => canvasContext.invalidate(),
+      {
+        attributes: true,
+        attributeFilter: ['class', 'data-theme'],
+      }
+    );
+  }
 
   onMount(() => {
     context = ref?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
@@ -310,33 +327,6 @@
     pendingInvalidation = false;
   }
 
-  /**
-   * Recursively render the component tree.
-   * Group nodes: save → render (translate/opacity) → recurse children → restore
-   * Leaf nodes: save → render → restore
-   */
-  function renderTree(canvasCtx: CanvasRenderingContext2D, node: ComponentNode) {
-    if (node.kind === 'group' && node.canvasRender) {
-      // Group: save state, apply transform, render children, restore
-      canvasCtx.save();
-      node.canvasRender.render(canvasCtx);
-      for (const child of node.children) {
-        renderTree(canvasCtx, child);
-      }
-      canvasCtx.restore();
-    } else if (node.canvasRender) {
-      // Leaf mark: save, render, restore
-      canvasCtx.save();
-      node.canvasRender.render(canvasCtx);
-      canvasCtx.restore();
-    } else {
-      // Non-rendering node (e.g. root, composite-mark): just recurse children
-      for (const child of node.children) {
-        renderTree(canvasCtx, child);
-      }
-    }
-  }
-
   function nodeHasEvents(node: ComponentNode) {
     return node.canvasRender?.events && Object.values(node.canvasRender.events).some((d) => d);
   }
@@ -345,7 +335,11 @@
    * Recursively render the hit canvas tree for pointer event detection.
    * Renders components that have event handlers (or whose ancestor group does), using unique colors.
    */
-  function renderHitTree(hitCtx: CanvasRenderingContext2D, node: ComponentNode, ancestorHasEvents = false) {
+  function renderHitTree(
+    hitCtx: CanvasRenderingContext2D,
+    node: ComponentNode,
+    ancestorHasEvents = false
+  ) {
     if (node.kind === 'group' && node.canvasRender) {
       const groupHasEvents = ancestorHasEvents || nodeHasEvents(node);
       // Group: apply transform, recurse children (scoped by save/restore)
@@ -383,11 +377,33 @@
 
     function invalidate() {
       if (pendingInvalidation) return;
+      if (typeof requestAnimationFrame === 'undefined') return;
       pendingInvalidation = true;
       frameId = requestAnimationFrame(update);
     }
 
-    return { register, invalidate };
+    function getRootNode() {
+      return rootNode;
+    }
+
+    return { register, invalidate, getRootNode };
+  }
+
+  function captureSSR() {
+    if (typeof window !== 'undefined') return '';
+    if (!ssrCapture && !ssrCaptureCallback) return '';
+
+    const captured: SSRCaptureTarget = {
+      chartState: ctx,
+      rootNode,
+    };
+
+    if (ssrCapture) {
+      Object.assign(ssrCapture, captured);
+    }
+
+    ssrCaptureCallback?.(captured);
+    return '';
   }
 
   const canvasContext = createCanvasContext();
@@ -457,6 +473,7 @@
 <canvas bind:this={hitCanvasElement} class="lc-hit-canvas" class:debug></canvas>
 
 {@render children?.({ ref, canvasContext: context })}
+{captureSSR()}
 
 <style>
   @layer base {

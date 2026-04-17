@@ -1,13 +1,31 @@
 ---
-description: Commonly used component which explains the symbols, colors, or patterns used in a chart, helping interpret the represented data categories. Filtering and toggling visibility of data series can be enabled for interactivity.
+description: Commonly used component which explains the symbols, colors, or patterns used in a chart, helping interpret the represented data categories. Typically paired with `Chart` `cScale` (color scale). Filtering and toggling visibility of data series can be enabled for interactivity.
 category: common
 layers: [html]
-related: []
+withinLayer: false
+related: [CircleLegend, GeoLegend]
 ---
 
 ## Usage
 
 :example{ name="sequential" showCode }
+
+### Tooltip indicator
+
+When the chart has an active tooltip, `Legend` draws a small arrow below the color ramp at the position of the currently hovered value. By default it reads `ctx.tooltip.data` and pipes it through the chart's color accessor (`ctx.c`), so charts that configure `c` / `cScale` on `<Chart>` get the indicator automatically.
+
+For `scaleThreshold` / `scaleQuantize` / `scaleQuantile` scales, the arrow centers on the matching bucket swatch.
+
+Pass an explicit `value` prop to override the auto-detection — useful when the tooltip data shape doesn't match the chart's color accessor:
+
+```svelte
+<Legend
+  scale={colorScale}
+  value={context.tooltip.data?.properties.data?.percentUnder18}
+/>
+```
+
+See the [choropleth](/docs/components/GeoPath/choropleth) and [bubble-map](/docs/components/GeoPath/bubble-map) examples.
 
 <!-- ## Examples
 

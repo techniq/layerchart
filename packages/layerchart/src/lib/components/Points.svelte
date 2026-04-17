@@ -137,8 +137,8 @@
     const scaledX: number = ctx.xScale(xVal);
     const scaledY: number = ctx.yScale(yVal);
 
-    const x = scaledX + getOffset(scaledX, offsetX, ctx.xScale, ctx.x1Scale);
-    const y = scaledY + getOffset(scaledY, offsetY, ctx.yScale, ctx.y1Scale);
+    const x = scaledX + getOffset(scaledX, offsetX, ctx.xScale, ctx.x1Scale ?? undefined);
+    const y = scaledY + getOffset(scaledY, offsetY, ctx.yScale, ctx.y1Scale ?? undefined);
 
     const radialPoint = pointRadial(x, y);
 

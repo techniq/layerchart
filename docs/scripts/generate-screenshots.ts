@@ -214,6 +214,14 @@ async function captureScreenshots(
 		// Navigate to the example
 		await page.goto(url, { waitUntil: 'networkidle' });
 
+		// wait for the page to be ready
+		await page.waitForLoadState('domcontentloaded');
+
+		// wait if the lazy-loaded element found
+		if ((await page.locator('.screenshot-delay').count()) > 0) {
+			await page.waitForTimeout(2000);
+		}
+
 		// Hide example controls before taking screenshots
 		await page.evaluate(() => {
 			const controls = document.querySelectorAll('.screenshot-hidden');
