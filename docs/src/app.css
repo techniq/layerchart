@@ -36,6 +36,10 @@
 		border-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
 		outline-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
 	}
+	strong {
+		color: currentColor !important; /* webkit fix for 'text-initial'  */
+		font-weight: 800 !important;
+	}
 }
 
 @layer utilities {
