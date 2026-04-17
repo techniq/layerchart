@@ -301,9 +301,9 @@
       pathData={seg.d}
       stroke={seg.stroke}
       fill={seg.fill}
+      opacity={seg.opacity ?? seriesOpacity}
       {...series?.props}
       {...restProps}
-      opacity={seg.opacity ?? seriesOpacity}
     />
   {/each}
 {:else}
@@ -311,8 +311,8 @@
     pathData={isTweened ? tweenState.current : d}
     stroke={(typeof stroke === 'string' ? stroke : undefined) ?? series?.color}
     fill={typeof fill === 'string' ? fill : undefined}
+    opacity={(typeof opacity === 'number' ? opacity : undefined) ?? seriesOpacity}
     {...series?.props}
     {...restProps}
-    opacity={(typeof opacity === 'number' ? opacity : undefined) ?? seriesOpacity}
   />
 {/if}
