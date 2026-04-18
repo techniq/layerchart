@@ -164,7 +164,7 @@ code[data-line-numbers] > [data-line]::before {
 
 /* Steps component styling - inspired by Docus */
 .steps {
-	@apply ms-4 pl-7 border-l border-surface-content/10;
+	@apply ms-4 pl-8 border-l border-surface-content/10;
 	counter-reset: step;
 
 	/* Headings (h2, h3, h4) in steps */
@@ -175,10 +175,15 @@ code[data-line-numbers] > [data-line]::before {
 		/* Counter circle */
 		&::before {
 			content: counter(step);
-			@apply absolute size-6 -left-10 bg-surface-100 rounded-full;
+			@apply absolute top-0.5 size-6 -left-11 bg-surface-100 rounded-full;
 			@apply font-semibold text-sm tabular-nums;
 			@apply inline-flex items-center justify-center;
 			@apply ring-1 ring-surface-content/20;
+		}
+
+		/* override second to last circle content */
+		&:nth-last-child(1 of :is(h2, h3, h4))::before {
+			content: '✔︎' !important;
 		}
 	}
 }
