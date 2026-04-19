@@ -12,3 +12,11 @@ related: [Points]
 ### Playground
 
 :example{ name="playground" }
+
+### Types
+
+:example{ name="types" }
+
+### Curves
+
+:example{ name="curves" }

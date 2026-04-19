@@ -3,10 +3,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { MotionNoneOption, MotionTweenOption } from '$lib/utils/motion.svelte.js';
   import { curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
-  import type {
-    ConnectorSweep,
-    ConnectorType,
-  } from '$lib/utils/connectorUtils.js';
+  import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
   import type { PathProps, PathPropsWithoutHTML } from './Path.svelte';
 
   export type LinkPropsWithoutHTML = {
@@ -174,9 +171,12 @@
   });
 
   const sweep = $derived.by(() => {
-    if (sweepProp) return sweepProp;
-    if (type === 'd3') return 'none';
-    return 'horizontal-vertical';
+    // For d3 type, 'none' means "just 2 points, no intermediate elbow" — honor it.
+    if (type === 'd3') return sweepProp ?? 'none';
+    // Preset types (square/beveled/rounded) always need an elbow; 'none' is
+    // meaningless, so treat it (and any unset value) as orientation-aware.
+    if (sweepProp && sweepProp !== 'none') return sweepProp;
+    return orientation === 'vertical' ? 'horizontal-vertical' : 'vertical-horizontal';
   });
 
   const sourceAccessor = $derived.by(() => {

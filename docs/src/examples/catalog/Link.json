@@ -22,6 +22,60 @@
           "line": "<Link"
         }
       ]
+    },
+    {
+      "name": "types",
+      "title": "types",
+      "path": "/docs/components/Link/types",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 31,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 32,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 33,
+          "line": "<Group"
+        }
+      ]
+    },
+    {
+      "name": "curves",
+      "title": "curves",
+      "path": "/docs/components/Link/curves",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 52,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 53,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 54,
+          "line": "<Link"
+        },
+        {
+          "component": "Group",
+          "lineNumber": 55,
+          "line": "<Group"
+        }
+      ]
     }
   ],
   "usage": [
