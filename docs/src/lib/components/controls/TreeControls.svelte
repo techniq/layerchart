@@ -14,6 +14,7 @@
 			sweep: ConnectorSweep;
 			curve: ComponentProps<typeof CurveMenuField>['value'];
 			radius: number;
+			bend: number;
 			siblingGap: number;
 			parentGap: number;
 			angularSpacing: number;
@@ -22,7 +23,7 @@
 
 	let { dataset = $bindable(), datasetOptions, config = $bindable() }: Props = $props();
 
-	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded'].map((type) => ({
+	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded', 'swoop'].map((type) => ({
 		label: type,
 		value: type
 	}));
@@ -79,6 +80,10 @@
 
 	{#if config.type === 'beveled' || config.type === 'rounded'}
 		<RangeField label="Radius" bind:value={config.radius} min={0} />
+	{/if}
+
+	{#if config.type === 'swoop'}
+		<RangeField label="Bend (°)" bind:value={config.bend} min={-90} max={90} />
 	{/if}
 
 	<MenuField

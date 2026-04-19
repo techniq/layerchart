@@ -15,9 +15,17 @@
 	let sweep: ConnectorSweep = $state('horizontal-vertical');
 	let orientation: 'horizontal' | 'vertical' = $state('horizontal');
 	let radius = $state(60);
+	let bend = $state(22.5);
 </script>
 
-<ConnectorPlaygroundControls bind:type bind:curve bind:sweep bind:orientation bind:radius />
+<ConnectorPlaygroundControls
+	bind:type
+	bind:curve
+	bind:sweep
+	bind:orientation
+	bind:radius
+	bind:bend
+/>
 
 <Chart padding={{ left: 16, bottom: 24 }} height={400}>
 	<Layer>
@@ -27,6 +35,7 @@
 			{sweep}
 			{type}
 			{radius}
+			{bend}
 			{curve}
 			{orientation}
 			class="stroke-primary stroke-4"

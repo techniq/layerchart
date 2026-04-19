@@ -10,6 +10,7 @@
 		sweep?: ConnectorSweep;
 		orientation?: 'horizontal' | 'vertical';
 		radius?: number;
+		bend?: number;
 	}
 
 	let {
@@ -17,10 +18,11 @@
 		curve = $bindable(undefined as ComponentProps<typeof CurveMenuField>['value']),
 		sweep = $bindable('horizontal-vertical' as ConnectorSweep),
 		orientation = $bindable('horizontal' as 'horizontal' | 'vertical'),
-		radius = $bindable(60)
+		radius = $bindable(60),
+		bend = $bindable(22.5)
 	}: Props = $props();
 
-	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded'].map((type) => ({
+	const typeOptions = ['d3', 'straight', 'square', 'beveled', 'rounded', 'swoop'].map((type) => ({
 		label: type,
 		value: type
 	}));
@@ -49,6 +51,9 @@
 	{/if}
 	{#if type === 'beveled' || type === 'rounded'}
 		<RangeField label="Radius" bind:value={radius} min={0} />
+	{/if}
+	{#if type === 'swoop'}
+		<RangeField label="Bend (°)" bind:value={bend} min={-90} max={90} />
 	{/if}
 </div>
 

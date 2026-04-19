@@ -5,7 +5,7 @@ export type ConnectorCoords = {
 	y: number;
 };
 
-export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded';
+export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded' | 'swoop';
 
 export type ConnectorType = PresetConnectorType | 'd3';
 
@@ -31,6 +31,7 @@ type CreateConnectorPathProps = {
 	sweep: ConnectorSweep;
 	dx: number;
 	dy: number;
+	bend?: number;
 };
 
 function createSquarePath({ source, target, sweep }: CreateConnectorPathProps): string {
@@ -91,15 +92,28 @@ function createRoundedPath(opts: CreateConnectorPathProps): string {
 	}
 }
 
+function createSwoopPath({ source, target, dx, dy, bend = 22.5 }: CreateConnectorPathProps): string {
+	const chordLen = Math.hypot(dx, dy);
+	const bendRad = (bend * Math.PI) / 180;
+	if (Math.abs(bendRad) < 1e-6 || chordLen < 1e-6) {
+		return createDirectPath(source, target);
+	}
+	const arcRadius = chordLen / (2 * Math.sin(Math.abs(bendRad)));
+	const largeArc = Math.abs(bend) > 90 ? 1 : 0;
+	const sweepFlag = bend > 0 ? 1 : 0;
+	return `M${source.x},${source.y}A${arcRadius},${arcRadius} 0 ${largeArc} ${sweepFlag} ${target.x},${target.y}`;
+}
+
 type PathStrategyMap = Record<
-	'square' | 'beveled' | 'rounded',
+	'square' | 'beveled' | 'rounded' | 'swoop',
 	(props: CreateConnectorPathProps) => string
 >;
 
 const pathStrategies: PathStrategyMap = {
 	square: createSquarePath,
 	beveled: createBeveledPath,
-	rounded: createRoundedPath
+	rounded: createRoundedPath,
+	swoop: createSwoopPath
 };
 
 type GetConnectorPresetPathProps = {

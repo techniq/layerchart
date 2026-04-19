@@ -39,6 +39,15 @@
     radius?: number;
 
     /**
+     * Bend angle in degrees for the `'swoop'` connector type. Positive bends
+     * right (clockwise from source to target), negative bends left, 0 draws a
+     * straight line.
+     *
+     * @default 22.5
+     */
+    bend?: number;
+
+    /**
      * The D3 curve function to use for the connector.
      *
      * Only used when type is `'d3'`
@@ -98,6 +107,7 @@
     sweep: sweepProp,
     type = 'rounded',
     radius = 20,
+    bend = 22.5,
     curve = curveLinear,
     radial: radialProp,
     orientation = 'horizontal',
@@ -141,7 +151,7 @@
     if (radial) {
       return type === 'd3'
         ? getConnectorRadialD3Path({ source, target, curve })
-        : getConnectorRadialPresetPath({ source, target, type, radius });
+        : getConnectorRadialPresetPath({ source, target, type, radius, bend });
     }
     if (type === 'd3') {
       return getConnectorD3Path({
@@ -152,7 +162,7 @@
         orientation,
       });
     } else {
-      return getConnectorPresetPath({ source, target, sweep, type, radius });
+      return getConnectorPresetPath({ source, target, sweep, type, radius, bend });
     }
   });
 

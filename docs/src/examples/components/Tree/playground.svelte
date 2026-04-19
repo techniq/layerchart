@@ -32,6 +32,7 @@
 		sweep: 'none' as ConnectorSweep,
 		curve: curveBumpX,
 		radius: 60,
+		bend: 22.5,
 		siblingGap: 20,
 		parentGap: 100,
 		angularSpacing: 23
@@ -105,6 +106,7 @@
 									type={config.type}
 									sweep={config.sweep}
 									radius={config.radius}
+								bend={config.bend}
 									motion="tween"
 									class="stroke-surface-content"
 								/>

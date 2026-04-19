@@ -14,7 +14,7 @@ export type ConnectorCoords = {
   y: number;
 };
 
-export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded';
+export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded' | 'swoop';
 
 export type ConnectorType = PresetConnectorType | 'd3';
 
@@ -40,6 +40,8 @@ type CreateConnectorPathProps = {
   sweep: ConnectorSweep;
   dx: number;
   dy: number;
+  /** Bend angle in degrees, used by 'swoop' type. Default 22.5. */
+  bend?: number;
 };
 
 function createSquarePath({ source, target, sweep }: CreateConnectorPathProps): string {
@@ -100,8 +102,26 @@ function createRoundedPath(opts: CreateConnectorPathProps): string {
   }
 }
 
+/**
+ * Swoop: circular arc between source and target. Equivalent to ObservablePlot's
+ * Arrow `bend` option — positive angle bends right (clockwise from source to
+ * target), negative bends left, 0 is a straight line.
+ */
+function createSwoopPath({ source, target, dx, dy, bend = 22.5 }: CreateConnectorPathProps): string {
+  const chordLen = Math.hypot(dx, dy);
+  const bendRad = (bend * Math.PI) / 180;
+  if (Math.abs(bendRad) < 1e-6 || chordLen < 1e-6) {
+    return createDirectPath(source, target);
+  }
+  // Half-chord subtends `bend` at the arc center, so radius = chord / (2 * sin(bend))
+  const arcRadius = chordLen / (2 * Math.sin(Math.abs(bendRad)));
+  const largeArc = Math.abs(bend) > 90 ? 1 : 0;
+  const sweepFlag = bend > 0 ? 1 : 0;
+  return `M${source.x},${source.y}A${arcRadius},${arcRadius} 0 ${largeArc} ${sweepFlag} ${target.x},${target.y}`;
+}
+
 type PathStrategyMap = Record<
-  'square' | 'beveled' | 'rounded',
+  'square' | 'beveled' | 'rounded' | 'swoop',
   (props: CreateConnectorPathProps) => string
 >;
 
@@ -109,6 +129,7 @@ const pathStrategies: PathStrategyMap = {
   square: createSquarePath,
   beveled: createBeveledPath,
   rounded: createRoundedPath,
+  swoop: createSwoopPath,
 };
 
 type GetConnectorPresetPathProps = {
@@ -117,6 +138,8 @@ type GetConnectorPresetPathProps = {
   radius: number;
   type: PresetConnectorType;
   sweep: ConnectorSweep;
+  /** Bend angle in degrees, used by 'swoop' type. Default 22.5. */
+  bend?: number;
 };
 
 export function getConnectorPresetPath(opts: GetConnectorPresetPathProps) {
@@ -125,8 +148,8 @@ export function getConnectorPresetPath(opts: GetConnectorPresetPathProps) {
   const dx = target.x - source.x;
   const dy = target.y - source.y;
 
-  // straight line cases
-  if (type === 'straight' || isNearZero(dx) || isNearZero(dy)) {
+  // straight line cases (swoop still bends even when axis-aligned)
+  if (type === 'straight' || (type !== 'swoop' && (isNearZero(dx) || isNearZero(dy)))) {
     return createDirectPath(source, target);
   }
 
@@ -258,6 +281,7 @@ type GetConnectorRadialPresetPathProps = {
   target: ConnectorCoords;
   type: PresetConnectorType;
   radius: number;
+  bend?: number;
 };
 
 export function getConnectorRadialPresetPath({
@@ -265,12 +289,28 @@ export function getConnectorRadialPresetPath({
   target,
   type,
   radius,
+  bend = 22.5,
 }: GetConnectorRadialPresetPathProps): string {
   const g = radialGeometry(source, target);
   const { sr, ta, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
 
   if (type === 'straight') {
     return `M${sx},${sy}L${tx},${ty}`;
+  }
+
+  if (type === 'swoop') {
+    // Circular arc in cartesian space between the polar-converted endpoints.
+    const dx = tx - sx;
+    const dy = ty - sy;
+    const chordLen = Math.hypot(dx, dy);
+    const bendRad = (bend * Math.PI) / 180;
+    if (Math.abs(bendRad) < 1e-6 || chordLen < 1e-6) {
+      return `M${sx},${sy}L${tx},${ty}`;
+    }
+    const arcRadius = chordLen / (2 * Math.sin(Math.abs(bendRad)));
+    const largeArc = Math.abs(bend) > 90 ? 1 : 0;
+    const arcSweep = bend > 0 ? 1 : 0;
+    return `M${sx},${sy}A${arcRadius},${arcRadius} 0 ${largeArc} ${arcSweep} ${tx},${ty}`;
   }
 
   if (type === 'rounded') {
