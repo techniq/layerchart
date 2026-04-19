@@ -47,7 +47,7 @@
 			{#snippet children({ nodes, linkPositions })}
 				<Layer center>
 					{#each links as link, i}
-						<Link data={link} explicitCoords={linkPositions[i]} class="stroke-surface-content/20" />
+						<Link data={link} {...linkPositions[i]} class="stroke-surface-content/20" />
 					{/each}
 
 					{#each nodes as node ([node.data.name, node.parent?.data?.name].join('-'))}

@@ -170,7 +170,7 @@
 					{#each links as link, i}
 						<Link
 							data={link}
-							explicitCoords={linkPositions[i]}
+							{...linkPositions[i]}
 							class="stroke-surface-content"
 							curve={curveLinear}
 							stroke-width={config.linkWidth}

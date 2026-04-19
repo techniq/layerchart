@@ -35,7 +35,7 @@
 			<Layer center>
 				{#each links as link, i (i)}
 					<Link
-						explicitCoords={linkPositions[i]}
+						{...linkPositions[i]}
 						data={link}
 						class="stroke-surface-content/20"
 						curve={curveLinear}

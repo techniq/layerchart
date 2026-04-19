@@ -16,12 +16,16 @@
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 
 	let config = $state({
-		orientation: 'horizontal' as 'horizontal' | 'vertical',
+		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
 		type: 'd3' as ConnectorType,
 		sweep: 'none' as ConnectorSweep,
 		curve: curveBumpX,
-		radius: 60
+		radius: 60,
+		bend: 22.5,
+		siblingGap: 20,
+		parentGap: 100,
+		angularSpacing: 23
 	});
 
 
@@ -66,7 +70,7 @@
 
 		<Tree
 			{hierarchy}
-			orientation={config.orientation}
+			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
 			nodeSize={config.layout === 'node' ? nodeSize : undefined}
 		>
 			{#snippet children({ nodes, links })}
@@ -74,7 +78,7 @@
 					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 						<Link
 							data={link}
-							orientation={config.orientation}
+							orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
 							curve={config.curve}
 							type={config.type}
 							sweep={config.sweep}

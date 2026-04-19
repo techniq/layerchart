@@ -47,8 +47,6 @@ export { default as ClipPath } from './ClipPath.svelte';
 export * from './ClipPath.svelte';
 export { default as ColorRamp } from './ColorRamp.svelte';
 export * from './ColorRamp.svelte';
-export { default as Connector } from './Connector.svelte';
-export * from './Connector.svelte';
 export { default as Contour } from './Contour.svelte';
 export * from './Contour.svelte';
 export { default as Dagre } from './Dagre.svelte';

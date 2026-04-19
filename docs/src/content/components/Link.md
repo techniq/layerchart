@@ -1,10 +1,14 @@
 ---
-description: Marking component which highlights or connects specific data points on a chart to emphasize relationships or sequences.
+description: Marking component which draws a line or curve between two points to highlight or connect data. Supports pixel coords (`x1/y1/x2/y2`) and data-driven coords (hierarchy/sankey/force).
 category: marks
 layers: [svg, canvas]
-related: [Connector, Points]
+related: [Points]
 ---
 
 ## Usage
 
 :example{ component="Tree" name="basic" }
+
+### Playground
+
+:example{ name="playground" }
