@@ -38,7 +38,7 @@
 					<!-- TODO: How best to support canvas? -->
 					<LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
 					<Text
-						y="-6"
+						y={-6}
 						value={capital.description}
 						textAnchor="middle"
 						class="text-[8px] stroke-surface-100 stroke-[2px]"

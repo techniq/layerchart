@@ -10,7 +10,7 @@
    * rather than a data property accessor.
    */
   function isCSSValue(value: string): boolean {
-    return /^[\d.]+(%|em|rem|px|pt|cm|mm|in)?$/.test(value);
+    return /^-?[\d.]+(%|em|rem|px|pt|cm|mm|in)?$/.test(value);
   }
 
   /**
