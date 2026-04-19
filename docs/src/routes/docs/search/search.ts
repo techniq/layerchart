@@ -32,22 +32,38 @@ function escapeRegex(str: string): string {
 	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function queryTokens(query: string): string[] {
+	return query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+}
+
 function highlightMatch(text: string, query: string): string {
-	const regex = new RegExp(escapeRegex(query), 'gi');
+	const tokens = queryTokens(query).map(escapeRegex);
+	if (!tokens.length) return text;
+	const regex = new RegExp(tokens.join('|'), 'gi');
 	return text.replace(regex, (match) => `<mark class="rounded">${match}</mark>`);
 }
 
 function getSnippet(text: string, query: string, contextLength = 80): string {
 	const lowerText = text.toLowerCase();
-	const lowerQuery = query.toLowerCase();
-	const index = lowerText.indexOf(lowerQuery);
+	const tokens = queryTokens(query);
 
-	if (index === -1) {
+	// Anchor the snippet on the earliest-occurring token
+	let anchorIndex = -1;
+	let anchorLength = 0;
+	for (const token of tokens) {
+		const idx = lowerText.indexOf(token);
+		if (idx !== -1 && (anchorIndex === -1 || idx < anchorIndex)) {
+			anchorIndex = idx;
+			anchorLength = token.length;
+		}
+	}
+
+	if (anchorIndex === -1) {
 		return text.substring(0, contextLength) + (text.length > contextLength ? '...' : '');
 	}
 
-	const start = Math.max(0, index - 20);
-	const end = Math.min(text.length, index + query.length + contextLength);
+	const start = Math.max(0, anchorIndex - 20);
+	const end = Math.min(text.length, anchorIndex + anchorLength + contextLength);
 	const snippet = text.substring(start, end).trim();
 
 	return (

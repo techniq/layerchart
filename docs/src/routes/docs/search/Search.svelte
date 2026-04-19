@@ -114,14 +114,34 @@
 		}
 	];
 
-	/** Rank a result for "Best match": 0 = title starts with query, 1 = title contains query, -1 = no match */
+	/**
+	 * Rank a result for "Best match". Multi-word queries are split on whitespace.
+	 * To qualify, every token must appear in the haystack (title + component for examples)
+	 * AND at least one token must appear in the title — this keeps long-content guides/components
+	 * out of "Best match" unless their title is actually involved.
+	 *
+	 * 0 = a query token is a prefix of a title word (strongest)
+	 * 1 = a query token appears anywhere in the title
+	 * -1 = does not qualify
+	 */
 	function bestMatchRank(result: SearchEntry, query: string): number {
 		if (result.type === 'heading') return -1;
 		const plainTitle = result.title.replace(/<[^>]*>/g, '').toLowerCase();
-		const q = query.toLowerCase().trim();
-		if (plainTitle.startsWith(q)) return 0;
-		if (plainTitle.includes(q)) return 1;
-		return -1;
+		const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+		if (!tokens.length) return -1;
+
+		const haystackParts = [plainTitle];
+		if (result.type === 'example' && result.component) {
+			haystackParts.push(result.component.toLowerCase());
+		}
+		const haystack = haystackParts.join(' ');
+
+		if (!tokens.every((t) => haystack.includes(t))) return -1;
+		if (!tokens.some((t) => plainTitle.includes(t))) return -1;
+
+		const titleWords = plainTitle.split(/\s+/);
+		const hasPrefixHit = tokens.some((t) => titleWords.some((w) => w.startsWith(t)));
+		return hasPrefixHit ? 0 : 1;
 	}
 
 	// Convert search results to MenuOption format with grouping
