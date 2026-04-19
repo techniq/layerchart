@@ -33,15 +33,15 @@
 		@apply text-primary hover:underline;
 	}
 
-	.release-content :global(code) {
-		@apply bg-surface-content/10 px-1.5 py-0.5 rounded text-sm font-mono;
-	}
-
-	.release-content :global(pre) {
-		@apply bg-surface-content/5 p-4 rounded overflow-x-auto;
-	}
-
 	.release-content :global(blockquote) {
 		@apply border-l-4 border-surface-content/20 pl-4 italic text-surface-content/80;
+	}
+
+	.release-content :global(figure[data-rehype-pretty-code-figure]) {
+		@apply rounded-lg outline outline-surface-content/20 dark:outline-surface-content/10 overflow-hidden my-2;
+	}
+
+	.release-content :global(figure[data-rehype-pretty-code-figure] pre) {
+		@apply text-sm bg-surface-100 dark:bg-surface-300 px-4 py-3 overflow-x-auto;
 	}
 </style>

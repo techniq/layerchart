@@ -4,6 +4,9 @@ import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { prettyCodeOptions } from './src/lib/markdown/config/index.js';
 import { extractTocFromMarkdown } from './src/lib/markdown/toc.js';
 
 const components = defineCollection({
@@ -200,7 +203,10 @@ const releases = defineCollection({
 		return {
 			...doc,
 			slug: fileName.replace('.md', ''),
-			html: await compileMarkdown(context, doc)
+			html: await compileMarkdown(context, doc, {
+				remarkPlugins: [remarkGfm],
+				rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]]
+			})
 		};
 	}
 });
