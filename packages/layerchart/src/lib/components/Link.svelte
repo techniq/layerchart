@@ -180,6 +180,7 @@ TODO:
   {curve}
   {sweep}
   {radius}
+  {orientation}
   radial={ctx.radial}
   {...extractLayerProps(restProps, 'lc-link')}
 />

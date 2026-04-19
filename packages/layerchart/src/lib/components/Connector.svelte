@@ -52,6 +52,14 @@
      * and render the path in radial space. Defaults to `ctx.radial` when unset.
      */
     radial?: boolean;
+
+    /**
+     * Cartesian orientation hint. Affects axis-dependent curves (d3 step variants
+     * step along y when `'vertical'`). Ignored in radial mode.
+     *
+     * @default 'horizontal'
+     */
+    orientation?: 'horizontal' | 'vertical';
   } & PathPropsWithoutHTML;
 
   export type ConnectorProps = ConnectorPropsWithoutHTML &
@@ -92,6 +100,7 @@
     radius = 20,
     curve = curveLinear,
     radial: radialProp,
+    orientation = 'horizontal',
     pathRef = $bindable(),
     pathData: pathDataProp,
     marker,
@@ -140,6 +149,7 @@
         target,
         sweep,
         curve,
+        orientation,
       });
     } else {
       return getConnectorPresetPath({ source, target, sweep, type, radius });

@@ -13,14 +13,24 @@
 	let type: ConnectorType = $state('d3');
 	let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 	let sweep: ConnectorSweep = $state('horizontal-vertical');
+	let orientation: 'horizontal' | 'vertical' = $state('horizontal');
 	let radius = $state(60);
 </script>
 
-<ConnectorPlaygroundControls bind:type bind:curve bind:sweep bind:radius />
+<ConnectorPlaygroundControls bind:type bind:curve bind:sweep bind:orientation bind:radius />
 
 <Chart padding={{ left: 16, bottom: 24 }} height={400}>
 	<Layer>
-		<Connector {source} {target} {sweep} {type} {radius} {curve} class="stroke-primary stroke-4" />
+		<Connector
+			{source}
+			{target}
+			{sweep}
+			{type}
+			{radius}
+			{curve}
+			{orientation}
+			class="stroke-primary stroke-4"
+		/>
 		<circle
 			cx={source.x}
 			cy={source.y}

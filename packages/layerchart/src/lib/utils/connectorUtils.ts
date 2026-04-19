@@ -137,11 +137,42 @@ const FALLBACK_PATH = 'M0,0L0,0';
 
 type GetConnectorD3PathProps = Omit<GetConnectorPresetPathProps, 'radius' | 'type'> & {
   curve: CurveFactory;
+  /**
+   * Cartesian orientation hint for axis-dependent curves (d3 step variants step
+   * along x by default; for 'vertical' we step along y to match the natural flow).
+   */
+  orientation?: 'horizontal' | 'vertical';
 };
 
-export function getConnectorD3Path({ source, target, sweep, curve }: GetConnectorD3PathProps) {
+export function getConnectorD3Path({
+  source,
+  target,
+  sweep,
+  curve,
+  orientation = 'horizontal',
+}: GetConnectorD3PathProps) {
   const dx = target.x - source.x;
   const dy = target.y - source.y;
+
+  // d3 step curves always step along x. For vertical orientation, emit a
+  // y-axis step manually so the step sits between parent/child along depth.
+  if (orientation === 'vertical' && sweep === 'none') {
+    const { x: sx, y: sy } = source;
+    const { x: tx, y: ty } = target;
+    if (curve === curveStep) {
+      const my = (sy + ty) / 2;
+      return `M${sx},${sy}L${sx},${my}L${tx},${my}L${tx},${ty}`;
+    }
+    if (curve === curveStepBefore) {
+      // Bump near source: sibling (x) changes first, then depth (y)
+      return `M${sx},${sy}L${tx},${sy}L${tx},${ty}`;
+    }
+    if (curve === curveStepAfter) {
+      // Bump near target: depth (y) changes first, then sibling (x)
+      return `M${sx},${sy}L${sx},${ty}L${tx},${ty}`;
+    }
+  }
+
   const line = d3Line().curve(curve);
   let points: [number, number][] = [];
 
