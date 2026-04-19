@@ -56,7 +56,10 @@ async function fetchReleases(): Promise<GitHubRelease[]> {
 		const url = `${GITHUB_API}?per_page=${perPage}&page=${page}`;
 		console.log(`Fetching page ${page}...`);
 
-		const response = await fetch(url);
+		const token = process.env.GITHUB_API_TOKEN || process.env.GITHUB_TOKEN;
+		const response = await fetch(url, {
+			headers: token ? { Authorization: `Bearer ${token}` } : undefined
+		});
 
 		if (!response.ok) {
 			throw new Error(`Failed to fetch releases: ${response.status} ${response.statusText}`);

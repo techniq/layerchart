@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev --port 3002",
 		"build": "vite build",
-		"prebuild": "pnpm generate:api && pnpm generate:stackblitz",
+		"prebuild": "pnpm generate:api && pnpm generate:stackblitz && pnpm generate:releases",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -20,7 +20,7 @@
 		"generate:catalog": "tsx scripts/generate-example-catalog.ts",
 		"generate:stackblitz": "tsx scripts/build-stackblitz-files.ts",
 		"generate:releases": "tsx scripts/generate-releases.ts",
-		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz"
+		"generate:all": "pnpm generate:api && pnpm generate:screenshots && pnpm generate:catalog && pnpm generate:stackblitz && pnpm generate:releases"
 	},
 	"devDependencies": {
 		"@content-collections/core": "^0.14.3",
