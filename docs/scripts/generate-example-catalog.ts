@@ -97,21 +97,35 @@ function extractComponentsFromExample(
 }
 
 /**
- * Extract module-level exports (title, description) from a <script module> block
+ * Extract module-level exports (title, description, tags) from a <script module> block
  */
-function extractModuleExports(filePath: string): { title?: string; description?: string } {
+function extractModuleExports(filePath: string): {
+	title?: string;
+	description?: string;
+	tags?: string[];
+} {
 	const content = fs.readFileSync(filePath, 'utf-8');
-	const moduleMatch = content.match(/<script\s+module>([\s\S]*?)<\/script>/);
+	const moduleMatch = content.match(/<script\s+module[^>]*>([\s\S]*?)<\/script>/);
 	if (!moduleMatch) return {};
 
 	const moduleContent = moduleMatch[1];
-	const result: { title?: string; description?: string } = {};
+	const result: { title?: string; description?: string; tags?: string[] } = {};
 
-	const titleMatch = moduleContent.match(/export\s+const\s+title\s*=\s*['"`](.+?)['"`]/);
+	const titleMatch = moduleContent.match(/export\s+(?:let|const)\s+title\s*=\s*['"`](.+?)['"`]/);
 	if (titleMatch) result.title = titleMatch[1];
 
-	const descMatch = moduleContent.match(/export\s+const\s+description\s*=\s*['"`](.+?)['"`]/);
+	const descMatch = moduleContent.match(
+		/export\s+(?:let|const)\s+description\s*=\s*['"`](.+?)['"`]/
+	);
 	if (descMatch) result.description = descMatch[1];
+
+	const tagsMatch = moduleContent.match(/export\s+(?:let|const)\s+tags\s*=\s*\[([\s\S]*?)\]/);
+	if (tagsMatch) {
+		const items = tagsMatch[1].match(/['"`]([^'"`]+)['"`]/g);
+		if (items?.length) {
+			result.tags = items.map((s) => s.slice(1, -1));
+		}
+	}
 
 	return result;
 }
@@ -151,6 +165,10 @@ function getComponentExamples(componentName: string, allComponents: string[]): E
 
 			if (moduleExports.description) {
 				info.description = moduleExports.description;
+			}
+
+			if (moduleExports.tags?.length) {
+				info.tags = moduleExports.tags;
 			}
 
 			examples.push(info);

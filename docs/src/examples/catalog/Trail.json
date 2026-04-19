@@ -90,7 +90,7 @@
     },
     {
       "name": "tdf-stage",
-      "title": "tdf stage",
+      "title": "Tour de France Stage Profile",
       "path": "/docs/components/Trail/tdf-stage",
       "components": [
         {
@@ -118,7 +118,8 @@
           "lineNumber": 29,
           "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
         }
-      ]
+      ],
+      "description": "Elevation profile of a Tour de France stage using trail width to encode elevation."
     }
   ],
   "usage": [
@@ -151,5 +152,5 @@
       "line": "<Trail class=\"fill-danger/40\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:27.017Z"
+  "updatedAt": "2026-04-19T13:21:56.378Z"
 }

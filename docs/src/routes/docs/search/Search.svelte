@@ -116,12 +116,12 @@
 
 	/**
 	 * Rank a result for "Best match". Multi-word queries are split on whitespace.
-	 * To qualify, every token must appear in the haystack (title + component for examples)
-	 * AND at least one token must appear in the title — this keeps long-content guides/components
-	 * out of "Best match" unless their title is actually involved.
+	 * Every token must appear in the haystack — built from author-curated fields only
+	 * (title, plus component name and tags for examples) — so long-content guides/components
+	 * don't get promoted just because their body text happens to contain the query terms.
 	 *
-	 * 0 = a query token is a prefix of a title word (strongest)
-	 * 1 = a query token appears anywhere in the title
+	 * 0 = a query token is a prefix of a haystack word (strongest)
+	 * 1 = every query token appears in the haystack but no prefix hit
 	 * -1 = does not qualify
 	 */
 	function bestMatchRank(result: SearchEntry, query: string): number {
@@ -131,16 +131,16 @@
 		if (!tokens.length) return -1;
 
 		const haystackParts = [plainTitle];
-		if (result.type === 'example' && result.component) {
-			haystackParts.push(result.component.toLowerCase());
+		if (result.type === 'example') {
+			if (result.component) haystackParts.push(result.component.toLowerCase());
+			if (result.tags?.length) haystackParts.push(...result.tags.map((t) => t.toLowerCase()));
 		}
 		const haystack = haystackParts.join(' ');
 
 		if (!tokens.every((t) => haystack.includes(t))) return -1;
-		if (!tokens.some((t) => plainTitle.includes(t))) return -1;
 
-		const titleWords = plainTitle.split(/\s+/);
-		const hasPrefixHit = tokens.some((t) => titleWords.some((w) => w.startsWith(t)));
+		const haystackWords = haystack.split(/\s+/);
+		const hasPrefixHit = tokens.some((t) => haystackWords.some((w) => w.startsWith(t)));
 		return hasPrefixHit ? 0 : 1;
 	}
 

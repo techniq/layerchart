@@ -2,7 +2,6 @@
 	import { Chart, Layer, Axis, Rect, LinearGradient, ChartClipPath } from 'layerchart';
 	import { interpolateSpectral } from 'd3-scale-chromatic';
 	import { quantize } from 'd3-interpolate';
-	import { cubicOut } from 'svelte/easing';
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 
 	const domainSize = 500;

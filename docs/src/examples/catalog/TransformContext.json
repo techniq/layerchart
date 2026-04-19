@@ -8,27 +8,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 19,
+          "lineNumber": 18,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<Layer>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 42,
+          "lineNumber": 41,
           "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Rect"
         },
         {
           "component": "Axis",
-          "lineNumber": 54,
+          "lineNumber": 53,
           "line": "<Axis"
         }
       ]
@@ -40,14 +40,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 7,
+          "lineNumber": 11,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 18,
+          "lineNumber": 22,
           "line": "<Layer type=\"html\">"
         }
+      ],
+      "tags": [
+        "tiger"
       ]
     },
     {
@@ -57,19 +60,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 7,
+          "lineNumber": 11,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 18,
+          "lineNumber": 22,
           "line": "<Layer type=\"svg\">"
         },
         {
           "component": "Image",
-          "lineNumber": 19,
+          "lineNumber": 23,
           "line": "<image"
         }
+      ],
+      "tags": [
+        "tiger"
       ]
     },
     {
@@ -158,22 +164,25 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 9,
+          "lineNumber": 16,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 21,
+          "lineNumber": 28,
           "line": "<Layer type=\"svg\">"
         },
         {
           "component": "Image",
-          "lineNumber": 22,
+          "lineNumber": 29,
           "line": "<image"
         }
+      ],
+      "tags": [
+        "tiger"
       ]
     }
   ],
   "usage": [],
-  "updatedAt": "2026-04-02T19:16:02.929Z"
+  "updatedAt": "2026-04-19T13:23:59.296Z"
 }

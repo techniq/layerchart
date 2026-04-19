@@ -860,7 +860,7 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 44,
+      "lineNumber": 43,
       "line": "<Rect"
     },
     {
@@ -920,5 +920,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-16T17:47:00.475Z"
+  "updatedAt": "2026-04-19T13:23:58.832Z"
 }

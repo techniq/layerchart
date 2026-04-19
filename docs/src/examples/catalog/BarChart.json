@@ -1245,29 +1245,32 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 39,
+          "lineNumber": 43,
           "line": "<BarChart"
         },
         {
           "component": "Axis",
-          "lineNumber": 65,
+          "lineNumber": 69,
           "line": "<Axis placement=\"bottom\" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>"
         },
         {
           "component": "Text",
-          "lineNumber": 67,
+          "lineNumber": 71,
           "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
         },
         {
           "component": "Polygon",
-          "lineNumber": 73,
+          "lineNumber": 77,
           "line": "<Polygon"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 84,
+          "lineNumber": 88,
           "line": "<Tooltip.Root>"
         }
+      ],
+      "tags": [
+        "gauge"
       ]
     },
     {
@@ -2079,7 +2082,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 39,
+      "lineNumber": 43,
       "line": "<BarChart"
     },
     {
@@ -2251,5 +2254,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.045Z"
+  "updatedAt": "2026-04-19T13:21:53.938Z"
 }

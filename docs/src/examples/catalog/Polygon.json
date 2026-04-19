@@ -565,7 +565,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 73,
+      "lineNumber": 77,
       "line": "<Polygon"
     },
     {
@@ -772,5 +772,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-04-16T17:47:00.397Z"
+  "updatedAt": "2026-04-19T13:21:55.859Z"
 }

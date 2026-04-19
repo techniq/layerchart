@@ -1,3 +1,7 @@
+<script module lang="ts">
+	export let tags = ['gauge'];
+</script>
+
 <script lang="ts">
 	import { Axis, BarChart, Polygon, Text, Tooltip } from 'layerchart';
 

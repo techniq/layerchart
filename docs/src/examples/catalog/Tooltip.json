@@ -2299,28 +2299,28 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 84,
+      "lineNumber": 88,
       "line": "<Tooltip.Root>"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 86,
+      "lineNumber": 90,
       "line": "<Tooltip.List>"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 87,
+      "lineNumber": 91,
       "line": "<Tooltip.Item label=\"Label:\" value={data.label} />"
     },
     {
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 88,
+      "lineNumber": 92,
       "line": "<Tooltip.Item label=\"Range:\" value=\"{data.start} - {data.end}\" />"
     },
     {
@@ -6797,5 +6797,5 @@
       "line": "<Tooltip.Item label=\"Direction\" value={data.angle} format=\"decimal\" />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:25.221Z"
+  "updatedAt": "2026-04-19T13:21:56.254Z"
 }

@@ -570,9 +570,9 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.391Z"
+  "updatedAt": "2026-04-19T13:23:58.401Z"
 }

@@ -3982,21 +3982,21 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<Layer>"
     },
     {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
-      "lineNumber": 18,
+      "lineNumber": 22,
       "line": "<Layer type=\"html\">"
     },
     {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 18,
+      "lineNumber": 22,
       "line": "<Layer type=\"svg\">"
     },
     {
@@ -4017,7 +4017,7 @@
       "example": "scroll-activation-key",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/scroll-activation-key",
-      "lineNumber": 21,
+      "lineNumber": 28,
       "line": "<Layer type=\"svg\">"
     },
     {
@@ -4175,5 +4175,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-17T14:32:27.192Z"
+  "updatedAt": "2026-04-19T13:23:58.262Z"
 }

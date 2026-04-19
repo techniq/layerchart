@@ -462,7 +462,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 67,
+      "lineNumber": 71,
       "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
     },
     {
@@ -1026,5 +1026,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-17T14:32:28.157Z"
+  "updatedAt": "2026-04-19T13:21:56.185Z"
 }

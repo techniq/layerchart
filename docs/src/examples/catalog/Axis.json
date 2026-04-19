@@ -1756,7 +1756,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 65,
+      "lineNumber": 69,
       "line": "<Axis placement=\"bottom\" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>"
     },
     {
@@ -4990,14 +4990,14 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Axis"
     },
     {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 61,
+      "lineNumber": 60,
       "line": "<Axis"
     },
     {
@@ -5106,5 +5106,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-17T14:32:25.646Z"
+  "updatedAt": "2026-04-19T13:23:56.697Z"
 }

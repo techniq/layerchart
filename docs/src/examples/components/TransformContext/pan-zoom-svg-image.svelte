@@ -1,3 +1,7 @@
+<script module lang="ts">
+	export let tags = ['tiger'];
+</script>
+
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { Chart, Layer } from 'layerchart';

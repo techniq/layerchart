@@ -230,7 +230,7 @@
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 19,
+      "lineNumber": 23,
       "line": "<image"
     },
     {
@@ -244,9 +244,9 @@
       "example": "scroll-activation-key",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/scroll-activation-key",
-      "lineNumber": 22,
+      "lineNumber": 29,
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.950Z"
+  "updatedAt": "2026-04-19T13:23:58.214Z"
 }

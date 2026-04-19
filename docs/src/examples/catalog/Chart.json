@@ -4020,21 +4020,21 @@
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 19,
+      "lineNumber": 18,
       "line": "<Chart"
     },
     {
       "example": "pan-zoom-html-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-html-image",
-      "lineNumber": 7,
+      "lineNumber": 11,
       "line": "<Chart"
     },
     {
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 7,
+      "lineNumber": 11,
       "line": "<Chart"
     },
     {
@@ -4055,7 +4055,7 @@
       "example": "scroll-activation-key",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/scroll-activation-key",
-      "lineNumber": 9,
+      "lineNumber": 16,
       "line": "<Chart"
     },
     {
@@ -4199,5 +4199,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-17T14:32:26.034Z"
+  "updatedAt": "2026-04-19T13:23:57.080Z"
 }
