@@ -6,7 +6,7 @@ export const load = async ({ params, parent }) => {
 	// Get examples from parent layout
 	const parentData = await parent();
 
-	const allAPIs = import.meta.glob('/src/generated/api/*.json', {
+	const allAPIs = import.meta.glob('/generated/api/*.json', {
 		import: 'default'
 	});
 
@@ -35,7 +35,7 @@ export const load = async ({ params, parent }) => {
 
 	// Load component API (utils may have API documentation too)
 	let api: ComponentAPI | null = null;
-	const apiPath = `/src/generated/api/${params.name}.json`;
+	const apiPath = `/generated/api/${params.name}.json`;
 	if (allAPIs[apiPath]) {
 		try {
 			api = (await allAPIs[apiPath]()) as ComponentAPI;

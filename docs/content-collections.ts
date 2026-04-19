@@ -85,7 +85,7 @@ const components = defineCollection({
 		// Best example to use: first from docs markdown, fallback to first in catalog
 		const defaultExample = usageExample ?? catalogFirstExample;
 
-		const apiPath = join(process.cwd(), `src/generated/api/${path}.json`);
+		const apiPath = join(process.cwd(), `generated/api/${path}.json`);
 		if (existsSync(apiPath)) {
 			try {
 				const api = JSON.parse(readFileSync(apiPath, 'utf-8'));
@@ -182,7 +182,7 @@ const guides = defineCollection({
 
 const releases = defineCollection({
 	name: 'releases',
-	directory: 'src/content/releases',
+	directory: 'generated/releases',
 	include: '**/*.md',
 	schema: z.object({
 		title: z.string(),

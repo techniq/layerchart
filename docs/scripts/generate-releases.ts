@@ -25,7 +25,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const RELEASES_DIR = path.resolve(__dirname, '../src/content/releases');
+const RELEASES_DIR = path.resolve(__dirname, '../generated/releases');
 const GITHUB_API = 'https://api.github.com/repos/techniq/layerchart/releases';
 
 interface GitHubRelease {

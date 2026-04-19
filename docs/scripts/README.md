@@ -16,13 +16,13 @@ pnpm extract:api
 
 This will generate:
 
-- Individual component API files in `docs/src/generated/api/` (e.g., `api/Rect.json`, `api/Circle.json`)
-- An index file `src/generated/api/index.json` listing all available components
-- A combined `api.json` file at `src/generated/api.json`
+- Individual component API files in `docs/generated/api/` (e.g., `api/Rect.json`, `api/Circle.json`)
+- An index file `generated/api/index.json` listing all available components
+- A combined `api.json` file at `generated/api.json`
 
 ## Output Format
 
-### Index File (`docs/src/generated/api/index.json`)
+### Index File (`docs/generated/api/index.json`)
 
 A quick reference listing all available components:
 
@@ -40,7 +40,7 @@ A quick reference listing all available components:
 }
 ```
 
-### Individual Component Files (`docs/src/generated/api/{Component}.json`)
+### Individual Component Files (`docs/generated/api/{Component}.json`)
 
 Each component gets its own JSON file:
 
@@ -64,7 +64,7 @@ Each component gets its own JSON file:
 }
 ```
 
-### Combined File (`docs/src/generated/api.json`)
+### Combined File (`docs/generated/api.json`)
 
 The generated `api.json` file has the following structure:
 
