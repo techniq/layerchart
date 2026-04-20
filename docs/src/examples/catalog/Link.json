@@ -76,6 +76,33 @@
           "line": "<Group"
         }
       ]
+    },
+    {
+      "name": "bended-arrows",
+      "title": "bended arrows",
+      "path": "/docs/components/Link/bended-arrows",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 12,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 25,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 26,
+          "line": "<Axis"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 31,
+          "line": "<Link"
+        }
+      ]
     }
   ],
   "usage": [

@@ -5,38 +5,48 @@
   import { curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
   import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
   import type { PathProps, PathPropsWithoutHTML } from './Path.svelte';
+  import type { Accessor } from '$lib/utils/common.js';
 
   export type LinkPropsWithoutHTML = {
-    // --- Pixel mode -------------------------------------------------------
-    /** Source `x` coordinate (pixel mode). */
-    x1?: number;
-    /** Source `y` coordinate (pixel mode). */
-    y1?: number;
-    /** Target `x` coordinate (pixel mode). */
-    x2?: number;
-    /** Target `y` coordinate (pixel mode). */
-    y2?: number;
+    /**
+     * Source `x` coordinate. Accepts a `number` (pixel value), a string property
+     * name, or `(d) => value` accessor. Strings/functions use `ctx.xScale`.
+     */
+    x1?: Accessor;
+    /**
+     * Source `y` coordinate. Accepts a `number`, property name, or
+     * `(d) => value` accessor. Strings/functions use `ctx.yScale`.
+     */
+    y1?: Accessor;
+    /** Target `x` coordinate. See `x1`. */
+    x2?: Accessor;
+    /** Target `y` coordinate. See `y1`. */
+    y2?: Accessor;
 
-    // --- Data mode --------------------------------------------------------
-    /** Link datum (e.g. a d3 hierarchy link or sankey link). */
+    /**
+     * Data for the link. In array mode (when `x1`/`y1`/`x2`/`y2` are strings or
+     * functions) this should be an array of rows; one path is rendered per row.
+     * In hierarchy/sankey mode, a single link object (`{source, target, ...}`).
+     * Defaults to `ctx.data` in array mode.
+     */
     data?: any;
 
     /**
-     * Update source and target accessors to be compatible with d3-sankey.  see: https://github.com/d3/d3-sankey#sankeyLinkHorizontal
+     * Update source and target accessors to be compatible with d3-sankey. see:
+     * https://github.com/d3/d3-sankey#sankeyLinkHorizontal
      *
      * @default false
      */
     sankey?: boolean;
-    /** Accessor returning the source node from `data`. */
+    /** Accessor returning the source node from `data` (hierarchy/sankey mode). */
     source?: (d: any) => any;
-    /** Accessor returning the target node from `data`. */
+    /** Accessor returning the target node from `data` (hierarchy/sankey mode). */
     target?: (d: any) => any;
-    /** Accessor returning `x` for a node. */
+    /** Accessor returning `x` for a node (hierarchy/sankey mode). */
     x?: (d: any) => any;
-    /** Accessor returning `y` for a node. */
+    /** Accessor returning `y` for a node (hierarchy/sankey mode). */
     y?: (d: any) => any;
 
-    // --- Geometry ---------------------------------------------------------
     /**
      * The connector path type.
      *
@@ -60,20 +70,15 @@
      */
     bend?: number;
 
-    /**
-     * D3 curve function (used when `type === 'd3'`).
-     */
+    /** D3 curve function (used when `type === 'd3'`). */
     curve?: CurveFactory;
 
-    /**
-     * Sweep direction for preset types and d3 paths.
-     */
+    /** Sweep direction for preset types and d3 paths. */
     sweep?: ConnectorSweep;
 
     /**
-     * Convenient property to swap x/y accessor logic, and to indicate the
-     * natural flow direction (affects default curve and axis-dependent step
-     * curves).
+     * Natural flow direction (affects default curve and axis-dependent step
+     * curves). Also toggles x/y accessor logic in hierarchy mode.
      */
     orientation?: 'vertical' | 'horizontal';
 
@@ -83,7 +88,6 @@
      */
     radial?: boolean;
 
-    // --- Markers ----------------------------------------------------------
     /** Marker at both start and end points. */
     marker?: MarkerOptions;
     /** Marker at the middle point. */
@@ -94,11 +98,21 @@
     markerEnd?: MarkerOptions;
 
     motion?: MotionTweenOption | MotionNoneOption;
-  } & PathPropsWithoutHTML;
+
+    /**
+     * CSS class. In array mode, accepts a `(d) => string` function evaluated
+     * per datum.
+     */
+    class?: string | ((d: any) => string);
+  } & Omit<PathPropsWithoutHTML, 'class'>;
 
   export type LinkProps = LinkPropsWithoutHTML & Without<PathProps, LinkPropsWithoutHTML>;
 
   const FALLBACK_COORDS = { x: 0, y: 0 };
+
+  function isAccessorAccessor(value: Accessor | undefined): boolean {
+    return typeof value === 'string' || typeof value === 'function';
+  }
 </script>
 
 <script lang="ts">
@@ -110,9 +124,9 @@
   } from '$lib/utils/connectorUtils.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import Path from './Path.svelte';
-  import MarkerWrapper from './MarkerWrapper.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import { createId } from '$lib/utils/createId.js';
+  import { accessor } from '$lib/utils/common.js';
+  import { cls } from '@layerstack/tailwind';
   import {
     createMotion,
     extractTweenConfig,
@@ -120,23 +134,19 @@
   } from '$lib/utils/motion.svelte.js';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  const uid = $props.id();
   const ctx = getChartContext();
 
   let {
-    // Pixel mode
     x1,
     y1,
     x2,
     y2,
-    // Data mode
     data,
     sankey = false,
     source: sourceProp,
     target: targetProp,
     x: xProp,
     y: yProp,
-    // Geometry
     orientation: orientationProp,
     curve: curveProp,
     type = 'd3',
@@ -144,15 +154,14 @@
     radius = 20,
     bend = 22.5,
     radial: radialProp,
-    // Markers
     marker,
     markerStart,
     markerMid,
     markerEnd,
-    // Motion / path
     motion,
     pathRef = $bindable(),
     pathData: pathDataProp,
+    class: classProp,
     ...restProps
   }: LinkProps = $props();
 
@@ -171,14 +180,26 @@
   });
 
   const sweep = $derived.by(() => {
-    // For d3 type, 'none' means "just 2 points, no intermediate elbow" — honor it.
     if (type === 'd3') return sweepProp ?? 'none';
-    // Preset types (square/beveled/rounded) always need an elbow; 'none' is
-    // meaningless, so treat it (and any unset value) as orientation-aware.
     if (sweepProp && sweepProp !== 'none') return sweepProp;
     return orientation === 'vertical' ? 'horizontal-vertical' : 'vertical-horizontal';
   });
 
+  // Array/data mode: any of x1/y1/x2/y2 is a string or function
+  const isArrayMode = $derived(
+    isAccessorAccessor(x1) || isAccessorAccessor(y1) || isAccessorAccessor(x2) || isAccessorAccessor(y2)
+  );
+
+  // Pixel mode: any of x1/y1/x2/y2 is a number (and not array mode)
+  const isPixelMode = $derived(
+    !isArrayMode &&
+      (typeof x1 === 'number' ||
+        typeof y1 === 'number' ||
+        typeof x2 === 'number' ||
+        typeof y2 === 'number')
+  );
+
+  // --- Hierarchy/sankey accessors (used only when !isArrayMode && !isPixelMode) ---
   const sourceAccessor = $derived.by(() => {
     if (sourceProp) return sourceProp;
     if (sankey) return (d: any) => ({ node: d.source, y: d.y0, isSource: true });
@@ -205,14 +226,35 @@
     return (d: any) => (orientation === 'horizontal' ? d.x : d.y);
   });
 
-  const isPixelMode = $derived(
-    x1 !== undefined || y1 !== undefined || x2 !== undefined || y2 !== undefined
-  );
+  // --- Array mode: resolve endpoint coords for each row ---
+  const x1Accessor = $derived(accessor(x1 as Accessor));
+  const y1Accessor = $derived(accessor(y1 as Accessor));
+  const x2Accessor = $derived(accessor(x2 as Accessor));
+  const y2Accessor = $derived(accessor(y2 as Accessor));
 
-  const sourceCoords = $derived.by(() => {
-    if (isPixelMode) return { x: x1 ?? 0, y: y1 ?? 0 };
+  const resolveArrayCoords = (d: any) => {
+    const sxRaw = x1Accessor(d);
+    const syRaw = y1Accessor(d);
+    const txRaw = x2Accessor(d);
+    const tyRaw = y2Accessor(d);
+    const scaleX = typeof x1 === 'string' || typeof x1 === 'function' ? ctx.xScale : null;
+    const scaleY = typeof y1 === 'string' || typeof y1 === 'function' ? ctx.yScale : null;
+    const sx = scaleX && sxRaw != null ? scaleX(sxRaw) : typeof sxRaw === 'number' ? sxRaw : 0;
+    const sy = scaleY && syRaw != null ? scaleY(syRaw) : typeof syRaw === 'number' ? syRaw : 0;
+    const tx = scaleX && txRaw != null ? scaleX(txRaw) : typeof txRaw === 'number' ? txRaw : 0;
+    const ty = scaleY && tyRaw != null ? scaleY(tyRaw) : typeof tyRaw === 'number' ? tyRaw : 0;
+    return {
+      source: { x: Number.isFinite(sx) ? sx : 0, y: Number.isFinite(sy) ? sy : 0 },
+      target: { x: Number.isFinite(tx) ? tx : 0, y: Number.isFinite(ty) ? ty : 0 },
+    };
+  };
+
+  // --- Single-path coords (pixel or hierarchy/sankey mode) ---
+  const singleSourceCoords = $derived.by(() => {
+    if (isPixelMode) {
+      return { x: typeof x1 === 'number' ? x1 : 0, y: typeof y1 === 'number' ? y1 : 0 };
+    }
     if (!data) return FALLBACK_COORDS;
-
     try {
       const sourceData = sourceAccessor(data);
       if (sourceData == null) return FALLBACK_COORDS;
@@ -225,10 +267,11 @@
     }
   });
 
-  const targetCoords = $derived.by(() => {
-    if (isPixelMode) return { x: x2 ?? 100, y: y2 ?? 100 };
+  const singleTargetCoords = $derived.by(() => {
+    if (isPixelMode) {
+      return { x: typeof x2 === 'number' ? x2 : 100, y: typeof y2 === 'number' ? y2 : 100 };
+    }
     if (!data) return FALLBACK_COORDS;
-
     try {
       const targetData = targetAccessor(data);
       if (targetData == null) return FALLBACK_COORDS;
@@ -241,9 +284,23 @@
     }
   });
 
-  const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
-  const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
-  const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
+  function buildPath(source: { x: number; y: number }, target: { x: number; y: number }) {
+    if (pathDataProp) return pathDataProp;
+    if (radial) {
+      return type === 'd3'
+        ? getConnectorRadialD3Path({ source, target, curve })
+        : getConnectorRadialPresetPath({ source, target, type, radius, bend });
+    }
+    if (type === 'd3') {
+      return getConnectorD3Path({ source, target, sweep, curve, orientation });
+    }
+    return getConnectorPresetPath({ source, target, sweep, type, radius, bend });
+  }
+
+  // --- Single-path case ---
+  const singlePathData = $derived(
+    isArrayMode ? '' : buildPath(singleSourceCoords, singleTargetCoords)
+  );
 
   const extractedTween = extractTweenConfig(motion);
   const tweenOptions: ResolvedMotion | undefined = extractedTween
@@ -256,55 +313,59 @@
       }
     : undefined;
 
-  const pathData = $derived.by(() => {
-    if (pathDataProp) return pathDataProp;
-    if (radial) {
-      return type === 'd3'
-        ? getConnectorRadialD3Path({ source: sourceCoords, target: targetCoords, curve })
-        : getConnectorRadialPresetPath({
-            source: sourceCoords,
-            target: targetCoords,
-            type,
-            radius,
-            bend,
-          });
-    }
-    if (type === 'd3') {
-      return getConnectorD3Path({
-        source: sourceCoords,
-        target: targetCoords,
-        sweep,
-        curve,
-        orientation,
-      });
-    } else {
-      return getConnectorPresetPath({
-        source: sourceCoords,
-        target: targetCoords,
-        sweep,
-        type,
-        radius,
-        bend,
-      });
-    }
-  });
-
   const motionPath = createMotion(
     '',
-    () => pathData,
+    () => singlePathData,
     tweenOptions ? tweenOptions : { type: 'none' }
   );
+
+  // --- Array mode paths ---
+  const arrayRows = $derived(isArrayMode ? ((data ?? ctx.data) ?? []) : []);
+
+  function resolvePerDatum<T>(value: T | ((d: any) => T) | undefined, d: any): T | undefined {
+    return typeof value === 'function' ? (value as (d: any) => T)(d) : (value as T | undefined);
+  }
+
+  function resolveClass(d: any): string | undefined {
+    return resolvePerDatum<string>(classProp as any, d);
+  }
+
+  // Pull potentially-per-datum style props out of restProps so we can resolve
+  // each per row in array mode (e.g. stroke={(d) => colorScale(...)})
+  const strokeProp = $derived((restProps as any).stroke);
+  const fillProp = $derived((restProps as any).fill);
+  const strokeWidthProp = $derived((restProps as any)['stroke-width'] ?? (restProps as any).strokeWidth);
 </script>
 
-<Path
-  pathData={motionPath.current}
-  bind:pathRef
-  marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
-  marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
-  marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  {...extractLayerProps(restProps, 'lc-link')}
-  {...restProps}
-/>
-<MarkerWrapper id={markerStartId} marker={markerStart} />
-<MarkerWrapper id={markerMidId} marker={markerMid} />
-<MarkerWrapper id={markerEndId} marker={markerEnd} />
+{#if isArrayMode}
+  {#each arrayRows as d, i (i)}
+    {@const { source, target } = resolveArrayCoords(d)}
+    {@const resolvedStroke =
+      resolvePerDatum(strokeProp, d) ?? (ctx.config.c ? ctx.cGet(d) : undefined)}
+    <Path
+      pathData={buildPath(source, target)}
+      {marker}
+      {markerStart}
+      {markerMid}
+      {markerEnd}
+      {...extractLayerProps(restProps, 'lc-link')}
+      {...restProps}
+      stroke={resolvedStroke}
+      fill={resolvePerDatum(fillProp, d)}
+      stroke-width={resolvePerDatum(strokeWidthProp, d)}
+      class={cls('lc-link', resolveClass(d))}
+    />
+  {/each}
+{:else}
+  <Path
+    pathData={motionPath.current}
+    bind:pathRef
+    {marker}
+    {markerStart}
+    {markerMid}
+    {markerEnd}
+    {...extractLayerProps(restProps, 'lc-link')}
+    {...restProps}
+    class={cls('lc-link', typeof classProp === 'string' ? classProp : undefined)}
+  />
+{/if}

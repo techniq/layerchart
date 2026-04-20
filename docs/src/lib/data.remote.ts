@@ -131,6 +131,25 @@ export const getSimpleTree = prerender(async () => {
 	return data;
 });
 
+export type MetroData = {
+	Metro: string;
+	POP_1980: number;
+	LPOP_1980: number;
+	R90_10_1980: number;
+	POP_2015: number;
+	LPOP_2015: number;
+	R90_10_2015: number;
+	nyt_display: string;
+	state_display: string;
+	highlight: number;
+};
+
+export const getMetros = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = csvParse(await (await fetch('/data/examples/metros.csv')).text(), autoType) as unknown as MetroData[];
+	return data;
+});
+
 export const getUsSenators = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
