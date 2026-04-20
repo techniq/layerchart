@@ -477,9 +477,13 @@ Inertia works with all transform modes and respects `translateExtent`, `constrai
 
 ## Controls
 
-The `TransformContextControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
+The `TransformControls` component provides a UI overlay with zoom/pan buttons and scroll mode selector:
 
 ```svelte
+<script lang="ts">
+	import { Chart, TransformControls } from 'layerchart';
+</script>
+
 <Chart transform={{ mode: 'canvas', scrollMode: 'scale' }}>
 	{#snippet children()}
 		<TransformContextControls />
@@ -488,7 +492,7 @@ The `TransformContextControls` component provides a UI overlay with zoom/pan but
 </Chart>
 ```
 
-It supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
+[TransformControls](/docs/utils/transformcontrols) supports placement (`'top-left'`, `'top-right'`, `'bottom-left'`, etc.), orientation (`'horizontal'` or `'vertical'`), and selective display of controls via the `show` prop.
 
 ## Quick reference
 
