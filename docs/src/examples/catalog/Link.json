@@ -2,36 +2,79 @@
   "component": "Link",
   "examples": [
     {
+      "name": "bended-arrows",
+      "title": "bended arrows",
+      "path": "/docs/components/Link/bended-arrows",
+      "components": [
+        {
+          "component": "Legend",
+          "lineNumber": 22,
+          "line": "<Legend"
+        },
+        {
+          "component": "Chart",
+          "lineNumber": 30,
+          "line": "<Chart"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 45,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Axis",
+          "lineNumber": 46,
+          "line": "<Axis"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 57,
+          "line": "<Link"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 74,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
+      "name": "curves",
+      "title": "D3 curves",
+      "path": "/docs/components/Link/curves",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 54,
+          "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 60,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 61,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 71,
+          "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+        }
+      ],
+      "description": "When "
+    },
+    {
       "name": "playground",
       "title": "playground",
       "path": "/docs/components/Link/playground",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 29,
-          "line": "<Chart"
-        },
-        {
-          "component": "Layer",
           "lineNumber": 30,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Link",
-          "lineNumber": 31,
-          "line": "<Link"
-        }
-      ]
-    },
-    {
-      "name": "types",
-      "title": "types",
-      "path": "/docs/components/Link/types",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 30,
-          "line": "<Chart"
+          "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
         },
         {
           "component": "Layer",
@@ -44,65 +87,39 @@
           "line": "<Link"
         },
         {
-          "component": "Group",
-          "lineNumber": 33,
-          "line": "<Group"
+          "component": "Circle",
+          "lineNumber": 45,
+          "line": "<circle"
         }
       ]
     },
     {
-      "name": "curves",
-      "title": "curves",
-      "path": "/docs/components/Link/curves",
+      "name": "types",
+      "title": "Connector types",
+      "path": "/docs/components/Link/types",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 52,
-          "line": "<Chart"
+          "lineNumber": 29,
+          "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
         },
         {
           "component": "Layer",
-          "lineNumber": 53,
+          "lineNumber": 35,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 54,
+          "lineNumber": 36,
           "line": "<Link"
         },
         {
-          "component": "Group",
-          "lineNumber": 55,
-          "line": "<Group"
+          "component": "Circle",
+          "lineNumber": 45,
+          "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
         }
-      ]
-    },
-    {
-      "name": "bended-arrows",
-      "title": "bended arrows",
-      "path": "/docs/components/Link/bended-arrows",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 12,
-          "line": "<Chart"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 25,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 26,
-          "line": "<Axis"
-        },
-        {
-          "component": "Link",
-          "lineNumber": 31,
-          "line": "<Link"
-        }
-      ]
+      ],
+      "description": "Link supports several connector path types across cartesian and radial orientations."
     }
   ],
   "usage": [
@@ -139,7 +156,35 @@
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
       "lineNumber": 50,
-      "line": "<Link data={link} explicitCoords={linkPositions[i]} class=\"stroke-surface-content/20\" />"
+      "line": "<Link data={link} {...linkPositions[i]} class=\"stroke-surface-content/20\" />"
+    },
+    {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 57,
+      "line": "<Link"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 61,
+      "line": "<Link"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 32,
+      "line": "<Link"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 36,
+      "line": "<Link"
     },
     {
       "example": "complex",
@@ -187,16 +232,16 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 75,
+      "lineNumber": 79,
       "line": "<Link"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 101,
+      "lineNumber": 102,
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:59.884Z"
+  "updatedAt": "2026-04-20T01:54:54.559Z"
 }

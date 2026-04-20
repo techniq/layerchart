@@ -3727,6 +3727,20 @@
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 46,
+      "line": "<Axis"
+    },
+    {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 55,
+      "line": "<Axis placement=\"left\" grid label=\"Inequality (90/10 ratio)\" />"
+    },
+    {
       "example": "repeat-indefinitely",
       "component": "MotionPath",
       "path": "/docs/components/MotionPath/repeat-indefinitely",
@@ -5106,5 +5120,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:56.697Z"
+  "updatedAt": "2026-04-20T01:54:52.902Z"
 }

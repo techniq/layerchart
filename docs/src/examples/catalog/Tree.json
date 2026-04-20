@@ -50,27 +50,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 55,
+          "lineNumber": 59,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 67,
+          "lineNumber": 71,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 73,
+          "lineNumber": 77,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 75,
+          "lineNumber": 79,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 92,
+          "lineNumber": 96,
           "line": "<Group"
         }
       ]
@@ -82,37 +82,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 76,
+          "lineNumber": 77,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 91,
+          "lineNumber": 92,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 97,
+          "lineNumber": 98,
           "line": "<Layer>"
         },
         {
           "component": "Group",
-          "lineNumber": 98,
+          "lineNumber": 99,
           "line": "<Group center={config.orientation === 'radial'}>"
         },
         {
           "component": "Link",
-          "lineNumber": 101,
+          "lineNumber": 102,
           "line": "<Link"
         },
         {
           "component": "Rect",
-          "lineNumber": 148,
+          "lineNumber": 150,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 164,
+          "lineNumber": 166,
           "line": "<Text"
         }
       ]
@@ -130,16 +130,16 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 67,
+      "lineNumber": 71,
       "line": "<Tree"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 91,
+      "lineNumber": 92,
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-04-16T17:47:01.070Z"
+  "updatedAt": "2026-04-20T01:54:55.598Z"
 }

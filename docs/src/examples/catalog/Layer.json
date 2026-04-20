@@ -1557,13 +1557,6 @@
       "line": "<Layer>"
     },
     {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 22,
-      "line": "<Layer>"
-    },
-    {
       "example": "sampled",
       "component": "Contour",
       "path": "/docs/components/Contour/sampled",
@@ -2723,6 +2716,34 @@
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
       "lineNumber": 85,
+      "line": "<Layer>"
+    },
+    {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 45,
+      "line": "<Layer>"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 60,
+      "line": "<Layer>"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 31,
+      "line": "<Layer>"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 35,
       "line": "<Layer>"
     },
     {
@@ -4031,21 +4052,21 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 73,
+      "lineNumber": 77,
       "line": "<Layer>"
     },
     {
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 88,
+      "lineNumber": 92,
       "line": "<Layer type=\"html\">"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 97,
+      "lineNumber": 98,
       "line": "<Layer>"
     },
     {
@@ -4175,5 +4196,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:58.262Z"
+  "updatedAt": "2026-04-20T01:54:54.392Z"
 }

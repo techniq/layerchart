@@ -874,7 +874,7 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 148,
+      "lineNumber": 150,
       "line": "<Rect"
     },
     {
@@ -920,5 +920,5 @@
       "line": "<Rect"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:58.832Z"
+  "updatedAt": "2026-04-20T01:54:54.967Z"
 }

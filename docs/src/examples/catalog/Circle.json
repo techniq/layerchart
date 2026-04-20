@@ -381,20 +381,6 @@
       "line": "<circle cx=\"240\" cy=\"150\" r=\"90\" />"
     },
     {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 24,
-      "line": "<circle"
-    },
-    {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 37,
-      "line": "<circle"
-    },
-    {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
@@ -624,6 +610,48 @@
       "path": "/docs/components/Line/data-mode",
       "lineNumber": 21,
       "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 71,
+      "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 72,
+      "line": "<circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 45,
+      "line": "<circle"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 58,
+      "line": "<circle"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 45,
+      "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 46,
+      "line": "<circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
     },
     {
       "example": "sync-with-draw",
@@ -941,5 +969,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:58.724Z"
+  "updatedAt": "2026-04-20T01:54:53.469Z"
 }

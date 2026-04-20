@@ -648,6 +648,13 @@
       "line": "<text"
     },
     {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 74,
+      "line": "<Text"
+    },
+    {
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
@@ -896,7 +903,7 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 164,
+      "lineNumber": 166,
       "line": "<Text"
     },
     {
@@ -1026,5 +1033,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-19T13:21:56.185Z"
+  "updatedAt": "2026-04-20T01:54:55.223Z"
 }

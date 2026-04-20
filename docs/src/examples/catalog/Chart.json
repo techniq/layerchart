@@ -1805,13 +1805,6 @@
       "line": "<Chart height={300}>"
     },
     {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 21,
-      "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
-    },
-    {
       "example": "sampled",
       "component": "Contour",
       "path": "/docs/components/Contour/sampled",
@@ -2769,6 +2762,34 @@
       "path": "/docs/components/LineChart/persist-brush-zoom",
       "lineNumber": 64,
       "line": "<Chart"
+    },
+    {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 30,
+      "line": "<Chart"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 54,
+      "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 30,
+      "line": "<Chart padding={{ left: 16, bottom: 24 }} height={400}>"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 29,
+      "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
     },
     {
       "example": "line",
@@ -4069,14 +4090,14 @@
       "example": "html-nodes",
       "component": "Tree",
       "path": "/docs/components/Tree/html-nodes",
-      "lineNumber": 55,
+      "lineNumber": 59,
       "line": "<Chart"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 76,
+      "lineNumber": 77,
       "line": "<Chart"
     },
     {
@@ -4199,5 +4220,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:57.080Z"
+  "updatedAt": "2026-04-20T01:54:53.345Z"
 }

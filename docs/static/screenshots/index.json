@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-17T17:34:08.579Z",
+  "generatedAt": "2026-04-20T01:55:57.872Z",
   "totalComponents": 76,
-  "totalExamples": 884,
+  "totalExamples": 887,
   "components": [
     {
       "component": "AnnotationLine",
@@ -1289,7 +1289,7 @@
         {
           "name": "single-stack-with-indicator",
           "path": "/example/BarChart/single-stack-with-indicator",
-          "checksum": "b5ed42de649219c650d3f83c1fd5d4f5"
+          "checksum": "7fc32a900dccacd1e3f4c22caec3a834"
         },
         {
           "name": "sparkbar",
@@ -2124,16 +2124,6 @@
       ]
     },
     {
-      "component": "Connector",
-      "examples": [
-        {
-          "name": "playground",
-          "path": "/example/Connector/playground",
-          "checksum": "aca38f2e855865e33e6d94221a70f5dd"
-        }
-      ]
-    },
-    {
       "component": "Contour",
       "examples": [
         {
@@ -2274,17 +2264,17 @@
         {
           "name": "disjoint-graph",
           "path": "/example/ForceSimulation/disjoint-graph",
-          "checksum": "bb36d29cad43e572dc71ca35ad47f20b"
+          "checksum": "7ac498dea45e47054cb3580480729f1c"
         },
         {
           "name": "graph-drag",
           "path": "/example/ForceSimulation/graph-drag",
-          "checksum": "b0def9e461e56d4e32c14c724e6c6787"
+          "checksum": "44fb7a167a0fa9928cc9b3264e1d858d"
         },
         {
           "name": "graph-playground",
           "path": "/example/ForceSimulation/graph-playground",
-          "checksum": "a3a20416a573afb12b5409d5007af0c5"
+          "checksum": "a6048e9f21fb6888e323056d98382c85"
         },
         {
           "name": "group",
@@ -2294,7 +2284,7 @@
         {
           "name": "lattice",
           "path": "/example/ForceSimulation/lattice",
-          "checksum": "41e9baca14a26c0918f8db21702a4439"
+          "checksum": "b68f83e76c197496c847407d14ecc511"
         },
         {
           "name": "text",
@@ -2304,7 +2294,7 @@
         {
           "name": "tree",
           "path": "/example/ForceSimulation/tree",
-          "checksum": "bc52917f1c038e37b07e4d8c1dec643c"
+          "checksum": "a8123a64cef9c5ea3aca0656321a42d7"
         }
       ]
     },
@@ -2544,7 +2534,7 @@
         {
           "name": "icons",
           "path": "/example/GeoPoint/icons",
-          "checksum": "9e1bcd4ce82ac1fa3e865e5b44cd2d0c"
+          "checksum": "643920b432411da8ccb3cfc7490d0e7e"
         },
         {
           "name": "us-airports",
@@ -2554,7 +2544,7 @@
         {
           "name": "us-state-capitals",
           "path": "/example/GeoPoint/us-state-capitals",
-          "checksum": "f187085dcc5994da1f945e916402ec08"
+          "checksum": "03bebadf5f4db738e4b80ec51f3dafd1"
         },
         {
           "name": "world-airports",
@@ -2564,7 +2554,7 @@
         {
           "name": "world-capitals",
           "path": "/example/GeoPoint/world-capitals",
-          "checksum": "6aaa79ce093bb9d8d09a9aacc7427e2e"
+          "checksum": "a003b2634e43a78eb78cd7cf2ac41d47"
         }
       ]
     },
@@ -3340,6 +3330,31 @@
           "name": "vertical",
           "path": "/example/LineChart/vertical",
           "checksum": "f218b2a2669148b773e570175487e1fb"
+        }
+      ]
+    },
+    {
+      "component": "Link",
+      "examples": [
+        {
+          "name": "bended-arrows",
+          "path": "/example/Link/bended-arrows",
+          "checksum": "2da8fdee57aac534eeef1a59afa7af26"
+        },
+        {
+          "name": "curves",
+          "path": "/example/Link/curves",
+          "checksum": "80279afa7a1ef9925e1e5c393b29a51d"
+        },
+        {
+          "name": "playground",
+          "path": "/example/Link/playground",
+          "checksum": "7e2242a14a91cfaa740cfae94cb43ca8"
+        },
+        {
+          "name": "types",
+          "path": "/example/Link/types",
+          "checksum": "25e64b11a93056d84dbfb0208b14c472"
         }
       ]
     },
@@ -4649,17 +4664,17 @@
         {
           "name": "pan-zoom-axes",
           "path": "/example/TransformContext/pan-zoom-axes",
-          "checksum": "789841b372344ff620306f6704d0bc9a"
+          "checksum": "8d2a260aa0edbd1a45cbe6c0c6381773"
         },
         {
           "name": "pan-zoom-html-image",
           "path": "/example/TransformContext/pan-zoom-html-image",
-          "checksum": "7c6d778b61cb47e0ee0ce6a37b773644"
+          "checksum": "b353b9eb57c6a483ae3dcbc6ee0e8a19"
         },
         {
           "name": "pan-zoom-svg-image",
           "path": "/example/TransformContext/pan-zoom-svg-image",
-          "checksum": "a54a0450e1398b2a09e2b955ecbd163a"
+          "checksum": "e250374180cb5df1e07645203cd045e9"
         },
         {
           "name": "planet-distances",
@@ -4674,7 +4689,7 @@
         {
           "name": "scroll-activation-key",
           "path": "/example/TransformContext/scroll-activation-key",
-          "checksum": "b78e1b355e0d571be1d9278e28aa0233"
+          "checksum": "fef6d444365fbcbee6de84fae20f5975"
         }
       ]
     },
@@ -4689,12 +4704,12 @@
         {
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
-          "checksum": "c5d81e82f7bfdd7c0323385ff184b5af"
+          "checksum": "a8e8473258c27a98f67313663f3ca4ca"
         },
         {
           "name": "playground",
           "path": "/example/Tree/playground",
-          "checksum": "ef68ebac1a898e2cf38e9cb0d76f9a97"
+          "checksum": "3628662489c3daf7484661fd1278edc0"
         }
       ]
     },

@@ -285,7 +285,7 @@
         {
           "component": "Link",
           "lineNumber": 50,
-          "line": "<Link data={link} explicitCoords={linkPositions[i]} class=\"stroke-surface-content/20\" />"
+          "line": "<Link data={link} {...linkPositions[i]} class=\"stroke-surface-content/20\" />"
         },
         {
           "component": "Circle",
@@ -365,5 +365,5 @@
       "line": "<ForceSimulation"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.492Z"
+  "updatedAt": "2026-04-20T01:54:53.794Z"
 }

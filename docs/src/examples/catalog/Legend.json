@@ -529,6 +529,13 @@
       "line": "<Legend"
     },
     {
+      "example": "bended-arrows",
+      "component": "Link",
+      "path": "/docs/components/Link/bended-arrows",
+      "lineNumber": 22,
+      "line": "<Legend"
+    },
+    {
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
@@ -550,5 +557,5 @@
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.018Z"
+  "updatedAt": "2026-04-20T01:54:54.440Z"
 }
