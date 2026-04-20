@@ -275,6 +275,14 @@ export class ChartState<
         // Use the value axis accessor (y for horizontal charts, x for vertical).
         const valueAxis = this.valueAxis;
         const chartValueProp = valueAxis === 'y' ? this.props.y : this.props.x;
+        const chartValueKeys = Array.isArray(chartValueProp)
+          ? chartValueProp.filter((k): k is string => typeof k === 'string')
+          : typeof chartValueProp === 'string'
+            ? [chartValueProp]
+            : [];
+        const chartHasOwnData =
+          this.props.data != null &&
+          (!Array.isArray(this.props.data) || this.props.data.length > 0);
         const implicitSeries: SeriesData<TData, any>[] = [];
         for (const { info } of this._markInfos) {
           const valueAccessor = valueAxis === 'y' ? info.y : info.x;
@@ -282,10 +290,12 @@ export class ChartState<
             info.seriesKey ??
             (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
           if (!key) continue;
-          // Skip if the mark just reuses the chart's own axis accessor and has no
-          // separate data — it's not defining a new series, just using the chart's axis.
-          // Marks with their own data arrays are kept (multi-dataset scenario).
-          if (key === chartValueProp && !info.data) continue;
+          // Skip if the mark's key matches one of the chart's axis accessors.
+          // When the chart has its own data, any mark using that accessor is just
+          // decorating (e.g. a filtered label subset), not defining a new series.
+          // Without explicit chart data, still skip unless the mark has its own
+          // dataset (multi-dataset scenario).
+          if (chartValueKeys.includes(key) && (chartHasOwnData || !info.data)) continue;
           if (implicitSeries.some((s) => s.key === key)) continue;
           implicitSeries.push({
             key,

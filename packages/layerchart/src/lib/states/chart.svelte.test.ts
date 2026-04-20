@@ -668,6 +668,136 @@ describe('ChartState data vs visibleSeriesData', () => {
     }
   });
 
+  it('should not create an implicit series for a decorative mark when chart has own data', () => {
+    // Scenario: <Chart data={full}> + <Text data={highlighted} y="value"> (labels)
+    // The Text mark shouldn't create an implicit series that narrows the domain.
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 50 },
+      { date: '2024-03', value: 100 },
+    ];
+    const highlighted = [fullData[1]];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // Decorative mark shouldn't turn this into a multi-series chart.
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not create an implicit series when chart uses array y accessor matching the mark key', () => {
+    // Scenario: <Chart data={full} y={['v1', 'v2']}> + <Text data={highlighted} y="v2">
+    // The chart declares both v1 and v2 as value axes; the Text mark using v2
+    // is just decorative, not a new series.
+    type Dual = { date: string; v1: number; v2: number };
+    const fullData: Dual[] = [
+      { date: '2024-01', v1: 10, v2: 20 },
+      { date: '2024-02', v1: 30, v2: 40 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data: fullData,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      state.registerMark({ y: 'v2', data: [fullData[0]] });
+      flushSync();
+
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should compute yDomain from full chart data when a decorative mark has a filtered subset', () => {
+    // Regression: Text labeling highlighted rows shouldn't narrow the y domain.
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 50 },
+      { date: '2024-03', value: 100 },
+    ];
+    const highlighted = [fullData[1]]; // only value=50
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // yDomain should reflect the full data extent [10, 100], not just [50, 50].
+      expect(state.yDomain).toEqual([10, 100]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should compute yDomain across all array y accessors on Chart', () => {
+    // Scenario: arrow-variation chart with y={['v1', 'v2']} where v1/v2 span different ranges.
+    type Dual = { date: string; v1: number; v2: number };
+    const data: Dual[] = [
+      { date: '2024-01', v1: 3, v2: 5 },
+      { date: '2024-02', v1: 2, v2: 8 },
+      { date: '2024-03', v1: 4, v2: 9 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      // Domain should span min(v1) = 2 to max(v2) = 9
+      expect(state.yDomain).toEqual([2, 9]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep full yDomain when decorative mark + array y both present', () => {
+    // End-to-end bended-arrows scenario
+    type Dual = { date: string; v1: number; v2: number };
+    const data: Dual[] = [
+      { date: '2024-01', v1: 3, v2: 5 },
+      { date: '2024-02', v1: 2, v2: 8 },
+      { date: '2024-03', v1: 4, v2: 9 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      // Decorative Text mark with subset data and y matching one of chart's keys
+      state.registerMark({ y: 'v2', data: [data[0]] });
+      flushSync();
+
+      // Still the full range [2, 9], not narrowed to [5, 5]
+      expect(state.yDomain).toEqual([2, 9]);
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
   it('should fall back to visibleSeriesData when props.data is an empty array', () => {
     // Composite charts (BarChart, etc.) default `data = []` when not passed.
     const applesData: TestData[] = [{ date: '2024-01', value: 10 }];
