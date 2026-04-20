@@ -2,7 +2,7 @@
 	import type { ComponentProps } from 'svelte';
 	import { Field, ToggleGroup, ToggleOption, RangeField, MenuField } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
-	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
+	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 
 	interface Props {
 		dataset?: string;
@@ -10,8 +10,8 @@
 		config: {
 			orientation: 'horizontal' | 'vertical' | 'radial';
 			layout: 'chart' | 'node';
-			type: ConnectorType;
-			sweep: ConnectorSweep;
+			type: LinkType;
+			sweep: LinkSweep;
 			curve: ComponentProps<typeof CurveMenuField>['value'];
 			radius: number;
 			bend: number;
@@ -67,7 +67,7 @@
 
 <div class="grid grid-cols-3 gap-2 mt-2 mb-2 screenshot-hidden">
 	<MenuField
-		label="Connector Type"
+		label="Link Type"
 		options={typeOptions}
 		bind:value={config.type}
 		stepper
@@ -87,7 +87,7 @@
 	{/if}
 
 	<MenuField
-		label="Connector Sweep"
+		label="Link Sweep"
 		options={sweepOptions}
 		bind:value={config.sweep}
 		stepper

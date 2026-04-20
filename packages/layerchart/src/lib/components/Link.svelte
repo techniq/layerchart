@@ -3,7 +3,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { MotionNoneOption, MotionTweenOption } from '$lib/utils/motion.svelte.js';
   import { curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
-  import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
+  import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
   import type { PathProps, PathPropsWithoutHTML } from './Path.svelte';
   import type { Accessor } from '$lib/utils/common.js';
 
@@ -48,13 +48,13 @@
     y?: (d: any) => any;
 
     /**
-     * The connector path type.
+     * The link path type.
      *
      * Set to `'d3'` to use a D3 curve function via the `curve` prop.
      *
      * @default 'd3'
      */
-    type?: ConnectorType;
+    type?: LinkType;
 
     /**
      * Corner radius (used by `'beveled'` and `'rounded'`).
@@ -64,7 +64,7 @@
     radius?: number;
 
     /**
-     * Bend angle in degrees for the `'swoop'` connector type.
+     * Bend angle in degrees for the `'swoop'` link type.
      *
      * @default 22.5
      */
@@ -74,7 +74,7 @@
     curve?: CurveFactory;
 
     /** Sweep direction for preset types and d3 paths. */
-    sweep?: ConnectorSweep;
+    sweep?: LinkSweep;
 
     /**
      * Natural flow direction (affects default curve and axis-dependent step
@@ -117,11 +117,11 @@
 
 <script lang="ts">
   import {
-    getConnectorD3Path,
-    getConnectorPresetPath,
-    getConnectorRadialD3Path,
-    getConnectorRadialPresetPath,
-  } from '$lib/utils/connectorUtils.js';
+    getLinkD3Path,
+    getLinkPresetPath,
+    getLinkRadialD3Path,
+    getLinkRadialPresetPath,
+  } from '$lib/utils/linkUtils.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import Path from './Path.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
@@ -288,13 +288,13 @@
     if (pathDataProp) return pathDataProp;
     if (radial) {
       return type === 'd3'
-        ? getConnectorRadialD3Path({ source, target, curve })
-        : getConnectorRadialPresetPath({ source, target, type, radius, bend });
+        ? getLinkRadialD3Path({ source, target, curve })
+        : getLinkRadialPresetPath({ source, target, type, radius, bend });
     }
     if (type === 'd3') {
-      return getConnectorD3Path({ source, target, sweep, curve, orientation });
+      return getLinkD3Path({ source, target, sweep, curve, orientation });
     }
-    return getConnectorPresetPath({ source, target, sweep, type, radius, bend });
+    return getLinkPresetPath({ source, target, sweep, type, radius, bend });
   }
 
   // --- Single-path case ---

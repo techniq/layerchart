@@ -1,14 +1,14 @@
 <script module>
-	export const title = 'Connector types';
+	export const title = 'Link types';
 	export const description =
-		'Link supports several connector path types across cartesian and radial orientations.';
+		'Link supports several path types across cartesian and radial orientations.';
 </script>
 
 <script lang="ts">
-	import { Chart, Layer, Link } from 'layerchart';
-	import type { ConnectorType } from '$lib/utils/connectorUtils.js';
+	import { Chart, Circle, Layer, Link } from 'layerchart';
+	import type { LinkType } from '$lib/utils/linkUtils.js';
 
-	const types: ConnectorType[] = ['straight', 'square', 'beveled', 'rounded', 'swoop', 'd3'];
+	const types: LinkType[] = ['straight', 'square', 'beveled', 'rounded', 'swoop', 'd3'];
 
 	const orientations = [
 		{ label: 'horizontal', value: 'horizontal' as const },
@@ -19,7 +19,10 @@
 	const pad = 16;
 </script>
 
-<div class="grid gap-4" style="grid-template-columns: repeat({orientations.length}, minmax(0, 1fr));">
+<div
+	class="grid gap-4"
+	style="grid-template-columns: repeat({orientations.length}, minmax(0, 1fr));"
+>
 	{#each orientations as { label, value } (label)}
 		<div>
 			<div class="text-center text-sm font-semibold text-surface-content/60 mb-2">{label}</div>
@@ -42,8 +45,8 @@
 										orientation={value}
 										class="stroke-primary stroke-2 fill-none"
 									/>
-									<circle cx={x1} cy={y1} r={4} class="fill-info" />
-									<circle cx={x2} cy={y2} r={4} class="fill-accent" />
+									<Circle cx={x1} cy={y1} r={4} class="fill-info" />
+									<Circle cx={x2} cy={y2} r={4} class="fill-accent" />
 								</Layer>
 							{/snippet}
 						</Chart>

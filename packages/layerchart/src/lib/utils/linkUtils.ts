@@ -9,22 +9,22 @@ import {
   linkRadial,
 } from 'd3-shape';
 
-export type ConnectorCoords = {
+export type LinkCoords = {
   x: number;
   y: number;
 };
 
-export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded' | 'swoop';
+export type PresetLinkType = 'straight' | 'square' | 'beveled' | 'rounded' | 'swoop';
 
-export type ConnectorType = PresetConnectorType | 'd3';
+export type LinkType = PresetLinkType | 'd3';
 
-export type ConnectorSweep = 'horizontal-vertical' | 'vertical-horizontal' | 'none';
+export type LinkSweep = 'horizontal-vertical' | 'vertical-horizontal' | 'none';
 
-function isSamePoint(p1: ConnectorCoords, p2: ConnectorCoords): boolean {
+function isSamePoint(p1: LinkCoords, p2: LinkCoords): boolean {
   return Math.abs(p1.x - p2.x) < 1e-6 && Math.abs(p1.y - p2.y) < 1e-6;
 }
 
-function createDirectPath(source: ConnectorCoords, target: ConnectorCoords): string {
+function createDirectPath(source: LinkCoords, target: LinkCoords): string {
   if (isSamePoint(source, target)) return '';
   return `M ${source.x} ${source.y} L ${target.x} ${target.y}`;
 }
@@ -33,18 +33,18 @@ function isNearZero(value: number): boolean {
   return Math.abs(value) < 1e-6;
 }
 
-type CreateConnectorPathProps = {
-  source: ConnectorCoords;
-  target: ConnectorCoords;
+type CreateLinkPathProps = {
+  source: LinkCoords;
+  target: LinkCoords;
   radius: number;
-  sweep: ConnectorSweep;
+  sweep: LinkSweep;
   dx: number;
   dy: number;
   /** Bend angle in degrees, used by 'swoop' type. Default 22.5. */
   bend?: number;
 };
 
-function createSquarePath({ source, target, sweep }: CreateConnectorPathProps): string {
+function createSquarePath({ source, target, sweep }: CreateLinkPathProps): string {
   if (sweep === 'horizontal-vertical') {
     return `M ${source.x} ${source.y} L ${target.x} ${source.y} L ${target.x} ${target.y}`;
   } else {
@@ -52,7 +52,7 @@ function createSquarePath({ source, target, sweep }: CreateConnectorPathProps): 
   }
 }
 
-function createBeveledPath(opts: CreateConnectorPathProps): string {
+function createBeveledPath(opts: CreateLinkPathProps): string {
   const { radius, dx, dy, source, target, sweep } = opts;
   const effectiveRadius = Math.max(0, Math.min(radius, Math.abs(dx), Math.abs(dy)));
 
@@ -76,7 +76,7 @@ function createBeveledPath(opts: CreateConnectorPathProps): string {
   }
 }
 
-function createRoundedPath(opts: CreateConnectorPathProps): string {
+function createRoundedPath(opts: CreateLinkPathProps): string {
   const { radius, dx, dy, source, target, sweep } = opts;
   const effectiveRadius = Math.max(0, Math.min(radius, Math.abs(dx), Math.abs(dy)));
 
@@ -107,7 +107,7 @@ function createRoundedPath(opts: CreateConnectorPathProps): string {
  * Arrow `bend` option — positive angle bends right (clockwise from source to
  * target), negative bends left, 0 is a straight line.
  */
-function createSwoopPath({ source, target, dx, dy, bend = 22.5 }: CreateConnectorPathProps): string {
+function createSwoopPath({ source, target, dx, dy, bend = 22.5 }: CreateLinkPathProps): string {
   const chordLen = Math.hypot(dx, dy);
   const bendRad = (bend * Math.PI) / 180;
   if (Math.abs(bendRad) < 1e-6 || chordLen < 1e-6) {
@@ -122,7 +122,7 @@ function createSwoopPath({ source, target, dx, dy, bend = 22.5 }: CreateConnecto
 
 type PathStrategyMap = Record<
   'square' | 'beveled' | 'rounded' | 'swoop',
-  (props: CreateConnectorPathProps) => string
+  (props: CreateLinkPathProps) => string
 >;
 
 const pathStrategies: PathStrategyMap = {
@@ -132,17 +132,17 @@ const pathStrategies: PathStrategyMap = {
   swoop: createSwoopPath,
 };
 
-type GetConnectorPresetPathProps = {
-  source: ConnectorCoords;
-  target: ConnectorCoords;
+type GetLinkPresetPathProps = {
+  source: LinkCoords;
+  target: LinkCoords;
   radius: number;
-  type: PresetConnectorType;
-  sweep: ConnectorSweep;
+  type: PresetLinkType;
+  sweep: LinkSweep;
   /** Bend angle in degrees, used by 'swoop' type. Default 22.5. */
   bend?: number;
 };
 
-export function getConnectorPresetPath(opts: GetConnectorPresetPathProps) {
+export function getLinkPresetPath(opts: GetLinkPresetPathProps) {
   const { source, target, type } = opts;
   if (isSamePoint(source, target)) return '';
   const dx = target.x - source.x;
@@ -158,7 +158,7 @@ export function getConnectorPresetPath(opts: GetConnectorPresetPathProps) {
 
 const FALLBACK_PATH = 'M0,0L0,0';
 
-type GetConnectorD3PathProps = Omit<GetConnectorPresetPathProps, 'radius' | 'type'> & {
+type GetLinkD3PathProps = Omit<GetLinkPresetPathProps, 'radius' | 'type'> & {
   curve: CurveFactory;
   /**
    * Cartesian orientation hint for axis-dependent curves (d3 step variants step
@@ -167,13 +167,13 @@ type GetConnectorD3PathProps = Omit<GetConnectorPresetPathProps, 'radius' | 'typ
   orientation?: 'horizontal' | 'vertical';
 };
 
-export function getConnectorD3Path({
+export function getLinkD3Path({
   source,
   target,
   sweep,
   curve,
   orientation = 'horizontal',
-}: GetConnectorD3PathProps) {
+}: GetLinkD3PathProps) {
   const dx = target.x - source.x;
   const dy = target.y - source.y;
 
@@ -249,7 +249,7 @@ type RadialGeometry = {
   sweepFlag: 0 | 1;
 };
 
-function radialGeometry(source: ConnectorCoords, target: ConnectorCoords): RadialGeometry {
+function radialGeometry(source: LinkCoords, target: LinkCoords): RadialGeometry {
   const sa = source.x - Math.PI / 2;
   const sr = source.y;
   const ta = target.x - Math.PI / 2;
@@ -276,21 +276,21 @@ function radialGeometry(source: ConnectorCoords, target: ConnectorCoords): Radia
   };
 }
 
-type GetConnectorRadialPresetPathProps = {
-  source: ConnectorCoords;
-  target: ConnectorCoords;
-  type: PresetConnectorType;
+type GetLinkRadialPresetPathProps = {
+  source: LinkCoords;
+  target: LinkCoords;
+  type: PresetLinkType;
   radius: number;
   bend?: number;
 };
 
-export function getConnectorRadialPresetPath({
+export function getLinkRadialPresetPath({
   source,
   target,
   type,
   radius,
   bend = 22.5,
-}: GetConnectorRadialPresetPathProps): string {
+}: GetLinkRadialPresetPathProps): string {
   const g = radialGeometry(source, target);
   const { sr, ta, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
 
@@ -361,17 +361,17 @@ export function getConnectorRadialPresetPath({
   return `M${sx},${sy}L${p1x},${p1y}L${p2x},${p2y}L${tx},${ty}`;
 }
 
-type GetConnectorRadialD3PathProps = {
-  source: ConnectorCoords;
-  target: ConnectorCoords;
+type GetLinkRadialD3PathProps = {
+  source: LinkCoords;
+  target: LinkCoords;
   curve?: CurveFactory;
 };
 
-export function getConnectorRadialD3Path({
+export function getLinkRadialD3Path({
   source,
   target,
   curve,
-}: GetConnectorRadialD3PathProps): string {
+}: GetLinkRadialD3PathProps): string {
   const g = radialGeometry(source, target);
   const { sr, tr, sc, ss, tc, ts, sx, sy, tx, ty, sweepFlag } = g;
 
@@ -414,8 +414,8 @@ export function getConnectorRadialD3Path({
 
   // Default: smooth radial curve via d3.linkRadial (visx LinkRadial)
   const linkGen = linkRadial<
-    { source: ConnectorCoords; target: ConnectorCoords },
-    ConnectorCoords
+    { source: LinkCoords; target: LinkCoords },
+    LinkCoords
   >()
     .angle((d) => d.x)
     .radius((d) => d.y);

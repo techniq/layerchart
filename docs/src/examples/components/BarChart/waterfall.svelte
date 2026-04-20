@@ -82,7 +82,7 @@
 			{@const bandRight = bandLeft + context.xScale.bandwidth()}
 			{@const isNegative = d.value < 0}
 
-			<!-- Connector line to next bar -->
+			<!-- Link line to next bar -->
 			{#if i < data.length - 1}
 				<Line
 					x1={bandRight}

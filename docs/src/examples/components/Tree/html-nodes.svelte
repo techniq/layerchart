@@ -12,14 +12,14 @@
 	import { Chart, Group, Link, Layer, Tree } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { cls } from '@layerstack/tailwind';
-	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
+	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 
 	let config = $state({
 		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
-		type: 'd3' as ConnectorType,
-		sweep: 'none' as ConnectorSweep,
+		type: 'd3' as LinkType,
+		sweep: 'none' as LinkSweep,
 		curve: curveBumpX,
 		radius: 60,
 		bend: 22.5,

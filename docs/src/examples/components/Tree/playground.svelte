@@ -13,7 +13,7 @@
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 	import { cls } from '@layerstack/tailwind';
-	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
+	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 
 	const datasetOptions = [
 		{ label: 'Simple', value: 'simple' },
@@ -28,8 +28,8 @@
 	let config = $state({
 		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
-		type: 'd3' as ConnectorType,
-		sweep: 'none' as ConnectorSweep,
+		type: 'd3' as LinkType,
+		sweep: 'none' as LinkSweep,
 		curve: curveBumpX,
 		radius: 60,
 		bend: 22.5,
@@ -86,108 +86,106 @@
 	clip
 	height={800}
 >
-	{#snippet children()}
-		<TransformContextControls orientation="horizontal" />
+	<TransformContextControls orientation="horizontal" />
 
-		<Tree
-			{hierarchy}
-			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
-			nodeSize={config.layout === 'node' ? nodeSize : undefined}
-		>
-			{#snippet children({ nodes, links })}
-				<Layer>
-					<Group center={config.orientation === 'radial'}>
-						<Group opacity={0.2}>
-							{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-								<Link
-									data={link}
-									orientation={config.orientation === 'radial' ? undefined : config.orientation}
-									curve={config.curve}
-									type={config.type}
-									sweep={config.sweep}
-									radius={config.radius}
+	<Tree
+		{hierarchy}
+		orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
+		nodeSize={config.layout === 'node' ? nodeSize : undefined}
+	>
+		{#snippet children({ nodes, links })}
+			<Layer>
+				<Group center={config.orientation === 'radial'}>
+					<Group opacity={0.2}>
+						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+							<Link
+								data={link}
+								orientation={config.orientation === 'radial' ? undefined : config.orientation}
+								curve={config.curve}
+								type={config.type}
+								sweep={config.sweep}
+								radius={config.radius}
 								bend={config.bend}
-									motion="tween"
-									class="stroke-surface-content"
-								/>
-							{/each}
-						</Group>
-
-						{#each nodes as node (getNodeKey(node))}
-							{@const nodeX =
-								config.orientation === 'radial'
-									? node.y * Math.sin(node.x)
-									: config.orientation === 'horizontal'
-										? node.y
-										: node.x}
-							{@const nodeY =
-								config.orientation === 'radial'
-									? -node.y * Math.cos(node.x)
-									: config.orientation === 'horizontal'
-										? node.x
-										: node.y}
-							<Group
-								x={nodeX - nodeWidth / 2}
-								y={nodeY - nodeHeight / 2}
 								motion="tween"
-								onclick={() => {
-									if (expandedNodeNames.includes(node.data.name)) {
-										expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
-									} else {
-										expandedNodeNames = [...expandedNodeNames, node.data.name];
-									}
-									selected = node;
-
-									// transform.zoomTo({
-									//   x: orientation === 'horizontal' ? selected.y : selected.x,
-									//   y: orientation === 'horizontal' ? selected.x : selected.y,
-									// });
-								}}
-								class={cls(node.data.children && 'cursor-pointer')}
-							>
-								{@const isRoot = node.depth === 0}
-								{@const isExpanded = expandedNodeNames.includes(node.data.name)}
-								<Rect
-									width={nodeWidth}
-									height={nodeHeight}
-									class={cls(
-										isRoot && isExpanded
-											? 'fill-success stroke-success'
-											: isRoot
-												? 'fill-surface-100 stroke-success'
-												: isExpanded
-													? 'fill-primary stroke-primary'
-													: node.data.children
-														? 'stroke-primary hover:stroke-2 fill-surface-100'
-														: 'stroke-secondary [stroke-dasharray:1] fill-surface-100'
-									)}
-									rx={node.data.children ? 4 : nodeHeight / 2}
-								/>
-								<Text
-									value={node.data.name}
-									x={nodeWidth / 2}
-									y={nodeHeight / 2}
-									dy={-2}
-									textAnchor="middle"
-									verticalAnchor="middle"
-									class={cls(
-										'text-xs pointer-events-none',
-										isRoot && isExpanded
-											? 'fill-success-content font-bold'
-											: isRoot
-												? 'fill-success font-bold'
-												: isExpanded
-													? 'fill-primary-content font-bold'
-													: node.data.children
-														? 'fill-primary'
-														: 'fill-secondary'
-									)}
-								/>
-							</Group>
+								class="stroke-surface-content"
+							/>
 						{/each}
 					</Group>
-				</Layer>
-			{/snippet}
-		</Tree>
-	{/snippet}
+
+					{#each nodes as node (getNodeKey(node))}
+						{@const nodeX =
+							config.orientation === 'radial'
+								? node.y * Math.sin(node.x)
+								: config.orientation === 'horizontal'
+									? node.y
+									: node.x}
+						{@const nodeY =
+							config.orientation === 'radial'
+								? -node.y * Math.cos(node.x)
+								: config.orientation === 'horizontal'
+									? node.x
+									: node.y}
+						<Group
+							x={nodeX - nodeWidth / 2}
+							y={nodeY - nodeHeight / 2}
+							motion="tween"
+							onclick={() => {
+								if (expandedNodeNames.includes(node.data.name)) {
+									expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
+								} else {
+									expandedNodeNames = [...expandedNodeNames, node.data.name];
+								}
+								selected = node;
+
+								// transform.zoomTo({
+								//   x: orientation === 'horizontal' ? selected.y : selected.x,
+								//   y: orientation === 'horizontal' ? selected.x : selected.y,
+								// });
+							}}
+							class={cls(node.data.children && 'cursor-pointer')}
+						>
+							{@const isRoot = node.depth === 0}
+							{@const isExpanded = expandedNodeNames.includes(node.data.name)}
+							<Rect
+								width={nodeWidth}
+								height={nodeHeight}
+								class={cls(
+									isRoot && isExpanded
+										? 'fill-success stroke-success'
+										: isRoot
+											? 'fill-surface-100 stroke-success'
+											: isExpanded
+												? 'fill-primary stroke-primary'
+												: node.data.children
+													? 'stroke-primary hover:stroke-2 fill-surface-100'
+													: 'stroke-secondary [stroke-dasharray:1] fill-surface-100'
+								)}
+								rx={node.data.children ? 4 : nodeHeight / 2}
+							/>
+							<Text
+								value={node.data.name}
+								x={nodeWidth / 2}
+								y={nodeHeight / 2}
+								dy={-2}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								class={cls(
+									'text-xs pointer-events-none',
+									isRoot && isExpanded
+										? 'fill-success-content font-bold'
+										: isRoot
+											? 'fill-success font-bold'
+											: isExpanded
+												? 'fill-primary-content font-bold'
+												: node.data.children
+													? 'fill-primary'
+													: 'fill-secondary'
+								)}
+							/>
+						</Group>
+					{/each}
+				</Group>
+			</Layer>
+		{/snippet}
+	</Tree>
 </Chart>
