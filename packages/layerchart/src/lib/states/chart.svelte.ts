@@ -430,14 +430,21 @@ export class ChartState<
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
 
-  // If seriesState has series-specific data, use visible series data (for domain calculations).
-  // This allows simplified charts to pass raw data and let Chart derive chartData from seriesState.
-  // Using visibleSeriesData ensures domain recalculates when series are shown/hidden via legend.
+  // When `<Chart data>` is passed with a non-empty dataset, it's canonical —
+  // marks with their own `data` (e.g. filtered label subsets) still contribute
+  // to `flatData` for domain calculation but don't replace iteration data.
+  // Otherwise fall back to `visibleSeriesData` so simplified charts that pass
+  // data via series definitions still work, with reactive recomputation when
+  // series are shown/hidden via legend.
   data = $derived.by(() => {
+    const propsData = this.props.data;
+    if (propsData != null && (!Array.isArray(propsData) || propsData.length > 0)) {
+      return propsData;
+    }
     if (this.seriesState?.visibleSeriesData?.length) {
       return this.seriesState.visibleSeriesData;
     }
-    return this.props.data ?? [];
+    return [];
   });
 
   flatData = $derived.by(() => {

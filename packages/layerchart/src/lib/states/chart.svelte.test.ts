@@ -611,6 +611,86 @@ describe('ChartState mark registration', () => {
   });
 });
 
+describe('ChartState data vs visibleSeriesData', () => {
+  it('should return props.data when explicit, even if a mark registers a filtered subset', () => {
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+      { date: '2024-03', value: 30 },
+    ];
+    const highlighted = [fullData[0]]; // filtered subset
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      // Simulate a decorative mark (e.g. <Text data={highlighted}>) registering
+      // its own filtered dataset with the same value accessor as the chart.
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // ctx.data (used by sibling marks for iteration) should remain the full
+      // chart data, not be replaced by the filtered subset.
+      expect(state.data).toBe(fullData);
+      expect(state.data).toHaveLength(3);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should fall back to visibleSeriesData when props.data is not provided', () => {
+    const applesData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+    ];
+    const bananasData: TestData[] = [
+      { date: '2024-01', value: 15 },
+      { date: '2024-02', value: 25 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      x: 'date',
+      y: 'value',
+      series: [
+        { key: 'apples', data: applesData },
+        { key: 'bananas', data: bananasData },
+      ],
+    });
+
+    try {
+      // No props.data — ctx.data should flatten series data for iteration.
+      expect(state.data).toHaveLength(4);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should fall back to visibleSeriesData when props.data is an empty array', () => {
+    // Composite charts (BarChart, etc.) default `data = []` when not passed.
+    const applesData: TestData[] = [{ date: '2024-01', value: 10 }];
+    const bananasData: TestData[] = [{ date: '2024-01', value: 15 }];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: [],
+      x: 'date',
+      y: 'value',
+      series: [
+        { key: 'apples', data: applesData },
+        { key: 'bananas', data: bananasData },
+      ],
+    });
+
+    try {
+      expect(state.data).toHaveLength(2);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState geo projection skips markInfo', () => {
   const geoData: GeoData[] = [
     { name: 'New York', longitude: -74.006, latitude: 40.7128 },
