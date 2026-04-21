@@ -172,6 +172,20 @@
   "usage": [
     {
       "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 107,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 121,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/playground",
       "lineNumber": 221,
@@ -990,5 +1004,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:32.123Z"
+  "updatedAt": "2026-04-21T13:52:39.826Z"
 }

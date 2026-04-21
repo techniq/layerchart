@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-21T13:21:31.071Z",
+  "generatedAt": "2026-04-21T13:52:38.533Z",
   "totalComponents": 76,
-  "totalExamples": 891,
+  "totalExamples": 892,
   "components": [
     {
       "component": "AnnotationLine",
@@ -25,6 +25,11 @@
           "name": "horizontal-with-range",
           "path": "/example/AnnotationLine/horizontal-with-range",
           "checksum": "1d7f1b1e8d70f2188cc0832aac47e5e4"
+        },
+        {
+          "name": "playground",
+          "path": "/example/AnnotationLine/playground",
+          "checksum": "de3d447ad6d2db0d096b638e29448f3f"
         },
         {
           "name": "slopped",

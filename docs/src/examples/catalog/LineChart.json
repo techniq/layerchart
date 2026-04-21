@@ -1034,6 +1034,13 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 76,
+      "line": "<LineChart"
+    },
+    {
       "example": "slopped",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/slopped",
@@ -1685,5 +1692,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:32.845Z"
+  "updatedAt": "2026-04-21T13:52:40.793Z"
 }

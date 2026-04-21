@@ -75,6 +75,28 @@
       ]
     },
     {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/AnnotationLine/playground",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 76,
+          "line": "<LineChart"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 85,
+          "line": "<AnnotationLine"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 107,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
       "name": "slopped",
       "title": "slopped",
       "path": "/docs/components/AnnotationLine/slopped",
@@ -170,6 +192,13 @@
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
       "lineNumber": 26,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 85,
       "line": "<AnnotationLine"
     },
     {
@@ -320,5 +349,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:31.505Z"
+  "updatedAt": "2026-04-21T13:52:38.972Z"
 }
