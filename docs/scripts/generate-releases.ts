@@ -57,9 +57,15 @@ async function fetchReleases(): Promise<GitHubRelease[]> {
 		console.log(`Fetching page ${page}...`);
 
 		const token = process.env.GITHUB_API_TOKEN || process.env.GITHUB_TOKEN;
-		const response = await fetch(url, {
+		let response = await fetch(url, {
 			headers: token ? { Authorization: `Bearer ${token}` } : undefined
 		});
+
+		// Retry unauthenticated if the provided token is rejected (e.g. stale local env var)
+		if (response.status === 401 && token) {
+			console.warn('GitHub returned 401 with provided token — retrying unauthenticated');
+			response = await fetch(url);
+		}
 
 		if (!response.ok) {
 			throw new Error(`Failed to fetch releases: ${response.status} ${response.statusText}`);
