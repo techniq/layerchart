@@ -61,7 +61,7 @@
         {
           "component": "Circle",
           "lineNumber": 71,
-          "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+          "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
         }
       ],
       "description": "When "
@@ -89,37 +89,37 @@
         {
           "component": "Circle",
           "lineNumber": 45,
-          "line": "<circle"
+          "line": "<Circle"
         }
       ]
     },
     {
       "name": "types",
-      "title": "Connector types",
+      "title": "Link types",
       "path": "/docs/components/Link/types",
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 29,
+          "lineNumber": 32,
           "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
         },
         {
           "component": "Layer",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Layer>"
         },
         {
           "component": "Link",
-          "lineNumber": 36,
+          "lineNumber": 39,
           "line": "<Link"
         },
         {
           "component": "Circle",
-          "lineNumber": 45,
-          "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+          "lineNumber": 48,
+          "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
         }
       ],
-      "description": "Link supports several connector path types across cartesian and radial orientations."
+      "description": "Link supports several path types across cartesian and radial orientations."
     }
   ],
   "usage": [
@@ -183,7 +183,7 @@
       "example": "types",
       "component": "Link",
       "path": "/docs/components/Link/types",
-      "lineNumber": 36,
+      "lineNumber": 39,
       "line": "<Link"
     },
     {
@@ -239,9 +239,9 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 102,
+      "lineNumber": 101,
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:54.559Z"
+  "updatedAt": "2026-04-21T13:21:32.884Z"
 }

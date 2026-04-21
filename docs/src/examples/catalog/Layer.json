@@ -66,6 +66,20 @@
       "line": "<Layer>"
     },
     {
+      "example": "us-cities",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "lineNumber": 98,
+      "line": "<Layer>"
+    },
+    {
+      "example": "world-landmarks",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "lineNumber": 109,
+      "line": "<Layer>"
+    },
+    {
       "example": "clock",
       "component": "Arc",
       "path": "/docs/components/Arc/clock",
@@ -2743,7 +2757,7 @@
       "example": "types",
       "component": "Link",
       "path": "/docs/components/Link/types",
-      "lineNumber": 35,
+      "lineNumber": 38,
       "line": "<Layer>"
     },
     {
@@ -4066,7 +4080,7 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 98,
+      "lineNumber": 97,
       "line": "<Layer>"
     },
     {
@@ -4196,5 +4210,5 @@
       "line": "<Layer onpointermove={onPointerMove}>"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:54.392Z"
+  "updatedAt": "2026-04-21T13:21:32.768Z"
 }

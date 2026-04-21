@@ -333,21 +333,21 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 99,
+      "lineNumber": 98,
       "line": "<Group center={config.orientation === 'radial'}>"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 100,
+      "lineNumber": 99,
       "line": "<Group opacity={0.2}>"
     },
     {
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 129,
+      "lineNumber": 128,
       "line": "<Group"
     },
     {
@@ -393,5 +393,5 @@
       "line": "<Group"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:54.250Z"
+  "updatedAt": "2026-04-21T13:21:32.640Z"
 }

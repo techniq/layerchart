@@ -251,6 +251,20 @@
   ],
   "usage": [
     {
+      "example": "us-cities",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "lineNumber": 97,
+      "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500} padding={{ right: 40 }}>"
+    },
+    {
+      "example": "world-landmarks",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "lineNumber": 108,
+      "line": "<Chart geo={{ projection: geoNaturalEarth1, fitGeojson: countries }} height={500}>"
+    },
+    {
       "example": "clock",
       "component": "Arc",
       "path": "/docs/components/Arc/clock",
@@ -2788,7 +2802,7 @@
       "example": "types",
       "component": "Link",
       "path": "/docs/components/Link/types",
-      "lineNumber": 29,
+      "lineNumber": 32,
       "line": "<Chart height={chartHeight} padding={pad} class=\"flex-1\">"
     },
     {
@@ -4220,5 +4234,5 @@
       "line": "<Chart {data} x=\"x\" y=\"y\" height={400}>"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:53.345Z"
+  "updatedAt": "2026-04-21T13:21:32.029Z"
 }

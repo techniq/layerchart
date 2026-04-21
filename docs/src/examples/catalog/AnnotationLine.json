@@ -75,6 +75,23 @@
       ]
     },
     {
+      "name": "slopped",
+      "title": "slopped",
+      "path": "/docs/components/AnnotationLine/slopped",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 19,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationLine",
+          "lineNumber": 21,
+          "line": "<AnnotationLine"
+        }
+      ]
+    },
+    {
       "name": "vertical",
       "title": "vertical",
       "path": "/docs/components/AnnotationLine/vertical",
@@ -153,6 +170,13 @@
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
       "lineNumber": 26,
+      "line": "<AnnotationLine"
+    },
+    {
+      "example": "slopped",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/slopped",
+      "lineNumber": 21,
       "line": "<AnnotationLine"
     },
     {
@@ -296,5 +320,5 @@
       "line": "<AnnotationLine"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:22.581Z"
+  "updatedAt": "2026-04-21T13:21:31.505Z"
 }

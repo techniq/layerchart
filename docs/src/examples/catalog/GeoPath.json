@@ -740,6 +740,20 @@
   ],
   "usage": [
     {
+      "example": "us-cities",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "lineNumber": 99,
+      "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
+      "example": "world-landmarks",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "lineNumber": 111,
+      "line": "<GeoPath geojson={f} class=\"fill-surface-content/10 stroke-surface-100\" />"
+    },
+    {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
@@ -1615,5 +1629,5 @@
       "line": "<GeoPath"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:23.880Z"
+  "updatedAt": "2026-04-21T13:21:32.454Z"
 }

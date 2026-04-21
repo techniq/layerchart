@@ -171,6 +171,27 @@
   ],
   "usage": [
     {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 221,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 237,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 251,
+      "line": "<Circle"
+    },
+    {
       "example": "clock",
       "component": "Arc",
       "path": "/docs/components/Arc/clock",
@@ -616,42 +637,42 @@
       "component": "Link",
       "path": "/docs/components/Link/curves",
       "lineNumber": 71,
-      "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
     },
     {
       "example": "curves",
       "component": "Link",
       "path": "/docs/components/Link/curves",
       "lineNumber": 72,
-      "line": "<circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
     },
     {
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
       "lineNumber": 45,
-      "line": "<circle"
+      "line": "<Circle"
     },
     {
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
       "lineNumber": 58,
-      "line": "<circle"
+      "line": "<Circle"
     },
     {
       "example": "types",
       "component": "Link",
       "path": "/docs/components/Link/types",
-      "lineNumber": 45,
-      "line": "<circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+      "lineNumber": 48,
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
     },
     {
       "example": "types",
       "component": "Link",
       "path": "/docs/components/Link/types",
-      "lineNumber": 46,
-      "line": "<circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+      "lineNumber": 49,
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
     },
     {
       "example": "sync-with-draw",
@@ -969,5 +990,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:53.469Z"
+  "updatedAt": "2026-04-21T13:21:32.123Z"
 }

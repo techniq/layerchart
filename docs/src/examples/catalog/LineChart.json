@@ -1034,6 +1034,13 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
+      "example": "slopped",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/slopped",
+      "lineNumber": 19,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+    },
+    {
       "example": "vertical",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical",
@@ -1055,17 +1062,17 @@
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
-      "example": "label-placement",
-      "component": "AnnotationPoint",
-      "path": "/docs/components/AnnotationPoint/label-placement",
-      "lineNumber": 33,
-      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
-    },
-    {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
       "lineNumber": 59,
+      "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+    },
+    {
+      "example": "link-callouts",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/link-callouts",
+      "lineNumber": 55,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -1678,5 +1685,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.359Z"
+  "updatedAt": "2026-04-21T13:21:32.845Z"
 }

@@ -46,23 +46,6 @@
       ]
     },
     {
-      "name": "label-placement",
-      "title": "label placement",
-      "path": "/docs/components/AnnotationPoint/label-placement",
-      "components": [
-        {
-          "component": "LineChart",
-          "lineNumber": 33,
-          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
-        },
-        {
-          "component": "AnnotationPoint",
-          "lineNumber": 36,
-          "line": "<AnnotationPoint"
-        }
-      ]
-    },
-    {
       "name": "line-to-point",
       "title": "line to point",
       "path": "/docs/components/AnnotationPoint/line-to-point",
@@ -91,6 +74,23 @@
           "component": "Tooltip",
           "lineNumber": 83,
           "line": "<Tooltip.Root>"
+        }
+      ]
+    },
+    {
+      "name": "link-callouts",
+      "title": "link callouts",
+      "path": "/docs/components/AnnotationPoint/link-callouts",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 55,
+          "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 58,
+          "line": "<AnnotationPoint {...annotation} />"
         }
       ]
     },
@@ -181,6 +181,28 @@
       ]
     },
     {
+      "name": "playground",
+      "title": "playground",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "components": [
+        {
+          "component": "ScatterChart",
+          "lineNumber": 188,
+          "line": "<ScatterChart"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 199,
+          "line": "<AnnotationPoint"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 221,
+          "line": "<Circle"
+        }
+      ]
+    },
+    {
       "name": "series-annotation",
       "title": "series annotation",
       "path": "/docs/components/AnnotationPoint/series-annotation",
@@ -194,6 +216,60 @@
           "component": "AnnotationPoint",
           "lineNumber": 22,
           "line": "<AnnotationPoint"
+        }
+      ]
+    },
+    {
+      "name": "us-cities",
+      "title": "us cities",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 97,
+          "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500} padding={{ right: 40 }}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 98,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 99,
+          "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 102,
+          "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+        }
+      ]
+    },
+    {
+      "name": "world-landmarks",
+      "title": "world landmarks",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 108,
+          "line": "<Chart geo={{ projection: geoNaturalEarth1, fitGeojson: countries }} height={500}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 109,
+          "line": "<Layer>"
+        },
+        {
+          "component": "GeoPath",
+          "lineNumber": 111,
+          "line": "<GeoPath geojson={f} class=\"fill-surface-content/10 stroke-surface-100\" />"
+        },
+        {
+          "component": "AnnotationPoint",
+          "lineNumber": 115,
+          "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
         }
       ]
     }
@@ -214,18 +290,18 @@
       "line": "<AnnotationPoint"
     },
     {
-      "example": "label-placement",
-      "component": "AnnotationPoint",
-      "path": "/docs/components/AnnotationPoint/label-placement",
-      "lineNumber": 36,
-      "line": "<AnnotationPoint"
-    },
-    {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
       "lineNumber": 69,
       "line": "<AnnotationPoint"
+    },
+    {
+      "example": "link-callouts",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/link-callouts",
+      "lineNumber": 58,
+      "line": "<AnnotationPoint {...annotation} />"
     },
     {
       "example": "on-axis-with-tooltip",
@@ -249,12 +325,33 @@
       "line": "<AnnotationPoint"
     },
     {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 199,
+      "line": "<AnnotationPoint"
+    },
+    {
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/series-annotation",
       "lineNumber": 22,
       "line": "<AnnotationPoint"
+    },
+    {
+      "example": "us-cities",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/us-cities",
+      "lineNumber": 102,
+      "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+    },
+    {
+      "example": "world-landmarks",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/world-landmarks",
+      "lineNumber": 115,
+      "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.507Z"
+  "updatedAt": "2026-04-21T13:21:31.530Z"
 }

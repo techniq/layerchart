@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-20T01:55:57.872Z",
+  "generatedAt": "2026-04-21T13:21:31.071Z",
   "totalComponents": 76,
-  "totalExamples": 887,
+  "totalExamples": 891,
   "components": [
     {
       "component": "AnnotationLine",
@@ -25,6 +25,11 @@
           "name": "horizontal-with-range",
           "path": "/example/AnnotationLine/horizontal-with-range",
           "checksum": "1d7f1b1e8d70f2188cc0832aac47e5e4"
+        },
+        {
+          "name": "slopped",
+          "path": "/example/AnnotationLine/slopped",
+          "checksum": "e87a9cb6891d1bde1dd8f6f1c7e79bbc"
         },
         {
           "name": "vertical",
@@ -57,14 +62,14 @@
           "checksum": "33a0d2b715cf2ca654d8baa54849bbb8"
         },
         {
-          "name": "label-placement",
-          "path": "/example/AnnotationPoint/label-placement",
-          "checksum": "988074d87867ccdf35438d2f7cdab3ce"
-        },
-        {
           "name": "line-to-point",
           "path": "/example/AnnotationPoint/line-to-point",
           "checksum": "c3cf32ce69d8c0916f410e9f4f4a88db"
+        },
+        {
+          "name": "link-callouts",
+          "path": "/example/AnnotationPoint/link-callouts",
+          "checksum": "17460fa2213d9d4377821c395d350ca3"
         },
         {
           "name": "on-axis-with-tooltip",
@@ -82,9 +87,24 @@
           "checksum": "5d43b35df0d08eaf8cb8670183190533"
         },
         {
+          "name": "playground",
+          "path": "/example/AnnotationPoint/playground",
+          "checksum": "cbfc7eb8663dff3a54b29c44a05c932d"
+        },
+        {
           "name": "series-annotation",
           "path": "/example/AnnotationPoint/series-annotation",
           "checksum": "4fdd12ab3ee79a794c0015e7e54bcbf1"
+        },
+        {
+          "name": "us-cities",
+          "path": "/example/AnnotationPoint/us-cities",
+          "checksum": "c179a9793ff2612c276bf770b9820bb5"
+        },
+        {
+          "name": "world-landmarks",
+          "path": "/example/AnnotationPoint/world-landmarks",
+          "checksum": "818be76ade4a953db483999eae045c7c"
         }
       ]
     },
@@ -1374,7 +1394,7 @@
         {
           "name": "waterfall",
           "path": "/example/BarChart/waterfall",
-          "checksum": "cdab2f37ea12b870865f620bfb6cc6bb"
+          "checksum": "1647cf6b346d5bb722091c8ef1ddf0db"
         }
       ]
     },
@@ -3344,17 +3364,17 @@
         {
           "name": "curves",
           "path": "/example/Link/curves",
-          "checksum": "80279afa7a1ef9925e1e5c393b29a51d"
+          "checksum": "f950964842e6ea649d824b369f612fc0"
         },
         {
           "name": "playground",
           "path": "/example/Link/playground",
-          "checksum": "7e2242a14a91cfaa740cfae94cb43ca8"
+          "checksum": "186e09b2b7b47afbf7e7426a31e08444"
         },
         {
           "name": "types",
           "path": "/example/Link/types",
-          "checksum": "25e64b11a93056d84dbfb0208b14c472"
+          "checksum": "e4195ca99290b73abeea042efba47096"
         }
       ]
     },
@@ -4704,12 +4724,12 @@
         {
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
-          "checksum": "a8e8473258c27a98f67313663f3ca4ca"
+          "checksum": "c3132079d076e4e6c520c13c909d7a5f"
         },
         {
           "name": "playground",
           "path": "/example/Tree/playground",
-          "checksum": "3628662489c3daf7484661fd1278edc0"
+          "checksum": "bd99254ecfe4098ec6d842b37d18e4a9"
         }
       ]
     },

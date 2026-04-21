@@ -376,6 +376,13 @@
   ],
   "usage": [
     {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 188,
+      "line": "<ScatterChart"
+    },
+    {
       "example": "basic",
       "component": "ScatterChart",
       "path": "/docs/components/ScatterChart/basic",
@@ -558,5 +565,5 @@
       "line": "<ScatterChart"
     }
   ],
-  "updatedAt": "2026-04-08T15:12:17.829Z"
+  "updatedAt": "2026-04-21T13:21:33.384Z"
 }
