@@ -9,20 +9,24 @@ related: [AnnotationLine, AnnotationRange, Link, Circle, Text]
 
 :example{ name="line-to-point" showCode }
 
-## Callouts
+### Callouts
 
 Pass `link` (or `link={{ type: 'swoop', ... }}` etc.) to draw a `<Link>` from
 the ring edge to the label.
-:example{ name="link-callouts" showCode }
+:example{ name="link-callouts" }
 
-## Geo
+### Geo
 
 Inside a geo `<Chart>`, `x`/`y` are interpreted as `[lon, lat]` and projected directly.
 
-:example{ name="us-cities" showCode }
+#### US Cities
 
-:example{ name="world-landmarks" showCode }
+:example{ name="us-cities" }
 
-## Playground
+#### World Landmarks
+
+:example{ name="world-landmarks" }
+
+### Playground
 
 :example{ name="playground" }
