@@ -151,10 +151,10 @@
   <Path
     {pathData}
     {...restProps}
-    onclick={onclick ? _onClick : undefined}
-    onpointerenter={tooltip || onpointerenter ? _onPointerEnter : undefined}
-    onpointermove={tooltip || onpointermove ? _onPointerMove : undefined}
-    onpointerleave={tooltip || onpointerleave ? _onPointerLeave : undefined}
+    {...onclick && { onclick: _onClick }}
+    {...(tooltip || onpointerenter) && { onpointerenter: _onPointerEnter }}
+    {...(tooltip || onpointermove) && { onpointermove: _onPointerMove }}
+    {...(tooltip || onpointerleave) && { onpointerleave: _onPointerLeave }}
     class={cls('lc-geo-path', className)}
     pathRef={refProp}
   />
