@@ -49,6 +49,7 @@
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
+  import { getGeoContext } from '$lib/contexts/geo.js';
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
   import Text from './Text.svelte';
@@ -70,10 +71,18 @@
   }: AnnotationPointProps = $props();
 
   const ctx = getChartContext();
+  const geo = getGeoContext();
 
-  const point = $derived({
-    x: x ? ctx.xScale(x) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0) : 0,
-    y: y ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0) : ctx.height,
+  const point = $derived.by(() => {
+    // Inside a geo chart, interpret `x`/`y` as `[lon, lat]` and project directly.
+    if (geo.projection && typeof x === 'number' && typeof y === 'number') {
+      const [px, py] = geo.projection([x, y]) ?? [0, 0];
+      return { x: px, y: py };
+    }
+    return {
+      x: x ? ctx.xScale(x) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0) : 0,
+      y: y ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0) : ctx.height,
+    };
   });
 
   const labelProps = $derived.by<ComponentProps<typeof Text>>(() => {
