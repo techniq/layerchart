@@ -82,6 +82,14 @@ code:not(pre > code):not(.custom) {
 	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
 }
 
+/* Inline-only rendered markdown (e.g. API property descriptions) */
+.prose-inline a {
+	@apply text-primary underline underline-offset-2 hover:text-primary/80;
+}
+.prose-inline code:not(pre > code):not(.custom) {
+	@apply text-xs px-1 py-0;
+}
+
 /* Code block figure container */
 figure[data-rehype-pretty-code-figure] {
 	/* Title/filename display - hidden, handled by pre.svelte component */

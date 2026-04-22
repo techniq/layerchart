@@ -1,4 +1,3 @@
-import type { ComponentAPI } from '$lib/api-types.js';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
 import type { Examples } from '$lib/types.js';
@@ -6,10 +5,6 @@ import type { Examples } from '$lib/types.js';
 export const load = async ({ params, url, parent }) => {
 	// Get examples from parent layout
 	const parentData = await parent();
-
-	const allAPIs = import.meta.glob('/generated/api/*.json', {
-		import: 'default'
-	});
 
 	const allCatalogs = import.meta.glob('/src/examples/catalog/*.json', {
 		import: 'default'
@@ -49,24 +44,10 @@ export const load = async ({ params, url, parent }) => {
 	// Page examples take precedence
 	const examples: Examples = { ...parentData.examples, ...pageExamples };
 
-	// Load component API
-	let api: ComponentAPI | null = null;
-	const apiPath = `/generated/api/${params.name}.json`;
-	if (allAPIs[apiPath]) {
-		try {
-			api = (await allAPIs[apiPath]()) as ComponentAPI;
-		} catch (error) {
-			console.warn(`Failed to load API file for component: ${params.name}`, error);
-		}
-	} else {
-		console.warn(`No API file found for component: ${params.name}`);
-	}
-
 	return {
 		PageComponent,
 		metadata,
 		catalog,
-		examples,
-		api
+		examples
 	};
 };

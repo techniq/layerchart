@@ -32,7 +32,7 @@ const components = defineCollection({
 		order: z.number().optional(),
 		content: z.string()
 	}),
-	transform: async (doc) => {
+	transform: async (doc, context) => {
 		const { filePath, fileName, directory, path } = doc._meta;
 
 		const name = doc.name ?? toPascalCase(fileName.replace('.md', ''));
@@ -89,9 +89,31 @@ const components = defineCollection({
 		const defaultExample = usageExample ?? catalogFirstExample;
 
 		const apiPath = join(process.cwd(), `generated/api/${path}.json`);
+		let api: any = null;
 		if (existsSync(apiPath)) {
 			try {
-				const api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+				api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+
+				const renderInline = async (text: string) => {
+					const html = await compileMarkdown(
+						context,
+						{ ...doc, content: text } as any,
+						{ remarkPlugins: [remarkGfm] }
+					);
+					return html
+						.replace(/^<p>/, '')
+						.replace(/<\/p>\s*$/, '')
+						.trim();
+				};
+
+				const walk = async (props: any[] = []) => {
+					for (const p of props) {
+						if (p.description) p.descriptionHtml = await renderInline(p.description);
+						if (p.properties) await walk(p.properties);
+					}
+				};
+				await walk(api.properties);
+
 				if (api.properties?.length) {
 					toc.push({ id: 'api-reference', text: 'API Reference', level: 2 });
 				}
@@ -111,8 +133,8 @@ const components = defineCollection({
 			source,
 			sourceUrl,
 			defaultExample,
-			toc
-			// html: await compileMarkdown(context, doc)
+			toc,
+			api
 		};
 	}
 });
