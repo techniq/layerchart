@@ -647,6 +647,13 @@
       "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
     },
     {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 67,
+      "line": "<Circle cx={dotX} cy={dotY} r={3} fill={seriesColor} />"
+    },
+    {
       "example": "curves",
       "component": "Link",
       "path": "/docs/components/Link/curves",
@@ -1004,5 +1011,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-21T13:52:39.826Z"
+  "updatedAt": "2026-04-22T15:30:11.862Z"
 }

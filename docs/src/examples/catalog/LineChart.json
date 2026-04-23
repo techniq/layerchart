@@ -955,6 +955,33 @@
       ]
     },
     {
+      "name": "svelte-milestones",
+      "title": "svelte milestones",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "components": [
+        {
+          "component": "LineChart",
+          "lineNumber": 23,
+          "line": "<LineChart"
+        },
+        {
+          "component": "Link",
+          "lineNumber": 57,
+          "line": "<Link"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 67,
+          "line": "<Circle cx={dotX} cy={dotY} r={3} fill={seriesColor} />"
+        },
+        {
+          "component": "Text",
+          "lineNumber": 68,
+          "line": "<Text"
+        }
+      ]
+    },
+    {
       "name": "threshold",
       "title": "threshold",
       "path": "/docs/components/LineChart/threshold",
@@ -1664,6 +1691,13 @@
       "line": "<LineChart"
     },
     {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 23,
+      "line": "<LineChart"
+    },
+    {
       "example": "threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/threshold",
@@ -1692,5 +1726,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-21T13:52:40.793Z"
+  "updatedAt": "2026-04-22T15:30:13.097Z"
 }

@@ -648,6 +648,13 @@
       "line": "<text"
     },
     {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 68,
+      "line": "<Text"
+    },
+    {
       "example": "bended-arrows",
       "component": "Link",
       "path": "/docs/components/Link/bended-arrows",
@@ -1033,5 +1040,5 @@
       "line": "<Text x={570} y={16} textAnchor=\"middle\" class=\"text-xs fill-surface-content/50\""
     }
   ],
-  "updatedAt": "2026-04-21T13:21:33.466Z"
+  "updatedAt": "2026-04-22T15:30:13.972Z"
 }

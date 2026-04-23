@@ -159,6 +159,13 @@
       "line": "<Link data={link} {...linkPositions[i]} class=\"stroke-surface-content/20\" />"
     },
     {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 57,
+      "line": "<Link"
+    },
+    {
       "example": "bended-arrows",
       "component": "Link",
       "path": "/docs/components/Link/bended-arrows",
@@ -243,5 +250,5 @@
       "line": "<Link"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:32.884Z"
+  "updatedAt": "2026-04-22T15:30:13.153Z"
 }

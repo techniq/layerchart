@@ -203,6 +203,34 @@ export const getCivilizationEvents = prerender(async () => {
 	return data;
 });
 
+export type SvelteCount = { date: Date; n: number; cumsum: number; category: 'svelte' | 'sveltekit' };
+
+export const getSvelteCounts = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-counts.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteCount>(await r.text(), autoType)
+	);
+	return data;
+});
+
+export type SvelteMilestone = {
+	date: Date;
+	category: 'svelte' | 'sveltekit' | 'ecosystem';
+	label: string;
+	x: Date;
+	y: number;
+};
+
+export const getSvelteMilestones = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-milestones.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteMilestone>(await r.text(), autoType)
+	);
+	return data;
+});
+
 export const getAppleTicker = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = await fetch('/data/examples/date/apple-ticker.json').then(async (r) =>
