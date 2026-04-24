@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.59
+
+### Patch Changes
+
+- fix: Prevent submitting forms when clicking legend buttons ([#841](https://github.com/techniq/layerchart/pull/841))
+
 ## 2.0.0-next.58
 
 ### Major Changes
