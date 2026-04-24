@@ -498,6 +498,7 @@
     <div class={cls('lc-legend-swatch-group', classes.items)} data-orientation={orientation}>
       {#each swatchItems as item}
         <button
+          type="button"
           class={cls('lc-legend-swatch-button', resolveMaybeFn(classes?.item, item))}
           style:opacity={selected.length === 0 || selected.includes(item.value) ? 1 : 0.3}
           onclick={(e) => onclickProp?.(e, item) ?? item.onclick?.(e)}
