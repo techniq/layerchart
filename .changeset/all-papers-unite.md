@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix: Prevent clicking legend buttons from submitting forms
+fix: Prevent submitting forms when clicking legend buttons
