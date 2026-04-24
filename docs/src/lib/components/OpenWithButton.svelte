@@ -82,10 +82,18 @@
 	}
 </script>
 
-<ButtonGroup variant="fill-light" size="sm" color="primary" class={example ? 'mb-40 mt-4' : ''}>
+<ButtonGroup
+	variant="fill-light"
+	size="sm"
+	color="primary"
+	class={example
+		? 'mb-40 mt-4 bg-surface-100 rounded-full border p-0.5'
+		: 'bg-surface-100 rounded-full border p-0.5'}
+>
 	<Button
 		icon={LucideCopyIcon}
 		variant="fill-light"
+		rounded="full"
 		size="sm"
 		color="primary"
 		onclick={async () => {
@@ -106,7 +114,7 @@
 		</span>
 	</Button>
 	<Toggle bind:on={isOpen} let:on={open} let:toggle let:toggleOff>
-		<Button on:click={toggle}>
+		<Button rounded="full" size="sm" on:click={toggle}>
 			<span style="transition: transform 300ms ease; transform: rotate({open ? -180 : 0}deg);">
 				<ChevronDownIcon />
 			</span>

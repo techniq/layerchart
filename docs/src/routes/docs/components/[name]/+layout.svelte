@@ -1,21 +1,32 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { getSettings } from 'layerchart';
-	import { Button, Menu, Switch, Toggle, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
+	import {
+		Button,
+		Menu,
+		Switch,
+		Toggle,
+		ToggleGroup,
+		ToggleOption,
+		Tooltip,
+		Breadcrumb
+	} from 'svelte-ux';
 	import { toTitleCase } from '@layerstack/utils';
 	import LoadingPlaceholder from '$lib/components/LoadingPlaceholder.svelte';
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
-
+	import ScrollToTop from '~icons/lucide/arrow-up-to-line';
+	import Hidybar from '$lib/components/Hidybar.svelte';
 	import { examples } from '$lib/context.js';
 	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
-	import LucideChevronLeft from '~icons/lucide/chevron-left';
-	import LucideChevronRight from '~icons/lucide/chevron-right';
+	import { cls } from '@layerstack/tailwind';
 
 	// TODO: `setSettings({...})` or just use default?
 	const settings = getSettings();
-
+	const origin = $derived(dev ? 'http://next.layerchart.com' : page.url.origin);
+	const url = $derived(`${origin}${page.url.pathname})`);
 	let { data, children } = $props();
 
 	const { metadata } = $derived(data);
@@ -78,37 +89,47 @@
 	let layers = $derived(
 		pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []
 	);
+
+	const title = $derived(
+		pageExample?.module?.title ??
+			toTitleCase(page.params.example?.replaceAll('-', ' ') ?? toTitleCase(metadata.name))
+	);
+
+	const breadcrumbs = $derived([
+		{ label: metadata.category },
+		...(page.params.example
+			? [{ label: metadata.name, href: `/docs/components/${page.params.name}` }]
+			: []),
+		{
+			label: title,
+			href: `/docs/components/${metadata.name}/${title.toLowerCase().replaceAll(' ', '-')}`
+		}
+	]);
 </script>
 
-<div class="mb-4">
-	<!-- Show back if viewing individual example or all component examples -->
-	{#if page.params.example || page.route.id == '/docs/components/[name]/examples'}
-		<Button
-			size="sm"
-			icon={LucideChevronLeft}
-			href="/docs/components/{page.params.name}"
-			class="mb-4 border"
+<Hidybar
+	loaded={page.params.example ? !!pageExample : true}
+	headerHeight="56px"
+	/* height -1 to overlap bottom border of header */
+	hidybarHeight="50px"
+	class={cls(
+		'flex flex-col w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden'
+	)}
+>
+	<div class="flex items-center gap-4 px-3 overflow-hidden h-full">
+		<Breadcrumb
+			items={breadcrumbs}
+			class="text-surface-content/50 font-bold capitalize text-xs min-w-0 overflow-hidden [&_.divider]:text-primary-500 [&_.divider]:opacity-70"
 		>
-			Back to {page.params.name}
-		</Button>
-	{/if}
-
-	<div class="flex items-center gap-2 text-xs font-bold">
-		<div class="text-surface-content/50 capitalize">
-			{metadata.category}
-		</div>
-
-		{#if page.params.example}
-			<LucideChevronRight class="text-sm opacity-25" />
-			<a href="/docs/components/{page.params.name}" class="text-primary">{metadata.name}</a>
-		{/if}
-	</div>
-
-	<div class="flex items-center gap-4">
-		<h1 class="text-3xl font-bold first-letter:capitalize">
-			{pageExample?.module?.title ?? page.params.example?.replaceAll('-', ' ') ?? metadata.name}
-		</h1>
-		<span class="flex items-center gap-1">
+			{#snippet item({ item }: { item: (typeof breadcrumbs)[number] })}
+				{#if item.href}
+					<a href={item.href} class="text-primary truncate">{item.label}</a>
+				{:else}
+					<span class="truncate">{item.label}</span>
+				{/if}
+			{/snippet}
+		</Breadcrumb>
+		<span class="flex items-center gap-2 ml-auto shrink-0">
 			{#if layers?.length}
 				<ToggleGroup
 					bind:value={settings.layer}
@@ -117,13 +138,14 @@
 					inset
 					rounded="full"
 					size="sm"
+					class="bg-surface-100 rounded-full"
 				>
 					{#each layers as layer}
 						<ToggleOption value={layer}>{toTitleCase(layer)}</ToggleOption>
 					{/each}
 				</ToggleGroup>
 			{/if}
-
+			<OpenWithButton {metadata} />
 			<Toggle let:on={open} let:toggle let:toggleOff>
 				<Tooltip title="Settings">
 					<Button iconOnly on:click={toggle}>
@@ -137,44 +159,49 @@
 					</Button>
 				</Tooltip>
 			</Toggle>
+			<Tooltip title="Scroll to top">
+				<Button
+					iconOnly
+					icon={ScrollToTop}
+					class="text-surface-content"
+					onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+				></Button>
+			</Tooltip>
 		</span>
 	</div>
+</Hidybar>
 
-	{#if pageExample?.module?.description}
-		<div class="text-sm text-surface-content/70">{pageExample.module.description}</div>
-	{/if}
+<h1
+	class="text-4xl font-bold select-none pb-4"
+	ondblclick={() => {
+		navigator.clipboard.writeText(`[${title}](${url}`);
+	}}
+>
+	{title}
+</h1>
+{#if pageExample?.module?.description}
+	<div class="text-sm text-surface-content/70">{pageExample.module.description}</div>
+{/if}
 
-	{#if page.params.example == null}
-		<div class="text-sm text-surface-content/70">{metadata.description}</div>
+{#if page.params.example == null}
+	<div class="text-sm text-surface-content/70">{metadata.description}</div>
 
-		<div class="flex gap-2 mt-3">
-			<OpenWithButton {metadata} />
-
-			<!-- <ViewSourceButton
-        label="Page source"
-        source={pageSource}
-        href={pageUrl
-          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
-          : ''}
-        icon={LucideFilePenLine}
-      /> -->
-
-			<!-- {#if !hideTableOfContents}
-        <Button
-          icon={LucideChevronDown}
-          on:click={() => {
-            showTableOfContents = !showTableOfContents;
-          }}
-          variant="fill-light"
-          color="primary"
-          size="sm"
-        >
-          On this page
-        </Button>
-      {/if} -->
-		</div>
-	{/if}
-</div>
+	<!-- <div class="flex gap-2 mt-3">
+	{#if !hideTableOfContents}
+	<Button
+	icon={LucideChevronDown}
+	on:click={() => {
+		showTableOfContents = !showTableOfContents;
+		}}
+		variant="fill-light"
+		color="primary"
+		size="sm"
+		>
+		On this page
+		</Button>
+		{/if}
+		</div>  -->
+{/if}
 
 <svelte:boundary>
 	{#snippet pending()}

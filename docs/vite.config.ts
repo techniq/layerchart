@@ -34,7 +34,7 @@ export default defineConfig({
 		}) /*, devtoolsJson()*/
 	],
 	server: {
-		// allowedHosts: ['.trycloudflare.com'],
+		allowedHosts: ['.ngrok-free.app', '.trycloudflare.com'],
 		fs: {
 			allow: ['.live-code']
 		},

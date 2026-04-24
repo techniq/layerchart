@@ -43,7 +43,7 @@
 
 <header
 	class={cls(
-		'sticky top-0 z-30 flex h-16 items-center border-b border-primary/10 px-4 py-2',
+		'sticky top-0 z-30 flex h-header items-center border-b border-primary/10 px-4 py-2',
 		// dot background
 		'bg-radial from-black/0 from-[1px] to-surface-100/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}
@@ -143,10 +143,10 @@
 	</div>
 </header>
 
-<div class="bg-surface-200 flex min-h-[calc(100vh-64px)]">
+<div class="bg-surface-200 flex min-h-[calc(100vh-var(--spacing-header))]">
 	<aside
 		class={cls(
-			'bg-surface-300/30 sticky top-16 hidden max-h-[calc(100dvh-64px)] border-r border-primary/10 transition-[width]',
+			'bg-surface-300/30 sticky top-header hidden max-h-[calc(100dvh-var(--spacing-header))] border-r border-primary/10 transition-[width]',
 			'lg:grid lg:grid-rows-[1fr_56px]',
 			showSidebar ? 'w-62' : 'w-0'
 		)}
@@ -249,7 +249,7 @@
 	<!-- Table of Contents -->
 	{#if page.data.metadata?.toc?.length}
 		<div
-			class="sticky top-16 hidden max-h-[calc(100dvh-64px)] w-70 overflow-auto py-5 pr-6 xl:block"
+			class="sticky top-header hidden max-h-[calc(100dvh-var(--spacing-header))] w-70 overflow-auto py-5 pr-6 xl:block"
 		>
 			<div
 				class="text-surface-content/50 flex items-center gap-2 pb-3 text-xs font-medium uppercase tracking-widest"
