@@ -231,15 +231,43 @@ const refs = [
 	private measureBundle(
 		safeName: string
 	): { size: number; gzipSize: number } {
-		const bundlePath = join(this.tempDir, `dist-${safeName}`, "bundle.js");
+		const distDir = join(this.tempDir, `dist-${safeName}`);
+		const entryPath = join(distDir, "bundle.js");
 
-		if (!existsSync(bundlePath)) {
+		if (!existsSync(entryPath)) {
 			return { size: 0, gzipSize: 0 };
 		}
 
-		const content = readFileSync(bundlePath, "utf-8");
-		const size = Buffer.byteLength(content, "utf-8");
-		const gzipSize = gzipSync(content).length;
+		// Sum the entry chunk + all chunks reachable via STATIC imports.
+		// Lazy-loaded chunks (via dynamic `import()`) are excluded so the
+		// reported size reflects what every consumer of this scenario pays
+		// up-front, not optional features they may not use.
+		const visited = new Set<string>();
+		const stack = ["bundle.js"];
+		let totalContent = "";
+
+		while (stack.length > 0) {
+			const file = stack.pop()!;
+			if (visited.has(file)) continue;
+			visited.add(file);
+
+			const filePath = join(distDir, file);
+			if (!existsSync(filePath)) continue;
+
+			const content = readFileSync(filePath, "utf-8");
+			totalContent += content;
+
+			// Match top-of-file static imports: `import ... from "./XXX.js"`
+			// (Dynamic `import("./XXX.js")` calls have a paren — different pattern.)
+			const staticImportRegex =
+				/(?:^|[\n;])\s*import\s+(?:[\s\S]*?\s+from\s+)?["']\.\/([\w-]+\.js)["']/g;
+			for (const match of content.matchAll(staticImportRegex)) {
+				stack.push(match[1]!);
+			}
+		}
+
+		const size = Buffer.byteLength(totalContent, "utf-8");
+		const gzipSize = gzipSync(totalContent).length;
 
 		return { size, gzipSize };
 	}

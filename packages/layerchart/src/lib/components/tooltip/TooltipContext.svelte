@@ -119,9 +119,11 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import Svg from './../layers/Svg.svelte';
-  import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
-  import Voronoi from './../Voronoi.svelte';
+  // Voronoi (used only when mode === 'voronoi') and Arc (used only for radial
+  // bounds/band mode) are dynamically imported inline in the markup via
+  // `{#await import(...)}` so non-voronoi/non-radial tooltip users don't pay
+  // for them. Voronoi alone pulls in d3-geo-voronoi + d3-geo.
 
   import { isScaleBand, isScaleTime, scaleInvert } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
@@ -701,56 +703,60 @@
     {@render children?.({ state: tooltipState })}
 
     {#if mode === 'voronoi'}
-      <Svg>
-        <Voronoi
-          x={xProp}
-          y={yProp}
-          r={radius}
-          onpointerenter={(e, { data }) => {
-            showTooltip(e, data);
-          }}
-          onpointermove={(e, { data }) => {
-            showTooltip(e, data);
-          }}
-          onpointerleave={() => hideTooltip()}
-          onpointerdown={(e) => {
-            // @ts-expect-error
-            if (e.target?.hasPointerCapture(e.pointerId)) {
+      {#await import('../Voronoi.svelte') then { default: Voronoi }}
+        <Svg>
+          <Voronoi
+            x={xProp}
+            y={yProp}
+            r={radius}
+            onpointerenter={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointermove={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointerleave={() => hideTooltip()}
+            onpointerdown={(e) => {
               // @ts-expect-error
-              e.target.releasePointerCapture(e.pointerId);
-            }
-          }}
-          onclick={(e, { data }) => {
-            onclick(e, { data });
-          }}
-          classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
-        />
-      </Svg>
+              if (e.target?.hasPointerCapture(e.pointerId)) {
+                // @ts-expect-error
+                e.target.releasePointerCapture(e.pointerId);
+              }
+            }}
+            onclick={(e, { data }) => {
+              onclick(e, { data });
+            }}
+            classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
+          />
+        </Svg>
+      {/await}
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg center={ctx.radial}>
         <g class="lc-tooltip-rects-g">
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             {#if ctx.radial}
-              <Arc
-                innerRadius={rect.y}
-                outerRadius={rect.y + rect.height}
-                startAngle={rect.x}
-                endAngle={rect.x + rect.width}
-                class={cls('lc-tooltip-rect', debug && 'debug')}
-                onpointerenter={(e) => showTooltip(e, rect?.data)}
-                onpointermove={(e) => showTooltip(e, rect?.data)}
-                onpointerleave={() => hideTooltip()}
-                onpointerdown={(e) => {
-                  const target = e.target as Element;
-                  if (target?.hasPointerCapture(e.pointerId)) {
-                    target.releasePointerCapture(e.pointerId);
-                  }
-                }}
-                onclick={(e) => {
-                  onclick(e, { data: rect?.data });
-                }}
-              />
+              {#await import('../Arc.svelte') then { default: Arc }}
+                <Arc
+                  innerRadius={rect.y}
+                  outerRadius={rect.y + rect.height}
+                  startAngle={rect.x}
+                  endAngle={rect.x + rect.width}
+                  class={cls('lc-tooltip-rect', debug && 'debug')}
+                  onpointerenter={(e) => showTooltip(e, rect?.data)}
+                  onpointermove={(e) => showTooltip(e, rect?.data)}
+                  onpointerleave={() => hideTooltip()}
+                  onpointerdown={(e) => {
+                    const target = e.target as Element;
+                    if (target?.hasPointerCapture(e.pointerId)) {
+                      target.releasePointerCapture(e.pointerId);
+                    }
+                  }}
+                  onclick={(e) => {
+                    onclick(e, { data: rect?.data });
+                  }}
+                />
+              {/await}
             {:else}
               <rect
                 x={rect?.x}
