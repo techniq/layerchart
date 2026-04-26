@@ -19,7 +19,10 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "changeset publish",
-    "up-deps": "pnpm update -r -i --latest"
+    "up-deps": "pnpm update -r -i --latest",
+    "bundle:analyze": "pnpm --filter @layerchart/bundle-analyzer bundle:analyze",
+    "bundle:compare": "pnpm --filter @layerchart/bundle-analyzer bundle:compare",
+    "bundle:generate-comment": "pnpm --filter @layerchart/bundle-analyzer generate-comment"
   },
   "devDependencies": {
     "@changesets/cli": "2.30.0",
