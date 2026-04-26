@@ -1,0 +1,93 @@
+name: Bundle Analysis
+
+on:
+  pull_request:
+    paths:
+      - packages/layerchart/**
+      - bundle-analyzer/**
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Run bundle analysis on PR
+        run: pnpm bundle:analyze
+
+      - name: Save PR bundle report
+        run: |
+          mkdir -p /tmp/bundle-analysis
+          cp ./bundle-analyzer/bundle-reports/latest.json /tmp/bundle-analysis/pr-current.json
+
+      - name: Get target branch bundle report
+        id: check-target-bundle
+        run: |
+          if git cat-file -e origin/${{ github.base_ref }}:bundle-analyzer/bundle-reports/latest.json 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            git show origin/${{ github.base_ref }}:bundle-analyzer/bundle-reports/latest.json > /tmp/bundle-analysis/target-baseline.json
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate target baseline if missing
+        if: steps.check-target-bundle.outputs.exists == 'false'
+        run: |
+          git stash push -m "temp stash for baseline generation" || true
+          git checkout origin/${{ github.base_ref }}
+          pnpm install --frozen-lockfile
+          pnpm build:packages
+          pnpm bundle:analyze || echo "Bundle analysis failed on target branch"
+          if [ -f "./bundle-analyzer/bundle-reports/latest.json" ]; then
+            cp ./bundle-analyzer/bundle-reports/latest.json /tmp/bundle-analysis/target-baseline.json
+          else
+            echo '{"timestamp":"","results":[]}' > /tmp/bundle-analysis/target-baseline.json
+          fi
+          git checkout ${{ github.head_ref }}
+          git stash pop || true
+
+      - name: Generate bundle comparison comment
+        run: |
+          node ./bundle-analyzer/generate-pr-comment.js \
+            /tmp/bundle-analysis/pr-current.json \
+            /tmp/bundle-analysis/target-baseline.json
+
+      - name: Find existing comment
+        uses: peter-evans/find-comment@v3
+        id: existing-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: "## Bundle Size Analysis"
+
+      - name: Update or create comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.existing-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: /tmp/bundle-analysis/comment.md
+          edit-mode: replace

@@ -1,0 +1,102 @@
+name: Update Bundle Baseline
+
+on:
+  push:
+    branches:
+      - next
+    paths:
+      - packages/layerchart/**
+      - bundle-analyzer/**
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-baseline:
+    name: Update Bundle Size Baseline
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Run bundle analysis
+        run: pnpm bundle:analyze
+
+      - name: Check if baseline changed
+        id: check-changes
+        run: |
+          if [ ! -f "./bundle-analyzer/bundle-reports/latest.json" ]; then
+            echo "No latest.json generated"
+            echo "changed=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if git cat-file -e HEAD:bundle-analyzer/bundle-reports/latest.json 2>/dev/null; then
+            OLD_FILE=$(git show HEAD:bundle-analyzer/bundle-reports/latest.json)
+            NEW_FILE=$(cat ./bundle-analyzer/bundle-reports/latest.json)
+
+            # Remove timestamp fields and compare
+            OLD_NO_TS=$(echo "$OLD_FILE" | jq 'del(.timestamp)')
+            NEW_NO_TS=$(echo "$NEW_FILE" | jq 'del(.timestamp)')
+
+            if [ "$OLD_NO_TS" = "$NEW_NO_TS" ]; then
+              echo "Only timestamp changed"
+              echo "changed=false" >> $GITHUB_OUTPUT
+            else
+              echo "Bundle data changed"
+              echo "changed=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "First baseline"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create or update bundle baseline PR
+        if: steps.check-changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/update-bundle-baseline
+          title: "chore: update bundle size baseline"
+          body: |
+            ## Bundle Size Baseline Update
+
+            This PR updates the bundle size baseline after recent changes to the `next` branch.
+
+            ### What changed?
+            - Updated `bundle-analyzer/bundle-reports/latest.json` with current scenario sizes
+            - This serves as the baseline for future bundle size comparisons in PRs
+
+            ### How to review
+            1. Check that the bundle size changes align with recent merged PRs
+            2. Verify no unexpected size increases
+            3. Merge when satisfied with the baseline update
+
+            _This PR was automatically created by the bundle analysis workflow._
+          commit-message: "chore: update bundle size baseline"
+          add-paths: |
+            bundle-analyzer/bundle-reports/latest.json
+          delete-branch: true
+          author: "github-actions[bot] <action@github.com>"
+          committer: "github-actions[bot] <action@github.com>"
+          base: next
