@@ -1,5 +1,6 @@
 import { build } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { visualizer } from "rollup-plugin-visualizer";
 import { resolve, join } from "node:path";
 import {
 	writeFileSync,
@@ -47,6 +48,7 @@ class BundleAnalyzer {
 		scenarios?: string[];
 		components?: boolean;
 		componentFilter?: string[];
+		visualize?: boolean;
 	}): Promise<BundleReport> {
 		console.log("Starting bundle analysis...\n");
 
@@ -70,7 +72,7 @@ class BundleAnalyzer {
 
 		for (const scenario of scenariosToAnalyze) {
 			console.log(`  Analyzing: ${scenario.name}`);
-			const result = await this.analyzeScenario(scenario);
+			const result = await this.analyzeScenario(scenario, options.visualize);
 			results.push(result);
 		}
 
@@ -81,6 +83,16 @@ class BundleAnalyzer {
 
 		this.saveReport(report);
 		this.printReport(report);
+
+		if (options.visualize) {
+			console.log("\nTreemap visualizations:");
+			for (const scenario of scenariosToAnalyze) {
+				const safeName = scenario.name.replace(/[^a-zA-Z0-9_-]/g, "_");
+				console.log(
+					`  ${join(this.outputDir, `visualize-${safeName}.html`)}`
+				);
+			}
+		}
 
 		// Clean up temp directory
 		if (existsSync(this.tempDir)) {
@@ -102,12 +114,14 @@ class BundleAnalyzer {
 	}
 
 	private async analyzeScenario(
-		scenario: Scenario
+		scenario: Scenario,
+		visualize = false
 	): Promise<BundleResult> {
 		const entryPath = this.createEntryFile(scenario);
 		const { size, gzipSize } = await this.buildAndMeasure(
 			entryPath,
-			scenario.name
+			scenario.name,
+			visualize
 		);
 
 		return {
@@ -153,15 +167,31 @@ const refs = [
 
 	private async buildAndMeasure(
 		entryPath: string,
-		scenarioName: string
+		scenarioName: string,
+		visualize = false
 	): Promise<{ size: number; gzipSize: number }> {
 		const safeName = scenarioName.replace(/[^a-zA-Z0-9_-]/g, "_");
 		const outputPath = join(this.tempDir, `dist-${safeName}`);
+		const visualizePath = join(
+			this.outputDir,
+			`visualize-${safeName}.html`
+		);
 
 		try {
 			await build({
 				plugins: [
 					svelte(),
+					...(visualize
+						? [
+								visualizer({
+									filename: visualizePath,
+									template: "treemap",
+									gzipSize: true,
+									brotliSize: true,
+									title: `Bundle: ${scenarioName}`,
+								}),
+							]
+						: []),
 					{
 						name: "strip-comments",
 						generateBundle(_options, bundle) {
@@ -393,6 +423,7 @@ async function main() {
 	}
 
 	const includeComponents = args.includes("--components");
+	const visualize = args.includes("--visualize");
 	const scenarioFilter = args
 		.filter((a) => !a.startsWith("--"))
 		.filter((a) => a.length > 0);
@@ -403,6 +434,7 @@ async function main() {
 		components: includeComponents,
 		componentFilter:
 			scenarioFilter.length > 0 ? scenarioFilter : undefined,
+		visualize,
 	});
 }
 
