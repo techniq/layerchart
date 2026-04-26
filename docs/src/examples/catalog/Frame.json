@@ -118,6 +118,34 @@
   "usage": [
     {
       "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 15,
+      "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 15,
+      "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 15,
+      "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 23,
+      "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+    },
+    {
+      "example": "basic",
       "component": "Frame",
       "path": "/docs/components/Frame/basic",
       "lineNumber": 12,
@@ -145,5 +173,5 @@
       "line": "<Frame class=\"stroke-primary/10\" fill={gradient} />"
     }
   ],
-  "updatedAt": "2026-02-07T20:21:31.674Z"
+  "updatedAt": "2026-04-16T17:46:59.073Z"
 }

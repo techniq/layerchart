@@ -37,7 +37,7 @@
 					<GeoPoint lat={capital.latitude} long={capital.longitude}>
 						<Circle r={2} class="fill-white stroke-danger" />
 						<Text
-							y="-6"
+							y={-6}
 							value={capital.description}
 							textAnchor="middle"
 							class="text-[8px] stroke-surface-100 [stroke-width:2px]"

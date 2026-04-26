@@ -1,11 +1,22 @@
 <script lang="ts" module>
   import type { Without } from '$lib/utils/types.js';
+  import type { Accessor } from '$lib/utils/common.js';
 
   export type VoronoiPropsWithoutHTML = {
     /**
      * Override data instead of using context
      */
     data?: any;
+
+    /**
+     * Override the `x` accessor used to place each point. Useful when the
+     * chart's `x` accessor returns an array of values (e.g. `['start', 'end']`)
+     * and you want to use a specific one.
+     */
+    x?: Accessor;
+
+    /** Override the `y` accessor used to place each point. See `x` above. */
+    y?: Accessor;
 
     /** Radius to clip voronoi cells.  `0` or `undefined` to disables clipping */
     r?: number;
@@ -56,7 +67,7 @@
 </script>
 
 <script lang="ts">
-  import { min } from 'd3-array';
+  import { max } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import { type GeoPermissibleObjects } from 'd3-geo';
   // @ts-expect-error
@@ -69,10 +80,13 @@
   import Path from './Path.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
+  import { accessor } from '$lib/utils/common.js';
   import CircleClipPath from './CircleClipPath.svelte';
 
   let {
     data,
+    x: xProp,
+    y: yProp,
     r,
     classes = {},
     onclick,
@@ -86,14 +100,29 @@
   const ctx = getChartContext();
   const geo = getGeoContext();
 
+  const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
+  const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
+
   const points = $derived(
     (data ?? ctx.flatData).map((d: any) => {
       // geo voronoi needs raw latitude/longitude, not mapped to range (chart dimensions)
-      const xValue = geo.projection ? ctx.x(d) : ctx.xGet(d);
-      const yValue = geo.projection ? ctx.y(d) : ctx.yGet(d);
+      const xValue = xAccessorOverride
+        ? geo.projection
+          ? xAccessorOverride(d)
+          : ctx.xScale(xAccessorOverride(d))
+        : geo.projection
+          ? ctx.x(d)
+          : ctx.xGet(d);
+      const yValue = yAccessorOverride
+        ? geo.projection
+          ? yAccessorOverride(d)
+          : ctx.yScale(yAccessorOverride(d))
+        : geo.projection
+          ? ctx.y(d)
+          : ctx.yGet(d);
 
-      const x = Array.isArray(xValue) ? min(xValue) : xValue;
-      const y = Array.isArray(yValue) ? min(yValue) : yValue;
+      const x = Array.isArray(xValue) ? max(xValue) : xValue;
+      const y = Array.isArray(yValue) ? max(yValue) : yValue;
 
       let point: [number, number];
       if (ctx.radial) {

@@ -6,7 +6,7 @@
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		pathGenerator: (x: number) => x,
 		amplitude: 1,
 		frequency: 10,
@@ -15,7 +15,7 @@
 		cap: 'round' as 'round' | 'butt',
 		pointCount: 30,
 		showLine: true,
-		motion: 'none' as 'tween' | 'none'
+		motion: 'tween' as 'tween' | 'none'
 	});
 
 	const data = $derived(

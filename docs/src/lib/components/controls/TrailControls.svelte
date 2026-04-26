@@ -3,6 +3,7 @@
 	import { Field, MenuField, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/controls/fields/PathDataMenuField.svelte';
+	import ShowField from './fields/ShowField.svelte';
 
 	interface TrailPlaygroundConfig {
 		show: boolean;
@@ -23,7 +24,7 @@
 
 	let {
 		config = $bindable({
-			show: true,
+			show: false,
 			pathGenerator: (x: number) => x,
 			amplitude: 1,
 			frequency: 10,
@@ -38,9 +39,10 @@
 </script>
 
 <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 screenshot-hidden">
-	<Field label="Show" let:id>
+	<!-- <Field label="Show" let:id>
 		<Switch checked={config.show} on:change={() => (config.show = !config.show)} {id} size="md" />
-	</Field>
+	</Field> -->
+	<ShowField bind:show={config.show} inline />
 	<PathDataMenuField
 		bind:value={config.pathGenerator}
 		amplitude={config.amplitude}

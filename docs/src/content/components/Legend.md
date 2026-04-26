@@ -2,6 +2,7 @@
 description: Commonly used component which explains the symbols, colors, or patterns used in a chart, helping interpret the represented data categories. Typically paired with `Chart` `cScale` (color scale). Filtering and toggling visibility of data series can be enabled for interactivity.
 category: common
 layers: [html]
+withinLayer: false
 related: [CircleLegend, GeoLegend]
 ---
 

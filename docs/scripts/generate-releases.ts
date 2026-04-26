@@ -25,7 +25,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const RELEASES_DIR = path.resolve(__dirname, '../src/content/releases');
+const RELEASES_DIR = path.resolve(__dirname, '../generated/releases');
 const GITHUB_API = 'https://api.github.com/repos/techniq/layerchart/releases';
 
 interface GitHubRelease {
@@ -56,7 +56,16 @@ async function fetchReleases(): Promise<GitHubRelease[]> {
 		const url = `${GITHUB_API}?per_page=${perPage}&page=${page}`;
 		console.log(`Fetching page ${page}...`);
 
-		const response = await fetch(url);
+		const token = process.env.GITHUB_API_TOKEN || process.env.GITHUB_TOKEN;
+		let response = await fetch(url, {
+			headers: token ? { Authorization: `Bearer ${token}` } : undefined
+		});
+
+		// Retry unauthenticated if the provided token is rejected (e.g. stale local env var)
+		if (response.status === 401 && token) {
+			console.warn('GitHub returned 401 with provided token — retrying unauthenticated');
+			response = await fetch(url);
+		}
 
 		if (!response.ok) {
 			throw new Error(`Failed to fetch releases: ${response.status} ${response.statusText}`);

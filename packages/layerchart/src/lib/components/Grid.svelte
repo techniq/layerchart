@@ -3,20 +3,31 @@
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
 
+  /** Props forwarded onto the underlying grid line (`<Line>`, `<Circle>`, or `<Spline>`). */
+  type GridLineProps = Pick<SVGAttributes<SVGElement>, 'class' | 'style'> & {
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number;
+    /** Dashed-line pattern. See `Line.dashArray`. */
+    dashArray?: number | number[] | string;
+  };
+
   export type GridPropsWithoutHTML<In extends Transition = Transition> = {
     /**
-     * Draw a x-axis lines
+     * Draw a x-axis lines. Pass props (class, style, stroke, strokeWidth,
+     * opacity, dashArray) to forward onto the underlying line.
      *
      * @default false
      */
-    x?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    x?: boolean | GridLineProps;
 
     /**
-     * Draw a y-axis lines
+     * Draw a y-axis lines. Pass props (class, style, stroke, strokeWidth,
+     * opacity, dashArray) to forward onto the underlying line.
      *
      * @default false
      */
-    y?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    y?: boolean | GridLineProps;
 
     /**
      * Control the number of x-axis ticks

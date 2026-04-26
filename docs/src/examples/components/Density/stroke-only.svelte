@@ -1,9 +1,11 @@
+<script module lang="ts">
+	import { getFaithful } from '$lib/data.remote.js';
+	const data = await getFaithful();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, Density, Layer, Points } from 'layerchart';
 
-	import { getFaithful } from '$lib/data.remote.js';
-
-	const data = await getFaithful();
 </script>
 
 <Chart

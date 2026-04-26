@@ -27,6 +27,8 @@ export interface ExampleInfo {
 	title: string;
 	/** Optional description (from <script module> export) */
 	description?: string;
+	/** Optional search keywords (from <script module> export — e.g. `export let tags = ['tiger']`) */
+	tags?: string[];
 	/** The URL path to view the example */
 	path: string;
 	/** All components used in this example */

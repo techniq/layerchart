@@ -1,12 +1,14 @@
+<script module lang="ts">
+	import { getVolcano } from '$lib/data.remote.js';
+	const volcano = await getVolcano();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Axis, Chart, Contour, Layer } from 'layerchart';
 	import { RangeField } from 'svelte-ux';
 
-	import { getVolcano } from '$lib/data.remote.js';
-
-	const volcano = await getVolcano();
 
 	let thresholds = $state(20);
 	let blur = $state(0);

@@ -6,6 +6,12 @@
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" rule />
-		<Rule y={70} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
+		<Rule
+			y={70}
+			strokeWidth={2}
+			stroke="var(--color-danger)"
+			dashArray={[4]}
+			stroke-linecap="round"
+		/>
 	</Layer>
 </Chart>

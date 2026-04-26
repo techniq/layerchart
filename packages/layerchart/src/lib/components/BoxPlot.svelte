@@ -134,21 +134,13 @@
   });
 
   // Resolve final statistics: explicit props take priority over computed values
-  const minVal = $derived(
-    minProp != null ? accessor(minProp)(data) : computedStats?.min
-  );
-  const q1Val = $derived(
-    q1Prop != null ? accessor(q1Prop)(data) : computedStats?.q1
-  );
+  const minVal = $derived(minProp != null ? accessor(minProp)(data) : computedStats?.min);
+  const q1Val = $derived(q1Prop != null ? accessor(q1Prop)(data) : computedStats?.q1);
   const medianVal = $derived(
     medianProp != null ? accessor(medianProp)(data) : computedStats?.median
   );
-  const q3Val = $derived(
-    q3Prop != null ? accessor(q3Prop)(data) : computedStats?.q3
-  );
-  const maxVal = $derived(
-    maxProp != null ? accessor(maxProp)(data) : computedStats?.max
-  );
+  const q3Val = $derived(q3Prop != null ? accessor(q3Prop)(data) : computedStats?.q3);
+  const maxVal = $derived(maxProp != null ? accessor(maxProp)(data) : computedStats?.max);
   const outliersVal = $derived<number[]>(
     outliersProp != null ? (accessor(outliersProp)(data) ?? []) : (computedStats?.outliers ?? [])
   );

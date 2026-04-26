@@ -23,7 +23,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -52,7 +59,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -85,7 +99,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -119,7 +140,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -153,7 +181,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -194,7 +229,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,
@@ -225,7 +267,14 @@ describe('ArcLabel', () => {
       childComponents: [
         {
           component: ArcLabel,
-          props: ({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps }) => ({
+          props: ({
+            centroid,
+            startAngle,
+            endAngle,
+            innerRadius,
+            outerRadius,
+            getArcTextProps,
+          }) => ({
             centroid,
             startAngle,
             endAngle,

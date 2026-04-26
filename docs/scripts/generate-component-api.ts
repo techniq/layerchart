@@ -51,7 +51,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const COMPONENTS_DIR = path.resolve(__dirname, '../../packages/layerchart/src/lib/components');
-const OUTPUT_DIR = path.resolve(__dirname, '../src/generated/api');
+const OUTPUT_DIR = path.resolve(__dirname, '../generated/api');
 
 /**
  * Get all .svelte files in a directory (recursively)

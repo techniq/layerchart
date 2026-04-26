@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getDisjointGraph } from '$lib/graph.remote.js';
+	const data = await getDisjointGraph();
+</script>
+
 <script lang="ts">
 	import {
 		forceManyBody,
@@ -12,8 +17,6 @@
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
 	import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
-	import { getDisjointGraph } from '$lib/graph.remote.js';
-
 	import type { Prettify } from '@layerstack/utils';
 
 	type NodeDatum = {
@@ -32,7 +35,7 @@
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
 
-	const data = $derived(await getDisjointGraph());
+
 	const nodes: MySimulationNodeDatum[] = $derived(data.nodes);
 	const links: MySimulationLinkDatum[] = $derived(data.links);
 
@@ -65,7 +68,7 @@
 				{#each links as link, i (keyForLink(link))}
 					<Link
 						data={link}
-						explicitCoords={linkPositions[i]}
+						{...linkPositions[i]}
 						class="stroke-surface-content/50"
 						curve={curveLinear}
 					/>

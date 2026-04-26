@@ -1,11 +1,14 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { LineChart, Chart, Area, Layer, defaultChartPadding, type ChartState } from 'layerchart';
-	import { getAppleStock } from '$lib/data.remote';
-
 	const STORAGE_KEY = 'layerchart:persist-brush-zoom:range';
 
-	const data = $derived(await getAppleStock());
+
 	let context = $state<ChartState>();
 	let loaded = false;
 

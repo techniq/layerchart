@@ -8,22 +8,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 12,
+          "lineNumber": 14,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 31,
+          "lineNumber": 33,
           "line": "<GeoLegend title=\"Miles\" units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
       ]
@@ -35,22 +35,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 12,
+          "lineNumber": 14,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 31,
+          "lineNumber": 33,
           "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
       ]
@@ -62,22 +62,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 29,
+          "lineNumber": 31,
           "line": "<GeoLegend units=\"km\" labelPlacement=\"top\" />"
         }
       ]
@@ -89,22 +89,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<GeoPath geojson={countries} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<GeoLegend units=\"km\" tickFormat=\"metric\" placement=\"bottom-left\" class=\"m-2\" />"
         }
       ]
@@ -116,22 +116,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 13,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 25,
+          "lineNumber": 27,
           "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 28,
+          "lineNumber": 30,
           "line": "<GeoLegend units=\"mi\" ticks={1} placement=\"bottom-left\" class=\"m-2\" />"
         }
       ]
@@ -143,22 +143,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 17,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 23,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 24,
+          "lineNumber": 26,
           "line": "<GeoPath geojson={states} class=\"fill-surface-100 stroke-surface-content\" />"
         },
         {
           "component": "GeoLegend",
-          "lineNumber": 27,
+          "lineNumber": 29,
           "line": "<GeoLegend {variant} units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
         }
       ]
@@ -169,58 +169,58 @@
       "example": "basic",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/basic",
-      "lineNumber": 31,
+      "lineNumber": 33,
       "line": "<GeoLegend title=\"Miles\" units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
     },
     {
       "example": "canvas-mode",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/canvas-mode",
-      "lineNumber": 31,
+      "lineNumber": 33,
       "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
     },
     {
       "example": "stacked-units",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/stacked-units",
-      "lineNumber": 29,
+      "lineNumber": 31,
       "line": "<GeoLegend units=\"km\" labelPlacement=\"top\" />"
     },
     {
       "example": "stacked-units",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/stacked-units",
-      "lineNumber": 30,
+      "lineNumber": 32,
       "line": "<GeoLegend units=\"mi\" />"
     },
     {
       "example": "tick-format",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/tick-format",
-      "lineNumber": 28,
+      "lineNumber": 30,
       "line": "<GeoLegend units=\"km\" tickFormat=\"metric\" placement=\"bottom-left\" class=\"m-2\" />"
     },
     {
       "example": "ticks",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/ticks",
-      "lineNumber": 28,
+      "lineNumber": 30,
       "line": "<GeoLegend units=\"mi\" ticks={1} placement=\"bottom-left\" class=\"m-2\" />"
     },
     {
       "example": "variants",
       "component": "GeoLegend",
       "path": "/docs/components/GeoLegend/variants",
-      "lineNumber": 27,
+      "lineNumber": 29,
       "line": "<GeoLegend {variant} units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 148,
-      "line": "<GeoLegend units=\"mi\" placement=\"bottom-left\" class=\"m-2\" />"
+      "lineNumber": 150,
+      "line": "<GeoLegend units=\"mi\" referenceScale={1300} placement=\"bottom-left\" class=\"m-2\" />"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:10.931Z"
+  "updatedAt": "2026-04-12T22:48:25.625Z"
 }

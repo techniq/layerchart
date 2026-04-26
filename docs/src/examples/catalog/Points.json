@@ -263,28 +263,28 @@
       "example": "bandwidth",
       "component": "Density",
       "path": "/docs/components/Density/bandwidth",
-      "lineNumber": 31,
+      "lineNumber": 33,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "basic",
       "component": "Density",
       "path": "/docs/components/Density/basic",
-      "lineNumber": 24,
+      "lineNumber": 26,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "stroke-only",
       "component": "Density",
       "path": "/docs/components/Density/stroke-only",
-      "lineNumber": 24,
+      "lineNumber": 26,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "thresholds",
       "component": "Density",
       "path": "/docs/components/Density/thresholds",
-      "lineNumber": 31,
+      "lineNumber": 33,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
@@ -361,7 +361,7 @@
       "example": "lollipop",
       "component": "Rule",
       "path": "/docs/components/Rule/lollipop",
-      "lineNumber": 25,
+      "lineNumber": 27,
       "line": "<Points class=\"fill-secondary\" />"
     },
     {
@@ -428,5 +428,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.344Z"
+  "updatedAt": "2026-04-12T22:48:26.446Z"
 }

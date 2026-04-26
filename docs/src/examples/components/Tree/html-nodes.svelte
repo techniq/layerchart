@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
@@ -6,21 +11,23 @@
 
 	import { Chart, Group, Link, Layer, Tree } from 'layerchart';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-	import { getFlare } from '$lib/data.remote';
 	import { cls } from '@layerstack/tailwind';
-	import type { ConnectorSweep, ConnectorType } from '$lib/utils/connectorUtils.js';
+	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 
 	let config = $state({
-		orientation: 'horizontal' as 'horizontal' | 'vertical',
+		orientation: 'horizontal' as 'horizontal' | 'vertical' | 'radial',
 		layout: 'chart' as 'chart' | 'node',
-		type: 'd3' as ConnectorType,
-		sweep: 'none' as ConnectorSweep,
+		type: 'd3' as LinkType,
+		sweep: 'none' as LinkSweep,
 		curve: curveBumpX,
-		radius: 60
+		radius: 60,
+		bend: 22.5,
+		siblingGap: 20,
+		parentGap: 100,
+		angularSpacing: 23
 	});
 
-	let data = await getFlare();
 
 	let expandedNodeNames = $state(['flare']);
 	const hierarchy = $derived(
@@ -63,7 +70,7 @@
 
 		<Tree
 			{hierarchy}
-			orientation={config.orientation}
+			orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
 			nodeSize={config.layout === 'node' ? nodeSize : undefined}
 		>
 			{#snippet children({ nodes, links })}
@@ -71,7 +78,7 @@
 					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 						<Link
 							data={link}
-							orientation={config.orientation}
+							orientation={config.orientation === 'radial' ? 'horizontal' : config.orientation}
 							curve={config.curve}
 							type={config.type}
 							sweep={config.sweep}

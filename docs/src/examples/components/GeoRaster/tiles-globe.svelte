@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+</script>
+
 <script lang="ts">
 	import { geoMercator, geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
@@ -5,9 +10,6 @@
 	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
 	import { RangeField } from 'svelte-ux';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
-	import { getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
 	const countries = feature(topology, topology.objects.countries);
 
 	const TILE_SIZE = 256;

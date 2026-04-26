@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - docs/**
+  release:
+    types: [published]
 
 jobs:
   deploy-production:

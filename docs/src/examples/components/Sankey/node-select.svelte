@@ -1,9 +1,13 @@
-<script lang="ts">
+<script module lang="ts">
 	import { getGreenhouseGraph } from '$lib/graph.remote';
+	const data = await getGreenhouseGraph();
+</script>
+
+<script lang="ts">
 	import type { SankeyNode } from 'd3-sankey';
 	import { Chart, Group, Link, Rect, Sankey, Layer, Text, sankeyGraphFromNode } from 'layerchart';
 
-	const data = $derived(await getGreenhouseGraph());
+
 	let selectedNode: SankeyNode<any, any> | null = $state.raw(null);
 
 	export { data };

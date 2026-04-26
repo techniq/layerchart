@@ -125,6 +125,31 @@ export const getFlare = prerender(async () => {
 	return data;
 });
 
+export const getSimpleTree = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/hierarchy/simple-tree.json').then((r) => r.json());
+	return data;
+});
+
+export type MetroData = {
+	Metro: string;
+	POP_1980: number;
+	LPOP_1980: number;
+	R90_10_1980: number;
+	POP_2015: number;
+	LPOP_2015: number;
+	R90_10_2015: number;
+	nyt_display: string;
+	state_display: string;
+	highlight: number;
+};
+
+export const getMetros = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = csvParse(await (await fetch('/data/examples/metros.csv')).text(), autoType) as unknown as MetroData[];
+	return data;
+});
+
 export const getUsSenators = prerender(async () => {
 	const { fetch } = getRequestEvent();
 	const data = (await fetch('/data/examples/us-senators.csv').then(async (r) =>
@@ -175,6 +200,34 @@ export const getCivilizationEvents = prerender(async () => {
 		).sort(sortFunc('start'));
 	});
 
+	return data;
+});
+
+export type SvelteCount = { date: Date; n: number; cumsum: number; category: 'svelte' | 'sveltekit' };
+
+export const getSvelteCounts = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-counts.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteCount>(await r.text(), autoType)
+	);
+	return data;
+});
+
+export type SvelteMilestone = {
+	date: Date;
+	category: 'svelte' | 'sveltekit' | 'ecosystem';
+	label: string;
+	x: Date;
+	y: number;
+};
+
+export const getSvelteMilestones = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = await fetch('/data/examples/date/svelte-milestones.csv').then(async (r) =>
+		// @ts-expect-error - autoType
+		csvParse<SvelteMilestone>(await r.text(), autoType)
+	);
 	return data;
 });
 

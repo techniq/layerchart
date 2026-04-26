@@ -63,11 +63,25 @@
 
 {#if layerCtx === 'svg'}
   {#if children}
-    <Group {x} {y} opacity={opacity as number} class={className as string} {...extractLayerProps(restProps, 'lc-geo-point-group')}>
+    <Group
+      {x}
+      {y}
+      opacity={opacity as number}
+      class={className as string}
+      {...extractLayerProps(restProps, 'lc-geo-point-group')}
+    >
       {@render children({ x, y })}
     </Group>
   {:else}
-    <Circle cx={x} cy={y} {opacity} {fillOpacity} {strokeWidth} class={className} {...extractLayerProps(restProps, 'lc-geo-point')} />
+    <Circle
+      cx={x}
+      cy={y}
+      {opacity}
+      {fillOpacity}
+      {strokeWidth}
+      class={className}
+      {...extractLayerProps(restProps, 'lc-geo-point')}
+    />
   {/if}
 {/if}
 
@@ -78,6 +92,14 @@
     {@render children({ x, y })}
     <!-- </Group> -->
   {:else}
-    <Circle cx={x} cy={y} {opacity} {fillOpacity} {strokeWidth} class={className} {...extractLayerProps(restProps, 'lc-geo-point')} />
+    <Circle
+      cx={x}
+      cy={y}
+      {opacity}
+      {fillOpacity}
+      {strokeWidth}
+      class={className}
+      {...extractLayerProps(restProps, 'lc-geo-point')}
+    />
   {/if}
 {/if}

@@ -57,8 +57,8 @@
 			</div>
 		</Menu>
 	</Toggle>
-	<RangeField label="X offset" bind:value={xOffset} max={10} />
-	<RangeField label="Y offset" bind:value={yOffset} max={10} />
+	<RangeField label="X offset" bind:value={xOffset} min={-20} max={20} />
+	<RangeField label="Y offset" bind:value={yOffset} min={-20} max={20} />
 	{#if radius !== undefined}
 		<RangeField label="Radius" bind:value={radius} max={10} />
 	{/if}

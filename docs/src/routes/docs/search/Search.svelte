@@ -114,14 +114,34 @@
 		}
 	];
 
-	/** Rank a result for "Best match": 0 = title starts with query, 1 = title contains query, -1 = no match */
+	/**
+	 * Rank a result for "Best match". Multi-word queries are split on whitespace.
+	 * Every token must appear in the haystack — built from author-curated fields only
+	 * (title, plus component name and tags for examples) — so long-content guides/components
+	 * don't get promoted just because their body text happens to contain the query terms.
+	 *
+	 * 0 = a query token is a prefix of a haystack word (strongest)
+	 * 1 = every query token appears in the haystack but no prefix hit
+	 * -1 = does not qualify
+	 */
 	function bestMatchRank(result: SearchEntry, query: string): number {
 		if (result.type === 'heading') return -1;
 		const plainTitle = result.title.replace(/<[^>]*>/g, '').toLowerCase();
-		const q = query.toLowerCase().trim();
-		if (plainTitle.startsWith(q)) return 0;
-		if (plainTitle.includes(q)) return 1;
-		return -1;
+		const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+		if (!tokens.length) return -1;
+
+		const haystackParts = [plainTitle];
+		if (result.type === 'example') {
+			if (result.component) haystackParts.push(result.component.toLowerCase());
+			if (result.tags?.length) haystackParts.push(...result.tags.map((t) => t.toLowerCase()));
+		}
+		const haystack = haystackParts.join(' ');
+
+		if (!tokens.every((t) => haystack.includes(t))) return -1;
+
+		const haystackWords = haystack.split(/\s+/);
+		const hasPrefixHit = tokens.some((t) => haystackWords.some((w) => w.startsWith(t)));
+		return hasPrefixHit ? 0 : 1;
 	}
 
 	// Convert search results to MenuOption format with grouping

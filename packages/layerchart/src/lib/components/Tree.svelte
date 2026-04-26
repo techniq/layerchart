@@ -49,9 +49,13 @@
   const ctx = getChartContext();
 
   const treeData = $derived.by(() => {
-    const _tree = d3Tree<T>().size(
-      orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height]
-    );
+    const _tree = ctx.radial
+      ? d3Tree<T>()
+          .size([2 * Math.PI, Math.min(ctx.width, ctx.height) / 2])
+          .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth)
+      : d3Tree<T>().size(
+          orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height]
+        );
 
     if (nodeSize) {
       _tree.nodeSize(nodeSize);

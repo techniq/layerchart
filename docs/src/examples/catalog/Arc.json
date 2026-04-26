@@ -622,14 +622,14 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 97,
+      "lineNumber": 100,
       "line": "<Arc"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 123,
+      "lineNumber": 126,
       "line": "<Arc {startAngle} {endAngle} {innerRadius} {outerRadius} />"
     },
     {
@@ -696,5 +696,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:39.822Z"
+  "updatedAt": "2026-04-12T22:48:24.560Z"
 }

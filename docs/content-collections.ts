@@ -4,6 +4,9 @@ import { toPascalCase } from '@layerstack/utils';
 import { z } from 'zod';
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { prettyCodeOptions } from './src/lib/markdown/config/index.js';
 import { extractTocFromMarkdown } from './src/lib/markdown/toc.js';
 
 const components = defineCollection({
@@ -15,13 +18,21 @@ const components = defineCollection({
 		description: z.string().optional(),
 		category: z.string().optional(),
 		layers: z.array(z.string()).default([]),
+		/**
+		 * Whether the component renders inside an `<Svg|Canvas|Html>` layer.
+		 * Set to `false` for components that live outside any layer (e.g.
+		 * Legend, CircleLegend, GeoLegend) — they don't constrain which layers
+		 * the rest of the chart can render into and are skipped when
+		 * intersecting example layer support.
+		 */
+		withinLayer: z.boolean().default(true),
 		related: z.array(z.string()).default([]),
 		resize: z.boolean().optional(),
 		tableOfContents: z.boolean().default(true),
 		order: z.number().optional(),
 		content: z.string()
 	}),
-	transform: async (doc) => {
+	transform: async (doc, context) => {
 		const { filePath, fileName, directory, path } = doc._meta;
 
 		const name = doc.name ?? toPascalCase(fileName.replace('.md', ''));
@@ -77,10 +88,32 @@ const components = defineCollection({
 		// Best example to use: first from docs markdown, fallback to first in catalog
 		const defaultExample = usageExample ?? catalogFirstExample;
 
-		const apiPath = join(process.cwd(), `src/generated/api/${path}.json`);
+		const apiPath = join(process.cwd(), `generated/api/${path}.json`);
+		let api: any = null;
 		if (existsSync(apiPath)) {
 			try {
-				const api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+				api = JSON.parse(readFileSync(apiPath, 'utf-8'));
+
+				const renderInline = async (text: string) => {
+					const html = await compileMarkdown(
+						context,
+						{ ...doc, content: text } as any,
+						{ remarkPlugins: [remarkGfm] }
+					);
+					return html
+						.replace(/^<p>/, '')
+						.replace(/<\/p>\s*$/, '')
+						.trim();
+				};
+
+				const walk = async (props: any[] = []) => {
+					for (const p of props) {
+						if (p.description) p.descriptionHtml = await renderInline(p.description);
+						if (p.properties) await walk(p.properties);
+					}
+				};
+				await walk(api.properties);
+
 				if (api.properties?.length) {
 					toc.push({ id: 'api-reference', text: 'API Reference', level: 2 });
 				}
@@ -100,8 +133,8 @@ const components = defineCollection({
 			source,
 			sourceUrl,
 			defaultExample,
-			toc
-			// html: await compileMarkdown(context, doc)
+			toc,
+			api
 		};
 	}
 });
@@ -174,7 +207,7 @@ const guides = defineCollection({
 
 const releases = defineCollection({
 	name: 'releases',
-	directory: 'src/content/releases',
+	directory: 'generated/releases',
 	include: '**/*.md',
 	schema: z.object({
 		title: z.string(),
@@ -192,7 +225,10 @@ const releases = defineCollection({
 		return {
 			...doc,
 			slug: fileName.replace('.md', ''),
-			html: await compileMarkdown(context, doc)
+			html: await compileMarkdown(context, doc, {
+				remarkPlugins: [remarkGfm],
+				rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]]
+			})
 		};
 	}
 });

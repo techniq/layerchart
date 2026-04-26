@@ -1,6 +1,150 @@
 {
   "component": "ClipPath",
-  "examples": [],
+  "examples": [
+    {
+      "name": "basic",
+      "title": "basic",
+      "path": "/docs/components/ClipPath/basic",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 12,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 14,
+          "line": "<ClipPath {path}>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    },
+    {
+      "name": "clip-snippet",
+      "title": "clip snippet",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 6,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 7,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 9,
+          "line": "<ClipPath>"
+        },
+        {
+          "component": "Circle",
+          "lineNumber": 11,
+          "line": "<circle cx=\"120\" cy=\"150\" r=\"90\" />"
+        },
+        {
+          "component": "Rect",
+          "lineNumber": 13,
+          "line": "<rect x=\"100\" y=\"130\" width=\"160\" height=\"40\" />"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    },
+    {
+      "name": "inverted",
+      "title": "inverted",
+      "path": "/docs/components/ClipPath/inverted",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 10,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 11,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 12,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 14,
+          "line": "<ClipPath {path} invert>"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 15,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    },
+    {
+      "name": "use-id",
+      "title": "use id",
+      "path": "/docs/components/ClipPath/use-id",
+      "components": [
+        {
+          "component": "Chart",
+          "lineNumber": 5,
+          "line": "<Chart height={300}>"
+        },
+        {
+          "component": "Layer",
+          "lineNumber": 7,
+          "line": "<Layer>"
+        },
+        {
+          "component": "Polygon",
+          "lineNumber": 9,
+          "line": "<Polygon"
+        },
+        {
+          "component": "Pattern",
+          "lineNumber": 20,
+          "line": "<Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>"
+        },
+        {
+          "component": "ClipPath",
+          "lineNumber": 22,
+          "line": "<ClipPath useId=\"star-shape\">"
+        },
+        {
+          "component": "Frame",
+          "lineNumber": 23,
+          "line": "<Frame fill={pattern} class=\"stroke-surface-content\" />"
+        }
+      ]
+    }
+  ],
   "usage": [
     {
       "example": "gauge",
@@ -17,40 +161,47 @@
       "line": "<ClipPath>"
     },
     {
-      "example": "timezones",
-      "component": "GeoPath",
-      "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 105,
-      "line": "<ClipPath useId=\"clip\" disabled={!enableClip}>"
+      "example": "basic",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/basic",
+      "lineNumber": 14,
+      "line": "<ClipPath {path}>"
+    },
+    {
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 9,
+      "line": "<ClipPath>"
+    },
+    {
+      "example": "inverted",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/inverted",
+      "lineNumber": 14,
+      "line": "<ClipPath {path} invert>"
+    },
+    {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 22,
+      "line": "<ClipPath useId=\"star-shape\">"
     },
     {
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 125,
+      "lineNumber": 138,
       "line": "<ClipPath useId=\"globe\">"
-    },
-    {
-      "example": "clipped",
-      "component": "GeoTile",
-      "path": "/docs/components/GeoTile/clipped",
-      "lineNumber": 42,
-      "line": "<ClipPath useId=\"clip\">"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 121,
-      "line": "<ClipPath>"
-    },
-    {
-      "example": "us-water-vapor",
-      "component": "Raster",
-      "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 37,
+      "lineNumber": 124,
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:40.793Z"
+  "updatedAt": "2026-04-16T17:46:58.803Z"
 }

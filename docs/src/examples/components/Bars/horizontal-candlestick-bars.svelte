@@ -1,10 +1,13 @@
+<script module lang="ts">
+	import { getAppleTicker } from '$lib/data.remote.js';
+	const data = await getAppleTicker();
+</script>
+
 <script lang="ts">
 	import { scaleUtc } from 'd3-scale';
 	import { utcDay } from 'd3-time';
 	import { Axis, Bars, Chart, Highlight, Layer, Tooltip } from 'layerchart';
-	import { getAppleTicker } from '$lib/data.remote.js';
 
-	const data = $derived(await getAppleTicker());
 	export { data };
 </script>
 

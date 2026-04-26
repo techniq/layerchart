@@ -74,6 +74,8 @@ export type SearchEntry = {
 	component?: string;
 	/** For examples, the example name (e.g., 'basic') */
 	example?: string;
+	/** For examples, optional author-curated search keywords */
+	tags?: string[];
 	/** For headings, the parent page title */
 	parent?: string;
 	/** For headings, the parent page slug (without hash) */
@@ -202,10 +204,12 @@ function catalogToEntries(): SearchEntry[] {
 			entries.push({
 				title: example.title,
 				slug: example.path.slice(1), // Remove leading slash
-				content: [catalog.component, example.name.replaceAll('-', ' ')].join(' '),
+				content: [catalog.component, example.name.replaceAll('-', ' '), ...(example.tags ?? [])]
+					.join(' '),
 				type: 'example',
 				component: catalog.component,
-				example: example.name
+				example: example.name,
+				tags: example.tags
 			});
 		}
 	}

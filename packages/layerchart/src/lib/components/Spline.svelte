@@ -95,12 +95,30 @@
   const ctx = getChartContext();
   const geo = getGeoContext();
 
-  let { data, x, y, seriesKey, defined, curve, stroke, fill, opacity, motion, ...restProps }: SplineProps = $props();
+  let {
+    data,
+    x,
+    y,
+    seriesKey,
+    defined,
+    curve,
+    stroke,
+    fill,
+    opacity,
+    motion,
+    ...restProps
+  }: SplineProps = $props();
 
   ctx.registerComponent({
     name: 'Spline',
     kind: 'mark',
-    markInfo: () => ({ data, x, y, seriesKey, color: typeof stroke === 'string' ? stroke : undefined }),
+    markInfo: () => ({
+      data,
+      x,
+      y,
+      seriesKey,
+      color: typeof stroke === 'string' ? stroke : undefined,
+    }),
   });
 
   function getScaleValue(
@@ -267,8 +285,8 @@
 
   const seriesOpacity = $derived(
     series?.key == null ||
-    ctx.series.visibleSeries.length <= 1 ||
-    ctx.series.isHighlighted(series.key, true)
+      ctx.series.visibleSeries.length <= 1 ||
+      ctx.series.isHighlighted(series.key, true)
       ? 1
       : 0.1
   );
@@ -283,9 +301,9 @@
       pathData={seg.d}
       stroke={seg.stroke}
       fill={seg.fill}
+      opacity={seg.opacity ?? seriesOpacity}
       {...series?.props}
       {...restProps}
-      opacity={seg.opacity ?? seriesOpacity}
     />
   {/each}
 {:else}
@@ -293,8 +311,8 @@
     pathData={isTweened ? tweenState.current : d}
     stroke={(typeof stroke === 'string' ? stroke : undefined) ?? series?.color}
     fill={typeof fill === 'string' ? fill : undefined}
+    opacity={(typeof opacity === 'number' ? opacity : undefined) ?? seriesOpacity}
     {...series?.props}
     {...restProps}
-    opacity={(typeof opacity === 'number' ? opacity : undefined) ?? seriesOpacity}
   />
 {/if}

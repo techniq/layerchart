@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getMiserablesGraph } from '$lib/graph.remote';
+	const data = await getMiserablesGraph();
+</script>
+
 <script lang="ts">
 	import {
 		forceCollide,
@@ -13,8 +18,6 @@
 
 	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import ForceGraphControls from '$lib/components/controls/ForceGraphPlaygroundControls.svelte';
-	import { getMiserablesGraph } from '$lib/graph.remote';
-
 	import type { Prettify } from '@layerstack/utils';
 	type NodeDatum = {
 		id: string;
@@ -32,7 +35,7 @@
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
 
-	const data = $derived(await getMiserablesGraph());
+
 
 	const nodes: MySimulationNodeDatum[] = data.nodes;
 	const links: MySimulationLinkDatum[] = data.links;
@@ -167,7 +170,7 @@
 					{#each links as link, i}
 						<Link
 							data={link}
-							explicitCoords={linkPositions[i]}
+							{...linkPositions[i]}
 							class="stroke-surface-content"
 							curve={curveLinear}
 							stroke-width={config.linkWidth}

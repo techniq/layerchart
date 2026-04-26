@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getUsCountiesTopology } from '$lib/geo.remote.js';
+	const geojson = await getUsCountiesTopology();
+</script>
+
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -9,9 +14,6 @@
 	import GeoPathProjectionControls from '$lib/components/controls/GeoPathProjectionControls.svelte';
 
 	import type { GeometryObjectA } from 'topojson-specification';
-	import { getUsCountiesTopology } from '$lib/geo.remote.js';
-
-	const geojson = await getUsCountiesTopology();
 	let settings = getSettings();
 
 	let projection = $state(geoAlbersUsa);

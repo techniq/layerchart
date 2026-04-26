@@ -2,6 +2,7 @@
 description: Geographic scale bar showing real-world distance for the current `Chart` projection. Inspired by Harry Stevens' d3-geo-scale-bar.
 category: geo
 layers: [html]
+withinLayer: false
 related: [Legend, CircleLegend]
 ---
 

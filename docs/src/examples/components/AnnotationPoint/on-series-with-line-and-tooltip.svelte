@@ -1,9 +1,12 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { AnnotationLine, AnnotationPoint, Layer, LineChart, Tooltip } from 'layerchart';
 	import { format, sortFunc } from '@layerstack/utils';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	// Get a few random points to use for annotations
 	const annotations = $derived(
@@ -31,7 +34,7 @@
 					y={annotation.y}
 					r={6}
 					props={{
-						line: { class: '[stroke-dasharray:4,4] opacity-50' }
+						line: { dashArray: [4, 4], opacity: 0.5 }
 					}}
 				/>
 

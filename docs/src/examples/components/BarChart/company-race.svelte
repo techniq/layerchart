@@ -1,14 +1,18 @@
+<script module lang="ts">
+	import { getCategoryBrands } from '$lib/data.remote.js';
+	const allData = await getCategoryBrands();
+</script>
+
 <script lang="ts">
 	import { Axis, Chart, Group, Image, Layer, Rect, Text } from 'layerchart';
 	import { Button, RangeField } from 'svelte-ux';
 	import LucidePlay from '~icons/lucide/play';
 	import LucidePause from '~icons/lucide/pause';
-	import { getCategoryBrands } from '$lib/data.remote.js';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { pairs, rollup, ascending, max, rank } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 
-	const allData = $derived(await getCategoryBrands());
+
 
 	const n = 12;
 	const k = 10;

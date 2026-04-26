@@ -1,11 +1,13 @@
+<script module lang="ts">
+	import { getUsStatesTopology } from '$lib/geo.remote.js';
+	const topology = await getUsStatesTopology();
+</script>
+
 <script lang="ts">
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
 	import { Chart, GeoPath, Layer, Text } from 'layerchart';
-	import { getUsStatesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getUsStatesTopology();
 	const states = feature(topology, topology.objects.states);
 
 	const data = { topology, states };

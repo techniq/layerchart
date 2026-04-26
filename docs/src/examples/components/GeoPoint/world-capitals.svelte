@@ -65,7 +65,7 @@
 					>
 						<Circle r={4} class="stroke-primary/50 fill-none" />
 						<Text
-							y="-6"
+							y={-6}
 							value={context.tooltip.data.label}
 							textAnchor="middle"
 							class="text-[8px] stroke-surface-100 stroke-[2px]"

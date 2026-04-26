@@ -6,7 +6,7 @@
   "type": "module",
   "homepage": "https://layerchart.com",
   "scripts": {
-    "dev": "pnpm package && pnpm --filter docs dev",
+    "dev": "pnpm --parallel --filter layerchart --filter docs dev",
     "test:unit": "pnpm -r test:unit",
     "build:packages": "rimraf packages/*/dist && pnpm --filter './packages/*' build",
     "build:examples": "rimraf packages/*/dist && pnpm --filter './packages/*' package &&  pnpm --filter './examples/*' build",
@@ -29,7 +29,7 @@
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "prettier-plugin-svelte": "^3.5.1",
     "rimraf": "6.1.3",
-    "wrangler": "^4.76.0"
+    "wrangler": "^4.81.1"
   },
   "packageManager": "pnpm@10.18.2",
   "pnpm": {

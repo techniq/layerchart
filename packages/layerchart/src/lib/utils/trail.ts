@@ -34,10 +34,7 @@ export type TrailPathOptions = {
  * Supports optional curve interpolation (via d3-shape curve factories)
  * and two cap styles: 'round' (capsule-based) and 'butt' (polygon offset).
  */
-export function computeTrailPath(
-  points: TrailPoint[],
-  options: TrailPathOptions = {}
-): string {
+export function computeTrailPath(points: TrailPoint[], options: TrailPathOptions = {}): string {
   if (points.length === 0) return '';
 
   const { curve, cap = 'round', tension, resolution } = options;
@@ -82,10 +79,14 @@ function trailPathRound(points: TrailPoint[]): string {
     nx /= len;
     ny /= len;
 
-    const x1L = p1.x - nx * r1, y1L = p1.y - ny * r1;
-    const x1R = p1.x + nx * r1, y1R = p1.y + ny * r1;
-    const x2L = p2.x - nx * r2, y2L = p2.y - ny * r2;
-    const x2R = p2.x + nx * r2, y2R = p2.y + ny * r2;
+    const x1L = p1.x - nx * r1,
+      y1L = p1.y - ny * r1;
+    const x1R = p1.x + nx * r1,
+      y1R = p1.y + ny * r1;
+    const x2L = p2.x - nx * r2,
+      y2L = p2.y - ny * r2;
+    const x2R = p2.x + nx * r2,
+      y2R = p2.y + ny * r2;
 
     d += `M${x1L},${y1L}`;
     d += `L${x2L},${y2L}`;
@@ -126,9 +127,7 @@ function trailPathButt(points: TrailPoint[]): string {
     const dirPrev = hasPrev
       ? normalize(curr.x - prev.x, curr.y - prev.y)
       : normalize(next.x - curr.x, next.y - curr.y);
-    const dirNext = hasNext
-      ? normalize(next.x - curr.x, next.y - curr.y)
-      : dirPrev;
+    const dirNext = hasNext ? normalize(next.x - curr.x, next.y - curr.y) : dirPrev;
 
     // Perpendicular normals (rotate 90° CCW)
     const normPrev: [number, number] = [-dirPrev[1], dirPrev[0]];
@@ -178,8 +177,19 @@ function trailPathButt(points: TrailPoint[]): string {
 type PathCommand =
   | { type: 'M'; x: number; y: number; r: number }
   | { type: 'L'; from: [number, number, number]; to: [number, number, number] }
-  | { type: 'C'; from: [number, number, number]; cp1: [number, number]; cp2: [number, number]; to: [number, number, number] }
-  | { type: 'Q'; from: [number, number, number]; cp: [number, number]; to: [number, number, number] };
+  | {
+      type: 'C';
+      from: [number, number, number];
+      cp1: [number, number];
+      cp2: [number, number];
+      to: [number, number, number];
+    }
+  | {
+      type: 'Q';
+      from: [number, number, number];
+      cp: [number, number];
+      to: [number, number, number];
+    };
 
 /**
  * Resample points through a d3-shape curve factory, producing dense
@@ -375,20 +385,19 @@ function interpolateRadii(original: TrailPoint[], dense: TrailPoint[]): void {
   // Cumulative arc-length of original points
   const origCum: number[] = [0];
   for (let i = 1; i < original.length; i++) {
-    origCum.push(origCum[i - 1] + Math.hypot(
-      original[i].x - original[i - 1].x,
-      original[i].y - original[i - 1].y
-    ));
+    origCum.push(
+      origCum[i - 1] +
+        Math.hypot(original[i].x - original[i - 1].x, original[i].y - original[i - 1].y)
+    );
   }
   const origTotal = origCum[origCum.length - 1] || 1;
 
   // Cumulative arc-length of dense points
   const denseCum: number[] = [0];
   for (let i = 1; i < dense.length; i++) {
-    denseCum.push(denseCum[i - 1] + Math.hypot(
-      dense[i].x - dense[i - 1].x,
-      dense[i].y - dense[i - 1].y
-    ));
+    denseCum.push(
+      denseCum[i - 1] + Math.hypot(dense[i].x - dense[i - 1].x, dense[i].y - dense[i - 1].y)
+    );
   }
   const denseTotal = denseCum[denseCum.length - 1] || 1;
 

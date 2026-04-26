@@ -8,7 +8,7 @@ const exampleSources = import.meta.glob<string>('/src/examples/**/*.svelte', {
 	import: 'default'
 });
 
-const apiFiles = import.meta.glob<string>('/src/generated/api/*.json', {
+const apiFiles = import.meta.glob<string>('/generated/api/*.json', {
 	eager: true,
 	query: '?raw',
 	import: 'default'
@@ -278,7 +278,7 @@ export function generateComponentMarkdown(
 
 	// Load API
 	let api: ComponentAPI | null = null;
-	const apiKey = `/src/generated/api/${component.slug}.json`;
+	const apiKey = `/generated/api/${component.slug}.json`;
 	const apiContent = apiFiles[apiKey];
 	if (apiContent) {
 		api = JSON.parse(apiContent);

@@ -33,10 +33,18 @@
     rule?: boolean | Partial<ComponentProps<typeof Rule>>;
 
     /**
-     * Draw grid lines
+     * Draw grid lines. Pass props (class, style, stroke, strokeWidth, opacity,
+     * dashArray) to forward onto the underlying grid line.
      * @default false
      */
-    grid?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+    grid?:
+      | boolean
+      | (Pick<SVGAttributes<SVGElement>, 'class' | 'style'> & {
+          stroke?: string;
+          strokeWidth?: number;
+          opacity?: number;
+          dashArray?: number | number[] | string;
+        });
 
     /**
      * Control the number of ticks

@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getCountriesTopology, getUsStatesTopology } from '$lib/geo.remote';
+	const countriesTopo = await getCountriesTopology();
+	const statesTopo = await getUsStatesTopology();
+</script>
+
 <script lang="ts">
 	import {
 		geoEqualEarth,
@@ -14,12 +20,8 @@
 
 	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
 	import { Button, SelectField } from 'svelte-ux';
-	import { getCountriesTopology, getUsStatesTopology } from '$lib/geo.remote';
-
-	const countriesTopo = await getCountriesTopology();
 	const countries = feature(countriesTopo, countriesTopo.objects.countries);
 
-	const statesTopo = await getUsStatesTopology();
 	const usStates = feature(statesTopo, statesTopo.objects.states);
 
 	const projections = [

@@ -84,7 +84,7 @@
 		{ component: 'Arc', example: 'clock' },
 		{ component: 'Arc', example: 'color-wheel' },
 		{ component: 'Arc', example: 'label-direction' },
-		{ component: 'Connector', example: 'playground' },
+		{ component: 'Link', example: 'playground' },
 		{ component: 'Marker', example: 'styling' },
 		{ component: 'Polygon', example: 'hexagon' },
 		{ component: 'Image', example: 'us-presidents' },

@@ -150,7 +150,7 @@
       "example": "clipped-area-on-tooltip",
       "component": "Area",
       "path": "/docs/components/Area/clipped-area-on-tooltip",
-      "lineNumber": 32,
+      "lineNumber": 34,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -255,42 +255,42 @@
       "example": "integrated-brush-(both-axis-area)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(both-axis-area)",
-      "lineNumber": 42,
+      "lineNumber": 45,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "integrated-brush-(x-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(x-axis)",
-      "lineNumber": 39,
+      "lineNumber": 42,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "integrated-brush-(y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/integrated-brush-(y-axis)",
-      "lineNumber": 39,
+      "lineNumber": 42,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "separate-chart-(clip-data-y-axis)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data-y-axis)",
-      "lineNumber": 45,
+      "lineNumber": 48,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "separate-chart-(clip-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(clip-data)",
-      "lineNumber": 33,
+      "lineNumber": 36,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
       "example": "separate-chart-(filter-data)",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/separate-chart-(filter-data)",
-      "lineNumber": 34,
+      "lineNumber": 37,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -304,7 +304,7 @@
       "example": "tooltip-interop",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/tooltip-interop",
-      "lineNumber": 44,
+      "lineNumber": 47,
       "line": "<LinearGradient class=\"from-primary/50 to-primary/1\" vertical>"
     },
     {
@@ -458,14 +458,14 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 24,
+      "lineNumber": 28,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
     },
     {
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 14,
+      "lineNumber": 18,
       "line": "<LinearGradient"
     },
     {
@@ -556,23 +556,23 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 22,
+      "lineNumber": 25,
       "line": "<LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 16,
+      "lineNumber": 19,
       "line": "<LinearGradient"
     },
     {
       "example": "pan-zoom-axes",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-axes",
-      "lineNumber": 42,
+      "lineNumber": 41,
       "line": "<LinearGradient x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\" {stops}>"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:11.497Z"
+  "updatedAt": "2026-04-19T13:23:58.401Z"
 }

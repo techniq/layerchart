@@ -171,6 +171,41 @@
   ],
   "usage": [
     {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 107,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationLine",
+      "path": "/docs/components/AnnotationLine/playground",
+      "lineNumber": 121,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 221,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 237,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "AnnotationPoint",
+      "path": "/docs/components/AnnotationPoint/playground",
+      "lineNumber": 251,
+      "line": "<Circle"
+    },
+    {
       "example": "clock",
       "component": "Arc",
       "path": "/docs/components/Arc/clock",
@@ -230,7 +265,7 @@
       "example": "markers",
       "component": "AreaChart",
       "path": "/docs/components/AreaChart/markers",
-      "lineNumber": 36,
+      "lineNumber": 39,
       "line": "<Circle"
     },
     {
@@ -367,31 +402,31 @@
       "line": "<Circle"
     },
     {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 24,
-      "line": "<circle"
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 11,
+      "line": "<circle cx=\"120\" cy=\"150\" r=\"90\" />"
     },
     {
-      "example": "playground",
-      "component": "Connector",
-      "path": "/docs/components/Connector/playground",
-      "lineNumber": 37,
-      "line": "<circle"
+      "example": "clip-snippet",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/clip-snippet",
+      "lineNumber": 12,
+      "line": "<circle cx=\"240\" cy=\"150\" r=\"90\" />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 55,
+      "lineNumber": 57,
       "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1 / context.transform.scale} fill=\"currentColor\" />"
     },
     {
       "example": "walmart",
       "component": "Density",
       "path": "/docs/components/Density/walmart",
-      "lineNumber": 60,
+      "lineNumber": 62,
       "line": "<Circle"
     },
     {
@@ -405,7 +440,7 @@
       "example": "beeswarm",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/beeswarm",
-      "lineNumber": 44,
+      "lineNumber": 46,
       "line": "<Circle"
     },
     {
@@ -419,7 +454,7 @@
       "example": "disjoint-graph",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/disjoint-graph",
-      "lineNumber": 75,
+      "lineNumber": 78,
       "line": "<Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />"
     },
     {
@@ -433,7 +468,7 @@
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-playground",
-      "lineNumber": 179,
+      "lineNumber": 182,
       "line": "<Circle"
     },
     {
@@ -454,14 +489,21 @@
       "example": "tree",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
-      "lineNumber": 51,
+      "lineNumber": 54,
       "line": "<Circle"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 108,
+      "lineNumber": 110,
+      "line": "<Circle"
+    },
+    {
+      "example": "paint-brush-selection",
+      "component": "GeoPath",
+      "path": "/docs/components/GeoPath/paint-brush-selection",
+      "lineNumber": 437,
       "line": "<Circle"
     },
     {
@@ -605,6 +647,55 @@
       "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
     },
     {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 67,
+      "line": "<Circle cx={dotX} cy={dotY} r={3} fill={seriesColor} />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 71,
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "curves",
+      "component": "Link",
+      "path": "/docs/components/Link/curves",
+      "lineNumber": 72,
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 45,
+      "line": "<Circle"
+    },
+    {
+      "example": "playground",
+      "component": "Link",
+      "path": "/docs/components/Link/playground",
+      "lineNumber": 58,
+      "line": "<Circle"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 48,
+      "line": "<Circle cx={x1} cy={y1} r={4} class=\"fill-info\" />"
+    },
+    {
+      "example": "types",
+      "component": "Link",
+      "path": "/docs/components/Link/types",
+      "lineNumber": 49,
+      "line": "<Circle cx={x2} cy={y2} r={4} class=\"fill-accent\" />"
+    },
+    {
       "example": "sync-with-draw",
       "component": "MotionPath",
       "path": "/docs/components/MotionPath/sync-with-draw",
@@ -615,7 +706,7 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 119,
+      "lineNumber": 121,
       "line": "<Circle"
     },
     {
@@ -811,7 +902,7 @@
       "example": "end-slot-with-draw-with-value",
       "component": "Spline",
       "path": "/docs/components/Spline/end-slot-with-draw-with-value",
-      "lineNumber": 39,
+      "lineNumber": 44,
       "line": "<Circle r={5} class=\"fill-primary\" />"
     },
     {
@@ -920,5 +1011,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-08T22:44:10.553Z"
+  "updatedAt": "2026-04-22T15:30:11.862Z"
 }

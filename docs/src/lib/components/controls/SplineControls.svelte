@@ -3,6 +3,8 @@
 	import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/controls/fields/PathDataMenuField.svelte';
+	import ShowField from './fields/ShowField.svelte';
+	import { cls } from '@layerstack/tailwind';
 
 	interface SplinePlaygroundConfig {
 		show: boolean;
@@ -22,7 +24,7 @@
 
 	let {
 		config = $bindable({
-			show: true,
+			show: false,
 			pathGenerator: (x: number) => x,
 			amplitude: 1,
 			frequency: 10,
@@ -30,15 +32,13 @@
 			curve: undefined as ComponentProps<typeof CurveMenuField>['value'],
 			pointCount: 100,
 			showPoints: false,
-			motion: undefined as undefined | 'draw' | 'tween' | 'none'
+			motion: undefined
 		})
 	}: Props = $props();
 </script>
 
-<div class="grid grid-cols-[auto_1fr_1fr] gap-2 screenshot-hidden">
-	<Field label="Show" let:id>
-		<Switch checked={config.show} on:change={() => (config.show = !config.show)} {id} size="md" />
-	</Field>
+<div class="grid gap-2 screenshot-hidden grid-cols-[auto_1fr_1fr]">
+	<ShowField bind:show={config.show} inline={true} />
 	<PathDataMenuField
 		bind:value={config.pathGenerator}
 		amplitude={config.amplitude}

@@ -1,12 +1,16 @@
+<script module lang="ts">
+	import { getSeriesArrays } from '$lib/data.remote.js';
+	const data = await getSeriesArrays();
+</script>
+
 <script lang="ts">
 	import { type ComponentProps } from 'svelte';
 	import { LineChart } from 'layerchart';
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
-	import { getSeriesArrays } from '$lib/data.remote.js';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-	const data = $derived(await getSeriesArrays());
+
 
 	let example = $state<'single'>('single');
 	let motion = $state(true);

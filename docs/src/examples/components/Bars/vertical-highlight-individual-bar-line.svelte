@@ -23,7 +23,12 @@
 		<Bars strokeWidth={1} class="fill-primary" />
 		<Highlight
 			data={data[3]}
-			lines={{ class: 'stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] ' }}
+			lines={{
+				strokeWidth: 2,
+				stroke: 'var(--color-danger)',
+				dashArray: [4],
+				'stroke-linecap': 'round'
+			}}
 			axis="y"
 		/>
 	</Layer>

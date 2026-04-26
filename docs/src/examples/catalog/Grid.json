@@ -95,7 +95,7 @@
         {
           "component": "Grid",
           "lineNumber": 7,
-          "line": "<Grid y={{ style: 'stroke-dasharray: 6 4' }} />"
+          "line": "<Grid y={{ dashArray: [6, 4] }} />"
         }
       ]
     },
@@ -301,33 +301,6 @@
       ]
     },
     {
-      "name": "tick-count-responsive",
-      "title": "tick count responsive",
-      "path": "/docs/components/Grid/tick-count-responsive",
-      "components": [
-        {
-          "component": "Chart",
-          "lineNumber": 7,
-          "line": "<!-- <Chart"
-        },
-        {
-          "component": "Layer",
-          "lineNumber": 15,
-          "line": "<Layer>"
-        },
-        {
-          "component": "Grid",
-          "lineNumber": 16,
-          "line": "<Grid x xTicks={mdScreen.current ? 10 : 5} />"
-        },
-        {
-          "component": "Axis",
-          "lineNumber": 17,
-          "line": "<Axis placement=\"bottom\" rule ticks={mdScreen.current ? 10 : 5} />"
-        }
-      ]
-    },
-    {
       "name": "x-only",
       "title": "x only",
       "path": "/docs/components/Grid/x-only",
@@ -384,7 +357,7 @@
       "example": "punchcard",
       "component": "Cell",
       "path": "/docs/components/Cell/punchcard",
-      "lineNumber": 29,
+      "lineNumber": 30,
       "line": "<Grid x={false} y bandAlign=\"between\" />"
     },
     {
@@ -413,7 +386,7 @@
       "component": "Grid",
       "path": "/docs/components/Grid/dashed-lines",
       "lineNumber": 7,
-      "line": "<Grid y={{ style: 'stroke-dasharray: 6 4' }} />"
+      "line": "<Grid y={{ dashArray: [6, 4] }} />"
     },
     {
       "example": "explicit-ticks",
@@ -472,13 +445,6 @@
       "line": "<Grid y yTicks={null} />"
     },
     {
-      "example": "tick-count-responsive",
-      "component": "Grid",
-      "path": "/docs/components/Grid/tick-count-responsive",
-      "lineNumber": 16,
-      "line": "<Grid x xTicks={mdScreen.current ? 10 : 5} />"
-    },
-    {
       "example": "x-only",
       "component": "Grid",
       "path": "/docs/components/Grid/x-only",
@@ -493,5 +459,5 @@
       "line": "<Grid y />"
     }
   ],
-  "updatedAt": "2026-03-18T04:40:48.471Z"
+  "updatedAt": "2026-04-17T14:32:26.956Z"
 }

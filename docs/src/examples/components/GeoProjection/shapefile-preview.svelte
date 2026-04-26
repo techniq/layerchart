@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getShapeData } from '$lib/data.remote.js';
+	let data = await getShapeData(null);
+</script>
+
 <script lang="ts">
 	import {
 		geoAlbersUsa,
@@ -24,11 +29,8 @@
 	} from 'svelte-ux';
 
 	import LucideChevronDown from '~icons/lucide/chevron-down';
-	import { getShapeData } from '$lib/data.remote.js';
-
 	import { goto } from '$app/navigation';
 
-	let data = await getShapeData(null);
 	let file = $state(data.file);
 
 	const geojson = $derived(data.geojson);

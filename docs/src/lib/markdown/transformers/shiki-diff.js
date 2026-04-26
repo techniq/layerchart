@@ -7,9 +7,10 @@ export function shikiDiffTransformer() {
 	return {
 		name: 'diff-transformer',
 		code(node) {
-			// Check if this code block has 'diff' in the meta string
+			// Trigger on either ```diff (language) or ```<lang> diff (meta string)
 			const metaString = this.options.meta?.__raw || '';
-			if (!metaString.includes('diff')) return;
+			const lang = this.options.lang || '';
+			if (lang !== 'diff' && !metaString.includes('diff')) return;
 
 			// Add class to the pre element
 			this.addClassToHast(this.pre, 'has-diff');

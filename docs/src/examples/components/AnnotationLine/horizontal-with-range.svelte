@@ -1,8 +1,11 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const data = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { AnnotationLine, AnnotationRange, LineChart } from 'layerchart';
-	import { getAppleStock } from '$lib/data.remote';
 
-	const data = $derived(await getAppleStock());
 
 	export { data };
 </script>
@@ -26,7 +29,7 @@
 			labelPlacement="bottom-right"
 			labelYOffset={2}
 			props={{
-				line: { class: '[stroke-dasharray:2,2] _stroke-danger' }
+				line: { dashArray: [2, 2] }
 			}}
 		/>
 	{/snippet}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Table } from 'svelte-ux';
+	import type { Component } from 'content-collections';
 
 	import { h2 as H2 } from '$lib/markdown/blueprints/default/blueprint.svelte';
 	import { tableCell } from '@layerstack/svelte-table';
@@ -7,9 +8,12 @@
 	import { page } from '$app/state';
 
 	import RelatedLink from '$lib/components/RelatedLink.svelte';
+	import type { PropertyInfo } from '$lib/api-types.js';
 
 	let { data } = $props();
-	const { PageComponent, metadata, api, catalog } = $derived(data);
+	const { PageComponent, catalog } = $derived(data);
+	const metadata = $derived(data.metadata as Component);
+	const api = $derived(metadata.api);
 </script>
 
 <!-- Markdown page -->
@@ -39,7 +43,8 @@
 		}}
 	>
 		<tbody slot="data" let:columns let:data let:getCellValue let:getCellContent>
-			{#each data ?? [] as rowData, rowIndex}
+			{#each (data ?? []) as rowData, rowIndex (rowIndex)}
+				{@const row = rowData as PropertyInfo}
 				<tr class="hover:bg-surface-content/5 border-b">
 					{#each columns as column (column.name)}
 						{@const value = getCellValue(column, rowData, rowIndex)}
@@ -50,7 +55,7 @@
 									<span class="text-xs font-pixel bg-surface-content/10 px-2 py-1 rounded border"
 										>{value}</span
 									>
-									{#if rowData.required}
+									{#if row.required}
 										<span
 											class="bg-danger/10 px-1 py-0.5 font-medium rounded border border-danger text-danger text-xs"
 											>required</span
@@ -60,10 +65,14 @@
 							{:else if column.name === 'type'}
 								<span class="font-pixel text-xs text-surface-content/70">{value}</span>
 							{:else if column.name === 'description'}
-								<span class="whitespace-pre-line">{value}</span>
-								{#if rowData.default != null}
+								{#if row.descriptionHtml}
+									<span class="prose-inline">{@html row.descriptionHtml}</span>
+								{:else}
+									<span class="whitespace-pre-line">{value}</span>
+								{/if}
+								{#if row.default != null}
 									<div class="mt-2 text-surface-content/70">
-										default: <span class="font-pixel">{rowData.default}</span>
+										default: <span class="font-pixel">{row.default}</span>
 									</div>
 								{/if}
 							{:else}

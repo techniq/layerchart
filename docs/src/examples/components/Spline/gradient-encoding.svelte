@@ -1,11 +1,14 @@
+<script module lang="ts">
+	import { getDailyTemperature } from '$lib/data.remote';
+	const data = await getDailyTemperature();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { extent, ticks } from 'd3-array';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Axis, Chart, Layer, Legend, LinearGradient, Spline } from 'layerchart';
-	import { getDailyTemperature } from '$lib/data.remote';
 
-	const data = $derived(await getDailyTemperature());
 
 	const temperatureColor = scaleSequential(
 		extent(data, (d) => d.value) as [number, number],

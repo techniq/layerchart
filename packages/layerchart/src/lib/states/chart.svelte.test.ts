@@ -333,17 +333,23 @@ describe('ChartState mark registration', () => {
 
       expect(state.seriesState.isDefaultSeries).toBe(false);
       expect(state.seriesState.series).toHaveLength(2);
-      expect(state.seriesState.series[0]).toMatchObject({ key: 'apples', color: 'red', value: 'apples' });
-      expect(state.seriesState.series[1]).toMatchObject({ key: 'bananas', color: 'yellow', value: 'bananas' });
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'apples',
+        color: 'red',
+        value: 'apples',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'bananas',
+        color: 'yellow',
+        value: 'bananas',
+      });
     } finally {
       cleanup();
     }
   });
 
   it('should not generate implicit series when explicit series are provided', () => {
-    const data: MultiSeriesData[] = [
-      { date: '2024-01', apples: 10, bananas: 15 },
-    ];
+    const data: MultiSeriesData[] = [{ date: '2024-01', apples: 10, bananas: 15 }];
 
     const { state, cleanup } = createChartState<MultiSeriesData>({
       data,
@@ -605,6 +611,216 @@ describe('ChartState mark registration', () => {
   });
 });
 
+describe('ChartState data vs visibleSeriesData', () => {
+  it('should return props.data when explicit, even if a mark registers a filtered subset', () => {
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+      { date: '2024-03', value: 30 },
+    ];
+    const highlighted = [fullData[0]]; // filtered subset
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      // Simulate a decorative mark (e.g. <Text data={highlighted}>) registering
+      // its own filtered dataset with the same value accessor as the chart.
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // ctx.data (used by sibling marks for iteration) should remain the full
+      // chart data, not be replaced by the filtered subset.
+      expect(state.data).toBe(fullData);
+      expect(state.data).toHaveLength(3);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should fall back to visibleSeriesData when props.data is not provided', () => {
+    const applesData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 20 },
+    ];
+    const bananasData: TestData[] = [
+      { date: '2024-01', value: 15 },
+      { date: '2024-02', value: 25 },
+    ];
+
+    const { state, cleanup } = createChartState<TestData>({
+      x: 'date',
+      y: 'value',
+      series: [
+        { key: 'apples', data: applesData },
+        { key: 'bananas', data: bananasData },
+      ],
+    });
+
+    try {
+      // No props.data — ctx.data should flatten series data for iteration.
+      expect(state.data).toHaveLength(4);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not create an implicit series for a decorative mark when chart has own data', () => {
+    // Scenario: <Chart data={full}> + <Text data={highlighted} y="value"> (labels)
+    // The Text mark shouldn't create an implicit series that narrows the domain.
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 50 },
+      { date: '2024-03', value: 100 },
+    ];
+    const highlighted = [fullData[1]];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // Decorative mark shouldn't turn this into a multi-series chart.
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should not create an implicit series when chart uses array y accessor matching the mark key', () => {
+    // Scenario: <Chart data={full} y={['v1', 'v2']}> + <Text data={highlighted} y="v2">
+    // The chart declares both v1 and v2 as value axes; the Text mark using v2
+    // is just decorative, not a new series.
+    type Dual = { date: string; v1: number; v2: number };
+    const fullData: Dual[] = [
+      { date: '2024-01', v1: 10, v2: 20 },
+      { date: '2024-02', v1: 30, v2: 40 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data: fullData,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      state.registerMark({ y: 'v2', data: [fullData[0]] });
+      flushSync();
+
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should compute yDomain from full chart data when a decorative mark has a filtered subset', () => {
+    // Regression: Text labeling highlighted rows shouldn't narrow the y domain.
+    const fullData: TestData[] = [
+      { date: '2024-01', value: 10 },
+      { date: '2024-02', value: 50 },
+      { date: '2024-03', value: 100 },
+    ];
+    const highlighted = [fullData[1]]; // only value=50
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: fullData,
+      x: 'date',
+      y: 'value',
+    });
+
+    try {
+      state.registerMark({ y: 'value', data: highlighted });
+      flushSync();
+
+      // yDomain should reflect the full data extent [10, 100], not just [50, 50].
+      expect(state.yDomain).toEqual([10, 100]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should compute yDomain across all array y accessors on Chart', () => {
+    // Scenario: arrow-variation chart with y={['v1', 'v2']} where v1/v2 span different ranges.
+    type Dual = { date: string; v1: number; v2: number };
+    const data: Dual[] = [
+      { date: '2024-01', v1: 3, v2: 5 },
+      { date: '2024-02', v1: 2, v2: 8 },
+      { date: '2024-03', v1: 4, v2: 9 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      // Domain should span min(v1) = 2 to max(v2) = 9
+      expect(state.yDomain).toEqual([2, 9]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should keep full yDomain when decorative mark + array y both present', () => {
+    // End-to-end bended-arrows scenario
+    type Dual = { date: string; v1: number; v2: number };
+    const data: Dual[] = [
+      { date: '2024-01', v1: 3, v2: 5 },
+      { date: '2024-02', v1: 2, v2: 8 },
+      { date: '2024-03', v1: 4, v2: 9 },
+    ];
+
+    const { state, cleanup } = createChartState<Dual>({
+      data,
+      x: 'date',
+      y: ['v1', 'v2'],
+    });
+
+    try {
+      // Decorative Text mark with subset data and y matching one of chart's keys
+      state.registerMark({ y: 'v2', data: [data[0]] });
+      flushSync();
+
+      // Still the full range [2, 9], not narrowed to [5, 5]
+      expect(state.yDomain).toEqual([2, 9]);
+      expect(state.seriesState.isDefaultSeries).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should fall back to visibleSeriesData when props.data is an empty array', () => {
+    // Composite charts (BarChart, etc.) default `data = []` when not passed.
+    const applesData: TestData[] = [{ date: '2024-01', value: 10 }];
+    const bananasData: TestData[] = [{ date: '2024-01', value: 15 }];
+
+    const { state, cleanup } = createChartState<TestData>({
+      data: [],
+      x: 'date',
+      y: 'value',
+      series: [
+        { key: 'apples', data: applesData },
+        { key: 'bananas', data: bananasData },
+      ],
+    });
+
+    try {
+      expect(state.data).toHaveLength(2);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
 describe('ChartState geo projection skips markInfo', () => {
   const geoData: GeoData[] = [
     { name: 'New York', longitude: -74.006, latitude: 40.7128 },
@@ -700,8 +916,16 @@ describe('ChartState geo projection skips markInfo', () => {
       // seriesKey/color/label should still create implicit series for legends
       expect(state.seriesState.isDefaultSeries).toBe(false);
       expect(state.seriesState.series).toHaveLength(2);
-      expect(state.seriesState.series[0]).toMatchObject({ key: 'earthquakes', color: 'red', label: 'Earthquakes' });
-      expect(state.seriesState.series[1]).toMatchObject({ key: 'volcanos', color: 'orange', label: 'Volcanos' });
+      expect(state.seriesState.series[0]).toMatchObject({
+        key: 'earthquakes',
+        color: 'red',
+        label: 'Earthquakes',
+      });
+      expect(state.seriesState.series[1]).toMatchObject({
+        key: 'volcanos',
+        color: 'orange',
+        label: 'Volcanos',
+      });
 
       // But flatData should not include extra mark data
       expect(state.flatData).toHaveLength(3);
@@ -980,9 +1204,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should deduplicate repeated mark x keys into a single accessor', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({});
 
@@ -1000,9 +1222,7 @@ describe('ChartState implicit x/y from marks (no x/y on Chart)', () => {
   });
 
   it('should use explicit x/y from Chart props over mark-derived values', () => {
-    const data: DateValueData[] = [
-      { date: new Date(2024, 0, 1), value: 10 },
-    ];
+    const data: DateValueData[] = [{ date: new Date(2024, 0, 1), value: 10 }];
 
     const { state, cleanup } = createChartState<DateValueData>({
       x: 'value', // explicit — should override 'date' from marks
@@ -1408,12 +1628,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
     { year: '2017', apples: 960, bananas: 480, cherries: 240, grapes: 100 },
   ];
 
-  const series = [
-    { key: 'apples' },
-    { key: 'bananas' },
-    { key: 'cherries' },
-    { key: 'grapes' },
-  ];
+  const series = [{ key: 'apples' }, { key: 'bananas' }, { key: 'cherries' }, { key: 'grapes' }];
 
   it('should auto-derive x1Domain from series keys when seriesLayout=group and valueAxis=y', () => {
     const { state, cleanup } = createChartState<WideData>({
@@ -1509,9 +1724,7 @@ describe('ChartState group layout auto-derives x1/y1', () => {
 
     try {
       // With more padding, bandwidth should be smaller
-      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(
-        stateNoPad.x1Scale!.bandwidth!()
-      );
+      expect(stateWithPad.x1Scale!.bandwidth!()).toBeLessThan(stateNoPad.x1Scale!.bandwidth!());
     } finally {
       c1();
       c2();
@@ -1571,6 +1784,56 @@ describe('ChartState group layout auto-derives x1/y1', () => {
 
       // With only 1 series, bandwidth should be larger (full group band)
       expect(state.x1Scale!.bandwidth!()).toBeGreaterThan(initialBandwidth);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe('ChartState x1Domain/y1Domain without series', () => {
+  type LongData = { year: number; fruit: string; value: number };
+  const longData: LongData[] = [
+    { year: 2019, fruit: 'apples', value: 3840 },
+    { year: 2019, fruit: 'bananas', value: 1920 },
+    { year: 2018, fruit: 'apples', value: 1600 },
+    { year: 2018, fruit: 'bananas', value: 1440 },
+  ];
+
+  it('should pass through explicit x1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      x: 'year',
+      xScale: scaleBand(),
+      y: 'value',
+      x1: 'fruit',
+      x1Domain: ['apples', 'bananas'],
+      x1Range: ({ xScale }) => [0, (xScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.x1Domain).toEqual(['apples', 'bananas']);
+      expect(state.x1Scale!.domain()).toEqual(['apples', 'bananas']);
+    } finally {
+      cleanup();
+    }
+  });
+
+  it('should pass through explicit y1Domain when no series are configured', () => {
+    const { state, cleanup } = createChartState<LongData>({
+      data: longData,
+      y: 'year',
+      yScale: scaleBand(),
+      x: 'value',
+      y1: 'fruit',
+      y1Domain: ['apples', 'bananas'],
+      y1Range: ({ yScale }) => [0, (yScale as any).bandwidth()],
+    });
+
+    try {
+      expect(state.seriesState.series).toHaveLength(0);
+      expect(state.y1Domain).toEqual(['apples', 'bananas']);
+      expect(state.y1Scale!.domain()).toEqual(['apples', 'bananas']);
     } finally {
       cleanup();
     }

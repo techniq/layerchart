@@ -1,16 +1,19 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	const data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { hierarchy, type HierarchyLink, type HierarchyNode } from 'd3-hierarchy';
 	import { forceX, forceY, forceManyBody, forceLink, type SimulationNodeDatum } from 'd3-force';
 
 	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
-	import { getFlare } from '$lib/data.remote';
-
 	import type { Prettify } from '@layerstack/utils';
 	type NodeDatum = { name: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
-	const data = $derived(await getFlare());
+
 
 	const root: HierarchyNode<MySimulationNodeDatum> = hierarchy<MySimulationNodeDatum>(data);
 	const nodes: HierarchyNode<MySimulationNodeDatum>[] = root.descendants();
@@ -44,7 +47,7 @@
 			{#snippet children({ nodes, linkPositions })}
 				<Layer center>
 					{#each links as link, i}
-						<Link data={link} explicitCoords={linkPositions[i]} class="stroke-surface-content/20" />
+						<Link data={link} {...linkPositions[i]} class="stroke-surface-content/20" />
 					{/each}
 
 					{#each nodes as node ([node.data.name, node.parent?.data?.name].join('-'))}

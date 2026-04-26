@@ -10,7 +10,7 @@
    * rather than a data property accessor.
    */
   function isCSSValue(value: string): boolean {
-    return /^[\d.]+(%|em|rem|px|pt|cm|mm|in)?$/.test(value);
+    return /^-?[\d.]+(%|em|rem|px|pt|cm|mm|in)?$/.test(value);
   }
 
   /**
@@ -24,6 +24,11 @@
     return false;
   }
 
+  export type TextSegment = {
+    value: string | number;
+    class?: string;
+  };
+
   export type TextPropsWithoutHTML = {
     /**
      * Text value to render.
@@ -35,6 +40,13 @@
      * @default 0
      */
     value?: string | number | ((d: any) => string | number);
+
+    /**
+     * Array of styled text segments for inline mixed styling.
+     * Each segment has its own value and optional class.
+     * Mutually exclusive with `value`.
+     */
+    segments?: TextSegment[];
 
     /**
      * Maximum width to occupy (approximate as words are not split)
@@ -256,6 +268,7 @@
 
   let {
     value,
+    segments,
     x = 0,
     initialX,
     y = 0,
@@ -670,14 +683,37 @@
       const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
       ctx.textAlign = textAlign;
 
-      for (let index = 0; index < wordsByLines.length; index++) {
-        const line = wordsByLines[index];
-        const text = line.words.join(' ');
+      if (segments) {
+        let xOffset = baseX;
+        for (const segment of segments) {
+          const segStyles = getTextStyles(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            segment.class
+          );
+          const text = String(segment.value);
+          // Set font before rendering and measuring so width is accurate
+          const segComputedStyles = getComputedStyles(ctx.canvas, segStyles);
+          const fontWeight = segComputedStyles.fontWeight || '';
+          const fontSize = segComputedStyles.fontSize || '10px';
+          const fontFamily = segComputedStyles.fontFamily || 'sans-serif';
+          ctx.font = `${fontWeight} ${fontSize} ${fontFamily}`.trim();
+          renderText(ctx, text, { x: xOffset, y: baseY }, segStyles);
+          xOffset += ctx.measureText(text).width;
+        }
+      } else {
+        for (let index = 0; index < wordsByLines.length; index++) {
+          const line = wordsByLines[index];
+          const text = line.words.join(' ');
 
-        const xPos = baseX;
-        const yPos = baseY + index * effectiveLineHeight;
+          const xPos = baseX;
+          const yPos = baseY + index * effectiveLineHeight;
 
-        renderText(ctx, text, { x: xPos, y: yPos }, styles);
+          renderText(ctx, text, { x: xPos, y: yPos }, styles);
+        }
       }
 
       ctx.restore();
@@ -708,6 +744,7 @@
               dataMode,
               dataMode ? resolvedItems : null,
               value,
+              segments,
               motionX.current,
               motionY.current,
               fillKey!.current,
@@ -806,15 +843,23 @@
           opacity={staticOpacity}
           class={['lc-text', staticClassName]}
         >
-          {#each wordsByLines as line, index}
-            <tspan
-              x={motionX.current}
-              dy={index === 0 ? startDy : getPixelValue(lineHeight)}
-              class="lc-text-tspan"
-            >
-              {line.words.join(' ')}
-            </tspan>
-          {/each}
+          {#if segments}
+            {#each segments as segment, index (index)}
+              <tspan dy={index === 0 ? startDy : 0} class={['lc-text-tspan', segment.class]}>
+                {segment.value}
+              </tspan>
+            {/each}
+          {:else}
+            {#each wordsByLines as line, index (index)}
+              <tspan
+                x={motionX.current}
+                dy={index === 0 ? startDy : getPixelValue(lineHeight)}
+                class="lc-text-tspan"
+              >
+                {line.words.join(' ')}
+              </tspan>
+            {/each}
+          {/if}
         </text>
       {/if}
     </svg>
@@ -823,6 +868,9 @@
   {#if dataMode}
     {#each resolvedItems as item (item.key)}
       {@const text = resolveTextValue(item.d)}
+      {@const resolvedFill = resolveColorProp(fill, item.d, chartCtx.cScale)}
+      {@const resolvedFillOpacity = resolveStyleProp(fillOpacity, item.d)}
+      {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
       {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
       {@const translateY =
@@ -840,6 +888,8 @@
         {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
         style:white-space="pre-wrap"
         style:line-height={lineHeight}
+        style:color={resolvedFill}
+        style:opacity={resolvedOpacity ?? resolvedFillOpacity}
         class={['lc-text', resolvedClass]}
       >
         {text}
@@ -862,9 +912,17 @@
       {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
       style:white-space="pre-wrap"
       style:line-height={lineHeight}
+      style:color={staticFill}
+      style:opacity={staticOpacity ?? staticFillOpacity}
       class={['lc-text', staticClassName]}
     >
-      {textValue}
+      {#if segments}
+        {#each segments as segment}
+          <span class={segment.class}>{segment.value}</span>
+        {/each}
+      {:else}
+        {textValue}
+      {/if}
     </div>
   {/if}
 {/if}

@@ -1,12 +1,15 @@
+<script module lang="ts">
+	import { getAppleStock } from '$lib/data.remote';
+	const allData = await getAppleStock();
+</script>
+
 <script lang="ts">
 	import { extent } from 'd3-array';
 	import { useDebounce } from 'runed';
 	import { LineChart, defaultChartPadding, type ChartState } from 'layerchart';
 	import { ProgressCircle } from 'svelte-ux';
-	import { getAppleStock, getAppleStockRange } from '$lib/data.remote';
-
+	import { getAppleStockRange } from '$lib/data.remote';
 	// Load full dataset for domain extent
-	const allData = await getAppleStock();
 	const xDomain = extent(allData, (d) => d.date) as [Date, Date];
 	const yDomain = extent(allData, (d) => d.value) as [number, number];
 

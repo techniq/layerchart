@@ -310,6 +310,15 @@
   const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
   const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
   const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  // Match SVG's implicit `stroke-width: 1` default: if `stroke` is set but
+  // `strokeWidth` is not, render a 1px border so HTML matches SVG/Canvas layers.
+  const staticBorderWidth = $derived(
+    typeof strokeWidth === 'number'
+      ? `${strokeWidth}px`
+      : typeof stroke === 'string'
+        ? '1px'
+        : undefined
+  );
 
   chartCtx.registerComponent({
     name: 'Ellipse',
@@ -401,6 +410,12 @@
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
+      {@const resolvedBorderWidth =
+        resolvedStrokeWidth != null
+          ? `${resolvedStrokeWidth}px`
+          : resolvedStroke != null
+            ? '1px'
+            : undefined}
       <div
         style:position="absolute"
         style:left="{item.cx}px"
@@ -408,9 +423,10 @@
         style:width="{item.rx * 2}px"
         style:height="{item.ry * 2}px"
         style:border-radius="50%"
-        style:background-color={resolvedFill}
+        style:background={resolvedFill}
+        style:background-origin="border-box"
         style:opacity={resolvedOpacity}
-        style:border-width={resolvedStrokeWidth}
+        style:border-width={resolvedBorderWidth}
         style:border-color={resolvedStroke}
         style:border-style="solid"
         style:transform="translate(-50%, -50%)"
@@ -426,9 +442,10 @@
       style:width="{motionRx.current * 2}px"
       style:height="{motionRy.current * 2}px"
       style:border-radius="50%"
-      style:background-color={staticFill}
+      style:background={staticFill}
+      style:background-origin="border-box"
       style:opacity={staticOpacity}
-      style:border-width={staticStrokeWidth}
+      style:border-width={staticBorderWidth}
       style:border-color={staticStroke}
       style:border-style="solid"
       style:transform="translate(-50%, -50%)"
@@ -454,8 +471,12 @@
     }
 
     /* Html layers */
-    :global(:where(.lc-layout-html .lc-ellipse):not([background-color])) {
-      background-color: var(--fill-color);
+    :global(:where(.lc-layout-html .lc-ellipse)) {
+      /* Match SVG sizing (visual extent equals `rx * 2`×`ry * 2`, border on outer edge) */
+      box-sizing: border-box;
+    }
+    :global(:where(.lc-layout-html .lc-ellipse):not([background])) {
+      background: var(--fill-color);
     }
     :global(:where(.lc-layout-html .lc-ellipse):not([border-color])) {
       border-color: var(--stroke-color);

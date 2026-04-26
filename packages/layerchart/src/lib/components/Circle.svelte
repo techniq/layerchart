@@ -78,6 +78,13 @@
     /** Motion configuration (pixel mode only). */
     motion?: MotionProp;
 
+    /**
+     * Dashed-border pattern. Accepts a number (single dash length), a
+     * `[dash, gap, ...]` array, or a string (same syntax as SVG
+     * `stroke-dasharray`). HTML layer approximates via `border-style: dashed`.
+     */
+    dashArray?: number | number[] | string;
+
     /** Children content to render.  Note: Only works for Html layers */
     children?: Snippet;
   } & DataDrivenStyleProps;
@@ -106,6 +113,7 @@
   import { chartDataArray } from '$lib/utils/common.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
+  import { parseDashArray } from '$lib/utils/path.js';
 
   let {
     cx = 0,
@@ -124,9 +132,13 @@
     opacity,
     class: className,
     ref: refProp = $bindable(),
+    dashArray,
     children,
     ...restProps
   }: CircleProps = $props();
+
+  const dashArrayResolved = $derived(parseDashArray(dashArray));
+  const dashArrayAttr = $derived(dashArrayResolved ? dashArrayResolved.join(' ') : undefined);
 
   // Data mode detection: if any positional prop is a string or function
   const dataMode = $derived(hasAnyDataProp(cx, cy, r));
@@ -215,6 +227,15 @@
   const staticStrokeWidth = $derived(typeof strokeWidth === 'number' ? strokeWidth : undefined);
   const staticOpacity = $derived(typeof opacity === 'number' ? opacity : undefined);
   const staticClassName = $derived(typeof className === 'string' ? className : undefined);
+  // Match SVG's implicit `stroke-width: 1` default: if `stroke` is set but
+  // `strokeWidth` is not, render a 1px border so HTML matches SVG/Canvas layers.
+  const staticBorderWidth = $derived(
+    typeof strokeWidth === 'number'
+      ? `${strokeWidth}px`
+      : typeof stroke === 'string'
+        ? '1px'
+        : undefined
+  );
 
   // Style options (shared between pixel and data mode)
   function getStyleOptions(
@@ -250,7 +271,13 @@
             'lc-circle',
             itemClass ?? (typeof className === 'string' ? className : undefined)
           ),
-          style: restProps.style as string | undefined,
+          style:
+            [
+              restProps.style as string | undefined,
+              dashArrayAttr ? `stroke-dasharray: ${dashArrayAttr}` : undefined,
+            ]
+              .filter(Boolean)
+              .join('; ') || undefined,
         };
   }
 
@@ -328,6 +355,7 @@
               opacity,
               className,
               restProps.style,
+              dashArrayAttr,
             ],
           }
         : undefined,
@@ -352,6 +380,7 @@
         stroke={resolvedStroke}
         stroke-width={resolvedStrokeWidth}
         opacity={resolvedOpacity}
+        stroke-dasharray={dashArrayAttr}
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
       />
@@ -367,6 +396,7 @@
       stroke={staticStroke}
       stroke-width={staticStrokeWidth}
       opacity={staticOpacity}
+      stroke-dasharray={dashArrayAttr}
       class={cls('lc-circle', staticClassName)}
       {...restProps}
     />
@@ -380,6 +410,12 @@
       {@const resolvedStrokeWidth = resolveStyleProp(strokeWidth, item.d)}
       {@const resolvedOpacity = resolveStyleProp(opacity, item.d)}
       {@const resolvedClass = resolveStyleProp(className, item.d)}
+      {@const resolvedBorderWidth =
+        resolvedStrokeWidth != null
+          ? `${resolvedStrokeWidth}px`
+          : resolvedStroke != null
+            ? '1px'
+            : undefined}
       <div
         style:position="absolute"
         style:left="{item.cx}px"
@@ -387,11 +423,12 @@
         style:width="{item.r * 2}px"
         style:height="{item.r * 2}px"
         style:border-radius="50%"
-        style:background-color={resolvedFill}
+        style:background={resolvedFill}
+        style:background-origin="border-box"
         style:opacity={resolvedOpacity}
-        style:border-width={resolvedStrokeWidth}
+        style:border-width={resolvedBorderWidth}
         style:border-color={resolvedStroke}
-        style:border-style="solid"
+        style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
         style:transform="translate(-50%, -50%)"
         class={cls('lc-circle', resolvedClass)}
         {...restProps}
@@ -405,11 +442,12 @@
       style:width="{motionR.current * 2}px"
       style:height="{motionR.current * 2}px"
       style:border-radius="50%"
-      style:background-color={staticFill}
+      style:background={staticFill}
+      style:background-origin="border-box"
       style:opacity={staticOpacity}
-      style:border-width={staticStrokeWidth}
+      style:border-width={staticBorderWidth}
       style:border-color={staticStroke}
-      style:border-style="solid"
+      style:border-style={dashArrayResolved ? 'dashed' : 'solid'}
       style:transform="translate(-50%, -50%)"
       class={cls('lc-circle', staticClassName)}
       {...restProps}
@@ -435,8 +473,12 @@
     }
 
     /* Html layers */
-    :global(:where(.lc-layout-html .lc-circle):not([background-color])) {
-      background-color: var(--fill-color);
+    :global(:where(.lc-layout-html .lc-circle)) {
+      /* Match SVG sizing (visual extent equals `r * 2`, border on outer edge) */
+      box-sizing: border-box;
+    }
+    :global(:where(.lc-layout-html .lc-circle):not([background])) {
+      background: var(--fill-color);
     }
     :global(:where(.lc-layout-html .lc-circle):not([border-color])) {
       border-color: var(--stroke-color);

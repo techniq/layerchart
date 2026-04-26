@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+	const worldLinks = await getWorldLinks();
+</script>
+
 <script lang="ts">
 	import { geoNaturalEarth1 } from 'd3-geo';
 	import { flatRollup } from 'd3-array';
@@ -5,10 +11,6 @@
 
 	import { Chart, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
 
-	import { getWorldLinks, getCountriesTopology } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
-	const worldLinks = await getWorldLinks();
 
 	const countries = feature(topology, topology.objects.countries);
 

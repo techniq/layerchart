@@ -6,6 +6,7 @@
 	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	import { examples } from '$lib/context.js';
+	import { intersectExampleLayers } from '$lib/utils/layers.js';
 	import { page } from '$app/state';
 
 	import LucideSettings from '~icons/lucide/settings';
@@ -64,7 +65,19 @@
 		const { name, example } = page.params;
 		return name && example ? currentExamples[name]?.[example] : null;
 	});
-	let layers = $derived(pageExample?.module?.layers ?? metadata.layers ?? []);
+	// For example pages, intersect the supported layers of every component used.
+	// A Spline in an otherwise Html-capable example narrows the toggle to [svg, canvas].
+	const computedExampleLayers = $derived.by(() => {
+		const exampleInfo = page.params.example
+			? data.catalog?.examples.find((e) => e.name === page.params.example)
+			: undefined;
+		return exampleInfo
+			? intersectExampleLayers(exampleInfo.components, metadata.layers ?? [])
+			: null;
+	});
+	let layers = $derived(
+		pageExample?.module?.layers ?? computedExampleLayers ?? metadata.layers ?? []
+	);
 </script>
 
 <div class="mb-4">

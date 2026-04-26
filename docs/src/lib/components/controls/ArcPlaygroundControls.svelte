@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Field, RangeField, Switch, TextField } from 'svelte-ux';
+	import ShowField from './fields/ShowField.svelte';
 
 	interface ArcPlaygroundConfig {
 		show: boolean;
@@ -23,7 +24,7 @@
 
 	let {
 		config = $bindable({
-			show: true,
+			show: false,
 			value: 60,
 			spring: true,
 			domain: [0, 100] as [number, number],
@@ -48,9 +49,7 @@
 		max={config.domain[1]}
 		class="col-span-2"
 	/>
-	<Field label="Show" let:id>
-		<Switch bind:checked={config.show} {id} />
-	</Field>
+	<ShowField bind:show={config.show} inline />
 	<Field label="Use spring" let:id>
 		<Switch bind:checked={config.spring} {id} />
 	</Field>

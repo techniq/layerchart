@@ -38,14 +38,13 @@
 		{#each dataByGroup as [group, data]}
 			{@const color = groupColor(group)}
 			<Points r={3} {data} fill={color} />
-			<!-- TODO: handle group color differently to work with Canvas -->
 			<Hull
 				{data}
 				{curve}
-				style="--group-color:{color}"
-				classes={{
-					path: 'pointer-events-none stroke-[var(--group-color)] fill-[var(--group-color)] [fill-opacity:0.1]'
-				}}
+				stroke={color}
+				fill={color}
+				fillOpacity={0.1}
+				class="pointer-events-none"
 			/>
 		{/each}
 	</Layer>

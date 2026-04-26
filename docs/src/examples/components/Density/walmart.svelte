@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getWalmarts, getUsStatesTopology } from '$lib/geo.remote.js';
+	const walmarts = await getWalmarts();
+	const geojson = await getUsStatesTopology();
+</script>
+
 <script lang="ts">
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateYlGnBu } from 'd3-scale-chromatic';
@@ -7,10 +13,6 @@
 	import { Chart, Circle, Density, GeoPath, Layer, Tooltip } from 'layerchart';
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 
-	import { getWalmarts, getUsStatesTopology } from '$lib/geo.remote.js';
-
-	const walmarts = await getWalmarts();
-	const geojson = await getUsStatesTopology();
 
 	const states = feature(geojson, geojson.objects.states);
 	const nation = feature(geojson, geojson.objects.nation);

@@ -174,14 +174,14 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 210,
+      "lineNumber": 214,
       "line": "<Image"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 212,
+      "lineNumber": 216,
       "line": "<Image"
     },
     {
@@ -230,7 +230,7 @@
       "example": "pan-zoom-svg-image",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/pan-zoom-svg-image",
-      "lineNumber": 19,
+      "lineNumber": 23,
       "line": "<image"
     },
     {
@@ -244,9 +244,9 @@
       "example": "scroll-activation-key",
       "component": "TransformContext",
       "path": "/docs/components/TransformContext/scroll-activation-key",
-      "lineNumber": 22,
+      "lineNumber": 29,
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-04-01T13:16:18.368Z"
+  "updatedAt": "2026-04-19T13:23:58.214Z"
 }

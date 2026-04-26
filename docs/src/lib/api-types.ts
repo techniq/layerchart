@@ -7,6 +7,7 @@ export interface PropertyInfo {
 	type: string;
 	required: boolean;
 	description?: string;
+	descriptionHtml?: string;
 	default?: string;
 	tags?: Record<string, string>;
 	properties?: PropertyInfo[]; // For nested object types

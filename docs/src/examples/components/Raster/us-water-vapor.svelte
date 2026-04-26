@@ -3,7 +3,7 @@
 	import { interpolateRdYlBu } from 'd3-scale-chromatic';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	import { Chart, ClipPath, Contour, GeoPath, Layer, Legend, Raster } from 'layerchart';
+	import { Chart, Contour, GeoClipPath, GeoPath, Layer, Legend, Raster } from 'layerchart';
 
 	import { getWaterVapor } from '$lib/data.remote.js';
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';
@@ -34,11 +34,7 @@
 	/>
 
 	<Layer>
-		<ClipPath>
-			{#snippet clip()}
-				<GeoPath geojson={nation} class="stroke-none" />
-			{/snippet}
-
+		<GeoClipPath geojson={nation}>
 			<Raster
 				data={waterVapor.values}
 				width={waterVapor.width}
@@ -64,7 +60,7 @@
 				thresholds={40}
 				blur={10}
 			/>
-		</ClipPath>
+		</GeoClipPath>
 
 		<GeoPath geojson={nation} class="fill-none stroke-[#2f2f2f]" strokeWidth={1.25} />
 	</Layer>

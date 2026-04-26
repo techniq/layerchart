@@ -157,37 +157,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 184,
+          "lineNumber": 188,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 194,
+          "lineNumber": 198,
           "line": "<Layer>"
         },
         {
           "component": "Group",
-          "lineNumber": 199,
+          "lineNumber": 203,
           "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 200,
+          "lineNumber": 204,
           "line": "<Rect"
         },
         {
           "component": "Image",
-          "lineNumber": 210,
+          "lineNumber": 214,
           "line": "<Image"
         },
         {
           "component": "Text",
-          "lineNumber": 220,
+          "lineNumber": 224,
           "line": "<Text"
         },
         {
           "component": "Axis",
-          "lineNumber": 242,
+          "lineNumber": 246,
           "line": "<Axis"
         }
       ]
@@ -304,12 +304,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 11,
+          "lineNumber": 14,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 24,
+          "lineNumber": 27,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -321,12 +321,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 27,
+          "lineNumber": 30,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -355,12 +355,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 41,
+          "lineNumber": 44,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -372,12 +372,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 13,
+          "lineNumber": 16,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 46,
+          "lineNumber": 49,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -615,17 +615,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 22,
+          "lineNumber": 25,
           "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 35,
+          "lineNumber": 38,
           "line": "<Rect x0={(d) => 0} y0=\"x0\" x1=\"length\" y1=\"x1\" insets={{ y: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 38,
+          "lineNumber": 41,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -659,17 +659,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 22,
+          "lineNumber": 25,
           "line": "<Chart"
         },
         {
           "component": "Rect",
-          "lineNumber": 37,
+          "lineNumber": 40,
           "line": "<Rect x0=\"x0\" y0={(d) => 0} x1=\"x1\" y1=\"length\" insets={{ x: 1 }} class=\"fill-primary\" />"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 41,
+          "lineNumber": 44,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -729,42 +729,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 184,
+          "lineNumber": 188,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 195,
+          "lineNumber": 199,
           "line": "<Layer>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 196,
+          "lineNumber": 200,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Group",
-          "lineNumber": 201,
+          "lineNumber": 205,
           "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 202,
+          "lineNumber": 206,
           "line": "<Rect"
         },
         {
           "component": "Image",
-          "lineNumber": 212,
+          "lineNumber": 216,
           "line": "<Image"
         },
         {
           "component": "Text",
-          "lineNumber": 222,
+          "lineNumber": 226,
           "line": "<Text"
         },
         {
           "component": "Axis",
-          "lineNumber": 245,
+          "lineNumber": 249,
           "line": "<Axis"
         }
       ]
@@ -836,7 +836,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 14,
+          "lineNumber": 16,
           "line": "<BarChart"
         }
       ]
@@ -1245,29 +1245,32 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 39,
+          "lineNumber": 43,
           "line": "<BarChart"
         },
         {
           "component": "Axis",
-          "lineNumber": 65,
+          "lineNumber": 69,
           "line": "<Axis placement=\"bottom\" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>"
         },
         {
           "component": "Text",
-          "lineNumber": 67,
+          "lineNumber": 71,
           "line": "<Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />"
         },
         {
           "component": "Polygon",
-          "lineNumber": 73,
+          "lineNumber": 77,
           "line": "<Polygon"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 84,
+          "lineNumber": 88,
           "line": "<Tooltip.Root>"
         }
+      ],
+      "tags": [
+        "gauge"
       ]
     },
     {
@@ -1680,14 +1683,14 @@
       "example": "duration-bars-dense",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-bars-dense",
-      "lineNumber": 11,
+      "lineNumber": 14,
       "line": "<BarChart"
     },
     {
       "example": "duration-bars-dense-lanes",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-bars-dense-lanes",
-      "lineNumber": 13,
+      "lineNumber": 16,
       "line": "<BarChart"
     },
     {
@@ -1701,14 +1704,14 @@
       "example": "duration-civilization-timeline",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-civilization-timeline",
-      "lineNumber": 13,
+      "lineNumber": 16,
       "line": "<BarChart"
     },
     {
       "example": "duration-civilization-timeline-dense",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-civilization-timeline-dense",
-      "lineNumber": 13,
+      "lineNumber": 16,
       "line": "<BarChart"
     },
     {
@@ -1855,7 +1858,7 @@
       "example": "motion-tween",
       "component": "BarChart",
       "path": "/docs/components/BarChart/motion-tween",
-      "lineNumber": 14,
+      "lineNumber": 16,
       "line": "<BarChart"
     },
     {
@@ -2079,7 +2082,7 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 39,
+      "lineNumber": 43,
       "line": "<BarChart"
     },
     {
@@ -2205,35 +2208,35 @@
       "example": "compound-common-scale-with-extra-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-common-scale-with-extra-marks",
-      "lineNumber": 15,
+      "lineNumber": 19,
       "line": "<BarChart"
     },
     {
       "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 11,
-      "line": "<BarChart"
-    },
-    {
-      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "component": "Chart",
-      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
-      "lineNumber": 26,
-      "line": "<BarChart"
-    },
-    {
-      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "component": "Chart",
-      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "lineNumber": 14,
       "line": "<BarChart"
     },
     {
+      "example": "compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-and-overridden-marks",
+      "lineNumber": 29,
+      "line": "<BarChart"
+    },
+    {
       "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
       "component": "Chart",
       "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
-      "lineNumber": 31,
+      "lineNumber": 17,
+      "line": "<BarChart"
+    },
+    {
+      "example": "compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "component": "Chart",
+      "path": "/docs/components/Chart/compound-separate-scales-with-stacked-charts-with-inverted-range-top-down",
+      "lineNumber": 34,
       "line": "<BarChart"
     },
     {
@@ -2251,5 +2254,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-08T04:31:40.308Z"
+  "updatedAt": "2026-04-19T13:21:53.938Z"
 }

@@ -180,9 +180,15 @@
       .map((d: any) => ({
         x: getScaleValue(d, ctx.xScale, xAccessor) + xOffset,
         y: getScaleValue(d, ctx.yScale, yAccessor) + yOffset,
-        r: resolvedR != null
-          ? resolveDataProp(resolvedR, d, ctx.rScale, typeof resolvedR === 'number' ? resolvedR : 4)
-          : 4,
+        r:
+          resolvedR != null
+            ? resolveDataProp(
+                resolvedR,
+                d,
+                ctx.rScale,
+                typeof resolvedR === 'number' ? resolvedR : 4
+              )
+            : 4,
       }));
 
     return computeTrailPath(points, { curve, cap, tension, resolution });
@@ -206,9 +212,15 @@
         .map((d: any) => ({
           x: getScaleValue(d, ctx.xScale, xAccessor) + xOffset,
           y: baseline,
-          r: resolvedR != null
-            ? resolveDataProp(resolvedR, d, ctx.rScale, typeof resolvedR === 'number' ? resolvedR : 4)
-            : 4,
+          r:
+            resolvedR != null
+              ? resolveDataProp(
+                  resolvedR,
+                  d,
+                  ctx.rScale,
+                  typeof resolvedR === 'number' ? resolvedR : 4
+                )
+              : 4,
         }));
 
       return computeTrailPath(points, { curve, cap, tension, resolution });
@@ -236,7 +248,7 @@
 <Path
   pathData={isTweened ? tweenState.current : trailPath}
   {fill}
-  fillOpacity={fillOpacity}
+  {fillOpacity}
   {opacity}
   stroke="none"
   class={cls('lc-trail', className)}

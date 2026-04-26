@@ -36,6 +36,10 @@
 		border-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
 		outline-color: color-mix(in oklab, var(--color-surface-content) 20%, transparent);
 	}
+	strong {
+		color: currentColor !important; /* webkit fix for 'text-initial'  */
+		font-weight: 800 !important;
+	}
 }
 
 @layer utilities {
@@ -76,6 +80,14 @@ code[data-theme*=' '] span {
 /* Inline code styling */
 code:not(pre > code):not(.custom) {
 	@apply text-sm font-medium bg-primary/5 text-primary font-pixel px-2 rounded border border-primary/50;
+}
+
+/* Inline-only rendered markdown (e.g. API property descriptions) */
+.prose-inline a {
+	@apply text-primary underline underline-offset-2 hover:text-primary/80;
+}
+.prose-inline code:not(pre > code):not(.custom) {
+	@apply text-xs px-1 py-0;
 }
 
 /* Code block figure container */
@@ -160,7 +172,7 @@ code[data-line-numbers] > [data-line]::before {
 
 /* Steps component styling - inspired by Docus */
 .steps {
-	@apply ms-4 pl-7 border-l border-surface-content/10;
+	@apply ms-4 pl-8 border-l border-surface-content/10;
 	counter-reset: step;
 
 	/* Headings (h2, h3, h4) in steps */
@@ -171,10 +183,15 @@ code[data-line-numbers] > [data-line]::before {
 		/* Counter circle */
 		&::before {
 			content: counter(step);
-			@apply absolute size-6 -left-10 bg-surface-100 rounded-full;
+			@apply absolute top-0.5 size-6 -left-11 bg-surface-100 rounded-full;
 			@apply font-semibold text-sm tabular-nums;
 			@apply inline-flex items-center justify-center;
 			@apply ring-1 ring-surface-content/20;
+		}
+
+		/* override second to last circle content */
+		&:nth-last-child(1 of :is(h2, h3, h4))::before {
+			content: '✔︎' !important;
 		}
 	}
 }

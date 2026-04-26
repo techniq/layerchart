@@ -565,7 +565,14 @@
       "example": "single-stack-with-indicator",
       "component": "BarChart",
       "path": "/docs/components/BarChart/single-stack-with-indicator",
-      "lineNumber": 73,
+      "lineNumber": 77,
+      "line": "<Polygon"
+    },
+    {
+      "example": "use-id",
+      "component": "ClipPath",
+      "path": "/docs/components/ClipPath/use-id",
+      "lineNumber": 9,
       "line": "<Polygon"
     },
     {
@@ -765,5 +772,5 @@
       "line": "<Polygon"
     }
   ],
-  "updatedAt": "2026-03-23T00:08:16.486Z"
+  "updatedAt": "2026-04-19T13:21:55.859Z"
 }

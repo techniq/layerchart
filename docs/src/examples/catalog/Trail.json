@@ -95,27 +95,27 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 15,
+          "lineNumber": 16,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 24,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 25,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" grid label=\"Latitude\" />"
         },
         {
           "component": "Trail",
-          "lineNumber": 27,
+          "lineNumber": 28,
           "line": "<Trail class=\"fill-danger/40\" />"
         },
         {
           "component": "Spline",
-          "lineNumber": 28,
+          "lineNumber": 29,
           "line": "<Spline class=\"stroke-1 stroke-surface-content\" />"
         }
       ],
@@ -148,9 +148,9 @@
       "example": "tdf-stage",
       "component": "Trail",
       "path": "/docs/components/Trail/tdf-stage",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<Trail class=\"fill-danger/40\" />"
     }
   ],
-  "updatedAt": "2026-04-03T20:08:36.649Z"
+  "updatedAt": "2026-04-19T13:21:56.378Z"
 }

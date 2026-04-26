@@ -2,6 +2,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { asAny, type Without } from '$lib/utils/types.js';
   import type { TooltipState as TooltipStateType } from '$lib/states/tooltip.svelte.js';
+  import type { Accessor } from '$lib/utils/common.js';
 
   export type TooltipMode =
     | 'bisect-x' // requires values to be sorted
@@ -54,6 +55,21 @@
      * @default Infinity
      */
     radius?: number;
+
+    /**
+     * Override the `x` accessor used for quadtree/voronoi hit detection.
+     * Useful when the chart's `x` accessor returns an array of values and you
+     * want hit detection at a specific endpoint.
+     *
+     * Accepts a string property name (e.g. `'POP_2015'`) or a function.
+     */
+    x?: Accessor;
+
+    /**
+     * Override the `y` accessor used for quadtree/voronoi hit detection.
+     * See `x` above.
+     */
+    y?: Accessor;
 
     /**
      * Enable debug view (show hit targets, etc)
@@ -131,6 +147,8 @@
     radius = Infinity,
     raiseTarget = false,
     state: stateProp = $bindable() as TooltipStateType<TData>,
+    x: xProp,
+    y: yProp,
     children,
   }: TooltipContextProps<TData> = $props();
 
@@ -411,12 +429,20 @@
     }, hideDelay);
   }
 
+  const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
+  const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
+
   const quadtree: Quadtree<[number, number]> | undefined = $derived.by(() => {
     if (['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
       return d3Quadtree()
         .x((d) => {
           if (mode === 'quadtree-y') {
             return 0;
+          }
+
+          if (xAccessorOverride) {
+            const scaled = ctx.xScale(xAccessorOverride(d));
+            return typeof scaled === 'number' ? scaled : 0;
           }
 
           if (geo.projection) {
@@ -429,11 +455,10 @@
           const value = ctx.xGet(d);
 
           if (Array.isArray(value)) {
-            // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-            // Using first value.  Consider using average, max, etc
-            // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-            // return midpoint;
-            return min(value);
+            // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
+            // Default to the max (typically the "target"/"end" endpoint); override
+            // via the `x` prop for explicit control.
+            return max(value);
           } else {
             return value;
           }
@@ -441,6 +466,11 @@
         .y((d) => {
           if (mode === 'quadtree-x') {
             return 0;
+          }
+
+          if (yAccessorOverride) {
+            const scaled = ctx.yScale(yAccessorOverride(d));
+            return typeof scaled === 'number' ? scaled : 0;
           }
 
           if (geo.projection) {
@@ -453,11 +483,8 @@
           const value = ctx.yGet(d);
 
           if (Array.isArray(value)) {
-            // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-            // Using first value.  Consider using average, max, etc
-            // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-            // return midpoint;
-            return min(value);
+            // `y` accessor with multiple properties — default to max endpoint.
+            return max(value);
           } else {
             return value;
           }
@@ -676,6 +703,8 @@
     {#if mode === 'voronoi'}
       <Svg>
         <Voronoi
+          x={xProp}
+          y={yProp}
           r={radius}
           onpointerenter={(e, { data }) => {
             showTooltip(e, data);

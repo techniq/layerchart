@@ -1,3 +1,8 @@
+<script module lang="ts">
+	import { getFlare } from '$lib/data.remote';
+	let data = await getFlare();
+</script>
+
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -9,7 +14,6 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { getFlare } from '$lib/data.remote';
 	import {
 		Bounds,
 		Chart,
@@ -34,7 +38,6 @@
 	let round = $state(false);
 	let fullSizeLeafNodes = $state(false);
 
-	let data = await getFlare();
 	const hierarchy = d3Hierarchy(data)
 		.sum((d) => d.value)
 		.sort(sortFunc('value', 'desc')) as HierarchyRectangularNode<any>;

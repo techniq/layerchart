@@ -33,7 +33,7 @@
 			label: 'Max',
 			y: 75,
 			props: {
-				line: { class: '[stroke-dasharray:2,2] _stroke-danger' }
+				line: { dashArray: [2, 2] }
 			}
 		}
 	]}

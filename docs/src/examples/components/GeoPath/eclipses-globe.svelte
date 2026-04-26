@@ -1,3 +1,9 @@
+<script module lang="ts">
+	import { getCountriesTopology, getEclipses } from '$lib/geo.remote.js';
+	const topology = await getCountriesTopology();
+	const eclipsesData = await getEclipses();
+</script>
+
 <script lang="ts">
 	// 'https://www.visionscarto.net/empreintes-d-eclipses',
 	// 'http://xjubier.free.fr/en/site_pages/Solar_Eclipses.html',
@@ -17,10 +23,6 @@
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import { getCountriesTopology, getEclipses } from '$lib/geo.remote.js';
-
-	const topology = await getCountriesTopology();
-	const eclipsesData = await getEclipses();
 
 	const countries = feature(topology, topology.objects.countries);
 	const eclipses = feature(eclipsesData, eclipsesData.objects.eclipses);

@@ -2,16 +2,14 @@
 title: Getting Started
 ---
 
-LayerChart can be used standlone, or integrates nicely with other frameworks and design systems.
-
-Provides built-in first class support for [:icon{name="logos:tailwindcss-icon" class="text-xs"} Tailwind 4](https://tailwindcss.com/),
-but is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and [:icon{name="logos:unocss"} unoCSS](https://unocss.dev/).
+LayerChart provides built-in first class support for [:icon{name="logos:tailwindcss-icon" class="text-xs"} Tailwind 4](https://tailwindcss.com/),
+but this is completely optional. The library also works seamlessly with vanilla CSS, inline styles, and [:icon{name="logos:unocss"} unoCSS](https://unocss.dev/). It can be used standlone, or integrates nicely with other frameworks and design systems.
 
 ::steps
 
 ## Create a new project or [git a project](#git-up-and-running-even-quicker)
 
-Use the Svelte CLI to generate a new SvelteKit project, or continue with an existing project.
+Use the Svelte `sv` CLI to generate a new SvelteKit project.
 
 :::tabs{key="bundler"}
 
@@ -53,7 +51,7 @@ Use the Svelte CLI to generate a new SvelteKit project, or continue with an exis
 :::
 
 ::note
-To add Tailwind to an existing project you can `npm sv add tailwindcss`
+To add Tailwind to an existing Sveltekit project you can `npx sv add tailwindcss`
 ::
 
 ## Import `layerchart` with your package manager of choice.
@@ -94,7 +92,7 @@ To add Tailwind to an existing project you can `npm sv add tailwindcss`
 
 ## Apply CSS
 
-Out of the box LayerChart will use [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value#currentcolor_keyword) as the default color, but you can customize the CSS globally with a few CSS variables.
+Out of the box LayerChart will use [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value#currentcolor_keyword) as the default primary color, but you can customize the CSS globally with a few CSS variables.
 
 ```css title="app.css"
 .lc-root-container {
@@ -110,6 +108,10 @@ Out of the box LayerChart will use [`currentColor`](https://developer.mozilla.or
 	--color-surface-content: var(--color-gray-900);
 }
 ```
+
+::note
+If you wish to apply darkmode defaults, see the [dark mode](/docs/guides/styles#dark-mode) section of the styling guide.
+::
 
 or with a single `.css` import, Layerchart [provides](https://github.com/techniq/layerchart/tree/next/packages/layerchart/src/lib/styles) theming conventions for many popular UI frameworks.
 
@@ -201,7 +203,7 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     ::tab{label="shadcn-svelte" icon="custom-brands:shadcnsvelte"}
     [shadcn-svelte](https://www.shadcn-svelte.com/)
 
-    v1:
+    - v1:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/shadcn-svelte-1" size="sm" icon="simple-icons:stackblitz"}
     ::
@@ -209,11 +211,10 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     ::tab{label="Skeleton" icon="custom-brands:skeleton"}
     [Skeleton](https://www.skeleton.dev/)
 
-    v3:
+    - v3:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-3" size="sm" icon="simple-icons:stackblitz"}
-
-    v4:
+    - v4:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/skeleton-4" size="sm" icon="simple-icons:stackblitz"}
     ::
@@ -221,7 +222,7 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     ::tab{label="Svelte UX" icon="custom-brands:svelteux"}
     [Svelte UX](https://svelte-ux.techniq.dev/)
 
-    v2:
+    - v2:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/svelte-ux-2" size="sm" icon="simple-icons:stackblitz"}
     ::
@@ -229,7 +230,7 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     ::tab{label="daisyUI" icon="custom-brands:daisyUI"}
     [daisyUI](https://daisyui.com/)
 
-    v5:
+    - v5:
         :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="lucide:github"}
         :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/daisyui-5" size="sm" icon="simple-icons:stackblitz"}
     ::
@@ -237,13 +238,17 @@ Starter [project repos](https://github.com/techniq/layerchart/tree/next/examples
     ::tab{label="UnoCSS" icon="logos:unocss"}
     [UnoCSS](https://unocss.dev/)
 
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/unocss" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/unocss-1" size="sm" icon="simple-icons:stackblitz"}
+    -
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/unocss" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/unocss-1" size="sm" icon="simple-icons:stackblitz"}
     ::
 
     ::tab{label="Vanilla CSS" icon="vscode-icons:file-type-css"}
-    :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="lucide:github"}
-    :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="simple-icons:stackblitz"}
+    Vanilla CSS
+
+    -
+        :button{label="Source" href="https://github.com/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="lucide:github"}
+        :button{label="Open in StackBlitz" href="https://stackblitz.com/github/techniq/layerchart/tree/docs-v2/examples/standalone" size="sm" icon="simple-icons:stackblitz"}
     ::
 
 :::

@@ -3,7 +3,7 @@
 	import ArcPlaygroundControls from '$lib/components/controls/ArcPlaygroundControls.svelte';
 
 	let config = $state({
-		show: true,
+		show: false,
 		value: 60,
 		spring: true,
 		domain: [0, 100] as [number, number],

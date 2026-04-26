@@ -174,10 +174,14 @@
   }
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponent({ name: 'Gradient', kind: 'group', canvasRender: {
-      render,
-      deps: () => [x1, y1, x2, y2, stops, className],
-    } });
+    ctx.registerComponent({
+      name: 'Gradient',
+      kind: 'group',
+      canvasRender: {
+        render,
+        deps: () => [x1, y1, x2, y2, stops, className],
+      },
+    });
   }
 </script>
 

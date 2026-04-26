@@ -146,8 +146,7 @@ describe('LineChart mount — series count', () => {
   const data5 = generateMultiSeriesData(200, keys5);
   const data10 = generateMultiSeriesData(200, keys10);
 
-  const makeSeries = (keys: string[]) =>
-    keys.map((key) => ({ key, color: 'currentColor' }));
+  const makeSeries = (keys: string[]) => keys.map((key) => ({ key, color: 'currentColor' }));
 
   bench('1 series', () => {
     cleanup();

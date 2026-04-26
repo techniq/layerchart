@@ -1,7 +1,7 @@
 ---
 description: Marking component which positions text labels on pie and arc chart segments, including along the arc path, at the centroid (horizontal, tangent-rotated, or radially-rotated), outside the arc, and with callout leader lines.
 category: marks
-layers: [svg]
+layers: [svg, canvas]
 related: [Arc, Pie, PieChart, ArcChart, Labels]
 ---
 
@@ -47,12 +47,12 @@ Customize the line itself via the `line` prop, which forwards props to `<Path>`:
 
 ```svelte
 <PieChart
-  {data}
-  labels={{
-    placement: 'callout',
-    value: 'fruit',
-    line: { stroke: 'currentColor', strokeWidth: 1.5, class: 'opacity-50' }
-  }}
+	{data}
+	labels={{
+		placement: 'callout',
+		value: 'fruit',
+		line: { stroke: 'currentColor', strokeWidth: 1.5, class: 'opacity-50' }
+	}}
 />
 ```
 
@@ -62,17 +62,17 @@ When using `Arc` directly (outside of `PieChart`/`ArcChart`), render `ArcLabel` 
 
 ```svelte
 <Arc {...arcProps}>
-  {#snippet children({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps })}
-    <ArcLabel
-      {centroid}
-      {startAngle}
-      {endAngle}
-      {innerRadius}
-      {outerRadius}
-      {getArcTextProps}
-      placement="centroid-radial"
-      value="Label text"
-    />
-  {/snippet}
+	{#snippet children({ centroid, startAngle, endAngle, innerRadius, outerRadius, getArcTextProps })}
+		<ArcLabel
+			{centroid}
+			{startAngle}
+			{endAngle}
+			{innerRadius}
+			{outerRadius}
+			{getArcTextProps}
+			placement="centroid-radial"
+			value="Label text"
+		/>
+	{/snippet}
 </Arc>
 ```

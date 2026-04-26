@@ -226,7 +226,8 @@ export class ChartState<
         const info = markInfo();
         // Skip registration for empty mark info (e.g. pixel-mode marks)
         // to avoid unnecessary array push/splice and version bumps
-        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label) return;
+        if (!info.x && !info.y && !info.data && !info.color && !info.seriesKey && !info.label)
+          return;
         return untrack(() => this.registerMark(info));
       });
     }
@@ -274,6 +275,14 @@ export class ChartState<
         // Use the value axis accessor (y for horizontal charts, x for vertical).
         const valueAxis = this.valueAxis;
         const chartValueProp = valueAxis === 'y' ? this.props.y : this.props.x;
+        const chartValueKeys = Array.isArray(chartValueProp)
+          ? chartValueProp.filter((k): k is string => typeof k === 'string')
+          : typeof chartValueProp === 'string'
+            ? [chartValueProp]
+            : [];
+        const chartHasOwnData =
+          this.props.data != null &&
+          (!Array.isArray(this.props.data) || this.props.data.length > 0);
         const implicitSeries: SeriesData<TData, any>[] = [];
         for (const { info } of this._markInfos) {
           const valueAccessor = valueAxis === 'y' ? info.y : info.x;
@@ -281,10 +290,12 @@ export class ChartState<
             info.seriesKey ??
             (typeof valueAccessor === 'string' ? (valueAccessor as string) : undefined);
           if (!key) continue;
-          // Skip if the mark just reuses the chart's own axis accessor and has no
-          // separate data — it's not defining a new series, just using the chart's axis.
-          // Marks with their own data arrays are kept (multi-dataset scenario).
-          if (key === chartValueProp && !info.data) continue;
+          // Skip if the mark's key matches one of the chart's axis accessors.
+          // When the chart has its own data, any mark using that accessor is just
+          // decorating (e.g. a filtered label subset), not defining a new series.
+          // Without explicit chart data, still skip unless the mark has its own
+          // dataset (multi-dataset scenario).
+          if (chartValueKeys.includes(key) && (chartHasOwnData || !info.data)) continue;
           if (implicitSeries.some((s) => s.key === key)) continue;
           implicitSeries.push({
             key,
@@ -429,14 +440,21 @@ export class ChartState<
   containerWidth = $derived(this.props.width ?? this._containerWidth);
   containerHeight = $derived(this.props.height ?? this._containerHeight);
 
-  // If seriesState has series-specific data, use visible series data (for domain calculations).
-  // This allows simplified charts to pass raw data and let Chart derive chartData from seriesState.
-  // Using visibleSeriesData ensures domain recalculates when series are shown/hidden via legend.
+  // When `<Chart data>` is passed with a non-empty dataset, it's canonical —
+  // marks with their own `data` (e.g. filtered label subsets) still contribute
+  // to `flatData` for domain calculation but don't replace iteration data.
+  // Otherwise fall back to `visibleSeriesData` so simplified charts that pass
+  // data via series definitions still work, with reactive recomputation when
+  // series are shown/hidden via legend.
   data = $derived.by(() => {
+    const propsData = this.props.data;
+    if (propsData != null && (!Array.isArray(propsData) || propsData.length > 0)) {
+      return propsData;
+    }
     if (this.seriesState?.visibleSeriesData?.length) {
       return this.seriesState.visibleSeriesData;
     }
-    return this.props.data ?? [];
+    return [];
   });
 
   flatData = $derived.by(() => {
@@ -866,8 +884,13 @@ export class ChartState<
 
   x1Domain = $derived.by(() => {
     if (this.props.x1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full x1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.x1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.x1Domain;
     }
     // Auto-derive for grouped series when x is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'y') {
@@ -880,8 +903,13 @@ export class ChartState<
   });
   y1Domain = $derived.by(() => {
     if (this.props.y1Domain) {
-      const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
-      return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      // Only filter by visible series when series are configured — otherwise the
+      // full y1Domain is used as-is (composable charts without series).
+      if (this.seriesState.series.length > 0) {
+        const visibleKeys = new Set(this.seriesState.visibleSeries.map((s) => s.key));
+        return this.props.y1Domain.filter((key: any) => visibleKeys.has(key));
+      }
+      return this.props.y1Domain;
     }
     // Auto-derive for grouped series when y is the category axis
     if (this.props.seriesLayout === 'group' && this.valueAxis === 'x') {

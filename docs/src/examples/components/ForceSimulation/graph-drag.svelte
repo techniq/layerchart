@@ -80,7 +80,7 @@
 					{#each links as link, i}
 						<Link
 							data={link}
-							explicitCoords={linkPositions[i]}
+							{...linkPositions[i]}
 							curve={curveLinear}
 							class="stroke-surface-content/20"
 						/>

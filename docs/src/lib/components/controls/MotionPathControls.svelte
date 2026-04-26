@@ -3,6 +3,7 @@
 	import { Field, RangeField, Switch } from 'svelte-ux';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import PathDataMenuField from '$lib/components/controls/fields/PathDataMenuField.svelte';
+	import ShowField from '$lib/components/controls/fields/ShowField.svelte';
 
 	interface MotionPathConfig {
 		pointCount: number;
@@ -30,7 +31,7 @@
 			amplitude: 1,
 			frequency: 10,
 			phase: 0,
-			show: true,
+			show: false,
 			duration: '5s',
 			repeatCount: 'indefinite' as number | 'indefinite',
 			start: undefined as string | undefined
@@ -39,9 +40,7 @@
 </script>
 
 <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-4 screenshot-hidden">
-	<Field label="Show" let:id>
-		<Switch bind:checked={config.show} {id} size="md" />
-	</Field>
+	<ShowField bind:show={config.show} inline={true} />
 	<PathDataMenuField
 		bind:value={config.pathGenerator}
 		amplitude={config.amplitude}

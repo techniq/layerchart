@@ -1,4 +1,3 @@
-import type { ComponentAPI } from '$lib/api-types.js';
 import type { ComponentCatalog } from '$examples/catalog/types.js';
 import { getMarkdownComponent, loadExamplesFromMarkdown } from '$lib/markdown/utils.js';
 import type { Examples } from '$lib/types.js';
@@ -6,10 +5,6 @@ import type { Examples } from '$lib/types.js';
 export const load = async ({ params, url, parent }) => {
 	// Get examples from parent layout
 	const parentData = await parent();
-
-	const allAPIs = import.meta.glob('/src/generated/api/*.json', {
-		import: 'default'
-	});
 
 	const allCatalogs = import.meta.glob('/src/examples/catalog/*.json', {
 		import: 'default'
@@ -34,7 +29,9 @@ export const load = async ({ params, url, parent }) => {
 	// from [example]/+page.ts can't be used to update context after initialization.
 	const urlSegments = url.pathname.split('/');
 	const exampleName = urlSegments.length >= 5 ? urlSegments[4] : null;
-	if (exampleName && !pageExamples[params.name]?.[exampleName]) {
+	// Skip known route names that aren't actual examples
+	const knownRoutes = ['examples', 'llms.txt'];
+	if (exampleName && !knownRoutes.includes(exampleName) && !pageExamples[params.name]?.[exampleName]) {
 		const { loadExample } = await import('$lib/examples.js');
 		const loaded = await loadExample(params.name, exampleName);
 		if (loaded) {
@@ -47,24 +44,10 @@ export const load = async ({ params, url, parent }) => {
 	// Page examples take precedence
 	const examples: Examples = { ...parentData.examples, ...pageExamples };
 
-	// Load component API
-	let api: ComponentAPI | null = null;
-	const apiPath = `/src/generated/api/${params.name}.json`;
-	if (allAPIs[apiPath]) {
-		try {
-			api = (await allAPIs[apiPath]()) as ComponentAPI;
-		} catch (error) {
-			console.warn(`Failed to load API file for component: ${params.name}`, error);
-		}
-	} else {
-		console.warn(`No API file found for component: ${params.name}`);
-	}
-
 	return {
 		PageComponent,
 		metadata,
 		catalog,
-		examples,
-		api
+		examples
 	};
 };

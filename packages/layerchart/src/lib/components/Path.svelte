@@ -197,30 +197,50 @@
   const strokeKey = layerCtx === 'canvas' ? createKey(() => stroke) : undefined;
 
   if (layerCtx === 'canvas') {
-    ctx.registerComponent({ name: 'Path', kind: 'mark', canvasRender: {
-      render,
-      events: {
-        get click() { return onclick; },
-        get pointerenter() { return onpointerenter; },
-        get pointermove() { return onpointermove; },
-        get pointerleave() { return onpointerleave; },
-        get pointerdown() { return onpointerdown; },
-        get pointerover() { return onpointerover; },
-        get pointerout() { return onpointerout; },
-        get touchmove() { return ontouchmove; },
+    ctx.registerComponent({
+      name: 'Path',
+      kind: 'mark',
+      canvasRender: {
+        render,
+        events: {
+          get click() {
+            return onclick;
+          },
+          get pointerenter() {
+            return onpointerenter;
+          },
+          get pointermove() {
+            return onpointermove;
+          },
+          get pointerleave() {
+            return onpointerleave;
+          },
+          get pointerdown() {
+            return onpointerdown;
+          },
+          get pointerover() {
+            return onpointerover;
+          },
+          get pointerout() {
+            return onpointerout;
+          },
+          get touchmove() {
+            return ontouchmove;
+          },
+        },
+        deps: () => [
+          fillKey!.current,
+          fillOpacity,
+          strokeKey!.current,
+          strokeOpacity,
+          strokeWidth,
+          opacity,
+          className,
+          tweenedState.current,
+          restProps.style,
+        ],
       },
-      deps: () => [
-        fillKey!.current,
-        fillOpacity,
-        strokeKey!.current,
-        strokeOpacity,
-        strokeWidth,
-        opacity,
-        className,
-        tweenedState.current,
-        restProps.style,
-      ],
-    } });
+    });
   }
 
   let startPoint = $state<DOMPoint | undefined>();
