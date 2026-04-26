@@ -4,7 +4,7 @@
 	import { format } from '@layerstack/utils';
 	import { getStats } from '$lib/stats.remote';
 
-	const statsPromise = getStats();
+	const query = getStats();
 
 	let npmEl = $state<HTMLElement>();
 	const inViewport = new IsInViewport(() => npmEl);
@@ -17,29 +17,41 @@
 			interval.pause();
 		}
 	});
+
+	const stats = $derived(
+		query.current
+			? [
+					{
+						label: ' Downloads',
+						value: query.current.npmDownloads,
+						link: 'https://npmjs.com/package/layerchart',
+						intervals: ['Weekly', 'Monthly', 'Lifetime']
+					},
+					{
+						label: 'GitHub Stars',
+						value: query.current.githubStars,
+						link: 'https://github.com/techniq/layerchart'
+					},
+					{
+						label: 'Discord Members',
+						value: query.current.discordMembers,
+						link: 'https://discord.gg/697JhMPD3t'
+					},
+					{
+						label: 'Bluesky Followers',
+						value: query.current.bskyFollowers,
+						link: 'https://bsky.app/profile/techniq.dev'
+					}
+				].filter((s) => s.value != null)
+			: []
+	);
 </script>
 
-{#await statsPromise}
+{#if query.loading || query.error || !query.current}
 	<div
 		class="grid grid-cols-2 md:grid-cols-4 items-center justify-items-center px-1 py-2 rounded-xl outline m-4 outline-surface-100 h-36 md:h-18 animate-pulse"
 	></div>
-{:then { npmDownloads, githubStars, discordMembers, bskyFollowers }}
-	{@const stats = [
-		{
-			label: ' Downloads',
-			value: npmDownloads,
-			link: 'https://npmjs.com/package/layerchart',
-			intervals: ['Weekly', 'Monthly', 'Lifetime']
-		},
-		{ label: 'GitHub Stars', value: githubStars, link: 'https://github.com/techniq/layerchart' },
-		{ label: 'Discord Members', value: discordMembers, link: 'https://discord.gg/697JhMPD3t' },
-		{
-			label: 'Bluesky Followers',
-			value: bskyFollowers,
-			link: 'https://bsky.app/profile/techniq.dev'
-		}
-	].filter((s) => s.value != null)}
-
+{:else}
 	<div
 		class="flex flex-wrap items-center justify-evenly px-1 py-2 rounded-xl outline m-4 outline-surface-content/10"
 	>
@@ -60,7 +72,7 @@
 						<ScrollingValue value={interval.counter} axis="y">
 							{@const intervalIndex = interval.counter % intervals.length}
 							<div class="text-lg font-bold text-surface-content">
-								{format(npmDownloads[intervalIndex]!, 'metric', {
+								{format(query.current.npmDownloads[intervalIndex]!, 'metric', {
 									fractionDigits: 1
 								}).toLowerCase() + '+'}
 							</div>
@@ -85,4 +97,4 @@
 			{/if}
 		{/each}
 	</div>
-{/await}
+{/if}
