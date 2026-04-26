@@ -69,6 +69,9 @@
     "vitest-browser-svelte": "^2.1.0"
   },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "@dagrejs/dagre": "^2.0.4",
     "@layerstack/svelte-actions": "1.0.1-next.18",

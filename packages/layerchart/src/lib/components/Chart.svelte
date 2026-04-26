@@ -19,7 +19,6 @@
   import type { GeoStateProps } from '$lib/states/geo.svelte.js';
   import TooltipContext from './tooltip/TooltipContext.svelte';
 
-  import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
   import BrushContext from './BrushContext.svelte';
   import {
@@ -777,18 +776,23 @@
     }
   });
 
-  const initialTransform = $derived(
-    transform?.mode === 'projection' &&
-      (resolvedApply.translate || resolvedApply.scale) &&
-      geo?.fitGeojson &&
-      geo?.projection
-      ? geoFitObjectTransform(
-          geo.projection(),
-          [chartState.width, chartState.height],
-          geo.fitGeojson
-        )
-      : undefined
-  );
+  const initialTransform = $derived.by(() => {
+    if (
+      transform?.mode !== 'projection' ||
+      !(resolvedApply.translate || resolvedApply.scale) ||
+      !geo?.fitGeojson ||
+      !geo?.projection
+    ) {
+      return undefined;
+    }
+    // Inlined to avoid pulling `$lib/utils/geo.js` (and its d3-geo imports)
+    // into Chart's static graph for non-geo charts.
+    const fitted = geo
+      .projection()
+      .fitSize([chartState.width, chartState.height], geo.fitGeojson);
+    const t = fitted.translate();
+    return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
+  });
 
   const processTranslate = $derived.by(() => {
     if (resolvedApply.rotation && chartState.geoState?.projection) {

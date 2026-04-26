@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import TooltipContext from './tooltip/TooltipContext.svelte';
+  import type TooltipContext from './tooltip/TooltipContext.svelte';
   import type Tooltip from './tooltip/Tooltip.svelte';
   import type TooltipHeader from './tooltip/TooltipHeader.svelte';
   import type TooltipList from './tooltip/TooltipList.svelte';
@@ -133,24 +133,24 @@
   import { asAny } from '../utils/types.js';
   import { getObjectOrNull } from '../utils/common.js';
 
-  import Area from './Area.svelte';
-  import Arc from './Arc.svelte';
+  import type Area from './Area.svelte';
+  import type Arc from './Arc.svelte';
   import Axis from './Axis.svelte';
-  import Bars from './Bars.svelte';
-  import BrushContext from './BrushContext.svelte';
+  import type Bars from './Bars.svelte';
+  import type BrushContext from './BrushContext.svelte';
   import ChartAnnotations from './charts/ChartAnnotations.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
-  import Group from './Group.svelte';
+  import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
   import Points from './Points.svelte';
   import Labels from './Labels.svelte';
   import Legend from './Legend.svelte';
-  import Line from './Line.svelte';
-  import Pie from './Pie.svelte';
+  import type Line from './Line.svelte';
+  import type Pie from './Pie.svelte';
   import Rule from './Rule.svelte';
-  import Spline from './Spline.svelte';
+  import type Spline from './Spline.svelte';
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
 
