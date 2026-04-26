@@ -1,5 +1,6 @@
 import { build } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { visualizer } from "rollup-plugin-visualizer";
 import { resolve, join } from "node:path";
 import {
 	writeFileSync,
@@ -47,6 +48,7 @@ class BundleAnalyzer {
 		scenarios?: string[];
 		components?: boolean;
 		componentFilter?: string[];
+		visualize?: boolean;
 	}): Promise<BundleReport> {
 		console.log("Starting bundle analysis...\n");
 
@@ -70,7 +72,7 @@ class BundleAnalyzer {
 
 		for (const scenario of scenariosToAnalyze) {
 			console.log(`  Analyzing: ${scenario.name}`);
-			const result = await this.analyzeScenario(scenario);
+			const result = await this.analyzeScenario(scenario, options.visualize);
 			results.push(result);
 		}
 
@@ -81,6 +83,16 @@ class BundleAnalyzer {
 
 		this.saveReport(report);
 		this.printReport(report);
+
+		if (options.visualize) {
+			console.log("\nTreemap visualizations:");
+			for (const scenario of scenariosToAnalyze) {
+				const safeName = scenario.name.replace(/[^a-zA-Z0-9_-]/g, "_");
+				console.log(
+					`  ${join(this.outputDir, `visualize-${safeName}.html`)}`
+				);
+			}
+		}
 
 		// Clean up temp directory
 		if (existsSync(this.tempDir)) {
@@ -102,12 +114,14 @@ class BundleAnalyzer {
 	}
 
 	private async analyzeScenario(
-		scenario: Scenario
+		scenario: Scenario,
+		visualize = false
 	): Promise<BundleResult> {
 		const entryPath = this.createEntryFile(scenario);
 		const { size, gzipSize } = await this.buildAndMeasure(
 			entryPath,
-			scenario.name
+			scenario.name,
+			visualize
 		);
 
 		return {
@@ -153,15 +167,31 @@ const refs = [
 
 	private async buildAndMeasure(
 		entryPath: string,
-		scenarioName: string
+		scenarioName: string,
+		visualize = false
 	): Promise<{ size: number; gzipSize: number }> {
 		const safeName = scenarioName.replace(/[^a-zA-Z0-9_-]/g, "_");
 		const outputPath = join(this.tempDir, `dist-${safeName}`);
+		const visualizePath = join(
+			this.outputDir,
+			`visualize-${safeName}.html`
+		);
 
 		try {
 			await build({
 				plugins: [
 					svelte(),
+					...(visualize
+						? [
+								visualizer({
+									filename: visualizePath,
+									template: "treemap",
+									gzipSize: true,
+									brotliSize: true,
+									title: `Bundle: ${scenarioName}`,
+								}),
+							]
+						: []),
 					{
 						name: "strip-comments",
 						generateBundle(_options, bundle) {
@@ -231,15 +261,43 @@ const refs = [
 	private measureBundle(
 		safeName: string
 	): { size: number; gzipSize: number } {
-		const bundlePath = join(this.tempDir, `dist-${safeName}`, "bundle.js");
+		const distDir = join(this.tempDir, `dist-${safeName}`);
+		const entryPath = join(distDir, "bundle.js");
 
-		if (!existsSync(bundlePath)) {
+		if (!existsSync(entryPath)) {
 			return { size: 0, gzipSize: 0 };
 		}
 
-		const content = readFileSync(bundlePath, "utf-8");
-		const size = Buffer.byteLength(content, "utf-8");
-		const gzipSize = gzipSync(content).length;
+		// Sum the entry chunk + all chunks reachable via STATIC imports.
+		// Lazy-loaded chunks (via dynamic `import()`) are excluded so the
+		// reported size reflects what every consumer of this scenario pays
+		// up-front, not optional features they may not use.
+		const visited = new Set<string>();
+		const stack = ["bundle.js"];
+		let totalContent = "";
+
+		while (stack.length > 0) {
+			const file = stack.pop()!;
+			if (visited.has(file)) continue;
+			visited.add(file);
+
+			const filePath = join(distDir, file);
+			if (!existsSync(filePath)) continue;
+
+			const content = readFileSync(filePath, "utf-8");
+			totalContent += content;
+
+			// Match top-of-file static imports: `import ... from "./XXX.js"`
+			// (Dynamic `import("./XXX.js")` calls have a paren — different pattern.)
+			const staticImportRegex =
+				/(?:^|[\n;])\s*import\s+(?:[\s\S]*?\s+from\s+)?["']\.\/([\w-]+\.js)["']/g;
+			for (const match of content.matchAll(staticImportRegex)) {
+				stack.push(match[1]!);
+			}
+		}
+
+		const size = Buffer.byteLength(totalContent, "utf-8");
+		const gzipSize = gzipSync(totalContent).length;
 
 		return { size, gzipSize };
 	}
@@ -365,6 +423,7 @@ async function main() {
 	}
 
 	const includeComponents = args.includes("--components");
+	const visualize = args.includes("--visualize");
 	const scenarioFilter = args
 		.filter((a) => !a.startsWith("--"))
 		.filter((a) => a.length > 0);
@@ -375,6 +434,7 @@ async function main() {
 		components: includeComponents,
 		componentFilter:
 			scenarioFilter.length > 0 ? scenarioFilter : undefined,
+		visualize,
 	});
 }
 

@@ -21,6 +21,7 @@
     "changeset:release": "changeset publish",
     "up-deps": "pnpm update -r -i --latest",
     "bundle:analyze": "pnpm --filter @layerchart/bundle-analyzer bundle:analyze",
+    "bundle:visualize": "pnpm --filter @layerchart/bundle-analyzer bundle:visualize",
     "bundle:compare": "pnpm --filter @layerchart/bundle-analyzer bundle:compare",
     "bundle:generate-comment": "pnpm --filter @layerchart/bundle-analyzer generate-comment"
   },

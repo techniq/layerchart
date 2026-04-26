@@ -65,6 +65,11 @@ pnpm bundle:analyze -- --components
 # Analyze specific scenarios or components by name
 pnpm bundle:analyze -- geo dagre
 
+# Generate interactive treemap HTML for the given scenarios
+pnpm bundle:visualize -- core geo
+# → bundle-reports/visualize-core.html, bundle-reports/visualize-geo.html
+# Open in a browser to drill into per-module sizes (rendered/gzipped/brotli)
+
 # Compare two report files
 pnpm bundle:compare -- report-new.json report-old.json
 ```
