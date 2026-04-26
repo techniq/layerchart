@@ -1,8 +1,17 @@
 <script lang="ts">
-  // Shared tooltip logic across simplified chart components
+  // Shared tooltip logic across simplified chart components.
+  // Use explicit named imports instead of `import * as Tooltip from '../tooltip/index.js'`
+  // so this dynamically-imported chunk doesn't drag in `TooltipContext.svelte`
+  // (which is already in the static graph via Chart.svelte and would otherwise
+  // bloat the lazy chunk and trip Vite dev-server compilation in CI).
   import { sum } from 'd3-array';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import * as Tooltip from '../tooltip/index.js';
+  import Root from '../tooltip/Tooltip.svelte';
+  import Header from '../tooltip/TooltipHeader.svelte';
+  import List from '../tooltip/TooltipList.svelte';
+  import Item from '../tooltip/TooltipItem.svelte';
+  import Separator from '../tooltip/TooltipSeparator.svelte';
+  const Tooltip = { Root, Header, List, Item, Separator };
   import { format } from '@layerstack/utils';
   import type { ChartChildrenProps } from '../ChartChildren.svelte';
 

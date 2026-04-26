@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-26T17:12:59.640Z",
+  "timestamp": "2026-04-26T17:40:15.157Z",
   "results": [
     {
       "scenario": "core",
@@ -27,8 +27,8 @@
     {
       "scenario": "line-chart-interactive",
       "description": "Line chart with tooltip and highlight",
-      "size": 487269,
-      "gzipSize": 118836,
+      "size": 477969,
+      "gzipSize": 114945,
       "imports": [
         "Chart",
         "Svg",
@@ -96,7 +96,7 @@
       "scenario": "high-level-charts",
       "description": "All high-level chart components (LineChart, BarChart, etc.)",
       "size": 537434,
-      "gzipSize": 128556,
+      "gzipSize": 128555,
       "imports": [
         "LineChart",
         "AreaChart",
@@ -137,7 +137,7 @@
       "scenario": "geo-full",
       "description": "Full geo setup with all geo components",
       "size": 519681,
-      "gzipSize": 128291,
+      "gzipSize": 128292,
       "imports": [
         "Chart",
         "Svg",
@@ -187,7 +187,7 @@
       "scenario": "hierarchy-treemap",
       "description": "Treemap layout",
       "size": 469813,
-      "gzipSize": 114599,
+      "gzipSize": 114600,
       "imports": [
         "Chart",
         "Svg",
@@ -242,7 +242,7 @@
       "scenario": "chord",
       "description": "Chord diagram",
       "size": 472313,
-      "gzipSize": 114787,
+      "gzipSize": 114788,
       "imports": [
         "Chart",
         "Svg",
@@ -263,8 +263,8 @@
     {
       "scenario": "all",
       "description": "Everything from layerchart (worst case)",
-      "size": 977111,
-      "gzipSize": 242321,
+      "size": 966959,
+      "gzipSize": 238859,
       "imports": [
         "*"
       ]
