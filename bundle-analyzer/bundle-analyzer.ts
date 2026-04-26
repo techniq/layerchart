@@ -81,7 +81,14 @@ class BundleAnalyzer {
 			results,
 		};
 
-		this.saveReport(report);
+		// Only update `latest.json` (the committed baseline) on full runs.
+		// Filtered/component runs would otherwise drop scenarios from the
+		// baseline and break the PR comparison comment.
+		const isFullRun =
+			!options.scenarios &&
+			!options.components &&
+			!options.componentFilter;
+		this.saveReport(report, isFullRun);
 		this.printReport(report);
 
 		if (options.visualize) {
@@ -302,16 +309,23 @@ const refs = [
 		return { size, gzipSize };
 	}
 
-	private saveReport(report: BundleReport): void {
+	private saveReport(report: BundleReport, updateLatest = true): void {
 		const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 		const filepath = join(this.outputDir, `bundle-report-${timestamp}.json`);
 
 		writeFileSync(filepath, JSON.stringify(report, null, 2));
 
-		const latestPath = join(this.outputDir, "latest.json");
-		writeFileSync(latestPath, JSON.stringify(report, null, 2));
+		if (updateLatest) {
+			const latestPath = join(this.outputDir, "latest.json");
+			writeFileSync(latestPath, JSON.stringify(report, null, 2));
+		}
 
 		console.log(`\nReport saved to ${filepath}`);
+		if (!updateLatest) {
+			console.log(
+				`(Skipped updating latest.json because this was a filtered run)`
+			);
+		}
 	}
 
 	private printReport(report: BundleReport): void {
