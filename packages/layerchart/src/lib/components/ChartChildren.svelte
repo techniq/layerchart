@@ -139,6 +139,11 @@
   import type Bars from './Bars.svelte';
   import type BrushContext from './BrushContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
+  // DefaultTooltip is statically imported because lazy-loading it broke
+  // a vitest-browser test in CI ("Failed to fetch dynamically imported
+  // module"). The savings were small (~3 KB gz) and not worth the test
+  // instability; the other lazy-loads below stay.
+  import DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
   import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
@@ -149,12 +154,12 @@
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
 
-  // ChartAnnotations, DefaultTooltip, Labels, Legend, and Points are
-  // dynamically imported inline in the markup via `{#await import(...)}` so
-  // composed `<Chart><Svg>...</Svg></Chart>` users (no auto-render props)
-  // don't pay for them. The bundler turns each `import()` into a separate
-  // chunk. The type-only imports below keep `ComponentProps<typeof X>` working
-  // in the `props` prop type definition.
+  // ChartAnnotations, Labels, Legend, and Points are dynamically imported
+  // inline in the markup via `{#await import(...)}` so composed
+  // `<Chart><Svg>...</Svg></Chart>` users (no auto-render props) don't pay
+  // for them. The bundler turns each `import()` into a separate chunk. The
+  // type-only imports below keep `ComponentProps<typeof X>` working in the
+  // `props` prop type definition.
   import type Labels from './Labels.svelte';
   import type Legend from './Legend.svelte';
   import type Points from './Points.svelte';
@@ -322,8 +327,6 @@
   {#if typeof tooltip === 'function'}
     {@render tooltip(snippetProps)}
   {:else if tooltipContext}
-    {#await import('./charts/DefaultTooltip.svelte') then { default: DefaultTooltip }}
-      <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
-    {/await}
+    <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
   {/if}
 {/if}
