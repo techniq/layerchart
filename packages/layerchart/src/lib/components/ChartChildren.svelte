@@ -138,21 +138,31 @@
   import Axis from './Axis.svelte';
   import type Bars from './Bars.svelte';
   import type BrushContext from './BrushContext.svelte';
-  import ChartAnnotations from './charts/ChartAnnotations.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
   import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
-  import Labels from './Labels.svelte';
-  import Legend from './Legend.svelte';
   import type Line from './Line.svelte';
   import type Pie from './Pie.svelte';
-  import Points from './Points.svelte';
   import Rule from './Rule.svelte';
   import type Spline from './Spline.svelte';
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
+
+  // ChartAnnotations, Labels, Legend, and Points are dynamically imported via
+  // `$effect` (script-side `import()`) so composed `<Chart><Svg>...</Svg></Chart>`
+  // users (no auto-render props) don't pay for them. The bundler turns each
+  // `import()` into a separate chunk. The type-only imports keep
+  // `ComponentProps<typeof X>` working in the `props` prop type definition.
+  import type ChartAnnotations from './charts/ChartAnnotations.svelte';
+  import type Labels from './Labels.svelte';
+  import type Legend from './Legend.svelte';
+  import type Points from './Points.svelte';
+  let ChartAnnotationsLazy = $state<typeof ChartAnnotations | null>(null);
+  let LabelsLazy = $state<typeof Labels | null>(null);
+  let LegendLazy = $state<typeof Legend | null>(null);
+  let PointsLazy = $state<typeof Points | null>(null);
 
   const context = getChartContext<TData, XScale, YScale>();
   const settings = getSettings();
@@ -179,6 +189,38 @@
 
   let snippetProps = $derived({ context });
   let layer = $derived(settings.layer);
+
+  $effect(() => {
+    if (annotations.length > 0 && !ChartAnnotationsLazy) {
+      import('./charts/ChartAnnotations.svelte').then((m) => {
+        ChartAnnotationsLazy = m.default;
+      });
+    }
+  });
+
+  $effect(() => {
+    if (legend && typeof legend !== 'function' && !LegendLazy) {
+      import('./Legend.svelte').then((m) => {
+        LegendLazy = m.default;
+      });
+    }
+  });
+
+  $effect(() => {
+    if (labels && typeof labels !== 'function' && !LabelsLazy) {
+      import('./Labels.svelte').then((m) => {
+        LabelsLazy = m.default;
+      });
+    }
+  });
+
+  $effect(() => {
+    if (points && typeof points !== 'function' && !PointsLazy) {
+      import('./Points.svelte').then((m) => {
+        PointsLazy = m.default;
+      });
+    }
+  });
 </script>
 
 {#if childrenProp}
@@ -204,7 +246,9 @@
     {/if}
 
     <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
-      <ChartAnnotations {annotations} layer="below" />
+      {#if annotations.length > 0 && ChartAnnotationsLazy}
+        <ChartAnnotationsLazy {annotations} layer="below" />
+      {/if}
 
       {@render belowMarks?.(snippetProps)}
       {@render marks?.(snippetProps)}
@@ -262,9 +306,9 @@
     >
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
-      {:else if points}
+      {:else if points && PointsLazy}
         {#each context.series.visibleSeries as s, i (s.key)}
-          <Points
+          <PointsLazy
             seriesKey={s.key}
             stroke="var(--color-surface-100, light-dark(white, black))"
             {...getObjectOrNull(points)}
@@ -275,10 +319,10 @@
 
       {#if typeof labels === 'function'}
         {@render labels(snippetProps)}
-      {:else if labels}
+      {:else if labels && LabelsLazy}
         {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
         {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
-          <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
+          <LabelsLazy seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
         {/each}
       {/if}
 
@@ -288,7 +332,9 @@
         <Highlight {...typeof highlight === 'object' ? highlight : {}} {...props.highlight} />
       {/if}
 
-      <ChartAnnotations {annotations} layer="above" />
+      {#if annotations.length > 0 && ChartAnnotationsLazy}
+        <ChartAnnotationsLazy {annotations} layer="above" />
+      {/if}
     </ChartClipPath>
   </Layer>
 
@@ -296,8 +342,8 @@
 
   {#if typeof legend === 'function'}
     {@render legend(snippetProps)}
-  {:else if legend}
-    <Legend placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
+  {:else if legend && LegendLazy}
+    <LegendLazy placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
   {/if}
 
   {#if typeof tooltip === 'function'}
