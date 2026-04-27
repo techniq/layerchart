@@ -11,3 +11,9 @@
  */
 export { default as Circle } from './components/Circle.svg.svelte';
 export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle.shared.svelte.js';
+export { default as Text } from './components/Text.svg.svelte';
+export type {
+  TextProps,
+  TextPropsWithoutHTML,
+  TextSegment,
+} from './components/Text.shared.svelte.js';

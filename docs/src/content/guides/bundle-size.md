@@ -89,11 +89,12 @@ The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer v
 
 ### Components currently split
 
-| Primitive | SVG variant | Canvas variant | HTML variant |
+| Primitive | Svg-only saves | Canvas-only saves | Html-only saves |
 | --- | --- | --- | --- |
-| `Circle` | `layerchart/svg` | `layerchart/canvas` | `layerchart/html` |
+| `Circle` | ~4 KB gz (~25%) | ~1 KB gz (~7%) | ~4 KB gz (~22%) |
+| `Text` | ~13 KB gz (~45%) | ~2 KB gz (~8%) | ~13 KB gz (~46%) |
 
-More primitives (`Rect`, `Line`, `Path`, `Text`, `Bar`) are planned. The pattern follows the same shape — we'll add to the table as they land.
+More primitives (`Rect`, `Line`, `Path`, `Bar`) are planned. The pattern follows the same shape — we'll add to the table as they land.
 
 ## Worst case: importing everything
 
@@ -114,6 +115,8 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 | `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~129 KB |
 | `circle-svg` (per-layer) | `Circle` from `layerchart/svg` | ~13 KB |
 | `circle-agnostic` | `Circle` from `layerchart` | ~17 KB |
+| `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |
+| `text-agnostic` | `Text` from `layerchart` | ~29 KB |
 
 `core` is what every chart pays. The other rows show what specific feature additions cost on top.
 

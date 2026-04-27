@@ -205,6 +205,33 @@ export const scenarios: Scenario[] = [
 		imports: ["Circle"],
 		subpathOverrides: { Circle: "html" },
 	},
+	{
+		name: "text-agnostic",
+		group: "Layer-specific",
+		description: "Standalone Text (agnostic) — baseline",
+		imports: ["Text"],
+	},
+	{
+		name: "text-svg",
+		group: "Layer-specific",
+		description: "Standalone Text from `layerchart/svg`",
+		imports: ["Text"],
+		subpathOverrides: { Text: "svg" },
+	},
+	{
+		name: "text-canvas",
+		group: "Layer-specific",
+		description: "Standalone Text from `layerchart/canvas`",
+		imports: ["Text"],
+		subpathOverrides: { Text: "canvas" },
+	},
+	{
+		name: "text-html",
+		group: "Layer-specific",
+		description: "Standalone Text from `layerchart/html`",
+		imports: ["Text"],
+		subpathOverrides: { Text: "html" },
+	},
 
 	// --- Worst case ---
 	{
