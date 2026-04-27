@@ -143,7 +143,6 @@
   import Grid from './Grid.svelte';
   import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
-  import Lazy from './Lazy.svelte';
   import type Line from './Line.svelte';
   import type Pie from './Pie.svelte';
   import Rule from './Rule.svelte';
@@ -151,11 +150,14 @@
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
 
-  // ChartAnnotations, Labels, Legend, and Points are lazy-loaded via <Lazy />
-  // so composed `<Chart><Svg>...</Svg></Chart>` users (no auto-render props)
-  // don't pay for them. The bundler turns each `import()` inside <Lazy load>
-  // into a separate chunk. Type-only imports below keep
-  // `ComponentProps<typeof X>` working in the `props` prop type definition.
+  // ChartAnnotations, Labels, Legend, and Points are dynamically imported
+  // inline in the markup via `{#await import(...)}` so composed
+  // `<Chart><Svg>...</Svg></Chart>` users (no auto-render props) don't pay
+  // for them. The bundler turns each `import()` into a separate chunk. The
+  // type-only imports below keep `ComponentProps<typeof X>` working in the
+  // `props` prop type definition.
+  // Note: lazy-only deps must be added to `vite.config.js`'s `optimizeDeps.include`
+  // (e.g. `d3-interpolate` from Legend) so Vite doesn't reload mid-test in CI.
   import type Labels from './Labels.svelte';
   import type Legend from './Legend.svelte';
   import type Points from './Points.svelte';
@@ -211,11 +213,9 @@
 
     <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
       {#if annotations.length > 0}
-        <Lazy
-          load={() => import('./charts/ChartAnnotations.svelte')}
-          {annotations}
-          layer="below"
-        />
+        {#await import('./charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          <ChartAnnotations {annotations} layer="below" />
+        {/await}
       {/if}
 
       {@render belowMarks?.(snippetProps)}
@@ -275,31 +275,27 @@
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
       {:else if points}
-        <Lazy load={() => import('./Points.svelte')}>
-          {#snippet then(Points)}
-            {#each context.series.visibleSeries as s, i (s.key)}
-              <Points
-                seriesKey={s.key}
-                stroke="var(--color-surface-100, light-dark(white, black))"
-                {...getObjectOrNull(points)}
-                {...props.points}
-              />
-            {/each}
-          {/snippet}
-        </Lazy>
+        {#await import('./Points.svelte') then { default: Points }}
+          {#each context.series.visibleSeries as s, i (s.key)}
+            <Points
+              seriesKey={s.key}
+              stroke="var(--color-surface-100, light-dark(white, black))"
+              {...getObjectOrNull(points)}
+              {...props.points}
+            />
+          {/each}
+        {/await}
       {/if}
 
       {#if typeof labels === 'function'}
         {@render labels(snippetProps)}
       {:else if labels}
-        <Lazy load={() => import('./Labels.svelte')}>
-          {#snippet then(Labels)}
-            {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
-            {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
-              <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
-            {/each}
-          {/snippet}
-        </Lazy>
+        {#await import('./Labels.svelte') then { default: Labels }}
+          {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
+          {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
+            <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
+          {/each}
+        {/await}
       {/if}
 
       {#if typeof highlight === 'function'}
@@ -309,11 +305,9 @@
       {/if}
 
       {#if annotations.length > 0}
-        <Lazy
-          load={() => import('./charts/ChartAnnotations.svelte')}
-          {annotations}
-          layer="above"
-        />
+        {#await import('./charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          <ChartAnnotations {annotations} layer="above" />
+        {/await}
       {/if}
     </ChartClipPath>
   </Layer>
@@ -323,12 +317,9 @@
   {#if typeof legend === 'function'}
     {@render legend(snippetProps)}
   {:else if legend}
-    <Lazy
-      load={() => import('./Legend.svelte')}
-      placement="bottom"
-      {...getObjectOrNull(legend)}
-      {...props.legend}
-    />
+    {#await import('./Legend.svelte') then { default: Legend }}
+      <Legend placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
+    {/await}
   {/if}
 
   {#if typeof tooltip === 'function'}
