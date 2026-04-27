@@ -56,7 +56,7 @@
   import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import Circle from './Circle.svelte';
+  import Circle from './Circle/Circle.svelte';
   import Group from './Group.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';

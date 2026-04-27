@@ -44,7 +44,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import Rect from './Rect.svelte';
-  import Circle from './Circle.svelte';
+  import Circle from './Circle/Circle.svelte';
   import Group from './Group.svelte';
 
   let { shape = 'rect', r, x, y, ...restProps }: CellProps = $props();

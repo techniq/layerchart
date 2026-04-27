@@ -9,11 +9,11 @@
  * The agnostic versions (e.g. `import { Circle } from 'layerchart'`) still
  * work and dispatch to these per-layer variants under the hood.
  */
-export { default as Circle } from './components/Circle.svg.svelte';
-export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle.shared.svelte.js';
-export { default as Text } from './components/Text.svg.svelte';
+export { default as Circle } from './components/Circle/Circle.svg.svelte';
+export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle/Circle.shared.svelte.js';
+export { default as Text } from './components/Text/Text.svg.svelte';
 export type {
   TextProps,
   TextPropsWithoutHTML,
   TextSegment,
-} from './components/Text.shared.svelte.js';
+} from './components/Text/Text.shared.svelte.js';

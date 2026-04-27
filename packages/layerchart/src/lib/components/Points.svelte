@@ -61,7 +61,7 @@
 <script lang="ts">
   import { pointRadial } from 'd3-shape';
 
-  import Circle, { type CircleProps } from './Circle.svelte';
+  import Circle, { type CircleProps } from './Circle/Circle.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';

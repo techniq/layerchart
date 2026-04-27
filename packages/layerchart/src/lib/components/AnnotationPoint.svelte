@@ -50,9 +50,9 @@
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import Circle from './Circle.svelte';
+  import Circle from './Circle/Circle.svelte';
   import Link from './Link.svelte';
-  import Text from './Text.svelte';
+  import Text from './Text/Text.svelte';
   import type { Placement } from './types.js';
 
   import { cls } from '@layerstack/tailwind';

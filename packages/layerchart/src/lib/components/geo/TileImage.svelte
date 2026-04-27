@@ -61,7 +61,7 @@
 <script lang="ts">
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  import Text from '../Text.svelte';
+  import Text from '../Text/Text.svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { onMount } from 'svelte';
 

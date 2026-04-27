@@ -109,7 +109,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
-  import Circle from './Circle.svelte';
+  import Circle from './Circle/Circle.svelte';
   import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';

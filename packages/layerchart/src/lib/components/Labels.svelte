@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import Text, { type TextProps } from './Text.svelte';
+  import Text, { type TextProps } from './Text/Text.svelte';
   import { type ComponentProps, type Snippet } from 'svelte';
   import { format as formatValue, type FormatType, type FormatConfig } from '@layerstack/utils';
   import type { Without } from '$lib/utils/types.js';

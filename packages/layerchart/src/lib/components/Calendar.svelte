@@ -61,7 +61,7 @@
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
   import MonthPath from './MonthPath.svelte';
-  import Text from './Text.svelte';
+  import Text from './Text/Text.svelte';
   import { chartDataArray } from '../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { SVGAttributes } from 'svelte/elements';

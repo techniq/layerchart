@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { PathProps } from './Path.svelte';
-  import type { TextProps } from './Text.svelte';
+  import type { TextProps } from './Text/Text.svelte';
   import type { GetArcTextProps, ArcTextOptions } from '$lib/utils/arcText.svelte.js';
 
   /**
@@ -94,7 +94,7 @@
 
 <script lang="ts">
   import Path from './Path.svelte';
-  import Text from './Text.svelte';
+  import Text from './Text/Text.svelte';
   import { radiansToDegrees } from '$lib/utils/math.js';
 
   let {

@@ -2,11 +2,11 @@
   import Chart from '../components/Chart.svelte';
   import Layer from '../components/layers/Layer.svelte';
   import Rect from '../components/Rect.svelte';
-  import Circle from '../components/Circle.svelte';
+  import Circle from '../components/Circle/Circle.svelte';
   import Ellipse from '../components/Ellipse.svelte';
   import Line from '../components/Line.svelte';
   import Group from '../components/Group.svelte';
-  import Text from '../components/Text.svelte';
+  import Text from '../components/Text/Text.svelte';
   import Path from '../components/Path.svelte';
 
   type Primitive = 'rect' | 'circle' | 'ellipse' | 'line' | 'group' | 'text' | 'path';

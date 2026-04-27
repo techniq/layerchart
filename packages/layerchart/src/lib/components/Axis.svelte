@@ -154,7 +154,7 @@
   import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
-  import Text from './Text.svelte';
+  import Text from './Text/Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   import { getChartContext } from '$lib/contexts/chart.js';

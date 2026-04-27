@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import Circle, { type CircleProps } from '../Circle.svelte';
+  import Circle, { type CircleProps } from '../Circle/Circle.svelte';
   import type { Without } from '$lib/utils/types.js';
 
   export type GeoPointPropsWithoutHTML = {

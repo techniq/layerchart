@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import Circle from './Circle.svelte';
+  import Circle from './Circle/Circle.svelte';
   import Line from './Line.svelte';
   import type Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
