@@ -81,6 +81,7 @@ function analyzeChanges(prReport, targetReport) {
 			changes.push({
 				scenario,
 				description: pr.description || target.description || "",
+				group: pr.group || target.group,
 				status: hasSignificantChange ? "changed" : "unchanged",
 				sizeDiff,
 				gzipSizeDiff,
@@ -95,6 +96,7 @@ function analyzeChanges(prReport, targetReport) {
 			changes.push({
 				scenario,
 				description: pr.description || "",
+				group: pr.group,
 				status: "added",
 				sizeDiff: pr.size,
 				gzipSizeDiff: pr.gzipSize,
@@ -109,6 +111,7 @@ function analyzeChanges(prReport, targetReport) {
 			changes.push({
 				scenario,
 				description: target.description || "",
+				group: target.group,
 				status: "removed",
 				sizeDiff: -target.size,
 				gzipSizeDiff: -target.gzipSize,
@@ -122,7 +125,10 @@ function analyzeChanges(prReport, targetReport) {
 		}
 	}
 
-	return changes.sort((a, b) => a.scenario.localeCompare(b.scenario));
+	// Preserve the input order — PR scenarios first (which start with `core`),
+	// then any target-only scenarios. Order within a group reflects the order
+	// in `define-scenarios.ts`.
+	return changes;
 }
 
 function generateComment(changes, hasBaseline = true) {
@@ -183,17 +189,32 @@ function generateComment(changes, hasBaseline = true) {
 
 	if (changedScenarios.length > 0) {
 		comment += "### Use-Case Scenarios\n\n";
-		comment += "| Scenario | Current | New | Change |\n";
-		comment += "|----------|--------:|----:|-------:|\n";
 
+		// Group rows by `group` field, preserving insertion order. Scenarios
+		// without a `group` end up under "Other".
+		/** @type {Map<string, ScenarioDiff[]>} */
+		const byGroup = new Map();
 		for (const s of changedScenarios) {
+			const g = s.group || "Other";
+			if (!byGroup.has(g)) byGroup.set(g, []);
+			byGroup.get(g).push(s);
+		}
+
+		const renderRow = (s) => {
 			const icon = getStatusIcon(s.status, s.sizeDiff);
 			const current = `${formatKB(s.targetSize)} KB <sub>(${formatKB(s.targetGzipSize)} gz)</sub>`;
 			const newSize = `${formatKB(s.currentSize)} KB <sub>(${formatKB(s.currentGzipSize)} gz)</sub>`;
 			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)}) <sub>(${formatDiff(s.gzipSizeDiff)} gz, ${formatPercent(s.gzipSizePercent)})</sub>`;
-			comment += `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
+			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
+		};
+
+		for (const [groupName, rows] of byGroup) {
+			comment += `#### ${groupName}\n\n`;
+			comment += "| Scenario | Current | New | Change |\n";
+			comment += "|----------|--------:|----:|-------:|\n";
+			for (const s of rows) comment += renderRow(s);
+			comment += "\n";
 		}
-		comment += "\n";
 	}
 
 	if (changedComponents.length > 0) {

@@ -24,6 +24,7 @@ const __dirname = dirname(__filename);
 interface BundleResult {
 	scenario: string;
 	description: string;
+	group?: string;
 	size: number;
 	gzipSize: number;
 	imports: string[];
@@ -134,6 +135,7 @@ class BundleAnalyzer {
 		return {
 			scenario: scenario.name,
 			description: scenario.description,
+			group: scenario.group,
 			size,
 			gzipSize,
 			imports: scenario.imports,
