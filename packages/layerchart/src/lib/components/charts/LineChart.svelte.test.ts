@@ -36,10 +36,13 @@ describe('LineChart', () => {
       clientY: rect.y + rect.height / 2,
     };
 
-    tooltipRect!.dispatchEvent(new PointerEvent('pointerenter', eventInit));
-    tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
-
+    // Retry the dispatch inside vi.waitFor — DefaultTooltip is lazy-loaded
+    // by ChartChildren so the first pointer event may fire before its chunk
+    // resolves.
     await vi.waitFor(() => {
+      tooltipRect!.dispatchEvent(new PointerEvent('pointerenter', eventInit));
+      tooltipRect!.dispatchEvent(new PointerEvent('pointermove', eventInit));
+
       const colorDot = document.querySelector('.lc-tooltip-item-color') as HTMLElement | null;
       expect(colorDot).not.toBeNull();
 

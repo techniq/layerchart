@@ -112,7 +112,9 @@
 <script lang="ts" generics="TData = any">
   import type { Snippet } from 'svelte';
   import { bisector, max, min } from 'd3-array';
-  import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
+  // d3-quadtree (used only for quadtree* tooltip modes) is dynamically
+  // imported inside the $effect below so non-quadtree users don't pay for it.
+  import type { Quadtree } from 'd3-quadtree';
   import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -434,65 +436,77 @@
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
-  const quadtree: Quadtree<[number, number]> | undefined = $derived.by(() => {
-    if (['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
-      return d3Quadtree()
-        .x((d) => {
-          if (mode === 'quadtree-y') {
-            return 0;
-          }
+  let quadtree = $state<Quadtree<[number, number]> | undefined>();
 
-          if (xAccessorOverride) {
-            const scaled = ctx.xScale(xAccessorOverride(d));
+  $effect(() => {
+    // Touch the dependencies the quadtree is built from so the effect re-runs
+    // on changes (mode, accessors, scales, data, projection).
+    if (!['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
+      quadtree = undefined;
+      return;
+    }
+
+    const m = mode;
+    const xAcc = xAccessorOverride;
+    const yAcc = yAccessorOverride;
+    const xScale = ctx.xScale;
+    const yScale = ctx.yScale;
+    const xGet = ctx.xGet;
+    const yGet = ctx.yGet;
+    const xAccCtx = ctx.x;
+    const yAccCtx = ctx.y;
+    const projection = geo.projection;
+    const flatData = ctx.flatData;
+
+    let cancelled = false;
+    import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
+      if (cancelled) return;
+      quadtree = d3Quadtree<[number, number]>()
+        .x((d) => {
+          if (m === 'quadtree-y') return 0;
+          if (xAcc) {
+            const scaled = xScale(xAcc(d));
             return typeof scaled === 'number' ? scaled : 0;
           }
-
-          if (geo.projection) {
-            const lat = ctx.x(d);
-            const long = ctx.y(d);
-            const geoValue = geo.projection([lat, long]) ?? [0, 0];
+          if (projection) {
+            const lat = xAccCtx(d);
+            const long = yAccCtx(d);
+            const geoValue = projection([lat, long]) ?? [0, 0];
             return geoValue[0];
           }
-
-          const value = ctx.xGet(d);
-
+          const value = xGet(d);
           if (Array.isArray(value)) {
             // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
             // Default to the max (typically the "target"/"end" endpoint); override
             // via the `x` prop for explicit control.
             return max(value);
-          } else {
-            return value;
           }
+          return value;
         })
         .y((d) => {
-          if (mode === 'quadtree-x') {
-            return 0;
-          }
-
-          if (yAccessorOverride) {
-            const scaled = ctx.yScale(yAccessorOverride(d));
+          if (m === 'quadtree-x') return 0;
+          if (yAcc) {
+            const scaled = yScale(yAcc(d));
             return typeof scaled === 'number' ? scaled : 0;
           }
-
-          if (geo.projection) {
-            const lat = ctx.x(d);
-            const long = ctx.y(d);
-            const geoValue = geo.projection([lat, long]) ?? [0, 0];
+          if (projection) {
+            const lat = xAccCtx(d);
+            const long = yAccCtx(d);
+            const geoValue = projection([lat, long]) ?? [0, 0];
             return geoValue[1];
           }
-
-          const value = ctx.yGet(d);
-
+          const value = yGet(d);
           if (Array.isArray(value)) {
             // `y` accessor with multiple properties — default to max endpoint.
             return max(value);
-          } else {
-            return value;
           }
+          return value;
         })
-        .addAll(ctx.flatData as [number, number][]);
-    }
+        .addAll(flatData as [number, number][]);
+    });
+    return () => {
+      cancelled = true;
+    };
   });
 
   const rects: Array<{ x: number; y: number; width: number; height: number; data: any }> =

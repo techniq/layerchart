@@ -139,7 +139,9 @@
   import type Bars from './Bars.svelte';
   import type BrushContext from './BrushContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
-  import DefaultTooltip from './charts/DefaultTooltip.svelte';
+  // DefaultTooltip is lazy-loaded inline (only when `tooltipContext` is set
+  // and no custom `tooltip` snippet is provided).
+  import type DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
   import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
@@ -325,6 +327,8 @@
   {#if typeof tooltip === 'function'}
     {@render tooltip(snippetProps)}
   {:else if tooltipContext}
-    <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
+    {#await import('./charts/DefaultTooltip.svelte') then { default: DefaultTooltip }}
+      <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
+    {/await}
   {/if}
 {/if}
