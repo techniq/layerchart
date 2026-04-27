@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { geoOrthographic } from 'd3-geo';
 
-	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, GeoRaster, Graticule } from 'layerchart/geo';
 	import { SelectField } from 'svelte-ux';
 
 	// Procedural textures — built on demand into an HTMLCanvasElement and handed

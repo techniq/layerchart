@@ -229,8 +229,11 @@
 								<div class="font-semibold text-danger mb-2">
 									Example error{#if component && name}: {component}/{name}{/if}
 								</div>
-								<pre class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
-								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}>Retry</Button>
+								<pre
+									class="text-danger/80 whitespace-pre-wrap break-words overflow-auto max-h-60">{error}</pre>
+								<Button variant="outline" color="danger" size="sm" class="mt-2" on:click={reset}
+									>Retry</Button
+								>
 							</div>
 						{/snippet}
 						{#snippet pending()}

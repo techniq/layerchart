@@ -9,8 +9,8 @@
 	import { geoIdentity, geoPath as d3GeoPath, type GeoProjection } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Layer, Vector, Tooltip } from 'layerchart';
-
+	import { Chart, Layer, Vector, Tooltip } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 
 	const projection = geoIdentity as unknown as () => GeoProjection;
 
@@ -115,9 +115,24 @@
 			{#snippet children({ data })}
 				<Tooltip.Header>{data.county_name}, {data.state_name}</Tooltip.Header>
 				<Tooltip.List>
-					<Tooltip.Item label="Democrat" value={data.votes_dem} format="integer" valueAlign="right" />
-					<Tooltip.Item label="Republican" value={data.votes_gop} format="integer" valueAlign="right" />
-					<Tooltip.Item label="Total" value={data.total_votes} format="integer" valueAlign="right" />
+					<Tooltip.Item
+						label="Democrat"
+						value={data.votes_dem}
+						format="integer"
+						valueAlign="right"
+					/>
+					<Tooltip.Item
+						label="Republican"
+						value={data.votes_gop}
+						format="integer"
+						valueAlign="right"
+					/>
+					<Tooltip.Item
+						label="Total"
+						value={data.total_votes}
+						format="integer"
+						valueAlign="right"
+					/>
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>

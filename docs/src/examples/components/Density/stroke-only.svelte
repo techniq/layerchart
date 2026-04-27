@@ -5,7 +5,6 @@
 
 <script lang="ts">
 	import { Axis, Chart, Density, Layer, Points } from 'layerchart';
-
 </script>
 
 <Chart
@@ -22,7 +21,13 @@
 	<Layer>
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
-		<Density fill="none" stroke="oklch(0.6 0.2 260)" strokeWidth={1} bandwidth={10} thresholds={20} />
+		<Density
+			fill="none"
+			stroke="oklch(0.6 0.2 260)"
+			strokeWidth={1}
+			bandwidth={10}
+			thresholds={20}
+		/>
 		<Points r={1.5} class="fill-surface-content/50" />
 	</Layer>
 </Chart>

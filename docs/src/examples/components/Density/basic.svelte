@@ -5,7 +5,6 @@
 
 <script lang="ts">
 	import { Axis, Chart, Density, Layer, Points } from 'layerchart';
-
 </script>
 
 <Chart

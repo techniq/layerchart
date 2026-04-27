@@ -81,7 +81,9 @@
     }
     return {
       x: x ? ctx.xScale(x) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0) : 0,
-      y: y ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0) : ctx.height,
+      y: y
+        ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0)
+        : ctx.height,
     };
   });
 
@@ -116,16 +118,8 @@
   const linkEndpoints = $derived.by(() => {
     if (!link) return null;
 
-    const dirX = labelPlacement.includes('left')
-      ? -1
-      : labelPlacement.includes('right')
-        ? 1
-        : 0;
-    const dirY = labelPlacement.includes('top')
-      ? -1
-      : labelPlacement.includes('bottom')
-        ? 1
-        : 0;
+    const dirX = labelPlacement.includes('left') ? -1 : labelPlacement.includes('right') ? 1 : 0;
+    const dirY = labelPlacement.includes('top') ? -1 : labelPlacement.includes('bottom') ? 1 : 0;
     if (dirX === 0 && dirY === 0) return null; // labelPlacement='center' — no line
 
     const mag = Math.hypot(dirX, dirY);

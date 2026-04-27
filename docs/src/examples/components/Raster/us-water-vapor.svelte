@@ -3,7 +3,8 @@
 	import { interpolateRdYlBu } from 'd3-scale-chromatic';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	import { Chart, Contour, GeoClipPath, GeoPath, Layer, Legend, Raster } from 'layerchart';
+	import { Chart, Contour, Layer, Legend, Raster } from 'layerchart';
+	import { GeoClipPath, GeoPath } from 'layerchart/geo';
 
 	import { getWaterVapor } from '$lib/data.remote.js';
 	import { getUsCountiesTopology } from '$lib/geo.remote.js';

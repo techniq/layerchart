@@ -10,14 +10,13 @@
 
 	import {
 		Chart,
-		GeoPath,
 		getSettings,
-		Graticule,
 		Layer,
 		Tooltip,
 		defaultChartPadding,
 		type ChartState
 	} from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { Button } from 'svelte-ux';
 	import { sortFunc } from '@layerstack/utils';
 	import { scrollIntoView } from '@layerstack/svelte-actions';

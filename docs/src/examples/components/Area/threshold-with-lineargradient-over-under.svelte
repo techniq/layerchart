@@ -12,7 +12,15 @@
 	export { data };
 </script>
 
-<Chart {data} x="date" y="value" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>
+<Chart
+	{data}
+	x="date"
+	y="value"
+	yNice
+	padding={20}
+	tooltipContext={{ mode: 'quadtree-x' }}
+	height={300}
+>
 	{#snippet children({ context })}
 		{@const thresholdValue = 0}
 		{@const thresholdOffset = context.yScale(thresholdValue) / context.containerHeight}

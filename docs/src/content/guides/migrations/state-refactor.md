@@ -238,10 +238,7 @@ When using `<Chart>` directly (not simplified charts):
 The component has been renamed. See the [geo guide](/docs/guides/geo) for updated examples.
 
 ```svelte diff
-- import { GeoContext } from 'layerchart'
-+ import { GeoProjection } from 'layerchart'
-
-- <GeoContext projection={geoAlbersUsa}>
+- import { GeoContext } from 'layerchart';+ import { GeoProjection } from 'layerchart/geo';- <GeoContext projection={geoAlbersUsa}>
 + <GeoProjection projection={geoAlbersUsa}>
 ```
 
@@ -250,10 +247,8 @@ The component has been renamed. See the [geo guide](/docs/guides/geo) for update
 The old `payload` array (from recharts-style APIs) has been replaced with `tooltip.series` and `tooltip.data` on the chart context. If you are building custom tooltips that read from the tooltip context directly:
 
 ```svelte diff
-- import { getTooltipContext } from 'layerchart'
-- const tooltipCtx = getTooltipContext()
-+ import { getChartContext } from 'layerchart'
-+ const ctx = getChartContext()
+- import { getTooltipContext } from 'layerchart';- const tooltipCtx = getTooltipContext()
++ import { getChartContext } from 'layerchart';+ const ctx = getChartContext()
 
   // x-axis value (e.g. a Date)
 - item.label
@@ -394,10 +389,8 @@ The context system has been consolidated. See the [state guide](/docs/guides/sta
 Standalone context functions have been removed in favor of the unified `getChartContext()`:
 
 ```svelte diff
-- import { getTooltipContext } from 'layerchart'
-- const tooltip = getTooltipContext()
-+ import { getChartContext } from 'layerchart'
-+ const chart = getChartContext()
+- import { getTooltipContext } from 'layerchart';- const tooltip = getTooltipContext()
++ import { getChartContext } from 'layerchart';+ const chart = getChartContext()
 + // chart.tooltip, chart.brushState, chart.transformState
 ```
 
@@ -410,10 +403,7 @@ Removed functions:
 #### `ChartContextValue` type renamed to `ChartState`
 
 ```svelte diff
-- import { type ChartContextValue } from 'layerchart'
-+ import { type ChartState } from 'layerchart'
-
-- let context = $state<ChartContextValue>()
+- import { type ChartContextValue } from 'layerchart';+ import { type ChartState } from 'layerchart';- let context = $state<ChartContextValue>()
 + let context = $state<ChartState>()
 ```
 
@@ -442,10 +432,7 @@ ChartState properties:
 See the [layers guide](/docs/guides/layers) for the updated API.
 
 ```svelte diff
-- import { getRenderContext } from 'layerchart'
-+ import { getLayerContext } from 'layerchart'
-
-// Component prop rename:
+- import { getRenderContext } from 'layerchart';+ import { getLayerContext } from 'layerchart';// Component prop rename:
 - supportedContexts={['svg', 'canvas']}
 + layers={['svg', 'canvas']}
 ```

@@ -7,7 +7,6 @@
 	import { Area, Chart, Layer, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
 
-
 	export { data };
 </script>
 

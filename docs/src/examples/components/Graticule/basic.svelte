@@ -17,7 +17,8 @@
 	} from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import GraticuleControls from '$lib/components/controls/GraticuleControls.svelte';
 	let config = $state({
 		stepX: 10,

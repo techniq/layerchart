@@ -7,7 +7,8 @@
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	const countries = feature(topology, topology.objects.countries);
 

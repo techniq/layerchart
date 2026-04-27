@@ -11,16 +11,8 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import {
-		Chart,
-		Circle,
-		Group,
-		Pack,
-		Layer,
-		Text,
-		findAncestor,
-		type ChartState
-	} from 'layerchart';
+	import { Chart, Circle, Group, Layer, Text, findAncestor, type ChartState } from 'layerchart';
+	import { Pack } from 'layerchart/hierarchy';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import PackControls from '$lib/components/controls/PackControls.svelte';

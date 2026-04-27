@@ -11,8 +11,6 @@
 	import { zip } from 'd3-array';
 	import Blockquote from '$lib/markdown/components/blockquote.svelte';
 
-
-
 	let example = $state<'single'>('single');
 	let motion = $state(true);
 	let show = $state(true);

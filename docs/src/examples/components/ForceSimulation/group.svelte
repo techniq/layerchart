@@ -8,7 +8,8 @@
 		type SimulationNodeDatum
 	} from 'd3-force';
 
-	import { asAny, Chart, Circle, ForceSimulation, Layer } from 'layerchart';
+	import { asAny, Chart, Circle, Layer } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import GroupControl from '$lib/components/controls/ForceSimulationControls.svelte';
 	import { getForceGroupDots } from '$lib/data.remote';
 

@@ -256,7 +256,7 @@ These examples are rendered live from the API endpoints in this project.
 <script lang="ts">
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { GeoPath } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import type { GeoProjection, GeoPermissibleObjects } from 'd3-geo';
 
 	let {
@@ -345,7 +345,13 @@ These examples are rendered live from the API endpoints in this project.
 	<Sankey nodeId={(d) => d.id}>
 		{#snippet children({ links, nodes })}
 			{#each links as link}
-				<Link sankey data={link} strokeWidth={link.width} stroke="rgba(59, 130, 246, 0.2)" fill="none" />
+				<Link
+					sankey
+					data={link}
+					strokeWidth={link.width}
+					stroke="rgba(59, 130, 246, 0.2)"
+					fill="none"
+				/>
 			{/each}
 			{#each nodes as node (node.id)}
 				{@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}

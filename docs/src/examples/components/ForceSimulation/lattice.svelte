@@ -2,7 +2,8 @@
 	import { forceManyBody, forceLink } from 'd3-force';
 	import { curveLinear } from 'd3-shape';
 
-	import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
+	import { Chart, Circle, Link, Layer } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 
 	// Generate lattice grid data
 	const n = 20;

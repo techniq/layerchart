@@ -17,7 +17,7 @@
 		{ min: 0, max: 45, class: 'fill-emerald-500' },
 		{ min: 45, max: 75, class: 'fill-yellow-500' },
 		{ min: 75, max: 100, class: 'fill-orange-500' },
-		{ min: 100, max: 120, class: 'fill-red-500' },
+		{ min: 100, max: 120, class: 'fill-red-500' }
 	];
 
 	const majorTicks = Array.from({ length: 13 }, (_, i) => i * 10);
@@ -46,7 +46,7 @@
 				<!-- Track arc (background) -->
 				<Arc
 					value={0}
-					domain={domain}
+					{domain}
 					range={angleRange}
 					{outerRadius}
 					{innerRadius}

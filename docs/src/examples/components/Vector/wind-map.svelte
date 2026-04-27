@@ -10,7 +10,6 @@
 
 	import { Axis, Chart, Layer, Vector, Tooltip } from 'layerchart';
 
-
 	const wind = windData.map((d) => {
 		const speed = Math.hypot(d.u, d.v);
 		const angle = (Math.atan2(d.u, d.v) * 180) / Math.PI;

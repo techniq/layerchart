@@ -6,7 +6,6 @@
 <script lang="ts">
 	import { BarChart, Tooltip, applyLanes } from 'layerchart';
 
-
 	function formatYear(number: number): string {
 		return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
 	}

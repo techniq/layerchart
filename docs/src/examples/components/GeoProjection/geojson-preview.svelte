@@ -15,7 +15,8 @@
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 	import { color } from 'd3-color';
 
-	import { Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoPath, GeoTile } from 'layerchart/geo';
 	import TransformControls from '$lib/components/controls/TransformContextControls.svelte';
 	import {
 		EmptyMessage,

@@ -38,7 +38,15 @@
 		<Axis placement="left" grid rule />
 		<Axis placement="bottom" rule />
 		{#each data as item}
-			<BoxPlot data={item} min="min" q1="q1" median="median" q3="q3" max="max" outliers="outliers" />
+			<BoxPlot
+				data={item}
+				min="min"
+				q1="q1"
+				median="median"
+				q3="q3"
+				max="max"
+				outliers="outliers"
+			/>
 		{/each}
 	</Layer>
 </Chart>

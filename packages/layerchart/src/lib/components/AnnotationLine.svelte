@@ -70,9 +70,7 @@
 
   const ctx = getChartContext();
 
-  const isVertical = $derived(
-    x != null || (x1Prop != null && x2Prop != null && x1Prop === x2Prop)
-  );
+  const isVertical = $derived(x != null || (x1Prop != null && x2Prop != null && x1Prop === x2Prop));
 
   const line = $derived({
     x1: x1Prop != null ? ctx.xScale(x1Prop) : x != null ? ctx.xScale(x) : ctx.xRange[0],

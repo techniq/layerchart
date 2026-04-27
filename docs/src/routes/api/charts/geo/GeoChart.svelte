@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { GeoPath } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import type { GeoProjection, GeoPermissibleObjects } from 'd3-geo';
 
 	let {

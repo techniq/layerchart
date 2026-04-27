@@ -60,9 +60,19 @@
 				<Tooltip.Header>{data.label}</Tooltip.Header>
 				<Tooltip.List>
 					{#if data.type === 'total' || data.start === 0}
-						<Tooltip.Item label="Value" value={data.end} format="currencyRound" valueAlign="right" />
+						<Tooltip.Item
+							label="Value"
+							value={data.end}
+							format="currencyRound"
+							valueAlign="right"
+						/>
 					{:else}
-						<Tooltip.Item label="Start" value={data.start} format="currencyRound" valueAlign="right" />
+						<Tooltip.Item
+							label="Start"
+							value={data.start}
+							format="currencyRound"
+							valueAlign="right"
+						/>
 						<Tooltip.Item
 							label="Change"
 							value="{data.value >= 0 ? '+' : ''}{format(data.value, 'currencyRound')}"

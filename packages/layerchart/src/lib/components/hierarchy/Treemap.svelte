@@ -86,7 +86,7 @@
     type HierarchyRectangularNode,
   } from 'd3-hierarchy';
 
-  import { aspectTile } from '../utils/treemap.js';
+  import { aspectTile } from '../../utils/treemap.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { Snippet } from 'svelte';
 

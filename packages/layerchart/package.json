@@ -119,6 +119,26 @@
       "svelte": "./dist/server/index.js",
       "default": "./dist/server/index.js"
     },
+    "./geo": {
+      "types": "./dist/geo.d.ts",
+      "svelte": "./dist/geo.js",
+      "default": "./dist/geo.js"
+    },
+    "./hierarchy": {
+      "types": "./dist/hierarchy.d.ts",
+      "svelte": "./dist/hierarchy.js",
+      "default": "./dist/hierarchy.js"
+    },
+    "./force": {
+      "types": "./dist/force.d.ts",
+      "svelte": "./dist/force.js",
+      "default": "./dist/force.js"
+    },
+    "./graph": {
+      "types": "./dist/graph.d.ts",
+      "svelte": "./dist/graph.js",
+      "default": "./dist/graph.js"
+    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "svelte": "./dist/utils/*.js",

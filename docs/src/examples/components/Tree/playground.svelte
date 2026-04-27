@@ -9,7 +9,8 @@
 	import { hierarchy as d3Hierarchy, type HierarchyNode } from 'd3-hierarchy';
 	import { curveBumpX } from 'd3-shape';
 
-	import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
+	import { Chart, Group, Link, Layer, Rect, Text } from 'layerchart';
+	import { Tree } from 'layerchart/hierarchy';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import TreeControls from '$lib/components/controls/TreeControls.svelte';
 	import { cls } from '@layerstack/tailwind';

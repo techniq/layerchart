@@ -18,14 +18,7 @@
 	let bend = $state(22.5);
 </script>
 
-<LinkPlaygroundControls
-	bind:type
-	bind:curve
-	bind:sweep
-	bind:orientation
-	bind:radius
-	bind:bend
-/>
+<LinkPlaygroundControls bind:type bind:curve bind:sweep bind:orientation bind:radius bind:bend />
 
 <Chart padding={{ left: 16, bottom: 24 }} height={400}>
 	<Layer>

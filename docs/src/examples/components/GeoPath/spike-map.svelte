@@ -10,9 +10,9 @@
 	import { scaleLinear } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, getSettings, Layer, Vector, Tooltip } from 'layerchart';
+	import { Chart, getSettings, Layer, Vector, Tooltip } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-
 
 	let settings = getSettings();
 
@@ -83,8 +83,8 @@
 						{@const d = feature.properties.data}
 						{@const height = heightScale(d?.population ?? 0)}
 						<Vector
-							x={x}
-							y={y}
+							{x}
+							{y}
 							length={height}
 							shape="spike"
 							width={spikeWidth}

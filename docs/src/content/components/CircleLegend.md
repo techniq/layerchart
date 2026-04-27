@@ -29,10 +29,7 @@ When the chart has an active tooltip, `CircleLegend` draws a 50%-opacity filled 
 Pass an explicit `value` prop to override the auto-detection when the tooltip data shape doesn't match the chart's radius accessor:
 
 ```svelte
-<CircleLegend
-  scale={rScale}
-  value={context.tooltip.data?.properties.data?.population}
-/>
+<CircleLegend scale={rScale} value={context.tooltip.data?.properties.data?.population} />
 ```
 
 See the [bubble-map](/docs/components/GeoPath/bubble-map) example.

@@ -204,8 +204,11 @@ function catalogToEntries(): SearchEntry[] {
 			entries.push({
 				title: example.title,
 				slug: example.path.slice(1), // Remove leading slash
-				content: [catalog.component, example.name.replaceAll('-', ' '), ...(example.tags ?? [])]
-					.join(' '),
+				content: [
+					catalog.component,
+					example.name.replaceAll('-', ' '),
+					...(example.tags ?? [])
+				].join(' '),
 				type: 'example',
 				component: catalog.component,
 				example: example.name,

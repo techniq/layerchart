@@ -1,5 +1,10 @@
 import dagre from '@dagrejs/dagre';
-import { Align, EdgeLabelPosition, RankDir, type DagreProps } from '$lib/components/Dagre.svelte';
+import {
+  Align,
+  EdgeLabelPosition,
+  RankDir,
+  type DagreProps,
+} from '$lib/components/graph/Dagre.svelte';
 
 /**
  * Build `dagre.graphlib.Graph` instance from DagreGraphData (`{ nodes, edges }`)

@@ -4,9 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { Chart, Group, Link, Rect, Sankey, Layer, Text } from 'layerchart';
-
-
+	import { Chart, Group, Link, Rect, Layer, Text } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 </script>
 
 <Chart {data} flatData={[]} height={400}>

@@ -22,7 +22,7 @@
   import { geoDistance } from 'd3-geo';
 
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import Group, { type GroupProps } from './Group.svelte';
+  import Group, { type GroupProps } from '../Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {

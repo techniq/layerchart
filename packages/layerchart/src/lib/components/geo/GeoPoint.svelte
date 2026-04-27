@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import Circle, { type CircleProps } from './Circle.svelte';
+  import Circle, { type CircleProps } from '../Circle.svelte';
   import type { Without } from '$lib/utils/types.js';
 
   export type GeoPointPropsWithoutHTML = {
@@ -30,7 +30,7 @@
 </script>
 
 <script lang="ts">
-  import Group from './Group.svelte';
+  import Group from '../Group.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';

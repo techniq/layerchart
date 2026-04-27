@@ -69,7 +69,9 @@
 				}
 
 				// Otherwise, filter examples by name
-				const filteredExamples = examples.filter((example) => matchesQuery(example.name) || matchesQuery(example.title));
+				const filteredExamples = examples.filter(
+					(example) => matchesQuery(example.name) || matchesQuery(example.title)
+				);
 
 				// Only return component if it has matching examples
 				if (filteredExamples.length > 0) {
@@ -167,20 +169,20 @@
 		<MenuField options={categoryOptions} bind:value={params.category} class="flex-1" />
 
 		<div class="flex gap-2">
-		<Button
-			icon={LucideZoomIn}
-			on:click={() => (columnCount = Math.max(1, columnCount - 1))}
-			variant="fill-outline"
-			class="size-9 border-surface-content/30 pt-1"
-			disabled={columnCount <= 1}
-		/>
-		<Button
-			icon={LucideZoomOut}
-			on:click={() => (columnCount = Math.min(5, columnCount + 1))}
-			variant="fill-outline"
-			class="size-9 border-surface-content/30 pt-1"
-			disabled={columnCount >= 5}
-		/>
+			<Button
+				icon={LucideZoomIn}
+				on:click={() => (columnCount = Math.max(1, columnCount - 1))}
+				variant="fill-outline"
+				class="size-9 border-surface-content/30 pt-1"
+				disabled={columnCount <= 1}
+			/>
+			<Button
+				icon={LucideZoomOut}
+				on:click={() => (columnCount = Math.min(5, columnCount + 1))}
+				variant="fill-outline"
+				class="size-9 border-surface-content/30 pt-1"
+				disabled={columnCount >= 5}
+			/>
 		</div>
 	</div>
 </div>

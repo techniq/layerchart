@@ -31,7 +31,11 @@ export const load = async ({ params, url, parent }) => {
 	const exampleName = urlSegments.length >= 5 ? urlSegments[4] : null;
 	// Skip known route names that aren't actual examples
 	const knownRoutes = ['examples', 'llms.txt'];
-	if (exampleName && !knownRoutes.includes(exampleName) && !pageExamples[params.name]?.[exampleName]) {
+	if (
+		exampleName &&
+		!knownRoutes.includes(exampleName) &&
+		!pageExamples[params.name]?.[exampleName]
+	) {
 		const { loadExample } = await import('$lib/examples.js');
 		const loaded = await loadExample(params.name, exampleName);
 		if (loaded) {

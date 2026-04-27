@@ -17,7 +17,7 @@
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import Group from './Group.svelte';
+  import Group from '../Group.svelte';
 
   let { lines, outline, stepX = 10, stepY = 10, ...restProps }: GraticuleProps = $props();
 

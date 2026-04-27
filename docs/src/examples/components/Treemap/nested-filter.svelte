@@ -15,7 +15,8 @@
 	import { Button, Breadcrumb } from 'svelte-ux';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
-	import { Chart, Group, Rect, RectClipPath, Layer, Text, Treemap, findAncestor } from 'layerchart';
+	import { Chart, Group, Rect, RectClipPath, Layer, Text, findAncestor } from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 
 	let config = $state({
 		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],
@@ -29,7 +30,6 @@
 		paddingRight: 0,
 		isFiltered: false
 	});
-
 
 	let selectedCarNode = $state<HierarchyNode<any>>();
 
@@ -166,10 +166,8 @@
 											value: node.data[0] ?? 'Overall',
 											class: cls(
 												'text-[10px] font-medium',
-												config.colorBy === 'children'
-													? 'fill-primary-content'
-													: 'fill-black'
-											),
+												config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+											)
 										},
 										...(node.children
 											? [
@@ -177,13 +175,11 @@
 														value: ` ${format(node.value ?? 0, 'integer')}`,
 														class: cls(
 															'text-[8px] font-extralight',
-															config.colorBy === 'children'
-																? 'fill-primary-content'
-																: 'fill-black'
-														),
-													},
+															config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+														)
+													}
 												]
-											: []),
+											: [])
 									]}
 									verticalAnchor="start"
 									lineHeight="10px"

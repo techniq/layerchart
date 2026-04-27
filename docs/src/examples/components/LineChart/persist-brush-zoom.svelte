@@ -8,7 +8,6 @@
 	import { LineChart, Chart, Area, Layer, defaultChartPadding, type ChartState } from 'layerchart';
 	const STORAGE_KEY = 'layerchart:persist-brush-zoom:range';
 
-
 	let context = $state<ChartState>();
 	let loaded = false;
 

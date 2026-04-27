@@ -10,7 +10,8 @@
 	import { Icon } from 'svelte-ux';
 	import { cls } from '@layerstack/tailwind';
 	import LucideArrowRight from '~icons/lucide/arrow-right';
-	import { Chart, Group, Link, Rect, Sankey, Layer, Text, Tooltip } from 'layerchart';
+	import { Chart, Group, Link, Rect, Layer, Text, Tooltip } from 'layerchart';
+	import { Sankey } from 'layerchart/graph';
 	import SankeyControls, {
 		type SankeyConfig
 	} from '$lib/components/controls/SankeyControls.svelte';
@@ -36,7 +37,6 @@
 					inactive: 0.01
 				}
 	);
-
 
 	export { data };
 </script>

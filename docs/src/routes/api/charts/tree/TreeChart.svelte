@@ -2,7 +2,8 @@
 	import { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 	import { ServerChart } from 'layerchart/server';
 	import type { CaptureTarget } from 'layerchart/server';
-	import { Group, Link, Rect, Text, Tree } from 'layerchart';
+	import { Group, Link, Rect, Text } from 'layerchart';
+	import { Tree } from 'layerchart/hierarchy';
 
 	let {
 		data,
@@ -21,9 +22,7 @@
 	const nodeWidth = 100;
 	const nodeHeight = 20;
 
-	const hierarchy = $derived(
-		d3Hierarchy(data, (d) => d.children)
-	);
+	const hierarchy = $derived(d3Hierarchy(data, (d) => d.children));
 </script>
 
 <ServerChart
@@ -33,25 +32,14 @@
 	{height}
 	padding={{ top: 20, bottom: 20, left: nodeWidth / 2 + 10, right: nodeWidth / 2 + 10 }}
 >
-	<Tree
-		{hierarchy}
-		orientation="horizontal"
-	>
+	<Tree {hierarchy} orientation="horizontal">
 		{#snippet children({ nodes, links })}
 			{#each links as link (link.source.data.name + '_' + link.target.data.name)}
-				<Link
-					data={link}
-					orientation="horizontal"
-					stroke="rgba(0,0,0,0.2)"
-					fill="none"
-				/>
+				<Link data={link} orientation="horizontal" stroke="rgba(0,0,0,0.2)" fill="none" />
 			{/each}
 
 			{#each nodes as node (node.data.name + node.depth)}
-				<Group
-					x={node.y - nodeWidth / 2}
-					y={node.x - nodeHeight / 2}
-				>
+				<Group x={node.y - nodeWidth / 2} y={node.x - nodeHeight / 2}>
 					<Rect
 						width={nodeWidth}
 						height={nodeHeight}

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
-	import { Chart, Layer, Chord, Ribbon, Arc, ArcLabel } from 'layerchart';
+	import { Chart, Layer, Arc, ArcLabel } from 'layerchart';
+	import { Chord, Ribbon } from 'layerchart/graph';
 
 	// Population migration between regions (in thousands)
 	const names = ['Asia', 'Europe', 'Africa', 'Americas', 'Oceania'];

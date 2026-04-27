@@ -31,13 +31,13 @@ SVG layer styles (CSS variables, Tailwind classes, etc.) are inlined before rast
 
 #### Options
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `filename` | `string` | `'chart'` | File name without extension |
-| `format` | `'png' \| 'jpeg' \| 'webp'` | `'png'` | Output image format |
-| `quality` | `number` | `0.92` | Quality for lossy formats (0–1) |
-| `background` | `string` | transparent (PNG) / white (JPEG/WebP) | Background fill color |
-| `pixelRatio` | `number` | `window.devicePixelRatio` | Scale factor — higher = crisper on retina |
+| Option       | Type                        | Default                               | Description                               |
+| ------------ | --------------------------- | ------------------------------------- | ----------------------------------------- |
+| `filename`   | `string`                    | `'chart'`                             | File name without extension               |
+| `format`     | `'png' \| 'jpeg' \| 'webp'` | `'png'`                               | Output image format                       |
+| `quality`    | `number`                    | `0.92`                                | Quality for lossy formats (0–1)           |
+| `background` | `string`                    | transparent (PNG) / white (JPEG/WebP) | Background fill color                     |
+| `pixelRatio` | `number`                    | `window.devicePixelRatio`             | Scale factor — higher = crisper on retina |
 
 ### downloadSvg()
 
@@ -83,6 +83,6 @@ import { getChartSvgString } from 'layerchart';
 
 const svg = getChartSvgString(chartRef);
 if (svg) {
-  // upload, post-process, etc.
+	// upload, post-process, etc.
 }
 ```

@@ -161,9 +161,7 @@ describe('llms.txt endpoints', () => {
 			// Extract a real component/example pair from the llms.txt index
 			const index = generateLlmsTxt();
 			const examplesSection = index.slice(index.indexOf('## Examples'));
-			const exampleMatch = examplesSection.match(
-				/- \[([^/\]]+)\/([^\]]+)\]\([^)]+\/llms\.txt\)/
-			);
+			const exampleMatch = examplesSection.match(/- \[([^/\]]+)\/([^\]]+)\]\([^)]+\/llms\.txt\)/);
 			expect(exampleMatch, 'Should find an example link in Examples section').not.toBeNull();
 
 			const [matched, componentSlug, exampleName] = exampleMatch!;
@@ -209,9 +207,7 @@ describe('llms.txt endpoints', () => {
 
 		it('should return response with correct content-disposition', () => {
 			const response = markdownResponse('# Test', 'test.md');
-			expect(response.headers.get('Content-Disposition')).toBe(
-				'inline; filename="test.md"'
-			);
+			expect(response.headers.get('Content-Disposition')).toBe('inline; filename="test.md"');
 		});
 
 		it('should return the content as body', async () => {

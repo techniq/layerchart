@@ -146,7 +146,10 @@ export type MetroData = {
 
 export const getMetros = prerender(async () => {
 	const { fetch } = getRequestEvent();
-	const data = csvParse(await (await fetch('/data/examples/metros.csv')).text(), autoType) as unknown as MetroData[];
+	const data = csvParse(
+		await (await fetch('/data/examples/metros.csv')).text(),
+		autoType
+	) as unknown as MetroData[];
 	return data;
 });
 
@@ -203,7 +206,12 @@ export const getCivilizationEvents = prerender(async () => {
 	return data;
 });
 
-export type SvelteCount = { date: Date; n: number; cumsum: number; category: 'svelte' | 'sveltekit' };
+export type SvelteCount = {
+	date: Date;
+	n: number;
+	cumsum: number;
+	category: 'svelte' | 'sveltekit';
+};
 
 export const getSvelteCounts = prerender(async () => {
 	const { fetch } = getRequestEvent();

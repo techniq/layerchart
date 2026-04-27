@@ -7,15 +7,8 @@
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoProjection,
-		GeoPath,
-		Graticule,
-		Layer,
-		Tooltip,
-		type ChartState
-	} from 'layerchart';
+	import { Chart, Layer, Tooltip, type ChartState } from 'layerchart';
+	import { GeoProjection, GeoPath, Graticule } from 'layerchart/geo';
 	import GeoPathTranslucentControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 	const countries = feature(topology, topology.objects.countries);

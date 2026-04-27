@@ -88,9 +88,7 @@
 		<H2 id={title.toLowerCase().replaceAll(' ', '-')}>{title}</H2>
 		<div class="flex items-center gap-2 mb-2">
 			{#if viewAllHref && catalog.examples?.length}
-				<Button href="{viewAllHref}{filterQuery ? `?filter=${filterQuery}` : ''}">
-					View all
-				</Button>
+				<Button href="{viewAllHref}{filterQuery ? `?filter=${filterQuery}` : ''}">View all</Button>
 			{/if}
 
 			<TextField placeholder="Filter" bind:value={filterQuery} dense>

@@ -6,7 +6,6 @@
 <script lang="ts">
 	import { Area, Chart, Layer } from 'layerchart';
 
-
 	export { data };
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import type { Without } from '$lib/utils/types.js';
-  import type { PathProps } from './Path.svelte';
+  import type { PathProps } from '../Path.svelte';
 
   export type GeoSplinePropsWithoutHTML = {
     /**
@@ -38,7 +38,7 @@
 
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import Path from './Path.svelte';
+  import Path from '../Path.svelte';
 
   let { link, loft = 1.0, curve = curveNatural, ...restProps }: GeoSplineProps = $props();
 

@@ -9,15 +9,8 @@
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoPath,
-		GeoTile,
-		Layer,
-		Tooltip,
-		geoFitObjectTransform,
-		getSettings
-	} from 'layerchart';
+	import { Chart, Layer, Tooltip, geoFitObjectTransform, getSettings } from 'layerchart';
+	import { GeoPath, GeoTile } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 

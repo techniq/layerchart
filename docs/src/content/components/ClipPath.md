@@ -10,13 +10,13 @@ order: 1
 
 ### Basic
 
-Clip a patterned `<Rect>` to a circular `path` — only content *inside* the shape renders.
+Clip a patterned `<Rect>` to a circular `path` — only content _inside_ the shape renders.
 
 :example{name="basic" showCode}
 
 ### Inverted
 
-Set `invert` to render content *outside* the clip shape — useful for cutouts and masks.
+Set `invert` to render content _outside_ the clip shape — useful for cutouts and masks.
 
 :example{name="inverted" showCode}
 

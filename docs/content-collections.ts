@@ -95,11 +95,9 @@ const components = defineCollection({
 				api = JSON.parse(readFileSync(apiPath, 'utf-8'));
 
 				const renderInline = async (text: string) => {
-					const html = await compileMarkdown(
-						context,
-						{ ...doc, content: text } as any,
-						{ remarkPlugins: [remarkGfm] }
-					);
+					const html = await compileMarkdown(context, { ...doc, content: text } as any, {
+						remarkPlugins: [remarkGfm]
+					});
 					return html
 						.replace(/^<p>/, '')
 						.replace(/<\/p>\s*$/, '')

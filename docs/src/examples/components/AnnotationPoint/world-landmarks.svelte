@@ -7,7 +7,8 @@
 	import { geoNaturalEarth1 } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { AnnotationPoint, Chart, GeoPath, Layer } from 'layerchart';
+	import { AnnotationPoint, Chart, Layer } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import type { ComponentProps } from 'svelte';
 
 	const countries = feature(topology, topology.objects.countries);

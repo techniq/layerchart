@@ -43,7 +43,7 @@
 		}}
 	>
 		<tbody slot="data" let:columns let:data let:getCellValue let:getCellContent>
-			{#each (data ?? []) as rowData, rowIndex (rowIndex)}
+			{#each data ?? [] as rowData, rowIndex (rowIndex)}
 				{@const row = rowData as PropertyInfo}
 				<tr class="hover:bg-surface-content/5 border-b">
 					{#each columns as column (column.name)}

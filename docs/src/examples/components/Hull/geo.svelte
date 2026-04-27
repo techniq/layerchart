@@ -2,7 +2,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { curveLinearClosed } from 'd3-shape';
 	import { feature } from 'topojson-client';
-	import { Chart, Circle, GeoPath, GeoPoint, Hull, Layer, Text } from 'layerchart';
+	import { Chart, Circle, Hull, Layer, Text } from 'layerchart';
+	import { GeoPath, GeoPoint } from 'layerchart/geo';
 	import CurveMenuField from '$lib/components/controls/fields/CurveMenuField.svelte';
 	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 

@@ -7,8 +7,8 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-	import { asAny, Axis, Chart, Circle, ForceSimulation, Layer, Tooltip } from 'layerchart';
-
+	import { asAny, Axis, Chart, Circle, Layer, Tooltip } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 
 	type MySimulationNodeDatum = (typeof usSenators)[number] & SimulationNodeDatum;
 

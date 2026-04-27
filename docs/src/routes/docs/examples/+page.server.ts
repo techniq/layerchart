@@ -12,7 +12,10 @@ interface ExampleInfo {
 }
 
 export async function load() {
-	const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/*.json', { eager: true, import: 'default' });
+	const catalogModules = import.meta.glob<ComponentCatalog>('/src/examples/catalog/*.json', {
+		eager: true,
+		import: 'default'
+	});
 
 	// Create a map of component names to their categories
 	const componentCategoryMap = new Map<string, string>();

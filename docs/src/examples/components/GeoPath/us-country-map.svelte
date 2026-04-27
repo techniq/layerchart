@@ -7,7 +7,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Layer, Text } from 'layerchart';
+	import { Chart, Layer, Text } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	const states = feature(topology, topology.objects.states);
 
 	const data = { topology, states };

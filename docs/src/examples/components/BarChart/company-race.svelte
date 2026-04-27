@@ -12,8 +12,6 @@
 	import { pairs, rollup, ascending, max, rank } from 'd3-array';
 	import { sortFunc } from '@layerstack/utils';
 
-
-
 	const n = 12;
 	const k = 10;
 	const duration = 250;

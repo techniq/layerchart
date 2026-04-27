@@ -24,11 +24,11 @@
 		RectClipPath,
 		Layer,
 		Text,
-		Treemap,
 		asAny,
 		findAncestor,
 		isNodeVisible
 	} from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 
 	let config = $state({
 		tile: 'squarify' as ComponentProps<typeof Treemap>['tile'],

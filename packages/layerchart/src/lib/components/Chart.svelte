@@ -787,9 +787,7 @@
     }
     // Inlined to avoid pulling `$lib/utils/geo.js` (and its d3-geo imports)
     // into Chart's static graph for non-geo charts.
-    const fitted = geo
-      .projection()
-      .fitSize([chartState.width, chartState.height], geo.fitGeojson);
+    const fitted = geo.projection().fitSize([chartState.width, chartState.height], geo.fitGeojson);
     const t = fitted.translate();
     return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
   });

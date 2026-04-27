@@ -8,7 +8,8 @@
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoClipPath, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoClipPath, GeoPath, GeoTile } from 'layerchart/geo';
 	import GeoTileControls from '$lib/components/controls/GeoTileControls.svelte';
 	const states = feature(topology, topology.objects.states);
 
