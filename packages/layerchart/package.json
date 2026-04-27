@@ -8,6 +8,7 @@
   "version": "2.0.0-next.59",
   "scripts": {
     "dev": "pnpm package:watch",
+    "build": "svelte-package",
     "package": "svelte-package",
     "package:watch": "svelte-package --watch",
     "prepublishOnly": "svelte-package",
