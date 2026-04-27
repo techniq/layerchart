@@ -40,6 +40,12 @@ function formatDiff(bytes) {
 	return `${sign}${formatKB(bytes)}`;
 }
 
+function formatPercent(percent) {
+	if (!isFinite(percent)) return "";
+	const sign = percent > 0 ? "+" : "";
+	return `${sign}${percent.toFixed(1)}%`;
+}
+
 function getStatusIcon(status, sizeDiff) {
 	if (status === "changed") {
 		return sizeDiff > 0 ? "\u{1F534}" : sizeDiff < 0 ? "\u{1F7E2}" : "\u27A1\uFE0F";
@@ -184,7 +190,7 @@ function generateComment(changes, hasBaseline = true) {
 			const icon = getStatusIcon(s.status, s.sizeDiff);
 			const current = `${formatKB(s.targetSize)} KB <sub>(${formatKB(s.targetGzipSize)} gz)</sub>`;
 			const newSize = `${formatKB(s.currentSize)} KB <sub>(${formatKB(s.currentGzipSize)} gz)</sub>`;
-			const change = `${formatDiff(s.sizeDiff)} KB <sub>(${formatDiff(s.gzipSizeDiff)} gz)</sub>`;
+			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)}) <sub>(${formatDiff(s.gzipSizeDiff)} gz, ${formatPercent(s.gzipSizePercent)})</sub>`;
 			comment += `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		}
 		comment += "\n";
@@ -201,7 +207,7 @@ function generateComment(changes, hasBaseline = true) {
 			const icon = getStatusIcon(c.status, c.sizeDiff);
 			const current = `${formatKB(c.targetSize)} KB`;
 			const newSize = `${formatKB(c.currentSize)} KB`;
-			const change = `${formatDiff(c.sizeDiff)} KB`;
+			const change = `${formatDiff(c.sizeDiff)} KB (${formatPercent(c.sizePercent)})`;
 			comment += `| ${icon} \`${name}\` | ${current} | ${newSize} | ${change} |\n`;
 		}
 		comment += "\n</details>\n\n";
