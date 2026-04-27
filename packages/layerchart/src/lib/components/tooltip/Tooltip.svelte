@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-  import type { PortalOptions } from '@layerstack/svelte-actions';
+  import type { PortalOptions } from '@layerstack/svelte-actions/portal';
   import type { Without } from '$lib/utils/types.js';
   import type { Placement } from '../types.js';
 
@@ -164,7 +164,7 @@
 <script lang="ts" generics="T = any">
   import { fade } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
-  import { portal as portalAction } from '@layerstack/svelte-actions';
+  import { portal as portalAction } from '@layerstack/svelte-actions/portal';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';

@@ -20,7 +20,9 @@
   import TooltipContext from './tooltip/TooltipContext.svelte';
 
   import TransformContext from './TransformContext.svelte';
-  import BrushContext from './BrushContext.svelte';
+  // BrushContext (used only when `brush` prop is set) is lazy-loaded inline
+  // via `{#await import(...)}` so non-brush charts don't pay for it.
+  import type BrushContext from './BrushContext.svelte';
   import {
     type BrushDomainType,
     type BrushState,
@@ -1146,8 +1148,21 @@
         {onTransform}
         {ondragend}
       >
-        <!-- svelte-ignore ownership_invalid_binding -->
-        <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
+        {#if brush}
+          {#await import('./BrushContext.svelte') then { default: BrushContext }}
+            <!-- svelte-ignore ownership_invalid_binding -->
+            <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
+              <!-- svelte-ignore ownership_invalid_binding -->
+              <TooltipContext
+                onclick={onTooltipClick}
+                {...getObjectOrNull(tooltipContext)}
+                bind:state={chartState.tooltipState}
+              >
+                <ChartChildren {children} {tooltipContext} {...restProps} />
+              </TooltipContext>
+            </BrushContext>
+          {/await}
+        {:else}
           <!-- svelte-ignore ownership_invalid_binding -->
           <TooltipContext
             onclick={onTooltipClick}
@@ -1156,7 +1171,7 @@
           >
             <ChartChildren {children} {tooltipContext} {...restProps} />
           </TooltipContext>
-        </BrushContext>
+        {/if}
       </TransformContext>
     {/key}
   </div>

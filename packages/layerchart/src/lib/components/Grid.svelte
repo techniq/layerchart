@@ -113,7 +113,8 @@
   import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
-  import Spline from './Spline.svelte';
+  // Spline (used only for radial linear grid lines) is lazy-loaded inline
+  // via `{#await import(...)}` so non-radial grids don't pay for it.
   import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { autoTickVals, type TicksConfig } from '$lib/utils/ticks.js';
@@ -232,16 +233,18 @@
               class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
             />
           {:else}
-            <Spline
-              data={xTickVals.map((x) => ({ x, y }))}
-              x="x"
-              y="y"
-              {stroke}
-              motion={tweenConfig}
-              curve={curveLinearClosed}
-              {...splineProps}
-              class={cls('lc-grid-y-radial-line', classes.line, splineProps?.class)}
-            />
+            {#await import('./Spline.svelte') then { default: Spline }}
+              <Spline
+                data={xTickVals.map((x) => ({ x, y }))}
+                x="x"
+                y="y"
+                {stroke}
+                motion={tweenConfig}
+                curve={curveLinearClosed}
+                {...splineProps}
+                class={cls('lc-grid-y-radial-line', classes.line, splineProps?.class)}
+              />
+            {/await}
           {/if}
         {:else}
           <Line
