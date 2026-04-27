@@ -16,6 +16,14 @@ export interface Scenario {
 	extraImports?: string[];
 	/** Optional grouping label used to organize scenarios in the PR comment */
 	group?: string;
+	/**
+	 * Per-import sub-path overrides. Maps a component name to a sub-path
+	 * suffix (e.g. `"svg"` → `"layerchart/svg"`) for scenarios that test
+	 * per-layer variants of agnostic components.
+	 *
+	 * Overrides take precedence over the analyzer's default subpath map.
+	 */
+	subpathOverrides?: Record<string, string>;
 }
 
 export interface ComponentInfo {
@@ -164,6 +172,38 @@ export const scenarios: Scenario[] = [
 		group: "Graph / network",
 		description: "Chord diagram",
 		imports: ["Chart", "Svg", "Chord", "Ribbon"],
+	},
+
+	// --- Layer-specific (opt-in per-layer variants) ---
+	// Standalone Circle measurements (in isolation — no Chart context, no
+	// Highlight pulling in the agnostic version transitively). These are the
+	// cleanest way to see what `layerchart/svg` etc. actually save.
+	{
+		name: "circle-agnostic",
+		group: "Layer-specific",
+		description: "Standalone Circle (agnostic) — baseline",
+		imports: ["Circle"],
+	},
+	{
+		name: "circle-svg",
+		group: "Layer-specific",
+		description: "Standalone Circle from `layerchart/svg`",
+		imports: ["Circle"],
+		subpathOverrides: { Circle: "svg" },
+	},
+	{
+		name: "circle-canvas",
+		group: "Layer-specific",
+		description: "Standalone Circle from `layerchart/canvas`",
+		imports: ["Circle"],
+		subpathOverrides: { Circle: "canvas" },
+	},
+	{
+		name: "circle-html",
+		group: "Layer-specific",
+		description: "Standalone Circle from `layerchart/html`",
+		imports: ["Circle"],
+		subpathOverrides: { Circle: "html" },
 	},
 
 	// --- Worst case ---

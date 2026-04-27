@@ -190,9 +190,12 @@ import * as LayerChartGraph from "layerchart/graph";
 `;
 		} else {
 			// Group imports by source module (root vs each sub-path).
+			// Per-scenario `subpathOverrides` win over the default mapping —
+			// used to test layer-specific variants like `layerchart/svg`.
 			const groups = new Map<string, string[]>([["layerchart", []]]);
 			for (const name of scenario.imports) {
-				const sub = SUBPATH_FOR_COMPONENT[name];
+				const overrideSub = scenario.subpathOverrides?.[name];
+				const sub = overrideSub ?? SUBPATH_FOR_COMPONENT[name];
 				const mod = sub ? `layerchart/${sub}` : "layerchart";
 				const list = groups.get(mod) ?? [];
 				list.push(name);
