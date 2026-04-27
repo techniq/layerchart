@@ -1149,7 +1149,23 @@
         {ondragend}
       >
         {#if brush}
-          {#await import('./BrushContext.svelte') then { default: BrushContext }}
+          {#await import('./BrushContext.svelte')}
+            <!--
+              Pending: render the chart subtree immediately so the chart paints
+              before the BrushContext chunk arrives (avoids a perceived hang on
+              slow networks). The subtree re-mounts once `{:then}` resolves —
+              acceptable because it happens before user interaction, brush is
+              an opt-in feature, and any chart state at that point is empty.
+            -->
+            <!-- svelte-ignore ownership_invalid_binding -->
+            <TooltipContext
+              onclick={onTooltipClick}
+              {...getObjectOrNull(tooltipContext)}
+              bind:state={chartState.tooltipState}
+            >
+              <ChartChildren {children} {tooltipContext} {...restProps} />
+            </TooltipContext>
+          {:then { default: BrushContext }}
             <!-- svelte-ignore ownership_invalid_binding -->
             <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
               <!-- svelte-ignore ownership_invalid_binding -->
