@@ -64,7 +64,7 @@
 
   import { cls } from '@layerstack/tailwind';
 
-  import Group from './Group.svelte';
+  import Group from './Group/Group.svelte';
   import Path from './Path/Path.svelte';
   import Rect from './Rect/Rect.svelte';
   import Line from './Line/Line.svelte';

@@ -57,7 +57,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import Circle from './Circle/Circle.svelte';
-  import Group from './Group.svelte';
+  import Group from './Group/Group.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line/Line.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';

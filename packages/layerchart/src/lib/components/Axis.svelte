@@ -151,7 +151,7 @@
   import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Group, { type GroupProps } from './Group.svelte';
+  import Group, { type GroupProps } from './Group/Group.svelte';
   import Line from './Line/Line.svelte';
   import Rule from './Rule.svelte';
   import Text from './Text/Text.svelte';

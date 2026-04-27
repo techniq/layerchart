@@ -9,7 +9,7 @@
   import { cls } from '@layerstack/tailwind';
   import { createControlledMotion } from '$lib/utils/motion.svelte.js';
   import { createId } from '$lib/utils/createId.js';
-  import Group from '../Group.svelte';
+  import Group from '../Group/Group.svelte';
   import MarkerWrapper from '../MarkerWrapper.svelte';
   import { PathState, type PathProps } from './Path.shared.svelte.js';
 

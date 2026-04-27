@@ -45,7 +45,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import Rect from './Rect/Rect.svelte';
   import Circle from './Circle/Circle.svelte';
-  import Group from './Group.svelte';
+  import Group from './Group/Group.svelte';
 
   let { shape = 'rect', r, x, y, ...restProps }: CellProps = $props();
 

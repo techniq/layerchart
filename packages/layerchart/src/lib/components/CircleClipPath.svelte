@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
-  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
+  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath/ClipPath.svelte';
 
   export type CircleClipPathPropsWithoutHTML = {
     /**

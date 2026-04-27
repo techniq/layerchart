@@ -7,7 +7,7 @@
 
   import Arc from '../Arc.svelte';
   import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
-  import Group from '../Group.svelte';
+  import Group from '../Group/Group.svelte';
   import Pie from '../Pie.svelte';
 
   export type PieChartExtraSnippetProps<TData> = {

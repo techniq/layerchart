@@ -8,7 +8,7 @@
 
   import Arc from '../Arc.svelte';
   import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
-  import Group from '../Group.svelte';
+  import Group from '../Group/Group.svelte';
 
   export type ArcChartExtraSnippetProps<TData> = {
     key: Accessor<TData>;

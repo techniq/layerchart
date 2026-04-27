@@ -61,7 +61,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import GeoPath from './geo/GeoPath.svelte';
-  import Group, { type GroupProps } from './Group.svelte';
+  import Group, { type GroupProps } from './Group/Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';

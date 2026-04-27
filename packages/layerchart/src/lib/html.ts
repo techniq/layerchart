@@ -25,3 +25,33 @@ export type {
   LineProps,
   LinePropsWithoutHTML,
 } from './components/Line/Line.shared.svelte.js';
+export { default as ClipPath } from './components/ClipPath/ClipPath.html.svelte';
+export type {
+  ClipPathProps,
+  ClipPathPropsWithoutHTML,
+} from './components/ClipPath/ClipPath.shared.svelte.js';
+export { default as LinearGradient } from './components/LinearGradient/LinearGradient.html.svelte';
+export type {
+  LinearGradientProps,
+  LinearGradientPropsWithoutHTML,
+} from './components/LinearGradient/LinearGradient.shared.svelte.js';
+export { default as Group } from './components/Group/Group.html.svelte';
+export type {
+  GroupProps,
+  GroupPropsWithoutHTML,
+} from './components/Group/Group.shared.svelte.js';
+export { default as Pattern } from './components/Pattern/Pattern.html.svelte';
+export type {
+  PatternProps,
+  PatternPropsWithoutHTML,
+} from './components/Pattern/Pattern.shared.svelte.js';
+export { default as Ellipse } from './components/Ellipse/Ellipse.html.svelte';
+export type {
+  EllipseProps,
+  EllipsePropsWithoutHTML,
+} from './components/Ellipse/Ellipse.shared.svelte.js';
+export { default as Image } from './components/Image/Image.html.svelte';
+export type {
+  ImageProps,
+  ImagePropsWithoutHTML,
+} from './components/Image/Image.shared.svelte.js';

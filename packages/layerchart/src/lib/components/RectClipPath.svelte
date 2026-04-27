@@ -70,7 +70,7 @@
 </script>
 
 <script lang="ts">
-  import ClipPath from './ClipPath.svelte';
+  import ClipPath from './ClipPath/ClipPath.svelte';
   import { createId } from '$lib/utils/createId.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
 

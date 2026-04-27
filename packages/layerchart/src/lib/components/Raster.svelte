@@ -67,7 +67,7 @@
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { gridCellCenterToBounds, resolveRasterBounds } from '$lib/utils/index.js';
   import { interpolateGrid } from '$lib/utils/rasterInterpolate.js';
-  import Image from './Image.svelte';
+  import Image from './Image/Image.svelte';
 
   const ctx = getChartContext();
   const geo = getGeoContext();

@@ -83,7 +83,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import Group from './Group.svelte';
+  import Group from './Group/Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { createDimensionGetter } from '$lib/utils/rect.svelte.js';
 

@@ -32,3 +32,46 @@ export type {
   PathProps,
   PathPropsWithoutHTML,
 } from './components/Path/Path.shared.svelte.js';
+export { default as ClipPath } from './components/ClipPath/ClipPath.svg.svelte';
+export type {
+  ClipPathProps,
+  ClipPathPropsWithoutHTML,
+} from './components/ClipPath/ClipPath.shared.svelte.js';
+export { default as RadialGradient } from './components/RadialGradient/RadialGradient.svg.svelte';
+export type {
+  RadialGradientProps,
+  RadialGradientPropsWithoutHTML,
+} from './components/RadialGradient/RadialGradient.shared.svelte.js';
+export { default as LinearGradient } from './components/LinearGradient/LinearGradient.svg.svelte';
+export type {
+  LinearGradientProps,
+  LinearGradientPropsWithoutHTML,
+} from './components/LinearGradient/LinearGradient.shared.svelte.js';
+export { default as Group } from './components/Group/Group.svg.svelte';
+export type {
+  GroupProps,
+  GroupPropsWithoutHTML,
+} from './components/Group/Group.shared.svelte.js';
+export { default as Pattern } from './components/Pattern/Pattern.svg.svelte';
+export type {
+  PatternProps,
+  PatternPropsWithoutHTML,
+  PatternShape,
+  CircleShape,
+  LineShape,
+} from './components/Pattern/Pattern.shared.svelte.js';
+export { default as Ellipse } from './components/Ellipse/Ellipse.svg.svelte';
+export type {
+  EllipseProps,
+  EllipsePropsWithoutHTML,
+} from './components/Ellipse/Ellipse.shared.svelte.js';
+export { default as Polygon } from './components/Polygon/Polygon.svg.svelte';
+export type {
+  PolygonProps,
+  PolygonPropsWithoutHTML,
+} from './components/Polygon/Polygon.shared.svelte.js';
+export { default as Image } from './components/Image/Image.svg.svelte';
+export type {
+  ImageProps,
+  ImagePropsWithoutHTML,
+} from './components/Image/Image.shared.svelte.js';

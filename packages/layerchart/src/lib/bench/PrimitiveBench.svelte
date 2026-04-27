@@ -3,9 +3,9 @@
   import Layer from '../components/layers/Layer.svelte';
   import Rect from '../components/Rect/Rect.svelte';
   import Circle from '../components/Circle/Circle.svelte';
-  import Ellipse from '../components/Ellipse.svelte';
+  import Ellipse from '../components/Ellipse/Ellipse.svelte';
   import Line from '../components/Line/Line.svelte';
-  import Group from '../components/Group.svelte';
+  import Group from '../components/Group/Group.svelte';
   import Text from '../components/Text/Text.svelte';
   import Path from '../components/Path/Path.svelte';
 

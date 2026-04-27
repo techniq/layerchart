@@ -96,6 +96,16 @@ The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer v
 | `Rect` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~23%) |
 | `Line` | ~4 KB gz (~22%) | ~3 KB gz (~14%) | ~5 KB gz (~27%) |
 | `Path` | ~3 KB gz (~15%) | ~4 KB gz (~20%) | n/a (no HTML variant) |
+| `Ellipse` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~23%) |
+| `Polygon` | ~3 KB gz (~16%) | ~1 KB gz (~3%) | n/a (no HTML variant) |
+| `Group` | ~0.5 KB gz (~13%) | ~1 KB gz (~22%) | ~0.5 KB gz (~12%) |
+| `Image` | ~1 KB gz (~8%) | **~11 KB gz (~75%)** | ~2 KB gz (~11%) |
+| `ClipPath` | ~0.5 KB gz (~27%) | ~0.8 KB gz (~40%) | ~0.7 KB gz (~36%) |
+| `Pattern` | ~4 KB gz (~26%) | ~1 KB gz (~9%) | **~14 KB gz (~94%)** |
+| `LinearGradient` | ~4 KB gz (~26%) | ~1 KB gz (~7%) | **~14 KB gz (~96%)** |
+| `RadialGradient` | ~4 KB gz (~25%) | ~0.8 KB gz (~6%) | n/a (no HTML variant) |
+
+Notice the dramatic per-layer savings for components like `Pattern` and `LinearGradient` on HTML — the HTML implementation is just CSS-string generation (no canvas API or SVG element overhead), so the per-layer variant is ~95% smaller than agnostic.
 
 ## Worst case: importing everything
 

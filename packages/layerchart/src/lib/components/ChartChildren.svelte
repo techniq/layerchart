@@ -143,7 +143,7 @@
   // and no custom `tooltip` snippet is provided).
   import type DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
-  import type Group from './Group.svelte';
+  import type Group from './Group/Group.svelte';
   import Highlight from './Highlight.svelte';
   import type Line from './Line/Line.svelte';
   import type Pie from './Pie.svelte';

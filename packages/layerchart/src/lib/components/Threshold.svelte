@@ -43,7 +43,7 @@
   import { min, max } from 'd3-array';
 
   import Area from './Area.svelte';
-  import ClipPath from './ClipPath.svelte';
+  import ClipPath from './ClipPath/ClipPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
 
   const ctx = getChartContext();

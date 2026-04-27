@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
-import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
+import TestHarness, { componentTestId } from '../tests/TestHarness.svelte';
 import Polygon from './Polygon.svelte';
 
 describe('Polygon', () => {
