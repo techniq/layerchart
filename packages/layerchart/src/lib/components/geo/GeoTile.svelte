@@ -47,7 +47,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import Group from './Group.svelte';
+  import Group from '../Group.svelte';
   import TileImage from './TileImage.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 

@@ -8,7 +8,6 @@
 	import { utcDay } from 'd3-time';
 	import { Axis, Bars, Chart, Highlight, Layer, Rule, Tooltip, type DomainType } from 'layerchart';
 
-
 	let xDomain = $state<DomainType>([null, null]);
 
 	export { data };

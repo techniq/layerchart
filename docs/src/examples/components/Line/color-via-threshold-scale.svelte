@@ -10,7 +10,7 @@
 		{ date: new Date('2024-05-01'), value: 80 },
 		{ date: new Date('2024-06-01'), value: 55 },
 		{ date: new Date('2024-07-01'), value: 92 },
-		{ date: new Date('2024-08-01'), value: 68 },
+		{ date: new Date('2024-08-01'), value: 68 }
 	];
 </script>
 
@@ -32,13 +32,13 @@
 		<AnnotationLine
 			y={50}
 			props={{
-				line: { dashArray: [4], stroke: 'var(--color-danger)', strokeOpacity: 0.5 },
+				line: { dashArray: [4], stroke: 'var(--color-danger)', strokeOpacity: 0.5 }
 			}}
 		/>
 		<AnnotationLine
 			y={90}
 			props={{
-				line: { dashArray: [4], stroke: 'var(--color-success)', strokeOpacity: 0.5 },
+				line: { dashArray: [4], stroke: 'var(--color-success)', strokeOpacity: 0.5 }
 			}}
 		/>
 		<Line x1="date" y1={(d) => 0} x2="date" y2="value" stroke="value" />

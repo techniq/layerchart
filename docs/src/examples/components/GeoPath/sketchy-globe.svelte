@@ -9,7 +9,8 @@
 	import { feature } from 'topojson-client';
 	import { presimplify, simplify } from 'topojson-simplify';
 
-	import { Chart, GeoPath, Graticule, Layer, type ChartState } from 'layerchart';
+	import { Chart, Layer, type ChartState } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import GeoPathGlobeControls2 from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { TimerState } from '@layerstack/svelte-state';
 

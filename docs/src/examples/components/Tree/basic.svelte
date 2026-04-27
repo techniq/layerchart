@@ -1,5 +1,6 @@
 <script>
-	import { Chart, Group, Layer, Link, Rect, Text, Tree } from 'layerchart';
+	import { Chart, Group, Layer, Link, Rect, Text } from 'layerchart';
+	import { Tree } from 'layerchart/hierarchy';
 	import { hierarchy } from 'd3-hierarchy';
 
 	const data = hierarchy({

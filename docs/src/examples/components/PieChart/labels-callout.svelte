@@ -13,18 +13,8 @@
 </script>
 
 <div class="grid grid-cols-3 gap-2 mb-4">
-	<RangeField
-		label="calloutLineLength"
-		bind:value={calloutLineLength}
-		min={0}
-		max={60}
-	/>
-	<RangeField
-		label="calloutLabelOffset"
-		bind:value={calloutLabelOffset}
-		min={0}
-		max={60}
-	/>
+	<RangeField label="calloutLineLength" bind:value={calloutLineLength} min={0} max={60} />
+	<RangeField label="calloutLabelOffset" bind:value={calloutLabelOffset} min={0} max={60} />
 	<RangeField label="calloutPadding" bind:value={calloutPadding} min={0} max={20} />
 </div>
 

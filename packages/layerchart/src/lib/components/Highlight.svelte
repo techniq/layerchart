@@ -2,7 +2,7 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
-  import Bar from './Bar.svelte';
+  import type Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { accessor, type Accessor } from '$lib/utils/common.js';
 
@@ -660,13 +660,15 @@
     {#if typeof bar === 'function'}
       {@render bar()}
     {:else}
-      <Bar
-        motion={motion === 'spring' ? 'spring' : undefined}
-        data={highlightData}
-        {opacity}
-        {...extractLayerProps(bar, 'lc-highlight-bar')}
-        onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
-      />
+      {#await import('./Bar.svelte') then { default: Bar }}
+        <Bar
+          motion={motion === 'spring' ? 'spring' : undefined}
+          data={highlightData}
+          {opacity}
+          {...extractLayerProps(bar, 'lc-highlight-bar')}
+          onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
+        />
+      {/await}
     {/if}
   {/if}
 

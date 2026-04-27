@@ -7,7 +7,6 @@
 	import { AnnotationLine, AnnotationPoint, LineChart, Tooltip, Text } from 'layerchart';
 	import { format } from '@layerstack/utils';
 
-
 	const annotations = [
 		{
 			x: new Date('June 29, 2007'),

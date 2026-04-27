@@ -9,15 +9,23 @@
 		{ date: new Date('2024-05-01'), value: 30 },
 		{ date: new Date('2024-06-01'), value: 55 },
 		{ date: new Date('2024-07-01'), value: 42 },
-		{ date: new Date('2024-08-01'), value: 68 },
+		{ date: new Date('2024-08-01'), value: 68 }
 	];
 </script>
 
-<Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>
+<Chart
+	{data}
+	x="date"
+	y="value"
+	yDomain={[0, null]}
+	yNice
+	padding={{ top: 20, bottom: 20, left: 24, right: 10 }}
+	height={300}
+>
 	<Layer>
 		<Axis placement="bottom" rule />
 		<Axis placement="left" rule />
-		<Line x1="date" y1={d => 0} x2="date" y2="value" class="stroke-primary" />
+		<Line x1="date" y1={(d) => 0} x2="date" y2="value" class="stroke-primary" />
 		<Circle cx="date" cy="value" r={4} class="fill-primary" />
 	</Layer>
 </Chart>

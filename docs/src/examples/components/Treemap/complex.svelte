@@ -13,23 +13,12 @@
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 
-	import {
-		Chart,
-		Group,
-		Layer,
-		Rect,
-		RectClipPath,
-		Text,
-		Tooltip,
-		Treemap,
-		findAncestor
-	} from 'layerchart';
-	import type { TreemapProps } from 'layerchart';
+	import { Chart, Group, Layer, Rect, RectClipPath, Text, Tooltip, findAncestor } from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
+	import type { TreemapProps } from 'layerchart/hierarchy';
 
 	type TreemapTileMethod = TreemapProps<any>['tile'];
 	type TreemapColorBy = 'children' | 'depth' | 'parent';
-
-
 
 	const root = hierarchy(data)
 		.sum((d) => d.value)
@@ -115,10 +104,8 @@
 											value: node.data.name,
 											class: cls(
 												'text-[10px] font-medium',
-												config.colorBy === 'children'
-													? 'fill-primary-content'
-													: 'fill-black'
-											),
+												config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+											)
 										},
 										...(node.children
 											? [
@@ -126,13 +113,11 @@
 														value: ` ${format(node.value ?? 0, 'integer')}`,
 														class: cls(
 															'text-[8px] font-extralight',
-															config.colorBy === 'children'
-																? 'fill-primary-content'
-																: 'fill-black'
-														),
-													},
+															config.colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+														)
+													}
 												]
-											: []),
+											: [])
 									]}
 									verticalAnchor="start"
 									lineHeight="10px"

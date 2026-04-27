@@ -156,13 +156,13 @@ The `anchor` prop controls which corner of the tooltip aligns to the position po
 
 By default, `Tooltip.Root` is portaled outside the chart DOM to `document.body` (or a `.PortalTarget` element if one exists). This prevents the tooltip from being clipped by ancestors with `overflow: hidden`.
 
-| Value                         | Behavior                                                    |
-| ----------------------------- | ----------------------------------------------------------- |
-| `true`                        | Portal to `.PortalTarget` or `document.body` (default)      |
-| `false`                       | Render inline within the chart (original behavior)          |
-| `{ target: '.my-container' }` | Portal to a specific CSS selector                           |
-| `{ target: element }`         | Portal to a specific DOM element                            |
-| `{ enabled: false }`          | Same as `false`                                             |
+| Value                         | Behavior                                               |
+| ----------------------------- | ------------------------------------------------------ |
+| `true`                        | Portal to `.PortalTarget` or `document.body` (default) |
+| `false`                       | Render inline within the chart (original behavior)     |
+| `{ target: '.my-container' }` | Portal to a specific CSS selector                      |
+| `{ target: element }`         | Portal to a specific DOM element                       |
+| `{ enabled: false }`          | Same as `false`                                        |
 
 ```svelte
 <!-- Default: portaled to body -->

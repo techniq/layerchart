@@ -14,15 +14,8 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { feature } from 'topojson-client';
 
-	import {
-		Chart,
-		GeoPath,
-		GeoProjection,
-		Graticule,
-		Layer,
-		Rect,
-		type ChartState
-	} from 'layerchart';
+	import { Chart, Layer, Rect, type ChartState } from 'layerchart';
+	import { GeoPath, GeoProjection, Graticule } from 'layerchart/geo';
 	import { SelectField } from 'svelte-ux';
 
 	const countries = feature(countriesTopo, countriesTopo.objects.countries);
@@ -245,7 +238,7 @@
 	const transformMotion = {
 		mode: 'projection' as const,
 		motion: { type: 'tween' as const, duration: 800, easing: cubicInOut },
-		inertia: true,
+		inertia: true
 	};
 
 	// Set initial positions once contexts are ready

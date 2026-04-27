@@ -7,7 +7,6 @@
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 	import { Axis, Chart, Contour, Layer, Raster } from 'layerchart';
-
 </script>
 
 <Chart

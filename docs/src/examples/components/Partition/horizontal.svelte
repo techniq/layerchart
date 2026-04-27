@@ -19,13 +19,13 @@
 		Chart,
 		ChartClipPath,
 		Group,
-		Partition,
 		Rect,
 		RectClipPath,
 		Layer,
 		Text,
 		findAncestor
 	} from 'layerchart';
+	import { Partition } from 'layerchart/hierarchy';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
@@ -126,20 +126,16 @@
 															value: node.data.name,
 															class: cls(
 																'text-[10px] font-medium',
-																colorBy === 'children'
-																	? 'fill-primary-content'
-																	: 'fill-black'
-															),
+																colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+															)
 														},
 														{
 															value: ` ${format(node.value ?? 0, 'integer')}`,
 															class: cls(
 																'text-[8px] font-extralight',
-																colorBy === 'children'
-																	? 'fill-primary-content'
-																	: 'fill-black'
-															),
-														},
+																colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+															)
+														}
 													]}
 													verticalAnchor="start"
 													lineHeight="10px"

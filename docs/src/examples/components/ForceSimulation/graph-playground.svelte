@@ -16,7 +16,8 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
-	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, Link, Layer, Tooltip } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import ForceGraphControls from '$lib/components/controls/ForceGraphPlaygroundControls.svelte';
 	import type { Prettify } from '@layerstack/utils';
 	type NodeDatum = {
@@ -34,8 +35,6 @@
 	type MySimulationLinkDatum = Prettify<
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
-
-
 
 	const nodes: MySimulationNodeDatum[] = data.nodes;
 	const links: MySimulationLinkDatum[] = data.links;

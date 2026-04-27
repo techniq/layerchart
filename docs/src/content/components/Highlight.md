@@ -30,11 +30,11 @@ Each accepts `true`, an object of component props (e.g. `lines={{ class: 'stroke
 
 ```svelte
 <Highlight>
-  {#snippet points({ points })}
-    {#each points as point}
-      <Circle cx={point.x} cy={point.y} r={8} fill={point.fill} />
-    {/each}
-  {/snippet}
+	{#snippet points({ points })}
+		{#each points as point}
+			<Circle cx={point.x} cy={point.y} r={8} fill={point.fill} />
+		{/each}
+	{/snippet}
 </Highlight>
 ```
 
@@ -42,11 +42,11 @@ Each accepts `true`, an object of component props (e.g. `lines={{ class: 'stroke
 
 The `axis` prop controls which crosshair lines are drawn:
 
-| Value    | Effect                        |
-| -------- | ----------------------------- |
-| `'x'`    | Vertical line at x position   |
-| `'y'`    | Horizontal line at y position |
-| `'both'` | Both lines                    |
+| Value    | Effect                             |
+| -------- | ---------------------------------- |
+| `'x'`    | Vertical line at x position        |
+| `'y'`    | Horizontal line at y position      |
+| `'both'` | Both lines                         |
 | `'none'` | No lines (even if `lines` is true) |
 
 When not set, Highlight auto-detects the appropriate axis based on the chart's scale types.
@@ -60,13 +60,7 @@ In charts with multiple series, Highlight automatically renders a point for each
 When using a bubble/scatter chart with an `r` scale, pass `r={true}` to scale highlight points to match the data's radius instead of the default fixed size.
 
 ```svelte
-<ScatterChart
-  {data}
-  x="x"
-  y="y"
-  r="population"
-  highlight={{ points: true, r: true }}
-/>
+<ScatterChart {data} x="x" y="y" r="population" highlight={{ points: true, r: true }} />
 ```
 
 A custom accessor can also be used:
@@ -91,3 +85,4 @@ By default, Highlight uses `TooltipContext` data. Pass explicit `data` to highli
 
 ```svelte
 <Highlight data={specificItem} points lines />
+```

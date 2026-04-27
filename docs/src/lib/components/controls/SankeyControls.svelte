@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { RangeField, MenuField } from 'svelte-ux';
-	import type { SankeyProps } from 'layerchart';
+	import type { SankeyProps } from 'layerchart/graph';
 
 	export interface SankeyConfig {
 		nodeAlign: SankeyProps['nodeAlign'];

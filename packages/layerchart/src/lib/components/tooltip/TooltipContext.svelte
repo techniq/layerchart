@@ -112,16 +112,20 @@
 <script lang="ts" generics="TData = any">
   import type { Snippet } from 'svelte';
   import { bisector, max, min } from 'd3-array';
-  import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
+  // d3-quadtree (used only for quadtree* tooltip modes) is dynamically
+  // imported inside the $effect below so non-quadtree users don't pay for it.
+  import type { Quadtree } from 'd3-quadtree';
   import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import Svg from './../layers/Svg.svelte';
-  import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
-  import Voronoi from './../Voronoi.svelte';
+  // Voronoi (used only when mode === 'voronoi') and Arc (used only for radial
+  // bounds/band mode) are dynamically imported inline in the markup via
+  // `{#await import(...)}` so non-voronoi/non-radial tooltip users don't pay
+  // for them. Voronoi alone pulls in d3-geo-voronoi + d3-geo.
 
   import { isScaleBand, isScaleTime, scaleInvert } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
@@ -432,65 +436,77 @@
   const xAccessorOverride = $derived(xProp != null ? accessor(xProp) : undefined);
   const yAccessorOverride = $derived(yProp != null ? accessor(yProp) : undefined);
 
-  const quadtree: Quadtree<[number, number]> | undefined = $derived.by(() => {
-    if (['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
-      return d3Quadtree()
-        .x((d) => {
-          if (mode === 'quadtree-y') {
-            return 0;
-          }
+  let quadtree = $state<Quadtree<[number, number]> | undefined>();
 
-          if (xAccessorOverride) {
-            const scaled = ctx.xScale(xAccessorOverride(d));
+  $effect(() => {
+    // Touch the dependencies the quadtree is built from so the effect re-runs
+    // on changes (mode, accessors, scales, data, projection).
+    if (!['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
+      quadtree = undefined;
+      return;
+    }
+
+    const m = mode;
+    const xAcc = xAccessorOverride;
+    const yAcc = yAccessorOverride;
+    const xScale = ctx.xScale;
+    const yScale = ctx.yScale;
+    const xGet = ctx.xGet;
+    const yGet = ctx.yGet;
+    const xAccCtx = ctx.x;
+    const yAccCtx = ctx.y;
+    const projection = geo.projection;
+    const flatData = ctx.flatData;
+
+    let cancelled = false;
+    import('d3-quadtree').then(({ quadtree: d3Quadtree }) => {
+      if (cancelled) return;
+      quadtree = d3Quadtree<[number, number]>()
+        .x((d) => {
+          if (m === 'quadtree-y') return 0;
+          if (xAcc) {
+            const scaled = xScale(xAcc(d));
             return typeof scaled === 'number' ? scaled : 0;
           }
-
-          if (geo.projection) {
-            const lat = ctx.x(d);
-            const long = ctx.y(d);
-            const geoValue = geo.projection([lat, long]) ?? [0, 0];
+          if (projection) {
+            const lat = xAccCtx(d);
+            const long = yAccCtx(d);
+            const geoValue = projection([lat, long]) ?? [0, 0];
             return geoValue[0];
           }
-
-          const value = ctx.xGet(d);
-
+          const value = xGet(d);
           if (Array.isArray(value)) {
             // `x` accessor with multiple properties (ex. `x={['start', 'end']})`).
             // Default to the max (typically the "target"/"end" endpoint); override
             // via the `x` prop for explicit control.
             return max(value);
-          } else {
-            return value;
           }
+          return value;
         })
         .y((d) => {
-          if (mode === 'quadtree-x') {
-            return 0;
-          }
-
-          if (yAccessorOverride) {
-            const scaled = ctx.yScale(yAccessorOverride(d));
+          if (m === 'quadtree-x') return 0;
+          if (yAcc) {
+            const scaled = yScale(yAcc(d));
             return typeof scaled === 'number' ? scaled : 0;
           }
-
-          if (geo.projection) {
-            const lat = ctx.x(d);
-            const long = ctx.y(d);
-            const geoValue = geo.projection([lat, long]) ?? [0, 0];
+          if (projection) {
+            const lat = xAccCtx(d);
+            const long = yAccCtx(d);
+            const geoValue = projection([lat, long]) ?? [0, 0];
             return geoValue[1];
           }
-
-          const value = ctx.yGet(d);
-
+          const value = yGet(d);
           if (Array.isArray(value)) {
             // `y` accessor with multiple properties — default to max endpoint.
             return max(value);
-          } else {
-            return value;
           }
+          return value;
         })
-        .addAll(ctx.flatData as [number, number][]);
-    }
+        .addAll(flatData as [number, number][]);
+    });
+    return () => {
+      cancelled = true;
+    };
   });
 
   const rects: Array<{ x: number; y: number; width: number; height: number; data: any }> =
@@ -701,56 +717,60 @@
     {@render children?.({ state: tooltipState })}
 
     {#if mode === 'voronoi'}
-      <Svg>
-        <Voronoi
-          x={xProp}
-          y={yProp}
-          r={radius}
-          onpointerenter={(e, { data }) => {
-            showTooltip(e, data);
-          }}
-          onpointermove={(e, { data }) => {
-            showTooltip(e, data);
-          }}
-          onpointerleave={() => hideTooltip()}
-          onpointerdown={(e) => {
-            // @ts-expect-error
-            if (e.target?.hasPointerCapture(e.pointerId)) {
+      {#await import('../Voronoi.svelte') then { default: Voronoi }}
+        <Svg>
+          <Voronoi
+            x={xProp}
+            y={yProp}
+            r={radius}
+            onpointerenter={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointermove={(e, { data }) => {
+              showTooltip(e, data);
+            }}
+            onpointerleave={() => hideTooltip()}
+            onpointerdown={(e) => {
               // @ts-expect-error
-              e.target.releasePointerCapture(e.pointerId);
-            }
-          }}
-          onclick={(e, { data }) => {
-            onclick(e, { data });
-          }}
-          classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
-        />
-      </Svg>
+              if (e.target?.hasPointerCapture(e.pointerId)) {
+                // @ts-expect-error
+                e.target.releasePointerCapture(e.pointerId);
+              }
+            }}
+            onclick={(e, { data }) => {
+              onclick(e, { data });
+            }}
+            classes={{ path: cls('lc-tooltip-voronoi-path', debug && 'debug') }}
+          />
+        </Svg>
+      {/await}
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg center={ctx.radial}>
         <g class="lc-tooltip-rects-g">
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             {#if ctx.radial}
-              <Arc
-                innerRadius={rect.y}
-                outerRadius={rect.y + rect.height}
-                startAngle={rect.x}
-                endAngle={rect.x + rect.width}
-                class={cls('lc-tooltip-rect', debug && 'debug')}
-                onpointerenter={(e) => showTooltip(e, rect?.data)}
-                onpointermove={(e) => showTooltip(e, rect?.data)}
-                onpointerleave={() => hideTooltip()}
-                onpointerdown={(e) => {
-                  const target = e.target as Element;
-                  if (target?.hasPointerCapture(e.pointerId)) {
-                    target.releasePointerCapture(e.pointerId);
-                  }
-                }}
-                onclick={(e) => {
-                  onclick(e, { data: rect?.data });
-                }}
-              />
+              {#await import('../Arc.svelte') then { default: Arc }}
+                <Arc
+                  innerRadius={rect.y}
+                  outerRadius={rect.y + rect.height}
+                  startAngle={rect.x}
+                  endAngle={rect.x + rect.width}
+                  class={cls('lc-tooltip-rect', debug && 'debug')}
+                  onpointerenter={(e) => showTooltip(e, rect?.data)}
+                  onpointermove={(e) => showTooltip(e, rect?.data)}
+                  onpointerleave={() => hideTooltip()}
+                  onpointerdown={(e) => {
+                    const target = e.target as Element;
+                    if (target?.hasPointerCapture(e.pointerId)) {
+                      target.releasePointerCapture(e.pointerId);
+                    }
+                  }}
+                  onclick={(e) => {
+                    onclick(e, { data: rect?.data });
+                  }}
+                />
+              {/await}
             {:else}
               <rect
                 x={rect?.x}

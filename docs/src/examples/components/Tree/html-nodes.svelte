@@ -9,7 +9,8 @@
 	import { hierarchy as d3Hierarchy, type HierarchyNode } from 'd3-hierarchy';
 	import { curveBumpX } from 'd3-shape';
 
-	import { Chart, Group, Link, Layer, Tree } from 'layerchart';
+	import { Chart, Group, Link, Layer } from 'layerchart';
+	import { Tree } from 'layerchart/hierarchy';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
 	import { cls } from '@layerstack/tailwind';
 	import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
@@ -27,7 +28,6 @@
 		parentGap: 100,
 		angularSpacing: 23
 	});
-
 
 	let expandedNodeNames = $state(['flare']);
 	const hierarchy = $derived(

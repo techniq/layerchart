@@ -19,10 +19,7 @@ For `scaleThreshold` / `scaleQuantize` / `scaleQuantile` scales, the arrow cente
 Pass an explicit `value` prop to override the auto-detection — useful when the tooltip data shape doesn't match the chart's color accessor:
 
 ```svelte
-<Legend
-  scale={colorScale}
-  value={context.tooltip.data?.properties.data?.percentUnder18}
-/>
+<Legend scale={colorScale} value={context.tooltip.data?.properties.data?.percentUnder18} />
 ```
 
 See the [choropleth](/docs/components/GeoPath/choropleth) and [bubble-map](/docs/components/GeoPath/bubble-map) examples.

@@ -15,7 +15,8 @@
 	} from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, GeoRaster, Graticule } from 'layerchart/geo';
 	import { SelectField } from 'svelte-ux';
 	const countries = feature(topology, topology.objects.countries);
 

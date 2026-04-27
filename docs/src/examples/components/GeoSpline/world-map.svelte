@@ -9,8 +9,8 @@
 	import { flatRollup } from 'd3-array';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
-
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, GeoPoint, GeoSpline, Graticule } from 'layerchart/geo';
 
 	const countries = feature(topology, topology.objects.countries);
 

@@ -17,7 +17,16 @@
 		})
 	);
 
-	const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line', 'square', 'square-stroke'] as const;
+	const markerTypes = [
+		'arrow',
+		'triangle',
+		'dot',
+		'circle',
+		'circle-stroke',
+		'line',
+		'square',
+		'square-stroke'
+	] as const;
 	export { data };
 </script>
 

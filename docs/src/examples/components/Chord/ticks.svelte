@@ -4,7 +4,8 @@
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { format } from '@layerstack/utils';
 	import type { ChordGroup } from 'd3-chord';
-	import { Chart, Layer, Chord, Ribbon, Arc } from 'layerchart';
+	import { Chart, Layer, Arc } from 'layerchart';
+	import { Chord, Ribbon } from 'layerchart/graph';
 
 	const names = ['Apple', 'HTC', 'Huawei', 'LG', 'Nokia', 'Samsung', 'Sony', 'Other'];
 

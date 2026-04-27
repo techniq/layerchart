@@ -9,7 +9,6 @@
 	import { scaleSequential } from 'd3-scale';
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 
-
 	export { data };
 </script>
 

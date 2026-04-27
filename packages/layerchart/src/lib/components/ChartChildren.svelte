@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import TooltipContext from './tooltip/TooltipContext.svelte';
+  import type TooltipContext from './tooltip/TooltipContext.svelte';
   import type Tooltip from './tooltip/Tooltip.svelte';
   import type TooltipHeader from './tooltip/TooltipHeader.svelte';
   import type TooltipList from './tooltip/TooltipList.svelte';
@@ -133,26 +133,36 @@
   import { asAny } from '../utils/types.js';
   import { getObjectOrNull } from '../utils/common.js';
 
-  import Area from './Area.svelte';
-  import Arc from './Arc.svelte';
+  import type Area from './Area.svelte';
+  import type Arc from './Arc.svelte';
   import Axis from './Axis.svelte';
-  import Bars from './Bars.svelte';
-  import BrushContext from './BrushContext.svelte';
-  import ChartAnnotations from './charts/ChartAnnotations.svelte';
+  import type Bars from './Bars.svelte';
+  import type BrushContext from './BrushContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
-  import DefaultTooltip from './charts/DefaultTooltip.svelte';
+  // DefaultTooltip is lazy-loaded inline (only when `tooltipContext` is set
+  // and no custom `tooltip` snippet is provided).
+  import type DefaultTooltip from './charts/DefaultTooltip.svelte';
   import Grid from './Grid.svelte';
-  import Group from './Group.svelte';
+  import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
-  import Points from './Points.svelte';
-  import Labels from './Labels.svelte';
-  import Legend from './Legend.svelte';
-  import Line from './Line.svelte';
-  import Pie from './Pie.svelte';
+  import type Line from './Line.svelte';
+  import type Pie from './Pie.svelte';
   import Rule from './Rule.svelte';
-  import Spline from './Spline.svelte';
+  import type Spline from './Spline.svelte';
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';
+
+  // ChartAnnotations, Labels, Legend, and Points are dynamically imported
+  // inline in the markup via `{#await import(...)}` so composed
+  // `<Chart><Svg>...</Svg></Chart>` users (no auto-render props) don't pay
+  // for them. The bundler turns each `import()` into a separate chunk. The
+  // type-only imports below keep `ComponentProps<typeof X>` working in the
+  // `props` prop type definition.
+  // Note: lazy-only deps must be added to `vite.config.js`'s `optimizeDeps.include`
+  // (e.g. `d3-interpolate` from Legend) so Vite doesn't reload mid-test in CI.
+  import type Labels from './Labels.svelte';
+  import type Legend from './Legend.svelte';
+  import type Points from './Points.svelte';
 
   const context = getChartContext<TData, XScale, YScale>();
   const settings = getSettings();
@@ -204,7 +214,11 @@
     {/if}
 
     <ChartClipPath disabled={!context.props.brush && context.transformState?.mode !== 'domain'}>
-      <ChartAnnotations {annotations} layer="below" />
+      {#if annotations.length > 0}
+        {#await import('./charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          <ChartAnnotations {annotations} layer="below" />
+        {/await}
+      {/if}
 
       {@render belowMarks?.(snippetProps)}
       {@render marks?.(snippetProps)}
@@ -263,23 +277,27 @@
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
       {:else if points}
-        {#each context.series.visibleSeries as s, i (s.key)}
-          <Points
-            seriesKey={s.key}
-            stroke="var(--color-surface-100, light-dark(white, black))"
-            {...getObjectOrNull(points)}
-            {...props.points}
-          />
-        {/each}
+        {#await import('./Points.svelte') then { default: Points }}
+          {#each context.series.visibleSeries as s, i (s.key)}
+            <Points
+              seriesKey={s.key}
+              stroke="var(--color-surface-100, light-dark(white, black))"
+              {...getObjectOrNull(points)}
+              {...props.points}
+            />
+          {/each}
+        {/await}
       {/if}
 
       {#if typeof labels === 'function'}
         {@render labels(snippetProps)}
       {:else if labels}
-        {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
-        {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
-          <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
-        {/each}
+        {#await import('./Labels.svelte') then { default: Labels }}
+          {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
+          {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
+            <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />
+          {/each}
+        {/await}
       {/if}
 
       {#if typeof highlight === 'function'}
@@ -288,7 +306,11 @@
         <Highlight {...typeof highlight === 'object' ? highlight : {}} {...props.highlight} />
       {/if}
 
-      <ChartAnnotations {annotations} layer="above" />
+      {#if annotations.length > 0}
+        {#await import('./charts/ChartAnnotations.svelte') then { default: ChartAnnotations }}
+          <ChartAnnotations {annotations} layer="above" />
+        {/await}
+      {/if}
     </ChartClipPath>
   </Layer>
 
@@ -297,12 +319,16 @@
   {#if typeof legend === 'function'}
     {@render legend(snippetProps)}
   {:else if legend}
-    <Legend placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
+    {#await import('./Legend.svelte') then { default: Legend }}
+      <Legend placement="bottom" {...getObjectOrNull(legend)} {...props.legend} />
+    {/await}
   {/if}
 
   {#if typeof tooltip === 'function'}
     {@render tooltip(snippetProps)}
   {:else if tooltipContext}
-    <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
+    {#await import('./charts/DefaultTooltip.svelte') then { default: DefaultTooltip }}
+      <DefaultTooltip tooltipProps={props.tooltip} canHaveTotal />
+    {/await}
   {/if}
 {/if}

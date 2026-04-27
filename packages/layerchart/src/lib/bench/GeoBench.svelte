@@ -1,7 +1,7 @@
 <script lang="ts">
   import Chart from '../components/Chart.svelte';
   import Layer from '../components/layers/Layer.svelte';
-  import GeoPath from '../components/GeoPath.svelte';
+  import GeoPath from '../components/geo/GeoPath.svelte';
 
   type Props = {
     features: any[];

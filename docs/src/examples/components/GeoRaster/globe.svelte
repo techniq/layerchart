@@ -7,7 +7,8 @@
 	import { geoOrthographic } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, GeoRaster, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, GeoRaster, Graticule } from 'layerchart/geo';
 	const countries = feature(topology, topology.objects.countries);
 
 	// NASA Blue Marble — equirectangular / plate carrée. Served locally from

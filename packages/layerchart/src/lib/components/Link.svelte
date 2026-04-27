@@ -187,7 +187,10 @@
 
   // Array/data mode: any of x1/y1/x2/y2 is a string or function
   const isArrayMode = $derived(
-    isAccessorAccessor(x1) || isAccessorAccessor(y1) || isAccessorAccessor(x2) || isAccessorAccessor(y2)
+    isAccessorAccessor(x1) ||
+      isAccessorAccessor(y1) ||
+      isAccessorAccessor(x2) ||
+      isAccessorAccessor(y2)
   );
 
   // Pixel mode: any of x1/y1/x2/y2 is a number (and not array mode)
@@ -320,7 +323,7 @@
   );
 
   // --- Array mode paths ---
-  const arrayRows = $derived(isArrayMode ? ((data ?? ctx.data) ?? []) : []);
+  const arrayRows = $derived(isArrayMode ? (data ?? ctx.data ?? []) : []);
 
   function resolvePerDatum<T>(value: T | ((d: any) => T) | undefined, d: any): T | undefined {
     return typeof value === 'function' ? (value as (d: any) => T)(d) : (value as T | undefined);
@@ -334,7 +337,9 @@
   // each per row in array mode (e.g. stroke={(d) => colorScale(...)})
   const strokeProp = $derived((restProps as any).stroke);
   const fillProp = $derived((restProps as any).fill);
-  const strokeWidthProp = $derived((restProps as any)['stroke-width'] ?? (restProps as any).strokeWidth);
+  const strokeWidthProp = $derived(
+    (restProps as any)['stroke-width'] ?? (restProps as any).strokeWidth
+  );
 </script>
 
 {#if isArrayMode}

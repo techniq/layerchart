@@ -7,9 +7,9 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-
 
 	const states = feature(geojson, geojson.objects.states);
 

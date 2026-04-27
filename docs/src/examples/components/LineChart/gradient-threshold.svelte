@@ -7,7 +7,6 @@
 	import { LinearGradient, LineChart, Highlight, Spline, Tooltip } from 'layerchart';
 	import { format } from '@layerstack/utils';
 
-
 	export { data };
 </script>
 

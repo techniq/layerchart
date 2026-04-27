@@ -18,7 +18,8 @@
 
 	import { interpolateTurbo } from 'd3-scale-chromatic';
 
-	import { Chart, GeoPath, Graticule, Layer } from 'layerchart';
+	import { Chart, Layer } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { Button, SelectField } from 'svelte-ux';
 	const countries = feature(countriesTopo, countriesTopo.objects.countries);
 

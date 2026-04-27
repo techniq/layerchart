@@ -2,7 +2,7 @@
   import type { GeoPermissibleObjects } from 'd3-geo';
   import type { Snippet } from 'svelte';
 
-  import type { ClipPathPropsWithoutHTML } from './ClipPath.svelte';
+  import type { ClipPathPropsWithoutHTML } from '../ClipPath.svelte';
   import type { GeoPathPropsWithoutHTML } from './GeoPath.svelte';
   import type { Without } from '$lib/utils/types.js';
 
@@ -46,7 +46,7 @@
 <script lang="ts">
   import { geoPath as d3GeoPath } from 'd3-geo';
 
-  import ClipPath from './ClipPath.svelte';
+  import ClipPath from '../ClipPath.svelte';
   import { createId } from '$lib/utils/createId.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
 

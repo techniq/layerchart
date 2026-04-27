@@ -14,6 +14,8 @@ export interface Scenario {
 	imports: string[];
 	/** Additional import lines (e.g. from "layerchart/utils/foo") */
 	extraImports?: string[];
+	/** Optional grouping label used to organize scenarios in the PR comment */
+	group?: string;
 }
 
 export interface ComponentInfo {
@@ -25,58 +27,80 @@ export interface ComponentInfo {
  * Each scenario includes the minimum set of components for that chart type.
  */
 export const scenarios: Scenario[] = [
+	// --- Foundation ---
 	{
 		name: "core",
+		group: "Foundation",
 		description: "Bare minimum: Chart context + Svg layer",
 		imports: ["Chart", "Svg"],
 	},
 	{
+		name: "canvas",
+		group: "Foundation",
+		description: "Canvas-based rendering",
+		imports: ["Chart", "Canvas"],
+	},
+
+	// --- Cartesian charts ---
+	{
 		name: "line-chart",
+		group: "Cartesian charts",
 		description: "Basic line chart with axes and grid",
 		imports: ["Chart", "Svg", "Line", "Axis", "Grid"],
 	},
 	{
 		name: "line-chart-interactive",
+		group: "Cartesian charts",
 		description: "Line chart with tooltip and highlight",
 		imports: ["Chart", "Svg", "Line", "Axis", "Grid", "Highlight", "Tooltip"],
 	},
 	{
 		name: "area-chart",
+		group: "Cartesian charts",
 		description: "Area chart with axes",
 		imports: ["Chart", "Svg", "Area", "Axis", "Grid"],
 	},
 	{
 		name: "bar-chart",
+		group: "Cartesian charts",
 		description: "Bar chart with axes",
 		imports: ["Chart", "Svg", "Bars", "Axis", "Grid"],
 	},
 	{
 		name: "scatter-chart",
+		group: "Cartesian charts",
 		description: "Scatter plot with points",
 		imports: ["Chart", "Svg", "Points", "Point", "Axis", "Grid"],
 	},
 	{
 		name: "pie-chart",
+		group: "Cartesian charts",
 		description: "Pie/donut chart with arcs",
 		imports: ["Chart", "Svg", "Pie", "Arc", "ArcLabel"],
 	},
 	{
 		name: "high-level-charts",
+		group: "Cartesian charts",
 		description: "All high-level chart components (LineChart, BarChart, etc.)",
 		imports: ["LineChart", "AreaChart", "BarChart", "PieChart", "ScatterChart", "ArcChart"],
 	},
+
+	// --- Geo ---
 	{
 		name: "geo",
+		group: "Geo",
 		description: "Geographic map with paths",
 		imports: ["Chart", "Svg", "GeoProjection", "GeoPath", "GeoPoint"],
 	},
 	{
 		name: "geo-tiles",
+		group: "Geo",
 		description: "Geographic map with tile layer",
 		imports: ["Chart", "Svg", "GeoProjection", "GeoPath", "GeoTile", "TileImage"],
 	},
 	{
 		name: "geo-full",
+		group: "Geo",
 		description: "Full geo setup with all geo components",
 		imports: [
 			"Chart",
@@ -95,48 +119,57 @@ export const scenarios: Scenario[] = [
 			"TileImage",
 		],
 	},
-	{
-		name: "force",
-		description: "Force-directed graph layout",
-		imports: ["Chart", "Svg", "ForceSimulation", "Link", "Circle", "Text"],
-	},
+
+	// --- Hierarchy ---
 	{
 		name: "hierarchy-tree",
+		group: "Hierarchy",
 		description: "Tree layout with links",
 		imports: ["Chart", "Svg", "Tree", "Link", "Circle", "Text"],
 	},
 	{
 		name: "hierarchy-treemap",
+		group: "Hierarchy",
 		description: "Treemap layout",
 		imports: ["Chart", "Svg", "Treemap", "Group", "Rect", "Text"],
 	},
 	{
 		name: "hierarchy-pack",
+		group: "Hierarchy",
 		description: "Circle packing layout",
 		imports: ["Chart", "Svg", "Pack", "Circle", "Text"],
 	},
+
+	// --- Graph / network ---
+	{
+		name: "force",
+		group: "Graph / network",
+		description: "Force-directed graph layout",
+		imports: ["Chart", "Svg", "ForceSimulation", "Link", "Circle", "Text"],
+	},
 	{
 		name: "dagre",
+		group: "Graph / network",
 		description: "Dagre directed graph layout",
 		imports: ["Chart", "Svg", "Dagre", "Link", "Circle", "Text"],
 	},
 	{
 		name: "sankey",
+		group: "Graph / network",
 		description: "Sankey flow diagram",
 		imports: ["Chart", "Svg", "Sankey", "Link", "Rect", "Text"],
 	},
 	{
 		name: "chord",
+		group: "Graph / network",
 		description: "Chord diagram",
 		imports: ["Chart", "Svg", "Chord", "Ribbon"],
 	},
-	{
-		name: "canvas",
-		description: "Canvas-based rendering",
-		imports: ["Chart", "Canvas"],
-	},
+
+	// --- Worst case ---
 	{
 		name: "all",
+		group: "Worst case",
 		description: "Everything from layerchart (worst case)",
 		imports: ["*"],
 	},

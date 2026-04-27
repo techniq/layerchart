@@ -18,7 +18,7 @@
 		columns.map((col) => ({
 			row,
 			col,
-			value: Math.floor(seededRandom() * 100),
+			value: Math.floor(seededRandom() * 100)
 		}))
 	);
 </script>

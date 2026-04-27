@@ -7,7 +7,6 @@
 	import { AnnotationLine, LineChart, type Placement } from 'layerchart';
 	import AnnotationLineControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 
-
 	let placement: Placement = $state('top-right');
 	let xOffset = $state(5);
 	let yOffset = $state(0);

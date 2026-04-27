@@ -17,6 +17,16 @@ const config = defineConfig({
       {
         // Client-side tests (Svelte components)
         extends: true,
+        // Pre-bundle deps that are only reachable through dynamically-imported
+        // chunks (e.g. `{#await import('./Legend.svelte')}` in ChartChildren).
+        // Without this, Vite discovers them mid-test, reloads the dev server,
+        // and kills any in-flight test file load with "Failed to fetch
+        // dynamically imported module" in `vitest-browser` CI runs.
+        // Must be a sibling of `test`, not inside it:
+        // https://github.com/vitest-dev/vitest/issues/5477#issuecomment-3616351661
+        optimizeDeps: {
+          include: ['d3-interpolate'],
+        },
         test: {
           name: 'client',
           testTimeout: 5000,

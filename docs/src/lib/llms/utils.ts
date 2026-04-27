@@ -355,7 +355,9 @@ export function generateUtilMarkdown(
 	// Related
 	if (util.related && util.related.length > 0) {
 		sections.push(`${h(headingLevel + 1)} Related`);
-		const relatedLinks = util.related.map((r) => `- [${r}](${docsUrl(baseUrl, 'utils', r)})`).join('\n');
+		const relatedLinks = util.related
+			.map((r) => `- [${r}](${docsUrl(baseUrl, 'utils', r)})`)
+			.join('\n');
 		sections.push(relatedLinks);
 	}
 
@@ -487,7 +489,11 @@ function generateCollectionListSection(options: CollectionListOptions): string {
 /**
  * Generate markdown for a single component example
  */
-export function generateExampleMarkdown(baseUrl: string, componentSlug: string, exampleName: string): string | null {
+export function generateExampleMarkdown(
+	baseUrl: string,
+	componentSlug: string,
+	exampleName: string
+): string | null {
 	const raw = getExampleSource('components', componentSlug, exampleName);
 	if (!raw) return null;
 
@@ -543,7 +549,12 @@ This file contains links to LLM-optimized documentation in markdown format.`);
 
 	// Guides
 	sections.push(
-		generateCollectionListSection({ baseUrl, title: 'Guides', items: getSortedGuides(), type: 'guides' })
+		generateCollectionListSection({
+			baseUrl,
+			title: 'Guides',
+			items: getSortedGuides(),
+			type: 'guides'
+		})
 	);
 
 	// Components
@@ -594,7 +605,12 @@ export function generateFullLlmsTxt(baseUrl: string): string {
 This file contains the complete LLM-optimized documentation for all components and utilities.`);
 
 	sections.push(
-		generateCollectionListSection({ baseUrl, title: 'Guides', items: getSortedGuides(), type: 'guides' })
+		generateCollectionListSection({
+			baseUrl,
+			title: 'Guides',
+			items: getSortedGuides(),
+			type: 'guides'
+		})
 	);
 
 	// Components section - full content

@@ -11,7 +11,7 @@
 		{ country: 'Australia', code: 'au', gdpPerCapita: 64491, lifeExpectancy: 83.3 },
 		{ country: 'South Korea', code: 'kr', gdpPerCapita: 32255, lifeExpectancy: 83.7 },
 		{ country: 'Mexico', code: 'mx', gdpPerCapita: 10046, lifeExpectancy: 70.2 },
-		{ country: 'France', code: 'fr', gdpPerCapita: 44408, lifeExpectancy: 82.5 },
+		{ country: 'France', code: 'fr', gdpPerCapita: 44408, lifeExpectancy: 82.5 }
 	];
 </script>
 

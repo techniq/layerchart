@@ -2,7 +2,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, Circle, GeoPath, Image, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, Image, Layer, Tooltip } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import { SelectField } from 'svelte-ux';
 	import { getUsStatesTopology, getD1FootballTeams } from '$lib/geo.remote';
 

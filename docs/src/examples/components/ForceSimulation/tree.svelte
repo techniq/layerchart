@@ -7,13 +7,12 @@
 	import { hierarchy, type HierarchyLink, type HierarchyNode } from 'd3-hierarchy';
 	import { forceX, forceY, forceManyBody, forceLink, type SimulationNodeDatum } from 'd3-force';
 
-	import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
+	import { Chart, Circle, Link, Layer, Tooltip } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import { cls } from '@layerstack/tailwind';
 	import type { Prettify } from '@layerstack/utils';
 	type NodeDatum = { name: string; value: number };
 	type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
-
-
 
 	const root: HierarchyNode<MySimulationNodeDatum> = hierarchy<MySimulationNodeDatum>(data);
 	const nodes: HierarchyNode<MySimulationNodeDatum>[] = root.descendants();

@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
+  import Path, { type PathPropsWithoutHTML } from '../Path.svelte';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 

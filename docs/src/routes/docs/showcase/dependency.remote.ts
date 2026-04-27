@@ -243,9 +243,7 @@ export const getDependents = prerender(async () => {
 		.filter((d) => !manualUrls.has(d.repourl) && !manualUrls.has(d.homepageurl))
 		.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0));
 
-	const popularSites = filteredDependents.filter(
-		(d) => (d.stars ?? 0) >= POPULAR_STAR_THRESHOLD
-	);
+	const popularSites = filteredDependents.filter((d) => (d.stars ?? 0) >= POPULAR_STAR_THRESHOLD);
 	const otherSites = [
 		...filteredDependents.filter(
 			(d) => (d.stars ?? 0) >= OTHER_STAR_THRESHOLD && (d.stars ?? 0) < POPULAR_STAR_THRESHOLD

@@ -1,5 +1,6 @@
 <script>
-	import { Chart, Group, Layer, Rect, Text, Treemap } from 'layerchart';
+	import { Chart, Group, Layer, Rect, Text } from 'layerchart';
+	import { Treemap } from 'layerchart/hierarchy';
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeSpectral } from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';

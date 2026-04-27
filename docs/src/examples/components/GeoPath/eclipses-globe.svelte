@@ -16,13 +16,13 @@
 	import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Legend, Layer, Tooltip, type ChartState } from 'layerchart';
+	import { Chart, Legend, Layer, Tooltip, type ChartState } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 
 	import GeoPathEclipsesControls from '$lib/components/controls/GeoPathGlobeControls2.svelte';
 	import { format } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
-
 
 	const countries = feature(topology, topology.objects.countries);
 	const eclipses = feature(eclipsesData, eclipsesData.objects.eclipses);

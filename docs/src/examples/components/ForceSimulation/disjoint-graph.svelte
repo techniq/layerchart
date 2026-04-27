@@ -16,7 +16,8 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
-	import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
+	import { Chart, Circle, Link, Layer } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import type { Prettify } from '@layerstack/utils';
 
 	type NodeDatum = {
@@ -34,7 +35,6 @@
 	type MySimulationLinkDatum = Prettify<
 		LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
 	>;
-
 
 	const nodes: MySimulationNodeDatum[] = $derived(data.nodes);
 	const links: MySimulationLinkDatum[] = $derived(data.links);

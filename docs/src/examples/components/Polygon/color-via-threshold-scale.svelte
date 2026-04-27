@@ -8,7 +8,7 @@
 		{ date: new Date('2024-05-01'), value: 22 },
 		{ date: new Date('2024-07-01'), value: 48 },
 		{ date: new Date('2024-09-01'), value: 80 },
-		{ date: new Date('2024-11-01'), value: 92 },
+		{ date: new Date('2024-11-01'), value: 92 }
 	];
 </script>
 
@@ -30,13 +30,13 @@
 		<AnnotationLine
 			y={50}
 			props={{
-				line: { dashArray: [4], stroke: 'var(--color-danger)', strokeOpacity: 0.5 },
+				line: { dashArray: [4], stroke: 'var(--color-danger)', strokeOpacity: 0.5 }
 			}}
 		/>
 		<AnnotationLine
 			y={90}
 			props={{
-				line: { dashArray: [4], stroke: 'var(--color-success)', strokeOpacity: 0.5 },
+				line: { dashArray: [4], stroke: 'var(--color-success)', strokeOpacity: 0.5 }
 			}}
 		/>
 		<Polygon cx="date" cy="value" r={8} points={6} fill="value" />

@@ -7,7 +7,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { AnnotationPoint, Chart, GeoPath, Layer, type Placement } from 'layerchart';
+	import { AnnotationPoint, Chart, Layer, type Placement } from 'layerchart';
+	import { GeoPath } from 'layerchart/geo';
 	import type { ComponentProps } from 'svelte';
 
 	const states = feature(topology, topology.objects.states);

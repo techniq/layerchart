@@ -12,7 +12,8 @@
 	} from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
+	import { Chart, Layer, Tooltip } from 'layerchart';
+	import { GeoPath, Graticule } from 'layerchart/geo';
 	import { getCountriesTopology, getCountriesDetailTopology } from '$lib/geo.remote';
 	import GeoContextPlaygroundControls from '$lib/components/controls/GeoContextPlaygroundControls.svelte';
 

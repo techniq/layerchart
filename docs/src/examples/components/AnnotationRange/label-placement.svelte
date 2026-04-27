@@ -7,8 +7,6 @@
 	import { AnnotationRange, LineChart, defaultChartPadding, type Placement } from 'layerchart';
 	import AnnotationRangeControls from '$lib/components/controls/AnnotationRangePointLineControls.svelte';
 
-
-
 	const placementOptions = [
 		'top-left',
 		'top',

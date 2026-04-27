@@ -19,13 +19,13 @@
 		Chart,
 		ChartClipPath,
 		Group,
-		Partition,
 		Rect,
 		RectClipPath,
 		Layer,
 		Text,
 		findAncestor
 	} from 'layerchart';
+	import { Partition } from 'layerchart/hierarchy';
 	import { Breadcrumb, Button } from 'svelte-ux';
 	import { format, sortFunc } from '@layerstack/utils';
 	import { cls } from '@layerstack/tailwind';

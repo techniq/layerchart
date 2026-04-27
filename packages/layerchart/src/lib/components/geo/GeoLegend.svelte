@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Placement } from './types.js';
+  import type { Placement } from '../types.js';
   import { asAny, type Without } from '$lib/utils/types.js';
 
   export type GeoLegendUnits = 'km' | 'mi';

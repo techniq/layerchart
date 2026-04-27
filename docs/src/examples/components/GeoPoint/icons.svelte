@@ -2,7 +2,8 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
+	import { Chart, Circle, Layer, Text, Tooltip } from 'layerchart';
+	import { GeoPath, GeoPoint } from 'layerchart/geo';
 	import { getUsStatesTopology, getUsCapitals } from '$lib/geo.remote';
 
 	import LucideStar from '~icons/lucide/star';

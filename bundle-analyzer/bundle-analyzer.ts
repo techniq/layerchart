@@ -24,6 +24,7 @@ const __dirname = dirname(__filename);
 interface BundleResult {
 	scenario: string;
 	description: string;
+	group?: string;
 	size: number;
 	gzipSize: number;
 	imports: string[];
@@ -33,6 +34,40 @@ interface BundleReport {
 	timestamp: string;
 	results: BundleResult[];
 }
+
+/**
+ * Maps a component name to the layerchart sub-path it lives under.
+ * Components not listed here import from the bare `layerchart` package.
+ * Keep in sync with the package.json `exports` map and src/lib/components/<sub>/index.ts.
+ */
+const SUBPATH_FOR_COMPONENT: Record<string, string> = {
+	// geo
+	GeoCircle: "geo",
+	GeoClipPath: "geo",
+	GeoEdgeFade: "geo",
+	GeoLegend: "geo",
+	GeoPath: "geo",
+	GeoPoint: "geo",
+	GeoProjection: "geo",
+	GeoRaster: "geo",
+	GeoSpline: "geo",
+	GeoTile: "geo",
+	GeoVisible: "geo",
+	Graticule: "geo",
+	TileImage: "geo",
+	// hierarchy
+	Tree: "hierarchy",
+	Treemap: "hierarchy",
+	Pack: "hierarchy",
+	Partition: "hierarchy",
+	// force
+	ForceSimulation: "force",
+	// graph
+	Chord: "graph",
+	Dagre: "graph",
+	Ribbon: "graph",
+	Sankey: "graph",
+};
 
 
 class BundleAnalyzer {
@@ -81,7 +116,14 @@ class BundleAnalyzer {
 			results,
 		};
 
-		this.saveReport(report);
+		// Only update `latest.json` (the committed baseline) on full runs.
+		// Filtered/component runs would otherwise drop scenarios from the
+		// baseline and break the PR comparison comment.
+		const isFullRun =
+			!options.scenarios &&
+			!options.components &&
+			!options.componentFilter;
+		this.saveReport(report, isFullRun);
 		this.printReport(report);
 
 		if (options.visualize) {
@@ -127,6 +169,7 @@ class BundleAnalyzer {
 		return {
 			scenario: scenario.name,
 			description: scenario.description,
+			group: scenario.group,
 			size,
 			gzipSize,
 			imports: scenario.imports,
@@ -137,13 +180,34 @@ class BundleAnalyzer {
 		let content: string;
 
 		if (scenario.imports.length === 1 && scenario.imports[0] === "*") {
-			// Wildcard import: import everything
+			// Wildcard import: import everything (root + each sub-path)
 			content = `import * as LayerChart from "layerchart";
-;(globalThis.__lc_keep ||= []).push(LayerChart);
+import * as LayerChartGeo from "layerchart/geo";
+import * as LayerChartHierarchy from "layerchart/hierarchy";
+import * as LayerChartForce from "layerchart/force";
+import * as LayerChartGraph from "layerchart/graph";
+;(globalThis.__lc_keep ||= []).push(LayerChart, LayerChartGeo, LayerChartHierarchy, LayerChartForce, LayerChartGraph);
 `;
 		} else {
-			const importList = scenario.imports.join(", ");
-			content = `import { ${importList} } from "layerchart";
+			// Group imports by source module (root vs each sub-path).
+			const groups = new Map<string, string[]>([["layerchart", []]]);
+			for (const name of scenario.imports) {
+				const sub = SUBPATH_FOR_COMPONENT[name];
+				const mod = sub ? `layerchart/${sub}` : "layerchart";
+				const list = groups.get(mod) ?? [];
+				list.push(name);
+				groups.set(mod, list);
+			}
+
+			const importLines: string[] = [];
+			for (const [mod, names] of groups) {
+				if (names.length === 0) continue;
+				importLines.push(
+					`import { ${names.join(", ")} } from "${mod}";`
+				);
+			}
+
+			content = `${importLines.join("\n")}
 
 const refs = [
 	${scenario.imports.join(",\n\t")}
@@ -302,16 +366,23 @@ const refs = [
 		return { size, gzipSize };
 	}
 
-	private saveReport(report: BundleReport): void {
+	private saveReport(report: BundleReport, updateLatest = true): void {
 		const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 		const filepath = join(this.outputDir, `bundle-report-${timestamp}.json`);
 
 		writeFileSync(filepath, JSON.stringify(report, null, 2));
 
-		const latestPath = join(this.outputDir, "latest.json");
-		writeFileSync(latestPath, JSON.stringify(report, null, 2));
+		if (updateLatest) {
+			const latestPath = join(this.outputDir, "latest.json");
+			writeFileSync(latestPath, JSON.stringify(report, null, 2));
+		}
 
 		console.log(`\nReport saved to ${filepath}`);
+		if (!updateLatest) {
+			console.log(
+				`(Skipped updating latest.json because this was a filtered run)`
+			);
+		}
 	}
 
 	private printReport(report: BundleReport): void {

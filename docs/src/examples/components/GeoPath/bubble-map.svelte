@@ -13,19 +13,9 @@
 	import { feature } from 'topojson-client';
 	import { sortFunc } from '@layerstack/utils';
 
-	import {
-		Chart,
-		Circle,
-		CircleLegend,
-		GeoLegend,
-		GeoPath,
-		Layer,
-		Legend,
-		Tooltip,
-		getSettings
-	} from 'layerchart';
+	import { Chart, Circle, CircleLegend, Layer, Legend, Tooltip, getSettings } from 'layerchart';
+	import { GeoLegend, GeoPath } from 'layerchart/geo';
 	import TransformContextControls from '$lib/components/controls/TransformContextControls.svelte';
-
 
 	const states = feature(geojson, geojson.objects.states);
 	const counties = feature(geojson, geojson.objects.counties);

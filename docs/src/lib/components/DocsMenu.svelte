@@ -83,9 +83,17 @@
 		</h2>
 		{#each guidesByCategory as [category, guides]}
 			{#if category && collapsibleCategories.includes(category)}
-				<details class="ml-2 mb-6 last:mb-0 group" open={guides.some((g) => page.url.pathname.includes(`/docs/guides/${g.slug}`))}>
-					<summary class="text-surface-content/80 mb-3 text-sm font-medium capitalize cursor-pointer list-none flex items-center gap-1 select-none [&::-webkit-details-marker]:hidden">
-						<span class="transition-transform duration-200 group-open:rotate-90 text-surface-content/40">&#9656;</span>
+				<details
+					class="ml-2 mb-6 last:mb-0 group"
+					open={guides.some((g) => page.url.pathname.includes(`/docs/guides/${g.slug}`))}
+				>
+					<summary
+						class="text-surface-content/80 mb-3 text-sm font-medium capitalize cursor-pointer list-none flex items-center gap-1 select-none [&::-webkit-details-marker]:hidden"
+					>
+						<span
+							class="transition-transform duration-200 group-open:rotate-90 text-surface-content/40"
+							>&#9656;</span
+						>
 						{category}
 					</summary>
 					<div class="border-l border-surface-content/10">

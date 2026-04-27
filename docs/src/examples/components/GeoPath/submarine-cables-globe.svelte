@@ -1,5 +1,9 @@
 <script module lang="ts">
-	import { getCountriesTopology, getSubmarineCables, getSubmarineCablesLandingPoints } from '$lib/geo.remote.js';
+	import {
+		getCountriesTopology,
+		getSubmarineCables,
+		getSubmarineCablesLandingPoints
+	} from '$lib/geo.remote.js';
 	const topology = await getCountriesTopology();
 	const cables = await getSubmarineCables();
 	const landingPoints = await getSubmarineCablesLandingPoints();
@@ -12,18 +16,9 @@
 	import { cls } from '@layerstack/tailwind';
 	import { TimerState } from '@layerstack/svelte-state';
 
-	import {
-		Chart,
-		GeoPath,
-		GeoPoint,
-		GeoVisible,
-		Graticule,
-		Layer,
-		Tooltip,
-		type ChartState
-	} from 'layerchart';
+	import { Chart, Layer, Tooltip, type ChartState } from 'layerchart';
+	import { GeoPath, GeoPoint, GeoVisible, Graticule } from 'layerchart/geo';
 	import GeoPathSubmarineControls from '$lib/components/controls/GeoPathSubmarineControls.svelte';
-
 
 	const countries = feature(topology, topology.objects.countries);
 

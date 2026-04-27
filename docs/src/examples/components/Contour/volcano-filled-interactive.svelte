@@ -9,7 +9,6 @@
 	import { Axis, Chart, Contour, Layer } from 'layerchart';
 	import { RangeField } from 'svelte-ux';
 
-
 	let thresholds = $state(20);
 	let blur = $state(0);
 </script>
@@ -19,7 +18,11 @@
 	<RangeField label="Blur" bind:value={blur} min={0} max={10} step={0.5} />
 </div>
 
-<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>
+<Chart
+	cScale={scaleSequential(interpolateTurbo)}
+	padding={{ left: 30, bottom: 24, top: 8, right: 8 }}
+	height={400}
+>
 	<Layer>
 		<Axis placement="left" rule />
 		<Axis placement="bottom" rule />

@@ -2,7 +2,8 @@
 	import type { ComponentProps } from 'svelte';
 	import { forceX, forceY, forceManyBody, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-	import { Chart, ForceSimulation, Layer, Points } from 'layerchart';
+	import { Chart, Layer, Points } from 'layerchart';
+	import { ForceSimulation } from 'layerchart/force';
 	import ForceTextControls from '$lib/components/controls/ForceTextControls.svelte';
 
 	import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';

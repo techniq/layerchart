@@ -19,9 +19,10 @@
   import type { GeoStateProps } from '$lib/states/geo.svelte.js';
   import TooltipContext from './tooltip/TooltipContext.svelte';
 
-  import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext from './TransformContext.svelte';
-  import BrushContext from './BrushContext.svelte';
+  // BrushContext (used only when `brush` prop is set) is lazy-loaded inline
+  // via `{#await import(...)}` so non-brush charts don't pay for it.
+  import type BrushContext from './BrushContext.svelte';
   import {
     type BrushDomainType,
     type BrushState,
@@ -777,18 +778,21 @@
     }
   });
 
-  const initialTransform = $derived(
-    transform?.mode === 'projection' &&
-      (resolvedApply.translate || resolvedApply.scale) &&
-      geo?.fitGeojson &&
-      geo?.projection
-      ? geoFitObjectTransform(
-          geo.projection(),
-          [chartState.width, chartState.height],
-          geo.fitGeojson
-        )
-      : undefined
-  );
+  const initialTransform = $derived.by(() => {
+    if (
+      transform?.mode !== 'projection' ||
+      !(resolvedApply.translate || resolvedApply.scale) ||
+      !geo?.fitGeojson ||
+      !geo?.projection
+    ) {
+      return undefined;
+    }
+    // Inlined to avoid pulling `$lib/utils/geo.js` (and its d3-geo imports)
+    // into Chart's static graph for non-geo charts.
+    const fitted = geo.projection().fitSize([chartState.width, chartState.height], geo.fitGeojson);
+    const t = fitted.translate();
+    return { translate: { x: t[0], y: t[1] }, scale: fitted.scale() };
+  });
 
   const processTranslate = $derived.by(() => {
     if (resolvedApply.rotation && chartState.geoState?.projection) {
@@ -1144,8 +1148,37 @@
         {onTransform}
         {ondragend}
       >
-        <!-- svelte-ignore ownership_invalid_binding -->
-        <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
+        {#if brush}
+          {#await import('./BrushContext.svelte')}
+            <!--
+              Pending: render the chart subtree immediately so the chart paints
+              before the BrushContext chunk arrives (avoids a perceived hang on
+              slow networks). The subtree re-mounts once `{:then}` resolves —
+              acceptable because it happens before user interaction, brush is
+              an opt-in feature, and any chart state at that point is empty.
+            -->
+            <!-- svelte-ignore ownership_invalid_binding -->
+            <TooltipContext
+              onclick={onTooltipClick}
+              {...getObjectOrNull(tooltipContext)}
+              bind:state={chartState.tooltipState}
+            >
+              <ChartChildren {children} {tooltipContext} {...restProps} />
+            </TooltipContext>
+          {:then { default: BrushContext }}
+            <!-- svelte-ignore ownership_invalid_binding -->
+            <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
+              <!-- svelte-ignore ownership_invalid_binding -->
+              <TooltipContext
+                onclick={onTooltipClick}
+                {...getObjectOrNull(tooltipContext)}
+                bind:state={chartState.tooltipState}
+              >
+                <ChartChildren {children} {tooltipContext} {...restProps} />
+              </TooltipContext>
+            </BrushContext>
+          {/await}
+        {:else}
           <!-- svelte-ignore ownership_invalid_binding -->
           <TooltipContext
             onclick={onTooltipClick}
@@ -1154,7 +1187,7 @@
           >
             <ChartChildren {children} {tooltipContext} {...restProps} />
           </TooltipContext>
-        </BrushContext>
+        {/if}
       </TransformContext>
     {/key}
   </div>
