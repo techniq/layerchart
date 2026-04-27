@@ -65,9 +65,9 @@
   import { cls } from '@layerstack/tailwind';
 
   import Group from './Group.svelte';
-  import Path from './Path.svelte';
-  import Rect from './Rect.svelte';
-  import Line from './Line.svelte';
+  import Path from './Path/Path.svelte';
+  import Rect from './Rect/Rect.svelte';
+  import Line from './Line/Line.svelte';
   import { accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';

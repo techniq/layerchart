@@ -104,7 +104,7 @@
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
   import { greatestAbs } from '@layerstack/utils';
 
-  import Rect from './Rect.svelte';
+  import Rect from './Rect/Rect.svelte';
 
   import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';

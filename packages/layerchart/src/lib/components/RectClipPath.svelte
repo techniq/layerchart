@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { type RectPropsWithoutHTML } from './Rect.svelte';
+  import { type RectPropsWithoutHTML } from './Rect/Rect.svelte';
   import type { CommonEvents, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';

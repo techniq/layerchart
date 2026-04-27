@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Without } from '$lib/utils/types.js';
-  import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect.svelte';
+  import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect/Rect.svelte';
 
   export type FramePropsWithoutHTML = RectPropsWithoutHTML & {
     /**

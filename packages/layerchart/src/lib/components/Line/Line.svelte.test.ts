@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 
 import type { Component } from 'svelte';
-import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
+import TestHarness, { componentTestId } from '../tests/TestHarness.svelte';
 import Line from './Line.svelte';
 
 describe('Line', () => {

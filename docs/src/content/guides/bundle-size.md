@@ -91,10 +91,11 @@ The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer v
 
 | Primitive | Svg-only saves | Canvas-only saves | Html-only saves |
 | --- | --- | --- | --- |
-| `Circle` | ~4 KB gz (~25%) | ~1 KB gz (~7%) | ~4 KB gz (~22%) |
+| `Circle` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~22%) |
 | `Text` | ~13 KB gz (~45%) | ~2 KB gz (~8%) | ~13 KB gz (~46%) |
-
-More primitives (`Rect`, `Line`, `Path`, `Bar`) are planned. The pattern follows the same shape — we'll add to the table as they land.
+| `Rect` | ~4 KB gz (~23%) | ~1 KB gz (~7%) | ~4 KB gz (~23%) |
+| `Line` | ~4 KB gz (~22%) | ~3 KB gz (~14%) | ~5 KB gz (~27%) |
+| `Path` | ~3 KB gz (~15%) | ~4 KB gz (~20%) | n/a (no HTML variant) |
 
 ## Worst case: importing everything
 
@@ -117,6 +118,12 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 | `circle-agnostic` | `Circle` from `layerchart` | ~17 KB |
 | `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |
 | `text-agnostic` | `Text` from `layerchart` | ~29 KB |
+| `rect-svg` (per-layer) | `Rect` from `layerchart/svg` | ~14 KB |
+| `rect-agnostic` | `Rect` from `layerchart` | ~19 KB |
+| `line-svg` (per-layer) | `Line` from `layerchart/svg` | ~15 KB |
+| `line-agnostic` | `Line` from `layerchart` | ~19 KB |
+| `path-svg` (per-layer) | `Path` from `layerchart/svg` | ~18 KB |
+| `path-agnostic` | `Path` from `layerchart` | ~21 KB |
 
 `core` is what every chart pays. The other rows show what specific feature additions cost on top.
 

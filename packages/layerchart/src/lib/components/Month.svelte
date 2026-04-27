@@ -82,7 +82,7 @@
   import { index } from 'd3-array';
   import { format } from '@layerstack/utils';
 
-  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
+  import Rect, { type RectPropsWithoutHTML } from './Rect/Rect.svelte';
   import Group from './Group.svelte';
   import Text from './Text/Text.svelte';
   import { chartDataArray } from '../utils/common.js';

@@ -38,7 +38,7 @@
   import { timeWeek } from 'd3-time';
   import { cls } from '@layerstack/tailwind';
   import { endOfInterval } from '@layerstack/utils';
-  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path/Path.svelte';
 
   let {
     date,

@@ -111,7 +111,7 @@
 
   import Circle from './Circle/Circle.svelte';
   import Group, { type GroupProps } from './Group.svelte';
-  import Line from './Line.svelte';
+  import Line from './Line/Line.svelte';
   import Rule from './Rule.svelte';
   // Spline (used only for radial linear grid lines) is lazy-loaded inline
   // via `{#await import(...)}` so non-radial grids don't pay for it.

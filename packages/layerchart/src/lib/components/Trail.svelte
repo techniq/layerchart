@@ -5,7 +5,7 @@
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import type { DataProp } from '$lib/utils/dataProp.js';
   import type { TrailCap } from '$lib/utils/trail.js';
-  import type { PathProps } from './Path.svelte';
+  import type { PathProps } from './Path/Path.svelte';
 
   export type TrailPropsWithoutHTML = {
     /**
@@ -114,7 +114,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { computeTrailPath } from '$lib/utils/trail.js';
   import { createMotion, extractTweenConfig } from '$lib/utils/motion.svelte.js';
-  import Path from './Path.svelte';
+  import Path from './Path/Path.svelte';
 
   const ctx = getChartContext();
 

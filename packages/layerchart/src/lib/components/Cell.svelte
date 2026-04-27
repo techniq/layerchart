@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { RectProps } from './Rect.svelte';
+  import type { RectProps } from './Rect/Rect.svelte';
   import type { DataProp } from '$lib/utils/dataProp.js';
 
   type BaseRectCellProps = Omit<
@@ -43,7 +43,7 @@
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
-  import Rect from './Rect.svelte';
+  import Rect from './Rect/Rect.svelte';
   import Circle from './Circle/Circle.svelte';
   import Group from './Group.svelte';
 

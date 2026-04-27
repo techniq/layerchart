@@ -12,7 +12,7 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
 
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { PathProps } from '../Path.svelte';
+  import type { PathProps } from '../Path/Path.svelte';
 
   export type GeoPathPropsWithoutHTML = {
     /**
@@ -82,7 +82,7 @@
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import Path from '../Path.svelte';
+  import Path from '../Path/Path.svelte';
 
   let {
     geoTransform,

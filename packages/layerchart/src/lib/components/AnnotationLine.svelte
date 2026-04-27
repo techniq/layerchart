@@ -48,7 +48,7 @@
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
-  import Line from './Line.svelte';
+  import Line from './Line/Line.svelte';
   import Text from './Text/Text.svelte';
   import type { Placement } from './types.js';
 

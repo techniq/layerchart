@@ -50,7 +50,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import LinearGradient from './LinearGradient.svelte';
   import Pattern from './Pattern.svelte';
-  import Rect from './Rect.svelte';
+  import Rect from './Rect/Rect.svelte';
   import Text from './Text/Text.svelte';
   import type { Placement } from './types.js';
 

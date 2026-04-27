@@ -58,7 +58,7 @@
 
   import Circle from './Circle/Circle.svelte';
   import Group from './Group.svelte';
-  import Line, { type LinePropsWithoutHTML } from './Line.svelte';
+  import Line, { type LinePropsWithoutHTML } from './Line/Line.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
   import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';

@@ -145,7 +145,7 @@
   import Grid from './Grid.svelte';
   import type Group from './Group.svelte';
   import Highlight from './Highlight.svelte';
-  import type Line from './Line.svelte';
+  import type Line from './Line/Line.svelte';
   import type Pie from './Pie.svelte';
   import Rule from './Rule.svelte';
   import type Spline from './Spline.svelte';

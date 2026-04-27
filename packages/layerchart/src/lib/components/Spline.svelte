@@ -89,7 +89,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { resolveColorProp, resolveStyleProp } from '$lib/utils/dataProp.js';
-  import Path, { type PathProps } from './Path.svelte';
+  import Path, { type PathProps } from './Path/Path.svelte';
   import { createMotion, extractTweenConfig } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();

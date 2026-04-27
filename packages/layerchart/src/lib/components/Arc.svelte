@@ -2,7 +2,7 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  import Path, { type PathPropsWithoutHTML } from './Path.svelte';
+  import Path, { type PathPropsWithoutHTML } from './Path/Path.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 

@@ -61,7 +61,7 @@
   import { interpolatePath } from 'd3-interpolate-path';
 
   import Spline from './Spline.svelte';
-  import Path, { type PathProps } from './Path.svelte';
+  import Path, { type PathProps } from './Path/Path.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
   import { getChartContext } from '$lib/contexts/chart.js';

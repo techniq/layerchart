@@ -4,7 +4,7 @@
   import type { MotionNoneOption, MotionTweenOption } from '$lib/utils/motion.svelte.js';
   import { curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
   import type { LinkSweep, LinkType } from '$lib/utils/linkUtils.js';
-  import type { PathProps, PathPropsWithoutHTML } from './Path.svelte';
+  import type { PathProps, PathPropsWithoutHTML } from './Path/Path.svelte';
   import type { Accessor } from '$lib/utils/common.js';
 
   export type LinkPropsWithoutHTML = {
@@ -123,7 +123,7 @@
     getLinkRadialPresetPath,
   } from '$lib/utils/linkUtils.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import Path from './Path.svelte';
+  import Path from './Path/Path.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { accessor } from '$lib/utils/common.js';
   import { cls } from '@layerstack/tailwind';

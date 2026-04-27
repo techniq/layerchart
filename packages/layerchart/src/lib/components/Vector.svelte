@@ -143,7 +143,7 @@
     vectorSpikePath,
     transformVectorPath,
   } from '$lib/utils/path.js';
-  import Path from './Path.svelte';
+  import Path from './Path/Path.svelte';
 
   let {
     x = 0,

@@ -1,9 +1,9 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
   import Circle from './Circle/Circle.svelte';
-  import Line from './Line.svelte';
+  import Line from './Line/Line.svelte';
   import type Bar from './Bar.svelte';
-  import Rect from './Rect.svelte';
+  import Rect from './Rect/Rect.svelte';
   import { accessor, type Accessor } from '$lib/utils/common.js';
 
   export type HighlightPointData = { x: any; y: any };

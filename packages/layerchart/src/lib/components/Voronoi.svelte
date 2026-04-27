@@ -77,7 +77,7 @@
 
   import GeoPath from './geo/GeoPath.svelte';
   import Group, { type GroupProps } from './Group.svelte';
-  import Path from './Path.svelte';
+  import Path from './Path/Path.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { accessor } from '$lib/utils/common.js';
