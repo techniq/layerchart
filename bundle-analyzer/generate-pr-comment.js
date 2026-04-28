@@ -41,6 +41,10 @@ function formatDiff(bytes) {
 }
 
 function formatPercent(percent) {
+	// Added scenarios (target was 0) have +Infinity; render as "+100%". Removed
+	// scenarios go through the explicit -100 branch, but handle -Infinity too.
+	if (percent === Infinity) return "+100%";
+	if (percent === -Infinity) return "-100%";
 	if (!isFinite(percent)) return "";
 	const sign = percent > 0 ? "+" : "";
 	return `${sign}${percent.toFixed(1)}%`;
@@ -202,9 +206,9 @@ function generateComment(changes, hasBaseline = true) {
 
 		const renderRow = (s) => {
 			const icon = getStatusIcon(s.status, s.sizeDiff);
-			const current = `${formatKB(s.targetSize)} KB <sub>(${formatKB(s.targetGzipSize)} gz)</sub>`;
-			const newSize = `${formatKB(s.currentSize)} KB <sub>(${formatKB(s.currentGzipSize)} gz)</sub>`;
-			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)}) <sub>(${formatDiff(s.gzipSizeDiff)} gz, ${formatPercent(s.gzipSizePercent)})</sub>`;
+			const current = `${formatKB(s.targetSize)} KB<br><sub>${formatKB(s.targetGzipSize)} gz</sub>`;
+			const newSize = `${formatKB(s.currentSize)} KB<br><sub>${formatKB(s.currentGzipSize)} gz</sub>`;
+			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)})<br><sub>${formatDiff(s.gzipSizeDiff)} gz (${formatPercent(s.gzipSizePercent)})</sub>`;
 			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		};
 
