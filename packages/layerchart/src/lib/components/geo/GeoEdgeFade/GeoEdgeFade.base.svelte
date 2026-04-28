@@ -1,20 +1,12 @@
 <script lang="ts" module>
-  import type { Snippet } from 'svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import type { Component } from 'svelte';
+  import type { GeoEdgeFadeProps } from './GeoEdgeFade.shared.svelte.js';
 
-  export type GeoEdgeFadePropsWithoutHTML = {
-    link: { source: [number, number]; target: [number, number] };
-    /**
-     * A bindable reference to the underlying `<g>` element.
-     * @bindable
-     */
-    ref?: SVGGElement;
-
-    children?: Snippet;
+  export type GeoEdgeFadeBaseLayerComponents = {
+    Group: Component<any>;
   };
 
-  export type GeoEdgeFadeProps = GeoEdgeFadePropsWithoutHTML &
-    Without<GroupProps, GeoEdgeFadePropsWithoutHTML>;
+  export type GeoEdgeFadeBaseProps = GeoEdgeFadeProps & GeoEdgeFadeBaseLayerComponents;
 </script>
 
 <script lang="ts">
@@ -22,16 +14,16 @@
   import { geoDistance } from 'd3-geo';
 
   import { getGeoContext } from '$lib/contexts/geo.js';
-  import Group, { type GroupProps } from '../Group/Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
+    Group,
     link,
     ref: refProp = $bindable(),
     children,
     opacity: opacityProp,
     ...restProps
-  }: GeoEdgeFadeProps = $props();
+  }: GeoEdgeFadeBaseProps = $props();
 
   let ref = $state<SVGGElement>();
 

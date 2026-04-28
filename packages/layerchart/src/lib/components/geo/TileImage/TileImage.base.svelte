@@ -1,71 +1,20 @@
 <script lang="ts" module>
-  import type { Without } from '$lib/utils/types.js';
+  import type { Component } from 'svelte';
+  import type { TileImageProps } from './TileImage.shared.svelte.js';
 
-  let tileCache = new Map<string, Promise<string>>();
-
-  export type TileImagePropsWithoutHTML = {
-    /**
-     * x position of the tile
-     */
-    x: number;
-    /**
-     * y position of the tile
-     */
-    y: number;
-
-    /**
-     * z position of the tile
-     */
-    z: number;
-
-    /**
-     * translate x
-     */
-    tx: number;
-
-    /**
-   * translate y
-
-   */
-    ty: number;
-
-    /**
-     * scale of the tile
-     */
-    scale: number;
-
-    /**
-     * Whether to disable cache
-     *
-     * @default false
-     */
-    disableCache?: boolean;
-
-    /**
-     * Whether to enable debug mode
-     *
-     * @default false
-     */
-    debug?: boolean;
-
-    /**
-     * URL function to get the tile image
-     */
-    url: (x: number, y: number, z: number) => string;
+  export type TileImageBaseLayerComponents = {
+    Text: Component<any>;
   };
 
-  export type TileImageProps = TileImagePropsWithoutHTML &
-    Omit<Without<SVGAttributes<SVGImageElement>, TileImagePropsWithoutHTML>, 'href'>;
+  export type TileImageBaseProps = TileImageProps & TileImageBaseLayerComponents;
 </script>
 
 <script lang="ts">
   import { extractLayerProps } from '$lib/utils/attributes.js';
-
-  import Text from '../Text/Text.svelte';
-  import type { SVGAttributes } from 'svelte/elements';
-  import { onMount } from 'svelte';
+  import { tileCache } from './TileImage.shared.svelte.js';
 
   let {
+    Text,
     x,
     y,
     z,
@@ -76,20 +25,17 @@
     debug = false,
     url,
     ...restProps
-  }: TileImageProps = $props();
+  }: TileImageBaseProps = $props();
 
-  // if disable cache, set href immediately, otherwise set from cache / dataUri
   let href = $state(disableCache ? url(x, y, z) : '');
 
   function loadImage(url: string) {
-    // const key = [x, y, z].join('-');
     const key = url;
 
     if (tileCache.has(key)) {
       tileCache
         .get(key)
         ?.then((dataUri) => {
-          // console.log('from cache', { x, y, z });
           href = dataUri;
         })
         .catch(() => {});
@@ -107,7 +53,6 @@
           // @ts-expect-error
           context.drawImage(this, 0, 0);
           var dataUri = canvas.toDataURL('image/jpeg');
-          // console.log('from load', { x, y, z });
           href = dataUri;
           resolve(dataUri);
         };
@@ -127,7 +72,6 @@
   });
 </script>
 
-<!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
 {#key href}
   <image
     {href}

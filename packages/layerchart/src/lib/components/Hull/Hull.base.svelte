@@ -18,9 +18,8 @@
   import { curveLinearClosed } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  // GeoPath is geo-specific and lives in the geo sub-path; use the agnostic
-  // dispatcher (rare path — only when used inside a geo chart).
-  import GeoPath from '../geo/GeoPath.svelte';
+  // GeoPath agnostic; only loaded when used inside a geo chart.
+  import GeoPath from '../geo/GeoPath/GeoPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
 

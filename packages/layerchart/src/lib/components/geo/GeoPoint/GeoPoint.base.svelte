@@ -1,41 +1,23 @@
 <script lang="ts" module>
-  import type { Snippet } from 'svelte';
-  import Circle, { type CircleProps } from '../Circle/Circle.svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import type { Component } from 'svelte';
+  import type { GeoPointProps } from './GeoPoint.shared.svelte.js';
 
-  export type GeoPointPropsWithoutHTML = {
-    /**
-     * Latitude of the point.
-     */
-    lat: number;
-
-    /**
-     * Longitude of the point.
-     */
-    long: number;
-
-    /**
-     * A bindable reference to the underlying element, which
-     * can be a `<circle>` or `<g>` element.
-     */
-    ref?: Element;
-
-    children?: Snippet<[{ x: number; y: number }]>;
+  export type GeoPointBaseLayerComponents = {
+    Circle: Component<any>;
+    Group: Component<any>;
   };
 
-  export type GeoPointProps = Omit<
-    GeoPointPropsWithoutHTML & Without<CircleProps, GeoPointPropsWithoutHTML>,
-    'x' | 'y'
-  >;
+  export type GeoPointBaseProps = GeoPointProps & GeoPointBaseLayerComponents;
 </script>
 
 <script lang="ts">
-  import Group from '../Group/Group.svelte';
   import { getLayerContext } from '$lib/contexts/layer.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
+    Circle,
+    Group,
     lat,
     long,
     ref: refProp = $bindable(),
@@ -45,7 +27,7 @@
     strokeWidth,
     class: className,
     ...restProps
-  }: GeoPointProps = $props();
+  }: GeoPointBaseProps = $props();
 
   let ref = $state<Element>();
   $effect.pre(() => {
@@ -87,10 +69,7 @@
 
 {#if layerCtx === 'canvas'}
   {#if children}
-    <!-- TODO: Handle Canvas translation. Consolidate with svg use case above -->
-    <!-- <Group {x} {y} {...$$restProps}> -->
     {@render children({ x, y })}
-    <!-- </Group> -->
   {:else}
     <Circle
       cx={x}

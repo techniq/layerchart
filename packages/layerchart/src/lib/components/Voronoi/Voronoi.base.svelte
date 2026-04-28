@@ -20,7 +20,7 @@
   import { cls } from '@layerstack/tailwind';
 
   // GeoPath lives in geo/ subpath; agnostic import (only used in geo charts).
-  import GeoPath from '../geo/GeoPath.svelte';
+  import GeoPath from '../geo/GeoPath/GeoPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { accessor } from '$lib/utils/common.js';

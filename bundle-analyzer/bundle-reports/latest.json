@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-04-28T19:19:39.925Z",
+  "timestamp": "2026-04-28T19:38:55.794Z",
   "results": [
     {
       "scenario": "core",
       "description": "Core charting components without rendering layer",
       "group": "Foundation",
       "size": 374970,
-      "gzipSize": 86618,
+      "gzipSize": 86619,
       "imports": [
         "Chart",
         "Svg"
@@ -17,7 +17,7 @@
       "description": "Svg-based rendering",
       "group": "Foundation",
       "size": 351979,
-      "gzipSize": 82187,
+      "gzipSize": 82186,
       "imports": [
         "Chart",
         "Svg"
@@ -39,7 +39,7 @@
       "description": "HTML-based rendering",
       "group": "Foundation",
       "size": 359830,
-      "gzipSize": 84204,
+      "gzipSize": 84205,
       "imports": [
         "Chart",
         "Html"
@@ -50,7 +50,7 @@
       "description": "Basic line chart with axes and grid",
       "group": "Cartesian charts",
       "size": 375465,
-      "gzipSize": 86650,
+      "gzipSize": 86651,
       "imports": [
         "Chart",
         "Svg",
@@ -64,7 +64,7 @@
       "description": "Line chart composed from `layerchart/svg`",
       "group": "Cartesian charts",
       "size": 352003,
-      "gzipSize": 82209,
+      "gzipSize": 82210,
       "imports": [
         "Chart",
         "Layer",
@@ -78,7 +78,7 @@
       "description": "Line chart composed from `layerchart/canvas`",
       "group": "Cartesian charts",
       "size": 358530,
-      "gzipSize": 83963,
+      "gzipSize": 83962,
       "imports": [
         "Chart",
         "Layer",
@@ -92,7 +92,7 @@
       "description": "Line chart composed from `layerchart/html`",
       "group": "Cartesian charts",
       "size": 359854,
-      "gzipSize": 84218,
+      "gzipSize": 84220,
       "imports": [
         "Chart",
         "Layer",
@@ -106,7 +106,7 @@
       "description": "Line chart with tooltip and highlight",
       "group": "Cartesian charts",
       "size": 390306,
-      "gzipSize": 90006,
+      "gzipSize": 90005,
       "imports": [
         "Chart",
         "Svg",
@@ -122,7 +122,7 @@
       "description": "High-level `LineChart` component",
       "group": "Cartesian charts",
       "size": 399089,
-      "gzipSize": 93026,
+      "gzipSize": 93025,
       "imports": [
         "LineChart"
       ]
@@ -132,7 +132,7 @@
       "description": "Area chart with axes",
       "group": "Cartesian charts",
       "size": 388981,
-      "gzipSize": 89728,
+      "gzipSize": 89730,
       "imports": [
         "Chart",
         "Svg",
@@ -146,7 +146,7 @@
       "description": "High-level `AreaChart` component",
       "group": "Cartesian charts",
       "size": 392569,
-      "gzipSize": 90588,
+      "gzipSize": 90589,
       "imports": [
         "AreaChart"
       ]
@@ -156,7 +156,7 @@
       "description": "Bar chart with axes",
       "group": "Cartesian charts",
       "size": 379305,
-      "gzipSize": 87396,
+      "gzipSize": 87393,
       "imports": [
         "Chart",
         "Svg",
@@ -170,7 +170,7 @@
       "description": "High-level `BarChart` component",
       "group": "Cartesian charts",
       "size": 384438,
-      "gzipSize": 88534,
+      "gzipSize": 88531,
       "imports": [
         "BarChart"
       ]
@@ -195,7 +195,7 @@
       "description": "High-level `ScatterChart` component",
       "group": "Cartesian charts",
       "size": 378994,
-      "gzipSize": 87787,
+      "gzipSize": 87788,
       "imports": [
         "ScatterChart"
       ]
@@ -205,7 +205,7 @@
       "description": "Pie/donut chart with arcs",
       "group": "Cartesian charts",
       "size": 387712,
-      "gzipSize": 89808,
+      "gzipSize": 89809,
       "imports": [
         "Chart",
         "Svg",
@@ -238,8 +238,8 @@
       "scenario": "geo",
       "description": "Geographic map with paths",
       "group": "Geo",
-      "size": 407211,
-      "gzipSize": 94415,
+      "size": 397074,
+      "gzipSize": 92030,
       "imports": [
         "Chart",
         "Svg",
@@ -252,8 +252,8 @@
       "scenario": "geo-tiles",
       "description": "Geographic map with tile layer",
       "group": "Geo",
-      "size": 411656,
-      "gzipSize": 95919,
+      "size": 402266,
+      "gzipSize": 93681,
       "imports": [
         "Chart",
         "Svg",
@@ -267,8 +267,8 @@
       "scenario": "geo-full",
       "description": "Full geo setup with all geo components",
       "group": "Geo",
-      "size": 460021,
-      "gzipSize": 109495,
+      "size": 455732,
+      "gzipSize": 107596,
       "imports": [
         "Chart",
         "Svg",
@@ -291,7 +291,7 @@
       "description": "Tree layout with links",
       "group": "Hierarchy",
       "size": 415076,
-      "gzipSize": 96457,
+      "gzipSize": 96456,
       "imports": [
         "Chart",
         "Svg",
@@ -306,7 +306,7 @@
       "description": "Treemap layout",
       "group": "Hierarchy",
       "size": 393889,
-      "gzipSize": 91267,
+      "gzipSize": 91266,
       "imports": [
         "Chart",
         "Svg",
@@ -350,7 +350,7 @@
       "description": "Dagre directed graph layout",
       "group": "Graph / network",
       "size": 474962,
-      "gzipSize": 112737,
+      "gzipSize": 112736,
       "imports": [
         "Chart",
         "Svg",
@@ -379,8 +379,8 @@
       "scenario": "chord",
       "description": "Chord diagram",
       "group": "Graph / network",
-      "size": 389429,
-      "gzipSize": 90418,
+      "size": 384515,
+      "gzipSize": 88846,
       "imports": [
         "Chart",
         "Svg",
@@ -1702,8 +1702,8 @@
       "scenario": "Hull",
       "description": "Standalone Hull (agnostic) — baseline",
       "group": "Components",
-      "size": 180829,
-      "gzipSize": 47999,
+      "size": 181180,
+      "gzipSize": 47930,
       "imports": [
         "Hull"
       ]
@@ -1712,8 +1712,8 @@
       "scenario": "Hull.svg",
       "description": "Standalone Hull from `layerchart/svg`",
       "group": "Components",
-      "size": 180033,
-      "gzipSize": 48048,
+      "size": 180384,
+      "gzipSize": 48106,
       "imports": [
         "Hull"
       ]
@@ -1722,8 +1722,8 @@
       "scenario": "Hull.canvas",
       "description": "Standalone Hull from `layerchart/canvas`",
       "group": "Components",
-      "size": 180037,
-      "gzipSize": 47785,
+      "size": 180388,
+      "gzipSize": 47864,
       "imports": [
         "Hull"
       ]
@@ -1832,8 +1832,8 @@
       "scenario": "Voronoi",
       "description": "Standalone Voronoi (agnostic) — baseline",
       "group": "Components",
-      "size": 177185,
-      "gzipSize": 46704,
+      "size": 177536,
+      "gzipSize": 46642,
       "imports": [
         "Voronoi"
       ]
@@ -1842,8 +1842,8 @@
       "scenario": "Voronoi.svg",
       "description": "Standalone Voronoi from `layerchart/svg`",
       "group": "Components",
-      "size": 175162,
-      "gzipSize": 46464,
+      "size": 175513,
+      "gzipSize": 46519,
       "imports": [
         "Voronoi"
       ]
@@ -1852,8 +1852,8 @@
       "scenario": "Voronoi.canvas",
       "description": "Standalone Voronoi from `layerchart/canvas`",
       "group": "Components",
-      "size": 174164,
-      "gzipSize": 46000,
+      "size": 174515,
+      "gzipSize": 46072,
       "imports": [
         "Voronoi"
       ]
@@ -2019,11 +2019,281 @@
       ]
     },
     {
+      "scenario": "GeoPath",
+      "description": "Standalone GeoPath (agnostic) — baseline",
+      "group": "Components",
+      "size": 100716,
+      "gzipSize": 25972,
+      "imports": [
+        "GeoPath"
+      ]
+    },
+    {
+      "scenario": "GeoPath.svg",
+      "description": "Standalone GeoPath from `layerchart/svg`",
+      "group": "Components",
+      "size": 89637,
+      "gzipSize": 22852,
+      "imports": [
+        "GeoPath"
+      ]
+    },
+    {
+      "scenario": "GeoPath.canvas",
+      "description": "Standalone GeoPath from `layerchart/canvas`",
+      "group": "Components",
+      "size": 80311,
+      "gzipSize": 21335,
+      "imports": [
+        "GeoPath"
+      ]
+    },
+    {
+      "scenario": "GeoSpline",
+      "description": "Standalone GeoSpline (agnostic) — baseline",
+      "group": "Components",
+      "size": 118553,
+      "gzipSize": 31572,
+      "imports": [
+        "GeoSpline"
+      ]
+    },
+    {
+      "scenario": "GeoSpline.svg",
+      "description": "Standalone GeoSpline from `layerchart/svg`",
+      "group": "Components",
+      "size": 107470,
+      "gzipSize": 28482,
+      "imports": [
+        "GeoSpline"
+      ]
+    },
+    {
+      "scenario": "GeoSpline.canvas",
+      "description": "Standalone GeoSpline from `layerchart/canvas`",
+      "group": "Components",
+      "size": 98160,
+      "gzipSize": 27065,
+      "imports": [
+        "GeoSpline"
+      ]
+    },
+    {
+      "scenario": "GeoPoint",
+      "description": "Standalone GeoPoint (agnostic) — baseline",
+      "group": "Components",
+      "size": 76843,
+      "gzipSize": 18884,
+      "imports": [
+        "GeoPoint"
+      ]
+    },
+    {
+      "scenario": "GeoPoint.svg",
+      "description": "Standalone GeoPoint from `layerchart/svg`",
+      "group": "Components",
+      "size": 64553,
+      "gzipSize": 15396,
+      "imports": [
+        "GeoPoint"
+      ]
+    },
+    {
+      "scenario": "GeoPoint.canvas",
+      "description": "Standalone GeoPoint from `layerchart/canvas`",
+      "group": "Components",
+      "size": 72046,
+      "gzipSize": 17822,
+      "imports": [
+        "GeoPoint"
+      ]
+    },
+    {
+      "scenario": "GeoCircle",
+      "description": "Standalone GeoCircle (agnostic) — baseline",
+      "group": "Components",
+      "size": 104782,
+      "gzipSize": 27135,
+      "imports": [
+        "GeoCircle"
+      ]
+    },
+    {
+      "scenario": "GeoCircle.svg",
+      "description": "Standalone GeoCircle from `layerchart/svg`",
+      "group": "Components",
+      "size": 93523,
+      "gzipSize": 23959,
+      "imports": [
+        "GeoCircle"
+      ]
+    },
+    {
+      "scenario": "GeoCircle.canvas",
+      "description": "Standalone GeoCircle from `layerchart/canvas`",
+      "group": "Components",
+      "size": 84197,
+      "gzipSize": 22436,
+      "imports": [
+        "GeoCircle"
+      ]
+    },
+    {
+      "scenario": "GeoTile",
+      "description": "Standalone GeoTile (agnostic) — baseline",
+      "group": "Components",
+      "size": 131416,
+      "gzipSize": 32447,
+      "imports": [
+        "GeoTile"
+      ]
+    },
+    {
+      "scenario": "GeoTile.svg",
+      "description": "Standalone GeoTile from `layerchart/svg`",
+      "group": "Components",
+      "size": 120805,
+      "gzipSize": 29581,
+      "imports": [
+        "GeoTile"
+      ]
+    },
+    {
+      "scenario": "GeoTile.canvas",
+      "description": "Standalone GeoTile from `layerchart/canvas`",
+      "group": "Components",
+      "size": 122195,
+      "gzipSize": 30421,
+      "imports": [
+        "GeoTile"
+      ]
+    },
+    {
+      "scenario": "TileImage",
+      "description": "Standalone TileImage (agnostic) — baseline",
+      "group": "Components",
+      "size": 119479,
+      "gzipSize": 29955,
+      "imports": [
+        "TileImage"
+      ]
+    },
+    {
+      "scenario": "TileImage.svg",
+      "description": "Standalone TileImage from `layerchart/svg`",
+      "group": "Components",
+      "size": 109907,
+      "gzipSize": 27283,
+      "imports": [
+        "TileImage"
+      ]
+    },
+    {
+      "scenario": "TileImage.canvas",
+      "description": "Standalone TileImage from `layerchart/canvas`",
+      "group": "Components",
+      "size": 112589,
+      "gzipSize": 28436,
+      "imports": [
+        "TileImage"
+      ]
+    },
+    {
+      "scenario": "Graticule",
+      "description": "Standalone Graticule (agnostic) — baseline",
+      "group": "Components",
+      "size": 105996,
+      "gzipSize": 27158,
+      "imports": [
+        "Graticule"
+      ]
+    },
+    {
+      "scenario": "Graticule.svg",
+      "description": "Standalone Graticule from `layerchart/svg`",
+      "group": "Components",
+      "size": 94685,
+      "gzipSize": 23998,
+      "imports": [
+        "Graticule"
+      ]
+    },
+    {
+      "scenario": "Graticule.canvas",
+      "description": "Standalone Graticule from `layerchart/canvas`",
+      "group": "Components",
+      "size": 92012,
+      "gzipSize": 24168,
+      "imports": [
+        "Graticule"
+      ]
+    },
+    {
+      "scenario": "GeoClipPath",
+      "description": "Standalone GeoClipPath (agnostic) — baseline",
+      "group": "Components",
+      "size": 15028,
+      "gzipSize": 4397,
+      "imports": [
+        "GeoClipPath"
+      ]
+    },
+    {
+      "scenario": "GeoClipPath.svg",
+      "description": "Standalone GeoClipPath from `layerchart/svg`",
+      "group": "Components",
+      "size": 13207,
+      "gzipSize": 4095,
+      "imports": [
+        "GeoClipPath"
+      ]
+    },
+    {
+      "scenario": "GeoClipPath.canvas",
+      "description": "Standalone GeoClipPath from `layerchart/canvas`",
+      "group": "Components",
+      "size": 12175,
+      "gzipSize": 3811,
+      "imports": [
+        "GeoClipPath"
+      ]
+    },
+    {
+      "scenario": "GeoEdgeFade",
+      "description": "Standalone GeoEdgeFade (agnostic) — baseline",
+      "group": "Components",
+      "size": 86116,
+      "gzipSize": 23790,
+      "imports": [
+        "GeoEdgeFade"
+      ]
+    },
+    {
+      "scenario": "GeoEdgeFade.svg",
+      "description": "Standalone GeoEdgeFade from `layerchart/svg`",
+      "group": "Components",
+      "size": 84596,
+      "gzipSize": 23322,
+      "imports": [
+        "GeoEdgeFade"
+      ]
+    },
+    {
+      "scenario": "GeoEdgeFade.canvas",
+      "description": "Standalone GeoEdgeFade from `layerchart/canvas`",
+      "group": "Components",
+      "size": 83293,
+      "gzipSize": 23085,
+      "imports": [
+        "GeoEdgeFade"
+      ]
+    },
+    {
       "scenario": "all",
       "description": "Everything from layerchart (worst case)",
       "group": "Worst case",
-      "size": 996557,
-      "gzipSize": 234983,
+      "size": 1006072,
+      "gzipSize": 235747,
       "imports": [
         "*"
       ]

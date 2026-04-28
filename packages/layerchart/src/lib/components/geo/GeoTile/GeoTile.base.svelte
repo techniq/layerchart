@@ -1,43 +1,13 @@
 <script lang="ts" module>
-  import type { ComponentProps, Snippet } from 'svelte';
+  import type { Component } from 'svelte';
+  import type { GeoTilePropsWithoutHTML } from './GeoTile.shared.svelte.js';
 
-  export type GeoTilePropsWithoutHTML = {
-    url: (x: number, y: number, z: number) => string;
-    /**
-     * The zoom delta for the tile.
-     *
-     * @default 0
-     */
-    zoomDelta?: number;
-
-    /**
-     * The tile size for the tile.
-     *
-     * @default 256
-     */
-    tileSize?: number;
-
-    /**
-     * Whether to disable the cache for the tile.
-     *
-     * @default false
-     */
-    disableCache?: boolean;
-
-    /**
-     * Additional props to apply to the `Group` component.
-     */
-    group?: Partial<ComponentProps<typeof Group>>;
-
-    /**
-     * Whether to enable debug mode for the tile.
-     *
-     * @default false
-     */
-    debug?: boolean;
-
-    children?: Snippet<[{ tiles: any[] }]>;
+  export type GeoTileBaseLayerComponents = {
+    Group: Component<any>;
+    TileImage: Component<any>;
   };
+
+  export type GeoTileBaseProps = GeoTilePropsWithoutHTML & GeoTileBaseLayerComponents;
 </script>
 
 <script lang="ts">
@@ -47,11 +17,11 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { getLayerContext } from '$lib/contexts/layer.js';
-  import Group from '../Group/Group.svelte';
-  import TileImage from './TileImage.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
+    Group,
+    TileImage,
     url,
     zoomDelta = 0,
     tileSize = 256,
@@ -59,7 +29,7 @@
     debug = false,
     group,
     children,
-  }: GeoTilePropsWithoutHTML = $props();
+  }: GeoTileBaseProps = $props();
 
   const ctx = getChartContext();
   const geo = getGeoContext();
@@ -71,7 +41,6 @@
     d3Tile()
       .size([ctx.containerWidth, ctx.containerHeight])
       .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
-      // TODO: is this fine to add the 0 as a default?
       .scale(geo.projection ? geo.projection.scale() * 2 * Math.PI : undefined)
       .tileSize(tileSize)
       .zoomDelta(zoomDelta)()

@@ -230,6 +230,50 @@ export type {
   BoxPlotProps,
   BoxPlotPropsWithoutHTML,
 } from './components/BoxPlot/BoxPlot.shared.svelte.js';
+
+// Geo components
+export { default as GeoPath } from './components/geo/GeoPath/GeoPath.canvas.svelte';
+export type {
+  GeoPathProps,
+  GeoPathPropsWithoutHTML,
+} from './components/geo/GeoPath/GeoPath.shared.svelte.js';
+export { default as GeoSpline } from './components/geo/GeoSpline/GeoSpline.canvas.svelte';
+export type {
+  GeoSplineProps,
+  GeoSplinePropsWithoutHTML,
+} from './components/geo/GeoSpline/GeoSpline.shared.svelte.js';
+export { default as GeoPoint } from './components/geo/GeoPoint/GeoPoint.canvas.svelte';
+export type {
+  GeoPointProps,
+  GeoPointPropsWithoutHTML,
+} from './components/geo/GeoPoint/GeoPoint.shared.svelte.js';
+export { default as GeoCircle } from './components/geo/GeoCircle/GeoCircle.canvas.svelte';
+export type {
+  GeoCircleProps,
+  GeoCirclePropsWithoutHTML,
+} from './components/geo/GeoCircle/GeoCircle.shared.svelte.js';
+export { default as GeoClipPath } from './components/geo/GeoClipPath/GeoClipPath.canvas.svelte';
+export type {
+  GeoClipPathProps,
+  GeoClipPathPropsWithoutHTML,
+} from './components/geo/GeoClipPath/GeoClipPath.shared.svelte.js';
+export { default as GeoEdgeFade } from './components/geo/GeoEdgeFade/GeoEdgeFade.canvas.svelte';
+export type {
+  GeoEdgeFadeProps,
+  GeoEdgeFadePropsWithoutHTML,
+} from './components/geo/GeoEdgeFade/GeoEdgeFade.shared.svelte.js';
+export { default as GeoTile } from './components/geo/GeoTile/GeoTile.canvas.svelte';
+export type { GeoTilePropsWithoutHTML } from './components/geo/GeoTile/GeoTile.shared.svelte.js';
+export { default as TileImage } from './components/geo/TileImage/TileImage.canvas.svelte';
+export type {
+  TileImageProps,
+  TileImagePropsWithoutHTML,
+} from './components/geo/TileImage/TileImage.shared.svelte.js';
+export { default as Graticule } from './components/geo/Graticule/Graticule.canvas.svelte';
+export type {
+  GraticuleProps,
+  GraticulePropsWithoutHTML,
+} from './components/geo/Graticule/Graticule.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
 export type {
   RectClipPathProps,
