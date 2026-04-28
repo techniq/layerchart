@@ -7,8 +7,7 @@
   import Circle from '../Circle/Circle.svg.svelte';
   import Line from '../Line/Line.svg.svelte';
   import Rect from '../Rect/Rect.svg.svelte';
-  // Arc is not split yet — uses agnostic dispatcher.
-  import Arc from '../Arc.svelte';
+  import Arc from '../Arc/Arc.svg.svelte';
 
   import type { HighlightProps } from './Highlight.shared.svelte.js';
 

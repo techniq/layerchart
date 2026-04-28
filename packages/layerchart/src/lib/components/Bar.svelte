@@ -112,7 +112,7 @@
   import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
-  import Arc from './Arc.svelte';
+  import Arc from './Arc/Arc.svelte';
 
   const ctx = getChartContext();
 

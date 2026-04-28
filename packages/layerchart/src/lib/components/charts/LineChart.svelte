@@ -3,7 +3,7 @@
   import type { HighlightPointData } from '../Highlight/Highlight.svelte';
   import type { SeriesData } from './types.js';
 
-  import Spline from '../Spline.svelte';
+  import Spline from '../Spline/Spline.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type LineChartProps<TData> = {

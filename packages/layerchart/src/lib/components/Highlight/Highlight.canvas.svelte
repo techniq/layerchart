@@ -7,8 +7,7 @@
   import Circle from '../Circle/Circle.canvas.svelte';
   import Line from '../Line/Line.canvas.svelte';
   import Rect from '../Rect/Rect.canvas.svelte';
-  // Arc is not split yet — uses agnostic dispatcher.
-  import Arc from '../Arc.svelte';
+  import Arc from '../Arc/Arc.canvas.svelte';
 
   import type { HighlightProps } from './Highlight.shared.svelte.js';
 

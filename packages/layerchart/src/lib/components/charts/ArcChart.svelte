@@ -2,11 +2,11 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import type { ChartProps } from "../Chart/Chart.svelte";
   import type { ChartState } from '$lib/contexts/chart.js';
-  import type { ArcPropsWithoutHTML } from '../Arc.svelte';
+  import type { ArcPropsWithoutHTML } from '../Arc/Arc.svelte';
   import type { Accessor } from '$lib/utils/common.js';
   import type { SeriesData } from './types.js';
 
-  import Arc from '../Arc.svelte';
+  import Arc from '../Arc/Arc.svelte';
   import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
   import Group from '../Group/Group.svelte';
 

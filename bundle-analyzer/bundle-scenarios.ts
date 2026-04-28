@@ -782,6 +782,70 @@ export const scenarios: Scenario[] = [
     layers: { ChartClipPath: 'html' },
   },
 
+  // Arc / Spline / Area are heavy compound marks built on Path. Per-layer
+  // variants use the corresponding per-layer Path directly. (Arc has no html
+  // variant since it renders SVG path geometry.)
+  {
+    name: 'Arc',
+    group: 'Components',
+    description: 'Standalone Arc (agnostic) — baseline',
+    imports: ['Arc'],
+  },
+  {
+    name: 'Arc.svg',
+    group: 'Components',
+    description: 'Standalone Arc from `layerchart/svg`',
+    imports: ['Arc'],
+    layers: { Arc: 'svg' },
+  },
+  {
+    name: 'Arc.canvas',
+    group: 'Components',
+    description: 'Standalone Arc from `layerchart/canvas`',
+    imports: ['Arc'],
+    layers: { Arc: 'canvas' },
+  },
+  {
+    name: 'Spline',
+    group: 'Components',
+    description: 'Standalone Spline (agnostic) — baseline',
+    imports: ['Spline'],
+  },
+  {
+    name: 'Spline.svg',
+    group: 'Components',
+    description: 'Standalone Spline from `layerchart/svg`',
+    imports: ['Spline'],
+    layers: { Spline: 'svg' },
+  },
+  {
+    name: 'Spline.canvas',
+    group: 'Components',
+    description: 'Standalone Spline from `layerchart/canvas`',
+    imports: ['Spline'],
+    layers: { Spline: 'canvas' },
+  },
+  {
+    name: 'Area',
+    group: 'Components',
+    description: 'Standalone Area (agnostic) — baseline',
+    imports: ['Area'],
+  },
+  {
+    name: 'Area.svg',
+    group: 'Components',
+    description: 'Standalone Area from `layerchart/svg`',
+    imports: ['Area'],
+    layers: { Area: 'svg' },
+  },
+  {
+    name: 'Area.canvas',
+    group: 'Components',
+    description: 'Standalone Area from `layerchart/canvas`',
+    imports: ['Area'],
+    layers: { Area: 'canvas' },
+  },
+
   // --- Worst case ---
   {
     name: 'all',

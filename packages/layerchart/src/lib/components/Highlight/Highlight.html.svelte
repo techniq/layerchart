@@ -7,8 +7,10 @@
   import Circle from '../Circle/Circle.html.svelte';
   import Line from '../Line/Line.html.svelte';
   import Rect from '../Rect/Rect.html.svelte';
-  // Arc is not split yet — uses agnostic dispatcher.
-  import Arc from '../Arc.svelte';
+  // Arc has no html variant — radial highlight area uses SVG path. Highlight.html
+  // never enters the radial branch (no html chart context is radial), but we
+  // import Arc.svg here so the per-layer wrapper avoids the agnostic dispatcher.
+  import Arc from '../Arc/Arc.svg.svelte';
 
   import type { HighlightProps } from './Highlight.shared.svelte.js';
 

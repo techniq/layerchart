@@ -3,9 +3,9 @@ import { render } from 'vitest-browser-svelte';
 import { page, type Locator } from 'vitest/browser';
 import type { ComponentProps } from 'svelte';
 
-import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
+import TestHarness, { componentTestId } from '../tests/TestHarness.svelte';
 import Arc from './Arc.svelte';
-import Text from './Text/Text.svelte';
+import Text from '../Text/Text.svelte';
 import type { ChartState } from '$lib/states/chart.svelte.js';
 
 const defaultProps: Partial<ComponentProps<typeof Arc>> = {

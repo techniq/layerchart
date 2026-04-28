@@ -75,7 +75,7 @@
 
 <script lang="ts">
   import { min, max } from 'd3-array';
-  import Arc from './Arc.svelte';
+  import Arc from './Arc/Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { getChartContext } from '$lib/contexts/chart.js';

@@ -3,7 +3,7 @@
   import type { HighlightPoint } from '../Highlight/Highlight.svelte';
   import type { SeriesData } from './types.js';
 
-  import Area from '../Area.svelte';
+  import Area from '../Area/Area.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type AreaChartProps<TData> = {

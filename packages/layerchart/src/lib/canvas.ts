@@ -106,6 +106,18 @@ export type {
   HighlightPoint,
   HighlightPointData,
 } from './components/Highlight/Highlight.shared.svelte.js';
+export { default as Arc } from './components/Arc/Arc.canvas.svelte';
+export type { ArcProps, ArcPropsWithoutHTML } from './components/Arc/Arc.shared.svelte.js';
+export { default as Spline } from './components/Spline/Spline.canvas.svelte';
+export type {
+  SplineProps,
+  SplinePropsWithoutHTML,
+} from './components/Spline/Spline.shared.svelte.js';
+export { default as Area } from './components/Area/Area.canvas.svelte';
+export type {
+  AreaProps,
+  AreaPropsWithoutHTML,
+} from './components/Area/Area.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
 export type {
   RectClipPathProps,

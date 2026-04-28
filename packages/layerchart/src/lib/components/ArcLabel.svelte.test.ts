@@ -4,7 +4,7 @@ import { page } from 'vitest/browser';
 import type { ComponentProps } from 'svelte';
 
 import TestHarness, { componentTestId } from './tests/TestHarness.svelte';
-import Arc from './Arc.svelte';
+import Arc from './Arc/Arc.svelte';
 import ArcLabel from './ArcLabel.svelte';
 
 const defaultArcProps: Partial<ComponentProps<typeof Arc>> = {

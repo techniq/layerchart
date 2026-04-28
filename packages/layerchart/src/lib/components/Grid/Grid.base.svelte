@@ -134,7 +134,7 @@
               class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
             />
           {:else}
-            {#await import('../Spline.svelte') then { default: Spline }}
+            {#await import('../Spline/Spline.svelte') then { default: Spline }}
               <Spline
                 data={c.xTickVals.map((tx) => ({ x: tx, y: tick }))}
                 x="x"

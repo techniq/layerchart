@@ -750,7 +750,7 @@
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             {#if ctx.radial}
-              {#await import('../Arc.svelte') then { default: Arc }}
+              {#await import('../Arc/Arc.svelte') then { default: Arc }}
                 <Arc
                   innerRadius={rect.y}
                   outerRadius={rect.y + rect.height}
