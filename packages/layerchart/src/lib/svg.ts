@@ -9,6 +9,20 @@
  * The agnostic versions (e.g. `import { Circle } from 'layerchart'`) still
  * work and dispatch to these per-layer variants under the hood.
  */
+// `Layer` is an alias for the layer wrapper of this sub-path. Importing
+// `Layer` from `layerchart/svg` is equivalent to importing `Svg`.
+export { default as Svg, default as Layer } from './components/layers/Svg.svelte';
+export type { SVGProps } from './components/layers/Svg.svelte';
+export { default as Chart } from './components/Chart/Chart.svg.svelte';
+export type {
+  ChartProps,
+  ChartPropsWithoutHTML,
+  ChartResizeDetail,
+  PreservedChartConfig,
+  LayerChartInternalMeta,
+} from './components/Chart/Chart.shared.svelte.js';
+export { default as ChartChildren } from './components/ChartChildren/ChartChildren.svg.svelte';
+export type { ChartChildrenProps } from './components/ChartChildren/ChartChildren.shared.svelte.js';
 export { default as Circle } from './components/Circle/Circle.svg.svelte';
 export type { CircleProps, CirclePropsWithoutHTML } from './components/Circle/Circle.shared.svelte.js';
 export { default as Text } from './components/Text/Text.svg.svelte';

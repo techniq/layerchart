@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import type { ChartProps } from '../Chart.svelte';
+  import type { ChartProps } from "../Chart/Chart.svelte";
   import type { ChartState } from '$lib/contexts/chart.js';
   import type { Accessor } from '$lib/utils/common.js';
   import type { SeriesData } from './types.js';
@@ -190,7 +190,7 @@
   import type { PieArcDatum } from 'd3-shape';
   import { schemeObservable10 } from 'd3-scale-chromatic';
 
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';

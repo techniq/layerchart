@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ChartProps } from '../Chart.svelte';
+  import type { ChartProps } from "../Chart/Chart.svelte";
   import type { SeriesData } from './types.js';
 
   import Points from '../Points.svelte';
@@ -27,7 +27,7 @@
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
 
   import { chartDataArray } from '../../utils/common.js';
 

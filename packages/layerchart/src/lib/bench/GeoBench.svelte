@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Chart from '../components/Chart.svelte';
+  import Chart from '../components/Chart/Chart.svelte';
   import Layer from '../components/layers/Layer.svelte';
   import GeoPath from '../components/geo/GeoPath.svelte';
 

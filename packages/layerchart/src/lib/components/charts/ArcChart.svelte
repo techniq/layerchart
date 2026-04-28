@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ComponentProps, Snippet } from 'svelte';
-  import type { ChartProps } from '../Chart.svelte';
+  import type { ChartProps } from "../Chart/Chart.svelte";
   import type { ChartState } from '$lib/contexts/chart.js';
   import type { ArcPropsWithoutHTML } from '../Arc.svelte';
   import type { Accessor } from '$lib/utils/common.js';
@@ -139,7 +139,7 @@
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';

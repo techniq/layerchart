@@ -15,7 +15,7 @@ import {
   isScaleTime,
   makeAccessor,
 } from '$lib/utils/scales.svelte.js';
-import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
+import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import type { Extents } from '$lib/utils/types.js';
 import { accessor, chartDataArray, defaultChartPadding, type Accessor } from '$lib/utils/common.js';
 import { filterObject } from '$lib/utils/filterObject.js';

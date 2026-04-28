@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ChartProps } from '../Chart.svelte';
+  import type { ChartProps } from "../Chart/Chart.svelte";
   import type { HighlightPointData } from '../Highlight.svelte';
   import type { SeriesData } from './types.js';
 
@@ -44,7 +44,7 @@
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
 
   import { getObjectOrNull } from '../../utils/common.js';
   import { isScaleTime } from '../../utils/scales.svelte.js';

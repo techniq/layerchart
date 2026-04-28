@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
   import Layer from '../layers/Layer.svelte';
   import Bars from '../Bars.svelte';
 

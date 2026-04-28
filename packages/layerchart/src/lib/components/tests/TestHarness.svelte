@@ -5,7 +5,7 @@
 
 <script lang="ts">
   import type { Component as ComponentType } from 'svelte';
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
   import type { ChartState } from '$lib/states/chart.svelte.js';
   import Layer from '../layers/Layer.svelte';
 
