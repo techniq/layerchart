@@ -39,14 +39,38 @@ export const scenarios: Scenario[] = [
   {
     name: 'core',
     group: 'Foundation',
-    description: 'Bare minimum: Chart context + Svg layer',
+    description: 'Core charting components without rendering layer',
     imports: ['Chart', 'Svg'],
   },
   {
-    name: 'canvas',
+    name: 'core-svg',
+    group: 'Foundation',
+    description: 'Svg-based rendering',
+    imports: ['Chart', 'Svg'],
+    layers: {
+      Chart: 'svg',
+      Svg: 'svg',
+    },
+  },
+  {
+    name: 'core-canvas',
     group: 'Foundation',
     description: 'Canvas-based rendering',
     imports: ['Chart', 'Canvas'],
+    layers: {
+      Chart: 'canvas',
+      Canvas: 'canvas',
+    },
+  },
+  {
+    name: 'core-html',
+    group: 'Foundation',
+    description: 'HTML-based rendering',
+    imports: ['Chart', 'Html'],
+    layers: {
+      Chart: 'html',
+      Html: 'html',
+    },
   },
 
   // --- Cartesian charts ---
