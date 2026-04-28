@@ -11,5 +11,5 @@
 		"verbatimModuleSyntax": true,
 		"noEmit": true
 	},
-	"include": ["bundle-analyzer.ts", "define-scenarios.ts"]
+	"include": ["bundle-analyzer.ts", "bundle-scenarios.ts"]
 }

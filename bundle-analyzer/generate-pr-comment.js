@@ -127,7 +127,7 @@ function analyzeChanges(prReport, targetReport) {
 
 	// Preserve the input order — PR scenarios first (which start with `core`),
 	// then any target-only scenarios. Order within a group reflects the order
-	// in `define-scenarios.ts`.
+	// in `bundle-scenarios.ts`.
 	return changes;
 }
 

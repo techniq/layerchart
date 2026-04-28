@@ -28,7 +28,7 @@ Svelte runtime is excluded from measurements since it's shared across all compon
 
 ## Scenarios
 
-Scenarios are defined in [`define-scenarios.ts`](./define-scenarios.ts) and represent real-world usage patterns:
+Scenarios are defined in [`bundle-scenarios.ts`](./bundle-scenarios.ts) and represent real-world usage patterns:
 
 | Scenario | Description |
 |----------|-------------|
@@ -83,7 +83,7 @@ Two GitHub Actions workflows automate bundle tracking:
 
 ## Adding scenarios
 
-Edit [`define-scenarios.ts`](./define-scenarios.ts) to add new scenarios to the `scenarios` array:
+Edit [`bundle-scenarios.ts`](./bundle-scenarios.ts) to add new scenarios to the `scenarios` array:
 
 ```ts
 {

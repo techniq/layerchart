@@ -16,7 +16,7 @@ import {
 	getScenarios,
 	getComponentScenarios,
 	type Scenario,
-} from "./define-scenarios.js";
+} from "./bundle-scenarios.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -190,11 +190,11 @@ import * as LayerChartGraph from "layerchart/graph";
 `;
 		} else {
 			// Group imports by source module (root vs each sub-path).
-			// Per-scenario `subpathOverrides` win over the default mapping —
+			// Per-scenario `layers` win over the default mapping —
 			// used to test layer-specific variants like `layerchart/svg`.
 			const groups = new Map<string, string[]>([["layerchart", []]]);
 			for (const name of scenario.imports) {
-				const overrideSub = scenario.subpathOverrides?.[name];
+				const overrideSub = scenario.layers?.[name];
 				const sub = overrideSub ?? SUBPATH_FOR_COMPONENT[name];
 				const mod = sub ? `layerchart/${sub}` : "layerchart";
 				const list = groups.get(mod) ?? [];
