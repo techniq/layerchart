@@ -10,7 +10,7 @@ That flexibility has a cost: every consumer of `import { Chart } from 'layerchar
 
 1. **Lazy-loaded opt-in features** — Heavy features are dynamically imported only when activated
 2. **Sub-path exports for heavy dependencies** — Components that pull in big external deps live behind opt-in sub-paths
-3. **Per-layer primitive variants** — Layer-agnostic primitives have SVG/Canvas/HTML-specific variants for users who commit to one layer
+3. **Per-layer variants** — Almost every component has SVG/Canvas/HTML-specific variants for users who commit to one layer (primitives, compound marks, geo, graph, and the high-level chart wrappers like `<LineChart>`)
 
 The first two cost you nothing — they're transparent. The third is opt-in: you swap an import to get a smaller bundle in exchange for losing layer flexibility on that import.
 
@@ -53,9 +53,11 @@ import { Sankey, Dagre } from 'layerchart/graph';
 
 If you don't use them, you don't pay for them — the agnostic root export simply doesn't expose them, so even bundlers that mishandle tree-shaking can't accidentally include them.
 
-## Per-layer primitive variants (opt-in)
+Each sub-path also re-exports the layer-agnostic helpers you'd need alongside its specialty components (e.g. `Chart`, `Tooltip`, `Axis`, `Highlight`, scales, layouts). For typical usage you can stay on a single sub-path import line for an entire chart.
 
-Layer-agnostic primitives — components like `<Circle>`, `<Rect>`, `<Line>`, `<Path>`, `<Text>` — auto-detect the surrounding layer (`<Svg>`, `<Canvas>`, or `<Html>`) and render appropriately. To do this they bundle all three rendering paths.
+## Per-layer variants (opt-in)
+
+Almost every layer-agnostic component — primitives like `<Circle>` / `<Rect>` / `<Text>`, compound marks like `<Axis>` / `<Bars>` / `<Spline>`, geo components like `<GeoPath>`, and the high-level chart wrappers like `<LineChart>` — auto-detects the surrounding layer (`<Svg>`, `<Canvas>`, or `<Html>`) and renders appropriately. To do this they bundle every rendering path.
 
 If you know your chart only renders to one layer, you can opt into a layer-specific variant:
 
@@ -75,6 +77,8 @@ import { Circle } from 'layerchart/html';
 
 The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer variant under the hood at runtime, so you can mix per-layer and agnostic imports in the same chart — the resolved code path is identical.
 
+The `layerchart/svg`, `layerchart/canvas`, and `layerchart/html` sub-paths re-export every layer-agnostic helper too (layouts, scales, tooltip primitives, etc.), so a single per-layer import path can cover a typical chart end-to-end.
+
 ### When per-layer is worth it
 
 - ✅ You're building many charts in a single layer (most likely SVG)
@@ -87,7 +91,7 @@ The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer v
 - 🤷 Your bundle savings would be small relative to the rest of your app
 - 🤷 You value the flexibility to swap a chart's rendering layer later without touching imports
 
-### Components currently split
+### Primitives
 
 | Primitive | Svg-only saves | Canvas-only saves | Html-only saves |
 | --- | --- | --- | --- |
@@ -107,6 +111,75 @@ The agnostic version (`Circle.svelte`) dispatches to the appropriate per-layer v
 
 Notice the dramatic per-layer savings for components like `Pattern` and `LinearGradient` on HTML — the HTML implementation is just CSS-string generation (no canvas API or SVG element overhead), so the per-layer variant is ~95% smaller than agnostic.
 
+### Compound marks
+
+These are the chart-relative shapes built on top of primitives — bars, splines, areas, axes, points, annotations, etc. Per-layer savings here are typically 8–15% gz; outliers like `Highlight` (-30% canvas), `Cell` (-22% svg), and `CircleClipPath` (-37% canvas) are larger because their HTML/canvas vs. SVG paths diverge significantly.
+
+| Component | Svg-only saves | Canvas-only saves | Html-only saves |
+| --- | --- | --- | --- |
+| `Axis` | ~5 KB gz (~13%) | ~6 KB gz (~14%) | ~7 KB gz (~15%) |
+| `Highlight` | ~2 KB gz (~23%) | ~3 KB gz (~30%) | ~2 KB gz (~21%) |
+| `Bars` / `Bar` | ~3 KB gz (~8%) | ~3–4 KB gz (~8–9%) | n/a |
+| `Spline` | ~3 KB gz (~11%) | ~4 KB gz (~16%) | n/a |
+| `Area` | ~3 KB gz (~11%) | ~4 KB gz (~15%) | n/a |
+| `Pie` / `Arc` / `ArcLabel` | ~3 KB gz (~8–9%) | ~4 KB gz (~12–13%) | n/a |
+| `Points` | ~4 KB gz (~20%) | ~1 KB gz (~5%) | ~4 KB gz (~20%) |
+| `Cell` | ~5 KB gz (~22%) | ~2 KB gz (~11%) | ~5 KB gz (~22%) |
+| `Frame` | ~4 KB gz (~22%) | ~1 KB gz (~6%) | ~4 KB gz (~22%) |
+| `Threshold` | ~3 KB gz (~11%) | ~5 KB gz (~15%) | n/a |
+| `Trail` / `Vector` / `Link` | ~3 KB gz (~11–13%) | ~3–4 KB gz (~15–17%) | n/a |
+| `AnnotationLine` / `AnnotationPoint` / `AnnotationRange` | ~3–4 KB gz (~9–11%) | ~3–6 KB gz (~9–14%) | n/a |
+| `Labels` | ~4 KB gz (~12%) | ~4 KB gz (~10%) | ~5 KB gz (~13%) |
+| `ChartClipPath` | ~0.5 KB gz (~5%) | ~0.8 KB gz (~7%) | ~0.8 KB gz (~6%) |
+| `CircleClipPath` | ~0.5 KB gz (~25%) | ~0.8 KB gz (~37%) | ~0.7 KB gz (~33%) |
+| `Density` / `Contour` / `Raster` | ~1–3 KB gz (~3–8%) | ~1–3 KB gz (~4–8%) | `Raster` only on html (~4%) |
+| `Violin` / `BoxPlot` | ~4 KB gz (~13–16%) | ~3–4 KB gz (~12–13%) | n/a |
+| `Calendar` / `Month` | ~1–3 KB gz (~3–10%) | ~2 KB gz (~5–7%) | n/a |
+| `Hull` / `Voronoi` | ~0 KB | ~0–0.5 KB gz | n/a |
+
+`Hull` and `Voronoi` show no per-layer wins because their cost is dominated by the d3 algorithm rather than the rendering path.
+
+### Geo components
+
+Geo marks live on `layerchart/geo` (and `layerchart/geo`-prefixed variants like `layerchart/svg` re-export them too).
+
+| Component | Svg-only saves | Canvas-only saves |
+| --- | --- | --- |
+| `GeoPath` | ~3 KB gz (~12%) | ~5 KB gz (~18%) |
+| `GeoSpline` | ~3 KB gz (~10%) | ~4 KB gz (~14%) |
+| `GeoPoint` | ~3 KB gz (~18%) | ~1 KB gz (~6%) |
+| `GeoCircle` | ~3 KB gz (~12%) | ~5 KB gz (~17%) |
+| `GeoTile` / `TileImage` | ~3 KB gz (~9%) | ~2 KB gz (~5–6%) |
+| `Graticule` | ~3 KB gz (~12%) | ~3 KB gz (~11%) |
+| `GeoClipPath` | ~0.3 KB gz (~7%) | ~0.6 KB gz (~13%) |
+| `GeoEdgeFade` | ~0.5 KB gz (~2%) | ~0.7 KB gz (~3%) |
+
+### High-level chart wrappers
+
+`<LineChart>`, `<AreaChart>`, `<BarChart>`, `<ScatterChart>`, `<PieChart>`, and `<ArcChart>` are pre-composed charts — they include `<Chart>` itself plus the appropriate marks, tooltip wiring, highlight handling, and series management. Importing a high-level chart from a per-layer sub-path skips both the chart wrapper's layer dispatch *and* every primitive/mark it composes, so the savings are larger than any single primitive.
+
+| Chart | Agnostic | `from 'layerchart/svg'` | `from 'layerchart/canvas'` |
+| --- | --- | --- | --- |
+| `LineChart` | 92.5 KB gz | 81.9 KB gz (-11%) | 83.6 KB gz (-10%) |
+| `AreaChart` | 90.3 KB gz | 84.1 KB gz (-7%) | 85.7 KB gz (-5%) |
+| `BarChart` | 88.3 KB gz | 82.1 KB gz (-7%) | 83.8 KB gz (-5%) |
+| `ScatterChart` | 87.4 KB gz | 81.0 KB gz (-7%) | 82.7 KB gz (-5%) |
+| `PieChart` | 94.8 KB gz | 88.1 KB gz (-7%) | 89.9 KB gz (-5%) |
+| `ArcChart` | 93.7 KB gz | 87.1 KB gz (-7%) | 88.8 KB gz (-5%) |
+
+```ts
+// Agnostic — supports Svg / Canvas / Html
+import { LineChart } from 'layerchart';
+
+// SVG-only
+import { LineChart } from 'layerchart/svg';
+
+// Canvas-only
+import { LineChart } from 'layerchart/canvas';
+```
+
+There is no `layerchart/html` variant for the high-level charts because the marks they compose (`<Spline>`, `<Bars>`, `<Area>`, `<Pie>`, `<Arc>`) don't have a pure HTML rendering. Importing `LineChart` from `layerchart/html` falls back to the agnostic dispatcher.
+
 ## Worst case: importing everything
 
 If you `import * as LayerChart from 'layerchart'` (or your bundler can't tree-shake at all), you'll pay for the entire surface area of the root barrel — currently around 240 KB gz across all components. The strategies above exist precisely to keep this from happening for typical consumers.
@@ -119,21 +192,20 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 
 | Scenario | Imports | Gzipped |
 | --- | --- | --- |
-| `core` | `Chart`, `Svg` | ~106 KB |
-| `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~106 KB |
-| `geo` (sub-path) | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint` | ~109 KB |
-| `force` (sub-path) | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~114 KB |
-| `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~129 KB |
+| `core` | `Chart`, `Svg` | ~86 KB |
+| `core-svg` (per-layer) | `Chart`, `Svg` from `layerchart/svg` | ~80 KB |
+| `core-canvas` (per-layer) | `Chart`, `Canvas` from `layerchart/canvas` | ~82 KB |
+| `core-html` (per-layer) | `Chart`, `Html` from `layerchart/html` | ~82 KB |
+| `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~86 KB |
+| `LineChart` | high-level `LineChart` | ~92 KB |
+| `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg` | ~82 KB |
+| `geo` (sub-path) | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint` | ~90 KB |
+| `force` (sub-path) | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~97 KB |
+| `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~112 KB |
 | `circle-svg` (per-layer) | `Circle` from `layerchart/svg` | ~13 KB |
 | `circle-agnostic` | `Circle` from `layerchart` | ~17 KB |
 | `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |
 | `text-agnostic` | `Text` from `layerchart` | ~29 KB |
-| `rect-svg` (per-layer) | `Rect` from `layerchart/svg` | ~14 KB |
-| `rect-agnostic` | `Rect` from `layerchart` | ~19 KB |
-| `line-svg` (per-layer) | `Line` from `layerchart/svg` | ~15 KB |
-| `line-agnostic` | `Line` from `layerchart` | ~19 KB |
-| `path-svg` (per-layer) | `Path` from `layerchart/svg` | ~18 KB |
-| `path-agnostic` | `Path` from `layerchart` | ~21 KB |
 
 `core` is what every chart pays. The other rows show what specific feature additions cost on top.
 
