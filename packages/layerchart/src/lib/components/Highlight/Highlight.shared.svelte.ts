@@ -3,7 +3,7 @@ import { max, min } from 'd3-array';
 import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
 import { notNull } from '@layerstack/utils';
 
-import type Bar from '../Bar.svelte';
+import type Bar from '../Bar/Bar.svelte';
 import type Circle from '../Circle/Circle.svelte';
 import type Line from '../Line/Line.svelte';
 import type Rect from '../Rect/Rect.svelte';

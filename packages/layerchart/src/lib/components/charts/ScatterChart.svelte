@@ -2,7 +2,7 @@
   import type { ChartProps } from "../Chart/Chart.svelte";
   import type { SeriesData } from './types.js';
 
-  import Points from '../Points.svelte';
+  import Points from '../Points/Points.svelte';
 
   // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
   export type ScatterChartProps<TData> = {

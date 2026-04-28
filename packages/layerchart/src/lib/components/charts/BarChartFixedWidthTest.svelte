@@ -2,7 +2,7 @@
   import { scaleBand } from 'd3-scale';
   import Chart from "../Chart/Chart.svelte";
   import Layer from '../layers/Layer.svelte';
-  import Bars from '../Bars.svelte';
+  import Bars from '../Bars/Bars.svelte';
 
   let {
     data,

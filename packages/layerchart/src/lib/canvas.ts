@@ -118,6 +118,32 @@ export type {
   AreaProps,
   AreaPropsWithoutHTML,
 } from './components/Area/Area.shared.svelte.js';
+export { default as Pie } from './components/Pie/Pie.canvas.svelte';
+export type { PieProps, PiePropsWithoutHTML } from './components/Pie/Pie.shared.svelte.js';
+export { default as ArcLabel } from './components/ArcLabel/ArcLabel.canvas.svelte';
+export type {
+  ArcLabelProps,
+  ArcLabelConfig,
+  ArcLabelPlacement,
+} from './components/ArcLabel/ArcLabel.shared.svelte.js';
+export { default as Bar } from './components/Bar/Bar.canvas.svelte';
+export type { BarProps, BarPropsWithoutHTML } from './components/Bar/Bar.shared.svelte.js';
+export { default as Bars } from './components/Bars/Bars.canvas.svelte';
+export type {
+  BarsProps,
+  BarsPropsWithoutHTML,
+} from './components/Bars/Bars.shared.svelte.js';
+export { default as Points } from './components/Points/Points.canvas.svelte';
+export type {
+  PointsProps,
+  PointsPropsWithoutHTML,
+  Point,
+} from './components/Points/Points.shared.svelte.js';
+export { default as Labels } from './components/Labels/Labels.canvas.svelte';
+export type {
+  LabelsProps,
+  LabelsPropsWithoutHTML,
+} from './components/Labels/Labels.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
 export type {
   RectClipPathProps,

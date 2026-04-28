@@ -86,7 +86,7 @@
     {#if typeof bar === 'function'}
       {@render bar()}
     {:else}
-      {#await import('../Bar.svelte') then { default: Bar }}
+      {#await import('../Bar/Bar.svelte') then { default: Bar }}
         <Bar
           motion={motion === 'spring' ? 'spring' : undefined}
           data={c.highlightData}

@@ -101,3 +101,14 @@ export type {
   ChartClipPathProps,
   ChartClipPathPropsWithoutHTML,
 } from './components/ChartClipPath/ChartClipPath.shared.svelte.js';
+export { default as Points } from './components/Points/Points.html.svelte';
+export type {
+  PointsProps,
+  PointsPropsWithoutHTML,
+  Point,
+} from './components/Points/Points.shared.svelte.js';
+export { default as Labels } from './components/Labels/Labels.html.svelte';
+export type {
+  LabelsProps,
+  LabelsPropsWithoutHTML,
+} from './components/Labels/Labels.shared.svelte.js';

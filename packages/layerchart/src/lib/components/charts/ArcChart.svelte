@@ -7,7 +7,7 @@
   import type { SeriesData } from './types.js';
 
   import Arc from '../Arc/Arc.svelte';
-  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
+  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel/ArcLabel.svelte';
   import Group from '../Group/Group.svelte';
 
   export type ArcChartExtraSnippetProps<TData> = {

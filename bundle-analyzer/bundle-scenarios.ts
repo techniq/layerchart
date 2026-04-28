@@ -846,6 +846,29 @@ export const scenarios: Scenario[] = [
     layers: { Area: 'canvas' },
   },
 
+  // Pie / ArcLabel / Bar / Bars / Points / Labels — heavy compounds built on
+  // primitives. Per-layer variants use the corresponding per-layer primitives.
+  { name: 'Pie', group: 'Components', description: 'Standalone Pie (agnostic) — baseline', imports: ['Pie'] },
+  { name: 'Pie.svg', group: 'Components', description: 'Standalone Pie from `layerchart/svg`', imports: ['Pie'], layers: { Pie: 'svg' } },
+  { name: 'Pie.canvas', group: 'Components', description: 'Standalone Pie from `layerchart/canvas`', imports: ['Pie'], layers: { Pie: 'canvas' } },
+  { name: 'ArcLabel', group: 'Components', description: 'Standalone ArcLabel (agnostic) — baseline', imports: ['ArcLabel'] },
+  { name: 'ArcLabel.svg', group: 'Components', description: 'Standalone ArcLabel from `layerchart/svg`', imports: ['ArcLabel'], layers: { ArcLabel: 'svg' } },
+  { name: 'ArcLabel.canvas', group: 'Components', description: 'Standalone ArcLabel from `layerchart/canvas`', imports: ['ArcLabel'], layers: { ArcLabel: 'canvas' } },
+  { name: 'Bar', group: 'Components', description: 'Standalone Bar (agnostic) — baseline', imports: ['Bar'] },
+  { name: 'Bar.svg', group: 'Components', description: 'Standalone Bar from `layerchart/svg`', imports: ['Bar'], layers: { Bar: 'svg' } },
+  { name: 'Bar.canvas', group: 'Components', description: 'Standalone Bar from `layerchart/canvas`', imports: ['Bar'], layers: { Bar: 'canvas' } },
+  { name: 'Bars', group: 'Components', description: 'Standalone Bars (agnostic) — baseline', imports: ['Bars'] },
+  { name: 'Bars.svg', group: 'Components', description: 'Standalone Bars from `layerchart/svg`', imports: ['Bars'], layers: { Bars: 'svg' } },
+  { name: 'Bars.canvas', group: 'Components', description: 'Standalone Bars from `layerchart/canvas`', imports: ['Bars'], layers: { Bars: 'canvas' } },
+  { name: 'Points', group: 'Components', description: 'Standalone Points (agnostic) — baseline', imports: ['Points'] },
+  { name: 'Points.svg', group: 'Components', description: 'Standalone Points from `layerchart/svg`', imports: ['Points'], layers: { Points: 'svg' } },
+  { name: 'Points.canvas', group: 'Components', description: 'Standalone Points from `layerchart/canvas`', imports: ['Points'], layers: { Points: 'canvas' } },
+  { name: 'Points.html', group: 'Components', description: 'Standalone Points from `layerchart/html`', imports: ['Points'], layers: { Points: 'html' } },
+  { name: 'Labels', group: 'Components', description: 'Standalone Labels (agnostic) — baseline', imports: ['Labels'] },
+  { name: 'Labels.svg', group: 'Components', description: 'Standalone Labels from `layerchart/svg`', imports: ['Labels'], layers: { Labels: 'svg' } },
+  { name: 'Labels.canvas', group: 'Components', description: 'Standalone Labels from `layerchart/canvas`', imports: ['Labels'], layers: { Labels: 'canvas' } },
+  { name: 'Labels.html', group: 'Components', description: 'Standalone Labels from `layerchart/html`', imports: ['Labels'], layers: { Labels: 'html' } },
+
   // --- Worst case ---
   {
     name: 'all',

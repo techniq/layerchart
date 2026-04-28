@@ -155,7 +155,7 @@
       {#if typeof points === 'function'}
         {@render points(snippetProps)}
       {:else if points}
-        {#await import('../Points.svelte') then { default: Points }}
+        {#await import('../Points/Points.svelte') then { default: Points }}
           {#each context.series.visibleSeries as s, i (s.key)}
             <Points
               seriesKey={s.key}
@@ -170,7 +170,7 @@
       {#if typeof labels === 'function'}
         {@render labels(snippetProps)}
       {:else if labels}
-        {#await import('../Labels.svelte') then { default: Labels }}
+        {#await import('../Labels/Labels.svelte') then { default: Labels }}
           {@const labelSeriesKey = typeof labels === 'object' ? labels.seriesKey : undefined}
           {#each context.series.visibleSeries.filter((s) => !labelSeriesKey || s.key === labelSeriesKey) as s, i (s.key)}
             <Labels seriesKey={s.key} {...getObjectOrNull(labels)} {...props.labels} />

@@ -6,9 +6,9 @@
   import type { SeriesData } from './types.js';
 
   import Arc from '../Arc/Arc.svelte';
-  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel.svelte';
+  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel/ArcLabel.svelte';
   import Group from '../Group/Group.svelte';
-  import Pie from '../Pie.svelte';
+  import Pie from '../Pie/Pie.svelte';
 
   export type PieChartExtraSnippetProps<TData> = {
     key: Accessor<TData>;
