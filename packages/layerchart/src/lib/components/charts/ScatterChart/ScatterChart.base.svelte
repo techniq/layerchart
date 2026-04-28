@@ -1,37 +1,24 @@
 <script lang="ts" module>
-  import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { SeriesData } from './types.js';
+  import type { Component } from 'svelte';
+  import type { ScatterChartProps } from './ScatterChart.shared.svelte.js';
 
-  import Points from '../Points/Points.svelte';
+  export type ScatterChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Points: Component<any>;
+  };
 
-  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
-  export type ScatterChartProps<TData> = {
-    /**
-     * The data for the chart
-     */
-    data?: TData[] | readonly TData[];
-  } & Omit<ChartProps<any>, 'data'> & {
-      /**
-       * The series data to be used for the chart.
-       */
-      series?: SeriesData<TData, typeof Points>[];
-
-      /**
-       * Enable profiling to measure render time.
-       * @default false
-       */
-      profile?: boolean;
-    };
+  export type ScatterChartBaseProps<TData> = ScatterChartProps<TData> &
+    ScatterChartBaseLayerComponents;
 </script>
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from "../Chart/Chart.svelte";
-
-  import { chartDataArray } from '../../utils/common.js';
+  import { chartDataArray } from '$lib/utils/common.js';
 
   let {
+    Chart,
+    Points,
     data = [],
     x: xProp,
     y: yProp,
@@ -51,7 +38,7 @@
     tooltip: tooltipProp,
     context = $bindable(),
     ...restProps
-  }: ScatterChartProps<TData> = $props();
+  }: ScatterChartBaseProps<TData> = $props();
 
   const series = $derived(
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
@@ -98,7 +85,7 @@
   tooltip={tooltipProp}
   {props}
 >
-  {#snippet marks({ context })}
+  {#snippet marks({ context }: { context: any })}
     {#if typeof marks === 'function'}
       {@render marks({ context })}
     {:else}

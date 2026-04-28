@@ -1,136 +1,15 @@
 <script lang="ts" module>
-  import type { ComponentProps, Snippet } from 'svelte';
-  import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { ChartState } from '$lib/contexts/chart.js';
-  import type { ArcPropsWithoutHTML } from '../Arc/Arc.svelte';
-  import type { Accessor } from '$lib/utils/common.js';
-  import type { SeriesData } from './types.js';
+  import type { Component } from 'svelte';
+  import type { ArcChartProps } from './ArcChart.shared.svelte.js';
 
-  import Arc from '../Arc/Arc.svelte';
-  import ArcLabel, { type ArcLabelConfig } from '../ArcLabel/ArcLabel.svelte';
-  import Group from '../Group/Group.svelte';
-
-  export type ArcChartExtraSnippetProps<TData> = {
-    key: Accessor<TData>;
-    label: Accessor<TData>;
-    value: Accessor<TData>;
-    visibleData: TData[];
-    getGroupProps: () => ComponentProps<typeof Group>;
-    getArcProps: (s: SeriesData<TData, typeof Arc>, i: number) => ComponentProps<typeof Arc>;
+  export type ArcChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Arc: Component<any>;
+    ArcLabel: Component<any>;
+    Group: Component<any>;
   };
 
-  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
-  export type ArcChartProps<TData> = {
-    /**
-     * The data for the chart
-     */
-    data?: TData[] | readonly TData[];
-  } & Omit<
-    ChartProps<any>,
-    // Props that don't apply to ArcChart
-    'data' | 'axis' | 'brush' | 'grid' | 'highlight' | 'labels' | 'points' | 'rule'
-  > & {
-      /**
-       * Render text labels on each arc.
-       *
-       * Pass `true` to enable with default placement (`centroid`), or an object
-       * to customize via `ArcLabel` props (placement, format, value accessor, etc).
-       */
-      labels?: boolean | (ArcLabelConfig & { value?: Accessor });
-    } & Pick<
-      ArcPropsWithoutHTML,
-      | 'cornerRadius'
-      | 'trackCornerRadius'
-      | 'padAngle'
-      | 'trackPadAngle'
-      | 'trackStartAngle'
-      | 'trackEndAngle'
-      | 'trackInnerRadius'
-      | 'trackOuterRadius'
-      | 'innerRadius'
-      | 'outerRadius'
-      | 'range'
-    > & {
-      /**
-       * The series data to be used for the chart.
-       */
-      series?: SeriesData<TData, typeof Arc>[];
-
-      /**
-       * Key accessor
-       *
-       * @default 'key'
-       */
-      key?: Accessor<TData>;
-
-      /**
-       * Label accessor
-       *
-       * @default 'label'
-       */
-      label?: Accessor<TData>;
-
-      /**
-       * Value accessor
-       *
-       * @default 'value'
-       */
-      value?: Accessor<TData>;
-
-      /**
-       * Color accessor
-       *
-       * @default key
-       */
-      c?: Accessor<TData>;
-
-      /**
-       * Maximum possible value, useful when `data` is single item
-       */
-      maxValue?: number;
-
-      /**
-       * Placement of the ArcChart
-       *
-       * @default 'center'
-       */
-      placement?: 'left' | 'center' | 'right';
-
-      /**
-       * Center the chart.
-       *
-       * Override and use `props.group` for more control.
-       *
-       * @default placement === 'center'
-       */
-      center?: boolean;
-
-      /**
-       * A callback function triggered when the arc is clicked.
-       */
-      onArcClick?: (
-        e: MouseEvent,
-        detail: { data: any; series: SeriesData<TData, typeof Arc> }
-      ) => void;
-
-      arc?: Snippet<
-        [
-          { context: ChartState<TData> } & ArcChartExtraSnippetProps<TData> & {
-              props: ComponentProps<typeof Arc>;
-              /**
-               * The index of the series currently being iterated over.
-               */
-              seriesIndex: number;
-            },
-        ]
-      >;
-
-      /**
-       * Enable profiling to measure render time.
-       * @default false
-       */
-      profile?: boolean;
-    };
+  export type ArcChartBaseProps<TData> = ArcChartProps<TData> & ArcChartBaseLayerComponents;
 </script>
 
 <script lang="ts" generics="TData">
@@ -139,13 +18,20 @@
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Chart from "../Chart/Chart.svelte";
-  import * as Tooltip from '../tooltip/index.js';
+  import * as Tooltip from '../../tooltip/index.js';
 
-  import { accessor, chartDataArray, getObjectOrNull } from '../../utils/common.js';
+  import type { ArcLabelConfig } from '../../ArcLabel/ArcLabel.shared.svelte.js';
+  import type { ArcProps } from '../../Arc/Arc.shared.svelte.js';
+  import type { GroupProps } from '../../Group/Group.shared.svelte.js';
+  import type { SeriesData } from '../types.js';
+  import { accessor, chartDataArray, getObjectOrNull, type Accessor } from '$lib/utils/common.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
 
   let {
+    Chart,
+    Arc,
+    ArcLabel,
+    Group,
     data = [],
     key = 'key',
     label = 'label',
@@ -180,7 +66,7 @@
     trackInnerRadius,
     trackOuterRadius,
     ...restProps
-  }: ArcChartProps<TData> = $props();
+  }: ArcChartBaseProps<TData> = $props();
 
   const center = $derived(centerProp ?? placement === 'center');
 
@@ -207,7 +93,7 @@
   );
   const isDefaultSeries = $derived(_series.length === 1 && _series[0].key === 'default');
 
-  const series: SeriesData<TData, typeof Arc>[] = $derived.by(() => {
+  const series: SeriesData<TData, any>[] = $derived.by(() => {
     if (!isDefaultSeries) return _series;
     // build series from data
     return chartDataArray(data).map((d) => {
@@ -248,7 +134,7 @@
     return item ? (labelAccessor(item) ?? tick) : tick;
   };
 
-  function getGroupProps(): ComponentProps<typeof Group> {
+  function getGroupProps(): GroupProps {
     if (!context) return {};
     return {
       x:
@@ -262,7 +148,7 @@
     };
   }
 
-  function getArcProps(s: SeriesData<TData, typeof Arc>, i: number): ComponentProps<typeof Arc> {
+  function getArcProps(s: SeriesData<TData, any>, i: number): ArcProps {
     if (!context) return {};
     const d = s.data?.[0] || chartData[0];
     const multiSeries = chartDataArray(data).length > 1 || series.length > 1;
@@ -286,7 +172,7 @@
       opacity: (context?.series.isHighlighted(keyAccessor(d), true) ?? true) ? 1 : 0.1,
       tooltip: true,
       data: d,
-      onclick: (e) => {
+      onclick: (e: MouseEvent) => {
         onArcClick(e, { data: d, series: s });
         // Workaround for `tooltip={{ mode: 'manual' }}
         onTooltipClick(e, { data: d });
@@ -352,7 +238,7 @@
     canvas: { center, ...props.canvas },
   }}
 >
-  {#snippet marks(snippetProps)}
+  {#snippet marks(snippetProps: any)}
     {#if typeof marks === 'function'}
       {@render marks(snippetProps)}
     {:else}
@@ -380,7 +266,7 @@
                 innerRadius: arcInnerRadius,
                 outerRadius: arcOuterRadius,
                 getArcTextProps,
-              })}
+              }: any)}
                 {@const { value: labelValue, ...labelRest } = labelsConfig}
                 <ArcLabel
                   {centroid}
@@ -402,12 +288,12 @@
     {/if}
   {/snippet}
 
-  {#snippet tooltip(snippetProps)}
+  {#snippet tooltip(snippetProps: any)}
     {#if typeof tooltipProp === 'function'}
       {@render tooltipProp(snippetProps as any)}
     {:else if tooltipContext}
       <Tooltip.Root context={snippetProps.context} {...props.tooltip?.root}>
-        {#snippet children({ data })}
+        {#snippet children({ data }: { data: any })}
           <Tooltip.List {...props.tooltip?.list}>
             <Tooltip.Item
               label={labelAccessor(data) || keyAccessor(data)}

@@ -310,12 +310,12 @@ export * as Tooltip from './components/tooltip/index.js';
 export * from './components/tooltip/TooltipContext.svelte';
 
 // High-level chart wrappers
-export { default as LineChart } from './components/charts/LineChart.svelte';
-export { default as AreaChart } from './components/charts/AreaChart.svelte';
-export { default as BarChart } from './components/charts/BarChart.svelte';
-export { default as PieChart } from './components/charts/PieChart.svelte';
-export { default as ScatterChart } from './components/charts/ScatterChart.svelte';
-export { default as ArcChart } from './components/charts/ArcChart.svelte';
+export { default as LineChart } from './components/charts/LineChart/LineChart.canvas.svelte';
+export { default as AreaChart } from './components/charts/AreaChart/AreaChart.canvas.svelte';
+export { default as BarChart } from './components/charts/BarChart/BarChart.canvas.svelte';
+export { default as PieChart } from './components/charts/PieChart/PieChart.canvas.svelte';
+export { default as ScatterChart } from './components/charts/ScatterChart/ScatterChart.canvas.svelte';
+export { default as ArcChart } from './components/charts/ArcChart/ArcChart.canvas.svelte';
 
 // Layout components
 export { default as Tree } from './components/hierarchy/Tree.svelte';

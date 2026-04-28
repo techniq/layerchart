@@ -1,55 +1,24 @@
 <script lang="ts" module>
-  import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { HighlightPointData } from '../Highlight/Highlight.svelte';
-  import type { SeriesData } from './types.js';
+  import type { Component } from 'svelte';
+  import type { LineChartProps } from './LineChart.shared.svelte.js';
 
-  import Spline from '../Spline/Spline.svelte';
+  export type LineChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Spline: Component<any>;
+  };
 
-  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
-  export type LineChartProps<TData> = {
-    /**
-     * The data for the chart
-     */
-    data?: TData[] | readonly TData[];
-  } & Omit<ChartProps<any>, 'data'> & {
-      /**
-       * The orientation of the chart.  Sets which axis is the value axis.
-       *
-       * @default 'horizontal'
-       */
-      orientation?: 'horizontal' | 'vertical';
-
-      /**
-       * The series data to be used for the chart.
-       * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-       */
-      series?: SeriesData<TData, typeof Spline>[];
-
-      /**
-       * The event to be dispatched when the point is clicked.
-       */
-      onPointClick?: (
-        e: MouseEvent,
-        details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
-      ) => void;
-
-      /**
-       * Enable profiling to measure render time.
-       * @default false
-       */
-      profile?: boolean;
-    };
+  export type LineChartBaseProps<TData> = LineChartProps<TData> & LineChartBaseLayerComponents;
 </script>
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from "../Chart/Chart.svelte";
-
-  import { getObjectOrNull } from '../../utils/common.js';
-  import { isScaleTime } from '../../utils/scales.svelte.js';
+  import { getObjectOrNull } from '$lib/utils/common.js';
+  import { isScaleTime } from '$lib/utils/scales.svelte.js';
 
   let {
+    Chart,
+    Spline,
     data = [],
     x: xProp,
     xScale,
@@ -71,7 +40,7 @@
     marks,
     context = $bindable(),
     ...restProps
-  }: LineChartProps<TData> = $props();
+  }: LineChartBaseProps<TData> = $props();
 
   const valueAxis = $derived(valueAxisProp ?? (orientation === 'horizontal' ? 'y' : 'x'));
 
@@ -145,7 +114,7 @@
   {legend}
   {props}
 >
-  {#snippet marks({ context })}
+  {#snippet marks({ context }: { context: any })}
     {#if typeof marks === 'function'}
       {@render marks({ context })}
     {:else}

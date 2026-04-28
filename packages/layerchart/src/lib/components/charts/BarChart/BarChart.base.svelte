@@ -1,81 +1,21 @@
 <script lang="ts" module>
-  import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { SeriesData } from './types.js';
+  import type { Component } from 'svelte';
+  import type { BarChartProps } from './BarChart.shared.svelte.js';
 
-  import Bars from '../Bars/Bars.svelte';
+  export type BarChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Bars: Component<any>;
+  };
 
-  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
-  export type BarChartProps<TData> = {
-    /**
-     * The data for the chart
-     */
-    data?: TData[] | readonly TData[];
-  } & Omit<ChartProps<any>, 'data'> & {
-      /**
-       * The orientation of the chart.  Sets which axis is the value axis.
-       *
-       * @default 'vertical'
-       */
-      orientation?: 'horizontal' | 'vertical';
-
-      /**
-       * The series data to be used for the chart.
-       * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-       */
-      series?: SeriesData<TData, typeof Bars>[];
-
-      /**
-       * The layout of the series.
-       *
-       * @default 'overlap'
-       */
-      seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' | 'group';
-
-      /**
-       * Padding between primary x or y bands/bars, applied to scaleBand().padding()
-       *
-       * @default 0.4
-       */
-      bandPadding?: number;
-
-      /**
-       * Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding()
-       *
-       * @default 0
-       */
-      groupPadding?: number;
-
-      /**
-       * Padding between series items within bars when using 'seriesLayout="stack"'
-       *
-       * @default 0
-       */
-      stackPadding?: number;
-
-      /**
-       * A callback function that is called when a bar is clicked.
-       * @param e - The original event that triggered the callback
-       * @param detail - An object containing the bar's data and series information
-       */
-      onBarClick?: (
-        event: MouseEvent,
-        detail: { data: any; series: SeriesData<TData, typeof Bars> }
-      ) => void;
-
-      /**
-       * Enable profiling to measure render time.
-       * @default false
-       */
-      profile?: boolean;
-    };
+  export type BarChartBaseProps<TData> = BarChartProps<TData> & BarChartBaseLayerComponents;
 </script>
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from "../Chart/Chart.svelte";
-
   let {
+    Chart,
+    Bars,
     data = [],
     x: xProp,
     y: yProp,
@@ -102,7 +42,7 @@
     marks,
     context = $bindable(),
     ...restProps
-  }: BarChartProps<TData> = $props();
+  }: BarChartBaseProps<TData> = $props();
 
   const valueAxis = $derived(orientation === 'horizontal' ? 'x' : 'y');
 
@@ -174,15 +114,15 @@
   highlight={highlight as any}
   {props}
 >
-  {#snippet marks({ context })}
+  {#snippet marks({ context }: { context: any })}
     {#if typeof marks === 'function'}
       {@render marks({ context })}
     {:else}
       {#each context.series.visibleSeries as s, i (s.key)}
         <Bars
           seriesKey={s.key}
-          x1={valueAxis === 'y' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
-          y1={valueAxis === 'x' && isGroupSeries ? (d) => s.value ?? s.key : undefined}
+          x1={valueAxis === 'y' && isGroupSeries ? (d: any) => s.value ?? s.key : undefined}
+          y1={valueAxis === 'x' && isGroupSeries ? (d: any) => s.value ?? s.key : undefined}
           rounded={context.series.divergingEdgeKeys
             ? context.series.divergingEdgeKeys.has(s.key)
               ? 'edge'
@@ -196,7 +136,7 @@
           strokeWidth={1}
           {stackPadding}
           opacity={context.series.isHighlighted(s.key, true) ? 1 : 0.1}
-          onBarClick={(e, detail) => onBarClick(e, { ...detail, series: s })}
+          onBarClick={(e: MouseEvent, detail: any) => onBarClick(e, { ...detail, series: s })}
           {...props.bars}
           {...s.props}
         />

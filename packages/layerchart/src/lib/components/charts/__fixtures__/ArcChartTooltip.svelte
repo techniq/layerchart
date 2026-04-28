@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ArcChart from '../ArcChart.svelte';
+  import ArcChart from '../ArcChart/ArcChart.svelte';
 
   const data = [
     { browser: 'other', visitors: 90, color: 'gray' },

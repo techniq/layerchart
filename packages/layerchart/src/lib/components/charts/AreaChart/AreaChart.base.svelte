@@ -1,53 +1,23 @@
 <script lang="ts" module>
-  import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { HighlightPoint } from '../Highlight/Highlight.svelte';
-  import type { SeriesData } from './types.js';
+  import type { Component } from 'svelte';
+  import type { AreaChartProps } from './AreaChart.shared.svelte.js';
 
-  import Area from '../Area/Area.svelte';
+  export type AreaChartBaseLayerComponents = {
+    Chart: Component<any>;
+    Area: Component<any>;
+  };
 
-  // Use explicit data prop for TData inference, with rest from ChartPropsWithoutHTML<any>
-  export type AreaChartProps<TData> = {
-    /**
-     * The data for the chart
-     */
-    data?: TData[] | readonly TData[];
-  } & Omit<ChartProps<any>, 'data'> & {
-      /**
-       * The series data to be used for the chart.
-       * @default [{ key: 'default', value: y, color: 'var(--color-primary)' }]
-       */
-      series?: SeriesData<TData, typeof Area>[];
-
-      /**
-       * The layout of the series.
-       * @default 'overlap'
-       */
-      seriesLayout?: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging';
-
-      /**
-       * A callback function called when a point in the chart is clicked.
-       *
-       * @param e - the original event that triggered the `onPointClick`
-       * @param details - an object containing the highlighted point and data
-       */
-      onPointClick?: (e: MouseEvent, details: { point: HighlightPoint; data: any }) => void;
-
-      /**
-       * Enable profiling to measure render time.
-       * @default false
-       */
-      profile?: boolean;
-    };
+  export type AreaChartBaseProps<TData> = AreaChartProps<TData> & AreaChartBaseLayerComponents;
 </script>
 
 <script lang="ts" generics="TData">
   import { onMount } from 'svelte';
 
-  import Chart from "../Chart/Chart.svelte";
-
   import { getObjectOrNull } from '$lib/utils/common.js';
 
   let {
+    Chart,
+    Area,
     data = [],
     y,
     xDomain,
@@ -68,7 +38,7 @@
     tooltip: tooltipProp,
     context = $bindable(),
     ...restProps
-  }: AreaChartProps<TData> = $props();
+  }: AreaChartBaseProps<TData> = $props();
 
   const series = $derived(
     seriesProp === undefined
@@ -131,7 +101,7 @@
     },
   }}
 >
-  {#snippet marks({ context })}
+  {#snippet marks({ context }: { context: any })}
     {#if typeof marks === 'function'}
       {@render marks({ context })}
     {:else}

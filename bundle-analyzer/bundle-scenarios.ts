@@ -133,6 +133,20 @@ export const scenarios: Scenario[] = [
     imports: ['LineChart'],
   },
   {
+    name: 'LineChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `LineChart` from `layerchart/svg`',
+    imports: ['LineChart'],
+    layers: { LineChart: 'svg' },
+  },
+  {
+    name: 'LineChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `LineChart` from `layerchart/canvas`',
+    imports: ['LineChart'],
+    layers: { LineChart: 'canvas' },
+  },
+  {
     name: 'area-chart',
     group: 'Cartesian charts',
     description: 'Area chart with axes',
@@ -143,6 +157,20 @@ export const scenarios: Scenario[] = [
     group: 'Cartesian charts',
     description: 'High-level `AreaChart` component',
     imports: ['AreaChart'],
+  },
+  {
+    name: 'AreaChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `AreaChart` from `layerchart/svg`',
+    imports: ['AreaChart'],
+    layers: { AreaChart: 'svg' },
+  },
+  {
+    name: 'AreaChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `AreaChart` from `layerchart/canvas`',
+    imports: ['AreaChart'],
+    layers: { AreaChart: 'canvas' },
   },
   {
     name: 'bar-chart',
@@ -157,6 +185,20 @@ export const scenarios: Scenario[] = [
     imports: ['BarChart'],
   },
   {
+    name: 'BarChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `BarChart` from `layerchart/svg`',
+    imports: ['BarChart'],
+    layers: { BarChart: 'svg' },
+  },
+  {
+    name: 'BarChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `BarChart` from `layerchart/canvas`',
+    imports: ['BarChart'],
+    layers: { BarChart: 'canvas' },
+  },
+  {
     name: 'scatter-chart',
     group: 'Cartesian charts',
     description: 'Scatter plot with points',
@@ -167,6 +209,20 @@ export const scenarios: Scenario[] = [
     group: 'Cartesian charts',
     description: 'High-level `ScatterChart` component',
     imports: ['ScatterChart'],
+  },
+  {
+    name: 'ScatterChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `ScatterChart` from `layerchart/svg`',
+    imports: ['ScatterChart'],
+    layers: { ScatterChart: 'svg' },
+  },
+  {
+    name: 'ScatterChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `ScatterChart` from `layerchart/canvas`',
+    imports: ['ScatterChart'],
+    layers: { ScatterChart: 'canvas' },
   },
   {
     name: 'pie-chart',
@@ -181,10 +237,38 @@ export const scenarios: Scenario[] = [
     imports: ['PieChart'],
   },
   {
+    name: 'PieChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `PieChart` from `layerchart/svg`',
+    imports: ['PieChart'],
+    layers: { PieChart: 'svg' },
+  },
+  {
+    name: 'PieChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `PieChart` from `layerchart/canvas`',
+    imports: ['PieChart'],
+    layers: { PieChart: 'canvas' },
+  },
+  {
     name: 'ArcChart',
     group: 'Cartesian charts',
     description: 'High-level `ArcChart` component',
     imports: ['ArcChart'],
+  },
+  {
+    name: 'ArcChart-svg',
+    group: 'Cartesian charts',
+    description: 'High-level `ArcChart` from `layerchart/svg`',
+    imports: ['ArcChart'],
+    layers: { ArcChart: 'svg' },
+  },
+  {
+    name: 'ArcChart-canvas',
+    group: 'Cartesian charts',
+    description: 'High-level `ArcChart` from `layerchart/canvas`',
+    imports: ['ArcChart'],
+    layers: { ArcChart: 'canvas' },
   },
 
   // --- Geo ---
