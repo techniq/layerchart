@@ -337,6 +337,15 @@ export const scenarios: Scenario[] = [
 	{ name: "image-canvas", group: "Layer-specific", description: "Standalone Image from `layerchart/canvas`", imports: ["Image"], subpathOverrides: { Image: "canvas" } },
 	{ name: "image-html", group: "Layer-specific", description: "Standalone Image from `layerchart/html`", imports: ["Image"], subpathOverrides: { Image: "html" } },
 
+	// Axis is a compound mark: pulls Group + Line + Text + Rule. The per-layer
+	// variants use the corresponding per-layer Group/Line/Text directly. Measured
+	// in isolation (without Chart) since `Chart`'s `ChartChildren` statically
+	// imports the agnostic Axis variant.
+	{ name: "axis-agnostic", group: "Layer-specific", description: "Standalone Axis (agnostic) — baseline", imports: ["Axis"] },
+	{ name: "axis-svg", group: "Layer-specific", description: "Standalone Axis from `layerchart/svg`", imports: ["Axis"], subpathOverrides: { Axis: "svg" } },
+	{ name: "axis-canvas", group: "Layer-specific", description: "Standalone Axis from `layerchart/canvas`", imports: ["Axis"], subpathOverrides: { Axis: "canvas" } },
+	{ name: "axis-html", group: "Layer-specific", description: "Standalone Axis from `layerchart/html`", imports: ["Axis"], subpathOverrides: { Axis: "html" } },
+
 	// --- Worst case ---
 	{
 		name: "all",

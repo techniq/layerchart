@@ -1,7 +1,7 @@
 <script lang="ts">
   import Chart from '../components/Chart.svelte';
   import Layer from '../components/layers/Layer.svelte';
-  import Axis from '../components/Axis.svelte';
+  import Axis from '../components/Axis/Axis.svelte';
   import Spline from '../components/Spline.svelte';
   import Highlight from '../components/Highlight.svelte';
 

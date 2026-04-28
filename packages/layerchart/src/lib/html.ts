@@ -55,3 +55,8 @@ export type {
   ImageProps,
   ImagePropsWithoutHTML,
 } from './components/Image/Image.shared.svelte.js';
+export { default as Axis } from './components/Axis/Axis.html.svelte';
+export type {
+  AxisProps,
+  AxisPropsWithoutHTML,
+} from './components/Axis/Axis.shared.svelte.js';

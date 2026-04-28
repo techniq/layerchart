@@ -135,7 +135,7 @@
 
   import type Area from './Area.svelte';
   import type Arc from './Arc.svelte';
-  import Axis from './Axis.svelte';
+  import Axis from './Axis/Axis.svelte';
   import type Bars from './Bars.svelte';
   import type BrushContext from './BrushContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
