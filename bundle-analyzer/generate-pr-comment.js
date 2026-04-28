@@ -154,12 +154,28 @@ function generateComment(changes, hasBaseline = true) {
 
 		if (scenarios.length > 0) {
 			comment += "### Use-Case Scenarios\n\n";
-			comment += "| Scenario | Size | Gzipped |\n";
-			comment += "|----------|-----:|--------:|\n";
+
+			/** @type {Map<string, ScenarioDiff[]>} */
+			const byGroup = new Map();
 			for (const s of scenarios) {
-				comment += `| \`${s.scenario}\` | ${formatKB(s.currentSize)} KB | ${formatKB(s.currentGzipSize)} KB |\n`;
+				const g = s.group || "Other";
+				if (!byGroup.has(g)) byGroup.set(g, []);
+				byGroup.get(g).push(s);
 			}
-			comment += "\n";
+
+			const expandedGroups = new Set(["Foundation"]);
+
+			for (const [groupName, rows] of byGroup) {
+				const open = expandedGroups.has(groupName) ? " open" : "";
+				comment += `<details${open}>\n`;
+				comment += `<summary><strong>${groupName}</strong> (${rows.length})</summary>\n\n`;
+				comment += "| Scenario | Size | Gzipped |\n";
+				comment += "|----------|-----:|--------:|\n";
+				for (const s of rows) {
+					comment += `| \`${s.scenario}\` | ${formatKB(s.currentSize)} KB | ${formatKB(s.currentGzipSize)} KB |\n`;
+				}
+				comment += "\n</details>\n\n";
+			}
 		}
 
 		if (components.length > 0) {
@@ -212,12 +228,18 @@ function generateComment(changes, hasBaseline = true) {
 			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		};
 
+		// Foundation expanded by default; other groups collapsed to keep the
+		// comment scannable. Each group shows the count of changed scenarios.
+		const expandedGroups = new Set(["Foundation"]);
+
 		for (const [groupName, rows] of byGroup) {
-			comment += `#### ${groupName}\n\n`;
+			const open = expandedGroups.has(groupName) ? " open" : "";
+			comment += `<details${open}>\n`;
+			comment += `<summary><strong>${groupName}</strong> (${rows.length} changed)</summary>\n\n`;
 			comment += "| Scenario | Current | New | Change |\n";
 			comment += "|----------|--------:|----:|-------:|\n";
 			for (const s of rows) comment += renderRow(s);
-			comment += "\n";
+			comment += "\n</details>\n\n";
 		}
 	}
 
@@ -288,6 +310,7 @@ function main() {
 			changes = prReport.results.map((result) => ({
 				scenario: result.scenario,
 				description: result.description,
+				group: result.group,
 				status: "added",
 				sizeDiff: result.size,
 				gzipSizeDiff: result.gzipSize,
