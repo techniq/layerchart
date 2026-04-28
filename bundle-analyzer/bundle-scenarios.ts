@@ -914,6 +914,26 @@ export const scenarios: Scenario[] = [
   { name: 'CircleClipPath.canvas', group: 'Components', description: 'Standalone CircleClipPath from `layerchart/canvas`', imports: ['CircleClipPath'], layers: { CircleClipPath: 'canvas' } },
   { name: 'CircleClipPath.html', group: 'Components', description: 'Standalone CircleClipPath from `layerchart/html`', imports: ['CircleClipPath'], layers: { CircleClipPath: 'html' } },
 
+  { name: 'Voronoi', group: 'Components', description: 'Standalone Voronoi (agnostic) — baseline', imports: ['Voronoi'] },
+  { name: 'Voronoi.svg', group: 'Components', description: 'Standalone Voronoi from `layerchart/svg`', imports: ['Voronoi'], layers: { Voronoi: 'svg' } },
+  { name: 'Voronoi.canvas', group: 'Components', description: 'Standalone Voronoi from `layerchart/canvas`', imports: ['Voronoi'], layers: { Voronoi: 'canvas' } },
+  { name: 'Contour', group: 'Components', description: 'Standalone Contour (agnostic) — baseline', imports: ['Contour'] },
+  { name: 'Contour.svg', group: 'Components', description: 'Standalone Contour from `layerchart/svg`', imports: ['Contour'], layers: { Contour: 'svg' } },
+  { name: 'Contour.canvas', group: 'Components', description: 'Standalone Contour from `layerchart/canvas`', imports: ['Contour'], layers: { Contour: 'canvas' } },
+  { name: 'Month', group: 'Components', description: 'Standalone Month (agnostic) — baseline', imports: ['Month'] },
+  { name: 'Month.svg', group: 'Components', description: 'Standalone Month from `layerchart/svg`', imports: ['Month'], layers: { Month: 'svg' } },
+  { name: 'Month.canvas', group: 'Components', description: 'Standalone Month from `layerchart/canvas`', imports: ['Month'], layers: { Month: 'canvas' } },
+  { name: 'Raster', group: 'Components', description: 'Standalone Raster (agnostic) — baseline', imports: ['Raster'] },
+  { name: 'Raster.svg', group: 'Components', description: 'Standalone Raster from `layerchart/svg`', imports: ['Raster'], layers: { Raster: 'svg' } },
+  { name: 'Raster.canvas', group: 'Components', description: 'Standalone Raster from `layerchart/canvas`', imports: ['Raster'], layers: { Raster: 'canvas' } },
+  { name: 'Raster.html', group: 'Components', description: 'Standalone Raster from `layerchart/html`', imports: ['Raster'], layers: { Raster: 'html' } },
+  { name: 'Violin', group: 'Components', description: 'Standalone Violin (agnostic) — baseline', imports: ['Violin'] },
+  { name: 'Violin.svg', group: 'Components', description: 'Standalone Violin from `layerchart/svg`', imports: ['Violin'], layers: { Violin: 'svg' } },
+  { name: 'Violin.canvas', group: 'Components', description: 'Standalone Violin from `layerchart/canvas`', imports: ['Violin'], layers: { Violin: 'canvas' } },
+  { name: 'BoxPlot', group: 'Components', description: 'Standalone BoxPlot (agnostic) — baseline', imports: ['BoxPlot'] },
+  { name: 'BoxPlot.svg', group: 'Components', description: 'Standalone BoxPlot from `layerchart/svg`', imports: ['BoxPlot'], layers: { BoxPlot: 'svg' } },
+  { name: 'BoxPlot.canvas', group: 'Components', description: 'Standalone BoxPlot from `layerchart/canvas`', imports: ['BoxPlot'], layers: { BoxPlot: 'canvas' } },
+
   // --- Worst case ---
   {
     name: 'all',

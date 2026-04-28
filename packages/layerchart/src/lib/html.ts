@@ -121,3 +121,8 @@ export { default as Cell } from './components/Cell/Cell.html.svelte';
 export type { CellProps } from './components/Cell/Cell.shared.svelte.js';
 export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.html.svelte';
 export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.shared.svelte.js';
+export { default as Raster } from './components/Raster/Raster.html.svelte';
+export type {
+  RasterProps,
+  RasterPropsWithoutHTML,
+} from './components/Raster/Raster.shared.svelte.js';

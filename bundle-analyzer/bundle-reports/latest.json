@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-04-28T17:43:07.104Z",
+  "timestamp": "2026-04-28T19:19:39.925Z",
   "results": [
     {
       "scenario": "core",
       "description": "Core charting components without rendering layer",
       "group": "Foundation",
-      "size": 373472,
-      "gzipSize": 86295,
+      "size": 374970,
+      "gzipSize": 86618,
       "imports": [
         "Chart",
         "Svg"
@@ -16,8 +16,8 @@
       "scenario": "core-svg",
       "description": "Svg-based rendering",
       "group": "Foundation",
-      "size": 350474,
-      "gzipSize": 81861,
+      "size": 351979,
+      "gzipSize": 82187,
       "imports": [
         "Chart",
         "Svg"
@@ -27,8 +27,8 @@
       "scenario": "core-canvas",
       "description": "Canvas-based rendering",
       "group": "Foundation",
-      "size": 357008,
-      "gzipSize": 83586,
+      "size": 358506,
+      "gzipSize": 83936,
       "imports": [
         "Chart",
         "Canvas"
@@ -38,8 +38,8 @@
       "scenario": "core-html",
       "description": "HTML-based rendering",
       "group": "Foundation",
-      "size": 358328,
-      "gzipSize": 83882,
+      "size": 359830,
+      "gzipSize": 84204,
       "imports": [
         "Chart",
         "Html"
@@ -49,8 +49,8 @@
       "scenario": "line-chart",
       "description": "Basic line chart with axes and grid",
       "group": "Cartesian charts",
-      "size": 373967,
-      "gzipSize": 86324,
+      "size": 375465,
+      "gzipSize": 86650,
       "imports": [
         "Chart",
         "Svg",
@@ -63,8 +63,8 @@
       "scenario": "line-chart-svg",
       "description": "Line chart composed from `layerchart/svg`",
       "group": "Cartesian charts",
-      "size": 350498,
-      "gzipSize": 81877,
+      "size": 352003,
+      "gzipSize": 82209,
       "imports": [
         "Chart",
         "Layer",
@@ -77,8 +77,8 @@
       "scenario": "line-chart-canvas",
       "description": "Line chart composed from `layerchart/canvas`",
       "group": "Cartesian charts",
-      "size": 357032,
-      "gzipSize": 83608,
+      "size": 358530,
+      "gzipSize": 83963,
       "imports": [
         "Chart",
         "Layer",
@@ -91,8 +91,8 @@
       "scenario": "line-chart-html",
       "description": "Line chart composed from `layerchart/html`",
       "group": "Cartesian charts",
-      "size": 358352,
-      "gzipSize": 83896,
+      "size": 359854,
+      "gzipSize": 84218,
       "imports": [
         "Chart",
         "Layer",
@@ -105,8 +105,8 @@
       "scenario": "line-chart-interactive",
       "description": "Line chart with tooltip and highlight",
       "group": "Cartesian charts",
-      "size": 388808,
-      "gzipSize": 89665,
+      "size": 390306,
+      "gzipSize": 90006,
       "imports": [
         "Chart",
         "Svg",
@@ -121,8 +121,8 @@
       "scenario": "LineChart",
       "description": "High-level `LineChart` component",
       "group": "Cartesian charts",
-      "size": 397591,
-      "gzipSize": 92683,
+      "size": 399089,
+      "gzipSize": 93026,
       "imports": [
         "LineChart"
       ]
@@ -131,8 +131,8 @@
       "scenario": "area-chart",
       "description": "Area chart with axes",
       "group": "Cartesian charts",
-      "size": 387483,
-      "gzipSize": 89388,
+      "size": 388981,
+      "gzipSize": 89728,
       "imports": [
         "Chart",
         "Svg",
@@ -145,8 +145,8 @@
       "scenario": "AreaChart",
       "description": "High-level `AreaChart` component",
       "group": "Cartesian charts",
-      "size": 391071,
-      "gzipSize": 90231,
+      "size": 392569,
+      "gzipSize": 90588,
       "imports": [
         "AreaChart"
       ]
@@ -155,8 +155,8 @@
       "scenario": "bar-chart",
       "description": "Bar chart with axes",
       "group": "Cartesian charts",
-      "size": 377807,
-      "gzipSize": 87054,
+      "size": 379305,
+      "gzipSize": 87396,
       "imports": [
         "Chart",
         "Svg",
@@ -169,8 +169,8 @@
       "scenario": "BarChart",
       "description": "High-level `BarChart` component",
       "group": "Cartesian charts",
-      "size": 382940,
-      "gzipSize": 88188,
+      "size": 384438,
+      "gzipSize": 88534,
       "imports": [
         "BarChart"
       ]
@@ -179,8 +179,8 @@
       "scenario": "scatter-chart",
       "description": "Scatter plot with points",
       "group": "Cartesian charts",
-      "size": 374749,
-      "gzipSize": 86781,
+      "size": 376247,
+      "gzipSize": 87110,
       "imports": [
         "Chart",
         "Svg",
@@ -194,8 +194,8 @@
       "scenario": "ScatterChart",
       "description": "High-level `ScatterChart` component",
       "group": "Cartesian charts",
-      "size": 377496,
-      "gzipSize": 87450,
+      "size": 378994,
+      "gzipSize": 87787,
       "imports": [
         "ScatterChart"
       ]
@@ -204,8 +204,8 @@
       "scenario": "pie-chart",
       "description": "Pie/donut chart with arcs",
       "group": "Cartesian charts",
-      "size": 386214,
-      "gzipSize": 89437,
+      "size": 387712,
+      "gzipSize": 89808,
       "imports": [
         "Chart",
         "Svg",
@@ -218,8 +218,8 @@
       "scenario": "PieChart",
       "description": "High-level `PieChart` component",
       "group": "Cartesian charts",
-      "size": 411672,
-      "gzipSize": 95159,
+      "size": 413165,
+      "gzipSize": 95513,
       "imports": [
         "PieChart"
       ]
@@ -228,8 +228,8 @@
       "scenario": "ArcChart",
       "description": "High-level `ArcChart` component",
       "group": "Cartesian charts",
-      "size": 405168,
-      "gzipSize": 93924,
+      "size": 406661,
+      "gzipSize": 94270,
       "imports": [
         "ArcChart"
       ]
@@ -238,8 +238,8 @@
       "scenario": "geo",
       "description": "Geographic map with paths",
       "group": "Geo",
-      "size": 407218,
-      "gzipSize": 94283,
+      "size": 407211,
+      "gzipSize": 94415,
       "imports": [
         "Chart",
         "Svg",
@@ -252,8 +252,8 @@
       "scenario": "geo-tiles",
       "description": "Geographic map with tile layer",
       "group": "Geo",
-      "size": 411663,
-      "gzipSize": 95795,
+      "size": 411656,
+      "gzipSize": 95919,
       "imports": [
         "Chart",
         "Svg",
@@ -268,7 +268,7 @@
       "description": "Full geo setup with all geo components",
       "group": "Geo",
       "size": 460021,
-      "gzipSize": 109396,
+      "gzipSize": 109495,
       "imports": [
         "Chart",
         "Svg",
@@ -290,8 +290,8 @@
       "scenario": "hierarchy-tree",
       "description": "Tree layout with links",
       "group": "Hierarchy",
-      "size": 413578,
-      "gzipSize": 96112,
+      "size": 415076,
+      "gzipSize": 96457,
       "imports": [
         "Chart",
         "Svg",
@@ -305,8 +305,8 @@
       "scenario": "hierarchy-treemap",
       "description": "Treemap layout",
       "group": "Hierarchy",
-      "size": 392396,
-      "gzipSize": 90916,
+      "size": 393889,
+      "gzipSize": 91267,
       "imports": [
         "Chart",
         "Svg",
@@ -320,8 +320,8 @@
       "scenario": "hierarchy-pack",
       "description": "Circle packing layout",
       "group": "Hierarchy",
-      "size": 392110,
-      "gzipSize": 91006,
+      "size": 393608,
+      "gzipSize": 91347,
       "imports": [
         "Chart",
         "Svg",
@@ -334,8 +334,8 @@
       "scenario": "force",
       "description": "Force-directed graph layout",
       "group": "Graph / network",
-      "size": 416035,
-      "gzipSize": 97005,
+      "size": 417533,
+      "gzipSize": 97346,
       "imports": [
         "Chart",
         "Svg",
@@ -349,8 +349,8 @@
       "scenario": "dagre",
       "description": "Dagre directed graph layout",
       "group": "Graph / network",
-      "size": 473464,
-      "gzipSize": 112404,
+      "size": 474962,
+      "gzipSize": 112737,
       "imports": [
         "Chart",
         "Svg",
@@ -364,8 +364,8 @@
       "scenario": "sankey",
       "description": "Sankey flow diagram",
       "group": "Graph / network",
-      "size": 415770,
-      "gzipSize": 96364,
+      "size": 417268,
+      "gzipSize": 96693,
       "imports": [
         "Chart",
         "Svg",
@@ -379,8 +379,8 @@
       "scenario": "chord",
       "description": "Chord diagram",
       "group": "Graph / network",
-      "size": 389419,
-      "gzipSize": 90285,
+      "size": 389429,
+      "gzipSize": 90418,
       "imports": [
         "Chart",
         "Svg",
@@ -1829,11 +1829,201 @@
       ]
     },
     {
+      "scenario": "Voronoi",
+      "description": "Standalone Voronoi (agnostic) — baseline",
+      "group": "Components",
+      "size": 177185,
+      "gzipSize": 46704,
+      "imports": [
+        "Voronoi"
+      ]
+    },
+    {
+      "scenario": "Voronoi.svg",
+      "description": "Standalone Voronoi from `layerchart/svg`",
+      "group": "Components",
+      "size": 175162,
+      "gzipSize": 46464,
+      "imports": [
+        "Voronoi"
+      ]
+    },
+    {
+      "scenario": "Voronoi.canvas",
+      "description": "Standalone Voronoi from `layerchart/canvas`",
+      "group": "Components",
+      "size": 174164,
+      "gzipSize": 46000,
+      "imports": [
+        "Voronoi"
+      ]
+    },
+    {
+      "scenario": "Contour",
+      "description": "Standalone Contour (agnostic) — baseline",
+      "group": "Components",
+      "size": 165261,
+      "gzipSize": 45091,
+      "imports": [
+        "Contour"
+      ]
+    },
+    {
+      "scenario": "Contour.svg",
+      "description": "Standalone Contour from `layerchart/svg`",
+      "group": "Components",
+      "size": 154130,
+      "gzipSize": 41991,
+      "imports": [
+        "Contour"
+      ]
+    },
+    {
+      "scenario": "Contour.canvas",
+      "description": "Standalone Contour from `layerchart/canvas`",
+      "group": "Components",
+      "size": 151468,
+      "gzipSize": 42247,
+      "imports": [
+        "Contour"
+      ]
+    },
+    {
+      "scenario": "Month",
+      "description": "Standalone Month (agnostic) — baseline",
+      "group": "Components",
+      "size": 145395,
+      "gzipSize": 34818,
+      "imports": [
+        "Month"
+      ]
+    },
+    {
+      "scenario": "Month.svg",
+      "description": "Standalone Month from `layerchart/svg`",
+      "group": "Components",
+      "size": 131590,
+      "gzipSize": 31322,
+      "imports": [
+        "Month"
+      ]
+    },
+    {
+      "scenario": "Month.canvas",
+      "description": "Standalone Month from `layerchart/canvas`",
+      "group": "Components",
+      "size": 133179,
+      "gzipSize": 32172,
+      "imports": [
+        "Month"
+      ]
+    },
+    {
+      "scenario": "Raster",
+      "description": "Standalone Raster (agnostic) — baseline",
+      "group": "Components",
+      "size": 124893,
+      "gzipSize": 33929,
+      "imports": [
+        "Raster"
+      ]
+    },
+    {
+      "scenario": "Raster.svg",
+      "description": "Standalone Raster from `layerchart/svg`",
+      "group": "Components",
+      "size": 118793,
+      "gzipSize": 32840,
+      "imports": [
+        "Raster"
+      ]
+    },
+    {
+      "scenario": "Raster.canvas",
+      "description": "Standalone Raster from `layerchart/canvas`",
+      "group": "Components",
+      "size": 116920,
+      "gzipSize": 32309,
+      "imports": [
+        "Raster"
+      ]
+    },
+    {
+      "scenario": "Raster.html",
+      "description": "Standalone Raster from `layerchart/html`",
+      "group": "Components",
+      "size": 117693,
+      "gzipSize": 32508,
+      "imports": [
+        "Raster"
+      ]
+    },
+    {
+      "scenario": "Violin",
+      "description": "Standalone Violin (agnostic) — baseline",
+      "group": "Components",
+      "size": 134196,
+      "gzipSize": 31522,
+      "imports": [
+        "Violin"
+      ]
+    },
+    {
+      "scenario": "Violin.svg",
+      "description": "Standalone Violin from `layerchart/svg`",
+      "group": "Components",
+      "size": 117906,
+      "gzipSize": 27216,
+      "imports": [
+        "Violin"
+      ]
+    },
+    {
+      "scenario": "Violin.canvas",
+      "description": "Standalone Violin from `layerchart/canvas`",
+      "group": "Components",
+      "size": 112909,
+      "gzipSize": 27177,
+      "imports": [
+        "Violin"
+      ]
+    },
+    {
+      "scenario": "BoxPlot",
+      "description": "Standalone BoxPlot (agnostic) — baseline",
+      "group": "Components",
+      "size": 122645,
+      "gzipSize": 25706,
+      "imports": [
+        "BoxPlot"
+      ]
+    },
+    {
+      "scenario": "BoxPlot.svg",
+      "description": "Standalone BoxPlot from `layerchart/svg`",
+      "group": "Components",
+      "size": 105136,
+      "gzipSize": 21519,
+      "imports": [
+        "BoxPlot"
+      ]
+    },
+    {
+      "scenario": "BoxPlot.canvas",
+      "description": "Standalone BoxPlot from `layerchart/canvas`",
+      "group": "Components",
+      "size": 107149,
+      "gzipSize": 22436,
+      "imports": [
+        "BoxPlot"
+      ]
+    },
+    {
       "scenario": "all",
       "description": "Everything from layerchart (worst case)",
       "group": "Worst case",
-      "size": 983871,
-      "gzipSize": 233508,
+      "size": 996557,
+      "gzipSize": 234983,
       "imports": [
         "*"
       ]

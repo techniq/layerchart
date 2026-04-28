@@ -204,6 +204,37 @@ export type {
 } from './components/Calendar/Calendar.shared.svelte.js';
 export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.svg.svelte';
 export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.shared.svelte.js';
+export { default as Voronoi } from './components/Voronoi/Voronoi.svg.svelte';
+export type {
+  VoronoiProps,
+  VoronoiPropsWithoutHTML,
+} from './components/Voronoi/Voronoi.shared.svelte.js';
+export { default as Contour } from './components/Contour/Contour.svg.svelte';
+export type {
+  ContourProps,
+  ContourPropsWithoutHTML,
+} from './components/Contour/Contour.shared.svelte.js';
+export { default as Month } from './components/Month/Month.svg.svelte';
+export type {
+  MonthProps,
+  MonthPropsWithoutHTML,
+  MonthCell,
+} from './components/Month/Month.shared.svelte.js';
+export { default as Raster } from './components/Raster/Raster.svg.svelte';
+export type {
+  RasterProps,
+  RasterPropsWithoutHTML,
+} from './components/Raster/Raster.shared.svelte.js';
+export { default as Violin } from './components/Violin/Violin.svg.svelte';
+export type {
+  ViolinProps,
+  ViolinPropsWithoutHTML,
+} from './components/Violin/Violin.shared.svelte.js';
+export { default as BoxPlot } from './components/BoxPlot/BoxPlot.svg.svelte';
+export type {
+  BoxPlotProps,
+  BoxPlotPropsWithoutHTML,
+} from './components/BoxPlot/BoxPlot.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.svg.svelte';
 export type {
   RectClipPathProps,
