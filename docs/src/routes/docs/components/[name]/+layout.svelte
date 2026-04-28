@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
+	import { onMount } from 'svelte';
 	import { getSettings } from 'layerchart';
 	import {
 		Button,
@@ -28,6 +29,11 @@
 	const origin = $derived(dev ? 'http://next.layerchart.com' : page.url.origin);
 	const url = $derived(`${origin}${page.url.pathname})`);
 	let { data, children } = $props();
+
+	let loaded = $state(false);
+	onMount(() => {
+		loaded = true;
+	});
 
 	const { metadata } = $derived(data);
 
@@ -108,9 +114,7 @@
 </script>
 
 <Hidybar
-	loaded={page.params.example ? !!pageExample : true}
-	headerHeight="56px"
-	/* height -1 to overlap bottom border of header */
+	{loaded}
 	hidybarHeight="50px"
 	class={cls(
 		'flex flex-col w-full rounded-xl rounded-t-none border-x border-b border-primary/10 shadow-lg px-2 py-1 overflow-hidden'

@@ -5,7 +5,6 @@
 
 	import ComponentLink from '$lib/components/ComponentLink.svelte';
 	import ExampleListing from '$lib/components/ExampleListing.svelte';
-	import OpenWithButton from '$lib/components/OpenWithButton.svelte';
 
 	let { data } = $props();
 
@@ -14,10 +13,6 @@
 
 	const exampleInfo = $derived(data.catalog?.examples.find((e) => e.name === example));
 </script>
-
-<div class="mb-4">
-	<OpenWithButton />
-</div>
 
 <Example name={example} {component} showCode />
 

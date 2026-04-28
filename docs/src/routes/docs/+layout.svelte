@@ -43,7 +43,7 @@
 
 <header
 	class={cls(
-		'sticky top-0 z-30 flex h-header items-center border-b border-primary/10 px-4 py-2',
+		'banner sticky top-0 z-30 flex h-header items-center border-b border-primary/10 px-4 py-2',
 		// dot background
 		'bg-radial from-black/0 from-[1px] to-surface-100/90 to-[1px] bg-size-[6px_6px] backdrop-blur-lg'
 	)}

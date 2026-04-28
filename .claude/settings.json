@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(playwright-cli)",
+      "Skill(playwright-cli:*)"
+    ]
+  }
+}
