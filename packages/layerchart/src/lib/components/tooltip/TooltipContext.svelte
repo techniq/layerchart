@@ -717,7 +717,7 @@
     {@render children?.({ state: tooltipState })}
 
     {#if mode === 'voronoi'}
-      {#await import('../Voronoi.svelte') then { default: Voronoi }}
+      {#await import('../Voronoi/Voronoi.svelte') then { default: Voronoi }}
         <Svg>
           <Voronoi
             x={xProp}

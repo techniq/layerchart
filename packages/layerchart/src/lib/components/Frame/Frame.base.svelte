@@ -1,27 +1,24 @@
 <script lang="ts" module>
-  import type { Without } from '$lib/utils/types.js';
-  import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect/Rect.svelte';
+  import type { Component } from 'svelte';
+  import type { FrameProps } from './Frame.shared.svelte.js';
 
-  export type FramePropsWithoutHTML = RectPropsWithoutHTML & {
-    /**
-     * Whether to include padding area
-     *
-     * @default false
-     */
-    full?: boolean;
+  export type FrameBaseLayerComponents = {
+    Rect: Component<any>;
   };
 
-  export type FrameProps = Omit<
-    FramePropsWithoutHTML & Without<RectProps, FramePropsWithoutHTML>,
-    'width' | 'height'
-  >;
+  export type FrameBaseProps = FrameProps & FrameBaseLayerComponents;
 </script>
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let { ref: refProp = $bindable(), full = false, ...restProps }: FrameProps = $props();
+  let {
+    Rect,
+    ref: refProp = $bindable(),
+    full = false,
+    ...restProps
+  }: FrameBaseProps = $props();
 
   let ref = $state<SVGRectElement>();
   $effect.pre(() => {

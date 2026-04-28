@@ -144,6 +144,33 @@ export type {
   LabelsProps,
   LabelsPropsWithoutHTML,
 } from './components/Labels/Labels.shared.svelte.js';
+export { default as Frame } from './components/Frame/Frame.canvas.svelte';
+export type {
+  FrameProps,
+  FramePropsWithoutHTML,
+} from './components/Frame/Frame.shared.svelte.js';
+export { default as Cell } from './components/Cell/Cell.canvas.svelte';
+export type { CellProps } from './components/Cell/Cell.shared.svelte.js';
+export { default as Threshold } from './components/Threshold/Threshold.canvas.svelte';
+export type {
+  ThresholdProps,
+  ThresholdSnippetProps,
+} from './components/Threshold/Threshold.shared.svelte.js';
+export { default as AnnotationLine } from './components/AnnotationLine/AnnotationLine.canvas.svelte';
+export type {
+  AnnotationLineProps,
+  AnnotationLinePropsWithoutHTML,
+} from './components/AnnotationLine/AnnotationLine.shared.svelte.js';
+export { default as AnnotationPoint } from './components/AnnotationPoint/AnnotationPoint.canvas.svelte';
+export type {
+  AnnotationPointProps,
+  AnnotationPointPropsWithoutHTML,
+} from './components/AnnotationPoint/AnnotationPoint.shared.svelte.js';
+export { default as Trail } from './components/Trail/Trail.canvas.svelte';
+export type {
+  TrailProps,
+  TrailPropsWithoutHTML,
+} from './components/Trail/Trail.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
 export type {
   RectClipPathProps,

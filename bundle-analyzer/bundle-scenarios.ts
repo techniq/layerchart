@@ -869,6 +869,28 @@ export const scenarios: Scenario[] = [
   { name: 'Labels.canvas', group: 'Components', description: 'Standalone Labels from `layerchart/canvas`', imports: ['Labels'], layers: { Labels: 'canvas' } },
   { name: 'Labels.html', group: 'Components', description: 'Standalone Labels from `layerchart/html`', imports: ['Labels'], layers: { Labels: 'html' } },
 
+  // Niche compounds.
+  { name: 'Frame', group: 'Components', description: 'Standalone Frame (agnostic) — baseline', imports: ['Frame'] },
+  { name: 'Frame.svg', group: 'Components', description: 'Standalone Frame from `layerchart/svg`', imports: ['Frame'], layers: { Frame: 'svg' } },
+  { name: 'Frame.canvas', group: 'Components', description: 'Standalone Frame from `layerchart/canvas`', imports: ['Frame'], layers: { Frame: 'canvas' } },
+  { name: 'Frame.html', group: 'Components', description: 'Standalone Frame from `layerchart/html`', imports: ['Frame'], layers: { Frame: 'html' } },
+  { name: 'Cell', group: 'Components', description: 'Standalone Cell (agnostic) — baseline', imports: ['Cell'] },
+  { name: 'Cell.svg', group: 'Components', description: 'Standalone Cell from `layerchart/svg`', imports: ['Cell'], layers: { Cell: 'svg' } },
+  { name: 'Cell.canvas', group: 'Components', description: 'Standalone Cell from `layerchart/canvas`', imports: ['Cell'], layers: { Cell: 'canvas' } },
+  { name: 'Cell.html', group: 'Components', description: 'Standalone Cell from `layerchart/html`', imports: ['Cell'], layers: { Cell: 'html' } },
+  { name: 'Threshold', group: 'Components', description: 'Standalone Threshold (agnostic) — baseline', imports: ['Threshold'] },
+  { name: 'Threshold.svg', group: 'Components', description: 'Standalone Threshold from `layerchart/svg`', imports: ['Threshold'], layers: { Threshold: 'svg' } },
+  { name: 'Threshold.canvas', group: 'Components', description: 'Standalone Threshold from `layerchart/canvas`', imports: ['Threshold'], layers: { Threshold: 'canvas' } },
+  { name: 'AnnotationLine', group: 'Components', description: 'Standalone AnnotationLine (agnostic) — baseline', imports: ['AnnotationLine'] },
+  { name: 'AnnotationLine.svg', group: 'Components', description: 'Standalone AnnotationLine from `layerchart/svg`', imports: ['AnnotationLine'], layers: { AnnotationLine: 'svg' } },
+  { name: 'AnnotationLine.canvas', group: 'Components', description: 'Standalone AnnotationLine from `layerchart/canvas`', imports: ['AnnotationLine'], layers: { AnnotationLine: 'canvas' } },
+  { name: 'AnnotationPoint', group: 'Components', description: 'Standalone AnnotationPoint (agnostic) — baseline', imports: ['AnnotationPoint'] },
+  { name: 'AnnotationPoint.svg', group: 'Components', description: 'Standalone AnnotationPoint from `layerchart/svg`', imports: ['AnnotationPoint'], layers: { AnnotationPoint: 'svg' } },
+  { name: 'AnnotationPoint.canvas', group: 'Components', description: 'Standalone AnnotationPoint from `layerchart/canvas`', imports: ['AnnotationPoint'], layers: { AnnotationPoint: 'canvas' } },
+  { name: 'Trail', group: 'Components', description: 'Standalone Trail (agnostic) — baseline', imports: ['Trail'] },
+  { name: 'Trail.svg', group: 'Components', description: 'Standalone Trail from `layerchart/svg`', imports: ['Trail'], layers: { Trail: 'svg' } },
+  { name: 'Trail.canvas', group: 'Components', description: 'Standalone Trail from `layerchart/canvas`', imports: ['Trail'], layers: { Trail: 'canvas' } },
+
   // --- Worst case ---
   {
     name: 'all',

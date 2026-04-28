@@ -75,13 +75,13 @@
   import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import GeoPath from './geo/GeoPath.svelte';
-  import Group, { type GroupProps } from './Group/Group.svelte';
-  import Path from './Path/Path.svelte';
+  import GeoPath from '../geo/GeoPath.svelte';
+  import Group, { type GroupProps } from '../Group/Group.svelte';
+  import Path from '../Path/Path.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import { accessor } from '$lib/utils/common.js';
-  import CircleClipPath from './CircleClipPath.svelte';
+  import CircleClipPath from '../CircleClipPath.svelte';
 
   let {
     data,

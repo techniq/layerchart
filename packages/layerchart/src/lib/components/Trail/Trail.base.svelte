@@ -1,107 +1,12 @@
 <script lang="ts" module>
-  import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
+  import type { Component } from 'svelte';
+  import type { TrailProps } from './Trail.shared.svelte.js';
 
-  import { accessor, type Accessor } from '../utils/common.js';
-  import type { MotionProp } from '$lib/utils/motion.svelte.js';
-  import type { DataProp } from '$lib/utils/dataProp.js';
-  import type { TrailCap } from '$lib/utils/trail.js';
-  import type { PathProps } from './Path/Path.svelte';
-
-  export type TrailPropsWithoutHTML = {
-    /**
-     * Override data instead of using context
-     */
-    data?: any;
-
-    /**
-     * Override `x` accessor from Chart context
-     */
-    x?: Accessor;
-
-    /**
-     * Override `y` accessor from Chart context
-     */
-    y?: Accessor;
-
-    /**
-     * Series key to use for accessor. Only applicable if `<Chart>` uses `series` and `x`/`y` are not set.
-     */
-    seriesKey?: string;
-
-    /**
-     * Function to determine if a point is defined
-     *
-     * @example
-     * <Trail defined={(d) => d.value !== null} />
-     */
-    defined?: Parameters<Line<any>['defined']>[0];
-
-    /**
-     * Width at each point. Falls back to Chart's `r` accessor if not set.
-     * - `number`: pixel value (direct)
-     * - `string`: data property name, resolved via rScale
-     * - `function(d)`: accessor called per data item, result passed through rScale
-     *
-     * @default 4 (when Chart `r` is also not set)
-     */
-    r?: DataProp;
-
-    /**
-     * Curve interpolation applied to the trail centerline.
-     * @example
-     * import { curveNatural } from 'd3-shape';
-     * <Trail curve={curveNatural} />
-     */
-    curve?: CurveFactory | CurveFactoryLineOnly;
-
-    /**
-     * Cap style for trail endpoints.
-     * - 'round' (default): semicircular end caps
-     * - 'butt': flat ends with polygon offset outline
-     * @default 'round'
-     */
-    cap?: TrailCap;
-
-    /**
-     * Tension parameter for applicable curve factories (0–1).
-     * Applied via curveCardinal.tension(), curveCatmullRom.alpha(), or curveBundle.beta().
-     */
-    tension?: number;
-
-    /**
-     * Number of interpolated samples per segment for curve resampling.
-     * Auto-estimated when omitted.
-     */
-    resolution?: number;
-
-    /**
-     * Fill color
-     */
-    fill?: string;
-
-    /**
-     * Fill opacity
-     */
-    fillOpacity?: number;
-
-    /**
-     * Opacity
-     */
-    opacity?: number;
-
-    /**
-     * CSS class
-     */
-    class?: string;
-
-    /**
-     * Whether to animate the path using tweened interpolation.
-     */
-    motion?: MotionProp;
+  export type TrailBaseLayerComponents = {
+    Path: Component<any>;
   };
 
-  export type TrailProps = TrailPropsWithoutHTML &
-    Omit<PathProps, keyof TrailPropsWithoutHTML | 'r'>;
+  export type TrailBaseProps = TrailProps & TrailBaseLayerComponents;
 </script>
 
 <script lang="ts">
@@ -109,16 +14,17 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '../utils/scales.svelte.js';
-  import { resolveDataProp } from '$lib/utils/dataProp.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { resolveDataProp, type DataProp } from '$lib/utils/dataProp.js';
+  import { accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { computeTrailPath } from '$lib/utils/trail.js';
   import { createMotion, extractTweenConfig } from '$lib/utils/motion.svelte.js';
-  import Path from './Path/Path.svelte';
 
   const ctx = getChartContext();
 
   let {
+    Path,
     data,
     x,
     y,
@@ -135,7 +41,7 @@
     motion,
     class: className,
     ...restProps
-  }: TrailProps = $props();
+  }: TrailBaseProps = $props();
 
   let series = $derived(ctx.series.series.find((s) => s.key === seriesKey));
   let seriesAccessor = $derived(series?.value ?? (series?.data ? undefined : series?.key));
@@ -153,22 +59,14 @@
   function getScaleValue(
     data: any,
     scale: typeof ctx.xScale | typeof ctx.yScale,
-    accessor: Function
+    accessorFn: Function
   ) {
-    let value = accessor(data);
-
-    if (Array.isArray(value)) {
-      value = max(value);
-    }
-
-    if (scale.domain().length) {
-      return scale(value);
-    } else {
-      return value;
-    }
+    let value = accessorFn(data);
+    if (Array.isArray(value)) value = max(value);
+    if (scale.domain().length) return scale(value);
+    return value;
   }
 
-  /** Resolve r per data point: prop > Chart r accessor > default 4 */
   const resolvedR = $derived(r ?? (ctx.config.r as DataProp | undefined));
 
   const trailPath = $derived.by(() => {
@@ -194,12 +92,7 @@
     return computeTrailPath(points, { curve, cap, tension, resolution });
   });
 
-  /**
-   * Provide initial baseline trail so it animates up from y=0 on mount.
-   * Computes a trail path with all y-values at baseline.
-   */
   function defaultPathData() {
-    // Skip baseline computation when motion is not initially enabled (faster initial render)
     if (!extractTweenConfig(motion)) return '';
 
     if (ctx.config.x) {
@@ -229,13 +122,11 @@
     return '';
   }
 
-  // Always create tween motion so it's ready when motion is toggled on
   const tweenState = createMotion(defaultPathData(), () => trailPath, {
     type: 'tween',
     interpolate: interpolatePath,
   });
 
-  /** Reactively check whether motion is enabled */
   const isTweened = $derived(extractTweenConfig(motion) != null);
 
   ctx.registerComponent({

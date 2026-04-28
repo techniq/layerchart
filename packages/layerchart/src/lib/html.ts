@@ -112,3 +112,10 @@ export type {
   LabelsProps,
   LabelsPropsWithoutHTML,
 } from './components/Labels/Labels.shared.svelte.js';
+export { default as Frame } from './components/Frame/Frame.html.svelte';
+export type {
+  FrameProps,
+  FramePropsWithoutHTML,
+} from './components/Frame/Frame.shared.svelte.js';
+export { default as Cell } from './components/Cell/Cell.html.svelte';
+export type { CellProps } from './components/Cell/Cell.shared.svelte.js';

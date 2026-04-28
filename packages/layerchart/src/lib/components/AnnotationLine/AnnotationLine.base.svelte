@@ -1,60 +1,22 @@
 <script lang="ts" module>
-  import type { ComponentProps } from 'svelte';
-  import type { SVGAttributes } from 'svelte/elements';
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
+  import type { Component, ComponentProps } from 'svelte';
+  import type { AnnotationLineProps } from './AnnotationLine.shared.svelte.js';
 
-  export type AnnotationLinePropsWithoutHTML = {
-    /** x value of the line (draws vertically across the full y range) */
-    x?: SingleDomainType;
+  export type AnnotationLineBaseLayerComponents = {
+    Line: Component<any>;
+    Text: Component<any>;
+  };
 
-    /** y value of the line (draws horizontally across the full x range) */
-    y?: SingleDomainType;
-
-    /** x value of the line's start point. Takes precedence over `x`. Defaults to the start of the x range. */
-    x1?: SingleDomainType;
-
-    /** y value of the line's start point. Takes precedence over `y`. Defaults to the start of the y range. */
-    y1?: SingleDomainType;
-
-    /** x value of the line's end point. Takes precedence over `x`. Defaults to the end of the x range. */
-    x2?: SingleDomainType;
-
-    /** y value of the line's end point. Takes precedence over `y`. Defaults to the end of the y range. */
-    y2?: SingleDomainType;
-
-    /** Label to display for line*/
-    label?: string;
-
-    /** Placement of the label */
-    labelPlacement?: Placement;
-
-    /** X offset of the label */
-    labelXOffset?: number;
-
-    /** Y offset of the label */
-    labelYOffset?: number;
-
-    /** Classes for inner elements */
-    props?: {
-      label?: Partial<ComponentProps<typeof Text>>;
-      line?: Partial<ComponentProps<typeof Line>>;
-    };
-  } & CommonStyleProps;
-
-  export type AnnotationLineProps = AnnotationLinePropsWithoutHTML &
-    Without<SVGAttributes<Element>, AnnotationLinePropsWithoutHTML>;
+  export type AnnotationLineBaseProps = AnnotationLineProps & AnnotationLineBaseLayerComponents;
 </script>
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
-  import Line from './Line/Line.svelte';
-  import Text from './Text/Text.svelte';
-  import type { Placement } from './types.js';
-
   import { cls } from '@layerstack/tailwind';
 
-  const {
+  let {
+    Line,
+    Text,
     x,
     y,
     x1: x1Prop,
@@ -66,7 +28,7 @@
     labelXOffset = 0,
     labelYOffset = 0,
     props,
-  }: AnnotationLineProps = $props();
+  }: AnnotationLineBaseProps = $props();
 
   const ctx = getChartContext();
 
@@ -82,7 +44,6 @@
 
   const isSloped = $derived(!isVertical && line.x1 !== line.x2 && line.y1 !== line.y2);
 
-  // Angle of the line in degrees, normalized to [-90, 90] so text stays upright
   const slopeAngle = $derived.by(() => {
     let angle = Math.atan2(line.y2 - line.y1, line.x2 - line.x1) * (180 / Math.PI);
     if (angle > 90) angle -= 180;
@@ -90,7 +51,7 @@
     return angle;
   });
 
-  const labelProps = $derived.by<ComponentProps<typeof Text>>(() => {
+  const labelProps = $derived.by(() => {
     const isLeft = labelPlacement.includes('left');
     const isRight = labelPlacement.includes('right');
     const isTop = labelPlacement.includes('top');
@@ -104,13 +65,13 @@
           (['top', 'bottom-left', 'bottom-right'].includes(labelPlacement)
             ? -labelYOffset
             : labelYOffset),
-        dy: -2, // adjust for smaller font size
+        dy: -2,
         textAnchor: isLeft ? 'end' : isRight ? 'start' : 'middle',
         verticalAnchor:
           labelPlacement === 'top'
-            ? 'end' // place above line
+            ? 'end'
             : labelPlacement === 'bottom'
-              ? 'start' // place below line
+              ? 'start'
               : isTop
                 ? 'start'
                 : isBottom
@@ -119,13 +80,13 @@
       };
     }
 
-    const x = isLeft ? line.x1 : isRight ? line.x2 : (line.x1 + line.x2) / 2;
-    const y = isLeft ? line.y1 : isRight ? line.y2 : (line.y1 + line.y2) / 2;
+    const _x = isLeft ? line.x1 : isRight ? line.x2 : (line.x1 + line.x2) / 2;
+    const _y = isLeft ? line.y1 : isRight ? line.y2 : (line.y1 + line.y2) / 2;
     const textAnchor =
       labelPlacement === 'left'
-        ? 'end' // place beside line
+        ? 'end'
         : labelPlacement === 'right'
-          ? 'start' // place beside line
+          ? 'start'
           : isLeft
             ? 'start'
             : isRight
@@ -134,18 +95,16 @@
     const verticalAnchor = isTop ? 'end' : isBottom ? 'start' : 'middle';
 
     if (isSloped) {
-      // Project along-line and perpendicular offsets onto screen dx/dy so
-      // labelXOffset/labelYOffset track the slope rather than the viewport axes.
       const aSign = ['left', 'top-right', 'bottom-right'].includes(labelPlacement) ? -1 : 1;
       const pSign = isTop ? 1 : -1;
       const alongLine = aSign * labelXOffset;
-      const perpAbove = pSign * labelYOffset + 2; // +2 for font baseline
+      const perpAbove = pSign * labelYOffset + 2;
       const theta = (slopeAngle * Math.PI) / 180;
       const cosT = Math.cos(theta);
       const sinT = Math.sin(theta);
       return {
-        x,
-        y,
+        x: _x,
+        y: _y,
         rotate: slopeAngle,
         dx: alongLine * cosT + perpAbove * sinT,
         dy: alongLine * sinT - perpAbove * cosT,
@@ -156,12 +115,12 @@
 
     return {
       x:
-        x +
+        _x +
         (['left', 'top-right', 'bottom-right'].includes(labelPlacement)
           ? -labelXOffset
           : labelXOffset),
-      y: y + (isTop ? -labelYOffset : labelYOffset),
-      dy: -2, // adjust for smaller font size
+      y: _y + (isTop ? -labelYOffset : labelYOffset),
+      dy: -2,
       textAnchor,
       verticalAnchor,
     };

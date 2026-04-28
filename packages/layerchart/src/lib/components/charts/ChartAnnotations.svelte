@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { ChartAnnotations } from './types.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import AnnotationLine from '../AnnotationLine.svelte';
-  import AnnotationPoint from '../AnnotationPoint.svelte';
-  import AnnotationRange from '../AnnotationRange.svelte';
+  import AnnotationLine from '../AnnotationLine/AnnotationLine.svelte';
+  import AnnotationPoint from '../AnnotationPoint/AnnotationPoint.svelte';
+  import AnnotationRange from '../AnnotationRange/AnnotationRange.svelte';
 
   let {
     annotations,

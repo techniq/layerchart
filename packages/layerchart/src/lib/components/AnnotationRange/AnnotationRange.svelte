@@ -48,11 +48,11 @@
 
 <script lang="ts">
   import { getChartContext } from '$lib/contexts/chart.js';
-  import LinearGradient from './LinearGradient/LinearGradient.svelte';
-  import Pattern from './Pattern/Pattern.svelte';
-  import Rect from './Rect/Rect.svelte';
-  import Text from './Text/Text.svelte';
-  import type { Placement } from './types.js';
+  import LinearGradient from '../LinearGradient/LinearGradient.svelte';
+  import Pattern from '../Pattern/Pattern.svelte';
+  import Rect from '../Rect/Rect.svelte';
+  import Text from '../Text/Text.svelte';
+  import type { Placement } from '../types.js';
 
   import { cls } from '@layerstack/tailwind';
 
