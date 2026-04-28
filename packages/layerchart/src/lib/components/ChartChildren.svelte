@@ -142,12 +142,12 @@
   // DefaultTooltip is lazy-loaded inline (only when `tooltipContext` is set
   // and no custom `tooltip` snippet is provided).
   import type DefaultTooltip from './charts/DefaultTooltip.svelte';
-  import Grid from './Grid.svelte';
+  import Grid from './Grid/Grid.svelte';
   import type Group from './Group/Group.svelte';
   import Highlight from './Highlight.svelte';
   import type Line from './Line/Line.svelte';
   import type Pie from './Pie.svelte';
-  import Rule from './Rule.svelte';
+  import Rule from './Rule/Rule.svelte';
   import type Spline from './Spline.svelte';
   import type { Canvas, Svg } from './index.js';
   import type { ChartAnnotations as ChartAnnotationsType } from './charts/types.js';

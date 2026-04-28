@@ -60,3 +60,13 @@ export type {
   AxisProps,
   AxisPropsWithoutHTML,
 } from './components/Axis/Axis.shared.svelte.js';
+export { default as Rule } from './components/Rule/Rule.html.svelte';
+export type {
+  RuleProps,
+  RulePropsWithoutHTML,
+} from './components/Rule/Rule.shared.svelte.js';
+export { default as Grid } from './components/Grid/Grid.html.svelte';
+export type {
+  GridProps,
+  GridPropsWithoutHTML,
+} from './components/Grid/Grid.shared.svelte.js';

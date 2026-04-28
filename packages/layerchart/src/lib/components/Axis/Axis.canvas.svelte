@@ -7,7 +7,7 @@
   import Group from '../Group/Group.canvas.svelte';
   import Line from '../Line/Line.canvas.svelte';
   import Text from '../Text/Text.canvas.svelte';
-  import Rule from '../Rule.svelte';
+  import Rule from '../Rule/Rule.canvas.svelte';
 
   import type { Transition } from '$lib/utils/types.js';
   import type { AxisProps } from './Axis.shared.svelte.js';

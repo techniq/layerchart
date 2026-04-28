@@ -346,6 +346,20 @@ export const scenarios: Scenario[] = [
 	{ name: "axis-canvas", group: "Layer-specific", description: "Standalone Axis from `layerchart/canvas`", imports: ["Axis"], subpathOverrides: { Axis: "canvas" } },
 	{ name: "axis-html", group: "Layer-specific", description: "Standalone Axis from `layerchart/html`", imports: ["Axis"], subpathOverrides: { Axis: "html" } },
 
+	// Rule is a compound mark: pulls Group + Line + Circle. Per-layer variants
+	// use the corresponding per-layer primitives directly.
+	{ name: "rule-agnostic", group: "Layer-specific", description: "Standalone Rule (agnostic) — baseline", imports: ["Rule"] },
+	{ name: "rule-svg", group: "Layer-specific", description: "Standalone Rule from `layerchart/svg`", imports: ["Rule"], subpathOverrides: { Rule: "svg" } },
+	{ name: "rule-canvas", group: "Layer-specific", description: "Standalone Rule from `layerchart/canvas`", imports: ["Rule"], subpathOverrides: { Rule: "canvas" } },
+	{ name: "rule-html", group: "Layer-specific", description: "Standalone Rule from `layerchart/html`", imports: ["Rule"], subpathOverrides: { Rule: "html" } },
+
+	// Grid is a compound mark: pulls Group + Line + Circle + Rule. Per-layer
+	// variants use the corresponding per-layer primitives directly.
+	{ name: "grid-agnostic", group: "Layer-specific", description: "Standalone Grid (agnostic) — baseline", imports: ["Grid"] },
+	{ name: "grid-svg", group: "Layer-specific", description: "Standalone Grid from `layerchart/svg`", imports: ["Grid"], subpathOverrides: { Grid: "svg" } },
+	{ name: "grid-canvas", group: "Layer-specific", description: "Standalone Grid from `layerchart/canvas`", imports: ["Grid"], subpathOverrides: { Grid: "canvas" } },
+	{ name: "grid-html", group: "Layer-specific", description: "Standalone Grid from `layerchart/html`", imports: ["Grid"], subpathOverrides: { Grid: "html" } },
+
 	// --- Full-chart per-layer (regression guard) ---
 	// Composes a realistic chart entirely from a single sub-path. Today these
 	// mostly mirror the agnostic baselines because `Chart`/`Svg`/`Canvas`/`Grid`
@@ -356,21 +370,21 @@ export const scenarios: Scenario[] = [
 		group: "Layer-specific",
 		description: "Line chart composed from `layerchart/svg`",
 		imports: ["Chart", "Svg", "Line", "Axis", "Grid"],
-		subpathOverrides: { Line: "svg", Axis: "svg" },
+		subpathOverrides: { Line: "svg", Axis: "svg", Grid: "svg" },
 	},
 	{
 		name: "line-chart-canvas",
 		group: "Layer-specific",
 		description: "Line chart composed from `layerchart/canvas`",
 		imports: ["Chart", "Canvas", "Line", "Axis", "Grid"],
-		subpathOverrides: { Line: "canvas", Axis: "canvas" },
+		subpathOverrides: { Line: "canvas", Axis: "canvas", Grid: "canvas" },
 	},
 	{
 		name: "line-chart-html",
 		group: "Layer-specific",
 		description: "Line chart composed from `layerchart/html`",
 		imports: ["Chart", "Html", "Line", "Axis", "Grid"],
-		subpathOverrides: { Line: "html", Axis: "html" },
+		subpathOverrides: { Line: "html", Axis: "html", Grid: "html" },
 	},
 
 	// --- Worst case ---

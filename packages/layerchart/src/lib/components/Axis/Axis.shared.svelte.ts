@@ -11,7 +11,7 @@ import { cls } from '@layerstack/tailwind';
 import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
 import type { GroupProps } from '../Group/Group.shared.svelte.js';
 import type { TextProps } from '../Text/Text.shared.svelte.js';
-import type Rule from '../Rule.svelte';
+import type Rule from '../Rule/Rule.svelte';
 import { isScaleBand } from '$lib/utils/scales.svelte.js';
 import { getChartContext } from '$lib/contexts/chart.js';
 import type { ChartState } from '$lib/states/chart.svelte.js';
