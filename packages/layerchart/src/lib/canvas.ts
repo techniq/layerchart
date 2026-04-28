@@ -99,3 +99,20 @@ export type {
   GridProps,
   GridPropsWithoutHTML,
 } from './components/Grid/Grid.shared.svelte.js';
+export { default as Highlight } from './components/Highlight/Highlight.canvas.svelte';
+export type {
+  HighlightProps,
+  HighlightPropsWithoutHTML,
+  HighlightPoint,
+  HighlightPointData,
+} from './components/Highlight/Highlight.shared.svelte.js';
+export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
+export type {
+  RectClipPathProps,
+  RectClipPathPropsWithoutHTML,
+} from './components/RectClipPath/RectClipPath.shared.svelte.js';
+export { default as ChartClipPath } from './components/ChartClipPath/ChartClipPath.canvas.svelte';
+export type {
+  ChartClipPathProps,
+  ChartClipPathPropsWithoutHTML,
+} from './components/ChartClipPath/ChartClipPath.shared.svelte.js';

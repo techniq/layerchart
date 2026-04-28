@@ -11,7 +11,7 @@ import type BrushContext from '../BrushContext.svelte';
 import type Canvas from '../layers/Canvas.svelte';
 import type Grid from '../Grid/Grid.svelte';
 import type Group from '../Group/Group.svelte';
-import type Highlight from '../Highlight.svelte';
+import type Highlight from '../Highlight/Highlight.svelte';
 import type Labels from '../Labels.svelte';
 import type Legend from '../Legend.svelte';
 import type Line from '../Line/Line.svelte';

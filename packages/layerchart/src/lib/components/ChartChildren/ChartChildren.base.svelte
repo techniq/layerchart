@@ -7,14 +7,17 @@
    * Per-layer primitives a `<ChartChildren.base>` consumer must inject.
    *
    * `Layer` is the layer wrapper (Svg / Canvas / Html, or the agnostic
-   * `Layer` dispatcher). `Axis` / `Grid` / `Rule` are the per-layer
-   * compound mark variants (or the agnostic dispatchers).
+   * `Layer` dispatcher). `Axis` / `Grid` / `Rule` / `Highlight` /
+   * `ChartClipPath` are the per-layer compound mark variants (or the
+   * agnostic dispatchers).
    */
   export type ChartChildrenBaseLayerComponents = {
     Layer: Component<any>;
     Axis: Component<any>;
     Grid: Component<any>;
     Rule: Component<any>;
+    Highlight: Component<any>;
+    ChartClipPath: Component<any>;
   };
 
   export type ChartChildrenBaseProps<
@@ -33,9 +36,6 @@
   import { asAny } from '$lib/utils/types.js';
   import { getObjectOrNull } from '$lib/utils/common.js';
 
-  import ChartClipPath from '../ChartClipPath.svelte';
-  import Highlight from '../Highlight.svelte';
-
   const context = getChartContext<TData, XScale, YScale>();
   const settings = getSettings();
 
@@ -44,6 +44,8 @@
     Axis,
     Grid,
     Rule,
+    Highlight,
+    ChartClipPath,
     props = {},
     children: childrenProp,
     belowContext,

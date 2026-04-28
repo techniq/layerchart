@@ -11,6 +11,8 @@
   import Axis from '../Axis/Axis.svg.svelte';
   import Grid from '../Grid/Grid.svg.svelte';
   import Rule from '../Rule/Rule.svg.svelte';
+  import Highlight from '../Highlight/Highlight.svg.svelte';
+  import ChartClipPath from '../ChartClipPath/ChartClipPath.svg.svelte';
 
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import type { ChartChildrenProps } from './ChartChildren.shared.svelte.js';
@@ -18,4 +20,4 @@
   let props: ChartChildrenProps<TData, XScale, YScale> = $props();
 </script>
 
-<ChartChildrenBase {Layer} {Axis} {Grid} {Rule} {...props} />
+<ChartChildrenBase {Layer} {Axis} {Grid} {Rule} {Highlight} {ChartClipPath} {...props} />

@@ -695,6 +695,93 @@ export const scenarios: Scenario[] = [
     layers: { Grid: 'html' },
   },
 
+  // Highlight is a compound mark: pulls Circle + Line + Rect (+ Arc when
+  // radial). Per-layer variants use the corresponding per-layer primitives.
+  {
+    name: 'Highlight',
+    group: 'Components',
+    description: 'Standalone Highlight (agnostic) — baseline',
+    imports: ['Highlight'],
+  },
+  {
+    name: 'Highlight.svg',
+    group: 'Components',
+    description: 'Standalone Highlight from `layerchart/svg`',
+    imports: ['Highlight'],
+    layers: { Highlight: 'svg' },
+  },
+  {
+    name: 'Highlight.canvas',
+    group: 'Components',
+    description: 'Standalone Highlight from `layerchart/canvas`',
+    imports: ['Highlight'],
+    layers: { Highlight: 'canvas' },
+  },
+  {
+    name: 'Highlight.html',
+    group: 'Components',
+    description: 'Standalone Highlight from `layerchart/html`',
+    imports: ['Highlight'],
+    layers: { Highlight: 'html' },
+  },
+
+  // RectClipPath / ChartClipPath chain pulls ClipPath. Per-layer variants
+  // use the corresponding per-layer ClipPath directly.
+  {
+    name: 'RectClipPath',
+    group: 'Components',
+    description: 'Standalone RectClipPath (agnostic) — baseline',
+    imports: ['RectClipPath'],
+  },
+  {
+    name: 'RectClipPath.svg',
+    group: 'Components',
+    description: 'Standalone RectClipPath from `layerchart/svg`',
+    imports: ['RectClipPath'],
+    layers: { RectClipPath: 'svg' },
+  },
+  {
+    name: 'RectClipPath.canvas',
+    group: 'Components',
+    description: 'Standalone RectClipPath from `layerchart/canvas`',
+    imports: ['RectClipPath'],
+    layers: { RectClipPath: 'canvas' },
+  },
+  {
+    name: 'RectClipPath.html',
+    group: 'Components',
+    description: 'Standalone RectClipPath from `layerchart/html`',
+    imports: ['RectClipPath'],
+    layers: { RectClipPath: 'html' },
+  },
+  {
+    name: 'ChartClipPath',
+    group: 'Components',
+    description: 'Standalone ChartClipPath (agnostic) — baseline',
+    imports: ['ChartClipPath'],
+  },
+  {
+    name: 'ChartClipPath.svg',
+    group: 'Components',
+    description: 'Standalone ChartClipPath from `layerchart/svg`',
+    imports: ['ChartClipPath'],
+    layers: { ChartClipPath: 'svg' },
+  },
+  {
+    name: 'ChartClipPath.canvas',
+    group: 'Components',
+    description: 'Standalone ChartClipPath from `layerchart/canvas`',
+    imports: ['ChartClipPath'],
+    layers: { ChartClipPath: 'canvas' },
+  },
+  {
+    name: 'ChartClipPath.html',
+    group: 'Components',
+    description: 'Standalone ChartClipPath from `layerchart/html`',
+    imports: ['ChartClipPath'],
+    layers: { ChartClipPath: 'html' },
+  },
+
   // --- Worst case ---
   {
     name: 'all',

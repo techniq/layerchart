@@ -121,7 +121,7 @@
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
   import Svg from './../layers/Svg.svelte';
-  import ChartClipPath from './../ChartClipPath.svelte';
+  import ChartClipPath from '../ChartClipPath/ChartClipPath.svelte';
   // Voronoi (used only when mode === 'voronoi') and Arc (used only for radial
   // bounds/band mode) are dynamically imported inline in the markup via
   // `{#await import(...)}` so non-voronoi/non-radial tooltip users don't pay

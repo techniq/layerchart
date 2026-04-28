@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { ChartProps } from "../Chart/Chart.svelte";
-  import type { HighlightPoint } from '../Highlight.svelte';
+  import type { HighlightPoint } from '../Highlight/Highlight.svelte';
   import type { SeriesData } from './types.js';
 
   import Area from '../Area.svelte';
