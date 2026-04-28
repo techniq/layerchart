@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-28T19:38:55.794Z",
+  "timestamp": "2026-04-28T19:56:41.701Z",
   "results": [
     {
       "scenario": "core",
@@ -28,7 +28,7 @@
       "description": "Canvas-based rendering",
       "group": "Foundation",
       "size": 358506,
-      "gzipSize": 83936,
+      "gzipSize": 83935,
       "imports": [
         "Chart",
         "Canvas"
@@ -39,7 +39,7 @@
       "description": "HTML-based rendering",
       "group": "Foundation",
       "size": 359830,
-      "gzipSize": 84205,
+      "gzipSize": 84202,
       "imports": [
         "Chart",
         "Html"
@@ -64,7 +64,7 @@
       "description": "Line chart composed from `layerchart/svg`",
       "group": "Cartesian charts",
       "size": 352003,
-      "gzipSize": 82210,
+      "gzipSize": 82207,
       "imports": [
         "Chart",
         "Layer",
@@ -379,8 +379,8 @@
       "scenario": "chord",
       "description": "Chord diagram",
       "group": "Graph / network",
-      "size": 384515,
-      "gzipSize": 88846,
+      "size": 384902,
+      "gzipSize": 88881,
       "imports": [
         "Chart",
         "Svg",
@@ -1013,7 +1013,7 @@
       "description": "Standalone Highlight from `layerchart/svg`",
       "group": "Components",
       "size": 35567,
-      "gzipSize": 6784,
+      "gzipSize": 6785,
       "imports": [
         "Highlight"
       ]
@@ -1023,7 +1023,7 @@
       "description": "Standalone Highlight from `layerchart/canvas`",
       "group": "Components",
       "size": 32884,
-      "gzipSize": 6215,
+      "gzipSize": 6217,
       "imports": [
         "Highlight"
       ]
@@ -2292,8 +2292,8 @@
       "scenario": "all",
       "description": "Everything from layerchart (worst case)",
       "group": "Worst case",
-      "size": 1006072,
-      "gzipSize": 235747,
+      "size": 1007001,
+      "gzipSize": 235893,
       "imports": [
         "*"
       ]

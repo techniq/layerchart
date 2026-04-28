@@ -1,70 +1,23 @@
 <script lang="ts" module>
-  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
+  import type { Component } from 'svelte';
+  import type { RibbonProps } from './Ribbon.shared.svelte.js';
 
-  import Path, { type PathPropsWithoutHTML } from '../Path/Path.svelte';
-  import type { MotionProp } from '$lib/utils/motion.svelte.js';
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  export type RibbonBaseLayerComponents = {
+    Path: Component<any>;
+  };
 
-  export type RibbonPropsWithoutHTML = {
-    /**
-     * A single chord object from the d3-chord layout, containing `source` and `target`
-     * sub-objects each with `startAngle`, `endAngle`, `value`, and `index`.
-     */
-    chord: import('d3-chord').Chord;
-
-    /**
-     * The radius of the ribbon.
-     */
-    radius?: number;
-
-    /**
-     * When true, uses `ribbonArrow()` instead of `ribbon()` to render
-     * directed ribbons with arrowheads.
-     *
-     * @default false
-     */
-    directed?: boolean;
-
-    /**
-     * The radius of the arrowhead when `directed` is true.
-     * Only applies when `directed` is true.
-     */
-    headRadius?: number;
-
-    /**
-     * Setup pointer events to show tooltip for related data.
-     *
-     * **Must set `data` prop as well**
-     */
-    tooltip?: boolean;
-
-    /**
-     * Data to set when showing tooltip
-     */
-    data?: any;
-
-    /**
-     * Animation/transition configuration for the ribbon path.
-     */
-    motion?: MotionProp;
-
-    onpointerenter?: PointerEventHandler<SVGPathElement>;
-    onpointermove?: PointerEventHandler<SVGPathElement>;
-    onpointerleave?: PointerEventHandler<SVGPathElement>;
-    ontouchmove?: (e: TouchEvent & { currentTarget: SVGPathElement }) => void;
-  } & CommonStyleProps;
-
-  export type RibbonProps = RibbonPropsWithoutHTML &
-    Without<SVGAttributes<SVGPathElement>, RibbonPropsWithoutHTML & PathPropsWithoutHTML>;
+  export type RibbonBaseProps = RibbonProps & RibbonBaseLayerComponents;
 </script>
 
 <script lang="ts">
+  import type { PointerEventHandler } from 'svelte/elements';
   import { ribbon as d3ribbon, ribbonArrow as d3ribbonArrow } from 'd3-chord';
 
   import { getChartContext } from '$lib/contexts/chart.js';
   import { cls } from '@layerstack/tailwind';
 
   let {
+    Path,
     chord,
     radius,
     directed = false,
@@ -83,7 +36,7 @@
     motion,
     class: className,
     ...restProps
-  }: RibbonProps = $props();
+  }: RibbonBaseProps = $props();
 
   const ctx = getChartContext();
 
@@ -132,7 +85,7 @@
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
-  ontouchmove={(e) => {
+  ontouchmove={(e: TouchEvent & { currentTarget: SVGPathElement }) => {
     ontouchmove?.(e);
     if (tooltip) {
       e.preventDefault();

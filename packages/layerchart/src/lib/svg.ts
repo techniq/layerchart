@@ -142,7 +142,7 @@ export { default as Points } from './components/Points/Points.svg.svelte';
 export type {
   PointsProps,
   PointsPropsWithoutHTML,
-  Point,
+  Point as PointDatum,
 } from './components/Points/Points.shared.svelte.js';
 export { default as Labels } from './components/Labels/Labels.svg.svelte';
 export type {
@@ -279,6 +279,72 @@ export type {
   GraticuleProps,
   GraticulePropsWithoutHTML,
 } from './components/geo/Graticule/Graticule.shared.svelte.js';
+
+// Ribbon (graph) — uses Path
+export { default as Ribbon } from './components/graph/Ribbon/Ribbon.svg.svelte';
+export type {
+  RibbonProps,
+  RibbonPropsWithoutHTML,
+} from './components/graph/Ribbon/Ribbon.shared.svelte.js';
+
+// --- Layer-agnostic re-exports ---
+// These components don't render layer-specific elements (pure logic, layout
+// helpers, context providers, or composite chart wrappers). Re-exported here
+// so the per-layer sub-path has a complete API.
+
+// Helpers / context providers
+export { default as Blur } from './components/Blur.svelte';
+export * from './components/Blur.svelte';
+export { default as Bounds } from './components/Bounds.svelte';
+export * from './components/Bounds.svelte';
+export { default as BrushContext } from './components/BrushContext.svelte';
+export * from './components/BrushContext.svelte';
+export { default as CircleLegend } from './components/CircleLegend.svelte';
+export * from './components/CircleLegend.svelte';
+export { default as ColorRamp } from './components/ColorRamp.svelte';
+export * from './components/ColorRamp.svelte';
+export { default as Legend } from './components/Legend.svelte';
+export * from './components/Legend.svelte';
+export { default as MotionPath } from './components/MotionPath.svelte';
+export * from './components/MotionPath.svelte';
+export { default as Point } from './components/Point.svelte';
+export * from './components/Point.svelte';
+export { default as TransformContext } from './components/TransformContext.svelte';
+export * from './components/TransformContext.svelte';
+export * as Tooltip from './components/tooltip/index.js';
+export * from './components/tooltip/TooltipContext.svelte';
+
+// High-level chart wrappers
+export { default as LineChart } from './components/charts/LineChart.svelte';
+export { default as AreaChart } from './components/charts/AreaChart.svelte';
+export { default as BarChart } from './components/charts/BarChart.svelte';
+export { default as PieChart } from './components/charts/PieChart.svelte';
+export { default as ScatterChart } from './components/charts/ScatterChart.svelte';
+export { default as ArcChart } from './components/charts/ArcChart.svelte';
+
+// Layout components
+export { default as Tree } from './components/hierarchy/Tree.svelte';
+export * from './components/hierarchy/Tree.svelte';
+export { default as Treemap } from './components/hierarchy/Treemap.svelte';
+export * from './components/hierarchy/Treemap.svelte';
+export { default as Pack } from './components/hierarchy/Pack.svelte';
+export * from './components/hierarchy/Pack.svelte';
+export { default as Partition } from './components/hierarchy/Partition.svelte';
+export * from './components/hierarchy/Partition.svelte';
+export { default as Chord } from './components/graph/Chord.svelte';
+export * from './components/graph/Chord.svelte';
+export { default as Dagre } from './components/graph/Dagre.svelte';
+export * from './components/graph/Dagre.svelte';
+export { default as Sankey } from './components/graph/Sankey.svelte';
+export * from './components/graph/Sankey.svelte';
+export { default as ForceSimulation } from './components/force/ForceSimulation.svelte';
+export * from './components/force/ForceSimulation.svelte';
+
+// Geo helpers (no per-layer rendering)
+export { default as GeoLegend } from './components/geo/GeoLegend/GeoLegend.svelte';
+export { default as GeoProjection } from './components/geo/GeoProjection/GeoProjection.svelte';
+export { default as GeoRaster } from './components/geo/GeoRaster/GeoRaster.svelte';
+export { default as GeoVisible } from './components/geo/GeoVisible/GeoVisible.svelte';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.svg.svelte';
 export type {
   RectClipPathProps,
