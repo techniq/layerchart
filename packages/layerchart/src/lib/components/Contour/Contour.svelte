@@ -62,8 +62,8 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max, min } from 'd3-array';
 
-  import Group from './Group/Group.svelte';
-  import Path from './Path/Path.svelte';
+  import Group from '../Group/Group.svelte';
+  import Path from '../Path/Path.svelte';
   import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';

@@ -55,10 +55,10 @@
   import { cls } from '@layerstack/tailwind';
   import { quantile } from 'd3-array';
 
-  import Group from './Group/Group.svelte';
-  import Rect from './Rect/Rect.svelte';
-  import Line from './Line/Line.svelte';
-  import Circle from './Circle/Circle.svelte';
+  import Group from '../Group/Group.svelte';
+  import Rect from '../Rect/Rect.svelte';
+  import Line from '../Line/Line.svelte';
+  import Circle from '../Circle/Circle.svelte';
   import { accessor } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { isScaleBand } from '$lib/utils/scales.svelte.js';

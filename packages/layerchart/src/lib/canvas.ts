@@ -171,6 +171,34 @@ export type {
   TrailProps,
   TrailPropsWithoutHTML,
 } from './components/Trail/Trail.shared.svelte.js';
+export { default as Vector } from './components/Vector/Vector.canvas.svelte';
+export type {
+  VectorProps,
+  VectorPropsWithoutHTML,
+  VectorShape,
+} from './components/Vector/Vector.shared.svelte.js';
+export { default as Link } from './components/Link/Link.canvas.svelte';
+export type { LinkProps, LinkPropsWithoutHTML } from './components/Link/Link.shared.svelte.js';
+export { default as AnnotationRange } from './components/AnnotationRange/AnnotationRange.canvas.svelte';
+export type {
+  AnnotationRangeProps,
+  AnnotationRangePropsWithoutHTML,
+} from './components/AnnotationRange/AnnotationRange.shared.svelte.js';
+export { default as Hull } from './components/Hull/Hull.canvas.svelte';
+export type { HullProps, HullPropsWithoutHTML } from './components/Hull/Hull.shared.svelte.js';
+export { default as Density } from './components/Density/Density.canvas.svelte';
+export type {
+  DensityProps,
+  DensityPropsWithoutHTML,
+} from './components/Density/Density.shared.svelte.js';
+export { default as Calendar } from './components/Calendar/Calendar.canvas.svelte';
+export type {
+  CalendarProps,
+  CalendarPropsWithoutHTML,
+  CalendarCell,
+} from './components/Calendar/Calendar.shared.svelte.js';
+export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.canvas.svelte';
+export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.shared.svelte.js';
 export { default as RectClipPath } from './components/RectClipPath/RectClipPath.canvas.svelte';
 export type {
   RectClipPathProps,

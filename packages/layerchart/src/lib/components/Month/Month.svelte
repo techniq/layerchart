@@ -82,10 +82,10 @@
   import { index } from 'd3-array';
   import { format } from '@layerstack/utils';
 
-  import Rect, { type RectPropsWithoutHTML } from './Rect/Rect.svelte';
-  import Group from './Group/Group.svelte';
-  import Text from './Text/Text.svelte';
-  import { chartDataArray } from '../utils/common.js';
+  import Rect, { type RectPropsWithoutHTML } from '../Rect/Rect.svelte';
+  import Group from '../Group/Group.svelte';
+  import Text from '../Text/Text.svelte';
+  import { chartDataArray } from '../../utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';

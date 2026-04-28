@@ -1,74 +1,29 @@
 <script lang="ts" module>
-  export type CalendarCell = {
-    x: number;
-    y: number;
-    color: any;
-    data: any;
+  import type { Component } from 'svelte';
+  import type { CalendarCell, CalendarPropsWithoutHTML } from './Calendar.shared.svelte.js';
+
+  export type CalendarBaseLayerComponents = {
+    Rect: Component<any>;
+    Text: Component<any>;
   };
 
-  export type CalendarPropsWithoutHTML = {
-    /**
-     * The start date of the calendar.
-     */
-    start: Date;
-
-    /**
-     * The end date of the calendar.
-     */
-    end: Date;
-
-    /**
-     * Size of the cell in the calendar.
-     *
-     * - `number`: sets width/height as same value (square).
-     * - `array`: sets as [width,height].
-     * - `undefined/omitted`: is derived from Chart width/height
-     */
-    cellSize?: number | [number, number];
-
-    /**
-     * Enable drawing path around each month.  If object, pass as props to underlying <path>
-     *
-     * @default false
-     */
-    monthPath?: boolean | Partial<ComponentProps<typeof MonthPath>>;
-
-    /**
-     * Props to pass to the `<text>` element for month labels.
-     */
-    monthLabel?: boolean | Partial<ComponentProps<typeof Text>>;
-
-    /**
-     * Setup pointer events to show tooltip for related data
-     */
-    tooltip?: boolean;
-
-    children?: Snippet<[{ cells: CalendarCell[]; cellSize: [number, number] }]>;
-  } & Omit<
-    RectPropsWithoutHTML,
-    'children' | 'x' | 'y' | 'width' | 'height' | 'fill' | 'onpointermove' | 'onpointerleave'
-  >;
-
-  export type CalendarProps = CalendarPropsWithoutHTML &
-    Without<SVGAttributes<SVGRectElement>, CalendarPropsWithoutHTML>;
+  export type CalendarBaseProps = CalendarPropsWithoutHTML & CalendarBaseLayerComponents;
 </script>
 
 <script lang="ts">
-  import { type ComponentProps, type Snippet } from 'svelte';
   import { timeDays, timeMonths, timeWeek } from 'd3-time';
   import { index } from 'd3-array';
   import { format } from '@layerstack/utils';
 
-  import Rect, { type RectPropsWithoutHTML } from './Rect/Rect.svelte';
-  import MonthPath from './MonthPath.svelte';
-  import Text from './Text/Text.svelte';
-  import { chartDataArray } from '../utils/common.js';
+  // MonthPath isn't split — only used here when `monthPath` is set.
+  import MonthPath from '../MonthPath.svelte';
+  import { chartDataArray } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import type { SVGAttributes } from 'svelte/elements';
-  import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
+    Rect,
+    Text,
     end,
     start,
     cellSize: cellSizeProp,
@@ -77,7 +32,7 @@
     tooltip,
     children,
     ...restProps
-  }: CalendarPropsWithoutHTML = $props();
+  }: CalendarBaseProps = $props();
 
   const ctx = getChartContext();
 
@@ -86,10 +41,8 @@
   const yearWeeks = $derived(timeWeek.count(start, end));
   const chartCellWidth = $derived(ctx.width / (yearWeeks + 1));
   const chartCellHeight = $derived(ctx.height / 7);
-  // Use smallest to fit, and keep square aspect
   const chartCellSize = $derived(Math.min(chartCellWidth, chartCellHeight));
 
-  // [width, height]
   const cellSize: [number, number] = $derived(
     Array.isArray(cellSizeProp)
       ? cellSizeProp
@@ -125,8 +78,8 @@
       width={cellSize[0]}
       height={cellSize[1]}
       fill={cell.color}
-      onpointermove={(e) => tooltip && ctx.tooltip?.show(e, cell.data)}
-      onpointerleave={(e) => tooltip && ctx.tooltip?.hide()}
+      onpointermove={(e: PointerEvent) => tooltip && ctx.tooltip?.show(e, cell.data)}
+      onpointerleave={() => tooltip && ctx.tooltip?.hide()}
       strokeWidth={1}
       {...extractLayerProps(restProps, 'lc-calendar-cell')}
     />

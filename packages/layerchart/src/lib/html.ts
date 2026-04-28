@@ -119,3 +119,5 @@ export type {
 } from './components/Frame/Frame.shared.svelte.js';
 export { default as Cell } from './components/Cell/Cell.html.svelte';
 export type { CellProps } from './components/Cell/Cell.shared.svelte.js';
+export { default as CircleClipPath } from './components/CircleClipPath/CircleClipPath.html.svelte';
+export type { CircleClipPathPropsWithoutHTML } from './components/CircleClipPath/CircleClipPath.shared.svelte.js';

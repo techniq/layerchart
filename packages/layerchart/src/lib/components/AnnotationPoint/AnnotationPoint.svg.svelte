@@ -8,8 +8,7 @@
 <script lang="ts">
   import AnnotationPointBase from './AnnotationPoint.base.svelte';
   import Circle from '../Circle/Circle.svg.svelte';
-  // Link not yet split — use agnostic dispatcher.
-  import Link from '../Link/Link.svelte';
+  import Link from '../Link/Link.svg.svelte';
   import Text from '../Text/Text.svg.svelte';
   import type { AnnotationPointProps } from './AnnotationPoint.shared.svelte.js';
 

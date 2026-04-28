@@ -1,55 +1,13 @@
 <script lang="ts" module>
-  import type { Without, CommonStyleProps } from '$lib/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
-  import type { ComponentProps } from 'svelte';
+  import type { Component } from 'svelte';
+  import type { HullProps } from './Hull.shared.svelte.js';
 
-  export type HullPropsWithoutHTML = {
-    /**
-     * Override data instead of using context
-     */
-    data?: any;
+  export type HullBaseLayerComponents = {
+    Group: Component<any>;
+    Spline: Component<any>;
+  };
 
-    /**
-     * The curve factory to use for the hull
-     * @default curveLinearClosed
-     */
-    curve?: ComponentProps<typeof Spline>['curve'];
-
-    /**
-     * Classes to apply to the elements.
-     */
-    classes?: {
-      root?: string;
-      path?: string;
-    };
-
-    onpointermove?: (
-      e: PointerEvent,
-      details: {
-        points: [number, number][];
-        polygon: Delaunay.Polygon;
-      }
-    ) => void;
-
-    onclick?: (
-      e: MouseEvent,
-      details: {
-        points: [number, number][];
-        polygon: Delaunay.Polygon;
-      }
-    ) => void;
-
-    onpointerleave?: (e: PointerEvent) => void;
-
-    /**
-     * A bindable reference to the wrapping `<g>` element.
-     *
-     * @bindable
-     */
-    ref?: SVGGElement;
-  } & CommonStyleProps;
-
-  export type HullProps = HullPropsWithoutHTML & Without<GroupProps, HullPropsWithoutHTML>;
+  export type HullBaseProps = HullProps & HullBaseLayerComponents;
 </script>
 
 <script lang="ts">
@@ -60,19 +18,20 @@
   import { curveLinearClosed } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
-  import GeoPath from './geo/GeoPath.svelte';
-  import Group, { type GroupProps } from './Group/Group.svelte';
-  import Spline from './Spline/Spline.svelte';
+  // GeoPath is geo-specific and lives in the geo sub-path; use the agnostic
+  // dispatcher (rare path — only when used inside a geo chart).
+  import GeoPath from '../geo/GeoPath.svelte';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
 
   const ctx = getChartContext();
   const geo = getGeoContext();
 
-  // Mark as composite so child Spline doesn't register
   ctx.registerComponent({ name: 'Hull', kind: 'composite-mark' });
 
   let {
+    Group,
+    Spline,
     data,
     curve = curveLinearClosed,
     classes = {},
@@ -88,7 +47,7 @@
     class: className,
     ref: refProp = $bindable(),
     ...restProps
-  }: HullProps = $props();
+  }: HullBaseProps = $props();
 
   let ref = $state<SVGGElement>();
 
@@ -125,8 +84,8 @@
       {strokeWidth}
       {opacity}
       class={['lc-hull-path', classes.path]}
-      onclick={(e) => onclick?.(e, { points, polygon })}
-      onpointermove={(e) => onpointermove?.(e, { points, polygon })}
+      onclick={(e: MouseEvent) => onclick?.(e, { points, polygon })}
+      onpointermove={(e: PointerEvent) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
     />
   {:else}
@@ -134,8 +93,8 @@
     {@const polygon = delaunay.hullPolygon()}
     <Spline
       data={polygon}
-      x={(d) => d[0]}
-      y={(d) => d[1]}
+      x={(d: any) => d[0]}
+      y={(d: any) => d[1]}
       {curve}
       {fill}
       {fillOpacity}
@@ -144,8 +103,8 @@
       {strokeWidth}
       {opacity}
       class={['lc-hull-class', classes.path]}
-      onclick={(e) => onclick?.(e, { points, polygon })}
-      onpointermove={(e) => onpointermove?.(e, { points, polygon })}
+      onclick={(e: MouseEvent) => onclick?.(e, { points, polygon })}
+      onpointermove={(e: PointerEvent) => onpointermove?.(e, { points, polygon })}
       {onpointerleave}
     />
   {/if}

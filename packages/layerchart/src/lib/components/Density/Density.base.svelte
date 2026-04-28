@@ -1,25 +1,13 @@
 <script lang="ts" module>
-  import type { SVGAttributes } from 'svelte/elements';
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { Accessor } from '$lib/utils/common.js';
+  import type { Component } from 'svelte';
+  import type { DensityProps } from './Density.shared.svelte.js';
 
-  export type DensityPropsWithoutHTML = {
-    /** Override chart data. Defaults to chart context data. */
-    data?: any[];
-    /** X accessor. Defaults to chart context x accessor. */
-    x?: Accessor;
-    /** Y accessor. Defaults to chart context y accessor. */
-    y?: Accessor;
-    /** Weight accessor for weighted density estimation. */
-    weight?: Accessor;
-    /** KDE bandwidth in pixels. @default 20 */
-    bandwidth?: number;
-    /** Number of contour thresholds. @default 20 */
-    thresholds?: number;
-  } & CommonStyleProps;
+  export type DensityBaseLayerComponents = {
+    Group: Component<any>;
+    Path: Component<any>;
+  };
 
-  export type DensityProps = DensityPropsWithoutHTML &
-    Without<SVGAttributes<SVGGElement>, DensityPropsWithoutHTML>;
+  export type DensityBaseProps = DensityProps & DensityBaseLayerComponents;
 </script>
 
 <script lang="ts">
@@ -30,8 +18,6 @@
   import { interpolateYlGnBu } from 'd3-scale-chromatic';
   import { max } from 'd3-array';
 
-  import Group from './Group/Group.svelte';
-  import Path from './Path/Path.svelte';
   import { accessor as resolveAccessor, chartDataArray } from '$lib/utils/common.js';
   import { getChartContext } from '$lib/contexts/chart.js';
   import { getGeoContext } from '$lib/contexts/geo.js';
@@ -40,6 +26,8 @@
   const geo = getGeoContext();
 
   let {
+    Group,
+    Path,
     data: dataProp,
     x: xProp,
     y: yProp,
@@ -53,12 +41,9 @@
     opacity,
     class: className,
     ...restProps
-  }: DensityProps = $props();
+  }: DensityBaseProps = $props();
 
-  ctx.registerComponent({
-    name: 'Density',
-    kind: 'composite-mark',
-  });
+  ctx.registerComponent({ name: 'Density', kind: 'composite-mark' });
 
   const xAccessor = $derived(xProp ? resolveAccessor(xProp) : ctx.x);
   const yAccessor = $derived(yProp ? resolveAccessor(yProp) : ctx.y);
@@ -66,7 +51,6 @@
 
   const data = $derived(dataProp ?? chartDataArray(ctx.data));
 
-  // Compute density contours in pixel space
   const contours = $derived.by(() => {
     if (!data || data.length === 0 || !ctx.width || !ctx.height) return [];
 
@@ -95,7 +79,6 @@
       density.weight((d: any) => weightAccessor(d));
     }
 
-    // Filter out data that doesn't project (e.g. points outside projection bounds)
     const filteredData = projection
       ? data.filter((d: any) => projection([xAccessor(d), yAccessor(d)]) !== null)
       : data;
@@ -103,10 +86,8 @@
     return density(filteredData as any);
   });
 
-  // Identity geoPath for pixel-coordinate contours
   const pathGenerator = $derived(geoPath());
 
-  // Color scale: use chart's cScale (with auto-computed domain) or fall back to default
   const colorScale = $derived.by(() => {
     if (fill) return null;
     const maxValue = max(contours, (d) => d.value) ?? 1;
