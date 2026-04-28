@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-28T13:01:33.883Z",
+  "timestamp": "2026-04-28T13:23:07.731Z",
   "results": [
     {
       "scenario": "core",
@@ -807,6 +807,48 @@
       "gzipSize": 42403,
       "imports": [
         "Axis"
+      ]
+    },
+    {
+      "scenario": "line-chart-svg",
+      "description": "Line chart composed from `layerchart/svg`",
+      "group": "Layer-specific",
+      "size": 443357,
+      "gzipSize": 106510,
+      "imports": [
+        "Chart",
+        "Svg",
+        "Line",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "line-chart-canvas",
+      "description": "Line chart composed from `layerchart/canvas`",
+      "group": "Layer-specific",
+      "size": 443357,
+      "gzipSize": 106499,
+      "imports": [
+        "Chart",
+        "Canvas",
+        "Line",
+        "Axis",
+        "Grid"
+      ]
+    },
+    {
+      "scenario": "line-chart-html",
+      "description": "Line chart composed from `layerchart/html`",
+      "group": "Layer-specific",
+      "size": 443357,
+      "gzipSize": 106498,
+      "imports": [
+        "Chart",
+        "Html",
+        "Line",
+        "Axis",
+        "Grid"
       ]
     },
     {

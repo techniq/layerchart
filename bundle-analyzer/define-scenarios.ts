@@ -346,6 +346,33 @@ export const scenarios: Scenario[] = [
 	{ name: "axis-canvas", group: "Layer-specific", description: "Standalone Axis from `layerchart/canvas`", imports: ["Axis"], subpathOverrides: { Axis: "canvas" } },
 	{ name: "axis-html", group: "Layer-specific", description: "Standalone Axis from `layerchart/html`", imports: ["Axis"], subpathOverrides: { Axis: "html" } },
 
+	// --- Full-chart per-layer (regression guard) ---
+	// Composes a realistic chart entirely from a single sub-path. Today these
+	// mostly mirror the agnostic baselines because `Chart`/`Svg`/`Canvas`/`Grid`
+	// aren't split — but as more components are split these numbers should fall
+	// and these scenarios will catch any regression in that progression.
+	{
+		name: "line-chart-svg",
+		group: "Layer-specific",
+		description: "Line chart composed from `layerchart/svg`",
+		imports: ["Chart", "Svg", "Line", "Axis", "Grid"],
+		subpathOverrides: { Line: "svg", Axis: "svg" },
+	},
+	{
+		name: "line-chart-canvas",
+		group: "Layer-specific",
+		description: "Line chart composed from `layerchart/canvas`",
+		imports: ["Chart", "Canvas", "Line", "Axis", "Grid"],
+		subpathOverrides: { Line: "canvas", Axis: "canvas" },
+	},
+	{
+		name: "line-chart-html",
+		group: "Layer-specific",
+		description: "Line chart composed from `layerchart/html`",
+		imports: ["Chart", "Html", "Line", "Axis", "Grid"],
+		subpathOverrides: { Line: "html", Axis: "html" },
+	},
+
 	// --- Worst case ---
 	{
 		name: "all",
