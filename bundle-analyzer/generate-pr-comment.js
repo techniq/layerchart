@@ -163,7 +163,7 @@ function generateComment(changes, hasBaseline = true) {
 				byGroup.get(g).push(s);
 			}
 
-			const expandedGroups = new Set(["Foundation"]);
+			const expandedGroups = new Set(["Core (agnostic)", "Core (layer-specific)"]);
 
 			for (const [groupName, rows] of byGroup) {
 				const open = expandedGroups.has(groupName) ? " open" : "";
@@ -228,9 +228,9 @@ function generateComment(changes, hasBaseline = true) {
 			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		};
 
-		// Foundation expanded by default; other groups collapsed to keep the
+		// Core groups expanded by default; other groups collapsed to keep the
 		// comment scannable. Each group shows the count of changed scenarios.
-		const expandedGroups = new Set(["Foundation"]);
+		const expandedGroups = new Set(["Core (agnostic)", "Core (layer-specific)"]);
 
 		for (const [groupName, rows] of byGroup) {
 			const open = expandedGroups.has(groupName) ? " open" : "";

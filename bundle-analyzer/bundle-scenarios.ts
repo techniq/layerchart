@@ -35,16 +35,36 @@ export interface ComponentInfo {
  * Each scenario includes the minimum set of components for that chart type.
  */
 export const scenarios: Scenario[] = [
-  // --- Foundation ---
+  // --- Core (agnostic) ---
   {
     name: 'core',
-    group: 'Foundation',
+    group: 'Core (agnostic)',
     description: 'Core charting components without rendering layer',
     imports: ['Chart'],
   },
   {
+    name: 'core-svg-agnostic',
+    group: 'Core (agnostic)',
+    description: '`Chart` + `Svg` from `layerchart` (agnostic dispatcher)',
+    imports: ['Chart', 'Svg'],
+  },
+  {
+    name: 'core-canvas-agnostic',
+    group: 'Core (agnostic)',
+    description: '`Chart` + `Canvas` from `layerchart` (agnostic dispatcher)',
+    imports: ['Chart', 'Canvas'],
+  },
+  {
+    name: 'core-html-agnostic',
+    group: 'Core (agnostic)',
+    description: '`Chart` + `Html` from `layerchart` (agnostic dispatcher)',
+    imports: ['Chart', 'Html'],
+  },
+
+  // --- Core (layer-specific) ---
+  {
     name: 'core-svg',
-    group: 'Foundation',
+    group: 'Core (layer-specific)',
     description: 'Svg-based rendering',
     imports: ['Chart', 'Svg'],
     layers: {
@@ -54,7 +74,7 @@ export const scenarios: Scenario[] = [
   },
   {
     name: 'core-canvas',
-    group: 'Foundation',
+    group: 'Core (layer-specific)',
     description: 'Canvas-based rendering',
     imports: ['Chart', 'Canvas'],
     layers: {
@@ -64,7 +84,7 @@ export const scenarios: Scenario[] = [
   },
   {
     name: 'core-html',
-    group: 'Foundation',
+    group: 'Core (layer-specific)',
     description: 'HTML-based rendering',
     imports: ['Chart', 'Html'],
     layers: {

@@ -1,21 +1,20 @@
 {
-  "timestamp": "2026-04-28T21:04:57.162Z",
+  "timestamp": "2026-04-29T13:49:30.832Z",
   "results": [
     {
       "scenario": "core",
       "description": "Core charting components without rendering layer",
-      "group": "Foundation",
-      "size": 379780,
-      "gzipSize": 88341,
+      "group": "Core (agnostic)",
+      "size": 379776,
+      "gzipSize": 88343,
       "imports": [
-        "Chart",
-        "Svg"
+        "Chart"
       ]
     },
     {
       "scenario": "core-svg",
       "description": "Svg-based rendering",
-      "group": "Foundation",
+      "group": "Core (layer-specific)",
       "size": 351979,
       "gzipSize": 82188,
       "imports": [
@@ -26,7 +25,7 @@
     {
       "scenario": "core-canvas",
       "description": "Canvas-based rendering",
-      "group": "Foundation",
+      "group": "Core (layer-specific)",
       "size": 358506,
       "gzipSize": 83936,
       "imports": [
@@ -37,7 +36,7 @@
     {
       "scenario": "core-html",
       "description": "HTML-based rendering",
-      "group": "Foundation",
+      "group": "Core (layer-specific)",
       "size": 359830,
       "gzipSize": 84206,
       "imports": [
