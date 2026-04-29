@@ -9,7 +9,8 @@
     "standalone": "0.0.1",
     "svelteux-2": "0.0.1",
     "docs": "0.0.1",
-    "skeleton4": "0.0.1"
+    "skeleton4": "0.0.1",
+    "@layerchart/bundle-analyzer": "0.0.0"
   },
   "changesets": [
     "add-boxplot-component",
@@ -164,6 +165,7 @@
     "large-spiders-stay",
     "late-glasses-itch",
     "layer-context-rename",
+    "lazy-load-opt-in-features",
     "legal-parrots-beam",
     "legend-tooltip-indicator",
     "lemon-bats-change",
@@ -258,6 +260,7 @@
     "spline-reactive-motion",
     "spotty-plums-invite",
     "spotty-rules-taste",
+    "subpath-exports",
     "swift-gifts-flow",
     "tall-mice-tap",
     "tall-poems-take",
