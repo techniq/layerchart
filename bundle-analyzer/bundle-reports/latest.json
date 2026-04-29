@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-29T13:49:30.832Z",
+  "timestamp": "2026-04-29T13:53:34.049Z",
   "results": [
     {
       "scenario": "core",
@@ -9,6 +9,39 @@
       "gzipSize": 88343,
       "imports": [
         "Chart"
+      ]
+    },
+    {
+      "scenario": "core-svg-agnostic",
+      "description": "`Chart` + `Svg` from `layerchart` (agnostic dispatcher)",
+      "group": "Core (agnostic)",
+      "size": 379780,
+      "gzipSize": 88341,
+      "imports": [
+        "Chart",
+        "Svg"
+      ]
+    },
+    {
+      "scenario": "core-canvas-agnostic",
+      "description": "`Chart` + `Canvas` from `layerchart` (agnostic dispatcher)",
+      "group": "Core (agnostic)",
+      "size": 379780,
+      "gzipSize": 88356,
+      "imports": [
+        "Chart",
+        "Canvas"
+      ]
+    },
+    {
+      "scenario": "core-html-agnostic",
+      "description": "`Chart` + `Html` from `layerchart` (agnostic dispatcher)",
+      "group": "Core (agnostic)",
+      "size": 379780,
+      "gzipSize": 88353,
+      "imports": [
+        "Chart",
+        "Html"
       ]
     },
     {
