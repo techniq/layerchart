@@ -32,10 +32,12 @@
           styleOverrides
         )
       : {
+          // Use raw `rest.fill` / `rest.stroke` (not `staticFill`) so canvas
+          // accepts non-string values like `CanvasPattern` / `CanvasGradient`.
           styles: {
-            fill: itemFill ?? c.staticFill,
+            fill: itemFill ?? (rest.fill as any),
             fillOpacity: itemFillOpacity ?? c.staticFillOpacity,
-            stroke: itemStroke ?? c.staticStroke,
+            stroke: itemStroke ?? (rest.stroke as any),
             strokeWidth: itemStrokeWidth ?? c.staticStrokeWidth,
             opacity: itemOpacity ?? c.staticOpacity,
           },

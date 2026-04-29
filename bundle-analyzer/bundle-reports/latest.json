@@ -1,82 +1,6 @@
 {
-  "timestamp": "2026-04-29T15:57:54.893Z",
+  "timestamp": "2026-04-29T16:24:54.584Z",
   "results": [
-    {
-      "scenario": "base",
-      "description": "`Chart` — full charting frame without rendering layer",
-      "group": "Base (agnostic)",
-      "size": 365532,
-      "gzipSize": 85425,
-      "imports": [
-        "Chart"
-      ]
-    },
-    {
-      "scenario": "base-svg-agnostic",
-      "description": "`Chart` + `Svg` from `layerchart` (agnostic dispatcher)",
-      "group": "Base (agnostic)",
-      "size": 365536,
-      "gzipSize": 85428,
-      "imports": [
-        "Chart",
-        "Svg"
-      ]
-    },
-    {
-      "scenario": "base-canvas-agnostic",
-      "description": "`Chart` + `Canvas` from `layerchart` (agnostic dispatcher)",
-      "group": "Base (agnostic)",
-      "size": 365536,
-      "gzipSize": 85425,
-      "imports": [
-        "Chart",
-        "Canvas"
-      ]
-    },
-    {
-      "scenario": "base-html-agnostic",
-      "description": "`Chart` + `Html` from `layerchart` (agnostic dispatcher)",
-      "group": "Base (agnostic)",
-      "size": 365536,
-      "gzipSize": 85422,
-      "imports": [
-        "Chart",
-        "Html"
-      ]
-    },
-    {
-      "scenario": "base-svg",
-      "description": "`Chart` + `Svg` from `layerchart/svg`",
-      "group": "Base (layer-specific)",
-      "size": 337713,
-      "gzipSize": 79225,
-      "imports": [
-        "Chart",
-        "Svg"
-      ]
-    },
-    {
-      "scenario": "base-canvas",
-      "description": "`Chart` + `Canvas` from `layerchart/canvas`",
-      "group": "Base (layer-specific)",
-      "size": 344259,
-      "gzipSize": 80925,
-      "imports": [
-        "Chart",
-        "Canvas"
-      ]
-    },
-    {
-      "scenario": "base-html",
-      "description": "`Chart` + `Html` from `layerchart/html`",
-      "group": "Base (layer-specific)",
-      "size": 345563,
-      "gzipSize": 81246,
-      "imports": [
-        "Chart",
-        "Html"
-      ]
-    },
     {
       "scenario": "core",
       "description": "`ChartCore` — bare-bones chart without `ChartChildren`",
@@ -155,6 +79,82 @@
         "ChartCore",
         "Svg",
         "Points"
+      ]
+    },
+    {
+      "scenario": "base",
+      "description": "`Chart` — full charting frame without rendering layer",
+      "group": "Base (agnostic)",
+      "size": 365532,
+      "gzipSize": 85425,
+      "imports": [
+        "Chart"
+      ]
+    },
+    {
+      "scenario": "base-svg-agnostic",
+      "description": "`Chart` + `Svg` from `layerchart` (agnostic dispatcher)",
+      "group": "Base (agnostic)",
+      "size": 365536,
+      "gzipSize": 85428,
+      "imports": [
+        "Chart",
+        "Svg"
+      ]
+    },
+    {
+      "scenario": "base-canvas-agnostic",
+      "description": "`Chart` + `Canvas` from `layerchart` (agnostic dispatcher)",
+      "group": "Base (agnostic)",
+      "size": 365536,
+      "gzipSize": 85425,
+      "imports": [
+        "Chart",
+        "Canvas"
+      ]
+    },
+    {
+      "scenario": "base-html-agnostic",
+      "description": "`Chart` + `Html` from `layerchart` (agnostic dispatcher)",
+      "group": "Base (agnostic)",
+      "size": 365536,
+      "gzipSize": 85422,
+      "imports": [
+        "Chart",
+        "Html"
+      ]
+    },
+    {
+      "scenario": "base-svg",
+      "description": "`Chart` + `Svg` from `layerchart/svg`",
+      "group": "Base (layer-specific)",
+      "size": 337713,
+      "gzipSize": 79225,
+      "imports": [
+        "Chart",
+        "Svg"
+      ]
+    },
+    {
+      "scenario": "base-canvas",
+      "description": "`Chart` + `Canvas` from `layerchart/canvas`",
+      "group": "Base (layer-specific)",
+      "size": 344259,
+      "gzipSize": 80925,
+      "imports": [
+        "Chart",
+        "Canvas"
+      ]
+    },
+    {
+      "scenario": "base-html",
+      "description": "`Chart` + `Html` from `layerchart/html`",
+      "group": "Base (layer-specific)",
+      "size": 345563,
+      "gzipSize": 81246,
+      "imports": [
+        "Chart",
+        "Html"
       ]
     },
     {
