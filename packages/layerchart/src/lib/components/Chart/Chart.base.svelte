@@ -34,7 +34,6 @@
   } from '$lib/states/brush.svelte.js';
 
   import TooltipContext from '../tooltip/TooltipContext.svelte';
-  import TransformContext from '../TransformContext.svelte';
 
   let {
     ChartChildren,
@@ -436,69 +435,82 @@
     {...restProps}
   >
     {#key chartState.isMounted}
-      <!-- svelte-ignore ownership_invalid_binding -->
-      {@const {
-        domainExtent: _de,
-        constrain: _uc,
-        apply: _apply,
-        scaleExtent: _se,
-        translateExtent: _te,
-        ...transformProps
-      } = transform ?? {}}
-      <TransformContext
-        bind:state={chartState.transformState}
-        mode={transform?.mode ?? 'none'}
-        initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
-        initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
-        {processTranslate}
-        {...transformProps}
-        scaleExtent={resolvedScaleExtent}
-        translateExtent={resolvedTranslateExtent}
-        constrain={composedConstrain}
-        disablePointer={brush === true ||
-          (typeof brush === 'object' && !brush.disabled) ||
-          transform?.disablePointer}
-        {ondragstart}
-        {onTransform}
-        {ondragend}
-      >
-        {#if brush}
-          {#await import('../BrushContext.svelte')}
-            <!-- svelte-ignore ownership_invalid_binding -->
-            <TooltipContext
-              onclick={onTooltipClick}
-              {...getObjectOrNull(tooltipContext)}
-              bind:state={chartState.tooltipState}
-            >
-              <ChartChildren {children} {tooltipContext} {...restProps} />
-            </TooltipContext>
-          {:then { default: BrushContext }}
-            <!-- svelte-ignore ownership_invalid_binding -->
-            <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
-              <!-- svelte-ignore ownership_invalid_binding -->
-              <TooltipContext
-                onclick={onTooltipClick}
-                {...getObjectOrNull(tooltipContext)}
-                bind:state={chartState.tooltipState}
-              >
-                <ChartChildren {children} {tooltipContext} {...restProps} />
-              </TooltipContext>
-            </BrushContext>
-          {/await}
-        {:else}
+      {#if transform}
+        <!-- Lazy-load TransformContext only when transform is enabled -->
+        {@const {
+          domainExtent: _de,
+          constrain: _uc,
+          apply: _apply,
+          scaleExtent: _se,
+          translateExtent: _te,
+          ...transformProps
+        } = transform}
+        {#await import('../TransformContext.svelte')}
+          {@render inner()}
+        {:then { default: TransformContext }}
           <!-- svelte-ignore ownership_invalid_binding -->
-          <TooltipContext
-            onclick={onTooltipClick}
-            {...getObjectOrNull(tooltipContext)}
-            bind:state={chartState.tooltipState}
+          <TransformContext
+            bind:state={chartState.transformState}
+            mode={transform.mode ?? 'none'}
+            initialTranslate={resolvedApply.translate ? initialTransform?.translate : undefined}
+            initialScale={resolvedApply.scale ? initialTransform?.scale : undefined}
+            {processTranslate}
+            {...transformProps}
+            scaleExtent={resolvedScaleExtent}
+            translateExtent={resolvedTranslateExtent}
+            constrain={composedConstrain}
+            disablePointer={brush === true ||
+              (typeof brush === 'object' && !brush.disabled) ||
+              transform.disablePointer}
+            {ondragstart}
+            {onTransform}
+            {ondragend}
           >
-            <ChartChildren {children} {tooltipContext} {...restProps} />
-          </TooltipContext>
-        {/if}
-      </TransformContext>
+            {@render inner()}
+          </TransformContext>
+        {/await}
+      {:else}
+        {@render inner()}
+      {/if}
     {/key}
   </div>
 {/if}
+
+{#snippet inner()}
+  {#if brush}
+    {#await import('../BrushContext.svelte')}
+      <!-- svelte-ignore ownership_invalid_binding -->
+      <TooltipContext
+        onclick={onTooltipClick}
+        {...getObjectOrNull(tooltipContext)}
+        bind:state={chartState.tooltipState}
+      >
+        <ChartChildren {children} {tooltipContext} {...restProps} />
+      </TooltipContext>
+    {:then { default: BrushContext }}
+      <!-- svelte-ignore ownership_invalid_binding -->
+      <BrushContext {...enhancedBrushProps} bind:state={chartState.brushState}>
+        <!-- svelte-ignore ownership_invalid_binding -->
+        <TooltipContext
+          onclick={onTooltipClick}
+          {...getObjectOrNull(tooltipContext)}
+          bind:state={chartState.tooltipState}
+        >
+          <ChartChildren {children} {tooltipContext} {...restProps} />
+        </TooltipContext>
+      </BrushContext>
+    {/await}
+  {:else}
+    <!-- svelte-ignore ownership_invalid_binding -->
+    <TooltipContext
+      onclick={onTooltipClick}
+      {...getObjectOrNull(tooltipContext)}
+      bind:state={chartState.tooltipState}
+    >
+      <ChartChildren {children} {tooltipContext} {...restProps} />
+    </TooltipContext>
+  {/if}
+{/snippet}
 
 <style>
   .lc-root-container,
