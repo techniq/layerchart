@@ -13,6 +13,7 @@ import type { CivilizationTimeline } from '$static/data/examples/date/civilizati
 import type { HydroData } from '$static/data/examples/date/hydro.js';
 import type { AppleTickerData } from '$static/data/examples/date/apple-ticker.js';
 import type { NewPassengerCars } from '$static/data/examples/new-passenger-cars.js';
+import type { CarsVegaData } from '$static/data/examples/cars-vega.js';
 
 export const getGroupData = prerender(async () => {
 	const { fetch } = getRequestEvent();
@@ -253,6 +254,12 @@ export const getCars = prerender(async () => {
 		// @ts-expect-error - shh
 		csvParse<CarData>(await r.text(), autoType)
 	);
+	return data;
+});
+
+export const getCarsVega = prerender(async () => {
+	const { fetch } = getRequestEvent();
+	const data = (await fetch('/data/examples/cars-vega.json').then((r) => r.json())) as CarsVegaData[];
 	return data;
 });
 
