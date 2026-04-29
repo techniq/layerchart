@@ -12,8 +12,12 @@
      * The `ChartChildren` component to render inside the chart. Per-layer
      * variants (`Chart.svg.svelte` etc.) inject the matching per-layer
      * `ChartChildren` so the underlying primitive imports are layer-specific.
+     *
+     * When undefined (used by `ChartCore`), the `children` snippet is rendered
+     * directly without `ChartChildren` — skipping the `Axis` / `Grid` / `Rule` /
+     * `Highlight` / `ChartClipPath` / `Layer` import chain.
      */
-    ChartChildren: Component<any>;
+    ChartChildren?: Component<any>;
   };
 </script>
 
@@ -476,6 +480,14 @@
   </div>
 {/if}
 
+{#snippet body()}
+  {#if ChartChildren}
+    <ChartChildren {children} {tooltipContext} {...restProps} />
+  {:else}
+    {@render children?.({ context: chartState })}
+  {/if}
+{/snippet}
+
 {#snippet inner()}
   {#if brush}
     {#await import('../BrushContext.svelte')}
@@ -485,7 +497,7 @@
         {...getObjectOrNull(tooltipContext)}
         bind:state={chartState.tooltipState}
       >
-        <ChartChildren {children} {tooltipContext} {...restProps} />
+        {@render body()}
       </TooltipContext>
     {:then { default: BrushContext }}
       <!-- svelte-ignore ownership_invalid_binding -->
@@ -496,7 +508,7 @@
           {...getObjectOrNull(tooltipContext)}
           bind:state={chartState.tooltipState}
         >
-          <ChartChildren {children} {tooltipContext} {...restProps} />
+          {@render body()}
         </TooltipContext>
       </BrushContext>
     {/await}
@@ -507,7 +519,7 @@
       {...getObjectOrNull(tooltipContext)}
       bind:state={chartState.tooltipState}
     >
-      <ChartChildren {children} {tooltipContext} {...restProps} />
+      {@render body()}
     </TooltipContext>
   {/if}
 {/snippet}

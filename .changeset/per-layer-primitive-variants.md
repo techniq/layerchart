@@ -56,6 +56,40 @@ The geo, graph, hierarchy, and force sub-paths also re-export every layer-agnost
 
 For a consumer who migrates all imports to a single layer, cumulative savings across primitives and compound marks are 60–80 KB gz.
 
+### Bundle reductions on the default `<Chart>` path
+
+In addition to opt-in per-layer variants, this release also makes a few previously-eager features lazy:
+
+- **`<TransformContext>`** is now dynamically imported when `<Chart transform={...}>` is set — saves ~2.8 KB gz on every chart that doesn't pan/zoom.
+- **`<BrushContext>`** was already lazy; nothing changes there.
+
+### `<ChartCore>` for non-cartesian charts (new)
+
+A new `<ChartCore>` component is exported alongside `<Chart>` from each layer sub-path (`layerchart`, `layerchart/svg`, `layerchart/canvas`, `layerchart/html`). It provides the chart context, sizing, brush, transform, and tooltip plumbing — but skips `<ChartChildren>` and the `Layer` / `Axis` / `Grid` / `Rule` / `Highlight` / `ChartClipPath` import chain it pulls in.
+
+Use it for geo maps, custom layouts, or any chart that renders its own primitives directly via the `children` snippet:
+
+```svelte
+<script>
+  import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
+</script>
+
+<ChartCore data={countries}>
+  {#snippet children({ context })}
+    <Svg>
+      <GeoProjection projection={geoMercator} fitGeojson={countries}>
+        <GeoPath geojson={countries} fill="steelblue" />
+      </GeoProjection>
+    </Svg>
+  {/snippet}
+</ChartCore>
+```
+
+Measured savings (bundle scenarios):
+- `base` (`<Chart>`) → `core` (`<ChartCore>`): 83.42 → 50.93 KB gz (**−39%**)
+- `geo` (`<Chart>` + `GeoPath`/`GeoPoint`) → `core-geo` (`<ChartCore>` + `GeoProjection` + `GeoPath`): 87.23 → 54.67 KB gz (**−37%**)
+- `base-svg` (per-layer) → `core-svg` (per-layer): 77.37 → 50.88 KB gz (**−34%**)
+
 ### Behavior
 
 Identical to the agnostic versions: visual output, props, types, and bindable refs all match. The dispatcher pattern adds ~0.2 KB per primitive to `core` for users on the agnostic API (transitive cost from `Highlight` / `Axis` / `Chart`) — a worthwhile tradeoff for the opt-in per-layer savings.

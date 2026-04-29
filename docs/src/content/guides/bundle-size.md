@@ -21,6 +21,7 @@ The following heavy features are loaded only when you use them, with no code cha
 | Feature | When it loads |
 | --- | --- |
 | `<BrushContext>` (and brush state) | When `<Chart brush={...}>` is set |
+| `<TransformContext>` (and transform state) | When `<Chart transform={...}>` is set |
 | `<DefaultTooltip>` | When `tooltipContext` is set and you don't provide a custom `tooltip` snippet |
 | `Voronoi` hit-detection | When `<TooltipContext mode="voronoi">` is used |
 | `Arc` (radial tooltip rects) | When `<TooltipContext mode="bounds">` or `mode="band"` is used inside a radial chart |
@@ -54,6 +55,38 @@ import { Sankey, Dagre } from 'layerchart/graph';
 If you don't use them, you don't pay for them — the agnostic root export simply doesn't expose them, so even bundlers that mishandle tree-shaking can't accidentally include them.
 
 Each sub-path also re-exports the layer-agnostic helpers you'd need alongside its specialty components (e.g. `Chart`, `Tooltip`, `Axis`, `Highlight`, scales, layouts). For typical usage you can stay on a single sub-path import line for an entire chart.
+
+## `<ChartCore>` for non-cartesian charts (opt-in)
+
+`<Chart>` includes the standard cartesian frame: `<Layer>`, `<Axis>`, `<Grid>`, `<Rule>`, `<Highlight>`, and `<ChartClipPath>`. Those are baked into `Chart`'s import graph so cartesian users get them automatically. But if you're rendering a geo map, a custom layout, or any chart that doesn't need axes/grids, that import chain is dead weight.
+
+`<ChartCore>` is a bare-bones variant that provides the chart context, sizing, brush, transform, and tooltip plumbing — but skips `ChartChildren` and everything it pulls in. You provide your own primitives directly via the `children` snippet:
+
+```svelte
+<script>
+  import { ChartCore, Svg, GeoProjection, GeoPath } from 'layerchart/svg';
+</script>
+
+<ChartCore data={countries}>
+  {#snippet children({ context })}
+    <Svg>
+      <GeoProjection projection={geoMercator} fitGeojson={countries}>
+        <GeoPath geojson={countries} fill="steelblue" />
+      </GeoProjection>
+    </Svg>
+  {/snippet}
+</ChartCore>
+```
+
+A typical geo chart drops from ~90 KB gz with `<Chart>` to ~70 KB gz with `<ChartCore>` (a ~20 KB gz / ~22% saving) because the entire `Axis` / `Grid` / `Rule` / `Highlight` / `ChartClipPath` / `Layer` chain is no longer in the import graph.
+
+`<ChartCore>` is exported from each layer sub-path (`layerchart`, `layerchart/svg`, `layerchart/canvas`, `layerchart/html`). The component itself is layer-agnostic — the layer is whatever you put inside the `children` snippet — so the sub-path choice only affects what other components (like `<Svg>` or `<GeoPath>`) tree-shake to.
+
+When to use `<ChartCore>`:
+- ✅ Geo maps (you'll render `<GeoProjection>` + `<GeoPath>` directly, no axes needed)
+- ✅ Custom force-directed or hierarchy layouts that compose their own primitives
+- ✅ Pre-rendered SVG/canvas content that just needs chart context for sizing
+- 🤷 Cartesian charts — keep using `<Chart>`; you'd just have to re-add Axis/Grid/etc. yourself
 
 ## Per-layer variants (opt-in)
 
@@ -192,10 +225,13 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 
 | Scenario | Imports | Gzipped |
 | --- | --- | --- |
-| `core` | `Chart`, `Svg` | ~86 KB |
-| `core-svg` (per-layer) | `Chart`, `Svg` from `layerchart/svg` | ~80 KB |
-| `core-canvas` (per-layer) | `Chart`, `Canvas` from `layerchart/canvas` | ~82 KB |
-| `core-html` (per-layer) | `Chart`, `Html` from `layerchart/html` | ~82 KB |
+| `base` | `Chart` | ~83 KB |
+| `base-svg` (per-layer) | `Chart`, `Svg` from `layerchart/svg` | ~77 KB |
+| `base-canvas` (per-layer) | `Chart`, `Canvas` from `layerchart/canvas` | ~79 KB |
+| `base-html` (per-layer) | `Chart`, `Html` from `layerchart/html` | ~79 KB |
+| `core` | `ChartCore` (no Axis/Grid/Highlight) | ~51 KB |
+| `core-svg` (per-layer) | `ChartCore`, `Svg` from `layerchart/svg` | ~51 KB |
+| `core-geo` | `ChartCore`, `Svg`, `GeoProjection`, `GeoPath` | ~58 KB |
 | `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~86 KB |
 | `LineChart` | high-level `LineChart` | ~92 KB |
 | `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg` | ~82 KB |
@@ -207,7 +243,7 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 | `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |
 | `text-agnostic` | `Text` from `layerchart` | ~29 KB |
 
-`core` is what every chart pays. The other rows show what specific feature additions cost on top.
+`base` is the cost of `<Chart>` (with the cartesian frame baked in) — what every cartesian chart pays. `core` is the cost of `<ChartCore>` — what geo and custom-layout charts pay instead.
 
 ## Background: how LayerChart minimizes baseline cost
 

@@ -35,6 +35,7 @@ export { default as Canvas } from './layers/Canvas.svelte';
 export * from './layers/Canvas.svelte';
 export { default as Chart } from "./Chart/Chart.svelte";
 export * from "./Chart/Chart.svelte";
+export { default as ChartCore } from './Chart/ChartCore.svelte';
 export { default as ChartClipPath } from './ChartClipPath/ChartClipPath.svelte';
 export * from './ChartClipPath/ChartClipPath.svelte';
 export { default as Circle } from './Circle/Circle.svelte';

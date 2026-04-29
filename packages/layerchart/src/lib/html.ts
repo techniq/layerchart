@@ -12,6 +12,7 @@
 export { default as Html, default as Layer } from './components/layers/Html.svelte';
 export type { HTMLProps } from './components/layers/Html.svelte';
 export { default as Chart } from './components/Chart/Chart.html.svelte';
+export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,
   ChartPropsWithoutHTML,

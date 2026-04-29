@@ -35,37 +35,38 @@ export interface ComponentInfo {
  * Each scenario includes the minimum set of components for that chart type.
  */
 export const scenarios: Scenario[] = [
-  // --- Core (agnostic) ---
+  // --- Base (agnostic) ---
+  // The full `<Chart>` (with Axis/Grid/Rule/Highlight/Layer/ChartClipPath baked in).
   {
-    name: 'core',
-    group: 'Core (agnostic)',
-    description: 'Core charting components without rendering layer',
+    name: 'base',
+    group: 'Base (agnostic)',
+    description: '`Chart` — full charting frame without rendering layer',
     imports: ['Chart'],
   },
   {
-    name: 'core-svg-agnostic',
-    group: 'Core (agnostic)',
+    name: 'base-svg-agnostic',
+    group: 'Base (agnostic)',
     description: '`Chart` + `Svg` from `layerchart` (agnostic dispatcher)',
     imports: ['Chart', 'Svg'],
   },
   {
-    name: 'core-canvas-agnostic',
-    group: 'Core (agnostic)',
+    name: 'base-canvas-agnostic',
+    group: 'Base (agnostic)',
     description: '`Chart` + `Canvas` from `layerchart` (agnostic dispatcher)',
     imports: ['Chart', 'Canvas'],
   },
   {
-    name: 'core-html-agnostic',
-    group: 'Core (agnostic)',
+    name: 'base-html-agnostic',
+    group: 'Base (agnostic)',
     description: '`Chart` + `Html` from `layerchart` (agnostic dispatcher)',
     imports: ['Chart', 'Html'],
   },
 
-  // --- Core (layer-specific) ---
+  // --- Base (layer-specific) ---
   {
-    name: 'core-svg',
-    group: 'Core (layer-specific)',
-    description: 'Svg-based rendering',
+    name: 'base-svg',
+    group: 'Base (layer-specific)',
+    description: '`Chart` + `Svg` from `layerchart/svg`',
     imports: ['Chart', 'Svg'],
     layers: {
       Chart: 'svg',
@@ -73,9 +74,9 @@ export const scenarios: Scenario[] = [
     },
   },
   {
-    name: 'core-canvas',
-    group: 'Core (layer-specific)',
-    description: 'Canvas-based rendering',
+    name: 'base-canvas',
+    group: 'Base (layer-specific)',
+    description: '`Chart` + `Canvas` from `layerchart/canvas`',
     imports: ['Chart', 'Canvas'],
     layers: {
       Chart: 'canvas',
@@ -83,14 +84,63 @@ export const scenarios: Scenario[] = [
     },
   },
   {
-    name: 'core-html',
-    group: 'Core (layer-specific)',
-    description: 'HTML-based rendering',
+    name: 'base-html',
+    group: 'Base (layer-specific)',
+    description: '`Chart` + `Html` from `layerchart/html`',
     imports: ['Chart', 'Html'],
     layers: {
       Chart: 'html',
       Html: 'html',
     },
+  },
+
+  // --- Core ---
+  // The bare-bones `<ChartCore>` (no `<ChartChildren>` — no Axis/Grid/Rule/Highlight/Layer).
+  // Use cases: geo maps, custom layouts, or anything that doesn't need the cartesian frame.
+  {
+    name: 'core',
+    group: 'Core',
+    description: '`ChartCore` — bare-bones chart without `ChartChildren`',
+    imports: ['ChartCore'],
+  },
+  {
+    name: 'core-svg',
+    group: 'Core',
+    description: '`ChartCore` + `Svg` from `layerchart/svg`',
+    imports: ['ChartCore', 'Svg'],
+    layers: { ChartCore: 'svg', Svg: 'svg' },
+  },
+  {
+    name: 'core-canvas',
+    group: 'Core',
+    description: '`ChartCore` + `Canvas` from `layerchart/canvas`',
+    imports: ['ChartCore', 'Canvas'],
+    layers: { ChartCore: 'canvas', Canvas: 'canvas' },
+  },
+  {
+    name: 'core-html',
+    group: 'Core',
+    description: '`ChartCore` + `Html` from `layerchart/html`',
+    imports: ['ChartCore', 'Html'],
+    layers: { ChartCore: 'html', Html: 'html' },
+  },
+  {
+    name: 'core-geo',
+    group: 'Core',
+    description: '`ChartCore`-based geo map (`GeoProjection` + `GeoPath`)',
+    imports: ['ChartCore', 'Svg', 'GeoProjection', 'GeoPath'],
+  },
+  {
+    name: 'core-line',
+    group: 'Core',
+    description: '`ChartCore` + manual `Spline` line (no Axis/Grid)',
+    imports: ['ChartCore', 'Svg', 'Spline'],
+  },
+  {
+    name: 'core-scatter',
+    group: 'Core',
+    description: '`ChartCore` + manual `Points` scatter (no Axis/Grid)',
+    imports: ['ChartCore', 'Svg', 'Points'],
   },
 
   // --- Cartesian charts ---
@@ -1712,6 +1762,7 @@ const INDIVIDUAL_COMPONENTS: string[] = [
   'Canvas',
   'Cell',
   'Chart',
+  'ChartCore',
   'Chord',
   'ChartClipPath',
   'Circle',

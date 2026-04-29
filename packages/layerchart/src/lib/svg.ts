@@ -14,6 +14,7 @@
 export { default as Svg, default as Layer } from './components/layers/Svg.svelte';
 export type { SVGProps } from './components/layers/Svg.svelte';
 export { default as Chart } from './components/Chart/Chart.svg.svelte';
+export { default as ChartCore } from './components/Chart/ChartCore.svelte';
 export type {
   ChartProps,
   ChartPropsWithoutHTML,
