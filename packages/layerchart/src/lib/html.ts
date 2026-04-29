@@ -127,6 +127,37 @@ export type {
   RasterProps,
   RasterPropsWithoutHTML,
 } from './components/Raster/Raster.shared.svelte.js';
+export { default as Bar } from './components/Bar/Bar.html.svelte';
+export type { BarProps, BarPropsWithoutHTML } from './components/Bar/Bar.shared.svelte.js';
+export { default as Bars } from './components/Bars/Bars.html.svelte';
+export type { BarsProps, BarsPropsWithoutHTML } from './components/Bars/Bars.shared.svelte.js';
+export { default as AnnotationLine } from './components/AnnotationLine/AnnotationLine.html.svelte';
+export type {
+  AnnotationLineProps,
+  AnnotationLinePropsWithoutHTML,
+} from './components/AnnotationLine/AnnotationLine.shared.svelte.js';
+export { default as AnnotationPoint } from './components/AnnotationPoint/AnnotationPoint.html.svelte';
+export type {
+  AnnotationPointProps,
+  AnnotationPointPropsWithoutHTML,
+} from './components/AnnotationPoint/AnnotationPoint.shared.svelte.js';
+export { default as AnnotationRange } from './components/AnnotationRange/AnnotationRange.html.svelte';
+export type {
+  AnnotationRangeProps,
+  AnnotationRangePropsWithoutHTML,
+} from './components/AnnotationRange/AnnotationRange.shared.svelte.js';
+export { default as Calendar } from './components/Calendar/Calendar.html.svelte';
+export type {
+  CalendarProps,
+  CalendarPropsWithoutHTML,
+  CalendarCell,
+} from './components/Calendar/Calendar.shared.svelte.js';
+export { default as Month } from './components/Month/Month.html.svelte';
+export type {
+  MonthProps,
+  MonthPropsWithoutHTML,
+  MonthCell,
+} from './components/Month/Month.shared.svelte.js';
 
 // --- Layer-agnostic re-exports ---
 // These components don't render layer-specific elements (pure logic, layout

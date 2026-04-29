@@ -4,7 +4,12 @@
 
   export type AnnotationPointBaseLayerComponents = {
     Circle: Component<any>;
-    Link: Component<any>;
+    /**
+     * Used for callout link rendering. Optional because the HTML layer
+     * doesn't have a `Link` variant; HTML annotation points without callouts
+     * still render correctly.
+     */
+    Link?: Component<any>;
     Text: Component<any>;
   };
 
@@ -119,7 +124,7 @@
   class={cls('lc-annotation-point', link && 'lc-annotation-point-ring', props?.circle?.class)}
 />
 
-{#if linkEndpoints}
+{#if linkEndpoints && Link}
   <Link
     x1={linkEndpoints.source.x}
     y1={linkEndpoints.source.y}

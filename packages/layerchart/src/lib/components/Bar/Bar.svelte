@@ -6,6 +6,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import BarSvg from './Bar.svg.svelte';
   import BarCanvas from './Bar.canvas.svelte';
+  import BarHtml from './Bar.html.svelte';
   import type { BarProps } from './Bar.shared.svelte.js';
 
   const layerCtx = getLayerContext();
@@ -17,4 +18,6 @@
   <BarSvg {...props} />
 {:else if layerCtx === 'canvas'}
   <BarCanvas {...props} />
+{:else if layerCtx === 'html'}
+  <BarHtml {...props} />
 {/if}

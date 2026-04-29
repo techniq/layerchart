@@ -9,6 +9,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import AnnotationLineSvg from './AnnotationLine.svg.svelte';
   import AnnotationLineCanvas from './AnnotationLine.canvas.svelte';
+  import AnnotationLineHtml from './AnnotationLine.html.svelte';
   import type { AnnotationLineProps } from './AnnotationLine.shared.svelte.js';
 
   const layerCtx = getLayerContext();
@@ -20,4 +21,6 @@
   <AnnotationLineSvg {...props} />
 {:else if layerCtx === 'canvas'}
   <AnnotationLineCanvas {...props} />
+{:else if layerCtx === 'html'}
+  <AnnotationLineHtml {...props} />
 {/if}

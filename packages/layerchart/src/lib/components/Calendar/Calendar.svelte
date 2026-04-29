@@ -10,6 +10,7 @@
   import { getLayerContext } from '$lib/contexts/layer.js';
   import CalendarSvg from './Calendar.svg.svelte';
   import CalendarCanvas from './Calendar.canvas.svelte';
+  import CalendarHtml from './Calendar.html.svelte';
   import type { CalendarPropsWithoutHTML } from './Calendar.shared.svelte.js';
 
   const layerCtx = getLayerContext();
@@ -21,4 +22,6 @@
   <CalendarSvg {...props} />
 {:else if layerCtx === 'canvas'}
   <CalendarCanvas {...props} />
+{:else if layerCtx === 'html'}
+  <CalendarHtml {...props} />
 {/if}
