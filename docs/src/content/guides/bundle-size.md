@@ -78,7 +78,7 @@ Each sub-path also re-exports the layer-agnostic helpers you'd need alongside it
 </ChartCore>
 ```
 
-A typical geo chart drops from ~90 KB gz with `<Chart>` to ~70 KB gz with `<ChartCore>` (a ~20 KB gz / ~22% saving) because the entire `Axis` / `Grid` / `Rule` / `Highlight` / `ChartClipPath` / `Layer` chain is no longer in the import graph.
+A typical geo chart drops from ~87 KB gz with `<Chart>` to ~55 KB gz with `<ChartCore>` (a ~32 KB gz / ~37% saving) because the entire `Axis` / `Grid` / `Rule` / `Highlight` / `ChartClipPath` / `Layer` chain is no longer in the import graph.
 
 `<ChartCore>` is exported from each layer sub-path (`layerchart`, `layerchart/svg`, `layerchart/canvas`, `layerchart/html`). The component itself is layer-agnostic — the layer is whatever you put inside the `children` snippet — so the sub-path choice only affects what other components (like `<Svg>` or `<GeoPath>`) tree-shake to.
 
@@ -193,12 +193,12 @@ Geo marks live on `layerchart/geo` (and `layerchart/geo`-prefixed variants like 
 
 | Chart | Agnostic | `from 'layerchart/svg'` | `from 'layerchart/canvas'` |
 | --- | --- | --- | --- |
-| `LineChart` | 92.5 KB gz | 81.9 KB gz (-11%) | 83.6 KB gz (-10%) |
-| `AreaChart` | 90.3 KB gz | 84.1 KB gz (-7%) | 85.7 KB gz (-5%) |
-| `BarChart` | 88.3 KB gz | 82.1 KB gz (-7%) | 83.8 KB gz (-5%) |
-| `ScatterChart` | 87.4 KB gz | 81.0 KB gz (-7%) | 82.7 KB gz (-5%) |
-| `PieChart` | 94.8 KB gz | 88.1 KB gz (-7%) | 89.9 KB gz (-5%) |
-| `ArcChart` | 93.7 KB gz | 87.1 KB gz (-7%) | 88.8 KB gz (-5%) |
+| `LineChart` | 89.6 KB gz | 79.0 KB gz (-12%) | 80.7 KB gz (-10%) |
+| `AreaChart` | 87.3 KB gz | 81.2 KB gz (-7%) | 82.8 KB gz (-5%) |
+| `BarChart` | 85.4 KB gz | 79.2 KB gz (-7%) | 80.9 KB gz (-5%) |
+| `ScatterChart` | 84.5 KB gz | 78.1 KB gz (-8%) | 79.8 KB gz (-6%) |
+| `PieChart` | 91.9 KB gz | 85.3 KB gz (-7%) | 86.9 KB gz (-5%) |
+| `ArcChart` | 90.7 KB gz | 84.2 KB gz (-7%) | 85.9 KB gz (-5%) |
 
 ```ts
 // Agnostic — supports Svg / Canvas / Html
@@ -215,7 +215,7 @@ There is no `layerchart/html` variant for the high-level charts because the mark
 
 ## Worst case: importing everything
 
-If you `import * as LayerChart from 'layerchart'` (or your bundler can't tree-shake at all), you'll pay for the entire surface area of the root barrel — currently around 240 KB gz across all components. The strategies above exist precisely to keep this from happening for typical consumers.
+If you `import * as LayerChart from 'layerchart'` (or your bundler can't tree-shake at all), you'll pay for the entire surface area of the root barrel — currently around 232 KB gz across all components. The strategies above exist precisely to keep this from happening for typical consumers.
 
 If you're not sure what your bundle looks like in practice, run a tool like [`rollup-plugin-visualizer`](https://github.com/btd/rollup-plugin-visualizer) or `vite build --mode=production` with source maps and inspect the output.
 
@@ -231,13 +231,13 @@ The numbers below are gzipped totals from LayerChart's own bundle analyzer. They
 | `base-html` (per-layer) | `Chart`, `Html` from `layerchart/html` | ~79 KB |
 | `core` | `ChartCore` (no Axis/Grid/Highlight) | ~51 KB |
 | `core-svg` (per-layer) | `ChartCore`, `Svg` from `layerchart/svg` | ~51 KB |
-| `core-geo` | `ChartCore`, `Svg`, `GeoProjection`, `GeoPath` | ~58 KB |
-| `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~86 KB |
-| `LineChart` | high-level `LineChart` | ~92 KB |
-| `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg` | ~82 KB |
-| `geo` (sub-path) | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint` | ~90 KB |
-| `force` (sub-path) | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~97 KB |
-| `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~112 KB |
+| `core-geo` | `ChartCore`, `Svg`, `GeoProjection`, `GeoPath` | ~55 KB |
+| `line-chart` | `Chart`, `Svg`, `Line`, `Axis`, `Grid` | ~83 KB |
+| `LineChart` | high-level `LineChart` | ~90 KB |
+| `LineChart-svg` (per-layer) | high-level `LineChart` from `layerchart/svg` | ~79 KB |
+| `geo` (sub-path) | `Chart`, `Svg`, `GeoProjection`, `GeoPath`, `GeoPoint` | ~87 KB |
+| `force` (sub-path) | `Chart`, `Svg`, `ForceSimulation`, `Link`, `Circle`, `Text` | ~94 KB |
+| `dagre` (sub-path) | `Chart`, `Svg`, `Dagre`, `Link`, `Circle`, `Text` | ~109 KB |
 | `circle-svg` (per-layer) | `Circle` from `layerchart/svg` | ~13 KB |
 | `circle-agnostic` | `Circle` from `layerchart` | ~17 KB |
 | `text-svg` (per-layer) | `Text` from `layerchart/svg` | ~16 KB |

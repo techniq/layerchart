@@ -52,7 +52,7 @@ The geo, graph, hierarchy, and force sub-paths also re-export every layer-agnost
 
 **Compound marks:** typically 8–15% gz savings per-layer; outliers like `Highlight` (-30% canvas) and `Cell` (-22% svg) are larger because their HTML/canvas vs. SVG paths diverge significantly.
 
-**High-level charts:** ~10–12% gz savings (~5–11 KB) when imported from `layerchart/svg` or `layerchart/canvas`. A single-layer LineChart drops from 92.5 KB → 81.9 KB gz on the SVG path.
+**High-level charts:** ~5–12% gz savings (~5–11 KB) when imported from `layerchart/svg` or `layerchart/canvas`. A single-layer LineChart drops from 89.6 KB → 79.0 KB gz on the SVG path.
 
 For a consumer who migrates all imports to a single layer, cumulative savings across primitives and compound marks are 60–80 KB gz.
 
