@@ -12,7 +12,6 @@
   import {
     TextState,
     textMarkInfo,
-    isValidXOrY,
     getPixelValue,
     type TextProps,
   } from './Text.shared.svelte.js';
@@ -128,7 +127,11 @@
           {c.wordsByLines.map((line) => line.words.join(' ')).join()}
         </textPath>
       </text>
-    {:else if isValidXOrY(typeof rest.x === 'function' ? undefined : rest.x) || isValidXOrY(typeof rest.y === 'function' ? undefined : rest.y)}
+    {:else}
+      <!-- `motionX` / `motionY` default to 0 when `x` / `y` aren't set, matching
+           SVG's natural "missing coord = 0" behavior. This lets `<Text>` work
+           inside positioned parents like `<Group>` or `<Arc>` even without
+           explicit coordinates (matching `Text.canvas` / `Text.html`). -->
       <text
         {...rest as any}
         bind:this={ref}
