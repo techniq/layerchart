@@ -35,6 +35,55 @@ export interface ComponentInfo {
  * Each scenario includes the minimum set of components for that chart type.
  */
 export const scenarios: Scenario[] = [
+  // --- Core ---
+  // The bare-bones `<ChartCore>` (no `<ChartChildren>` — no Axis/Grid/Rule/Highlight/Layer).
+  // Use cases: geo maps, custom layouts, or anything that doesn't need the cartesian frame.
+  {
+    name: 'core',
+    group: 'Core',
+    description: '`ChartCore` — bare-bones chart without `ChartChildren`',
+    imports: ['ChartCore'],
+  },
+  {
+    name: 'core-svg',
+    group: 'Core',
+    description: '`ChartCore` + `Svg` from `layerchart/svg`',
+    imports: ['ChartCore', 'Svg'],
+    layers: { ChartCore: 'svg', Svg: 'svg' },
+  },
+  {
+    name: 'core-canvas',
+    group: 'Core',
+    description: '`ChartCore` + `Canvas` from `layerchart/canvas`',
+    imports: ['ChartCore', 'Canvas'],
+    layers: { ChartCore: 'canvas', Canvas: 'canvas' },
+  },
+  {
+    name: 'core-html',
+    group: 'Core',
+    description: '`ChartCore` + `Html` from `layerchart/html`',
+    imports: ['ChartCore', 'Html'],
+    layers: { ChartCore: 'html', Html: 'html' },
+  },
+  {
+    name: 'core-geo',
+    group: 'Core',
+    description: '`ChartCore`-based geo map (`GeoProjection` + `GeoPath`)',
+    imports: ['ChartCore', 'Svg', 'GeoProjection', 'GeoPath'],
+  },
+  {
+    name: 'core-line',
+    group: 'Core',
+    description: '`ChartCore` + manual `Spline` line (no Axis/Grid)',
+    imports: ['ChartCore', 'Svg', 'Spline'],
+  },
+  {
+    name: 'core-scatter',
+    group: 'Core',
+    description: '`ChartCore` + manual `Points` scatter (no Axis/Grid)',
+    imports: ['ChartCore', 'Svg', 'Points'],
+  },
+
   // --- Base (agnostic) ---
   // The full `<Chart>` (with Axis/Grid/Rule/Highlight/Layer/ChartClipPath baked in).
   {
@@ -92,55 +141,6 @@ export const scenarios: Scenario[] = [
       Chart: 'html',
       Html: 'html',
     },
-  },
-
-  // --- Core ---
-  // The bare-bones `<ChartCore>` (no `<ChartChildren>` — no Axis/Grid/Rule/Highlight/Layer).
-  // Use cases: geo maps, custom layouts, or anything that doesn't need the cartesian frame.
-  {
-    name: 'core',
-    group: 'Core',
-    description: '`ChartCore` — bare-bones chart without `ChartChildren`',
-    imports: ['ChartCore'],
-  },
-  {
-    name: 'core-svg',
-    group: 'Core',
-    description: '`ChartCore` + `Svg` from `layerchart/svg`',
-    imports: ['ChartCore', 'Svg'],
-    layers: { ChartCore: 'svg', Svg: 'svg' },
-  },
-  {
-    name: 'core-canvas',
-    group: 'Core',
-    description: '`ChartCore` + `Canvas` from `layerchart/canvas`',
-    imports: ['ChartCore', 'Canvas'],
-    layers: { ChartCore: 'canvas', Canvas: 'canvas' },
-  },
-  {
-    name: 'core-html',
-    group: 'Core',
-    description: '`ChartCore` + `Html` from `layerchart/html`',
-    imports: ['ChartCore', 'Html'],
-    layers: { ChartCore: 'html', Html: 'html' },
-  },
-  {
-    name: 'core-geo',
-    group: 'Core',
-    description: '`ChartCore`-based geo map (`GeoProjection` + `GeoPath`)',
-    imports: ['ChartCore', 'Svg', 'GeoProjection', 'GeoPath'],
-  },
-  {
-    name: 'core-line',
-    group: 'Core',
-    description: '`ChartCore` + manual `Spline` line (no Axis/Grid)',
-    imports: ['ChartCore', 'Svg', 'Spline'],
-  },
-  {
-    name: 'core-scatter',
-    group: 'Core',
-    description: '`ChartCore` + manual `Points` scatter (no Axis/Grid)',
-    imports: ['ChartCore', 'Svg', 'Points'],
   },
 
   // --- Cartesian charts ---
