@@ -13,7 +13,7 @@
   import Separator from '../tooltip/TooltipSeparator.svelte';
   const Tooltip = { Root, Header, List, Item, Separator };
   import { format } from '@layerstack/utils';
-  import type { ChartChildrenProps } from '../ChartChildren.svelte';
+  import type { ChartChildrenProps } from "../ChartChildren/ChartChildren.svelte";
 
   let {
     tooltipProps,

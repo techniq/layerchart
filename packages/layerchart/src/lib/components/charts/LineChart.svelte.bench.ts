@@ -1,7 +1,7 @@
 import { describe, bench, afterEach } from 'vitest';
 import { render, cleanup } from 'vitest-browser-svelte';
 
-import LineChart from './LineChart.svelte';
+import LineChart from './LineChart/LineChart.svelte';
 import {
   generateTimeSeriesData,
   generateMultiSeriesData,

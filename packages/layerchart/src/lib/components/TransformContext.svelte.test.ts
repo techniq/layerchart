@@ -70,7 +70,10 @@ describe('TransformContext', () => {
       await vi.waitFor(() => expect(chartContext).toBeDefined());
 
       // Orthographic is a globe — processTranslate should be a function
-      expect(chartContext.transform.processTranslate).toBeTypeOf('function');
+      // (TransformContext is lazy-loaded, so wait for it to resolve)
+      await vi.waitFor(() => {
+        expect(chartContext.transform.processTranslate).toBeTypeOf('function');
+      });
 
       // Switch to Mercator (flat)
       chartProps.geo = {
@@ -107,8 +110,9 @@ describe('TransformContext', () => {
 
       await vi.waitFor(() => expect(chartContext).toBeDefined());
 
+      // TransformContext is lazy-loaded, so wait for fitSize to apply
+      await vi.waitFor(() => expect(chartContext.transform.scale).toBeGreaterThan(1));
       const initialScale = chartContext.transform.scale;
-      expect(initialScale).toBeGreaterThan(1); // fitSize should give a scale > 1
 
       // Simulate zoom in
       chartContext.transform.setScale(initialScale * 2, { instant: true });
@@ -145,8 +149,9 @@ describe('TransformContext', () => {
 
       await vi.waitFor(() => expect(chartContext).toBeDefined());
 
+      // TransformContext is lazy-loaded, so wait for fitSize to apply
+      await vi.waitFor(() => expect(chartContext.transform.scale).toBeGreaterThan(10));
       const initialScale = chartContext.transform.scale;
-      expect(initialScale).toBeGreaterThan(10); // Mercator fitSize scale is typically large
 
       // Try to zoom way beyond 2x — should be clamped to 2x initial
       chartContext.transform.setScale(initialScale * 5, { instant: true });
@@ -186,7 +191,10 @@ describe('TransformContext', () => {
 
       await vi.waitFor(() => expect(chartContext).toBeDefined());
 
-      expect(chartContext.transform.disablePointer).toBe(false);
+      // TransformContext is lazy-loaded, so wait for it to resolve
+      await vi.waitFor(() => {
+        expect(chartContext.transform.disablePointer).toBe(false);
+      });
 
       // Enable disablePointer
       chartProps.transform = {

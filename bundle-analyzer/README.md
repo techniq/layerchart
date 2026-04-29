@@ -28,18 +28,22 @@ Svelte runtime is excluded from measurements since it's shared across all compon
 
 ## Scenarios
 
-Scenarios are defined in [`define-scenarios.ts`](./define-scenarios.ts) and represent real-world usage patterns:
+Scenarios are defined in [`bundle-scenarios.ts`](./bundle-scenarios.ts) and represent real-world usage patterns:
 
 | Scenario | Description |
 |----------|-------------|
-| `core` | Bare minimum: `Chart` + `Svg` |
+| `base` | Full `Chart` (with the cartesian frame: Axis, Grid, Rule, Highlight) |
+| `base-svg` / `base-canvas` / `base-html` | `Chart` from `layerchart/svg`, etc. |
+| `core` | Bare-bones `ChartCore` (no Axis/Grid/Rule/Highlight) |
+| `core-svg` / `core-canvas` / `core-html` | `ChartCore` from `layerchart/svg`, etc. |
+| `core-geo` / `core-line` / `core-scatter` | `ChartCore` + manual primitives (geo / spline / points) |
 | `line-chart` | Line chart with axes and grid |
 | `line-chart-interactive` | Line chart with tooltip and highlight |
 | `area-chart` | Area chart with axes |
 | `bar-chart` | Bar chart with axes |
 | `scatter-chart` | Scatter plot with points |
 | `pie-chart` | Pie/donut chart with arcs |
-| `high-level-charts` | All high-level chart components |
+| `LineChart` / `AreaChart` / `BarChart` / etc. | High-level chart wrappers |
 | `geo` | Geographic map with paths |
 | `geo-tiles` | Geographic map with tile layer |
 | `geo-full` | All geo components |
@@ -50,7 +54,6 @@ Scenarios are defined in [`define-scenarios.ts`](./define-scenarios.ts) and repr
 | `dagre` | Dagre directed graph |
 | `sankey` | Sankey flow diagram |
 | `chord` | Chord diagram |
-| `canvas` | Canvas-based rendering |
 | `all` | Everything from layerchart |
 
 ## CLI options
@@ -83,7 +86,7 @@ Two GitHub Actions workflows automate bundle tracking:
 
 ## Adding scenarios
 
-Edit [`define-scenarios.ts`](./define-scenarios.ts) to add new scenarios to the `scenarios` array:
+Edit [`bundle-scenarios.ts`](./bundle-scenarios.ts) to add new scenarios to the `scenarios` array:
 
 ```ts
 {

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import LineChart from '../charts/LineChart.svelte';
+import LineChart from '../charts/LineChart/LineChart.svelte';
 
 const data = [
   { date: 0, value: 10 },

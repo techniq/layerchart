@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 
-import AreaChart from './AreaChart.svelte';
-import LineChart from './LineChart.svelte';
-import ScatterChart from './ScatterChart.svelte';
+import AreaChart from './AreaChart/AreaChart.svelte';
+import LineChart from './LineChart/LineChart.svelte';
+import ScatterChart from './ScatterChart/ScatterChart.svelte';
 
 // Shared test data
 const timeSeriesData = [

@@ -32,7 +32,7 @@
   import Canvas, { type CanvasProps } from './Canvas.svelte';
   import Svg, { type SVGProps } from './Svg.svelte';
   import Html, { type HTMLProps } from './Html.svelte';
-  import Frame from '../Frame.svelte';
+  import Frame from '../Frame/Frame.svelte';
   import { getSettings } from '$lib/contexts/settings.js';
 
   let { type, children, ...restProps }: LayerProps = $props();

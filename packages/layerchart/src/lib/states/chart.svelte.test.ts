@@ -6,7 +6,7 @@ import { geoAlbersUsa } from 'd3-geo';
 import { timeDay } from 'd3-time';
 
 import { ChartState } from './chart.svelte.js';
-import type { ChartPropsWithoutHTML } from '$lib/components/Chart.svelte';
+import type { ChartPropsWithoutHTML } from '$lib/components/Chart/Chart.svelte';
 import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
 
 type TestData = { date: string; value: number };

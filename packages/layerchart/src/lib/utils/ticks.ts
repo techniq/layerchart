@@ -9,7 +9,7 @@ import {
   DateToken,
 } from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
-import type { AxisProps } from '$lib/components/Axis.svelte';
+import type { AxisProps } from '$lib/components/Axis/Axis.svelte';
 
 export function getDurationFormat(
   duration: Duration,

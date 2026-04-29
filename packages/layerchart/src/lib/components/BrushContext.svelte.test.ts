@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
 
-import Chart from './Chart.svelte';
+import Chart from "./Chart/Chart.svelte";
 import BrushTestHarness from './tests/BrushTestHarness.svelte';
 
 const data = [

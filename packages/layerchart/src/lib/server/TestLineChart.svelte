@@ -1,8 +1,8 @@
 <script lang="ts">
   import ServerChart from './ServerChart.svelte';
   import type { CaptureTarget } from './captureStore.js';
-  import Area from '$lib/components/Area.svelte';
-  import Spline from '$lib/components/Spline.svelte';
+  import Area from '$lib/components/Area/Area.svelte';
+  import Spline from '$lib/components/Spline/Spline.svelte';
 
   let {
     data,

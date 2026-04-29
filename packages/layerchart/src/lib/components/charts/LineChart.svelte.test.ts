@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { scaleSequential } from 'd3-scale';
 import { interpolateTurbo } from 'd3-scale-chromatic';
 
-import LineChart from './LineChart.svelte';
+import LineChart from './LineChart/LineChart.svelte';
 
 const data = [
   { date: 0, value: 10 },

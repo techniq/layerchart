@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Chart from '../Chart.svelte';
+  import Chart from "../Chart/Chart.svelte";
   import type { ChartState } from '$lib/states/chart.svelte.js';
 
   let {

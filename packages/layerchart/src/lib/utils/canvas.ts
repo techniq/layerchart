@@ -1,7 +1,7 @@
 import type { ClassValue } from 'svelte/elements';
 import memoize from 'memoize';
 import { cls } from '@layerstack/tailwind';
-import type { PatternShape } from '$lib/components/Pattern.svelte';
+import type { PatternShape } from '$lib/components/Pattern/Pattern.svelte';
 import { roundedRectPath } from './path.js';
 
 /** @deprecated - use `isTransparentFill` instead */

@@ -41,6 +41,10 @@ function formatDiff(bytes) {
 }
 
 function formatPercent(percent) {
+	// Added scenarios (target was 0) have +Infinity; render as "+100%". Removed
+	// scenarios go through the explicit -100 branch, but handle -Infinity too.
+	if (percent === Infinity) return "+100%";
+	if (percent === -Infinity) return "-100%";
 	if (!isFinite(percent)) return "";
 	const sign = percent > 0 ? "+" : "";
 	return `${sign}${percent.toFixed(1)}%`;
@@ -127,7 +131,7 @@ function analyzeChanges(prReport, targetReport) {
 
 	// Preserve the input order — PR scenarios first (which start with `core`),
 	// then any target-only scenarios. Order within a group reflects the order
-	// in `define-scenarios.ts`.
+	// in `bundle-scenarios.ts`.
 	return changes;
 }
 
@@ -150,12 +154,28 @@ function generateComment(changes, hasBaseline = true) {
 
 		if (scenarios.length > 0) {
 			comment += "### Use-Case Scenarios\n\n";
-			comment += "| Scenario | Size | Gzipped |\n";
-			comment += "|----------|-----:|--------:|\n";
+
+			/** @type {Map<string, ScenarioDiff[]>} */
+			const byGroup = new Map();
 			for (const s of scenarios) {
-				comment += `| \`${s.scenario}\` | ${formatKB(s.currentSize)} KB | ${formatKB(s.currentGzipSize)} KB |\n`;
+				const g = s.group || "Other";
+				if (!byGroup.has(g)) byGroup.set(g, []);
+				byGroup.get(g).push(s);
 			}
-			comment += "\n";
+
+			const expandedGroups = new Set(["Base (agnostic)", "Base (layer-specific)", "Core"]);
+
+			for (const [groupName, rows] of byGroup) {
+				const open = expandedGroups.has(groupName) ? " open" : "";
+				comment += `<details${open}>\n`;
+				comment += `<summary><strong>${groupName}</strong> (${rows.length})</summary>\n\n`;
+				comment += "| Scenario | Size | Gzipped |\n";
+				comment += "|----------|-----:|--------:|\n";
+				for (const s of rows) {
+					comment += `| \`${s.scenario}\` | ${formatKB(s.currentSize)} KB | ${formatKB(s.currentGzipSize)} KB |\n`;
+				}
+				comment += "\n</details>\n\n";
+			}
 		}
 
 		if (components.length > 0) {
@@ -202,18 +222,24 @@ function generateComment(changes, hasBaseline = true) {
 
 		const renderRow = (s) => {
 			const icon = getStatusIcon(s.status, s.sizeDiff);
-			const current = `${formatKB(s.targetSize)} KB <sub>(${formatKB(s.targetGzipSize)} gz)</sub>`;
-			const newSize = `${formatKB(s.currentSize)} KB <sub>(${formatKB(s.currentGzipSize)} gz)</sub>`;
-			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)}) <sub>(${formatDiff(s.gzipSizeDiff)} gz, ${formatPercent(s.gzipSizePercent)})</sub>`;
+			const current = `${formatKB(s.targetSize)} KB<br><sub>${formatKB(s.targetGzipSize)} gz</sub>`;
+			const newSize = `${formatKB(s.currentSize)} KB<br><sub>${formatKB(s.currentGzipSize)} gz</sub>`;
+			const change = `${formatDiff(s.sizeDiff)} KB (${formatPercent(s.sizePercent)})<br><sub>${formatDiff(s.gzipSizeDiff)} gz (${formatPercent(s.gzipSizePercent)})</sub>`;
 			return `| ${icon} \`${s.scenario}\` | ${current} | ${newSize} | ${change} |\n`;
 		};
 
+		// Base + Core groups expanded by default; other groups collapsed to keep
+		// the comment scannable. Each group shows the count of changed scenarios.
+		const expandedGroups = new Set(["Base (agnostic)", "Base (layer-specific)", "Core"]);
+
 		for (const [groupName, rows] of byGroup) {
-			comment += `#### ${groupName}\n\n`;
+			const open = expandedGroups.has(groupName) ? " open" : "";
+			comment += `<details${open}>\n`;
+			comment += `<summary><strong>${groupName}</strong> (${rows.length} changed)</summary>\n\n`;
 			comment += "| Scenario | Current | New | Change |\n";
 			comment += "|----------|--------:|----:|-------:|\n";
 			for (const s of rows) comment += renderRow(s);
-			comment += "\n";
+			comment += "\n</details>\n\n";
 		}
 	}
 
@@ -284,6 +310,7 @@ function main() {
 			changes = prReport.results.map((result) => ({
 				scenario: result.scenario,
 				description: result.description,
+				group: result.group,
 				status: "added",
 				sizeDiff: result.size,
 				gzipSizeDiff: result.gzipSize,

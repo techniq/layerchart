@@ -139,6 +139,21 @@
       "svelte": "./dist/graph.js",
       "default": "./dist/graph.js"
     },
+    "./svg": {
+      "types": "./dist/svg.d.ts",
+      "svelte": "./dist/svg.js",
+      "default": "./dist/svg.js"
+    },
+    "./canvas": {
+      "types": "./dist/canvas.d.ts",
+      "svelte": "./dist/canvas.js",
+      "default": "./dist/canvas.js"
+    },
+    "./html": {
+      "types": "./dist/html.d.ts",
+      "svelte": "./dist/html.js",
+      "default": "./dist/html.js"
+    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "svelte": "./dist/utils/*.js",

@@ -2,7 +2,7 @@
   import { scaleBand } from 'd3-scale';
   import ServerChart from './ServerChart.svelte';
   import type { CaptureTarget } from './captureStore.js';
-  import Bars from '$lib/components/Bars.svelte';
+  import Bars from '$lib/components/Bars/Bars.svelte';
 
   let {
     data,
