@@ -128,7 +128,7 @@
           {c.wordsByLines.map((line) => line.words.join(' ')).join()}
         </textPath>
       </text>
-    {:else if isValidXOrY(typeof rest.x === 'function' ? undefined : rest.x) && isValidXOrY(typeof rest.y === 'function' ? undefined : rest.y)}
+    {:else if isValidXOrY(typeof rest.x === 'function' ? undefined : rest.x) || isValidXOrY(typeof rest.y === 'function' ? undefined : rest.y)}
       <text
         {...rest as any}
         bind:this={ref}
