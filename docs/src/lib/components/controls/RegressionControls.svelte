@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SelectField } from 'svelte-ux';
-	import type { RegressionType } from '$lib/components/Regression.svelte';
+	import type { RegressionType } from '../Regression.svelte';
 
 	interface Props {
 		type?: RegressionType;

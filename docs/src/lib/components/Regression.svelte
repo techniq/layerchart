@@ -288,9 +288,10 @@
     <Path {pathData} class={props?.line?.class} {...(restProps as PathProps)} />
     {/if}
     {#if confidenceBandPath}
-    <path
-        d={confidenceBandPath}
+      <Path
+        pathData={confidenceBandPath}
         fill={(restProps.stroke as string) ?? 'currentColor'}
+        stroke="none"
         class={cls("opacity-10", props?.confidence?.class)}
       />
     {/if}
