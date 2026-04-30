@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-21T13:52:38.533Z",
+  "generatedAt": "2026-04-30T15:47:36.271Z",
   "totalComponents": 76,
-  "totalExamples": 892,
+  "totalExamples": 893,
   "components": [
     {
       "component": "AnnotationLine",
@@ -19,12 +19,12 @@
         {
           "name": "horizontal-placement",
           "path": "/example/AnnotationLine/horizontal-placement",
-          "checksum": "c5f3787cee263675abba7ed5d1c01301"
+          "checksum": "ce15ffc3df7895943c20d49732e47bfa"
         },
         {
           "name": "horizontal-with-range",
           "path": "/example/AnnotationLine/horizontal-with-range",
-          "checksum": "1d7f1b1e8d70f2188cc0832aac47e5e4"
+          "checksum": "3fb545ef6b34c4006c5374711fe0fd21"
         },
         {
           "name": "playground",
@@ -32,24 +32,24 @@
           "checksum": "de3d447ad6d2db0d096b638e29448f3f"
         },
         {
-          "name": "slopped",
-          "path": "/example/AnnotationLine/slopped",
+          "name": "sloped",
+          "path": "/example/AnnotationLine/sloped",
           "checksum": "e87a9cb6891d1bde1dd8f6f1c7e79bbc"
         },
         {
           "name": "vertical",
           "path": "/example/AnnotationLine/vertical",
-          "checksum": "a650ef4261a139fcd355da52fa6d4139"
+          "checksum": "fd2210fba45f82657d20c504b5084ea2"
         },
         {
           "name": "vertical-placement",
           "path": "/example/AnnotationLine/vertical-placement",
-          "checksum": "150fadd417f5faaae22383779434956c"
+          "checksum": "b3f9fadd30e8f4f6119abc0f8a5b16c8"
         },
         {
           "name": "vertical-with-rotation",
           "path": "/example/AnnotationLine/vertical-with-rotation",
-          "checksum": "c9fb134f44a9aa7e313b3338ec350097"
+          "checksum": "ca4c34bdafdb304b18ff785b5ea028c0"
         }
       ]
     },
@@ -69,7 +69,7 @@
         {
           "name": "line-to-point",
           "path": "/example/AnnotationPoint/line-to-point",
-          "checksum": "c3cf32ce69d8c0916f410e9f4f4a88db"
+          "checksum": "0960f8d77e7b5792fb627b4a22590ddd"
         },
         {
           "name": "link-callouts",
@@ -79,17 +79,17 @@
         {
           "name": "on-axis-with-tooltip",
           "path": "/example/AnnotationPoint/on-axis-with-tooltip",
-          "checksum": "7db49f386a2e1517ee29c46fa90a236d"
+          "checksum": "70fdb13c05d27808786eaa291a0ca9dd"
         },
         {
           "name": "on-series-with-line-and-tooltip",
           "path": "/example/AnnotationPoint/on-series-with-line-and-tooltip",
-          "checksum": "4da998685607cf281dd9771c7e331779"
+          "checksum": "88f5559232651f573bb1ad869d4ab0ec"
         },
         {
           "name": "on-series-with-tooltip",
           "path": "/example/AnnotationPoint/on-series-with-tooltip",
-          "checksum": "5d43b35df0d08eaf8cb8670183190533"
+          "checksum": "55187ac75c7b4b698744cf0b73f2488b"
         },
         {
           "name": "playground",
@@ -99,17 +99,17 @@
         {
           "name": "series-annotation",
           "path": "/example/AnnotationPoint/series-annotation",
-          "checksum": "4fdd12ab3ee79a794c0015e7e54bcbf1"
+          "checksum": "c713d49abc369ffa268524d5f03498ac"
         },
         {
           "name": "us-cities",
           "path": "/example/AnnotationPoint/us-cities",
-          "checksum": "c179a9793ff2612c276bf770b9820bb5"
+          "checksum": "cbc8017f292d18c7adf5600a2d0444a1"
         },
         {
           "name": "world-landmarks",
           "path": "/example/AnnotationPoint/world-landmarks",
-          "checksum": "818be76ade4a953db483999eae045c7c"
+          "checksum": "d6b0efb4681228625a28d5d55ba6ebb7"
         }
       ]
     },
@@ -134,52 +134,52 @@
         {
           "name": "hide-tooltip",
           "path": "/example/AnnotationRange/hide-tooltip",
-          "checksum": "5d231163cb0edee97a18953b182e3042"
+          "checksum": "18d5b94c39fa7280592cdce94397cd00"
         },
         {
           "name": "horizontal-with-fill-multiple",
           "path": "/example/AnnotationRange/horizontal-with-fill-multiple",
-          "checksum": "2c8dd8871130e6398e007fbad91c1c30"
+          "checksum": "650f2d9f186954441a3d9dd271b932a1"
         },
         {
           "name": "horizontal-with-pattern-lower-bound",
           "path": "/example/AnnotationRange/horizontal-with-pattern-lower-bound",
-          "checksum": "0438c9bd921723e5415468f1618c1d52"
+          "checksum": "8613e9d9c5b7bd9b304f170d0aa38719"
         },
         {
           "name": "horizontal-with-pattern-range",
           "path": "/example/AnnotationRange/horizontal-with-pattern-range",
-          "checksum": "ab89d8162d764a00a4860551f10bf1fa"
+          "checksum": "764869035b0a05ae89ba19c6e7e2aee7"
         },
         {
           "name": "horizontal-with-pattern-upper-bound",
           "path": "/example/AnnotationRange/horizontal-with-pattern-upper-bound",
-          "checksum": "2af206fb693263a9434ce4351f6ed19f"
+          "checksum": "59e0530d47bdadefb4a8da937452dfd5"
         },
         {
           "name": "label-placement",
           "path": "/example/AnnotationRange/label-placement",
-          "checksum": "482890e1e0d13f6445ab112bc087df83"
+          "checksum": "b2e5847731fe57e99e9f6b584b419571"
         },
         {
           "name": "vertical-with-gradient-range",
           "path": "/example/AnnotationRange/vertical-with-gradient-range",
-          "checksum": "1b86400205ea14606ee0a7707c98d619"
+          "checksum": "6659694b73f3c8add1e7022aa64748a4"
         },
         {
           "name": "vertical-with-pattern-lower-bound",
           "path": "/example/AnnotationRange/vertical-with-pattern-lower-bound",
-          "checksum": "6f63f20bc12dff0310423dc7bf9802f8"
+          "checksum": "79c217ca78c379fae6e77c004b4c7cd0"
         },
         {
           "name": "vertical-with-pattern-range",
           "path": "/example/AnnotationRange/vertical-with-pattern-range",
-          "checksum": "647d8d1c783c9cb2c8862afde0a2066d"
+          "checksum": "2fa2cb1bfbce90a2f9a7a0812050efbb"
         },
         {
           "name": "vertical-with-pattern-upper-bound",
           "path": "/example/AnnotationRange/vertical-with-pattern-upper-bound",
-          "checksum": "03e5a1fc7d9f4f4eec72ea8289bde218"
+          "checksum": "8e2f51a212791f90c25c5a7ad3a93f7b"
         }
       ]
     },
@@ -244,7 +244,7 @@
         {
           "name": "speedometer",
           "path": "/example/Arc/speedometer",
-          "checksum": "6df459c295a5d8e8394caaace11e65c1"
+          "checksum": "9730efb5e3636369c9a4b912b1906057"
         },
         {
           "name": "tween-value-on-mount",
@@ -379,7 +379,7 @@
         {
           "name": "highlight-color-based-on-value-using-tooltip-slot-prop",
           "path": "/example/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-          "checksum": "0001168dcd7bb7efe079bf7d1b378890"
+          "checksum": "ffebc20979144246fc2429203a8e6a1d"
         },
         {
           "name": "multiple-series",
@@ -434,22 +434,22 @@
         {
           "name": "threshold-with-lineargradient",
           "path": "/example/Area/threshold-with-lineargradient",
-          "checksum": "91f0943d59569008b30c5949b4b59d4c"
+          "checksum": "4f583d0da584d5359a327d3eab31a429"
         },
         {
           "name": "threshold-with-lineargradient-over-under",
           "path": "/example/Area/threshold-with-lineargradient-over-under",
-          "checksum": "db432b5c7b0c23b46bbf407ee31858c6"
+          "checksum": "e91ee635d1cc88d373c92a1ceee817fc"
         },
         {
           "name": "threshold-with-rectclippath",
           "path": "/example/Area/threshold-with-rectclippath",
-          "checksum": "ba154f5de8bb079ea3aca9c42bd21b34"
+          "checksum": "dd3da5c0feb67958e53ea9a56c9620af"
         },
         {
           "name": "threshold-with-rectclippath-over-under",
           "path": "/example/Area/threshold-with-rectclippath-over-under",
-          "checksum": "ab781cec7b06045b75adf277d1486fd0"
+          "checksum": "171f9d2eb9de0fd7fd228a201577fa0b"
         },
         {
           "name": "tween-on-mount",
@@ -474,7 +474,7 @@
         {
           "name": "all-zero",
           "path": "/example/AreaChart/all-zero",
-          "checksum": "2d9c23f5b2f9fedb10fa12daa2cb8339"
+          "checksum": "6ef4fd975ef41a382b32c1602d335cae"
         },
         {
           "name": "band-scale",
@@ -494,7 +494,7 @@
         {
           "name": "brush-sync",
           "path": "/example/AreaChart/brush-sync",
-          "checksum": "a28374b95efaf812511fc0fa44511606"
+          "checksum": "3c42ab058063d2117f68f21bc3b63107"
         },
         {
           "name": "curve",
@@ -709,7 +709,7 @@
         {
           "name": "barchart-tickspacing",
           "path": "/example/Axis/barchart-tickspacing",
-          "checksum": "54141bf7721375f2566f08417c9fe1f5"
+          "checksum": "9a654f6fda830f6a8a2bb35621b64a93"
         },
         {
           "name": "barchart-xinterval-xinset",
@@ -969,7 +969,7 @@
         {
           "name": "company-race",
           "path": "/example/BarChart/company-race",
-          "checksum": "dc92c87735a54d09e62abf01c08d52fe"
+          "checksum": "a73d84295ce45c13b79ec0b41a1917f6"
         },
         {
           "name": "custom-chart",
@@ -1014,12 +1014,12 @@
         {
           "name": "duration-civilization-timeline",
           "path": "/example/BarChart/duration-civilization-timeline",
-          "checksum": "b76790e4ad88d2a8a4d628ee249d3159"
+          "checksum": "ca017a1f8d057f3f1c1475f8aba855ce"
         },
         {
           "name": "duration-civilization-timeline-dense",
           "path": "/example/BarChart/duration-civilization-timeline-dense",
-          "checksum": "4586c976941cb97cbac9845a2dae2477"
+          "checksum": "df2cf7296850b070c855e65c3abb37fc"
         },
         {
           "name": "duration-labels",
@@ -1124,7 +1124,7 @@
         {
           "name": "language-race",
           "path": "/example/BarChart/language-race",
-          "checksum": "7fc00126c49c3b0a7cae6012ae9df15a"
+          "checksum": "bcaaec59ee23095811c0470038d09ff3"
         },
         {
           "name": "legend-custom-labels",
@@ -1399,7 +1399,7 @@
         {
           "name": "waterfall",
           "path": "/example/BarChart/waterfall",
-          "checksum": "1647cf6b346d5bb722091c8ef1ddf0db"
+          "checksum": "57f4946c78dbf1d37d4e162e0c714bfd"
         }
       ]
     },
@@ -1774,7 +1774,7 @@
         {
           "name": "pre-computed",
           "path": "/example/BoxPlot/pre-computed",
-          "checksum": "031785677bac4ced6af9e3b413f916d8"
+          "checksum": "5712cd3a5a06623b8dba5ce81fe5b946"
         },
         {
           "name": "styled",
@@ -1799,7 +1799,7 @@
         {
           "name": "basic",
           "path": "/example/BrushContext/basic",
-          "checksum": "f8968fcb79c60d677e386ca498bbf449"
+          "checksum": "dd5cc899c307b26e26e728165561eff3"
         },
         {
           "name": "constant-labels",
@@ -1809,12 +1809,12 @@
         {
           "name": "handle-arrows",
           "path": "/example/BrushContext/handle-arrows",
-          "checksum": "12cf32b63675c98ce4c6bb1fa94c0b52"
+          "checksum": "0f3aa3a367ce0b4a14a97ce5c378779f"
         },
         {
           "name": "handle-labels",
           "path": "/example/BrushContext/handle-labels",
-          "checksum": "7fe342ea042c6eaf58793c86c5de9553"
+          "checksum": "ed8de9560c2599259de2c9c4b3a00f9e"
         },
         {
           "name": "integrated-brush-(both-axis-area)",
@@ -1864,12 +1864,12 @@
         {
           "name": "simple-styling",
           "path": "/example/BrushContext/simple-styling",
-          "checksum": "850981631e76a9aa0f002f4bbb919ea8"
+          "checksum": "edc72fe9d5f6d1b9c2d4763bd0776287"
         },
         {
           "name": "striped-background",
           "path": "/example/BrushContext/striped-background",
-          "checksum": "b9a931e7e067e7ade1d22a62ba3f3142"
+          "checksum": "e34f7726a5d4d73ab8cc235aa78e054d"
         },
         {
           "name": "synced-brushes",
@@ -1934,17 +1934,17 @@
         {
           "name": "basic",
           "path": "/example/Cell/basic",
-          "checksum": "bdf48842e17461fcd4afe352a0b65d1e"
+          "checksum": "fa9f733556ba72343e48a8011fd77a8a"
         },
         {
           "name": "circle",
           "path": "/example/Cell/circle",
-          "checksum": "bea3a454b393b5bac0e061bf88a3f761"
+          "checksum": "6bc128d0fba7d4db6e38bf37d842b4c5"
         },
         {
           "name": "color-scale",
           "path": "/example/Cell/color-scale",
-          "checksum": "0be53455996b66a04f5ce891ad207ea2"
+          "checksum": "aa9d798baeac059e93723616a906d76b"
         },
         {
           "name": "punchcard",
@@ -1954,7 +1954,7 @@
         {
           "name": "rounded-insets",
           "path": "/example/Cell/rounded-insets",
-          "checksum": "571bf3b2ff3a525a91dd4bb48be8f5e9"
+          "checksum": "45974012ff5d8de20278d9734eff4aba"
         }
       ]
     },
@@ -2024,27 +2024,27 @@
         {
           "name": "basic",
           "path": "/example/Chord/basic",
-          "checksum": "fe4e57872bdafdb0271d2309f790df0e"
+          "checksum": "b71d018f8b4315ea9db3676b200a1b73"
         },
         {
           "name": "directed",
           "path": "/example/Chord/directed",
-          "checksum": "43b6c339ef5416ba8d888dfcc091bbf6"
+          "checksum": "076318f9c53aca44077da13ab5ce4909"
         },
         {
           "name": "gradient",
           "path": "/example/Chord/gradient",
-          "checksum": "59f1b216a61ebbaf63ced045cf4ba345"
+          "checksum": "fa1c3a849c124993bff159b743521a2c"
         },
         {
           "name": "hover",
           "path": "/example/Chord/hover",
-          "checksum": "9c95ed56d8ed60873629bf23410b3afc"
+          "checksum": "9ed77d4c6ac7d3e5f7063d7148048cf1"
         },
         {
           "name": "ticks",
           "path": "/example/Chord/ticks",
-          "checksum": "c60be8422b71734c40e9c36eb5703d9d"
+          "checksum": "a74934a1624ae9247e6bb592c5197019"
         }
       ]
     },
@@ -2054,17 +2054,17 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Circle/color-via-ordinal-scale",
-          "checksum": "437aaf6da33ee4f4d5cff47f4ac57ae1"
+          "checksum": "4ae3a5b2714cf200c3c8db6640be8af1"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Circle/color-via-threshold-scale",
-          "checksum": "8392f7c9c2a513f0bca6fa87f9bd5d86"
+          "checksum": "29b9b4331babc06215a0bc2a5c25774c"
         },
         {
           "name": "data-mode",
           "path": "/example/Circle/data-mode",
-          "checksum": "ebb6d93a6579ae3c2617c9f8bee9d93e"
+          "checksum": "3c3650dcac7af315a9acbeef0a79fa7e"
         },
         {
           "name": "styling-using-attributes",
@@ -2164,17 +2164,17 @@
         {
           "name": "volcano-filled",
           "path": "/example/Contour/volcano-filled",
-          "checksum": "c272c0739f9018f84435e5f78cc97f4e"
+          "checksum": "b8c40f65aa814b916b2563697e2557f4"
         },
         {
           "name": "volcano-filled-interactive",
           "path": "/example/Contour/volcano-filled-interactive",
-          "checksum": "bc4c25112866ad9be87f3779709ab5cc"
+          "checksum": "c3913b72e27917bba567a9c9bb1e03f1"
         },
         {
           "name": "volcano-lines",
           "path": "/example/Contour/volcano-lines",
-          "checksum": "60d87b035a1da9d13441e99e4f6d9145"
+          "checksum": "c8ef38b4c2423395d2941e621cb27c21"
         }
       ]
     },
@@ -2184,22 +2184,22 @@
         {
           "name": "basic",
           "path": "/example/Dagre/basic",
-          "checksum": "f54dc19a0516b72fb940c60f7d56b5c1"
+          "checksum": "fc17ba55c4e98a863898e0d1a1f745fe"
         },
         {
           "name": "playground",
           "path": "/example/Dagre/playground",
-          "checksum": "aadce6e16d6748c4dde5baaca25b649f"
+          "checksum": "0519c7434b2fcb1af51541c110b3d0eb"
         },
         {
           "name": "software-user-flow",
           "path": "/example/Dagre/software-user-flow",
-          "checksum": "0d30b7f6812a641756cad163b1310f1b"
+          "checksum": "149876b9e8b77f090b428fafd2ea7e4c"
         },
         {
           "name": "tcp-state-diagram",
           "path": "/example/Dagre/tcp-state-diagram",
-          "checksum": "aa3b043aa6a71e8223a7ad8f34219bb1"
+          "checksum": "ce032add4b0ae72c5cd53da4c5379432"
         }
       ]
     },
@@ -2209,27 +2209,27 @@
         {
           "name": "bandwidth",
           "path": "/example/Density/bandwidth",
-          "checksum": "54066d2783484bb090f0da5dbdb8eec2"
+          "checksum": "bf5002c29093bc7f1061f937bc6f6083"
         },
         {
           "name": "basic",
           "path": "/example/Density/basic",
-          "checksum": "c256277938c20561d4a1db6d53def797"
+          "checksum": "f3208d6d185f2bd671357c286739e26c"
         },
         {
           "name": "stroke-only",
           "path": "/example/Density/stroke-only",
-          "checksum": "8c9dedf5770fafe77fcb5faf8f130bac"
+          "checksum": "a7208e1ebb9bbff099509598244f3c2c"
         },
         {
           "name": "thresholds",
           "path": "/example/Density/thresholds",
-          "checksum": "d21bf23184b84817e4521d853a9f79cc"
+          "checksum": "6f07a863caf02fe92ede18386410d893"
         },
         {
           "name": "walmart",
           "path": "/example/Density/walmart",
-          "checksum": "a0bb1737bdbd7e36b31eed671e4db9f6"
+          "checksum": "0c88fdf01fdc901a29ba0cecbe47fe89"
         },
         {
           "name": "weighted",
@@ -2244,17 +2244,17 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Ellipse/color-via-ordinal-scale",
-          "checksum": "4ade95218a7a1e59750c6925dfbccd48"
+          "checksum": "87b4cd9cf38b3ebaf963999779cbe52c"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Ellipse/color-via-threshold-scale",
-          "checksum": "66eb89f2bbe0eeb25a9aa668f5d6db7b"
+          "checksum": "78a4e00ad034487cc868b115b29d74ad"
         },
         {
           "name": "data-mode",
           "path": "/example/Ellipse/data-mode",
-          "checksum": "23bf51b0b2ae1ebdc9d0af18718b8633"
+          "checksum": "4316ea22b690375874d6385f114b6b48"
         },
         {
           "name": "styling-using-attributes",
@@ -2279,22 +2279,22 @@
         {
           "name": "beeswarm",
           "path": "/example/ForceSimulation/beeswarm",
-          "checksum": "85da758e5c466219db9f56aa0d574b5f"
+          "checksum": "7708cac1b3bd47eb76692aa061226af6"
         },
         {
           "name": "collision-detection",
           "path": "/example/ForceSimulation/collision-detection",
-          "checksum": "f332ae1881b82d3cc71974c477f38948"
+          "checksum": "b81328390e8938f30c6213ed9c54ab8d"
         },
         {
           "name": "disjoint-graph",
           "path": "/example/ForceSimulation/disjoint-graph",
-          "checksum": "7ac498dea45e47054cb3580480729f1c"
+          "checksum": "eba37240524ba65b4252507e2de88156"
         },
         {
           "name": "graph-drag",
           "path": "/example/ForceSimulation/graph-drag",
-          "checksum": "44fb7a167a0fa9928cc9b3264e1d858d"
+          "checksum": "3ca78657c1f545a8f9c44e2eec1fc6d0"
         },
         {
           "name": "graph-playground",
@@ -2304,7 +2304,7 @@
         {
           "name": "group",
           "path": "/example/ForceSimulation/group",
-          "checksum": "b145cab0794e86d1d4a2d076149e5eb2"
+          "checksum": "c3cd41e1bbb46895858d901f5a45c5ce"
         },
         {
           "name": "lattice",
@@ -2314,12 +2314,12 @@
         {
           "name": "text",
           "path": "/example/ForceSimulation/text",
-          "checksum": "507483c0cf9df0d026a8ec904692df4c"
+          "checksum": "9a04697db56d9a95029a88ec05f9e055"
         },
         {
           "name": "tree",
           "path": "/example/ForceSimulation/tree",
-          "checksum": "a8123a64cef9c5ea3aca0656321a42d7"
+          "checksum": "12ab38864a2dd33c368ddeb8ed330a29"
         }
       ]
     },
@@ -2354,12 +2354,12 @@
         {
           "name": "earthquake-globe",
           "path": "/example/GeoCircle/earthquake-globe",
-          "checksum": "775aa592c68444e62090d97fd1b1050e"
+          "checksum": "17cf0da972f87f43c21281eb47894f63"
         },
         {
           "name": "playground",
           "path": "/example/GeoCircle/playground",
-          "checksum": "e8597fb99f249987979f712798c8f5ae"
+          "checksum": "4571a093ccae55735fa2cf27e815c5c2"
         }
       ]
     },
@@ -2369,7 +2369,7 @@
         {
           "name": "basic",
           "path": "/example/GeoClipPath/basic",
-          "checksum": "d06bef05bec9eb96afc409475dfb2cbf"
+          "checksum": "0745bb4e56c3ce8bd744512e53de1b94"
         }
       ]
     },
@@ -2379,22 +2379,22 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoContext/geojson-preview",
-          "checksum": "323a6809688ce46171d86541697e6ef0"
+          "checksum": "2e05bfea59836d50cfd1fbfbb9f49d91"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoContext/projection-playground",
-          "checksum": "df351b699c608a31876d6b35a03c21f1"
+          "checksum": "d20a4b281420c09dbf164510a76f5e62"
         },
         {
           "name": "shapefile-preview",
           "path": "/example/GeoContext/shapefile-preview",
-          "checksum": "61e5226e0bc1509617a1a9bd8c946a30"
+          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
         },
         {
           "name": "topojson-preview",
           "path": "/example/GeoContext/topojson-preview",
-          "checksum": "d576cd2a788fc5469da82dd593ad41ef"
+          "checksum": "fd4202ca3158d4ad00759d3d3b46b28a"
         }
       ]
     },
@@ -2404,32 +2404,32 @@
         {
           "name": "basic",
           "path": "/example/GeoLegend/basic",
-          "checksum": "125e6731c449f1900b51fc5bdb9d3ad7"
+          "checksum": "19a0d38c007f5bee214530c7302223c8"
         },
         {
           "name": "canvas-mode",
           "path": "/example/GeoLegend/canvas-mode",
-          "checksum": "39c2ef4c8db300479b61df3445c9f183"
+          "checksum": "0f7b94f5b68e6dc064b580c74f36f713"
         },
         {
           "name": "stacked-units",
           "path": "/example/GeoLegend/stacked-units",
-          "checksum": "79218eb69667f28b28fbb4c5dfc098bd"
+          "checksum": "a6198d65e098496a9b5a810618b2ab0a"
         },
         {
           "name": "tick-format",
           "path": "/example/GeoLegend/tick-format",
-          "checksum": "9a48b86d2f38a71b032ec464733117bd"
+          "checksum": "9bff1fbe6913bd537185fab31930f391"
         },
         {
           "name": "ticks",
           "path": "/example/GeoLegend/ticks",
-          "checksum": "d9d2a1fed38f0d82c75bac23a350dc44"
+          "checksum": "8a935b9fefc9d9f45f042a0c3439195b"
         },
         {
           "name": "variants",
           "path": "/example/GeoLegend/variants",
-          "checksum": "7dfb5c5a45f51517d4ded2d6ba0ed5a4"
+          "checksum": "2267da6325cb3abd5e9c999a3cbaafb7"
         }
       ]
     },
@@ -2439,117 +2439,117 @@
         {
           "name": "animated-globe",
           "path": "/example/GeoPath/animated-globe",
-          "checksum": "1c900344a0df081f213d8fff35805358"
+          "checksum": "80372bfd69f0bc548fee36e69f80fa48"
         },
         {
           "name": "bubble-map",
           "path": "/example/GeoPath/bubble-map",
-          "checksum": "052edcdceb37b2039530539f943350a4"
+          "checksum": "d48a67e3f5f84dc4d5e27f0a5a05787b"
         },
         {
           "name": "choropleth",
           "path": "/example/GeoPath/choropleth",
-          "checksum": "b719932db7ecf7e97f1c8948ae2de05a"
+          "checksum": "f6e6e47b15dc949aba2943c16ef82c8f"
         },
         {
           "name": "eclipses-globe",
           "path": "/example/GeoPath/eclipses-globe",
-          "checksum": "fd323e55a4caaabd99c8545d2802f52b"
+          "checksum": "c4c87a7c15b6a555cd469b57192d3eae"
         },
         {
           "name": "interpolating-projections",
           "path": "/example/GeoPath/interpolating-projections",
-          "checksum": "5f171eb32ef44733dc6cd80c874c0d21"
+          "checksum": "d5580ca0449a6e5d5559a9a1b20bd2c8"
         },
         {
           "name": "paint-brush-selection",
           "path": "/example/GeoPath/paint-brush-selection",
-          "checksum": "e8f602fe7c0e2fe198a4e64484ce813a"
+          "checksum": "b5af73505d7980e1401e976bac2d309a"
         },
         {
           "name": "sketchy-globe",
           "path": "/example/GeoPath/sketchy-globe",
-          "checksum": "b7c7b1ab1f53fcb5a82d782dce939164"
+          "checksum": "ed1b1d6490736afcbc657b16ee0e9a6b"
         },
         {
           "name": "spike-map",
           "path": "/example/GeoPath/spike-map",
-          "checksum": "d305a13a0bac9f9f14178b1f0c5a8b87"
+          "checksum": "771508f940243cb0b998ae76e91bb233"
         },
         {
           "name": "submarine-cables-globe",
           "path": "/example/GeoPath/submarine-cables-globe",
-          "checksum": "ce1be72b2f83e281fb511ec762621bae"
+          "checksum": "e24c57a7046a7470b09450785ebe839c"
         },
         {
           "name": "timezones",
           "path": "/example/GeoPath/timezones",
-          "checksum": "07cb35f69c74c88a538d226fbc7a0c0d"
+          "checksum": "2b5b55f02a3df414e76833e9feaeb605"
         },
         {
           "name": "tooltip",
           "path": "/example/GeoPath/tooltip",
-          "checksum": "680ebb5b6dc858a4c010c3cfcf31718c"
+          "checksum": "421cb186af2f5680810b02d678e9262a"
         },
         {
           "name": "transform-canvas",
           "path": "/example/GeoPath/transform-canvas",
-          "checksum": "3015df5d742ea062b94652900fb0c1f4"
+          "checksum": "df0c31ed6a2d9ce61395858d20335f40"
         },
         {
           "name": "transform-canvas-scale-extent",
           "path": "/example/GeoPath/transform-canvas-scale-extent",
-          "checksum": "55e8d3f10e64ed0ec84df5db7237162b"
+          "checksum": "0a11d564067e496da5000beb1f0d84d8"
         },
         {
           "name": "transform-globe-constrain",
           "path": "/example/GeoPath/transform-globe-constrain",
-          "checksum": "1820ef84bd71fb20c3507a7a866ba0b1"
+          "checksum": "47486d07f1743955477d7f0e97b90bb2"
         },
         {
           "name": "transform-globe-inertia",
           "path": "/example/GeoPath/transform-globe-inertia",
-          "checksum": "edc48071e1c1e30f060e6fe26ccfff0e"
+          "checksum": "126b25a293d26ffc1037a09a6d81e3c3"
         },
         {
           "name": "transform-projection",
           "path": "/example/GeoPath/transform-projection",
-          "checksum": "ef5a9d2abbb38de4ea25bcf42ce66a6c"
+          "checksum": "cdbb0d9cadbab3982cde5abe93e6efd6"
         },
         {
           "name": "transform-world-canvas",
           "path": "/example/GeoPath/transform-world-canvas",
-          "checksum": "f788528bb83dd1c31e953bf67929bfc5"
+          "checksum": "9e8aee50b4d979cd93ca8cc73ecf433d"
         },
         {
           "name": "transform-world-projection",
           "path": "/example/GeoPath/transform-world-projection",
-          "checksum": "9c78aac6bef154d5f18a0b376b55292d"
+          "checksum": "52b2848cd100d6bbd3449bbb90959123"
         },
         {
           "name": "translucent-globe",
           "path": "/example/GeoPath/translucent-globe",
-          "checksum": "47ed3dac7434721be8a284da15a86ea6"
+          "checksum": "8a43d73a9a0f53ed0680265ebd55aaf6"
         },
         {
           "name": "us-country-map",
           "path": "/example/GeoPath/us-country-map",
-          "checksum": "c9c8eccd00472940abbfac27a7025296"
+          "checksum": "d1d2accdb59624b0f354b21da88c5c20"
         },
         {
           "name": "us-state",
           "path": "/example/GeoPath/us-state",
-          "checksum": "537ef8d0008095d3fcc2e309d3b2ea01"
+          "checksum": "7e1218e4ceb903f23f8ffce1c2d63cf1"
         },
         {
           "name": "us-state-with-counties",
           "path": "/example/GeoPath/us-state-with-counties",
-          "checksum": "1560f99d657daccec7a17c01506187fa"
+          "checksum": "ab3269252bae9cc26394fb6a3c3a43d0"
         },
         {
           "name": "us-state-with-surrounding-states",
           "path": "/example/GeoPath/us-state-with-surrounding-states",
-          "checksum": "f120632113d9f0788f14bcb5343a29c0"
+          "checksum": "bce63b36a7b322103d7ab0959c463f62"
         }
       ]
     },
@@ -2559,27 +2559,27 @@
         {
           "name": "icons",
           "path": "/example/GeoPoint/icons",
-          "checksum": "643920b432411da8ccb3cfc7490d0e7e"
+          "checksum": "c7d652113b51658da56467802f169872"
         },
         {
           "name": "us-airports",
           "path": "/example/GeoPoint/us-airports",
-          "checksum": "ad3638503e2521e6a3edb627554fffe8"
+          "checksum": "b8165561452410b1f4dff29ef9b46a0e"
         },
         {
           "name": "us-state-capitals",
           "path": "/example/GeoPoint/us-state-capitals",
-          "checksum": "03bebadf5f4db738e4b80ec51f3dafd1"
+          "checksum": "c886914c31fe2e670595063c9b6972e1"
         },
         {
           "name": "world-airports",
           "path": "/example/GeoPoint/world-airports",
-          "checksum": "a2f74fe4fd0a140e2f993e06b0923ec2"
+          "checksum": "f6c46619fe7feabe48799ee2f00fdd04"
         },
         {
           "name": "world-capitals",
           "path": "/example/GeoPoint/world-capitals",
-          "checksum": "a003b2634e43a78eb78cd7cf2ac41d47"
+          "checksum": "cd1fd2129b56c6e802248b69dc65fbcb"
         }
       ]
     },
@@ -2589,37 +2589,37 @@
         {
           "name": "geojson-preview",
           "path": "/example/GeoProjection/geojson-preview",
-          "checksum": "8159cb0663d14237a0924efd43ea7582"
+          "checksum": "1790b6f47677e1c4762c4216cc6cce54"
         },
         {
           "name": "projection-playground",
           "path": "/example/GeoProjection/projection-playground",
-          "checksum": "98b9b55909b2b4f2827291ed7b624f0d"
+          "checksum": "fb7d586d9868f5bb66c001bf15506845"
         },
         {
           "name": "satellite",
           "path": "/example/GeoProjection/satellite",
-          "checksum": "0ef248b175a7cd1ccff1c3d7962a955f"
+          "checksum": "04dde09b68e6c7cbf54ca00a36215dbb"
         },
         {
           "name": "shapefile-preview",
           "path": "/example/GeoProjection/shapefile-preview",
-          "checksum": "61e5226e0bc1509617a1a9bd8c946a30"
+          "checksum": "14817e4e8b57e18999de9b2be22ddc37"
         },
         {
           "name": "topojson-preview",
           "path": "/example/GeoProjection/topojson-preview",
-          "checksum": "f284f98205e6d0a99b8498dde7172002"
+          "checksum": "e2612e9ff8a2ef23983a41539ad25688"
         },
         {
           "name": "true-size",
           "path": "/example/GeoProjection/true-size",
-          "checksum": "9f693f8eee45a002a5ceab5ce5e501ed"
+          "checksum": "49f328b2a7a9eb291fd0ad52d28ca215"
         },
         {
           "name": "true-size-globe",
           "path": "/example/GeoProjection/true-size-globe",
-          "checksum": "df7237ba59d3abae260e976335194f59"
+          "checksum": "51e3d08a51caea0e5bf109d9d094d4ba"
         }
       ]
     },
@@ -2629,27 +2629,27 @@
         {
           "name": "globe",
           "path": "/example/GeoRaster/globe",
-          "checksum": "f4cac10d06de2d65158164ec3d2715d0"
+          "checksum": "d353f7e7b29cb94ac113cdb162c98b14"
         },
         {
           "name": "planets",
           "path": "/example/GeoRaster/planets",
-          "checksum": "115a02a468718b0d4031ec15cec08426"
+          "checksum": "ce27cb902e0321c8ee72dd98101a0795"
         },
         {
           "name": "projections",
           "path": "/example/GeoRaster/projections",
-          "checksum": "9eee7e002a70e9332ab82383bce744ad"
+          "checksum": "dd498ca54f27c9c32d534d941dd5dea3"
         },
         {
           "name": "textures",
           "path": "/example/GeoRaster/textures",
-          "checksum": "3a251b3c441be2a1059db05853418240"
+          "checksum": "1ab0bfdd3c5ed8c2093901ba45be4526"
         },
         {
           "name": "tiles-globe",
           "path": "/example/GeoRaster/tiles-globe",
-          "checksum": "ec18c1cc26d1be266bee5fa6465ba5a2"
+          "checksum": "8b40e0a3d333bcf8ebc6d4c39bdd8628"
         }
       ]
     },
@@ -2659,12 +2659,12 @@
         {
           "name": "draggable-globe",
           "path": "/example/GeoSpline/draggable-globe",
-          "checksum": "a023f09d9bb2f100bd740d010fa56a0e"
+          "checksum": "360230a0313b9e3d945702fe7d27766e"
         },
         {
           "name": "world-map",
           "path": "/example/GeoSpline/world-map",
-          "checksum": "a5f1bfb849c5ac2c3a7a6827f55f26f6"
+          "checksum": "16d74457d105638c3357e68fedd777f6"
         }
       ]
     },
@@ -2674,27 +2674,27 @@
         {
           "name": "basic",
           "path": "/example/GeoTile/basic",
-          "checksum": "d3d9ad3f6ab531106784b65fc186bf00"
+          "checksum": "c08f8a933ae941d1d53e010e3d15351e"
         },
         {
           "name": "clipped",
           "path": "/example/GeoTile/clipped",
-          "checksum": "712c19897261017e6edec2eaac44409b"
+          "checksum": "edaed37822a404e867633ee284778622"
         },
         {
           "name": "zoomable",
           "path": "/example/GeoTile/zoomable",
-          "checksum": "208e87a3dc5a31363cfc51fe649838c3"
+          "checksum": "3b43630dc48485d39c9eded81a41d1e4"
         },
         {
           "name": "zoomable-seamless-layers",
           "path": "/example/GeoTile/zoomable-seamless-layers",
-          "checksum": "f36ee22111cc8d2c10a3a0d52d13540c"
+          "checksum": "7c4560b53210465b529f95e31455baed"
         },
         {
           "name": "zoomable-with-padding",
           "path": "/example/GeoTile/zoomable-with-padding",
-          "checksum": "3ca035b3436402848fb532b1481405e2"
+          "checksum": "f5b08777ea7616aac5b9625111c80239"
         }
       ]
     },
@@ -2704,7 +2704,7 @@
         {
           "name": "basic",
           "path": "/example/Graticule/basic",
-          "checksum": "b587689bc86d97d4176a29f53185c4af"
+          "checksum": "2d4670ae3733aae1d223708ac6e0ca71"
         }
       ]
     },
@@ -2794,7 +2794,7 @@
         {
           "name": "data-mode",
           "path": "/example/Group/data-mode",
-          "checksum": "68a8d0335edab9870c24bd5286046837"
+          "checksum": "2ab83cd5bb10c312124a201461693c60"
         }
       ]
     },
@@ -2804,7 +2804,7 @@
         {
           "name": "geo",
           "path": "/example/Hull/geo",
-          "checksum": "2193c6f476348c340b0ceee0118594ed"
+          "checksum": "1e9a93c96c605dc81d7cf922e12f00a7"
         },
         {
           "name": "scatter",
@@ -2819,12 +2819,12 @@
         {
           "name": "college-football-map",
           "path": "/example/Image/college-football-map",
-          "checksum": "75b529c88d5c11c1d51e726a6dc22b9e"
+          "checksum": "77ea4515a0df695b372d5f969fe3188b"
         },
         {
           "name": "country-flags",
           "path": "/example/Image/country-flags",
-          "checksum": "af31ff6fcd8e95895cbb8f742ae2ce6c"
+          "checksum": "7eca8e326c25e967421e9d39846c40d4"
         },
         {
           "name": "pixel-mode",
@@ -2839,12 +2839,12 @@
         {
           "name": "sports-logos",
           "path": "/example/Image/sports-logos",
-          "checksum": "698a39a1033b6a7752b108fb8f295ff4"
+          "checksum": "56e50b2c424f4300a48b1cc31e82cda7"
         },
         {
           "name": "us-presidents",
           "path": "/example/Image/us-presidents",
-          "checksum": "0887064b06ad96a1d299cf210a3486f2"
+          "checksum": "fe67a4cfe2fa04cb00dee92819c8cb5d"
         }
       ]
     },
@@ -2964,17 +2964,17 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Line/color-via-ordinal-scale",
-          "checksum": "64762a9750ac3201ba4257034564fcd3"
+          "checksum": "bdfe94033fbcae60e67230e91f7f63d6"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Line/color-via-threshold-scale",
-          "checksum": "e1a5a61fa26f24c93f1d13c883da7941"
+          "checksum": "b234f305066484c77fdd7e54791c1fd2"
         },
         {
           "name": "data-mode",
           "path": "/example/Line/data-mode",
-          "checksum": "aec840f88aa571601dba1f146bf9d7e2"
+          "checksum": "3d40efb42edd9b437af3e71ed8a3e4f9"
         },
         {
           "name": "styling-using-attributes",
@@ -3079,12 +3079,12 @@
         {
           "name": "gradient-encoding",
           "path": "/example/LineChart/gradient-encoding",
-          "checksum": "47e3d02439ecb5cd73fca0be33fc025e"
+          "checksum": "0120c9bd83f4f501e8ebb6c394e753c8"
         },
         {
           "name": "gradient-threshold",
           "path": "/example/LineChart/gradient-threshold",
-          "checksum": "f8dcbc2d21f3b6d3b6bde1efc9897017"
+          "checksum": "62d21e30cedf737a3c9f958243ad0fd9"
         },
         {
           "name": "labels",
@@ -3174,17 +3174,17 @@
         {
           "name": "perf-dimension-arrays",
           "path": "/example/LineChart/perf-dimension-arrays",
-          "checksum": "819981e164505cd78d249a50fc7fa3a0"
+          "checksum": "585a7d7fb748b8120423613eb05caaef"
         },
         {
           "name": "perf-dimension-arrays-processed",
           "path": "/example/LineChart/perf-dimension-arrays-processed",
-          "checksum": "fce042f05889593409bf02ec1f64db01"
+          "checksum": "f6ba2b373dfba7f2fda1b4d1ff411a4b"
         },
         {
           "name": "perf-series-arrays",
           "path": "/example/LineChart/perf-series-arrays",
-          "checksum": "5cd76ea5591bac4cd007f0b147aead33"
+          "checksum": "b4221dc6a4852f0fdf509804b6d36f4c"
         },
         {
           "name": "perf-streaming",
@@ -3194,17 +3194,17 @@
         {
           "name": "perf-wide-data",
           "path": "/example/LineChart/perf-wide-data",
-          "checksum": "83e95fb92703b48f7a94a630da9c2345"
+          "checksum": "891390544842b9da2a3a8b74bb4a1578"
         },
         {
           "name": "perf-wide-data-processed",
           "path": "/example/LineChart/perf-wide-data-processed",
-          "checksum": "97a6853d136757c4406a05da9be827c5"
+          "checksum": "db6c07c551ffc19d2d9003e940373355"
         },
         {
           "name": "persist-brush-zoom",
           "path": "/example/LineChart/persist-brush-zoom",
-          "checksum": "d8240e52b79f525f29714ab812d6743f"
+          "checksum": "46c20c5237705872fbb4ee89b68f3c3b"
         },
         {
           "name": "persist-series",
@@ -3342,6 +3342,11 @@
           "checksum": "f770dd27b4a2a168dc559e100277d805"
         },
         {
+          "name": "svelte-milestones",
+          "path": "/example/LineChart/svelte-milestones",
+          "checksum": "200663d638fe5c27da52ed994decbd4a"
+        },
+        {
           "name": "threshold",
           "path": "/example/LineChart/threshold",
           "checksum": "ee7d7491fad94c7377b224b55f473bd7"
@@ -3374,7 +3379,7 @@
         {
           "name": "playground",
           "path": "/example/Link/playground",
-          "checksum": "186e09b2b7b47afbf7e7426a31e08444"
+          "checksum": "efb57199e0f6df89501ace886a86189b"
         },
         {
           "name": "types",
@@ -3389,7 +3394,7 @@
         {
           "name": "line",
           "path": "/example/Marker/line",
-          "checksum": "b1d1d4e751afaccb1e78857ded906c33"
+          "checksum": "3adfc3ba9580394833e6133b00ad2862"
         },
         {
           "name": "orientation",
@@ -3399,7 +3404,7 @@
         {
           "name": "spline",
           "path": "/example/Marker/spline",
-          "checksum": "b3b641a44f274f2295b4c0a00dd70c31"
+          "checksum": "c1e376402212fc10808123bfa6c480e7"
         },
         {
           "name": "spline-w-thicker-stroke",
@@ -3474,7 +3479,7 @@
         {
           "name": "basic",
           "path": "/example/Pack/basic",
-          "checksum": "d066f97e28478d8678d82412730b7acc"
+          "checksum": "22f2d01656b6769cba0449e42b669bd6"
         }
       ]
     },
@@ -3484,22 +3489,22 @@
         {
           "name": "filterable",
           "path": "/example/Partition/filterable",
-          "checksum": "f8c6aeb97349a0f5a0cd3b3a0cf4c008"
+          "checksum": "76b7242cebb972c62ef3b4394b07be7c"
         },
         {
           "name": "horizontal",
           "path": "/example/Partition/horizontal",
-          "checksum": "92cd1563619390c85f5e6cf2befb5071"
+          "checksum": "d4753154cacf43851dd190167b2fd12c"
         },
         {
           "name": "sunburst",
           "path": "/example/Partition/sunburst",
-          "checksum": "dbec2769e8155bec7a0350da32e0d46b"
+          "checksum": "3e761a11294bdb1b0cb5a25bd6ee715e"
         },
         {
           "name": "vertical",
           "path": "/example/Partition/vertical",
-          "checksum": "a48a0639b232857a2f8301be3c8d003e"
+          "checksum": "9fb68ab7036b378243d99dee29998f80"
         }
       ]
     },
@@ -3744,7 +3749,7 @@
         {
           "name": "labels-callout",
           "path": "/example/PieChart/labels-callout",
-          "checksum": "7acb378f392440b4692cf728c7f0b70e"
+          "checksum": "6bd35a43a6bc662fd07f71aebca2b5f6"
         },
         {
           "name": "legend",
@@ -3944,12 +3949,12 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Polygon/color-via-ordinal-scale",
-          "checksum": "4ba2504dc9179cc46f5466a2be9aeaf8"
+          "checksum": "c2e2787f5806a37a9668885b8192f88a"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Polygon/color-via-threshold-scale",
-          "checksum": "ce58f23c0cf4ffd7cca620aa5ef99d4e"
+          "checksum": "a590fb6107daee1dbb62371211dfb315"
         },
         {
           "name": "cross",
@@ -3959,7 +3964,7 @@
         {
           "name": "data-mode",
           "path": "/example/Polygon/data-mode",
-          "checksum": "f3458ee6e6028a07e13af38e6a97e864"
+          "checksum": "c290de623f3b25c373296c6bb708d8d0"
         },
         {
           "name": "diamond",
@@ -4064,17 +4069,17 @@
         {
           "name": "us-water-vapor",
           "path": "/example/Raster/us-water-vapor",
-          "checksum": "bc0a8557397f8fdc7f95c575604ff7fa"
+          "checksum": "e47fb7df200f848720ffab60a9122e48"
         },
         {
           "name": "volcano",
           "path": "/example/Raster/volcano",
-          "checksum": "ba92e69f7d33fc98aff252142e13c1b2"
+          "checksum": "70828eeef93c803ba07a5fa52e93f45b"
         },
         {
           "name": "with-contour-overlay",
           "path": "/example/Raster/with-contour-overlay",
-          "checksum": "4a19bd5c2f070d93c7d7de1c2483e833"
+          "checksum": "6bd1e5ac57b7f30bc81f5b10b3da88da"
         }
       ]
     },
@@ -4084,17 +4089,17 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Rect/color-via-ordinal-scale",
-          "checksum": "da5d3b6a497047798adf40e19799ad46"
+          "checksum": "10a796cc506feca6a7bd31e61759588f"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Rect/color-via-threshold-scale",
-          "checksum": "db2700395624a1664b56f36ef3d4b4e5"
+          "checksum": "3d83c2cb657f24ebcaaf9ce907372f59"
         },
         {
           "name": "data-mode-edge",
           "path": "/example/Rect/data-mode-edge",
-          "checksum": "fb927960e82b59536da8b07c755d1561"
+          "checksum": "c25cf446ae6dd4f3f3ba6e9dcbdbebaf"
         },
         {
           "name": "styling-using-attributes",
@@ -4149,17 +4154,17 @@
         {
           "name": "candlestick",
           "path": "/example/Rule/candlestick",
-          "checksum": "1e302e30de4ecce8594dce54c8b79a3f"
+          "checksum": "8d66d9965e3258a57e64ea423d4fefbd"
         },
         {
           "name": "candlestick-open-close-line-color",
           "path": "/example/Rule/candlestick-open-close-line-color",
-          "checksum": "5dee90c7e21332bcabd145eede69f93e"
+          "checksum": "8ba9507a4b14c4fb9855e2a0a589bfed"
         },
         {
           "name": "candlestick-with-brushing",
           "path": "/example/Rule/candlestick-with-brushing",
-          "checksum": "3768293c58a71723259bb5efa068c637"
+          "checksum": "c385abcf4265273353802ac3fb4f1e13"
         },
         {
           "name": "data-x-band",
@@ -4194,27 +4199,27 @@
         {
           "name": "complex",
           "path": "/example/Sankey/complex",
-          "checksum": "c04a23ee616578f97bc7e5838a82972f"
+          "checksum": "90e4bdf6826e86d6af609427f1b97247"
         },
         {
           "name": "hierarchy",
           "path": "/example/Sankey/hierarchy",
-          "checksum": "109f3ddf62413ed4994afec6e0b0c4fa"
+          "checksum": "5736352b98b388a8bfc3a35f0e734904"
         },
         {
           "name": "node-select",
           "path": "/example/Sankey/node-select",
-          "checksum": "f1e34e86c7eb1ab125afa85be5aeadde"
+          "checksum": "1d5a913841edce89ecae0b4cdfa449dd"
         },
         {
           "name": "simple",
           "path": "/example/Sankey/simple",
-          "checksum": "6a79a3e27d6ef7cc0676cf0ab4bd3651"
+          "checksum": "e11ca35cc37ba00508b7fd46a951cca0"
         },
         {
           "name": "tooltip",
           "path": "/example/Sankey/tooltip",
-          "checksum": "883df523528942e31ffd1362cd7b6f64"
+          "checksum": "ee06f79952b499f228a1af4175b13881"
         }
       ]
     },
@@ -4384,17 +4389,17 @@
         {
           "name": "geo-routes",
           "path": "/example/Spline/geo-routes",
-          "checksum": "6f9a49eb3d8a2e7e548f5dad0f1876c8"
+          "checksum": "4aca8ca06a36021106195216e8115343"
         },
         {
           "name": "gradient-encoding",
           "path": "/example/Spline/gradient-encoding",
-          "checksum": "b4bf27fbf8fe16f1bc215044abc8b28c"
+          "checksum": "0425b8023a9878f0b317ec8221125edf"
         },
         {
           "name": "gradient-threshold",
           "path": "/example/Spline/gradient-threshold",
-          "checksum": "f3a3280e43b30c4a6fb4d16f4815e9e0"
+          "checksum": "2241988d6c482ead6917fb70542698ad"
         },
         {
           "name": "label-using-start-end-snippets",
@@ -4439,12 +4444,12 @@
         {
           "name": "radial-line-with-areas",
           "path": "/example/Spline/radial-line-with-areas",
-          "checksum": "0d65a35cc953b7f0099013a217be59a9"
+          "checksum": "f611df2b6ea3db7d94cb131d4df64e4e"
         },
         {
           "name": "radial-multi-year-lines",
           "path": "/example/Spline/radial-multi-year-lines",
-          "checksum": "b757926cdc221117d6681526ee927c39"
+          "checksum": "6ea2fc30eb6cf8c1bde981ec6c6bd6cf"
         },
         {
           "name": "radial-radar",
@@ -4454,7 +4459,7 @@
         {
           "name": "stroke-grouping",
           "path": "/example/Spline/stroke-grouping",
-          "checksum": "04c6698c4b0f7479777f6294b120a511"
+          "checksum": "4a768802b2277792449647f9513f790a"
         },
         {
           "name": "tween-on-mount",
@@ -4489,12 +4494,12 @@
         {
           "name": "color-via-ordinal-scale",
           "path": "/example/Text/color-via-ordinal-scale",
-          "checksum": "4b2f701400b514bdb5ca314dab1c10ea"
+          "checksum": "023dcecc1bbadb7a31923b7fb5287994"
         },
         {
           "name": "color-via-threshold-scale",
           "path": "/example/Text/color-via-threshold-scale",
-          "checksum": "abb15355e0866351cf83edf0758c365c"
+          "checksum": "edf28e5cf1c671c747bd0d5c62f5b095"
         },
         {
           "name": "data-mode",
@@ -4724,17 +4729,17 @@
         {
           "name": "basic",
           "path": "/example/Tree/basic",
-          "checksum": "d8e405c44f6f47e8d278f12832f9bd6e"
+          "checksum": "51e749d5e1d9eb8886243f74e84e5d7a"
         },
         {
           "name": "html-nodes",
           "path": "/example/Tree/html-nodes",
-          "checksum": "c3132079d076e4e6c520c13c909d7a5f"
+          "checksum": "a36c2f5a7338f42fcc5c52eedc0d5455"
         },
         {
           "name": "playground",
           "path": "/example/Tree/playground",
-          "checksum": "bd99254ecfe4098ec6d842b37d18e4a9"
+          "checksum": "f09d0057b0c0c0792df9cbd430503fd3"
         }
       ]
     },
@@ -4744,32 +4749,32 @@
         {
           "name": "basic",
           "path": "/example/Treemap/basic",
-          "checksum": "d4858f4a494920b19b5b7275b9937da4"
+          "checksum": "979761309a2b73226ecb6bd5b3201c9e"
         },
         {
           "name": "complex",
           "path": "/example/Treemap/complex",
-          "checksum": "8d84d4664bccdeb0fca4c19f27618582"
+          "checksum": "20b32fc606c1ce45e1069882e2d1f119"
         },
         {
           "name": "nested-filter",
           "path": "/example/Treemap/nested-filter",
-          "checksum": "bbd88ed013fc08ecb31b9b03716d5f85"
+          "checksum": "4c36f3d717fe777f1e22dba745493bb8"
         },
         {
           "name": "nested-zoom",
           "path": "/example/Treemap/nested-zoom",
-          "checksum": "74203ed18d5f71938efa7fbf3ffa3f50"
+          "checksum": "401eeb036158acdb3b2e3f1c3262c0dd"
         },
         {
           "name": "playground",
           "path": "/example/Treemap/playground",
-          "checksum": "e8f248bf9315cd7920b13bf6aacc0a2e"
+          "checksum": "7ba152ed8c37f09dc9a6c1951c9f3bb9"
         },
         {
           "name": "stacked-zoom",
           "path": "/example/Treemap/stacked-zoom",
-          "checksum": "c3316c0bbe86f84692ab28fb6135cb91"
+          "checksum": "152e00e3548cb03d7655f52355e1d1bf"
         }
       ]
     },
@@ -4779,12 +4784,12 @@
         {
           "name": "anchor",
           "path": "/example/Vector/anchor",
-          "checksum": "962f8e3d63062d1d4fded4e46acbf08e"
+          "checksum": "0a12d31740a7783b782b8a31b0eb21d3"
         },
         {
           "name": "basic",
           "path": "/example/Vector/basic",
-          "checksum": "78a100070413ec737058e339d4782aca"
+          "checksum": "93d48c111bbc90f981b3b4fbe607cd1c"
         },
         {
           "name": "data-mode",
@@ -4794,7 +4799,7 @@
         {
           "name": "election-wind-map",
           "path": "/example/Vector/election-wind-map",
-          "checksum": "7bef0e77b8e0be47cbe90348576bef43"
+          "checksum": "843d5f417132b69a391e332e793171b0"
         },
         {
           "name": "shapes",
@@ -4804,7 +4809,7 @@
         {
           "name": "wind-map",
           "path": "/example/Vector/wind-map",
-          "checksum": "1c341cdedd7d2f79472914ff84bdbac8"
+          "checksum": "a0475c0cc501bf4bb2704bae13e6c538"
         }
       ]
     },
@@ -4814,22 +4819,22 @@
         {
           "name": "bandwidth",
           "path": "/example/Violin/bandwidth",
-          "checksum": "ed3d33ea221db322984cff07db594fd1"
+          "checksum": "999902c4aaaef34d03a9aa1ec611ce64"
         },
         {
           "name": "basic",
           "path": "/example/Violin/basic",
-          "checksum": "b75cc7397b904189245623475b042131"
+          "checksum": "819459879600ddb7f55a75b6150d5029"
         },
         {
           "name": "horizontal",
           "path": "/example/Violin/horizontal",
-          "checksum": "94a534d4a6dccd2fa35161d5eae4852f"
+          "checksum": "4fad9620d59552bf0026f95e47ec391d"
         },
         {
           "name": "with-box-median",
           "path": "/example/Violin/with-box-median",
-          "checksum": "2c52005f99ce345942e3379040901455"
+          "checksum": "d934cca76224277f79e2af6df03e29a0"
         }
       ]
     },
