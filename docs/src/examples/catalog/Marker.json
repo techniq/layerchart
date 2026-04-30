@@ -8,17 +8,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 29,
+          "lineNumber": 38,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={35}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 40,
           "line": "<Layer>"
         },
         {
           "component": "Line",
-          "lineNumber": 32,
+          "lineNumber": 41,
           "line": "<Line"
         }
       ]
@@ -52,17 +52,17 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 40,
+          "lineNumber": 49,
           "line": "<Chart {data} x=\"x\" y=\"y\" height={100}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 41,
+          "lineNumber": 50,
           "line": "<Layer>"
         },
         {
           "component": "Spline",
-          "lineNumber": 43,
+          "lineNumber": 52,
           "line": "<Spline"
         }
       ]
@@ -113,5 +113,5 @@
     }
   ],
   "usage": [],
-  "updatedAt": "2026-02-07T20:21:32.026Z"
+  "updatedAt": "2026-04-30T15:36:26.666Z"
 }

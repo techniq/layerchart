@@ -55,37 +55,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 62,
+          "lineNumber": 53,
           "line": "<Chart data={graph} padding={{ right: 100 }} flatData={[]} height={2000}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 63,
+          "lineNumber": 54,
           "line": "<Layer>"
         },
         {
           "component": "Sankey",
-          "lineNumber": 64,
+          "lineNumber": 55,
           "line": "<Sankey"
         },
         {
           "component": "Link",
-          "lineNumber": 79,
+          "lineNumber": 70,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 102,
+          "lineNumber": 93,
           "line": "<Group x={node.x0} y={node.y0} motion=\"tween\">"
         },
         {
           "component": "Rect",
-          "lineNumber": 103,
+          "lineNumber": 94,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 117,
+          "lineNumber": 108,
           "line": "<Text"
         }
       ]
@@ -139,37 +139,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 12,
+          "lineNumber": 11,
           "line": "<Chart {data} flatData={[]} height={400}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<Layer>"
         },
         {
           "component": "Sankey",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<Sankey nodeId={(d) => d.id}>"
         },
         {
           "component": "Link",
-          "lineNumber": 17,
+          "lineNumber": 16,
           "line": "<Link sankey data={link} strokeWidth={link.width} class=\"stroke-surface-content/10\" />"
         },
         {
           "component": "Group",
-          "lineNumber": 22,
+          "lineNumber": 21,
           "line": "<Group x={node.x0} y={node.y0}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 23,
+          "lineNumber": 22,
           "line": "<Rect width={nodeWidth} height={nodeHeight} class=\"fill-primary\" />"
         },
         {
           "component": "Text",
-          "lineNumber": 24,
+          "lineNumber": 23,
           "line": "<Text"
         }
       ]
@@ -181,42 +181,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 14,
+          "lineNumber": 15,
           "line": "<Chart {data} flatData={[]} height={600}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 16,
+          "lineNumber": 17,
           "line": "<Layer>"
         },
         {
           "component": "Sankey",
-          "lineNumber": 17,
+          "lineNumber": 18,
           "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
         },
         {
           "component": "Link",
-          "lineNumber": 20,
+          "lineNumber": 21,
           "line": "<Link"
         },
         {
           "component": "Group",
-          "lineNumber": 33,
+          "lineNumber": 34,
           "line": "<Group x={node.x0} y={node.y0}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 34,
+          "lineNumber": 35,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<Text"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 55,
+          "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -234,7 +234,7 @@
       "example": "hierarchy",
       "component": "Sankey",
       "path": "/docs/components/Sankey/hierarchy",
-      "lineNumber": 64,
+      "lineNumber": 55,
       "line": "<Sankey"
     },
     {
@@ -248,16 +248,16 @@
       "example": "simple",
       "component": "Sankey",
       "path": "/docs/components/Sankey/simple",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Sankey nodeId={(d) => d.id}>"
     },
     {
       "example": "tooltip",
       "component": "Sankey",
       "path": "/docs/components/Sankey/tooltip",
-      "lineNumber": 17,
+      "lineNumber": 18,
       "line": "<Sankey nodeId={(d) => d.name} nodeWidth={8}>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.626Z"
+  "updatedAt": "2026-04-30T15:36:28.091Z"
 }

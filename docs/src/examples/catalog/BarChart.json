@@ -157,37 +157,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 188,
+          "lineNumber": 186,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 198,
+          "lineNumber": 196,
           "line": "<Layer>"
         },
         {
           "component": "Group",
-          "lineNumber": 203,
+          "lineNumber": 201,
           "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 204,
+          "lineNumber": 202,
           "line": "<Rect"
         },
         {
           "component": "Image",
-          "lineNumber": 214,
+          "lineNumber": 212,
           "line": "<Image"
         },
         {
           "component": "Text",
-          "lineNumber": 224,
+          "lineNumber": 222,
           "line": "<Text"
         },
         {
           "component": "Axis",
-          "lineNumber": 246,
+          "lineNumber": 244,
           "line": "<Axis"
         }
       ]
@@ -355,12 +355,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 16,
+          "lineNumber": 15,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -372,12 +372,12 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 16,
+          "lineNumber": 15,
           "line": "<BarChart"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 49,
+          "lineNumber": 48,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -729,42 +729,42 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 188,
+          "lineNumber": 186,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 199,
+          "lineNumber": 197,
           "line": "<Layer>"
         },
         {
           "component": "ChartClipPath",
-          "lineNumber": 200,
+          "lineNumber": 198,
           "line": "<ChartClipPath>"
         },
         {
           "component": "Group",
-          "lineNumber": 205,
+          "lineNumber": 203,
           "line": "<Group x={0} y={yPos(d.rank)} opacity={visible ? 0.8 : 0} motion={tweenMotion}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 206,
+          "lineNumber": 204,
           "line": "<Rect"
         },
         {
           "component": "Image",
-          "lineNumber": 216,
+          "lineNumber": 214,
           "line": "<Image"
         },
         {
           "component": "Text",
-          "lineNumber": 226,
+          "lineNumber": 224,
           "line": "<Text"
         },
         {
           "component": "Axis",
-          "lineNumber": 249,
+          "lineNumber": 247,
           "line": "<Axis"
         }
       ]
@@ -1492,12 +1492,12 @@
         },
         {
           "component": "Line",
-          "lineNumber": 87,
+          "lineNumber": 97,
           "line": "<Line"
         },
         {
           "component": "Text",
-          "lineNumber": 100,
+          "lineNumber": 110,
           "line": "<Text"
         }
       ]
@@ -1550,7 +1550,7 @@
       "example": "barchart-tickspacing",
       "component": "Axis",
       "path": "/docs/components/Axis/barchart-tickspacing",
-      "lineNumber": 26,
+      "lineNumber": 71,
       "line": "<BarChart"
     },
     {
@@ -1704,14 +1704,14 @@
       "example": "duration-civilization-timeline",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-civilization-timeline",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<BarChart"
     },
     {
       "example": "duration-civilization-timeline-dense",
       "component": "BarChart",
       "path": "/docs/components/BarChart/duration-civilization-timeline-dense",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<BarChart"
     },
     {
@@ -2254,5 +2254,5 @@
       "line": "<BarChart"
     }
   ],
-  "updatedAt": "2026-04-19T13:21:53.938Z"
+  "updatedAt": "2026-04-30T15:36:22.677Z"
 }

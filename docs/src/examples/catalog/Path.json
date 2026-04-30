@@ -29,7 +29,7 @@
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 450,
+      "lineNumber": 451,
       "line": "<Path"
     },
     {
@@ -40,5 +40,5 @@
       "line": "<Path pathData=\"M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80\" strokeWidth={2} />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.603Z"
+  "updatedAt": "2026-04-30T15:36:26.935Z"
 }

@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 41,
+          "lineNumber": 42,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 61,
+          "lineNumber": 62,
           "line": "<Layer>"
         },
         {
           "component": "Circle",
-          "lineNumber": 63,
+          "lineNumber": 64,
           "line": "<Circle"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 77,
+          "lineNumber": 78,
           "line": "<GeoPath"
         },
         {
           "component": "Image",
-          "lineNumber": 84,
+          "lineNumber": 85,
           "line": "<Image"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 94,
+          "lineNumber": 95,
           "line": "<Tooltip.Root {context}>"
         }
       ]
@@ -174,21 +174,21 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 214,
+      "lineNumber": 212,
       "line": "<Image"
     },
     {
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 216,
+      "lineNumber": 214,
       "line": "<Image"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 84,
+      "lineNumber": 85,
       "line": "<Image"
     },
     {
@@ -248,5 +248,5 @@
       "line": "<image"
     }
   ],
-  "updatedAt": "2026-04-19T13:23:58.214Z"
+  "updatedAt": "2026-04-30T15:36:25.977Z"
 }

@@ -580,35 +580,35 @@
       "example": "basic",
       "component": "Chord",
       "path": "/docs/components/Chord/basic",
-      "lineNumber": 37,
+      "lineNumber": 38,
       "line": "<Arc"
     },
     {
       "example": "directed",
       "component": "Chord",
       "path": "/docs/components/Chord/directed",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Arc"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 103,
+      "lineNumber": 104,
       "line": "<Arc"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 89,
+      "lineNumber": 90,
       "line": "<Arc"
     },
     {
       "example": "ticks",
       "component": "Chord",
       "path": "/docs/components/Chord/ticks",
-      "lineNumber": 52,
+      "lineNumber": 53,
       "line": "<Arc"
     },
     {
@@ -622,14 +622,14 @@
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 100,
+      "lineNumber": 91,
       "line": "<Arc"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 126,
+      "lineNumber": 117,
       "line": "<Arc {startAngle} {endAngle} {innerRadius} {outerRadius} />"
     },
     {
@@ -696,5 +696,5 @@
       "line": "<Arc {...props} offset={index === 1 ? 16 : undefined} />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.560Z"
+  "updatedAt": "2026-04-30T15:36:21.734Z"
 }

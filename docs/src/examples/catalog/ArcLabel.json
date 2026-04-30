@@ -6,37 +6,37 @@
       "example": "basic",
       "component": "Chord",
       "path": "/docs/components/Chord/basic",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<ArcLabel"
     },
     {
       "example": "directed",
       "component": "Chord",
       "path": "/docs/components/Chord/directed",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<ArcLabel"
     },
     {
       "example": "gradient",
       "component": "Chord",
       "path": "/docs/components/Chord/gradient",
-      "lineNumber": 116,
+      "lineNumber": 117,
       "line": "<ArcLabel"
     },
     {
       "example": "hover",
       "component": "Chord",
       "path": "/docs/components/Chord/hover",
-      "lineNumber": 127,
+      "lineNumber": 128,
       "line": "<ArcLabel"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 128,
+      "lineNumber": 119,
       "line": "<ArcLabel"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.624Z"
+  "updatedAt": "2026-04-30T15:36:21.938Z"
 }

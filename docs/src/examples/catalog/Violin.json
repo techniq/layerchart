@@ -78,7 +78,7 @@
         {
           "component": "Violin",
           "lineNumber": 53,
-          "line": "<Violin"
+          "line": "<Violin data={item} values=\"values\" box median class=\"fill-primary/20 stroke-primary\" />"
         }
       ]
     },
@@ -137,7 +137,7 @@
       "component": "Violin",
       "path": "/docs/components/Violin/horizontal",
       "lineNumber": 53,
-      "line": "<Violin"
+      "line": "<Violin data={item} values=\"values\" box median class=\"fill-primary/20 stroke-primary\" />"
     },
     {
       "example": "with-box-median",
@@ -147,5 +147,5 @@
       "line": "<Violin"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:53.992Z"
+  "updatedAt": "2026-04-30T15:36:29.085Z"
 }

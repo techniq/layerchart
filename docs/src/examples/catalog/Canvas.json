@@ -6,16 +6,16 @@
       "example": "animated-globe",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/animated-globe",
-      "lineNumber": 154,
+      "lineNumber": 153,
       "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> -->"
     },
     {
       "example": "tooltip",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/tooltip",
-      "lineNumber": 35,
+      "lineNumber": 36,
       "line": "<!-- Provides better performance by rendering tooltip path on separate <Canvas> layer -->"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.032Z"
+  "updatedAt": "2026-04-30T15:36:23.272Z"
 }

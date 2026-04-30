@@ -200,17 +200,17 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 16,
+          "lineNumber": 15,
           "line": "<LineChart"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<LinearGradient stops={ticks(1, 0, 10).map(interpolateTurbo)} vertical>"
         },
         {
           "component": "Spline",
-          "lineNumber": 30,
+          "lineNumber": 29,
           "line": "<Spline stroke={gradient} />"
         }
       ]
@@ -222,27 +222,27 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 14,
+          "lineNumber": 13,
           "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 18,
+          "lineNumber": 17,
           "line": "<LinearGradient"
         },
         {
           "component": "Spline",
-          "lineNumber": 27,
+          "lineNumber": 26,
           "line": "<Spline stroke={gradient} />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 34,
+          "lineNumber": 33,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 44,
+          "lineNumber": 43,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -498,7 +498,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 57,
+          "lineNumber": 55,
           "line": "<LineChart"
         }
       ]
@@ -510,7 +510,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 63,
+          "lineNumber": 61,
           "line": "<LineChart"
         }
       ]
@@ -522,7 +522,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 56,
+          "lineNumber": 54,
           "line": "<LineChart data={data.cpu} x=\"x\" y=\"y\" props={chartProps} brush profile />"
         }
       ]
@@ -546,7 +546,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 56,
+          "lineNumber": 54,
           "line": "<LineChart {data} x=\"epoch\" y={(d) => 100 - d.idl} props={chartProps} brush profile />"
         }
       ]
@@ -558,7 +558,7 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 63,
+          "lineNumber": 61,
           "line": "<LineChart data={chartData} x=\"date\" y=\"cpu\" props={chartProps} brush profile />"
         }
       ]
@@ -570,22 +570,22 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 45,
+          "lineNumber": 44,
           "line": "<LineChart"
         },
         {
           "component": "Chart",
-          "lineNumber": 64,
+          "lineNumber": 63,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 85,
+          "lineNumber": 84,
           "line": "<Layer>"
         },
         {
           "component": "Area",
-          "lineNumber": 86,
+          "lineNumber": 85,
           "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
         }
       ]
@@ -961,23 +961,18 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 23,
+          "lineNumber": 35,
           "line": "<LineChart"
         },
         {
-          "component": "Link",
-          "lineNumber": 57,
-          "line": "<Link"
+          "component": "Layer",
+          "lineNumber": 64,
+          "line": "<Layer>"
         },
         {
-          "component": "Circle",
-          "lineNumber": 67,
-          "line": "<Circle cx={dotX} cy={dotY} r={3} fill={seriesColor} />"
-        },
-        {
-          "component": "Text",
-          "lineNumber": 68,
-          "line": "<Text"
+          "component": "AnnotationPoint",
+          "lineNumber": 76,
+          "line": "<AnnotationPoint"
         }
       ]
     },
@@ -1050,14 +1045,14 @@
       "example": "horizontal-placement",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-placement",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "horizontal-with-range",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -1068,9 +1063,9 @@
       "line": "<LineChart"
     },
     {
-      "example": "slopped",
+      "example": "sloped",
       "component": "AnnotationLine",
-      "path": "/docs/components/AnnotationLine/slopped",
+      "path": "/docs/components/AnnotationLine/sloped",
       "lineNumber": 19,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
@@ -1078,28 +1073,28 @@
       "example": "vertical",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical-placement",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical-placement",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "vertical-with-rotation",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/vertical-with-rotation",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 59,
+      "lineNumber": 58,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
     },
     {
@@ -1113,98 +1108,98 @@
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "on-series-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
     },
     {
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/series-annotation",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "hide-tooltip",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/hide-tooltip",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-lower-bound",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-range",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "horizontal-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-upper-bound",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/label-placement",
-      "lineNumber": 32,
+      "lineNumber": 30,
       "line": "<LineChart"
     },
     {
       "example": "vertical-with-gradient-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-gradient-range",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-lower-bound",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-range",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
       "example": "vertical-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-upper-bound",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<LineChart"
     },
     {
@@ -1288,14 +1283,14 @@
       "example": "gradient-encoding",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-encoding",
-      "lineNumber": 16,
+      "lineNumber": 15,
       "line": "<LineChart"
     },
     {
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<LineChart {data} x=\"date\" y=\"value\" yDomain={null} height={300}>"
     },
     {
@@ -1421,42 +1416,42 @@
       "example": "perf-dimension-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
-      "lineNumber": 57,
+      "lineNumber": 55,
       "line": "<LineChart"
     },
     {
       "example": "perf-dimension-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-dimension-arrays",
-      "lineNumber": 78,
-      "line": "<LineChart"
-    },
-    {
-      "example": "perf-dimension-arrays-processed",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/perf-dimension-arrays-processed",
-      "lineNumber": 63,
-      "line": "<LineChart"
-    },
-    {
-      "example": "perf-dimension-arrays-processed",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/perf-dimension-arrays-processed",
       "lineNumber": 76,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays-processed",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/perf-dimension-arrays-processed",
+      "lineNumber": 61,
+      "line": "<LineChart"
+    },
+    {
+      "example": "perf-dimension-arrays-processed",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/perf-dimension-arrays-processed",
+      "lineNumber": 74,
       "line": "<LineChart"
     },
     {
       "example": "perf-series-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-series-arrays",
-      "lineNumber": 56,
+      "lineNumber": 54,
       "line": "<LineChart data={data.cpu} x=\"x\" y=\"y\" props={chartProps} brush profile />"
     },
     {
       "example": "perf-series-arrays",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-series-arrays",
-      "lineNumber": 62,
+      "lineNumber": 60,
       "line": "<LineChart"
     },
     {
@@ -1470,35 +1465,35 @@
       "example": "perf-wide-data",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-wide-data",
-      "lineNumber": 56,
+      "lineNumber": 54,
       "line": "<LineChart {data} x=\"epoch\" y={(d) => 100 - d.idl} props={chartProps} brush profile />"
     },
     {
       "example": "perf-wide-data",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-wide-data",
-      "lineNumber": 62,
+      "lineNumber": 60,
       "line": "<LineChart"
     },
     {
       "example": "perf-wide-data-processed",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-wide-data-processed",
-      "lineNumber": 63,
+      "lineNumber": 61,
       "line": "<LineChart data={chartData} x=\"date\" y=\"cpu\" props={chartProps} brush profile />"
     },
     {
       "example": "perf-wide-data-processed",
       "component": "LineChart",
       "path": "/docs/components/LineChart/perf-wide-data-processed",
-      "lineNumber": 69,
+      "lineNumber": 67,
       "line": "<LineChart"
     },
     {
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 45,
+      "lineNumber": 44,
       "line": "<LineChart"
     },
     {
@@ -1694,7 +1689,7 @@
       "example": "svelte-milestones",
       "component": "LineChart",
       "path": "/docs/components/LineChart/svelte-milestones",
-      "lineNumber": 23,
+      "lineNumber": 35,
       "line": "<LineChart"
     },
     {
@@ -1726,5 +1721,5 @@
       "line": "<LineChart"
     }
   ],
-  "updatedAt": "2026-04-22T15:30:13.097Z"
+  "updatedAt": "2026-04-30T15:36:26.377Z"
 }

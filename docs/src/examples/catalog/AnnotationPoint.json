@@ -52,27 +52,27 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 59,
+          "lineNumber": 58,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ top: 10, bottom: 20, left: 25 }}>"
         },
         {
           "component": "Text",
-          "lineNumber": 61,
+          "lineNumber": 60,
           "line": "<Text x={context.width / 2} y={10} textAnchor=\"middle\" value=\"Apple Stock\" />"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 63,
+          "lineNumber": 62,
           "line": "<AnnotationLine"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 69,
+          "lineNumber": 68,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 83,
+          "lineNumber": 82,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -101,22 +101,22 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 31,
+          "lineNumber": 30,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 33,
+          "lineNumber": 32,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -128,27 +128,27 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 30,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationLine",
-          "lineNumber": 32,
+          "lineNumber": 31,
           "line": "<AnnotationLine"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 41,
+          "lineNumber": 40,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 57,
+          "lineNumber": 56,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -160,22 +160,22 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 28,
+          "lineNumber": 27,
           "line": "<LineChart {data} x=\"date\" y=\"value\" height={300} padding={{ left: 25, bottom: 15 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 30,
+          "lineNumber": 29,
           "line": "<Layer>"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 32,
+          "lineNumber": 31,
           "line": "<AnnotationPoint"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 48,
+          "lineNumber": 47,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -209,12 +209,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 22,
+          "lineNumber": 21,
           "line": "<AnnotationPoint"
         }
       ]
@@ -226,22 +226,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 97,
+          "lineNumber": 98,
           "line": "<Chart geo={{ projection: geoAlbersUsa, fitGeojson: states }} height={500} padding={{ right: 40 }}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 98,
+          "lineNumber": 99,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 99,
+          "lineNumber": 100,
           "line": "<GeoPath geojson={states} class=\"fill-surface-content/10 stroke-surface-100\" />"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 102,
+          "lineNumber": 103,
           "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
         }
       ]
@@ -253,22 +253,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 108,
+          "lineNumber": 109,
           "line": "<Chart geo={{ projection: geoNaturalEarth1, fitGeojson: countries }} height={500}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 109,
+          "lineNumber": 110,
           "line": "<Layer>"
         },
         {
           "component": "GeoPath",
-          "lineNumber": 111,
+          "lineNumber": 112,
           "line": "<GeoPath geojson={f} class=\"fill-surface-content/10 stroke-surface-100\" />"
         },
         {
           "component": "AnnotationPoint",
-          "lineNumber": 115,
+          "lineNumber": 116,
           "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
         }
       ]
@@ -293,7 +293,7 @@
       "example": "line-to-point",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/line-to-point",
-      "lineNumber": 69,
+      "lineNumber": 68,
       "line": "<AnnotationPoint"
     },
     {
@@ -307,21 +307,21 @@
       "example": "on-axis-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-axis-with-tooltip",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-line-and-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-line-and-tooltip",
-      "lineNumber": 41,
+      "lineNumber": 40,
       "line": "<AnnotationPoint"
     },
     {
       "example": "on-series-with-tooltip",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/on-series-with-tooltip",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<AnnotationPoint"
     },
     {
@@ -335,23 +335,30 @@
       "example": "series-annotation",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/series-annotation",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<AnnotationPoint"
     },
     {
       "example": "us-cities",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/us-cities",
-      "lineNumber": 102,
+      "lineNumber": 103,
       "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
     },
     {
       "example": "world-landmarks",
       "component": "AnnotationPoint",
       "path": "/docs/components/AnnotationPoint/world-landmarks",
-      "lineNumber": 115,
+      "lineNumber": 116,
       "line": "<AnnotationPoint {...annotation} x={annotation.lon} y={annotation.lat} r={4} link />"
+    },
+    {
+      "example": "svelte-milestones",
+      "component": "LineChart",
+      "path": "/docs/components/LineChart/svelte-milestones",
+      "lineNumber": 76,
+      "line": "<AnnotationPoint"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:31.530Z"
+  "updatedAt": "2026-04-30T15:36:21.477Z"
 }

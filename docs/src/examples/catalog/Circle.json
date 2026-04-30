@@ -68,21 +68,21 @@
         {
           "component": "Chart",
           "lineNumber": 16,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 24,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 25,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Circle",
-          "lineNumber": 20,
+          "lineNumber": 27,
           "line": "<Circle cx=\"date\" cy=\"value\" r={5} class=\"fill-primary\" />"
         }
       ]
@@ -314,7 +314,7 @@
       "example": "data-mode",
       "component": "Circle",
       "path": "/docs/components/Circle/data-mode",
-      "lineNumber": 20,
+      "lineNumber": 27,
       "line": "<Circle cx=\"date\" cy=\"value\" r={5} class=\"fill-primary\" />"
     },
     {
@@ -447,7 +447,7 @@
       "example": "collision-detection",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/collision-detection",
-      "lineNumber": 59,
+      "lineNumber": 60,
       "line": "<Circle"
     },
     {
@@ -461,112 +461,112 @@
       "example": "graph-drag",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-drag",
-      "lineNumber": 92,
+      "lineNumber": 93,
       "line": "<circle"
     },
     {
       "example": "graph-playground",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/graph-playground",
-      "lineNumber": 182,
+      "lineNumber": 181,
       "line": "<Circle"
     },
     {
       "example": "group",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/group",
-      "lineNumber": 72,
+      "lineNumber": 73,
       "line": "<Circle"
     },
     {
       "example": "lattice",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/lattice",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Circle cx={node.x} cy={node.y} r={3} class=\"fill-surface-content\" />"
     },
     {
       "example": "tree",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/tree",
-      "lineNumber": 54,
+      "lineNumber": 53,
       "line": "<Circle"
     },
     {
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 110,
+      "lineNumber": 100,
       "line": "<Circle"
     },
     {
       "example": "paint-brush-selection",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/paint-brush-selection",
-      "lineNumber": 437,
+      "lineNumber": 438,
       "line": "<Circle"
     },
     {
       "example": "icons",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/icons",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Circle"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 46,
+      "lineNumber": 47,
       "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
     },
     {
       "example": "us-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-airports",
-      "lineNumber": 52,
+      "lineNumber": 53,
       "line": "<Circle"
     },
     {
       "example": "us-state-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-state-capitals",
-      "lineNumber": 38,
+      "lineNumber": 39,
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
     },
     {
       "example": "us-state-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/us-state-capitals",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Circle cx={x} cy={y} r={2} class=\"fill-white stroke-danger\" />"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 43,
+      "lineNumber": 44,
       "line": "<Circle cx=\"longitude\" cy=\"latitude\" r={1} class=\"fill-primary pointer-events-none\" />"
     },
     {
       "example": "world-airports",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-airports",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Circle"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
-      "lineNumber": 66,
+      "lineNumber": 67,
       "line": "<Circle r={4} class=\"stroke-primary/50 fill-none\" />"
     },
     {
       "example": "world-capitals",
       "component": "GeoPoint",
       "path": "/docs/components/GeoPoint/world-capitals",
-      "lineNumber": 81,
+      "lineNumber": 82,
       "line": "<Circle cx={x} cy={y} r={4} class=\"stroke-primary/50 fill-none\" />"
     },
     {
@@ -587,21 +587,21 @@
       "example": "data-mode",
       "component": "Group",
       "path": "/docs/components/Group/data-mode",
-      "lineNumber": 19,
+      "lineNumber": 26,
       "line": "<Circle r={4} class=\"fill-primary\" />"
     },
     {
       "example": "geo",
       "component": "Hull",
       "path": "/docs/components/Hull/geo",
-      "lineNumber": 47,
+      "lineNumber": 48,
       "line": "<Circle r={2} class=\"fill-white stroke-danger\" />"
     },
     {
       "example": "college-football-map",
       "component": "Image",
       "path": "/docs/components/Image/college-football-map",
-      "lineNumber": 63,
+      "lineNumber": 64,
       "line": "<Circle"
     },
     {
@@ -643,15 +643,8 @@
       "example": "data-mode",
       "component": "Line",
       "path": "/docs/components/Line/data-mode",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<Circle cx=\"date\" cy=\"value\" r={4} class=\"fill-primary\" />"
-    },
-    {
-      "example": "svelte-milestones",
-      "component": "LineChart",
-      "path": "/docs/components/LineChart/svelte-milestones",
-      "lineNumber": 67,
-      "line": "<Circle cx={dotX} cy={dotY} r={3} fill={seriesColor} />"
     },
     {
       "example": "curves",
@@ -671,14 +664,14 @@
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 45,
+      "lineNumber": 38,
       "line": "<Circle"
     },
     {
       "example": "playground",
       "component": "Link",
       "path": "/docs/components/Link/playground",
-      "lineNumber": 58,
+      "lineNumber": 51,
       "line": "<Circle"
     },
     {
@@ -706,7 +699,7 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 121,
+      "lineNumber": 113,
       "line": "<Circle"
     },
     {
@@ -993,7 +986,7 @@
       "example": "anchor",
       "component": "Vector",
       "path": "/docs/components/Vector/anchor",
-      "lineNumber": 31,
+      "lineNumber": 39,
       "line": "<Circle cx={300} cy={150} r={3} class=\"fill-danger\" />"
     },
     {
@@ -1011,5 +1004,5 @@
       "line": "<Circle cx={point.x} cy={point.y} r={4} class=\"fill-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-22T15:30:11.862Z"
+  "updatedAt": "2026-04-30T15:36:23.837Z"
 }

@@ -13,7 +13,7 @@
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 200,
+      "lineNumber": 198,
       "line": "<ChartClipPath>"
     },
     {
@@ -83,7 +83,7 @@
       "example": "us-state-with-surrounding-states",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/us-state-with-surrounding-states",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<ChartClipPath>"
     },
     {
@@ -129,5 +129,5 @@
       "line": "<ChartClipPath>"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.506Z"
+  "updatedAt": "2026-04-30T15:36:23.654Z"
 }

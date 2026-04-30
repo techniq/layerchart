@@ -8,37 +8,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 25,
+          "lineNumber": 26,
           "line": "<Chart padding={{ top: 16, left: nodeWidth / 2, right: nodeWidth / 2 }} height={300}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 26,
+          "lineNumber": 27,
           "line": "<Layer>"
         },
         {
           "component": "Tree",
-          "lineNumber": 27,
+          "lineNumber": 28,
           "line": "<Tree hierarchy={data} orientation=\"horizontal\">"
         },
         {
           "component": "Link",
-          "lineNumber": 30,
+          "lineNumber": 31,
           "line": "<Link data={link} orientation=\"horizontal\" class=\"stroke-surface-content opacity-20\" />"
         },
         {
           "component": "Group",
-          "lineNumber": 34,
+          "lineNumber": 35,
           "line": "<Group x={node.y - nodeWidth / 2} y={node.x - nodeHeight / 2}>"
         },
         {
           "component": "Rect",
-          "lineNumber": 35,
+          "lineNumber": 36,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 43,
+          "lineNumber": 44,
           "line": "<Text"
         }
       ]
@@ -82,37 +82,37 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 77,
+          "lineNumber": 78,
           "line": "<Chart"
         },
         {
           "component": "Tree",
-          "lineNumber": 91,
+          "lineNumber": 92,
           "line": "<Tree"
         },
         {
           "component": "Layer",
-          "lineNumber": 97,
+          "lineNumber": 98,
           "line": "<Layer>"
         },
         {
           "component": "Group",
-          "lineNumber": 98,
+          "lineNumber": 99,
           "line": "<Group center={config.orientation === 'radial'}>"
         },
         {
           "component": "Link",
-          "lineNumber": 101,
+          "lineNumber": 102,
           "line": "<Link"
         },
         {
           "component": "Rect",
-          "lineNumber": 149,
+          "lineNumber": 150,
           "line": "<Rect"
         },
         {
           "component": "Text",
-          "lineNumber": 165,
+          "lineNumber": 166,
           "line": "<Text"
         }
       ]
@@ -123,7 +123,7 @@
       "example": "basic",
       "component": "Tree",
       "path": "/docs/components/Tree/basic",
-      "lineNumber": 27,
+      "lineNumber": 28,
       "line": "<Tree hierarchy={data} orientation=\"horizontal\">"
     },
     {
@@ -137,9 +137,9 @@
       "example": "playground",
       "component": "Tree",
       "path": "/docs/components/Tree/playground",
-      "lineNumber": 91,
+      "lineNumber": 92,
       "line": "<Tree"
     }
   ],
-  "updatedAt": "2026-04-21T13:21:33.692Z"
+  "updatedAt": "2026-04-30T15:36:28.933Z"
 }

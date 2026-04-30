@@ -258,41 +258,41 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 20,
+          "lineNumber": 28,
           "line": "<Rule y={0} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 21,
+          "lineNumber": 29,
           "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
         },
         {
           "component": "Area",
-          "lineNumber": 22,
+          "lineNumber": 30,
           "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
         },
         {
           "component": "Highlight",
-          "lineNumber": 32,
+          "lineNumber": 40,
           "line": "<Highlight"
         },
         {
           "component": "Tooltip",
-          "lineNumber": 50,
+          "lineNumber": 58,
           "line": "<Tooltip.Root>"
         }
       ]
@@ -690,31 +690,31 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 19,
+          "lineNumber": 27,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 20,
+          "lineNumber": 28,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 22,
+          "lineNumber": 30,
           "line": "<Rule y={0} />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 23,
+          "lineNumber": 31,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 32,
+          "lineNumber": 40,
           "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
         }
       ]
@@ -727,31 +727,31 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 19,
+          "lineNumber": 27,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 20,
+          "lineNumber": 28,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 22,
+          "lineNumber": 30,
           "line": "<Rule y={0} />"
         },
         {
           "component": "LinearGradient",
-          "lineNumber": 23,
+          "lineNumber": 31,
           "line": "<LinearGradient"
         },
         {
           "component": "Area",
-          "lineNumber": 32,
+          "lineNumber": 40,
           "line": "<Area"
         }
       ]
@@ -764,31 +764,31 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 20,
+          "lineNumber": 28,
           "line": "<Rule y={0} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 21,
+          "lineNumber": 29,
           "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
         },
         {
           "component": "Area",
-          "lineNumber": 22,
+          "lineNumber": 30,
           "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
         }
       ]
@@ -801,31 +801,31 @@
         {
           "component": "Chart",
           "lineNumber": 15,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={20} tooltipContext={{ mode: 'quadtree-x' }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 25,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 26,
           "line": "<Axis placement=\"left\" grid rule />"
         },
         {
           "component": "Rule",
-          "lineNumber": 20,
+          "lineNumber": 28,
           "line": "<Rule y={0} />"
         },
         {
           "component": "RectClipPath",
-          "lineNumber": 21,
+          "lineNumber": 29,
           "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
         },
         {
           "component": "Area",
-          "lineNumber": 22,
+          "lineNumber": 30,
           "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
         }
       ]
@@ -995,14 +995,14 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 22,
+      "lineNumber": 30,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 30,
+      "lineNumber": 38,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
@@ -1093,42 +1093,42 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 32,
+      "lineNumber": 40,
       "line": "<Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 32,
+      "lineNumber": 40,
       "line": "<Area"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 22,
+      "lineNumber": 30,
       "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 30,
+      "lineNumber": 38,
       "line": "<Area line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 22,
+      "lineNumber": 30,
       "line": "<Area line={{ class: 'stroke-2 stroke-success' }} class=\"fill-success/20\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 30,
+      "lineNumber": 38,
       "line": "<Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class=\"fill-danger/20\" />"
     },
     {
@@ -1212,7 +1212,7 @@
       "example": "basic",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/basic",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1226,14 +1226,14 @@
       "example": "handle-arrows",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-arrows",
-      "lineNumber": 25,
+      "lineNumber": 24,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "handle-labels",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/handle-labels",
-      "lineNumber": 17,
+      "lineNumber": 16,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1310,14 +1310,14 @@
       "example": "simple-styling",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/simple-styling",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "striped-background",
       "component": "BrushContext",
       "path": "/docs/components/BrushContext/striped-background",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
@@ -1359,21 +1359,21 @@
       "example": "persist-brush-zoom",
       "component": "LineChart",
       "path": "/docs/components/LineChart/persist-brush-zoom",
-      "lineNumber": 86,
+      "lineNumber": 85,
       "line": "<Area line={{ class: 'stroke-2 stroke-primary' }} class=\"fill-primary/20\" />"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 27,
+      "lineNumber": 26,
       "line": "<Area"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Area"
     },
     {
@@ -1517,5 +1517,5 @@
       "line": "<Area"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:22.782Z"
+  "updatedAt": "2026-04-30T15:36:22.071Z"
 }

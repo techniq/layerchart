@@ -59,12 +59,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -76,12 +76,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
         }
       ]
@@ -93,12 +93,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -110,12 +110,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -127,12 +127,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -144,12 +144,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 32,
+          "lineNumber": 30,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 40,
+          "lineNumber": 38,
           "line": "<AnnotationRange"
         }
       ]
@@ -161,12 +161,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -178,12 +178,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -195,12 +195,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -212,12 +212,12 @@
       "components": [
         {
           "component": "LineChart",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<LineChart"
         },
         {
           "component": "AnnotationRange",
-          "lineNumber": 21,
+          "lineNumber": 20,
           "line": "<AnnotationRange"
         }
       ]
@@ -228,7 +228,7 @@
       "example": "horizontal-with-range",
       "component": "AnnotationLine",
       "path": "/docs/components/AnnotationLine/horizontal-with-range",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<AnnotationRange"
     },
     {
@@ -256,86 +256,86 @@
       "example": "hide-tooltip",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/hide-tooltip",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange y={[0, 400]} class=\"fill-success/10\" />"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<AnnotationRange y={[400, 600]} class=\"fill-warning/10\" />"
     },
     {
       "example": "horizontal-with-fill-multiple",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-fill-multiple",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<AnnotationRange y={[600, null]} class=\"fill-danger/10\" />"
     },
     {
       "example": "horizontal-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-lower-bound",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-range",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "horizontal-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/horizontal-with-pattern-upper-bound",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "label-placement",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/label-placement",
-      "lineNumber": 40,
+      "lineNumber": 38,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-gradient-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-gradient-range",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-lower-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-lower-bound",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-range",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-range",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     },
     {
       "example": "vertical-with-pattern-upper-bound",
       "component": "AnnotationRange",
       "path": "/docs/components/AnnotationRange/vertical-with-pattern-upper-bound",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<AnnotationRange"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:24.535Z"
+  "updatedAt": "2026-04-30T15:36:21.604Z"
 }

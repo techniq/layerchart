@@ -68,21 +68,21 @@
         {
           "component": "Chart",
           "lineNumber": 16,
-          "line": "<Chart {data} x=\"date\" y=\"value\" yNice padding={{ top: 20, bottom: 20, left: 24, right: 10 }} height={300}>"
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 17,
+          "lineNumber": 24,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 18,
+          "lineNumber": 25,
           "line": "<Axis placement=\"bottom\" rule />"
         },
         {
           "component": "Ellipse",
-          "lineNumber": 20,
+          "lineNumber": 27,
           "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} class=\"fill-primary\" />"
         }
       ]
@@ -188,7 +188,7 @@
       "example": "data-mode",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/data-mode",
-      "lineNumber": 20,
+      "lineNumber": 27,
       "line": "<Ellipse cx=\"date\" cy=\"value\" rx={12} ry={6} class=\"fill-primary\" />"
     },
     {
@@ -276,5 +276,5 @@
       "line": "<Ellipse"
     }
   ],
-  "updatedAt": "2026-03-12T03:09:22.119Z"
+  "updatedAt": "2026-04-30T15:36:24.441Z"
 }

@@ -78,7 +78,7 @@
         {
           "component": "BoxPlot",
           "lineNumber": 41,
-          "line": "<BoxPlot data={item} min=\"min\" q1=\"q1\" median=\"median\" q3=\"q3\" max=\"max\" outliers=\"outliers\" />"
+          "line": "<BoxPlot"
         }
       ]
     },
@@ -209,7 +209,7 @@
       "component": "BoxPlot",
       "path": "/docs/components/BoxPlot/pre-computed",
       "lineNumber": 41,
-      "line": "<BoxPlot data={item} min=\"min\" q1=\"q1\" median=\"median\" q3=\"q3\" max=\"max\" outliers=\"outliers\" />"
+      "line": "<BoxPlot"
     },
     {
       "example": "styled",
@@ -233,5 +233,5 @@
       "line": "<BoxPlot"
     }
   ],
-  "updatedAt": "2026-03-28T15:21:51.539Z"
+  "updatedAt": "2026-04-30T15:36:23.012Z"
 }

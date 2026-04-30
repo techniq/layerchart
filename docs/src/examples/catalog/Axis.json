@@ -74,7 +74,7 @@
       "components": [
         {
           "component": "BarChart",
-          "lineNumber": 26,
+          "lineNumber": 71,
           "line": "<BarChart"
         }
       ]
@@ -1007,14 +1007,14 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 18,
+      "lineNumber": 26,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -1133,56 +1133,56 @@
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 20,
+      "lineNumber": 28,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 20,
+      "lineNumber": 28,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-lineargradient-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-lineargradient-over-under",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 18,
+      "lineNumber": 26,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 18,
+      "lineNumber": 26,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
@@ -1728,7 +1728,7 @@
       "example": "company-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/company-race",
-      "lineNumber": 246,
+      "lineNumber": 244,
       "line": "<Axis"
     },
     {
@@ -1749,7 +1749,7 @@
       "example": "language-race",
       "component": "BarChart",
       "path": "/docs/components/BarChart/language-race",
-      "lineNumber": 249,
+      "lineNumber": 247,
       "line": "<Axis"
     },
     {
@@ -3135,182 +3135,182 @@
       "example": "data-mode",
       "component": "Circle",
       "path": "/docs/components/Circle/data-mode",
-      "lineNumber": 18,
+      "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-mode",
       "component": "Circle",
       "path": "/docs/components/Circle/data-mode",
+      "lineNumber": 26,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "styling-using-attributes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-attributes",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "styling-using-classes",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-classes",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 12,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "styling-using-css-variables",
+      "component": "Circle",
+      "path": "/docs/components/Circle/styling-using-css-variables",
+      "lineNumber": 13,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 15,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled",
+      "lineNumber": 16,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 24,
+      "line": "<Axis placement=\"left\" grid rule />"
+    },
+    {
+      "example": "sampled-interactive",
+      "component": "Contour",
+      "path": "/docs/components/Contour/sampled-interactive",
+      "lineNumber": 25,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "volcano-filled",
+      "component": "Contour",
+      "path": "/docs/components/Contour/volcano-filled",
       "lineNumber": 19,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "styling-using-attributes",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-attributes",
-      "lineNumber": 12,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "styling-using-attributes",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-attributes",
-      "lineNumber": 13,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "styling-using-classes",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-classes",
-      "lineNumber": 12,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "styling-using-classes",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-classes",
-      "lineNumber": 13,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "styling-using-css-variables",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-css-variables",
-      "lineNumber": 12,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "styling-using-css-variables",
-      "component": "Circle",
-      "path": "/docs/components/Circle/styling-using-css-variables",
-      "lineNumber": 13,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "sampled",
-      "component": "Contour",
-      "path": "/docs/components/Contour/sampled",
-      "lineNumber": 15,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "sampled",
-      "component": "Contour",
-      "path": "/docs/components/Contour/sampled",
-      "lineNumber": 16,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "sampled-interactive",
-      "component": "Contour",
-      "path": "/docs/components/Contour/sampled-interactive",
-      "lineNumber": 24,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "sampled-interactive",
-      "component": "Contour",
-      "path": "/docs/components/Contour/sampled-interactive",
-      "lineNumber": 25,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "volcano-filled",
-      "component": "Contour",
-      "path": "/docs/components/Contour/volcano-filled",
-      "lineNumber": 15,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "volcano-filled",
-      "component": "Contour",
-      "path": "/docs/components/Contour/volcano-filled",
-      "lineNumber": 16,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "volcano-filled-interactive",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
-      "lineNumber": 24,
+      "lineNumber": 27,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "volcano-filled-interactive",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
-      "lineNumber": 25,
+      "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "volcano-lines",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-lines",
-      "lineNumber": 13,
+      "lineNumber": 12,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "volcano-lines",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-lines",
-      "lineNumber": 14,
+      "lineNumber": 13,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "bandwidth",
       "component": "Density",
       "path": "/docs/components/Density/bandwidth",
-      "lineNumber": 30,
+      "lineNumber": 29,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "bandwidth",
       "component": "Density",
       "path": "/docs/components/Density/bandwidth",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "basic",
       "component": "Density",
       "path": "/docs/components/Density/basic",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "basic",
       "component": "Density",
       "path": "/docs/components/Density/basic",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "stroke-only",
       "component": "Density",
       "path": "/docs/components/Density/stroke-only",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stroke-only",
       "component": "Density",
       "path": "/docs/components/Density/stroke-only",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "thresholds",
+      "component": "Density",
+      "path": "/docs/components/Density/thresholds",
+      "lineNumber": 29,
+      "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "thresholds",
       "component": "Density",
       "path": "/docs/components/Density/thresholds",
       "lineNumber": 30,
-      "line": "<Axis placement=\"left\" grid rule />"
-    },
-    {
-      "example": "thresholds",
-      "component": "Density",
-      "path": "/docs/components/Density/thresholds",
-      "lineNumber": 31,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -3359,14 +3359,14 @@
       "example": "data-mode",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/data-mode",
-      "lineNumber": 18,
+      "lineNumber": 25,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-mode",
       "component": "Ellipse",
       "path": "/docs/components/Ellipse/data-mode",
-      "lineNumber": 19,
+      "lineNumber": 26,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3541,14 +3541,14 @@
       "example": "data-mode",
       "component": "Group",
       "path": "/docs/components/Group/data-mode",
-      "lineNumber": 16,
+      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-mode",
       "component": "Group",
       "path": "/docs/components/Group/data-mode",
-      "lineNumber": 17,
+      "lineNumber": 24,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3646,14 +3646,14 @@
       "example": "data-mode",
       "component": "Line",
       "path": "/docs/components/Line/data-mode",
-      "lineNumber": 18,
+      "lineNumber": 26,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-mode",
       "component": "Line",
       "path": "/docs/components/Line/data-mode",
-      "lineNumber": 19,
+      "lineNumber": 27,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3926,14 +3926,14 @@
       "example": "data-mode",
       "component": "Polygon",
       "path": "/docs/components/Polygon/data-mode",
-      "lineNumber": 16,
+      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "data-mode",
       "component": "Polygon",
       "path": "/docs/components/Polygon/data-mode",
-      "lineNumber": 17,
+      "lineNumber": 24,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -3982,70 +3982,70 @@
       "example": "volcano",
       "component": "Raster",
       "path": "/docs/components/Raster/volcano",
-      "lineNumber": 15,
+      "lineNumber": 18,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "volcano",
       "component": "Raster",
       "path": "/docs/components/Raster/volcano",
-      "lineNumber": 16,
+      "lineNumber": 19,
       "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "with-contour-overlay",
+      "component": "Raster",
+      "path": "/docs/components/Raster/with-contour-overlay",
+      "lineNumber": 18,
+      "line": "<Axis placement=\"left\" rule />"
     },
     {
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
       "lineNumber": 19,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "with-contour-overlay",
-      "component": "Raster",
-      "path": "/docs/components/Raster/with-contour-overlay",
-      "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "color-via-ordinal-scale",
       "component": "Rect",
       "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 31,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-ordinal-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "lineNumber": 32,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 33,
+      "line": "<Axis placement=\"bottom\" rule />"
+    },
+    {
+      "example": "color-via-threshold-scale",
+      "component": "Rect",
+      "path": "/docs/components/Rect/color-via-threshold-scale",
+      "lineNumber": 34,
+      "line": "<Axis placement=\"left\" rule />"
+    },
+    {
+      "example": "data-mode-edge",
+      "component": "Rect",
+      "path": "/docs/components/Rect/data-mode-edge",
       "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
-      "example": "color-via-ordinal-scale",
+      "example": "data-mode-edge",
       "component": "Rect",
-      "path": "/docs/components/Rect/color-via-ordinal-scale",
+      "path": "/docs/components/Rect/data-mode-edge",
       "lineNumber": 29,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "color-via-threshold-scale",
-      "component": "Rect",
-      "path": "/docs/components/Rect/color-via-threshold-scale",
-      "lineNumber": 30,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "color-via-threshold-scale",
-      "component": "Rect",
-      "path": "/docs/components/Rect/color-via-threshold-scale",
-      "lineNumber": 31,
-      "line": "<Axis placement=\"left\" rule />"
-    },
-    {
-      "example": "data-mode-edge",
-      "component": "Rect",
-      "path": "/docs/components/Rect/data-mode-edge",
-      "lineNumber": 17,
-      "line": "<Axis placement=\"bottom\" rule />"
-    },
-    {
-      "example": "data-mode-edge",
-      "component": "Rect",
-      "path": "/docs/components/Rect/data-mode-edge",
-      "lineNumber": 18,
       "line": "<Axis placement=\"left\" rule />"
     },
     {
@@ -4178,42 +4178,42 @@
       "example": "candlestick",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick",
-      "lineNumber": 28,
+      "lineNumber": 27,
       "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
     },
     {
       "example": "candlestick",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick",
-      "lineNumber": 29,
+      "lineNumber": 28,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
+    },
+    {
+      "example": "candlestick-open-close-line-color",
+      "component": "Rule",
+      "path": "/docs/components/Rule/candlestick-open-close-line-color",
+      "lineNumber": 27,
+      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-open-close-line-color",
       "lineNumber": 28,
-      "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
-    },
-    {
-      "example": "candlestick-open-close-line-color",
-      "component": "Rule",
-      "path": "/docs/components/Rule/candlestick-open-close-line-color",
-      "lineNumber": 29,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 36,
+      "lineNumber": 35,
       "line": "<Axis placement=\"left\" grid rule tickSpacing={20} />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 37,
+      "lineNumber": 36,
       "line": "<Axis placement=\"bottom\" rule tickMultiline />"
     },
     {
@@ -4374,28 +4374,28 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 23,
+      "lineNumber": 22,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 24,
+      "lineNumber": 23,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 17,
+      "lineNumber": 16,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "gradient-threshold",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-threshold",
-      "lineNumber": 18,
+      "lineNumber": 17,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -4500,28 +4500,28 @@
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<Axis placement=\"angle\" grid tickLength={0} format={'month'} />"
     },
     {
       "example": "radial-line-with-areas",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-line-with-areas",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Axis"
     },
     {
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 46,
+      "lineNumber": 45,
       "line": "<Axis placement=\"angle\" tickLength={0} grid format={'month'} />"
     },
     {
       "example": "radial-multi-year-lines",
       "component": "Spline",
       "path": "/docs/components/Spline/radial-multi-year-lines",
-      "lineNumber": 47,
+      "lineNumber": 46,
       "line": "<Axis"
     },
     {
@@ -4542,14 +4542,14 @@
       "example": "stroke-grouping",
       "component": "Spline",
       "path": "/docs/components/Spline/stroke-grouping",
-      "lineNumber": 20,
+      "lineNumber": 19,
       "line": "<Axis placement=\"left\" grid rule />"
     },
     {
       "example": "stroke-grouping",
       "component": "Spline",
       "path": "/docs/components/Spline/stroke-grouping",
-      "lineNumber": 21,
+      "lineNumber": 20,
       "line": "<Axis placement=\"bottom\" rule />"
     },
     {
@@ -5053,14 +5053,14 @@
       "example": "wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/wind-map",
-      "lineNumber": 39,
+      "lineNumber": 38,
       "line": "<Axis placement=\"bottom\" />"
     },
     {
       "example": "wind-map",
       "component": "Vector",
       "path": "/docs/components/Vector/wind-map",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Axis placement=\"left\" />"
     },
     {
@@ -5120,5 +5120,5 @@
       "line": "<Axis placement=\"bottom\" rule />"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:52.902Z"
+  "updatedAt": "2026-04-30T15:36:22.340Z"
 }

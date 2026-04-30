@@ -263,35 +263,35 @@
       "example": "bandwidth",
       "component": "Density",
       "path": "/docs/components/Density/bandwidth",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "basic",
       "component": "Density",
       "path": "/docs/components/Density/basic",
-      "lineNumber": 26,
+      "lineNumber": 25,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "stroke-only",
       "component": "Density",
       "path": "/docs/components/Density/stroke-only",
-      "lineNumber": 26,
+      "lineNumber": 31,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "thresholds",
       "component": "Density",
       "path": "/docs/components/Density/thresholds",
-      "lineNumber": 33,
+      "lineNumber": 32,
       "line": "<Points r={1.5} class=\"fill-surface-content/50\" />"
     },
     {
       "example": "text",
       "component": "ForceSimulation",
       "path": "/docs/components/ForceSimulation/text",
-      "lineNumber": 103,
+      "lineNumber": 104,
       "line": "<Points data={nodes.slice(1)} r={config.radius} class=\"fill-primary\" />"
     },
     {
@@ -428,5 +428,5 @@
       "line": "<Points r={2} class=\"fill-primary stroke-primary\" />"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.446Z"
+  "updatedAt": "2026-04-30T15:36:27.319Z"
 }

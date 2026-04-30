@@ -245,7 +245,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 142,
+      "lineNumber": 132,
       "line": "<Legend"
     },
     {
@@ -539,7 +539,7 @@
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 28,
+      "lineNumber": 29,
       "line": "<Legend"
     },
     {
@@ -553,9 +553,9 @@
       "example": "gradient-encoding",
       "component": "Spline",
       "path": "/docs/components/Spline/gradient-encoding",
-      "lineNumber": 31,
+      "lineNumber": 30,
       "line": "<Legend"
     }
   ],
-  "updatedAt": "2026-04-20T01:54:54.440Z"
+  "updatedAt": "2026-04-30T15:36:26.212Z"
 }

@@ -8,32 +8,32 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 98,
+          "lineNumber": 90,
           "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 108,
+          "lineNumber": 100,
           "line": "<Layer onclick={() => (selected = complexHierarchy)}>"
         },
         {
           "component": "Pack",
-          "lineNumber": 109,
+          "lineNumber": 101,
           "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
         },
         {
           "component": "Group",
-          "lineNumber": 111,
+          "lineNumber": 103,
           "line": "<Group"
         },
         {
           "component": "Circle",
-          "lineNumber": 121,
+          "lineNumber": 113,
           "line": "<Circle"
         },
         {
           "component": "Text",
-          "lineNumber": 142,
+          "lineNumber": 134,
           "line": "<Text"
         }
       ]
@@ -44,9 +44,9 @@
       "example": "basic",
       "component": "Pack",
       "path": "/docs/components/Pack/basic",
-      "lineNumber": 109,
+      "lineNumber": 101,
       "line": "<Pack {padding} hierarchy={complexHierarchy} bind:nodes>"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:26.266Z"
+  "updatedAt": "2026-04-30T15:36:26.884Z"
 }

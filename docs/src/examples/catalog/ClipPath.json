@@ -192,16 +192,16 @@
       "example": "timezones",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/timezones",
-      "lineNumber": 138,
+      "lineNumber": 129,
       "line": "<ClipPath useId=\"globe\">"
     },
     {
       "example": "sunburst",
       "component": "Partition",
       "path": "/docs/components/Partition/sunburst",
-      "lineNumber": 124,
+      "lineNumber": 115,
       "line": "<ClipPath>"
     }
   ],
-  "updatedAt": "2026-04-16T17:46:58.803Z"
+  "updatedAt": "2026-04-30T15:36:24.052Z"
 }

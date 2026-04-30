@@ -62,23 +62,23 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 13,
-          "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+          "lineNumber": 12,
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 14,
+          "lineNumber": 17,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 15,
+          "lineNumber": 18,
           "line": "<Axis placement=\"left\" rule />"
         },
         {
           "component": "Contour",
-          "lineNumber": 17,
-          "line": "<Contour"
+          "lineNumber": 20,
+          "line": "<Contour data={volcano.values} width={volcano.width} height={volcano.height} thresholds={20} />"
         }
       ]
     },
@@ -89,22 +89,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 22,
-          "line": "<Chart cScale={scaleSequential(interpolateTurbo)} padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
+          "lineNumber": 21,
+          "line": "<Chart"
         },
         {
           "component": "Layer",
-          "lineNumber": 23,
+          "lineNumber": 26,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 24,
+          "lineNumber": 27,
           "line": "<Axis placement=\"left\" rule />"
         },
         {
           "component": "Contour",
-          "lineNumber": 26,
+          "lineNumber": 29,
           "line": "<Contour"
         }
       ]
@@ -116,22 +116,22 @@
       "components": [
         {
           "component": "Chart",
-          "lineNumber": 11,
+          "lineNumber": 10,
           "line": "<Chart padding={{ left: 30, bottom: 24, top: 8, right: 8 }} height={400}>"
         },
         {
           "component": "Layer",
-          "lineNumber": 12,
+          "lineNumber": 11,
           "line": "<Layer>"
         },
         {
           "component": "Axis",
-          "lineNumber": 13,
+          "lineNumber": 12,
           "line": "<Axis placement=\"left\" rule />"
         },
         {
           "component": "Contour",
-          "lineNumber": 15,
+          "lineNumber": 14,
           "line": "<Contour"
         }
       ]
@@ -156,21 +156,21 @@
       "example": "volcano-filled",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled",
-      "lineNumber": 17,
-      "line": "<Contour"
+      "lineNumber": 20,
+      "line": "<Contour data={volcano.values} width={volcano.width} height={volcano.height} thresholds={20} />"
     },
     {
       "example": "volcano-filled-interactive",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-filled-interactive",
-      "lineNumber": 26,
+      "lineNumber": 29,
       "line": "<Contour"
     },
     {
       "example": "volcano-lines",
       "component": "Contour",
       "path": "/docs/components/Contour/volcano-lines",
-      "lineNumber": 15,
+      "lineNumber": 14,
       "line": "<Contour"
     },
     {
@@ -184,16 +184,16 @@
       "example": "us-water-vapor",
       "component": "Raster",
       "path": "/docs/components/Raster/us-water-vapor",
-      "lineNumber": 49,
+      "lineNumber": 50,
       "line": "<Contour"
     },
     {
       "example": "with-contour-overlay",
       "component": "Raster",
       "path": "/docs/components/Raster/with-contour-overlay",
-      "lineNumber": 22,
+      "lineNumber": 21,
       "line": "<Contour"
     }
   ],
-  "updatedAt": "2026-04-13T13:16:04.870Z"
+  "updatedAt": "2026-04-30T15:36:24.189Z"
 }

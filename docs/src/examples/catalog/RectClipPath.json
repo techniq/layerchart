@@ -27,42 +27,42 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 24,
+      "lineNumber": 32,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath",
-      "lineNumber": 24,
+      "lineNumber": 32,
       "line": "<RectClipPath"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 21,
+      "lineNumber": 29,
       "line": "<RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>"
     },
     {
       "example": "threshold-with-rectclippath-over-under",
       "component": "Area",
       "path": "/docs/components/Area/threshold-with-rectclippath-over-under",
-      "lineNumber": 24,
+      "lineNumber": 32,
       "line": "<RectClipPath"
     },
     {
@@ -104,7 +104,7 @@
       "example": "complex",
       "component": "Treemap",
       "path": "/docs/components/Treemap/complex",
-      "lineNumber": 111,
+      "lineNumber": 100,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
@@ -125,7 +125,7 @@
       "example": "playground",
       "component": "Treemap",
       "path": "/docs/components/Treemap/playground",
-      "lineNumber": 153,
+      "lineNumber": 144,
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     },
     {
@@ -136,5 +136,5 @@
       "line": "<RectClipPath width={nodeWidth} height={nodeHeight}>"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.918Z"
+  "updatedAt": "2026-04-30T15:36:27.786Z"
 }

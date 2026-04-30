@@ -104,7 +104,7 @@
       "example": "bubble-map",
       "component": "GeoPath",
       "path": "/docs/components/GeoPath/bubble-map",
-      "lineNumber": 148,
+      "lineNumber": 138,
       "line": "<CircleLegend title=\"Population\" tickFormat=\"metric\" placement=\"bottom-right\" />"
     },
     {
@@ -115,5 +115,5 @@
       "line": "<CircleLegend"
     }
   ],
-  "updatedAt": "2026-04-12T22:48:25.252Z"
+  "updatedAt": "2026-04-30T15:36:24.028Z"
 }

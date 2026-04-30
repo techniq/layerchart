@@ -20,7 +20,7 @@
       "example": "highlight-color-based-on-value-using-tooltip-slot-prop",
       "component": "Area",
       "path": "/docs/components/Area/highlight-color-based-on-value-using-tooltip-slot-prop",
-      "lineNumber": 32,
+      "lineNumber": 40,
       "line": "<Highlight"
     },
     {
@@ -377,7 +377,7 @@
       "example": "gradient-threshold",
       "component": "LineChart",
       "path": "/docs/components/LineChart/gradient-threshold",
-      "lineNumber": 34,
+      "lineNumber": 33,
       "line": "<Highlight"
     },
     {
@@ -405,21 +405,21 @@
       "example": "candlestick",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-open-close-line-color",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-open-close-line-color",
-      "lineNumber": 32,
+      "lineNumber": 31,
       "line": "<Highlight lines />"
     },
     {
       "example": "candlestick-with-brushing",
       "component": "Rule",
       "path": "/docs/components/Rule/candlestick-with-brushing",
-      "lineNumber": 40,
+      "lineNumber": 39,
       "line": "<Highlight lines />"
     },
     {
@@ -661,5 +661,5 @@
       "line": "<Highlight lines axis=\"x\" />"
     }
   ],
-  "updatedAt": "2026-04-14T21:42:24.157Z"
+  "updatedAt": "2026-04-30T15:36:25.764Z"
 }
