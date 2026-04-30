@@ -64,7 +64,9 @@ export class SplineState {
   ctx: ChartState = getChartContext();
   geo: GeoState = getGeoContext();
 
-  #tweenState!: ReturnType<typeof createMotion<string>>;
+  // Only allocated when the user opts into a tween via the `motion` prop;
+  // `Spline.base.svelte` reads `c.d` directly otherwise (gated by `isTweened`).
+  #tweenState: ReturnType<typeof createMotion<string>> | null = null;
 
   constructor(getProps: () => SplineProps) {
     this.#getProps = getProps;
@@ -85,10 +87,12 @@ export class SplineState {
       },
     });
 
-    this.#tweenState = createMotion(this.#defaultPathData(), () => this.d, {
-      type: 'tween',
-      interpolate: interpolatePath,
-    });
+    if (extractTweenConfig(initial.motion) != null) {
+      this.#tweenState = createMotion(this.#defaultPathData(), () => this.d, {
+        type: 'tween',
+        interpolate: interpolatePath,
+      });
+    }
   }
 
   #getScaleValue(
@@ -224,7 +228,8 @@ export class SplineState {
   isTweened = $derived(extractTweenConfig(this.#getProps().motion) != null);
 
   get tweenedPath() {
-    return this.#tweenState.current;
+    if (this.#tweenState) return this.#tweenState.current;
+    return this.d;
   }
 
   seriesOpacity = $derived.by(() => {

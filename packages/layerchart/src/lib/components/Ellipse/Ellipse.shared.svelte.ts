@@ -119,23 +119,34 @@ export class EllipseState {
     };
   }
 
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters read directly
+  // from props.
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionCx!: ReturnType<typeof createMotion<number>>;
-  #motionCy!: ReturnType<typeof createMotion<number>>;
-  #motionRx!: ReturnType<typeof createMotion<number>>;
-  #motionRy!: ReturnType<typeof createMotion<number>>;
+  #motionCx: ReturnType<typeof createMotion<number>> | null = null;
+  #motionCy: ReturnType<typeof createMotion<number>> | null = null;
+  #motionRx: ReturnType<typeof createMotion<number>> | null = null;
+  #motionRy: ReturnType<typeof createMotion<number>> | null = null;
 
   get motionCx() {
-    return this.#motionCx.current;
+    if (this.#motionCx) return this.#motionCx.current;
+    const cx = this.#getProps().cx;
+    return typeof cx === 'number' ? cx : 0;
   }
   get motionCy() {
-    return this.#motionCy.current;
+    if (this.#motionCy) return this.#motionCy.current;
+    const cy = this.#getProps().cy;
+    return typeof cy === 'number' ? cy : 0;
   }
   get motionRx() {
-    return this.#motionRx.current;
+    if (this.#motionRx) return this.#motionRx.current;
+    const rx = this.#getProps().rx;
+    return typeof rx === 'number' ? rx : 1;
   }
   get motionRy() {
-    return this.#motionRy.current;
+    if (this.#motionRy) return this.#motionRy.current;
+    const ry = this.#getProps().ry;
+    return typeof ry === 'number' ? ry : 1;
   }
 
   staticFill = $derived(
@@ -173,31 +184,34 @@ export class EllipseState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialCx = initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
-    const initialCy = initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
-    const initialRx = initial.initialRx ?? (typeof initial.rx === 'number' ? initial.rx : 1);
-    const initialRy = initial.initialRy ?? (typeof initial.ry === 'number' ? initial.ry : 1);
 
-    this.#motionCx = createMotion(
-      initialCx,
-      () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
-      initial.motion
-    );
-    this.#motionCy = createMotion(
-      initialCy,
-      () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
-      initial.motion
-    );
-    this.#motionRx = createMotion(
-      initialRx,
-      () => (typeof getProps().rx === 'number' ? (getProps().rx as number) : 1),
-      initial.motion
-    );
-    this.#motionRy = createMotion(
-      initialRy,
-      () => (typeof getProps().ry === 'number' ? (getProps().ry as number) : 1),
-      initial.motion
-    );
+    if (initial.motion !== undefined) {
+      const initialCx = initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
+      const initialCy = initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
+      const initialRx = initial.initialRx ?? (typeof initial.rx === 'number' ? initial.rx : 1);
+      const initialRy = initial.initialRy ?? (typeof initial.ry === 'number' ? initial.ry : 1);
+
+      this.#motionCx = createMotion(
+        initialCx,
+        () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
+        initial.motion
+      );
+      this.#motionCy = createMotion(
+        initialCy,
+        () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
+        initial.motion
+      );
+      this.#motionRx = createMotion(
+        initialRx,
+        () => (typeof getProps().rx === 'number' ? (getProps().rx as number) : 1),
+        initial.motion
+      );
+      this.#motionRy = createMotion(
+        initialRy,
+        () => (typeof getProps().ry === 'number' ? (getProps().ry as number) : 1),
+        initial.motion
+      );
+    }
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {

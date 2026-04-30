@@ -301,24 +301,32 @@ export class RectState {
     ) || 0
   );
 
-  // Pixel-mode motion sources
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters read directly
+  // from props.
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionX!: ReturnType<typeof createMotion<number>>;
-  #motionY!: ReturnType<typeof createMotion<number>>;
-  #motionWidth!: ReturnType<typeof createMotion<number>>;
-  #motionHeight!: ReturnType<typeof createMotion<number>>;
+  #motionX: ReturnType<typeof createMotion<number>> | null = null;
+  #motionY: ReturnType<typeof createMotion<number>> | null = null;
+  #motionWidth: ReturnType<typeof createMotion<number>> | null = null;
+  #motionHeight: ReturnType<typeof createMotion<number>> | null = null;
 
   get motionX() {
-    return this.#motionX.current;
+    if (this.#motionX) return this.#motionX.current;
+    const x = this.#getProps().x;
+    return typeof x === 'number' ? x : 0;
   }
   get motionY() {
-    return this.#motionY.current;
+    if (this.#motionY) return this.#motionY.current;
+    const y = this.#getProps().y;
+    return typeof y === 'number' ? y : 0;
   }
   get motionWidth() {
-    return this.#motionWidth.current;
+    if (this.#motionWidth) return this.#motionWidth.current;
+    return this.#getProps().width ?? 0;
   }
   get motionHeight() {
-    return this.#motionHeight.current;
+    if (this.#motionHeight) return this.#motionHeight.current;
+    return this.#getProps().height ?? 0;
   }
 
   // Resolved per-corner radii (clamped to current bounds)
@@ -387,32 +395,35 @@ export class RectState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
-    const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : 0);
-    const initialWidth = initial.initialWidth ?? initial.width ?? 0;
-    const initialHeight = initial.initialHeight ?? initial.height ?? 0;
     const motion = initial.motion;
 
-    this.#motionX = createMotion(
-      initialX,
-      () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
-      motion === undefined ? undefined : parseMotionProp(motion, 'x')
-    );
-    this.#motionY = createMotion(
-      initialY,
-      () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
-      motion === undefined ? undefined : parseMotionProp(motion, 'y')
-    );
-    this.#motionWidth = createMotion(
-      initialWidth,
-      () => getProps().width ?? 0,
-      motion === undefined ? undefined : parseMotionProp(motion, 'width')
-    );
-    this.#motionHeight = createMotion(
-      initialHeight,
-      () => getProps().height ?? 0,
-      motion === undefined ? undefined : parseMotionProp(motion, 'height')
-    );
+    if (motion !== undefined) {
+      const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
+      const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : 0);
+      const initialWidth = initial.initialWidth ?? initial.width ?? 0;
+      const initialHeight = initial.initialHeight ?? initial.height ?? 0;
+
+      this.#motionX = createMotion(
+        initialX,
+        () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
+        parseMotionProp(motion, 'x')
+      );
+      this.#motionY = createMotion(
+        initialY,
+        () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
+        parseMotionProp(motion, 'y')
+      );
+      this.#motionWidth = createMotion(
+        initialWidth,
+        () => getProps().width ?? 0,
+        parseMotionProp(motion, 'width')
+      );
+      this.#motionHeight = createMotion(
+        initialHeight,
+        () => getProps().height ?? 0,
+        parseMotionProp(motion, 'height')
+      );
+    }
 
     this.#dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
     if (this.#dataMotionMap) {

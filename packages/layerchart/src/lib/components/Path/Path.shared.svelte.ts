@@ -78,11 +78,14 @@ export class PathState {
   // Contexts
   chartCtx: ChartState = getChartContext();
 
-  // Path data tween source — the actual `d` attribute / canvas render input
-  #tweenedState!: ReturnType<typeof createMotion<string | null | undefined>>;
+  // Path data tween source — the actual `d` attribute / canvas render input.
+  // Only allocated when the user opts into a tween via the `motion` prop;
+  // otherwise the getter reads `pathData` directly.
+  #tweenedState: ReturnType<typeof createMotion<string | null | undefined>> | null = null;
 
   get tweenedPathData() {
-    return this.#tweenedState.current;
+    if (this.#tweenedState) return this.#tweenedState.current;
+    return this.#getProps().pathData;
   }
 
   // Re-key trigger for draw transitions
@@ -93,28 +96,26 @@ export class PathState {
 
     const initial = getProps();
     const extractedTween = extractTweenConfig(initial.motion);
-    const tweenedOptions: ResolvedMotion | undefined = extractedTween
-      ? {
-          type: extractedTween.type,
-          options: { interpolate: interpolatePath, ...extractedTween.options },
-        }
-      : undefined;
 
-    // Provide initial `0` baseline; only set on initial mount
-    const defaultPathData = (() => {
-      if (!tweenedOptions) {
-        // Fast initial render when not tweened
-        return '';
-      } else if (initial.pathData) {
-        return flattenPathData(
-          initial.pathData,
-          Math.min(this.chartCtx.yScale(0) ?? this.chartCtx.yRange[0], this.chartCtx.yRange[0])
-        );
-      }
-      return '';
-    })();
+    if (extractedTween) {
+      const tweenedOptions: ResolvedMotion = {
+        type: extractedTween.type,
+        options: { interpolate: interpolatePath, ...extractedTween.options },
+      };
 
-    this.#tweenedState = createMotion(defaultPathData, () => getProps().pathData, tweenedOptions);
+      const defaultPathData = initial.pathData
+        ? flattenPathData(
+            initial.pathData,
+            Math.min(this.chartCtx.yScale(0) ?? this.chartCtx.yRange[0], this.chartCtx.yRange[0])
+          )
+        : '';
+
+      this.#tweenedState = createMotion(
+        defaultPathData,
+        () => getProps().pathData,
+        tweenedOptions
+      );
+    }
 
     // Re-trigger draw transition when path data changes
     $effect(() => {

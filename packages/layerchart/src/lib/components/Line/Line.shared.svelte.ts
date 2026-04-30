@@ -200,24 +200,34 @@ export class LineState {
   dashArrayResolved = $derived(parseDashArray(this.#getProps().dashArray));
   dashArrayAttr = $derived(this.dashArrayResolved ? this.dashArrayResolved.join(' ') : undefined);
 
-  // Pixel-mode motion sources
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters read directly
+  // from props.
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionX1!: ReturnType<typeof createMotion<number>>;
-  #motionY1!: ReturnType<typeof createMotion<number>>;
-  #motionX2!: ReturnType<typeof createMotion<number>>;
-  #motionY2!: ReturnType<typeof createMotion<number>>;
+  #motionX1: ReturnType<typeof createMotion<number>> | null = null;
+  #motionY1: ReturnType<typeof createMotion<number>> | null = null;
+  #motionX2: ReturnType<typeof createMotion<number>> | null = null;
+  #motionY2: ReturnType<typeof createMotion<number>> | null = null;
 
   get motionX1() {
-    return this.#motionX1.current;
+    if (this.#motionX1) return this.#motionX1.current;
+    const x1 = this.#getProps().x1;
+    return typeof x1 === 'number' ? x1 : 0;
   }
   get motionY1() {
-    return this.#motionY1.current;
+    if (this.#motionY1) return this.#motionY1.current;
+    const y1 = this.#getProps().y1;
+    return typeof y1 === 'number' ? y1 : 0;
   }
   get motionX2() {
-    return this.#motionX2.current;
+    if (this.#motionX2) return this.#motionX2.current;
+    const x2 = this.#getProps().x2;
+    return typeof x2 === 'number' ? x2 : 0;
   }
   get motionY2() {
-    return this.#motionY2.current;
+    if (this.#motionY2) return this.#motionY2.current;
+    const y2 = this.#getProps().y2;
+    return typeof y2 === 'number' ? y2 : 0;
   }
 
   // Static (non-data-driven) values for SVG/HTML pixel mode
@@ -256,31 +266,34 @@ export class LineState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialX1 = initial.initialX1 ?? (typeof initial.x1 === 'number' ? initial.x1 : 0);
-    const initialY1 = initial.initialY1 ?? (typeof initial.y1 === 'number' ? initial.y1 : 0);
-    const initialX2 = initial.initialX2 ?? (typeof initial.x2 === 'number' ? initial.x2 : 0);
-    const initialY2 = initial.initialY2 ?? (typeof initial.y2 === 'number' ? initial.y2 : 0);
 
-    this.#motionX1 = createMotion(
-      initialX1,
-      () => (typeof getProps().x1 === 'number' ? (getProps().x1 as number) : 0),
-      initial.motion
-    );
-    this.#motionY1 = createMotion(
-      initialY1,
-      () => (typeof getProps().y1 === 'number' ? (getProps().y1 as number) : 0),
-      initial.motion
-    );
-    this.#motionX2 = createMotion(
-      initialX2,
-      () => (typeof getProps().x2 === 'number' ? (getProps().x2 as number) : 0),
-      initial.motion
-    );
-    this.#motionY2 = createMotion(
-      initialY2,
-      () => (typeof getProps().y2 === 'number' ? (getProps().y2 as number) : 0),
-      initial.motion
-    );
+    if (initial.motion !== undefined) {
+      const initialX1 = initial.initialX1 ?? (typeof initial.x1 === 'number' ? initial.x1 : 0);
+      const initialY1 = initial.initialY1 ?? (typeof initial.y1 === 'number' ? initial.y1 : 0);
+      const initialX2 = initial.initialX2 ?? (typeof initial.x2 === 'number' ? initial.x2 : 0);
+      const initialY2 = initial.initialY2 ?? (typeof initial.y2 === 'number' ? initial.y2 : 0);
+
+      this.#motionX1 = createMotion(
+        initialX1,
+        () => (typeof getProps().x1 === 'number' ? (getProps().x1 as number) : 0),
+        initial.motion
+      );
+      this.#motionY1 = createMotion(
+        initialY1,
+        () => (typeof getProps().y1 === 'number' ? (getProps().y1 as number) : 0),
+        initial.motion
+      );
+      this.#motionX2 = createMotion(
+        initialX2,
+        () => (typeof getProps().x2 === 'number' ? (getProps().x2 as number) : 0),
+        initial.motion
+      );
+      this.#motionY2 = createMotion(
+        initialY2,
+        () => (typeof getProps().y2 === 'number' ? (getProps().y2 as number) : 0),
+        initial.motion
+      );
+    }
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {

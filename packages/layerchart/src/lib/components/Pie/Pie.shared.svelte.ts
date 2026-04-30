@@ -49,11 +49,16 @@ export class PieState {
   #getProps: () => PieProps = () => ({}) as PieProps;
   ctx: ChartState = getChartContext();
 
-  #motionEndAngle!: ReturnType<typeof createMotion<number>>;
+  // Only allocated when the user opts into animation via the `motion` prop;
+  // otherwise the pie generator reads `endAngle` directly.
+  #motionEndAngle: ReturnType<typeof createMotion<number>> | null = null;
 
   constructor(getProps: () => PieProps) {
     this.#getProps = getProps;
-    this.#motionEndAngle = createMotion(0, () => this.endAngle, getProps().motion);
+    const initial = getProps();
+    if (initial.motion !== undefined) {
+      this.#motionEndAngle = createMotion(0, () => this.endAngle, initial.motion);
+    }
   }
 
   range = $derived(this.#getProps().range ?? ([0, 360] as [number, number]));
@@ -77,7 +82,7 @@ export class PieState {
             (this.ctx.config.xRange ? min(this.ctx.config.xRange as number[]) : min(this.range))!
           )
       )
-      .endAngle(this.#motionEndAngle.current)
+      .endAngle(this.#motionEndAngle?.current ?? this.endAngle)
       .padAngle(props.padAngle ?? 0)
       .value(this.ctx.x);
 

@@ -160,24 +160,33 @@ export class PolygonState {
     return roundedPolygonPath(pts, props.cornerRadius ?? 0);
   }
 
-  // Pixel-mode motion sources
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters read directly
+  // from props / pixelPathData.
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionCx!: ReturnType<typeof createMotion<number>>;
-  #motionCy!: ReturnType<typeof createMotion<number>>;
-  #motionR!: ReturnType<typeof createMotion<number>>;
-  #tweenedState!: ReturnType<typeof createMotion<string | null>>;
+  #motionCx: ReturnType<typeof createMotion<number>> | null = null;
+  #motionCy: ReturnType<typeof createMotion<number>> | null = null;
+  #motionR: ReturnType<typeof createMotion<number>> | null = null;
+  #tweenedState: ReturnType<typeof createMotion<string | null>> | null = null;
 
   get motionCx() {
-    return this.#motionCx.current;
+    if (this.#motionCx) return this.#motionCx.current;
+    const cx = this.#getProps().cx;
+    return typeof cx === 'number' ? cx : 0;
   }
   get motionCy() {
-    return this.#motionCy.current;
+    if (this.#motionCy) return this.#motionCy.current;
+    const cy = this.#getProps().cy;
+    return typeof cy === 'number' ? cy : 0;
   }
   get motionR() {
-    return this.#motionR.current;
+    if (this.#motionR) return this.#motionR.current;
+    const r = this.#getProps().r;
+    return typeof r === 'number' ? r : 1;
   }
   get tweenedPathData() {
-    return this.#tweenedState.current;
+    if (this.#tweenedState) return this.#tweenedState.current;
+    return this.pixelPathData;
   }
 
   // Pixel-mode polygon path string (depends on motion + transform props)
@@ -232,38 +241,41 @@ export class PolygonState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialCx = initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
-    const initialCy = initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
-    const initialR = initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
 
-    this.#motionCx = createMotion(
-      initialCx,
-      () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
-      initial.motion
-    );
-    this.#motionCy = createMotion(
-      initialCy,
-      () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
-      initial.motion
-    );
-    this.#motionR = createMotion(
-      initialR,
-      () => (typeof getProps().r === 'number' ? (getProps().r as number) : 1),
-      initial.motion
-    );
+    if (initial.motion !== undefined) {
+      const initialCx = initial.initialCx ?? (typeof initial.cx === 'number' ? initial.cx : 0);
+      const initialCy = initial.initialCy ?? (typeof initial.cy === 'number' ? initial.cy : 0);
+      const initialR = initial.initialR ?? (typeof initial.r === 'number' ? initial.r : 1);
 
-    const extractedTween = extractTweenConfig(initial.motion);
-    const tweenedOptions: ResolvedMotion | undefined = extractedTween
-      ? {
+      this.#motionCx = createMotion(
+        initialCx,
+        () => (typeof getProps().cx === 'number' ? (getProps().cx as number) : 0),
+        initial.motion
+      );
+      this.#motionCy = createMotion(
+        initialCy,
+        () => (typeof getProps().cy === 'number' ? (getProps().cy as number) : 0),
+        initial.motion
+      );
+      this.#motionR = createMotion(
+        initialR,
+        () => (typeof getProps().r === 'number' ? (getProps().r as number) : 1),
+        initial.motion
+      );
+
+      const extractedTween = extractTweenConfig(initial.motion);
+      if (extractedTween) {
+        const tweenedOptions: ResolvedMotion = {
           type: extractedTween.type,
           options: { interpolate: interpolatePath, ...extractedTween.options },
-        }
-      : undefined;
-    this.#tweenedState = createMotion<string | null>(
-      null,
-      () => this.pixelPathData,
-      tweenedOptions
-    );
+        };
+        this.#tweenedState = createMotion<string | null>(
+          null,
+          () => this.pixelPathData,
+          tweenedOptions
+        );
+      }
+    }
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {

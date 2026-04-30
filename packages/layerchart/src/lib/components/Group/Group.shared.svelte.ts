@@ -160,14 +160,18 @@ export class GroupState {
   });
 
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionX!: ReturnType<typeof createMotion<number | undefined>>;
-  #motionY!: ReturnType<typeof createMotion<number | undefined>>;
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters return `trueX`/`trueY`.
+  #motionX: ReturnType<typeof createMotion<number | undefined>> | null = null;
+  #motionY: ReturnType<typeof createMotion<number | undefined>> | null = null;
 
   get motionX() {
-    return this.#motionX.current;
+    if (this.#motionX) return this.#motionX.current;
+    return this.trueX;
   }
   get motionY() {
-    return this.#motionY.current;
+    if (this.#motionY) return this.#motionY.current;
+    return this.trueY;
   }
 
   // Transform string for SVG/HTML pixel mode
@@ -189,11 +193,14 @@ export class GroupState {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : undefined);
-    const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : undefined);
 
-    this.#motionX = createMotion(initialX, () => this.trueX, initial.motion);
-    this.#motionY = createMotion(initialY, () => this.trueY, initial.motion);
+    if (initial.motion !== undefined) {
+      const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : undefined);
+      const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : undefined);
+
+      this.#motionX = createMotion(initialX, () => this.trueX, initial.motion);
+      this.#motionY = createMotion(initialY, () => this.trueY, initial.motion);
+    }
 
     this.#dataMotionMap = createDataMotionMap(initial.motion);
     if (this.#dataMotionMap) {

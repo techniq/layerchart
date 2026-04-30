@@ -174,67 +174,79 @@ export class ImageState {
     typeof this.#getProps().rotate === 'number' ? (this.#getProps().rotate as number) : undefined
   );
 
+  // Pixel-mode motion sources. Only allocated when the user opts into
+  // animation via the `motion` prop; otherwise the getters read directly
+  // from props.
   #dataMotionMap: ReturnType<typeof createDataMotionMap> = null;
-  #motionX!: ReturnType<typeof createMotion<number>>;
-  #motionY!: ReturnType<typeof createMotion<number>>;
-  #motionWidth!: ReturnType<typeof createMotion<number>>;
-  #motionHeight!: ReturnType<typeof createMotion<number>>;
+  #motionX: ReturnType<typeof createMotion<number>> | null = null;
+  #motionY: ReturnType<typeof createMotion<number>> | null = null;
+  #motionWidth: ReturnType<typeof createMotion<number>> | null = null;
+  #motionHeight: ReturnType<typeof createMotion<number>> | null = null;
 
   get motionX() {
-    return this.#motionX.current;
+    if (this.#motionX) return this.#motionX.current;
+    const x = this.#getProps().x;
+    return typeof x === 'number' ? x : 0;
   }
   get motionY() {
-    return this.#motionY.current;
+    if (this.#motionY) return this.#motionY.current;
+    const y = this.#getProps().y;
+    return typeof y === 'number' ? y : 0;
   }
   get motionWidth() {
-    return this.#motionWidth.current;
+    if (this.#motionWidth) return this.#motionWidth.current;
+    return this.resolvedPixelWidth;
   }
   get motionHeight() {
-    return this.#motionHeight.current;
+    if (this.#motionHeight) return this.#motionHeight.current;
+    return this.resolvedPixelHeight;
   }
 
   constructor(getProps: () => ImageProps) {
     this.#getProps = getProps;
 
     const initial = getProps();
-    const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
-    const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : 0);
-    const initialWidth =
-      initial.initialWidth ??
-      (typeof initial.width === 'number'
-        ? initial.width
-        : typeof initial.r === 'number'
-          ? initial.r * 2
-          : 16);
-    const initialHeight =
-      initial.initialHeight ??
-      (typeof initial.height === 'number'
-        ? initial.height
-        : typeof initial.r === 'number'
-          ? initial.r * 2
-          : 16);
     const motion = initial.motion;
 
-    this.#motionX = createMotion(
-      initialX,
-      () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
-      motion === undefined ? undefined : parseMotionProp(motion, 'x')
-    );
-    this.#motionY = createMotion(
-      initialY,
-      () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
-      motion === undefined ? undefined : parseMotionProp(motion, 'y')
-    );
-    this.#motionWidth = createMotion(
-      initialWidth,
-      () => this.resolvedPixelWidth,
-      motion === undefined ? undefined : parseMotionProp(motion, 'width')
-    );
-    this.#motionHeight = createMotion(
-      initialHeight,
-      () => this.resolvedPixelHeight,
-      motion === undefined ? undefined : parseMotionProp(motion, 'height')
-    );
+    if (motion !== undefined) {
+      const initialX = initial.initialX ?? (typeof initial.x === 'number' ? initial.x : 0);
+      const initialY = initial.initialY ?? (typeof initial.y === 'number' ? initial.y : 0);
+      const initialWidth =
+        initial.initialWidth ??
+        (typeof initial.width === 'number'
+          ? initial.width
+          : typeof initial.r === 'number'
+            ? initial.r * 2
+            : 16);
+      const initialHeight =
+        initial.initialHeight ??
+        (typeof initial.height === 'number'
+          ? initial.height
+          : typeof initial.r === 'number'
+            ? initial.r * 2
+            : 16);
+
+      this.#motionX = createMotion(
+        initialX,
+        () => (typeof getProps().x === 'number' ? (getProps().x as number) : 0),
+        parseMotionProp(motion, 'x')
+      );
+      this.#motionY = createMotion(
+        initialY,
+        () => (typeof getProps().y === 'number' ? (getProps().y as number) : 0),
+        parseMotionProp(motion, 'y')
+      );
+      this.#motionWidth = createMotion(
+        initialWidth,
+        () => this.resolvedPixelWidth,
+        parseMotionProp(motion, 'width')
+      );
+      this.#motionHeight = createMotion(
+        initialHeight,
+        () => this.resolvedPixelHeight,
+        parseMotionProp(motion, 'height')
+      );
+    }
 
     this.#dataMotionMap = createDataMotionMap(motion as MotionOptions | undefined);
     if (this.#dataMotionMap) {
