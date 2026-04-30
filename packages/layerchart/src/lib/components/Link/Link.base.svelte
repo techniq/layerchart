@@ -18,7 +18,6 @@
     getLinkRadialPresetPath,
   } from '$lib/utils/linkUtils.js';
   import { getChartContext } from '$lib/contexts/chart.js';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
   import { cls } from '@layerstack/tailwind';
   import {
@@ -203,11 +202,20 @@
       }
     : undefined;
 
-  const motionPath = createMotion(
-    '',
-    () => singlePathData,
-    tweenOptions ? tweenOptions : { type: 'none' }
-  );
+  // Pass `tweenOptions` (possibly undefined) so `createMotion` takes its
+  // fast-path passthrough when no tween is configured — avoids allocating
+  // a MotionNone container + per-instance `$effect` that fires on every
+  // x1/y1/x2/y2 change. Critical for force-simulation graphs which can
+  // have hundreds of links updating on every tick.
+  const motionPath = createMotion('', () => singlePathData, tweenOptions);
+
+  // Stable getter handed to `<Path>` instead of `motionPath.current`.
+  // Reading `motionPath.current` directly in the template would subscribe
+  // *this* component's template to per-tick updates, forcing the entire
+  // `<Path>` block to re-evaluate (and re-spread props) on every change.
+  // By passing a function reference, the per-tick `current` read happens
+  // inside `<Path>`'s own template — the parent stays stable.
+  const getPathData = () => motionPath.current;
 
   const arrayRows = $derived(isArrayMode ? data ?? ctx.data ?? [] : []);
 
@@ -237,7 +245,6 @@
       {markerStart}
       {markerMid}
       {markerEnd}
-      {...extractLayerProps(restProps, 'lc-link')}
       {...restProps}
       stroke={resolvedStroke}
       fill={resolvePerDatum(fillProp, d)}
@@ -247,13 +254,12 @@
   {/each}
 {:else}
   <Path
-    pathData={motionPath.current}
+    pathData={getPathData}
     bind:pathRef
     {marker}
     {markerStart}
     {markerMid}
     {markerEnd}
-    {...extractLayerProps(restProps, 'lc-link')}
     {...restProps}
     class={cls('lc-link', typeof classProp === 'string' ? classProp : undefined)}
   />

@@ -16,7 +16,7 @@
   const uid = $props.id();
 
   let {
-    pathRef: pathRefProp = $bindable(),
+    pathRef = $bindable(),
     marker,
     markerStart: markerStartProp,
     markerMid: markerMidProp,
@@ -24,28 +24,34 @@
     startContent,
     endContent,
     draw,
+    motion,
+    // Extracted out of `rest` so the `<path>` element's `{...rest}`
+    // spread doesn't re-evaluate on every frame in mark-heavy scenes
+    // (force-simulation graphs with hundreds of links updating per tick).
+    // - `pathData`: changes every frame
+    // - `class`: parents typically pass `cls(...)` which produces a new
+    //   string reference per parent render
+    // - styling props: explicit on the <path> element below, no need to
+    //   leak them through the spread
+    pathData: _pathData,
+    class: classProp,
+    fill: fillProp,
+    fillOpacity: fillOpacityProp,
+    stroke: strokeProp,
+    strokeOpacity: strokeOpacityProp,
+    strokeWidth: strokeWidthProp,
+    opacity: opacityProp,
     ...rest
   }: PathProps = $props();
 
+  // Pass `pathData` as its own getter so the hot-path tween read only subscribes
+  // to `pathData` (which changes per tick on force sims) and not to every other
+  // Path prop. Pre-fix the per-tick `<path d=...>` updater re-read all 15+ props
+  // through `getProps()` on each force-sim tick × hundreds of paths.
   const c = new PathState(
-    () =>
-      ({
-        marker,
-        markerStart: markerStartProp,
-        markerMid: markerMidProp,
-        markerEnd: markerEndProp,
-        startContent,
-        endContent,
-        draw,
-        ...rest,
-      }) as PathProps
+    () => _pathData,
+    () => ({ draw, motion }) as PathProps
   );
-
-  let pathRef = $state<SVGPathElement>();
-
-  $effect.pre(() => {
-    pathRefProp = pathRef;
-  });
 
   const markerStart = $derived(markerStartProp ?? marker);
   const markerMid = $derived(markerMidProp ?? marker);
@@ -56,7 +62,6 @@
   const markerEndId = $derived(markerEnd ? createId('marker-end', uid) : '');
 
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
-
   let startPoint = $state<DOMPoint | undefined>();
 
   const endPointDuration = $derived.by(() => {
@@ -70,60 +75,70 @@
     return 800;
   });
 
-  const endPoint = createControlledMotion<DOMPoint | undefined>(
-    undefined,
-    draw
-      ? {
-          type: 'tween',
-          duration: () => endPointDuration,
-          easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
-          interpolate() {
-            return (t: number) => {
-              const totalLength = pathRef?.getTotalLength() ?? 0;
-              const point = pathRef?.getPointAtLength(totalLength * t);
-              return point;
-            };
-          },
-        }
-      : { type: 'none' }
-  );
+  // Only allocate the controlled motion container when `draw` is configured;
+  // otherwise the per-Path `MotionNone` × hundreds of paths was a measurable
+  // mount-time cost in mark-heavy scenes.
+  const endPoint = draw
+    ? createControlledMotion<DOMPoint | undefined>(undefined, {
+        type: 'tween',
+        duration: () => endPointDuration,
+        easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
+        interpolate() {
+          return (t: number) => {
+            const totalLength = pathRef?.getTotalLength() ?? 0;
+            const point = pathRef?.getPointAtLength(totalLength * t);
+            return point;
+          };
+        },
+      })
+    : null;
 
-  $effect(() => {
-    if (!startContent && !endContent) return;
-    // Track path data changes
-    void c.tweenedPathData;
-    if (!pathRef) return;
-
-    tick().then(() => {
+  // Only set up path-end tracking when startContent/endContent require it.
+  if (startContent || endContent) {
+    $effect(() => {
+      // Track path data changes
+      void c.tweenedPathData;
       if (!pathRef) return;
-      const totalLength = pathRef.getTotalLength();
-      if (!totalLength) return;
-      startPoint = pathRef.getPointAtLength(0);
-      endPoint.target = pathRef.getPointAtLength(totalLength);
+
+      tick().then(() => {
+        if (!pathRef) return;
+        const totalLength = pathRef.getTotalLength();
+        if (!totalLength) return;
+        startPoint = pathRef.getPointAtLength(0);
+        if (endPoint) {
+          endPoint.target = pathRef.getPointAtLength(totalLength);
+        }
+      });
     });
-  });
+  }
 </script>
 
 {#key c.drawKey}
   <path
     {...rest as any}
     d={c.tweenedPathData}
-    fill={rest.fill}
-    fill-opacity={rest.fillOpacity}
-    stroke={rest.stroke}
-    stroke-opacity={rest.strokeOpacity}
-    stroke-width={rest.strokeWidth}
-    opacity={rest.opacity}
-    class={cls('lc-path', rest.class as string | undefined)}
+    fill={fillProp}
+    fill-opacity={fillOpacityProp}
+    stroke={strokeProp}
+    stroke-opacity={strokeOpacityProp}
+    stroke-width={strokeWidthProp}
+    opacity={opacityProp}
+    class={cls('lc-path', classProp as string | undefined)}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     bind:this={pathRef}
   />
-  <MarkerWrapper id={markerStartId} marker={markerStart} />
-  <MarkerWrapper id={markerMidId} marker={markerMid} />
-  <MarkerWrapper id={markerEndId} marker={markerEnd} />
+  {#if markerStart}
+    <MarkerWrapper id={markerStartId} marker={markerStart} />
+  {/if}
+  {#if markerMid}
+    <MarkerWrapper id={markerMidId} marker={markerMid} />
+  {/if}
+  {#if markerEnd}
+    <MarkerWrapper id={markerEndId} marker={markerEnd} />
+  {/if}
 
   {#if startContent && startPoint}
     <Group x={startPoint.x} y={startPoint.y} class="lc-path-g-start">
@@ -137,7 +152,7 @@
     </Group>
   {/if}
 
-  {#if endContent && endPoint.current}
+  {#if endContent && endPoint?.current}
     <Group x={endPoint.current.x} y={endPoint.current.y} class="lc-path-g-end">
       {@render endContent({
         point: endPoint.current,
